@@ -1,0 +1,32 @@
+{
+  "source": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "status": "FAILED",
+  "startedAt": "2026-11-27T04:47:36.397888+00:00",
+  "controllerPID": 25184,
+  "route": "Original generated HanlinPlatform package scheme, actual iOS destination, exact original source/fixtures/pins. Build-for-testing phase; native test acceptance remains separate.",
+  "derivedData": "/Users/m1/builds/hanlin-two-wave-root-20261126/derived-data/platform-16b4af44",
+  "expectedTestDefinitions": 58,
+  "expectedTestInvocations": 79,
+  "phases": [],
+  "requiredFreeBytes": 8073741824,
+  "phaseBudget": {
+    "freshCompileCheckoutsAndProductsAllowance": 5000000000,
+    "observedSharedGrowthAllowance": 2000000000,
+    "OSMargin": 1073741824
+  },
+  "buildJobs": 2,
+  "coordinationLocks": {
+    "native": "exclusive",
+    "existingMaintenance": "shared"
+  },
+  "retainedWarmBuildBudgetBasis": {
+    "derivedData": "/Users/m1/builds/hanlin-two-wave-root-20261126/derived-data/platform-16b4af44",
+    "historicalBuildReceipt": "/Users/m1/builds/hanlin-two-wave-root-20261126/platform-native-build-16b4af44-r2.json",
+    "historicalBuildReceiptSHA256": "5cf867d6e92fb889e954f830adbd32b00dc746efa546ff0af7f23cc8b91edfab",
+    "scope": "Existing owned package cache is retained. The original full build-for-testing command recompiles current changed inputs; historical products are not native acceptance. Conservative8073741824-byte admission and original phase limits remain unchanged."
+  },
+  "error": "AssertionError()",
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/m1/builds/hanlin-two-wave-root-20261126/build-platform-native-866d2d3c-r1.py\", line 46, in <module>\n    assert dd.is_dir() and (dd/'SourcePackages/repositories').is_dir() and (dd/'Build').is_dir()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "finishedAt": "2026-11-27T04:47:36.401276+00:00",
+  "freeAfter": 10990252032
+}

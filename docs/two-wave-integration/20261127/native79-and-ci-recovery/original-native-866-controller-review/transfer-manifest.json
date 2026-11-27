@@ -1,0 +1,80 @@
+{
+  "status": "EXACT_SOURCE_CONTROLLER_AND_CLEANUP_EVIDENCE_TRANSFER_NATIVE_NOT_RUN",
+  "files": [
+    {
+      "path": "original/build-platform-native-16b4af44-r2.py",
+      "bytes": 11665,
+      "sha256": "a11d31bfc44bf109a1a09ea0367e61457bfea4418a9eebbeaccbcdce76d3c5d6"
+    },
+    {
+      "path": "original/run-platform-native-16b4af44-test-r1.py",
+      "bytes": 14712,
+      "sha256": "6e4f128954254805369af24887804a5257e313a2bab21f66fe7ba696338f1f10"
+    },
+    {
+      "path": "original/reconcile-platform-native-16b4af44-r1.py",
+      "bytes": 7045,
+      "sha256": "157eed397a0289975c8d4444d236eb3e12af220573c230a5ac9fdd1386e7ea85"
+    },
+    {
+      "path": "original/prepare-host-integrated-20261127.py",
+      "bytes": 16074,
+      "sha256": "1dc574ca6da582ec6fe09f3349b684acb577d70e26a87f8686a5c8c47d272170"
+    },
+    {
+      "path": "candidate/build-platform-native-866d2d3c-r1.py",
+      "bytes": 12549,
+      "sha256": "62b2c4ddeb461f00885391ced25ed4df04b5c8d52e4cb5cd8efa8c1f2b4d0507"
+    },
+    {
+      "path": "candidate/run-platform-native-866d2d3c-test-r1.py",
+      "bytes": 15348,
+      "sha256": "b874539d133da1f0700538aebadbaf2ff8f5beacd2a41b674ee4b89c2141c1d5"
+    },
+    {
+      "path": "candidate/reconcile-platform-native-866d2d3c-r1.py",
+      "bytes": 7941,
+      "sha256": "bfc28efcb7cefa80c2bef927fd6a89fa7f38dc173f0e99804328fd1ac70bfd73"
+    },
+    {
+      "path": "candidate/prepare-host-integrated-866d2d3c-20261127.py",
+      "bytes": 17771,
+      "sha256": "2b9ecd9f220cc15c04dfaeaa44b38bad7d76fe5816eda31dfdcf181b86ed427f"
+    },
+    {
+      "path": "source-binding-review.diff",
+      "bytes": 25131,
+      "sha256": "50866bf93c616c0f2204029de0b495df07d146c06457ed62d08f5bf1d8476fe6"
+    },
+    {
+      "path": "controller-candidate-manifest.json",
+      "bytes": 1688,
+      "sha256": "c53eb6203eeecacdf3fa111859696a01f2f5696243f0d588e10d1845c5bad1e6"
+    },
+    {
+      "path": "source-stage-866d2d3c.json",
+      "bytes": 17820,
+      "sha256": "3b8c8a565050df6e1b5b9314a56b90d7230c3f282fe68b25aafebde4dc70e284"
+    },
+    {
+      "path": "platform-test-inventory-866d2d3c.json",
+      "bytes": 39917,
+      "sha256": "a5530408269f296d1cbb743fd52624f74755509623ee68b2bfd0f7e351b78822"
+    },
+    {
+      "path": "source-stage-preflight-r1-not-run.json",
+      "bytes": 497,
+      "sha256": "e8957e849c5c14ae61a4ed2982afd9043f5df5585843494369d1262e2b5817eb"
+    },
+    {
+      "path": "cleanup-g14-g15.json",
+      "bytes": 4494,
+      "sha256": "f56564a5b8eca9851ad8c325c4d3531caf9db9c82d1eb2500d961efeb3218966"
+    },
+    {
+      "path": "cleanup-bounded-g7-g13.json",
+      "bytes": 3692,
+      "sha256": "7fc9f9916312df81e8f9c31520883ea9ac6831d84e3a6e208de2d47ec1902e64"
+    }
+  ]
+}

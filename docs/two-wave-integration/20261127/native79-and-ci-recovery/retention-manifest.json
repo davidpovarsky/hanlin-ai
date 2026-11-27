@@ -1,0 +1,1205 @@
+{
+  "schema": 1,
+  "retainedAtUTC": "2026-11-27T05:31:35.323041+00:00",
+  "sourceUnderTest": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "entries": [
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-default-plan-866d2d3c/plan.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-default-plan-866d2d3c/plan.json.gz",
+      "originalBytes": 1433983,
+      "originalSHA256": "c8dd57044c1e8dec1fb13a9601acaca66da079a04d8ab8aefc06cdd9640f89c6",
+      "storedBytes": 67831,
+      "storedSHA256": "ffe2145b312fad2c4c1b2c0d38cdc1b8959d9e8790bcda96542cd137b9a8e4c7",
+      "compression": "gzip-lossless"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-default-plan-866d2d3c/receipt.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-default-plan-866d2d3c/receipt.json",
+      "originalBytes": 5565,
+      "originalSHA256": "fe597727a8de252bd38ab562d6f79de1b72ba10b0d6d350932a24b6cb939ce76",
+      "storedBytes": 5565,
+      "storedSHA256": "fe597727a8de252bd38ab562d6f79de1b72ba10b0d6d350932a24b6cb939ce76",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-default-plan-866d2d3c/stderr.log",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-default-plan-866d2d3c/stderr.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-default-plan-866d2d3c/stdout.log",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-default-plan-866d2d3c/stdout.log.gz",
+      "originalBytes": 29449,
+      "originalSHA256": "db619d82ae17159cd5238c40a089edc9d37d2d27756c9ed4052ad901576a7584",
+      "storedBytes": 4685,
+      "storedSHA256": "6e367a5956afcfe27cb604ad910c237a3f2a8aabc94b0764f768af3d1819e89b",
+      "compression": "gzip-lossless"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original90-dispatch-866d2d3c/artifacts-readback.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original90-dispatch-866d2d3c/artifacts-readback.json",
+      "originalBytes": 3714,
+      "originalSHA256": "6a673c14ec11924cc7d0e3b32cc648a235697e646ea7c097465ec8a6e05c1728",
+      "storedBytes": 3714,
+      "storedSHA256": "6a673c14ec11924cc7d0e3b32cc648a235697e646ea7c097465ec8a6e05c1728",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original90-dispatch-866d2d3c/dispatch-intent.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original90-dispatch-866d2d3c/dispatch-intent.json",
+      "originalBytes": 1212,
+      "originalSHA256": "90c7ddec192312a8be5b7eb49ae28d6e55910f0a5da746a48cb18620c0e0eb7f",
+      "storedBytes": 1212,
+      "storedSHA256": "90c7ddec192312a8be5b7eb49ae28d6e55910f0a5da746a48cb18620c0e0eb7f",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original90-dispatch-866d2d3c/dispatch-request.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original90-dispatch-866d2d3c/dispatch-request.json",
+      "originalBytes": 4291,
+      "originalSHA256": "9d8b2f79587165581d5408ba4738fef011fb73f55bc6878a8d6e4d24678b867c",
+      "storedBytes": 4291,
+      "storedSHA256": "9d8b2f79587165581d5408ba4738fef011fb73f55bc6878a8d6e4d24678b867c",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original90-dispatch-866d2d3c/dispatch-result.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original90-dispatch-866d2d3c/dispatch-result.json",
+      "originalBytes": 1385,
+      "originalSHA256": "1f6c338f7f2ae21d99e682a3e7d2bd4c447b7300e2aa63de4394a28b79f303b2",
+      "storedBytes": 1385,
+      "storedSHA256": "1f6c338f7f2ae21d99e682a3e7d2bd4c447b7300e2aa63de4394a28b79f303b2",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original90-dispatch-866d2d3c/dispatch.stderr.log",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original90-dispatch-866d2d3c/dispatch.stderr.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original90-dispatch-866d2d3c/dispatch.stdout.log",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original90-dispatch-866d2d3c/dispatch.stdout.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original90-dispatch-866d2d3c/jobs-readback.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original90-dispatch-866d2d3c/jobs-readback.json",
+      "originalBytes": 55871,
+      "originalSHA256": "6e7b70d70b2f7856301ba18d45d71b52941e4b4191366e7229963bf972182e9b",
+      "storedBytes": 55871,
+      "storedSHA256": "6e7b70d70b2f7856301ba18d45d71b52941e4b4191366e7229963bf972182e9b",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original90-dispatch-866d2d3c/original-ci-plan.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original90-dispatch-866d2d3c/original-ci-plan.json.gz",
+      "originalBytes": 944020,
+      "originalSHA256": "60c636f91976690751fdaa2d7a9e74ff503ad42bbf169381a85441972684c5a2",
+      "storedBytes": 52974,
+      "storedSHA256": "37488237af95efc0e5ff76c5db60af9a49235dd5baef9ad31d4c9134d8184b0d",
+      "compression": "gzip-lossless"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original90-dispatch-866d2d3c/original-ci-plan.zip",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original90-dispatch-866d2d3c/original-ci-plan.zip",
+      "originalBytes": 53954,
+      "originalSHA256": "2eb1a7c5f84dbb8aeb1d43630c552882cec013abe37f4db87369866d6f8fa9ea",
+      "storedBytes": 53954,
+      "storedSHA256": "2eb1a7c5f84dbb8aeb1d43630c552882cec013abe37f4db87369866d6f8fa9ea",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original90-dispatch-866d2d3c/planner-source-label-correction.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original90-dispatch-866d2d3c/planner-source-label-correction.json",
+      "originalBytes": 632,
+      "originalSHA256": "ce65996038215c0ddb29aa3c4f9e3869d8ea87ad6fb2d771d20bd5467e089708",
+      "storedBytes": 632,
+      "storedSHA256": "ce65996038215c0ddb29aa3c4f9e3869d8ea87ad6fb2d771d20bd5467e089708",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original90-dispatch-866d2d3c/run-readback.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original90-dispatch-866d2d3c/run-readback.json",
+      "originalBytes": 6614,
+      "originalSHA256": "ea0940cf8f7b838f46eec8f1bebc1adf508a524bb15d64d99a615bc1f83bb792",
+      "storedBytes": 6614,
+      "storedSHA256": "ea0940cf8f7b838f46eec8f1bebc1adf508a524bb15d64d99a615bc1f83bb792",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original90-dispatch-866d2d3c/runs-before.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original90-dispatch-866d2d3c/runs-before.json",
+      "originalBytes": 104737,
+      "originalSHA256": "1aeb13811e0291138d7be2d97caab428b43f1e45eeee55e60c490e7c0924021a",
+      "storedBytes": 104737,
+      "storedSHA256": "1aeb13811e0291138d7be2d97caab428b43f1e45eeee55e60c490e7c0924021a",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original54-dispatch-866d2d3c/dispatch-intent.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original54-dispatch-866d2d3c/dispatch-intent.json",
+      "originalBytes": 875,
+      "originalSHA256": "f4e1f574635870caaa1ab6d2e95112b69a5bfdf25eb0d295b1032696b228790a",
+      "storedBytes": 875,
+      "storedSHA256": "f4e1f574635870caaa1ab6d2e95112b69a5bfdf25eb0d295b1032696b228790a",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original54-dispatch-866d2d3c/dispatch-request.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original54-dispatch-866d2d3c/dispatch-request.json",
+      "originalBytes": 481,
+      "originalSHA256": "a309f2ea1185e7e0767106bafca2b578e81d57ce31ecc55bb98bce8b8b716b89",
+      "storedBytes": 481,
+      "storedSHA256": "a309f2ea1185e7e0767106bafca2b578e81d57ce31ecc55bb98bce8b8b716b89",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original54-dispatch-866d2d3c/dispatch-result.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original54-dispatch-866d2d3c/dispatch-result.json",
+      "originalBytes": 1048,
+      "originalSHA256": "7c6dd8921592bb9ca77d89c23301ccd071a49b0f52acbc9e541c4e2f061b080c",
+      "storedBytes": 1048,
+      "storedSHA256": "7c6dd8921592bb9ca77d89c23301ccd071a49b0f52acbc9e541c4e2f061b080c",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original54-dispatch-866d2d3c/dispatch.stderr.log",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original54-dispatch-866d2d3c/dispatch.stderr.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original54-dispatch-866d2d3c/dispatch.stdout.log",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original54-dispatch-866d2d3c/dispatch.stdout.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original54-dispatch-866d2d3c/run-readback.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original54-dispatch-866d2d3c/run-readback.json",
+      "originalBytes": 625,
+      "originalSHA256": "f0803a0d6817b97b06abf198cf4211746bd683f5214407041ba6cbacc35fec8c",
+      "storedBytes": 625,
+      "storedSHA256": "f0803a0d6817b97b06abf198cf4211746bd683f5214407041ba6cbacc35fec8c",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original54-dispatch-866d2d3c/runs-before.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original54-dispatch-866d2d3c/runs-before.json",
+      "originalBytes": 46,
+      "originalSHA256": "763f11efb3fd0695809422708bf5765dfad5d8438bfb9a7bad31f23ff74d3285",
+      "storedBytes": 46,
+      "storedSHA256": "763f11efb3fd0695809422708bf5765dfad5d8438bfb9a7bad31f23ff74d3285",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-platform-contracts-dispatch-866d2d3c/artifacts-readback.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-platform-contracts-dispatch-866d2d3c/artifacts-readback.json",
+      "originalBytes": 937,
+      "originalSHA256": "86348c3c09e8b0b375dcb4192b6a40f574a02469b290cd042960ac95dcaa098a",
+      "storedBytes": 937,
+      "storedSHA256": "86348c3c09e8b0b375dcb4192b6a40f574a02469b290cd042960ac95dcaa098a",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-platform-contracts-dispatch-866d2d3c/dispatch-intent.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-platform-contracts-dispatch-866d2d3c/dispatch-intent.json",
+      "originalBytes": 1135,
+      "originalSHA256": "fba69cdb076a3e18334454b5cac34066fa74605f42400c117e509c73d4d4907b",
+      "storedBytes": 1135,
+      "storedSHA256": "fba69cdb076a3e18334454b5cac34066fa74605f42400c117e509c73d4d4907b",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-platform-contracts-dispatch-866d2d3c/dispatch-request.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-platform-contracts-dispatch-866d2d3c/dispatch-request.json",
+      "originalBytes": 408,
+      "originalSHA256": "2de6c9fb9e432478415a8c7b23927d21faccc336399b8e6c5abb21a950b20213",
+      "storedBytes": 408,
+      "storedSHA256": "2de6c9fb9e432478415a8c7b23927d21faccc336399b8e6c5abb21a950b20213",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-platform-contracts-dispatch-866d2d3c/dispatch-result.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-platform-contracts-dispatch-866d2d3c/dispatch-result.json",
+      "originalBytes": 1308,
+      "originalSHA256": "9d70fb5d5b6a7df97879f6c5f7b29e33bbb4298a8fb2a75ab7ceeb6204824271",
+      "storedBytes": 1308,
+      "storedSHA256": "9d70fb5d5b6a7df97879f6c5f7b29e33bbb4298a8fb2a75ab7ceeb6204824271",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-platform-contracts-dispatch-866d2d3c/dispatch.stderr.log",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-platform-contracts-dispatch-866d2d3c/dispatch.stderr.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-platform-contracts-dispatch-866d2d3c/dispatch.stdout.log",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-platform-contracts-dispatch-866d2d3c/dispatch.stdout.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-platform-contracts-dispatch-866d2d3c/jobs-readback.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-platform-contracts-dispatch-866d2d3c/jobs-readback.json",
+      "originalBytes": 41896,
+      "originalSHA256": "ccd3ede3d9fb08d3fc3f82456cc5f864a3002cc6b2c099c0ba7477572acf91da",
+      "storedBytes": 41896,
+      "storedSHA256": "ccd3ede3d9fb08d3fc3f82456cc5f864a3002cc6b2c099c0ba7477572acf91da",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-platform-contracts-dispatch-866d2d3c/original-ci-plan.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-platform-contracts-dispatch-866d2d3c/original-ci-plan.json.gz",
+      "originalBytes": 1412257,
+      "originalSHA256": "462c7b9e1baae4ca4485c19da5ced95e18833ad27ea9e4d00c454af41f573772",
+      "storedBytes": 66101,
+      "storedSHA256": "05cf1357f99f4e97cae8c9cf3a5bc2e9beeee78e6c55b25d9c5119e7a9e94a8c",
+      "compression": "gzip-lossless"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-platform-contracts-dispatch-866d2d3c/original-ci-plan.zip",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-platform-contracts-dispatch-866d2d3c/original-ci-plan.zip",
+      "originalBytes": 67823,
+      "originalSHA256": "2384303e05a59eece6333b8cd8db25f94580cc3b01411eb6976494a7890ad2e5",
+      "storedBytes": 67823,
+      "storedSHA256": "2384303e05a59eece6333b8cd8db25f94580cc3b01411eb6976494a7890ad2e5",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-platform-contracts-dispatch-866d2d3c/run-readback.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-platform-contracts-dispatch-866d2d3c/run-readback.json",
+      "originalBytes": 2416,
+      "originalSHA256": "ce700414188889ab9bfdf0b65fef778aa21fca93ee8eab6fcc99d5281b51f1d7",
+      "storedBytes": 2416,
+      "storedSHA256": "ce700414188889ab9bfdf0b65fef778aa21fca93ee8eab6fcc99d5281b51f1d7",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-platform-contracts-dispatch-866d2d3c/runs-before.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-platform-contracts-dispatch-866d2d3c/runs-before.json",
+      "originalBytes": 122176,
+      "originalSHA256": "b48ba20b64775c075aa29cbb3ed01f6bf4f26709eb3166f97c48e19b96e72feb",
+      "storedBytes": 122176,
+      "storedSHA256": "b48ba20b64775c075aa29cbb3ed01f6bf4f26709eb3166f97c48e19b96e72feb",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-device-ipa-dispatch-866d2d3c/artifacts-readback.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-device-ipa-dispatch-866d2d3c/artifacts-readback.json",
+      "originalBytes": 1872,
+      "originalSHA256": "41e7b6a6ecdfd72f44d7e2090b94e5e3ad20751ba6fd2ef6d56bb6c659d84957",
+      "storedBytes": 1872,
+      "storedSHA256": "41e7b6a6ecdfd72f44d7e2090b94e5e3ad20751ba6fd2ef6d56bb6c659d84957",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-device-ipa-dispatch-866d2d3c/dispatch-intent.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-device-ipa-dispatch-866d2d3c/dispatch-intent.json",
+      "originalBytes": 959,
+      "originalSHA256": "a0124170d9a7f59be40148050cf4059e0c73add8ce0c12abb9aa83f4f8df75ee",
+      "storedBytes": 959,
+      "storedSHA256": "a0124170d9a7f59be40148050cf4059e0c73add8ce0c12abb9aa83f4f8df75ee",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-device-ipa-dispatch-866d2d3c/dispatch-request.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-device-ipa-dispatch-866d2d3c/dispatch-request.json",
+      "originalBytes": 460,
+      "originalSHA256": "4400c4994448dcbc028b488ee73a5f61e35d554bd8c807d8dd963a894f92d89b",
+      "storedBytes": 460,
+      "storedSHA256": "4400c4994448dcbc028b488ee73a5f61e35d554bd8c807d8dd963a894f92d89b",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-device-ipa-dispatch-866d2d3c/dispatch-result.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-device-ipa-dispatch-866d2d3c/dispatch-result.json",
+      "originalBytes": 1132,
+      "originalSHA256": "48f1d1057b44281f1f7e67f2bd9a103766d5f787239e2471191d36f8bce01f7d",
+      "storedBytes": 1132,
+      "storedSHA256": "48f1d1057b44281f1f7e67f2bd9a103766d5f787239e2471191d36f8bce01f7d",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-device-ipa-dispatch-866d2d3c/dispatch.stderr.log",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-device-ipa-dispatch-866d2d3c/dispatch.stderr.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-device-ipa-dispatch-866d2d3c/dispatch.stdout.log",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-device-ipa-dispatch-866d2d3c/dispatch.stdout.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-device-ipa-dispatch-866d2d3c/jobs-readback.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-device-ipa-dispatch-866d2d3c/jobs-readback.json",
+      "originalBytes": 45397,
+      "originalSHA256": "6a8021ef7e59afa25e921116bbbbc98f920d2abaaea1e789f24476079485299c",
+      "storedBytes": 45397,
+      "storedSHA256": "6a8021ef7e59afa25e921116bbbbc98f920d2abaaea1e789f24476079485299c",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-device-ipa-dispatch-866d2d3c/original-ci-plan.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-device-ipa-dispatch-866d2d3c/original-ci-plan.json.gz",
+      "originalBytes": 1412750,
+      "originalSHA256": "0ad222b5b7ad9c443e0d5c5aa1bafd4f4d7903dddcc1790cb49a87dcdf97edd0",
+      "storedBytes": 66108,
+      "storedSHA256": "fb100cdce8192c0b93838b04c1f8b3c28faed8d4fd5c866e5e16cbfb89e97023",
+      "compression": "gzip-lossless"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-device-ipa-dispatch-866d2d3c/original-ci-plan.zip",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-device-ipa-dispatch-866d2d3c/original-ci-plan.zip",
+      "originalBytes": 67837,
+      "originalSHA256": "6bc7beeb69c9a24638de39e8114f9ac7a1102d6517d81d71694dd541a27c5480",
+      "storedBytes": 67837,
+      "storedSHA256": "6bc7beeb69c9a24638de39e8114f9ac7a1102d6517d81d71694dd541a27c5480",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-device-ipa-dispatch-866d2d3c/run-readback.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-device-ipa-dispatch-866d2d3c/run-readback.json",
+      "originalBytes": 2461,
+      "originalSHA256": "dd1d7062695329b55f0126c3d1d525d1c8d8f5c4b93254752496c9ae6e49a109",
+      "storedBytes": 2461,
+      "storedSHA256": "dd1d7062695329b55f0126c3d1d525d1c8d8f5c4b93254752496c9ae6e49a109",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-device-ipa-dispatch-866d2d3c/runs-before.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-device-ipa-dispatch-866d2d3c/runs-before.json.gz",
+      "originalBytes": 139615,
+      "originalSHA256": "5a3878c203a7d28c6921f541313d37313b145ab59223f3202f48640fc7d91c52",
+      "storedBytes": 4653,
+      "storedSHA256": "b3ad0ec3c4984497142dc539240bc0242abad8706947b88deccd0a74c7aeef48",
+      "compression": "gzip-lossless"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original54-release-retry-866d2d3c/dispatch-intent.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original54-release-retry-866d2d3c/dispatch-intent.json",
+      "originalBytes": 1596,
+      "originalSHA256": "12be2277e72f52861f257d2b949651fe0363bacfe57028c661cac6c91212add2",
+      "storedBytes": 1596,
+      "storedSHA256": "12be2277e72f52861f257d2b949651fe0363bacfe57028c661cac6c91212add2",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original54-release-retry-866d2d3c/dispatch-request.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original54-release-retry-866d2d3c/dispatch-request.json",
+      "originalBytes": 470,
+      "originalSHA256": "6e5bc11662f4a85f84a825ae3affde0c421852c36e086fb5ee76c244ecae1c9c",
+      "storedBytes": 470,
+      "storedSHA256": "6e5bc11662f4a85f84a825ae3affde0c421852c36e086fb5ee76c244ecae1c9c",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original54-release-retry-866d2d3c/dispatch-result.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original54-release-retry-866d2d3c/dispatch-result.json",
+      "originalBytes": 1779,
+      "originalSHA256": "3ffce19c0e381bc09f0ac6283c12451a9c0d3a4452d4bc86a4d4eb1bbb614862",
+      "storedBytes": 1779,
+      "storedSHA256": "3ffce19c0e381bc09f0ac6283c12451a9c0d3a4452d4bc86a4d4eb1bbb614862",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original54-release-retry-866d2d3c/dispatch.stderr.log",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original54-release-retry-866d2d3c/dispatch.stderr.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original54-release-retry-866d2d3c/dispatch.stdout.log",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original54-release-retry-866d2d3c/dispatch.stdout.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original54-release-retry-866d2d3c/prior-run.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original54-release-retry-866d2d3c/prior-run.json",
+      "originalBytes": 15021,
+      "originalSHA256": "3c9f7bda8b4a60386472ddf09af33f949f7e6ec10bf0e1f4345dde5bbb7f0f45",
+      "storedBytes": 15021,
+      "storedSHA256": "3c9f7bda8b4a60386472ddf09af33f949f7e6ec10bf0e1f4345dde5bbb7f0f45",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-original54-release-retry-866d2d3c/runs-before.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-original54-release-retry-866d2d3c/runs-before.json.gz",
+      "originalBytes": 480233,
+      "originalSHA256": "d6301c0bef3f1866b521f03de1d6373cd7fe4fc71feec1d096deb3c738bf0734",
+      "storedBytes": 11814,
+      "storedSHA256": "687452b332a6776d0ea7a9d94222679d88d36144bed82b6b52542abde48b4512",
+      "compression": "gzip-lossless"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-device-ipa-release-retry-866d2d3c/dispatch-intent.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-device-ipa-release-retry-866d2d3c/dispatch-intent.json",
+      "originalBytes": 1632,
+      "originalSHA256": "d3f8277a4f995091a36f25b37d39e5fad2062a289c9d00d03743084a872d4232",
+      "storedBytes": 1632,
+      "storedSHA256": "d3f8277a4f995091a36f25b37d39e5fad2062a289c9d00d03743084a872d4232",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-device-ipa-release-retry-866d2d3c/dispatch-request.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-device-ipa-release-retry-866d2d3c/dispatch-request.json",
+      "originalBytes": 407,
+      "originalSHA256": "b9ba20867616c59d7572d7de0aadf4b2cac9293d87eee18bb968ae8ce668b1c0",
+      "storedBytes": 407,
+      "storedSHA256": "b9ba20867616c59d7572d7de0aadf4b2cac9293d87eee18bb968ae8ce668b1c0",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-device-ipa-release-retry-866d2d3c/dispatch-result.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-device-ipa-release-retry-866d2d3c/dispatch-result.json",
+      "originalBytes": 1815,
+      "originalSHA256": "afd90970131944764a02b0b2e0a8c663d1dee37bc766da6752b4d0ff217f45a8",
+      "storedBytes": 1815,
+      "storedSHA256": "afd90970131944764a02b0b2e0a8c663d1dee37bc766da6752b4d0ff217f45a8",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-device-ipa-release-retry-866d2d3c/dispatch.stderr.log",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-device-ipa-release-retry-866d2d3c/dispatch.stderr.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-device-ipa-release-retry-866d2d3c/dispatch.stdout.log",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-device-ipa-release-retry-866d2d3c/dispatch.stdout.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-device-ipa-release-retry-866d2d3c/prior-run.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-device-ipa-release-retry-866d2d3c/prior-run.json",
+      "originalBytes": 16325,
+      "originalSHA256": "0d29b872bb7d515eeeeb36c08122341c99d6079ee653e3504090722e6dada39a",
+      "storedBytes": 16325,
+      "storedSHA256": "0d29b872bb7d515eeeeb36c08122341c99d6079ee653e3504090722e6dada39a",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-device-ipa-release-retry-866d2d3c/runs-before.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-device-ipa-release-retry-866d2d3c/runs-before.json.gz",
+      "originalBytes": 511364,
+      "originalSHA256": "79b4a672fc286bf3ee114093bd75ce7505bca04de72533876f19124a6ac343d1",
+      "storedBytes": 14215,
+      "storedSHA256": "648d0509608b7d36f60a040e9d9f362b00bd2f6c85591ff5caf48465ff5e62b5",
+      "compression": "gzip-lossless"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-45939988710-preparation-failure/artifact-verification.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-45939988710-preparation-failure/artifact-verification.json",
+      "originalBytes": 8083,
+      "originalSHA256": "c4ba1c22b55de2fd567877b03b62175aed67c963ddce4b28c36616dee9af062d",
+      "storedBytes": 8083,
+      "storedSHA256": "c4ba1c22b55de2fd567877b03b62175aed67c963ddce4b28c36616dee9af062d",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-45939988710-preparation-failure/artifacts.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-45939988710-preparation-failure/artifacts.json",
+      "originalBytes": 765,
+      "originalSHA256": "f362c31387c833e09a0d868dc2c82b17af88a17fcf8e11c7a4441814a101442d",
+      "storedBytes": 765,
+      "storedSHA256": "f362c31387c833e09a0d868dc2c82b17af88a17fcf8e11c7a4441814a101442d",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-45939988710-preparation-failure/initial-diagnostic.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-45939988710-preparation-failure/initial-diagnostic.json",
+      "originalBytes": 13034,
+      "originalSHA256": "90bdac6d900c2a66d8bf1bb621da0ece592663466842beeb2891c9242cc24050",
+      "storedBytes": 13034,
+      "storedSHA256": "90bdac6d900c2a66d8bf1bb621da0ece592663466842beeb2891c9242cc24050",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-45939988710-preparation-failure/jobs.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-45939988710-preparation-failure/jobs.json",
+      "originalBytes": 10972,
+      "originalSHA256": "768a79595ba46e8e29074dec667b2a6f4d1b7964c8bc123f0ba80460367bfc5e",
+      "storedBytes": 10972,
+      "storedSHA256": "768a79595ba46e8e29074dec667b2a6f4d1b7964c8bc123f0ba80460367bfc5e",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-45939988710-preparation-failure/original-app-split.zip",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-45939988710-preparation-failure/original-app-split.zip",
+      "originalBytes": 500410,
+      "originalSHA256": "34ae5b723004fbb99f665011c163801c9d522c59c52c8b3e6653aa434e513639",
+      "storedBytes": 500410,
+      "storedSHA256": "34ae5b723004fbb99f665011c163801c9d522c59c52c8b3e6653aa434e513639",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-45939988710-preparation-failure/original-job.log",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-45939988710-preparation-failure/original-job.log.gz",
+      "originalBytes": 5147367,
+      "originalSHA256": "ff38173edb093e19c5a7b903a2bcf30e219767ab82d9e80e8bc308ca83a9c44a",
+      "storedBytes": 619998,
+      "storedSHA256": "f1e899a65b0f3291a163e3f8e5955bb4fcb6e11fb66b5df8e3fc7f472b071877",
+      "compression": "gzip-lossless"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-45939988710-preparation-failure/run.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-45939988710-preparation-failure/run.json",
+      "originalBytes": 13438,
+      "originalSHA256": "011984b2ac55395100b16382d3e4c5723b86d0e1a585456c08d8c24816b495d0",
+      "storedBytes": 13438,
+      "storedSHA256": "011984b2ac55395100b16382d3e4c5723b86d0e1a585456c08d8c24816b495d0",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-45942933110-preparation-failure/app-split-45942933110.zip",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-45942933110-preparation-failure/app-split-45942933110.zip",
+      "originalBytes": 500353,
+      "originalSHA256": "e9ca708a98f8ff723abb866efaa0e99a7f1357abe76f26fa58693df620b5b0e8",
+      "storedBytes": 500353,
+      "storedSHA256": "e9ca708a98f8ff723abb866efaa0e99a7f1357abe76f26fa58693df620b5b0e8",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-45942933110-preparation-failure/artifact-verification.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-45942933110-preparation-failure/artifact-verification.json",
+      "originalBytes": 7177,
+      "originalSHA256": "56c0377c629309053dd76c9d7ddb9c1f013bf05f4700bf01a5df8a4f5a83473c",
+      "storedBytes": 7177,
+      "storedSHA256": "56c0377c629309053dd76c9d7ddb9c1f013bf05f4700bf01a5df8a4f5a83473c",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-45942933110-preparation-failure/artifacts.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-45942933110-preparation-failure/artifacts.json",
+      "originalBytes": 765,
+      "originalSHA256": "5450a0f58dc7820cb9a8ad6cd6996613bf7316bb22e5ab28cde0b454ed65b27d",
+      "storedBytes": 765,
+      "storedSHA256": "5450a0f58dc7820cb9a8ad6cd6996613bf7316bb22e5ab28cde0b454ed65b27d",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-45942933110-preparation-failure/initial-diagnostic.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-45942933110-preparation-failure/initial-diagnostic.json",
+      "originalBytes": 12050,
+      "originalSHA256": "de2bd37fa86c05259fd1eab30986e3ecf8eaa0e63bc08e5fa6d17027883e4035",
+      "storedBytes": 12050,
+      "storedSHA256": "de2bd37fa86c05259fd1eab30986e3ecf8eaa0e63bc08e5fa6d17027883e4035",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-45942933110-preparation-failure/original-job.log",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/ci-45942933110-preparation-failure/original-job.log.gz",
+      "originalBytes": 5144427,
+      "originalSHA256": "f045646db95f0b17fe4f7a00f45d9a6102a724ce087c3cd280a6b8b2c336b7e0",
+      "storedBytes": 615842,
+      "storedSHA256": "74a60ddf682b61407402055d7460ce1c2c0389cce60f2829c99d75063e25a5b2",
+      "compression": "gzip-lossless"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-ci-readback-20261127-0516/branch-runs.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/root-ci-readback-20261127-0516/branch-runs.json.gz",
+      "originalBytes": 172675,
+      "originalSHA256": "9a40f852aa4dd0386785c678308cdd30bf5b5407cf498425b8d6d4c9b234e273",
+      "storedBytes": 5230,
+      "storedSHA256": "e5cc576f3e468f4afba217a424bc59e490cb956b7bc662dcacc8f904897665b0",
+      "compression": "gzip-lossless"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-ci-readback-20261127-0516/original90-app-build.log",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/root-ci-readback-20261127-0516/original90-app-build.log.gz",
+      "originalBytes": 23281498,
+      "originalSHA256": "b15a8de8d0e74ba7c3102f722e2227e18ed9564462db38dd1ea05bc6eb14940e",
+      "storedBytes": 1868471,
+      "storedSHA256": "effd7cd440661e6ad138d17a0d99df12a619ecdcd6ea3cebcbd700c329635c19",
+      "compression": "gzip-lossless"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-ci-readback-20261127-0516/original90-artifact-verification.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/root-ci-readback-20261127-0516/original90-artifact-verification.json",
+      "originalBytes": 11962,
+      "originalSHA256": "497e1990a212953f700eb1fe68f62558d8dce155442a44f900bb40ca7b0a51a8",
+      "storedBytes": 11962,
+      "storedSHA256": "497e1990a212953f700eb1fe68f62558d8dce155442a44f900bb40ca7b0a51a8",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-ci-readback-20261127-0516/original90-artifacts.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/root-ci-readback-20261127-0516/original90-artifacts.json",
+      "originalBytes": 6012,
+      "originalSHA256": "7793a28268ea17e07de4a86eec56a200366f7575ec8ab24883f48d599ae3c58e",
+      "storedBytes": 6012,
+      "storedSHA256": "7793a28268ea17e07de4a86eec56a200366f7575ec8ab24883f48d599ae3c58e",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-ci-readback-20261127-0516/original90-build-failure-artifact.zip",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/root-ci-readback-20261127-0516/original90-build-failure-artifact.zip",
+      "originalBytes": 1882623,
+      "originalSHA256": "e52b97c22cb1df7196c53f344056445c1e1cf10cb995f6f8094da148dcf66f96",
+      "storedBytes": 1882623,
+      "storedSHA256": "e52b97c22cb1df7196c53f344056445c1e1cf10cb995f6f8094da148dcf66f96",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-ci-readback-20261127-0516/receipt.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/root-ci-readback-20261127-0516/receipt.json",
+      "originalBytes": 21641,
+      "originalSHA256": "669d9ba27eb04202db023407bddd0df58523dfb14d135c4b743b72ec2583e137",
+      "storedBytes": 21641,
+      "storedSHA256": "669d9ba27eb04202db023407bddd0df58523dfb14d135c4b743b72ec2583e137",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native866-package-launch-and-capacity/historical2a-sdk-expansion-retirement-20261127/receipt.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/native866-package-launch-and-capacity/historical2a-sdk-expansion-retirement-20261127/receipt.json",
+      "originalBytes": 1320,
+      "originalSHA256": "7add91633503b4e2917d5b8faa3fe7c9f6f9a8d0e7bd26f604c8fcd78152afe6",
+      "storedBytes": 1320,
+      "storedSHA256": "7add91633503b4e2917d5b8faa3fe7c9f6f9a8d0e7bd26f604c8fcd78152afe6",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native866-package-launch-and-capacity/obsolete-g15-ipad-os-asset-cache-retirement-20261127/receipt.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/native866-package-launch-and-capacity/obsolete-g15-ipad-os-asset-cache-retirement-20261127/receipt.json",
+      "originalBytes": 2321,
+      "originalSHA256": "b1f875c52808417ae204b0db3e7e3592886b94add514876bf64d1377863b0d4d",
+      "storedBytes": 2321,
+      "storedSHA256": "b1f875c52808417ae204b0db3e7e3592886b94add514876bf64d1377863b0d4d",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native866-package-launch-and-capacity/obsolete-g15-ipad-os-asset-cache-retirement-20261127/retired-os-asset-file-inventory.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/native866-package-launch-and-capacity/obsolete-g15-ipad-os-asset-cache-retirement-20261127/retired-os-asset-file-inventory.json.gz",
+      "originalBytes": 566924,
+      "originalSHA256": "a85e149ac84ee62e8c9b61dee77771d949ecdeac344129ec05ac39cc988bbef5",
+      "storedBytes": 101101,
+      "storedSHA256": "d34bac6aba69adbd4a8c2d32d65999fca7a926cbe15a9e984df1e85a13c5187c",
+      "compression": "gzip-lossless"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native866-package-launch-and-capacity/owned-index-and-duplicate-archive-reclaim-20261127/receipt.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/native866-package-launch-and-capacity/owned-index-and-duplicate-archive-reclaim-20261127/receipt.json",
+      "originalBytes": 1996,
+      "originalSHA256": "6c847c3c30705ca25c061c3555b2763b7a9b629ef16679fa26f9266875dcccd1",
+      "storedBytes": 1996,
+      "storedSHA256": "6c847c3c30705ca25c061c3555b2763b7a9b629ef16679fa26f9266875dcccd1",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native866-package-launch-and-capacity/platform-native-build-866d2d3c-r2-launch.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/native866-package-launch-and-capacity/platform-native-build-866d2d3c-r2-launch.json",
+      "originalBytes": 542,
+      "originalSHA256": "5e09497396cf56c06f3935905be5cdff4ad009c3d7a7faa568615029d7290689",
+      "storedBytes": 542,
+      "storedSHA256": "5e09497396cf56c06f3935905be5cdff4ad009c3d7a7faa568615029d7290689",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native866-package-launch-and-capacity/platform-sourcepackages-recovery-866d2d3c.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/native866-package-launch-and-capacity/platform-sourcepackages-recovery-866d2d3c.json",
+      "originalBytes": 3956,
+      "originalSHA256": "c032a99fa639eccf6e7c5b84d4034e463abfc593026aaec2e9bbb139ecf77e28",
+      "storedBytes": 3956,
+      "storedSHA256": "c032a99fa639eccf6e7c5b84d4034e463abfc593026aaec2e9bbb139ecf77e28",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native866-package-launch-and-capacity/transfer-manifest.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/native866-package-launch-and-capacity/transfer-manifest.json",
+      "originalBytes": 1350,
+      "originalSHA256": "fddb027cda77ef2c05b62ce011e874469f03742fa97c7319c8e34d9845f7ac21",
+      "storedBytes": 1350,
+      "storedSHA256": "fddb027cda77ef2c05b62ce011e874469f03742fa97c7319c8e34d9845f7ac21",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/candidate/build-platform-native-866d2d3c-r1.py",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/candidate/build-platform-native-866d2d3c-r1.py",
+      "originalBytes": 12549,
+      "originalSHA256": "62b2c4ddeb461f00885391ced25ed4df04b5c8d52e4cb5cd8efa8c1f2b4d0507",
+      "storedBytes": 12549,
+      "storedSHA256": "62b2c4ddeb461f00885391ced25ed4df04b5c8d52e4cb5cd8efa8c1f2b4d0507",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/candidate/prepare-host-integrated-866d2d3c-20261127.py",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/candidate/prepare-host-integrated-866d2d3c-20261127.py",
+      "originalBytes": 17771,
+      "originalSHA256": "2b9ecd9f220cc15c04dfaeaa44b38bad7d76fe5816eda31dfdcf181b86ed427f",
+      "storedBytes": 17771,
+      "storedSHA256": "2b9ecd9f220cc15c04dfaeaa44b38bad7d76fe5816eda31dfdcf181b86ed427f",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/candidate/reconcile-platform-native-866d2d3c-r1.py",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/candidate/reconcile-platform-native-866d2d3c-r1.py",
+      "originalBytes": 7941,
+      "originalSHA256": "bfc28efcb7cefa80c2bef927fd6a89fa7f38dc173f0e99804328fd1ac70bfd73",
+      "storedBytes": 7941,
+      "storedSHA256": "bfc28efcb7cefa80c2bef927fd6a89fa7f38dc173f0e99804328fd1ac70bfd73",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/candidate/run-platform-native-866d2d3c-test-r1.py",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/candidate/run-platform-native-866d2d3c-test-r1.py",
+      "originalBytes": 15348,
+      "originalSHA256": "b874539d133da1f0700538aebadbaf2ff8f5beacd2a41b674ee4b89c2141c1d5",
+      "storedBytes": 15348,
+      "storedSHA256": "b874539d133da1f0700538aebadbaf2ff8f5beacd2a41b674ee4b89c2141c1d5",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/cleanup-bounded-g7-g13.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/cleanup-bounded-g7-g13.json",
+      "originalBytes": 3692,
+      "originalSHA256": "7fc9f9916312df81e8f9c31520883ea9ac6831d84e3a6e208de2d47ec1902e64",
+      "storedBytes": 3692,
+      "storedSHA256": "7fc9f9916312df81e8f9c31520883ea9ac6831d84e3a6e208de2d47ec1902e64",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/cleanup-g14-g15.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/cleanup-g14-g15.json",
+      "originalBytes": 4494,
+      "originalSHA256": "f56564a5b8eca9851ad8c325c4d3531caf9db9c82d1eb2500d961efeb3218966",
+      "storedBytes": 4494,
+      "storedSHA256": "f56564a5b8eca9851ad8c325c4d3531caf9db9c82d1eb2500d961efeb3218966",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/controller-candidate-manifest.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/controller-candidate-manifest.json",
+      "originalBytes": 1688,
+      "originalSHA256": "c53eb6203eeecacdf3fa111859696a01f2f5696243f0d588e10d1845c5bad1e6",
+      "storedBytes": 1688,
+      "storedSHA256": "c53eb6203eeecacdf3fa111859696a01f2f5696243f0d588e10d1845c5bad1e6",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/original/build-platform-native-16b4af44-r2.py",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/original/build-platform-native-16b4af44-r2.py",
+      "originalBytes": 11665,
+      "originalSHA256": "a11d31bfc44bf109a1a09ea0367e61457bfea4418a9eebbeaccbcdce76d3c5d6",
+      "storedBytes": 11665,
+      "storedSHA256": "a11d31bfc44bf109a1a09ea0367e61457bfea4418a9eebbeaccbcdce76d3c5d6",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/original/prepare-host-integrated-20261127.py",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/original/prepare-host-integrated-20261127.py",
+      "originalBytes": 16074,
+      "originalSHA256": "1dc574ca6da582ec6fe09f3349b684acb577d70e26a87f8686a5c8c47d272170",
+      "storedBytes": 16074,
+      "storedSHA256": "1dc574ca6da582ec6fe09f3349b684acb577d70e26a87f8686a5c8c47d272170",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/original/reconcile-platform-native-16b4af44-r1.py",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/original/reconcile-platform-native-16b4af44-r1.py",
+      "originalBytes": 7045,
+      "originalSHA256": "157eed397a0289975c8d4444d236eb3e12af220573c230a5ac9fdd1386e7ea85",
+      "storedBytes": 7045,
+      "storedSHA256": "157eed397a0289975c8d4444d236eb3e12af220573c230a5ac9fdd1386e7ea85",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/original/run-platform-native-16b4af44-test-r1.py",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/original/run-platform-native-16b4af44-test-r1.py",
+      "originalBytes": 14712,
+      "originalSHA256": "6e4f128954254805369af24887804a5257e313a2bab21f66fe7ba696338f1f10",
+      "storedBytes": 14712,
+      "storedSHA256": "6e4f128954254805369af24887804a5257e313a2bab21f66fe7ba696338f1f10",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/platform-final-controller-review-866d2d3c.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/platform-final-controller-review-866d2d3c.json",
+      "originalBytes": 3148,
+      "originalSHA256": "2a9afafc4960e72f52f544bc78ba30e5f444cb00357ea7d24eb2ca37c08880e5",
+      "storedBytes": 3148,
+      "storedSHA256": "2a9afafc4960e72f52f544bc78ba30e5f444cb00357ea7d24eb2ca37c08880e5",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/platform-test-inventory-866d2d3c.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/platform-test-inventory-866d2d3c.json",
+      "originalBytes": 39917,
+      "originalSHA256": "a5530408269f296d1cbb743fd52624f74755509623ee68b2bfd0f7e351b78822",
+      "storedBytes": 39917,
+      "storedSHA256": "a5530408269f296d1cbb743fd52624f74755509623ee68b2bfd0f7e351b78822",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/r2/build-platform-native-866d2d3c-r2.py",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/r2/build-platform-native-866d2d3c-r2.py",
+      "originalBytes": 12972,
+      "originalSHA256": "e66483c6e193f76c3f2445fbbe425f87d752de3237b3e27355444bcdd3e6534a",
+      "storedBytes": 12972,
+      "storedSHA256": "e66483c6e193f76c3f2445fbbe425f87d752de3237b3e27355444bcdd3e6534a",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/r2/obsolete-g17-phone-app-evidence-20261127/receipt.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/r2/obsolete-g17-phone-app-evidence-20261127/receipt.json",
+      "originalBytes": 2838,
+      "originalSHA256": "ec1870b0c756d59078008a988959dca796523f8dfc8f26f82ea9f1e56201b722",
+      "storedBytes": 2838,
+      "storedSHA256": "ec1870b0c756d59078008a988959dca796523f8dfc8f26f82ea9f1e56201b722",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/r2/obsolete-g17-phone-compiled-pretrim-20261127/receipt.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/r2/obsolete-g17-phone-compiled-pretrim-20261127/receipt.json",
+      "originalBytes": 2093,
+      "originalSHA256": "45d03862074da606415bb4129c5fb3540f4ea49215fa91877e22722e12c607d4",
+      "storedBytes": 2093,
+      "storedSHA256": "45d03862074da606415bb4129c5fb3540f4ea49215fa91877e22722e12c607d4",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/r2/platform-final-controller-review-866d2d3c-r2.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/r2/platform-final-controller-review-866d2d3c-r2.json",
+      "originalBytes": 4468,
+      "originalSHA256": "7fa26246dfd4ae4ebda92fd2ad7eea63060fc25dfb5f92f6b890fcfb4a003456",
+      "storedBytes": 4468,
+      "storedSHA256": "7fa26246dfd4ae4ebda92fd2ad7eea63060fc25dfb5f92f6b890fcfb4a003456",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/r2/platform-native-build-866d2d3c-r1-launch.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/r2/platform-native-build-866d2d3c-r1-launch.json",
+      "originalBytes": 543,
+      "originalSHA256": "b6ce742f7f450476bf6db35b9cbabb94b9f5935336181d23f1d1b5c17ca03927",
+      "storedBytes": 543,
+      "storedSHA256": "b6ce742f7f450476bf6db35b9cbabb94b9f5935336181d23f1d1b5c17ca03927",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/r2/platform-native-build-866d2d3c-r1.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/r2/platform-native-build-866d2d3c-r1.json",
+      "originalBytes": 1961,
+      "originalSHA256": "7d270b0d672f4cf37e96818ebe48eea9c2233dfdf77f0398fffc30da1a061b9e",
+      "storedBytes": 1961,
+      "storedSHA256": "7d270b0d672f4cf37e96818ebe48eea9c2233dfdf77f0398fffc30da1a061b9e",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/r2/platform-sourcepackages-recovery-866d2d3c.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/r2/platform-sourcepackages-recovery-866d2d3c.json",
+      "originalBytes": 3956,
+      "originalSHA256": "c032a99fa639eccf6e7c5b84d4034e463abfc593026aaec2e9bbb139ecf77e28",
+      "storedBytes": 3956,
+      "storedSHA256": "c032a99fa639eccf6e7c5b84d4034e463abfc593026aaec2e9bbb139ecf77e28",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/r2/platform866-r2-attempt-binding.diff",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/r2/platform866-r2-attempt-binding.diff",
+      "originalBytes": 5449,
+      "originalSHA256": "b698b521eaf55f74fdd1dd19226c124a5caf2e5aea74aebfc7cf854379f9e70e",
+      "storedBytes": 5449,
+      "storedSHA256": "b698b521eaf55f74fdd1dd19226c124a5caf2e5aea74aebfc7cf854379f9e70e",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/r2/platform866-r2-candidate-manifest.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/r2/platform866-r2-candidate-manifest.json",
+      "originalBytes": 991,
+      "originalSHA256": "da31f28e915a09f7bfab019f7ace159d16662ac2860301720c1b830718c554ef",
+      "storedBytes": 991,
+      "storedSHA256": "da31f28e915a09f7bfab019f7ace159d16662ac2860301720c1b830718c554ef",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/r2/run-platform-native-866d2d3c-test-r2.py",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/r2/run-platform-native-866d2d3c-test-r2.py",
+      "originalBytes": 15351,
+      "originalSHA256": "ba549b64d0145537f57ea52c535264dcd68c617dea07d2e2ab3f56dbfd354ed7",
+      "storedBytes": 15351,
+      "storedSHA256": "ba549b64d0145537f57ea52c535264dcd68c617dea07d2e2ab3f56dbfd354ed7",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/r2/transfer-manifest.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/r2/transfer-manifest.json",
+      "originalBytes": 1667,
+      "originalSHA256": "52945a30aac44da7c45d04a703721d6e3904f99d4d2657357ecdd17494c85b37",
+      "storedBytes": 1667,
+      "storedSHA256": "52945a30aac44da7c45d04a703721d6e3904f99d4d2657357ecdd17494c85b37",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/source-binding-review.diff",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/source-binding-review.diff",
+      "originalBytes": 25131,
+      "originalSHA256": "50866bf93c616c0f2204029de0b495df07d146c06457ed62d08f5bf1d8476fe6",
+      "storedBytes": 25131,
+      "storedSHA256": "50866bf93c616c0f2204029de0b495df07d146c06457ed62d08f5bf1d8476fe6",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/source-stage-866d2d3c.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/source-stage-866d2d3c.json",
+      "originalBytes": 17820,
+      "originalSHA256": "3b8c8a565050df6e1b5b9314a56b90d7230c3f282fe68b25aafebde4dc70e284",
+      "storedBytes": 17820,
+      "storedSHA256": "3b8c8a565050df6e1b5b9314a56b90d7230c3f282fe68b25aafebde4dc70e284",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/source-stage-preflight-r1-not-run.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/source-stage-preflight-r1-not-run.json",
+      "originalBytes": 497,
+      "originalSHA256": "e8957e849c5c14ae61a4ed2982afd9043f5df5585843494369d1262e2b5817eb",
+      "storedBytes": 497,
+      "storedSHA256": "e8957e849c5c14ae61a4ed2982afd9043f5df5585843494369d1262e2b5817eb",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-native-866-controller-review/transfer-manifest.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/original-native-866-controller-review/transfer-manifest.json",
+      "originalBytes": 2730,
+      "originalSHA256": "1543d858e33016c509f2aa85fd4b62468a156df4bec77d55775c883b42f15f87",
+      "storedBytes": 2730,
+      "storedSHA256": "1543d858e33016c509f2aa85fd4b62468a156df4bec77d55775c883b42f15f87",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-paired-runtime-release-default-20261127/candidate.yml",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/root-paired-runtime-release-default-20261127/candidate.yml",
+      "originalBytes": 31763,
+      "originalSHA256": "9890a2c52bbcf3cc644f26b0987d178dd1ee7d211533b836143eccb1b0a02b2d",
+      "storedBytes": 31763,
+      "storedSHA256": "9890a2c52bbcf3cc644f26b0987d178dd1ee7d211533b836143eccb1b0a02b2d",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-paired-runtime-release-default-20261127/change.patch",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/root-paired-runtime-release-default-20261127/change.patch.gz",
+      "originalBytes": 920,
+      "originalSHA256": "ec2ccf66a52c0ecfbb079d7a1788455e064b6bb9493590734467920f75c94fb1",
+      "storedBytes": 402,
+      "storedSHA256": "81c0cf9a09167a9bf817c71b3acfe13b91c833a1bba9dadf66c95a08226f7791",
+      "compression": "gzip-lossless"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-paired-runtime-release-default-20261127/independent-w2-source-review.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/root-paired-runtime-release-default-20261127/independent-w2-source-review.json",
+      "originalBytes": 2483,
+      "originalSHA256": "e0231bd9f664b1317b4a23cf315c2f00c21b5664472682c08e38dc713f616a2d",
+      "storedBytes": 2483,
+      "storedSHA256": "e0231bd9f664b1317b4a23cf315c2f00c21b5664472682c08e38dc713f616a2d",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-paired-runtime-release-default-20261127/original.yml",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/root-paired-runtime-release-default-20261127/original.yml",
+      "originalBytes": 31721,
+      "originalSHA256": "062a32f28e96578c542e8244186174a810d60f1f7c787bababd738049c30d113",
+      "storedBytes": 31721,
+      "storedSHA256": "062a32f28e96578c542e8244186174a810d60f1f7c787bababd738049c30d113",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-paired-runtime-release-default-20261127/review-input.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/root-paired-runtime-release-default-20261127/review-input.json",
+      "originalBytes": 1337,
+      "originalSHA256": "998ac21eafc16c19369849c56fc96c226aab9559d4125cc2f1ca6f12a471f6a9",
+      "storedBytes": 1337,
+      "storedSHA256": "998ac21eafc16c19369849c56fc96c226aab9559d4125cc2f1ca6f12a471f6a9",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-package-866d2d3c-pass/native866-package-pass-transfer-manifest.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/native-package-866d2d3c-pass/native866-package-pass-transfer-manifest.json",
+      "originalBytes": 74283,
+      "originalSHA256": "16131d6eaf10a5e5d0419cb9b42cc48b5b13e87542336530eaf5a9212a876502",
+      "storedBytes": 74283,
+      "storedSHA256": "16131d6eaf10a5e5d0419cb9b42cc48b5b13e87542336530eaf5a9212a876502",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-package-866d2d3c-pass/native866-package-pass.tar.gz",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/native-package-866d2d3c-pass/native866-package-pass.tar.gz",
+      "originalBytes": 942509,
+      "originalSHA256": "b1f76fa0ed59475da55484ed74ebfd57941cc78120f142b43469e563e0debad0",
+      "storedBytes": 942509,
+      "storedSHA256": "b1f76fa0ed59475da55484ed74ebfd57941cc78120f142b43469e563e0debad0",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-package-866d2d3c-pass/platform-final-controller-review-866d2d3c-r2.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/native-package-866d2d3c-pass/platform-final-controller-review-866d2d3c-r2.json",
+      "originalBytes": 4468,
+      "originalSHA256": "7fa26246dfd4ae4ebda92fd2ad7eea63060fc25dfb5f92f6b890fcfb4a003456",
+      "storedBytes": 4468,
+      "storedSHA256": "7fa26246dfd4ae4ebda92fd2ad7eea63060fc25dfb5f92f6b890fcfb4a003456",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-package-866d2d3c-pass/platform-final-controller-review-866d2d3c.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/native-package-866d2d3c-pass/platform-final-controller-review-866d2d3c.json",
+      "originalBytes": 3148,
+      "originalSHA256": "2a9afafc4960e72f52f544bc78ba30e5f444cb00357ea7d24eb2ca37c08880e5",
+      "storedBytes": 3148,
+      "storedSHA256": "2a9afafc4960e72f52f544bc78ba30e5f444cb00357ea7d24eb2ca37c08880e5",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-package-866d2d3c-pass/platform-native-build-866d2d3c-r2-launch.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/native-package-866d2d3c-pass/platform-native-build-866d2d3c-r2-launch.json",
+      "originalBytes": 542,
+      "originalSHA256": "5e09497396cf56c06f3935905be5cdff4ad009c3d7a7faa568615029d7290689",
+      "storedBytes": 542,
+      "storedSHA256": "5e09497396cf56c06f3935905be5cdff4ad009c3d7a7faa568615029d7290689",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-package-866d2d3c-pass/platform-native-build-866d2d3c-r2.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/native-package-866d2d3c-pass/platform-native-build-866d2d3c-r2.json",
+      "originalBytes": 34120,
+      "originalSHA256": "a7e19f54fb23a65db5a13bbbec70be83042233b428226848f76db0142e5aef48",
+      "storedBytes": 34120,
+      "storedSHA256": "a7e19f54fb23a65db5a13bbbec70be83042233b428226848f76db0142e5aef48",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-package-866d2d3c-pass/platform-native-test-866d2d3c-r1.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/native-package-866d2d3c-pass/platform-native-test-866d2d3c-r1.json",
+      "originalBytes": 68566,
+      "originalSHA256": "a8743f6401561b7f54b05c2f2cb4f78ed2fcb2b2c90554c0c8d7a7669e507224",
+      "storedBytes": 68566,
+      "storedSHA256": "a8743f6401561b7f54b05c2f2cb4f78ed2fcb2b2c90554c0c8d7a7669e507224",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-package-866d2d3c-pass/platform-native-test-866d2d3c-r2-launch.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/native-package-866d2d3c-pass/platform-native-test-866d2d3c-r2-launch.json",
+      "originalBytes": 642,
+      "originalSHA256": "1c5877efda8eeb1b9ee8a1e1a59ea95debf42dfd99e687f0c938dc73a22174ab",
+      "storedBytes": 642,
+      "storedSHA256": "1c5877efda8eeb1b9ee8a1e1a59ea95debf42dfd99e687f0c938dc73a22174ab",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-package-866d2d3c-pass/platform-test-inventory-866d2d3c.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/native-package-866d2d3c-pass/platform-test-inventory-866d2d3c.json",
+      "originalBytes": 39917,
+      "originalSHA256": "a5530408269f296d1cbb743fd52624f74755509623ee68b2bfd0f7e351b78822",
+      "storedBytes": 39917,
+      "storedSHA256": "a5530408269f296d1cbb743fd52624f74755509623ee68b2bfd0f7e351b78822",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-package-866d2d3c-pass/post-package866-owned-simulator-shutdown.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/native-package-866d2d3c-pass/post-package866-owned-simulator-shutdown.json",
+      "originalBytes": 588,
+      "originalSHA256": "77257e4579ed45401463e5e7659c65d83751ff3f156a305292e875cd0be3ed13",
+      "storedBytes": 588,
+      "storedSHA256": "77257e4579ed45401463e5e7659c65d83751ff3f156a305292e875cd0be3ed13",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-package-866d2d3c-pass/source-stage-866d2d3c.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/native-package-866d2d3c-pass/source-stage-866d2d3c.json",
+      "originalBytes": 17820,
+      "originalSHA256": "3b8c8a565050df6e1b5b9314a56b90d7230c3f282fe68b25aafebde4dc70e284",
+      "storedBytes": 17820,
+      "storedSHA256": "3b8c8a565050df6e1b5b9314a56b90d7230c3f282fe68b25aafebde4dc70e284",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-package-866d2d3c-pass/transfer-readback.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/native-package-866d2d3c-pass/transfer-readback.json",
+      "originalBytes": 625,
+      "originalSHA256": "20afd1f07debfd80ff618e31efa4e1111589645852a35afff10ec998c46e1a24",
+      "storedBytes": 625,
+      "storedSHA256": "20afd1f07debfd80ff618e31efa4e1111589645852a35afff10ec998c46e1a24",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-package-866d2d3c-pass/transport-r1-failure.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/native-package-866d2d3c-pass/transport-r1-failure.json",
+      "originalBytes": 266,
+      "originalSHA256": "fb6ae61cf05d42c13e7d726085c07b907769dbf5e3b9585bca1462720d6d24e5",
+      "storedBytes": 266,
+      "storedSHA256": "fb6ae61cf05d42c13e7d726085c07b907769dbf5e3b9585bca1462720d6d24e5",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-native79-independent-review.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/root-native79-independent-review.json",
+      "originalBytes": 698,
+      "originalSHA256": "30bb1184e87dc311042150e31ad80e27fce5e136197f0d4f6ac01255dda4248c",
+      "storedBytes": 698,
+      "storedSHA256": "30bb1184e87dc311042150e31ad80e27fce5e136197f0d4f6ac01255dda4248c",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-concurrency-source-866d2d3c/root-final-source-review.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/concurrency-root-final-source-review.json",
+      "originalBytes": 3175,
+      "originalSHA256": "9a16c80e1b0ce072539e8f0fa795bfb84c605e4871e45b4fd9755fed4907b7cc",
+      "storedBytes": 3175,
+      "storedSHA256": "9a16c80e1b0ce072539e8f0fa795bfb84c605e4871e45b4fd9755fed4907b7cc",
+      "compression": "original"
+    },
+    {
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-concurrency-integration-20261127/receipt.json",
+      "retainedPath": "docs/two-wave-integration/20261127/native79-and-ci-recovery/concurrency-integration.json",
+      "originalBytes": 416,
+      "originalSHA256": "74909777a6f160ed99471a442677a5f90294862c253590f26204c1c1fc95cd2b",
+      "storedBytes": 416,
+      "storedSHA256": "74909777a6f160ed99471a442677a5f90294862c253590f26204c1c1fc95cd2b",
+      "compression": "original"
+    }
+  ],
+  "retentionNote": "Original whitespace preserved byte-for-byte; two original text files losslessly gzipped after git diff --check identified original trailing-context/EOF whitespace. No raw log or patch was normalized."
+}

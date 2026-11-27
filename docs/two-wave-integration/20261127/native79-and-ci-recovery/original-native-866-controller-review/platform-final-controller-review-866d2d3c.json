@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "source": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "reviewer": "/root",
+  "recordedAtUTC": "2026-11-27T04:39:40.018082+00:00",
+  "decision": "APPROVED_ORIGINAL_NATIVE_AND_HOST_SOURCE_BINDINGS",
+  "inventorySHA256": "a5530408269f296d1cbb743fd52624f74755509623ee68b2bfd0f7e351b78822",
+  "sourceStageSHA256": "3b8c8a565050df6e1b5b9314a56b90d7230c3f282fe68b25aafebde4dc70e284",
+  "controllerSHA256": {
+    "build-platform-native-866d2d3c-r1.py": "62b2c4ddeb461f00885391ced25ed4df04b5c8d52e4cb5cd8efa8c1f2b4d0507",
+    "run-platform-native-866d2d3c-test-r1.py": "b874539d133da1f0700538aebadbaf2ff8f5beacd2a41b674ee4b89c2141c1d5",
+    "reconcile-platform-native-866d2d3c-r1.py": "bfc28efcb7cefa80c2bef927fd6a89fa7f38dc173f0e99804328fd1ac70bfd73",
+    "prepare-host-integrated-866d2d3c-20261127.py": "2b9ecd9f220cc15c04dfaeaa44b38bad7d76fe5816eda31dfdcf181b86ed427f"
+  },
+  "packetManifestSHA256": "1543d858e33016c509f2aa85fd4b62468a156df4bec77d55775c883b42f15f87",
+  "verifiedPacketMembers": 15,
+  "verifiedGitSourceHashes": 33,
+  "originalFunctionsUnchanged": [
+    {
+      "controller": "build-platform-native-866d2d3c-r1.py",
+      "unchangedOriginalFunctions": [
+        "digest",
+        "free",
+        "phase",
+        "save"
+      ]
+    },
+    {
+      "controller": "run-platform-native-866d2d3c-test-r1.py",
+      "unchangedOriginalFunctions": [
+        "digest",
+        "free",
+        "phase",
+        "save"
+      ]
+    },
+    {
+      "controller": "reconcile-platform-native-866d2d3c-r1.py",
+      "unchangedOriginalFunctions": [
+        "sha",
+        "walk"
+      ]
+    },
+    {
+      "controller": "prepare-host-integrated-866d2d3c-20261127.py",
+      "unchangedOriginalFunctions": [
+        "closure",
+        "digest",
+        "free",
+        "phase",
+        "save"
+      ]
+    }
+  ],
+  "completeDiffSHA256": "50866bf93c616c0f2204029de0b495df07d146c06457ed62d08f5bf1d8476fe6",
+  "findings": [
+    "Reviewed full189-line delta: source/proof/inventory bindings updated to866, original selectors and phase commands retained.",
+    "Warm owned DerivedData is truthfully retained; full original build-for-testing recompiles current inputs. Original8073741824-byte admission and all phase limits remain unchanged.",
+    "All package test source bytes unchanged from16b; original58definitions/79invocations,28parameterinvocations and zero collateral remain required.",
+    "Fresh current-source original79 actual terminal PASS is required before Host188. Historical79 and188 are not accepted as current source proof.",
+    "Reconciliation strengthens clean phase/stopReason checks; no timeout/cancellation may be recast as PASS.",
+    "Controller self-hashes and current source/inventory receipt required before execution; source/lock/product guards preserved.",
+    "Original Host188 acceptance and complete producer phases preserved; app/OS acceptance remains separate."
+  ],
+  "launchConditions": [
+    "Mac soleowner must remeasure free space and acquire original locks.",
+    "No phase is approved to bypass its original capacity/source/receipt guard."
+  ],
+  "executionEvidence": "NOT_RUN_BY_REVIEWER"
+}

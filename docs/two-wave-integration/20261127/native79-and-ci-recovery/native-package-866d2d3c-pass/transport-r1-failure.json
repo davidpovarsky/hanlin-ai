@@ -1,0 +1,6 @@
+{
+  "status": "TRANSFER_ONLY_FAILED_BEFORE_COPY",
+  "nativeAcceptance": "EXACT_REQUIRED_NATIVE_SCOPE_PASSED",
+  "job": "job_63f2be7a4f16",
+  "reason": "Wrong assumed local transfer UID caused scp permission denial. No proof file copied or native receipt changed."
+}

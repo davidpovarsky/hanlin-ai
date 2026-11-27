@@ -1,0 +1,22 @@
+{
+  "source": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "inventorySHA256": "a5530408269f296d1cbb743fd52624f74755509623ee68b2bfd0f7e351b78822",
+  "status": "R2_ADMISSION_REVIEW_PENDING_NATIVE_NOT_RUN",
+  "controllers": [
+    {
+      "original": "build-platform-native-866d2d3c-r1.py",
+      "originalSHA256": "62b2c4ddeb461f00885391ced25ed4df04b5c8d52e4cb5cd8efa8c1f2b4d0507",
+      "candidate": "build-platform-native-866d2d3c-r2.py",
+      "candidateSHA256": "e66483c6e193f76c3f2445fbbe425f87d752de3237b3e27355444bcdd3e6534a",
+      "bytes": 12972
+    },
+    {
+      "original": "run-platform-native-866d2d3c-test-r1.py",
+      "originalSHA256": "b874539d133da1f0700538aebadbaf2ff8f5beacd2a41b674ee4b89c2141c1d5",
+      "candidate": "run-platform-native-866d2d3c-test-r2.py",
+      "candidateSHA256": "ba549b64d0145537f57ea52c535264dcd68c617dea07d2e2ab3f56dbfd354ed7",
+      "bytes": 15351
+    }
+  ],
+  "diffSHA256": "b698b521eaf55f74fdd1dd19226c124a5caf2e5aea74aebfc7cf854379f9e70e"
+}

@@ -1,0 +1,167 @@
+{
+  "at": "2026-11-27T04:51:44.848946+00:00",
+  "runID": 45939988710,
+  "source": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "jobID": 140311853510,
+  "logBytes": 5147367,
+  "logSHA256": "ff38173edb093e19c5a7b903a2bcf30e219767ab82d9e80e8bc308ca83a9c44a",
+  "lineCount": 33248,
+  "diagnostics": [
+    {
+      "line": 3197,
+      "text": "2026-11-27T04:29:56.5833560Z Cache not found for input keys: split-derived-v2-macOS-arm64-27B52-27.2-d2d8748fb36530375f048cf05fa2c6494db6bc1e19d0e5bd4a2149cfef5ff9b3-49b60d2ae712e3b8d4927ee778004c3b4a08849facf8831af67e00fdec65dfff, split-derived-v2-macOS-arm64-27B52-27.2-d2d8748fb36530375f048cf05fa2c6494db6bc1e19d0e5bd4a2149cfef5ff9b3-"
+    },
+    {
+      "line": 3596,
+      "text": "2026-11-27T04:31:20.3349930Z [Expo-precompiled] RNWorklets: building from source (prebuilt tarball not found)"
+    },
+    {
+      "line": 3846,
+      "text": "2026-11-27T04:33:22.4672820Z warning: The @ExpoModule class 'CoreModule' (/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/Expo/node_modules/expo-modules-core/ios/Core/Modules/CoreModule.swift) is internal, so the generated modules provider cannot reference it. Declare it public to link it automatically, or use a lower access level such as private to opt it out of linking."
+    },
+    {
+      "line": 12387,
+      "text": "2026-11-27T04:35:10.7878080Z /Users/runner/work/hanlin-ai/hanlin-ai/build/miniapp-upstreams/expo-native-source/ios/build/Release-iphoneos/XCFrameworkIntermediates/ExpoModulesCore/ExpoModulesCore.framework/Headers/EXImageLoader.h:14:38: warning: cannot find protocol definition for 'EXImageLoaderInterface'"
+    },
+    {
+      "line": 12396,
+      "text": "2026-11-27T04:35:10.7883230Z    |                                      `- warning: cannot find protocol definition for 'EXImageLoaderInterface'"
+    },
+    {
+      "line": 12423,
+      "text": "2026-11-27T04:35:10.7912440Z /Users/runner/work/hanlin-ai/hanlin-ai/build/miniapp-upstreams/expo-native-source/ios/build/Release-iphoneos/XCFrameworkIntermediates/ExpoModulesCore/ExpoModulesCore.framework/Headers/EXModuleRegistryHolderReactModule.h:7:58: warning: cannot find protocol definition for 'RCTBridgeModule'"
+    },
+    {
+      "line": 12432,
+      "text": "2026-11-27T04:35:10.7917540Z    |                                                          `- warning: cannot find protocol definition for 'RCTBridgeModule'"
+    },
+    {
+      "line": 22047,
+      "text": "2026-11-27T04:37:40.3148720Z /Users/runner/work/hanlin-ai/hanlin-ai/build/miniapp-upstreams/expo-native-source/ios/build/Release-iphonesimulator/XCFrameworkIntermediates/ExpoModulesCore/ExpoModulesCore.framework/Headers/EXImageLoader.h:14:38: warning: cannot find protocol definition for 'EXImageLoaderInterface'"
+    },
+    {
+      "line": 22056,
+      "text": "2026-11-27T04:37:40.3153150Z    |                                      `- warning: cannot find protocol definition for 'EXImageLoaderInterface'"
+    },
+    {
+      "line": 22083,
+      "text": "2026-11-27T04:37:40.3916980Z /Users/runner/work/hanlin-ai/hanlin-ai/build/miniapp-upstreams/expo-native-source/ios/build/Release-iphonesimulator/XCFrameworkIntermediates/ExpoModulesCore/ExpoModulesCore.framework/Headers/EXModuleRegistryHolderReactModule.h:7:58: warning: cannot find protocol definition for 'RCTBridgeModule'"
+    },
+    {
+      "line": 22092,
+      "text": "2026-11-27T04:37:40.4834530Z    |                                                          `- warning: cannot find protocol definition for 'RCTBridgeModule'"
+    },
+    {
+      "line": 22247,
+      "text": "2026-11-27T04:37:41.3447060Z /Users/runner/work/hanlin-ai/hanlin-ai/build/miniapp-upstreams/expo-native-source/ios/build/Release-iphonesimulator/XCFrameworkIntermediates/ExpoModulesCore/ExpoModulesCore.framework/Headers/EXImageLoader.h:14:38: warning: cannot find protocol definition for 'EXImageLoaderInterface'"
+    },
+    {
+      "line": 22256,
+      "text": "2026-11-27T04:37:41.3463820Z    |                                      `- warning: cannot find protocol definition for 'EXImageLoaderInterface'"
+    },
+    {
+      "line": 22283,
+      "text": "2026-11-27T04:37:41.3486940Z /Users/runner/work/hanlin-ai/hanlin-ai/build/miniapp-upstreams/expo-native-source/ios/build/Release-iphonesimulator/XCFrameworkIntermediates/ExpoModulesCore/ExpoModulesCore.framework/Headers/EXModuleRegistryHolderReactModule.h:7:58: warning: cannot find protocol definition for 'RCTBridgeModule'"
+    },
+    {
+      "line": 22292,
+      "text": "2026-11-27T04:37:41.3491170Z    |                                                          `- warning: cannot find protocol definition for 'RCTBridgeModule'"
+    },
+    {
+      "line": 33089,
+      "text": "2026-11-27T04:44:23.3696700Z Traceback (most recent call last):"
+    },
+    {
+      "line": 33098,
+      "text": "2026-11-27T04:44:23.3718090Z ValueError: Expected one live Runtime bundle artifact"
+    },
+    {
+      "line": 33099,
+      "text": "2026-11-27T04:44:23.4286260Z ##[error]Process completed with exit code 1."
+    },
+    {
+      "line": 33114,
+      "text": "2026-11-27T04:44:23.4660640Z \u001b[36;1m# A missing final report cannot establish whether UI cases ran or passed.\u001b[0m"
+    }
+  ],
+  "tail": [
+    "2026-11-27T04:44:24.8124190Z   path: build/app-split-evidence",
+    "build/runtime-host/RuntimeHostResources.zip",
+    "build/runtime-host/host-metadata.json",
+    "build/runtime-host/runtime-host.sha256",
+    "",
+    "2026-11-27T04:44:24.8127150Z   if-no-files-found: error",
+    "2026-11-27T04:44:24.8142510Z   retention-days: 14",
+    "2026-11-27T04:44:24.8142820Z   compression-level: 6",
+    "2026-11-27T04:44:24.8143080Z   overwrite: false",
+    "2026-11-27T04:44:24.8143300Z   include-hidden-files: false",
+    "2026-11-27T04:44:24.8143580Z   archive: true",
+    "2026-11-27T04:44:24.8143800Z env:",
+    "2026-11-27T04:44:24.8144850Z   SPLIT_EVIDENCE: /Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence",
+    "2026-11-27T04:44:24.8147440Z   GH_TOKEN: ***",
+    "2026-11-27T04:44:24.8147650Z   RUNTIME_CORE_ARTIFACT_RUN_ID: 42926628418",
+    "2026-11-27T04:44:24.8147880Z   HOST_PROOF_RUN_ID: ",
+    "2026-11-27T04:44:24.8148100Z   FOREGROUND_PROOF_RUN_ID: ",
+    "2026-11-27T04:44:24.8148340Z   PAIRED_PROOF_REUSE_REQUIRED: false",
+    "2026-11-27T04:44:24.8148730Z   SPLIT_DERIVED_DATA: /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+    "2026-11-27T04:44:24.8149120Z   SPLIT_NATIVE_TEST_SCOPE: baseline",
+    "2026-11-27T04:44:24.8149480Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer",
+    "2026-11-27T04:44:24.8149940Z ##[endgroup]",
+    "2026-11-27T04:44:25.1827620Z Multiple search paths detected. Calculating the least common ancestor of all paths",
+    "2026-11-27T04:44:25.1830920Z The least common ancestor is /Users/runner/work/hanlin-ai/hanlin-ai/build. This will be the root directory of the artifact",
+    "2026-11-27T04:44:25.1831700Z With the provided path, there will be 36 files uploaded",
+    "2026-11-27T04:44:25.1835300Z Artifact name is valid!",
+    "2026-11-27T04:44:25.1836240Z Root directory input is valid!",
+    "2026-11-27T04:44:25.6678500Z Uploading artifact: app-split-45939988710.zip",
+    "2026-11-27T04:44:25.6679430Z Beginning upload of artifact content to blob storage",
+    "2026-11-27T04:44:26.4726900Z Uploaded bytes 500410",
+    "2026-11-27T04:44:26.5575860Z Finished uploading artifact content to blob storage!",
+    "2026-11-27T04:44:26.5651010Z SHA256 digest of uploaded artifact is 34ae5b723004fbb99f665011c163801c9d522c59c52c8b3e6653aa434e513639",
+    "2026-11-27T04:44:26.5703750Z Finalizing artifact upload",
+    "2026-11-27T04:44:27.1096150Z Artifact app-split-45939988710 successfully finalized. Artifact ID 15173212148",
+    "2026-11-27T04:44:27.1097070Z Artifact app-split-45939988710 has been successfully uploaded! Final size is 500410 bytes. Artifact ID is 15173212148",
+    "2026-11-27T04:44:27.1098020Z Artifact download URL: https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939988710/artifacts/15173212148",
+    "2026-11-27T04:44:27.1606990Z Post job cleanup.",
+    "2026-11-27T04:44:27.3697590Z [command]/opt/homebrew/bin/git version",
+    "2026-11-27T04:44:27.4418460Z git version 2.56.0",
+    "2026-11-27T04:44:27.4454840Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/194384ee-b92f-450b-b64e-3a742dcd7a9e/.gitconfig'",
+    "2026-11-27T04:44:27.4467640Z Temporarily overriding HOME='/Users/runner/work/_temp/194384ee-b92f-450b-b64e-3a742dcd7a9e' before making global git config changes",
+    "2026-11-27T04:44:27.4468770Z Adding repository directory to the temporary git global config as a safe directory",
+    "2026-11-27T04:44:27.4474950Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/hanlin-ai/hanlin-ai",
+    "2026-11-27T04:44:27.4752770Z Removing SSH command configuration",
+    "2026-11-27T04:44:27.4755120Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\\.sshCommand",
+    "2026-11-27T04:44:27.4919710Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'core\\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\"",
+    "2026-11-27T04:44:27.7947500Z Removing HTTP extra header",
+    "2026-11-27T04:44:27.7968400Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\\.https\\:\\/\\/github\\.com\\/\\.extraheader",
+    "2026-11-27T04:44:27.8025090Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'http\\.https\\:\\/\\/github\\.com\\/\\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\"",
+    "2026-11-27T04:44:28.0957350Z Removing includeIf entries pointing to credentials config files",
+    "2026-11-27T04:44:28.1058780Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\\.gitdir:",
+    "2026-11-27T04:44:28.1160860Z includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path",
+    "2026-11-27T04:44:28.1261550Z includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path",
+    "2026-11-27T04:44:28.1363080Z includeif.gitdir:/github/workspace/.git.path",
+    "2026-11-27T04:44:28.1471480Z includeif.gitdir:/github/workspace/.git/worktrees/*.path",
+    "2026-11-27T04:44:28.1745810Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path",
+    "2026-11-27T04:44:28.1757060Z /Users/runner/work/_temp/git-credentials-080e543d-a183-44fe-be24-c993ceab42ca.config",
+    "2026-11-27T04:44:28.1759120Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path \\/Users\\/runner\\/work\\/_temp\\/git\\-credentials\\-080e543d\\-a183\\-44fe\\-be24\\-c993ceab42ca\\.config",
+    "2026-11-27T04:44:28.1761150Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path",
+    "2026-11-27T04:44:28.1767390Z /Users/runner/work/_temp/git-credentials-080e543d-a183-44fe-be24-c993ceab42ca.config",
+    "2026-11-27T04:44:28.1770210Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path \\/Users\\/runner\\/work\\/_temp\\/git\\-credentials\\-080e543d\\-a183\\-44fe\\-be24\\-c993ceab42ca\\.config",
+    "2026-11-27T04:44:28.1772210Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path",
+    "2026-11-27T04:44:28.1774430Z /github/runner_temp/git-credentials-080e543d-a183-44fe-be24-c993ceab42ca.config",
+    "2026-11-27T04:44:28.1779440Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \\/github\\/runner_temp\\/git\\-credentials\\-080e543d\\-a183\\-44fe\\-be24\\-c993ceab42ca\\.config",
+    "2026-11-27T04:44:28.1897150Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path",
+    "2026-11-27T04:44:28.1983640Z /github/runner_temp/git-credentials-080e543d-a183-44fe-be24-c993ceab42ca.config",
+    "2026-11-27T04:44:28.1996620Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \\/github\\/runner_temp\\/git\\-credentials\\-080e543d\\-a183\\-44fe\\-be24\\-c993ceab42ca\\.config",
+    "2026-11-27T04:44:28.2100150Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url",
+    "2026-11-27T04:44:28.4352930Z Removing credentials config '/Users/runner/work/_temp/git-credentials-080e543d-a183-44fe-be24-c993ceab42ca.config'",
+    "2026-11-27T04:44:28.4493750Z Cleaning up orphan processes"
+  ],
+  "artifacts": [
+    {
+      "id": 15173212148,
+      "name": "app-split-45939988710",
+      "size_in_bytes": 500410,
+      "expired": false
+    }
+  ]
+}

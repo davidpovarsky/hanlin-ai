@@ -1,0 +1,45 @@
+{
+  "status": "OLD_CLOSED_SIMULATORS_RETIRED_WITH_BOUNDED_VERIFIED_EVIDENCE",
+  "startedAt": "2026-11-27T04:44:28.434144+00:00",
+  "controllerPID": 23331,
+  "scope": "Only exact superseded terminal G17 iPhone; current G18 and old diagnostic iPads remain protected. Preserve all app-data containers, shared groups, preferences, logs and device metadata. Original reports, raw xcresults, attachments and source remain at original paths. Regenerable Simulator OS data and compiled app bundles are not copied. This is bounded evidence retention, not a full filesystem snapshot.",
+  "items": [
+    {
+      "generation": 17,
+      "role": "iphone",
+      "uuid": "5B172276-4392-4398-B7E8-AFFD3C9368A5",
+      "report": "/Users/m1/builds/hanlin-testflight-149101-20261125/post149101-20261126/generation-17/report.json",
+      "reportSHA256": "dfdaec86712b49712278abdd5045d5b038a7adf7a58aad6ee22c5e924f436c84",
+      "source": "6d4056d80064462cb3ceaca529f9f28c55315146",
+      "status": "RETIRED_WITH_VERIFIED_APP_EVIDENCE_AND_ORIGINAL_RESULTS_RETAINED",
+      "freeBefore": 2939801600,
+      "ownershipConfirmed": true,
+      "retainedOriginalFiles": {
+        "count": 41,
+        "manifest": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-g17-phone-app-evidence-20261127/generation-17-iphone/retained-original-result-files.json",
+        "sha256": "6fc816bbd63fefe6b67e68770fe12bdef2920ecb0b3530043afae561a012ca7e"
+      },
+      "outsideLogs": {
+        "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-g17-phone-app-evidence-20261127/generation-17-iphone/outside-device-core-simulator-logs.tar.gz",
+        "bytes": 39871,
+        "sha256": "842c919bec182756483882f101b62261d0802ab8cb6e2a41e7205037764cb415"
+      },
+      "preservedAppData": {
+        "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-g17-phone-app-evidence-20261127/generation-17-iphone/app-data-preferences-and-logs.tar.gz",
+        "bytes": 119604895,
+        "sha256": "eb56ae27eddf9b18c2456b0c2db33b28ed76a511c916d7e90d7f076f44939d4a",
+        "inventory": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-g17-phone-app-evidence-20261127/generation-17-iphone/retained-device-file-inventory.json",
+        "inventorySHA256": "2b267888297e313ff0f03b05a234d08cb1dd16b44a75cb6a2a864088e7b4dfc4",
+        "entries": 47460,
+        "allRetainedPayloadHashesVerified": true
+      },
+      "finishedAt": "2026-11-27T04:44:53.815288+00:00",
+      "freeAfter": 2779418624
+    }
+  ],
+  "freeBefore": 2939805696,
+  "compiledPretrimReceipt": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-g17-phone-compiled-pretrim-20261127/receipt.json",
+  "compiledPretrimReceiptSHA256": "45d03862074da606415bb4129c5fb3540f4ea49215fa91877e22722e12c607d4",
+  "finishedAt": "2026-11-27T04:44:53.815692+00:00",
+  "freeAfter": 2779410432
+}

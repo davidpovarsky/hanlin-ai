@@ -1,0 +1,32 @@
+{
+  "status": "OBSOLETE_COMPILED_BUNDLES_REMOVED_APP_DATA_AND_ORIGINAL_EVIDENCE_RETAINED",
+  "source": "6d4056d80064462cb3ceaca529f9f28c55315146",
+  "supersededBySource": "0e51194ab93f002da55bb6f568f3d063bba017c4",
+  "uuid": "5B172276-4392-4398-B7E8-AFFD3C9368A5",
+  "reportSHA256": "dfdaec86712b49712278abdd5045d5b038a7adf7a58aad6ee22c5e924f436c84",
+  "freeBefore": 1480908800,
+  "startedAt": "2026-11-27T04:42:19.002184+00:00",
+  "scope": "Raw original results/logs/source and all Simulator app-data/shared groups/preferences remain. Only exact obsolete shutdown G17 compiled app bundle containers are deleted to make room for bounded app-data preservation.",
+  "bundles": [
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/5B172276-4392-4398-B7E8-AFFD3C9368A5/data/Containers/Bundle/Application/3E3D390A-BFFF-432B-AB19-C76CEFDA82AB",
+      "bundleID": "com.itorah.chavrusachat.uitests.xctrunner",
+      "sourceRebuildCommit": "6d4056d80064462cb3ceaca529f9f28c55315146",
+      "manifest": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-g17-phone-compiled-pretrim-20261127/3E3D390A-BFFF-432B-AB19-C76CEFDA82AB-compiled-file-inventory.json",
+      "manifestSHA256": "17ec1c00ca5137915dfc9dc55f34f49d49c65af218845c4f7a020486af7fff1e",
+      "entries": 36,
+      "status": "REGENERABLE_COMPILED_CONTAINER_REMOVED"
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/5B172276-4392-4398-B7E8-AFFD3C9368A5/data/Containers/Bundle/Application/AF20F3F2-E9E2-40AE-B9E8-369AA24B4059",
+      "bundleID": "com.itorah.chavrusachat",
+      "sourceRebuildCommit": "6d4056d80064462cb3ceaca529f9f28c55315146",
+      "manifest": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-g17-phone-compiled-pretrim-20261127/AF20F3F2-E9E2-40AE-B9E8-369AA24B4059-compiled-file-inventory.json",
+      "manifestSHA256": "4564ec2e69fc12e6d4c36d2d24351eece4216812f4de917ca4d5b1ea0e504180",
+      "entries": 6689,
+      "status": "REGENERABLE_COMPILED_CONTAINER_REMOVED"
+    }
+  ],
+  "finishedAt": "2026-11-27T04:42:23.938235+00:00",
+  "freeAfter": 2959065088
+}

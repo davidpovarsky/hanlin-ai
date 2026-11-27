@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "status": "APPROVED_BOUNDED_WORKFLOW_INPUT_CORRECTION",
+  "reviewer": "/root/w2_source_resume",
+  "recordedAtUTC": "2026-11-27T05:28:46.854758+00:00",
+  "sourceBase": "b41233a61a3dca0632b78c7ab7f92e5e620492c4",
+  "path": ".github/workflows/validate-app-split.yml",
+  "candidateSHA256": "9890a2c52bbcf3cc644f26b0987d178dd1ee7d211533b836143eccb1b0a02b2d",
+  "originalSHA256": "062a32f28e96578c542e8244186174a810d60f1f7c787bababd738049c30d113",
+  "patchSHA256": "ec2ccf66a52c0ecfbb079d7a1788455e064b6bb9493590734467920f75c94fb1",
+  "definitions": {
+    "workflow_call": {
+      "old": {
+        "type": "string",
+        "required": "true"
+      },
+      "new": {
+        "type": "string",
+        "required": "false",
+        "default": ""
+      }
+    },
+    "workflow_dispatch": {
+      "old": {
+        "description": "Existing successful checksum-pinned RuntimeCore candidate",
+        "type": "string",
+        "default": "42926628418",
+        "required": "true"
+      },
+      "new": {
+        "description": "Optional exact RuntimeCore artifact run; empty uses the checksum-pinned lockfile release",
+        "type": "string",
+        "default": "",
+        "required": "false"
+      }
+    }
+  },
+  "allOtherParsedYAMLFieldsDeepEqual": true,
+  "sourceBranch": {
+    "path": "Scripts/Runtime/prepare-runtime-core.sh",
+    "sha256": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540",
+    "lockSHA256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+    "lockedRuntimeBundleSHA256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+    "inspection": "Existing explicit archive override retains first priority. Nonempty artifact run retains runtime_bundle_source.py validation. Empty/default run uses the original lock-derived release/tag/name, followed by the unchanged bundle SHA256, native identity, required-file, architecture, provenance and smoke checks."
+  },
+  "reviewConclusion": "The obsolete dispatch default cannot be selected implicitly after this change. Only the two input definitions differ; jobs, permissions, steps, build settings, exact selectors, validators and acceptance counts are unchanged. No pin or product source changes.",
+  "execution": "No CI or native run by this reviewer. The actual expired-artifact trigger is reported by the parent; this receipt independently qualifies only the exact source correction. Original54 acceptance remains NOT_RUN on the corrected workflow."
+}

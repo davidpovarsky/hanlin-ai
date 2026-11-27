@@ -1,0 +1,36 @@
+{
+  "startedAt": "2026-11-27T05:04:20.926389+00:00",
+  "freeBefore": 8124170240,
+  "actions": [
+    {
+      "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host/RuntimeHostResources.zip",
+      "action": "INDEPENDENT_APFS_CLONE_SAME_BYTES_SAME_PATH",
+      "sha256": "6612023836ff21ac7c9e894b420734781e621ba9c0e348fe9fc2d11174a39c14",
+      "bytes": 81901053,
+      "oldInode": 69823136,
+      "newInode": 70805879,
+      "donor": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host-2a0b19b7-original-phases-r1/RuntimeHostResources.zip"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/AI_HLY/RuntimeHostResources.zip",
+      "action": "INDEPENDENT_APFS_CLONE_SAME_BYTES_SAME_PATH",
+      "sha256": "6612023836ff21ac7c9e894b420734781e621ba9c0e348fe9fc2d11174a39c14",
+      "bytes": 81901053,
+      "oldInode": 69823141,
+      "newInode": 70805881,
+      "donor": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host-2a0b19b7-original-phases-r1/RuntimeHostResources.zip"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-two-wave-root-20261126/Index.noindex",
+      "action": "RETIRED_INACTIVE_GENERATED_CODE_INDEX",
+      "fileCount": 6035,
+      "allocatedBytes": 65871872,
+      "inventory": "/Users/m1/builds/hanlin-two-wave-root-20261126/owned-index-and-duplicate-archive-reclaim-20261127/retired-index-file-inventory.json",
+      "inventorySHA256": "cba349dee4bbe8991b2a33771ee58db461458d06dff196b0d02d7e34ae552105"
+    }
+  ],
+  "scope": "Only own inactive generated source index and independent APFS clones of three byte-identical old Host ZIP copies. All archives stay at their original paths with unchanged bytes; mutable copy inodes remain distinct. Build intermediates/products/source/results unchanged.",
+  "status": "OWNED_REGENERABLE_INDEX_RETIRED_AND_DUPLICATE_ARCHIVES_COW_CLONED",
+  "finishedAt": "2026-11-27T05:04:23.190248+00:00",
+  "freeAfter": 8355442688
+}

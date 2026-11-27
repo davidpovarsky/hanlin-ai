@@ -1,0 +1,36 @@
+{
+  "source": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "inventorySHA256": "a5530408269f296d1cbb743fd52624f74755509623ee68b2bfd0f7e351b78822",
+  "sourceStageSHA256": "3b8c8a565050df6e1b5b9314a56b90d7230c3f282fe68b25aafebde4dc70e284",
+  "status": "PREPARED_FOR_INDEPENDENT_REVIEW_NATIVE_NOT_RUN",
+  "controllers": [
+    {
+      "original": "build-platform-native-16b4af44-r2.py",
+      "originalSHA256": "a11d31bfc44bf109a1a09ea0367e61457bfea4418a9eebbeaccbcdce76d3c5d6",
+      "candidate": "build-platform-native-866d2d3c-r1.py",
+      "candidateSHA256": "62b2c4ddeb461f00885391ced25ed4df04b5c8d52e4cb5cd8efa8c1f2b4d0507",
+      "bytes": 12549
+    },
+    {
+      "original": "run-platform-native-16b4af44-test-r1.py",
+      "originalSHA256": "6e4f128954254805369af24887804a5257e313a2bab21f66fe7ba696338f1f10",
+      "candidate": "run-platform-native-866d2d3c-test-r1.py",
+      "candidateSHA256": "b874539d133da1f0700538aebadbaf2ff8f5beacd2a41b674ee4b89c2141c1d5",
+      "bytes": 15348
+    },
+    {
+      "original": "reconcile-platform-native-16b4af44-r1.py",
+      "originalSHA256": "157eed397a0289975c8d4444d236eb3e12af220573c230a5ac9fdd1386e7ea85",
+      "candidate": "reconcile-platform-native-866d2d3c-r1.py",
+      "candidateSHA256": "bfc28efcb7cefa80c2bef927fd6a89fa7f38dc173f0e99804328fd1ac70bfd73",
+      "bytes": 7941
+    },
+    {
+      "original": "prepare-host-integrated-20261127.py",
+      "originalSHA256": "1dc574ca6da582ec6fe09f3349b684acb577d70e26a87f8686a5c8c47d272170",
+      "candidate": "prepare-host-integrated-866d2d3c-20261127.py",
+      "candidateSHA256": "2b9ecd9f220cc15c04dfaeaa44b38bad7d76fe5816eda31dfdcf181b86ed427f",
+      "bytes": 17771
+    }
+  ]
+}

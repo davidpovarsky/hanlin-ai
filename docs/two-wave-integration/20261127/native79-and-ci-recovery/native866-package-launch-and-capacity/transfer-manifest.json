@@ -1,0 +1,37 @@
+{
+  "status": "EXACT_READ_ONLY_LAUNCH_AND_CAPACITY_EVIDENCE_COPIED",
+  "observedAt": "2026-11-27T05:14:11.422899+00:00",
+  "nativeAcceptance": "PENDING",
+  "files": [
+    {
+      "path": "platform-native-build-866d2d3c-r2-launch.json",
+      "bytes": 542,
+      "sha256": "5e09497396cf56c06f3935905be5cdff4ad009c3d7a7faa568615029d7290689"
+    },
+    {
+      "path": "platform-sourcepackages-recovery-866d2d3c.json",
+      "bytes": 3956,
+      "sha256": "c032a99fa639eccf6e7c5b84d4034e463abfc593026aaec2e9bbb139ecf77e28"
+    },
+    {
+      "path": "historical2a-sdk-expansion-retirement-20261127/receipt.json",
+      "bytes": 1320,
+      "sha256": "7add91633503b4e2917d5b8faa3fe7c9f6f9a8d0e7bd26f604c8fcd78152afe6"
+    },
+    {
+      "path": "owned-index-and-duplicate-archive-reclaim-20261127/receipt.json",
+      "bytes": 1996,
+      "sha256": "6c847c3c30705ca25c061c3555b2763b7a9b629ef16679fa26f9266875dcccd1"
+    },
+    {
+      "path": "obsolete-g15-ipad-os-asset-cache-retirement-20261127/receipt.json",
+      "bytes": 2321,
+      "sha256": "b1f875c52808417ae204b0db3e7e3592886b94add514876bf64d1377863b0d4d"
+    },
+    {
+      "path": "obsolete-g15-ipad-os-asset-cache-retirement-20261127/retired-os-asset-file-inventory.json",
+      "bytes": 566924,
+      "sha256": "a85e149ac84ee62e8c9b61dee77771d949ecdeac344129ec05ac39cc988bbef5"
+    }
+  ]
+}

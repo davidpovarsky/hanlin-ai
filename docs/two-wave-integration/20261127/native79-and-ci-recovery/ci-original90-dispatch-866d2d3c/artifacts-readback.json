@@ -1,0 +1,85 @@
+{
+  "total_count": 4,
+  "artifacts": [
+    {
+      "id": 15172720338,
+      "node_id": "MDg6QXJ0aWZhY3QxNTE3MjcyMDMzOA==",
+      "name": "miniapp-upstream-inputs-full-app-simulator-smoke-45939727401",
+      "size_in_bytes": 33915,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15172720338",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15172720338/zip",
+      "expired": false,
+      "digest": "sha256:e175933a1c6231392ed66f308d1fb6d59f01ed6bfb7a2ee982848215b8a40256",
+      "created_at": "2026-11-27T04:28:08Z",
+      "updated_at": "2026-11-27T04:28:08Z",
+      "expires_at": "2026-12-27T04:28:07Z",
+      "workflow_run": {
+        "id": 45939727401,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/hanlin-two-wave-integration-20261126",
+        "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c"
+      }
+    },
+    {
+      "id": 15172366259,
+      "node_id": "MDg6QXJ0aWZhY3QxNTE3MjM2NjI1OQ==",
+      "name": "ci-validation-plan",
+      "size_in_bytes": 53954,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15172366259",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15172366259/zip",
+      "expired": false,
+      "digest": "sha256:2eb1a7c5f84dbb8aeb1d43630c552882cec013abe37f4db87369866d6f8fa9ea",
+      "created_at": "2026-11-27T04:25:31Z",
+      "updated_at": "2026-11-27T04:25:31Z",
+      "expires_at": "2026-12-11T04:25:31Z",
+      "workflow_run": {
+        "id": 45939727401,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/hanlin-two-wave-integration-20261126",
+        "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c"
+      }
+    },
+    {
+      "id": 15172302744,
+      "node_id": "MDg6QXJ0aWZhY3QxNTE3MjMwMjc0NA==",
+      "name": "phase1-validation-866d2d3c60525e32eae27564869e6dba024e625c",
+      "size_in_bytes": 44654,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15172302744",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15172302744/zip",
+      "expired": false,
+      "digest": "sha256:bf4bedf41f275c621d3da3f047adc6d6a9a70bbd5e075329a1d541a630e4c8ff",
+      "created_at": "2026-11-27T04:29:59Z",
+      "updated_at": "2026-11-27T04:29:59Z",
+      "expires_at": "2026-12-27T04:29:57Z",
+      "workflow_run": {
+        "id": 45939727401,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/hanlin-two-wave-integration-20261126",
+        "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c"
+      }
+    },
+    {
+      "id": 15172133066,
+      "node_id": "MDg6QXJ0aWZhY3QxNTE3MjEzMzA2Ng==",
+      "name": "hanlin-foundation-models-interface",
+      "size_in_bytes": 29949,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15172133066",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15172133066/zip",
+      "expired": false,
+      "digest": "sha256:ca0326e13905dd8af20ba711dceb8f8ef0691074652b548013c34acacbbb247d",
+      "created_at": "2026-11-27T04:27:04Z",
+      "updated_at": "2026-11-27T04:27:04Z",
+      "expires_at": "2026-12-11T04:27:03Z",
+      "workflow_run": {
+        "id": 45939727401,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/hanlin-two-wave-integration-20261126",
+        "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c"
+      }
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "observedAt": "2026-11-27T04:42:07.120061+00:00",
+  "target": "platform_contracts",
+  "run": {
+    "id": 45940810415,
+    "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+    "status": "in_progress",
+    "conclusion": null,
+    "created_at": "2026-11-27T04:35:12Z",
+    "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45940810415",
+    "head_branch": "codex/hanlin-two-wave-integration-20261126"
+  },
+  "jobs": [
+    {
+      "id": 140314433662,
+      "name": "Plan affected validation and tests",
+      "status": "completed",
+      "conclusion": "success",
+      "runner": "GitHub Actions 1000026863",
+      "activeOrFailedSteps": []
+    },
+    {
+      "id": 140314857205,
+      "name": "Validate baseline, contracts, tests, and iOS compilation",
+      "status": "in_progress",
+      "conclusion": null,
+      "runner": "GitHub Actions 1000026865",
+      "activeOrFailedSteps": [
+        {
+          "name": "Compile the Phase 1 Swift package",
+          "status": "in_progress",
+          "conclusion": null
+        }
+      ]
+    }
+  ],
+  "actualCIPlan": {
+    "artifactID": 15172926572,
+    "artifactName": "ci-validation-plan",
+    "zipBytes": 67823,
+    "zipSHA256": "2384303e05a59eece6333b8cd8db25f94580cc3b01411eb6976494a7890ad2e5",
+    "member": "ci-validation-plan.json",
+    "selectedGroups": [
+      "platform_contracts",
+      "runtimecore_host"
+    ],
+    "selectedTests": 79,
+    "explicitOverrides": [
+      "target_validation_group=platform_contracts"
+    ],
+    "stepOutputs": {
+      "run_full_validation": false,
+      "run_phase1": true,
+      "run_ci_router": false,
+      "run_scripting_reference": false,
+      "run_scripting_compiler": false,
+      "run_platform_contracts": true,
+      "run_nativescript_dependencies": false,
+      "run_nativescript_runtime": false,
+      "run_runtimecore_bundle": false,
+      "run_runtimecore_host": true,
+      "run_device_build": false,
+      "run_ipa_packaging": false,
+      "run_simulator_job": false,
+      "run_simulator_unit": false,
+      "run_simulator_scripting_acceptance": false,
+      "run_simulator_targeted_ui": false,
+      "run_simulator_shell_acceptance": false,
+      "run_simulator_mcp_acceptance": false,
+      "run_simulator_smoke_launch": false,
+      "run_simulator_nativescript_poc": false,
+      "run_runtime_tooling_full_acceptance": false,
+      "simulator_configuration": "Release"
+    }
+  }
+}

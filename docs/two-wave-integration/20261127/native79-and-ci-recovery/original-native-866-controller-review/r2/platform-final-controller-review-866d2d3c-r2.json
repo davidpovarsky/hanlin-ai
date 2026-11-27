@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "source": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "reviewer": "/root",
+  "recordedAtUTC": "2026-11-27T04:54:49.082780+00:00",
+  "decision": "APPROVED_ORIGINAL_NATIVE_AND_HOST_SOURCE_BINDINGS",
+  "inventorySHA256": "a5530408269f296d1cbb743fd52624f74755509623ee68b2bfd0f7e351b78822",
+  "sourceStageSHA256": "3b8c8a565050df6e1b5b9314a56b90d7230c3f282fe68b25aafebde4dc70e284",
+  "controllerSHA256": {
+    "build-platform-native-866d2d3c-r1.py": "62b2c4ddeb461f00885391ced25ed4df04b5c8d52e4cb5cd8efa8c1f2b4d0507",
+    "run-platform-native-866d2d3c-test-r1.py": "b874539d133da1f0700538aebadbaf2ff8f5beacd2a41b674ee4b89c2141c1d5",
+    "reconcile-platform-native-866d2d3c-r1.py": "bfc28efcb7cefa80c2bef927fd6a89fa7f38dc173f0e99804328fd1ac70bfd73",
+    "prepare-host-integrated-866d2d3c-20261127.py": "2b9ecd9f220cc15c04dfaeaa44b38bad7d76fe5816eda31dfdcf181b86ed427f",
+    "build-platform-native-866d2d3c-r2.py": "e66483c6e193f76c3f2445fbbe425f87d752de3237b3e27355444bcdd3e6534a",
+    "run-platform-native-866d2d3c-test-r2.py": "ba549b64d0145537f57ea52c535264dcd68c617dea07d2e2ab3f56dbfd354ed7"
+  },
+  "packetManifestSHA256": "52945a30aac44da7c45d04a703721d6e3904f99d4d2657357ecdd17494c85b37",
+  "verifiedPacketMembers": 9,
+  "verifiedGitSourceHashes": 33,
+  "originalFunctionsUnchanged": [
+    {
+      "controller": "build-platform-native-866d2d3c-r1.py",
+      "unchangedOriginalFunctions": [
+        "digest",
+        "free",
+        "phase",
+        "save"
+      ]
+    },
+    {
+      "controller": "run-platform-native-866d2d3c-test-r1.py",
+      "unchangedOriginalFunctions": [
+        "digest",
+        "free",
+        "phase",
+        "save"
+      ]
+    },
+    {
+      "controller": "reconcile-platform-native-866d2d3c-r1.py",
+      "unchangedOriginalFunctions": [
+        "sha",
+        "walk"
+      ]
+    },
+    {
+      "controller": "prepare-host-integrated-866d2d3c-20261127.py",
+      "unchangedOriginalFunctions": [
+        "closure",
+        "digest",
+        "free",
+        "phase",
+        "save"
+      ]
+    }
+  ],
+  "completeDiffSHA256": "b698b521eaf55f74fdd1dd19226c124a5caf2e5aea74aebfc7cf854379f9e70e",
+  "findings": [
+    "Reviewed full189-line delta: source/proof/inventory bindings updated to866, original selectors and phase commands retained.",
+    "Warm owned DerivedData is truthfully retained; full original build-for-testing recompiles current inputs. Original8073741824-byte admission and all phase limits remain unchanged.",
+    "All package test source bytes unchanged from16b; original58definitions/79invocations,28parameterinvocations and zero collateral remain required.",
+    "Fresh current-source original79 actual terminal PASS is required before Host188. Historical79 and188 are not accepted as current source proof.",
+    "Reconciliation strengthens clean phase/stopReason checks; no timeout/cancellation may be recast as PASS.",
+    "Controller self-hashes and current source/inventory receipt required before execution; source/lock/product guards preserved.",
+    "Original Host188 acceptance and complete producer phases preserved; app/OS acceptance remains separate."
+  ],
+  "launchConditions": [
+    "Mac soleowner must remeasure free space and acquire original locks.",
+    "No phase is approved to bypass its original capacity/source/receipt guard."
+  ],
+  "executionEvidence": "NOT_RUN_BY_REVIEWER",
+  "reviewAttempt": "r2 cache recovery and new build attempt binding",
+  "priorApprovalSHA256": "2a9afafc4960e72f52f544bc78ba30e5f444cb00357ea7d24eb2ca37c08880e5",
+  "recoveryReceiptSHA256": "c032a99fa639eccf6e7c5b84d4034e463abfc593026aaec2e9bbb139ecf77e28",
+  "originalPreflightNativeStatus": "NOT_RUN; original controller recordedFAILED withzero phases",
+  "r2Findings": [
+    "Complete two-controller diff reviewed. Only new build-r2 receipt/proof path, exact six-repository recovery receipt guard, updated test build prerequisite and new approval filename.",
+    "Original function ASTs, commands, selectors, thresholds and phase limits unchanged. Reconciler/Host original reviewed bytes remain unchanged and retain original approval.",
+    "Six recovered revisions independently equal all six pins in Git866 Packages/HanlinPlatform/Package.resolved. Source and dependency pins did not change.",
+    "First build preflight failed before any original native phase. Original failure evidence is retained unchanged. Test output remains test-r1 because no native test attempt has yet run."
+  ]
+}

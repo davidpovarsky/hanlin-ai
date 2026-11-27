@@ -1,0 +1,64 @@
+{
+  "status": "SIX_ORIGINAL_PINNED_REPOSITORIES_RECOVERED_NATIVE_NOT_RUN",
+  "source": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "startedAt": "2026-11-27T04:49:27.238822+00:00",
+  "freeBefore": 10983956480,
+  "priorPreparationSHA256": "6ed30ad6eae5bec037c1a7e7eb2d6a3ab23d31cd56ab006f9703e860528f1120",
+  "missingAtPreflightReceipt": "/Users/m1/builds/hanlin-two-wave-root-20261126/platform-native-build-866d2d3c-r1.json",
+  "missingAtPreflightReceiptSHA256": "7d270b0d672f4cf37e96818ebe48eea9c2233dfdf77f0398fffc30da1a061b9e",
+  "cacheLossAttribution": "Unknown. This lane did not remove this SourcePackages directory.",
+  "retainedBuild": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/derived-data/platform-16b4af44/Build",
+    "inode": 65979392,
+    "xctestruns": {
+      "/Users/m1/builds/hanlin-two-wave-root-20261126/derived-data/platform-16b4af44/Build/Products/HanlinPlatform-16b4af44-native-evidence-r1.xctestrun": "923f2eeb4e122c7df89b8bbc92ddfd4296a0cce79e6a89f6585d6da8f3794d41",
+      "/Users/m1/builds/hanlin-two-wave-root-20261126/derived-data/platform-16b4af44/Build/Products/HanlinPlatform-Package_HanlinPlatform-Package_iphonesimulator27.0-arm64.xctestrun": "77c65a28906392b66ff580ec9ccaf8b292aa36310d004af15bd6a390e13d0459"
+    }
+  },
+  "repositories": [
+    {
+      "identity": "opentelemetry-swift-core",
+      "revision": "c6fcee77cfc21ba400366f12475217c7b6e1d605",
+      "donor": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/SourcePackages/repositories/opentelemetry-swift-core-67427d09",
+      "ownedClone": "/Users/m1/builds/hanlin-two-wave-root-20261126/derived-data/platform-16b4af44/SourcePackages/repositories/opentelemetry-swift-core-67427d09",
+      "independentInode": true
+    },
+    {
+      "identity": "swift-ai-sdk",
+      "revision": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+      "donor": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/SourcePackages/repositories/swift-ai-sdk-3a198367",
+      "ownedClone": "/Users/m1/builds/hanlin-two-wave-root-20261126/derived-data/platform-16b4af44/SourcePackages/repositories/swift-ai-sdk-3a198367",
+      "independentInode": true
+    },
+    {
+      "identity": "swift-argument-parser",
+      "revision": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+      "donor": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/SourcePackages/repositories/swift-argument-parser-54a11a8d",
+      "ownedClone": "/Users/m1/builds/hanlin-two-wave-root-20261126/derived-data/platform-16b4af44/SourcePackages/repositories/swift-argument-parser-54a11a8d",
+      "independentInode": true
+    },
+    {
+      "identity": "swift-atomics",
+      "revision": "0442cb5a3f98ab802acb777929fdb446bda11a34",
+      "donor": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/SourcePackages/repositories/swift-atomics-7429e549",
+      "ownedClone": "/Users/m1/builds/hanlin-two-wave-root-20261126/derived-data/platform-16b4af44/SourcePackages/repositories/swift-atomics-7429e549",
+      "independentInode": true
+    },
+    {
+      "identity": "swiftyjson",
+      "revision": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+      "donor": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/SourcePackages/repositories/SwiftyJSON-5ca3ee64",
+      "ownedClone": "/Users/m1/builds/hanlin-two-wave-root-20261126/derived-data/platform-16b4af44/SourcePackages/repositories/SwiftyJSON-5ca3ee64",
+      "independentInode": true
+    },
+    {
+      "identity": "zipfoundation",
+      "revision": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
+      "donor": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/SourcePackages/repositories/ZIPFoundation-789121e4",
+      "ownedClone": "/Users/m1/builds/hanlin-two-wave-root-20261126/derived-data/platform-16b4af44/SourcePackages/repositories/ZIPFoundation-789121e4",
+      "independentInode": true
+    }
+  ],
+  "finishedAt": "2026-11-27T04:49:27.464691+00:00",
+  "freeAfter": 10983530496
+}

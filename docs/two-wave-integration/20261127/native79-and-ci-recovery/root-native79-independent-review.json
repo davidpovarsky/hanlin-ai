@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "reviewer": "/root",
+  "observedAtUTC": "2026-11-27T05:24:17.125056+00:00",
+  "source": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "decision": "VERIFIED_EXACT_NATIVE_PACKAGE_79_PASS",
+  "filesIndependentlyVerified": 264,
+  "rawBytes": 4661385,
+  "transferManifestSHA256": "16131d6eaf10a5e5d0419cb9b42cc48b5b13e87542336530eaf5a9212a876502",
+  "reconciliationSHA256": "e99daf1bb7bb98c14d98d33b153d88531e7e016c7e295bc964a1e4f10af2bf64",
+  "definitions": 58,
+  "invocations": 79,
+  "parameterInvocations": 28,
+  "skipped": 0,
+  "failures": 0,
+  "boundary": "Native selected package cases only; not full platform or Host188, original54/90/extra26, actual OS or signed delivery."
+}
