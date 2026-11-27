@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "b5475156e7b0253b24c0a4385236b60da21f6f7e",
+  "sourceCommit": "bec5117319785fecb4d8b98a876b885cf843d8f5",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -979,7 +979,7 @@
       "file": "AI_HLY.xcodeproj/project.pbxproj",
       "line": 3061,
       "anchor": "/* Begin PBXNativeTarget section */",
-      "sha256": "3563bca75df76ae2862be5272bf5daa958eceb9ef4d6110498e410e0050fa15e"
+      "sha256": "5b70df51a40bb8bad27a531cba6e931c19bb68686c4ba7e28b490b133da97808"
     },
     "audit": {
       "file": "Scripts/Audit/audit_miniapp_reachability.py",
