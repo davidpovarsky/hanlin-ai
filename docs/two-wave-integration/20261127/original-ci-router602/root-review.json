@@ -1,0 +1,21 @@
+{
+  "reviewer": "/root",
+  "reviewedAtUTC": "2026-11-27T11:06:34.926059+00:00",
+  "source": "602b29e303a633155fe07583e9ece28fce0ba113",
+  "status": "ACTUAL_ORIGINAL_DISCOVERY_PASS_WITH_TWO_ORIGINAL_SKIPS",
+  "discovered": 465,
+  "passed": 463,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 2,
+  "skips": [
+    "test_staged_artifacts_have_valid_plists_only_ios_slices_and_no_broken_links (test_expo_xcframework_preparation.TestExpoXCFrameworkPreparation.test_staged_artifacts_have_valid_plists_only_ios_slices_and_no_broken_links) ... skipped 'Artifacts directory is not staged'",
+    "test_real_flit_backend_download_build_install_and_import (hanlin_python_packaging_acceptance.PythonPackagingTests.test_real_flit_backend_download_build_install_and_import) ... skipped 'explicit real PyPI/backend integration'"
+  ],
+  "receiptSHA256": "3e92cbed613062227069aa98dab7c0a496178cb1e5c80d162be88759194c5119",
+  "originalCommandVerified": true,
+  "rawAndLosslessLogHashesVerified": true,
+  "fullSourceInputInventoryRetained": true,
+  "sparseRestorationVerified": true,
+  "boundary": "Original packaging opt-in remains unset; XCFrameworks not staged on Oracle. No native/app/OS acceptance inferred."
+}

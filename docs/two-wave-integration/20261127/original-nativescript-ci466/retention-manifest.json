@@ -1,0 +1,79 @@
+{
+  "kind": "LOSSLESS_ORIGINAL_PACKET_PLUS_ROOT_REVIEW",
+  "sourcePacket": "ci90-45977172889-baseline-job-140432237541-w2",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 1171,
+      "sha256": "c216389ef9e873203b4162524836a7dce7138916c618a21e39439eaf24609964"
+    },
+    {
+      "path": "assessment.json",
+      "bytes": 6370,
+      "sha256": "05e8bb1f9cb246bd6894ff81afee9e2bbcd28e99acdb8eab364f12cfa372b0ab"
+    },
+    {
+      "path": "build-ios26-unsigned-ipa.yml.gz",
+      "bytes": 34653,
+      "sha256": "bd5e0fc2ddcaba1ec7aa96b19ae976eef32c307bf960a638b5874e26c5e76c2b"
+    },
+    {
+      "path": "execution-evidence.json",
+      "bytes": 13300,
+      "sha256": "d84183857df2b4fbcbdbda8264a8aee8e93ffe16ddb9fe0ffb14e6c271f855da"
+    },
+    {
+      "path": "fetchNote.json",
+      "bytes": 324,
+      "sha256": "6ea48b5fb8850753452a6dad686e6d5fec861934539fee82a6d5bb2ddee2b27d"
+    },
+    {
+      "path": "job.json",
+      "bytes": 5527,
+      "sha256": "1747112fd381f9e9b48ce672874bd2f36d049449d3a7756d4d1294829e774d40"
+    },
+    {
+      "path": "log-retention.json",
+      "bytes": 324,
+      "sha256": "5407e16ab2d7d15fee526f3e23b2eb95155904bf1689001aee610b0c2a20072e"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 2147,
+      "sha256": "86027b4e7d4866e156cb5aed76b62332542e37dc58a91f52c2325260ce0b5082"
+    },
+    {
+      "path": "original-job.log.gz",
+      "bytes": 77394,
+      "sha256": "77e2cd4a796c86d4502e5c917fd38250a330b001d12af7cc9d86df2b2cd8cc48"
+    },
+    {
+      "path": "remaining-original-gates.input.json",
+      "bytes": 7091,
+      "sha256": "c7acb76911b764212eed6e75bfd499fd0bee18f278abe5bcd0d697cb7cf3cced"
+    },
+    {
+      "path": "run.json",
+      "bytes": 16323,
+      "sha256": "fde76a6ec664fd57d4da15ec44dd9e7f980d35c09683e1b1a6d48638e665e1bc"
+    },
+    {
+      "path": "steps.json",
+      "bytes": 5338,
+      "sha256": "1ab776e92d9d8e356d75c72a785731104aeacc903320fa58bd0931df67e0f21b"
+    },
+    {
+      "path": "validate-scripting-runtime.yml.gz",
+      "bytes": 1956,
+      "sha256": "f1318e71345093c7caf353dd97ee1fa4345631819bbca85feccaaba6986a2534"
+    },
+    {
+      "path": "workflow-source.json",
+      "bytes": 25442,
+      "sha256": "428f33428f974d37b912f3888253f6065c91728a62c3f8e9a0f00b95650f27a0"
+    }
+  ],
+  "archiveBytes": 133985,
+  "archiveSHA256": "a5ff3adf9d312b09a91956a691658394322f0a64f8c12bcfc831becbbab590c4",
+  "rootReviewSHA256": "386921a5b158a4e6d41baec135c42347d83f1dcb7b7a3b0bd70f9ea79cc09cc8"
+}

@@ -1,0 +1,16 @@
+{
+  "reviewer": "/root",
+  "reviewedAtUTC": "2026-11-27T10:54:35.874152+00:00",
+  "sourcePacket": "full-platform-466c6187-r1",
+  "originalManifestSHA256": "54f9a636ef99621c3af6eea08de003009774c5e47eb7f22ac084685d19d45627",
+  "declaredMemberCount": 151,
+  "allDeclaredBytesIndependentlyVerified": true,
+  "status": "ACTUAL_ORIGINAL_603_FAILED_ONLY_HTTP",
+  "actualStarts": 603,
+  "actualTerminals": 603,
+  "passCount": 602,
+  "failCount": 1,
+  "skipCount": 0,
+  "methodMultisetsMatch": true,
+  "boundary": "Original5-second HTTP budget and3600-second full gate unchanged. Original601 plus2 controls. No stack captured in this historical run; corrected602 observer execution is separate. Server response write does not prove client completion or JS settlement."
+}

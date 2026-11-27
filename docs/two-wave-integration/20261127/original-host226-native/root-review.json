@@ -1,0 +1,23 @@
+{
+  "reviewer": "/root",
+  "reviewedAtUTC": "2026-11-27T10:54:36.070073+00:00",
+  "sourcePacket": "host-sdk-226e7cfc-complete-pass-proof",
+  "originalManifestSHA256": "5af2d94297f9b48e4f32a55d811b63352c48772fa26c916aae75c36066cb352d",
+  "declaredMemberCount": 48,
+  "allDeclaredBytesIndependentlyVerified": true,
+  "status": "ACTUAL_HOST226_ALL12_PHASES_AND188_PASS",
+  "originalPhaseCount": 12,
+  "actualNodeSummary": {
+    "tests": 188,
+    "pass": 188,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "actualLongJob": {
+    "proof": "actual-node-job-over-300-seconds",
+    "elapsedMilliseconds": 305031.695375,
+    "executionID": "1472a4ac-4258-4fd8-93ad-ef47dfed5419"
+  },
+  "boundary": "Historical226 source, not current manifest9c624 SDK producer. All full raw closure maps retained. The81901047-byte ZIP itself is retained on Mac and was not independently downloaded by root. No native app/OS or distribution acceptance inferred."
+}

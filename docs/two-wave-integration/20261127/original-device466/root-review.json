@@ -1,0 +1,38 @@
+{
+  "reviewer": "/root",
+  "reviewedAtUTC": "2026-11-27T11:06:35.186140+00:00",
+  "source": "466c6187309f86da9d20b389de3c424cd93c9bdd",
+  "runID": 45977176612,
+  "jobID": 140432318518,
+  "status": "ACTUAL_DEVICE_BUILD_AND_ORIGINAL_PACKAGED_IPA_CLOSURE_PASS",
+  "completeRawLogSHA256": "a8be22f5a943035b5fc3cb60f2f9b3c4fd793c70aa82a74b8c0c5bdaa9203613",
+  "originalReports": {
+    "08-dyld-closure.json": {
+      "sha256": "25999e94a823fb9b4a47f6805cdbb9b146a0874e4ecf1a830db5666c4ab7959b",
+      "machOCount": 96,
+      "result": "pass",
+      "errors": 0
+    },
+    "09-packaged-ipa-dyld-closure.json": {
+      "sha256": "baf72c8980b65883c0a68a516f4f4c07fb99ec5cdace88af43ebfe20b700a028",
+      "machOCount": 96,
+      "result": "pass",
+      "errors": 0
+    }
+  },
+  "widgetAudit": {
+    "records": 93,
+    "unsafeLibraries": 0,
+    "missingDependencies": 0,
+    "forbiddenDependencies": 0,
+    "sha256": "c241d3b64895306c18fe60cf864e33e94c964e771d7c2c7bc181c8749646bfb8"
+  },
+  "completeBuildLogArtifactRetained": {
+    "artifactID": 15190512583,
+    "members": 63,
+    "bytes": 2815813,
+    "sha256": "204f65a08e24b25160b6ff23af537190bd887418ec0a7dd4e25077409cb38229"
+  },
+  "unsignedIPAArtifactID": 15190682084,
+  "boundary": "Actual466 unsigned IPA acceptance only. Native package tests, app UI, OS, signing and distribution remain separate gates. No current-source archive reuse qualification or TestFlight upload inferred."
+}

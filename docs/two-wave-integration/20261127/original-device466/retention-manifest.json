@@ -1,0 +1,69 @@
+{
+  "kind": "LOSSLESS_ORIGINAL_PACKET_PLUS_ROOT_REVIEW",
+  "sourcePacket": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/device-45977176612-job-140432318518-root",
+  "members": [
+    {
+      "path": "artifact-retention.json",
+      "bytes": 1042,
+      "sha256": "229fdaa6affef81b70a4734f1eaa0f54eadbd248e1023be9a085618bd6ae6a22"
+    },
+    {
+      "path": "artifacts.json",
+      "bytes": 3759,
+      "sha256": "caaefa855d30957797302fd819fb6fce77ef3ec6f71d9e463f1da097215790a7"
+    },
+    {
+      "path": "job.json",
+      "bytes": 9689,
+      "sha256": "343c3d3b5985b34963029a3e95b52421148f09dd959f5a1bd56531202f472352"
+    },
+    {
+      "path": "log-retention.json",
+      "bytes": 428,
+      "sha256": "ae99ea563eaf056b11fdfa3ea4c6cdaa562996a1ee2c81549b6533c4144bd1a5"
+    },
+    {
+      "path": "original-build-logs-artifact.zip",
+      "bytes": 2815813,
+      "sha256": "204f65a08e24b25160b6ff23af537190bd887418ec0a7dd4e25077409cb38229"
+    },
+    {
+      "path": "original-job.log.gz",
+      "bytes": 2125704,
+      "sha256": "8a524d631c3acbe3e2010fa4886ee13bb6d4d1e4b1aa16b0ed14de25157033b9"
+    },
+    {
+      "path": "reports/08-dyld-closure.json",
+      "bytes": 328045,
+      "sha256": "25999e94a823fb9b4a47f6805cdbb9b146a0874e4ecf1a830db5666c4ab7959b"
+    },
+    {
+      "path": "reports/08-dyld-closure.txt",
+      "bytes": 117142,
+      "sha256": "22f12017c35889cca66d899967e3311ee65496ce2d4e4858ba7a13f8f7ff38fe"
+    },
+    {
+      "path": "reports/09-packaged-ipa-dyld-closure.json",
+      "bytes": 318613,
+      "sha256": "baf72c8980b65883c0a68a516f4f4c07fb99ec5cdace88af43ebfe20b700a028"
+    },
+    {
+      "path": "reports/09-packaged-ipa-dyld-closure.txt",
+      "bytes": 113038,
+      "sha256": "97d8ab1218c748234b7437e334b0a89cc399ebd407abdfa3f0068f2f56e8e9c4"
+    },
+    {
+      "path": "reports/widget-native-mach-o.json",
+      "bytes": 58611,
+      "sha256": "c241d3b64895306c18fe60cf864e33e94c964e771d7c2c7bc181c8749646bfb8"
+    },
+    {
+      "path": "run.json",
+      "bytes": 14573,
+      "sha256": "7ffc8a30bd95f0b359fa5d9f53231c9f1174a1c559e155dce53f425e883b8bef"
+    }
+  ],
+  "archiveBytes": 4928754,
+  "archiveSHA256": "74891ef48f007a0c12917f0bee2f68b9f9167e80095e58874cfe1ed2f5bc2f20",
+  "rootReviewSHA256": "cfe0bae9ebb86cbc035bea2e9cc0392215ecbb19ddd3f09afe9fb64d4fa5a0aa"
+}
