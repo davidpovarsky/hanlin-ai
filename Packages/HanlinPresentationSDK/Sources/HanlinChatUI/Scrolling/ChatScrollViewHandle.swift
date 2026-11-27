@@ -18,10 +18,15 @@ public final class ChatScrollViewHandle {
     private var incomingConversationID: UUID?
     private var incomingProducerID: UUID?
     public private(set) var generation = UUID()
+    /// Native ownership survives bounds/inset changes, but never a different
+    /// producer, scroll view, window, conversation or activation lifetime.
+    public private(set) var bindingGeneration = UUID()
     private var deliveredGeneration: UUID?
     private var readinessTask: Task<Void, Never>?
+    private var readinessBindingGeneration: UUID?
     private var positionReadTask: Task<Void, Never>?
     private var positionReadID: UUID?
+    private var positionReadBindingGeneration: UUID?
     private var positionReadAction: (@MainActor (ChatAutoFollowPosition) -> Void)?
 
     /// A scroll view can move between windows or change its viewport without
@@ -83,6 +88,7 @@ public final class ChatScrollViewHandle {
         boundWindow = scrollView?.window
         viewport = scrollView.flatMap { Viewport($0) }
         // Even the same UIScrollView now belongs to a replacement probe/reader.
+        bindingGeneration = UUID()
         generation = UUID()
         invalidateReadiness()
         return true
@@ -91,6 +97,7 @@ public final class ChatScrollViewHandle {
     public func activate(conversationID: UUID) {
         guard activeConversationID != conversationID else { return }
         activeConversationID = conversationID
+        bindingGeneration = UUID()
         generation = UUID()
         invalidateReadiness()
         if incomingConversationID == conversationID, let producerID = incomingProducerID {
@@ -106,6 +113,7 @@ public final class ChatScrollViewHandle {
     public func deactivate(conversationID: UUID? = nil) -> Bool {
         if let conversationID, activeConversationID != conversationID { return false }
         activeConversationID = nil
+        bindingGeneration = UUID()
         generation = UUID()
         invalidateReadiness()
         return true
@@ -115,34 +123,51 @@ public final class ChatScrollViewHandle {
     /// The existing native bridge calls this from its attachment and layout
     /// callbacks; deliver once after layout, with no polling or state writes
     /// inside UIKit's layout pass. Only the short-lived task owns the action.
+    /// An explicit binding token allows a fresh same-owner resize; without one,
+    /// the existing strict viewport-generation behavior remains unchanged.
     @discardableResult
-    public func whenReady(conversationID: UUID, action: @escaping @MainActor () -> Void) -> Task<Void, Never>? {
-        guard activeConversationID == conversationID, boundConversationID == conversationID else { return nil }
-        guard layout(conversationID: conversationID) != nil else {
+    public func whenReady(conversationID: UUID, expectedBindingGeneration: UUID? = nil,
+                          action: @escaping @MainActor () -> Void) -> Task<Void, Never>? {
+        guard activeConversationID == conversationID, boundConversationID == conversationID,
+              expectedBindingGeneration == nil || expectedBindingGeneration == bindingGeneration else { return nil }
+        guard layout(conversationID: conversationID,
+                     expectedBindingGeneration: expectedBindingGeneration) != nil else {
             invalidateReadiness()
             return nil
         }
         guard deliveredGeneration != generation else { return nil }
-        if let readinessTask { return readinessTask }
+        if let readinessTask {
+            if readinessBindingGeneration == expectedBindingGeneration { return readinessTask }
+            readinessTask.cancel()
+        }
         let expectedGeneration = generation
+        readinessBindingGeneration = expectedBindingGeneration
         readinessTask = Task { @MainActor [weak self] in
             await Task.yield()
-            guard let self, !Task.isCancelled, self.generation == expectedGeneration else { return }
+            guard let self, !Task.isCancelled,
+                  expectedBindingGeneration != nil || self.generation == expectedGeneration else { return }
             self.readinessTask = nil
+            self.readinessBindingGeneration = nil
             guard self.layout(conversationID: conversationID,
-                              expectedGeneration: expectedGeneration) != nil else { return }
-            self.deliveredGeneration = expectedGeneration
+                              expectedGeneration: expectedBindingGeneration == nil ? expectedGeneration : nil,
+                              expectedBindingGeneration: expectedBindingGeneration) != nil else { return }
+            self.deliveredGeneration = self.generation
             action()
         }
         return readinessTask
     }
 
-    private func invalidateReadiness() {
-        readinessTask?.cancel()
-        readinessTask = nil
+    private func invalidateReadiness(preservingCurrentBinding: Bool = false) {
+        if !preservingCurrentBinding || readinessBindingGeneration != bindingGeneration {
+            readinessTask?.cancel()
+            readinessTask = nil
+            readinessBindingGeneration = nil
+        }
         deliveredGeneration = nil
-        positionReadTask?.cancel()
-        clearPositionRead()
+        if !preservingCurrentBinding || positionReadBindingGeneration != bindingGeneration {
+            positionReadTask?.cancel()
+            clearPositionRead()
+        }
     }
 
     /// Coalesce native layout/geometry notifications into one read after the
@@ -150,24 +175,33 @@ public final class ChatScrollViewHandle {
     /// changes may request another read within the same viewport generation.
     /// No cached geometry is published and this never repositions the scroll view.
     /// One yield is not a guarantee that every lazy layout pass is finished;
-    /// further real notifications request another current native sample.
+    /// further real notifications request another current native sample. An
+    /// explicit binding token admits the latest viewport of that same owner;
+    /// omitting it preserves strict viewport-generation cancellation.
     @discardableResult
-    public func readPositionAfterLayout(conversationID: UUID,
+    public func readPositionAfterLayout(conversationID: UUID, expectedBindingGeneration: UUID? = nil,
                                         action: @escaping @MainActor (ChatAutoFollowPosition) -> Void) -> Task<Void, Never>? {
         guard activeConversationID == conversationID, boundConversationID == conversationID,
-              layout(conversationID: conversationID) != nil else { return nil }
+              layout(conversationID: conversationID,
+                     expectedBindingGeneration: expectedBindingGeneration) != nil else { return nil }
+        if let positionReadTask, positionReadBindingGeneration != expectedBindingGeneration {
+            positionReadTask.cancel()
+            clearPositionRead()
+        }
         positionReadAction = action
         if let positionReadTask { return positionReadTask }
         let expectedGeneration = generation
         let requestID = UUID()
         positionReadID = requestID
+        positionReadBindingGeneration = expectedBindingGeneration
         positionReadTask = Task { @MainActor [weak self] in
             await Task.yield()
             guard let self, !Task.isCancelled, self.positionReadID == requestID else { return }
             let action = self.positionReadAction
             self.clearPositionRead()
             guard let position = self.position(conversationID: conversationID,
-                                               expectedGeneration: expectedGeneration) else { return }
+                                               expectedGeneration: expectedBindingGeneration == nil ? expectedGeneration : nil,
+                                               expectedBindingGeneration: expectedBindingGeneration) else { return }
             action?(position)
         }
         return positionReadTask
@@ -176,24 +210,31 @@ public final class ChatScrollViewHandle {
     private func clearPositionRead() {
         positionReadTask = nil
         positionReadID = nil
+        positionReadBindingGeneration = nil
         positionReadAction = nil
     }
 
     private func refreshViewport() {
         let currentWindow = scrollView?.window
         let currentViewport = scrollView.flatMap { Viewport($0) }
-        guard boundWindow !== currentWindow || viewport != currentViewport else { return }
+        let windowChanged = boundWindow !== currentWindow
+        guard windowChanged || viewport != currentViewport else { return }
         boundWindow = currentWindow
         viewport = currentViewport
+        if windowChanged { bindingGeneration = UUID() }
         generation = UUID()
-        invalidateReadiness()
+        // Bounds/insets can settle after the last bridge notification. Keep
+        // only explicitly owner-bound work; legacy viewport requests still end.
+        invalidateReadiness(preservingCurrentBinding: !windowChanged)
     }
 
     /// Read the settled offset from the same attached viewport used to admit
     /// scrolling. In particular, scroll-idle and reattachment must not reuse a
     /// Boolean delivered before the native scroll view finished its layout.
-    public func position(conversationID: UUID, expectedGeneration: UUID? = nil) -> ChatAutoFollowPosition? {
-        guard let layout = layout(conversationID: conversationID, expectedGeneration: expectedGeneration),
+    public func position(conversationID: UUID, expectedGeneration: UUID? = nil,
+                         expectedBindingGeneration: UUID? = nil) -> ChatAutoFollowPosition? {
+        guard let layout = layout(conversationID: conversationID, expectedGeneration: expectedGeneration,
+                                  expectedBindingGeneration: expectedBindingGeneration),
               let scrollView else { return nil }
         let position = ChatAutoFollowPosition(layout: layout, contentOffsetY: Double(scrollView.contentOffset.y))
         return position.isNearBottom == nil ? nil : position
@@ -213,14 +254,17 @@ public final class ChatScrollViewHandle {
 
     /// Re-read UIKit at execution time. A cached SwiftUI geometry notification
     /// can belong to the previous window, split-view width or conversation.
-    public func layout(conversationID: UUID, expectedGeneration: UUID? = nil) -> ChatAutoFollowLayout? {
+    public func layout(conversationID: UUID, expectedGeneration: UUID? = nil,
+                       expectedBindingGeneration: UUID? = nil) -> ChatAutoFollowLayout? {
         guard activeConversationID == conversationID,
-              boundConversationID == conversationID else { return nil }
+              boundConversationID == conversationID,
+              expectedBindingGeneration == nil || expectedBindingGeneration == bindingGeneration else { return nil }
         // Refresh before comparing the request generation. Checking generation
         // first accepts a stale request when UIKit changed bounds/window before
         // its next bridge callback.
         refreshViewport()
         guard expectedGeneration == nil || expectedGeneration == generation,
+              expectedBindingGeneration == nil || expectedBindingGeneration == bindingGeneration,
               let scrollView, scrollView.window != nil else { return nil }
         return Self.snapshotLayout(of: scrollView)
     }

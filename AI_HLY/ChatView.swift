@@ -1353,7 +1353,10 @@ struct ChatView: View {
 
     private func scheduleScrollWhenViewportReady(using proxy: ScrollViewProxy) {
         let conversationID = effectiveChatSessionID
-        transcriptScrollView.whenReady(conversationID: conversationID) {
+        guard transcriptScrollView.layout(conversationID: conversationID) != nil else { return }
+        let bindingGeneration = transcriptScrollView.bindingGeneration
+        transcriptScrollView.whenReady(conversationID: conversationID,
+                                       expectedBindingGeneration: bindingGeneration) {
             guard effectiveChatSessionID == conversationID else { return }
             refreshSettledScrollPosition()
             scheduleSourceScroll(using: proxy)
@@ -1372,7 +1375,10 @@ struct ChatView: View {
 
     private func scheduleNativePositionRead() {
         let conversationID = effectiveChatSessionID
-        transcriptScrollView.readPositionAfterLayout(conversationID: conversationID) { position in
+        guard transcriptScrollView.layout(conversationID: conversationID) != nil else { return }
+        let bindingGeneration = transcriptScrollView.bindingGeneration
+        transcriptScrollView.readPositionAfterLayout(conversationID: conversationID,
+                                                    expectedBindingGeneration: bindingGeneration) { position in
             guard effectiveChatSessionID == conversationID,
                   let isNearBottom = position.isNearBottom else { return }
             let wasNearBottom = autoFollowController.state.isNearBottom
@@ -1432,12 +1438,14 @@ struct ChatView: View {
         let layout = measuredLayout ?? attachedLayout
         autoFollowController.updateLayout(layout)
         traceAutoFollowBoundary("request", layout: layout)
-        let viewportGeneration = transcriptScrollView.generation
+        // A resize must use fresh geometry without discarding the latest
+        // request. Ownership still excludes an outgoing producer/reader/window.
+        let bindingGeneration = transcriptScrollView.bindingGeneration
         autoFollowController.scheduleScroll(animated: animated, force: force) { animate in
             guard pendingSourceScroll == nil, force || nativeSelectionIDs.isEmpty,
                   effectiveChatSessionID == conversationID,
                   transcriptScrollView.layout(conversationID: conversationID,
-                      expectedGeneration: viewportGeneration)?.hasScrollableContent == true else {
+                      expectedBindingGeneration: bindingGeneration)?.hasScrollableContent == true else {
                 traceAutoFollowBoundary("execution-rejected")
                 return
             }
