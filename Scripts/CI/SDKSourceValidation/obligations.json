@@ -88,7 +88,8 @@
         "simultaneousOwnersCannotExceedOneSharedQuota()": 1
       },
       "parameterArguments": {},
-      "scope": "Original HanlinChatUI payload lease accounting: 6 methods. UTF-8 payload bytes and owner count, not WebKit/RSS peak."
+      "scope": "Original HanlinChatUI payload lease accounting: 6 methods. UTF-8 payload bytes and owner count, not WebKit/RSS peak.",
+      "displayName": "Original code-fence retained payload ownership"
     },
     {
       "name": "widgets",
@@ -101,7 +102,8 @@
         "v1ShadowProjectsHistoricalFieldsWithoutLosingCurrentMetadata()": 1
       },
       "parameterArguments": {},
-      "scope": "Original prepared program and historical store projection in isolated macOS installations, not configured OS widgets or an iOS runtime generation."
+      "scope": "Original prepared program and historical store projection in isolated macOS installations, not configured OS widgets or an iOS runtime generation.",
+      "displayName": "Pass 3 installed widget programs, actions and transactions"
     }
   ],
   "iosBuild": {
@@ -128,6 +130,83 @@
       "parent": "20a1e6fa33ed261ba11e83a0b84a157029822e5e",
       "sourceScope": "Root-reviewed selective successor: three shared scrolling sources, one additive locale entry preserving1294 originals, six additive App/UIKit regression methods and original evidence. Other five package trees and locks unchanged. The six App/UIKit regressions are NOT selected by this package route.",
       "integrationReceiptSHA256": "ac0504faf07be3f094a24749eeace46b60f1b87215f941c70a9ec3f74fcb2bde"
+    }
+  },
+  "continuation": {
+    "selector": "HanlinSDKQuotaWidgetsAfterAgent45954793309",
+    "source": "caa0dac32afa18e58bba55fb4f0fdd262f181835",
+    "runID": 45954793309,
+    "attempt": 1,
+    "workflowID": 310046367,
+    "jobID": 140358668934,
+    "controllerSHA": "35b504095406476799b76a9593d04ba11900d112",
+    "controllerBranch": "codex/hanlin-sdk-hosted-validation-20261127",
+    "artifactID": 15178855568,
+    "artifactName": "hanlin-original-sdk-45954793309-1",
+    "artifactBytes": 119169729,
+    "artifactSHA256": "266836f5a18a7977489cbd1e4624ff06b6ccc8d0bff872657ffc7885f0de4ca3",
+    "originalSourceArchiveBytes": 40611840,
+    "originalSourceArchiveSHA256": "181e02e4ccb129f671ed337d80268e33ab55ee2e923fd0279c0bbd7dbb164ffb",
+    "originalProductArchiveBytes": 413972480,
+    "originalProductArchiveSHA256": "afa0e58b6a1d986e0e215f928671dda6a3e852d4fb4466518029b1b41f4769fc",
+    "originalToolchainScope": "Xcode27.2 / Swift6.4.2 / Swift Testing2403 / macOS27.0.1; no Xcode27.0 binary compatibility claim",
+    "members": {
+      "result.json": {
+        "bytes": 27259,
+        "sha256": "2dbcbb43294e9d1a90be8a7b776b1f28090e9a96f171c8c9f3f05371030018ab"
+      },
+      "commands.json": {
+        "bytes": 24940,
+        "sha256": "c6867508eb9c4c4b0a8e320d2bb3b1e87607a05b1262b422f150d697eff4efb7"
+      },
+      "admitted-source.json": {
+        "bytes": 3456,
+        "sha256": "eb05dd5707e5f41f7b148194d3da330877f4f659997cb7e02e2460c6af4e2028"
+      },
+      "original-source-files.json": {
+        "bytes": 305259,
+        "sha256": "75c8afbdff3bb555c1d285843fb6f071cee8471f7c0398e875a294bb3c75dacb"
+      },
+      "controller-identity.json": {
+        "bytes": 680,
+        "sha256": "3ef018232acb3eaddf4d0874a9b7e69eba2747815fa455703e933a03c7345d04"
+      },
+      "dispatch-inputs.json": {
+        "bytes": 818,
+        "sha256": "6cf9d4c9d8e2ae48e69a3835f8107d1bccd1695b92ed915ccc828b9a2158a42f"
+      },
+      "original-products.json": {
+        "bytes": 48396,
+        "sha256": "3a6556ad70612ebcf91c0402d2db8fadc869464f5b85cf5acc7d2582ae4a8f7a"
+      },
+      "agent-stop-checkouts.json": {
+        "bytes": 1179,
+        "sha256": "bd26caadb5e10d69dabc88634359e55680d684e822e61ce4ed55b88c1d1da15e"
+      },
+      "agent-stop-posttest-checkouts.json": {
+        "bytes": 1179,
+        "sha256": "bd26caadb5e10d69dabc88634359e55680d684e822e61ce4ed55b88c1d1da15e"
+      },
+      "agent-stop-tests.log": {
+        "bytes": 1061134,
+        "sha256": "a141517e1366496b39dd43796a0611dbc292e9146052534760b8937982c1f709"
+      },
+      "agent-stop-Package.resolved": {
+        "bytes": 1771,
+        "sha256": "543da4b8e9fe589c8d071fa3599d30034cb39bd57e839ba6130f754cdad701ca"
+      },
+      "controller-error.log": {
+        "bytes": 807,
+        "sha256": "9dbaf642d537bb7c4fa9ad9d99691122c81e6637f74642cc8ce7b9d2ef56cfa9"
+      },
+      "swift.log": {
+        "bytes": 128,
+        "sha256": "448e3f9c46706640fe62ea0140ecfccbb330baba2076b2916c0423af9642ee06"
+      },
+      "xcode.log": {
+        "bytes": 31,
+        "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7"
+      }
     }
   }
 }

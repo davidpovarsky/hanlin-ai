@@ -1,0 +1,221 @@
+{
+  "baseControl": "35b504095406476799b76a9593d04ba11900d112",
+  "changes": [
+    "Parse original Swift Testing2403 individual case successes separately from exact named methods; accept only observed optional Swift.Bool annotations and require all cases when those records are present.",
+    "Admit only actual original45954793309/attempt1/35b/artifact15178855568 by primary API identity and fixed archive/member/source/dependency/command/group/product hashes; reparse exact5/7 original terminal and skip only that already-executed Agent obligation.",
+    "Remaining quota6,Widget2 andiOS original HanlinChatUI product still execute normally. Original source-declared display names are bound to existing protected suite files.",
+    "Download original artifact with existing Actions read token scoped to bounded gh api children; preserve every original failure and binary."
+  ],
+  "currentSDKSourceChanged": false,
+  "evidence": [
+    {
+      "bytes": 53447,
+      "path": "actual-original-admission.json",
+      "sha256": "ea2d84b6c982002741dbc7fa6c34e2dfadcea35af48b61d20d84a52b9bb0d6a8"
+    },
+    {
+      "bytes": 658,
+      "path": "first-local-admission-control-failure.log",
+      "sha256": "205c0bf026a94d89f4dc77e14c422c1668373cf35b9788aad5bb940040e46bb8"
+    },
+    {
+      "bytes": 36103,
+      "path": "literal-inverse-proof.json",
+      "sha256": "049ddc86ee53e4dae09f061cf0275c69b4f27009c4177b6f708877dd2daa7b10"
+    },
+    {
+      "bytes": 3643,
+      "path": "local-control-receipt.json",
+      "sha256": "4976a27eace1436e970673e92128beded78f4cbe9e68fb9634c27bb553f32db0"
+    },
+    {
+      "bytes": 2189,
+      "path": "local-control-tests.log",
+      "sha256": "11aaad61957f44bb405a3ec0c2b32b0cfc88257d342619bce426372744dc0022"
+    },
+    {
+      "bytes": 807,
+      "path": "original-controller-error.log",
+      "sha256": "9dbaf642d537bb7c4fa9ad9d99691122c81e6637f74642cc8ce7b9d2ef56cfa9"
+    },
+    {
+      "bytes": 27259,
+      "path": "original-failed-result.json",
+      "sha256": "2dbcbb43294e9d1a90be8a7b776b1f28090e9a96f171c8c9f3f05371030018ab"
+    },
+    {
+      "bytes": 7272,
+      "path": "original35b-root-independent-review.json",
+      "sha256": "b27d14deb8de9d2fd723fb33c64107079a4b8e8722c2bd184ef65f2fd5cf0d3f"
+    }
+  ],
+  "firstLocalAdmissionCorrection": "A local verifier initially compared Git100644 directly to original git-archive0664 export permissions. Original failed local proof is retained. Final verifier binds all original bytes and the Git executable bit, matching the actual original archive without altering it.",
+  "literalInverseProof": {
+    "files": 5,
+    "operations": 37,
+    "path": "literal-inverse-proof.json",
+    "sha256": "049ddc86ee53e4dae09f061cf0275c69b4f27009c4177b6f708877dd2daa7b10"
+  },
+  "original35bIndependentReviewSHA256": "b27d14deb8de9d2fd723fb33c64107079a4b8e8722c2bd184ef65f2fd5cf0d3f",
+  "priorArtifact": {
+    "artifactBytes": 119169729,
+    "artifactID": 15178855568,
+    "artifactName": "hanlin-original-sdk-45954793309-1",
+    "artifactSHA256": "266836f5a18a7977489cbd1e4624ff06b6ccc8d0bff872657ffc7885f0de4ca3",
+    "attempt": 1,
+    "controllerBranch": "codex/hanlin-sdk-hosted-validation-20261127",
+    "controllerSHA": "35b504095406476799b76a9593d04ba11900d112",
+    "jobID": 140358668934,
+    "members": {
+      "admitted-source.json": {
+        "bytes": 3456,
+        "sha256": "eb05dd5707e5f41f7b148194d3da330877f4f659997cb7e02e2460c6af4e2028"
+      },
+      "agent-stop-Package.resolved": {
+        "bytes": 1771,
+        "sha256": "543da4b8e9fe589c8d071fa3599d30034cb39bd57e839ba6130f754cdad701ca"
+      },
+      "agent-stop-checkouts.json": {
+        "bytes": 1179,
+        "sha256": "bd26caadb5e10d69dabc88634359e55680d684e822e61ce4ed55b88c1d1da15e"
+      },
+      "agent-stop-posttest-checkouts.json": {
+        "bytes": 1179,
+        "sha256": "bd26caadb5e10d69dabc88634359e55680d684e822e61ce4ed55b88c1d1da15e"
+      },
+      "agent-stop-tests.log": {
+        "bytes": 1061134,
+        "sha256": "a141517e1366496b39dd43796a0611dbc292e9146052534760b8937982c1f709"
+      },
+      "commands.json": {
+        "bytes": 24940,
+        "sha256": "c6867508eb9c4c4b0a8e320d2bb3b1e87607a05b1262b422f150d697eff4efb7"
+      },
+      "controller-error.log": {
+        "bytes": 807,
+        "sha256": "9dbaf642d537bb7c4fa9ad9d99691122c81e6637f74642cc8ce7b9d2ef56cfa9"
+      },
+      "controller-identity.json": {
+        "bytes": 680,
+        "sha256": "3ef018232acb3eaddf4d0874a9b7e69eba2747815fa455703e933a03c7345d04"
+      },
+      "dispatch-inputs.json": {
+        "bytes": 818,
+        "sha256": "6cf9d4c9d8e2ae48e69a3835f8107d1bccd1695b92ed915ccc828b9a2158a42f"
+      },
+      "original-products.json": {
+        "bytes": 48396,
+        "sha256": "3a6556ad70612ebcf91c0402d2db8fadc869464f5b85cf5acc7d2582ae4a8f7a"
+      },
+      "original-source-files.json": {
+        "bytes": 305259,
+        "sha256": "75c8afbdff3bb555c1d285843fb6f071cee8471f7c0398e875a294bb3c75dacb"
+      },
+      "result.json": {
+        "bytes": 27259,
+        "sha256": "2dbcbb43294e9d1a90be8a7b776b1f28090e9a96f171c8c9f3f05371030018ab"
+      },
+      "swift.log": {
+        "bytes": 128,
+        "sha256": "448e3f9c46706640fe62ea0140ecfccbb330baba2076b2916c0423af9642ee06"
+      },
+      "xcode.log": {
+        "bytes": 31,
+        "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7"
+      }
+    },
+    "originalProductArchiveBytes": 413972480,
+    "originalProductArchiveSHA256": "afa0e58b6a1d986e0e215f928671dda6a3e852d4fb4466518029b1b41f4769fc",
+    "originalSourceArchiveBytes": 40611840,
+    "originalSourceArchiveSHA256": "181e02e4ccb129f671ed337d80268e33ab55ee2e923fd0279c0bbd7dbb164ffb",
+    "originalToolchainScope": "Xcode27.2 / Swift6.4.2 / Swift Testing2403 / macOS27.0.1; no Xcode27.0 binary compatibility claim",
+    "runID": 45954793309,
+    "selector": "HanlinSDKQuotaWidgetsAfterAgent45954793309",
+    "source": "caa0dac32afa18e58bba55fb4f0fdd262f181835",
+    "workflowID": 310046367
+  },
+  "reviewIndex": {
+    "baseControlSHA": "35b504095406476799b76a9593d04ba11900d112",
+    "files": [
+      {
+        "beforeBytes": 218761,
+        "beforeGitBlob": "ec92b5310a020daad266d2b345b04df70b0889fb",
+        "beforeSHA256": "b64caef8e3b91485fb9e7f22d88bdf17da00857ac3447ea031de4c993e8aeac3",
+        "bytes": 219117,
+        "gitBlob": "b819f3a8634a8466f821c7d33f3ba11ba03e8a59",
+        "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+        "sha256": "e1c50b40b2c93f77c22243c755cb8bcb0f9447b44199f5f2ec2518a1640dc423"
+      },
+      {
+        "bytes": 10440,
+        "gitBlob": "e5ad66452e11697ec83495e01c063951b8728918",
+        "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-45954793309-api-identities.json",
+        "sha256": "81568ddd916c22122dde29fde95b442bd166b32195906b0440d4868c851b7d20"
+      },
+      {
+        "bytes": 962,
+        "gitBlob": "994a5103cd15480eb327a155e480675d7fb58a1c",
+        "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-45954793309-stop-terminal-provenance.json",
+        "sha256": "ead7cd9f6e28b7285d09b07a101d87861fece5e2b512111a1a72167357205219"
+      },
+      {
+        "bytes": 2613,
+        "gitBlob": "e39dec6e775b630d544aa2caaba1c8176b100612",
+        "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-45954793309-stop-terminal.log",
+        "sha256": "387c1134c06e9e9dac179055a30ecd540851c700283f392116862bc754286a5f"
+      },
+      {
+        "beforeBytes": 10805,
+        "beforeGitBlob": "22736d1f04e9f63c953e3842b60bcd5c8d42a360",
+        "beforeSHA256": "a9eb742fcbb142707072c82408ba3d483cc920e66c7ea224d8d5d9d54bbcac81",
+        "bytes": 13552,
+        "gitBlob": "a3929250a9a8c45348f1a585035005cbdc763a63",
+        "path": "Scripts/CI/SDKSourceValidation/README.md",
+        "sha256": "d09a7681adfc74eaa25ed43e4068eb37248bfe792fe52c4bb7783453190dd0c8"
+      },
+      {
+        "bytes": 14758,
+        "gitBlob": "c36bc6f02fd17ded61263539bfc23d5b03d5bf6f",
+        "path": "Scripts/CI/SDKSourceValidation/continuation.py",
+        "sha256": "2658f82caa0b68a9d3322ff33e91c99d441264d10d51e15ec743001d61639a90"
+      },
+      {
+        "beforeBytes": 7657,
+        "beforeGitBlob": "874d6d1ff7b7b0c1da127ccb7cc8b97e327e2e91",
+        "beforeSHA256": "fc6bf51c942d7cb6a668110b023d95a36f3ff0fd0a7bc04dc7d2a88a03530253",
+        "bytes": 10940,
+        "gitBlob": "63806d652fc63c267947994ceccacf1cad477ee2",
+        "path": "Scripts/CI/SDKSourceValidation/obligations.json",
+        "sha256": "e56eeafa0e1be9aa0e484c28b0afa7e6aaa56602a2fb43d2e1571d71ac201958"
+      },
+      {
+        "beforeBytes": 28419,
+        "beforeGitBlob": "4359102c6b89334478303840f9c44c0e108ae2bb",
+        "beforeSHA256": "e269c858a58ae8e55e15b6d4a109c3e48fd244fa349d6006809be4048107e91e",
+        "bytes": 34314,
+        "gitBlob": "436a81e623c85f7ebda7b29f37563d12585f604e",
+        "path": "Scripts/CI/SDKSourceValidation/run.py",
+        "sha256": "81f6b2e267989b8d265177d1df52764fba15dc71389989ccca622a51a44d5c23"
+      },
+      {
+        "beforeBytes": 10112,
+        "beforeGitBlob": "e7b96230d6db23ec942ecdf4e6ec72f6ae1ca71e",
+        "beforeSHA256": "b7e18ac888cc84b189c1c9a8663449cfd9fb42092a5ea94a384e67ec7094e08e",
+        "bytes": 15251,
+        "gitBlob": "5f15c153d00daa72642e36f04361f05869887fcc",
+        "path": "Scripts/CI/SDKSourceValidation/test_control.py",
+        "sha256": "084cb257e2a485fba32675f3d42b51aa39b75aaeb078c63c66ac7db1cd0c5936"
+      }
+    ]
+  },
+  "runtimeScopes": {
+    "AnytypeAppOrNativeHandler": "NOT_RUN",
+    "newControlVerification": "12 actual portable Python controls; final local original-artifact admission verifies1005 source files,203 product files,34 commands and6 pre/post dependencies; no new Swift/native/compiler run.",
+    "originalAgent": "Actually executed on Xcode27.2 / Swift6.4.2 / Testing2403 / macOS27.0.1;5methods7cases passed0.204s, compile/test command214.558s exit0. Original workflow failed in interpretation afterward.",
+    "remainingHosted": "NOT_RUN",
+    "signingOrTestFlight": "NOT_RUN"
+  },
+  "schema": "hanlin-fixed-original-agent-continuation-source-v1",
+  "source": "caa0dac32afa18e58bba55fb4f0fdd262f181835",
+  "status": "SOURCE_AND_PORTABLE_CONTROL_VERIFIED_HOSTED_CONTINUATION_NOT_DISPATCHED"
+}

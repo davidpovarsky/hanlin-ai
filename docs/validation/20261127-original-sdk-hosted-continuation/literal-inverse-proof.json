@@ -1,0 +1,231 @@
+{
+  "baseControl": "35b504095406476799b76a9593d04ba11900d112",
+  "status": "PASS_SOURCE_RECONSTRUCTION_ONLY",
+  "files": [
+    {
+      "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "beforeSHA256": "b64caef8e3b91485fb9e7f22d88bdf17da00857ac3447ea031de4c993e8aeac3",
+      "afterSHA256": "e1c50b40b2c93f77c22243c755cb8bcb0f9447b44199f5f2ec2518a1640dc423",
+      "literalInverseOperations": [
+        {
+          "afterByteStart": 5588,
+          "afterUTF8": "  group: ${{ github.workflow }}-${{ github.ref }}-${{ (github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'agent_sdk_session_only_proof' && (inputs.exact_test_selector == 'HanlinSDKCancellationQuotaWidgets' || inputs.exact_test_selector == 'HanlinSDKQuotaWidgetsAfterAgent45954793309')) && format('original-sdk-{0}', github.run_id) || (github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'exact_test_selector') && format('exact-test-run-{0}', github.run_id) || (inputs.target_validation_group == 'phase2_app_with_motion') && 'phase2-combined-native' || (inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'AgentSkillsEmbeddedResultsUITests')) && 'embedded-result-acceptance' || (inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'HanlinMorphComposerUITests/testCompact')) && 'explicit-compact-composer' || (inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'testLiveGeminiPythonConsentAndColdReopen')) && 'live-provider-original-app' || (inputs.target_validation_group == 'chat_regression_native' || inputs.target_validation_group == 'simulator_environment_probe' || inputs.target_validation_group == 'device_build' || inputs.target_validation_group == 'project_packaging' || inputs.target_validation_group == 'chat_motion_product' || inputs.target_validation_group == 'a2ui_media_replay_ui' || inputs.target_validation_group == 'native_result_inspection' || inputs.target_validation_group == 'skill_format_app_resolve' || inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he' || inputs.target_validation_group == 'composer_metadata_only' || inputs.target_validation_group == 'composer_sdk_eligibility_diagnostic' || inputs.target_validation_group == 'composer_native_host_diagnostic') && inputs.target_validation_group || inputs.composer_validation_only && 'composer-isolated' || inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.markdown_renderer_validation_only && 'markdown-renderer' || inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}\n",
+          "beforeUTF8": "  group: ${{ github.workflow }}-${{ github.ref }}-${{ (github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'agent_sdk_session_only_proof' && inputs.exact_test_selector == 'HanlinSDKCancellationQuotaWidgets') && format('original-sdk-{0}', github.run_id) || (github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'exact_test_selector') && format('exact-test-run-{0}', github.run_id) || (inputs.target_validation_group == 'phase2_app_with_motion') && 'phase2-combined-native' || (inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'AgentSkillsEmbeddedResultsUITests')) && 'embedded-result-acceptance' || (inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'HanlinMorphComposerUITests/testCompact')) && 'explicit-compact-composer' || (inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'testLiveGeminiPythonConsentAndColdReopen')) && 'live-provider-original-app' || (inputs.target_validation_group == 'chat_regression_native' || inputs.target_validation_group == 'simulator_environment_probe' || inputs.target_validation_group == 'device_build' || inputs.target_validation_group == 'project_packaging' || inputs.target_validation_group == 'chat_motion_product' || inputs.target_validation_group == 'a2ui_media_replay_ui' || inputs.target_validation_group == 'native_result_inspection' || inputs.target_validation_group == 'skill_format_app_resolve' || inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he' || inputs.target_validation_group == 'composer_metadata_only' || inputs.target_validation_group == 'composer_sdk_eligibility_diagnostic' || inputs.target_validation_group == 'composer_native_host_diagnostic') && inputs.target_validation_group || inputs.composer_validation_only && 'composer-isolated' || inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.markdown_renderer_validation_only && 'markdown-renderer' || inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}\n"
+        },
+        {
+          "afterByteStart": 19544,
+          "afterUTF8": "    if: ${{ github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'agent_sdk_session_only_proof' && (inputs.exact_test_selector == 'HanlinSDKCancellationQuotaWidgets' || inputs.exact_test_selector == 'HanlinSDKQuotaWidgetsAfterAgent45954793309') && !inputs.testflight_upload }}\n",
+          "beforeUTF8": "    if: ${{ github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'agent_sdk_session_only_proof' && inputs.exact_test_selector == 'HanlinSDKCancellationQuotaWidgets' && !inputs.testflight_upload }}\n"
+        },
+        {
+          "afterByteStart": 20767,
+          "afterUTF8": "          GH_TOKEN: ${{ github.token }}\n",
+          "beforeUTF8": ""
+        },
+        {
+          "afterByteStart": 21272,
+          "afterUTF8": "    if: ${{ inputs.exact_test_selector != 'HanlinSDKCancellationQuotaWidgets' && inputs.exact_test_selector != 'HanlinSDKQuotaWidgetsAfterAgent45954793309' && inputs.exact_test_selector != 'HanlinPresentationSDK' && inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && ((inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_session_only_proof') && !inputs.testflight_upload))) ) }}\n",
+          "beforeUTF8": "    if: ${{ inputs.exact_test_selector != 'HanlinSDKCancellationQuotaWidgets' && inputs.exact_test_selector != 'HanlinPresentationSDK' && inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && ((inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_session_only_proof') && !inputs.testflight_upload))) ) }}\n"
+        },
+        {
+          "afterByteStart": 23607,
+          "afterUTF8": "    if: ${{ inputs.exact_test_selector != 'HanlinSDKCancellationQuotaWidgets' && inputs.exact_test_selector != 'HanlinSDKQuotaWidgetsAfterAgent45954793309' && inputs.target_validation_group == 'agent_sdk_session_only_proof' && inputs.exact_test_selector != 'HanlinAgentCoreTests,HanlinChatCoreTests' && !inputs.testflight_upload }}\n",
+          "beforeUTF8": "    if: ${{ inputs.exact_test_selector != 'HanlinSDKCancellationQuotaWidgets' && inputs.target_validation_group == 'agent_sdk_session_only_proof' && inputs.exact_test_selector != 'HanlinAgentCoreTests,HanlinChatCoreTests' && !inputs.testflight_upload }}\n"
+        }
+      ],
+      "reconstructedEveryOriginalByte": true
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/README.md",
+      "beforeSHA256": "a9eb742fcbb142707072c82408ba3d483cc920e66c7ea224d8d5d9d54bbcac81",
+      "afterSHA256": "d09a7681adfc74eaa25ed43e4068eb37248bfe792fe52c4bb7783453190dd0c8",
+      "literalInverseOperations": [
+        {
+          "afterByteStart": 8962,
+          "afterUTF8": "## Fixed continuation of original run45954793309\n\nThe separate closed selector `HanlinSDKQuotaWidgetsAfterAgent45954793309`\nadmits only source `caa0dac32afa18e58bba55fb4f0fdd262f181835`. It retrieves\nthe fixed original run45954793309/attempt1, controller35b504, job140358668934\nand artifact15178855568 using the workflow's existing Actions read token.\nThe token is passed only to those bounded `gh api` commands, never to the\ncompiler/test child environment. The original ZIP is exactly119169729 bytes,\nSHA-256 `266836f5a18a7977489cbd1e4624ff06b6ccc8d0bff872657ffc7885f0de4ca3`.\nNo arbitrary prior run, uploaded receipt, artifact ID or source is accepted.\n\nThat original workflow is still **failed**. Its actual Swift command exited0\nand all five Stop methods/seven cases passed; the controller then miscounted\nfour individual case-success lines as additional methods. The corrected parser\nseparates method and case records, admits only the observed optional\n`(Swift.Bool)` annotation, and rejects partial/duplicate/foreign case output.\nThe exact source-declared suite display names are bound to the two remaining\nprotected original test files. A display label cannot select another suite.\n\nBefore skipping any Agent execution, the continuation verifies the original\nrun/job outcomes, exact ZIP and14 fixed member hashes, the full1005-file\noriginal Git/archive inventory against the newly admitted caa0 source,\n34 actual command/log/process-group receipts, six actual clean dependency\ncheckouts before and after the test, the named5/7 terminal, and all203 retained\ncompiled product files. The original414MB product archive and failed result\nremain available byte-for-byte. No archived binary or controller is executed.\nThe local fixture/admission replays are control verification, not new Swift\ntests. The original controller stopped before its final all-suite source\nrecheck; that fact is stated in the reuse admission rather than invented.\n\nOnly after that admission does the new run skip the Agent build/test and\nexecute payload6, Widget2 and the iOS `HanlinChatUI` product build. These phases\nretain their own actual source/dependency/compiler/process/output evidence.\nThe final product-preservation gate requires both the admitted original Agent\nproducts and all newly compiled remaining products. The complete original ZIP\nand the original failed result are not converted into a successful prior run.\n\nOriginal Agent toolchain scope is **Xcode27.2 / Swift6.4.2 / Testing2403 /\nmacOS27.0.1**. The continuation records its own stable-helper-selected toolchain.\nNeither result proves an Xcode27.0 binary compatibility claim or the separately\ncompiled Anytype App, original NativeScript handler, or six App/UIKit runtime\nscrolling regressions.\n\n",
+          "beforeUTF8": ""
+        }
+      ],
+      "reconstructedEveryOriginalByte": true
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/obligations.json",
+      "beforeSHA256": "fc6bf51c942d7cb6a668110b023d95a36f3ff0fd0a7bc04dc7d2a88a03530253",
+      "afterSHA256": "e56eeafa0e1be9aa0e484c28b0afa7e6aaa56602a2fb43d2e1571d71ac201958",
+      "literalInverseOperations": [
+        {
+          "afterByteStart": 5053,
+          "afterUTF8": "      \"scope\": \"Original HanlinChatUI payload lease accounting: 6 methods. UTF-8 payload bytes and owner count, not WebKit/RSS peak.\",\n      \"displayName\": \"Original code-fence retained payload ownership\"\n",
+          "beforeUTF8": "      \"scope\": \"Original HanlinChatUI payload lease accounting: 6 methods. UTF-8 payload bytes and owner count, not WebKit/RSS peak.\"\n"
+        },
+        {
+          "afterByteStart": 5798,
+          "afterUTF8": "      \"scope\": \"Original prepared program and historical store projection in isolated macOS installations, not configured OS widgets or an iOS runtime generation.\",\n      \"displayName\": \"Pass 3 installed widget programs, actions and transactions\"\n",
+          "beforeUTF8": "      \"scope\": \"Original prepared program and historical store projection in isolated macOS installations, not configured OS widgets or an iOS runtime generation.\"\n"
+        },
+        {
+          "afterByteStart": 7805,
+          "afterUTF8": "  },\n  \"continuation\": {\n    \"selector\": \"HanlinSDKQuotaWidgetsAfterAgent45954793309\",\n    \"source\": \"caa0dac32afa18e58bba55fb4f0fdd262f181835\",\n    \"runID\": 45954793309,\n    \"attempt\": 1,\n    \"workflowID\": 310046367,\n    \"jobID\": 140358668934,\n    \"controllerSHA\": \"35b504095406476799b76a9593d04ba11900d112\",\n    \"controllerBranch\": \"codex/hanlin-sdk-hosted-validation-20261127\",\n    \"artifactID\": 15178855568,\n    \"artifactName\": \"hanlin-original-sdk-45954793309-1\",\n    \"artifactBytes\": 119169729,\n    \"artifactSHA256\": \"266836f5a18a7977489cbd1e4624ff06b6ccc8d0bff872657ffc7885f0de4ca3\",\n    \"originalSourceArchiveBytes\": 40611840,\n    \"originalSourceArchiveSHA256\": \"181e02e4ccb129f671ed337d80268e33ab55ee2e923fd0279c0bbd7dbb164ffb\",\n    \"originalProductArchiveBytes\": 413972480,\n    \"originalProductArchiveSHA256\": \"afa0e58b6a1d986e0e215f928671dda6a3e852d4fb4466518029b1b41f4769fc\",\n    \"originalToolchainScope\": \"Xcode27.2 / Swift6.4.2 / Swift Testing2403 / macOS27.0.1; no Xcode27.0 binary compatibility claim\",\n    \"members\": {\n      \"result.json\": {\n        \"bytes\": 27259,\n        \"sha256\": \"2dbcbb43294e9d1a90be8a7b776b1f28090e9a96f171c8c9f3f05371030018ab\"\n      },\n      \"commands.json\": {\n        \"bytes\": 24940,\n        \"sha256\": \"c6867508eb9c4c4b0a8e320d2bb3b1e87607a05b1262b422f150d697eff4efb7\"\n      },\n      \"admitted-source.json\": {\n        \"bytes\": 3456,\n        \"sha256\": \"eb05dd5707e5f41f7b148194d3da330877f4f659997cb7e02e2460c6af4e2028\"\n      },\n      \"original-source-files.json\": {\n        \"bytes\": 305259,\n        \"sha256\": \"75c8afbdff3bb555c1d285843fb6f071cee8471f7c0398e875a294bb3c75dacb\"\n      },\n      \"controller-identity.json\": {\n        \"bytes\": 680,\n        \"sha256\": \"3ef018232acb3eaddf4d0874a9b7e69eba2747815fa455703e933a03c7345d04\"\n      },\n      \"dispatch-inputs.json\": {\n        \"bytes\": 818,\n        \"sha256\": \"6cf9d4c9d8e2ae48e69a3835f8107d1bccd1695b92ed915ccc828b9a2158a42f\"\n      },\n      \"original-products.json\": {\n        \"bytes\": 48396,\n        \"sha256\": \"3a6556ad70612ebcf91c0402d2db8fadc869464f5b85cf5acc7d2582ae4a8f7a\"\n      },\n      \"agent-stop-checkouts.json\": {\n        \"bytes\": 1179,\n        \"sha256\": \"bd26caadb5e10d69dabc88634359e55680d684e822e61ce4ed55b88c1d1da15e\"\n      },\n      \"agent-stop-posttest-checkouts.json\": {\n        \"bytes\": 1179,\n        \"sha256\": \"bd26caadb5e10d69dabc88634359e55680d684e822e61ce4ed55b88c1d1da15e\"\n      },\n      \"agent-stop-tests.log\": {\n        \"bytes\": 1061134,\n        \"sha256\": \"a141517e1366496b39dd43796a0611dbc292e9146052534760b8937982c1f709\"\n      },\n      \"agent-stop-Package.resolved\": {\n        \"bytes\": 1771,\n        \"sha256\": \"543da4b8e9fe589c8d071fa3599d30034cb39bd57e839ba6130f754cdad701ca\"\n      },\n      \"controller-error.log\": {\n        \"bytes\": 807,\n        \"sha256\": \"9dbaf642d537bb7c4fa9ad9d99691122c81e6637f74642cc8ce7b9d2ef56cfa9\"\n      },\n      \"swift.log\": {\n        \"bytes\": 128,\n        \"sha256\": \"448e3f9c46706640fe62ea0140ecfccbb330baba2076b2916c0423af9642ee06\"\n      },\n      \"xcode.log\": {\n        \"bytes\": 31,\n        \"sha256\": \"67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7\"\n      }\n    }\n",
+          "beforeUTF8": ""
+        }
+      ],
+      "reconstructedEveryOriginalByte": true
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/run.py",
+      "beforeSHA256": "e269c858a58ae8e55e15b6d4a109c3e48fd244fa349d6006809be4048107e91e",
+      "afterSHA256": "81f6b2e267989b8d265177d1df52764fba15dc71389989ccca622a51a44d5c23",
+      "literalInverseOperations": [
+        {
+          "afterByteStart": 503,
+          "afterUTF8": "\nfrom continuation import admit_archive, validate_api\n",
+          "beforeUTF8": ""
+        },
+        {
+          "afterByteStart": 2529,
+          "afterUTF8": "    selector = inputs.get(\"exact_test_selector\")\n    require(selector in (CONFIG[\"selector\"], CONFIG[\"continuation\"][\"selector\"]), \"Wrong closed selector\")\n",
+          "beforeUTF8": "    require(inputs.get(\"exact_test_selector\") == CONFIG[\"selector\"], \"Wrong closed selector\")\n"
+        },
+        {
+          "afterByteStart": 3134,
+          "afterUTF8": "    if selector == CONFIG[\"continuation\"][\"selector\"]:\n        require(source == CONFIG[\"continuation\"][\"source\"], \"Continuation source differs from original execution\")\n",
+          "beforeUTF8": ""
+        },
+        {
+          "afterByteStart": 4060,
+          "afterUTF8": "    records = re.findall(r\"^\u2714 Test ((?!case passing )[^\\n]+?\\([^\\n]*?\\))(?: with (\\d+) test cases)? passed after [^\\n]+$\",\n",
+          "beforeUTF8": "    records = re.findall(r\"^\u2714 Test ([^\\n]+?\\([^\\n]*?\\))(?: with (\\d+) test cases)? passed after [^\\n]+$\",\n"
+        },
+        {
+          "afterByteStart": 4585,
+          "afterUTF8": "    started = re.findall(r\"^\u25c7 Test ((?!case passing )[^\\n]+?\\([^\\n]*?\\)) started\\.$\", text, re.M)\n    require(sorted(started) == sorted(actual), \"Missing, duplicate or foreign method start\")\n",
+          "beforeUTF8": ""
+        },
+        {
+          "afterByteStart": 5000,
+          "afterUTF8": "    passed_suites = re.findall(r\"^\u2714 Suite (.+?) passed after [^\\n]+$\", text, re.M)\n    allowed_suites = [suite[\"suite\"]]\n    if suite.get(\"displayName\"):\n        allowed_suites += [suite[\"displayName\"], '\"' + suite[\"displayName\"] + '\"']\n    require(len(passed_suites) == 1 and passed_suites[0] in allowed_suites and\n            re.findall(r\"^\u25c7 Suite (.+?) started\\.$\", text, re.M) == passed_suites,\n            \"Missing, duplicate or foreign suite; only exact source-declared names are admitted\")\n",
+          "beforeUTF8": "    require(re.search(r\"^\u2714 Suite \" + re.escape(suite[\"suite\"]) + r\" passed after \", text, re.M) is not None,\n            \"Original suite did not pass\")\n"
+        },
+        {
+          "afterByteStart": 5520,
+          "afterUTF8": "    case_starts = re.findall(r\"^\u25c7 Test case passing 1 argument (\\w+) \u2192 ([^\\n]+?) to ([^\\n]+?) started\\.$\", text, re.M)\n    case_passes = re.findall(r\"^\u2714 Test case passing 1 argument (\\w+) \u2192 ([^\\n]+?) to ([^\\n]+?) passed after [^\\n]+$\", text, re.M)\n    expected_cases = []\n",
+          "beforeUTF8": ""
+        },
+        {
+          "afterByteStart": 5863,
+          "afterUTF8": "        expected_cases.extend((expected[\"parameter\"], value, name) for value in expected[\"values\"])\n        arguments[name] = sorted(expected[\"values\"])\n    def normalized_cases(cases):\n        normalized = []\n        for parameter, value, name in cases:\n            # Only the exact bool spellings observed in original2084/2403 logs.\n            require(value in (\"false\", \"true\", \"false (Swift.Bool)\", \"true (Swift.Bool)\"),\n                    \"Unknown parameter value or type annotation\")\n            normalized.append((parameter, value.removesuffix(\" (Swift.Bool)\"), name))\n        return sorted(normalized)\n    require(normalized_cases(case_starts) == sorted(expected_cases),\n            \"Missing, duplicate or foreign original parameter start\")\n    #2084 has no individual case-pass lines.2403 emits one for every actual case.\n    # Once any are present, require the whole exact set, never a partial subset.\n    if case_passes or any(\" (Swift.Bool)\" in value for _, value, _ in case_starts):\n        require(normalized_cases(case_passes) == sorted(expected_cases),\n                \"Missing, duplicate or foreign original parameter success\")\n    recognized_passes = len(records) + len(case_passes) + len(summaries)\n    require(len(re.findall(r\"^\u2714 Test .+$\", text, re.M)) == recognized_passes,\n            \"Unrecognized successful test output\")\n    require(len(re.findall(r\"^\u25c7 Test .+ started\\.$\", text, re.M)) == len(started) + len(case_starts) + 1,\n            \"Unrecognized test start output\")\n",
+          "beforeUTF8": "        pattern = (r\"^\u25c7 Test case passing 1 argument \" + re.escape(expected[\"parameter\"]) +\n                   r\" \u2192 ([^\\n]+?) to \" + re.escape(name) + r\" started\\.$\")\n        values = re.findall(pattern, text, re.M)\n        require(sorted(values) == sorted(expected[\"values\"]), \"Missing/duplicate original parameter case\")\n        arguments[name] = values\n"
+        },
+        {
+          "afterByteStart": 7457,
+          "afterUTF8": "            \"reportedSuite\": passed_suites[0],\n",
+          "beforeUTF8": ""
+        },
+        {
+          "afterByteStart": 10574,
+          "afterUTF8": "        self.environment = {key: value for key, value in os.environ.items() if key not in (\"GH_TOKEN\", \"GITHUB_TOKEN\")}\n        self.environment.update(NO_COLOR=\"1\", TERM=\"dumb\", PYTHONUNBUFFERED=\"1\")\n",
+          "beforeUTF8": "        self.environment = dict(os.environ, NO_COLOR=\"1\", TERM=\"dumb\", PYTHONUNBUFFERED=\"1\")\n"
+        },
+        {
+          "afterByteStart": 11058,
+          "afterUTF8": "                timeout: int = 1200, allow_failure: bool = False,\n                binary_output: bool = False, environment: dict | None = None,\n                maximum_output_bytes: int | None = None) -> str:\n        log = self.output / (label + (\".zip\" if binary_output else \".log\"))\n",
+          "beforeUTF8": "                timeout: int = 1200, allow_failure: bool = False) -> str:\n        log = self.output / (label + \".log\")\n"
+        },
+        {
+          "afterByteStart": 11905,
+          "afterUTF8": "            process = subprocess.Popen(argv, cwd=cwd or self.root, env=environment or self.environment,\n",
+          "beforeUTF8": "            process = subprocess.Popen(argv, cwd=cwd or self.root, env=self.environment,\n"
+        },
+        {
+          "afterByteStart": 12373,
+          "afterUTF8": "                if maximum_output_bytes is None:\n                    process.wait(timeout=timeout)\n                else:\n                    end = time.monotonic() + timeout\n                    while process.poll() is None:\n                        require(log.stat().st_size <= maximum_output_bytes, \"Bounded command output exceeded\")\n                        remaining = end - time.monotonic()\n                        if remaining <= 0:\n                            raise subprocess.TimeoutExpired(argv, timeout)\n                        try:\n                            process.wait(timeout=min(0.25, remaining))\n                        except subprocess.TimeoutExpired:\n                            if time.monotonic() >= end:\n                                raise\n",
+          "beforeUTF8": "                process.wait(timeout=timeout)\n"
+        },
+        {
+          "afterByteStart": 13942,
+          "afterUTF8": "        text = \"\" if binary_output else log.read_text(errors=\"replace\")\n",
+          "beforeUTF8": "        text = log.read_text(errors=\"replace\")\n"
+        },
+        {
+          "afterByteStart": 14428,
+          "afterUTF8": "        if maximum_output_bytes is not None:\n            require(log.stat().st_size <= maximum_output_bytes, \"Bounded command output exceeded\")\n",
+          "beforeUTF8": ""
+        },
+        {
+          "afterByteStart": 14713,
+          "afterUTF8": "        result = subprocess.run([\"git\", *args], cwd=self.root, env=self.environment,\n                                capture_output=True, text=True, timeout=60)\n",
+          "beforeUTF8": "        result = subprocess.run([\"git\", *args], cwd=self.root, capture_output=True, text=True, timeout=60)\n"
+        },
+        {
+          "afterByteStart": 19069,
+          "afterUTF8": "                                  cwd=run.root, env=run.environment)\n",
+          "beforeUTF8": "                                  cwd=run.root)\n"
+        },
+        {
+          "afterByteStart": 19987,
+          "afterUTF8": "def execute(run: Run, source: str, continue_original_agent: bool = False) -> dict:\n",
+          "beforeUTF8": "def execute(run: Run, source: str) -> dict:\n"
+        },
+        {
+          "afterByteStart": 20609,
+          "afterUTF8": "                     \"Scripts/CI/SDKSourceValidation/run.py\", \"Scripts/CI/SDKSourceValidation/obligations.json\",\n                     \"Scripts/CI/SDKSourceValidation/continuation.py\"]\n",
+          "beforeUTF8": "                     \"Scripts/CI/SDKSourceValidation/run.py\", \"Scripts/CI/SDKSourceValidation/obligations.json\"]\n"
+        },
+        {
+          "afterByteStart": 24393,
+          "afterUTF8": "    if continue_original_agent:\n        fixed = CONFIG[\"continuation\"]\n        require(source == fixed[\"source\"], \"Original Agent evidence belongs to another source\")\n        token = os.environ.get(\"GH_TOKEN\")\n        require(token, \"Existing Actions read token is required for fixed original artifact retrieval\")\n        api_environment = dict(run.environment, GH_TOKEN=token)\n        api = \"repos/davidpovarsky/hanlin-ai/actions/\"\n        def api_json(label, endpoint):\n            text = run.command(label, [\"gh\", \"api\", api + endpoint], timeout=120,\n                               environment=api_environment, maximum_output_bytes=1024 * 1024)\n            return json.loads(text)\n        prior_run = api_json(\"prior-run-api\", f'runs/{fixed[\"runID\"]}')\n        prior_jobs = api_json(\"prior-jobs-api\", f'runs/{fixed[\"runID\"]}/jobs?per_page=100')\n        prior_artifact = api_json(\"prior-artifact-api\", f'artifacts/{fixed[\"artifactID\"]}')\n        validate_api(prior_run, prior_jobs, prior_artifact, fixed)\n        run.command(\"prior-original-artifact\", [\"gh\", \"api\", api + f'artifacts/{fixed[\"artifactID\"]}/zip'],\n                    timeout=300, binary_output=True, environment=api_environment,\n                    maximum_output_bytes=fixed[\"artifactBytes\"])\n        reused = admit_archive(run.output / \"prior-original-artifact.zip\", run.output, fixed,\n                               before, published, sys.modules[__name__])\n        suite_results.append(reused[\"parsed\"])\n        resolved_locks[\"agent-stop\"] = reused[\"resolvedLock\"]\n        run.products.append(reused[\"product\"])\n        write_json(run.output / \"reused-agent-admission.json\", reused[\"admission\"])\n        write_json(run.output / \"agent-stop-actual-results.json\", reused[\"parsed\"])\n        run.free_floor(2 * 1024**3)\n",
+          "beforeUTF8": ""
+        },
+        {
+          "afterByteStart": 26217,
+          "afterUTF8": "        if continue_original_agent and suite[\"name\"] == \"agent-stop\":\n            continue  # The exact original named execution was admitted above; no duplicate compile/test.\n",
+          "beforeUTF8": ""
+        },
+        {
+          "afterByteStart": 31465,
+          "afterUTF8": "    metadata_environment = {key: value for key, value in os.environ.items() if key not in (\"GH_TOKEN\", \"GITHUB_TOKEN\")}\n    root = Path(subprocess.check_output([\"git\", \"rev-parse\", \"--show-toplevel\"],\n                                       env=metadata_environment, text=True).strip())\n",
+          "beforeUTF8": "    root = Path(subprocess.check_output([\"git\", \"rev-parse\", \"--show-toplevel\"], text=True).strip())\n"
+        },
+        {
+          "afterByteStart": 32432,
+          "afterUTF8": "        result = execute(run, source, inputs[\"exact_test_selector\"] == CONFIG[\"continuation\"][\"selector\"])\n",
+          "beforeUTF8": "        result = execute(run, source)\n"
+        }
+      ],
+      "reconstructedEveryOriginalByte": true
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/test_control.py",
+      "beforeSHA256": "b7e18ac888cc84b189c1c9a8663449cfd9fb42092a5ea94a384e67ec7094e08e",
+      "afterSHA256": "084cb257e2a485fba32675f3d42b51aa39b75aaeb078c63c66ac7db1cd0c5936",
+      "literalInverseOperations": [
+        {
+          "afterByteStart": 486,
+          "afterUTF8": "\nfrom continuation import validate_api, admit_archive\n",
+          "beforeUTF8": ""
+        },
+        {
+          "afterByteStart": 4427,
+          "afterUTF8": "    def test_actual_2403_terminal_distinguishes_method_and_individual_case_success(self):\n        fixture = HERE / \"Fixtures/original-45954793309-stop-terminal.log\"\n        provenance = json.loads((HERE / \"Fixtures/original-45954793309-stop-terminal-provenance.json\").read_text())\n        self.assertEqual(hashlib.sha256(fixture.read_bytes()).hexdigest(), provenance[\"terminalSHA256\"])\n        result = control.parse_swift_testing(fixture.read_text(), CONFIG[\"suites\"][0])\n        self.assertEqual(result[\"methodCount\"], 5)\n        self.assertEqual(result[\"caseCount\"], 7)\n        self.assertEqual(result[\"arguments\"][\"stopAtEOFJoinsConfirmedReceiptWorkerBeforeReleasingRun(stopAtEOF:)\"], [\"false\", \"true\"])\n\n    def test_2403_refuses_partial_duplicate_foreign_or_wrong_typed_cases(self):\n        original = (HERE / \"Fixtures/original-45954793309-stop-terminal.log\").read_text()\n        one = next(x for x in original.splitlines(True) if x.startswith(\"\u2714 Test case passing\"))\n        variants = [original.replace(one, \"\"), original + one,\n            \"\".join(x for x in original.splitlines(True) if not x.startswith(\"\u2714 Test case passing\")),\n            original.replace(\"false (Swift.Bool)\", \"false (Other.Bool)\", 1),\n            original.replace(\"false (Swift.Bool)\", \"0 (Swift.Int)\", 1),\n            original + \"\u2714 Test case passing 1 argument other \u2192 true (Swift.Bool) to foreign(value:) passed after 0.1 seconds.\\n\",\n            original + \"\u25c7 Test foreign() started.\\n\",\n            original + \"\u2714 Test foreign() passed after 0.1 seconds.\\n\",\n            original + \"\u2714 Test run with 5 tests in 1 suite passed after 0.204 seconds.\\n\"]\n        for variant in variants:\n            with self.subTest(length=len(variant)), self.assertRaises(RuntimeError):\n                control.parse_swift_testing(variant, CONFIG[\"suites\"][0])\n\n    def test_continuation_only_admits_the_fixed_run_source_and_unchanged_side_effect_inputs(self):\n        fixed = CONFIG[\"continuation\"]\n        inputs = {**admitted_inputs(), \"exact_test_selector\": fixed[\"selector\"], CONFIG[\"sourceInput\"]: fixed[\"source\"]}\n        environment = {\"GITHUB_EVENT_NAME\": \"workflow_dispatch\", \"GITHUB_REPOSITORY\": \"davidpovarsky/hanlin-ai\",\n                       \"HANLIN_SDK_SOURCE_SHA\": fixed[\"source\"]}\n        self.assertEqual(control.validate_inputs(inputs, environment), fixed[\"source\"])\n        for changes in ({CONFIG[\"sourceInput\"]: CONFIG[\"referenceSource\"]}, {\"runtime_bundle_artifact_run_id\": \"45954793309\"},\n                        {\"testflight_upload\": \"true\"}, {\"exact_test_selector\": fixed[\"selector\"] + \"-other\"}):\n            with self.subTest(changes=changes), self.assertRaises(RuntimeError):\n                control.validate_inputs({**inputs, **changes}, environment)\n\n    def test_continuation_api_refuses_foreign_attempt_artifact_or_executed_sibling_job(self):\n        fixture = json.loads((HERE / \"Fixtures/original-45954793309-api-identities.json\").read_text())\n        fixed = CONFIG[\"continuation\"]\n        validate_api(fixture[\"run\"], fixture[\"jobs\"], fixture[\"artifact\"], fixed)\n        for kind, changes in ((\"run\", {\"run_attempt\": 2}), (\"run\", {\"conclusion\": \"success\"}),\n                              (\"run\", {\"head_sha\": \"f\" * 40}), (\"artifact\", {\"expired\": True}),\n                              (\"artifact\", {\"digest\": \"sha256:\" + \"0\" * 64}), (\"artifact\", {\"size_in_bytes\": 1})):\n            variant = copy.deepcopy(fixture); variant[kind].update(changes)\n            with self.subTest(kind=kind, changes=changes), self.assertRaises(RuntimeError):\n                validate_api(variant[\"run\"], variant[\"jobs\"], variant[\"artifact\"], fixed)\n        variant = copy.deepcopy(fixture)\n        next(x for x in variant[\"jobs\"][\"jobs\"] if x[\"id\"] != fixed[\"jobID\"])[\"conclusion\"] = \"success\"\n        with self.assertRaises(RuntimeError):\n            validate_api(variant[\"run\"], variant[\"jobs\"], variant[\"artifact\"], fixed)\n\n    def test_continuation_refuses_wrong_archive_before_any_source_or_product_admission(self):\n        with tempfile.TemporaryDirectory() as temporary:\n            root = Path(temporary); archive = root / \"wrong.zip\"\n            archive.write_bytes(b\"CONTROL_ONLY_NOT_AN_ACTIONS_ARTIFACT\")\n            with self.assertRaisesRegex(RuntimeError, \"ZIP bytes differ\"):\n                admit_archive(archive, root, CONFIG[\"continuation\"], [], {}, control)\n            self.assertEqual(list(root.iterdir()), [archive])\n\n",
+          "beforeUTF8": ""
+        },
+        {
+          "afterByteStart": 9495,
+          "afterUTF8": "                    original + \"\u25c7 Test missing() skipped.\\n\", original + \"\u2718 Test failure() failed.\\n\",\n                    original.replace(\"Suite AgentSessionTests\", \"Suite ForeignSuite\"),\n                    original + \"\u2714 Suite AgentSessionTests passed after 0.1 seconds.\\n\"]\n",
+          "beforeUTF8": "                    original + \"\u25c7 Test missing() skipped.\\n\", original + \"\u2718 Test failure() failed.\\n\"]\n"
+        },
+        {
+          "afterByteStart": 13769,
+          "afterUTF8": "                guards = (\"${{ inputs.exact_test_selector != '\" + CONFIG[\"selector\"] + \"' && \" +\n                          \"inputs.exact_test_selector != '\" + CONFIG[\"continuation\"][\"selector\"] + \"' && \")\n                expected = condition.replace(\"${{ \", guards, 1)\n",
+          "beforeUTF8": "                expected = condition.replace(\"${{ \", \"${{ inputs.exact_test_selector != '\" + CONFIG[\"selector\"] + \"' && \", 1)\n"
+        },
+        {
+          "afterByteStart": 14301,
+          "afterUTF8": "                         [\"sdk-original-obligations\"])\n        continued = {**inputs, \"exact_test_selector\": CONFIG[\"continuation\"][\"selector\"],\n                     CONFIG[\"sourceInput\"]: CONFIG[\"continuation\"][\"source\"]}\n        self.assertEqual([name for name, condition in actual.items() if job_value(condition, continued)],\n",
+          "beforeUTF8": ""
+        }
+      ],
+      "reconstructedEveryOriginalByte": true
+    }
+  ]
+}

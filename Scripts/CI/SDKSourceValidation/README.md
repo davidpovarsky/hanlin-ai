@@ -147,6 +147,49 @@ terminal excerpt in `Fixtures` is a byte-exact historical **parser unit-test
 fixture only**. It cannot make this new source pass or replace an actual run.
 Local controller tests never invoke Swift, Xcode, a simulator or native APIs.
 
+## Fixed continuation of original run45954793309
+
+The separate closed selector `HanlinSDKQuotaWidgetsAfterAgent45954793309`
+admits only source `caa0dac32afa18e58bba55fb4f0fdd262f181835`. It retrieves
+the fixed original run45954793309/attempt1, controller35b504, job140358668934
+and artifact15178855568 using the workflow's existing Actions read token.
+The token is passed only to those bounded `gh api` commands, never to the
+compiler/test child environment. The original ZIP is exactly119169729 bytes,
+SHA-256 `266836f5a18a7977489cbd1e4624ff06b6ccc8d0bff872657ffc7885f0de4ca3`.
+No arbitrary prior run, uploaded receipt, artifact ID or source is accepted.
+
+That original workflow is still **failed**. Its actual Swift command exited0
+and all five Stop methods/seven cases passed; the controller then miscounted
+four individual case-success lines as additional methods. The corrected parser
+separates method and case records, admits only the observed optional
+`(Swift.Bool)` annotation, and rejects partial/duplicate/foreign case output.
+The exact source-declared suite display names are bound to the two remaining
+protected original test files. A display label cannot select another suite.
+
+Before skipping any Agent execution, the continuation verifies the original
+run/job outcomes, exact ZIP and14 fixed member hashes, the full1005-file
+original Git/archive inventory against the newly admitted caa0 source,
+34 actual command/log/process-group receipts, six actual clean dependency
+checkouts before and after the test, the named5/7 terminal, and all203 retained
+compiled product files. The original414MB product archive and failed result
+remain available byte-for-byte. No archived binary or controller is executed.
+The local fixture/admission replays are control verification, not new Swift
+tests. The original controller stopped before its final all-suite source
+recheck; that fact is stated in the reuse admission rather than invented.
+
+Only after that admission does the new run skip the Agent build/test and
+execute payload6, Widget2 and the iOS `HanlinChatUI` product build. These phases
+retain their own actual source/dependency/compiler/process/output evidence.
+The final product-preservation gate requires both the admitted original Agent
+products and all newly compiled remaining products. The complete original ZIP
+and the original failed result are not converted into a successful prior run.
+
+Original Agent toolchain scope is **Xcode27.2 / Swift6.4.2 / Testing2403 /
+macOS27.0.1**. The continuation records its own stable-helper-selected toolchain.
+Neither result proves an Xcode27.0 binary compatibility claim or the separately
+compiled Anytype App, original NativeScript handler, or six App/UIKit runtime
+scrolling regressions.
+
 ## Separate original NativeScript and App/UIKit routes
 
 The original explicit-handler test remains:

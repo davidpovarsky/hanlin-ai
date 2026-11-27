@@ -17,6 +17,8 @@ control = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(control)
 CONFIG = control.CONFIG
 
+from continuation import validate_api, admit_archive
+
 
 def admitted_inputs():
     return {**{name: "false" for name in control.FALSE_INPUTS},
@@ -81,6 +83,64 @@ class ControlTests(unittest.TestCase):
         self.assertEqual(result["methodCount"], 5)
         self.assertEqual(result["caseCount"], 7)
 
+    def test_actual_2403_terminal_distinguishes_method_and_individual_case_success(self):
+        fixture = HERE / "Fixtures/original-45954793309-stop-terminal.log"
+        provenance = json.loads((HERE / "Fixtures/original-45954793309-stop-terminal-provenance.json").read_text())
+        self.assertEqual(hashlib.sha256(fixture.read_bytes()).hexdigest(), provenance["terminalSHA256"])
+        result = control.parse_swift_testing(fixture.read_text(), CONFIG["suites"][0])
+        self.assertEqual(result["methodCount"], 5)
+        self.assertEqual(result["caseCount"], 7)
+        self.assertEqual(result["arguments"]["stopAtEOFJoinsConfirmedReceiptWorkerBeforeReleasingRun(stopAtEOF:)"], ["false", "true"])
+
+    def test_2403_refuses_partial_duplicate_foreign_or_wrong_typed_cases(self):
+        original = (HERE / "Fixtures/original-45954793309-stop-terminal.log").read_text()
+        one = next(x for x in original.splitlines(True) if x.startswith("✔ Test case passing"))
+        variants = [original.replace(one, ""), original + one,
+            "".join(x for x in original.splitlines(True) if not x.startswith("✔ Test case passing")),
+            original.replace("false (Swift.Bool)", "false (Other.Bool)", 1),
+            original.replace("false (Swift.Bool)", "0 (Swift.Int)", 1),
+            original + "✔ Test case passing 1 argument other → true (Swift.Bool) to foreign(value:) passed after 0.1 seconds.\n",
+            original + "◇ Test foreign() started.\n",
+            original + "✔ Test foreign() passed after 0.1 seconds.\n",
+            original + "✔ Test run with 5 tests in 1 suite passed after 0.204 seconds.\n"]
+        for variant in variants:
+            with self.subTest(length=len(variant)), self.assertRaises(RuntimeError):
+                control.parse_swift_testing(variant, CONFIG["suites"][0])
+
+    def test_continuation_only_admits_the_fixed_run_source_and_unchanged_side_effect_inputs(self):
+        fixed = CONFIG["continuation"]
+        inputs = {**admitted_inputs(), "exact_test_selector": fixed["selector"], CONFIG["sourceInput"]: fixed["source"]}
+        environment = {"GITHUB_EVENT_NAME": "workflow_dispatch", "GITHUB_REPOSITORY": "davidpovarsky/hanlin-ai",
+                       "HANLIN_SDK_SOURCE_SHA": fixed["source"]}
+        self.assertEqual(control.validate_inputs(inputs, environment), fixed["source"])
+        for changes in ({CONFIG["sourceInput"]: CONFIG["referenceSource"]}, {"runtime_bundle_artifact_run_id": "45954793309"},
+                        {"testflight_upload": "true"}, {"exact_test_selector": fixed["selector"] + "-other"}):
+            with self.subTest(changes=changes), self.assertRaises(RuntimeError):
+                control.validate_inputs({**inputs, **changes}, environment)
+
+    def test_continuation_api_refuses_foreign_attempt_artifact_or_executed_sibling_job(self):
+        fixture = json.loads((HERE / "Fixtures/original-45954793309-api-identities.json").read_text())
+        fixed = CONFIG["continuation"]
+        validate_api(fixture["run"], fixture["jobs"], fixture["artifact"], fixed)
+        for kind, changes in (("run", {"run_attempt": 2}), ("run", {"conclusion": "success"}),
+                              ("run", {"head_sha": "f" * 40}), ("artifact", {"expired": True}),
+                              ("artifact", {"digest": "sha256:" + "0" * 64}), ("artifact", {"size_in_bytes": 1})):
+            variant = copy.deepcopy(fixture); variant[kind].update(changes)
+            with self.subTest(kind=kind, changes=changes), self.assertRaises(RuntimeError):
+                validate_api(variant["run"], variant["jobs"], variant["artifact"], fixed)
+        variant = copy.deepcopy(fixture)
+        next(x for x in variant["jobs"]["jobs"] if x["id"] != fixed["jobID"])["conclusion"] = "success"
+        with self.assertRaises(RuntimeError):
+            validate_api(variant["run"], variant["jobs"], variant["artifact"], fixed)
+
+    def test_continuation_refuses_wrong_archive_before_any_source_or_product_admission(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary); archive = root / "wrong.zip"
+            archive.write_bytes(b"CONTROL_ONLY_NOT_AN_ACTIONS_ARTIFACT")
+            with self.assertRaisesRegex(RuntimeError, "ZIP bytes differ"):
+                admit_archive(archive, root, CONFIG["continuation"], [], {}, control)
+            self.assertEqual(list(root.iterdir()), [archive])
+
     def test_partial_duplicate_skipped_or_zero_test_output_is_never_acceptance(self):
         original = (HERE / "Fixtures/original-385-stop-terminal.log").read_text()
         case = next(line for line in original.splitlines(True) if "changeAccount → false" in line)
@@ -88,7 +148,9 @@ class ControlTests(unittest.TestCase):
         variants = [original.replace(case, ""), original + passed,
                     original.replace("with 2 test cases passed", "with 1 test cases passed", 1),
                     original.replace("Test run with 5 tests", "Test run with 0 tests"),
-                    original + "◇ Test missing() skipped.\n", original + "✘ Test failure() failed.\n"]
+                    original + "◇ Test missing() skipped.\n", original + "✘ Test failure() failed.\n",
+                    original.replace("Suite AgentSessionTests", "Suite ForeignSuite"),
+                    original + "✔ Suite AgentSessionTests passed after 0.1 seconds.\n"]
         for variant in variants:
             with self.subTest(length=len(variant)), self.assertRaises(RuntimeError):
                 control.parse_swift_testing(variant, CONFIG["suites"][0])
@@ -156,10 +218,16 @@ class ControlTests(unittest.TestCase):
         for name, condition in prior.items():
             expected = condition
             if name in ("agent-sdk-proof", "presentation-sdk-proof"):
-                expected = condition.replace("${{ ", "${{ inputs.exact_test_selector != '" + CONFIG["selector"] + "' && ", 1)
+                guards = ("${{ inputs.exact_test_selector != '" + CONFIG["selector"] + "' && " +
+                          "inputs.exact_test_selector != '" + CONFIG["continuation"]["selector"] + "' && ")
+                expected = condition.replace("${{ ", guards, 1)
             self.assertEqual(actual[name], expected)
         inputs = {key: (False if value == "false" else value) for key, value in admitted_inputs().items()}
         self.assertEqual([name for name, condition in actual.items() if job_value(condition, inputs)],
+                         ["sdk-original-obligations"])
+        continued = {**inputs, "exact_test_selector": CONFIG["continuation"]["selector"],
+                     CONFIG["sourceInput"]: CONFIG["continuation"]["source"]}
+        self.assertEqual([name for name, condition in actual.items() if job_value(condition, continued)],
                          ["sdk-original-obligations"])
         for selector in ("", "HanlinPresentationSDK", "HanlinAgentCoreTests,HanlinChatCoreTests",
                          "HanlinNativeToolCancellationRecheck"):

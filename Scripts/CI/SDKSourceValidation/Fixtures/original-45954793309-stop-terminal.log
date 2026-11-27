@@ -1,0 +1,27 @@
+◇ Test run started.
+↳ Swift Standard Library Version: 6.4
+↳ Swift Compiler Version: 6.4.2
+↳ Testing Library Version: 2403
+↳ Target Platform: arm64e-apple-macos14.0
+↳ OS Version: 27.0.1 (26A434)
+◇ Suite AgentSessionTests started.
+◇ Test stopWaitsForOriginalNativeWorkerAndKeepsAccountFence(changeAccount:) started.
+◇ Test stopPreservesPartialTranscriptAndNewRunWhileOldConsumerTerminates() started.
+◇ Test stopBeforeProducerInstallationJoinsPreparationAndPreservesStoredConversation() started.
+◇ Test stopAtEOFJoinsConfirmedReceiptWorkerBeforeReleasingRun(stopAtEOF:) started.
+◇ Test case passing 1 argument changeAccount → false (Swift.Bool) to stopWaitsForOriginalNativeWorkerAndKeepsAccountFence(changeAccount:) started.
+◇ Test case passing 1 argument changeAccount → true (Swift.Bool) to stopWaitsForOriginalNativeWorkerAndKeepsAccountFence(changeAccount:) started.
+◇ Test stopDoesNotConvertUncertainReceiptIntoPermissionToRetry() started.
+◇ Test case passing 1 argument stopAtEOF → false (Swift.Bool) to stopAtEOFJoinsConfirmedReceiptWorkerBeforeReleasingRun(stopAtEOF:) started.
+◇ Test case passing 1 argument stopAtEOF → true (Swift.Bool) to stopAtEOFJoinsConfirmedReceiptWorkerBeforeReleasingRun(stopAtEOF:) started.
+✔ Test stopDoesNotConvertUncertainReceiptIntoPermissionToRetry() passed after 0.159 seconds.
+✔ Test case passing 1 argument changeAccount → true (Swift.Bool) to stopWaitsForOriginalNativeWorkerAndKeepsAccountFence(changeAccount:) passed after 0.179 seconds.
+✔ Test stopBeforeProducerInstallationJoinsPreparationAndPreservesStoredConversation() passed after 0.192 seconds.
+✔ Test stopPreservesPartialTranscriptAndNewRunWhileOldConsumerTerminates() passed after 0.193 seconds.
+✔ Test case passing 1 argument changeAccount → false (Swift.Bool) to stopWaitsForOriginalNativeWorkerAndKeepsAccountFence(changeAccount:) passed after 0.197 seconds.
+✔ Test stopWaitsForOriginalNativeWorkerAndKeepsAccountFence(changeAccount:) with 2 test cases passed after 0.198 seconds.
+✔ Test case passing 1 argument stopAtEOF → false (Swift.Bool) to stopAtEOFJoinsConfirmedReceiptWorkerBeforeReleasingRun(stopAtEOF:) passed after 0.200 seconds.
+✔ Test case passing 1 argument stopAtEOF → true (Swift.Bool) to stopAtEOFJoinsConfirmedReceiptWorkerBeforeReleasingRun(stopAtEOF:) passed after 0.200 seconds.
+✔ Test stopAtEOFJoinsConfirmedReceiptWorkerBeforeReleasingRun(stopAtEOF:) with 2 test cases passed after 0.202 seconds.
+✔ Suite AgentSessionTests passed after 0.203 seconds.
+✔ Test run with 5 tests in 1 suite passed after 0.204 seconds.

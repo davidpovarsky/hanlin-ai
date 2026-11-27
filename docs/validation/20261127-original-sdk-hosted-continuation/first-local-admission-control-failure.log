@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "<stdin>", line 17, in <module>
+  File "/workspace/scratch/ae335eba85e3/hanlin-hosted-sdk-control/continuation-after/Scripts/CI/SDKSourceValidation/continuation.py", line 129, in admit_archive
+    require(len(data) == row["bytes"] and hashlib.sha256(data).hexdigest() == row["sha256"] and
+  File "/workspace/scratch/ae335eba85e3/hanlin-hosted-sdk-control/continuation-after/Scripts/CI/SDKSourceValidation/continuation.py", line 20, in require
+    raise RuntimeError(message)
+RuntimeError: Original source archive differs from immutable Git: AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved

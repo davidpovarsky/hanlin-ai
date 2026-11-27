@@ -21,6 +21,8 @@ import tempfile
 import time
 import traceback
 
+from continuation import admit_archive, validate_api
+
 
 HERE = Path(__file__).resolve().parent
 CONFIG = json.loads((HERE / "obligations.json").read_text())
@@ -68,12 +70,15 @@ def validate_inputs(inputs: dict, environment: dict) -> str:
     require(environment.get("GITHUB_EVENT_NAME") == "workflow_dispatch", "Manual dispatch required")
     require(environment.get("GITHUB_REPOSITORY") == "davidpovarsky/hanlin-ai", "Wrong repository")
     require(inputs.get("target_validation_group") == CONFIG["group"], "Wrong SDK group")
-    require(inputs.get("exact_test_selector") == CONFIG["selector"], "Wrong closed selector")
+    selector = inputs.get("exact_test_selector")
+    require(selector in (CONFIG["selector"], CONFIG["continuation"]["selector"]), "Wrong closed selector")
     source = inputs.get(CONFIG["sourceInput"], "")
     require(isinstance(source, str) and re.fullmatch(r"[0-9a-f]{40}", source) is not None,
             "A complete immutable source SHA is required; refs/latest/defaults are not admitted")
     require(source in CONFIG["reviewedSources"], "Source has no exact reviewed tree entry in this controller")
     require(environment.get("HANLIN_SDK_SOURCE_SHA") == source, "Workflow/source input mismatch")
+    if selector == CONFIG["continuation"]["selector"]:
+        require(source == CONFIG["continuation"]["source"], "Continuation source differs from original execution")
     for name in FALSE_INPUTS:
         require(inputs.get(name) in (False, "false"), f"{name} must be explicitly false")
     for name in EMPTY_INPUTS:
@@ -90,7 +95,7 @@ def parse_swift_testing(text: str, suite: dict) -> dict:
     text = re.sub(r"\x1b\[[0-9;]*m", "", text)
     require(not re.search(r"^.*(?:✘|Test .+ skipped|Test .+ failed|recorded an issue)", text, re.M),
             "Swift Testing reported a failure, issue or skipped test")
-    records = re.findall(r"^✔ Test ([^\n]+?\([^\n]*?\))(?: with (\d+) test cases)? passed after [^\n]+$",
+    records = re.findall(r"^✔ Test ((?!case passing )[^\n]+?\([^\n]*?\))(?: with (\d+) test cases)? passed after [^\n]+$",
                          text, re.M)
     require(len(records) == len(suite["expectedMethods"]), "Wrong executed method count")
     actual = {}
@@ -98,18 +103,46 @@ def parse_swift_testing(text: str, suite: dict) -> dict:
         require(name not in actual, "Duplicate executed method")
         actual[name] = int(cases) if cases else 1
     require(actual == suite["expectedMethods"], "Named methods/case counts do not match original obligation")
+    started = re.findall(r"^◇ Test ((?!case passing )[^\n]+?\([^\n]*?\)) started\.$", text, re.M)
+    require(sorted(started) == sorted(actual), "Missing, duplicate or foreign method start")
     summaries = re.findall(r"^✔ Test run with (\d+) tests? in (\d+) suites? passed after [^\n]+$", text, re.M)
     require(summaries == [(str(len(actual)), "1")], "Missing or ambiguous successful Swift Testing summary")
-    require(re.search(r"^✔ Suite " + re.escape(suite["suite"]) + r" passed after ", text, re.M) is not None,
-            "Original suite did not pass")
+    passed_suites = re.findall(r"^✔ Suite (.+?) passed after [^\n]+$", text, re.M)
+    allowed_suites = [suite["suite"]]
+    if suite.get("displayName"):
+        allowed_suites += [suite["displayName"], '"' + suite["displayName"] + '"']
+    require(len(passed_suites) == 1 and passed_suites[0] in allowed_suites and
+            re.findall(r"^◇ Suite (.+?) started\.$", text, re.M) == passed_suites,
+            "Missing, duplicate or foreign suite; only exact source-declared names are admitted")
     arguments = {}
+    case_starts = re.findall(r"^◇ Test case passing 1 argument (\w+) → ([^\n]+?) to ([^\n]+?) started\.$", text, re.M)
+    case_passes = re.findall(r"^✔ Test case passing 1 argument (\w+) → ([^\n]+?) to ([^\n]+?) passed after [^\n]+$", text, re.M)
+    expected_cases = []
     for name, expected in suite["parameterArguments"].items():
-        pattern = (r"^◇ Test case passing 1 argument " + re.escape(expected["parameter"]) +
-                   r" → ([^\n]+?) to " + re.escape(name) + r" started\.$")
-        values = re.findall(pattern, text, re.M)
-        require(sorted(values) == sorted(expected["values"]), "Missing/duplicate original parameter case")
-        arguments[name] = values
+        expected_cases.extend((expected["parameter"], value, name) for value in expected["values"])
+        arguments[name] = sorted(expected["values"])
+    def normalized_cases(cases):
+        normalized = []
+        for parameter, value, name in cases:
+            # Only the exact bool spellings observed in original2084/2403 logs.
+            require(value in ("false", "true", "false (Swift.Bool)", "true (Swift.Bool)"),
+                    "Unknown parameter value or type annotation")
+            normalized.append((parameter, value.removesuffix(" (Swift.Bool)"), name))
+        return sorted(normalized)
+    require(normalized_cases(case_starts) == sorted(expected_cases),
+            "Missing, duplicate or foreign original parameter start")
+    #2084 has no individual case-pass lines.2403 emits one for every actual case.
+    # Once any are present, require the whole exact set, never a partial subset.
+    if case_passes or any(" (Swift.Bool)" in value for _, value, _ in case_starts):
+        require(normalized_cases(case_passes) == sorted(expected_cases),
+                "Missing, duplicate or foreign original parameter success")
+    recognized_passes = len(records) + len(case_passes) + len(summaries)
+    require(len(re.findall(r"^✔ Test .+$", text, re.M)) == recognized_passes,
+            "Unrecognized successful test output")
+    require(len(re.findall(r"^◇ Test .+ started\.$", text, re.M)) == len(started) + len(case_starts) + 1,
+            "Unrecognized test start output")
     return {"status": "PASS_ACTUAL_NAMED_SWIFT_TESTING_OUTPUT", "suite": suite["suite"],
+            "reportedSuite": passed_suites[0],
             "testModule": suite["testModule"], "methods": actual, "methodCount": len(actual),
             "caseCount": sum(actual.values()), "arguments": arguments, "scope": suite["scope"]}
 
@@ -186,15 +219,18 @@ def finish_original_process_group(process: subprocess.Popen, pgid: int) -> dict:
 class Run:
     def __init__(self, root: Path, output: Path):
         self.root, self.output = root, output
-        self.environment = dict(os.environ, NO_COLOR="1", TERM="dumb", PYTHONUNBUFFERED="1")
+        self.environment = {key: value for key, value in os.environ.items() if key not in ("GH_TOKEN", "GITHUB_TOKEN")}
+        self.environment.update(NO_COLOR="1", TERM="dumb", PYTHONUNBUFFERED="1")
         self.commands = []
         self.products = []
         self.build_roots = []
         self.deadline = time.monotonic() + 70 * 60  # Leave the workflow time for original product/artifact preservation.
 
     def command(self, label: str, argv: list[str], cwd: Path | None = None,
-                timeout: int = 1200, allow_failure: bool = False) -> str:
-        log = self.output / (label + ".log")
+                timeout: int = 1200, allow_failure: bool = False,
+                binary_output: bool = False, environment: dict | None = None,
+                maximum_output_bytes: int | None = None) -> str:
+        log = self.output / (label + (".zip" if binary_output else ".log"))
         timeout = min(timeout, int(self.deadline - time.monotonic()))
         require(timeout > 0, "Controller execution budget exhausted before the next command")
         record = {"label": label, "argv": argv, "cwd": str(cwd or self.root),
@@ -204,14 +240,27 @@ class Run:
         write_json(self.output / "commands.json", self.commands)
         began = time.monotonic()
         with log.open("wb") as stream:
-            process = subprocess.Popen(argv, cwd=cwd or self.root, env=self.environment,
+            process = subprocess.Popen(argv, cwd=cwd or self.root, env=environment or self.environment,
                                        stdout=stream, stderr=subprocess.STDOUT, start_new_session=True)
             record["pid"] = process.pid
             record["pgid"] = process.pid  # start_new_session establishes this original command group.
             write_json(self.output / "commands.json", self.commands)
             interrupted = None
             try:
-                process.wait(timeout=timeout)
+                if maximum_output_bytes is None:
+                    process.wait(timeout=timeout)
+                else:
+                    end = time.monotonic() + timeout
+                    while process.poll() is None:
+                        require(log.stat().st_size <= maximum_output_bytes, "Bounded command output exceeded")
+                        remaining = end - time.monotonic()
+                        if remaining <= 0:
+                            raise subprocess.TimeoutExpired(argv, timeout)
+                        try:
+                            process.wait(timeout=min(0.25, remaining))
+                        except subprocess.TimeoutExpired:
+                            if time.monotonic() >= end:
+                                raise
             except subprocess.TimeoutExpired:
                 record["timedOut"] = True
             except BaseException as error:
@@ -226,18 +275,21 @@ class Run:
             record.update(exitCode=process.poll(), elapsedSeconds=round(time.monotonic() - began, 3))
         record["logSHA256"] = sha256(log)
         write_json(self.output / "commands.json", self.commands)
-        text = log.read_text(errors="replace")
+        text = "" if binary_output else log.read_text(errors="replace")
         if interrupted is not None:
             raise interrupted
         require(record["groupCustody"]["groupAbsent"] and not record["groupCustody"]["abnormalCleanup"],
                 f"{label}: original process group required abnormal cleanup or did not drain")
         if not allow_failure:
             require(record["exitCode"] == 0 and not record.get("timedOut"), f"{label} failed; original log retained")
+        if maximum_output_bytes is not None:
+            require(log.stat().st_size <= maximum_output_bytes, "Bounded command output exceeded")
         return text
 
     def git(self, *args: str) -> str:
         # Metadata only; no credential-bearing configuration or environment dump.
-        result = subprocess.run(["git", *args], cwd=self.root, capture_output=True, text=True, timeout=60)
+        result = subprocess.run(["git", *args], cwd=self.root, env=self.environment,
+                                capture_output=True, text=True, timeout=60)
         require(result.returncode == 0, "Git metadata read failed: " + " ".join(args[:2]))
         return result.stdout.strip()
 
@@ -307,7 +359,7 @@ class Run:
 
 def source_inventory(run: Run, source: str, materialized: Path) -> list[dict]:
     raw = subprocess.check_output(["git", "ls-tree", "-r", "-z", source, "--", *CONFIG["archivePaths"]],
-                                  cwd=run.root)
+                                  cwd=run.root, env=run.environment)
     records = []
     folded = set()
     for record in raw.split(b"\0"):
@@ -327,7 +379,7 @@ def source_inventory(run: Run, source: str, materialized: Path) -> list[dict]:
     return records
 
 
-def execute(run: Run, source: str) -> dict:
+def execute(run: Run, source: str, continue_original_agent: bool = False) -> dict:
     require(platform.system() == "Darwin" and platform.machine() == "arm64", "Original Apple ARM64 host required")
     require(os.environ.get("GITHUB_ACTIONS") == "true" and
             os.environ.get("RUNNER_ENVIRONMENT") == "github-hosted", "Independent hosted runner required")
@@ -335,7 +387,8 @@ def execute(run: Run, source: str) -> dict:
     control = run.git("rev-parse", "HEAD")
     require(control == os.environ.get("GITHUB_SHA"), "Actual controller checkout differs from dispatched ref")
     control_paths = [".github/workflows/build-ios26-unsigned-ipa.yml",
-                     "Scripts/CI/SDKSourceValidation/run.py", "Scripts/CI/SDKSourceValidation/obligations.json"]
+                     "Scripts/CI/SDKSourceValidation/run.py", "Scripts/CI/SDKSourceValidation/obligations.json",
+                     "Scripts/CI/SDKSourceValidation/continuation.py"]
     controls = {}
     for path in control_paths:
         data = (run.root / path).read_bytes()
@@ -386,7 +439,35 @@ def execute(run: Run, source: str) -> dict:
     published = lock_records(materialized / APP_LOCK)
     suite_results = []
     resolved_locks = {}
+    if continue_original_agent:
+        fixed = CONFIG["continuation"]
+        require(source == fixed["source"], "Original Agent evidence belongs to another source")
+        token = os.environ.get("GH_TOKEN")
+        require(token, "Existing Actions read token is required for fixed original artifact retrieval")
+        api_environment = dict(run.environment, GH_TOKEN=token)
+        api = "repos/davidpovarsky/hanlin-ai/actions/"
+        def api_json(label, endpoint):
+            text = run.command(label, ["gh", "api", api + endpoint], timeout=120,
+                               environment=api_environment, maximum_output_bytes=1024 * 1024)
+            return json.loads(text)
+        prior_run = api_json("prior-run-api", f'runs/{fixed["runID"]}')
+        prior_jobs = api_json("prior-jobs-api", f'runs/{fixed["runID"]}/jobs?per_page=100')
+        prior_artifact = api_json("prior-artifact-api", f'artifacts/{fixed["artifactID"]}')
+        validate_api(prior_run, prior_jobs, prior_artifact, fixed)
+        run.command("prior-original-artifact", ["gh", "api", api + f'artifacts/{fixed["artifactID"]}/zip'],
+                    timeout=300, binary_output=True, environment=api_environment,
+                    maximum_output_bytes=fixed["artifactBytes"])
+        reused = admit_archive(run.output / "prior-original-artifact.zip", run.output, fixed,
+                               before, published, sys.modules[__name__])
+        suite_results.append(reused["parsed"])
+        resolved_locks["agent-stop"] = reused["resolvedLock"]
+        run.products.append(reused["product"])
+        write_json(run.output / "reused-agent-admission.json", reused["admission"])
+        write_json(run.output / "agent-stop-actual-results.json", reused["parsed"])
+        run.free_floor(2 * 1024**3)
     for suite in CONFIG["suites"]:
+        if continue_original_agent and suite["name"] == "agent-stop":
+            continue  # The exact original named execution was admitted above; no duplicate compile/test.
         run.free_floor(2 * 1024**3)
         label = suite["name"]
         package = materialized / "Packages" / suite["package"]
@@ -457,7 +538,9 @@ def execute(run: Run, source: str) -> dict:
 
 
 def main() -> int:
-    root = Path(subprocess.check_output(["git", "rev-parse", "--show-toplevel"], text=True).strip())
+    metadata_environment = {key: value for key, value in os.environ.items() if key not in ("GH_TOKEN", "GITHUB_TOKEN")}
+    root = Path(subprocess.check_output(["git", "rev-parse", "--show-toplevel"],
+                                       env=metadata_environment, text=True).strip())
     suffix = os.environ.get("GITHUB_RUN_ID", "missing") + "-" + os.environ.get("GITHUB_RUN_ATTEMPT", "missing")
     require(re.fullmatch(r"[0-9]+-[0-9]+", suffix) is not None, "Real workflow run identity required")
     output = root / "build/sdk-original-obligations" / suffix
@@ -469,7 +552,7 @@ def main() -> int:
         inputs = event.get("inputs", {})
         source = validate_inputs(inputs, os.environ)
         write_json(output / "dispatch-inputs.json", inputs)
-        result = execute(run, source)
+        result = execute(run, source, inputs["exact_test_selector"] == CONFIG["continuation"]["selector"])
     except BaseException as error:
         result["error"] = str(error)
         (output / "controller-error.log").write_text(traceback.format_exc())

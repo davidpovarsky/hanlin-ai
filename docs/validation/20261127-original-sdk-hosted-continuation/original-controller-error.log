@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/CI/SDKSourceValidation/run.py", line 472, in main
+    result = execute(run, source)
+  File "/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/CI/SDKSourceValidation/run.py", line 420, in execute
+    result = parse_swift_testing(log, suite)
+  File "/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/CI/SDKSourceValidation/run.py", line 95, in parse_swift_testing
+    require(len(records) == len(suite["expectedMethods"]), "Wrong executed method count")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/CI/SDKSourceValidation/run.py", line 45, in require
+    raise RuntimeError(message)
+RuntimeError: Wrong executed method count

@@ -1,0 +1,889 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "fetch",
+        "--no-tags",
+        "--depth=1",
+        "--filter=blob:none",
+        "origin",
+        "caa0dac32afa18e58bba55fb4f0fdd262f181835"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 2.036,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 22968,
+        "signals": []
+      },
+      "label": "fetch-original-source",
+      "log": "fetch-original-source.log",
+      "logSHA256": "181a6e45672cd16ad44df820b712b8da9b48195aa375651a77c3fd154c9edb2a",
+      "pgid": 22968,
+      "pid": 22968,
+      "startedUTC": "2026-11-27T06:54:07Z",
+      "timeoutSeconds": 600
+    },
+    {
+      "argv": [
+        "git",
+        "archive",
+        "--format=tar",
+        "-o",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/sdk-original-obligations/45954793309-1/original-source.tar",
+        "caa0dac32afa18e58bba55fb4f0fdd262f181835",
+        "Packages/HanlinAgentSDK",
+        "Packages/HanlinPlatform",
+        "Packages/HanlinPresentationSDK",
+        "Fixtures/Widgets",
+        "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+        "Scripts/CI/select_stable_xcode.py",
+        "Scripts/CI/verify_exact_json_vendor.py"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.553,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 23010,
+        "signals": []
+      },
+      "label": "archive-original-source",
+      "log": "archive-original-source.log",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pgid": 23010,
+      "pid": 23010,
+      "startedUTC": "2026-11-27T06:54:10Z",
+      "timeoutSeconds": 180
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/source/Scripts/CI/verify_exact_json_vendor.py"
+      ],
+      "cwd": "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/source",
+      "elapsedSeconds": 0.079,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 23144,
+        "signals": []
+      },
+      "label": "original-json-vendor",
+      "log": "original-json-vendor.log",
+      "logSHA256": "2ab9767daf4f656f82e652fcb51033d0cfbac33c380251318e9cae816bf68d2e",
+      "pgid": 23144,
+      "pid": 23144,
+      "startedUTC": "2026-11-27T06:54:11Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/source/Scripts/CI/select_stable_xcode.py"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 1.451,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 23158,
+        "signals": []
+      },
+      "label": "select-original-stable-xcode",
+      "log": "select-original-stable-xcode.log",
+      "logSHA256": "301b5f6f7a7218de96222abe7f9893903ec3f18d34c9f9bdba08e206428af564",
+      "pgid": 23158,
+      "pid": 23158,
+      "startedUTC": "2026-11-27T06:54:11Z",
+      "timeoutSeconds": 120
+    },
+    {
+      "argv": [
+        "xcodebuild",
+        "-version"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 4.24,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 23358,
+        "signals": []
+      },
+      "label": "xcode",
+      "log": "xcode.log",
+      "logSHA256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7",
+      "pgid": 23358,
+      "pid": 23358,
+      "startedUTC": "2026-11-27T06:54:12Z",
+      "timeoutSeconds": 30
+    },
+    {
+      "argv": [
+        "xcrun",
+        "swift",
+        "--version"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 5.209,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 23371,
+        "signals": []
+      },
+      "label": "swift",
+      "log": "swift.log",
+      "logSHA256": "448e3f9c46706640fe62ea0140ecfccbb330baba2076b2916c0423af9642ee06",
+      "pgid": 23371,
+      "pid": 23371,
+      "startedUTC": "2026-11-27T06:54:17Z",
+      "timeoutSeconds": 30
+    },
+    {
+      "argv": [
+        "sw_vers"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.026,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 23397,
+        "signals": []
+      },
+      "label": "macos",
+      "log": "macos.log",
+      "logSHA256": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c",
+      "pgid": 23397,
+      "pid": 23397,
+      "startedUTC": "2026-11-27T06:54:22Z",
+      "timeoutSeconds": 30
+    },
+    {
+      "argv": [
+        "xcrun",
+        "--sdk",
+        "iphonesimulator",
+        "--show-sdk-version"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 3.446,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 23398,
+        "signals": []
+      },
+      "label": "simulator-sdk",
+      "log": "simulator-sdk.log",
+      "logSHA256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+      "pgid": 23398,
+      "pid": 23398,
+      "startedUTC": "2026-11-27T06:54:22Z",
+      "timeoutSeconds": 30
+    },
+    {
+      "argv": [
+        "xcrun",
+        "swift",
+        "package",
+        "--package-path",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/source/Packages/HanlinAgentSDK",
+        "--scratch-path",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build",
+        "--skip-update",
+        "resolve"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 27.998,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 23739,
+        "signals": []
+      },
+      "label": "agent-stop-resolve",
+      "log": "agent-stop-resolve.log",
+      "logSHA256": "19334029a2d5b203d734ec1c65a1c2dac830c3b6f6deb7dc060f97cd1f8aa46c",
+      "pgid": 23739,
+      "pid": 23739,
+      "startedUTC": "2026-11-27T06:54:25Z",
+      "timeoutSeconds": 600
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/opentelemetry-swift-core",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.015,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 25434,
+        "signals": []
+      },
+      "label": "agent-stop-checkout-opentelemetry-swift-core",
+      "log": "agent-stop-checkout-opentelemetry-swift-core.log",
+      "logSHA256": "ba0bc27ce6aab5fb38ab786d41f4111a5cb35e4997395ce9a78ba96b08582970",
+      "pgid": 25434,
+      "pid": 25434,
+      "startedUTC": "2026-11-27T06:54:53Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/opentelemetry-swift-core",
+        "status",
+        "--porcelain",
+        "--untracked-files=all"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.02,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 25435,
+        "signals": []
+      },
+      "label": "agent-stop-clean-opentelemetry-swift-core",
+      "log": "agent-stop-clean-opentelemetry-swift-core.log",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pgid": 25435,
+      "pid": 25435,
+      "startedUTC": "2026-11-27T06:54:53Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/swift-ai-sdk",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.013,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 25436,
+        "signals": []
+      },
+      "label": "agent-stop-checkout-swift-ai-sdk",
+      "log": "agent-stop-checkout-swift-ai-sdk.log",
+      "logSHA256": "786842a3aaee62ed5c424ee998390befe9ead041b8dc1d8cd1c7ac63dfbaf8e9",
+      "pgid": 25436,
+      "pid": 25436,
+      "startedUTC": "2026-11-27T06:54:53Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/swift-ai-sdk",
+        "status",
+        "--porcelain",
+        "--untracked-files=all"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.032,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 25437,
+        "signals": []
+      },
+      "label": "agent-stop-clean-swift-ai-sdk",
+      "log": "agent-stop-clean-swift-ai-sdk.log",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pgid": 25437,
+      "pid": 25437,
+      "startedUTC": "2026-11-27T06:54:53Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/swift-argument-parser",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.01,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 25438,
+        "signals": []
+      },
+      "label": "agent-stop-checkout-swift-argument-parser",
+      "log": "agent-stop-checkout-swift-argument-parser.log",
+      "logSHA256": "e4d48bdff95b926ec32413e4db790336071d2802027f30fd56fc433c4b1da53d",
+      "pgid": 25438,
+      "pid": 25438,
+      "startedUTC": "2026-11-27T06:54:54Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/swift-argument-parser",
+        "status",
+        "--porcelain",
+        "--untracked-files=all"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.024,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 25439,
+        "signals": []
+      },
+      "label": "agent-stop-clean-swift-argument-parser",
+      "log": "agent-stop-clean-swift-argument-parser.log",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pgid": 25439,
+      "pid": 25439,
+      "startedUTC": "2026-11-27T06:54:54Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/swift-atomics",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.015,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 25440,
+        "signals": []
+      },
+      "label": "agent-stop-checkout-swift-atomics",
+      "log": "agent-stop-checkout-swift-atomics.log",
+      "logSHA256": "8e8693c70e5a1d5d0852f235224dffb1430483d7737c5b787bda0ebe3748748d",
+      "pgid": 25440,
+      "pid": 25440,
+      "startedUTC": "2026-11-27T06:54:54Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/swift-atomics",
+        "status",
+        "--porcelain",
+        "--untracked-files=all"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.013,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 25441,
+        "signals": []
+      },
+      "label": "agent-stop-clean-swift-atomics",
+      "log": "agent-stop-clean-swift-atomics.log",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pgid": 25441,
+      "pid": 25441,
+      "startedUTC": "2026-11-27T06:54:54Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/SwiftyJSON",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.014,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 25442,
+        "signals": []
+      },
+      "label": "agent-stop-checkout-swiftyjson",
+      "log": "agent-stop-checkout-swiftyjson.log",
+      "logSHA256": "94098fe59679476facf34875e5540582a31c5685612df691eb2e69f715642ba7",
+      "pgid": 25442,
+      "pid": 25442,
+      "startedUTC": "2026-11-27T06:54:54Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/SwiftyJSON",
+        "status",
+        "--porcelain",
+        "--untracked-files=all"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.015,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 25443,
+        "signals": []
+      },
+      "label": "agent-stop-clean-swiftyjson",
+      "log": "agent-stop-clean-swiftyjson.log",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pgid": 25443,
+      "pid": 25443,
+      "startedUTC": "2026-11-27T06:54:54Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/ZIPFoundation",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.02,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 25444,
+        "signals": []
+      },
+      "label": "agent-stop-checkout-zipfoundation",
+      "log": "agent-stop-checkout-zipfoundation.log",
+      "logSHA256": "b83937f7c636d6b112be5835b7bed033720c19a4ced445cd5a123092e789adef",
+      "pgid": 25444,
+      "pid": 25444,
+      "startedUTC": "2026-11-27T06:54:54Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/ZIPFoundation",
+        "status",
+        "--porcelain",
+        "--untracked-files=all"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.013,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 25445,
+        "signals": []
+      },
+      "label": "agent-stop-clean-zipfoundation",
+      "log": "agent-stop-clean-zipfoundation.log",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pgid": 25445,
+      "pid": 25445,
+      "startedUTC": "2026-11-27T06:54:54Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "xcrun",
+        "swift",
+        "test",
+        "--package-path",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/source/Packages/HanlinAgentSDK",
+        "--scratch-path",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build",
+        "--force-resolved-versions",
+        "--skip-update",
+        "--jobs",
+        "2",
+        "--verbose",
+        "--filter",
+        "AgentSessionTests/stop"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 214.558,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 25446,
+        "signals": []
+      },
+      "label": "agent-stop-tests",
+      "log": "agent-stop-tests.log",
+      "logSHA256": "a141517e1366496b39dd43796a0611dbc292e9146052534760b8937982c1f709",
+      "pgid": 25446,
+      "pid": 25446,
+      "startedUTC": "2026-11-27T06:54:54Z",
+      "timeoutSeconds": 1800
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/opentelemetry-swift-core",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.125,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 33384,
+        "signals": []
+      },
+      "label": "agent-stop-posttest-checkout-opentelemetry-swift-core",
+      "log": "agent-stop-posttest-checkout-opentelemetry-swift-core.log",
+      "logSHA256": "ba0bc27ce6aab5fb38ab786d41f4111a5cb35e4997395ce9a78ba96b08582970",
+      "pgid": 33384,
+      "pid": 33384,
+      "startedUTC": "2026-11-27T06:58:28Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/opentelemetry-swift-core",
+        "status",
+        "--porcelain",
+        "--untracked-files=all"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.055,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 33386,
+        "signals": []
+      },
+      "label": "agent-stop-posttest-clean-opentelemetry-swift-core",
+      "log": "agent-stop-posttest-clean-opentelemetry-swift-core.log",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pgid": 33386,
+      "pid": 33386,
+      "startedUTC": "2026-11-27T06:58:28Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/swift-ai-sdk",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.015,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 33388,
+        "signals": []
+      },
+      "label": "agent-stop-posttest-checkout-swift-ai-sdk",
+      "log": "agent-stop-posttest-checkout-swift-ai-sdk.log",
+      "logSHA256": "786842a3aaee62ed5c424ee998390befe9ead041b8dc1d8cd1c7ac63dfbaf8e9",
+      "pgid": 33388,
+      "pid": 33388,
+      "startedUTC": "2026-11-27T06:58:28Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/swift-ai-sdk",
+        "status",
+        "--porcelain",
+        "--untracked-files=all"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.176,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 33389,
+        "signals": []
+      },
+      "label": "agent-stop-posttest-clean-swift-ai-sdk",
+      "log": "agent-stop-posttest-clean-swift-ai-sdk.log",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pgid": 33389,
+      "pid": 33389,
+      "startedUTC": "2026-11-27T06:58:28Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/swift-argument-parser",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.018,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 33392,
+        "signals": []
+      },
+      "label": "agent-stop-posttest-checkout-swift-argument-parser",
+      "log": "agent-stop-posttest-checkout-swift-argument-parser.log",
+      "logSHA256": "e4d48bdff95b926ec32413e4db790336071d2802027f30fd56fc433c4b1da53d",
+      "pgid": 33392,
+      "pid": 33392,
+      "startedUTC": "2026-11-27T06:58:29Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/swift-argument-parser",
+        "status",
+        "--porcelain",
+        "--untracked-files=all"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.037,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 33393,
+        "signals": []
+      },
+      "label": "agent-stop-posttest-clean-swift-argument-parser",
+      "log": "agent-stop-posttest-clean-swift-argument-parser.log",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pgid": 33393,
+      "pid": 33393,
+      "startedUTC": "2026-11-27T06:58:29Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/swift-atomics",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.013,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 33394,
+        "signals": []
+      },
+      "label": "agent-stop-posttest-checkout-swift-atomics",
+      "log": "agent-stop-posttest-checkout-swift-atomics.log",
+      "logSHA256": "8e8693c70e5a1d5d0852f235224dffb1430483d7737c5b787bda0ebe3748748d",
+      "pgid": 33394,
+      "pid": 33394,
+      "startedUTC": "2026-11-27T06:58:29Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/swift-atomics",
+        "status",
+        "--porcelain",
+        "--untracked-files=all"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.06,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 33395,
+        "signals": []
+      },
+      "label": "agent-stop-posttest-clean-swift-atomics",
+      "log": "agent-stop-posttest-clean-swift-atomics.log",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pgid": 33395,
+      "pid": 33395,
+      "startedUTC": "2026-11-27T06:58:29Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/SwiftyJSON",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.012,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 33396,
+        "signals": []
+      },
+      "label": "agent-stop-posttest-checkout-swiftyjson",
+      "log": "agent-stop-posttest-checkout-swiftyjson.log",
+      "logSHA256": "94098fe59679476facf34875e5540582a31c5685612df691eb2e69f715642ba7",
+      "pgid": 33396,
+      "pid": 33396,
+      "startedUTC": "2026-11-27T06:58:29Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/SwiftyJSON",
+        "status",
+        "--porcelain",
+        "--untracked-files=all"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.021,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 33397,
+        "signals": []
+      },
+      "label": "agent-stop-posttest-clean-swiftyjson",
+      "log": "agent-stop-posttest-clean-swiftyjson.log",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pgid": 33397,
+      "pid": 33397,
+      "startedUTC": "2026-11-27T06:58:29Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/ZIPFoundation",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.016,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 33398,
+        "signals": []
+      },
+      "label": "agent-stop-posttest-checkout-zipfoundation",
+      "log": "agent-stop-posttest-checkout-zipfoundation.log",
+      "logSHA256": "b83937f7c636d6b112be5835b7bed033720c19a4ced445cd5a123092e789adef",
+      "pgid": 33398,
+      "pid": 33398,
+      "startedUTC": "2026-11-27T06:58:29Z",
+      "timeoutSeconds": 60
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/runner/work/_temp/hanlin-original-sdk-_ehko1qu/agent-stop-build/checkouts/ZIPFoundation",
+        "status",
+        "--porcelain",
+        "--untracked-files=all"
+      ],
+      "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+      "elapsedSeconds": 0.024,
+      "exitCode": 0,
+      "groupCustody": {
+        "abnormalCleanup": false,
+        "groupAbsent": true,
+        "pgid": 33399,
+        "signals": []
+      },
+      "label": "agent-stop-posttest-clean-zipfoundation",
+      "log": "agent-stop-posttest-clean-zipfoundation.log",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pgid": 33399,
+      "pid": 33399,
+      "startedUTC": "2026-11-27T06:58:29Z",
+      "timeoutSeconds": 60
+    }
+  ],
+  "error": "Wrong executed method count",
+  "notCovered": [
+    "Original NativeScript action handler: requires actual AI_HLY iOS runtime graph",
+    "Anytype native Save/Stop/engine or account replacement",
+    "Full Hanlin app/extension integration",
+    "Device, signing, IPA, TestFlight"
+  ],
+  "products": [
+    {
+      "archive": "agent-stop-original-products.tar",
+      "bytes": 413972480,
+      "label": "agent-stop",
+      "sha256": "afa0e58b6a1d986e0e215f928671dda6a3e852d4fb4466518029b1b41f4769fc"
+    }
+  ],
+  "status": "FAILED_BEFORE_COMPLETION"
+}

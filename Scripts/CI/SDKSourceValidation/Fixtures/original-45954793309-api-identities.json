@@ -1,0 +1,350 @@
+{
+  "provenance": "Selected fields copied from original GitHub run/jobs/artifact API responses; no substituted outcomes",
+  "run": {
+    "id": 45954793309,
+    "run_attempt": 1,
+    "workflow_id": 310046367,
+    "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+    "head_branch": "codex/hanlin-sdk-hosted-validation-20261127",
+    "event": "workflow_dispatch",
+    "status": "completed",
+    "conclusion": "failure",
+    "repository": {
+      "full_name": "davidpovarsky/hanlin-ai"
+    }
+  },
+  "jobs": {
+    "total_count": 28,
+    "jobs": [
+      {
+        "id": 140358668934,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "failure",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-11-27T06:53:42Z",
+            "completed_at": "2026-11-27T06:53:44Z"
+          },
+          {
+            "name": "Run actions/checkout@v7.0.1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-11-27T06:53:44Z",
+            "completed_at": "2026-11-27T06:54:05Z"
+          },
+          {
+            "name": "Verify closed controller without Apple or native operations",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-11-27T06:54:06Z",
+            "completed_at": "2026-11-27T06:54:07Z"
+          },
+          {
+            "name": "Test the explicit immutable original package source",
+            "status": "completed",
+            "conclusion": "failure",
+            "number": 4,
+            "started_at": "2026-11-27T06:54:07Z",
+            "completed_at": "2026-11-27T06:58:31Z"
+          },
+          {
+            "name": "Preserve original source, locks, logs, products and every failure",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-11-27T06:58:31Z",
+            "completed_at": "2026-11-27T06:58:48Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v7.0.1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-11-27T06:58:48Z",
+            "completed_at": "2026-11-27T06:58:49Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-11-27T06:58:49Z",
+            "completed_at": "2026-11-27T06:58:50Z"
+          }
+        ]
+      },
+      {
+        "id": 140358669124,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358669604,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358669973,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358670112,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358670216,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358670225,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358670227,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358670266,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358670400,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358670492,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358670535,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358671050,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358671273,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358671440,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358697719,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358697826,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358698538,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358702967,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358706767,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358707751,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358709162,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358709546,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358712419,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358714715,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358716617,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358723328,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      },
+      {
+        "id": 140358723592,
+        "run_id": 45954793309,
+        "run_attempt": 1,
+        "head_sha": "35b504095406476799b76a9593d04ba11900d112",
+        "status": "completed",
+        "conclusion": "skipped",
+        "steps": []
+      }
+    ]
+  },
+  "artifact": {
+    "id": 15178855568,
+    "node_id": "MDg6QXJ0aWZhY3QxNTE3ODg1NTU2OA==",
+    "name": "hanlin-original-sdk-45954793309-1",
+    "size_in_bytes": 119169729,
+    "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15178855568",
+    "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15178855568/zip",
+    "expired": false,
+    "digest": "sha256:266836f5a18a7977489cbd1e4624ff06b6ccc8d0bff872657ffc7885f0de4ca3",
+    "created_at": "2026-11-27T06:58:48Z",
+    "updated_at": "2026-11-27T06:58:48Z",
+    "expires_at": "2026-12-27T06:58:32Z",
+    "workflow_run": {
+      "id": 45954793309,
+      "repository_id": 1295277723,
+      "head_repository_id": 1295277723,
+      "head_branch": "codex/hanlin-sdk-hosted-validation-20261127",
+      "head_sha": "35b504095406476799b76a9593d04ba11900d112"
+    }
+  }
+}

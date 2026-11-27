@@ -1,0 +1,89 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/SDKSourceValidation",
+    "-p",
+    "test_control.py",
+    "-v"
+  ],
+  "exitCode": 0,
+  "files": [
+    {
+      "beforeBytes": 218761,
+      "beforeGitBlob": "ec92b5310a020daad266d2b345b04df70b0889fb",
+      "beforeSHA256": "b64caef8e3b91485fb9e7f22d88bdf17da00857ac3447ea031de4c993e8aeac3",
+      "bytes": 219117,
+      "gitBlob": "b819f3a8634a8466f821c7d33f3ba11ba03e8a59",
+      "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "sha256": "e1c50b40b2c93f77c22243c755cb8bcb0f9447b44199f5f2ec2518a1640dc423"
+    },
+    {
+      "bytes": 10440,
+      "gitBlob": "e5ad66452e11697ec83495e01c063951b8728918",
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-45954793309-api-identities.json",
+      "sha256": "81568ddd916c22122dde29fde95b442bd166b32195906b0440d4868c851b7d20"
+    },
+    {
+      "bytes": 962,
+      "gitBlob": "994a5103cd15480eb327a155e480675d7fb58a1c",
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-45954793309-stop-terminal-provenance.json",
+      "sha256": "ead7cd9f6e28b7285d09b07a101d87861fece5e2b512111a1a72167357205219"
+    },
+    {
+      "bytes": 2613,
+      "gitBlob": "e39dec6e775b630d544aa2caaba1c8176b100612",
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-45954793309-stop-terminal.log",
+      "sha256": "387c1134c06e9e9dac179055a30ecd540851c700283f392116862bc754286a5f"
+    },
+    {
+      "beforeBytes": 10805,
+      "beforeGitBlob": "22736d1f04e9f63c953e3842b60bcd5c8d42a360",
+      "beforeSHA256": "a9eb742fcbb142707072c82408ba3d483cc920e66c7ea224d8d5d9d54bbcac81",
+      "bytes": 13552,
+      "gitBlob": "a3929250a9a8c45348f1a585035005cbdc763a63",
+      "path": "Scripts/CI/SDKSourceValidation/README.md",
+      "sha256": "d09a7681adfc74eaa25ed43e4068eb37248bfe792fe52c4bb7783453190dd0c8"
+    },
+    {
+      "bytes": 14758,
+      "gitBlob": "c36bc6f02fd17ded61263539bfc23d5b03d5bf6f",
+      "path": "Scripts/CI/SDKSourceValidation/continuation.py",
+      "sha256": "2658f82caa0b68a9d3322ff33e91c99d441264d10d51e15ec743001d61639a90"
+    },
+    {
+      "beforeBytes": 7657,
+      "beforeGitBlob": "874d6d1ff7b7b0c1da127ccb7cc8b97e327e2e91",
+      "beforeSHA256": "fc6bf51c942d7cb6a668110b023d95a36f3ff0fd0a7bc04dc7d2a88a03530253",
+      "bytes": 10940,
+      "gitBlob": "63806d652fc63c267947994ceccacf1cad477ee2",
+      "path": "Scripts/CI/SDKSourceValidation/obligations.json",
+      "sha256": "e56eeafa0e1be9aa0e484c28b0afa7e6aaa56602a2fb43d2e1571d71ac201958"
+    },
+    {
+      "beforeBytes": 28419,
+      "beforeGitBlob": "4359102c6b89334478303840f9c44c0e108ae2bb",
+      "beforeSHA256": "e269c858a58ae8e55e15b6d4a109c3e48fd244fa349d6006809be4048107e91e",
+      "bytes": 34314,
+      "gitBlob": "436a81e623c85f7ebda7b29f37563d12585f604e",
+      "path": "Scripts/CI/SDKSourceValidation/run.py",
+      "sha256": "81f6b2e267989b8d265177d1df52764fba15dc71389989ccca622a51a44d5c23"
+    },
+    {
+      "beforeBytes": 10112,
+      "beforeGitBlob": "e7b96230d6db23ec942ecdf4e6ec72f6ae1ca71e",
+      "beforeSHA256": "b7e18ac888cc84b189c1c9a8663449cfd9fb42092a5ea94a384e67ec7094e08e",
+      "bytes": 15251,
+      "gitBlob": "5f15c153d00daa72642e36f04361f05869887fcc",
+      "path": "Scripts/CI/SDKSourceValidation/test_control.py",
+      "sha256": "084cb257e2a485fba32675f3d42b51aa39b75aaeb078c63c66ac7db1cd0c5936"
+    }
+  ],
+  "logSHA256": "11aaad61957f44bb405a3ec0c2b32b0cfc88257d342619bce426372744dc0022",
+  "methods": 12,
+  "newSwiftNativeOrAppleRuns": 0,
+  "status": "PASS_CONTROL_ONLY"
+}

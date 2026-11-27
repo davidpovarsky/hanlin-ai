@@ -1,0 +1,18 @@
+{
+  "repository": "davidpovarsky/hanlin-ai",
+  "runID": 45954793309,
+  "attempt": 1,
+  "jobID": 140358668934,
+  "source": "caa0dac32afa18e58bba55fb4f0fdd262f181835",
+  "controller": "35b504095406476799b76a9593d04ba11900d112",
+  "artifactID": 15178855568,
+  "artifactSHA256": "266836f5a18a7977489cbd1e4624ff06b6ccc8d0bff872657ffc7885f0de4ca3",
+  "originalLogSHA256": "a141517e1366496b39dd43796a0611dbc292e9146052534760b8937982c1f709",
+  "originalLogBytes": 1061134,
+  "terminalSHA256": "387c1134c06e9e9dac179055a30ecd540851c700283f392116862bc754286a5f",
+  "terminalBytes": 2613,
+  "extraction": "Exact bytes from unique original Test run started line to EOF, no substitutions",
+  "originalControllerStatus": "FAILED_BEFORE_COMPLETION",
+  "originalControllerError": "Wrong executed method count",
+  "meaning": "Original actual5method/7case terminal, parser fixture only; full original execution provenance must be separately admitted for runtime evidence reuse"
+}
