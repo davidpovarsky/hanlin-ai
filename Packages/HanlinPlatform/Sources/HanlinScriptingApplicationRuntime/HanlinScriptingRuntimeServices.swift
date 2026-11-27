@@ -2,6 +2,9 @@ import CoreFoundation
 import Foundation
 import HanlinScriptUI
 import UniformTypeIdentifiers
+#if os(macOS)
+import Security
+#endif
 
 public enum HanlinScriptingSystemResult: Sendable {
     case null
@@ -1770,8 +1773,33 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
         let readOnly: Bool
     }
 
+#if os(macOS)
+    // This is a host bookmark policy, not an effective-Sandbox detector.
+    // App Sandbox hosts keep explicit security scopes. A macOS host without
+    // that declared entitlement stores only the file location: this never
+    // restores OS grants lost on exit, including grants inherited by a helper.
+    // Existing URL grants, path checks and OS access still govern every use.
+    // Unknown entitlement state remains scoped and never falls back on failure.
+    private static let usesAppScopedBookmarks: Bool = {
+        guard let task = SecTaskCreateFromSelf(nil) else { return true }
+        var error: Unmanaged<CFError>?
+        let entitlement = SecTaskCopyValueForEntitlement(
+            task, "com.apple.security.app-sandbox" as CFString, &error
+        )
+        if let error {
+            _ = error.takeRetainedValue()
+            return true
+        }
+        guard let entitlement else { return false }
+        guard CFGetTypeID(entitlement) == CFBooleanGetTypeID() else { return true }
+        return CFEqual(entitlement, kCFBooleanTrue)
+    }()
+#endif
+
     private static var bookmarkCreationOptions: URL.BookmarkCreationOptions {
-#if os(macOS) || targetEnvironment(macCatalyst)
+#if os(macOS)
+        usesAppScopedBookmarks ? [.withSecurityScope] : []
+#elseif targetEnvironment(macCatalyst)
         [.withSecurityScope]
 #else
         []
@@ -1779,7 +1807,9 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {
     }
 
     private static var bookmarkResolutionOptions: URL.BookmarkResolutionOptions {
-#if os(macOS) || targetEnvironment(macCatalyst)
+#if os(macOS)
+        usesAppScopedBookmarks ? [.withSecurityScope, .withoutUI] : [.withoutUI]
+#elseif targetEnvironment(macCatalyst)
         [.withSecurityScope, .withoutUI]
 #else
         [.withoutUI]

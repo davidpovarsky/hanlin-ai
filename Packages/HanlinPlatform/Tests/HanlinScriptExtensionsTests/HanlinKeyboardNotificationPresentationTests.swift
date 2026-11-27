@@ -77,7 +77,14 @@ struct HanlinKeyboardNotificationPresentationTests {
         let prepared = try HanlinNativePresentationExecutor.prepare(firstRequest, store: store,
             storage: .extensionLocal(root: local))
         let firstContext = try context(prepared)
-        #expect(firstContext.resources["keyboard.txt"]?.path.hasPrefix(local.path) == true)
+        // The store canonicalizes Darwin's /var and /tmp container aliases.
+        // Compare complete canonical components so sibling prefixes or an
+        // escaped resource cannot satisfy extension-local containment.
+        let resource = try #require(firstContext.resources["keyboard.txt"])
+        let localComponents = local.standardizedFileURL.resolvingSymlinksInPath().pathComponents
+        let resourceComponents = resource.standardizedFileURL.resolvingSymlinksInPath().pathComponents
+        #expect(resourceComponents.count > localComponents.count
+            && resourceComponents.starts(with: localComponents))
         let command = HanlinWidgetActionCommand(context: firstContext, actionID: "insert", nonce: UUID().uuidString)
         let first = try HanlinNativePresentationExecutor.prepare(firstRequest, store: store, action: command,
             storage: .extensionLocal(root: local))
