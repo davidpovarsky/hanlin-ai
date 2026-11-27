@@ -966,6 +966,12 @@ def observe(args, stopping=lambda: False):
                 last_error = None
                 time.sleep(0.25)
                 continue
+            if request.get("surface") == "widgetFamilies":
+                from observe_widget_families import observe_case
+                observe_case(args, request, directory, evidence, seen, widget_fixture)
+                last_error = None
+                time.sleep(0.25)
+                continue
             if request.get("surface") == "widgetVoiceOver":
                 from observe_widget_voiceover import observe_case
                 observe_case(args, request, directory, evidence, seen, widget_fixture)
@@ -1114,6 +1120,8 @@ def main():
                         help="Original source/product attempt manifest, only for two-instance WidgetKit state acceptance")
     parser.add_argument("--widget-voiceover-inputs", type=Path,
                         help="Original source/product attempt manifest for the separate public VoiceOver widget pilot")
+    parser.add_argument("--widget-families-inputs", type=Path,
+                        help="Original source/product attempt manifest for four real Home Screen family and rotation cases")
     parser.add_argument("--system-inputs", type=Path,
                         help="Original runner input manifest, only for the original ten system-surface methods")
     parser.add_argument("--studio-inputs", type=Path,

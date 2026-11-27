@@ -527,6 +527,330 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
     }
 
 
+    func testMiniAppsSmallWidgetRetainsFamilyAndInstanceAcrossRotation() throws {
+        try observeWidgetFamily("systemSmall", sizeLabel: "Small")
+    }
+    func testMiniAppsMediumWidgetRetainsFamilyAndInstanceAcrossRotation() throws {
+        try observeWidgetFamily("systemMedium", sizeLabel: "Medium")
+    }
+    func testMiniAppsLargeWidgetRetainsFamilyAndInstanceAcrossRotation() throws {
+        try observeWidgetFamily("systemLarge", sizeLabel: "Large")
+    }
+    func testMiniAppsExtraLargeWidgetRetainsFamilyAndInstanceAcrossRotation() throws {
+        try observeWidgetFamily("systemExtraLarge", sizeLabel: "Extra Large")
+    }
+
+    private func observeWidgetFamily(_ family: String, sizeLabel: String) throws {
+        continueAfterFailure = false
+        executionTimeAllowance = 420
+        deadline = Date().addingTimeInterval(420)
+        let prior = XCUIDevice.shared.orientation
+        let priorName = widgetFamilyOrientationName()
+        let runID = UUID().uuidString.lowercased()
+        let instanceName = "Family-" + family + "-" + runID
+        let documents = try XCTUnwrap(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
+        let root = documents.appendingPathComponent("HanlinSystemSurfaceObservation", isDirectory: true)
+        let directory = root.appendingPathComponent(runID, isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        exchange = root; runDirectory = directory
+        record = ["schema": 1, "runID": runID, "engine": "expo", "surface": "widgetFamilies",
+                  "fixtureTitle": "Interactive Widget Matrix", "instanceName": instanceName,
+                  "expectedFamily": family, "sizeLabel": sizeLabel, "priorOrientation": priorName,
+                  "status": "RUNNING", "test": name, "startedAt": widgetStateTimestamp()]
+        var boundPlacement = false
+        var removed = false
+        var restored = false
+        defer {
+            // Only a configuration already read as this exact fresh name may
+            // be removed. An unbound placement is retained as a failed case.
+            if boundPlacement && !removed {
+                do { record["cleanup"] = try removeWidgetFamily(named: instanceName); removed = true }
+                catch { record["cleanupFailure"] = String(describing: error) }
+            }
+            if !restored {
+                XCUIDevice.shared.orientation = prior
+                if wait(25, until: { self.widgetFamilyOrientationName() == priorName && self.widgetFamilyScreenMatches(priorName) }) {
+                    record["orientationRestoration"] = widgetFamilyRestoration(priorName)
+                } else {
+                    record["restorationFailure"] = "The initial orientation was assigned but not effectively observed."
+                }
+            }
+            capture(mini, "widget-family-final-mini")
+            capture(springboard, "widget-family-final-system")
+            record["finishedAt"] = widgetStateTimestamp()
+            try? writeJSON(record, filename: "case.json")
+            try? checkpoint("finished")
+        }
+        do {
+            try require(priorName != "unknown", "A real initial screen orientation is required before changing it.")
+            try checkpoint("preparing")
+            mini.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+            mini.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+            mini.launch()
+            try importMatrixWidgetAndCreateInstance(named: instanceName)
+            capture(mini, "widget-family-instance-created")
+            try checkpoint("widget-family-instance-created")
+            let identity = try response("identity.json", timeout: 25)
+            try require(identity["status"] as? String == "READY", "The actual new family instance was not admitted.")
+            record["attemptID"] = try string(identity, "attemptID")
+            record["sourceSHA"] = try string(identity, "sourceSHA")
+            record["installedIdentity"] = identity
+
+            XCUIDevice.shared.press(.home)
+            try setWidgetFamilyOrientation("portrait")
+            try openWidgetFamilyGallery(sizeLabel: sizeLabel)
+            try checkpoint("widget-family-arm")
+            let armed = try response("placement-armed.json", timeout: 25)
+            try require(armed["status"] as? String == "READY", "The named placement was not armed before the real Add Widget action.")
+            record["placementArm"] = armed
+            let add = try widgetFamilyUnique(springboard.buttons.matching(
+                NSPredicate(format: "label MATCHES %@", "\\s*Add Widget\\s*")), "The selected gallery has no unique Add Widget action.")
+            try tap(add, "Place the actually observed family page.")
+            record["addWidgetTappedAt"] = widgetStateTimestamp()
+            record["unboundPlacementCreated"] = true
+            if springboard.buttons["Done"].firstMatch.exists { try tap(springboard.buttons["Done"].firstMatch, "Finish the actual Home Screen placement.") }
+            let placeholders = springboard.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Choose a widget instance"))
+            try require(wait(25) { self.widgetFamilyVisible(placeholders).count == 1 },
+                        "The newly added, previously absent configuration placeholder is missing or ambiguous.")
+            let placeholder = try XCTUnwrap(widgetFamilyVisible(placeholders).first)
+            record["placeholderFrame"] = widgetStateFrame(placeholder.frame)
+            capture(springboard, "widget-family-new-placeholder")
+            placeholder.press(forDuration: 1.5)
+            try tap(springboard.buttons["Edit Widget"].firstMatch, "Configure this new physical widget.")
+            let choose = try widgetFamilyUnique(springboard.descendants(matching: .any).matching(
+                NSPredicate(format: "label == 'Choose' OR label == 'Widget instance'")), "The actual instance configuration control is unavailable.")
+            try tap(choose, "Open the original installed-instance query.")
+            let entity = try widgetFamilyUnique(springboard.descendants(matching: .any).matching(
+                NSPredicate(format: "label CONTAINS %@", instanceName)), "The fresh named instance is not offered by the actual query.")
+            try tap(entity, "Select this case's exact named variant.")
+            XCUIDevice.shared.press(.home)
+            mini.terminate()
+            try require(mini.state == .notRunning, "The host must be terminated before observing the placed family.")
+
+            var rotations: [[String: Any]] = []
+            for (index, orientation) in ["portrait", "landscapeLeft", "portrait"].enumerated() {
+                let requestedAt = widgetStateTimestamp()
+                let requestedUptime = ProcessInfo.processInfo.systemUptime
+                try setWidgetFamilyOrientation(orientation)
+                let configuration = try confirmWidgetFamily(named: instanceName, label: "widget-family-configuration-" + String(index))
+                boundPlacement = true
+                record["unboundPlacementCreated"] = false
+                var row = try widgetFamilyObservation()
+                row["index"] = index; row["requestedOrientation"] = orientation
+                row["requestedAt"] = requestedAt; row["requestedUptime"] = requestedUptime
+                row["configuration"] = configuration
+                row["attachmentLabel"] = "widget-family-rotation-" + String(index)
+                capture(springboard, "widget-family-rotation-" + String(index))
+                row["capturedAt"] = widgetStateTimestamp()
+                row["capturedUptime"] = ProcessInfo.processInfo.systemUptime
+                rotations.append(row)
+                record["rotations"] = rotations
+                record["hostTerminated"] = mini.state == .notRunning
+                try checkpoint(index == 0 ? "widget-family-placed" : "widget-family-rotated")
+                let reply = try response(index == 0 ? "placement.json" : "rotation-" + String(index) + ".json", timeout: 35)
+                try require(reply["status"] as? String == "READY", "Actual family/configuration/rotation evidence was not accepted.")
+            }
+            record["cleanup"] = try removeWidgetFamily(named: instanceName)
+            removed = true
+            XCUIDevice.shared.orientation = prior
+            try require(wait(25) { self.widgetFamilyOrientationName() == priorName && self.widgetFamilyScreenMatches(priorName) },
+                        "The actual initial device orientation was not restored.")
+            record["orientationRestoration"] = widgetFamilyRestoration(priorName)
+            capture(springboard, "widget-family-restored")
+            restored = true
+            try checkpoint("widget-family-complete")
+            let completion = try response("completion.json", timeout: 30)
+            try require(completion["status"] as? String == "EXECUTED_PASS", "Final native/source/container/cleanup qualification did not pass.")
+            record["status"] = "EXECUTED_PASS"
+        } catch {
+            record["status"] = "FAILED"; record["error"] = String(describing: error)
+            throw error
+        }
+    }
+
+    private func widgetFamilyOrientationName() -> String {
+        switch XCUIDevice.shared.orientation {
+        case .portrait: return "portrait"
+        case .portraitUpsideDown: return "portraitUpsideDown"
+        case .landscapeLeft: return "landscapeLeft"
+        case .landscapeRight: return "landscapeRight"
+        default: return "unknown"
+        }
+    }
+
+    private func widgetFamilyScreenMatches(_ orientation: String) -> Bool {
+        let screen = springboard.frame
+        guard springboard.state == .runningForeground, screen.width > 0, screen.height > 0 else { return false }
+        if orientation == "portrait" || orientation == "portraitUpsideDown" { return screen.height > screen.width }
+        if orientation == "landscapeLeft" || orientation == "landscapeRight" { return screen.width > screen.height }
+        return false
+    }
+
+    private func setWidgetFamilyOrientation(_ name: String) throws {
+        if name == "portrait" { XCUIDevice.shared.orientation = .portrait }
+        else if name == "landscapeLeft" { XCUIDevice.shared.orientation = .landscapeLeft }
+        else { throw ObservationFailure(description: "Unknown requested family orientation.") }
+        try require(wait(25) { self.widgetFamilyOrientationName() == name && self.widgetFamilyScreenMatches(name) },
+                    "Public orientation assignment did not produce the required effective Home Screen geometry.")
+    }
+
+    private func widgetFamilyVisible(_ query: XCUIElementQuery) -> [XCUIElement] {
+        query.allElementsBoundByIndex.filter { $0.exists && $0.isHittable && $0.frame.width > 0
+            && $0.frame.height > 0 && springboard.frame.contains($0.frame) }
+    }
+
+    private func widgetFamilyUnique(_ query: XCUIElementQuery, _ message: String) throws -> XCUIElement {
+        try require(wait(12) { !self.widgetFamilyVisible(query).isEmpty }, message)
+        let choices = widgetFamilyVisible(query).sorted { $0.frame.width * $0.frame.height < $1.frame.width * $1.frame.height }
+        let element = try XCTUnwrap(choices.first, message)
+        let area = element.frame.width * element.frame.height
+        try require(choices.filter { $0.frame.width * $0.frame.height == area }.allSatisfy { $0.frame == element.frame }, message)
+        return element
+    }
+
+    private func widgetFamilyMarkerCount() -> Int {
+        widgetFamilyVisible(springboard.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "Matrix count: "))).count
+    }
+
+    private func widgetFamilyContainer() throws -> XCUIElement {
+        let labels = springboard.staticTexts.matching(NSPredicate(format: "label == %@", "Matrix count: 0"))
+        try require(wait(25) { self.widgetFamilyMarkerCount() == 1 && self.widgetFamilyVisible(labels).count == 1 },
+                    "A prior or second visible Matrix could alias this zero-count widget; physical identity is not unique.")
+        let marker = try XCTUnwrap(widgetFamilyVisible(labels).first)
+        let choices = springboard.descendants(matching: .any).containing(.staticText, identifier: "Matrix count: 0")
+            .allElementsBoundByIndex.filter { element in
+                let bounds = element.frame
+                return bounds.width > 0 && bounds.height > 0 && bounds != springboard.frame
+                    && springboard.frame.contains(bounds) && bounds.contains(marker.frame)
+                    && element.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "Matrix count: ")).count == 1
+                    && element.switches.matching(NSPredicate(format: "label == %@", "Widget notifications")).count == 1
+                    && element.buttons.matching(NSPredicate(format: "label == %@", "Add")).count == 1
+                    && element.buttons.matching(NSPredicate(format: "label == %@", "Refresh")).count == 1
+            }.sorted { $0.frame.width * $0.frame.height < $1.frame.width * $1.frame.height }
+        let selected = try XCTUnwrap(choices.first, "The actual AX tree does not expose one finite Matrix content container.")
+        let area = selected.frame.width * selected.frame.height
+        try require(choices.filter { $0.frame.width * $0.frame.height == area }.allSatisfy { $0.frame == selected.frame },
+                    "The smallest actual Matrix container is ambiguous.")
+        return selected
+    }
+
+    private func confirmWidgetFamily(named name: String, label: String) throws -> [String: Any] {
+        let container = try widgetFamilyContainer()
+        let frame = container.frame
+        container.press(forDuration: 1.5)
+        try tap(springboard.buttons["Edit Widget"].firstMatch, "Read this physical widget's saved instance before credit or removal.")
+        let selected = try widgetFamilyUnique(springboard.descendants(matching: .any).matching(
+            NSPredicate(format: "label CONTAINS %@ OR value CONTAINS %@", name, name)),
+            "The actual configuration belongs to another or an unidentifiable widget.")
+        let selectedLabel = selected.label; let value = selected.value as? String ?? ""
+        try require(selectedLabel.contains(name) || value.contains(name), "The real configuration does not select the exact case UUID.")
+        capture(springboard, label)
+        XCUIDevice.shared.press(.home)
+        let after = try widgetFamilyContainer()
+        try require(after.frame == frame && mini.state == .notRunning, "Reading configuration replaced the physical widget or opened its host.")
+        return ["instanceName": name, "label": selectedLabel, "value": value,
+                "frame": widgetStateFrame(frame), "verifiedAt": widgetStateTimestamp(),
+                "verifiedUptime": ProcessInfo.processInfo.systemUptime, "attachmentLabel": label]
+    }
+
+    private func widgetFamilyObservation() throws -> [String: Any] {
+        let container = try widgetFamilyContainer()
+        let marker = try XCTUnwrap(widgetFamilyVisible(springboard.staticTexts.matching(
+            NSPredicate(format: "label == %@", "Matrix count: 0"))).first)
+        try require(mini.state == .notRunning, "MiniApps must stay terminated during the actual family observation.")
+        return ["visibleMatrixCount": widgetFamilyMarkerCount(), "markerLabel": marker.label,
+                "markerHittable": marker.isHittable, "markerFrame": widgetStateFrame(marker.frame),
+                "widgetFrame": widgetStateFrame(container.frame), "screenFrame": widgetStateFrame(springboard.frame),
+                "orientation": widgetFamilyOrientationName(), "hostTerminated": mini.state == .notRunning]
+    }
+
+    private func openWidgetFamilyGallery(sizeLabel: String) throws {
+        var selectedIcon: XCUIElement?
+        for _ in 0..<5 {
+            selectedIcon = widgetFamilyVisible(springboard.icons.matching(NSPredicate(format: "label == %@", "Hanlin MiniApps")))
+                .first { $0.frame.maxY < self.springboard.frame.maxY - 140 }
+            if selectedIcon != nil { break }
+            springboard.swipeLeft()
+        }
+        let icon = try XCTUnwrap(selectedIcon, "The installed MiniApps Home Screen icon is absent.")
+        let placeholders = springboard.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Choose a widget instance"))
+        try require(widgetFamilyMarkerCount() == 0 && widgetFamilyVisible(placeholders).isEmpty,
+                    "This placement page already has an unowned Matrix or placeholder; do not reuse or remove it.")
+        record["prePlacement"] = ["visibleMatrixCount": 0, "visiblePlaceholderCount": 0,
+            "screenFrame": widgetStateFrame(springboard.frame), "orientation": widgetFamilyOrientationName(),
+            "at": widgetStateTimestamp(), "uptime": ProcessInfo.processInfo.systemUptime]
+        capture(springboard, "widget-family-before-placement")
+        icon.press(forDuration: 1.2)
+        let editHome = springboard.buttons["Edit Home Screen"].firstMatch
+        if !editHome.exists && springboard.buttons["Options"].firstMatch.exists { springboard.buttons["Options"].firstMatch.tap() }
+        try tap(editHome, "Open the actual Home Screen edit mode.")
+        if springboard.buttons["Edit"].firstMatch.exists { springboard.buttons["Edit"].firstMatch.tap() }
+        try tap(firstButton(springboard, ["Add Widget", "Add Widgets"]), "Open the real widget gallery.")
+        let search = springboard.searchFields.firstMatch
+        try tap(search, "Search the actual MiniApps widget provider."); search.typeText("Hanlin MiniApps")
+        let gallery = springboard.collectionViews["add-sheet-collection-view"].firstMatch
+        try require(gallery.waitForExistence(timeout: bounded(15)), "The system gallery collection is unavailable.")
+        try tap(gallery.cells.matching(NSPredicate(format: "label == %@", "Hanlin MiniApps")).firstMatch,
+                "Open the real installed MiniApps widget provider.")
+        let end = Date().addingTimeInterval(bounded(35))
+        var pages: [[String: Any]] = []
+        var seen = Set<String>()
+        for index in 0..<12 {
+            try require(Date() < end && Date() < deadline, "The bounded actual gallery traversal did not offer this named family.")
+            let rows = springboard.descendants(matching: .any).allElementsBoundByIndex.filter {
+                ($0.elementType == .staticText || $0.elementType == .button || $0.elementType == .pageIndicator)
+                    && $0.exists && $0.isHittable && springboard.frame.contains($0.frame)
+            }.map { ["label": $0.label, "value": $0.value as? String ?? "", "frame": widgetStateFrame($0.frame)] as [String: Any] }
+            try require(rows.count <= 128 && rows.allSatisfy { ($0["label"] as? String ?? "").count <= 1024 },
+                        "The actual gallery page evidence exceeded its finite observation bound.")
+            let texts = rows.flatMap { [$0["label"] as? String ?? "", $0["value"] as? String ?? ""] }
+            let normalized = texts.map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
+            let selected = normalized.contains("hanlin script") &&
+                normalized.contains(where: { $0 == sizeLabel.lowercased() || $0 == sizeLabel.lowercased() + " widget" })
+            let signature = try String(data: JSONSerialization.data(withJSONObject: rows, options: [.sortedKeys]), encoding: .utf8)
+            let actualSignature = try XCTUnwrap(signature)
+            try require(seen.insert(actualSignature).inserted, "The actual gallery repeated a page without offering the named family.")
+            let page: [String: Any] = ["index": index, "rows": rows, "selected": selected,
+                "observedAt": widgetStateTimestamp(), "uptime": ProcessInfo.processInfo.systemUptime,
+                "attachmentLabel": "widget-family-gallery-" + String(index)]
+            pages.append(page); record["galleryPages"] = pages
+            capture(springboard, "widget-family-gallery-" + String(index))
+            if selected {
+                _ = try widgetFamilyUnique(springboard.buttons.matching(NSPredicate(format: "label MATCHES %@", "\\s*Add Widget\\s*")),
+                                            "The observed named family page has no unique Add Widget control.")
+                return
+            }
+            springboard.swipeLeft()
+        }
+        throw ObservationFailure(description: "The actual gallery never exposed Hanlin Script and the requested family label; swipe count is not family evidence.")
+    }
+
+    private func removeWidgetFamily(named name: String) throws -> [String: Any] {
+        let binding = try confirmWidgetFamily(named: name, label: "widget-family-cleanup-configuration")
+        let container = try widgetFamilyContainer()
+        container.press(forDuration: 1.5)
+        try tap(springboard.buttons["Remove Widget"].firstMatch, "Remove only the physical widget just verified as this case's name.")
+        let confirmation = springboard.alerts.buttons.matching(NSPredicate(format: "label == 'Remove' OR label == 'Remove Widget'"))
+        let confirm = try widgetFamilyUnique(confirmation, "The actual widget-removal confirmation is unavailable.")
+        let confirmationLabel = confirm.label
+        capture(springboard, "widget-family-remove-confirmation")
+        try tap(confirm, "Confirm the real owned-widget removal.")
+        try require(wait(25) { self.widgetFamilyMarkerCount() == 0 }, "The owned Matrix remains physically visible after removal.")
+        try require(mini.state == .notRunning, "Removing the widget unexpectedly opened MiniApps.")
+        capture(springboard, "widget-family-removed")
+        return ["instanceName": name, "configuration": binding, "action": "Remove Widget",
+                "confirmationLabel": confirmationLabel, "visibleMatrixCountAfter": widgetFamilyMarkerCount(),
+                "hostTerminated": mini.state == .notRunning, "removedAt": widgetStateTimestamp(),
+                "removedUptime": ProcessInfo.processInfo.systemUptime]
+    }
+
+    private func widgetFamilyRestoration(_ prior: String) -> [String: Any] {
+        ["priorOrientation": prior, "orientation": widgetFamilyOrientationName(),
+         "screenFrame": widgetStateFrame(springboard.frame), "restoredAt": widgetStateTimestamp(),
+         "restoredUptime": ProcessInfo.processInfo.systemUptime]
+    }
+
+
     private struct WidgetStateControls {
         let container: XCUIElement
         let toggle: XCUIElement
