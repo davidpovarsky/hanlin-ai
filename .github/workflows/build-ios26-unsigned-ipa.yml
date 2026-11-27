@@ -2963,6 +2963,12 @@ jobs:
               if [[ "$cohort_selectors" == *"HanlinScriptUIProductionE2ETests"* ]] || [ "$RUN_FULL_VALIDATION" = "true" ]; then
                 ui_time_allowance=600
               fi
+              # Preserve this unchanged case's actual allowance from the original
+              # 90-test cohort when diagnosing it alone on a fresh owned device.
+              if [ "${{ inputs.target_validation_group }}" = "exact_test_selector" ] &&
+                 [ "${{ inputs.exact_test_selector }}" = "AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeLegacyWidgetWithHostTerminated" ]; then
+                ui_time_allowance=600
+              fi
               xcodebuild test-without-building \
               -xctestrun "$ui_xctestrun" \
               -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
