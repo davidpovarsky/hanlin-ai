@@ -272,7 +272,7 @@ private struct HanlinFollowLatestActionTarget: UIViewRepresentable {
         button.isAccessibilityElement = true
         button.accessibilityTraits = .button
         button.accessibilityIdentifier = "hanlin-chat-follow-latest"
-        button.addTarget(context.coordinator, action: #selector(Coordinator.activate(_:)), for: .touchUpInside)
+        button.addTarget(context.coordinator, action: #selector(Coordinator.activate(_:)), for: .primaryActionTriggered)
         configure(button, context: context)
         return button
     }
@@ -283,7 +283,7 @@ private struct HanlinFollowLatestActionTarget: UIViewRepresentable {
     }
 
     static func dismantleUIView(_ button: CircleButton, coordinator: Coordinator) {
-        button.removeTarget(coordinator, action: #selector(Coordinator.activate(_:)), for: .touchUpInside)
+        button.removeTarget(coordinator, action: #selector(Coordinator.activate(_:)), for: .primaryActionTriggered)
         coordinator.action = nil
     }
 
@@ -296,13 +296,80 @@ private struct HanlinFollowLatestActionTarget: UIViewRepresentable {
         override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
             super.point(inside: point, with: event) && UIBezierPath(ovalIn: bounds).contains(point)
         }
+
+        #if DEBUG || HANLIN_TESTING
+        private var diagnosticEventCount = 0
+
+        override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+            let accepted = super.beginTracking(touch, with: event)
+            traceNativeEvent("beginTracking", touch: touch, event: event,
+                             fields: ["trackingAccepted": accepted])
+            return accepted
+        }
+
+        override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
+            traceNativeEvent("endTracking", touch: touch, event: event)
+            super.endTracking(touch, with: event)
+        }
+
+        override func cancelTracking(with event: UIEvent?) {
+            traceNativeEvent("cancelTracking", event: event)
+            super.cancelTracking(with: event)
+        }
+
+        override func sendAction(_ action: Selector, to target: Any?, for event: UIEvent?) {
+            var fields: [String: Any] = ["actionSelector": NSStringFromSelector(action)]
+            if let target {
+                fields["targetType"] = String(reflecting: type(of: target))
+            }
+            traceNativeEvent("sendAction", event: event, fields: fields)
+            super.sendAction(action, to: target, for: event)
+        }
+
+        func traceNativeEvent(_ stage: String, touch: UITouch? = nil,
+                              event: UIEvent? = nil, fields additionalFields: [String: Any] = [:]) {
+            guard ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1",
+                  diagnosticEventCount < 32 else { return }
+            diagnosticEventCount += 1
+            // Only native control state and event metadata; never chat or draft content.
+            var fields: [String: Any] = [
+                "stage": stage,
+                "buttonID": String(describing: ObjectIdentifier(self)),
+                "sample": diagnosticEventCount,
+                "uptime": ProcessInfo.processInfo.systemUptime,
+                "enabled": isEnabled,
+                "tracking": isTracking,
+                "touchInside": isTouchInside,
+                "highlighted": isHighlighted,
+                "attached": window != nil
+            ]
+            if let event {
+                fields["eventType"] = event.type.rawValue
+                fields["eventTimestamp"] = event.timestamp
+            }
+            if let touch {
+                let point = touch.location(in: self)
+                fields["touchType"] = touch.type.rawValue
+                fields["touchPhase"] = touch.phase.rawValue
+                fields["touchX"] = point.x
+                fields["touchY"] = point.y
+            }
+            fields.merge(additionalFields) { _, new in new }
+            NativeToolTraceLogger.shared.log("followLatestNativeControl", fields)
+        }
+        #endif
     }
 
     @MainActor
     final class Coordinator: NSObject {
         var action: (() -> Void)?
         init(action: @escaping () -> Void) { self.action = action }
-        @objc func activate(_ sender: UIButton) { action?() }
+        @objc func activate(_ sender: UIButton) {
+            #if DEBUG || HANLIN_TESTING
+            (sender as? CircleButton)?.traceNativeEvent("activate", fields: ["actionPresent": action != nil])
+            #endif
+            action?()
+        }
     }
 }
 
