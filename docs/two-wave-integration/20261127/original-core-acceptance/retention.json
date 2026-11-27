@@ -1,0 +1,126 @@
+{
+  "at": "2026-11-27T13:15:09.253887+00:00",
+  "state": "PREPARED_NOT_YET_COMMITTED",
+  "coreResults": {
+    "macOS": {
+      "source": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+      "tests": 603,
+      "passed": 603
+    },
+    "Host": {
+      "source": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+      "seal": "b723338e995b14dc31f96a90ad4c865e8a4b345a",
+      "phases": 12,
+      "tests": 188,
+      "passed": 188
+    },
+    "iOS": {
+      "source": "b723338e995b14dc31f96a90ad4c865e8a4b345a",
+      "definitions": 58,
+      "invocations": 79,
+      "passed": 79
+    },
+    "CI": {
+      "source": "f43c3bb60f98e65b8061b08285612f7ceacc46bf",
+      "discovered": 491,
+      "passed": 489,
+      "skipped": 2
+    }
+  },
+  "packets": [
+    {
+      "packet": "original-macos603",
+      "memberCount": 166,
+      "rawBytes": 1129347,
+      "archive": "original-macos603.tar.gz",
+      "archiveBytes": 338800,
+      "archiveSHA256": "de545ac2598f3b7f04609df37ce8b5797f08c4c52c2d5eed58e2d3b194a03e85",
+      "inventory": "original-macos603.inventory.json",
+      "inventorySHA256": "9baaa781c6c68cfb1326106d0e26a4de177e18484a6edee7d4bbcd7e1d5eb30a"
+    },
+    {
+      "packet": "original-host188",
+      "memberCount": 42,
+      "rawBytes": 19987076,
+      "archive": "original-host188.tar.gz",
+      "archiveBytes": 4389659,
+      "archiveSHA256": "75865f1943e120296ec115087de547fb9c4315881eabc69e1bb7a0a8572957b2",
+      "inventory": "original-host188.inventory.json",
+      "inventorySHA256": "84ce65b6685c35bb29f2064351d6bbabe27bca3c8b5096a417383a9d126a680e"
+    },
+    {
+      "packet": "original-ios79",
+      "memberCount": 276,
+      "rawBytes": 4933363,
+      "archive": "original-ios79.tar.gz",
+      "archiveBytes": 950577,
+      "archiveSHA256": "1bb9876b02f8de513e0196a0d4ed1cf55a1d85e6e2db15dc8e591e8a37bedb53",
+      "inventory": "original-ios79.inventory.json",
+      "inventorySHA256": "847631eefef5a4b78746c4c671a30b3165f1cf215ade1c0ca96402b995ae4722"
+    },
+    {
+      "packet": "original-ci477-infrastructure-failure",
+      "memberCount": 7,
+      "rawBytes": 5187424,
+      "archive": "original-ci477-infrastructure-failure.tar.gz",
+      "archiveBytes": 846737,
+      "archiveSHA256": "084810c049ce3768da2a8554926a4ef746ed075765a52548081069aed210d9cb",
+      "inventory": "original-ci477-infrastructure-failure.inventory.json",
+      "inventorySHA256": "d647f917532ef2d926b7168e90f24943b694516892d506409c05ec65b7005ba6"
+    },
+    {
+      "packet": "original-ci477-pass",
+      "memberCount": 7,
+      "rawBytes": 5178367,
+      "archive": "original-ci477-pass.tar.gz",
+      "archiveBytes": 845438,
+      "archiveSHA256": "849a7bad88941187b7c06d5b2756dbf89ba0e31f30c18b959fb802c12bd1671b",
+      "inventory": "original-ci477-pass.inventory.json",
+      "inventorySHA256": "4db5f4832d0678ea698c693c3161ebe98ea2b50ae67fe5f23f22dc300b4878ff"
+    },
+    {
+      "packet": "original-ci491-pass",
+      "memberCount": 7,
+      "rawBytes": 5183340,
+      "archive": "original-ci491-pass.tar.gz",
+      "archiveBytes": 846626,
+      "archiveSHA256": "9c5f780f5687d2aae0a91a132368764e96d96e14d31b67adf3699354ad6ec356",
+      "inventory": "original-ci491-pass.inventory.json",
+      "inventorySHA256": "28fe567a210eecaedf3715bdecee48e4faeec2ce945ec0bb602fad4b64072dab"
+    },
+    {
+      "packet": "ci477-infrastructure-controller",
+      "memberCount": 7,
+      "rawBytes": 7094,
+      "archive": "ci477-infrastructure-controller.tar.gz",
+      "archiveBytes": 2442,
+      "archiveSHA256": "3f354e4c6fb07fa3683a879268dd6578252c27f0da07f4ca0d76c20eea92af26",
+      "inventory": "ci477-infrastructure-controller.inventory.json",
+      "inventorySHA256": "ce197d455cfce62a8eb84629c93ef510d84e81b87407ed34e04c19e47c9102b6"
+    },
+    {
+      "packet": "ci477-pass-controller",
+      "memberCount": 6,
+      "rawBytes": 6522,
+      "archive": "ci477-pass-controller.tar.gz",
+      "archiveBytes": 2230,
+      "archiveSHA256": "268044058d393c62bfc4c0e2be2e6145ffad9a81c37577eca3acaabbab164b30",
+      "inventory": "ci477-pass-controller.inventory.json",
+      "inventorySHA256": "f67d52d60481ab1318aec9b105246c642bb772533c11dc7672a7dfcc3d33a4c2"
+    },
+    {
+      "packet": "ci491-pass-controller",
+      "memberCount": 6,
+      "rawBytes": 6520,
+      "archive": "ci491-pass-controller.tar.gz",
+      "archiveBytes": 2231,
+      "archiveSHA256": "0ce5f677c6c8a44952196de8193a734c102c2fc6f5dd5ac4d6b617f715f02d65",
+      "inventory": "ci491-pass-controller.inventory.json",
+      "inventorySHA256": "40c8c4ee0f41de1b962222cc376b1391229aeab8c4059274bc59ee7bc31390d7"
+    }
+  ],
+  "credentialPatternHits": [],
+  "privateAsanaAndConsumerOperationalAuditsExcluded": true,
+  "transportMetadataOutsideDeclaredPacketsExcluded": true,
+  "nativeRerunPerformed": false
+}

@@ -1,0 +1,42 @@
+{
+  "packet": "original-ci477-infrastructure-failure",
+  "encoding": "Lossless original file bytes in gzip/tar; archive header metadata normalized; original receipts remain unchanged",
+  "originalDeclaredManifestSHA256": null,
+  "files": [
+    {
+      "path": "receipt.json",
+      "bytes": 2348,
+      "sha256": "1280c39c9d136ede85e596e3408c8178e954dce3dbca2ea44bc19d9d3626c291"
+    },
+    {
+      "path": "source-inputs.json",
+      "bytes": 5059473,
+      "sha256": "10b5b68550b787a13354064be72ca5ad45b506ddfb82efe4439fc78228387d89"
+    },
+    {
+      "path": "start.json",
+      "bytes": 856,
+      "sha256": "794e5f4ac71c37643a8a0c567c55b6858aa6aa6883e5319579de8cef948d77bf"
+    },
+    {
+      "path": "stderr.log",
+      "bytes": 102960,
+      "sha256": "0711941e2fca71787b53316826d93564f0f16297db93a738c7ef432c91f65254"
+    },
+    {
+      "path": "stderr.log.gz",
+      "bytes": 15991,
+      "sha256": "86c63e3a667319fd9e6a123bff2647b050a1ca09dfc0abf10a164510f5706238"
+    },
+    {
+      "path": "stdout.log",
+      "bytes": 4882,
+      "sha256": "1c1a935ea090f51508887dd1110093c9fae1d88cbd50dd3f457e8c7feb3b3f59"
+    },
+    {
+      "path": "stdout.log.gz",
+      "bytes": 914,
+      "sha256": "c4eb8d68841d769f53989fb41008839bc31f85704ef10e41e7baceb672ce5bd2"
+    }
+  ]
+}

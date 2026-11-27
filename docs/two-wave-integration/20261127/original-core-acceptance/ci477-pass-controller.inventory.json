@@ -1,0 +1,37 @@
+{
+  "packet": "ci477-pass-controller",
+  "encoding": "Lossless original file bytes in gzip/tar; archive header metadata normalized; original receipts remain unchanged",
+  "originalDeclaredManifestSHA256": null,
+  "files": [
+    {
+      "path": "admission.json",
+      "bytes": 574,
+      "sha256": "d4db68dc1e8541cc6ed5ad70a7432792023099505ea5a921f3e9d2cf6851b90c"
+    },
+    {
+      "path": "controller.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "controller.stdout",
+      "bytes": 1212,
+      "sha256": "1c2f3441f54dc12ba6d71b3ea7007ee9fd756e513d4f4068149e9d05a890a84b"
+    },
+    {
+      "path": "lease.json",
+      "bytes": 184,
+      "sha256": "c9225604a3e166b4b892fdc1564a7f6e94955e283d2586fa3fb256262b5f14dd"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 2332,
+      "sha256": "091f083e54615422533f6043a070784a111f747cff38dff322d76d96c9c977c2"
+    },
+    {
+      "path": "sparse-checkout.before",
+      "bytes": 2220,
+      "sha256": "fd9faf02165766a7ff4055132a8ecb65ac0038dc9ab5b163fd5e211e16eaf732"
+    }
+  ]
+}

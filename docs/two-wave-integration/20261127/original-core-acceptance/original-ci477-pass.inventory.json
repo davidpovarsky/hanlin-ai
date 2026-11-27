@@ -1,0 +1,42 @@
+{
+  "packet": "original-ci477-pass",
+  "encoding": "Lossless original file bytes in gzip/tar; archive header metadata normalized; original receipts remain unchanged",
+  "originalDeclaredManifestSHA256": null,
+  "files": [
+    {
+      "path": "receipt.json",
+      "bytes": 2332,
+      "sha256": "84e3db943264305354efce716001362713fcdb17494faed4fdc3eafaf514605a"
+    },
+    {
+      "path": "source-inputs.json",
+      "bytes": 5059473,
+      "sha256": "10b5b68550b787a13354064be72ca5ad45b506ddfb82efe4439fc78228387d89"
+    },
+    {
+      "path": "start.json",
+      "bytes": 856,
+      "sha256": "8c6c1429fea9686a24cf9a724d7eb6012fab48ac1825422ae660b2c51d4a9bc8"
+    },
+    {
+      "path": "stderr.log",
+      "bytes": 94563,
+      "sha256": "52398932e38f2e3cf46340f89a56659377e7624f44ffda019e486ddc85e94ccb"
+    },
+    {
+      "path": "stderr.log.gz",
+      "bytes": 15343,
+      "sha256": "5fcbd49393ade59b40d7a27bc6f83629b7dcf472512198c75708bfe441c798fb"
+    },
+    {
+      "path": "stdout.log",
+      "bytes": 4882,
+      "sha256": "a98a53bdce3ebec1cbd2cd1c972649d247cc624ced0bb115c37f1d3eab811eb7"
+    },
+    {
+      "path": "stdout.log.gz",
+      "bytes": 918,
+      "sha256": "2aaf27e53b5a84b9e11e801f885974f4fde46486fd13da460364bbba9909aef8"
+    }
+  ]
+}

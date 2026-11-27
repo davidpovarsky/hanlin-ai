@@ -1,0 +1,188 @@
+{
+  "reviewer": "/root",
+  "at": "2026-11-27T13:10:47.412019+00:00",
+  "source": "b723338e995b14dc31f96a90ad4c865e8a4b345a",
+  "verifiedMembers": 275,
+  "rawBytes": 4861857,
+  "manifestSHA256": "ea252d75708d22805a82767ce0fc1ddbbcf610cf22bbd73bf2b14e37cb83240b",
+  "selected": {
+    "qualification.json": {
+      "sha256": "156b1dc343f4acc789402dfdf984baff6ffdac598224f7fa80a58b48210d1db0",
+      "keys": [
+        "status",
+        "source",
+        "definitions",
+        "invocations",
+        "parameterInvocations",
+        "allParameterValuesExactlyMatched",
+        "noMissingUnexpectedCollateralSkippedOrExpectedFailure",
+        "originalMac603ActualSource",
+        "sourceSealHasOnly3GeneratedDocs",
+        "actualSDK",
+        "actualDevice",
+        "originalBuildConfiguration",
+        "sourceProductsAndFixturesUnchanged",
+        "reconciliationSHA256",
+        "nativeBuildReceiptSHA256",
+        "nativeTestReceiptSHA256",
+        "oldAcceptedProductsPreservedSeparately",
+        "newAcceptedProductsRetainedInOriginalDerivedData",
+        "at"
+      ],
+      "fields": {
+        "status": "ORIGINAL_IOS79_ACCEPTANCE_PASSED",
+        "source": "b723338e995b14dc31f96a90ad4c865e8a4b345a",
+        "definitions": 58,
+        "invocations": 79,
+        "parameterInvocations": 28,
+        "allParameterValuesExactlyMatched": true,
+        "noMissingUnexpectedCollateralSkippedOrExpectedFailure": true,
+        "originalMac603ActualSource": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+        "sourceSealHasOnly3GeneratedDocs": true,
+        "actualSDK": "27.0",
+        "originalBuildConfiguration": "Debug/iPhoneSimulator/SWIFT_STRICT_CONCURRENCY=complete",
+        "sourceProductsAndFixturesUnchanged": true,
+        "reconciliationSHA256": "33a79af6c799dc91236b55edb507dd360fe34917ed3ba5a59100e9c4daa6a187",
+        "nativeBuildReceiptSHA256": "fb8d71a4e7721545631ebeabb66a259caadba76fee1f44ee5c5a168917dc4fdf",
+        "nativeTestReceiptSHA256": "4b7a0df171a32df61b1cbc83e1b021f4048287f1f10b486f5f0b3460946f217b",
+        "oldAcceptedProductsPreservedSeparately": true,
+        "at": "2026-11-27T13:06:15.327183+00:00"
+      },
+      "collections": {
+        "actualDevice": {
+          "count": 7,
+          "keys": [
+            "architecture",
+            "deviceId",
+            "deviceName",
+            "modelName",
+            "osBuildNumber",
+            "osVersion",
+            "platform"
+          ]
+        },
+        "newAcceptedProductsRetainedInOriginalDerivedData": {
+          "count": 4,
+          "keys": null
+        }
+      }
+    },
+    "validation/test-r1/required-scope-reconciliation.json": {
+      "sha256": "33a79af6c799dc91236b55edb507dd360fe34917ed3ba5a59100e9c4daa6a187",
+      "keys": [
+        "source",
+        "recordedAtUTC",
+        "status",
+        "acceptancePassed",
+        "buildSDK",
+        "device",
+        "actualDefinitions",
+        "actualInvocations",
+        "originalDefinitions",
+        "originalInvocations",
+        "newRegressionDefinitions",
+        "newRegressionInvocations",
+        "methodResults",
+        "invocationResults",
+        "skipped",
+        "expectedFailures",
+        "missingRequiredIdentifiers",
+        "unexpectedExecutedIdentifiers",
+        "parameterizedDefinitions",
+        "parameterInvocations",
+        "parameterValuesExactlyReconciled",
+        "nativeExitCode",
+        "selectionQualification",
+        "inputProofs",
+        "failedIdentifiers",
+        "tests",
+        "originalResultBundle"
+      ],
+      "fields": {
+        "source": "b723338e995b14dc31f96a90ad4c865e8a4b345a",
+        "recordedAtUTC": "2026-11-27T13:01:50.738701+00:00",
+        "status": "EXACT_REQUIRED_NATIVE_SCOPE_PASSED",
+        "acceptancePassed": true,
+        "buildSDK": "27.0",
+        "actualDefinitions": 58,
+        "actualInvocations": 79,
+        "originalDefinitions": 57,
+        "originalInvocations": 78,
+        "newRegressionDefinitions": 1,
+        "newRegressionInvocations": 1,
+        "skipped": 0,
+        "expectedFailures": 0,
+        "parameterizedDefinitions": 7,
+        "parameterInvocations": 28,
+        "parameterValuesExactlyReconciled": true,
+        "nativeExitCode": 0,
+        "originalResultBundle": "/Users/m1/builds/hanlin-two-wave-root-20261126/validation/platform-b723338e/test-r1/PlatformTests.xcresult"
+      },
+      "collections": {
+        "device": {
+          "count": 7,
+          "keys": [
+            "architecture",
+            "deviceId",
+            "deviceName",
+            "modelName",
+            "osBuildNumber",
+            "osVersion",
+            "platform"
+          ]
+        },
+        "methodResults": {
+          "count": 1,
+          "keys": [
+            "Passed"
+          ]
+        },
+        "invocationResults": {
+          "count": 1,
+          "keys": [
+            "Passed"
+          ]
+        },
+        "missingRequiredIdentifiers": {
+          "count": 0,
+          "keys": null
+        },
+        "unexpectedExecutedIdentifiers": {
+          "count": 0,
+          "keys": null
+        },
+        "selectionQualification": {
+          "count": 8,
+          "keys": [
+            "historical6975EnumerationReportedDefinitions",
+            "proposedCollateralDefinitions",
+            "proposedCollateralInvocations",
+            "actualCollateralDefinitions",
+            "actualCollateralInvocations",
+            "absentCollateralIdentifiers",
+            "observation",
+            "independentEnumerationReviewSHA256"
+          ]
+        },
+        "inputProofs": {
+          "count": 4,
+          "keys": [
+            "inventorySHA256",
+            "runReceiptSHA256",
+            "summarySHA256",
+            "testNodesSHA256"
+          ]
+        },
+        "failedIdentifiers": {
+          "count": 0,
+          "keys": null
+        },
+        "tests": {
+          "count": 58,
+          "keys": null
+        }
+      }
+    }
+  },
+  "allMemberHashesVerified": true
+}
