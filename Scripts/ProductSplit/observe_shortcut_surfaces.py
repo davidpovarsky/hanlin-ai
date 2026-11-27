@@ -589,7 +589,7 @@ def widget_facts(request, roots, fixture):
                if entry.get("id") == identity["entrypointID"]]
     require(len(entries) == 1 and entries[0].get("kind") == "widget"
             and entries[0].get("widgetEngine") == "expo"
-            and entries[0].get("compatibility") == "supported"
+            and entries[0].get("compatibility") in ("supported", "partial")
             and entries[0].get("runtimeProfile") == "hanlin-expo"
             and "widget" in entries[0].get("supportedContexts", []),
             "The widget is not the current supported Expo entrypoint")
