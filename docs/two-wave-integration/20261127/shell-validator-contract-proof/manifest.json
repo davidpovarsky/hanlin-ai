@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "atUTC": "2026-11-27T14:32:20.614982+00:00",
+  "sourceCommit": "17dd195a3916928778b7cec384ac2d83f70d9de4",
+  "sourceBase": "b723338e995b14dc31f96a90ad4c865e8a4b345a",
+  "reviewer": "/root",
+  "reviewStatus": "APPROVED_SOURCE_NATIVE_CONTINUATION_NOT_RUN",
+  "sourceHashes": {
+    "Scripts/Runtime/validate_shell_acceptance.py": "1acd648f05117c915ff84cfa0621a452c9970bc2e89b72a1e5bdd6bb2157a538",
+    "Scripts/Runtime/Tests/test_validate_shell_acceptance.py": "673b8fbd33d549eb33b1ac406a7a554a0f855de137c6def7c8b6122f037172fb",
+    "docs/two-wave-integration/20261127/shell-validator-current-contract.md": "bf4fc3c899fb60d8f42e5eea47d66b2417ff612b9a60b7d422364f7315c5d93c"
+  },
+  "members": [
+    {
+      "path": "source-validation.json",
+      "bytes": 11498,
+      "sha256": "49d09fe9e9668355027c0c3b36a9567d862ecc6ed7daa752693b668298aa3dca"
+    },
+    {
+      "path": "root-independent-review.json",
+      "bytes": 1365,
+      "sha256": "b95b9b48ee3ad73ff60c4767b4c1fd348da2148ed04c5393246f6cab14b26046"
+    },
+    {
+      "path": "first-sparse-import-failure.log.txt",
+      "bytes": 1593,
+      "sha256": "f81a07bac26e5c4d01fbd780fff908e361792d22d05667c8d73ca659969c5c9b",
+      "originalEvidenceName": "first-sparse-import-failure.log"
+    },
+    {
+      "path": "second-sparse-import-failure.log.txt",
+      "bytes": 1484,
+      "sha256": "f87e1f65c5f63e17c0509fd949b47aa931ab740e10fc53adb9468f2a67aa0fbd",
+      "originalEvidenceName": "second-sparse-import-failure.log"
+    },
+    {
+      "path": "original-validator-tests-after-sparse-recovery.log.txt",
+      "bytes": 2013,
+      "sha256": "d5ba02c69901c6f88de61999a672fee4d2c4de0d99dd566fde29edbc2d52395c",
+      "originalEvidenceName": "original-validator-tests-after-sparse-recovery.log"
+    },
+    {
+      "path": "original-validator-retained-report-rejection-control.log.txt",
+      "bytes": 1129,
+      "sha256": "a32ee9c16dcd96c5cb36c89afcef44763ed72c9f8cf169ce4b5ad5406b48d46a",
+      "originalEvidenceName": "original-validator-retained-report-rejection-control.log"
+    },
+    {
+      "path": "actual-native-report-candidate-summary.json",
+      "bytes": 2903,
+      "sha256": "cca4ae4dcda76e6200b864a78b863bd42dc1d9899bb5d3e6a2ca7375c547ed71"
+    },
+    {
+      "path": "original-shell-canonical-block.py",
+      "bytes": 798,
+      "sha256": "d9d5fc3caddd03a4337b1e759664905baa500c7be29c72b2cd066459c946b3ba"
+    },
+    {
+      "path": "original-canonical-block-actual-report.log.txt",
+      "bytes": 87,
+      "sha256": "098ae2d0a8e151cde476fa7a3ac24160c96dc93c16fc01ba5e0c1b5c66a03843",
+      "originalEvidenceName": "original-canonical-block-actual-report.log"
+    },
+    {
+      "path": "original-canonical-canonical-mismatch.log.txt",
+      "bytes": 43,
+      "sha256": "a7b2dfa9c349045deb0687ec3c51f2c1c59f99f437f0b8490b8473a77844cc7a",
+      "originalEvidenceName": "original-canonical-canonical-mismatch.log"
+    },
+    {
+      "path": "original-canonical-missing-canonical.log.txt",
+      "bytes": 56,
+      "sha256": "3d5c70ed5254060461517ad9ae205e0e16e4eed8213e2482d88c7bee9e1dcc35",
+      "originalEvidenceName": "original-canonical-missing-canonical.log"
+    },
+    {
+      "path": "original-canonical-runtime-core-missing.log.txt",
+      "bytes": 48,
+      "sha256": "c209b8ba9e288c811109b9f03cd92e914064d74a4a46fa363d91b8bb5a122e73",
+      "originalEvidenceName": "original-canonical-runtime-core-missing.log"
+    },
+    {
+      "path": "original-canonical-runtime-core-not-passed.log.txt",
+      "bytes": 48,
+      "sha256": "c209b8ba9e288c811109b9f03cd92e914064d74a4a46fa363d91b8bb5a122e73",
+      "originalEvidenceName": "original-canonical-runtime-core-not-passed.log"
+    },
+    {
+      "path": "source.patch",
+      "bytes": 6880,
+      "sha256": "81eb3d5ace805bee41e2c0f5cfea5e1b665cb79068b4e0234f0b58760dff7156"
+    },
+    {
+      "path": "original-native-shell-acceptance.json",
+      "bytes": 10618,
+      "sha256": "46a5eba972c7b00022cd399f837bcfd42f764f8925a628feaf992897ac3ce26e"
+    }
+  ],
+  "originalNativeAttempt": "FAILED_SHELL_VALIDATOR",
+  "MCP": "NOT_RUN",
+  "productionChanged": false,
+  "nativeJobsExecutedForThisCorrection": 0,
+  "rawLogStorage": "Byte-identical .log.txt copies retain original log names and hashes; original .log files remain in Oracle evidence. Repository-wide *.log ignore is unchanged."
+}

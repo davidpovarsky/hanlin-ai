@@ -1,0 +1,123 @@
+{
+  "commandCount": 23,
+  "commands": [
+    {
+      "command": "awk",
+      "exitCode": 0,
+      "representativeOutput": "1\n2"
+    },
+    {
+      "command": "cat",
+      "exitCode": 0,
+      "representativeOutput": "cat-ok"
+    },
+    {
+      "command": "cp",
+      "exitCode": 0,
+      "representativeOutput": "exit=0"
+    },
+    {
+      "command": "curl",
+      "exitCode": 0,
+      "representativeOutput": "curl 8.1.2 (x86_64-apple-darwin22.5.0) libcurl/8.1.2 OpenSSL/1.1.1w zlib/1.2.12\nRelease-Date: 2023-05-30\nProtocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp smb smbs smtp smtps telnet tftp\nFeatures: alt-svc AsynchDNS HSTS HTTPS-proxy IPv6 Largefile libz NTLM NTLM_WB SSL threadsafe TLS-SRP UnixSockets"
+    },
+    {
+      "command": "grep",
+      "exitCode": 0,
+      "representativeOutput": "beta"
+    },
+    {
+      "command": "head",
+      "exitCode": 0,
+      "representativeOutput": "first"
+    },
+    {
+      "command": "ln",
+      "exitCode": 0,
+      "representativeOutput": "exit=0"
+    },
+    {
+      "command": "ls",
+      "exitCode": 0,
+      "representativeOutput": "ls-visible.txt"
+    },
+    {
+      "command": "mkdir",
+      "exitCode": 0,
+      "representativeOutput": "exit=0"
+    },
+    {
+      "command": "mv",
+      "exitCode": 0,
+      "representativeOutput": "exit=0"
+    },
+    {
+      "command": "readlink",
+      "exitCode": 0,
+      "representativeOutput": "readlink-target.txt"
+    },
+    {
+      "command": "rm",
+      "exitCode": 0,
+      "representativeOutput": "exit=0"
+    },
+    {
+      "command": "rmdir",
+      "exitCode": 0,
+      "representativeOutput": "exit=0"
+    },
+    {
+      "command": "sed",
+      "exitCode": 0,
+      "representativeOutput": "second"
+    },
+    {
+      "command": "sort",
+      "exitCode": 0,
+      "representativeOutput": "alpha\nbravo\ncharlie"
+    },
+    {
+      "command": "stat",
+      "exitCode": 0,
+      "representativeOutput": "16777232 74897424 -rw-r--r-- 1 (501) staff 0 8 \"Nov 27 15:05:30 2026\" \"Nov 27 15:05:30 2026\" \"Nov 27 15:05:30 2026\" \"Nov 27 15:05:30 2026\" 4096 8 0 stat-input.txt"
+    },
+    {
+      "command": "tail",
+      "exitCode": 0,
+      "representativeOutput": "last"
+    },
+    {
+      "command": "tar",
+      "exitCode": 0,
+      "representativeOutput": "tar-input.txt"
+    },
+    {
+      "command": "touch",
+      "exitCode": 0,
+      "representativeOutput": "exit=0"
+    },
+    {
+      "command": "tr",
+      "exitCode": 0,
+      "representativeOutput": "LOWER"
+    },
+    {
+      "command": "uniq",
+      "exitCode": 0,
+      "representativeOutput": "alpha\nbeta"
+    },
+    {
+      "command": "unlink",
+      "exitCode": 0,
+      "representativeOutput": "exit=0"
+    },
+    {
+      "command": "wc",
+      "exitCode": 0,
+      "representativeOutput": "2 wc-input.txt"
+    }
+  ],
+  "passed": true,
+  "policyCount": 5,
+  "workspaceEscapeCount": 0
+}

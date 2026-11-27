@@ -1,0 +1,1 @@
+Shell acceptance did not emit canonical shadow evidence

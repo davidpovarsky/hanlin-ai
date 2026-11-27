@@ -1,0 +1,23 @@
+test_validate_shell_acceptance (unittest.loader._FailedTest.test_validate_shell_acceptance) ... ERROR
+
+======================================================================
+ERROR: test_validate_shell_acceptance (unittest.loader._FailedTest.test_validate_shell_acceptance)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_validate_shell_acceptance
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/development/projects/worktrees/hanlin-shell-validator-contract-20261127/Scripts/Runtime/Tests/test_validate_shell_acceptance.py", line 6, in <module>
+    from Scripts.Runtime.validate_ios_system_resources import EXPECTED_ENTRIES
+  File "/mnt/development/projects/worktrees/hanlin-shell-validator-contract-20261127/Scripts/Runtime/validate_ios_system_resources.py", line 15, in <module>
+    from project_graph import parse_project
+  File "/mnt/development/projects/worktrees/hanlin-shell-validator-contract-20261127/Scripts/CI/IntegrationValidation/project_graph.py", line 9, in <module>
+    from extension_inventory import EXTENSIONS, MINIAPPS_EXTENSIONS, NEW_EXTENSION_KEYS, SIGNING_TARGETS
+ModuleNotFoundError: No module named 'extension_inventory'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

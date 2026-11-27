@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shell-validator-contract-b723338e/original-validate-shell-acceptance.py", line 119, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shell-validator-contract-b723338e/original-validate-shell-acceptance.py", line 110, in main
+    summary = validate_acceptance(payload)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shell-validator-contract-b723338e/original-validate-shell-acceptance.py", line 84, in validate_acceptance
+    require(set(policies_by_name) == EXPECTED_POLICIES, "Shell policy coverage is incomplete or unexpected")
+  File "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shell-validator-contract-b723338e/original-validate-shell-acceptance.py", line 35, in require
+    raise AcceptanceValidationError(message)
+AcceptanceValidationError: Shell policy coverage is incomplete or unexpected

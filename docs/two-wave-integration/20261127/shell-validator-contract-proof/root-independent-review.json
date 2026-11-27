@@ -1,0 +1,22 @@
+{
+  "atUTC": "2026-11-27T14:26:37.582241+00:00",
+  "reviewer": "/root",
+  "sourceBase": "b723338e995b14dc31f96a90ad4c865e8a4b345a",
+  "reviewedHashes": {
+    "Scripts/Runtime/validate_shell_acceptance.py": "1acd648f05117c915ff84cfa0621a452c9970bc2e89b72a1e5bdd6bb2157a538",
+    "Scripts/Runtime/Tests/test_validate_shell_acceptance.py": "673b8fbd33d549eb33b1ac406a7a554a0f855de137c6def7c8b6122f037172fb",
+    "docs/two-wave-integration/20261127/shell-validator-current-contract.md": "bf4fc3c899fb60d8f42e5eea47d66b2417ff612b9a60b7d422364f7315c5d93c"
+  },
+  "originalValidatorASTRecoveredAfterOnlyExpectedSetAndUniqueRowsDelta": true,
+  "allOriginalValidationGuardsPreserved": true,
+  "original12ValidatorTestsRawVerified": true,
+  "twoOriginalWorkflowMethodsRawVerifiedSeparately": true,
+  "sourceValidationSHA256": "49d09fe9e9668355027c0c3b36a9567d862ecc6ed7daa752693b668298aa3dca",
+  "actualNativeReportSHA256": "46a5eba972c7b00022cd399f837bcfd42f764f8925a628feaf992897ac3ce26e",
+  "currentNativeProducerAndUnitContractAlreadyRequireFivePolicies": true,
+  "legacyDenialSemanticsExplicitlySupersededNotClaimedEquivalent": true,
+  "noProductionSourceOrSDKInputChanges": true,
+  "decision": "APPROVED_SOURCE_FOR_ORIGINAL_NATIVE_CONTINUATION_AFTER_EXACT_INTEGRATION_AND_PRODUCT_INPUT_QUALIFICATION",
+  "originalAttemptRemainsFailed": true,
+  "MCPStillNotRun": true
+}
