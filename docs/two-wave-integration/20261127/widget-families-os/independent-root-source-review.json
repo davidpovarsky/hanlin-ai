@@ -1,0 +1,33 @@
+{
+  "reviewer": "/root",
+  "at": "2026-11-27T21:00:48.348629+00:00",
+  "decision": "APPROVED_FAMILY_R2_SOURCE_PENDING_CURRENT_FULL_CI_AND_NATIVE",
+  "sourceHashes": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "07dab2303533a16e0a1e0dc36f0ebfa9f8689e1ec6f5ea203347c3170bcfd7ed",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "38b7c4e8a3cc3051018497f5eb5edcbb94bb73ba41953eb0cc0562fab71337a7",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "ed9116aaaf7bf8bab3a77d273a30560760e4e8cc2051cf2e0ee64438b60edf79",
+    "Scripts/ProductSplit/observe_widget_families.py": "a4f86b96afff19a1f1b6158cf91d9069c590520c396986b44e05b8bc89b9de40",
+    "Scripts/CI/Tests/test_widget_families_observer.py": "d62d502d457dc8b4d5423aed79a925623dd2de8f1716b822ae231bb59625993a"
+  },
+  "sourceValidationSHA256": "a8463123a30cbf9814d585e68d8a7a72cff3abb8867536ec1bc1a9acb9a326dc",
+  "incrementalPatchSHA256": "ef943445c0e887431e3978ad4d51c3ad0ed5a26ca0766867724899887d69a430",
+  "wholeOriginal33UIAndRunnerDispatcherInverseExact": true,
+  "original16ControlASTsPreserved": true,
+  "totalControlMethods": 17,
+  "portableR1": "16 actualPASS retained",
+  "portableR2": "4 affected controls actualPASS; whole17 not yet run",
+  "newTestInvocationsByReviewer": 0,
+  "reviewCheckerClarification": "Initial inverse checker omitted six expected family-only set additions; removing those plus the three declared new blocks restores whole original runner. No candidate edit or test rerun.",
+  "UIIndependentReviewSHA256": "e7d51139a18b511a3880c4bb11031e63ea8699c5a9c0865c02f2743ecba71a40",
+  "sdk396Intersection": [],
+  "findings": [
+    "Read complete original family reader and16controls, then exactR2clock/controldelta.",
+    "Original widget_facts selects expectedFamily for native templates and last-good record; no medium-only delegate assumption.",
+    "Observed gallery labels, fresh UUIDnamedphysicalconfiguration, finiteframe/AX/PNGrotation andactualownedremoval/restoration are correlated with immutable source/product/MCM/program/settings/nativezero-state.",
+    "R2 freezes actual Add Widget timestamp before firstplacement acknowledgement, rejects rewriting, and requires post-Add matchingnativecache at firstplacement andfinalreadback.",
+    "Rotation may reuse that exact post-placementcache; no unnecessary native rerenderrequirement.",
+    "Allcurrentoriginal33UI bodies andallrunner/dispatcher behavior recover byte-exact; original420case/2100scope/210minworkflow budgets preserved."
+  ],
+  "nativeUI": "NOT_RUN",
+  "remaining": "Root workflow choice/upload/producer conditional integration; current fulloriginalCI; actualnativegallery/placement/rotation qualification"
+}

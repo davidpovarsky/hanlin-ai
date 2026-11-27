@@ -1,0 +1,140 @@
+{
+  "schema": 1,
+  "status": "FROZEN_SOURCE_CANDIDATE_NATIVE_NOT_RUN",
+  "base": "f5d3fc0e67095f1190c6e7e009266953cd2fea1a",
+  "scope": "miniapp_widget_families_os",
+  "sources": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": {
+      "sha256": "07dab2303533a16e0a1e0dc36f0ebfa9f8689e1ec6f5ea203347c3170bcfd7ed",
+      "bytes": 216789,
+      "originalSHA256": "0ae41eadc0e30eb81ac25c5f1a82505eaa07cdf3ff57e1f176951753ead54f01"
+    },
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "sha256": "38b7c4e8a3cc3051018497f5eb5edcbb94bb73ba41953eb0cc0562fab71337a7",
+      "bytes": 96742,
+      "originalSHA256": "64b1b87085e7d44b3a8289b571d6681b898238554ad12c77784074a7b3391d43"
+    },
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": {
+      "sha256": "ed9116aaaf7bf8bab3a77d273a30560760e4e8cc2051cf2e0ee64438b60edf79",
+      "bytes": 65230,
+      "originalSHA256": "a8dd6ad5cc2ab61e417db7843692c90678d82b34cb0751e29e8e6ea1a3418b7b"
+    },
+    "Scripts/ProductSplit/observe_widget_families.py": {
+      "sha256": "a4f86b96afff19a1f1b6158cf91d9069c590520c396986b44e05b8bc89b9de40",
+      "bytes": 25760,
+      "originalSHA256": null
+    },
+    "Scripts/CI/Tests/test_widget_families_observer.py": {
+      "sha256": "d62d502d457dc8b4d5423aed79a925623dd2de8f1716b822ae231bb59625993a",
+      "bytes": 22397,
+      "originalSHA256": null
+    }
+  },
+  "patchSHA256": "163cab901356bd85bd857519f3d08c61d113c076566d51b82a9ae8e449012ae0",
+  "uiPreservation": {
+    "originalSelectors": [
+      "testExpoPlacedWidgetInvokesAllFiveRuntimes",
+      "testNativeScriptPlacedWidgetInvokesAllFiveRuntimes",
+      "testExpoLiveActivityInvokesAllFiveRuntimes",
+      "testNativeScriptLiveActivityInvokesAllFiveRuntimes",
+      "testExpoShortcutInvokesAllFiveRuntimes",
+      "testNativeScriptShortcutInvokesAllFiveRuntimes",
+      "testExpoSystemShareInvokesAllFiveRuntimes",
+      "testNativeScriptSystemShareInvokesAllFiveRuntimes",
+      "testExpoSystemTranslationInvokesAllFiveRuntimes",
+      "testNativeScriptSystemTranslationInvokesAllFiveRuntimes",
+      "testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult",
+      "testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult",
+      "testExpoRunMiniAppActionSavedForegroundReturnsTypedResult",
+      "testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult",
+      "testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers",
+      "testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState",
+      "testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues",
+      "testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+      "testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts",
+      "testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+      "testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+      "testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+      "testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+      "testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns",
+      "testStudioExpoCreatesMovesStylesAndReopensSource",
+      "testStudioNativeScriptCreatesMovesStylesAndReopensSource",
+      "testStudioOriginalTypeScriptHelpPreferencesAndLiveLogExport",
+      "testStudioImportsActualFilesSourceAndReopensIndependentEdit",
+      "testStudioTwoRealWindowsConflictReloadAndRecoverSeparateCopy",
+      "testExpoSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds",
+      "testNativeScriptSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds",
+      "testExpoSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds",
+      "testNativeScriptSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds"
+    ],
+    "addedSelectors": [
+      "testMiniAppsSmallWidgetRetainsFamilyAndInstanceAcrossRotation",
+      "testMiniAppsMediumWidgetRetainsFamilyAndInstanceAcrossRotation",
+      "testMiniAppsLargeWidgetRetainsFamilyAndInstanceAcrossRotation",
+      "testMiniAppsExtraLargeWidgetRetainsFamilyAndInstanceAcrossRotation"
+    ],
+    "wholeFileInverse": true,
+    "originalSHA256": "0ae41eadc0e30eb81ac25c5f1a82505eaa07cdf3ff57e1f176951753ead54f01",
+    "exactInsertionSHA256": "f66738f42b3df01ba192bf16651afc7cc5fc543af9cf5d2d6e5a1f1ae92fda14",
+    "standaloneInsertionSHA256": "5586a986b1c12295b7e55603ac2e32cffb0d440402e735deed9036af5b7efb3d"
+  },
+  "pythonWholeFileInverses": {
+    "runner": "64b1b87085e7d44b3a8289b571d6681b898238554ad12c77784074a7b3391d43",
+    "dispatcher": "a8dd6ad5cc2ab61e417db7843692c90678d82b34cb0751e29e8e6ea1a3418b7b"
+  },
+  "originalFunctionDefinitionsIncludingNested": {
+    "runner": 26,
+    "dispatcher": 39
+  },
+  "nativeBudgets": {
+    "perCaseSeconds": 420,
+    "observerAndScopeSeconds": 2100,
+    "workflowMinutes": 210,
+    "existingSelectorsAndBudgetsChanged": false
+  },
+  "dependency": {
+    "sourceCommit": "d2586537ef480993a6f5fdb208b171a5c7844231",
+    "readerSHA256": "68b84fcc6475a125e1424c774c9337dde5fbde06f92becec1e6b3782389e8be6",
+    "helperSHA256": "2c24e64319ffd6547243b445260ef1448588a9c639dfe2a1103d74dc68e1273a",
+    "ownership": "W1 separately reviewed source; not part of these five changed paths"
+  },
+  "portable": {
+    "receipt": "portable-r1/receipt.json",
+    "sha256": "74e5e4fb6a75f131b2a4be63a8f70c8af556b7fa15dec0ca211d66746bafc0dc",
+    "result": "16 PASS / 0 FAIL / 0 SKIP",
+    "scope": "Pure evidence controls only, no native execution"
+  },
+  "limitations": [
+    "Actual offered family-page labels and AX grouping remain native pilot obligations",
+    "No Today View portrait or Lock Screen accessory acceptance",
+    "No appearance/RTL/VoiceOver/physical-device claims",
+    "Native timeline may be reused during rotation; only post-placement family render must be fresh",
+    "Only own name-bound physical widget is removed; unknown/ambiguous prior placements fail closed"
+  ],
+  "patchFormatCorrection": {
+    "originalPatchSHA256": "50c515911d196216a586bf8687423622a60ca21d09a95bef63550fa308d8a8d0",
+    "reason": "git apply --check required explicit new file mode for the two additions; original failed check retained; no candidate code bytes changed"
+  },
+  "revision": "R2: freeze actual Add Widget timestamp and require post-add native render",
+  "r1SourceValidationSHA256": "2d61c494f5cdb1bb07bb94b0406309fe76ef581a40b1bc602cda69853a03afd3",
+  "r1ToR2PatchSHA256": "ef943445c0e887431e3978ad4d51c3ad0ed5a26ca0766867724899887d69a430",
+  "r2Preservation": {
+    "unchangedPaths": [
+      "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "Scripts/ProductSplit/run_paired_acceptance.py",
+      "Scripts/ProductSplit/observe_shortcut_surfaces.py"
+    ],
+    "original16ControlMethodASTsUnchanged": true,
+    "newControlMethods": [
+      "test_post_arm_pre_add_render_and_rewritten_add_time_cannot_qualify"
+    ],
+    "onlyExistingControlHelperChange": "finish_control records the admitted Add Widget timestamp"
+  },
+  "portableR2": {
+    "receipt": "portable-r2/receipt.json",
+    "sha256": "b9510019a4cc0d33d17794120dce7535dee1f9445bd3a24982bccb33f4412783",
+    "result": "4 affected controls PASS / 0 FAIL / 0 SKIP",
+    "totalMethodsNow": 17,
+    "full17Run": "NOT_RUN; original16 receipt retained, only4 affected controls executed"
+  }
+}

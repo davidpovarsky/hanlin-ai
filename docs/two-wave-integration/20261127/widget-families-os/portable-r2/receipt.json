@@ -1,0 +1,39 @@
+{
+  "at": "2026-11-27T20:56:34.463265+00:00",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-m",
+    "unittest",
+    "-v",
+    "test_widget_families_observer.WidgetFamilyEvidenceControls.test_template_or_stale_preplacement_cache_cannot_count_as_fresh_render",
+    "test_widget_families_observer.WidgetFamilyEvidenceControls.test_final_source_attempt_MCM_and_extension_substitution_never_writes_completion",
+    "test_widget_families_observer.WidgetFamilyEvidenceControls.test_final_native_reread_and_frozen_rotation_history_are_required",
+    "test_widget_families_observer.WidgetFamilyEvidenceControls.test_post_arm_pre_add_render_and_rewritten_add_time_cannot_qualify"
+  ],
+  "cwd": "/workspace/scratch/d49eec8920ef/w2-widget-families/candidate",
+  "elapsedSeconds": 0.23962734300584998,
+  "environmentDelta": {
+    "PYTHONPATH": "/workspace/scratch/d49eec8920ef/w2-widget-families/candidate/Scripts/CI/Tests"
+  },
+  "exitCode": 0,
+  "logs": {
+    "stderr.log": {
+      "bytes": 940,
+      "sha256": "d7799c8470a8b3ceae9e7b0e8578d6b060f3e6fca5507b4c49e9b46136688654"
+    },
+    "stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "r1SixteenControlReceiptSHA256": "74e5e4fb6a75f131b2a4be63a8f70c8af556b7fa15dec0ca211d66746bafc0dc",
+  "scope": "Only four affected cache/phase/final-read controls; pure evidence controls, not native UI or Swift execution",
+  "sources": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "07dab2303533a16e0a1e0dc36f0ebfa9f8689e1ec6f5ea203347c3170bcfd7ed",
+    "Scripts/CI/Tests/test_widget_families_observer.py": "d62d502d457dc8b4d5423aed79a925623dd2de8f1716b822ae231bb59625993a",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "ed9116aaaf7bf8bab3a77d273a30560760e4e8cc2051cf2e0ee64438b60edf79",
+    "Scripts/ProductSplit/observe_widget_families.py": "a4f86b96afff19a1f1b6158cf91d9069c590520c396986b44e05b8bc89b9de40",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "38b7c4e8a3cc3051018497f5eb5edcbb94bb73ba41953eb0cc0562fab71337a7"
+  }
+}

@@ -1,0 +1,9 @@
+test_template_or_stale_preplacement_cache_cannot_count_as_fresh_render (test_widget_families_observer.WidgetFamilyEvidenceControls.test_template_or_stale_preplacement_cache_cannot_count_as_fresh_render) ... ok
+test_final_source_attempt_MCM_and_extension_substitution_never_writes_completion (test_widget_families_observer.WidgetFamilyEvidenceControls.test_final_source_attempt_MCM_and_extension_substitution_never_writes_completion) ... ok
+test_final_native_reread_and_frozen_rotation_history_are_required (test_widget_families_observer.WidgetFamilyEvidenceControls.test_final_native_reread_and_frozen_rotation_history_are_required) ... ok
+test_post_arm_pre_add_render_and_rewritten_add_time_cannot_qualify (test_widget_families_observer.WidgetFamilyEvidenceControls.test_post_arm_pre_add_render_and_rewritten_add_time_cannot_qualify) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.046s
+
+OK

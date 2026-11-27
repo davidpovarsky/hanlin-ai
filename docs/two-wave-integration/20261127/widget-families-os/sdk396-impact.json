@@ -1,0 +1,14 @@
+{
+  "sourceManifestSHA256": "7f2702e52587fe1d126cef37f068ab3a9e3a26adb275ffafb687cb38a2db9b87",
+  "inputSHA256": "9e397ad525cf254598f8b35256816d1519ae2adfb02f3e5692fc91c21a1a3ab1",
+  "inputCount": 396,
+  "changedPaths": [
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+    "Scripts/ProductSplit/run_paired_acceptance.py",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+    "Scripts/ProductSplit/observe_widget_families.py",
+    "Scripts/CI/Tests/test_widget_families_observer.py"
+  ],
+  "intersection": [],
+  "productOrFixtureChanges": []
+}
