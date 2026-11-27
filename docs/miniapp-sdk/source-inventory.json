@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "226e7cfcc60a9ace99241f009d3586b9cea7e65e",
+  "sourceCommit": "1ee9c45796f41893c3b59745864de3412c17ddb4",
   "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
@@ -15893,7 +15893,7 @@
     },
     {
       "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
-      "sha256": "577e4d58a3bebd29e379918938199aacff0a4c775cfb1c4923e1f7735686238c"
+      "sha256": "9e45c0aa8d951a6a59afa1eb4dbcad6e524fc1f408d2406d6c8e5a9efcdd7f8c"
     },
     {
       "path": "Scripts/NativeScript/dependency-lock.json",
