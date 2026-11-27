@@ -1,0 +1,44 @@
+{
+  "sourceBase": "fe0001ac868339d0825d1cc3d07f8383341d163d",
+  "argv": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_original_source_fixtures.py",
+    "-v"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-source-fixture-sandbox-20261127",
+  "startedAtUTC": "2026-11-27T18:05:26.494532+00:00",
+  "finishedAtUTC": "2026-11-27T18:05:26.760795+00:00",
+  "elapsedSeconds": 0.2662400007247925,
+  "exit": 0,
+  "sourceBeforeAfter": {
+    "Scripts/SDK/update_project.py": "12c2fbd6d91788680404656b639e1475596eee7254dac7551431306fb46ba378",
+    "AI_HLY.xcodeproj/project.pbxproj": "5b70df51a40bb8bad27a531cba6e931c19bb68686c4ba7e28b490b133da97808",
+    "Scripts/CI/Tests/test_original_source_fixtures.py": "67b4090516188f5e905c8940e0731ec5b9e3602d0dca69f66b6dfb1a98c025d2",
+    "Scripts/CI/prepare_original_source_fixtures.py": "9e052e05c003854a440e24c49004a223a06d319bc356fd2e322dbfdfd8ce3dc2",
+    "Scripts/CI/original-source-fixtures.xcfilelist": "36e5bab991c5207ef490edc299d6d444150816a63e359d2bc41ccd406f9d7b6d"
+  },
+  "sourceUnchangedDuringRun": true,
+  "nativeStatus": "NOT_RUN",
+  "outputs": [
+    {
+      "path": "stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "stderr.log",
+      "bytes": 2005,
+      "sha256": "740b49735f162e5f7e133f02299097042201e9c8de74f8b75da9e3eac0650f17"
+    }
+  ]
+}

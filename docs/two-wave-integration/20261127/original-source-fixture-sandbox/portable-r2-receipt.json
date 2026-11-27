@@ -1,0 +1,46 @@
+{
+  "sourceBase": "fe0001ac868339d0825d1cc3d07f8383341d163d",
+  "argv": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_original_source_fixtures.py",
+    "-v"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-source-fixture-sandbox-20261127",
+  "startedAtUTC": "2026-11-27T18:09:46.259264+00:00",
+  "finishedAtUTC": "2026-11-27T18:09:46.778427+00:00",
+  "elapsedSeconds": 0.5191574329510331,
+  "exit": 0,
+  "sourceBeforeAfter": {
+    "Scripts/SDK/update_project.py": "12c2fbd6d91788680404656b639e1475596eee7254dac7551431306fb46ba378",
+    "AI_HLY.xcodeproj/project.pbxproj": "5b70df51a40bb8bad27a531cba6e931c19bb68686c4ba7e28b490b133da97808",
+    "Scripts/CI/Tests/test_original_source_fixtures.py": "1b5a0f3673a191bc28fcab14a1de3b7064c27117fdb569897ae8fbe1b083d934",
+    "Scripts/CI/prepare_original_source_fixtures.py": "9e052e05c003854a440e24c49004a223a06d319bc356fd2e322dbfdfd8ce3dc2",
+    "Scripts/CI/original-source-fixtures.xcfilelist": "36e5bab991c5207ef490edc299d6d444150816a63e359d2bc41ccd406f9d7b6d"
+  },
+  "sourceUnchangedDuringRun": true,
+  "nativeStatus": "NOT_RUN",
+  "expectedTestMethods": 10,
+  "reconciliation": "Nine existing methods and one new physical output-tree/sandbox-settings control; no negative-test claim for removed R1 set-comparison loops.",
+  "outputs": [
+    {
+      "path": "stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "stderr.log",
+      "bytes": 1997,
+      "sha256": "50e25a1b3b4dcba0e49783319e1ac4685631b56712d7e29243cd1d98ac92c54a"
+    }
+  ]
+}

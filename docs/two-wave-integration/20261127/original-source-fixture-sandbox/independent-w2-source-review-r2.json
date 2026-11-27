@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w2_source_resume",
+  "recordedAt": "2026-11-27T18:11:11.634839+00:00",
+  "decision": "APPROVED_SOURCE_ONLY_FOR_ORIGINAL_NATIVE_RETRY",
+  "supersedesControlHashOnly": "87059e12ddf25ea188da94f6925359f4c4f33b308b86cdb45531f92cdc331dc3",
+  "base": "fe0001ac868339d0825d1cc3d07f8383341d163d",
+  "patchSHA256": "39e24b81d94b9945f7d04e988108329d349e95f6fbdec36739803a6b6948daaf",
+  "sourceHashes": {
+    "Scripts/SDK/update_project.py": "12c2fbd6d91788680404656b639e1475596eee7254dac7551431306fb46ba378",
+    "AI_HLY.xcodeproj/project.pbxproj": "5b70df51a40bb8bad27a531cba6e931c19bb68686c4ba7e28b490b133da97808",
+    "Scripts/CI/Tests/test_original_source_fixtures.py": "1b5a0f3673a191bc28fcab14a1de3b7064c27117fdb569897ae8fbe1b083d934"
+  },
+  "boundedControlDeltaSHA256": "adc3a2d4e059491410eccebf750b2a66dd4e3c9fbb91268271e01ec08b29eff8",
+  "assessment": [
+    "The canonical generator and exact40 owned output declarations are unchanged from independent review87059e12; all least-scope, producer, input and sandbox conclusions carry forward.",
+    "The original phase test now retains an independent literal root requirement rather than comparing the generator to itself.",
+    "The actual producer-tree equality, unique output count,24 files, denied directory,manifest and inherited/explicit sandboxYES checks remain.",
+    "Five set-equality tautology loops were removed; they are not claimed as meaningful negative controls.",
+    "Only the new method name and bounded control assertion/loop changes occurred; native sandbox qualification remains pending."
+  ],
+  "portableReceiptSHA256": "1bbf5fca28cc1a728d53297623c2f47369dbaf398bef689da438ae225ec1d984",
+  "testExecutionByReviewer": 0,
+  "nativeExecutionByReviewer": 0
+}

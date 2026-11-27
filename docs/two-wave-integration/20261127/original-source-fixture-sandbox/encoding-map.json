@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "path": "candidate-r1.patch.gz",
+      "encoding": "gzip",
+      "uncompressedBytes": 13144,
+      "uncompressedSHA256": "39e24b81d94b9945f7d04e988108329d349e95f6fbdec36739803a6b6948daaf"
+    },
+    {
+      "path": "candidate-r2.patch.gz",
+      "encoding": "gzip",
+      "uncompressedBytes": 12448,
+      "uncompressedSHA256": "04c4cd9d7bb25c5a5b949fa6d3f6f0facff04fef7ed432c762faa76824f07eed"
+    },
+    {
+      "path": "controls-r1-to-r2.patch.gz",
+      "encoding": "gzip",
+      "uncompressedBytes": 2256,
+      "uncompressedSHA256": "adc3a2d4e059491410eccebf750b2a66dd4e3c9fbb91268271e01ec08b29eff8"
+    },
+    {
+      "path": "portable-r1-stdout.log.gz",
+      "encoding": "gzip",
+      "uncompressedBytes": 0,
+      "uncompressedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "portable-r1-stderr.log.gz",
+      "encoding": "gzip",
+      "uncompressedBytes": 2005,
+      "uncompressedSHA256": "740b49735f162e5f7e133f02299097042201e9c8de74f8b75da9e3eac0650f17"
+    },
+    {
+      "path": "portable-r2-stdout.log.gz",
+      "encoding": "gzip",
+      "uncompressedBytes": 0,
+      "uncompressedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "portable-r2-stderr.log.gz",
+      "encoding": "gzip",
+      "uncompressedBytes": 1997,
+      "uncompressedSHA256": "50e25a1b3b4dcba0e49783319e1ac4685631b56712d7e29243cd1d98ac92c54a"
+    }
+  ]
+}

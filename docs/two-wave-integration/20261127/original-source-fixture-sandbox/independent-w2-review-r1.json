@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w2_source_resume",
+  "recordedAt": "2026-11-27T18:08:28.277594+00:00",
+  "decision": "APPROVED_SOURCE_ONLY_FOR_ORIGINAL_NATIVE_RETRY",
+  "base": "fe0001ac868339d0825d1cc3d07f8383341d163d",
+  "patchSHA256": "39e24b81d94b9945f7d04e988108329d349e95f6fbdec36739803a6b6948daaf",
+  "sourceHashes": {
+    "Scripts/SDK/update_project.py": "12c2fbd6d91788680404656b639e1475596eee7254dac7551431306fb46ba378",
+    "AI_HLY.xcodeproj/project.pbxproj": "5b70df51a40bb8bad27a531cba6e931c19bb68686c4ba7e28b490b133da97808",
+    "Scripts/CI/Tests/test_original_source_fixtures.py": "67b4090516188f5e905c8940e0731ec5b9e3602d0dca69f66b6dfb1a98c025d2"
+  },
+  "independentChecks": {
+    "completePatchRead": true,
+    "exactOutputSetDerivedFromOriginalInputsAndDirectoryAncestors": true,
+    "declaredUniqueOutputs": 40,
+    "ownedDirectoriesIncludingBundleRoot": 16,
+    "originalCopiedFiles": 23,
+    "producerManifest": 1,
+    "exactGeneratedPBXWholeFileInverse": true,
+    "producerAndInputListBytesUnchanged": true,
+    "sandboxSettingsUnchanged": true,
+    "noUnrelatedOutputGrant": true,
+    "originalStrictInputParserReused": true
+  },
+  "causalEvidence": {
+    "systemRun": 46033781797,
+    "widgetStateRun": 46033434171,
+    "concurrencyRun": 46033446412,
+    "source": "f57dfcc2292c0830f454e28d87293e85fe426a44",
+    "actualDeniedChild": "OriginalSourceFixtures.bundle/AI_HLY",
+    "systemDiagnosticSHA256": "24cb34dbe99c4fb6fa6e6a573a2a5935a91612e9d59cd637a4766d5ab21997f5",
+    "phase": "Prepare Original Source Fixtures",
+    "target": "AI_HLYTests",
+    "oldOutputDeclarationCount": 1
+  },
+  "assessment": [
+    "The source-derived set covers all exact descendants created by the unchanged producer, including the actual denied directory.",
+    "The strict source-path parser rejects invalid/duplicate traversal inputs before they can form output declarations.",
+    "The canonical generator imports producer definitions only; prepare()/main() are not executed during generator import.",
+    "The focused new test compares declared paths to the actual original producer output tree and rejects missing/extra outputs; this review did not rerun it.",
+    "Native Xcode sandbox/profile behavior still requires the original build; this is not a native PASS or a sandbox disablement."
+  ],
+  "testsRunByReviewer": 0,
+  "nativeExecutionsByReviewer": 0
+}

@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "sourceCommit": "fd445cdb49ea23bf0a9e519bf8102f41842b262f",
+  "base": "fe0001ac868339d0825d1cc3d07f8383341d163d",
+  "nativeStatus": "NOT_RUN",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 4108,
+      "sha256": "82fa5201706c15727191533e13416bc19c4ddcdf221df32e6cb52490ca049c48"
+    },
+    {
+      "path": "candidate-r1.patch.gz",
+      "bytes": 2743,
+      "sha256": "fc948c966a786afa85451cab234bfd86c7cc7a1863d527b056fa9abb0bccaf78"
+    },
+    {
+      "path": "candidate-r2.patch.gz",
+      "bytes": 2563,
+      "sha256": "877ad79c401410c09c010c93c902b4fdeb839cfbf1f25761af29da55f3e5fb38"
+    },
+    {
+      "path": "controls-r1-to-r2.patch.gz",
+      "bytes": 923,
+      "sha256": "9dd701f54e86c98e7dc2ceb37be74e9906f71fcf3462e6d252c13f3a036ff3d5"
+    },
+    {
+      "path": "encoding-map.json",
+      "bytes": 1494,
+      "sha256": "0ab8fd09de507ae39c3a7fac384ebb8247ab6115625c3f0c705926e3f6b08207"
+    },
+    {
+      "path": "independent-w2-review-r1.json",
+      "bytes": 2379,
+      "sha256": "87059e12ddf25ea188da94f6925359f4c4f33b308b86cdb45531f92cdc331dc3"
+    },
+    {
+      "path": "independent-w2-source-review-r2-final.json",
+      "bytes": 2139,
+      "sha256": "ac4bf42f1716e8906e73452e8351669b7427bd30470601270b707ab988d0d0de"
+    },
+    {
+      "path": "independent-w2-source-review-r2.json",
+      "bytes": 1761,
+      "sha256": "018ce4d9bd685ebdd8612a2f843bf38a7e7dbda8c7a74296c961227b3892c5b8"
+    },
+    {
+      "path": "portable-r1-receipt.json",
+      "bytes": 1517,
+      "sha256": "26b693400d4aaf2653530d7c741ca5fbcdee7b2dbbd44c09e4549e7a8ad7ce24"
+    },
+    {
+      "path": "portable-r1-stderr.log.gz",
+      "bytes": 448,
+      "sha256": "177b147b5ebf9d20b0587d2846844ff7379898739da2d48a76f6fdbc9b1ec668"
+    },
+    {
+      "path": "portable-r1-stdout.log.gz",
+      "bytes": 20,
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "portable-r2-receipt.json",
+      "bytes": 1710,
+      "sha256": "1bbf5fca28cc1a728d53297623c2f47369dbaf398bef689da438ae225ec1d984"
+    },
+    {
+      "path": "portable-r2-stderr.log.gz",
+      "bytes": 448,
+      "sha256": "abd114808a4f87383d73a45aa367c18e178591cfa2db63c62c086da12055f2cb"
+    },
+    {
+      "path": "portable-r2-stdout.log.gz",
+      "bytes": 20,
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "source-validation.json",
+      "bytes": 10497,
+      "sha256": "a6acee9b1177c2215254cf489cbe750ec1c0bd4edbd35cbf013876642caf26b5"
+    }
+  ]
+}
