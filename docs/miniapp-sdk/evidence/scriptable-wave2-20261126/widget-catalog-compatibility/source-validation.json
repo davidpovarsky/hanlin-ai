@@ -1,0 +1,54 @@
+{
+  "status": "SOURCE_CANDIDATE_FOR_INDEPENDENT_REVIEW",
+  "sourceBase": "34dc92c16b37c7e14453e86f25f14d8e5063556a",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-widget-catalog-compatibility-20261127",
+  "createdAt": "2026-11-27T23:48:37.353492+00:00",
+  "sourcePatchSHA256": "9f0ac1c3c942f6cc5518be5c00216f9376b85b4d17bcfe267dfa4779122d2ded",
+  "changedPaths": [
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "beforeSHA256": "8246b68f0125d31c2a83819e31c6e7e0dd2f385a731914d25b2eb60a95c342f3",
+      "afterSHA256": "5f15f5ffb4fcdaf63ef9ad396a650fce32b7b0b04eee8ba7690b013c6e8f8600",
+      "bytes": 65418
+    },
+    {
+      "path": "Scripts/CI/Tests/test_widget_catalog_compatibility.py",
+      "beforeSHA256": null,
+      "afterSHA256": "5bbe28a3b0e0be3c1b5d079088a438672a3b0187694746ab572fdec2cfc375b0",
+      "bytes": 7531
+    }
+  ],
+  "readerInverse": "Reverse only the one comparison substitution to recover every original byte.",
+  "readerFunctionCount": 39,
+  "changedFunctionASTs": [
+    "widget_facts"
+  ],
+  "unchangedFunctionASTCount": 38,
+  "originalPortableTestFileUnchanged": "Scripts/ProductSplit/Tests/test_shortcut_surface_observer.py",
+  "originalPortableTestSHA256": "1f815e35156e64bb63ee7a13fc06b1e790ff079f76d7db09607bfd4aed79f2a1",
+  "newTests": 3,
+  "originalFocusedTests": 6,
+  "negativeCatalogMutations": 18,
+  "negativeArtifactMutation": 1,
+  "actualRed": {
+    "path": "red-original/receipt.json",
+    "sha256": "391a885dba95af12cc7890f14d09e023482eeb0e95af11d8549e3a6a1e526e63",
+    "native": "NOT_RUN"
+  },
+  "actualGreen": {
+    "path": "green-focused/receipt.json",
+    "sha256": "88505cb83e500bf9d7669176b1e3e3e45893f646a02b6c8dbbbf22f3129353ad",
+    "result": "9 tests PASS; 6 existing recovery controls and 3 added catalog controls"
+  },
+  "sdkInputImpact": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/startup-sdk-f45d6edc-pass/sdk/miniapp-sdk.json",
+      "sha256": "9510c4feeffad1d70a8243ae2bdb7eaacd1d147a654758f8fb60674a0ae7d994",
+      "sourceInputCount": 396,
+      "changedIntersection": []
+    }
+  ],
+  "scope": "Only read-only observer compatibility admission and new CI-discovered pure controls. Product/runtime/fixtures/native tests/assertions/selectors/timeouts/workflows are unchanged.",
+  "nativeFailureQualification": "Recovery run46065868558 reported the compound widget guard, but the actual rejected catalog row was not retained. The canonical mismatch is reproduced; it is not proven to be the sole cause of that native failure.",
+  "verification": "No native execution, redispatch, or full-suite run by this lane."
+}

@@ -1,0 +1,52 @@
+{
+  "status": "EXECUTED_PASS",
+  "argv": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "Scripts.CI.Tests.test_widget_catalog_compatibility",
+    "Scripts.ProductSplit.Tests.test_shortcut_surface_observer.WidgetRecoveryObservationTests"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-widget-catalog-compatibility-20261127",
+  "startedAt": "2026-11-27T23:48:02.058894+00:00",
+  "finishedAt": "2026-11-27T23:48:02.225772+00:00",
+  "seconds": 0.16686966083943844,
+  "exitCode": 0,
+  "sourceInputs": [
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "bytes": 65418,
+      "sha256": "5f15f5ffb4fcdaf63ef9ad396a650fce32b7b0b04eee8ba7690b013c6e8f8600"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_widget_catalog_compatibility.py",
+      "bytes": 7531,
+      "sha256": "5bbe28a3b0e0be3c1b5d079088a438672a3b0187694746ab572fdec2cfc375b0"
+    },
+    {
+      "path": "Scripts/ProductSplit/Tests/test_shortcut_surface_observer.py",
+      "bytes": 28326,
+      "sha256": "1f815e35156e64bb63ee7a13fc06b1e790ff079f76d7db09607bfd4aed79f2a1"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinCanonicalEntrypointProjectionTests.swift",
+      "bytes": 13538,
+      "sha256": "5babc16bfe0a33eaa723f8915f4b64eb4292fefd075da0a047201fca09722d70"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo",
+      "bytes": 1953,
+      "sha256": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995"
+    }
+  ],
+  "sourceInputsUnchanged": true,
+  "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSHA256": "92bca0fef861105460b13b4b8c7acd8965768922629e7299e504fe495a127751",
+  "originalTests": 6,
+  "newTests": 3,
+  "newNegativeCatalogSubcases": 18,
+  "newCorruptedArtifactCase": 1,
+  "native": "NOT_RUN"
+}

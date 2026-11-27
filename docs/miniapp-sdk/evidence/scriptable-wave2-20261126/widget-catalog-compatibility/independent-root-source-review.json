@@ -1,0 +1,19 @@
+{
+  "classification": "INDEPENDENT_SOURCE_REVIEW_APPROVED",
+  "at": "2026-11-27T23:52:58.511170+00:00",
+  "base": "34dc92c16b37c7e14453e86f25f14d8e5063556a",
+  "sourcePatchSHA256": "9f0ac1c3c942f6cc5518be5c00216f9376b85b4d17bcfe267dfa4779122d2ded",
+  "candidateHashesVerified": true,
+  "originalReaderRecoveredByteExactlyByOnePredicateInverse": true,
+  "unchangedOtherFunctionASTs": 38,
+  "oldPortableTestsUnchanged": true,
+  "reviewedNewTests": 3,
+  "reviewedInvalidCatalogMutations": 18,
+  "reviewedArtifactDigestNegative": 1,
+  "nativeFailureScope": "Actual failed catalog row not retained; canonical semantic mismatch independently reproduced, not sole native-cause proof.",
+  "nativeReplay": false,
+  "proofReceiptHashes": [
+    "391a885dba95af12cc7890f14d09e023482eeb0e95af11d8549e3a6a1e526e63",
+    "88505cb83e500bf9d7669176b1e3e3e45893f646a02b6c8dbbbf22f3129353ad"
+  ]
+}
