@@ -1,0 +1,42 @@
+{
+  "reviewer": "/root",
+  "at": "2026-11-27T04:02:26.256179+00:00",
+  "records": [
+    {
+      "original": "source.json",
+      "retained": "source.json",
+      "originalBytes": 4435,
+      "originalSHA256": "7ce652afb21fc2de65fbc4bfcf3ff5a71299b3b2850f23cdc90199d8fb773f5a"
+    },
+    {
+      "original": "source.patch",
+      "retained": "source.patch.gz",
+      "originalBytes": 3251,
+      "originalSHA256": "83ef715d1fb7aede9b14faee6aa08956819ea8183da52dea0620d84df707b169"
+    },
+    {
+      "original": "focused-test-receipt.json",
+      "retained": "focused-test-receipt.json",
+      "originalBytes": 2227,
+      "originalSHA256": "65ce92526321a06e933baa1408d70988516a10a7e58206544217baf713edd4fb"
+    },
+    {
+      "original": "focused.stdout.log",
+      "retained": "focused.stdout.log.gz",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "focused.stderr.log",
+      "retained": "focused.stderr.log.gz",
+      "originalBytes": 1433,
+      "originalSHA256": "55bb9829f58cb3c91d666a928b39509852f210ab4d3ea34acce26374872a389f"
+    },
+    {
+      "original": "miniapps-selected-profile-icloud-grants-20261127.json",
+      "retained": "miniapps-selected-profile-icloud-grants-20261127.json",
+      "originalBytes": 1108,
+      "originalSHA256": "131ac0520b26d7215231112b14231fd068c464656a1195a63757fce4f36e406b"
+    }
+  ]
+}

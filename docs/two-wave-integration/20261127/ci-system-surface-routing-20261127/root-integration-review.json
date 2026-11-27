@@ -1,0 +1,34 @@
+{
+  "sourceBefore": "7dd86a3ab1e170a649ea126c1685b3250b6240eb",
+  "integratedSource": "b2a18e947c24b847d8b8416d262d01a4169af35e",
+  "routing": "716ab4d0e99c68f4d8988db8eafad9ff21237ebd",
+  "iCloud": {
+    "originalPortablePassed": 7,
+    "onlyExistingContainerAdded": true,
+    "allOtherEntitlementValuesIdentical": true,
+    "existingProfileGrantVerified": true,
+    "nativeUI": "NOT_RUN"
+  },
+  "mappingOnlyAddedExactPaths": [
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+    "Fixtures/HostActionSurfaces/expo/App.tsx",
+    "Fixtures/HostActionSurfaces/expo/proof.ts",
+    "Fixtures/HostActionSurfaces/nativescript/index.ts",
+    "Fixtures/HostActionSurfaces/nativescript/package.json",
+    "Fixtures/HostActionSurfaces/nativescript/proof.ts"
+  ],
+  "allPriorRouterFunctionsASTUnchanged": true,
+  "priorFunctionCount": 104,
+  "newMethods": [
+    "AffectedValidationPlannerTests.test_system_surface_sources_use_the_original_split_owner",
+    "AffectedValidationPlannerTests.test_unreviewed_system_surface_source_still_fails_closed"
+  ],
+  "CIOriginalGate": {
+    "total": 463,
+    "passed": 461,
+    "originalSkips": 2,
+    "exitCode": 0,
+    "source": "716ab4d0e99c68f4d8988db8eafad9ff21237ebd"
+  },
+  "independentReviews": "/root/w1_review_resume approved716; /root approvedc962 exact3-file diff+7tests+existingprofilegrant"
+}

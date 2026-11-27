@@ -1,0 +1,52 @@
+{
+  "sourceCommit": "716ab4d0e99c68f4d8988db8eafad9ff21237ebd",
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "startedAt": "2026-11-27T03:47:56.824767+00:00",
+  "finishedAt": "2026-11-27T03:48:26.005326+00:00",
+  "durationSeconds": 29.180551847442985,
+  "exitCode": 0,
+  "summary": [
+    "",
+    "----------------------------------------------------------------------",
+    "Ran 463 tests in 28.032s",
+    "",
+    "OK (skipped=2)"
+  ],
+  "skips": [
+    "test_staged_artifacts_have_valid_plists_only_ios_slices_and_no_broken_links (test_expo_xcframework_preparation.TestExpoXCFrameworkPreparation.test_staged_artifacts_have_valid_plists_only_ios_slices_and_no_broken_links) ... skipped 'Artifacts directory is not staged'",
+    "test_real_flit_backend_download_build_install_and_import (hanlin_python_packaging_acceptance.PythonPackagingTests.test_real_flit_backend_download_build_install_and_import) ... skipped 'explicit real PyPI/backend integration'"
+  ],
+  "statusAfter": "",
+  "files": {
+    "stdout.log": {
+      "bytes": 4882,
+      "sha256": "3f2d4b38ab2285ac2be63342c32e235d693adba73fd492c2caf38363feef2b9f"
+    },
+    "source.patch": {
+      "bytes": 3598,
+      "sha256": "c134117e97f747ecfc728334781445c4fbc25108ef9e23bc5032b3793bac8c32"
+    },
+    "stderr.log": {
+      "bytes": 91955,
+      "sha256": "cfaf22e65a04747ed837b440eb7108dab293e15469692ae878d91717159f6329"
+    },
+    "source.json": {
+      "bytes": 707,
+      "sha256": "2fbdb8a9f04a0333e21b54d5786a8253bdcaf0d7670944708af41dc5a525c6b7"
+    }
+  }
+}

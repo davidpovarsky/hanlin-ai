@@ -1,0 +1,65 @@
+{
+  "retrievedAt": "2026-11-27T03:43:32.437767+00:00",
+  "officialURL": "https://developer.apple.com/sample-code/app-store-connect/app-store-connect-openapi-specification.zip",
+  "zipBytes": 287892,
+  "zipSHA256": "528ebf253c4fea45d619f8576bca14a418a1a878080e4bcdef833e932a7abcef",
+  "member": "openapi.oas.json",
+  "specInfo": {
+    "title": "App Store Connect API",
+    "version": "4.6.1",
+    "x-platforms": {
+      "app_store_connect_api": "App Store Connect API"
+    }
+  },
+  "pathCount": 1032,
+  "appGroupOrUbiquityPaths": [],
+  "bundleIdRelationshipKeys": [
+    "profiles",
+    "bundleIdCapabilities",
+    "app"
+  ],
+  "capabilitySetting": {
+    "type": "object",
+    "properties": {
+      "key": {
+        "type": "string",
+        "enum": [
+          "ICLOUD_VERSION",
+          "DATA_PROTECTION_PERMISSION_LEVEL",
+          "APPLE_ID_AUTH_APP_CONSENT"
+        ]
+      },
+      "name": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "enabledByDefault": {
+        "type": "boolean"
+      },
+      "visible": {
+        "type": "boolean"
+      },
+      "allowedInstances": {
+        "type": "string",
+        "enum": [
+          "ENTRY",
+          "SINGLE",
+          "MULTIPLE"
+        ]
+      },
+      "minInstances": {
+        "type": "integer"
+      },
+      "options": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/CapabilityOption"
+        }
+      }
+    }
+  },
+  "appGroupSchemas": [],
+  "scope": "Read-only public API schema research; no account/authentication or capability/profile mutation."
+}

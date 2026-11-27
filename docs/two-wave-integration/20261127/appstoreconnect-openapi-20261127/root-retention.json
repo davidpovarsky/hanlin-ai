@@ -1,0 +1,18 @@
+{
+  "reviewer": "/root",
+  "at": "2026-11-27T04:02:26.260825+00:00",
+  "records": [
+    {
+      "original": "official-openapi.zip",
+      "retained": "official-openapi.zip",
+      "originalBytes": 287892,
+      "originalSHA256": "528ebf253c4fea45d619f8576bca14a418a1a878080e4bcdef833e932a7abcef"
+    },
+    {
+      "original": "read-only-schema-review.json",
+      "retained": "read-only-schema-review.json",
+      "originalBytes": 1601,
+      "originalSHA256": "04a4f25c352ebc45b6f3127a082a10a312082741884164a643e3447442b1e0d0"
+    }
+  ]
+}

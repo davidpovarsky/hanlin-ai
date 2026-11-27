@@ -1,0 +1,30 @@
+{
+  "sourceCommit": "7dd86a3ab1e170a649ea126c1685b3250b6240eb",
+  "sourceCandidate": "9c0879ee168b6aec78a4cc80fd071514c8787887",
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "Scripts/CI/plan_affected_validation.py",
+    "--repository",
+    "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126",
+    "--event-name",
+    "workflow_dispatch",
+    "--base-sha",
+    "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+    "--head-sha",
+    "7dd86a3ab1e170a649ea126c1685b3250b6240eb",
+    "--json-output",
+    "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/build/affected-routing-7dd86a3a/plan.json"
+  ],
+  "startedAt": "2026-11-27T03:39:51.195376+00:00",
+  "finishedAt": "2026-11-27T03:41:58.317030+00:00",
+  "seconds": 127.12164776027203,
+  "exitCode": 1,
+  "planSHA256": null,
+  "planKeys": null,
+  "stdoutTail": "",
+  "stderrTail": "================================================================================\nROUTING ERROR: Affected-test routing is incomplete.\n\nUnmapped changed paths:\n  - AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift\n  - Fixtures/HostActionSurfaces/expo/App.tsx\n  - Fixtures/HostActionSurfaces/expo/proof.ts\n  - Fixtures/HostActionSurfaces/nativescript/index.ts\n  - Fixtures/HostActionSurfaces/nativescript/package.json\n  - Fixtures/HostActionSurfaces/nativescript/proof.ts\n\nAdd an explicit routing rule in Scripts/CI/affected-validation-map.json before validation can continue.\nDO NOT RUN FULL VALIDATION AS A FALLBACK.\n================================================================================\n"
+}
