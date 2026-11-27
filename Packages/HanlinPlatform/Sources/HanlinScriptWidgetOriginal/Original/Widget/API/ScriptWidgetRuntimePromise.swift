@@ -8,24 +8,6 @@
 import Foundation
 import JavaScriptCore
 
-#if DEBUG
-// Existing per-execution logger and test transport are the only opt-in/storage.
-// Pass scalar observations only; never retain a JS value, context or callback.
-func recordOriginalHTTPBoundary(_ state: ScriptWidgetRunningState, _ boundary: String, _ details: [String: Any] = [:]) {
-    guard state.fetchManagerForTesting != nil else { return }
-    var event = details
-    event["boundary"] = boundary
-    event["session"] = state.executionSession.id.uuidString
-    event["pid"] = ProcessInfo.processInfo.processIdentifier
-    event["uptime"] = ProcessInfo.processInfo.systemUptime
-    event["at"] = Date().timeIntervalSince1970
-    event["isMainThread"] = Thread.isMainThread
-    guard let data = try? JSONSerialization.data(withJSONObject: event, options: [.sortedKeys]),
-          let message = String(data: data, encoding: .utf8) else { return }
-    state.logger.addLog("Original HTTP boundary " + message)
-}
-#endif
-
 @objc protocol ScriptWidgetRuntimePromiseExports: JSExport {
     func then(_ resolve: JSValue, _ reject: JSValue) -> Void
 }
@@ -51,6 +33,7 @@ class ScriptWidgetRuntimePromise: NSObject, ScriptWidgetRuntimePromiseExports {
         let failure: @convention(block) (JSValue) -> Void = { delivery.finish($0, rejected: true) }
         guard let guardedResolve = JSValue(object: success, in: resolve.context),
               let guardedReject = JSValue(object: failure, in: reject.context) else {
+            delivery.cancel()
             reject.call(withArguments: ["[execution_unavailable] Promise delivery could not be installed"])
             return
         }
@@ -61,77 +44,59 @@ class ScriptWidgetRuntimePromise: NSObject, ScriptWidgetRuntimePromiseExports {
 /// At most one callback can cross back into JS. Native payloads from a finished
 /// or replaced execution are discarded before invoking user continuations.
 final class ScriptWidgetPromiseDelivery: NSObject {
+    private struct Callbacks {
+        let resolve: JSValue
+        let reject: JSValue
+    }
     private let state: ScriptWidgetRunningState
-    private let resolve: JSManagedValue
-    private let reject: JSManagedValue
-    private weak var virtualMachine: JSVirtualMachine?
+    private var callbacks: Callbacks?
     private let lock = NSLock()
     private var settled = false
 
     init(state: ScriptWidgetRunningState, resolve: JSValue, reject: JSValue) {
         self.state = state
-        self.resolve = JSManagedValue(value: resolve)
-        self.reject = JSManagedValue(value: reject)
-        self.virtualMachine = resolve.context?.virtualMachine
+        self.callbacks = Callbacks(resolve: resolve, reject: reject)
         super.init()
-        // The VM owns the native callback blocks, which own this delivery.
-        // Strong JSValues here would root that same VM through a native cycle.
-        virtualMachine?.addManagedReference(self.resolve, withOwner: self)
-        virtualMachine?.addManagedReference(self.reject, withOwner: self)
+        // Native retention of the guarded blocks is not a JS-reachable managed
+        // ownership graph. Keep pending continuations until settlement or
+        // cancellation; the weak session entry can break this temporary VM
+        // cycle even while delivery is waiting on the callback queue.
+        if !state.executionSession.registerPromiseDelivery(self) { cancel() }
     }
 
     deinit {
-        virtualMachine?.removeManagedReference(resolve, withOwner: self)
-        virtualMachine?.removeManagedReference(reject, withOwner: self)
+        state.executionSession.completePromiseDelivery(self)
     }
 
     func finish(_ value: JSValue, rejected: Bool) {
-        #if DEBUG
-        recordOriginalHTTPBoundary(state, "promise-finish", ["delivery": String(describing: ObjectIdentifier(self)), "rejected": rejected])
-        #endif
         state.executionSession.callbackQueue.async { self.deliver(value, rejected: rejected) }
     }
 
-    private func deliver(_ value: JSValue, rejected: Bool) {
-        #if DEBUG
-        recordOriginalHTTPBoundary(state, "promise-deliver", ["delivery": String(describing: ObjectIdentifier(self)), "rejected": rejected])
-        #endif
+    func cancel() {
+        // Release JSValues outside both locks: their final release may dispose
+        // of the VM and its native callback blocks.
+        let callbacks = takeCallbacks()
+        withExtendedLifetime(callbacks) {}
+    }
+
+    private func takeCallbacks() -> Callbacks? {
         lock.lock()
-        guard !settled else {
-            lock.unlock()
-            #if DEBUG
-            recordOriginalHTTPBoundary(state, "promise-already-settled", ["delivery": String(describing: ObjectIdentifier(self))])
-            #endif
-            return
-        }
+        guard !settled else { lock.unlock(); return nil }
         settled = true
+        let callbacks = self.callbacks
+        self.callbacks = nil
         lock.unlock()
-        let success = resolve.value
-        let failure = reject.value
-        virtualMachine?.removeManagedReference(resolve, withOwner: self)
-        virtualMachine?.removeManagedReference(reject, withOwner: self)
-        #if DEBUG
-        recordOriginalHTTPBoundary(state, "promise-continuations", ["delivery": String(describing: ObjectIdentifier(self)), "resolvePresent": success != nil, "rejectPresent": failure != nil, "rejected": rejected])
-        #endif
-        guard state.executionSession.isActive else {
-            #if DEBUG
-            recordOriginalHTTPBoundary(state, "promise-inactive", ["delivery": String(describing: ObjectIdentifier(self))])
-            #endif
-            return
-        }
+        state.executionSession.completePromiseDelivery(self)
+        return callbacks
+    }
+
+    private func deliver(_ value: JSValue, rejected: Bool) {
+        guard let callbacks = takeCallbacks() else { return }
+        guard state.executionSession.isActive else { return }
         guard state.isCurrentExecution else {
-            #if DEBUG
-            recordOriginalHTTPBoundary(state, "promise-identity-rejection-call-attempt", ["delivery": String(describing: ObjectIdentifier(self))])
-            #endif
-            failure?.call(withArguments: ["[execution_identity_changed] Reload the widget before continuing"])
+            callbacks.reject.call(withArguments: ["[execution_identity_changed] Reload the widget before continuing"])
             return
         }
-        #if DEBUG
-        recordOriginalHTTPBoundary(state, "promise-current-call-attempt", ["delivery": String(describing: ObjectIdentifier(self)), "rejected": rejected])
-        #endif
-        (rejected ? failure : success)?.call(withArguments: [value])
-        #if DEBUG
-        recordOriginalHTTPBoundary(state, "promise-call-site-returned", ["delivery": String(describing: ObjectIdentifier(self))])
-        #endif
+        (rejected ? callbacks.reject : callbacks.resolve).call(withArguments: [value])
     }
 }

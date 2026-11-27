@@ -1,0 +1,9 @@
+{
+  "sourcePatchSHA256": "96615634d62b4988375c3a4d43650d39ebbac73637ee9d9f92137ade08459c06",
+  "fetchExactPrediagnostic": true,
+  "httpExactPrediagnostic": true,
+  "twoControlsSHA256": "527fba708cfbf5a6e365776650235a39ae115bde54a848b5f54d7c35636fde2c",
+  "weakRegistrySurvivesNativeFinishUntilDeliveryOrCancel": true,
+  "nativeExecution": "NOT_RUN",
+  "diffCheck": 0
+}

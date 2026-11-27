@@ -1,0 +1,26 @@
+[
+  {
+    "path": "native-stages.jsonl.gz",
+    "encoding": "lossless gzip, mtime=0",
+    "rawBytes": 86714,
+    "rawSHA256": "4274c49d0a97466a32f67a0c41ca7f2871dc274e5678e7611e8f520c0eea12cb",
+    "gzipBytes": 6258,
+    "gzipSHA256": "a581f3c69b667423e79a660204e31f12ed883c20aa9b1c1c785226e09ad2037e"
+  },
+  {
+    "path": "wire.jsonl.gz",
+    "encoding": "lossless gzip, mtime=0",
+    "rawBytes": 11001,
+    "rawSHA256": "daad4ccc876b14cd3189b565775f74c11e9f8e7e466e697bb2b0f9cc05cf6bc3",
+    "gzipBytes": 1023,
+    "gzipSHA256": "44bd1be2482a8b146d5ae4b9f96cd71c0faeaf1e9ed805f8273ea06ceb739344"
+  },
+  {
+    "path": "lifetime-repair.patch.gz",
+    "encoding": "lossless gzip, mtime=0",
+    "rawBytes": 6698,
+    "rawSHA256": "1f2d7dd290652d6d04e458a4e3cc85ed5eda6634b4030daa83f47053df1941a6",
+    "gzipBytes": 1955,
+    "gzipSHA256": "f45d1fb57a2da6ff7f9c1efabbe64add038de0a8d2220b131c3cc8df2fe76350"
+  }
+]

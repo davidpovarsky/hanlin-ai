@@ -282,19 +282,8 @@ private func performScriptWidgetFetch(_ httpMethod: String, _ url: String, _ par
         task = state.fetchManager.makeTask(httpMethod: httpMethod, url: urlValue, params: params, redirectValidator: {
             ScriptWidgetNetworkPolicy.allowsRedirect($0, state: state)
         }) { (data, response, error) in
-            #if DEBUG
-            recordOriginalHTTPBoundary(state, "fetch-native-completion", ["task": task.taskIdentifier, "dataBytes": data?.count ?? 0, "errorPresent": error != nil])
-            #endif
             executionSession.complete(task)
-            guard state.isCurrentExecution else {
-                #if DEBUG
-                recordOriginalHTTPBoundary(state, "fetch-completion-not-current", ["task": task.taskIdentifier])
-                #endif
-                return
-            }
-            #if DEBUG
-            recordOriginalHTTPBoundary(state, "fetch-completion-current", ["task": task.taskIdentifier])
-            #endif
+            guard state.isCurrentExecution else { return }
             if let error = error {
                 reject.call(withArguments: [error.localizedDescription])
             } else if let data = data {
@@ -320,9 +309,6 @@ private func performScriptWidgetFetch(_ httpMethod: String, _ url: String, _ par
                     let base64 = data.base64EncodedString()
                     resolve.call(withArguments: [base64])
                 } else if let string = String(data: data, encoding: String.Encoding.utf8) {
-                    #if DEBUG
-                    recordOriginalHTTPBoundary(state, "fetch-raw-string-handoff", ["task": task.taskIdentifier, "dataBytes": data.count])
-                    #endif
                     resolve.call(withArguments: [string])
                 } else {
                     reject.call(withArguments: ["\(urlValue) is empty"])

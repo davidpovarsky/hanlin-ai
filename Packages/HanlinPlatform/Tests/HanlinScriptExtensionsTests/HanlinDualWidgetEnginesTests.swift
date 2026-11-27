@@ -16,28 +16,6 @@ import Network
 @testable import HanlinScriptWidgetOriginal
 #endif
 
-#if os(macOS)
-// Test-only bridge for the legacy Swift 5 logger. The only owned object is
-// its string-only logger; all mutations already run on main in addLog/clear.
-// Every read below is synchronous on main, and only copied strings escape.
-private final class OriginalHTTPBoundaryLoggerReader: @unchecked Sendable {
-    private let logger: HanlinScriptWidgetOriginal.ScriptWidgetConsoleLogger?
-
-    init(_ logger: HanlinScriptWidgetOriginal.ScriptWidgetConsoleLogger?) {
-        self.logger = logger
-    }
-
-    func snapshot() -> [String] {
-        if Thread.isMainThread { return messagesOnMain() }
-        return DispatchQueue.main.sync { self.messagesOnMain() }
-    }
-
-    private func messagesOnMain() -> [String] {
-        logger?.logs.filter { $0.hasPrefix("Original HTTP boundary ") } ?? []
-    }
-}
-#endif
-
 private typealias Store = HanlinScriptExtensions.HanlinScriptExtensionStore
 private typealias Snapshot = HanlinScriptExtensions.HanlinScriptExtensionSnapshot
 private typealias Identity = HanlinScriptExtensions.HanlinScriptExtensionIdentity
@@ -326,18 +304,13 @@ struct HanlinDualWidgetEnginesTests {
             var rendered: (String, [String])?
             defer {
                 native.cancel()
-                let boundaryLogger = native.onJavaScriptQueue {
+                native.onJavaScriptQueue {
                     native.finish()
                     context.exceptionHandler = nil
                     for key in ["$render", "__httpTestDone", "__httpTestFailed", "__httpTestStore", "__httpTestStage"] {
                         context.setObject(nil, forKeyedSubscript: key as NSString)
                     }
-                    return context.scriptWidgetRunningState?.logger
                 }
-                // Snapshot only bounded diagnostic strings after the original
-                // cancellation/cleanup. The logger owns no JS context or state.
-                let boundaryMessages = OriginalHTTPBoundaryLoggerReader(boundaryLogger).snapshot()
-                recordStage(label, "original-callback-boundaries", ["messages": boundaryMessages])
             }
             try native.onJavaScriptQueue {
                 let state = try #require(context.scriptWidgetRunningState)
