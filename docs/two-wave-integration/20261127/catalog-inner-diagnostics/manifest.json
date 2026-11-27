@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "sourceCommit": "b4ee5612f005caa1a570749ecbd0a7c8b545901d",
+  "sourceParent": "e86e779d5d4bf85db3c9802e569c032283515ad6",
+  "classification": "SOURCE_ONLY_DIAGNOSTIC_PROOF",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3610,
+      "sha256": "bdea2051cec15bbc240601bac01bc72bcfeb21d0b90188f84aa1d95a529440ed"
+    },
+    {
+      "path": "independent-w1-source-review.json",
+      "bytes": 4967,
+      "sha256": "19fb6d926917b18d9f2b8e457bf9f0a2dbaade630016bffe4529b8856147a91e"
+    },
+    {
+      "path": "qualification.json",
+      "bytes": 8422,
+      "sha256": "682f9638253dd8fbecca9b73e6ef5f23a37a21ade985665b9629bfe0cabb9ce8"
+    },
+    {
+      "path": "source-hashes.json",
+      "bytes": 3296,
+      "sha256": "709ccbca78db78e06f082d3d1fe70d42ead30aefffc0a1dc71ae1b893c0c1d66"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 4128,
+      "sha256": "0fbb26e44cb287a963f1a9f9c638970fc5b1ba8daf773a110c222cfb92c6e680"
+    }
+  ],
+  "patchEncoding": {
+    "path": "source.patch.gz",
+    "encoding": "gzip",
+    "rawBytes": 25917,
+    "rawSHA256": "1f0d9cc9c0f1deb1d94c6e252d71403ca9e05e3f5e3dfab79b76ab83eea23d3b",
+    "roundtripByteExact": true,
+    "normalization": "none"
+  },
+  "testsExecutedForProof": 0,
+  "nativeExecutionsForProof": 0
+}
