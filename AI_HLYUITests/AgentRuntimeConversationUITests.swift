@@ -1373,7 +1373,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     }
 
     func testUI08ConversationalMCPLifecycleAndSecondTurnReuse() throws {
-        let app = launchAcceptanceApp()
+        let app = launchAcceptanceApp(isolatedStore: true)
         openChat(in: app)
 
         // Turn 1: Install local .tgz MCP server via manage_mcp_servers and call mcp__hanlin_echo_mcp__echo_ping in the same turn
