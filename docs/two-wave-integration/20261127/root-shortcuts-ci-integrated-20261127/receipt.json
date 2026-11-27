@@ -1,0 +1,20 @@
+{
+  "dateUTC": "2026-11-27T03:31:20.465616+00:00",
+  "sourceCommit": "9c0879ee168b6aec78a4cc80fd071514c8787887",
+  "prerequisite": "9d1a27133fd0bb56fa76a029561b34d35b946994",
+  "bundle": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-shortcuts-ci-integrated-20261127/root-shortcuts-ci.bundle",
+  "bytes": 38125,
+  "sha256": "8428d1644486a9662b35e92ca38253ed4a46b1b2b19fd272449d3b9d04257306",
+  "ownerCorrection": {
+    "directoryBefore": {
+      "uid": 0,
+      "gid": 1002,
+      "mode": "0o42755"
+    },
+    "directoryAfterUID": 1002,
+    "scope": "exact newly-created task handoff directory only",
+    "previousMergeWasSuccessful": true
+  },
+  "scope": "Reviewed03e OS companion; reviewed71a/0ce/35dc CI tests. Original54 selectors unchanged,0/10 OSsourcepath intersection with SDK392",
+  "status": "?? docs/two-wave-integration/20261127/ci-45927192346-phase1/"
+}

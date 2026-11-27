@@ -1,0 +1,24 @@
+{
+  "dateUTC": "2026-11-27T03:29:08.094755+00:00",
+  "rootBefore": "9d1a27133fd0bb56fa76a029561b34d35b946994",
+  "rootAfter": "6a90abc84e0f36ab76f1d9592421b65c947f16f7",
+  "integratedCommits": [
+    "03e0b8f42a5f9cc942875b3db3cdce161629a9ef",
+    "35dc2744ae7fd6ba45b0f393cbcd6806dafefdfb"
+  ],
+  "shortcutSourceSHA256": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "1dc0cf723dccd5016c9cb6192555d99dfb06680939ad5223b48f4c283cd7e150",
+    "Fixtures/HostActionSurfaces/README.md": "32a0dbb938e3bb8ea40b18f791c3536640c3d7b8d4e34510e916241165eacb23",
+    "Fixtures/HostActionSurfaces/expo/App.tsx": "3139ff15dfc85411e7954476908dc94ae458eb96e3ddeff165e00dd5d929b3f5",
+    "Fixtures/HostActionSurfaces/expo/proof.ts": "de2e2c2d24abb9f5d8f82c105ce51b504c782eb1c0512fde0d9c10b393bde1ea",
+    "Fixtures/HostActionSurfaces/nativescript/index.ts": "13599e9040ce6c32f0ad0838cfb52fdb483976416871a77d0791d92dd4c0b867",
+    "Fixtures/HostActionSurfaces/nativescript/package.json": "048e5efb91e28f9d198c885297cfdf7c7a0081b6e4c3c7b945398797dc283e4a",
+    "Fixtures/HostActionSurfaces/nativescript/proof.ts": "1e89a6b068e71cc5c172b0943b8fbd4d142b1e33383d46f28bc35a82e2cd184e",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "872a7f6e7f786e2d578a54e3107bbe00e42a8dd2238e23f10fd656a63d9ab3f7",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "3273ebb10864c8e7703db3a70d4036e07fa587c1f5e8826fce47e03eaf4afc71",
+    "Scripts/ProductSplit/Tests/test_shortcut_surface_observer.py": "f4e0a7a4b8599fb4ea024a37a0f2dfc0c56274ba470066c3258cf0409212e339"
+  },
+  "independentReview": "/root/w1_review_resume approved03e; /root read full35dc diff and exact03e source receipt",
+  "status": "?? docs/two-wave-integration/20261127/ci-45927192346-phase1/",
+  "nativeStatus": "NOT_RUN"
+}

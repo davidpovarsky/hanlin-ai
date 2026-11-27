@@ -1,0 +1,9 @@
+{
+  "reviewer": "root",
+  "run": 45927192346,
+  "github_artifact_metadata_independently_read": true,
+  "all_sizes_sha256_and_zip_integrity_match": true,
+  "original_scope": "NativeScript dependency closure and generic Simulator/device builds",
+  "other_phase1_gates": "SKIPPED",
+  "app_acceptance": "NOT_PROVEN"
+}

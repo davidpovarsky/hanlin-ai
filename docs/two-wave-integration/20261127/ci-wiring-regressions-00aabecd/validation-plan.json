@@ -1,0 +1,70 @@
+{
+  "status": "READY_FOR_FOCUSED_VALIDATION_NOT_RUN",
+  "agent": "/root/w1_review_resume",
+  "base": "00aabecd5e4cf7995fe358d63a9724edb3b299e4",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-ci-wiring-regressions-20261127",
+  "changedFiles": {
+    "test_phase2_product_wiring.py": {
+      "sha256": "62a4cb804e38c4ae4fd542d44c0c479d57380c7ebe00155ff691dbe1b64c0917",
+      "bytes": 20818,
+      "testMethods": [
+        "test_native_fixtures_follow_the_actual_xcode_host_install",
+        "test_deferred_native_staging_cannot_move_after_ui_or_reinstall_the_host",
+        "test_explicit_compact_validation_does_not_cancel_native_ipad_acceptance",
+        "test_device_mcp_verifies_the_canonical_patched_archive",
+        "test_motion_reuses_prepared_simulator_only_by_explicit_manual_group",
+        "test_skill_exposure_does_not_stage_unrelated_expo_fixtures",
+        "test_optional_progress_cannot_block_focused_native_acceptance",
+        "test_exact_app_tests_rebuild_affected_host_without_enabling_unrelated_groups",
+        "test_every_new_exact_package_is_an_active_project_reference",
+        "test_each_required_product_has_both_target_membership_and_a_link_entry",
+        "test_shared_application_wiring_rejects_orphaned_and_duplicate_host_edges",
+        "test_required_products_must_reach_the_original_sdk_module_and_generator_input",
+        "test_native_boot_has_one_owner_on_each_workflow_branch"
+      ]
+    },
+    "test_nativescript_test_log.py": {
+      "sha256": "395d0696d7eba4056618d1ecfe242999108dad3f155b645832a6338fa985e88b",
+      "bytes": 7400,
+      "testMethods": [
+        "test_shared_core_does_not_require_an_unselected_swiftui_fixture",
+        "test_swiftui_lifecycle_keeps_all_original_core_and_swiftui_requirements",
+        "test_exact_tab_bar_does_not_require_an_unselected_core_fixture",
+        "test_rejected_packages_do_not_claim_to_initialize_a_native_vm",
+        "test_whole_suite_and_mixed_selectors_retain_full_evidence",
+        "test_similar_names_do_not_select_native_or_swiftui_cases",
+        "test_a_runtime_initialization_marker_cannot_hide_a_wrong_external_root",
+        "test_combined_release_baseline_requires_only_its_selected_native_fixtures",
+        "test_actual_workflow_checks_the_original_log_with_the_exact_selection",
+        "test_each_cohort_uses_its_own_log_and_selection_and_retains_failure",
+        "test_wrong_log_global_selection_or_swallowed_failure_cannot_satisfy_the_workflow_contract"
+      ]
+    }
+  },
+  "originalFailingGate": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-router-original-00aabecd",
+  "why": "Three original CI assertions failed after real source graph/UI cohort changes. Preserve actual SDK membership/link ownership and cohort-specific native marker requirements, adding negative controls; no product/workflow/production-validator changes.",
+  "originalCommands": [
+    "python3 -B -m unittest Scripts.CI.Tests.test_phase2_product_wiring Scripts.CI.Tests.test_nativescript_test_log -v"
+  ],
+  "excludedExecution": [
+    "full discovery",
+    "native builds/tests",
+    "OS acceptance",
+    "Swift manifest generation"
+  ],
+  "sourceConsumers": [
+    "AI_HLY.xcodeproj/project.pbxproj",
+    "Package.swift",
+    "Scripts/SDK/application_products.json",
+    "Scripts/CI/IntegrationValidation/project_graph.py",
+    "Scripts/ProductSplit/extension_inventory.py",
+    ".github/workflows/build-ios26-unsigned-ipa.yml",
+    "Scripts/CI/ui_viewport_cohorts.py",
+    "Scripts/CI/ui_viewport_cohorts.json",
+    "Scripts/CI/verify_nativescript_test_log.py",
+    "Scripts/CI/plan_affected_validation.py",
+    "Scripts/CI/affected-validation-map.json"
+  ],
+  "statusReadback": " M Scripts/CI/Tests/test_nativescript_test_log.py\n M Scripts/CI/Tests/test_phase2_product_wiring.py\n",
+  "diffCheck": ""
+}

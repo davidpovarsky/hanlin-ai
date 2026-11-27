@@ -1,0 +1,13 @@
+{
+  "at_utc": "2026-11-27T02:43:53.834236+00:00",
+  "source_url": "https://nodejs.org/dist/v24.5.0/node-v24.5.0-linux-arm64.tar.xz",
+  "checksum_source_url": "https://nodejs.org/dist/v24.5.0/SHASUMS256.txt",
+  "archive_bytes": 30984052,
+  "archive_sha256": "313367534186a8551d68b39fbc2a6cc36638e583fb5dc75dcf5da3c6582bff3b",
+  "official_checksum_matches": true,
+  "node": "/mnt/development/projects/toolchains/node-v24.5.0-linux-arm64/bin/node",
+  "version": "v24.5.0",
+  "global_node_changed": false,
+  "python": "3.12.3",
+  "pyyaml": "6.0.1"
+}

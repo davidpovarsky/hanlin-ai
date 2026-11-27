@@ -1,0 +1,21 @@
+{
+  "reviewer": "/root",
+  "sourceCommit": "9c0879ee168b6aec78a4cc80fd071514c8787887",
+  "status": "ORIGINAL_DISCOVER_PASS_WITH_TWO_ORIGINAL_SKIPS",
+  "discovered": 461,
+  "passed": 459,
+  "skipped": 2,
+  "failures": 0,
+  "errors": 0,
+  "durationSeconds": 40.00683343689889,
+  "originalUnittestSeconds": 39.204,
+  "skips": [
+    "test_staged_artifacts_have_valid_plists_only_ios_slices_and_no_broken_links (test_expo_xcframework_preparation.TestExpoXCFrameworkPreparation.test_staged_artifacts_have_valid_plists_only_ios_slices_and_no_broken_links) ... skipped 'Artifacts directory is not staged'",
+    "test_real_flit_backend_download_build_install_and_import (hanlin_python_packaging_acceptance.PythonPackagingTests.test_real_flit_backend_download_build_install_and_import) ... skipped 'explicit real PyPI/backend integration'"
+  ],
+  "allOriginalReceiptHashesVerified": true,
+  "allCurrentSourceInputHashesMatch": true,
+  "trackedWorkingTreeAfter": "CLEAN",
+  "priorFailureRetained": "../ci-router-original-00aabecd",
+  "scope": "CI router only; no native, OS, fullpackage, signing or distribution acceptance inferred"
+}

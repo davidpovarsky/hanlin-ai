@@ -1,0 +1,29 @@
+{
+  "source": "71a1355bc49829e6942aadcc282899528b4030e8",
+  "started_utc": "2026-11-27T03:11:31.673808+00:00",
+  "finished_utc": "2026-11-27T03:11:47.207678+00:00",
+  "exit_code": 0,
+  "duration_seconds": 15.534,
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.CI.Tests.test_native_tool_cancellation_recheck_report",
+    "Scripts.CI.Tests.test_native_tool_pin_build_report",
+    "Scripts.CI.Tests.test_stop_continuation_delta_report",
+    "Scripts.CI.Tests.test_runtime_memory_entitlements",
+    "-v"
+  ],
+  "node": "24.5.0",
+  "git_status_after": "",
+  "logs": {
+    "stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr.log": {
+      "bytes": 4671,
+      "sha256": "fa5c7a7e13411cebe3194f814ccbf79572e4560220bc2b2a5a99f5994b65b66e"
+    }
+  }
+}
