@@ -1,5 +1,6 @@
 import Foundation
 import HanlinHostContracts
+import HanlinLocalization
 import Security
 import SwiftData
 import Testing
@@ -332,9 +333,9 @@ struct HanlinApplicationEmbeddingTests {
         #expect(original.name == "Renamed שלום" && original.input == "Unsent original draft")
         #expect(namesake.persistentModelID == namesakeID && namesake.name == "Equal original title" && !namesake.isPinned)
         #expect(announcement.role == "information" && announcement.record === original)
-        let chinese = (Locale.preferredLanguages.first ?? "zh-Hans").hasPrefix("zh")
-        #expect(announcement.text == (chinese ? "群聊名称被修改为“Renamed שלום”"
-            : "Group chat name has been changed to \"Renamed שלום\""))
+        let expectedAnnouncement = String(format: String(localized: "Conversation renamed to %@",
+            bundle: HanlinLocalization.bundle), "Renamed שלום")
+        #expect(announcement.text == expectedAnnouncement)
         #expect(try HanlinConversationMutation.rename(original, title: "Renamed שלום",
             announceChange: true, in: context) == nil)
         #expect(try context.fetch(FetchDescriptor<ChatMessages>()).count == 1)

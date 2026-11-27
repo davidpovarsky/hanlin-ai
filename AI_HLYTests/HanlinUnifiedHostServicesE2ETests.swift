@@ -186,7 +186,7 @@ struct HanlinUnifiedHostServicesE2ETests {
         // Submit concurrent operations across different caller domains
         async let r1 = HanlinRuntimeBroker.shared.execute(kind: .javaScriptCore, source: "100 + 1", context: agentContext)
         async let r2 = swiftAdapter.writeFile(path: "concurrent_a.txt", data: Data("swift-data".utf8))
-        async let r3 = expoAdapter.executeRuntime(kind: "jscore", source: "200 + 2")
+        async let r3 = expoAdapter.executeRuntime(kind: "javaScriptCore", source: "200 + 2")
 
         let (res1, _, res3) = try await (r1, r2, r3)
 
