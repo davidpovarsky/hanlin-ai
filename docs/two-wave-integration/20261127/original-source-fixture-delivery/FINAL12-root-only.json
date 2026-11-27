@@ -1,0 +1,9 @@
+{
+  "path": "AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift",
+  "beforeSHA256": "fa552eed7a9a15883266f9984ea0f0ae65a40dcea42ba9ab16cc0bad66a27c41",
+  "afterSHA256": "be1f303f8e6d857b8a4ebbd84c54703dc6f57cb7d043d51544448720dc36aded",
+  "patchSHA256": "eccf26e631c9546163a29417ea82a9441f7748d3aaab3259006969dfc316369e",
+  "rootOnlyBindingDelta": true,
+  "assertionsAndFallbackBodiesUnchanged": true,
+  "fileNotModifiedInCandidateWorktree": true
+}

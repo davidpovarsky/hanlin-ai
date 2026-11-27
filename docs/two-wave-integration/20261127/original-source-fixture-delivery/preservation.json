@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "base": "95c12227097f73d5755a6ff20ced43c9e2691c45",
+  "canonicalProjectOnlyChanges": [
+    "one added PBXShellScriptBuildPhase",
+    "AI_HLYTests phase insertion after Resources"
+  ],
+  "allOtherParsedProjectValuesIdentical": true,
+  "allOriginalGeneratorBytesRecoveredByRemovingOnlyNewFunctionConstantAndCall": true,
+  "parityWholeFileRecoveredByRestoringOnlyTwoRootInitializers": true,
+  "allOriginalParityExpectationRequirementLinesIdentical": true,
+  "parityExpectationRequirementLineCount": 364,
+  "originalSourceInputs": 23,
+  "actualOriginalSourceBytes": 574715,
+  "immutableExpectationsRegenerated": false,
+  "FINAL12PatchIsSeparateAndOriginalWorktreeFileUnchanged": true,
+  "portableValidation": {
+    "initialAttempt": "portable-r1: 8PASS+1 new-parser-representation assertion failure retained",
+    "correctedMethod": "portable-r2: 1PASS; only that method rerun",
+    "unchangedEightMethodAndSetupASTsQualified": true,
+    "uniquePassingControls": 9,
+    "freshFullNineClaim": false
+  },
+  "nativeBuildAndResourceLoading": "NOT_RUN"
+}

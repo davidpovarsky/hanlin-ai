@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "producer": "Scripts/CI/prepare_original_source_fixtures.py",
+  "producerSHA256": "9e052e05c003854a440e24c49004a223a06d319bc356fd2e322dbfdfd8ce3dc2",
+  "inputListSHA256": "36e5bab991c5207ef490edc299d6d444150816a63e359d2bc41ccd406f9d7b6d",
+  "files": [
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift",
+      "bytes": 9587,
+      "sha256": "ae38210d8943e7a76aab9695d3b545666349f45a47d0e6c2ec1e90ad4f0cf99c"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatMessagePreview.swift",
+      "bytes": 761,
+      "sha256": "a5c6ff27cae6a5269fc4b79ef70dee52e5e2ac5cef18772ec3e6425891d44839"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatMessagePreviewMetrics.swift",
+      "bytes": 87,
+      "sha256": "36440a0086cb4a20a9207d037fe14a1d7902c7f2648b40329e333480fa9f2439"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "bytes": 225611,
+      "sha256": "1e65885f3fa5aa398cf6a315cd365705986f092de9838692eb305ce87dc78b12"
+    },
+    {
+      "path": "AI_HLY/Views/Components/ChatViewComponents.swift",
+      "bytes": 216385,
+      "sha256": "15875a20addac6bc43ada66e7c3b929118a0f8ad19159d91ace9a8274e9448c9"
+    },
+    {
+      "path": "AI_HLY/Views/Components/ChatandFile.swift",
+      "bytes": 1966,
+      "sha256": "3260125c5dece237c8775806b21c470275c9cb5a88328fa6fba2f283c8f3e26d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinFileContentView.swift",
+      "bytes": 3473,
+      "sha256": "cae1895609127a867a0a028f5716e602026e5c87d4f669f051e9c4e665457801"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinImageViewer.swift",
+      "bytes": 7597,
+      "sha256": "8427d5bfafea323a84d0f62f9c272aaed848241ed26af6e3f832d767b5a57f13"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActionBar.swift",
+      "bytes": 9732,
+      "sha256": "f559b1b5fb3ab8f858399a710e79024bd8fe25b6267c84a9ef843ab7150e004e"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActions.swift",
+      "bytes": 5256,
+      "sha256": "40561523428c78730dc052ed23349669860a3891638981c96a34dc2d68ef8d39"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageBubble.swift",
+      "bytes": 5601,
+      "sha256": "c8ca0b950b08a84e2a8feb73f638668a3e614a28e10fb1667395fb12572f4720"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageDocumentAttachments.swift",
+      "bytes": 4378,
+      "sha256": "02c3a8a8f3560afd95c6638a12ab07e6a05e028b5c0c962df06a2e82367ce733"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageImageAttachments.swift",
+      "bytes": 4536,
+      "sha256": "7d89b9d5a6996f9e6ae36b7d0ff43ed48a0160c1f7d3bd0ac69ae7eae82a4e0f"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageMarkdownView.swift",
+      "bytes": 4665,
+      "sha256": "fd09ce372d0936da5d3388b30c638ad33fce00227f01cb9352294211a8a0b2b6"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessagePreview.swift",
+      "bytes": 7115,
+      "sha256": "3ffe0ba0d520f0a8489388bab991bf51316c9cec21b411986e77e885b6dd73b1"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessagePreviewMetrics.swift",
+      "bytes": 659,
+      "sha256": "5faf31d6d9278f3488cfcf35188c7fe722c7a4f91393d5ac128a659cc6076be8"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageSelectionView.swift",
+      "bytes": 5909,
+      "sha256": "b53108a0ddc25c49eb10ba5992f67e908ae3bba7f5cea3b417adacc5e941c52b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinVisualEffectBlur.swift",
+      "bytes": 522,
+      "sha256": "9f87a1d6c1a28314d90c49e5e5f0776315ab21e398b32faed8db3f6fb5340a49"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinWritingTool.swift",
+      "bytes": 523,
+      "sha256": "4d6d6679d1669aa0c071223c59af8e4b9ce0a696e6b0966b3aaa4a549e529661"
+    },
+    {
+      "path": "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2.json",
+      "bytes": 6168,
+      "sha256": "169e270d596fa000ce9cb043fa55f765cda62fd6043df49eb3bad8e2e160e6e3"
+    },
+    {
+      "path": "docs/hanlin-dock-v33-source-parity/SOURCE_REFERENCE_AND_SHA.md",
+      "bytes": 5769,
+      "sha256": "a8eabcda22a034da03aa07ebb2de2e92110a5e71a5dbed11e9478ecd632ad76f"
+    },
+    {
+      "path": "capability-invariants.json",
+      "bytes": 14403,
+      "sha256": "b957a4a1bb072b5c33d9bd44601b4167dc1efe3e7091fd540721a4246b9d2328"
+    },
+    {
+      "path": "docs/hanlin-platform/personal-runtime-completion/tool-inventory.json",
+      "bytes": 34012,
+      "sha256": "bb9e7c3d81af595574d8162c194d08d10f093b6e0b94048ff29992db855f7e11"
+    }
+  ]
+}
