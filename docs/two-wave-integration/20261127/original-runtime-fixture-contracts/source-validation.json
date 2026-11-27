@@ -41,5 +41,12 @@
   "productionChanged": false,
   "originalLargeMCPInputOrTestBodyChanged": false,
   "final12Changed": false,
-  "originalDeadlinesChanged": false
+  "originalDeadlinesChanged": false,
+  "losslessPatchArchive": {
+    "path": "source.patch.gz",
+    "sha256": "787a18ae066666f526e55e68485440cfbfe236d555badcec634f2fd84525d13f",
+    "bytes": 1527,
+    "uncompressedSHA256": "da282d78f75e961f5d4b97bf33845bb4e8e40df1c39f9cda16d1e08cb3dbad84",
+    "uncompressedBytes": 4393
+  }
 }
