@@ -1,0 +1,11 @@
+{
+  "sourceBase": "c929ebc14434523edfa78c4b0764fe8eb0fd47e6",
+  "final12Commit": "2cb9c4a4237699444ad698d59b4424ca1521e7e2",
+  "path": "AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift",
+  "beforeSHA256": "73e7e542ce1d6068b4caef455a5f34e47619cb71fbbd4215ba13d218b8020380",
+  "afterSHA256": "c775d8692c4e584aecdf58bc39340cb8cef40f25c3466c89b0c261d1cc637c90",
+  "exactInverse": true,
+  "allExpectAndRequireLinesIdentical": true,
+  "CMD01AndPY02ChangesPreserved": true,
+  "nativeStatus": "NOT_RUN"
+}
