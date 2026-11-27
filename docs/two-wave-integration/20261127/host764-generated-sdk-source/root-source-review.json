@@ -1,0 +1,24 @@
+{
+  "actualHostExecutionSource": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+  "sourceSeal": "78ec8f97a607f5e1f8c01de5109ae850791b9e04",
+  "inputFingerprint": "7e2d370d0753b37bb1c589e4c2b28e3e8383c6fb948b09b0556e651efcfa4a9e",
+  "inputCount": 396,
+  "originalBundleSHA256": "de2160db79aa49e14337263443b974e6fc540e9961b6d77e33b6ed6c3d419981",
+  "manifestSHA256": "98b6b44b0ec3e00944ecf9d5942aa4c6471df97c94a92ee978e6ab94c2fd4f57",
+  "all6TransferredFilesVerified": true,
+  "exactGeneratedDocInverseVerified": true,
+  "allowedReplacements": {
+    "sourceCommit": {
+      "before": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+      "after": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7"
+    },
+    "hostAuthoringSHA256": {
+      "before": "cea114769522eaaaceee804b89b26549c2335b3ebca16037a64f97724f2e92fc",
+      "after": "06fbe72f889da3befe00c2dfe9b286f062decd59a50c1df9c961df3bcb46b745"
+    }
+  },
+  "originalHostReceiptSHA256": "6046e68027dbb0acf87a42fd6b310c21405f9a58f721c4b17e90a5b775404942",
+  "currentUIRepairsNativeStatus": "NOT_RUN",
+  "sdkSourceCodeUnchangedBySeal": true,
+  "rawCompleteHostPhasePacket": "retained by native owner; publication follows independent full-packet verification"
+}

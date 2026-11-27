@@ -1,0 +1,34 @@
+{
+  "atUTC": "2026-11-27T15:41:39.356640+00:00",
+  "credentialPatternPreflight": "PASS",
+  "sourcePacket": "original-shell-mcp-64fdbd34-r2-pass",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2173,
+      "sha256": "b48db4f9bcd2b2bdbd055efcd5f564433a3be3f2ef47285917d7c7525c67842d"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 11725,
+      "sha256": "2c1accd897a73136859990dffe7fd75a1393c355fe32d38a21f8c9a1f2a52fee"
+    },
+    {
+      "path": "original-native-proof.tar.gz",
+      "bytes": 1566615,
+      "sha256": "f23d0bd0d60a1478a41f92e152d52aba7244ddc2df622df791e71cbb803a5a2a"
+    },
+    {
+      "path": "reconciliation.json",
+      "bytes": 3937,
+      "sha256": "f0958fe0e4545d75b785d79518d942506739509d8c61fe4edd7f04e92b29b4df"
+    },
+    {
+      "path": "root-review.json",
+      "bytes": 732,
+      "sha256": "8ecab27931d96b369b6f5aa660627f0f3f62f43acd7cbca6387994f79e70bb04"
+    }
+  ],
+  "nativeStatus": "PASSED_ON_64_APP_PRODUCER_B723",
+  "newSDK396OrLargeTransportAcceptance": false
+}

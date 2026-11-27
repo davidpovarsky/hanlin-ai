@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 1,
+  "sourceIntegration": "64fdbd3411de103e1cdad6f7e39dbb4afcb9bd83",
+  "actualAppProducerSource": "b723338e995b14dc31f96a90ad4c865e8a4b345a",
+  "status": "PASSED",
+  "members": [
+    {
+      "path": "controller/controller.py",
+      "bytes": 13869,
+      "sha256": "7e83df6816e522759c549c9026d17fb8d497f3b7fc0f924cc3acc22566e738cd"
+    },
+    {
+      "path": "controller/inputs/binding.json",
+      "bytes": 21258,
+      "sha256": "385ed5b685f975ae58b788725c8cb8cea81268e3c093530728da534f3a70c509"
+    },
+    {
+      "path": "controller/inputs/boot-ipad-simulator-and-stage-fixtures.sh",
+      "bytes": 4770,
+      "sha256": "99907dbcb1483c35cff367acf2b4add3c2490b867b303061d531adcdf9ca46bc"
+    },
+    {
+      "path": "controller/inputs/boot-ipad-simulator-and-stage-fixtures.sh.executed",
+      "bytes": 4774,
+      "sha256": "552d4417b3e3576ea8c649deea642233e295b9e2bcdf283b9fc8f3012eb0b750"
+    },
+    {
+      "path": "controller/inputs/build-full-arm64-simulator-app.sh",
+      "bytes": 7132,
+      "sha256": "acc1cded884f7e8cd7f46a2c8742914f3454ec7dfbba616c99748fefd36a3824"
+    },
+    {
+      "path": "controller/inputs/build-full-arm64-simulator-app.sh.executed",
+      "bytes": 7016,
+      "sha256": "d2b08d85c1f3bb9255f7a0d90c639aba6a27e8b64b4db79cefeea2373c45f266"
+    },
+    {
+      "path": "controller/inputs/controller.diff",
+      "bytes": 9128,
+      "sha256": "df71c9f2b274b0825ed3f7a5270c9f4da4c414271c869e8c59d292460b5e495a"
+    },
+    {
+      "path": "controller/inputs/launch-full-app-and-verify-runtime-acceptance.sh",
+      "bytes": 15643,
+      "sha256": "a9c5bb380680ef5178797a5c1e9bef11d3cf0a0027f8d1e3c50f8673b5c92b0a"
+    },
+    {
+      "path": "controller/inputs/launch-full-app-and-verify-runtime-acceptance.sh.executed",
+      "bytes": 15643,
+      "sha256": "a9c5bb380680ef5178797a5c1e9bef11d3cf0a0027f8d1e3c50f8673b5c92b0a"
+    },
+    {
+      "path": "controller/inputs/locate-and-scan-simulator-app.sh",
+      "bytes": 2341,
+      "sha256": "c44b49f7a0a2dc3182cc6dbacca1ffd1e81763302ae2dc6395fd5f2b20eef3d4"
+    },
+    {
+      "path": "controller/inputs/locate-and-scan-simulator-app.sh.executed",
+      "bytes": 2282,
+      "sha256": "8accf598ba7cd263cd01038a6ba9b3bfde2e4033924fd4727e76d319edf5b6d2"
+    },
+    {
+      "path": "controller/inputs/preparation.json",
+      "bytes": 2091,
+      "sha256": "33288864d6e1bf17da62aefc95cd4a22dcdd86e7cbc470ae14337cc8a64789e0"
+    },
+    {
+      "path": "controller/original-controller-b723.py",
+      "bytes": 11572,
+      "sha256": "190cef28cb593a8fb10a796053913be31b056cae5a16d07a1636e8f081ef7afb"
+    },
+    {
+      "path": "controller/receipt.json",
+      "bytes": 476018,
+      "sha256": "62f19b94f23ca50dcebf015a9baa505816c97dd2c2dd150c3678375800af37cc"
+    },
+    {
+      "path": "controller/supervisor.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "intake/cleanup-r2/cleanup-execution.json",
+      "bytes": 141621,
+      "sha256": "d96c0c1279a947d01a4b136b0f9e38091fa30519b99d8094195d5d4a1cc32fd5"
+    },
+    {
+      "path": "intake/cleanup-r2/explicit-module-cache-plan.json",
+      "bytes": 694227,
+      "sha256": "cd898d4411471b93ee6d40d86560f5cd9fc12f06462c6c0609f052ecd25f679a"
+    },
+    {
+      "path": "intake/cleanup-r2/explicit-module-cache-retirement.json",
+      "bytes": 696445,
+      "sha256": "1f5078b77fc5f358f0008fd20de6f543180e47beab8d9284b0965b864c241210"
+    },
+    {
+      "path": "intake/cleanup-r2/plan.json",
+      "bytes": 9378723,
+      "sha256": "734dd6bf8ee0aa581535e59872081d7ade01633f8ccac6a61d4bdf692a0850bc"
+    },
+    {
+      "path": "intake/first-native-phase-readback.json",
+      "bytes": 2331,
+      "sha256": "26ff86ad46edf3da26db9271b3283c5e5147b872504d0bd73b57b87f776d9036"
+    },
+    {
+      "path": "intake/launch-readback.json",
+      "bytes": 648,
+      "sha256": "a06a780a85599da975a605feb6934bfef571d03749cea0c02fa1269cea5af7ff"
+    },
+    {
+      "path": "intake/retained-app-input-qualification.json",
+      "bytes": 1088800,
+      "sha256": "56b85765edf22b5c7f765c20e7b0d9e72a33e67685c0eb66d178bfecb26bcd9f"
+    },
+    {
+      "path": "intake/source-stage.json",
+      "bytes": 10524,
+      "sha256": "37efd891c7d405a414a572b482c06f50f4ee9d2da53f5030e691be887879f51a"
+    },
+    {
+      "path": "original-native-proof/08-application.log",
+      "bytes": 316523,
+      "sha256": "5de199ef76901dd68057cef54c75a71ac2b7faac5ae6c4364f02dd21e12d26c2"
+    },
+    {
+      "path": "original-native-proof/08-bootstatus.log",
+      "bytes": 6798,
+      "sha256": "3f9fe86128a8bc1b5fbe262a60c93a4e9cf80b785416de24dd4fb67a5d8b45b1"
+    },
+    {
+      "path": "original-native-proof/08-launch-output.txt",
+      "bytes": 30,
+      "sha256": "4072b817a0814a3888c8047dd9bbab03535a79e173b0b38245cbf32e4ceab2de"
+    },
+    {
+      "path": "original-native-proof/08-mcp-acceptance-summary.json",
+      "bytes": 17806,
+      "sha256": "7ff4bf7d86a20befecccdf27bbf139dd2bae60ddbd1f321b427654f890c6c4a4"
+    },
+    {
+      "path": "original-native-proof/08-mcp-acceptance.log",
+      "bytes": 17806,
+      "sha256": "7ff4bf7d86a20befecccdf27bbf139dd2bae60ddbd1f321b427654f890c6c4a4"
+    },
+    {
+      "path": "original-native-proof/08-mcp-canonical-shadow.log",
+      "bytes": 85,
+      "sha256": "5b8fa23459653b3d568a8ae1301d9b2a604661bea2988577afa3f9b5d5eb1205"
+    },
+    {
+      "path": "original-native-proof/08-mcp-launch-output.txt",
+      "bytes": 30,
+      "sha256": "945d02cd29de1623349e02285f36929db4ffe9469351f8f9020c52c60987ce85"
+    },
+    {
+      "path": "original-native-proof/08-mcp-new-diagnostic-reports.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original-native-proof/08-nativescript-files-staging-skipped.txt",
+      "bytes": 66,
+      "sha256": "43d4c4e4577fad4c00a5b13c1707f59587669744fe63ba87ca542efee4dd9d08"
+    },
+    {
+      "path": "original-native-proof/08-new-diagnostic-reports.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original-native-proof/08-owned-simulator-boot.json",
+      "bytes": 522,
+      "sha256": "119632f2dce6166704eda2b1ce0d0d6cfdf48681fb55fa1cfa2bd7856e4a3912"
+    },
+    {
+      "path": "original-native-proof/08-post-tests-bootstatus.log",
+      "bytes": 166,
+      "sha256": "d00eafa8db1c85e4211789fc185856ea8043f292abed978fd78ceed7d9a3a658"
+    },
+    {
+      "path": "original-native-proof/08-scriptui-files-staging-skipped.txt",
+      "bytes": 58,
+      "sha256": "b8524eb1d6823878662fcf2680222b4ea8b80a17b90b8c134a4ecf93d4a2b194"
+    },
+    {
+      "path": "original-native-proof/08-shell-acceptance-summary.json",
+      "bytes": 2903,
+      "sha256": "5698613b8723d640abf44c9707c310782a69e9375a70a9443b13e3691817ac31"
+    },
+    {
+      "path": "original-native-proof/08-shell-acceptance.log",
+      "bytes": 2903,
+      "sha256": "5698613b8723d640abf44c9707c310782a69e9375a70a9443b13e3691817ac31"
+    },
+    {
+      "path": "original-native-proof/08-shell-canonical-shadow.log",
+      "bytes": 87,
+      "sha256": "098ae2d0a8e151cde476fa7a3ac24160c96dc93c16fc01ba5e0c1b5c66a03843"
+    },
+    {
+      "path": "original-native-proof/08-simulator-staging-duration-seconds.txt",
+      "bytes": 3,
+      "sha256": "19b8d5c59e421f037fe563007c7254eb8d98bc221b278c3db3e5fdbbfd52e273"
+    },
+    {
+      "path": "original-native-proof/alive-duration-seconds.txt",
+      "bytes": 3,
+      "sha256": "eecd262c3ecab667b61ebb70835f3b181a1d1530d3ebc0ef99a3a8dc3d5b193f"
+    },
+    {
+      "path": "original-native-proof/app-executable.txt",
+      "bytes": 10,
+      "sha256": "0aadda1cb8a292e1e5e08d32e3d79694a777b60244661e1f8f9a7eac00646952"
+    },
+    {
+      "path": "original-native-proof/app-path.txt",
+      "bytes": 40,
+      "sha256": "a3b4a5197338b3663fa72b98194a1ea3f5bd5fe8266af768aa9a4cd871b71cab"
+    },
+    {
+      "path": "original-native-proof/bundle-id.txt",
+      "bytes": 24,
+      "sha256": "2b647e2df6c537e477d32eca4a643686109691751c74438b3a1a80a0cce32b15"
+    },
+    {
+      "path": "original-native-proof/github-env",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original-native-proof/launch-marker",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original-native-proof/launch-pid.txt",
+      "bytes": 5,
+      "sha256": "23d14fa0fa0595204658523febec2987b0a3f593336fc92b4614c43016f590f0"
+    },
+    {
+      "path": "original-native-proof/mcp-acceptance.json",
+      "bytes": 18831,
+      "sha256": "931364957a2ddd1b81647bbc0fc8edc603e965393c368bde9ba66130066d5b46"
+    },
+    {
+      "path": "original-native-proof/mcp-launch-marker",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original-native-proof/mcp-launch-pid.txt",
+      "bytes": 5,
+      "sha256": "2a7227362d02b6d3328c4d3f8c13d5074e18818384ee15cc52da233daa930a67"
+    },
+    {
+      "path": "original-native-proof/node-runtime.log",
+      "bytes": 94180,
+      "sha256": "b293b3de9565d89b3c707e959a46fd8b7bb2ac9fd66596b5a06aede16d4b4579"
+    },
+    {
+      "path": "original-native-proof/original-boot-ipad-simulator-and-stage-fixtures-controller.log",
+      "bytes": 8975,
+      "sha256": "2d60a62281699372ca09b5a3fa2c18a98c81143346239638b8f06b68bf845229"
+    },
+    {
+      "path": "original-native-proof/original-launch-full-app-and-verify-runtime-acceptance-controller.log",
+      "bytes": 64049,
+      "sha256": "d5b55106241462e91fad6c37b55559d627445a13bed90995300ca9f8ca83cf81"
+    },
+    {
+      "path": "original-native-proof/retained-release-app-requalification.json",
+      "bytes": 917402,
+      "sha256": "fb235b128258a456e232f80d9f64f78a1a8b5181259f7c40c4106471ce0300b0"
+    },
+    {
+      "path": "original-native-proof/server-everything-compatibility-report.json",
+      "bytes": 153880,
+      "sha256": "cd95d70268e80d34c122916713dfcfc1de26feb8c541792d8c59d5b2eb112408"
+    },
+    {
+      "path": "original-native-proof/shell-acceptance.json",
+      "bytes": 10618,
+      "sha256": "d6c5c2f3a7930af5b85942ab1defef39057dbcddfc2a887d38b4c6f288d56f4b"
+    },
+    {
+      "path": "original-native-proof/shell-runtime.log",
+      "bytes": 1272,
+      "sha256": "3d9222262d4a73c59639cb9f5ac796952f6c5f1f81ea3178f59febd81eab6d9d"
+    },
+    {
+      "path": "original-native-proof/simulator-model.txt",
+      "bytes": 22,
+      "sha256": "5b5963979dab2480b8d5eacdea46edd918c341cf4c8596e9788a01d8f7a99223"
+    },
+    {
+      "path": "original-native-proof/simulator-runtime.txt",
+      "bytes": 44,
+      "sha256": "e98fd124491fd14687cf6840ff047d98a01f4873d19cffefffe430d54942f893"
+    },
+    {
+      "path": "original-native-proof/simulator-udid.txt",
+      "bytes": 37,
+      "sha256": "07bf4c5c6523c5f3d07d3d1061559e577487e80bffd9277c70f28bc8832c9c61"
+    },
+    {
+      "path": "original-native-proof/ui-viewport-plan.json",
+      "bytes": 305,
+      "sha256": "b9ac583416c4fc490c34cf90175dc096e52213e45e0c3f65e467cdf699becd44"
+    },
+    {
+      "path": "original-native-proof/verified-simulator-environment.json",
+      "bytes": 65753,
+      "sha256": "a0398d6652a502bdb49196b98ce34b3dab4845a55fa8ffb6131681635783c5a4"
+    },
+    {
+      "path": "reconciliation.json",
+      "bytes": 3937,
+      "sha256": "f0958fe0e4545d75b785d79518d942506739509d8c61fe4edd7f04e92b29b4df"
+    }
+  ],
+  "fileCount": 63,
+  "payloadBytes": 14312034,
+  "reconciliationSHA256": "f0958fe0e4545d75b785d79518d942506739509d8c61fe4edd7f04e92b29b4df"
+}

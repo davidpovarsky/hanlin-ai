@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "status": "PASSED",
+  "atUTC": "2026-11-27T15:13:30.164515+00:00",
+  "sourceIntegration": "64fdbd3411de103e1cdad6f7e39dbb4afcb9bd83",
+  "actualAppProducerSource": "b723338e995b14dc31f96a90ad4c865e8a4b345a",
+  "actualBuildRepeated": false,
+  "originalReleaseBuildAndScansReused": true,
+  "priorOriginalAttempt": "FAILED_SHELL_VALIDATOR_PRESERVED_SEPARATELY",
+  "nativePhases": [
+    {
+      "name": "original-boot-ipad-simulator-and-stage-fixtures",
+      "startedAt": "2026-11-27T15:00:13.707782+00:00",
+      "finishedAt": "2026-11-27T15:00:47.151636+00:00",
+      "exitCode": 0,
+      "status": "PASSED"
+    },
+    {
+      "name": "original-launch-full-app-and-verify-runtime-acceptance",
+      "startedAt": "2026-11-27T15:01:05.621758+00:00",
+      "finishedAt": "2026-11-27T15:04:40.523303+00:00",
+      "exitCode": 0,
+      "status": "PASSED"
+    }
+  ],
+  "jobElapsedSeconds": 275.585,
+  "originalDeadlineSeconds": 14400,
+  "originalShellPolls": 120,
+  "originalMCPPolls": 360,
+  "observedMCPPollIterations": 60,
+  "requiredLivenessSeconds": 15,
+  "actualLivenessSeconds": 63,
+  "shell": {
+    "passed": true,
+    "commands": 23,
+    "policies": 5,
+    "workspaceEscapes": 0,
+    "canonical": {
+      "mismatchCount": 0,
+      "passedCount": 1,
+      "skippedCount": 5,
+      "warningCount": 0
+    }
+  },
+  "mcp": {
+    "passed": true,
+    "canonical": {
+      "mismatchCount": 0,
+      "passedCount": 4,
+      "skippedCount": 2,
+      "warningCount": 0
+    },
+    "originalValidatedSummary": {
+      "childProcessImportOnlyPassed": true,
+      "harmlessToolSucceeded": true,
+      "lazyStartSucceeded": true,
+      "maximumConcurrentWorkers": 1,
+      "modulePolicyHooksAvailable": true,
+      "multiServerCollectionPassed": true,
+      "nodeVersion": "24.5.0",
+      "packageName": "@modelcontextprotocol/server-everything",
+      "partialFailureIsolationPassed": true,
+      "pathMigrationPassed": true,
+      "reachableModuleCount": 282,
+      "registryPreserved": true,
+      "resolvedEntryPoint": "dist/index.js",
+      "resolvedModuleCount": 689,
+      "resolvedVersion": "2026.7.4",
+      "restartStressPassed": true,
+      "serverToolCounts": {
+        "@modelcontextprotocol/server-everything": 13,
+        "@modelcontextprotocol/server-memory": 9,
+        "@modelcontextprotocol/server-sequential-thinking": 1
+      },
+      "subprocessExecutionBlocked": true,
+      "toolCallLazyRecoveryPassed": true,
+      "toolCount": 13,
+      "workerStopped": true
+    }
+  },
+  "simulator": {
+    "simulator": "8740C0F4-00AF-4F53-A3A2-6545829F95F3",
+    "run_provider": "local-mac",
+    "run_id": "shell64-release-continuation-20261127",
+    "run_attempt": "2",
+    "selection_sha256": "a0398d6652a502bdb49196b98ce34b3dab4845a55fa8ffb6131681635783c5a4",
+    "boot_receipt_sha256": "119632f2dce6166704eda2b1ce0d0d6cfdf48681fb55fa1cfa2bd7856e4a3912"
+  },
+  "actualSimulatorRuntime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+  "ownedShutdown": "PASSED",
+  "allOriginalControllerHelperASTsUnchanged": [
+    "digest",
+    "disk_size",
+    "free",
+    "phase",
+    "readcmd",
+    "save",
+    "simulator_snapshot",
+    "source_state",
+    "stop_owned",
+    "verify_created",
+    "verify_input_closure",
+    "verify_simulator_native"
+  ],
+  "matchedAppFilesBeforeAndAfter": 4498,
+  "matchedAppBytes": 810680753,
+  "sdkInputsMatchedBeforeAndAfter": 392,
+  "sdkManifestSHA256": "e7aa424015d509dc7d99b3158b85f6dbcbcc72fc17b3671d247382331e87e649",
+  "sdkInputSHA256": "0a9d3ca8f320af72485cab3d998be4861c1d858fe758c5f79e7b15d555937c50",
+  "hostSHA256": "d83702acbcc7ce22f672a2c1952a6f3623606cda227fdc27172a03dc1caf5f42",
+  "sourceAndPinsUnchanged": true,
+  "gateScope": "Original Release full-app combined Shell/MCP acceptance. Does not cover the distinct >8MiB RuntimeAutonomyV3 scenario or future source changes.",
+  "originalReceiptSHA256": "62f19b94f23ca50dcebf015a9baa505816c97dd2c2dd150c3678375800af37cc"
+}

@@ -1,0 +1,16 @@
+{
+  "atUTC": "2026-11-27T15:31:01.214809+00:00",
+  "reviewer": "root",
+  "manifestSHA256": "2c1accd897a73136859990dffe7fd75a1393c355fe32d38a21f8c9a1f2a52fee",
+  "reconciliationSHA256": "f0958fe0e4545d75b785d79518d942506739509d8c61fe4edd7f04e92b29b4df",
+  "archiveSHA256": "f23d0bd0d60a1478a41f92e152d52aba7244ddc2df622df791e71cbb803a5a2a",
+  "membersVerified": 63,
+  "rawBytesVerified": 14312034,
+  "archiveEntries": 64,
+  "extraEntryIsExactVerifiedManifest": true,
+  "declaredSetEqualsArchivePayloadSet": true,
+  "sourceIntegration": "64fdbd3411de103e1cdad6f7e39dbb4afcb9bd83",
+  "actualAppProducerSource": "b723338e995b14dc31f96a90ad4c865e8a4b345a",
+  "observedTerminalStatus": "PASSED",
+  "independentHashVerification": "PASS"
+}
