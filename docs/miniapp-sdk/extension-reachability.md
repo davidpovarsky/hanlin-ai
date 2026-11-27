@@ -2,7 +2,7 @@
 
 Status: **IN_PROGRESS — source audit only**.
 
-Base commit: `1ee9c45796f41893c3b59745864de3412c17ddb4`. Exact current file hashes and line anchors are in [the JSON matrix](extension-reachability.json).
+Base commit: `764ed325b3b3bbf1be4ce471b3a7574db2c44bc7`. Exact current file hashes and line anchors are in [the JSON matrix](extension-reachability.json).
 Runtime/API/version authority is [source-inventory.json](source-inventory.json); this matrix consumes it rather than maintaining a second SDK contract.
 
 The share, translation, widget and notification ingress categories × two native app engines × five canonical Host runtimes form 40 cells. Live Activity, Host AppIntent, Shortcuts, Spotlight, camera capture and foreground add 60 more. These 100 cells describe conditional Host-runtime passthrough, not all original widget, control or presentation capabilities. Spotlight without a declared action only opens its prepared app; camera capture reaches a Host handler after the system handoff.

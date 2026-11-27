@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+  "sourceCommit": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -48,7 +48,7 @@
     },
     {
       "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-      "sha256": "cea114769522eaaaceee804b89b26549c2335b3ebca16037a64f97724f2e92fc"
+      "sha256": "06fbe72f889da3befe00c2dfe9b286f062decd59a50c1df9c961df3bcb46b745"
     },
     {
       "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
