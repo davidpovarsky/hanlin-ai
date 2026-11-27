@@ -8,14 +8,22 @@ import UIKit
 @MainActor
 public struct ChatScrollImmediateContentTouches: UIViewRepresentable {
     public var onScrollViewChanged: @MainActor (UIScrollView?) -> Void = { _ in }
+    private var onOwnedScrollViewChanged: (@MainActor (UIScrollView?, UUID) -> Void)?
 
     public init(onScrollViewChanged: @escaping @MainActor (UIScrollView?) -> Void = { _ in }) {
         self.onScrollViewChanged = onScrollViewChanged
     }
 
+    /// The producer ID belongs to the native ConfigurationView, not a transient
+    /// SwiftUI value or the UIScrollView that multiple probes may observe.
+    public init(onOwnedScrollViewChanged: @escaping @MainActor (UIScrollView?, UUID) -> Void) {
+        self.onOwnedScrollViewChanged = onOwnedScrollViewChanged
+    }
+
     public func makeUIView(context: Context) -> ConfigurationView {
         let view = ConfigurationView()
         view.onScrollViewChanged = onScrollViewChanged
+        view.onOwnedScrollViewChanged = onOwnedScrollViewChanged
         view.isUserInteractionEnabled = false
         view.isAccessibilityElement = false
         view.backgroundColor = .clear
@@ -24,6 +32,7 @@ public struct ChatScrollImmediateContentTouches: UIViewRepresentable {
 
     public func updateUIView(_ uiView: ConfigurationView, context: Context) {
         uiView.onScrollViewChanged = onScrollViewChanged
+        uiView.onOwnedScrollViewChanged = onOwnedScrollViewChanged
         uiView.applyIfNeeded()
     }
 
@@ -34,10 +43,13 @@ public struct ChatScrollImmediateContentTouches: UIViewRepresentable {
     public static func dismantleUIView(_ uiView: ConfigurationView, coordinator: ()) {
         uiView.restoreOriginalValue()
         uiView.onScrollViewChanged = { _ in }
+        uiView.onOwnedScrollViewChanged = nil
     }
 
     public final class ConfigurationView: UIView {
         var onScrollViewChanged: @MainActor (UIScrollView?) -> Void = { _ in }
+        var onOwnedScrollViewChanged: (@MainActor (UIScrollView?, UUID) -> Void)?
+        private let producerID = UUID()
         private weak var observedScrollView: UIScrollView?
         private var originalDelaysContentTouches: Bool?
 
@@ -60,13 +72,21 @@ public struct ChatScrollImmediateContentTouches: UIViewRepresentable {
             applyIfNeeded()
         }
 
+        private func publish(_ scrollView: UIScrollView?) {
+            if let onOwnedScrollViewChanged {
+                onOwnedScrollViewChanged(scrollView, producerID)
+            } else {
+                onScrollViewChanged(scrollView)
+            }
+        }
+
         func restoreOriginalValue() {
             if let scrollView = observedScrollView, let original = originalDelaysContentTouches {
                 scrollView.delaysContentTouches = original
             }
             observedScrollView = nil
             originalDelaysContentTouches = nil
-            onScrollViewChanged(nil)
+            publish(nil)
         }
 
         func applyIfNeeded() {
@@ -80,7 +100,7 @@ public struct ChatScrollImmediateContentTouches: UIViewRepresentable {
                 if scrollView.delaysContentTouches {
                     scrollView.delaysContentTouches = false
                 }
-                onScrollViewChanged(scrollView)
+                publish(scrollView)
                 return
             }
             var ancestor = superview
@@ -104,7 +124,7 @@ public struct ChatScrollImmediateContentTouches: UIViewRepresentable {
             if scrollView.delaysContentTouches {
                 scrollView.delaysContentTouches = false
             }
-            onScrollViewChanged(scrollView)
+            publish(scrollView)
         }
     }
 }
@@ -116,6 +136,17 @@ public extension View {
     ) -> some View {
         background(alignment: .topLeading) {
             ChatScrollImmediateContentTouches(onScrollViewChanged: onScrollViewChanged)
+                .frame(width: 0, height: 0)
+                .accessibilityHidden(true)
+                .allowsHitTesting(false)
+        }
+    }
+
+    func chatScrollImmediateContentTouches(
+        onOwnedScrollViewChanged: @escaping @MainActor (UIScrollView?, UUID) -> Void
+    ) -> some View {
+        background(alignment: .topLeading) {
+            ChatScrollImmediateContentTouches(onOwnedScrollViewChanged: onOwnedScrollViewChanged)
                 .frame(width: 0, height: 0)
                 .accessibilityHidden(true)
                 .allowsHitTesting(false)

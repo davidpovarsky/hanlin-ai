@@ -11,9 +11,12 @@ public final class ChatScrollViewHandle {
     private weak var boundWindow: UIWindow?
     private var viewport: Viewport?
     private var boundConversationID: UUID?
+    private var boundProducerID: UUID?
+    private let legacyProducerID = UUID()
     private var activeConversationID: UUID?
     private weak var incomingScrollView: UIScrollView?
     private var incomingConversationID: UUID?
+    private var incomingProducerID: UUID?
     public private(set) var generation = UUID()
     private var deliveredGeneration: UUID?
     private var readinessTask: Task<Void, Never>?
@@ -39,7 +42,17 @@ public final class ChatScrollViewHandle {
         }
     }
 
+    /// Source-compatible binding for hosts with one legacy producer per handle.
     public func bind(_ scrollView: UIScrollView?, conversationID: UUID) {
+        bind(scrollView, conversationID: conversationID, producerID: legacyProducerID)
+    }
+
+    /// A native probe owns only the binding it installed. A replacement probe
+    /// may observe the same UIScrollView before its predecessor dismantles.
+    /// Returns false for ignored or staged callbacks; those callbacks must not
+    /// schedule work using an outgoing reader against another producer's binding.
+    @discardableResult
+    public func bind(_ scrollView: UIScrollView?, conversationID: UUID, producerID: UUID) -> Bool {
         // Outgoing SwiftUI representatives may dismantle after the replacement
         // conversation has activated. They do not own its native viewport.
         if let activeConversationID, activeConversationID != conversationID {
@@ -48,22 +61,31 @@ public final class ChatScrollViewHandle {
             if let scrollView {
                 incomingScrollView = scrollView
                 incomingConversationID = conversationID
-            } else if incomingConversationID == conversationID {
+                incomingProducerID = producerID
+            } else if incomingConversationID == conversationID, incomingProducerID == producerID {
                 incomingScrollView = nil
                 incomingConversationID = nil
+                incomingProducerID = nil
             }
-            return
+            return false
         }
-        guard self.scrollView !== scrollView || boundConversationID != conversationID else {
+        if scrollView == nil {
+            guard boundConversationID == conversationID, boundProducerID == producerID else { return false }
+        }
+        guard self.scrollView !== scrollView || boundConversationID != conversationID
+                || boundProducerID != producerID else {
             refreshViewport()
-            return
+            return true
         }
         self.scrollView = scrollView
         boundConversationID = conversationID
+        boundProducerID = scrollView == nil ? nil : producerID
         boundWindow = scrollView?.window
         viewport = scrollView.flatMap { Viewport($0) }
+        // Even the same UIScrollView now belongs to a replacement probe/reader.
         generation = UUID()
         invalidateReadiness()
+        return true
     }
 
     public func activate(conversationID: UUID) {
@@ -71,11 +93,12 @@ public final class ChatScrollViewHandle {
         activeConversationID = conversationID
         generation = UUID()
         invalidateReadiness()
-        if incomingConversationID == conversationID {
+        if incomingConversationID == conversationID, let producerID = incomingProducerID {
             let incoming = incomingScrollView
             incomingScrollView = nil
             incomingConversationID = nil
-            bind(incoming, conversationID: conversationID)
+            incomingProducerID = nil
+            bind(incoming, conversationID: conversationID, producerID: producerID)
         }
     }
 

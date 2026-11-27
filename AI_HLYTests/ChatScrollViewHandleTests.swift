@@ -187,6 +187,98 @@ struct ChatScrollViewHandleTests {
         #expect(handle.layout(conversationID: currentConversation) != nil)
     }
 
+
+    @Test func sameConversationProducerReplacementOwnsDetachAndPendingCallbacks() async throws {
+        let conversationID = UUID(), outgoingProducer = UUID(), currentProducer = UUID()
+        let unresolvedProducer = UUID()
+        let handle = ChatScrollViewHandle()
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 800, height: 600))
+        let scrollView = UIScrollView(frame: window.bounds)
+        window.addSubview(scrollView)
+        scrollView.contentSize = CGSize(width: 800, height: 2_000)
+        scrollView.contentOffset.y = 300
+        handle.activate(conversationID: conversationID)
+        handle.bind(scrollView, conversationID: conversationID, producerID: outgoingProducer)
+        let oldGeneration = handle.generation
+        var oldReadyCalls = 0, oldPositionCalls = 0
+        let oldReady = try #require(handle.whenReady(conversationID: conversationID) { oldReadyCalls += 1 })
+        let oldPosition = try #require(handle.readPositionAfterLayout(conversationID: conversationID) { _ in
+            oldPositionCalls += 1
+        })
+
+        // A replacement probe can bind the SAME native viewport before the
+        // outgoing representable dismantles. Its deferred work owns a new lifetime.
+        handle.bind(scrollView, conversationID: conversationID, producerID: currentProducer)
+        let currentGeneration = handle.generation
+        #expect(currentGeneration != oldGeneration && oldReady.isCancelled && oldPosition.isCancelled)
+        var readyCalls = 0, positionCalls = 0
+        let ready = try #require(handle.whenReady(conversationID: conversationID) { readyCalls += 1 })
+        let position = try #require(handle.readPositionAfterLayout(conversationID: conversationID) { sample in
+            positionCalls += 1
+            #expect(sample.contentOffsetY == 300)
+        })
+        handle.bind(scrollView, conversationID: conversationID, producerID: currentProducer)
+        #expect(!handle.bind(nil, conversationID: conversationID, producerID: outgoingProducer))
+        #expect(!handle.bind(nil, conversationID: conversationID, producerID: unresolvedProducer))
+        handle.bind(nil, conversationID: conversationID) // A legacy producer does not own this binding.
+        #expect(handle.generation == currentGeneration && !ready.isCancelled && !position.isCancelled)
+        #expect(handle.layout(conversationID: conversationID)?.contentHeight == 2_000)
+        await oldReady.value
+        await oldPosition.value
+        await ready.value
+        await position.value
+        #expect(oldReadyCalls == 0 && oldPositionCalls == 0 && readyCalls == 1 && positionCalls == 1)
+
+        let pending = try #require(handle.readPositionAfterLayout(conversationID: conversationID) { _ in
+            positionCalls += 1
+        })
+        handle.bind(nil, conversationID: conversationID, producerID: currentProducer)
+        #expect(handle.layout(conversationID: conversationID) == nil)
+        #expect(handle.generation != currentGeneration && pending.isCancelled)
+        await pending.value
+        #expect(positionCalls == 1 && scrollView.contentOffset.y == 300)
+    }
+
+    @Test func stagedProducerOwnershipSurvivesUnresolvedAndOutgoingCallbacks() async throws {
+        let previousConversation = UUID(), currentConversation = UUID()
+        let outgoingProducer = UUID(), currentProducer = UUID(), unresolvedProducer = UUID()
+        let handle = ChatScrollViewHandle()
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 800, height: 600))
+        let previous = UIScrollView(frame: window.bounds)
+        let incoming = UIScrollView(frame: window.bounds)
+        previous.contentSize = CGSize(width: 800, height: 2_000)
+        incoming.contentSize = CGSize(width: 800, height: 3_000)
+        window.addSubview(previous)
+        window.addSubview(incoming)
+        handle.activate(conversationID: previousConversation)
+        handle.bind(previous, conversationID: previousConversation)
+        handle.bind(incoming, conversationID: currentConversation, producerID: outgoingProducer)
+        handle.bind(incoming, conversationID: currentConversation, producerID: currentProducer)
+        handle.bind(nil, conversationID: currentConversation, producerID: outgoingProducer)
+        handle.bind(nil, conversationID: currentConversation, producerID: unresolvedProducer)
+        handle.bind(nil, conversationID: currentConversation)
+        #expect(handle.layout(conversationID: previousConversation)?.contentHeight == 2_000)
+
+        handle.activate(conversationID: currentConversation)
+        let generation = handle.generation
+        #expect(handle.layout(conversationID: currentConversation)?.contentHeight == 3_000)
+        var calls = 0
+        let ready = try #require(handle.whenReady(conversationID: currentConversation) { calls += 1 })
+        handle.bind(nil, conversationID: currentConversation, producerID: outgoingProducer)
+        #expect(handle.generation == generation && !ready.isCancelled)
+        await ready.value
+        #expect(calls == 1)
+
+        // A matching owner's detach must also clear an incoming binding before
+        // activation; protecting replacements must not preserve a departed probe.
+        handle.activate(conversationID: previousConversation)
+        handle.bind(previous, conversationID: previousConversation)
+        handle.bind(incoming, conversationID: currentConversation, producerID: currentProducer)
+        handle.bind(nil, conversationID: currentConversation, producerID: currentProducer)
+        handle.activate(conversationID: currentConversation)
+        #expect(handle.layout(conversationID: currentConversation) == nil)
+    }
+
     @Test func deferredReadinessRechecksResizeAndCanRecoverAtTheNewViewport() async throws {
         let conversationID = UUID()
         let handle = ChatScrollViewHandle()
