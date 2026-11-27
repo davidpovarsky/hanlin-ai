@@ -1,0 +1,40 @@
+--- current794224/Modules/PinkhaAnyHanlin/Sources/PinkhaHanlinUI/PinkhaHanlinChatView.swift
++++ proposed/Modules/PinkhaAnyHanlin/Sources/PinkhaHanlinUI/PinkhaHanlinChatView.swift
+@@ -258,7 +258,10 @@
+     private func scheduleWhenReady(using reader: ScrollViewProxy) {
+         guard isCurrent else { return }
+         let sessionID = presentation.session.id
+-        nativeViewport.whenReady(conversationID: sessionID) {
++        guard nativeViewport.layout(conversationID: sessionID) != nil else { return }
++        let bindingGeneration = nativeViewport.bindingGeneration
++        nativeViewport.whenReady(conversationID: sessionID,
++                                 expectedBindingGeneration: bindingGeneration) {
+             guard isCurrent, presentation.session.id == sessionID else { return }
+             if let position = nativeViewport.position(conversationID: sessionID) {
+                 autoFollow.updatePosition(position)
+@@ -271,7 +274,10 @@
+     private func scheduleNativePositionRead() {
+         guard isCurrent else { return }
+         let sessionID = presentation.session.id
+-        nativeViewport.readPositionAfterLayout(conversationID: sessionID) { position in
++        guard nativeViewport.layout(conversationID: sessionID) != nil else { return }
++        let bindingGeneration = nativeViewport.bindingGeneration
++        nativeViewport.readPositionAfterLayout(conversationID: sessionID,
++                                              expectedBindingGeneration: bindingGeneration) { position in
+             guard isCurrent, presentation.session.id == sessionID,
+                   let isNearBottom = position.isNearBottom else { return }
+             // Keep SwiftUI's newer growth measurement while the native owner
+@@ -307,11 +313,11 @@
+             return
+         }
+         autoFollow.updateLayout(measuredLayout ?? attachedLayout)
+-        let generation = nativeViewport.generation
++        let bindingGeneration = nativeViewport.bindingGeneration
+         autoFollow.scheduleScroll(animated: animated, force: force) { requestedAnimation in
+             guard isCurrent, presentation.session.id == sessionID,
+                   nativeViewport.layout(conversationID: sessionID,
+-                                        expectedGeneration: generation)?.hasScrollableContent == true else { return }
++                                        expectedBindingGeneration: bindingGeneration)?.hasScrollableContent == true else { return }
+             let target = BottomTarget(sessionID: sessionID)
+             if requestedAnimation && !reduceMotion {
+                 withAnimation(.easeOut(duration: 0.18)) { reader.scrollTo(target, anchor: .bottom) }

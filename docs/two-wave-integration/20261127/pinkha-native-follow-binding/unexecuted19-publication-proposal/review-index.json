@@ -1,0 +1,66 @@
+{
+  "builds": 0,
+  "controllerExecutions": 0,
+  "files": [
+    {
+      "bytes": 35283,
+      "path": "hanlin-sdk-native-follow-host-publication/publish_once.py",
+      "sha256": "21a40606656b6ebb11c15a288ca43387de2347dd5ab69c14c2668bb7329003d3"
+    },
+    {
+      "bytes": 1341426,
+      "path": "hanlin-sdk-native-follow-host-publication/payload.json",
+      "sha256": "fd36089954e4c8f7d1319d24f7b7e021e3a265dc80de0a48ca47043e6d5d837d"
+    },
+    {
+      "bytes": 232063,
+      "path": "hanlin-sdk-native-follow-host-publication/payload.json.gz",
+      "sha256": "52b7cae5ae1fa2f79ba54d823f27d23e49a8265ebc1e93c711e08985f11c7cd1"
+    },
+    {
+      "bytes": 9968,
+      "path": "hanlin-sdk-native-follow-host-publication/source-files.json",
+      "sha256": "cd785f075f6a2a57951e3c5d8addda8d9811caa4781177bdcfbf773d7d34af24"
+    },
+    {
+      "bytes": 45951,
+      "path": "hanlin-sdk-native-follow-host-publication/controller-full-inverse.json",
+      "sha256": "3b2633a73ef52978967cc92259746bacc65d41bfc66ecb9014906af468a8e0c3"
+    },
+    {
+      "bytes": 19471,
+      "path": "hanlin-sdk-native-follow-host-publication/controller.patch",
+      "sha256": "1c13735f8d2b246ae4f279ecd0cb5b9ad7988c3d47f06d12324bb71d8fdf9d62"
+    },
+    {
+      "bytes": 358702,
+      "path": "hanlin-sdk-native-follow-host-publication/local-whole-tree-objects.json",
+      "sha256": "c508778fbba46b6ccc418607fff3b9b62183c1bcb61163aa8748f41063be0c83"
+    },
+    {
+      "bytes": 778,
+      "path": "hanlin-sdk-native-follow-host-publication/ordinary-diff-check.original.json",
+      "sha256": "4986d076d5567fdb9b5fae5311305a8fe79243dd3d190976d4f0841501fcbeae"
+    },
+    {
+      "bytes": 398,
+      "path": "hanlin-sdk-native-follow-host-publication/product-diff-check.original.json",
+      "sha256": "3c3e8931ceef77c158e9752cb22b86698c2c9f0781bc34bd435c4ebc3f3871a5"
+    },
+    {
+      "bytes": 14597,
+      "path": "hanlin-sdk-native-follow-host-publication/prepare_controller.py",
+      "sha256": "b0d0c401a24c88b69b9b363cef624b0b21028ff8e331b303aa621328750bc5c9"
+    },
+    {
+      "bytes": 11323,
+      "path": "hanlin-sdk-native-follow-host-publication/prepare_payload.py",
+      "sha256": "9f0d43639c9105aaa3edf1990546cf572e6369fe255b26bf47376afc513fc7fe"
+    }
+  ],
+  "materializations": 0,
+  "remoteActions": 0,
+  "schema": "pinkha-native-follow-host-publication-review-index/v1",
+  "state": "FROZEN_PREPARED_NOT_EXECUTED",
+  "tests": 0
+}

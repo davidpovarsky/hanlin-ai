@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "git",
+    "diff",
+    "--check",
+    "c381d5c97207b30dfd0494bd54b74919010c7b1e",
+    "629b6136ccc6f28c09e4b42eb5708aef80416b4f"
+  ],
+  "exit": 2,
+  "scope": "Actual local full-tree ordinary whitespace check. Original raw patch diagnostics are preserved exactly; not source/runtime acceptance.",
+  "stderr": "",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/minimal-one-file.patch:7: trailing whitespace.\n+ \ndocs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/minimal-one-file.patch:13: trailing whitespace.\n+ \n",
+  "stdoutSHA256": "06ca24e253b3ffa1e171c13582277a85e2967a6a219bdc2afa3a1ea4f3e0d2c7"
+}

@@ -1,0 +1,74 @@
+{
+  "actualParentReceipt": {
+    "bytes": 208809,
+    "path": "hanlin-sdk-promise-metadata-intents-publication/integration.original.json",
+    "sha256": "3afc5bbe91fee176fab2ba0323ad7be5381e1b3c068335716c95f1ab4a723c4f"
+  },
+  "baseTree": "c381d5c97207b30dfd0494bd54b74919010c7b1e",
+  "controller": {
+    "bytes": 35283,
+    "path": "hanlin-sdk-native-follow-host-publication/publish_once.py",
+    "sha256": "21a40606656b6ebb11c15a288ca43387de2347dd5ab69c14c2668bb7329003d3"
+  },
+  "custody": {
+    "defaultCommandSeconds": 25,
+    "expectedSourceWorktree": "0ae1920d316b9592cbad0462bea96a07fd1ca351",
+    "fullInverseOperations": 17,
+    "normalNewRefOnly": true,
+    "originalPublisherSHA256": "78287bad76049927f80a136e9683abbe6f6c9ad9af8efb44f7c8619bf1b814eb",
+    "overallSeconds": 300,
+    "preservesBothIndexesAndAllExistingRefs": true,
+    "pushSeconds": 90,
+    "remoteReadSeconds": 45,
+    "unchangedCompleteDeclarations": 16
+  },
+  "expectedCompleteTree": "629b6136ccc6f28c09e4b42eb5708aef80416b4f",
+  "holds": [
+    "Root approval/execution only. No remote action performed by this preparation.",
+    "New G27 source audit is separate; this19-path packet stays immutable.",
+    "Actual current20 original UIKit methods and the Anytype native overlay behavior remain NOT_RUN.",
+    "Materializer988 remains unchanged and unexecuted until final source and actual Anytype pin receipt exist."
+  ],
+  "localDerivation": "AST parse and full literal inverse/identity proof only. No new test suite or compiler. Generator constant substitutions were narrowed to full line anchors before successful source derivation.",
+  "packages": {
+    "afterFiles": 1010,
+    "afterSourceBytes": 39794445,
+    "all227ProvenanceRowsUnchanged": true,
+    "allManifestsAndLocksUnchanged": true,
+    "beforeFiles": 1010,
+    "beforeSourceBytes": 39792490,
+    "otherPackagesUnchanged": true,
+    "presentationAfterTree": "2baee0bb044274da5adc395677dec54fc1342862",
+    "presentationBeforeTree": "3fdc8170b9a749797f4d97c796405306d21ed438",
+    "unchangedPresentationLeaves": 454
+  },
+  "packedPayload": {
+    "bytes": 232063,
+    "path": "hanlin-sdk-native-follow-host-publication/payload.json.gz",
+    "sha256": "52b7cae5ae1fa2f79ba54d823f27d23e49a8265ebc1e93c711e08985f11c7cd1"
+  },
+  "pathScope": {
+    "addedEvidence": 18,
+    "modified": 1,
+    "paths": 19,
+    "sourceAndEvidenceBytes": 616534
+  },
+  "payload": {
+    "bytes": 1341426,
+    "path": "hanlin-sdk-native-follow-host-publication/payload.json",
+    "sha256": "fd36089954e4c8f7d1319d24f7b7e021e3a265dc80de0a48ca47043e6d5d837d"
+  },
+  "proposedRef": "refs/heads/codex/pinkha-sdk-native-follow-host-20261127",
+  "repository": "davidpovarsky/hanlin-ai",
+  "schema": "pinkha-native-follow-host-publication-handoff/v1",
+  "soleParent": "8b548bbe5b1340a48e741191c41d6b30c73537df",
+  "state": "FROZEN_PREPARED_NOT_EXECUTED",
+  "whitespace": {
+    "classification": "PRESERVED_NOT_PASS",
+    "differentFailureOrAbnormalProcessCleanup": "STOP",
+    "exactOriginalRawPatchContextDiagnostics": 2,
+    "ordinaryWholeTreeExit": 2,
+    "productOnlyExit": 0,
+    "stdoutSHA256": "06ca24e253b3ffa1e171c13582277a85e2967a6a219bdc2afa3a1ea4f3e0d2c7"
+  }
+}

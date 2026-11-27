@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "git",
+    "diff",
+    "--check",
+    "c381d5c97207b30dfd0494bd54b74919010c7b1e",
+    "629b6136ccc6f28c09e4b42eb5708aef80416b4f",
+    "--",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/HanlinFollowLatestOverlay.swift"
+  ],
+  "exit": 0,
+  "scope": "Source-only whitespace check of the one actual changed Swift product file.",
+  "stderr": "",
+  "stdout": ""
+}

@@ -1,0 +1,116 @@
+{
+  "accepted63CandidateTree": "c381d5c97207b30dfd0494bd54b74919010c7b1e",
+  "all3InversesRestoreCompleteOriginalFile": true,
+  "before": {
+    "bytes": 4612,
+    "gitBlob": "111be2b204ec04ac4b8649af239c60d0879300f6",
+    "mode": "100644",
+    "sha256": "87fc88fbd778a9e91f3dc068b8bcfd0fba646cc81d7c0a005be7685520c3e85c"
+  },
+  "canonicalOriginal": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+  "compilerInvocations": 0,
+  "consumer": {
+    "authority": "Selected conversation binding revalidates original presentation; transcript action rechecks current mounted session and uses original autoFollow/nativeViewport generation.",
+    "bytes": 20726,
+    "control": "Existing native SwiftUI Button(action: request.perform),44scaled points, same label, Material and Circle shape.",
+    "entry": ".hanlinFollowLatestOverlayHost outside the original NavigationStack",
+    "gitBlob": "00108593ef058d881b522f606c8818bbaf974f0e",
+    "hostEditsRequired": 0,
+    "mode": "100644",
+    "path": "Modules/PinkhaAnyHanlin/Sources/PinkhaHanlinUI/PinkhaHanlinChatView.swift",
+    "sha256": "7942241949bb2f6b0ff7639e093791033712c88f2882856daab95f670eb05dec",
+    "sourceReceipt": "919626d8a5a2701c2dfb56277a657fa593700b98"
+  },
+  "explicitExclusions": [
+    "No full2b9 branch adoption.",
+    "Do not import the differing donor Package.swift or dependency conditions.",
+    "The preceding08be scene-source/scene-host public API additions are not needed by the current Anytype modal and are not included.",
+    "No current scrolling owner/probe/generation/test/Composer/stream/permission/save/cancellation code changes.",
+    "Frozen63 publication packet and materializer988 remain unchanged."
+  ],
+  "futureAcceptance": [
+    "Compile exact candidate in the common Anytype Apple host.",
+    "Existing20 original UIKit control methods remain NOT_RUN and unchanged; they do not alone prove this new UIViewControllerRepresentable overlay hit-routing.",
+    "Actual Anytype Hanlin follow button on iPhone/iPad must retain original live selection, touch, keyboard/rotation, environment, locale/RTL and teardown behavior. Owner rotated viewport failure remains open."
+  ],
+  "lifetimeReview": [
+    "Each actual overlay frame has an anchor-sized hosting-controller view; the rest of the overlay has no added UIKit view.",
+    "The current guarded original Button and full EnvironmentValues are replaced on every update.",
+    "Dismantle replaces control with nil and the captured environment with a fresh value, releasing both.",
+    "safeAreaRegions is empty because the original measured anchor already accounts for keyboard/safe-area placement; no second inset is added.",
+    "No custom gesture, copied scroll policy, new runtime authority, cached CGRect, new package dependency or artificial tap is introduced."
+  ],
+  "literalInverses": [
+    {
+      "newText": "import SwiftUI\nimport UIKit\n",
+      "oldText": "import SwiftUI\n",
+      "requiredOccurrences": 1
+    },
+    {
+      "newText": "/// Give only the resolved control region its own native hosting boundary.\n/// SwiftUI owns the controller view's bounds; the surrounding overlay stays empty.\n@MainActor\nprivate struct FollowLatestHostedControl<Control: View>: UIViewControllerRepresentable {\n    let control: Control\n    @Environment(\\.self) private var environment\n\n    typealias UIViewControllerType = UIHostingController<FollowLatestHostedControlRoot<Control>>\n\n    func makeUIViewController(context: Context) -> UIViewControllerType {\n        let controller = UIHostingController(rootView: rootView)\n        // The transcript's anchor already accounts for safe areas and the keyboard.\n        controller.safeAreaRegions = []\n        controller.view.backgroundColor = .clear\n        controller.view.isOpaque = false\n        return controller\n    }\n\n    func updateUIViewController(_ controller: UIViewControllerType, context: Context) {\n        // Replace the value so the original Button receives the current guarded action.\n        controller.rootView = rootView\n    }\n\n    static func dismantleUIViewController(_ controller: UIViewControllerType, coordinator: ()) {\n        // Release both the action and the captured parent environment.\n        controller.rootView = FollowLatestHostedControlRoot(\n            control: nil, environment: EnvironmentValues()\n        )\n    }\n\n    private var rootView: FollowLatestHostedControlRoot<Control> {\n        FollowLatestHostedControlRoot(control: control, environment: environment)\n    }\n}\n\n@MainActor\nprivate struct FollowLatestHostedControlRoot<Control: View>: View {\n    var control: Control?\n    let environment: EnvironmentValues\n\n    var body: some View {\n        Group {\n            if let control {\n                control\n            }\n        }\n        .environment(\\.self, environment)\n    }\n}\n\n@MainActor\nprivate struct FollowLatestOverlayHost<Control: View>",
+      "oldText": "@MainActor\nprivate struct FollowLatestOverlayHost<Control: View>",
+      "requiredOccurrences": 1
+    },
+    {
+      "newText": "                                FollowLatestHostedControl(control: control(guarded(request)))\n                                    .frame(width: frame.width, height: frame.height)\n",
+      "oldText": "                                control(guarded(request))\n",
+      "requiredOccurrences": 1
+    }
+  ],
+  "originalDonor": "2b9ef06cc0fdb89e43ef646e040346948a5ba36e",
+  "originalDonorFile": {
+    "bytes": 11306,
+    "gitBlob": "07010a5c97cc6d1663b92feb9c1dfdd6fdbc2abe",
+    "mode": "100644",
+    "sha256": "a23774ca6dfc01abc39b4517dc5c5366da8e10e182583c42f93fc8558f3f8186"
+  },
+  "originalDonorParent": "08be9aa5e16b59094e2bc690c583f09f540c41bd",
+  "originalDonorTree": "6827a294b908acaced18dc977a571764ba364bf0",
+  "originalPublishedDeltaReconstruction": "UIKit import + exact private helper pair + both original call substitutions reproduce every byte of2b9 from08be. Only the existing4cb host call is applicable to this consumer.",
+  "ownerEvidenceScope": {
+    "lastReportedAt": "2026-11-27T13:27:46Z",
+    "publishedEquivalent": "2b9ef06cc0fdb89e43ef646e040346948a5ba36e",
+    "qualification": "Owner Asana report only in this audit; raw G26 receipts/products not independently admitted. This is not Pinkha or complete iPad acceptance.",
+    "reported": "Focused file compile and G26 build passed; phone arrow passed; iPad passed click/manual-scroll stage then failed rotated keyboard viewport.",
+    "source": "270c1eb67bea1c425b49523f109385c4daa43e60",
+    "task": "1220927011075841"
+  },
+  "packageProjection": {
+    "afterTree": "2baee0bb044274da5adc395677dec54fc1342862",
+    "allOther454LeavesExact": true,
+    "beforeTree": "3fdc8170b9a749797f4d97c796405306d21ed438",
+    "excludedDonorManifest": {
+      "bytes": 3755,
+      "gitBlob": "ced8131b2d0bed8623b0494acc332bdaa6434d34",
+      "mode": "100644",
+      "sha256": "462479a3660edd652181ad339238c29f270ec9bfd8203d2f1310681d8029ecc4"
+    },
+    "fourPackageSourceBytes": 39794445,
+    "fourPackageTotalFiles": 1010,
+    "originalFiles": 455,
+    "proposedFiles": 455,
+    "unchangedCurrentManifest": {
+      "bytes": 4077,
+      "gitBlob": "ef1e46be07c7b0cba7b5796b3395e6cabdb89484",
+      "mode": "100644",
+      "sha256": "951afd5b85422e7d6ed99cf497602e7122b988c1d956132bd9c00e04c695b4c3"
+    }
+  },
+  "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/HanlinFollowLatestOverlay.swift",
+  "proposed": {
+    "bytes": 6567,
+    "gitBlob": "3ca835668cbc6bd9e26bb3a0ddfde165c0693e80",
+    "mode": "100644",
+    "sha256": "56d9b799c8f1c23c651aa64fd731a60808bac1b459a829786d3ab5663b297b3f"
+  },
+  "publicAPIAndGuards": {
+    "originalCurrentSelectionAndGuardedActionBytesRetained": true,
+    "ownerTokenIdentityAnimationAndFiniteGeometryChecksRetained": true,
+    "publicViewExtensionBytesRetained": true,
+    "requestPreferenceEnvironmentDeclarationsRetained": true
+  },
+  "remoteMutations": 0,
+  "schema": "pinkha-selective-original-native-follow-host-source-proof/v1",
+  "state": "SOURCE_PROPOSAL_ONLY_NOT_PUBLISHED_NOT_COMPILED_NOT_RUNTIME_ACCEPTANCE",
+  "testsExecuted": 0
+}

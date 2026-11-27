@@ -1,0 +1,251 @@
+{
+  "NoSourcePinMaterializationCompilerTestDispatch": true,
+  "filesBeforeThisIntake": {
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/HanlinFollowLatestOverlay.swift": {
+      "after": {
+        "bytes": 6567,
+        "gitBlob": "3ca835668cbc6bd9e26bb3a0ddfde165c0693e80",
+        "mode": "100644",
+        "sha256": "56d9b799c8f1c23c651aa64fd731a60808bac1b459a829786d3ab5663b297b3f"
+      },
+      "before": {
+        "bytes": 4612,
+        "gitBlob": "111be2b204ec04ac4b8649af239c60d0879300f6",
+        "mode": "100644",
+        "sha256": "87fc88fbd778a9e91f3dc068b8bcfd0fba646cc81d7c0a005be7685520c3e85c"
+      },
+      "beforeGitBlob": "111be2b204ec04ac4b8649af239c60d0879300f6",
+      "origin": "Reviewed minimal original2b9 host correction;3 full-file inverse operations",
+      "status": "M"
+    },
+    "docs/two-wave-integration/20261127/pinkha-native-follow-host/complete-four-package-source-projection.json": {
+      "after": {
+        "bytes": 209521,
+        "gitBlob": "90281ba885da6cdabe5f7ffac5cc164c06aca071",
+        "mode": "100644",
+        "sha256": "dde198d15cfcbd8ed7bf9c6d7ce51aa886a78b5d48e7720ae943a47c1e83fbf9"
+      },
+      "beforeGitBlob": null,
+      "origin": "Complete1010-file source-only projection",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/commit.original.json": {
+      "after": {
+        "bytes": 9327,
+        "gitBlob": "5c832bd047312f35d70eba29a462b7cd6dc59e92",
+        "mode": "100644",
+        "sha256": "c23e094b5c03c9e1a202b0a92df72e05f4bfebe1fe05be90acb9600a27ceba8e"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original2b9 source/consumer/inverse/review evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/local-preparation-history.json": {
+      "after": {
+        "bytes": 602,
+        "gitBlob": "87dc1ba88f23f85a7396df6590aca8cd9162002f",
+        "mode": "100644",
+        "sha256": "515c85b523ec74eed994e7f06a9724822b0bb7d1fe54b285ba1095ad5510a57a"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original2b9 source/consumer/inverse/review evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/minimal-one-file.patch": {
+      "after": {
+        "bytes": 3120,
+        "gitBlob": "1d04054177cabf4d4bc8362f3a3349e13afda195",
+        "mode": "100644",
+        "sha256": "65bf8b6c0aac748ff21a4d7e9241e8c7a09e436e5e31e2e8936aaef0925f63aa"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original2b9 source/consumer/inverse/review evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/minimal-source-and-consumer-proof.json": {
+      "after": {
+        "bytes": 8133,
+        "gitBlob": "4eec7fab8f582884c62424d611687845d5fc82df",
+        "mode": "100644",
+        "sha256": "ffadc059a08101b36467b5847b10f489875a0bf4fb84a02ed83148b9472f01b8"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original2b9 source/consumer/inverse/review evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/original-owner-scope-excerpts.json": {
+      "after": {
+        "bytes": 9661,
+        "gitBlob": "8eaeada40aeacd738a3f339263f7db4a2adccd79",
+        "mode": "100644",
+        "sha256": "332d662dcfe53e146302ac51735cd6e65dae7e91181564efd6174fca4298fc02"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original2b9 source/consumer/inverse/review evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/positive-anytype919-source-receipt.original.json": {
+      "after": {
+        "bytes": 47998,
+        "gitBlob": "cd9b8b1782591ad0b7418c382319587c8e990389",
+        "mode": "100644",
+        "sha256": "7efdf7e39beecfdd701c382db1afa07167706cfd9822ec877f262353ee34f2a6"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original2b9 source/consumer/inverse/review evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/prepare_minimal_proposal.py": {
+      "after": {
+        "bytes": 11920,
+        "gitBlob": "e62f8cfa75205b335ac886c3c574ba1e0d3b259d",
+        "mode": "100644",
+        "sha256": "4cdf858f4789f8e3957fa7a2cc07c3dd6055a617cb617660735ecd25b9fd6a96"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original2b9 source/consumer/inverse/review evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/primary-responses.original.json": {
+      "after": {
+        "bytes": 31164,
+        "gitBlob": "9ce7511c912b5488a78b086cc1f5dfc78ff7600a",
+        "mode": "100644",
+        "sha256": "bcfa456398b511bfc180e740b432435c24a4e431365282ebeca0e2987c5b63e9"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original2b9 source/consumer/inverse/review evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/primary/08be9aa5e16b59094e2bc690c583f09f540c41bd/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/HanlinFollowLatestOverlay.swift": {
+      "after": {
+        "bytes": 9230,
+        "gitBlob": "49bbec51f1e7198fadfb687c6e95ab32be6f22bf",
+        "mode": "100644",
+        "sha256": "0874dbee713362f5058e5185502d5fe4e013baa5a3e51da0e1c90622de5d868b"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original2b9 source/consumer/inverse/review evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/primary/2b9ef06cc0fdb89e43ef646e040346948a5ba36e/Packages/HanlinPresentationSDK/Package.swift": {
+      "after": {
+        "bytes": 3755,
+        "gitBlob": "ced8131b2d0bed8623b0494acc332bdaa6434d34",
+        "mode": "100644",
+        "sha256": "462479a3660edd652181ad339238c29f270ec9bfd8203d2f1310681d8029ecc4"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original2b9 source/consumer/inverse/review evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/primary/2b9ef06cc0fdb89e43ef646e040346948a5ba36e/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/HanlinFollowLatestOverlay.swift": {
+      "after": {
+        "bytes": 11306,
+        "gitBlob": "07010a5c97cc6d1663b92feb9c1dfdd6fdbc2abe",
+        "mode": "100644",
+        "sha256": "a23774ca6dfc01abc39b4517dc5c5366da8e10e182583c42f93fc8558f3f8186"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original2b9 source/consumer/inverse/review evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/primary/4cb6454c1c6e110ead73179c06ada9e909bf250b/Packages/HanlinPresentationSDK/Package.swift": {
+      "after": {
+        "bytes": 4077,
+        "gitBlob": "ef1e46be07c7b0cba7b5796b3395e6cabdb89484",
+        "mode": "100644",
+        "sha256": "951afd5b85422e7d6ed99cf497602e7122b988c1d956132bd9c00e04c695b4c3"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original2b9 source/consumer/inverse/review evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/primary/4cb6454c1c6e110ead73179c06ada9e909bf250b/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/HanlinFollowLatestOverlay.swift": {
+      "after": {
+        "bytes": 4612,
+        "gitBlob": "111be2b204ec04ac4b8649af239c60d0879300f6",
+        "mode": "100644",
+        "sha256": "87fc88fbd778a9e91f3dc068b8bcfd0fba646cc81d7c0a005be7685520c3e85c"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original2b9 source/consumer/inverse/review evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/primary/anytype919/Modules/PinkhaAnyHanlin/Sources/PinkhaHanlinUI/PinkhaHanlinChatView.swift": {
+      "after": {
+        "bytes": 20726,
+        "gitBlob": "00108593ef058d881b522f606c8818bbaf974f0e",
+        "mode": "100644",
+        "sha256": "7942241949bb2f6b0ff7639e093791033712c88f2882856daab95f670eb05dec"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original2b9 source/consumer/inverse/review evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/review-index.json": {
+      "after": {
+        "bytes": 4175,
+        "gitBlob": "9d433de23bcaf359afc57b81c38b43d01bafffdd",
+        "mode": "100644",
+        "sha256": "031443d99c8d1f4ed606eab8ec8c5c8c04b2ae095ea59d5005709aa0e0812b44"
+      },
+      "beforeGitBlob": null,
+      "origin": "Exact original frozen source-review index",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-native-follow-host/original63-publication-receipt.json": {
+      "after": {
+        "bytes": 208809,
+        "gitBlob": "7355c13cb00af407a677ee5d9d4561aa728d181b",
+        "mode": "100644",
+        "sha256": "3afc5bbe91fee176fab2ba0323ad7be5381e1b3c068335716c95f1ab4a723c4f"
+      },
+      "beforeGitBlob": null,
+      "origin": "Actual successful original110-command SDK63 publication receipt",
+      "status": "A"
+    }
+  },
+  "original63ReceiptSHA256": "3afc5bbe91fee176fab2ba0323ad7be5381e1b3c068335716c95f1ab4a723c4f",
+  "originalDonor": "2b9ef06cc0fdb89e43ef646e040346948a5ba36e",
+  "parent": "8b548bbe5b1340a48e741191c41d6b30c73537df",
+  "parentTree": "c381d5c97207b30dfd0494bd54b74919010c7b1e",
+  "product": {
+    "after": {
+      "bytes": 6567,
+      "gitBlob": "3ca835668cbc6bd9e26bb3a0ddfde165c0693e80",
+      "mode": "100644",
+      "sha256": "56d9b799c8f1c23c651aa64fd731a60808bac1b459a829786d3ab5663b297b3f"
+    },
+    "before": {
+      "bytes": 4612,
+      "gitBlob": "111be2b204ec04ac4b8649af239c60d0879300f6",
+      "mode": "100644",
+      "sha256": "87fc88fbd778a9e91f3dc068b8bcfd0fba646cc81d7c0a005be7685520c3e85c"
+    },
+    "literalInverseProofSHA256": "ffadc059a08101b36467b5847b10f489875a0bf4fb84a02ed83148b9472f01b8",
+    "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/HanlinFollowLatestOverlay.swift"
+  },
+  "proposedBranch": "codex/pinkha-sdk-native-follow-host-20261127",
+  "protectedTrees": {
+    ".github": "b961cc81df44b18062bf8297c6260c89d2ef30e0",
+    "Packages/HanlinAgentSDK": "bbe6a0e4387f3f33d6592e24c1927182a1aceb22",
+    "Packages/HanlinAppExtensionsSDK": "686aad16f099b5c75b6ef84073a0a10557281628",
+    "Packages/HanlinMiniAppsBridge": "98ef5d2b47c03f4ea98319a851abae183f500a40",
+    "Packages/HanlinNativeScriptRuntime": "14373dc81171600079e458087872d4e8ea7bbc1c",
+    "Packages/HanlinPlatform": "4c82574ed393dca14a4a99ca9ef67a3b0be58417"
+  },
+  "provenanceRowsUnchanged": 227,
+  "rootDecision": "One exact original private hosting helper and frame call for the existing public API. Preserve full63 source and exclude the divergent donor manifest and unneeded scene API additions.",
+  "runtimeScope": "Source-only. The actual4cb UIKit20 compile failure remains preserved by the parent. All20 control cases remain NOT_RUN, and they do not alone qualify this native overlay hit-routing. Owner G26 phone/tap evidence is separately scoped; iPad rotated viewport failure remains open.",
+  "schema": "pinkha-root-native-follow-host-source-intake/v1",
+  "sourceProjection": {
+    "PresentationAfter": "2baee0bb044274da5adc395677dec54fc1342862",
+    "PresentationBefore": "3fdc8170b9a749797f4d97c796405306d21ed438",
+    "filesAfter": 1010,
+    "filesBefore": 1010,
+    "other454PresentationLeavesExact": true,
+    "sourceBytesAfter": 39794445,
+    "sourceBytesBefore": 39792490
+  }
+}

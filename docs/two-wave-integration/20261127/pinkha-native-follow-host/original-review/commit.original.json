@@ -1,0 +1,101 @@
+{
+  "sha": "2b9ef06cc0fdb89e43ef646e040346948a5ba36e",
+  "node_id": "C_kwDOTTRem9oAKDJiOWVmMDZjYzBmZGI4OWU0M2VmNjQ2ZTA0MDM0Njk0OGE1YmEzNmU",
+  "commit": {
+    "author": {
+      "name": "davidpovarsky",
+      "email": "davidpovarski1@gmail.com",
+      "date": "2026-11-27T12:47:43Z"
+    },
+    "committer": {
+      "name": "davidpovarsky",
+      "email": "davidpovarski1@gmail.com",
+      "date": "2026-11-27T12:47:43Z"
+    },
+    "message": "fix(chat): give follow-latest controls a bounded native host\n\nMount the existing guarded SwiftUI control in an anchor-sized hosting controller, keeping its original appearance and action. Update the full environment with the current request and release both at teardown. Apply the shared host correction to both SDK presentation paths.\n\nThe focused Swift6/iOS27 typecheck passes. G25 native failure and partial routing diagnostics remain retained; unchanged native acceptance and TestFlight delivery are still pending.\n\nCanonical source: 270c1eb67bea1c425b49523f109385c4daa43e60",
+    "tree": {
+      "sha": "6827a294b908acaced18dc977a571764ba364bf0",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/trees/6827a294b908acaced18dc977a571764ba364bf0"
+    },
+    "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/commits/2b9ef06cc0fdb89e43ef646e040346948a5ba36e",
+    "comment_count": 0,
+    "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+    }
+  },
+  "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/commits/2b9ef06cc0fdb89e43ef646e040346948a5ba36e",
+  "html_url": "https://github.com/davidpovarsky/hanlin-ai/commit/2b9ef06cc0fdb89e43ef646e040346948a5ba36e",
+  "comments_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/commits/2b9ef06cc0fdb89e43ef646e040346948a5ba36e/comments",
+  "author": {
+    "login": "davidpovarsky",
+    "id": 202663769,
+    "node_id": "U_kgDODBRnWQ",
+    "avatar_url": "https://avatars.githubusercontent.com/u/202663769?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/davidpovarsky",
+    "html_url": "https://github.com/davidpovarsky",
+    "followers_url": "https://api.github.com/users/davidpovarsky/followers",
+    "following_url": "https://api.github.com/users/davidpovarsky/following{/other_user}",
+    "gists_url": "https://api.github.com/users/davidpovarsky/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/davidpovarsky/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/davidpovarsky/subscriptions",
+    "organizations_url": "https://api.github.com/users/davidpovarsky/orgs",
+    "repos_url": "https://api.github.com/users/davidpovarsky/repos",
+    "events_url": "https://api.github.com/users/davidpovarsky/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/davidpovarsky/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "committer": {
+    "login": "davidpovarsky",
+    "id": 202663769,
+    "node_id": "U_kgDODBRnWQ",
+    "avatar_url": "https://avatars.githubusercontent.com/u/202663769?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/davidpovarsky",
+    "html_url": "https://github.com/davidpovarsky",
+    "followers_url": "https://api.github.com/users/davidpovarsky/followers",
+    "following_url": "https://api.github.com/users/davidpovarsky/following{/other_user}",
+    "gists_url": "https://api.github.com/users/davidpovarsky/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/davidpovarsky/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/davidpovarsky/subscriptions",
+    "organizations_url": "https://api.github.com/users/davidpovarsky/orgs",
+    "repos_url": "https://api.github.com/users/davidpovarsky/repos",
+    "events_url": "https://api.github.com/users/davidpovarsky/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/davidpovarsky/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "parents": [
+    {
+      "sha": "08be9aa5e16b59094e2bc690c583f09f540c41bd",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/commits/08be9aa5e16b59094e2bc690c583f09f540c41bd",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/commit/08be9aa5e16b59094e2bc690c583f09f540c41bd"
+    }
+  ],
+  "stats": {
+    "total": 57,
+    "additions": 55,
+    "deletions": 2
+  },
+  "files": [
+    {
+      "sha": "07010a5c97cc6d1663b92feb9c1dfdd6fdbc2abe",
+      "filename": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/HanlinFollowLatestOverlay.swift",
+      "status": "modified",
+      "additions": 55,
+      "deletions": 2,
+      "changes": 57,
+      "blob_url": "https://github.com/davidpovarsky/hanlin-ai/blob/2b9ef06cc0fdb89e43ef646e040346948a5ba36e/Packages%2FHanlinPresentationSDK%2FSources%2FHanlinChatUI%2FScrolling%2FHanlinFollowLatestOverlay.swift",
+      "raw_url": "https://github.com/davidpovarsky/hanlin-ai/raw/2b9ef06cc0fdb89e43ef646e040346948a5ba36e/Packages%2FHanlinPresentationSDK%2FSources%2FHanlinChatUI%2FScrolling%2FHanlinFollowLatestOverlay.swift",
+      "contents_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/contents/Packages%2FHanlinPresentationSDK%2FSources%2FHanlinChatUI%2FScrolling%2FHanlinFollowLatestOverlay.swift?ref=2b9ef06cc0fdb89e43ef646e040346948a5ba36e",
+      "patch": "@@ -1,5 +1,6 @@\n #if canImport(SwiftUI) && canImport(UIKit)\n import SwiftUI\n+import UIKit\n \n /// A transient presentation request. The current transcript retains its scroll\n /// action; the host resolves only its original control's bounds.\n@@ -42,6 +43,56 @@ public extension EnvironmentValues {\n     }\n }\n \n+/// Give only the resolved control region its own native hosting boundary.\n+/// SwiftUI owns the controller view's bounds; the surrounding overlay stays empty.\n+@MainActor\n+private struct FollowLatestHostedControl<Control: View>: UIViewControllerRepresentable {\n+    let control: Control\n+    @Environment(\\.self) private var environment\n+\n+    typealias UIViewControllerType = UIHostingController<FollowLatestHostedControlRoot<Control>>\n+\n+    func makeUIViewController(context: Context) -> UIViewControllerType {\n+        let controller = UIHostingController(rootView: rootView)\n+        // The transcript's anchor already accounts for safe areas and the keyboard.\n+        controller.safeAreaRegions = []\n+        controller.view.backgroundColor = .clear\n+        controller.view.isOpaque = false\n+        return controller\n+    }\n+\n+    func updateUIViewController(_ controller: UIViewControllerType, context: Context) {\n+        // Replace the value so the original Button receives the current guarded action.\n+        controller.rootView = rootView\n+    }\n+\n+    static func dismantleUIViewController(_ controller: UIViewControllerType, coordinator: ()) {\n+        // Release both the action and the captured parent environment.\n+        controller.rootView = FollowLatestHostedControlRoot(\n+            control: nil, environment: EnvironmentValues()\n+        )\n+    }\n+\n+    private var rootView: FollowLatestHostedControlRoot<Control> {\n+        FollowLatestHostedControlRoot(control: control, environment: environment)\n+    }\n+}\n+\n+@MainActor\n+private struct FollowLatestHostedControlRoot<Control: View>: View {\n+    var control: Control?\n+    let environment: EnvironmentValues\n+\n+    var body: some View {\n+        Group {\n+            if let control {\n+                control\n+            }\n+        }\n+        .environment(\\.self, environment)\n+    }\n+}\n+\n @MainActor\n private struct FollowLatestOverlayHost<Control: View>: ViewModifier {\n     let selectedConversationID: Binding<UUID?>\n@@ -59,7 +110,8 @@ private struct FollowLatestOverlayHost<Control: View>: ViewModifier {\n                             if frame.minX.isFinite, frame.minY.isFinite,\n                                frame.width.isFinite, frame.height.isFinite,\n                                frame.width > 0, frame.height > 0 {\n-                                control(guarded(request))\n+                                FollowLatestHostedControl(control: control(guarded(request)))\n+                                    .frame(width: frame.width, height: frame.height)\n                                     .id(request.ownerToken)\n                                     .position(x: frame.midX, y: frame.midY)\n                             }\n@@ -139,7 +191,8 @@ private struct FollowLatestSceneOverlayHost<Control: View>: ViewModifier {\n                             if frame.minX.isFinite, frame.minY.isFinite,\n                                frame.width.isFinite, frame.height.isFinite,\n                                frame.width > 0, frame.height > 0 {\n-                                control(guarded(request))\n+                                FollowLatestHostedControl(control: control(guarded(request)))\n+                                    .frame(width: frame.width, height: frame.height)\n                                     .id(request.ownerToken)\n                                     .position(x: frame.midX, y: frame.midY)\n                             }"
+    }
+  ]
+}

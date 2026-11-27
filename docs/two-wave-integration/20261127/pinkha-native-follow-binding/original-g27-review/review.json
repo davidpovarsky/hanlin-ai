@@ -1,0 +1,109 @@
+{
+  "actions": {
+    "SwiftCompilers": 0,
+    "materializations": 0,
+    "remoteMutations": 0,
+    "remoteReadsOnly": true,
+    "runtimeTests": 0,
+    "workflowDispatches": 0
+  },
+  "anytypeHost": {
+    "accountSessionMountSourceRunComposerSaveStopAndDrainUnchanged": true,
+    "after": {
+      "bytes": 21227,
+      "gitBlob": "9ec594dc3021aeee39d49ba641f7be3919f475ad",
+      "sha256": "b60b4a02c5ca8e282016e07af5aa753bb0e438e662f8b95529ccfda1789e746a"
+    },
+    "before": {
+      "bytes": 20726,
+      "gitBlob": "00108593ef058d881b522f606c8818bbaf974f0e",
+      "sha256": "7942241949bb2f6b0ff7639e093791033712c88f2882856daab95f670eb05dec"
+    },
+    "changedFunctions": [
+      "scheduleWhenReady",
+      "scheduleNativePositionRead",
+      "scheduleFollow"
+    ],
+    "completeInverseVerified": true,
+    "foregroundNativeIdleWitnessUnchanged": {
+      "bytes": 1251,
+      "gitBlob": "9d9e46d7596add1a2d34d9eef1d1c779d679568b",
+      "sha256": "c6d88f3deedbd2933f4af3d78d0d9cf2001c842c44b21f4ee9b990c47b2eebb1"
+    },
+    "literalChanges": 4,
+    "path": "Modules/PinkhaAnyHanlin/Sources/PinkhaHanlinUI/PinkhaHanlinChatView.swift"
+  },
+  "findings": [
+    "The exact parent handle and test file equal canonical4cb; both can be taken whole from the published donor without importing other branch ancestry.",
+    "The original generation remains strict for viewport APIs. The new optional binding token admits latest geometry only for the same view/producer/window/conversation/activation lifetime.",
+    "Refresh checks ownership both before and after observing UIKit. Window movement changes the binding token, invalidates tasks and rejects stale work.",
+    "Explicitly binding-bound queued work survives only bounds/inset changes. Manual-reading and interaction state remain owned by the unchanged original AutoFollow controller.",
+    "Current Pinkha794224 still uses strict generation at all three deferred sites, so merely installing the new SDK would not close its resize gap. The proposed host adopts the original API only at these sites.",
+    "The weak foreground idle witness remains strict and byte-identical; actual native idle is still required before ending an interrupted gesture.",
+    "All old18 Handle declarations, all AutoFollow source and original20 selector prefix remain exact;3 original nonparameterized methods extend selection to23.",
+    "Original App ChatView is reference evidence only. Its unrelated UI and the excluded donor package manifest are not part of this proposal."
+  ],
+  "originalLocalSourceClaim": "5c9d7c723eabf6d7a184eb2cf14fd53308c6b936",
+  "packageProjection": {
+    "afterFiles": 1010,
+    "afterSourceBytes": 39797368,
+    "allManifestsLocks227RowsAndHandlerWireUnchanged": true,
+    "allOtherPackagesUnchanged": true,
+    "beforeFiles": 1010,
+    "beforeSourceBytes": 39794445,
+    "frozen19BaseTree": "629b6136ccc6f28c09e4b42eb5708aef80416b4f",
+    "presentation": {
+      "afterTree": "5c9daeab42def7d5b7594ebc9c6d79df6ed34743",
+      "beforeTree": "2baee0bb044274da5adc395677dec54fc1342862",
+      "files": 455,
+      "onlyChangedLeaf": "Sources/HanlinChatUI/Scrolling/ChatScrollViewHandle.swift",
+      "unchangedLeaves": 454
+    }
+  },
+  "publishedDonor": "abd1434f8674fd58129c93be5bf33933eda48e1d",
+  "publishedDonorParent": "2b9ef06cc0fdb89e43ef646e040346948a5ba36e",
+  "publishedDonorTree": "421e2209c6f76d6f7a6cfd730471d65bcc7f595c",
+  "repository": "davidpovarsky/hanlin-ai",
+  "runtime": {
+    "all23Methods": "NOT_RUN",
+    "newOverlayAndResizeHostBehavior": "NOT_RUN",
+    "original4cbUIKit20": "Build failed before original validator/runtime. No original20 result promoted.",
+    "owner80PlannedMethods": "NOT_RUN per13:53 task notes, not independently executed",
+    "ownerG26IPadRotatedKeyboardViewport": "Original failure preserved; no fix acceptance inferred from source",
+    "ownerG26PhonePass": "Owner-reported original source scope only; not Pinkha acceptance"
+  },
+  "schema": "hanlin-g27-original-binding-source-review/v1",
+  "sdkFiles": [
+    {
+      "after": {
+        "bytes": 15086,
+        "gitBlob": "756010d67b1ebb1ad5abb536cfbde125530d51da",
+        "sha256": "6c32cd42b665bd96bcd256161564d92fbee5cdf2b6947faf577734ace12efad0"
+      },
+      "afterEqualsCompletePublishedDonor": true,
+      "before": {
+        "bytes": 12163,
+        "gitBlob": "b5c9b7a2374672906d9550714cdb36a8fde785f7",
+        "sha256": "6a43ca9ea760bfb695e0cc81a16a6d9fd25d229f09695a43d9fbb14671f30398"
+      },
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatScrollViewHandle.swift",
+      "publishedDonorParentEqualsCanonical4cb": true
+    },
+    {
+      "after": {
+        "bytes": 36681,
+        "gitBlob": "ad2e0f75f296eedc39399d03c098c36164a2744c",
+        "sha256": "6618623245564706cc3bb377f6f54f7c7e1eba66ddc602989e72ec69a80eeed4"
+      },
+      "afterEqualsCompletePublishedDonor": true,
+      "before": {
+        "bytes": 28385,
+        "gitBlob": "ae35ab0ba03cec5dea4182159cc6c6d71028c895",
+        "sha256": "97ae3b4da1231de4b45526545b3c9c213fc2ff8970845cdacbdc0e3b48ca47e9"
+      },
+      "path": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "publishedDonorParentEqualsCanonical4cb": true
+    }
+  ],
+  "status": "SOURCE_ONLY_PROPOSED_NOT_PUBLISHED_OR_COMPILED"
+}

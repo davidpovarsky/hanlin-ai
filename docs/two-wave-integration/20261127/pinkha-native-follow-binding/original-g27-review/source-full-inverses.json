@@ -1,0 +1,465 @@
+{
+  "allCompleteOriginalsRestored": true,
+  "files": {
+    "AI_HLYTests/ChatScrollViewHandleTests.swift": {
+      "after": {
+        "bytes": 36681,
+        "gitBlob": "ad2e0f75f296eedc39399d03c098c36164a2744c",
+        "sha256": "6618623245564706cc3bb377f6f54f7c7e1eba66ddc602989e72ec69a80eeed4"
+      },
+      "before": {
+        "bytes": 28385,
+        "gitBlob": "ae35ab0ba03cec5dea4182159cc6c6d71028c895",
+        "sha256": "97ae3b4da1231de4b45526545b3c9c213fc2ff8970845cdacbdc0e3b48ca47e9"
+      },
+      "completeOriginalRestored": true,
+      "operations": [
+        {
+          "afterLineRange": [
+            530,
+            672
+          ],
+          "afterText": "\n    @Test func bindingBoundReadsDeliverTheLatestResizeOnceWithoutAnotherNotification() async throws {\n        for refreshBeforeDelivery in [false, true] {\n            let conversationID = UUID()\n            let handle = ChatScrollViewHandle()\n            let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 1_032, height: 935))\n            let scrollView = UIScrollView(frame: window.bounds)\n            window.addSubview(scrollView)\n            scrollView.contentInsetAdjustmentBehavior = .never\n            scrollView.contentSize = CGSize(width: 1_032, height: 3_821)\n            scrollView.contentOffset.y = 2_886\n            handle.activate(conversationID: conversationID)\n            handle.bind(scrollView, conversationID: conversationID, producerID: UUID())\n            let binding = handle.bindingGeneration, viewport = handle.generation\n            var readyCalls = 0, positionCalls = 0\n            var deliveredPosition: ChatAutoFollowPosition?\n            let ready = try #require(handle.whenReady(conversationID: conversationID,\n                                                       expectedBindingGeneration: binding) { readyCalls += 1 })\n            let read = try #require(handle.readPositionAfterLayout(conversationID: conversationID,\n                                                                   expectedBindingGeneration: binding) { position in\n                positionCalls += 1\n                deliveredPosition = position\n            })\n\n            // The final native rotation/keyboard size arrives after the last\n            // notification. Either this queued read or another admission read\n            // can be the first observer of the changed bounds.\n            scrollView.bounds.size = CGSize(width: 1_376, height: 496)\n            scrollView.contentSize = CGSize(width: 1_376, height: 2_466)\n            scrollView.contentOffset.y = 1_531\n            if refreshBeforeDelivery {\n                #expect(handle.layout(conversationID: conversationID, expectedGeneration: viewport) == nil)\n                #expect(!ready.isCancelled && !read.isCancelled)\n            }\n            await ready.value\n            await read.value\n            #expect(readyCalls == 1 && positionCalls == 1)\n            #expect(deliveredPosition?.layout.viewportHeight == 496)\n            #expect(deliveredPosition?.layout.contentHeight == 2_466)\n            #expect(deliveredPosition?.contentOffsetY == 1_531 && deliveredPosition?.isNearBottom == false)\n            #expect(handle.bindingGeneration == binding && handle.generation != viewport)\n            #expect(handle.layout(conversationID: conversationID, expectedGeneration: viewport) == nil)\n            #expect(handle.whenReady(conversationID: conversationID, expectedBindingGeneration: binding) {\n                Issue.record(\"The same settled viewport must not replay readiness\")\n            } == nil)\n            #expect(scrollView.contentOffset.y == 1_531 && window.subviews.contains(scrollView))\n        }\n    }\n\n    @Test func bindingBoundWorkStillRejectsEveryNativeOwnerReplacement() async throws {\n        for change in [\"producer\", \"view\", \"window\", \"conversation\", \"deactivation\", \"detach\"] {\n            let conversationID = UUID(), producerID = UUID()\n            let handle = ChatScrollViewHandle()\n            let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 800, height: 600))\n            let otherWindow = UIWindow(frame: window.bounds)\n            let scrollView = UIScrollView(frame: window.bounds)\n            window.addSubview(scrollView)\n            scrollView.contentSize = CGSize(width: 800, height: 2_000)\n            handle.activate(conversationID: conversationID)\n            handle.bind(scrollView, conversationID: conversationID, producerID: producerID)\n            let binding = handle.bindingGeneration\n            var calls = 0\n            let ready = try #require(handle.whenReady(conversationID: conversationID,\n                                                       expectedBindingGeneration: binding) { calls += 1 })\n            let read = try #require(handle.readPositionAfterLayout(conversationID: conversationID,\n                                                                   expectedBindingGeneration: binding) { _ in calls += 1 })\n            switch change {\n            case \"producer\":\n                handle.bind(scrollView, conversationID: conversationID, producerID: UUID())\n            case \"view\":\n                let replacement = UIScrollView(frame: window.bounds)\n                replacement.contentSize = scrollView.contentSize\n                window.addSubview(replacement)\n                handle.bind(replacement, conversationID: conversationID, producerID: producerID)\n            case \"window\":\n                otherWindow.addSubview(scrollView)\n            case \"conversation\":\n                let replacementID = UUID()\n                handle.activate(conversationID: replacementID)\n                handle.bind(scrollView, conversationID: replacementID, producerID: producerID)\n            case \"deactivation\":\n                handle.deactivate(conversationID: conversationID)\n            default:\n                scrollView.removeFromSuperview()\n            }\n            #expect(handle.layout(conversationID: conversationID, expectedBindingGeneration: binding) == nil)\n            await ready.value\n            await read.value\n            #expect(calls == 0 && handle.bindingGeneration != binding)\n            #expect(window.bounds.width == 800 && otherWindow.bounds.width == 800)\n        }\n    }\n\n    @Test func coalescedFollowUsesFreshSameBindingLayoutWithoutResumingManualReading() async throws {\n        let conversationID = UUID()\n        let handle = ChatScrollViewHandle()\n        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 1_032, height: 935))\n        let scrollView = UIScrollView(frame: window.bounds)\n        window.addSubview(scrollView)\n        scrollView.contentInsetAdjustmentBehavior = .never\n        scrollView.contentSize = CGSize(width: 1_032, height: 3_821)\n        scrollView.contentOffset.y = 2_886\n        handle.activate(conversationID: conversationID)\n        handle.bind(scrollView, conversationID: conversationID, producerID: UUID())\n        let binding = handle.bindingGeneration\n        let (gate, release) = AsyncStream<Void>.makeStream()\n        let controller = ChatAutoFollowController(waitBeforeScroll: {\n            var iterator = gate.makeAsyncIterator()\n            _ = await iterator.next()\n        })\n        controller.updatePosition(try #require(handle.position(conversationID: conversationID)))\n        var calls = 0\n        var admittedLayout: ChatAutoFollowLayout?\n        let pending = try #require(controller.scheduleScroll(animated: false) { _ in\n            guard let current = handle.layout(conversationID: conversationID,\n                                              expectedBindingGeneration: binding),\n                  current.hasScrollableContent else { return }\n            admittedLayout = current\n            calls += 1\n        })\n        let read = try #require(handle.readPositionAfterLayout(conversationID: conversationID,\n                                                               expectedBindingGeneration: binding) { position in\n            controller.updateNearBottom(position.isNearBottom == true)\n        })\n        scrollView.bounds.size = CGSize(width: 1_376, height: 496)\n        scrollView.contentSize = CGSize(width: 1_376, height: 2_466)\n        scrollView.contentOffset.y = 1_531\n        await read.value\n        #expect(controller.mode == .following && controller.showsScrollToBottomButton)\n        release.yield(())\n        release.finish()\n        await pending.value\n        #expect(calls == 1 && admittedLayout?.viewportHeight == 496 && admittedLayout?.contentHeight == 2_466)\n        #expect(scrollView.contentOffset.y == 1_531)\n\n        controller.pauseFollowing(reason: \"manualReading\")\n        #expect(controller.scheduleScroll(animated: false) { _ in calls += 1 } == nil)\n        controller.resumeFollowing()\n        controller.userInteractionBegan()\n        #expect(controller.scheduleScroll(animated: false) { _ in calls += 1 } == nil)\n        #expect(calls == 1 && scrollView.contentOffset.y == 1_531 && window.subviews.contains(scrollView))\n    }\n",
+          "beforeLineRange": [
+            530,
+            530
+          ],
+          "beforeText": ""
+        }
+      ]
+    },
+    "Modules/PinkhaAnyHanlin/Sources/PinkhaHanlinUI/PinkhaHanlinChatView.swift": {
+      "after": {
+        "bytes": 21227,
+        "gitBlob": "9ec594dc3021aeee39d49ba641f7be3919f475ad",
+        "sha256": "b60b4a02c5ca8e282016e07af5aa753bb0e438e662f8b95529ccfda1789e746a"
+      },
+      "before": {
+        "bytes": 20726,
+        "gitBlob": "00108593ef058d881b522f606c8818bbaf974f0e",
+        "sha256": "7942241949bb2f6b0ff7639e093791033712c88f2882856daab95f670eb05dec"
+      },
+      "completeOriginalRestored": true,
+      "operations": [
+        {
+          "afterLineRange": [
+            260,
+            264
+          ],
+          "afterText": "        guard nativeViewport.layout(conversationID: sessionID) != nil else { return }\n        let bindingGeneration = nativeViewport.bindingGeneration\n        nativeViewport.whenReady(conversationID: sessionID,\n                                 expectedBindingGeneration: bindingGeneration) {\n",
+          "beforeLineRange": [
+            260,
+            261
+          ],
+          "beforeText": "        nativeViewport.whenReady(conversationID: sessionID) {\n"
+        },
+        {
+          "afterLineRange": [
+            276,
+            280
+          ],
+          "afterText": "        guard nativeViewport.layout(conversationID: sessionID) != nil else { return }\n        let bindingGeneration = nativeViewport.bindingGeneration\n        nativeViewport.readPositionAfterLayout(conversationID: sessionID,\n                                              expectedBindingGeneration: bindingGeneration) { position in\n",
+          "beforeLineRange": [
+            273,
+            274
+          ],
+          "beforeText": "        nativeViewport.readPositionAfterLayout(conversationID: sessionID) { position in\n"
+        },
+        {
+          "afterLineRange": [
+            315,
+            316
+          ],
+          "afterText": "        let bindingGeneration = nativeViewport.bindingGeneration\n",
+          "beforeLineRange": [
+            309,
+            310
+          ],
+          "beforeText": "        let generation = nativeViewport.generation\n"
+        },
+        {
+          "afterLineRange": [
+            319,
+            320
+          ],
+          "afterText": "                                        expectedBindingGeneration: bindingGeneration)?.hasScrollableContent == true else { return }\n",
+          "beforeLineRange": [
+            313,
+            314
+          ],
+          "beforeText": "                                        expectedGeneration: generation)?.hasScrollableContent == true else { return }\n"
+        }
+      ],
+      "orderedWholeLiteralOperations": [
+        {
+          "afterText": "        guard nativeViewport.layout(conversationID: sessionID) != nil else { return }\n        let bindingGeneration = nativeViewport.bindingGeneration\n        nativeViewport.whenReady(conversationID: sessionID,\n                                 expectedBindingGeneration: bindingGeneration) {",
+          "beforeText": "        nativeViewport.whenReady(conversationID: sessionID) {"
+        },
+        {
+          "afterText": "        guard nativeViewport.layout(conversationID: sessionID) != nil else { return }\n        let bindingGeneration = nativeViewport.bindingGeneration\n        nativeViewport.readPositionAfterLayout(conversationID: sessionID,\n                                              expectedBindingGeneration: bindingGeneration) { position in",
+          "beforeText": "        nativeViewport.readPositionAfterLayout(conversationID: sessionID) { position in"
+        },
+        {
+          "afterText": "        let bindingGeneration = nativeViewport.bindingGeneration\n        autoFollow.scheduleScroll(animated: animated, force: force) { requestedAnimation in",
+          "beforeText": "        let generation = nativeViewport.generation\n        autoFollow.scheduleScroll(animated: animated, force: force) { requestedAnimation in"
+        },
+        {
+          "afterText": "                                        expectedBindingGeneration: bindingGeneration)?.hasScrollableContent == true else { return }",
+          "beforeText": "                                        expectedGeneration: generation)?.hasScrollableContent == true else { return }"
+        }
+      ]
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatScrollViewHandle.swift": {
+      "after": {
+        "bytes": 15086,
+        "gitBlob": "756010d67b1ebb1ad5abb536cfbde125530d51da",
+        "sha256": "6c32cd42b665bd96bcd256161564d92fbee5cdf2b6947faf577734ace12efad0"
+      },
+      "before": {
+        "bytes": 12163,
+        "gitBlob": "b5c9b7a2374672906d9550714cdb36a8fde785f7",
+        "sha256": "6a43ca9ea760bfb695e0cc81a16a6d9fd25d229f09695a43d9fbb14671f30398"
+      },
+      "completeOriginalRestored": true,
+      "operations": [
+        {
+          "afterLineRange": [
+            20,
+            23
+          ],
+          "afterText": "    /// Native ownership survives bounds/inset changes, but never a different\n    /// producer, scroll view, window, conversation or activation lifetime.\n    public private(set) var bindingGeneration = UUID()\n",
+          "beforeLineRange": [
+            20,
+            20
+          ],
+          "beforeText": ""
+        },
+        {
+          "afterLineRange": [
+            25,
+            26
+          ],
+          "afterText": "    private var readinessBindingGeneration: UUID?\n",
+          "beforeLineRange": [
+            22,
+            22
+          ],
+          "beforeText": ""
+        },
+        {
+          "afterLineRange": [
+            28,
+            29
+          ],
+          "afterText": "    private var positionReadBindingGeneration: UUID?\n",
+          "beforeLineRange": [
+            24,
+            24
+          ],
+          "beforeText": ""
+        },
+        {
+          "afterLineRange": [
+            90,
+            91
+          ],
+          "afterText": "        bindingGeneration = UUID()\n",
+          "beforeLineRange": [
+            85,
+            85
+          ],
+          "beforeText": ""
+        },
+        {
+          "afterLineRange": [
+            99,
+            100
+          ],
+          "afterText": "        bindingGeneration = UUID()\n",
+          "beforeLineRange": [
+            93,
+            93
+          ],
+          "beforeText": ""
+        },
+        {
+          "afterLineRange": [
+            115,
+            116
+          ],
+          "afterText": "        bindingGeneration = UUID()\n",
+          "beforeLineRange": [
+            108,
+            108
+          ],
+          "beforeText": ""
+        },
+        {
+          "afterLineRange": [
+            125,
+            127
+          ],
+          "afterText": "    /// An explicit binding token allows a fresh same-owner resize; without one,\n    /// the existing strict viewport-generation behavior remains unchanged.\n",
+          "beforeLineRange": [
+            117,
+            117
+          ],
+          "beforeText": ""
+        },
+        {
+          "afterLineRange": [
+            128,
+            134
+          ],
+          "afterText": "    public func whenReady(conversationID: UUID, expectedBindingGeneration: UUID? = nil,\n                          action: @escaping @MainActor () -> Void) -> Task<Void, Never>? {\n        guard activeConversationID == conversationID, boundConversationID == conversationID,\n              expectedBindingGeneration == nil || expectedBindingGeneration == bindingGeneration else { return nil }\n        guard layout(conversationID: conversationID,\n                     expectedBindingGeneration: expectedBindingGeneration) != nil else {\n",
+          "beforeLineRange": [
+            118,
+            121
+          ],
+          "beforeText": "    public func whenReady(conversationID: UUID, action: @escaping @MainActor () -> Void) -> Task<Void, Never>? {\n        guard activeConversationID == conversationID, boundConversationID == conversationID else { return nil }\n        guard layout(conversationID: conversationID) != nil else {\n"
+        },
+        {
+          "afterLineRange": [
+            138,
+            142
+          ],
+          "afterText": "        if let readinessTask {\n            if readinessBindingGeneration == expectedBindingGeneration { return readinessTask }\n            readinessTask.cancel()\n        }\n",
+          "beforeLineRange": [
+            125,
+            126
+          ],
+          "beforeText": "        if let readinessTask { return readinessTask }\n"
+        },
+        {
+          "afterLineRange": [
+            143,
+            144
+          ],
+          "afterText": "        readinessBindingGeneration = expectedBindingGeneration\n",
+          "beforeLineRange": [
+            127,
+            127
+          ],
+          "beforeText": ""
+        },
+        {
+          "afterLineRange": [
+            146,
+            148
+          ],
+          "afterText": "            guard let self, !Task.isCancelled,\n                  expectedBindingGeneration != nil || self.generation == expectedGeneration else { return }\n",
+          "beforeLineRange": [
+            129,
+            130
+          ],
+          "beforeText": "            guard let self, !Task.isCancelled, self.generation == expectedGeneration else { return }\n"
+        },
+        {
+          "afterLineRange": [
+            149,
+            150
+          ],
+          "afterText": "            self.readinessBindingGeneration = nil\n",
+          "beforeLineRange": [
+            131,
+            131
+          ],
+          "beforeText": ""
+        },
+        {
+          "afterLineRange": [
+            151,
+            154
+          ],
+          "afterText": "                              expectedGeneration: expectedBindingGeneration == nil ? expectedGeneration : nil,\n                              expectedBindingGeneration: expectedBindingGeneration) != nil else { return }\n            self.deliveredGeneration = self.generation\n",
+          "beforeLineRange": [
+            132,
+            134
+          ],
+          "beforeText": "                              expectedGeneration: expectedGeneration) != nil else { return }\n            self.deliveredGeneration = expectedGeneration\n"
+        },
+        {
+          "afterLineRange": [
+            159,
+            165
+          ],
+          "afterText": "    private func invalidateReadiness(preservingCurrentBinding: Bool = false) {\n        if !preservingCurrentBinding || readinessBindingGeneration != bindingGeneration {\n            readinessTask?.cancel()\n            readinessTask = nil\n            readinessBindingGeneration = nil\n        }\n",
+          "beforeLineRange": [
+            139,
+            142
+          ],
+          "beforeText": "    private func invalidateReadiness() {\n        readinessTask?.cancel()\n        readinessTask = nil\n"
+        },
+        {
+          "afterLineRange": [
+            166,
+            170
+          ],
+          "afterText": "        if !preservingCurrentBinding || positionReadBindingGeneration != bindingGeneration {\n            positionReadTask?.cancel()\n            clearPositionRead()\n        }\n",
+          "beforeLineRange": [
+            143,
+            145
+          ],
+          "beforeText": "        positionReadTask?.cancel()\n        clearPositionRead()\n"
+        },
+        {
+          "afterLineRange": [
+            177,
+            180
+          ],
+          "afterText": "    /// further real notifications request another current native sample. An\n    /// explicit binding token admits the latest viewport of that same owner;\n    /// omitting it preserves strict viewport-generation cancellation.\n",
+          "beforeLineRange": [
+            152,
+            153
+          ],
+          "beforeText": "    /// further real notifications request another current native sample.\n"
+        },
+        {
+          "afterLineRange": [
+            181,
+            182
+          ],
+          "afterText": "    public func readPositionAfterLayout(conversationID: UUID, expectedBindingGeneration: UUID? = nil,\n",
+          "beforeLineRange": [
+            154,
+            155
+          ],
+          "beforeText": "    public func readPositionAfterLayout(conversationID: UUID,\n"
+        },
+        {
+          "afterLineRange": [
+            184,
+            190
+          ],
+          "afterText": "              layout(conversationID: conversationID,\n                     expectedBindingGeneration: expectedBindingGeneration) != nil else { return nil }\n        if let positionReadTask, positionReadBindingGeneration != expectedBindingGeneration {\n            positionReadTask.cancel()\n            clearPositionRead()\n        }\n",
+          "beforeLineRange": [
+            157,
+            158
+          ],
+          "beforeText": "              layout(conversationID: conversationID) != nil else { return nil }\n"
+        },
+        {
+          "afterLineRange": [
+            195,
+            196
+          ],
+          "afterText": "        positionReadBindingGeneration = expectedBindingGeneration\n",
+          "beforeLineRange": [
+            163,
+            163
+          ],
+          "beforeText": ""
+        },
+        {
+          "afterLineRange": [
+            202,
+            204
+          ],
+          "afterText": "                                               expectedGeneration: expectedBindingGeneration == nil ? expectedGeneration : nil,\n                                               expectedBindingGeneration: expectedBindingGeneration) else { return }\n",
+          "beforeLineRange": [
+            169,
+            170
+          ],
+          "beforeText": "                                               expectedGeneration: expectedGeneration) else { return }\n"
+        },
+        {
+          "afterLineRange": [
+            212,
+            213
+          ],
+          "afterText": "        positionReadBindingGeneration = nil\n",
+          "beforeLineRange": [
+            178,
+            178
+          ],
+          "beforeText": ""
+        },
+        {
+          "afterLineRange": [
+            219,
+            221
+          ],
+          "afterText": "        let windowChanged = boundWindow !== currentWindow\n        guard windowChanged || viewport != currentViewport else { return }\n",
+          "beforeLineRange": [
+            184,
+            185
+          ],
+          "beforeText": "        guard boundWindow !== currentWindow || viewport != currentViewport else { return }\n"
+        },
+        {
+          "afterLineRange": [
+            223,
+            224
+          ],
+          "afterText": "        if windowChanged { bindingGeneration = UUID() }\n",
+          "beforeLineRange": [
+            187,
+            187
+          ],
+          "beforeText": ""
+        },
+        {
+          "afterLineRange": [
+            225,
+            228
+          ],
+          "afterText": "        // Bounds/insets can settle after the last bridge notification. Keep\n        // only explicitly owner-bound work; legacy viewport requests still end.\n        invalidateReadiness(preservingCurrentBinding: !windowChanged)\n",
+          "beforeLineRange": [
+            188,
+            189
+          ],
+          "beforeText": "        invalidateReadiness()\n"
+        },
+        {
+          "afterLineRange": [
+            233,
+            237
+          ],
+          "afterText": "    public func position(conversationID: UUID, expectedGeneration: UUID? = nil,\n                         expectedBindingGeneration: UUID? = nil) -> ChatAutoFollowPosition? {\n        guard let layout = layout(conversationID: conversationID, expectedGeneration: expectedGeneration,\n                                  expectedBindingGeneration: expectedBindingGeneration),\n",
+          "beforeLineRange": [
+            194,
+            196
+          ],
+          "beforeText": "    public func position(conversationID: UUID, expectedGeneration: UUID? = nil) -> ChatAutoFollowPosition? {\n        guard let layout = layout(conversationID: conversationID, expectedGeneration: expectedGeneration),\n"
+        },
+        {
+          "afterLineRange": [
+            256,
+            258
+          ],
+          "afterText": "    public func layout(conversationID: UUID, expectedGeneration: UUID? = nil,\n                       expectedBindingGeneration: UUID? = nil) -> ChatAutoFollowLayout? {\n",
+          "beforeLineRange": [
+            215,
+            216
+          ],
+          "beforeText": "    public func layout(conversationID: UUID, expectedGeneration: UUID? = nil) -> ChatAutoFollowLayout? {\n"
+        },
+        {
+          "afterLineRange": [
+            259,
+            261
+          ],
+          "afterText": "              boundConversationID == conversationID,\n              expectedBindingGeneration == nil || expectedBindingGeneration == bindingGeneration else { return nil }\n",
+          "beforeLineRange": [
+            217,
+            218
+          ],
+          "beforeText": "              boundConversationID == conversationID else { return nil }\n"
+        },
+        {
+          "afterLineRange": [
+            266,
+            267
+          ],
+          "afterText": "              expectedBindingGeneration == nil || expectedBindingGeneration == bindingGeneration,\n",
+          "beforeLineRange": [
+            223,
+            223
+          ],
+          "beforeText": ""
+        }
+      ]
+    }
+  },
+  "schema": "hanlin-g27-exact-source-inverses/v1"
+}

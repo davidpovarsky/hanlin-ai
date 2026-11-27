@@ -1,0 +1,50 @@
+{
+  "actual63Publication": {
+    "bytes": 208809,
+    "commit": "8b548bbe5b1340a48e741191c41d6b30c73537df",
+    "sha256": "3afc5bbe91fee176fab2ba0323ad7be5381e1b3c068335716c95f1ab4a723c4f",
+    "tree": "c381d5c97207b30dfd0494bd54b74919010c7b1e"
+  },
+  "branch": "codex/pinkha-sdk-native-follow-binding-20261127",
+  "currentAnytypeHostProposal": {
+    "appliedToAnytype": false,
+    "bytes": 21227,
+    "gitBlob": "9ec594dc3021aeee39d49ba641f7be3919f475ad",
+    "sha256": "b60b4a02c5ca8e282016e07af5aa753bb0e438e662f8b95529ccfda1789e746a"
+  },
+  "frozen19": {
+    "all19FilesRetainedByteExact": true,
+    "executed": false,
+    "expectedUnexecutedTree": "629b6136ccc6f28c09e4b42eb5708aef80416b4f",
+    "payloadSHA256": "fd36089954e4c8f7d1319d24f7b7e021e3a265dc80de0a48ca47043e6d5d837d"
+  },
+  "limits": [
+    "Entire original App ChatView and incompatible donor Package.swift excluded.",
+    "No accepted Agent7/quota6/Widget2 rerun; current native23/overlay/rotation acceptance pending.",
+    "Original4cb UIKit20 build failure and originalG26 rotated-viewport failure remain failures.",
+    "One final SDK materialization remains held until actual SDK publication and Anytype source pin receipt."
+  ],
+  "modifiedOriginalUIKitTest": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+  "modifiedProductFiles": [
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/HanlinFollowLatestOverlay.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatScrollViewHandle.swift"
+  ],
+  "newOriginalMethods": 3,
+  "original20Retained": true,
+  "originalBindingDonor": "abd1434f8674fd58129c93be5bf33933eda48e1d",
+  "originalOverlayDonor": "2b9ef06cc0fdb89e43ef646e040346948a5ba36e",
+  "packages": {
+    "files": 1010,
+    "presentationFiles": 455,
+    "sourceBytes": 39797368,
+    "unchangedOtherPackagesManifestsLocks227ProvenanceRowsHandlerAndWire": true,
+    "unchangedPresentationLeavesAgainstActual8b548": 453
+  },
+  "parentTree": "c381d5c97207b30dfd0494bd54b74919010c7b1e",
+  "repository": "davidpovarsky/hanlin-ai",
+  "schema": "pinkha-combined-native-follow-host-binding-source-intake/v1",
+  "selectedCases": 23,
+  "selectedMethods": 23,
+  "soleParent": "8b548bbe5b1340a48e741191c41d6b30c73537df",
+  "status": "SOURCE_ONLY_NOT_PUBLISHED_COMPILED_OR_MATERIALIZED"
+}

@@ -1,0 +1,8 @@
+{
+  "correction": "Bound the actual20,726-byte consumer to its complete00108593ef058d881b522f606c8818bbaf974f0e blob,79422419 SHA and positive919 source publication receipt7efdf7e3; all source inputs unchanged.",
+  "finalInverse": "All3 literal operations restore the complete original4cb source.",
+  "firstAttempt": "Stopped at an incorrectly transcribed full consumer Git blob literal before any proposed source file was written.",
+  "materializer988": "UNCHANGED_NOT_EXECUTED",
+  "publication63": "UNCHANGED",
+  "scope": "Local byte-only derivation, no host/compiler/test or repository mutation."
+}

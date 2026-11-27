@@ -1,0 +1,326 @@
+{
+  "all18PreviousHandleDeclarationsByteIdentical": true,
+  "allOtherAutoFollowSourceByteIdentical": true,
+  "autoFollowSelectedMethods": [
+    {
+      "declaration": {
+        "bytes": 1181,
+        "gitBlob": "8f9757a4c60badbf01e0fc838c17cae0e058543f",
+        "sha256": "f54620aefb40817d4be406f290ebad5934ee247a095d4c60460f5adc8d2510ac"
+      },
+      "expectations": 4,
+      "name": "equalVisibilitySamplesDoNotInvalidateTheTranscriptOrExternalComposer",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 901,
+        "gitBlob": "fd1c5c17ec0c46756992dec86514a85955b9e6e2",
+        "sha256": "4d5717394e9c637113d4fc3af481a2633c933b05a895bb39c962337da4a4edad"
+      },
+      "expectations": 3,
+      "name": "fittingAndInvalidatedSamplesDoNotPublishRepeatedHiddenArrowState",
+      "parameterized": false
+    }
+  ],
+  "canonicalCandidateCommit": null,
+  "futureAnytypeAdaptation": "Apple lane owns only exact two import substitutions plus original HanlinChatUI product linkage and closed actual compiler/result admission. No runtime acceptance inferred here.",
+  "handleMethods": [
+    {
+      "declaration": {
+        "bytes": 508,
+        "gitBlob": "905445247fa80119e5f17e8dcb526431cc496bce",
+        "sha256": "e949d38261c319ba416354c670767a99ac9084315778725ac5503fd25674e6e7"
+      },
+      "expectations": 1,
+      "name": "positiveGeometryWithoutAWindowCannotPositionATranscript",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 1145,
+        "gitBlob": "58b2e783c484c69f6025a8f3ca028949ce7f32b7",
+        "sha256": "b91f1b8f0fbd9cf4963591ed5a63baded06ad52b76af81ec6a166d833e370dfb"
+      },
+      "expectations": 5,
+      "name": "everyReadRechecksWindowDimensionsAndConversation",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 844,
+        "gitBlob": "b7c10d5a3baf867d2e0f2c261e59dffc04d53667",
+        "sha256": "6d726cb726cbb6856de6475f0db77dcb7f6ff4de8849af8752245b76ca7bf390"
+      },
+      "expectations": 4,
+      "name": "detachAndReplacementInvalidateCapturedRequestsWithoutRetainingViews",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 992,
+        "gitBlob": "b31a52365c97c8b13fcc345f79844032af86a08e",
+        "sha256": "590b28105d428b5c69db27ed88642a52206b9bbe927caa3f7437dcd62f15d8cd"
+      },
+      "expectations": 4,
+      "name": "lateWindowAttachmentDeliversOneDeferredReadinessCallback",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 1162,
+        "gitBlob": "6d9d26ce4a4006a032a2dd6ec41bcd8ed525fdb7",
+        "sha256": "c736616df876f766389e9d10b20b40cdc79f79a536d390489c33cdf794da2cdf"
+      },
+      "expectations": 2,
+      "name": "cancelledReadinessCannotRestoreAPreviousConversation",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 1526,
+        "gitBlob": "da0c695d858faaea4c4c68dccb341b88df07d5c1",
+        "sha256": "3ce1c7303ffcfd7bf4f1c1c3cab2f976320c3553cf59224be1518da9478587c3"
+      },
+      "expectations": 6,
+      "name": "resizedViewportRejectsARequestBeforeTheNextBridgeCallback",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 902,
+        "gitBlob": "1614ff3018dd013c516f5b4cbda308579d7c6714",
+        "sha256": "486f68f470d9d5ccbda9a7cf347642fd4f9d11cab0db4f78b5c43caca69c0cd3"
+      },
+      "expectations": 2,
+      "name": "movingTheSameScrollViewToAnotherWindowInvalidatesQueuedPositioning",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 1018,
+        "gitBlob": "0cc5480839e2d5f9026e8bd768ed5a145d41c925",
+        "sha256": "15d346053f2201ab8a11751e367fc63186d509db15ede73d8a42454ba3186299"
+      },
+      "expectations": 3,
+      "name": "contentGrowthAndUserScrollingKeepTheViewportLifetime",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 1271,
+        "gitBlob": "171cef8b01be02cf28b301ec790fb8ead36ea519",
+        "sha256": "d50b81bad8b296eed4f4a3ff03a327e0a69a7f8c4316abf2b3e6bc6d9a7b8677"
+      },
+      "expectations": 4,
+      "name": "outgoingConversationCallbacksCannotUnbindOrCancelTheCurrentViewport",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 3121,
+        "gitBlob": "8e0e1f4f372674d776efd330c175e6e06c8e6472",
+        "sha256": "ace2fce31b62d177d29802325bcd85deb782e42da0dfa073b8976d17c627b7b6"
+      },
+      "expectations": 10,
+      "name": "sameConversationProducerReplacementOwnsDetachAndPendingCallbacks",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 2529,
+        "gitBlob": "30dc24bcb0ebddc9a0ee860a9b4cf15c96d378c3",
+        "sha256": "899e78c3c9a6750af7db94d2de8a9f81b764ecddb4477da52c4444515cd426a0"
+      },
+      "expectations": 5,
+      "name": "stagedProducerOwnershipSurvivesUnresolvedAndOutgoingCallbacks",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 920,
+        "gitBlob": "97e1245d33b0e0f5e7a5ab603c1a78e6671a1547",
+        "sha256": "f23117e3366458bfeaf6a70e67fadceaffdc1118943f273de3b52ca4faa0705a"
+      },
+      "expectations": 2,
+      "name": "deferredReadinessRechecksResizeAndCanRecoverAtTheNewViewport",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 1253,
+        "gitBlob": "99ee1e49ec69103c86b2eb8593bc2677e0d785b9",
+        "sha256": "19f1424573f6bec29b4a483ea7e2d7f20a903604301bda84d7d9247fc731ec69"
+      },
+      "expectations": 6,
+      "name": "settledPositionReadsTheCurrentOffsetWithoutMutatingTheViewport",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 2149,
+        "gitBlob": "475faebe8efb70598893fa916826232f958e6e71",
+        "sha256": "e09e8c9045cd5ecf967bdd384e9bff73dbdd4171b71ab12950218de7d545445b"
+      },
+      "expectations": 11,
+      "name": "diagnosticPeekCannotAdvanceGenerationOrCancelPendingReadiness",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 1161,
+        "gitBlob": "12b5af8080e1fee9c265f7ca690a6f30b11e9f66",
+        "sha256": "4a1784700244fd0d330ef620ee3f3e00703be9a598131ec2bc0e4ce6fd326d77"
+      },
+      "expectations": 2,
+      "name": "incomingBindingBeforeActivationDoesNotNeedAnotherBridgeCallback",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 3970,
+        "gitBlob": "a677c6071ff6db4ebf93c0461b5df7a1e8b09baf",
+        "sha256": "a108c16825d291c8bdd49d43590976281a758ef52e6e46023e0ec47063c02901"
+      },
+      "expectations": 12,
+      "name": "postLayoutReadReconcilesLazyContentAtTheSameOffsetWithoutAnotherIdle",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 2136,
+        "gitBlob": "69fa8b3b661319c86df171cac5ded0068cc028dc",
+        "sha256": "6e38bfa93eb3df67d4bdf11f6a8bb873c847f935f98ac2d3bd98a9c5f2101ba2"
+      },
+      "expectations": 4,
+      "name": "olderFittingNativePositionCannotCancelAlreadyAdmittedGrowth",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 1610,
+        "gitBlob": "beaed5c1c36f8e17622516cea51fb4be0e0a1ee7",
+        "sha256": "cd352c50dec85d44aa40e565ca7b03c64ae65dc4e4337231ef420d64a2ff2203"
+      },
+      "expectations": 4,
+      "name": "postLayoutReadRejectsStaleViewportAndConversation",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 2991,
+        "gitBlob": "b651dd9926054d35d7dc3bb27cd21ce3f8f0e89a",
+        "sha256": "7411fcc65e6a71a7eaedaf1751553503a4e7d54094636039879ab311723b9c26"
+      },
+      "expectations": 10,
+      "name": "bindingBoundReadsDeliverTheLatestResizeOnceWithoutAnotherNotification",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 2549,
+        "gitBlob": "a0f6205797f3f5bebce706cbc59f4871d6c81f60",
+        "sha256": "8541abc11d40d07a44a4e85bb1bc5b04169c3f90ba672c80034f9901cb9a7b7b"
+      },
+      "expectations": 3,
+      "name": "bindingBoundWorkStillRejectsEveryNativeOwnerReplacement",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 2753,
+        "gitBlob": "12f7364cd36e1d761050ec83a8fd8cebb0dda628",
+        "sha256": "d0c4043cf87666006dd075cef756c81d4bcedd41205384fd3b67d7aa2652406a"
+      },
+      "expectations": 6,
+      "name": "coalescedFollowUsesFreshSameBindingLayoutWithoutResumingManualReading",
+      "parameterized": false
+    }
+  ],
+  "internalLoopsAreNotSeparateSwiftTestingCases": true,
+  "newMethods": [
+    {
+      "declaration": {
+        "bytes": 2991,
+        "gitBlob": "b651dd9926054d35d7dc3bb27cd21ce3f8f0e89a",
+        "sha256": "7411fcc65e6a71a7eaedaf1751553503a4e7d54094636039879ab311723b9c26"
+      },
+      "expectations": 10,
+      "name": "bindingBoundReadsDeliverTheLatestResizeOnceWithoutAnotherNotification",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 2549,
+        "gitBlob": "a0f6205797f3f5bebce706cbc59f4871d6c81f60",
+        "sha256": "8541abc11d40d07a44a4e85bb1bc5b04169c3f90ba672c80034f9901cb9a7b7b"
+      },
+      "expectations": 3,
+      "name": "bindingBoundWorkStillRejectsEveryNativeOwnerReplacement",
+      "parameterized": false
+    },
+    {
+      "declaration": {
+        "bytes": 2753,
+        "gitBlob": "12f7364cd36e1d761050ec83a8fd8cebb0dda628",
+        "sha256": "d0c4043cf87666006dd075cef756c81d4bcedd41205384fd3b67d7aa2652406a"
+      },
+      "expectations": 6,
+      "name": "coalescedFollowUsesFreshSameBindingLayoutWithoutResumingManualReading",
+      "parameterized": false
+    }
+  ],
+  "original20OrderedPrefixUnchanged": true,
+  "originalDonor": "abd1434f8674fd58129c93be5bf33933eda48e1d",
+  "originalDonorTree": "421e2209c6f76d6f7a6cfd730471d65bcc7f595c",
+  "originalImportedModule": "AI_Hanlin",
+  "originalTarget": "AI_HLYTests",
+  "parameterizedCases": false,
+  "sameTwoCompilerSourceFiles": true,
+  "schema": "hanlin-original-uikit23-source-inventory/v1",
+  "selectedCases": 23,
+  "selectedMethods": 23,
+  "selectors": [
+    "AI_HLYTests/ChatScrollViewHandleTests/positiveGeometryWithoutAWindowCannotPositionATranscript()",
+    "AI_HLYTests/ChatScrollViewHandleTests/everyReadRechecksWindowDimensionsAndConversation()",
+    "AI_HLYTests/ChatScrollViewHandleTests/detachAndReplacementInvalidateCapturedRequestsWithoutRetainingViews()",
+    "AI_HLYTests/ChatScrollViewHandleTests/lateWindowAttachmentDeliversOneDeferredReadinessCallback()",
+    "AI_HLYTests/ChatScrollViewHandleTests/cancelledReadinessCannotRestoreAPreviousConversation()",
+    "AI_HLYTests/ChatScrollViewHandleTests/resizedViewportRejectsARequestBeforeTheNextBridgeCallback()",
+    "AI_HLYTests/ChatScrollViewHandleTests/movingTheSameScrollViewToAnotherWindowInvalidatesQueuedPositioning()",
+    "AI_HLYTests/ChatScrollViewHandleTests/contentGrowthAndUserScrollingKeepTheViewportLifetime()",
+    "AI_HLYTests/ChatScrollViewHandleTests/outgoingConversationCallbacksCannotUnbindOrCancelTheCurrentViewport()",
+    "AI_HLYTests/ChatScrollViewHandleTests/sameConversationProducerReplacementOwnsDetachAndPendingCallbacks()",
+    "AI_HLYTests/ChatScrollViewHandleTests/stagedProducerOwnershipSurvivesUnresolvedAndOutgoingCallbacks()",
+    "AI_HLYTests/ChatScrollViewHandleTests/deferredReadinessRechecksResizeAndCanRecoverAtTheNewViewport()",
+    "AI_HLYTests/ChatScrollViewHandleTests/settledPositionReadsTheCurrentOffsetWithoutMutatingTheViewport()",
+    "AI_HLYTests/ChatScrollViewHandleTests/diagnosticPeekCannotAdvanceGenerationOrCancelPendingReadiness()",
+    "AI_HLYTests/ChatScrollViewHandleTests/incomingBindingBeforeActivationDoesNotNeedAnotherBridgeCallback()",
+    "AI_HLYTests/ChatScrollViewHandleTests/postLayoutReadReconcilesLazyContentAtTheSameOffsetWithoutAnotherIdle()",
+    "AI_HLYTests/ChatScrollViewHandleTests/olderFittingNativePositionCannotCancelAlreadyAdmittedGrowth()",
+    "AI_HLYTests/ChatScrollViewHandleTests/postLayoutReadRejectsStaleViewportAndConversation()",
+    "AI_HLYTests/ChatAutoFollowTests/equalVisibilitySamplesDoNotInvalidateTheTranscriptOrExternalComposer()",
+    "AI_HLYTests/ChatAutoFollowTests/fittingAndInvalidatedSamplesDoNotPublishRepeatedHiddenArrowState()",
+    "AI_HLYTests/ChatScrollViewHandleTests/bindingBoundReadsDeliverTheLatestResizeOnceWithoutAnotherNotification()",
+    "AI_HLYTests/ChatScrollViewHandleTests/bindingBoundWorkStillRejectsEveryNativeOwnerReplacement()",
+    "AI_HLYTests/ChatScrollViewHandleTests/coalescedFollowUsesFreshSameBindingLayoutWithoutResumingManualReading()"
+  ],
+  "sourceFiles": [
+    {
+      "bytes": 36681,
+      "gitBlob": "ad2e0f75f296eedc39399d03c098c36164a2744c",
+      "originalLocalPath": "/workspace/scratch/ae335eba85e3/hanlin-g27-native-binding-review/primary/abd1434f8674fd58129c93be5bf33933eda48e1d/AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "path": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "sha256": "6618623245564706cc3bb377f6f54f7c7e1eba66ddc602989e72ec69a80eeed4"
+    },
+    {
+      "bytes": 17730,
+      "gitBlob": "6ea844380327a127e174f095ed38d9ece93433eb",
+      "originalLocalPath": "/workspace/scratch/ae335eba85e3/hanlin-scroll-producer-ownership-review/uikit20-complete-scope/originals/ChatAutoFollowTests.swift",
+      "path": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "sha256": "f035c0ad0df4abf9888189273738b7054d99e21d98fc3ee0c68456d8e8a71597"
+    }
+  ],
+  "sourceProjectionOnly": true,
+  "status": "NOT_RUN"
+}
