@@ -142,6 +142,7 @@ struct HanlinDualWidgetEnginesTests {
                 event["phase"] = phase
                 event["at"] = Date().timeIntervalSince1970
                 event["pid"] = ProcessInfo.processInfo.processIdentifier
+                event["isMainThread"] = Thread.isMainThread
                 var bytes = try JSONSerialization.data(withJSONObject: event, options: [.sortedKeys])
                 bytes.append(0x0a)
                 if !FileManager.default.fileExists(atPath: stagesFile.path) {
