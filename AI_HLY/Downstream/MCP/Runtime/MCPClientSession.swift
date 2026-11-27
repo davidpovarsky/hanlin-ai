@@ -57,7 +57,7 @@ actor MCPClientSession {
         guard case .object(let object) = try JSONDecoder().decode(Value.self, from: data) else {
             throw MCPError.invalidPackageSpec
         }
-        try HanlinHostSchemaValidation.requireSameValue(
+        try HanlinHostSchemaValidation.requireSameMCPWireValue(
             originalJSON: data, projectedJSON: JSONEncoder().encode(object)
         )
         return object

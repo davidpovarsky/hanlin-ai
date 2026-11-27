@@ -1,0 +1,176 @@
+{
+  "schema": 1,
+  "classification": "PORTABLE_SOURCE_AND_ARITHMETIC_ONLY",
+  "nativeStatus": "NOT_RUN",
+  "metricCount": 49,
+  "parseUnchanged": 44,
+  "comparisonUnchanged": 46,
+  "sourceInverse": true,
+  "cases": [
+    {
+      "operation": "parse",
+      "counts": [
+        0
+      ],
+      "modelAdmitted": true,
+      "detail": {
+        "inputBytes": 0,
+        "stringBytes": 0,
+        "aggregateTextBytes": 0,
+        "retainedBytes": 16777216,
+        "workUnits": 8000000
+      }
+    },
+    {
+      "operation": "parse",
+      "counts": [
+        1
+      ],
+      "modelAdmitted": true,
+      "detail": {
+        "inputBytes": 1,
+        "stringBytes": 1,
+        "aggregateTextBytes": 1,
+        "retainedBytes": 16777219,
+        "workUnits": 8000006
+      }
+    },
+    {
+      "operation": "parse",
+      "counts": [
+        1048576
+      ],
+      "modelAdmitted": true,
+      "detail": {
+        "inputBytes": 1048576,
+        "stringBytes": 1048576,
+        "aggregateTextBytes": 1048576,
+        "retainedBytes": 19922944,
+        "workUnits": 14291456
+      }
+    },
+    {
+      "operation": "parse",
+      "counts": [
+        12000039
+      ],
+      "modelAdmitted": true,
+      "detail": {
+        "inputBytes": 12000039,
+        "stringBytes": 12000039,
+        "aggregateTextBytes": 12000039,
+        "retainedBytes": 52777333,
+        "workUnits": 80000234
+      }
+    },
+    {
+      "operation": "parse",
+      "counts": [
+        3074457345612666196
+      ],
+      "modelAdmitted": true,
+      "detail": {
+        "inputBytes": 3074457345612666196,
+        "stringBytes": 3074457345612666196,
+        "aggregateTextBytes": 3074457345612666196,
+        "retainedBytes": 9223372036854775804,
+        "workUnits": 18446744073683997176
+      }
+    },
+    {
+      "operation": "parse",
+      "counts": [
+        3074457345612666197
+      ],
+      "modelAdmitted": false,
+      "detail": "invalid finite capacity: retainedBytes"
+    },
+    {
+      "operation": "parse",
+      "counts": [
+        9223372036854775807
+      ],
+      "modelAdmitted": false,
+      "detail": "checked UInt64 multiplication overflow"
+    },
+    {
+      "operation": "parse",
+      "counts": [
+        -1
+      ],
+      "modelAdmitted": false,
+      "detail": "unrepresentable nonnegative Int byte count"
+    },
+    {
+      "operation": "compare",
+      "counts": [
+        0,
+        0
+      ],
+      "modelAdmitted": true,
+      "detail": {
+        "stringBytes": 0,
+        "aggregateTextBytes": 0,
+        "workUnits": 8000000
+      }
+    },
+    {
+      "operation": "compare",
+      "counts": [
+        1,
+        1
+      ],
+      "modelAdmitted": true,
+      "detail": {
+        "stringBytes": 1,
+        "aggregateTextBytes": 2,
+        "workUnits": 8000004
+      }
+    },
+    {
+      "operation": "compare",
+      "counts": [
+        12000039,
+        12000043
+      ],
+      "modelAdmitted": true,
+      "detail": {
+        "stringBytes": 12000043,
+        "aggregateTextBytes": 24000082,
+        "workUnits": 56000164
+      }
+    },
+    {
+      "operation": "compare",
+      "counts": [
+        3074457345612666196,
+        3074457345612666196
+      ],
+      "modelAdmitted": true,
+      "detail": {
+        "stringBytes": 3074457345612666196,
+        "aggregateTextBytes": 6148914691225332392,
+        "workUnits": 12297829382458664784
+      }
+    },
+    {
+      "operation": "compare",
+      "counts": [
+        9223372036854775806,
+        9223372036854775806
+      ],
+      "modelAdmitted": false,
+      "detail": "checked UInt64 multiplication overflow"
+    },
+    {
+      "operation": "compare",
+      "counts": [
+        0,
+        -1
+      ],
+      "modelAdmitted": false,
+      "detail": "unrepresentable nonnegative Int byte count"
+    }
+  ],
+  "meaning": "Mathematical bounds and source shape, not Swift execution or parser acceptance."
+}

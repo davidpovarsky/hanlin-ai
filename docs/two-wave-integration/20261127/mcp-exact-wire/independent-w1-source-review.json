@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w1_review_resume",
+  "recordedAtUTC": "2026-11-27T15:13:08.878574+00:00",
+  "decision": "APPROVED_FOR_ORIGINAL_NATIVE_QUALIFICATION",
+  "sourcePatchSHA256": "0437b690eae2e20ed1bea8862ffdc0ca585d767e2e50050e663a5d7a200a47ee",
+  "sources": [
+    {
+      "path": "AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift",
+      "beforeSHA256": "3496fc24615db8e482aa6b62fc210d916c0b6b3ad28056875df50f9d96ec0bd9",
+      "afterSHA256": "3b331e200237598147def7fed0875b3b5ae62a5581ba85da09a4d6c4b058fc13",
+      "bytes": 7251
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostSchemaValidation.swift",
+      "beforeSHA256": "0b8d1e3ff747b156d73a7bb67e80f95fc348ae9269f8dd3ae40a702d9da57432",
+      "afterSHA256": "622c7380bb066002a48bb46e6c76a6f919c41060392d891ac17c34f411b1a040",
+      "bytes": 12292
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HostMCPWireComparisonTests.swift",
+      "beforeSHA256": null,
+      "afterSHA256": "bbcae5565bdcbc7eba72c7d5c272eac5227af9106f00c50589901013f22830c7",
+      "bytes": 9813
+    }
+  ],
+  "sourceChecks": {
+    "entireOriginalHostValidationRecoveredByOneAdditiveInverse": true,
+    "entireMCPCallerRecoveredByOneMethodNameInverse": true,
+    "newNativeMethods": 11,
+    "noTestsExecutedByReviewer": true
+  },
+  "reviewedContract": [
+    "The new exact wire comparison applies only to the caller-owned original MCP argument document and its actual MCP.Value re-encoding; it does not replace schema or consent admission.",
+    "All existing parsing/schema/consent/metadata-removal API bodies are byte-identical; the new comparison exposes no metadata-removal parameter.",
+    "Both parse policies and the comparison policy are checked before parsing. Every conversion, multiplication and addition used for the input-derived budgets is checked; no saturation or unlimited mode is introduced.",
+    "The actual pinned JSONLimits.validate independently validates every metric and does not impose a cross-metric minimum that would reject smaller valid wire documents. Addressable capacities remain below Int.max and cumulative quotas below UInt64.max.",
+    "Pinned parser input-copy/scanning/string retention and comparison admission/textEquals behavior support the separate finite ledgers and conservative byte-linear allowances. Structural/numeric/key/cancellation quotas stay unchanged.",
+    "Cancellation checks remain before, between and after pinned operations. Every field including metadata is compared by the existing exact decimal/scalar implementation.",
+    "The 11 new controls retain the original >8 MiB Hebrew/emoji shape, a mutation at its tail, scalar/number/type/metadata/syntax fidelity, original resource limits, cancellation, old 1 MiB boundary and all49 policy fields."
+  ],
+  "limits": [
+    "Native Swift compilation, budget sufficiency and all11 test outcomes remain NOT_RUN.",
+    "The unchanged original real MCP transport/renderer/store acceptance remains required within its original two-minute ceiling.",
+    "The resource formulas bound the three independent JSON ledgers; they are not a process RSS or preexisting Foundation/MCP allocation bound."
+  ]
+}

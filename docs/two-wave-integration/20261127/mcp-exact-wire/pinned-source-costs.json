@@ -1,0 +1,58 @@
+[
+  {
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Codec/JSONLexer.swift",
+    "sha256": "0bfe86c1044068dfa5481b219ca85e9713e307494dd5818b056219b8f7157edf"
+  },
+  {
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Codec/JSONParser.swift",
+    "sha256": "9cf5f49d6902d4b837249415a8981f1d9da16f9c6f1dc56e8f68821e1788fee9"
+  },
+  {
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Codec/JSONParsingOptions.swift",
+    "sha256": "bc524c7443e1503235fed3344e67c74d74c9eeb804d4a45052944223c6313278"
+  },
+  {
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Codec/JSONTokenMachine.swift",
+    "sha256": "200a84cd2f4173ec42fb27a8b71d16f2e21c6f268c8ba851cdc78a5ca633ac71"
+  },
+  {
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Errors/JSONFailure.swift",
+    "sha256": "5937e7c9053734c3efe6e837df7b939a7b8840024370c8d85b9b2aca74ebdce3"
+  },
+  {
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Limits/JSONLimits.swift",
+    "sha256": "4d1fbd123f0e36867ca5d61c2d9c56a7475e022ea2ca692353fbf127d8d90935"
+  },
+  {
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Limits/JSONWorkMeter.swift",
+    "sha256": "01eafd1d592f7d0de4770075366c6c49145c5617052ba86a368ba6503b974905"
+  },
+  {
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Number/DecimalComponents.swift",
+    "sha256": "218b42a151efc078af9bf19236b057ac1954ba945f96af789269cb66706935fb"
+  },
+  {
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Number/JSONNumber.swift",
+    "sha256": "d981ecaaa6ca0e9db513020eb44521c53dc28662c51a173565c31fb6eca3d8f7"
+  },
+  {
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONComparison.swift",
+    "sha256": "b7e2766ee075385b6d18e7bfeb4f0d9b5a9d7b8fc4b54e3f0cb1086064bdfa18"
+  },
+  {
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONExactKeyIndex.swift",
+    "sha256": "0c1d712ebdec398192cdd2200f4996aed132563b23eee8ba2a307796852dcfb2"
+  },
+  {
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONFingerprint.swift",
+    "sha256": "afc4df472eaae6f6979a7b6caa113bc327e4f2213da359ff8cd9d8300ba03b3d"
+  },
+  {
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONKey.swift",
+    "sha256": "2b3760d60ba265a975dcf4eb8277269a3fa069e25d4ef2105a7b94e64620b3ce"
+  },
+  {
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONObject.swift",
+    "sha256": "a418915f32a4c17cc1ebec6f21ae2e53c955e294e209cdfa130704dd4c14a9db"
+  }
+]

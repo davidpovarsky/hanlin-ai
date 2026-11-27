@@ -78,6 +78,72 @@ public struct HanlinHostSchemaValidation: Sendable {
         try Task.checkCancellation()
     }
 
+    /// Compare already-owned MCP wire documents without changing schema/consent limits.
+    /// Every value, including metadata, must survive the wire SDK's projection exactly.
+    /// Each parser and the comparator has its own finite, input-derived ledger; the
+    /// original structural, numeric, key and cancellation limits still apply.
+    public static func requireSameMCPWireValue(originalJSON: Data, projectedJSON: Data) throws {
+        try Task.checkCancellation()
+        let originalLimits = try mcpWireParseLimits(inputByteCount: originalJSON.count)
+        let projectedLimits = try mcpWireParseLimits(inputByteCount: projectedJSON.count)
+        let comparisonLimits = try mcpWireComparisonLimits(
+            originalByteCount: originalJSON.count, projectedByteCount: projectedJSON.count
+        )
+        let original = try JSONParser(options: .init(limits: originalLimits)).parse(originalJSON)
+        try Task.checkCancellation()
+        let projection = try JSONParser(options: .init(limits: projectedLimits)).parse(projectedJSON)
+        try Task.checkCancellation()
+        guard try JSONComparison.equals(original, projection, limits: comparisonLimits) else {
+            throw Failure.lossyProjection
+        }
+        try Task.checkCancellation()
+    }
+
+    // Internal policy construction permits boundary checks without allocating huge inputs.
+    // These are logical parser budgets, not limits on caller-owned Data or process RSS.
+    static func mcpWireParseLimits(inputByteCount: Int) throws -> JSONLimits {
+        let bytes = try mcpWireByteCount(inputByteCount)
+        var bounded = limits
+        bounded[.inputBytes] = bytes
+        bounded[.stringBytes] = bytes
+        bounded[.aggregateTextBytes] = bytes
+        // Owned input, decoded text, and the transient closing-string copy.
+        bounded[.retainedBytes] = try mcpWireBudget(base: bounded[.retainedBytes], bytes: bytes, factor: 3)
+        // Input copy/scan, closing-string copy, escape output, and two key fingerprints.
+        // The original residual work quota still bounds structural/collision overhead.
+        bounded[.workUnits] = try mcpWireBudget(base: bounded[.workUnits], bytes: bytes, factor: 6)
+        try bounded.validate()
+        return bounded
+    }
+
+    static func mcpWireComparisonLimits(originalByteCount: Int, projectedByteCount: Int) throws -> JSONLimits {
+        let originalBytes = try mcpWireByteCount(originalByteCount)
+        let projectedBytes = try mcpWireByteCount(projectedByteCount)
+        let (combinedBytes, overflow) = originalBytes.addingReportingOverflow(projectedBytes)
+        guard !overflow else { throw Failure.inputTooLarge }
+        var bounded = limits
+        bounded[.stringBytes] = max(originalBytes, projectedBytes)
+        // JSONComparison admits BOTH values into its one comparison ledger.
+        bounded[.aggregateTextBytes] = combinedBytes
+        // Both admissions plus exact text/key comparison; no owned text copy here.
+        bounded[.workUnits] = try mcpWireBudget(base: bounded[.workUnits], bytes: combinedBytes, factor: 2)
+        try bounded.validate()
+        return bounded
+    }
+
+    private static func mcpWireByteCount(_ count: Int) throws -> UInt64 {
+        guard let bytes = UInt64(exactly: count) else { throw Failure.inputTooLarge }
+        return bytes
+    }
+
+    private static func mcpWireBudget(base: UInt64, bytes: UInt64, factor: UInt64) throws -> UInt64 {
+        let (scaled, multiplicationOverflow) = bytes.multipliedReportingOverflow(by: factor)
+        guard !multiplicationOverflow else { throw Failure.inputTooLarge }
+        let (total, additionOverflow) = base.addingReportingOverflow(scaled)
+        guard !additionOverflow else { throw Failure.inputTooLarge }
+        return total
+    }
+
     /// The portable DTO deliberately uses binary64 numbers. Prove that it is the
     /// deterministic projection of the retained original; it is never an executor input.
     /// Exact original-schema and original-to-executor comparisons remain mandatory.
