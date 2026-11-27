@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "scope": "Only the repaired body-framing part of the original portable CONNECT fixture control; actual two responses read completely",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/scratch/d49eec8920ef/w2-http/framing-repair/check_actual_response_bodies.py"
+  ],
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "startedAtUnix": 1795768042.4950347,
+  "finishedAtUnix": 1795768042.6268578,
+  "sourceSHA256": "c5846466716970ab7c4a1b5c2cd970e36a7d09cbedbc8a52417144fa6569a905",
+  "fixtureSHA256": "fcb456ecf862ec591208f007640983c6b5efc5352dc61bb9100d1628bc5d9c2a",
+  "originalNativeFailureStageSHA256": "896e72a7e418a654e1f93b24b58d7d3956f47736ab812e787c2855ccb3820621",
+  "checks": [
+    {
+      "path": "/limits/within-limit",
+      "status": 200,
+      "declaredBytes": 2097152,
+      "actualBytes": 2097152,
+      "actualSHA256": "6932fd31e5daf4739b9fa78ff777b2831b0995cc1d0b0093cac80601902013bc"
+    },
+    {
+      "path": "/limits/large",
+      "status": 200,
+      "declaredBytes": 2097153,
+      "actualBytes": 2097153,
+      "actualSHA256": "71ac24a75f6bc57bc51b43b3d13c3009aa243986b77a92102a3097c9e53123e9"
+    }
+  ],
+  "error": null,
+  "nativeSwiftSelector": "NOT_RUN",
+  "URLSessionAndOriginalResourceLimitAssertion": "NOT_RUN",
+  "wireSHA256": "df18719ee6e609cb4a05856015b41ec301caf5d20116684204dedb91f848b9cf"
+}

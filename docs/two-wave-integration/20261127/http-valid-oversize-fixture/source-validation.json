@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "author": "/root/w2_source_resume",
+  "base": "0f86ce7b7204ea64af4c792b7b0be2e1bbc3d5c2",
+  "actualNativeDiagnosticSource": "b84d5ffb1c52361ac884a967f13e5500efe3d232",
+  "sourcePath": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+  "beforeSHA256": "519cb2c41cf1835b30d9e82da54703c3ca844668686b1d933cb49a1bc2f8f974",
+  "candidateSHA256": "c5846466716970ab7c4a1b5c2cd970e36a7d09cbedbc8a52417144fa6569a905",
+  "fixtureSHA256": "fcb456ecf862ec591208f007640983c6b5efc5352dc61bb9100d1628bc5d9c2a",
+  "reason": "The actual original native selector reaches limits:/large and fails with network-connection-lost. Its server declared 2097153 Content-Length and closed without sending a body; the original test correctly requires the original runtime's specific resource-limit error. Send genuine oversize bytes through the existing normal response writer so a valid oversized response is available for the unchanged native policy to reject.",
+  "preserved": [
+    "All source bytes outside the five-to-two-line Python fixture framing replacement",
+    "Every original #expect and JavaScript assertion, including exact resource-limit error text",
+    "Original JavaScriptCore session, callback queue, Promise, URLSession, domain policy, request/response budgets and timeouts",
+    "Existing diagnostics, real CONNECT proxy ownership, server/client cleanup and retained original native failure"
+  ],
+  "sourceOnlyScope": "Test fixture source correction. No production source or pins changed; sole test path is outside the established SDK producer input closure.",
+  "nativeEvidence": {
+    "selector": "HanlinDualWidgetEnginesTests/originalScriptWidgetHTTPUsesBoundedRealTransport",
+    "status": "FAIL on original source519cb2c4; corrected candidate NOT_RUN",
+    "wallSeconds": 1.18,
+    "phase": "limits:/large",
+    "message": "The network connection was lost.",
+    "actualRecordedExecutionTimeout": 5,
+    "allStagesMainThread": false,
+    "logSHA256": "f626e542c74bb90e727799c49af7ecf6e2b3d739f40972967095c3292adcceef",
+    "stagesSHA256": "896e72a7e418a654e1f93b24b58d7d3956f47736ab812e787c2855ccb3820621",
+    "wireSHA256": "7ae0e61c8f575260623a990f1418b9f5ac87aa54933f920a2f14292698687d19",
+    "earlierFullSuiteTimeout": "8.282-second wall duration, stage unknown because earlier cleanup removed evidence. Its cause is not proven identical by this later diagnostic."
+  },
+  "portable": {
+    "status": "PASS",
+    "scope": "Only actual body-framing portion of original portable fixture control, using two real CONNECT requests and complete byte reads",
+    "actualResponseBytes": [
+      2097152,
+      2097153
+    ],
+    "receiptSHA256": "6891ae20ff35abaf661e3b831a4bc901f713741a8c73161a8525701ced6f4152",
+    "wireSHA256": "df18719ee6e609cb4a05856015b41ec301caf5d20116684204dedb91f848b9cf",
+    "sourceTransferPreflight": "First local extraction had an extra trailing newline and failed its exact fixture hash guard before any server execution. Raw failure retained; transfer normalized to exact authoritative extracted bytes. Candidate source never changed."
+  },
+  "artifacts": [
+    {
+      "path": "portable-framing-r1/extracted-proxy.py",
+      "bytes": 2702,
+      "sha256": "fcb456ecf862ec591208f007640983c6b5efc5352dc61bb9100d1628bc5d9c2a"
+    },
+    {
+      "path": "portable-framing-r1/check_actual_response_bodies.py",
+      "bytes": 3611,
+      "sha256": "2f7b35eaa14c73f1977b9e02522bf827992c1b8d5b69c693893331108de5b909"
+    },
+    {
+      "path": "portable-framing-r1/check.stdout",
+      "bytes": 1503,
+      "sha256": "6891ae20ff35abaf661e3b831a4bc901f713741a8c73161a8525701ced6f4152"
+    },
+    {
+      "path": "portable-framing-r1/check.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "portable-framing-r1/actual-wire/server.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "portable-framing-r1/actual-wire/port",
+      "bytes": 5,
+      "sha256": "cb496b8846a4c98f121a4ffef3ae19fecf915937438f0efd1b3c8b8c43c4c2ea"
+    },
+    {
+      "path": "portable-framing-r1/actual-wire/wire.jsonl",
+      "bytes": 670,
+      "sha256": "df18719ee6e609cb4a05856015b41ec301caf5d20116684204dedb91f848b9cf"
+    },
+    {
+      "path": "portable-framing-r1/actual-wire/server.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "portable-framing-r1/actual-wire/receipt.json",
+      "bytes": 1503,
+      "sha256": "6891ae20ff35abaf661e3b831a4bc901f713741a8c73161a8525701ced6f4152"
+    },
+    {
+      "path": "portable-framing-r1/source-transfer-preflight-r0/check.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "portable-framing-r1/source-transfer-preflight-r0/check.stderr",
+      "bytes": 334,
+      "sha256": "cb7a0829b88830bacc74ee330886cf23498eb9a3fd46a54ac66ecddc05b163c1"
+    },
+    {
+      "path": "original-native-diagnostic/server.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original-native-diagnostic/port",
+      "bytes": 5,
+      "sha256": "2c2029e3a7a42456b8ebe540f0af971f3025c9c8e8338e996daf82af2706fc8f"
+    },
+    {
+      "path": "original-native-diagnostic/wire.jsonl",
+      "bytes": 11089,
+      "sha256": "7ae0e61c8f575260623a990f1418b9f5ac87aa54933f920a2f14292698687d19"
+    },
+    {
+      "path": "original-native-diagnostic/native-stages.jsonl",
+      "bytes": 6669,
+      "sha256": "896e72a7e418a654e1f93b24b58d7d3956f47736ab812e787c2855ccb3820621"
+    },
+    {
+      "path": "original-native-diagnostic/server.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original-native-diagnostic/controller.json",
+      "bytes": 5987,
+      "sha256": "e65338a0fa8ebe0ce789493e0bc7b7f77c4fc200e8d50cb5321ef36b5a0931c5"
+    },
+    {
+      "path": "original-native-diagnostic/original-http-selector.log",
+      "bytes": 6952,
+      "sha256": "f626e542c74bb90e727799c49af7ecf6e2b3d739f40972967095c3292adcceef"
+    }
+  ],
+  "nativeAndURLSessionOnCorrectedSource": "NOT_RUN; original selector and full original suite remain Mac-owned acceptance",
+  "recordedAtUTC": "2026-11-27T08:29:57.599Z"
+}

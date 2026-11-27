@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/scratch/d49eec8920ef/w2-http/framing-repair/check_actual_response_bodies.py", line 18, in <module>
+    assert hashlib.sha256(SCRIPT.read_bytes()).hexdigest() == EXPECTED_FIXTURE_SHA
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

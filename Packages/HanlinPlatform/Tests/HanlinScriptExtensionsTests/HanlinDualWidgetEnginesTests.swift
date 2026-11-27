@@ -215,11 +215,8 @@ struct HanlinDualWidgetEnginesTests {
                         self.send_response(302)
                         self.send_header('Location', 'file:///etc/hosts')
                         self.send_header('Content-Length', '0'); self.end_headers(); return
-                    if path.endswith('/large'):
-                        self.send_response(200)
-                        self.send_header('Content-Length', str(2*1024*1024+1))
-                        self.end_headers(); self.close_connection = True; return
-                    if path.endswith('/within-limit'): data = b'x' * (2*1024*1024)
+                    if path.endswith('/large'): data = b'x' * (2*1024*1024+1)
+                    elif path.endswith('/within-limit'): data = b'x' * (2*1024*1024)
                     elif path.endswith('/binary'): data = bytes([0,127,255])
                     else: data = json.dumps({'method': self.command, 'body': body,
                         'header': self.headers.get('X-Widget'), 'type': self.headers.get('Content-Type')}).encode()

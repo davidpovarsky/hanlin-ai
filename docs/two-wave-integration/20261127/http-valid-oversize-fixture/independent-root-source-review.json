@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "reviewer": "/root",
+  "assessment": "APPROVED_EXACT_TEST_FIXTURE_SOURCE_CORRECTION_FOR_ORIGINAL_NATIVE_RETRY",
+  "candidateSHA256": "c5846466716970ab7c4a1b5c2cd970e36a7d09cbedbc8a52417144fa6569a905",
+  "originalSHA256": "519cb2c41cf1835b30d9e82da54703c3ca844668686b1d933cb49a1bc2f8f974",
+  "actualReview": "Reviewed actual 1,224-byte patch and original/candidate hashes on Oracle. Approve exactly the /large real-body + elif two-line fixture correction. Original runtime/assertions/deadline preserved; framing receipt remains fixture-only qualification.",
+  "attribution": "Actual collaboration message from /root to /root/w2_source_resume in this session; no review or execution inferred.",
+  "nativeValidation": "Corrected source NOT_RUN. Mac owner retains sole native execution authority.",
+  "recordedAtUTC": "2026-11-27T08:30:24.994Z"
+}
