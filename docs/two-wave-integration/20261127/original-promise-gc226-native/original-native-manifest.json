@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "status": "TWO_NATIVE_METHODS_FAILED_ONLY_IMMEDIATE_GC_NONRELEASE_ASSERTIONS",
+  "source": "226e7cfcc60a9ace99241f009d3586b9cea7e65e",
+  "members": [
+    {
+      "path": "validation/original-promise-gc-226e7cfc-r1/controller.json",
+      "bytes": 9671,
+      "sha256": "b1374e33e7ab4f4659016873f48d96eb6f81958282f77808c5aea5bd24f0dc12"
+    },
+    {
+      "path": "validation/original-promise-gc-226e7cfc-r1/original-promise-gc-selector.log",
+      "bytes": 8459,
+      "sha256": "5a5fd692cff911c95fe7cfc0fb440aca69e905371389b0059e62509b669e94a9"
+    },
+    {
+      "path": "run-original-promise-gc-226e7cfc.py",
+      "bytes": 14494,
+      "sha256": "6a529d1a9ca6a1fec6a840a7d3323d9941a42651ac5fbdb44ef4d4f55421aa5e"
+    },
+    {
+      "path": "promise-gc-226e7cfc-launch.json",
+      "bytes": 312,
+      "sha256": "bb790d38ffb3250c7b21f0f11dd18b590ac0f9c300db7af4a0b2a1c6862e8638"
+    },
+    {
+      "path": "promise-gc-226e7cfc-supervisor.log",
+      "bytes": 1755,
+      "sha256": "059e08350f67e0c37489261877976553f1b31790327a2dee8aaf98a9dfc04e93"
+    },
+    {
+      "path": "source-stage-226e7cfc-r1.json",
+      "bytes": 2783,
+      "sha256": "678db8ffd18e5af0686440b9dacb1b44eed0f2bc1109e65215f82141421abff4"
+    },
+    {
+      "path": "import-226e7cfc/root-promise-gc-compiler-fix-integrated.json",
+      "bytes": 1002,
+      "sha256": "ec5f656d2a5db43a379ee51acbc8152b9537308210d76490d9262fe5d3c48342"
+    },
+    {
+      "path": "import-226e7cfc/bundle-verification.log",
+      "bytes": 308,
+      "sha256": "8be4fb9f62fabc2792698a40f6f3cd78c04398e37c6aa062a79cb50c1f2d6257"
+    },
+    {
+      "path": "import-226e7cfc/bundle-fetch.log",
+      "bytes": 163,
+      "sha256": "e3b6e9184360b3c4ce487b368c62b487c53ea8a85a45f496a3a7ce61b74e4002"
+    },
+    {
+      "path": "import-226e7cfc/source-stage.log",
+      "bytes": 9582,
+      "sha256": "84ac3563c5aa6a64cf51fd966f180f7a77c709306c10ff049e51e30768bb3188"
+    },
+    {
+      "path": "import-226e7cfc/exact-test-only.diff",
+      "bytes": 1401,
+      "sha256": "bf7627a772e1b2007dbb62b34e41e3ec8ee45b805381d9811f97707ea0583c32"
+    },
+    {
+      "path": "source/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalPromiseLifetimeTests.swift",
+      "bytes": 8419,
+      "sha256": "65e0f9cb4d9063922bfa92717ff89cdd5b5d9a5220bf40fdc323fd04d8651147"
+    },
+    {
+      "path": "handoff/original-promise-gc-226e7cfc-native-baseline/observation-assessment.json",
+      "bytes": 6263,
+      "sha256": "58d0dc559c666fbe385d23801b40501f9ada68f7f1099c07312fc2c8b1b110c3"
+    },
+    {
+      "path": "source/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
+      "bytes": 3750,
+      "sha256": "13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5"
+    },
+    {
+      "path": "source/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+      "bytes": 17207,
+      "sha256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3"
+    },
+    {
+      "path": "source/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift",
+      "bytes": 16248,
+      "sha256": "f7b50ceacdf034833c92554a769fe692abebe296b87e55091e7a2fb09146d9da"
+    },
+    {
+      "path": "validation/original-promise-gc-226e7cfc-r1/native/original-promise-cancel-pending-299F93AE-CF60-4031-8BD0-26FD6B8B7E05.jsonl",
+      "bytes": 433,
+      "sha256": "69bb7f726bd0dbc8cb8bb28ccd40662041a28b1c2a1b1c2f73f89bceb8751957"
+    },
+    {
+      "path": "validation/original-promise-gc-226e7cfc-r1/native/original-promise-pending-gc-73F0AC7D-221E-498D-9412-DDFA4210E723.jsonl",
+      "bytes": 666,
+      "sha256": "6b0efddbe5cee51bb50186788b6c94f751d7320d8eac6fc3deefc3259c804f25"
+    }
+  ],
+  "count": 18,
+  "rawBytes": 102916,
+  "at": 1795772080.976705
+}
