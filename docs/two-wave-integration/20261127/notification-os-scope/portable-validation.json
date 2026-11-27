@@ -1,0 +1,118 @@
+{
+  "schema": 1,
+  "sourceCommit": "658d80215f9c6b3c5b84311cf79a796375f0bdad",
+  "executionType": "PORTABLE_ADMISSION_CONTROLS_ONLY",
+  "executions": [
+    {
+      "checkpoint": "portable-r1",
+      "pythonCommand": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/CI/Tests",
+        "-p",
+        "test_notification_os_scope.py",
+        "-v"
+      ],
+      "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+      "startedAtUTC": "2026-11-27T12:43:23.478163+00:00",
+      "finishedAtUTC": "2026-11-27T12:43:24.398715+00:00",
+      "controllerSeconds": 0.9205418573692441,
+      "unittestSeconds": 0.418,
+      "exitCode": 1,
+      "testMethods": 13,
+      "passedMethods": 12,
+      "failedMethods": 0,
+      "erroredMethods": 1,
+      "skippedMethods": 0,
+      "inputSHA256": {
+        "Scripts/ProductSplit/run_native_acceptance.py": "c0015605e04679acf18f8deb57eba51fb3d42e2592e9735ccae79d86a88aa375",
+        "Scripts/CI/Tests/test_notification_os_scope.py": "fcd2a4304349388625ef4c2a1ac59bcb3a18ba98e69c1f6b9e9b23b46297d0d8",
+        "Scripts/ProductSplit/verify_targets.py": "7d98c480a0a9866115527277abd093e897671705a6164e86b5952e00093c1602",
+        "Scripts/ProductSplit/simulator_entitlements.py": "aa1cfcd4f371dd25a637bc56ab281ef94f8bcdcc2bb415b9125dd0b0aa0b27a8",
+        "Scripts/ProductSplit/extension_inventory.py": "969011d17099fada7c7010528579ec8b3a256b8c7bb25fcfd609789e800068a8",
+        "Scripts/CI/IntegrationValidation/project_graph.py": "b55b15a969fb438d32f78db491e65ea51d755019d3f2d563e61e1cffe9f9afbd"
+      },
+      "rawReceiptSHA256": "16cac8fd6ea79568aacd6d0bfb97d41ac170c6b2d3ee61a215b9663570fc4833",
+      "rawStdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawStderrSHA256": "fe2dba73c158a858d1b2368e4561cd80a1e05786e63954802fa1c6188ecbea7f"
+    },
+    {
+      "checkpoint": "portable-r2",
+      "pythonCommand": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/CI/Tests",
+        "-p",
+        "test_notification_os_scope.py",
+        "-v"
+      ],
+      "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+      "startedAtUTC": "2026-11-27T12:44:14.706601+00:00",
+      "finishedAtUTC": "2026-11-27T12:44:15.432909+00:00",
+      "controllerSeconds": 0.7262856503948569,
+      "unittestSeconds": 0.331,
+      "exitCode": 0,
+      "testMethods": 13,
+      "passedMethods": 13,
+      "failedMethods": 0,
+      "erroredMethods": 0,
+      "skippedMethods": 0,
+      "inputSHA256": {
+        "Scripts/ProductSplit/run_native_acceptance.py": "2df1c3710a6d32237e8f68f1e1b17466dfc2221cefeaa18443301b3d10fc2f5a",
+        "Scripts/CI/Tests/test_notification_os_scope.py": "fcd2a4304349388625ef4c2a1ac59bcb3a18ba98e69c1f6b9e9b23b46297d0d8",
+        "Scripts/ProductSplit/verify_targets.py": "7d98c480a0a9866115527277abd093e897671705a6164e86b5952e00093c1602",
+        "Scripts/ProductSplit/simulator_entitlements.py": "aa1cfcd4f371dd25a637bc56ab281ef94f8bcdcc2bb415b9125dd0b0aa0b27a8",
+        "Scripts/ProductSplit/extension_inventory.py": "969011d17099fada7c7010528579ec8b3a256b8c7bb25fcfd609789e800068a8",
+        "Scripts/CI/IntegrationValidation/project_graph.py": "b55b15a969fb438d32f78db491e65ea51d755019d3f2d563e61e1cffe9f9afbd"
+      },
+      "rawReceiptSHA256": "bd61a74e82c8cb49d6e119c7ad859c04de031cf4fa579aee9d7ac26038dbec1e",
+      "rawStdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawStderrSHA256": "c343844f40ae9dd9a27633821790ebac846ae600ac57afefb1bed142cbdcc4b3"
+    },
+    {
+      "checkpoint": "portable-r3",
+      "pythonCommand": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/CI/Tests",
+        "-p",
+        "test_notification_os_scope.py",
+        "-v"
+      ],
+      "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+      "startedAtUTC": "2026-11-27T12:51:22.686542+00:00",
+      "finishedAtUTC": "2026-11-27T12:51:23.229815+00:00",
+      "controllerSeconds": 0.5432703997939825,
+      "unittestSeconds": 0.265,
+      "exitCode": 0,
+      "testMethods": 14,
+      "passedMethods": 14,
+      "failedMethods": 0,
+      "erroredMethods": 0,
+      "skippedMethods": 0,
+      "inputSHA256": {
+        "Scripts/ProductSplit/run_native_acceptance.py": "b10f64e508e512b4099dba2fab430dca915287d46c8afa5b6d472994965d316b",
+        "Scripts/CI/Tests/test_notification_os_scope.py": "d4837d2817ccbc67b1d4311c82993f3fdf4317709e52c7f3e6aafd5e8d86968d",
+        "Scripts/ProductSplit/verify_targets.py": "7d98c480a0a9866115527277abd093e897671705a6164e86b5952e00093c1602",
+        "Scripts/ProductSplit/simulator_entitlements.py": "aa1cfcd4f371dd25a637bc56ab281ef94f8bcdcc2bb415b9125dd0b0aa0b27a8",
+        "Scripts/ProductSplit/extension_inventory.py": "969011d17099fada7c7010528579ec8b3a256b8c7bb25fcfd609789e800068a8",
+        "Scripts/CI/IntegrationValidation/project_graph.py": "b55b15a969fb438d32f78db491e65ea51d755019d3f2d563e61e1cffe9f9afbd"
+      },
+      "rawReceiptSHA256": "5c79ec8771f164aa3336b841fa69fad2d24311e1f329e636d22736c1e0bd34ef",
+      "rawStdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawStderrSHA256": "49a927020a9774e8587d82fe87388fdf8ab8e8e18b691deb33979bf969fcef22"
+    }
+  ],
+  "r1Explanation": "Malformed UUID was already rejected; normalize its ValueError to the admission API RuntimeError without weakening the negative control.",
+  "r3Explanation": "Add one meaningful owned-child-exit and independent-cleanup-error/receipt-persistence method; all thirteen earlier method ASTs unchanged.",
+  "nativeOrSimulatorExecution": false
+}

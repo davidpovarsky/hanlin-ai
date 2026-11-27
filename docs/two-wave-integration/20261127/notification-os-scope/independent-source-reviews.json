@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "sourceCommit": "658d80215f9c6b3c5b84311cf79a796375f0bdad",
+  "sourceSHA256": {
+    "Scripts/ProductSplit/run_native_acceptance.py": "b10f64e508e512b4099dba2fab430dca915287d46c8afa5b6d472994965d316b",
+    "Scripts/CI/Tests/test_notification_os_scope.py": "d4837d2817ccbc67b1d4311c82993f3fdf4317709e52c7f3e6aafd5e8d86968d"
+  },
+  "recordedBy": "/root/w1_review_resume",
+  "attribution": "The named independent agents transmitted these source-review assessments through collaboration; the author did not execute an independent review of its own changes.",
+  "reviews": [
+    {
+      "reviewer": "/root",
+      "status": "APPROVED_SOURCE_ONLY_FOR_ORIGINAL_NATIVE_RETRY",
+      "reviewed": "Complete notification delta, all thirteen initial controls, final cleanup delta and fourteenth race/error-persistence control, original Swift UUID/schema/assertions, and actual runner/MCM/three-fixture contract evidence.",
+      "constraints": "Preserve original worker/UI/three old plans and 600/650/1200 bounds. Native result is NOT_RUN."
+    },
+    {
+      "reviewer": "/root/w2_source_resume",
+      "status": "APPROVED_SOURCE_ONLY_FOR_ORIGINAL_NATIVE_RETRY",
+      "reviewed": "Full initial source checkpoint plus exact cleanup delta577873f1a5c787898c655a12a90e556c9a120f693f1e0ae320cdddeba863baed; independently recomputed final two source hashes.",
+      "finding": "ESRCH reaps only the same owned child. Each cleanup runs independently, and cleanup/log errors retain a failing controller status and receipt. The additional control preserves all thirteen previous method bodies.",
+      "testsExecutedByReviewer": false
+    }
+  ],
+  "nativeExecution": "NOT_RUN"
+}
