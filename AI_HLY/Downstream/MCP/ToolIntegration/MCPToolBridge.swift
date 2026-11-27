@@ -40,13 +40,17 @@ enum MCPToolBridge {
         serverID: UUID,
         toolName: String,
         resultTitle: String,
-        argumentsJSON: String
+        argumentsJSON: String,
+        expectedDescriptor: MCPToolDescriptor? = nil,
+        beforeDispatch: (@Sendable () async throws -> Void)? = nil
     ) async -> NativeToolResult {
         do {
             let output = try await MCPRuntimeProvider.shared.controller.call(
                 serverID: serverID,
                 toolName: toolName,
-                argumentsJSON: argumentsJSON
+                argumentsJSON: argumentsJSON,
+                expectedDescriptor: expectedDescriptor,
+                beforeDispatch: beforeDispatch
             )
             await MCPRuntimeProvider.shared.synchronizeRuntimeState()
             return render(output, title: resultTitle)

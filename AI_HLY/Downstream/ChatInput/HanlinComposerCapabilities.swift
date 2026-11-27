@@ -6,6 +6,7 @@ import HanlinPlatformContracts
 /// start a MiniApp, connect an MCP server, run a Skill, or change preferences.
 @MainActor
 enum HanlinComposerCapabilities {
+    #if !HANLIN_ASSISTANT_CAPABILITIES_SDK
     static func messageText(for row: ChatMessages) -> String {
         let text = row.text ?? ""
         guard row.role == "user", let data = row.capabilityAttachmentsData,
@@ -58,6 +59,40 @@ enum HanlinComposerCapabilities {
                 configuration: group.toolEntries.compactMap(\.composerConfiguration).first))
         }
         result += HanlinMiniAppAssistantToolExports.descriptors()
+        result += assistantCatalog()
+        #if DEBUG || HANLIN_TESTING
+        if ProcessInfo.processInfo.environment["HANLIN_COMPOSER_CAPABILITY_UI_FIXTURES"] == "1" {
+            // UI-only data for real control gestures. No executor, network call,
+            // runtime-success marker or replacement product behavior is installed.
+            result.append(.init(reference: .init(kind: .tool, sourceID: "hanlin.ui.acceptance", capabilityID: "library-region"),
+                title: "Composer Catalog & Map", systemImage: "map",
+                configuration: .init(panels: [
+                    .init(id: "catalog", title: "Catalog", fields: [
+                        .init(key: "collections", title: "Collections", kind: .catalog,
+                              defaultValue: .array([.string("tanakh")]), options: [
+                                .init(id: "tanakh", title: "Tanakh"), .init(id: "talmud", title: "Talmud")])
+                    ]),
+                    .init(id: "region", title: "Region", fields: [
+                        .init(key: "location", title: "Search area", kind: .location, required: true,
+                              defaultValue: .object(["latitude": .number(31.78), "longitude": .number(35.23), "radiusMeters": .integer(1000)]),
+                              minimum: 100, maximum: 20000)
+                    ])
+                ])))
+        }
+        #endif
+        return result.sorted {
+            let order = $0.title.localizedStandardCompare($1.title)
+            return order == .orderedSame ? $0.id < $1.id : order == .orderedAscending
+        }
+    }
+
+    #else
+    static func catalog() -> [HanlinComposerCapabilityDescriptor] { assistantCatalog() }
+    #endif
+
+    /// Original Skills and MCP metadata; no runtime or tool is started here.
+    static func assistantCatalog() -> [HanlinComposerCapabilityDescriptor] {
+        var result: [HanlinComposerCapabilityDescriptor] = []
         let skills = HanlinSkillCatalog.shared
         for skill in skills.allSkills() where SkillStore.shared.isSkillEnabled(id: skill.id) {
             // A changed installed skill must be reselected instead of silently
@@ -79,26 +114,6 @@ enum HanlinComposerCapabilities {
                     systemImage: "server.rack"))
             }
         }
-        #if DEBUG || HANLIN_TESTING
-        if ProcessInfo.processInfo.environment["HANLIN_COMPOSER_CAPABILITY_UI_FIXTURES"] == "1" {
-            // UI-only data for real control gestures. No executor, network call,
-            // runtime-success marker or replacement product behavior is installed.
-            result.append(.init(reference: .init(kind: .tool, sourceID: "hanlin.ui.acceptance", capabilityID: "library-region"),
-                title: "Composer Catalog & Map", systemImage: "map",
-                configuration: .init(panels: [
-                    .init(id: "catalog", title: "Catalog", fields: [
-                        .init(key: "collections", title: "Collections", kind: .catalog,
-                              defaultValue: .array([.string("tanakh")]), options: [
-                                .init(id: "tanakh", title: "Tanakh"), .init(id: "talmud", title: "Talmud")])
-                    ]),
-                    .init(id: "region", title: "Region", fields: [
-                        .init(key: "location", title: "Search area", kind: .location, required: true,
-                              defaultValue: .object(["latitude": .number(31.78), "longitude": .number(35.23), "radiusMeters": .integer(1000)]),
-                              minimum: 100, maximum: 20000)
-                    ])
-                ])))
-        }
-        #endif
         return result.sorted {
             let order = $0.title.localizedStandardCompare($1.title)
             return order == .orderedSame ? $0.id < $1.id : order == .orderedAscending
@@ -146,6 +161,7 @@ enum HanlinComposerCapabilities {
         return scope
     }
 
+    #if !HANLIN_ASSISTANT_CAPABILITIES_SDK
     static func explicitNativeNames(in attachments: [HanlinCapabilityAttachment]) -> Set<String> {
         let catalog = NativeToolCatalog.shared
         var names = Set<String>()
@@ -174,4 +190,5 @@ enum HanlinComposerCapabilities {
         guard !names.isEmpty else { return [] }
         return LegacyToolCanonicalAdapter.sources().filter { names.contains($0.toolName) }
     }
+    #endif
 }

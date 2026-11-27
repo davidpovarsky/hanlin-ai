@@ -229,7 +229,9 @@ actor MCPRuntimeController {
     func call(
         serverID: UUID,
         toolName: String,
-        argumentsJSON: String
+        argumentsJSON: String,
+        expectedDescriptor: MCPToolDescriptor? = nil,
+        beforeDispatch: (@Sendable () async throws -> Void)? = nil
     ) async throws -> MCPToolCallOutput {
         guard let server = try await registry.load().first(where: {
             $0.id == serverID
@@ -259,9 +261,12 @@ actor MCPRuntimeController {
         ) else {
             throw MCPError.toolNotFound
         }
+        if let expectedDescriptor, expectedDescriptor != descriptor { throw MCPError.toolNotFound }
         return try await session.call(
             name: descriptor.originalName,
-            argumentsJSON: argumentsJSON
+            argumentsJSON: argumentsJSON,
+            expectedDescriptor: expectedDescriptor,
+            beforeDispatch: beforeDispatch
         )
     }
 

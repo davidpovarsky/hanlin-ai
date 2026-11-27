@@ -29,8 +29,15 @@ enum HanlinToolApprovalScopeFactory {
         let environment: [MCPEnvironmentVariable]
     }
 
+    #if !HANLIN_ASSISTANT_CAPABILITIES_SDK
     static func scope(for invocation: HanlinHostInvocation, tool: HanlinHostTool,
                       adapter: HanlinAISDKToolAdapter?) throws -> HanlinToolApprovalScope? {
+        try scope(for: invocation, tool: tool, source: adapter)
+    }
+    #endif
+
+    static func scope(for invocation: HanlinHostInvocation, tool: HanlinHostTool,
+                      source: (any HanlinOriginalToolSource)?) throws -> HanlinToolApprovalScope? {
         let descriptor = tool.descriptor
         let policy = descriptor.approvalPolicy
         guard policy.requiresConsent(arguments: invocation.request.arguments, risk: descriptor.risk) else { return nil }
@@ -43,7 +50,7 @@ enum HanlinToolApprovalScopeFactory {
             descriptor: descriptor,
             originalInputSchema: tool.originalInputSchemaJSON,
             providerConfigurationFingerprint: try providerFingerprint(
-                logicalID: descriptor.logicalID, alias: invocation.request.aliasUsed, identityFields: identityFields, adapter: adapter
+                logicalID: descriptor.logicalID, alias: invocation.request.aliasUsed, identityFields: identityFields, source: source
             )
         )
         let permissions = PermissionIdentity(
@@ -63,9 +70,8 @@ enum HanlinToolApprovalScopeFactory {
     }
 
     private static func providerFingerprint(logicalID: HanlinLogicalToolID, alias: String,
-                                            identityFields: [String: String], adapter: HanlinAISDKToolAdapter?) throws -> String {
-        let backend = adapter?.preparedTools.authority.resolution(alias: alias)?.backend
-        if case .mcp(let serverID, _) = backend {
+                                            identityFields: [String: String], source: (any HanlinOriginalToolSource)?) throws -> String {
+        if let serverID = source?.mcpServerID(for: alias) {
             guard let server = MCPRuntimeProvider.shared.servers.first(where: { $0.id == serverID }) else {
                 throw HanlinHostError.staleContext
             }

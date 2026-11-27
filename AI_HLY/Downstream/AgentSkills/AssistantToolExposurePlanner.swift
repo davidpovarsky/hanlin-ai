@@ -69,3 +69,68 @@ public struct AssistantToolExposurePlanner: Sendable {
         )
     }
 }
+
+extension AssistantToolExposurePlanner {
+    /// Original per-step ordering and optional schema budget from the native
+    /// adapter, also used when original services are embedded by another host.
+    @MainActor
+    static func activeAliases(session: AssistantCapabilitySession,
+                              sizes: [String: Int], mcpAliases: [String],
+                              supportsReportProgress: Bool = false,
+                              maxActiveStepSchemaBytes: Int? = nil) -> [String] {
+        var aliases: [String] = [
+            LoadSkillTool.toolName,
+            ReadSkillResourceTool.toolName,
+            ToolSearchTool.toolName,
+            ReadToolResultTool.toolName
+        ]
+        if supportsReportProgress {
+            aliases.append(ToolSchemaDecorator.reportProgressName)
+        }
+
+        var currentBytes = aliases.reduce(0) { $0 + (sizes[$1] ?? 350) }
+
+        // Priority order for exposed tools:
+        // 1. Capabilities explicitly attached to this request
+        // 2. Active MCP server tools (mcp__*)
+        // 3. Most recently discovered tools via tool_search (reversed)
+        // 4. Active skill preferred tool hints and remaining exposed tools
+        var prioritizedCandidates: [String] = []
+        prioritizedCandidates.append(contentsOf: session.explicitlySelectedToolAliases.sorted())
+        for alias in mcpAliases.sorted() where session.exposedToolAliases.contains(alias) {
+            if !prioritizedCandidates.contains(alias) {
+                prioritizedCandidates.append(alias)
+            }
+        }
+        for alias in session.discoveredToolAliases.reversed() where session.exposedToolAliases.contains(alias) {
+            if !prioritizedCandidates.contains(alias) {
+                prioritizedCandidates.append(alias)
+            }
+        }
+        for alias in session.activeSkillToolHints.sorted() where session.exposedToolAliases.contains(alias) {
+            if !prioritizedCandidates.contains(alias) {
+                prioritizedCandidates.append(alias)
+            }
+        }
+        for alias in session.exposedToolAliases.sorted() {
+            if !prioritizedCandidates.contains(alias) {
+                prioritizedCandidates.append(alias)
+            }
+        }
+
+        for alias in prioritizedCandidates {
+            guard sizes[alias] != nil,
+                  !aliases.contains(alias) else {
+                continue
+            }
+            let toolBytes = sizes[alias] ?? 400
+            if let budget = maxActiveStepSchemaBytes, currentBytes + toolBytes > budget && aliases.count > 6,
+               !session.explicitlySelectedToolAliases.contains(alias) {
+                continue
+            }
+            aliases.append(alias)
+            currentBytes += toolBytes
+        }
+        return aliases
+    }
+}

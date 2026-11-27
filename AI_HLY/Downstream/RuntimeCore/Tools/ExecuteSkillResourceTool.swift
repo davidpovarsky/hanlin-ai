@@ -32,22 +32,7 @@ struct ExecuteSkillResourceTool: NativeTool {
         )
     }
 
-    func openAIToolSchema() -> [String: Any] {
-        NativeToolSchema.function(
-            name: name,
-            description: "Execute a script resource (such as a Python or JavaScript helper) belonging to an active skill package. Scripts run locally within the application sandbox. Path traversal outside the skill package is prohibited.",
-            parameters: NativeToolSchema.object(
-                properties: [
-                    "skill_id": NativeToolSchema.string(description: "The unique identifier of the active skill."),
-                    "relative_path": NativeToolSchema.string(description: "Relative path to the executable script inside the skill package (e.g. 'scripts/search.py')."),
-                    "arguments": NativeToolSchema.stringArray(description: "Command-line arguments after the script name: sys.argv[1:] in Python and process.argv.slice(2) in Node/TypeScript."),
-                    "engine": NativeToolSchema.string(description: "Explicit original engine: node, typeScript, localPython, javaScriptCore or shell. Omit to use the declared resource-language route; availability is always checked."),
-                    "timeout_seconds": NativeToolSchema.integer(description: "Optional deadline in seconds. Omit for no deadline; user cancellation and actual errors still stop execution.", minimum: 1)
-                ],
-                required: ["skill_id", "relative_path"]
-            )
-        )
-    }
+    func openAIToolSchema() -> [String: Any] { SkillResourceExecutor.schema }
 
     func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
         await SkillResourceExecutor(catalog: catalog, store: store).execute(

@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import HanlinLocalization
+import HanlinHostContracts
 
 /// Component hosts use the same process-owned runtime and public MCP facade.
 /// The owner must be the app's retained shared owner, reused across its windows.
@@ -25,6 +26,25 @@ public final class HanlinAssistantServices {
     public func handleScenePhase(_ phase: ScenePhase) async {
         await RuntimeLifecycleBridge.handleScenePhase(phase)
     }
+
+    public func makeConversationHost(identity: HanlinHostSession,
+        validateCurrent: @escaping @MainActor @Sendable () throws -> Void,
+        consent: HanlinAppToolConsent) -> HanlinAssistantConversationHost {
+        HanlinAssistantConversationHost(identity: identity,
+            validateCurrent: validateCurrent, consent: consent)
+    }
+}
+
+@MainActor
+public struct HanlinMCPSettingsView: View {
+    public init() {}
+    public var body: some View { MCPServersSettingsView() }
+}
+
+@MainActor
+public struct HanlinSkillCenterView: View {
+    public init() {}
+    public var body: some View { SkillCenterView() }
 }
 
 /// Original management screens retain their original stores, installer,

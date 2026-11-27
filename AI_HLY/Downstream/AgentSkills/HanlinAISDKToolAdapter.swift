@@ -71,6 +71,7 @@ final class HanlinAISDKToolAdapter {
     /// Transient observers on the existing execution path. They never execute a tool.
     var sdkProgressHandlers: [String: @MainActor @Sendable (String) -> Void] = [:]
     var sdkPreDispatchHandlers: [String: @MainActor @Sendable (String) throws -> Void] = [:]
+    var sdkPreDispatchFailureHandlers: [String: @MainActor @Sendable (Error) -> Void] = [:]
     var sdkOutcomeHandlers: [String: @MainActor @Sendable (NativeToolExecutionOutcome) -> Void] = [:]
     var maxActiveStepSchemaBytes: Int? = nil
 
@@ -177,61 +178,10 @@ final class HanlinAISDKToolAdapter {
     /// Evaluates currently active tool aliases for model exposure in the next step,
     /// enforcing a per-step active schema byte budget so prompt token overhead stays bounded.
     func currentActiveToolAliases() -> [String] {
-        var aliases: [String] = [
-            LoadSkillTool.toolName,
-            ReadSkillResourceTool.toolName,
-            ToolSearchTool.toolName,
-            ReadToolResultTool.toolName
-        ]
-        if supportsReportProgress {
-            aliases.append(ToolSchemaDecorator.reportProgressName)
-        }
-
-        let sizes = preparedTools.schemaSizes()
-        var currentBytes = aliases.reduce(0) { $0 + (sizes[$1] ?? 350) }
-
-        // Priority order for exposed tools:
-        // 1. Capabilities explicitly attached to this request
-        // 2. Active MCP server tools (mcp__*)
-        // 3. Most recently discovered tools via tool_search (reversed)
-        // 4. Active skill preferred tool hints and remaining exposed tools
-        var prioritizedCandidates: [String] = []
-        prioritizedCandidates.append(contentsOf: session.explicitlySelectedToolAliases.sorted())
-        for alias in preparedTools.mcpAliases.sorted() where session.exposedToolAliases.contains(alias) {
-            if !prioritizedCandidates.contains(alias) {
-                prioritizedCandidates.append(alias)
-            }
-        }
-        for alias in session.discoveredToolAliases.reversed() where session.exposedToolAliases.contains(alias) {
-            if !prioritizedCandidates.contains(alias) {
-                prioritizedCandidates.append(alias)
-            }
-        }
-        for alias in session.activeSkillToolHints.sorted() where session.exposedToolAliases.contains(alias) {
-            if !prioritizedCandidates.contains(alias) {
-                prioritizedCandidates.append(alias)
-            }
-        }
-        for alias in session.exposedToolAliases.sorted() {
-            if !prioritizedCandidates.contains(alias) {
-                prioritizedCandidates.append(alias)
-            }
-        }
-
-        for alias in prioritizedCandidates {
-            guard preparedTools.authority.schemasByAlias[alias] != nil,
-                  !aliases.contains(alias) else {
-                continue
-            }
-            let toolBytes = sizes[alias] ?? 400
-            if let budget = maxActiveStepSchemaBytes, currentBytes + toolBytes > budget && aliases.count > 6,
-               !session.explicitlySelectedToolAliases.contains(alias) {
-                continue
-            }
-            aliases.append(alias)
-            currentBytes += toolBytes
-        }
-        return aliases
+        AssistantToolExposurePlanner.activeAliases(session: session,
+            sizes: preparedTools.schemaSizes(), mcpAliases: preparedTools.mcpAliases,
+            supportsReportProgress: supportsReportProgress,
+            maxActiveStepSchemaBytes: maxActiveStepSchemaBytes)
     }
 
     /// Generates step preparation metadata for `HanlinAISDKAgentEngine` and binds diagnostics round.
@@ -862,39 +812,11 @@ final class HanlinAISDKToolAdapter {
 
         sdkOutcomeHandlers[callID]?(result.outcome)
 
-        var modelText = result.modelText
-        let userText = result.userText ?? result.modelText
-        var resultRef: String? = nil
-        var embeddedPayload = result.embeddedPayload
-
-        // Large result store handling
-        let shouldStore = result.fullResultPayload != nil
-            || (result.isStoreEligible && result.modelText.utf8.count > 1024)
-        if shouldStore {
-            let payloadToStore = result.fullResultPayload ?? result.modelText
-            let mimeType = result.fullResultMIMEType ?? "text/plain"
-            if let ref = session.resultStore.store(payloadToStore, mimeType: mimeType) {
-                resultRef = ref
-                if let currentPayload = embeddedPayload {
-                    embeddedPayload = HanlinEmbeddedResultPayload(
-                        payload: currentPayload.payload,
-                        resultReference: ref,
-                        title: currentPayload.title,
-                        metadata: currentPayload.metadata,
-                        ownerID: currentPayload.ownerID,
-                        actions: currentPayload.actions
-                    )
-                }
-                modelText = """
-                [Large result stored behind reference: \(ref) (\(payloadToStore.utf8.count) bytes)]
-                Summary: \(String(result.modelText.prefix(200)))
-                To inspect or paginate this result, call `read_tool_result(reference: "\(ref)", offset: 0, limit: 4096)`.
-                """
-            } else {
-                // A storage resource error must not silently replace the full result with a summary.
-                modelText = "[Full result could not be persisted: \(session.resultStore.lastStorageError ?? "explicit storage budget exceeded")]\n" + payloadToStore
-            }
-        }
+        let stored = HanlinOriginalToolResultStorage.prepare(result, session: session)
+        let modelText = stored.modelText
+        let userText = stored.userText
+        let resultRef = stored.resultReference
+        let embeddedPayload = stored.embeddedPayload
 
         var effectiveUIBlocks = result.uiBlocks
         let isSuccess = result.outcome.isSuccess

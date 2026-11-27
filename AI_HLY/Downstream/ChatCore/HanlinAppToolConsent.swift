@@ -6,25 +6,26 @@ import HanlinAgentCore
 /// Live consent for a verified scope. A remembered host grant is independent of
 /// conversation history; provider-only requests remain one-use.
 @MainActor @Observable
-final class HanlinAppToolConsent {
-    struct Request: Identifiable {
-        let id: UUID
-        let tool: String
-        let canonicalRunID: UUID
-        let providerCallID: String
-        let originalArgumentsJSON: Data?
-        let providerApprovalID: String?
+public final class HanlinAppToolConsent {
+    public struct Request: Identifiable {
+        public let id: UUID
+        public let tool: String
+        public let canonicalRunID: UUID
+        public let providerCallID: String
+        public let originalArgumentsJSON: Data?
+        public let providerApprovalID: String?
         let approvalScope: HanlinToolApprovalScope?
-        var remembersDecision: Bool { approvalScope != nil }
-        var activityID: String { providerApprovalID ?? id.uuidString }
+        public var remembersDecision: Bool { approvalScope != nil }
+        public var activityID: String { providerApprovalID ?? id.uuidString }
     }
-    private(set) var pending: Request?
+    public private(set) var pending: Request?
     @ObservationIgnored var onChange: ((Request, Bool?) -> Void)?
     @ObservationIgnored private var continuation: CheckedContinuation<Bool, Never>?
     @ObservationIgnored private var deadlineTask: Task<Void, Never>?
     @ObservationIgnored private let grants: HanlinToolApprovalStore
 
-    init(grants: HanlinToolApprovalStore = .shared) { self.grants = grants }
+    public convenience init() { self.init(grants: .shared) }
+    init(grants: HanlinToolApprovalStore) { self.grants = grants }
 
     func request(_ invocation: HanlinHostInvocation, approvalScope: HanlinToolApprovalScope) async -> Bool {
         guard !Task.isCancelled else { return false }
@@ -36,7 +37,7 @@ final class HanlinAppToolConsent {
             deadline: invocation.request.deadline)
     }
 
-    func request(_ approval: HanlinAgentToolApproval) async -> Bool {
+    public func request(_ approval: HanlinAgentToolApproval) async -> Bool {
         await request(.init(id: UUID(), tool: approval.request.toolName,
             canonicalRunID: approval.runID, providerCallID: approval.request.toolCallID,
             originalArgumentsJSON: Data(approval.request.argumentsJSON.utf8),
@@ -65,7 +66,7 @@ final class HanlinAppToolConsent {
         }
     }
 
-    func answer(id: UUID, allowed: Bool) {
+    public func answer(id: UUID, allowed: Bool) {
         guard let pending, pending.id == id else { return }
         let accepted: Bool
         if allowed, let scope = pending.approvalScope {
@@ -80,7 +81,7 @@ final class HanlinAppToolConsent {
         reply?.resume(returning: accepted)
     }
 
-    func revoke() {
+    public func revoke() {
         if let pending { answer(id: pending.id, allowed: false) }
     }
 }

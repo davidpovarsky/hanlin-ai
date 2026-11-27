@@ -1,13 +1,28 @@
 import SwiftUI
 
-struct MCPChatServerSheet: View {
+public struct MCPChatServerSheet: View {
     let chatID: UUID
     let temporary: Bool
     let onSelectionChanged: (Int) -> Void
+    private let service: HanlinApplicationMCP?
     @State private var provider = MCPRuntimeProvider.shared
     @State private var selected: Set<UUID> = []
+    @State private var selectionError: String?
 
-    var body: some View {
+    init(chatID: UUID, temporary: Bool, onSelectionChanged: @escaping (Int) -> Void) {
+        self.chatID = chatID; self.temporary = temporary
+        self.onSelectionChanged = onSelectionChanged; self.service = nil
+    }
+
+    /// Uses the original validated facade, so a retained embedding sheet cannot
+    /// admit new selection writes after its conversation owner is revoked.
+    public init(service: HanlinApplicationMCP, conversationID: UUID,
+                onSelectionChanged: @escaping (Int) -> Void) {
+        self.chatID = conversationID; self.temporary = false
+        self.onSelectionChanged = onSelectionChanged; self.service = service
+    }
+
+    public var body: some View {
         NavigationStack {
             List {
                 Section {
@@ -25,9 +40,7 @@ struct MCPChatServerSheet: View {
                         Toggle(isOn: Binding(
                             get: { selected.contains(server.id) },
                             set: { enabled in
-                                var next = selected
-                                if enabled { next.insert(server.id) } else { next.remove(server.id) }
-                                update(next)
+                                update(server.id, enabled: enabled)
                             }
                         )) {
                             VStack(alignment: .leading) {
@@ -43,12 +56,21 @@ struct MCPChatServerSheet: View {
                     }
                 }
                 Section { NavigationLink(MCPL10n.string("Open MCP settings")) { MCPServersSettingsView() } }
+                if let selectionError {
+                    Section { Text(selectionError).foregroundStyle(.secondary) }
+                }
             }
             .navigationTitle(MCPL10n.string("MCP Servers"))
             .task {
-                await provider.loadIfNeeded()
-                selected = await provider.selection(chatID: chatID, temporary: temporary)
-                onSelectionChanged(selected.count)
+                do {
+                    if let service {
+                        selected = try await service.selectedServers(for: chatID)
+                    } else {
+                        await provider.loadIfNeeded()
+                        selected = await provider.selection(chatID: chatID, temporary: temporary)
+                    }
+                    onSelectionChanged(selected.count)
+                } catch { selectionError = error.localizedDescription }
             }
         }
     }
@@ -59,9 +81,39 @@ struct MCPChatServerSheet: View {
     }
 
     private func update(_ next: Set<UUID>) {
+        if let service {
+            let intents = available.map { ($0.id, next.contains($0.id)) }
+            Task {
+                do {
+                    for (id, enabled) in intents {
+                        try Task.checkCancellation()
+                        selected = try await service.setServer(id, selected: enabled, for: chatID)
+                    }
+                    selectionError = nil
+                    onSelectionChanged(selected.count)
+                } catch { selectionError = error.localizedDescription }
+            }
+            return
+        }
         selected = next
         onSelectionChanged(next.count)
         Task { await provider.setSelection(next, chatID: chatID, temporary: temporary) }
+    }
+
+    private func update(_ id: UUID, enabled: Bool) {
+        guard let service else {
+            var next = selected
+            if enabled { next.insert(id) } else { next.remove(id) }
+            update(next)
+            return
+        }
+        Task {
+            do {
+                selected = try await service.setServer(id, selected: enabled, for: chatID)
+                selectionError = nil
+                onSelectionChanged(selected.count)
+            } catch { selectionError = error.localizedDescription }
+        }
     }
 
     private func statusText(for server: MCPServerDescriptor) -> String {

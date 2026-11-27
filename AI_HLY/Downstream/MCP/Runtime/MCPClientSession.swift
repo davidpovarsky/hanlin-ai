@@ -63,13 +63,20 @@ actor MCPClientSession {
         return object
     }
 
-    func call(name: String, argumentsJSON: String) async throws -> MCPToolCallOutput {
+    func call(name: String, argumentsJSON: String,
+              expectedDescriptor: MCPToolDescriptor? = nil,
+              beforeDispatch: (@Sendable () async throws -> Void)? = nil) async throws -> MCPToolCallOutput {
         let arguments = try Self.checkedArguments(argumentsJSON)
         // The pinned SDK's async convenience returns a tuple that discards
         // structuredContent. Its public RequestContext preserves the full result.
         let owner = RuntimeUserOperation.current
         try owner?.checkInterruption()
         try Task.checkCancellation()
+        if let expectedDescriptor, !tools.contains(expectedDescriptor) { throw MCPError.toolNotFound }
+        try await beforeDispatch?()
+        try owner?.checkInterruption()
+        try Task.checkCancellation()
+        if let expectedDescriptor, !tools.contains(expectedDescriptor) { throw MCPError.toolNotFound }
         let context: RequestContext<CallTool.Result> = try await client.callTool(name: name, arguments: arguments)
         let client = client
         let interruption = owner?.registerInterruption { reason in

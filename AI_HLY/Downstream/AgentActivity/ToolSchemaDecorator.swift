@@ -1,7 +1,6 @@
 // Original shared implementation is owned by the SDK.
 import HanlinAgentActivityCore
 
-typealias ProgressSummarySanitizer = HanlinAgentActivityCore.ProgressSummarySanitizer
 //
 //  ToolSchemaDecorator.swift
 //  AI_HLY
@@ -9,11 +8,7 @@ typealias ProgressSummarySanitizer = HanlinAgentActivityCore.ProgressSummarySani
 
 import Foundation
 
-enum ToolSchemaDecorator {
-    static let progressSummaryKey = "progress_summary"
-    static let resultPresentationKey = "result_presentation"
-    static let reportProgressName = "report_progress"
-
+extension ToolSchemaDecorator {
     static let resultPresentationModelInstruction = "When a tool supports result_presentation, use \"card\" only when a visual or interactive result would be useful to the user, such as a source card, entity card, map, calendar item, code output, or an item the user may want to open or copy. Otherwise omit the field or use \"none\". Do not request a card when the final text answer is sufficient."
 
     private static var progressSummarySchema: [String: Any] {

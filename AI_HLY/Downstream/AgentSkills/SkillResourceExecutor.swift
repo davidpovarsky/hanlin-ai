@@ -6,6 +6,24 @@ import HanlinPlatformContracts
 /// cancellation journals and the same runtime broker remain authoritative.
 @MainActor
 struct SkillResourceExecutor {
+    static let toolName = "execute_skill_resource"
+    static var schema: [String: Any] {
+        NativeToolSchema.function(
+            name: toolName,
+            description: "Execute a script resource (such as a Python or JavaScript helper) belonging to an active skill package. Scripts run locally within the application sandbox. Path traversal outside the skill package is prohibited.",
+            parameters: NativeToolSchema.object(
+                properties: [
+                    "skill_id": NativeToolSchema.string(description: "The unique identifier of the active skill."),
+                    "relative_path": NativeToolSchema.string(description: "Relative path to the executable script inside the skill package (e.g. 'scripts/search.py')."),
+                    "arguments": NativeToolSchema.stringArray(description: "Command-line arguments after the script name: sys.argv[1:] in Python and process.argv.slice(2) in Node/TypeScript."),
+                    "engine": NativeToolSchema.string(description: "Explicit original engine: node, typeScript, localPython, javaScriptCore or shell. Omit to use the declared resource-language route; availability is always checked."),
+                    "timeout_seconds": NativeToolSchema.integer(description: "Optional deadline in seconds. Omit for no deadline; user cancellation and actual errors still stop execution.", minimum: 1)
+                ],
+                required: ["skill_id", "relative_path"]
+            )
+        )
+    }
+
     private let catalog: HanlinSkillCatalog?
     private let store: SkillStore?
 
@@ -14,7 +32,8 @@ struct SkillResourceExecutor {
         self.store = store
     }
 
-    func execute(argumentsJSON: String, session: AssistantCapabilitySession?) async -> NativeToolResult {
+    func execute(argumentsJSON: String, session: AssistantCapabilitySession?,
+                 beforeDispatch: (@MainActor @Sendable () throws -> Void)? = nil) async -> NativeToolResult {
         var receiptContext: (SkillRuntimeContract.ExecutionPlan, HanlinSkillID, String, RuntimeKind)?
         var observedJob: RuntimeJobSnapshot?
         do {
@@ -207,6 +226,8 @@ struct SkillResourceExecutor {
                 sessionID: try HanlinAppSessionID(validating: session.id.uuidString.lowercased())
             )
 
+            try Task.checkCancellation()
+            try beforeDispatch?()
             receiptContext = (plan, skillID, cleanPath, selectedKind)
             try Task.checkCancellation()
             let priorReporter = RuntimeJobProgress.reporter

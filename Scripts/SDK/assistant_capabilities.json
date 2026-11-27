@@ -14,7 +14,6 @@
     "Downstream/RuntimeCore/Shell/ShellRuntimeAcceptance.swift",
     "Downstream/RuntimeCore/Shell/ShellRuntimeSmokeSuite.swift",
     "Downstream/AgentSkills/HanlinAISDKToolAdapter.swift",
-    "Downstream/AgentSkills/AssistantCapabilitySession+Selections.swift",
     "Downstream/MCP/Runtime/MCPRuntimeAcceptance.swift",
     "Downstream/MCP/Runtime/MCPServerPathResolverAcceptance.swift",
     "Downstream/MCP/ToolIntegration/AssistantToolBridge.swift",
@@ -41,7 +40,20 @@
     "Downstream/HostServices/Core/HanlinHostServiceError.swift",
     "Downstream/HostServices/Capabilities/HanlinHostCapabilityAuthority.swift",
     "NativeAgentExtensions/Core/NativeToolJSON.swift",
-    "Downstream/HostServices/Capabilities/HanlinHostCapabilityMetadata.swift"
+    "Downstream/HostServices/Capabilities/HanlinHostCapabilityMetadata.swift",
+    "Downstream/SDK/HanlinOriginalToolExecution.swift",
+    "Downstream/SDK/HanlinOriginalToolCatalog.swift",
+    "Downstream/SDK/HanlinOriginalToolResultStorage.swift",
+    "Downstream/SDK/HanlinAISDKToolAdapter+OriginalExecution.swift",
+    "Downstream/SDK/HanlinAssistantConversationHost.swift",
+    "Downstream/ChatCore/HanlinAppToolConsent.swift",
+    "Downstream/ChatCore/HanlinToolApprovalScopeFactory.swift",
+    "Downstream/ChatCore/HanlinToolApprovalStore.swift",
+    "Downstream/ChatInput/HanlinComposerCapabilities.swift",
+    "Downstream/CanonicalAdapters/MCPCanonicalShadowAdapter.swift",
+    "Downstream/AgentActivity/ToolMetadataKeys.swift",
+    "Downstream/AgentActivity/ToolPresentation/ToolInvocationMetadata.swift",
+    "NativeAgentExtensions/ToolRuntime/NativeToolSchema.swift"
   ],
   "products": [
     "HanlinSkillFormat",
@@ -60,7 +72,8 @@
     "TreeSitter",
     "TreeSitterBash",
     "HanlinPresentationKit",
-    "HanlinScriptStore"
+    "HanlinScriptStore",
+    "HanlinChatCore"
   ],
   "targets": [
     "HanlinNodeBridge",
