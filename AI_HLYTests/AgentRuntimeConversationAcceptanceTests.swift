@@ -144,6 +144,10 @@ private actor ControllableGate {
         isToolStarted = true
     }
 
+    func hasStartedTool() -> Bool {
+        isToolStarted
+    }
+
     func waitForGate(timeoutSeconds: Double = 10) async {
         let deadline = Date().addingTimeInterval(timeoutSeconds)
         while Date() < deadline {
@@ -166,6 +170,10 @@ private final class ControllableDelayedTool: NativeTool, @unchecked Sendable {
 
     static func waitForToolStarted() async {
         await ControllableGate.shared.waitForToolStarted()
+    }
+
+    static func hasStartedTool() async -> Bool {
+        await ControllableGate.shared.hasStartedTool()
     }
 
     static func releaseGate() async {
@@ -502,6 +510,7 @@ struct AgentRuntimeConversationAcceptanceTests {
 
         // Wait until tool starts executing
         await ControllableDelayedTool.waitForToolStarted()
+        #expect(await ControllableDelayedTool.hasStartedTool(), "The actual tool handler must enter before cancellation or replacement")
 
         // Cancel the current request while tool is mid-execution!
         manager.cancelCurrentRequest()
@@ -605,6 +614,7 @@ struct AgentRuntimeConversationAcceptanceTests {
 
         // Wait until Run A's tool starts executing
         await ControllableDelayedTool.waitForToolStarted()
+        #expect(await ControllableDelayedTool.hasStartedTool(), "The actual tool handler must enter before cancellation or replacement")
         #expect(AgentRunLifecycleCoordinator.shared.isCurrentRun(runAID))
 
         // Before A finishes, configure Run B responses and start Run B on the SAME APIManager!
@@ -965,7 +975,17 @@ struct AgentRuntimeConversationAcceptanceTests {
     }
 
     private func toolCall(_ id: String, _ name: String, _ arguments: [String: Any]) -> String {
-        let argumentsData = try! JSONSerialization.data(withJSONObject: arguments, options: [.sortedKeys])
+        // Match the required metadata in the published ordinary-tool schemas.
+        // Meta-tools and the deliberately unknown alias keep their exact inputs.
+        let ordinaryTools: Set<String> = [
+            "quick_calculate", "execute_local_python_code", "execute_javascript_code",
+            "execute_typescript_code", "execute_shell_command", "controllable_delayed_tool"
+        ]
+        var suppliedArguments = arguments
+        if ordinaryTools.contains(name), suppliedArguments["progress_summary"] == nil {
+            suppliedArguments["progress_summary"] = "Perform the requested operation and report its result."
+        }
+        let argumentsData = try! JSONSerialization.data(withJSONObject: suppliedArguments, options: [.sortedKeys])
         let argumentsJSON = String(decoding: argumentsData, as: UTF8.self)
         let payload: [String: Any] = [
             "choices": [[

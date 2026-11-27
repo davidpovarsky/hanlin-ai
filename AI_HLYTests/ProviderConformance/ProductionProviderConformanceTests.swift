@@ -30,6 +30,10 @@ private actor ProductionGate {
         isToolStarted = true
     }
 
+    func hasStartedTool() -> Bool {
+        isToolStarted
+    }
+
     func waitForGate(timeoutSeconds: Double = 10) async {
         let deadline = Date().addingTimeInterval(timeoutSeconds)
         while Date() < deadline {
@@ -64,6 +68,10 @@ private final class ProductionDelayedTool: NativeTool, @unchecked Sendable {
 
     static func waitForToolStarted() async {
         await ProductionGate.shared.waitForToolStarted()
+    }
+
+    static func hasStartedTool() async -> Bool {
+        await ProductionGate.shared.hasStartedTool()
     }
 
     static func releaseGate() async {
@@ -338,7 +346,7 @@ struct ProductionProviderConformanceTests {
             ProductionConformanceFixtures.sseToolCall(
                 id: "call-openai-smoke-1",
                 name: "quick_calculate",
-                arguments: ["expression": "2 + 2"]
+                arguments: ["progress_summary": "Calculate the requested expression.", "expression": "2 + 2"]
             ),
             ProductionConformanceFixtures.sseFinalAnswer("4")
         ]
@@ -388,7 +396,7 @@ struct ProductionProviderConformanceTests {
     func testP01SkillsExposureAndExecution() async throws {
         let responses = [
             ProductionConformanceFixtures.sseToolCall(id: "call-load-1", name: "load_skill", arguments: ["skill_id": "code"]),
-            ProductionConformanceFixtures.sseToolCall(id: "call-py-2", name: "execute_local_python_code", arguments: ["source": "print(6 * 7)"]),
+            ProductionConformanceFixtures.sseToolCall(id: "call-py-2", name: "execute_local_python_code", arguments: ["progress_summary": "Run the requested local Python calculation.", "source": "print(6 * 7)"]),
             ProductionConformanceFixtures.sseFinalAnswer("42 / LOCAL_PYTHON_COMPLETE")
         ]
 
@@ -425,8 +433,8 @@ struct ProductionProviderConformanceTests {
     @Test("P02: Non-fatal tool failure recovers and completes in same turn")
     func testP02FailureRecovery() async throws {
         let responses = [
-            ProductionConformanceFixtures.sseToolCall(id: "call-bad-1", name: "execute_shell_command", arguments: ["program": "nonexistent_binary_xyz"]),
-            ProductionConformanceFixtures.sseToolCall(id: "call-good-2", name: "quick_calculate", arguments: ["expression": "10 + 20"]),
+            ProductionConformanceFixtures.sseToolCall(id: "call-bad-1", name: "execute_shell_command", arguments: ["progress_summary": "Run the requested shell program.", "program": "nonexistent_binary_xyz"]),
+            ProductionConformanceFixtures.sseToolCall(id: "call-good-2", name: "quick_calculate", arguments: ["progress_summary": "Calculate the requested expression.", "expression": "10 + 20"]),
             ProductionConformanceFixtures.sseFinalAnswer("RECOVERED_30")
         ]
 
@@ -442,11 +450,11 @@ struct ProductionProviderConformanceTests {
     @Test("P03: 5-step sequential production tool chain with per-round request validation")
     func testP03FiveStepSequentialTools() async throws {
         let responses = [
-            ProductionConformanceFixtures.sseToolCall(id: "c-1", name: "quick_calculate", arguments: ["expression": "1 + 1"]),
-            ProductionConformanceFixtures.sseToolCall(id: "c-2", name: "quick_calculate", arguments: ["expression": "2 + 2"]),
-            ProductionConformanceFixtures.sseToolCall(id: "c-3", name: "quick_calculate", arguments: ["expression": "4 + 4"]),
-            ProductionConformanceFixtures.sseToolCall(id: "c-4", name: "quick_calculate", arguments: ["expression": "8 + 8"]),
-            ProductionConformanceFixtures.sseToolCall(id: "c-5", name: "quick_calculate", arguments: ["expression": "16 + 16"]),
+            ProductionConformanceFixtures.sseToolCall(id: "c-1", name: "quick_calculate", arguments: ["progress_summary": "Calculate the requested expression.", "expression": "1 + 1"]),
+            ProductionConformanceFixtures.sseToolCall(id: "c-2", name: "quick_calculate", arguments: ["progress_summary": "Calculate the requested expression.", "expression": "2 + 2"]),
+            ProductionConformanceFixtures.sseToolCall(id: "c-3", name: "quick_calculate", arguments: ["progress_summary": "Calculate the requested expression.", "expression": "4 + 4"]),
+            ProductionConformanceFixtures.sseToolCall(id: "c-4", name: "quick_calculate", arguments: ["progress_summary": "Calculate the requested expression.", "expression": "8 + 8"]),
+            ProductionConformanceFixtures.sseToolCall(id: "c-5", name: "quick_calculate", arguments: ["progress_summary": "Calculate the requested expression.", "expression": "16 + 16"]),
             ProductionConformanceFixtures.sseFinalAnswer("CHAIN_COMPLETE_32")
         ]
 
@@ -464,8 +472,8 @@ struct ProductionProviderConformanceTests {
     func testP04ParallelTools() async throws {
         let responses = [
             ProductionConformanceFixtures.sseParallelToolCalls(calls: [
-                (id: "par-1", name: "quick_calculate", arguments: ["expression": "2 * 3"]),
-                (id: "par-2", name: "quick_calculate", arguments: ["expression": "4 * 5"])
+                (id: "par-1", name: "quick_calculate", arguments: ["progress_summary": "Calculate the requested expression.", "expression": "2 * 3"]),
+                (id: "par-2", name: "quick_calculate", arguments: ["progress_summary": "Calculate the requested expression.", "expression": "4 * 5"])
             ]),
             ProductionConformanceFixtures.sseFinalAnswer("PARALLEL_DONE_6_20")
         ]
@@ -482,7 +490,7 @@ struct ProductionProviderConformanceTests {
     func testP05ReasoningToolLoopOpenAICompatible() async throws {
         let toolChunks = ProductionConformanceFixtures.openAIReasoningAndToolCallChunks(
             reasoningContent: "First calculate the sum",
-            calls: [(id: "p05-c1", name: "quick_calculate", arguments: "{\"expression\":\"10+20\"}")],
+            calls: [(id: "p05-c1", name: "quick_calculate", arguments: "{\"progress_summary\":\"Calculate the requested expression.\",\"expression\":\"10+20\"}")],
             id: "p05-resp-1"
         )
         let responses: [Data] = [
@@ -520,7 +528,7 @@ struct ProductionProviderConformanceTests {
         let thinkingToolData = ProductionConformanceFixtures.sseAnthropicToolCall(
             id: "p05-ant-1",
             name: "quick_calculate",
-            arguments: ["expression": "50+50"],
+            arguments: ["progress_summary": "Calculate the requested expression.", "expression": "50+50"],
             thinking: "Let us compute 50 plus 50",
             signature: "sig-p05-ant"
         )
@@ -555,7 +563,7 @@ struct ProductionProviderConformanceTests {
     func testP05ReasoningToolLoopGoogle() async throws {
         let functionCallData = ProductionConformanceFixtures.sseGoogleFunctionCall(
             name: "quick_calculate",
-            arguments: ["expression": "10*10"],
+            arguments: ["progress_summary": "Calculate the requested expression.", "expression": "10*10"],
             thoughtSignature: "sig-p05-google"
         )
         let finalData = ProductionConformanceFixtures.sseGoogleFinalAnswer("GOOGLE_PRODUCT_100")
@@ -590,7 +598,7 @@ struct ProductionProviderConformanceTests {
         let toolChunks = ProductionConformanceFixtures.openAIReasoningAndToolCallChunks(
             reasoningContent: "Calculating product for OpenRouter",
             reasoningDetails: ProductionConformanceFixtures.richOpaqueReasoningDetailsJSON,
-            calls: [(id: "p05-or-1", name: "quick_calculate", arguments: "{\"expression\":\"3 * 3\"}")],
+            calls: [(id: "p05-or-1", name: "quick_calculate", arguments: "{\"progress_summary\":\"Calculate the requested expression.\",\"expression\":\"3 * 3\"}")],
             id: "p05-or-resp-1"
         )
         let responses: [Data] = [
@@ -683,7 +691,7 @@ struct ProductionProviderConformanceTests {
             responses.append(ProductionConformanceFixtures.sseToolCall(
                 id: "c20-\(i + 1)",
                 name: "quick_calculate",
-                arguments: ["expression": "\(i) + 1"]
+                arguments: ["progress_summary": "Calculate the requested expression.", "expression": "\(i) + 1"]
             ))
         }
         responses.append(ProductionConformanceFixtures.sseFinalAnswer("20_STEPS_PRODUCTION_COMPLETE"))
@@ -893,7 +901,7 @@ struct ProductionProviderConformanceTests {
         }
 
         let responses = [
-            ProductionConformanceFixtures.sseToolCall(id: "del-1", name: delayedTool.name, arguments: [:]),
+            ProductionConformanceFixtures.sseToolCall(id: "del-1", name: delayedTool.name, arguments: ["progress_summary": "Run the controllable operation and report its result."]),
             ProductionConformanceFixtures.sseFinalAnswer("LATE_FORBIDDEN_TEXT")
         ]
         ProductionConformanceURLProtocol.configure(responses: responses)
@@ -951,6 +959,7 @@ struct ProductionProviderConformanceTests {
         }
 
         await ProductionDelayedTool.waitForToolStarted()
+        #expect(await ProductionDelayedTool.hasStartedTool(), "The actual tool handler must enter before cancellation or replacement")
         manager.cancelCurrentRequest()
         await ProductionDelayedTool.releaseGate()
 
@@ -972,7 +981,7 @@ struct ProductionProviderConformanceTests {
         }
 
         ProductionConformanceURLProtocol.configure(responses: [
-            ProductionConformanceFixtures.sseToolCall(id: "del-a", name: delayedTool.name, arguments: [:]),
+            ProductionConformanceFixtures.sseToolCall(id: "del-a", name: delayedTool.name, arguments: ["progress_summary": "Run the controllable operation and report its result."]),
             ProductionConformanceFixtures.sseFinalAnswer("LATE_A")
         ])
         let configuration = URLSessionConfiguration.ephemeral
@@ -1029,10 +1038,11 @@ struct ProductionProviderConformanceTests {
         }
 
         await ProductionDelayedTool.waitForToolStarted()
+        #expect(await ProductionDelayedTool.hasStartedTool(), "The actual tool handler must enter before cancellation or replacement")
 
         // Configure Run B responses while A is blocked on tool
         ProductionConformanceURLProtocol.configure(responses: [
-            ProductionConformanceFixtures.sseToolCall(id: "b-calc", name: "quick_calculate", arguments: ["expression": "7 * 7"]),
+            ProductionConformanceFixtures.sseToolCall(id: "b-calc", name: "quick_calculate", arguments: ["progress_summary": "Calculate the requested expression.", "expression": "7 * 7"]),
             ProductionConformanceFixtures.sseFinalAnswer("RUN_B_FINAL_49")
         ])
 
@@ -1083,7 +1093,7 @@ struct ProductionProviderConformanceTests {
     @Test("P12A: Real application second turn history preserves user and assistant visible text")
     func testP12ARealApplicationSecondTurnHistory() async throws {
         let responsesTurn1 = [
-            ProductionConformanceFixtures.sseToolCall(id: "calc-1", name: "quick_calculate", arguments: ["expression": "100 + 200"]),
+            ProductionConformanceFixtures.sseToolCall(id: "calc-1", name: "quick_calculate", arguments: ["progress_summary": "Calculate the requested expression.", "expression": "100 + 200"]),
             ProductionConformanceFixtures.sseFinalAnswer("Result is 300.")
         ]
 

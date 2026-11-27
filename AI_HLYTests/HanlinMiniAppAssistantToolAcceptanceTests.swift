@@ -208,7 +208,8 @@ extension HanlinUnifiedHostServicesE2ETests {
                 renderer = try #require(ExpoEmbeddedResultAdapter.resolve(
                     packageID: installed.record.packageID, handler: "echo-result", payload: rich))
             }
-            try await verifyAssistantRenderer(renderer, package: installed, dataStore: dataStore, expected: .object(value))
+            try await verifyAssistantRenderer(renderer, package: installed, dataStore: dataStore,
+                nativeScript: nativeScript, expected: .object(value))
 
             var holdAttachment = attachment
             holdAttachment.actionID = "hold"
@@ -216,7 +217,8 @@ extension HanlinUnifiedHostServicesE2ETests {
             let running = Task { @MainActor in await hold.execute(argumentsJSON: arguments, context: context) }
             do {
                 let deadline = ContinuousClock.now + .seconds(45)
-                while try await dataStore.read(appID: installed.appID, area: .state, path: "assistant-hold") == nil {
+                while try await readAssistantFixtureState("assistant-hold", package: installed,
+                    dataStore: dataStore, nativeScript: nativeScript) == nil {
                     try #require(ContinuousClock.now < deadline, "Actual assistant handler did not acknowledge invocation")
                     try await Task.sleep(for: .milliseconds(25))
                 }
@@ -248,6 +250,7 @@ extension HanlinUnifiedHostServicesE2ETests {
         _ renderer: any HanlinEmbeddedResultSession,
         package: HanlinStoredPackageSnapshot,
         dataStore: HanlinMiniAppDataStore,
+        nativeScript: Bool,
         expected: HanlinJSONValue
     ) async throws {
         defer { renderer.tearDown() }
@@ -263,13 +266,33 @@ extension HanlinUnifiedHostServicesE2ETests {
         let deadline = ContinuousClock.now + .seconds(45)
         var received: Data?
         while received == nil {
-            received = try await dataStore.read(appID: package.appID, area: .state, path: "assistant-rendered")
+            received = try await readAssistantFixtureState("assistant-rendered", package: package,
+                dataStore: dataStore, nativeScript: nativeScript)
             if received != nil { break }
             try #require(ContinuousClock.now < deadline, "The real native result renderer did not consume its payload")
             try await Task.sleep(for: .milliseconds(25))
         }
         let receivedBytes = try #require(received)
         #expect(try HanlinJSONValue.decodeCanonicalJSON(receivedBytes) == expected)
+    }
+
+    private func readAssistantFixtureState(
+        _ path: String, package: HanlinStoredPackageSnapshot,
+        dataStore: HanlinMiniAppDataStore, nativeScript: Bool
+    ) async throws -> Data? {
+        if nativeScript {
+            // The original NativeScript fixture writes through stateDirectory().
+            return try await dataStore.read(appID: package.appID, area: .state, path: path)
+        }
+        // Both the actual Expo result renderer and headless assistant executor
+        // carry this installed identity into the canonical package storage scope.
+        let url = try await HanlinFileService.physicalURL(
+            for: path, area: .state, scope: .package(package.record.installedPackageID))
+        guard FileManager.default.fileExists(atPath: url.path) else { return nil }
+        let values = try url.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
+        try #require(values.isRegularFile == true && values.isSymbolicLink != true,
+            "The actual package-scoped assistant state must be a regular file")
+        return try Data(contentsOf: url)
     }
 
     private func fixtureJSON(_ value: [String: Any]) throws -> String {
