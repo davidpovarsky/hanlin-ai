@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "base": "f57dfcc2292c0830f454e28d87293e85fe426a44",
+  "workflowCommit": "64ed91dfb6c1cb8341fe41fbec85b2ddbf9665b1",
+  "controlsCommit": "29ffb712de27d5c583217166af61a12f634ac46a",
+  "rawPatchSHA256": "ddb9ecc47a0a41935d617b6e4b41c53cadeed16e5aae039f66294e71aabee613",
+  "patchEncoding": "gzip of exact original UTF-8 git diff bytes",
+  "files": {
+    "README.md": {
+      "bytes": 1602,
+      "sha256": "32188fb448f7966da95cb0a922413c61478730e704932a11a99e45bc25e8b3ea"
+    },
+    "controls-receipt.json": {
+      "bytes": 829,
+      "sha256": "cee4df9337ac7c0e5e481522bc0484c096a0c923a7f3d67727bb93b0ac1ca02b"
+    },
+    "controls.stderr.txt": {
+      "bytes": 496,
+      "sha256": "8db188d6cb55ba425bf121afcec84c5a5a68633897c774b1ff99175418fb1c77"
+    },
+    "independent-source-review.json": {
+      "bytes": 564,
+      "sha256": "3927fc06aafeddf4ef367e8421506d11649811612a396224b5614fb9c80f7cce"
+    },
+    "source-validation.json": {
+      "bytes": 1062,
+      "sha256": "3dfca343848aff0f856b65bcb2c0234bdb83ed18200376640c2ca2e9cd0fa701"
+    },
+    "source.patch.gz": {
+      "bytes": 1753,
+      "sha256": "42360a50c817bea665520d48fe2306547d7795592050a880673c25052dbae7ee"
+    }
+  }
+}

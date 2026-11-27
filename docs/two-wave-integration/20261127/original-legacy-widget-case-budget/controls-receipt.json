@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_legacy_widget_case_budget.py",
+    "-v"
+  ],
+  "startedAtUTC": "2026-11-27T16:26:45.673170+00:00",
+  "finishedAtUTC": "2026-11-27T16:26:48.066416+00:00",
+  "elapsedSeconds": 2.3932351153343916,
+  "exitCode": 0,
+  "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSHA256": "8db188d6cb55ba425bf121afcec84c5a5a68633897c774b1ff99175418fb1c77",
+  "sourceSHA256": {
+    ".github/workflows/build-ios26-unsigned-ipa.yml": "e9777f014bde0a00f8dafd583e5470bf0fbefe469d4c22cba837af443b6c0c36",
+    "Scripts/CI/Tests/test_legacy_widget_case_budget.py": "8d4e441aebdd1b7af898b0ac56d25f2524adc141cd5bd3cb85152da96b2e354d"
+  },
+  "nativeCommandsStarted": 0
+}
