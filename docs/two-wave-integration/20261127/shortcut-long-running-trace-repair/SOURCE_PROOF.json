@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "scope": "Source correction and independent review; no native or OS acceptance is inferred by this proof commit",
+  "sourceCommit": "0c7bde9e3662f23c8451152fa284ac2e0392a7e2",
+  "parent": "d651474a514e12ee78a1cc404e6b3289937ad3fc",
+  "source": {
+    "path": "Fixtures/ShortcutLongRunning/nativescript/index.ts",
+    "beforeSHA256": "9752d2e84665fbc08ed17a733ec68d9f83cf4082408cf8fc268f68dafc6cfe52",
+    "afterSHA256": "f8da967722404e641c758db94d03782b70a9815b71ee4f027fae0cebf9a8f496",
+    "patchSHA256": "69091b57e9324f445e4ffd3f09b21e822847744b3a848702dfbb0f4993f0fd31"
+  },
+  "change": "Import the already-shipped public NativeScript Trace API and replace only the diagnostic console.error call with Trace.write(message, Trace.categories.Error, Trace.messageType.error).",
+  "actualFailure": {
+    "source": "24c42b7c00d32cf7dfc86d016365fa8f620e19f1",
+    "classification": "STRICT_AUTHORING_SOURCE_DIAGNOSTIC",
+    "code": "TS2584",
+    "path": "Fixtures/ShortcutLongRunning/nativescript/index.ts",
+    "line": 24,
+    "column": 7,
+    "message": "Cannot find name 'console'.",
+    "nativeScriptValidate": {
+      "exitCode": 1,
+      "elapsedSeconds": 20.636,
+      "budgetSeconds": 300,
+      "reportSHA256": "ba4ce715c26058a893046e4ed9374ae844429690924e4a414cc25d723b168ba6",
+      "receiptSHA256": "e3a9087ef90d02de378d458ccce436688212c9f19b2dc5fe5a7c3bcaf8793775"
+    },
+    "nativeScriptBuild": "NOT_RUN_IN_ORIGINAL_FAILED_ATTEMPT",
+    "originalAttemptCounts": {
+      "PASS": 2,
+      "FAIL": 1,
+      "NOT_RUN": 1
+    },
+    "completeRawPacketManifestSHA256": "c6cd4af9c6a67f5d313da3d4373bba867bd0d7520fb4153c8526a1260cfbe685",
+    "reconciliationSHA256": "547f6d3a85dc79dbabd6d0f43b843ff2e7989d800d818f6727ed5e603b8d4e60"
+  },
+  "installedContract": {
+    "nativeScriptCore": "9.1.4",
+    "receiptSHA256": "e82c7bf52afd39fb65129d59cd47e0548ba20d14c7a86ad7d99e06f788e41d9a",
+    "barrelSHA256": "e47fa8f9f8b7d773aa418be72e228a195c50a502ca76fd0dab21c9dd0a998277",
+    "traceDeclarationSHA256": "c66ffe25eb4cb5294bec8d4c03ff4708b646a80083a93ce3005bcabd35bef9e7",
+    "traceImplementationSHA256": "ab08089d5ffa88bf4c35fa8e55837a7cfd837ac28cb144f8df36d49aaf9c1d2f",
+    "semantics": "The public barrel exports Trace. Error-type write invokes existing writers before normal enabled/category filtering; the installed default ConsoleWriter calls console.error. Trace.error instead invokes the default throwing error handler and is not used."
+  },
+  "preservation": {
+    "wholeFileInverseExact": true,
+    "onlyTwoSourceLinesChanged": true,
+    "ownWindowTokenNonceAndWriteSemanticsUnchanged": true,
+    "sameDiagnosticMessage": true,
+    "strictCompilerOptionsUnchanged": true,
+    "domOrGlobalShimAdded": false,
+    "newExpoInputsUnchanged": 7,
+    "otherNewNativeScriptInputsUnchanged": 5,
+    "existingHostActionSurfacesInputsUnchanged": 16,
+    "shippingSDKSourceIntersection": [],
+    "shippingSDKInputCount": 396
+  },
+  "reviews": {
+    "independent": {
+      "agent": "/root/w1_review_resume",
+      "receiptSHA256": "83034e60faebad91a360854750579c815fa59dcaa37e267a3c186643e1fa29fc",
+      "decision": "APPROVED_SOURCE_ONLY"
+    },
+    "integrationOwner": {
+      "agent": "/root",
+      "decision": "APPROVED_EXACT_TWO_LINE_FIXTURE_REPAIR",
+      "attribution": "Explicit source approval in the shared task conversation; independently verified the original61-member failure packet."
+    }
+  },
+  "validationForThisRepair": {
+    "newPortableOrNativeTests": 0,
+    "reason": "The original strict validate/build operations are the meaningful qualification; there is no separate mirrored logging test. Later actual qualification is retained separately."
+  }
+}
