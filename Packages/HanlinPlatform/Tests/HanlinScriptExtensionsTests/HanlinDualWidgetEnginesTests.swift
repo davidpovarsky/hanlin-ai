@@ -180,6 +180,29 @@ struct HanlinDualWidgetEnginesTests {
         recordStage("test", "started", ["executionTimeout": HanlinOriginalScriptWidgetSession.executionTimeout])
         let portFile = root.appending(path: "port")
         let wireFile = root.appending(path: "wire.jsonl")
+        if let directory = ProcessInfo.processInfo.environment["HANLIN_WIDGET_EVIDENCE_DIR"] {
+            let retained = URL(filePath: directory).appending(path: "original-http-" + root.lastPathComponent)
+            do {
+                let sourceFile = URL(filePath: #filePath)
+                let descriptor: [String: Any] = [
+                    "schema": 1, "kind": "hanlin.original-http.live-paths",
+                    "test": "originalScriptWidgetHTTPUsesBoundedRealTransport",
+                    "pid": ProcessInfo.processInfo.processIdentifier,
+                    "at": Date().timeIntervalSince1970,
+                    "runDirectory": URL(filePath: directory).standardizedFileURL.path,
+                    "instanceID": root.lastPathComponent,
+                    "sourceFile": sourceFile.path,
+                    "sourceSHA256": sha(try Data(contentsOf: sourceFile)),
+                    "temporaryRoot": root.path,
+                    "stagesFile": stagesFile.path, "wireFile": wireFile.path,
+                ]
+                try FileManager.default.createDirectory(at: retained, withIntermediateDirectories: true)
+                try JSONSerialization.data(withJSONObject: descriptor, options: [.sortedKeys])
+                    .write(to: retained.appending(path: "live-paths.json"), options: [.atomic])
+            } catch {
+                print("Original HTTP live-path publication failed: \(error)")
+            }
+        }
         let authority = "transport.hanlin.invalid:80"
         let server = Process()
         server.executableURL = URL(fileURLWithPath: "/usr/bin/env")
