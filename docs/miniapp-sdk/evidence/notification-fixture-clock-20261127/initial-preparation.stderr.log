@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/notification-fixture-clock-5870896b/affected-r1/run-original-affected-case.py", line 12, in <module>
+    spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/development/projects/worktrees/hanlin-notification-fixture-clock-20261127/Scripts/CI/Tests/test_notification_os_scope.py", line 32, in <module>
+    spec.loader.exec_module(runner)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/mnt/development/projects/worktrees/hanlin-notification-fixture-clock-20261127/Scripts/ProductSplit/run_native_acceptance.py", line 18, in <module>
+    from verify_targets import native_ui_typecheck_command, validate_native_test_membership
+  File "/mnt/development/projects/worktrees/hanlin-notification-fixture-clock-20261127/Scripts/ProductSplit/verify_targets.py", line 11, in <module>
+    from project_graph import parse_project, validate_graph, validate_agent_sdk_linkage
+ModuleNotFoundError: No module named 'project_graph'

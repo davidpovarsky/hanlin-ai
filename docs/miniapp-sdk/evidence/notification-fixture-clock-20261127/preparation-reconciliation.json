@@ -1,0 +1,12 @@
+{
+  "status": "PREPARATION_CORRECTED_NO_SOURCE_CHANGE",
+  "firstAttempt": "affected-r1",
+  "testsInvokedInFirstAttempt": 0,
+  "rawFailurePreserved": true,
+  "missingImport": "Scripts/CI/IntegrationValidation/project_graph.py",
+  "materializedSHA256": "b55b15a969fb438d32f78db491e65ea51d755019d3f2d563e61e1cffe9f9afbd",
+  "gitByteEquality": true,
+  "changedSourcePaths": [
+    "Scripts/CI/Tests/test_notification_os_scope.py"
+  ]
+}

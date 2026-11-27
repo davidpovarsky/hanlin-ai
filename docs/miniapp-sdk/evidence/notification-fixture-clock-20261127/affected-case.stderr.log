@@ -1,0 +1,6 @@
+test_worker_starts_only_after_actual_fresh_ui_exchange_and_uses_original_budgets (test_notification_os_scope.NotificationScopeTests.test_worker_starts_only_after_actual_fresh_ui_exchange_and_uses_original_budgets) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.016s
+
+OK

@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "status": "SOURCE_REVIEWED_AND_ONE_AFFECTED_PORTABLE_CASE_PASSED",
+  "sourceCommit": "6e915d9c268001388b7674c6566b0a967c80026b",
+  "base": "5870896b0aa2bea7a58aeab9bb2d9416700e152a",
+  "sourcePath": "Scripts/CI/Tests/test_notification_os_scope.py",
+  "sourceBeforeSHA256": "d4837d2817ccbc67b1d4311c82993f3fdf4317709e52c7f3e6aafd5e8d86968d",
+  "sourceAfterSHA256": "2aa9904662dc96b13026ab605863130e562e4316f9da19474d317d7437654d2d",
+  "sourcePatchSHA256": "b0c27cf1ebecd9edd83e1540899a4882760923604e253a78ad344e32c94c6c34",
+  "sourceDelta": [
+    "Import SimpleNamespace.",
+    "Install a per-test clock only as the runner module time reference, restoring the original through addCleanup. Monotonic and sleep initially refer to their original functions.",
+    "Each actual JSON fixture write advances its wall clock by exactly one second and uses os.utime to bind the actual file to that clock.",
+    "No production code, workflow, selector, assertion, security guard or native time allowance changes."
+  ],
+  "originalMethods": {
+    "test_missing_build_reuse_wrong_selector_and_parallelism_never_launch": "21b7881f264f125753646075bfb9c46e315c431c3a40722c8b74116cf4435aad",
+    "test_wrong_source_missing_worker_or_changed_prepared_diff_never_launch": "eb2b5d9e9c16e1898e0ea0f0e082f7928d4674ef07b3aac37a8f6ee116b28c1a",
+    "test_wrong_created_device_or_prior_result_never_launch": "095ef48ca589b2185ee2e12d83425d37a8e60fff45f4c308bfe12ab835f6508e",
+    "test_current_metadata_binds_both_containers_without_equating_directory_and_metadata_uuid": "b45cef6d61724256d28e538bca746b8dd7b79ce2ccb23200fb9765f483149a82",
+    "test_installed_debug_code_test_binary_and_post_xctest_fixture_must_match": "1942124f8e73dd3586f70180d96dda0e23912da7ff623a026eccf8a45db15343",
+    "test_stale_future_nonfinite_or_coerced_active_identity_is_rejected": "3e19125d4a71fabd2dbf7407b73dcddd47508931ffe0142b02cee77f974b68f5",
+    "test_complete_original_five_observations_require_both_actual_process_results": "e5932c173e18f8bc5ca9e986c47242f9f1ed1f9bd5d20aae3704d2e421c874d6",
+    "test_foreign_run_missing_observation_and_bool_version_cannot_pass": "92f4f7eb4f96cf7273e68781b2c1f6ada71deef6d32dc22b70fb3d8b5b6023be",
+    "test_changed_durable_receipt_or_wrong_product_store_cannot_pass": "4930be35a93c18f0aa6322a42ccae99a93d6792ce9dcaeb351a7f85084411b91",
+    "test_push_command_and_raw_output_are_bound_to_the_owned_device": "da4aed964ceca46ad174cdf2e3d334caf3cb0b39e9e28ffb953346cd33f9e215",
+    "test_actual_failed_result_and_duplicate_semantics_cannot_be_relabelled": "7795878f041d0f894f88b4ac2b90878dce082193fa247254cc8279ab55209843",
+    "test_worker_starts_only_after_actual_fresh_ui_exchange_and_uses_original_budgets": "8776e0dc4e5a591d19c46bd627fd34f0c625ee94cb3e2a52d2bb4e1e0d79f0ec",
+    "test_worker_deadline_stops_only_its_owned_children_and_zero_exit_cannot_pass": "ef469b7bb92f8758cd758e08357345cdbf82e0f34605e1591ff33d9855c56250",
+    "test_exited_child_race_or_one_cleanup_error_still_stops_other_child_and_persists_receipt": "b67e69e12b3ea9b4740096c52619bb8e6f1e6c1e0048f733d91b7588d4da75fb"
+  },
+  "originalMethodCount": 14,
+  "originalMethodBodiesAndASTUnchanged": true,
+  "originalAssertionCalls": 50,
+  "productionRunnerSHA256": "ad292cae96fe84b8c7672c21b83d790b97b12d3f73ec344466993e595db8f7b3",
+  "productionRunnerUnchanged": true,
+  "originalNativeBudgetsSeconds": {
+    "xctestAllowance": 600,
+    "workerTimeout": 650,
+    "testCommandTimeout": 1200
+  },
+  "failureBasis": {
+    "originalCompleteDiscoverySource": "5870896b0aa2bea7a58aeab9bb2d9416700e152a",
+    "originalDiscoveryTests": 624,
+    "originalDiscoveryPass": 621,
+    "originalSkips": 2,
+    "originalErrors": 1,
+    "rawStderrSHA256": "c94b57a81ccbdb8c4300209af43bce3af0ba9521b5bbb63dffa26f7fcb79cf27",
+    "rawStderrBytes": 125298,
+    "excerptSHA256": "af97c104670c195f206f52aed6c69a39fbca2673ff537b46f4285bceeddd583a",
+    "error": "The unchanged notification_active guard rejected the fixture exchange mtime as stale or future dated.",
+    "causeLimitation": "The historical failure did not retain start/mtime/current-clock values. Its exact stale-versus-future cause is unknown. Sixteen fresh filesystem clock observations passed and did not reproduce it; no granularity or clock-step cause is claimed."
+  },
+  "targetedResult": {
+    "receiptSHA256": "fd53a8be6c70e98d041fc9a8d319c38ca967d04a99a264303388234fa43f01d4",
+    "selectedOriginalCases": 1,
+    "actual": {
+      "selected": "test_worker_starts_only_after_actual_fresh_ui_exchange_and_uses_original_budgets",
+      "testsRun": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "runnerTimeRestored": true,
+      "globalTimeFunctionsUnchanged": true,
+      "fixtureWallClockAfterCase": 1700000002.0
+    },
+    "fullDiscoveryInvocations": 0,
+    "nativeInvocations": 0,
+    "initialAttempt": "Retained affected-r1 import preparation failure invoked zero tests; only the existing original project_graph.py was materialized, with exact Git bytes.",
+    "nextGate": "Root owns original complete CI discovery on the integrated source."
+  },
+  "sdkImpact": {
+    "sourceComparisonSHA256": "a065210359abf994fc36f2437eb1c33b29c89d5926d2d95096388071a1edf51d",
+    "actualSourceInputPathCount": 396,
+    "changedPathIntersection": [],
+    "qualification": "The only changed path is a portable CI fixture. Direct membership is zero; no new native/Host/SDK execution claim is made."
+  },
+  "review": {
+    "reviewer": "/root",
+    "receiptSHA256": "7749c86ce3a6b94b64376bdf4c0305765d5a24c29af0323f12c0aeff29c45535"
+  },
+  "clockObservationEncoding": {
+    "stored": "clock-observation.stdout.json.gz",
+    "encoding": "gzip lossless, mtime=0",
+    "uncompressedSHA256": "e3de91e7e964ecbabf139404deabbbc399d758cb9cdd815d2f9b6fa972f291c2",
+    "uncompressedBytes": 4864
+  },
+  "at": "2026-11-27T22:15:56.949005+00:00"
+}

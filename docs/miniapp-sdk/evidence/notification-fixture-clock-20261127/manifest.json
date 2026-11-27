@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "sourceCommit": "6e915d9c268001388b7674c6566b0a967c80026b",
+  "files": [
+    {
+      "path": "SOURCE_PROOF.json",
+      "bytes": 5880,
+      "sha256": "447a12226041bc577dcb507376359efe539f1af75982f6323af87c611e6d23c2"
+    },
+    {
+      "path": "affected-case-receipt.json",
+      "bytes": 13546,
+      "sha256": "fd53a8be6c70e98d041fc9a8d319c38ca967d04a99a264303388234fa43f01d4"
+    },
+    {
+      "path": "affected-case.stderr.log",
+      "bytes": 318,
+      "sha256": "a3450ee60b678d5d90d6ac3ae49d5b9a92b85e8b764503de130bd0f2fb52d5ff"
+    },
+    {
+      "path": "affected-case.stdout.json",
+      "bytes": 263,
+      "sha256": "78fabfe2a98b3868f1443eae7aff3f82a58d50c96de8b8b2c7c78aba768c540d"
+    },
+    {
+      "path": "clock-observation-receipt.json",
+      "bytes": 6748,
+      "sha256": "5abb9d78bd3b1442d93fdfcd40d5b76fe46d90e2befb888fbca43f97723b583b"
+    },
+    {
+      "path": "clock-observation.stdout.json.gz",
+      "bytes": 1139,
+      "sha256": "d57a9d3c16947abba9e0d1b0b5b059eda362c0685fa24431ed75f3a273634425"
+    },
+    {
+      "path": "initial-preparation.stderr.log",
+      "bytes": 1292,
+      "sha256": "e2a5c0aedeb76b9651f76e65c812dc19009e38e1d6103860e1e612050534ca88"
+    },
+    {
+      "path": "original-failure-excerpt.log",
+      "bytes": 221,
+      "sha256": "af97c104670c195f206f52aed6c69a39fbca2673ff537b46f4285bceeddd583a"
+    },
+    {
+      "path": "preparation-reconciliation.json",
+      "bytes": 431,
+      "sha256": "36225e2950f2b1b1180fecf5a318045dcc41df54869a7c7ccdcd16aa97807bd3"
+    },
+    {
+      "path": "root-source-review.json",
+      "bytes": 1896,
+      "sha256": "7749c86ce3a6b94b64376bdf4c0305765d5a24c29af0323f12c0aeff29c45535"
+    },
+    {
+      "path": "run-original-affected-case.py",
+      "bytes": 1478,
+      "sha256": "8ccf0dbca5a9756662ae505eab1032b3e4f61465cface009a93bd3d26051cd30"
+    },
+    {
+      "path": "source.patch",
+      "bytes": 2052,
+      "sha256": "b0c27cf1ebecd9edd83e1540899a4882760923604e253a78ad344e32c94c6c34"
+    }
+  ]
+}
