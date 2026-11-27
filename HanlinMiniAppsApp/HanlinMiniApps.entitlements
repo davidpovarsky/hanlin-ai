@@ -23,6 +23,10 @@
 	<array>
 		<string>iCloud.com.itorah.chavrusachat</string>
 	</array>
+	<key>com.apple.developer.ubiquity-container-identifiers</key>
+	<array>
+		<string>iCloud.com.itorah.chavrusachat</string>
+	</array>
 	<key>com.apple.developer.icloud-services</key>
 	<array>
 		<string>CloudKit</string>

@@ -215,6 +215,8 @@ def main():
     # declared container. Product persistence ownership remains checked above.
     assert entitlements["com.apple.developer.icloud-container-identifiers"] == [
         "iCloud.com.itorah.chavrusachat"]
+    assert entitlements["com.apple.developer.ubiquity-container-identifiers"] == [
+        "iCloud.com.itorah.chavrusachat"]
     assert set(entitlements["com.apple.developer.icloud-services"]) == {"CloudKit", "CloudDocuments"}
     assert entitlements["com.apple.developer.homekit"] is True
     assert entitlements["keychain-access-groups"] == [
