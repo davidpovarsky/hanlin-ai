@@ -90,16 +90,22 @@ $render(<vstack spacing="2"><hstack spacing="4"><text font="caption">ScriptWidge
   } },
   { name: 'Hanlin-Expo-Widget-Interactive-Matrix', extension: 'hanlinExpo', engine: 'expo', expected: 'IMPORT_AND_NATIVE_TEST_REQUIRED', files: {
     'script.json': json({ ...manifest('Interactive Widget Matrix', 'expo', [
-      {id:'enabled',kind:'expoCallback'}, {id:'increment',kind:'expoCallback'}, {id:'refresh',kind:'reload'}
+      {id:'enabled',kind:'expoCallback'}, {id:'increment',kind:'expoCallback'}, {id:'refresh',kind:'reload'},
+      {id:'failRefresh',kind:'expoCallback'}, {id:'recover',kind:'expoCallback'}
     ]), hanlinWidget: {...metadata([
-      {id:'enabled',kind:'expoCallback'}, {id:'increment',kind:'expoCallback'}, {id:'refresh',kind:'reload'}
+      {id:'enabled',kind:'expoCallback'}, {id:'increment',kind:'expoCallback'}, {id:'refresh',kind:'reload'},
+      {id:'failRefresh',kind:'expoCallback'}, {id:'recover',kind:'expoCallback'}
     ]), families: allFamilies} }),
     'package.json': expoPackage('hanlin-expo-widget-interactive-matrix'),
     'widget.jsx': `import {VStack,HStack,Text,Label,Toggle,Button,ProgressView,Gauge,Chart,Image,Link} from '@expo/ui/swift-ui';
 import {containerBackground,widgetAccentedRenderingMode,frame,font,accessibilityLabel} from '@expo/ui/swift-ui/modifiers';
 export default function Matrix(props, environment) {
   'widget';
-  if (props.fail) throw Error('Fixture refresh failed');
+  // Model a temporary source failure using the original public render clock.
+  // Button callbacks rebuild the layout too, so Retry becomes reachable only
+  // after this authored recovery boundary; no callback-only runtime is added.
+  const now = environment.date?.getTime() ?? 0;
+  if (props.fail && !(now >= props.retryAfter)) throw Error('Fixture refresh failed');
   const count = props.count ?? 0;
   const family = environment.widgetFamily;
   const enabled = props.enabled ?? false;
@@ -108,10 +114,13 @@ export default function Matrix(props, environment) {
   if (family === 'accessoryRectangular') return <VStack><Text>שלום Widget</Text><ProgressView value={Math.min(1,count/10)}><Text>{String(count)}</Text></ProgressView></VStack>;
   return <VStack spacing={4} modifiers={[containerBackground('clear','widget'),font({textStyle:'caption'})]}>
     <Label systemImage="sparkles"><Text>{family === 'systemExtraLargePortrait' ? 'Portrait · שלום' : 'Native · שלום'}</Text></Label>
+    <Text>{'Matrix count: ' + count}</Text>
     <Toggle target="enabled" label="Notifications" isOn={enabled} onIsOnChange={value=>({enabled:value, count:count+1})}
       modifiers={[accessibilityLabel('Widget notifications')]}/>
     <HStack><Button label="Add" target="increment" onPress={()=>({count:count+1})}/>
       <Button label="Refresh" target="refresh" {...{widgetRefresh:true}}/></HStack>
+    <HStack><Button label="Fail refresh" target="failRefresh" onPress={()=>({fail:true,retryAfter:now+90000,count:count+1})}/>
+      <Button label="Recover" target="recover" onPress={()=>({fail:false,retryAfter:0,count:count+1})}/></HStack>
     <ProgressView value={Math.min(1,count/10)}><Text>{String(count) + ' of 10'}</Text></ProgressView>
     <Gauge value={Math.min(1,count/10)} min={0} max={1} currentValueLabel={<Text>{String(count)}</Text>}><Text>Count</Text></Gauge>
     {family !== 'systemSmall' ? <Chart type="bar" data={[{x:'A',y:count},{x:'B',y:10}]} modifiers={[frame({height:44})]}/> : null}
