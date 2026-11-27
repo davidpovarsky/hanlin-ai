@@ -1730,9 +1730,7 @@ struct OriginalSourceNonRegressionTests {
 
     @Test("9.1 Original bubble identifiers retain canonical app and shared SDK ownership")
     func chatViewComponentsAndChatAndFileRetainOriginalIdentifiers() throws {
-        let repoRoot = URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent()
-            .deletingLastPathComponent()
+        let repoRoot = try OriginalSourceFixtures.root()
         let contract = try preservationContract(repoRoot: repoRoot)
         let componentsPath = "AI_HLY/Views/Components/ChatViewComponents.swift"
         let componentsSource = try String(contentsOf: repoRoot.appendingPathComponent(componentsPath), encoding: .utf8)
@@ -1759,9 +1757,7 @@ struct OriginalSourceNonRegressionTests {
 
     @Test("9.2 Protected chat files and authoritative V3.3 reference metadata remain cryptographically intact")
     func protectedFilesAndReferenceMetadataRemainIntact() throws {
-        let repoRoot = URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent()
-            .deletingLastPathComponent()
+        let repoRoot = try OriginalSourceFixtures.root()
         let contract = try preservationContract(repoRoot: repoRoot)
 
         func normalizedSHA256AndLength(relativePath: String) throws -> (String, Int) {

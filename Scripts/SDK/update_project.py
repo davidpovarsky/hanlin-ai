@@ -333,6 +333,48 @@ def wire_miniapps_ios_system_resources(text):
     return edit_object(text, phases[0], lambda block: replace_list(block, "files", files))
 
 
+SOURCE_FIXTURE_PHASE = "AC1F" + hashlib.sha256(b"original-source-fixtures").hexdigest()[:20].upper()
+
+
+def wire_original_source_fixtures(text):
+    """Make original source audits independent of compiler-host paths at runtime."""
+    objects = parse_project(text)["objects"]
+    unit_id, unit = next((key, value) for key, value in objects.items()
+                         if value.get("isa") == "PBXNativeTarget" and value.get("name") == "AI_HLYTests")
+    for key, value in objects.items():
+        if key != unit_id and SOURCE_FIXTURE_PHASE in value.get("buildPhases", []):
+            raise ValueError("Original source fixtures belong only to AI_HLYTests")
+    if SOURCE_FIXTURE_PHASE in objects:
+        existing = objects[SOURCE_FIXTURE_PHASE]
+        if existing.get("isa") != "PBXShellScriptBuildPhase" or existing.get("name") != "Prepare Original Source Fixtures":
+            raise ValueError("The source fixture phase ID belongs to another object")
+    script = ('set -eu\n/usr/bin/env python3 "$SRCROOT/Scripts/CI/prepare_original_source_fixtures.py" '
+              '--source-root "$SRCROOT" --output "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/OriginalSourceFixtures.bundle"\n')
+    body = (
+        '\t\t\tisa = PBXShellScriptBuildPhase;\n'
+        '\t\t\talwaysOutOfDate = 1;\n'
+        '\t\t\tbuildActionMask = 2147483647;\n'
+        '\t\t\tfiles = ();\n'
+        '\t\t\tinputFileListPaths = ("$(SRCROOT)/Scripts/CI/original-source-fixtures.xcfilelist",);\n'
+        '\t\t\tinputPaths = ("$(SRCROOT)/Scripts/CI/prepare_original_source_fixtures.py", '
+        '"$(SRCROOT)/Scripts/CI/original-source-fixtures.xcfilelist",);\n'
+        '\t\t\tname = "Prepare Original Source Fixtures";\n'
+        '\t\t\toutputPaths = ("$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle",);\n'
+        '\t\t\trunOnlyForDeploymentPostprocessing = 0;\n'
+        '\t\t\tshellPath = /bin/sh;\n'
+        '\t\t\tshellScript = ' + json.dumps(script) + ';\n'
+    )
+    if SOURCE_FIXTURE_PHASE in objects:
+        text = edit_object(text, SOURCE_FIXTURE_PHASE,
+                           lambda _: "\t\t" + SOURCE_FIXTURE_PHASE + " = {\n" + body + "\t\t};\n")
+    else:
+        text = insert_object(text, "PBXShellScriptBuildPhase", SOURCE_FIXTURE_PHASE, body)
+    phases = [key for key in unit["buildPhases"] if key != SOURCE_FIXTURE_PHASE]
+    resources = next(key for key in phases if objects[key]["isa"] == "PBXResourcesBuildPhase")
+    phases.insert(phases.index(resources) + 1, SOURCE_FIXTURE_PHASE)
+    return edit_object(text, unit_id, lambda block: replace_list(block, "buildPhases", phases))
+
+
 def update(package=None):
     if package is None:
         package = json.loads(subprocess.check_output(
@@ -548,6 +590,7 @@ def update(package=None):
     text = wire_miniapps_extensions(text, edit_object, replace_list, insert_object, sdk_products=PRODUCTS)
     text = wire_widget_cxx_imports(text, package)
     text = wire_miniapps_ios_system_resources(text)
+    text = wire_original_source_fixtures(text)
     parse_project(text)
     return text
 

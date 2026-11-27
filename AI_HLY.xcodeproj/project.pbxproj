@@ -3077,7 +3077,12 @@
 		B10000000000000000000007 = {
 			"isa" = "PBXNativeTarget";
 			"buildConfigurationList" = "B1000000000000000000000A";
-			"buildPhases" = ("B10000000000000000000005", "B10000000000000000000004", "B10000000000000000000006", );
+			buildPhases = (
+				"B10000000000000000000005" ,
+				"B10000000000000000000004" ,
+				"B10000000000000000000006" ,
+				"AC1F52E937C84F936FC95C9E" ,
+			);
 			"buildRules" = ();
 			"dependencies" = ("B1000000000000000000000C", );
 			"fileSystemSynchronizedGroups" = ("B10000000000000000000003", );
@@ -3788,6 +3793,19 @@
 			"shellPath" = "/bin/sh";
 			"shellScript" = "set -e\nsource \"$PROJECT_DIR/Vendor/Python/Python.xcframework/build/utils.sh\"\nif [ -z \"${EXPANDED_CODE_SIGN_IDENTITY:-}\" ]; then\n  export EXPANDED_CODE_SIGN_IDENTITY=\"-\"\n  export EXPANDED_CODE_SIGN_IDENTITY_NAME=\"Ad Hoc\"\nfi\ninstall_python Vendor/Python/Python.xcframework\n";
 			"showEnvVarsInLog" = "0";
+		};
+		AC1F52E937C84F936FC95C9E = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = ();
+			inputFileListPaths = ("$(SRCROOT)/Scripts/CI/original-source-fixtures.xcfilelist",);
+			inputPaths = ("$(SRCROOT)/Scripts/CI/prepare_original_source_fixtures.py", "$(SRCROOT)/Scripts/CI/original-source-fixtures.xcfilelist",);
+			name = "Prepare Original Source Fixtures";
+			outputPaths = ("$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle",);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -eu\n/usr/bin/env python3 \"$SRCROOT/Scripts/CI/prepare_original_source_fixtures.py\" --source-root \"$SRCROOT\" --output \"$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/OriginalSourceFixtures.bundle\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
