@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "kind": "STATIC_SOURCE_INPUT_AND_UNCHANGED_COLLECTOR_QUALIFICATION",
+  "base": "445e2cb514012110cd865bdd33a3dbb8e6b8143d",
+  "manifestPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/sdk-metadata-ce896542-pass-proof/actual-sdk/miniapp-sdk.json",
+  "manifestSHA256": "7f2702e52587fe1d126cef37f068ab3a9e3a26adb275ffafb687cb38a2db9b87",
+  "retainedInputSHA256": "9e397ad525cf254598f8b35256816d1519ae2adfb02f3e5692fc91c21a1a3ab1",
+  "retainedSourceInputCount": 396,
+  "candidatePaths": [
+    "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinShortcutValueCodec.swift",
+    "Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/HanlinShortcutValueCodecTests.swift",
+    "HanlinMiniAppsTests/MiniAppsShortcutIntentTests.swift",
+    "Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings",
+    "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/Localizable.xcstrings",
+    "Scripts/SDK/generate_app_intents_resources.py"
+  ],
+  "intersection": [],
+  "collectorPath": "Scripts/MiniApps/stage-sdk.mjs",
+  "collectorSHA256": "60b6b9496330d4605f60f56587170b06c7eced31a6b3d79ef04aa8faa548022c",
+  "collectorChangedByCandidate": false,
+  "fullCollectorRunInThisLane": "NOT_RUN",
+  "fullSDKStagePackInThisLane": "NOT_RUN",
+  "currentNativeCollectorQualificationOwner": "Mac owner at integrated source boundary",
+  "sharedPackageAppAndLocalizationClosureChanged": true
+}

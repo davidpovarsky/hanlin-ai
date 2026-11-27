@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "reviewer": "/root",
+  "at": "2026-11-27T22:24:53.652058+00:00",
+  "status": "APPROVED_R2_SOURCE_AND_CANONICAL_RESOURCE_PROJECTION_PENDING_APPLE_QUALIFICATION",
+  "sourceReviewR1SHA256": "70db6919586a19502875d0e578de879bb4a5f0ef7aeddb1cea0e4896f255eb6b",
+  "base": "445e2cb514012110cd865bdd33a3dbb8e6b8143d",
+  "rootPreimageHead": "d4cc35b182925f49d21de1ed10078ee82382785c",
+  "fullPatchSHA256": "e9fa58c7514d05e450256186a6d7ec3215c9c423f23577261300fb6b107c1a22",
+  "R1ToR2PatchSHA256": "262d0d506279e7139261f4bbd53476868ae7d7854b2cd3cad5754d9f215dad5d",
+  "manifestSHA256": "345068bcf1319aa77d1c9f8938803af89ef0354c4802e07a7e2488d8dc803dc0",
+  "membersVerified": 31,
+  "files": [
+    {
+      "path": "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift",
+      "preimageSHA256": "b1ed3e326e5fe968671a15900c18cffb3606641674aafa9c47dd36fd49b6b5bd",
+      "candidateSHA256": "88eaefa67a733beb153d2c0d3310de2e23ae85c80bf854f22b161c0b9e49ebeb",
+      "wholeOriginalInverseExact": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinShortcutValueCodec.swift",
+      "preimageSHA256": "3c3aee14c37a5835c6cc85a4ebb86271ff63b5fc3f60e1a62158bc5281eb332c",
+      "candidateSHA256": "633f70697d883b7c2b0e5a70bba016d6341ca55cc25038c2c87ba4edfbf5d605",
+      "wholeOriginalInverseExact": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/HanlinShortcutValueCodecTests.swift",
+      "preimageSHA256": "6659534680b3404010eefa45146a07aa3ae1cdf5d53273bfd3f756a2be5c2055",
+      "candidateSHA256": "58f74de7836b2924ad0d95aa9f3988c9b4bfb4246b469de2fd929acd49597b95",
+      "wholeOriginalInverseExact": true
+    },
+    {
+      "path": "HanlinMiniAppsTests/MiniAppsShortcutIntentTests.swift",
+      "preimageSHA256": "7924240896003356d83cf65d484087719ad01f217e6eb9d90fee28131d652f7e",
+      "candidateSHA256": "f5d10d9cfe428a1be99f9c9314820de9484100ea3ab752c82134f562e74f46dd",
+      "wholeOriginalInverseExact": true
+    },
+    {
+      "path": "Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings",
+      "preimageSHA256": "8a8bd214e8e1e5856f529451d44a8b82e975f975e93cb77666e94a9775b4733e",
+      "candidateSHA256": "247c4bcbbf53f7b40746d161972d26b1478c731eb79d13fa6edf6ff6c32da02e",
+      "wholeOriginalInverseExact": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/Localizable.xcstrings",
+      "preimageSHA256": "9437aa101dd2d12ad2e39471c6f76171750e6f4e2c83f01f21bbe47e1ef0186e",
+      "candidateSHA256": "de4b13dc8d45308a2b62eae117f4f62c73571133e962ad95a28ca07833bd3419",
+      "wholeOriginalInverseExact": true
+    },
+    {
+      "path": "Scripts/SDK/generate_app_intents_resources.py",
+      "preimageSHA256": "dcc0733ec154214d8da3ba43c48438e53dee415559b312cd56474d3495a1bffc",
+      "candidateSHA256": "7f3e49a4f5b5b03d64723db675cad94684a4cbced9125e3dffc83980c3508112",
+      "wholeOriginalInverseExact": true
+    }
+  ],
+  "findings": [
+    "All five previously reviewed R1 candidate files remain byte-identical; its source findings and unexecuted Apple/OS gates remain.",
+    "Only four canonical localization records and four existing-generator KEYS entries are added. All1294 old canonical records/order, original metadata and all60 old host records remain.",
+    "Removing exactly the appended key block recovers the complete original generator; no render/main/path/install behavior changes.",
+    "The four new canonical records equal the original producer generated host records exactly across en/he/zh-Hans.",
+    "Actual producer generate/check each exited0 once; their raw logs verified. The R1 stale-output finding was not an executed failure.",
+    "Static seven-path intersection with old SDK396 is zero, but complete current source collector/packaged resource/Swift/metadata qualification remains with Mac. No source-only fingerprint assumption closes it."
+  ],
+  "nativeCompiler": "NOT_RUN",
+  "swiftCodecTests": "NOT_RUN",
+  "actualAppMetadataAndShortcutOS": "NOT_RUN",
+  "rootCheckExecutions": "Read/hash/AST/source comparison only; no repeat producer or test execution"
+}

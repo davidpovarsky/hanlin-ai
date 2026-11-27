@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "kind": "DECLARATION_ONLY_PROBE_NOT_PRODUCT",
+  "probeSHA256": "53dd5e99224395d2e44613c02a6ef665436c0abf75e0801bf45a3016b8df7a4b",
+  "copiedFromCandidateSHA256": "88eaefa67a733beb153d2c0d3310de2e23ae85c80bf854f22b161c0b9e49ebeb",
+  "parameterAndSummarySHA256": "344e43c08a117323db72961185e9ddcf4bdb1351f1babfcc40aff847c7ce1936",
+  "enumSHA256": "d995c69badb70ace28c8adf14445e0cdd8581b454a3203dc1f4fb7519486fa4f",
+  "intentEntitySubstitution": "HanlinScriptActionEntity -> String for action only",
+  "runtimeExecution": "NOT_RUN",
+  "nativeTypecheck": "NOT_RUN"
+}

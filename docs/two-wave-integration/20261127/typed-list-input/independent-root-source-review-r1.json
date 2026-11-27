@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "reviewer": "/root",
+  "at": "2026-11-27T22:18:02.152924+00:00",
+  "status": "APPROVED_SOURCE_PENDING_APPLE_QUALIFICATION",
+  "base": "445e2cb514012110cd865bdd33a3dbb8e6b8143d",
+  "rootPreimageHead": "ca27c9479d3ed5c76d2e5028c5c8c1e1b046e5ae",
+  "patchSHA256": "cc1ecdcb25b2cc5730ea2dbf8809c725d8ba9bb92f4e63db0d8e8cf09aa41e91",
+  "candidateManifestSHA256": "2eea2f230f0e7516ac8bddc7251bef65e9d640bc3bd0695a718d31aaeffcf638",
+  "all22PacketMembersVerified": true,
+  "files": [
+    {
+      "path": "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift",
+      "preimageSHA256": "b1ed3e326e5fe968671a15900c18cffb3606641674aafa9c47dd36fd49b6b5bd",
+      "candidateSHA256": "88eaefa67a733beb153d2c0d3310de2e23ae85c80bf854f22b161c0b9e49ebeb",
+      "wholeOriginalInverseExact": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinShortcutValueCodec.swift",
+      "preimageSHA256": "3c3aee14c37a5835c6cc85a4ebb86271ff63b5fc3f60e1a62158bc5281eb332c",
+      "candidateSHA256": "633f70697d883b7c2b0e5a70bba016d6341ca55cc25038c2c87ba4edfbf5d605",
+      "wholeOriginalInverseExact": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/HanlinShortcutValueCodecTests.swift",
+      "preimageSHA256": "6659534680b3404010eefa45146a07aa3ae1cdf5d53273bfd3f756a2be5c2055",
+      "candidateSHA256": "58f74de7836b2924ad0d95aa9f3988c9b4bfb4246b469de2fd929acd49597b95",
+      "wholeOriginalInverseExact": true
+    },
+    {
+      "path": "HanlinMiniAppsTests/MiniAppsShortcutIntentTests.swift",
+      "preimageSHA256": "7924240896003356d83cf65d484087719ad01f217e6eb9d90fee28131d652f7e",
+      "candidateSHA256": "f5d10d9cfe428a1be99f9c9314820de9484100ea3ab752c82134f562e74f46dd",
+      "wholeOriginalInverseExact": true
+    },
+    {
+      "path": "Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings",
+      "preimageSHA256": "8a8bd214e8e1e5856f529451d44a8b82e975f975e93cb77666e94a9775b4733e",
+      "candidateSHA256": "247c4bcbbf53f7b40746d161972d26b1478c731eb79d13fa6edf6ff6c32da02e",
+      "wholeOriginalInverseExact": true
+    }
+  ],
+  "reviewScope": [
+    "Actual complete five-file patch and existing HanlinValue finiteNumber signature read; no native compiler result inferred.",
+    "The four optional homogeneous arrays are additive to the existing action. All five old parameter declarations/defaults and three original enum raw values remain, with original summary content in DefaultCase.",
+    "Input decoding is called once at the same pre-command pre-lease point. Old text/JSON/JSON-file branches and entire mode/provider/lease/progress/cancellation/presentation/output/helper suffix remain unchanged.",
+    "Selected nil/empty native list yields array; other parameter values cannot participate. String bytes/order and Boolean identity remain; Int64(exactly:) avoids a Double intermediary; existing finiteNumber rejects nonfinite Double values.",
+    "Six added codec methods cover meaningful precision/type/wire/empty/error boundaries; four added app methods cover selection/defaults/legacy routes and actual host localization. Original test bodies/parameterized inputs retained.",
+    "All60 original localization records and catalog metadata are unchanged; four new labels have en/he/zh-Hans translations through the existing canonical resource table.",
+    "Source preservation7 groups reviewed. Zero direct intersection with prior SDK396 is not a claim of whole package/app/metadata equivalence."
+  ],
+  "remainingGates": [
+    "Mac owned optional-array and conditional-summary declaration admission if needed, original real shared codec filter, actual standalone app build and emitted metadata comparison, original app intent tests and compiled host locale resources.",
+    "Actual Shortcuts acquisition/coercion/save/reopen/chaining and prior saved action compatibility remain unexecuted. Direct arbitrary Dictionary/Any or heterogeneous union support is not claimed.",
+    "Evidence-only declaration probe substitutes String for the existing action entity and never qualifies shipping metadata or runtime."
+  ],
+  "swiftOrNativeTestsExecutedByReviewer": 0
+}

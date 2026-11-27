@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "kind": "CANONICAL_LOCALIZATION_SOURCE_AND_ORIGINAL_PRODUCER_CHECK",
+  "base": "445e2cb514012110cd865bdd33a3dbb8e6b8143d",
+  "r1SourcePatchSHA256": "cc1ecdcb25b2cc5730ea2dbf8809c725d8ba9bb92f4e63db0d8e8cf09aa41e91",
+  "r2SourcePatchSHA256": "e9fa58c7514d05e450256186a6d7ec3215c9c423f23577261300fb6b107c1a22",
+  "deltaSHA256": "262d0d506279e7139261f4bbd53476868ae7d7854b2cd3cad5754d9f215dad5d",
+  "allFiveR1CandidateFilesByteIdentical": true,
+  "reusedSourcePreservationSHA256": "82df1b45f96a6434d9352d31b79352edd18d933cea9b762ccb7ac89844cdef01",
+  "canonicalOldRecordsUnchanged": 1294,
+  "oldHostRecordsUnchanged": 60,
+  "newRecords": [
+    "Text List",
+    "Integer List",
+    "Number List",
+    "Boolean List"
+  ],
+  "oldRecordOrderPreserved": true,
+  "generatorRenderAndMainByteIdentical": true,
+  "originalGeneratorPreimageSHA256": "dcc0733ec154214d8da3ba43c48438e53dee415559b312cd56474d3495a1bffc",
+  "candidateGeneratorSHA256": "7f3e49a4f5b5b03d64723db675cad94684a4cbced9125e3dffc83980c3508112",
+  "generatorAndCheckCommands": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "Scripts/SDK/generate_app_intents_resources.py"
+      ],
+      "cwd": "/workspace/scratch/d49eec8920ef/w2-miniapp-typed-list/r2/candidate",
+      "startedAt": "2026-11-27T22:21:18.220895+00:00",
+      "elapsedSeconds": 0.07269169100618456,
+      "exitCode": 0,
+      "stdout": {
+        "path": "original-generator-generate.stdout",
+        "sha256": "5e7f030b370dc3863066c9fb862587de239fce044c9dcfa6ebfa10564118036a",
+        "bytes": 107
+      },
+      "stderr": {
+        "path": "original-generator-generate.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "Scripts/SDK/generate_app_intents_resources.py",
+        "--check"
+      ],
+      "cwd": "/workspace/scratch/d49eec8920ef/w2-miniapp-typed-list/r2/candidate",
+      "startedAt": "2026-11-27T22:21:18.293805+00:00",
+      "elapsedSeconds": 0.06567303500196431,
+      "exitCode": 0,
+      "stdout": {
+        "path": "original-generator-check.stdout",
+        "sha256": "5e7f030b370dc3863066c9fb862587de239fce044c9dcfa6ebfa10564118036a",
+        "bytes": 107
+      },
+      "stderr": {
+        "path": "original-generator-check.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    }
+  ],
+  "r1CheckExecution": "NOT_RUN_SOURCE_FINDING_ONLY",
+  "swiftCompiler": "NOT_RUN",
+  "swiftCodecTests": "NOT_RUN",
+  "appOSExecution": "NOT_RUN"
+}
