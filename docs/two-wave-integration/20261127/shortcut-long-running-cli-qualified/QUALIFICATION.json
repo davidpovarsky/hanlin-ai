@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "qualifiedSource": "24fd1e20eb1af2ebab0f4d7dd7f617145217eded",
+  "scope": "Original shipping-SDK authoring validate/build only. This documentation does not claim app, Simulator or saved Shortcuts OS acceptance.",
+  "phases": [
+    {
+      "operation": "original-expo-long-running-validate",
+      "qualification": "REUSED_VERIFIED",
+      "actualExecutionSource": "24c42b7c00d32cf7dfc86d016365fa8f620e19f1",
+      "qualifiedSource": "24fd1e20eb1af2ebab0f4d7dd7f617145217eded",
+      "exitCode": 0,
+      "elapsedSeconds": 9.642354,
+      "budgetSeconds": 300,
+      "startedAt": "2026-11-27T19:13:21.187477+00:00",
+      "finishedAt": "2026-11-27T19:13:30.829831+00:00",
+      "rawLogSHA256": "352ab442baf7b07790ff13cccd2650f4629f8519aca72b922195568612c5b418",
+      "rawReportSHA256": "352ab442baf7b07790ff13cccd2650f4629f8519aca72b922195568612c5b418"
+    },
+    {
+      "operation": "original-expo-long-running-build",
+      "qualification": "REUSED_VERIFIED",
+      "actualExecutionSource": "24c42b7c00d32cf7dfc86d016365fa8f620e19f1",
+      "qualifiedSource": "24fd1e20eb1af2ebab0f4d7dd7f617145217eded",
+      "exitCode": 0,
+      "elapsedSeconds": 19.298245,
+      "budgetSeconds": 600,
+      "startedAt": "2026-11-27T19:13:30.838192+00:00",
+      "finishedAt": "2026-11-27T19:13:50.136437+00:00",
+      "rawLogSHA256": "8c44eee0c38251626fbfd2c9b08d1ed04e3a606897319378e3cf1d22c9917f1e",
+      "rawReportSHA256": "8c44eee0c38251626fbfd2c9b08d1ed04e3a606897319378e3cf1d22c9917f1e"
+    },
+    {
+      "operation": "original-nativescript-long-running-validate",
+      "qualification": "EXECUTED_PASS",
+      "actualExecutionSource": "24fd1e20eb1af2ebab0f4d7dd7f617145217eded",
+      "qualifiedSource": "24fd1e20eb1af2ebab0f4d7dd7f617145217eded",
+      "exitCode": 0,
+      "elapsedSeconds": 3.204442,
+      "budgetSeconds": 300,
+      "startedAt": "2026-11-27T19:28:24.402483+00:00",
+      "finishedAt": "2026-11-27T19:28:27.606925+00:00",
+      "rawLogSHA256": "3747ef84791438c0b497361c07f3985bd2bb149c8a0bfd35e652be1927c83c1e",
+      "rawReportSHA256": "3747ef84791438c0b497361c07f3985bd2bb149c8a0bfd35e652be1927c83c1e"
+    },
+    {
+      "operation": "original-nativescript-long-running-build",
+      "qualification": "EXECUTED_PASS",
+      "actualExecutionSource": "24fd1e20eb1af2ebab0f4d7dd7f617145217eded",
+      "qualifiedSource": "24fd1e20eb1af2ebab0f4d7dd7f617145217eded",
+      "exitCode": 0,
+      "elapsedSeconds": 5.301281,
+      "budgetSeconds": 600,
+      "startedAt": "2026-11-27T19:28:27.609728+00:00",
+      "finishedAt": "2026-11-27T19:28:32.911009+00:00",
+      "rawLogSHA256": "3d495fcca6392a3d8927313e5c9051334ce777d717b494fc20777d3ce113323f",
+      "rawReportSHA256": "3d495fcca6392a3d8927313e5c9051334ce777d717b494fc20777d3ce113323f"
+    }
+  ],
+  "newCurrentAttemptInvocations": {
+    "nativeScript": 2,
+    "expo": 0,
+    "Host188": 0,
+    "Platform603": 0,
+    "iOS79": 0,
+    "OSCases": 0
+  },
+  "expoReuse": {
+    "status": "REUSED_VERIFIED",
+    "actualExecutionSource": "24c42b7c00d32cf7dfc86d016365fa8f620e19f1",
+    "qualifiedSource": "24fd1e20eb1af2ebab0f4d7dd7f617145217eded",
+    "sourceInputCount": 7,
+    "sourceInputsEqual": true,
+    "sdk396Equal": true,
+    "toolingAndProducerTreesEqual": true,
+    "actualReceiptSHA256": "e1d14bc837f8d901d9f1a0a9cb4016d773ca8e46a154e77ab6871a7f0b30cb4c",
+    "actualArchiveSHA256": "52ca1a1497c5dbff710ab4045a615576f7946d5583424c0d2dc5211a44af7913",
+    "newInvocations": 0,
+    "actualConsumedFixtureFilesMatched": 7,
+    "broadCapturedFixtureFiles": 13,
+    "broadCapturedFixtureFilesMatched": 12,
+    "excludedUnconsumedChangedSource": [
+      "Fixtures/ShortcutLongRunning/nativescript/index.ts"
+    ],
+    "actualArchiveBytes": 2007300,
+    "basis": "Original direct Expo CLI consumes only its7 scoped authored files and unchanged actual SDK/tooling. The broad13-input before/after observer also captured the other fixture's6 inputs; its one corrected NS index is not an Expo input."
+  },
+  "nativeScript": {
+    "rawReceiptSHA256": "c1e74fc3f56f978abc53ee0e507197b31900f33b752804f9b33c90191ba77d9e",
+    "archive": {
+      "bytes": 20312,
+      "sha256": "a82ed21b40cb8c319e345a00fc1df90f100dc890a05557910c256eff411c0383"
+    },
+    "archiveCRCAndUniqueMemberCount": 15,
+    "generatedFiles": 15,
+    "generatedClosureSHA256": "ca98758b921579b7c81f0cfb7744bad727a9579db62f4b735f662e35636dd9d9",
+    "generatedInventorySHA256": "4db12c966b5c4b79c981c837c4f81c0c5b6a218b4e529cce3179e8dc09ee4d02",
+    "sourceUnchanged": true
+  },
+  "expo": {
+    "rawReceiptSHA256": "e1d14bc837f8d901d9f1a0a9cb4016d773ca8e46a154e77ab6871a7f0b30cb4c",
+    "archive": {
+      "bytes": 2007300,
+      "sha256": "52ca1a1497c5dbff710ab4045a615576f7946d5583424c0d2dc5211a44af7913"
+    },
+    "generatedFiles": 13,
+    "generatedClosureSHA256": "fecb027dc72055fde2797623932d24dac5c0d5625a4444ea7d026fc0627214bc",
+    "generatedInventorySHA256": "02e9f06972e9fd3751bd7b5cb344c87c772cfac76db5aeabf5f2033a6de3b1a6"
+  },
+  "originalCLI": "node Scripts/MiniApps/miniapp.mjs <validate|build> --sdk <actual extracted shipping MiniAppSDK> --project Fixtures/ShortcutLongRunning/<engine> [--archive <owned output>] --report <owned report>",
+  "actualSDK": {
+    "manifestSHA256": "7f2702e52587fe1d126cef37f068ab3a9e3a26adb275ffafb687cb38a2db9b87",
+    "inputSHA256": "9e397ad525cf254598f8b35256816d1519ae2adfb02f3e5692fc91c21a1a3ab1",
+    "sourceInputCount": 396,
+    "archiveSHA256": "a088d98b8f85ae1e1ad767fca92132c03f0155d5ddd379d57b8cc98c38f19383",
+    "originalCLIAndRunner": {
+      "Scripts/MiniApps/miniapp.mjs": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30",
+      "Scripts/ProductSplit/run_paired_acceptance.py": "77f339cb70b6294a94d8cc8162f2816fb8c4fb21c3f838c94978281707d6d0d1"
+    }
+  },
+  "currentAuthoredInputs": {
+    "Fixtures/ShortcutLongRunning/expo/App.tsx": "3306a9446bae91dc54a53048e058845053d1c8fb6bbe4812d0b541f5bfdb2081",
+    "Fixtures/ShortcutLongRunning/expo/hanlin.authoring.json": "57239928efb0bd0e6760bf64443e70bf021eb963f074908332de3f5b7959a5a3",
+    "Fixtures/ShortcutLongRunning/expo/index.ts": "e6ff990a5f73c39cebfecc539611b23872e530f1287c6b0d0d8447fbc9a832ee",
+    "Fixtures/ShortcutLongRunning/expo/package.json": "7f98541b8391b1f84b2728b35144921e855db9c28c20cda94d11e68d5272bb67",
+    "Fixtures/ShortcutLongRunning/expo/proof.ts": "1a5bea7578bda901dbd41cc89142b67a1b12cfe53bc1e945721f50628b482293",
+    "Fixtures/ShortcutLongRunning/expo/script.json": "362023c59de412ae476e4b32f3d8a39a70dcc8fdec4c5e1edd1c684551d142bc",
+    "Fixtures/ShortcutLongRunning/expo/tsconfig.json": "40d7c93d27898a4c2f676e917017a532edd471abbe9e76b620104ef272d7d466",
+    "Fixtures/ShortcutLongRunning/nativescript/hanlin.authoring.json": "5c45d2ab2cfce588d3758665eff52a9511613b2070a9946be001e32f87d517d9",
+    "Fixtures/ShortcutLongRunning/nativescript/index.ts": "f8da967722404e641c758db94d03782b70a9815b71ee4f027fae0cebf9a8f496",
+    "Fixtures/ShortcutLongRunning/nativescript/package.json": "0c64e8a08b4b5985a9ed3e5d73bb46f2384da8bc2ac892b47f2c89505559410c",
+    "Fixtures/ShortcutLongRunning/nativescript/proof.ts": "95dc082de18e5fbcfc8aaa10be5397e188ea4df9c24e4896d94794f31c6aca13",
+    "Fixtures/ShortcutLongRunning/nativescript/script.json": "e860896ff737ae9b3cc1d80675898a340f959ad8b69d24322600a2b9642c8af6",
+    "Fixtures/ShortcutLongRunning/nativescript/tsconfig.json": "32212ba114edcbc3f0f923db351e65c228b1c0bc4f2a2339a1bd2eaa90e24e75"
+  },
+  "all17ReviewedSourcesUnchanged": true,
+  "historicalFailure": {
+    "source": "24c42b7c00d32cf7dfc86d016365fa8f620e19f1",
+    "rawReceiptSHA256": "e3a9087ef90d02de378d458ccce436688212c9f19b2dc5fe5a7c3bcaf8793775",
+    "rawReportSHA256": "ba4ce715c26058a893046e4ed9374ae844429690924e4a414cc25d723b168ba6",
+    "cause": "TS2584: the original strict NativeScript environment does not expose global console. Only the diagnostic call was repaired using the existing public Trace.write API.",
+    "counts": {
+      "PASS": 2,
+      "FAIL": 1,
+      "NOT_RUN": 1
+    },
+    "preserved": true
+  },
+  "completePrivateRawPackets": {
+    "current": {
+      "manifestSHA256": "380071bb79b8a54e0cb2a474c3d8c32e72e4e20d43ea174a8ec2e4cbf7f82f9f",
+      "membersIndependentlyRehashed": 52,
+      "bytes": 660893
+    },
+    "original": {
+      "manifestSHA256": "c6cd4af9c6a67f5d313da3d4373bba867bd0d7520fb4153c8526a1260cfbe685",
+      "membersIndependentlyRehashed": 61,
+      "bytes": 12572051
+    }
+  },
+  "independentQualification": {
+    "reviewer": "/root/w1_review_resume",
+    "receiptSHA256": "85649f8bbdbbc96652e9c7be573b2a779e49d053ba6c74013a9d36570ebfa18e",
+    "scope": "52 packet members,17 reviewed source blobs,396 SDK inputs,actual NS archive15 CRC entries,Expo7 consumed inputs and8 unchanged tooling trees"
+  },
+  "remaining": "Actual hosted upstream overlay, both applications/test-bundle builds, saved four OS cases and physical-device boundaries remain separately qualified."
+}
