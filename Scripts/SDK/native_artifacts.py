@@ -77,6 +77,38 @@ MACHO = {b"\xfe\xed\xfa\xce", b"\xce\xfa\xed\xfe", b"\xfe\xed\xfa\xcf",
          b"\xca\xfe\xba\xbf", b"\xbf\xba\xfe\xca"}
 SCHEMA_VERSION = 1
 
+# Materialize the original validator's source dependencies from immutable Git
+# blobs, including complete trees consumed by stage-sdk's inputReceipt. The
+# original validator remains the sole authority for archive and SDK identity.
+# This is deliberately a superset of its inputs, not an archive-provided list:
+# a newly added source inside any tree must participate in the real fingerprint.
+NODE_SUPPORT_SOURCE_PATHS = (
+    "Scripts/Runtime/runtime_host_archive.py",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host",
+    "Scripts/MiniApps",
+    "Scripts/CI/IntegrationValidation/project_graph.py",
+    "Scripts/Expo/package.json", "Scripts/Expo/package-lock.json",
+    "Scripts/Expo/dependency-lock.json", "Scripts/Expo/babel.config.cjs",
+    "Scripts/Expo/metro.config.cjs", "Scripts/Expo/prepare-types.mjs",
+    "Scripts/Expo/build-original-widget-runtime.mjs",
+    "Scripts/Expo/sync-original-ui-exports.mjs",
+    "Scripts/NativeScript/package.json", "Scripts/NativeScript/package-lock.json",
+    "Scripts/NativeScript/dependency-lock.json",
+    "Scripts/ExpoNativeAPI/dependency-lock.json", "Tools/SwiftUIBridge/configuration.json",
+    "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIManager.swift",
+    "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIHostVersions.swift",
+    "Packages/HanlinPlatform/Package.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions",
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationExtension/HanlinNotificationService.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+    "Packages/HanlinExpoUI", "Packages/HanlinExpoNativeAPIJS",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services",
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal",
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets",
+    "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
+    "docs/miniapp-sdk", "docs/hanlin-nativescript-guide.md", "docs/hanlin-expo-runtime.md",
+)
+
 
 def digest(path: Path) -> str:
     with path.open("rb") as stream:
@@ -231,7 +263,9 @@ def validate_node_support(root: Path, archive: Path, revision: str) -> None:
     # native builder, frozen runtime extraction or second archive schema is used.
     validator = "Scripts/Runtime/runtime_host_archive.py"
     host = "AI_HLY/Downstream/RuntimeCore/Node/Host"
-    _, files = pinned_files(root, (validator, host), revision)
+    _, files = pinned_files(root, NODE_SUPPORT_SOURCE_PATHS, revision)
+    if validator not in files or "Scripts/MiniApps/stage-sdk.mjs" not in files:
+        raise ValueError("Pinned original Node validation source is incomplete")
     with tempfile.TemporaryDirectory(prefix="hanlin-sdk-source-") as temporary:
         source = Path(temporary)
         for name, content in files.items():
