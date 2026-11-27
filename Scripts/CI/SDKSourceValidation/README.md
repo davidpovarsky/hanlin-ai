@@ -307,6 +307,70 @@ Swift case, Widget2 and iOS product remain **NOT_RUN** until the separately
 authorized original hosted continuation actually executes. Original evidence
 uses Xcode27.2/Swift6.4.2/Testing2403, with no Xcode27.0 compatibility claim.
 
+## Continuation after the actual one-case alias-parser failure
+
+The next closed continuation keeps source
+`0ae1920d316b9592cbad0462bea96a07fd1ca351` unchanged. Actual run
+`45968129203`, attempt1, controller `c46884bff261863c3c1271279294dac7efcfafdb`
+compiled the original Presentation package and passed the single corrected
+cache-owner case. Its Swift command exited0 after194.67s; the named case
+passed in0.001s, and the one-case summary passed in0.002s. Both actual18-package
+checkout/clean snapshots completed. The controller then failed while parsing
+the exact suite spelling emitted by Swift Testing2403:
+
+```text
+"Original code-fence retained payload ownership" (aka 'ChatCodeFencePayloadRetentionTests')
+```
+
+That entire original controller run remains **FAILED**. Widgets and the iOS
+product were **NOT_REACHED**. No SDK source, test assertion, production lease,
+package pin, workflow predicate or dispatch input changes in this correction.
+The parser adds only the exact combination of the already fixed source-declared
+display string and suite identifier. Foreign aliases, mixed start/end suites,
+duplicates, missing outcomes and skipped cases remain rejected.
+
+`completed_quota.py` admits only original run45968129203/attempt1/job140401673036,
+controllerc468, source0ae and artifact15183909230. It requires the complete
+646621691-byte ZIP and SHA256
+`fc801c2d81b62fd94629dbd7f80ee1520703ad2a97c2aef4bb9f39b8bcc79c48`,
+all114 members,21 fixed original metadata/log members, the original1005-file
+source TAR, exact source-declared suite names,90 successful command/log/drained
+process-group receipts, both18-package dependency snapshots, the actual
+4880-byte resolved lock and all267 files in the original191805440-byte quota
+product TAR. The whole current source inventory must be identical to original0ae;
+no new successor delta is admitted. The earlier Agent and original-five-case
+admission implementations remain byte-for-byte unchanged and independently run.
+No archived source or product is executed.
+
+Only after all three original admissions pass, the controller combines the
+five unchanged original35d passes with the one original0ae pass. It executes
+**zero Agent and zero quota tests** in the new run. It restores the exact
+original0ae resolved lock into the identical private Presentation package for
+the unchanged iOS product build. That build still must verify its actual new
+checkouts and unchanged source. The remaining two original Widget methods and
+the original iOS build are executed as previously specified. The report names
+each original source/run separately; it never reports a same-run six-case quota
+pass or converts either failed controller run into a successful whole run.
+Original products and failures stay retained by the existing preservation gate.
+
+The source handoff retains the actual c468 failure, terminal, full-ZIP hash
+receipt and preceding bounded-reader timeout. The first range-selection receipt
+said full-ZIP hash pending and is preserved unchanged. Root's separate155-range
+full-hash receipt subsequently bound that same ETag and all646621691 bytes to
+the expected archive digest. The complete original ZIP remains at GitHub; no
+large ZIP/product was stored on Oracle. Local26 portable controls passed,
+including the actual alias terminal and closed metadata/API checks. The new
+full source/product TAR admission function itself has **NOT_RUN locally**; the
+future hosted continuation must execute that complete gate before any reuse.
+The old final all-suite source check was not reached and is not invented.
+
+Failure summaries now include bounded console error text, redacting URLs,
+known credential environment values and authorization/token spellings. The
+original first cause and any separate product-preservation failure remain
+separately recorded; a later cleanup error does not replace the original cause.
+The actual original proof is scoped to Xcode27.2/Swift6.4.2/Testing2403 and does
+not establish Xcode27.0 or Anytype application/runtime acceptance.
+
 ## Separate original NativeScript and App/UIKit routes
 
 The original explicit-handler test remains:

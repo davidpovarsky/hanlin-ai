@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/CI/SDKSourceValidation/run.py", line 603, in main
+    result = execute(run, source, inputs["exact_test_selector"] == CONFIG["continuation"]["selector"])
+  File "/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/CI/SDKSourceValidation/run.py", line 537, in execute
+    result = parse_swift_testing(log, suite)
+  File "/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/CI/SDKSourceValidation/run.py", line 131, in parse_swift_testing
+    require(len(passed_suites) == 1 and passed_suites[0] in allowed_suites and
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            re.findall(r"^◇ Suite (.+?) started\.$", text, re.M) == passed_suites,
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            "Missing, duplicate or foreign suite; only exact source-declared names are admitted")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/CI/SDKSourceValidation/run.py", line 48, in require
+    raise RuntimeError(message)
+RuntimeError: Missing, duplicate or foreign suite; only exact source-declared names are admitted

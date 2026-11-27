@@ -1,0 +1,19 @@
+{
+  "id": 15183909230,
+  "name": "hanlin-original-sdk-45968129203-1",
+  "size_in_bytes": 646621691,
+  "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15183909230",
+  "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15183909230/zip",
+  "expired": false,
+  "created_at": "2026-11-27T08:54:12Z",
+  "expires_at": "2026-12-27T08:53:16Z",
+  "updated_at": "2026-11-27T08:54:12Z",
+  "digest": "sha256:fc801c2d81b62fd94629dbd7f80ee1520703ad2a97c2aef4bb9f39b8bcc79c48",
+  "workflow_run": {
+    "id": 45968129203,
+    "repository_id": 1295277723,
+    "head_repository_id": 1295277723,
+    "head_branch": "codex/hanlin-sdk-hosted-validation-20261127",
+    "head_sha": "c46884bff261863c3c1271279294dac7efcfafdb"
+  }
+}

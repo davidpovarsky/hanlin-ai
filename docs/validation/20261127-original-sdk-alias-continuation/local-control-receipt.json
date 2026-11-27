@@ -1,0 +1,55 @@
+{
+  "appleBuilds": 0,
+  "capture": "Selected unmodified exit/output fields from the completed exec_command response; no rerun.",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "-v",
+    "test_control"
+  ],
+  "controlInputs": {
+    "completed_quota.py": {
+      "bytes": 14658,
+      "sha256": "d01c5a2744a0662a4376613830ab3309c6e31f29433782f9301c3a334b04cea3"
+    },
+    "continuation.py": {
+      "bytes": 17320,
+      "sha256": "9fd78bf1886e7fda6789a488fb84512c08b6a9826572332f620b9105613c3243"
+    },
+    "obligations.json": {
+      "bytes": 31136,
+      "sha256": "6046ead7a8de7550e0e5c12e804946660106d42cd6037b765b20e54822f3f860"
+    },
+    "quota_continuation.py": {
+      "bytes": 15805,
+      "sha256": "0d2e8081ecdcb802b3d211b041febd016c603ecdd149eae49e414acc4d5510ca"
+    },
+    "run.py": {
+      "bytes": 43477,
+      "sha256": "7dbb3eefceaf1cb0064e2e0e43a5046bb94f9e36aac8d211d2f0604c6d428809"
+    },
+    "test_control.py": {
+      "bytes": 34928,
+      "sha256": "11f2dc93ae4844905f2fa3990d55080010581130d516256f4bb0d722d85be34e"
+    }
+  },
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "executedControlMethods": 26,
+  "fullNewArchiveAdmission": "NOT_RUN_LOCALLY",
+  "newMethods": 6,
+  "rawOutput": {
+    "bytes": 4969,
+    "path": "local-control-tests.log",
+    "sha256": "a4cc2a31f798001ba98d9dfb36fa2907700a585dd86c0f2cf51d7b23a19f101e"
+  },
+  "reportedSeconds": 0.202,
+  "retainedOriginalControlMethods": 20,
+  "scope": "Actual raw terminal/API/recorded-scope and negative controls only; future full fixed original archive/source/product admission remains mandatory.",
+  "status": "PASS_PORTABLE_CONTROL_ONLY",
+  "swiftExecutions": 0,
+  "toolExitCode": 0,
+  "toolResultChunk": "5179f8"
+}

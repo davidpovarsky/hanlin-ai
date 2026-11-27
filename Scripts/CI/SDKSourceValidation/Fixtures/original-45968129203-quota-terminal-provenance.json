@@ -1,0 +1,16 @@
+{
+  "source": "0ae1920d316b9592cbad0462bea96a07fd1ca351",
+  "runID": 45968129203,
+  "attempt": 1,
+  "controller": "c46884bff261863c3c1271279294dac7efcfafdb",
+  "artifactID": 15183909230,
+  "artifactSHA256": "fc801c2d81b62fd94629dbd7f80ee1520703ad2a97c2aef4bb9f39b8bcc79c48",
+  "rawLog": {
+    "bytes": 1036503,
+    "sha256": "45d579668fffe19d4f8c8f5600cf9b3324f84ca18013b545fbc31ad51eb1de79"
+  },
+  "terminalOffset": 1035766,
+  "terminalBytes": 737,
+  "terminalSHA256": "0430b4e00684576bab5ee525919c02870c3e547f2cc8e0bbeb60abdfa2f413cb",
+  "scope": "Exact unmodified terminal byte slice from actual original raw Swift log. The original whole controller run remains FAILED."
+}

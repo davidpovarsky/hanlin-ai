@@ -1,0 +1,344 @@
+{
+  "actualLocalControls": {
+    "methods": 26,
+    "receipt": {
+      "bytes": 1733,
+      "gitBlob": "b716ff4cf596e7c05f0b3812c2a5c4960773c2c0",
+      "sha256": "5f34f2dbefdfb904f79d6061c61248aff8bf29f948765b2064e7f32b2d098488"
+    },
+    "reportedSeconds": 0.202,
+    "result": "PASS"
+  },
+  "actualOriginalScope": {
+    "archiveFullHashReceipt": {
+      "bytes": 27267,
+      "gitBlob": "e0848f828a0f19adf51404ce70d009106b07b287",
+      "sha256": "b0792499b6f3a187866afaa0f35262d3f099fa938101b044e909249a359b43ef"
+    },
+    "attempt": 1,
+    "commandCount": 90,
+    "fullNewTarReader": "NOT_RUN_LOCALLY",
+    "postTestDependencies": 18,
+    "runID": 45968129203,
+    "swiftOneCase": "PASS_ACTUAL_ORIGINAL",
+    "wholeStatus": "FAILED"
+  },
+  "changedFiles": [
+    {
+      "bytes": 783,
+      "gitBlob": "584204764cf9a1eb720590ecdc50cd70f7e1daf7",
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-45968129203-artifact.json",
+      "sha256": "dc8a7be854aec8cfd100abaacc292f25361efd2d238c09bda69f1b8d61f7455d",
+      "status": "added"
+    },
+    {
+      "bytes": 34933,
+      "gitBlob": "8b8d26e2bcb04abac448066dd84828f00f5c4765",
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-45968129203-jobs.json",
+      "sha256": "b9fade8247d899115f697a85a244e386a4f183dbbc6cecc1e1cca0beaf890f4c",
+      "status": "added"
+    },
+    {
+      "bytes": 676,
+      "gitBlob": "a5aaa21fa5d11c0ce903324e6338728ba90475e4",
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-45968129203-quota-terminal-provenance.json",
+      "sha256": "37e8cfb4afd6add74f4270114e735be05313e334d274d52e90e7fe214a8af34b",
+      "status": "added"
+    },
+    {
+      "bytes": 737,
+      "gitBlob": "49c53a6d4dd38732363e0779539482e343ff4b6b",
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-45968129203-quota-terminal.log",
+      "sha256": "0430b4e00684576bab5ee525919c02870c3e547f2cc8e0bbeb60abdfa2f413cb",
+      "status": "added"
+    },
+    {
+      "bytes": 692694,
+      "gitBlob": "14934312fc5575325633f0d7514bce9ea7d903ff",
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-45968129203-recorded-scope.json",
+      "sha256": "23dbf5953bd3238e088e12f70db128226a7c2968782a281e276183815315a19f",
+      "status": "added"
+    },
+    {
+      "bytes": 14634,
+      "gitBlob": "7c90d4c71f4f46693df453e942bd36e3558a79fb",
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-45968129203-run.json",
+      "sha256": "165e67ccdb069fb81a0ea5a47f6358f549963148ad3dd9ad133e7b293ed8bfd2",
+      "status": "added"
+    },
+    {
+      "before": {
+        "bytes": 21316,
+        "gitBlob": "b3b66e2d099e01af1d787d9d8896c3429613cf55",
+        "sha256": "3a40c5d02bb27e6208f36369bcd9bc807abbb93207eed413d34feeace446b8d6"
+      },
+      "bytes": 25332,
+      "gitBlob": "ed36361e4be2c986e4ea2e7acf993ab591405a5f",
+      "path": "Scripts/CI/SDKSourceValidation/README.md",
+      "sha256": "fa17a5d2d9c41ca694c3b2ca4fb5edcb867f23c9de556d7e2bf8be8caaf59b40",
+      "status": "modified"
+    },
+    {
+      "bytes": 14658,
+      "gitBlob": "bd21bdb04d85d4e6c30e85b4578c7779d2f764f9",
+      "path": "Scripts/CI/SDKSourceValidation/completed_quota.py",
+      "sha256": "d01c5a2744a0662a4376613830ab3309c6e31f29433782f9301c3a334b04cea3",
+      "status": "added"
+    },
+    {
+      "before": {
+        "bytes": 26647,
+        "gitBlob": "b4d831449b1642629ae72d0d79f9545f997fd9c1",
+        "sha256": "85ac7100b4776ad3ef9ccc51d7f8f493258dc0706f0fe96cc06a5e18a2c87af1"
+      },
+      "bytes": 31136,
+      "gitBlob": "f942833c419abed4f223a619e613a7d4c29fc811",
+      "path": "Scripts/CI/SDKSourceValidation/obligations.json",
+      "sha256": "6046ead7a8de7550e0e5c12e804946660106d42cd6037b765b20e54822f3f860",
+      "status": "modified"
+    },
+    {
+      "before": {
+        "bytes": 38159,
+        "gitBlob": "2719f795f73d6229755c51b402db8d4018d4850d",
+        "sha256": "42fe6b091114eaef011e94148d855e055391ab0576d999760df513446643134f"
+      },
+      "bytes": 43477,
+      "gitBlob": "22b0479613cd7490859ff57a0dd00326dae12ce3",
+      "path": "Scripts/CI/SDKSourceValidation/run.py",
+      "sha256": "7dbb3eefceaf1cb0064e2e0e43a5046bb94f9e36aac8d211d2f0604c6d428809",
+      "status": "modified"
+    },
+    {
+      "before": {
+        "bytes": 27915,
+        "gitBlob": "b32f02ecf396391f25004b02464d715fe7ca035f",
+        "sha256": "fdfac125835c8902f8f2aec84493228fe24a0d060648f711b8692d8ad8d35aa8"
+      },
+      "bytes": 34928,
+      "gitBlob": "ed5b9600d49129e8a3c6490e47252b26b2cb8ac0",
+      "path": "Scripts/CI/SDKSourceValidation/test_control.py",
+      "sha256": "11f2dc93ae4844905f2fa3990d55080010581130d516256f4bb0d722d85be34e",
+      "status": "modified"
+    },
+    {
+      "bytes": 4562,
+      "gitBlob": "abb261a37c7da47292c6d439fc3976e6783fe8d8",
+      "path": "docs/validation/20261127-original-sdk-alias-continuation/actual-failure-diagnosis.json",
+      "sha256": "753dd3dde7f897254cb15d1d7ec9b5edf7a080c675ae3bd0b62ce304261771f7",
+      "status": "added"
+    },
+    {
+      "bytes": 1733,
+      "gitBlob": "b716ff4cf596e7c05f0b3812c2a5c4960773c2c0",
+      "path": "docs/validation/20261127-original-sdk-alias-continuation/local-control-receipt.json",
+      "sha256": "5f34f2dbefdfb904f79d6061c61248aff8bf29f948765b2064e7f32b2d098488",
+      "status": "added"
+    },
+    {
+      "bytes": 4969,
+      "gitBlob": "cdd846c59e9d9dcf31e45a7e2e19f265c2af25e5",
+      "path": "docs/validation/20261127-original-sdk-alias-continuation/local-control-tests.log",
+      "sha256": "a4cc2a31f798001ba98d9dfb36fa2907700a585dd86c0f2cf51d7b23a19f101e",
+      "status": "added"
+    },
+    {
+      "bytes": 5097,
+      "gitBlob": "f360d321ad74d30d9de75ecb69ee66bf41998366",
+      "path": "docs/validation/20261127-original-sdk-alias-continuation/local-control-tool-result.json",
+      "sha256": "07ffc30d5e0e159c335279259362e464d89198cf27416464bc242b75aa7e10e5",
+      "status": "added"
+    },
+    {
+      "bytes": 1274,
+      "gitBlob": "88c1b4c45c433726d0282ec1049869a4553096e3",
+      "path": "docs/validation/20261127-original-sdk-alias-continuation/original-c468-controller-error.log",
+      "sha256": "4aafef8d2663a8e3ced95b0600549c0e6c3315c0b06f8ac2de746cb8dfc4f252",
+      "status": "added"
+    },
+    {
+      "bytes": 72832,
+      "gitBlob": "93a2b10fd2a7054274cac934b226ebae943904e4",
+      "path": "docs/validation/20261127-original-sdk-alias-continuation/original-c468-failed-result.json",
+      "sha256": "57a3898f54ccadde66d4e6607ea536e9fbe7011a29d2c78b03bca4378c9ffdaf",
+      "status": "added"
+    },
+    {
+      "bytes": 338,
+      "gitBlob": "cddad6ded456e839da89551393ea6e1b2750bd14",
+      "path": "docs/validation/20261127-original-sdk-alias-continuation/original-connector-size-limit.json",
+      "sha256": "224cc7802b9c89e6d6063afaf6b80e24b030f96da1dccfc6077718b3e47a2c86",
+      "status": "added"
+    },
+    {
+      "bytes": 546,
+      "gitBlob": "256a7e54dca6aa3aa206b565247f2424c145ecc1",
+      "path": "docs/validation/20261127-original-sdk-alias-continuation/original-root-first-full-stream-failure.json",
+      "sha256": "76a594fc565c240c1e6362442248efa6bbd5386ba5adc5dc6fcd53fd9e605a6c",
+      "status": "added"
+    },
+    {
+      "bytes": 27267,
+      "gitBlob": "e0848f828a0f19adf51404ce70d009106b07b287",
+      "path": "docs/validation/20261127-original-sdk-alias-continuation/original-root-full-archive-hash.json",
+      "sha256": "b0792499b6f3a187866afaa0f35262d3f099fa938101b044e909249a359b43ef",
+      "status": "added"
+    },
+    {
+      "bytes": 7632,
+      "gitBlob": "8786c919df294a598a1dd42beedfdf3165c61469",
+      "path": "docs/validation/20261127-original-sdk-alias-continuation/original-root-selected-members.json",
+      "sha256": "20179c7e1bd39287a04aeb4b459537dfbcea155dbd0c49a6c2f9fc1c77dea057",
+      "status": "added"
+    },
+    {
+      "bytes": 26456,
+      "gitBlob": "ab82423865de9f4948e2419d5c18eb003726504b",
+      "path": "docs/validation/20261127-original-sdk-alias-continuation/original-zip-directory.json",
+      "sha256": "98959bf0f884ca735072940b18c9b1de5753ae5d9cfedea43a242f0034c956e4",
+      "status": "added"
+    },
+    {
+      "bytes": 1180,
+      "gitBlob": "238b60f413c908da19eacd89056bec0fbf8d1757",
+      "path": "docs/validation/20261127-original-sdk-alias-continuation/proposed-dispatch-payload.json",
+      "sha256": "523eb9c7e5344de5807421c2b27cc297c074d65dae7b47181ca6aae6d2390211",
+      "status": "added"
+    }
+  ],
+  "futureScope": {
+    "agentExecutions": 0,
+    "existingInputs": 25,
+    "iosProduct": "Original HanlinChatUI generic iOS Simulator build",
+    "newInputs": 0,
+    "quotaExecutions": 0,
+    "sdkSourceChanged": false,
+    "sourcePinsChanged": false,
+    "strictAdmission": "Three independent fixed original artifacts, full source/product closure before reuse",
+    "widgetMethods": 2,
+    "workflowChanged": false
+  },
+  "inverseOperations": 13,
+  "limitations": [
+    "Original c468 and bd41 whole controller runs remain failed.",
+    "Current c468 selected source and raw outcome are bound to the root-verified complete original ZIP. New source/product TAR reader has not executed locally and must pass on the future hosted runner.",
+    "No Swift/native/compiler/Mac/account/signing/TestFlight action occurred in this source preparation.",
+    "Actual original proof uses Xcode27.2/Swift6.4.2/Testing2403; no Xcode27.0 binary compatibility claim."
+  ],
+  "literalInverses": {
+    "bytes": 32619,
+    "gitBlob": "e4452f5672cd2ab4902bd6e8facd7a609627db56",
+    "sha256": "dc846e8199bc20b7fdd59f7cd0b922ec4b3859d3c45db32bdf0b6a4fa1da492c"
+  },
+  "originalControlTestsClass": {
+    "bytes": 25263,
+    "gitBlob": "bbe7017576eb2eae31bea0524eba137060a67f9f",
+    "sha256": "62edbe2e624883ced316d03c25711806b1f2d602e8bda7dd9536957ec6450fa2"
+  },
+  "parentController": "c46884bff261863c3c1271279294dac7efcfafdb",
+  "parentTree": "c329344f1779040bd6c66298fae384b07f675f6a",
+  "schema": "original-sdk-suite-alias-continuation-source-intake-v1",
+  "source": "0ae1920d316b9592cbad0462bea96a07fd1ca351",
+  "sourceTree": "761851ab3909f8b419a0459a2e4739afa2776f7d",
+  "status": "PREPARED_REVIEW_REQUIRED_NO_PUBLICATION_OR_DISPATCH",
+  "unchangedFiles": [
+    {
+      "bytes": 219117,
+      "gitBlob": "b819f3a8634a8466f821c7d33f3ba11ba03e8a59",
+      "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "sha256": "e1c50b40b2c93f77c22243c755cb8bcb0f9447b44199f5f2ec2518a1640dc423"
+    },
+    {
+      "bytes": 17320,
+      "gitBlob": "c109231b6fa4aac18640657ff17b4d5d4d458645",
+      "path": "Scripts/CI/SDKSourceValidation/continuation.py",
+      "sha256": "9fd78bf1886e7fda6789a488fb84512c08b6a9826572332f620b9105613c3243"
+    },
+    {
+      "bytes": 15805,
+      "gitBlob": "1bb32828b65a9f64437166512fe66e6cf099abce",
+      "path": "Scripts/CI/SDKSourceValidation/quota_continuation.py",
+      "sha256": "0d2e8081ecdcb802b3d211b041febd016c603ecdd149eae49e414acc4d5510ca"
+    }
+  ],
+  "unchangedRunDeclarations": [
+    {
+      "bytes": 110,
+      "gitBlob": "ae07044fc86d16eedaf2fcf13e8cd44da40be8d9",
+      "name": "require",
+      "sha256": "23f95a5c024c37e264c643d4fa3249dd7fa0fed4946127720cb45fc3d79a5daa"
+    },
+    {
+      "bytes": 258,
+      "gitBlob": "ab7d32d22f0fb4bcd2d80d0c040ba24f52b26591",
+      "name": "write_json",
+      "sha256": "98d80b3e9cfe340b28efc925f319e61ac6045c516515ece64b52ad5d411e8194"
+    },
+    {
+      "bytes": 221,
+      "gitBlob": "74a2f1f9d28462d99e1c95cbea20b3f3a9a441be",
+      "name": "sha256",
+      "sha256": "474e84f9d1f6b11f415ad58b964a31c1e1e7148b31447b58fadead7b56bd0d66"
+    },
+    {
+      "bytes": 121,
+      "gitBlob": "2193f2835a82a7d1a266a2f4ee3f38da9dad7218",
+      "name": "blob_sha",
+      "sha256": "b717fc2c55e96ce4ec59be8d2822a15e4d72473d5b31665291f00e6a72e7947d"
+    },
+    {
+      "bytes": 309,
+      "gitBlob": "e758f3a9575d9250155738043e8d9fd969a3925b",
+      "name": "protected_blobs",
+      "sha256": "210fa8b4f338a1a7706d1b66a1b7b1850b4d583e8856d832fc1afdc854c7aa34"
+    },
+    {
+      "bytes": 1316,
+      "gitBlob": "bd56f56f9cbd853561b554477fe790e801eab31f",
+      "name": "validate_inputs",
+      "sha256": "1cf653e154bf4552a831a591f1da341d68f9db1e4f4637bec655b63e0e85c64d"
+    },
+    {
+      "bytes": 484,
+      "gitBlob": "0c8e36c55260b3435b447b5b943a63d54161f594",
+      "name": "selected_quota_suite",
+      "sha256": "c450dba81e93a5f55bf73a470a214f13c9920f251653868d47b8089543f1c318"
+    },
+    {
+      "bytes": 102,
+      "gitBlob": "47f45845180953ac73d53063e895dda76a944cd3",
+      "name": "normalized_location",
+      "sha256": "396c17e810b23cf1844aa499615f225670ec5beb947752c38c9fe32b477a1fe0"
+    },
+    {
+      "bytes": 743,
+      "gitBlob": "4ccf2332123060eaf604893c7a823465a0348e68",
+      "name": "lock_records",
+      "sha256": "f44fc4ad8e4f8939fb771d709a75127f2c4ba72012d2e633abd22cd74e8b909e"
+    },
+    {
+      "bytes": 369,
+      "gitBlob": "89829c81c915904ecd942a24fe76bb2d3d1994f7",
+      "name": "validate_lock",
+      "sha256": "bc11631d3f2fcf1fe0df4fb10238bb99384309e6c4a41e4c0b55cd6991c6175e"
+    },
+    {
+      "bytes": 1549,
+      "gitBlob": "6b865eb2474a03fde4ad1ebb41b4896e1a8fa711",
+      "name": "finish_original_process_group",
+      "sha256": "a11d7c8009d2f2b139f8814f8a909c9329d7102241fe7c93954e535f703c8947"
+    },
+    {
+      "bytes": 8416,
+      "gitBlob": "7191f67f2d376e3b6153309829091a4470c75409",
+      "name": "Run",
+      "sha256": "501c5472f385b5fa0fb51dce9374fdddb7e51bbc9c152d87816b342bed1865e7"
+    },
+    {
+      "bytes": 1100,
+      "gitBlob": "f0fd18b4b36e485a009cdd44395c04a0c84d16ad",
+      "name": "source_inventory",
+      "sha256": "20286d08b7faf8e3503ff04f30b5c73565160d66f84a90212b048fb85c66e9c1"
+    }
+  ]
+}

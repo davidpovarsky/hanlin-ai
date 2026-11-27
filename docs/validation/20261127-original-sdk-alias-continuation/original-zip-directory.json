@@ -1,0 +1,1028 @@
+[
+  {
+    "name": "45968129203-1/admitted-source.json",
+    "bytes": 3540,
+    "compressedBytes": 1620,
+    "crc32": 1996830324,
+    "headerOffset": 0,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/agent-stop-Package.resolved",
+    "bytes": 1771,
+    "compressedBytes": 537,
+    "crc32": 576761653,
+    "headerOffset": 1700,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/agent-stop-actual-results.json",
+    "bytes": 1565,
+    "compressedBytes": 819,
+    "crc32": 1956204732,
+    "headerOffset": 2324,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/agent-stop-original-products.tar",
+    "bytes": 413972480,
+    "compressedBytes": 100834386,
+    "crc32": 23000174,
+    "headerOffset": 3233,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/commands.json",
+    "bytes": 65883,
+    "compressedBytes": 5478,
+    "crc32": 59303018,
+    "headerOffset": 100837711,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/archive-original-source.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 100843262,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/controller-error.log",
+    "bytes": 1274,
+    "compressedBytes": 431,
+    "crc32": 3551418727,
+    "headerOffset": 100843351,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/controller-identity.json",
+    "bytes": 1094,
+    "compressedBytes": 532,
+    "crc32": 3574351371,
+    "headerOffset": 100843862,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/dispatch-inputs.json",
+    "bytes": 827,
+    "compressedBytes": 334,
+    "crc32": 1057365328,
+    "headerOffset": 100844478,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/evidence-files.json",
+    "bytes": 17951,
+    "compressedBytes": 3249,
+    "crc32": 2929962701,
+    "headerOffset": 100844892,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/fetch-original-source.log",
+    "bytes": 126,
+    "compressedBytes": 114,
+    "crc32": 811271005,
+    "headerOffset": 100848220,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/macos.log",
+    "bytes": 66,
+    "compressedBytes": 55,
+    "crc32": 2894203878,
+    "headerOffset": 100848419,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/original-json-vendor.log",
+    "bytes": 667,
+    "compressedBytes": 421,
+    "crc32": 1425709528,
+    "headerOffset": 100848543,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/original-products.json",
+    "bytes": 179033,
+    "compressedBytes": 26643,
+    "crc32": 1590231715,
+    "headerOffset": 100849048,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/original-source-files.json",
+    "bytes": 305259,
+    "compressedBytes": 69605,
+    "crc32": 2155003209,
+    "headerOffset": 100875773,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/original-source.tar",
+    "bytes": 40611840,
+    "compressedBytes": 18185550,
+    "crc32": 4082414154,
+    "headerOffset": 100945464,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-Package.resolved",
+    "bytes": 4880,
+    "compressedBytes": 1117,
+    "crc32": 2924164453,
+    "headerOffset": 119131093,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-checkout-a2ui.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 2034489323,
+    "headerOffset": 119132300,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-checkout-equatable.log",
+    "bytes": 41,
+    "compressedBytes": 42,
+    "crc32": 2929540204,
+    "headerOffset": 119132432,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-checkout-hanlin-streaming-markdown.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 2059057381,
+    "headerOffset": 119132570,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-checkout-opentelemetry-swift-core.log",
+    "bytes": 41,
+    "compressedBytes": 40,
+    "crc32": 2656028318,
+    "headerOffset": 119132723,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-checkout-swift-ai-sdk.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 1612942814,
+    "headerOffset": 119132874,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-checkout-iosmath.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 2047917565,
+    "headerOffset": 119133014,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-checkout-highlightswift.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 2045905781,
+    "headerOffset": 119133149,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-checkout-swift-argument-parser.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 939738399,
+    "headerOffset": 119133291,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-checkout-swift-cmark.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 2395491259,
+    "headerOffset": 119133440,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-checkout-swift-atomics.log",
+    "bytes": 41,
+    "compressedBytes": 42,
+    "crc32": 2752289728,
+    "headerOffset": 119133579,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-checkout-swift-collections.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 4052435515,
+    "headerOffset": 119133721,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-checkout-swift-markdown.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 2262606236,
+    "headerOffset": 119133866,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-checkout-swift-json-schema.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 2027237294,
+    "headerOffset": 119134008,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-checkout-swift-syntax.log",
+    "bytes": 41,
+    "compressedBytes": 40,
+    "crc32": 585109659,
+    "headerOffset": 119134153,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-checkout-swiftsoup.log",
+    "bytes": 41,
+    "compressedBytes": 42,
+    "crc32": 2831634740,
+    "headerOffset": 119134292,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-checkout-swiftui-shimmer.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 1807858582,
+    "headerOffset": 119134430,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-checkout-swiftyjson.log",
+    "bytes": 41,
+    "compressedBytes": 40,
+    "crc32": 2422200285,
+    "headerOffset": 119134573,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-checkout-zipfoundation.log",
+    "bytes": 41,
+    "compressedBytes": 40,
+    "crc32": 4243066500,
+    "headerOffset": 119134710,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-checkouts.json",
+    "bytes": 3521,
+    "compressedBytes": 861,
+    "crc32": 2502759755,
+    "headerOffset": 119134850,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-clean-a2ui.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 119135799,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-clean-equatable.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 119135889,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-clean-hanlin-streaming-markdown.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 119135984,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-clean-highlightswift.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 119136095,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-clean-iosmath.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 119136195,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-clean-opentelemetry-swift-core.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 119136288,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-clean-swift-ai-sdk.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 119136398,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-clean-swift-argument-parser.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 119136496,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-clean-swift-cmark.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 119136603,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-clean-swift-collections.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 119136700,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-clean-swift-json-schema.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 119136803,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-clean-swift-atomics.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 119136906,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-clean-swift-markdown.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 119137005,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-clean-swiftsoup.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 119137105,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-clean-swiftui-shimmer.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 119137200,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-clean-swift-syntax.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 119137301,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-clean-swiftyjson.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 119137399,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-original-products.tar",
+    "bytes": 191805440,
+    "compressedBytes": 58191104,
+    "crc32": 38657786,
+    "headerOffset": 119137495,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-checkout-a2ui.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 2034489323,
+    "headerOffset": 177328694,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-clean-zipfoundation.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 177328835,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-checkout-highlightswift.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 2045905781,
+    "headerOffset": 177328934,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-checkout-equatable.log",
+    "bytes": 41,
+    "compressedBytes": 42,
+    "crc32": 2929540204,
+    "headerOffset": 177329085,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-checkout-iosmath.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 2047917565,
+    "headerOffset": 177329232,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-checkout-hanlin-streaming-markdown.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 2059057381,
+    "headerOffset": 177329376,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-checkout-opentelemetry-swift-core.log",
+    "bytes": 41,
+    "compressedBytes": 40,
+    "crc32": 2656028318,
+    "headerOffset": 177329538,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-checkout-swift-argument-parser.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 939738399,
+    "headerOffset": 177329698,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-checkout-swift-atomics.log",
+    "bytes": 41,
+    "compressedBytes": 42,
+    "crc32": 2752289728,
+    "headerOffset": 177329856,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-checkout-swift-ai-sdk.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 1612942814,
+    "headerOffset": 177330007,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-checkout-swift-cmark.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 2395491259,
+    "headerOffset": 177330156,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-checkout-swift-collections.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 4052435515,
+    "headerOffset": 177330304,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-checkout-swift-json-schema.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 2027237294,
+    "headerOffset": 177330458,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-checkout-swift-markdown.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 2262606236,
+    "headerOffset": 177330612,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-checkout-swift-syntax.log",
+    "bytes": 41,
+    "compressedBytes": 40,
+    "crc32": 585109659,
+    "headerOffset": 177330763,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-checkout-swiftui-shimmer.log",
+    "bytes": 41,
+    "compressedBytes": 41,
+    "crc32": 1807858582,
+    "headerOffset": 177330911,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-checkout-swiftsoup.log",
+    "bytes": 41,
+    "compressedBytes": 42,
+    "crc32": 2831634740,
+    "headerOffset": 177331063,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-checkout-swiftyjson.log",
+    "bytes": 41,
+    "compressedBytes": 40,
+    "crc32": 2422200285,
+    "headerOffset": 177331210,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-checkout-zipfoundation.log",
+    "bytes": 41,
+    "compressedBytes": 40,
+    "crc32": 4243066500,
+    "headerOffset": 177331356,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-clean-a2ui.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 177331505,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-clean-equatable.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 177331604,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-checkouts.json",
+    "bytes": 3521,
+    "compressedBytes": 861,
+    "crc32": 2502759755,
+    "headerOffset": 177331708,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-clean-hanlin-streaming-markdown.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 177332666,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-clean-highlightswift.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 177332786,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-clean-iosmath.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 177332895,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-clean-opentelemetry-swift-core.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 177332997,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-clean-swift-ai-sdk.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 177333116,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-clean-swift-argument-parser.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 177333223,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-clean-swift-atomics.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 177333339,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-clean-swift-cmark.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 177333447,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-clean-swift-collections.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 177333553,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-clean-swift-json-schema.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 177333665,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-clean-swift-markdown.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 177333777,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-clean-swift-syntax.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 177333886,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-clean-swiftsoup.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 177333993,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-clean-swiftui-shimmer.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 177334097,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-clean-swiftyjson.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 177334207,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-posttest-clean-zipfoundation.log",
+    "bytes": 0,
+    "compressedBytes": 2,
+    "crc32": 0,
+    "headerOffset": 177334312,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-resolve.log",
+    "bytes": 13888,
+    "compressedBytes": 2697,
+    "crc32": 3406498415,
+    "headerOffset": 177334420,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/payload-quota-tests.log",
+    "bytes": 1036503,
+    "compressedBytes": 44099,
+    "crc32": 1692689105,
+    "headerOffset": 177337202,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/presentation-lock-seed.json",
+    "bytes": 313,
+    "compressedBytes": 238,
+    "crc32": 2525714062,
+    "headerOffset": 177381384,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/prior-artifact-api.log",
+    "bytes": 749,
+    "compressedBytes": 424,
+    "crc32": 4204423549,
+    "headerOffset": 177381709,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/prior-jobs-api.log",
+    "bytes": 28499,
+    "compressedBytes": 2544,
+    "crc32": 3377808225,
+    "headerOffset": 177382215,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/prior-original-artifact.zip",
+    "bytes": 119169729,
+    "compressedBytes": 117763940,
+    "crc32": 2636036543,
+    "headerOffset": 177384837,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/prior-quota-Package.resolved",
+    "bytes": 4880,
+    "compressedBytes": 1117,
+    "crc32": 2924164453,
+    "headerOffset": 295148864,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/prior-quota-artifact-api.log",
+    "bytes": 749,
+    "compressedBytes": 423,
+    "crc32": 2108643336,
+    "headerOffset": 295150069,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/prior-quota-artifact.zip",
+    "bytes": 295142941,
+    "compressedBytes": 293255692,
+    "crc32": 2502151083,
+    "headerOffset": 295150580,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/prior-quota-five-actual-results.json",
+    "bytes": 1454,
+    "compressedBytes": 862,
+    "crc32": 708050018,
+    "headerOffset": 588406356,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/prior-quota-jobs-api.log",
+    "bytes": 28499,
+    "compressedBytes": 2524,
+    "crc32": 2433194473,
+    "headerOffset": 588407314,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/prior-quota-original-products.tar",
+    "bytes": 191774720,
+    "compressedBytes": 58185659,
+    "crc32": 2236451198,
+    "headerOffset": 588409922,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/prior-quota-run-api.log",
+    "bytes": 14473,
+    "compressedBytes": 1878,
+    "crc32": 815547080,
+    "headerOffset": 646595674,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/prior-run-api.log",
+    "bytes": 14531,
+    "compressedBytes": 1890,
+    "crc32": 659459384,
+    "headerOffset": 646597635,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/result.json",
+    "bytes": 72832,
+    "compressedBytes": 6535,
+    "crc32": 1562623269,
+    "headerOffset": 646599602,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/reused-agent-admission.json",
+    "bytes": 2751,
+    "compressedBytes": 1344,
+    "crc32": 2663272905,
+    "headerOffset": 646606208,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/reused-quota-admission.json",
+    "bytes": 3136,
+    "compressedBytes": 1582,
+    "crc32": 1228151418,
+    "headerOffset": 646607639,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/select-original-stable-xcode.log",
+    "bytes": 215,
+    "compressedBytes": 92,
+    "crc32": 3386793104,
+    "headerOffset": 646609308,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/simulator-sdk.log",
+    "bytes": 5,
+    "compressedBytes": 7,
+    "crc32": 1330186854,
+    "headerOffset": 646609492,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/swift.log",
+    "bytes": 128,
+    "compressedBytes": 109,
+    "crc32": 925403282,
+    "headerOffset": 646609576,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "45968129203-1/xcode.log",
+    "bytes": 31,
+    "compressedBytes": 33,
+    "crc32": 4283013301,
+    "headerOffset": 646609754,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  },
+  {
+    "name": "controller-tests.log",
+    "bytes": 3689,
+    "compressedBytes": 779,
+    "crc32": 2611343716,
+    "headerOffset": 646609856,
+    "compression": 8,
+    "externalAttributes": 2175008800
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "InvalidInputException: Artifact exceeds max size of 536870912 bytes: 646621691 bytes."
+    }
+  ],
+  "structuredContent": {
+    "error": "InvalidInputException: Artifact exceeds max size of 536870912 bytes: 646621691 bytes.",
+    "error_code": "UNKNOWN"
+  },
+  "isError": true
+}

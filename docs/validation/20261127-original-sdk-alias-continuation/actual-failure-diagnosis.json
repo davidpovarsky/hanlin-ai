@@ -1,0 +1,116 @@
+{
+  "actualCases": 1,
+  "actualCommandExitCode": 0,
+  "actualCommandSeconds": 194.67,
+  "actualCompileSeconds": 141.33,
+  "actualDependenciesBeforeAndAfter": 18,
+  "actualMethod": "cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge()",
+  "actualMethodSeconds": 0.001,
+  "actualMethods": 1,
+  "actualProductFiles": 267,
+  "actualSuccessfulCommands": 90,
+  "actualSummarySeconds": 0.002,
+  "artifactBytes": 646621691,
+  "artifactID": 15183909230,
+  "artifactSHA256": "fc801c2d81b62fd94629dbd7f80ee1520703ad2a97c2aef4bb9f39b8bcc79c48",
+  "attempt": 1,
+  "controller": "c46884bff261863c3c1271279294dac7efcfafdb",
+  "firstCause": "Missing, duplicate or foreign suite; only exact source-declared names are admitted",
+  "fullZIPHash": "ROOT_INDEPENDENTLY_VERIFIED_SAME_ETAG",
+  "jobID": 140401673036,
+  "nextScope": "Keep SDK0ae; admit existing Agent5/7 plus original35d five passes plus original0ae one pass, then execute only remainingWidget2/iOS; no dispatch in this source preparation.",
+  "originalProcessGroups": "ALL90_ABSENT_WITH_NO_ABNORMAL_CLEANUP",
+  "originalSourceAndProductTarReader": "NEW_HOSTED_ADMISSION_REQUIRED_NOT_EXECUTED_LOCALLY",
+  "rawMembers": {
+    "admitted-source.json": {
+      "bytes": 3540,
+      "sha256": "6e3fbb20c493399296bc526dd8a515bd6d7fc6a43453bb2030d30c7583861bc3"
+    },
+    "agent-stop-actual-results.json": {
+      "bytes": 1565,
+      "sha256": "8da08ccf0669499b02655923435aa6f8d2c7f6b7a9029eb470cf1004d18fbccf"
+    },
+    "commands.json": {
+      "bytes": 65883,
+      "sha256": "e9e005261a64c889ef3a4c6cab464277b120ec059ccb4e68d27a7aee993f3428"
+    },
+    "controller-error.log": {
+      "bytes": 1274,
+      "sha256": "4aafef8d2663a8e3ced95b0600549c0e6c3315c0b06f8ac2de746cb8dfc4f252"
+    },
+    "controller-identity.json": {
+      "bytes": 1094,
+      "sha256": "ab085862830a82b7d6ef5311b1f94cef95680049417d11deeeb208bdf7388d12"
+    },
+    "dispatch-inputs.json": {
+      "bytes": 827,
+      "sha256": "f966ce1f05c24c97b5ac8be9238455f7c7b2f47d7e31c6dcd2416eae4a71117c"
+    },
+    "evidence-files.json": {
+      "bytes": 17951,
+      "sha256": "a04d9a9e61c80e36bb9c9baf06333b666f228b7fda5289c30c2072734691a08c"
+    },
+    "macos.log": {
+      "bytes": 66,
+      "sha256": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c"
+    },
+    "original-products.json": {
+      "bytes": 179033,
+      "sha256": "0c2508c398c8645120990b66667a7b1d26d2e3178b07ce0a2daccbcfe84d6ce7"
+    },
+    "original-source-files.json": {
+      "bytes": 305259,
+      "sha256": "8b316a5093caf12f957a7e2dd06cbcdbf321ea7d3cbe47c54150c0ee657a6bca"
+    },
+    "payload-quota-Package.resolved": {
+      "bytes": 4880,
+      "sha256": "2498e965486f4a40ed5aada9745475d785a98117b41caf03b88c5781d1969180"
+    },
+    "payload-quota-checkouts.json": {
+      "bytes": 3521,
+      "sha256": "ff2d924954e598839c7d9a5de7ab8e0b4be6cc007f6e99c5a78db9972f908f90"
+    },
+    "payload-quota-posttest-checkouts.json": {
+      "bytes": 3521,
+      "sha256": "ff2d924954e598839c7d9a5de7ab8e0b4be6cc007f6e99c5a78db9972f908f90"
+    },
+    "payload-quota-tests.log": {
+      "bytes": 1036503,
+      "sha256": "45d579668fffe19d4f8c8f5600cf9b3324f84ca18013b545fbc31ad51eb1de79"
+    },
+    "prior-quota-five-actual-results.json": {
+      "bytes": 1454,
+      "sha256": "26d92688b9ed4a4102462c19a7e58d0e8ff14afd863d52312d0114bdf34832aa"
+    },
+    "result.json": {
+      "bytes": 72832,
+      "sha256": "57a3898f54ccadde66d4e6607ea536e9fbe7011a29d2c78b03bca4378c9ffdaf"
+    },
+    "reused-agent-admission.json": {
+      "bytes": 2751,
+      "sha256": "81e9b08af0e72018f4a1f6a84011907c7a60a75354ec8c823c6ca6bed8050ee4"
+    },
+    "reused-quota-admission.json": {
+      "bytes": 3136,
+      "sha256": "cd95eb955255f2d132b2ff139016ec1b77925edc287b03bea805f8ec68f66b5c"
+    },
+    "simulator-sdk.log": {
+      "bytes": 5,
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b"
+    },
+    "swift.log": {
+      "bytes": 128,
+      "sha256": "448e3f9c46706640fe62ea0140ecfccbb330baba2076b2916c0423af9642ee06"
+    },
+    "xcode.log": {
+      "bytes": 31,
+      "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7"
+    }
+  },
+  "remainingStages": "Widget2 and iOS product NOT_REACHED",
+  "runID": 45968129203,
+  "source": "0ae1920d316b9592cbad0462bea96a07fd1ca351",
+  "status": "ACTUAL_ONE_CASE_PASS_FOLLOWED_BY_CONTROLLER_PARSER_FAILURE",
+  "toolchainScope": "Xcode27.2 (27B52) / Swift6.4.2 / Testing2403 / macOS27.0.1 (26A434); no Xcode27.0 binary compatibility claim",
+  "wholeRunStatus": "FAILED"
+}

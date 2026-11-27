@@ -19,6 +19,7 @@ CONFIG = control.CONFIG
 
 from continuation import validate_api, admit_archive, validate_source_continuity
 from quota_continuation import parse_original_quota_failure, validate_unchanged_declarations, admit_quota_archive
+from completed_quota import validate_recorded_scope, admit_completed_quota_archive
 
 
 def admitted_inputs():
@@ -402,6 +403,103 @@ class ControlTests(unittest.TestCase):
             self.assertEqual({name: job_value(condition, variant) for name, condition in prior.items()},
                              {name: job_value(actual[name], variant) for name in prior})
         self.assertFalse(job_value(actual["sdk-original-obligations"], inputs, event="push"))
+
+
+class CompletedQuotaControls(unittest.TestCase):
+    def test_actual_completed_quota_terminal_accepts_only_its_source_declared_alias(self):
+        fixture = HERE / "Fixtures/original-45968129203-quota-terminal.log"
+        provenance = json.loads((HERE / "Fixtures/original-45968129203-quota-terminal-provenance.json").read_text())
+        self.assertEqual(hashlib.sha256(fixture.read_bytes()).hexdigest(), provenance["terminalSHA256"])
+        self.assertEqual(len(fixture.read_bytes()), provenance["terminalBytes"])
+        suite = control.selected_quota_suite(CONFIG["suites"][1], True)
+        result = control.parse_swift_testing(fixture.read_text(), suite)
+        self.assertEqual(result["methods"], {CONFIG["completedQuotaContinuation"]["method"]: 1})
+        self.assertEqual(result["reportedSuite"], '"Original code-fence retained payload ownership" (aka \'ChatCodeFencePayloadRetentionTests\')')
+        self.assertEqual((result["methodCount"], result["caseCount"]), (1, 1))
+
+    def test_completed_alias_refuses_wrong_pair_duplicate_partial_skip_or_foreign_method(self):
+        original = (HERE / "Fixtures/original-45968129203-quota-terminal.log").read_text()
+        suite = control.selected_quota_suite(CONFIG["suites"][1], True)
+        one = next(x for x in original.splitlines(True) if x.startswith("✔ Test cache"))
+        variants = [original.replace("aka 'ChatCodeFencePayloadRetentionTests'", "aka 'ForeignSuite'"),
+                    original.replace("Original code-fence retained payload ownership", "Foreign display"),
+                    original.replace(" (aka 'ChatCodeFencePayloadRetentionTests')", " (aka 'ChatCodeFencePayloadRetentionTests.extra')"),
+                    original + one, original.replace(one, ""),
+                    original + "◇ Test foreign() started.\n",
+                    original + "◇ Test foreign() skipped.\n",
+                    original + "✔ Test foreign() passed after 0.1 seconds.\n",
+                    original.replace("with 1 test in 1 suite", "with 0 tests in 1 suite")]
+        for variant in variants:
+            with self.subTest(length=len(variant)), self.assertRaises(RuntimeError):
+                control.parse_swift_testing(variant, suite)
+
+    def test_completed_original_api_and_recorded_scope_are_exact_but_not_archive_admission(self):
+        fixed = CONFIG["completedQuotaContinuation"]
+        fixture = json.loads((HERE / "Fixtures/original-45968129203-recorded-scope.json").read_text())
+        raw = lambda name: fixture[name].encode()
+        for name, text in fixture.items():
+            self.assertEqual({"bytes": len(text.encode()), "sha256": hashlib.sha256(text.encode()).hexdigest()}, fixed["members"][name])
+        run = json.loads((HERE / "Fixtures/original-45968129203-run.json").read_text())
+        jobs = json.loads((HERE / "Fixtures/original-45968129203-jobs.json").read_text())
+        artifact = json.loads((HERE / "Fixtures/original-45968129203-artifact.json").read_text())
+        validate_api(run, jobs, artifact, fixed)
+        result = validate_recorded_scope(raw, fixed, json.loads(raw("original-source-files.json")), control, fixed["source"])
+        self.assertFalse(result["fullArchiveAdmission"])
+        self.assertEqual((len(result["commands"]), len(result["checkouts"]), len(result["product"]["files"])), (90, 18, 267))
+        self.assertEqual(result["continuity"]["reviewedInventoryChanges"], [])
+        for changed in ({**artifact, "digest": "sha256:" + "0" * 64}, {**artifact, "expired": True}):
+            with self.assertRaises(RuntimeError):
+                validate_api(run, jobs, changed, fixed)
+        with self.assertRaises(RuntimeError):
+            validate_api(run, {**jobs, "jobs": jobs["jobs"][:-1]}, artifact, fixed)
+
+    def test_completed_recorded_scope_rejects_late_lock_change_live_worker_and_changed_source(self):
+        fixed = CONFIG["completedQuotaContinuation"]
+        fixture = json.loads((HERE / "Fixtures/original-45968129203-recorded-scope.json").read_text())
+        original = {name: json.loads(text) for name, text in fixture.items()}
+        variants = []
+        changed = copy.deepcopy(original)
+        first = next(iter(changed["payload-quota-posttest-checkouts.json"]))
+        changed["payload-quota-posttest-checkouts.json"][first]["head"] = "f" * 40
+        variants.append(changed)
+        changed = copy.deepcopy(original)
+        row = next(x for x in changed["commands.json"] if x["label"] == "payload-quota-tests")
+        row["groupCustody"]["groupAbsent"] = False
+        changed["result.json"]["commands"] = changed["commands.json"]
+        variants.append(changed)
+        changed = copy.deepcopy(original)
+        changed["result.json"]["error"] = "A different failure"
+        variants.append(changed)
+        for changed in variants:
+            with self.assertRaises(RuntimeError):
+                validate_recorded_scope(lambda name: json.dumps(changed[name]).encode(), fixed,
+                    original["original-source-files.json"], control, fixed["source"])
+        current = copy.deepcopy(original["original-source-files.json"])
+        current[0]["sha256"] = "0" * 64
+        with self.assertRaises(RuntimeError):
+            validate_recorded_scope(lambda name: fixture[name].encode(), fixed, current, control, fixed["source"])
+        with self.assertRaises(RuntimeError):
+            validate_recorded_scope(lambda name: fixture[name].encode(), fixed,
+                original["original-source-files.json"], control, CONFIG["quotaContinuation"]["source"])
+
+    def test_completed_archive_requires_exact_original_zip_before_creating_any_reuse_output(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary); archive = root / "wrong.zip"
+            archive.write_bytes(b"CONTROL_ONLY_NOT_AN_ACTIONS_ARTIFACT")
+            with self.assertRaisesRegex(RuntimeError, "ZIP bytes differ"):
+                admit_completed_quota_archive(archive, root, CONFIG["completedQuotaContinuation"], [], {}, control,
+                    CONFIG["completedQuotaContinuation"]["source"])
+            self.assertEqual(list(root.iterdir()), [archive])
+
+    def test_console_first_cause_is_bounded_and_redacts_urls_authorization_and_environment_credentials(self):
+        cause = "Original parser failed; https://example.invalid/artifact?sig=private-value Bearer abc.def GH-value token=inline-value"
+        result = control.console_failure(cause, {"GH_TOKEN": "GH-value"})
+        self.assertTrue(result.startswith("Original parser failed;"))
+        for private in ("example.invalid", "private-value", "abc.def", "GH-value", "inline-value"):
+            self.assertNotIn(private, result)
+        self.assertEqual(control.console_failure(None, {}), None)
+        self.assertEqual(len(control.console_failure("x" * 3000, {})), 2048)
+        self.assertNotIn("\n", control.console_failure("first\nsecond", {}))
 
 
 if __name__ == "__main__":

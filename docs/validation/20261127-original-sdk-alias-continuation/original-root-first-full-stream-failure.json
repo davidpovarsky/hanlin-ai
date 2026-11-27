@@ -1,0 +1,16 @@
+{
+  "absentRequestedMembers": [],
+  "artifactID": 15183909230,
+  "controlCommit": "c46884bff261863c3c1271279294dac7efcfafdb",
+  "error": "Bounded reader overall deadline exceeded",
+  "errorType": "RuntimeError",
+  "fullStreamETag": "\"0x8DF4C6401DD1773\"",
+  "fullZIPStored": false,
+  "rangeRequests": [],
+  "runID": 45968129203,
+  "schema": "pinkha-original-artifact-bounded-selection/v1",
+  "seconds": 240.16077799350023,
+  "selectedMembers": [],
+  "status": "FAILED_PRESERVED",
+  "storageHost": "productionresultssa11.blob.core.windows.net"
+}

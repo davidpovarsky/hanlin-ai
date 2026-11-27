@@ -1,0 +1,314 @@
+{
+  "files": [
+    {
+      "after": {
+        "bytes": 25332,
+        "gitBlob": "ed36361e4be2c986e4ea2e7acf993ab591405a5f",
+        "sha256": "fa17a5d2d9c41ca694c3b2ca4fb5edcb867f23c9de556d7e2bf8be8caaf59b40"
+      },
+      "before": {
+        "bytes": 21316,
+        "gitBlob": "b3b66e2d099e01af1d787d9d8896c3429613cf55",
+        "sha256": "3a40c5d02bb27e6208f36369bcd9bc807abbb93207eed413d34feeace446b8d6"
+      },
+      "operations": [
+        {
+          "afterEndByte": 23326,
+          "afterStartByte": 19310,
+          "afterUTF8": "## Continuation after the actual one-case alias-parser failure\n\nThe next closed continuation keeps source\n`0ae1920d316b9592cbad0462bea96a07fd1ca351` unchanged. Actual run\n`45968129203`, attempt1, controller `c46884bff261863c3c1271279294dac7efcfafdb`\ncompiled the original Presentation package and passed the single corrected\ncache-owner case. Its Swift command exited0 after194.67s; the named case\npassed in0.001s, and the one-case summary passed in0.002s. Both actual18-package\ncheckout/clean snapshots completed. The controller then failed while parsing\nthe exact suite spelling emitted by Swift Testing2403:\n\n```text\n\"Original code-fence retained payload ownership\" (aka 'ChatCodeFencePayloadRetentionTests')\n```\n\nThat entire original controller run remains **FAILED**. Widgets and the iOS\nproduct were **NOT_REACHED**. No SDK source, test assertion, production lease,\npackage pin, workflow predicate or dispatch input changes in this correction.\nThe parser adds only the exact combination of the already fixed source-declared\ndisplay string and suite identifier. Foreign aliases, mixed start/end suites,\nduplicates, missing outcomes and skipped cases remain rejected.\n\n`completed_quota.py` admits only original run45968129203/attempt1/job140401673036,\ncontrollerc468, source0ae and artifact15183909230. It requires the complete\n646621691-byte ZIP and SHA256\n`fc801c2d81b62fd94629dbd7f80ee1520703ad2a97c2aef4bb9f39b8bcc79c48`,\nall114 members,21 fixed original metadata/log members, the original1005-file\nsource TAR, exact source-declared suite names,90 successful command/log/drained\nprocess-group receipts, both18-package dependency snapshots, the actual\n4880-byte resolved lock and all267 files in the original191805440-byte quota\nproduct TAR. The whole current source inventory must be identical to original0ae;\nno new successor delta is admitted. The earlier Agent and original-five-case\nadmission implementations remain byte-for-byte unchanged and independently run.\nNo archived source or product is executed.\n\nOnly after all three original admissions pass, the controller combines the\nfive unchanged original35d passes with the one original0ae pass. It executes\n**zero Agent and zero quota tests** in the new run. It restores the exact\noriginal0ae resolved lock into the identical private Presentation package for\nthe unchanged iOS product build. That build still must verify its actual new\ncheckouts and unchanged source. The remaining two original Widget methods and\nthe original iOS build are executed as previously specified. The report names\neach original source/run separately; it never reports a same-run six-case quota\npass or converts either failed controller run into a successful whole run.\nOriginal products and failures stay retained by the existing preservation gate.\n\nThe source handoff retains the actual c468 failure, terminal, full-ZIP hash\nreceipt and preceding bounded-reader timeout. The first range-selection receipt\nsaid full-ZIP hash pending and is preserved unchanged. Root's separate155-range\nfull-hash receipt subsequently bound that same ETag and all646621691 bytes to\nthe expected archive digest. The complete original ZIP remains at GitHub; no\nlarge ZIP/product was stored on Oracle. Local26 portable controls passed,\nincluding the actual alias terminal and closed metadata/API checks. The new\nfull source/product TAR admission function itself has **NOT_RUN locally**; the\nfuture hosted continuation must execute that complete gate before any reuse.\nThe old final all-suite source check was not reached and is not invented.\n\nFailure summaries now include bounded console error text, redacting URLs,\nknown credential environment values and authorization/token spellings. The\noriginal first cause and any separate product-preservation failure remain\nseparately recorded; a later cleanup error does not replace the original cause.\nThe actual original proof is scoped to Xcode27.2/Swift6.4.2/Testing2403 and does\nnot establish Xcode27.0 or Anytype application/runtime acceptance.\n\n",
+          "beforeEndByte": 19310,
+          "beforeStartByte": 19310,
+          "beforeUTF8": "",
+          "kind": "insert"
+        }
+      ],
+      "path": "Scripts/CI/SDKSourceValidation/README.md",
+      "restoredOriginal": {
+        "bytes": 21316,
+        "gitBlob": "b3b66e2d099e01af1d787d9d8896c3429613cf55",
+        "sha256": "3a40c5d02bb27e6208f36369bcd9bc807abbb93207eed413d34feeace446b8d6"
+      },
+      "result": "PASS_BYTE_EXACT_ORIGINAL_RECONSTRUCTION"
+    },
+    {
+      "after": {
+        "bytes": 31136,
+        "gitBlob": "f942833c419abed4f223a619e613a7d4c29fc811",
+        "sha256": "6046ead7a8de7550e0e5c12e804946660106d42cd6037b765b20e54822f3f860"
+      },
+      "before": {
+        "bytes": 26647,
+        "gitBlob": "b4d831449b1642629ae72d0d79f9545f997fd9c1",
+        "sha256": "85ac7100b4776ad3ef9ccc51d7f8f493258dc0706f0fe96cc06a5e18a2c87af1"
+      },
+      "operations": [
+        {
+          "afterEndByte": 31130,
+          "afterStartByte": 26641,
+          "afterUTF8": "  },\n  \"completedQuotaContinuation\": {\n    \"source\": \"0ae1920d316b9592cbad0462bea96a07fd1ca351\",\n    \"runID\": 45968129203,\n    \"attempt\": 1,\n    \"workflowID\": 310046367,\n    \"jobID\": 140401673036,\n    \"controllerSHA\": \"c46884bff261863c3c1271279294dac7efcfafdb\",\n    \"controllerBranch\": \"codex/hanlin-sdk-hosted-validation-20261127\",\n    \"artifactID\": 15183909230,\n    \"artifactName\": \"hanlin-original-sdk-45968129203-1\",\n    \"artifactBytes\": 646621691,\n    \"artifactSHA256\": \"fc801c2d81b62fd94629dbd7f80ee1520703ad2a97c2aef4bb9f39b8bcc79c48\",\n    \"originalSourceArchiveBytes\": 40611840,\n    \"originalSourceArchiveSHA256\": \"99da9ddf75ead28cdb9b59ab8869eab5963d46ebf94dd79aad6fb6daa4003edb\",\n    \"originalProductArchiveBytes\": 191805440,\n    \"originalProductArchiveSHA256\": \"7352256e33f50733ceaad522bf1b74d9a2ad5dfeb4288a09b50a133733949874\",\n    \"originalToolchainScope\": \"Xcode27.2 (27B52) / Swift6.4.2 / Testing2403 / macOS27.0.1 (26A434); no Xcode27.0 binary compatibility claim\",\n    \"testPath\": \"Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift\",\n    \"method\": \"cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge()\",\n    \"originalParserFailure\": \"Missing, duplicate or foreign suite; only exact source-declared names are admitted\",\n    \"members\": {\n      \"admitted-source.json\": {\n        \"bytes\": 3540,\n        \"sha256\": \"6e3fbb20c493399296bc526dd8a515bd6d7fc6a43453bb2030d30c7583861bc3\"\n      },\n      \"agent-stop-actual-results.json\": {\n        \"bytes\": 1565,\n        \"sha256\": \"8da08ccf0669499b02655923435aa6f8d2c7f6b7a9029eb470cf1004d18fbccf\"\n      },\n      \"commands.json\": {\n        \"bytes\": 65883,\n        \"sha256\": \"e9e005261a64c889ef3a4c6cab464277b120ec059ccb4e68d27a7aee993f3428\"\n      },\n      \"controller-error.log\": {\n        \"bytes\": 1274,\n        \"sha256\": \"4aafef8d2663a8e3ced95b0600549c0e6c3315c0b06f8ac2de746cb8dfc4f252\"\n      },\n      \"controller-identity.json\": {\n        \"bytes\": 1094,\n        \"sha256\": \"ab085862830a82b7d6ef5311b1f94cef95680049417d11deeeb208bdf7388d12\"\n      },\n      \"dispatch-inputs.json\": {\n        \"bytes\": 827,\n        \"sha256\": \"f966ce1f05c24c97b5ac8be9238455f7c7b2f47d7e31c6dcd2416eae4a71117c\"\n      },\n      \"evidence-files.json\": {\n        \"bytes\": 17951,\n        \"sha256\": \"a04d9a9e61c80e36bb9c9baf06333b666f228b7fda5289c30c2072734691a08c\"\n      },\n      \"macos.log\": {\n        \"bytes\": 66,\n        \"sha256\": \"4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c\"\n      },\n      \"original-products.json\": {\n        \"bytes\": 179033,\n        \"sha256\": \"0c2508c398c8645120990b66667a7b1d26d2e3178b07ce0a2daccbcfe84d6ce7\"\n      },\n      \"original-source-files.json\": {\n        \"bytes\": 305259,\n        \"sha256\": \"8b316a5093caf12f957a7e2dd06cbcdbf321ea7d3cbe47c54150c0ee657a6bca\"\n      },\n      \"payload-quota-Package.resolved\": {\n        \"bytes\": 4880,\n        \"sha256\": \"2498e965486f4a40ed5aada9745475d785a98117b41caf03b88c5781d1969180\"\n      },\n      \"payload-quota-checkouts.json\": {\n        \"bytes\": 3521,\n        \"sha256\": \"ff2d924954e598839c7d9a5de7ab8e0b4be6cc007f6e99c5a78db9972f908f90\"\n      },\n      \"payload-quota-posttest-checkouts.json\": {\n        \"bytes\": 3521,\n        \"sha256\": \"ff2d924954e598839c7d9a5de7ab8e0b4be6cc007f6e99c5a78db9972f908f90\"\n      },\n      \"payload-quota-tests.log\": {\n        \"bytes\": 1036503,\n        \"sha256\": \"45d579668fffe19d4f8c8f5600cf9b3324f84ca18013b545fbc31ad51eb1de79\"\n      },\n      \"prior-quota-five-actual-results.json\": {\n        \"bytes\": 1454,\n        \"sha256\": \"26d92688b9ed4a4102462c19a7e58d0e8ff14afd863d52312d0114bdf34832aa\"\n      },\n      \"result.json\": {\n        \"bytes\": 72832,\n        \"sha256\": \"57a3898f54ccadde66d4e6607ea536e9fbe7011a29d2c78b03bca4378c9ffdaf\"\n      },\n      \"reused-agent-admission.json\": {\n        \"bytes\": 2751,\n        \"sha256\": \"81e9b08af0e72018f4a1f6a84011907c7a60a75354ec8c823c6ca6bed8050ee4\"\n      },\n      \"reused-quota-admission.json\": {\n        \"bytes\": 3136,\n        \"sha256\": \"cd95eb955255f2d132b2ff139016ec1b77925edc287b03bea805f8ec68f66b5c\"\n      },\n      \"simulator-sdk.log\": {\n        \"bytes\": 5,\n        \"sha256\": \"53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b\"\n      },\n      \"swift.log\": {\n        \"bytes\": 128,\n        \"sha256\": \"448e3f9c46706640fe62ea0140ecfccbb330baba2076b2916c0423af9642ee06\"\n      },\n      \"xcode.log\": {\n        \"bytes\": 31,\n        \"sha256\": \"67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7\"\n      }\n    }\n",
+          "beforeEndByte": 26641,
+          "beforeStartByte": 26641,
+          "beforeUTF8": "",
+          "kind": "insert"
+        }
+      ],
+      "path": "Scripts/CI/SDKSourceValidation/obligations.json",
+      "restoredOriginal": {
+        "bytes": 26647,
+        "gitBlob": "b4d831449b1642629ae72d0d79f9545f997fd9c1",
+        "sha256": "85ac7100b4776ad3ef9ccc51d7f8f493258dc0706f0fe96cc06a5e18a2c87af1"
+      },
+      "result": "PASS_BYTE_EXACT_ORIGINAL_RECONSTRUCTION"
+    },
+    {
+      "after": {
+        "bytes": 43477,
+        "gitBlob": "22b0479613cd7490859ff57a0dd00326dae12ce3",
+        "sha256": "7dbb3eefceaf1cb0064e2e0e43a5046bb94f9e36aac8d211d2f0604c6d428809"
+      },
+      "before": {
+        "bytes": 38159,
+        "gitBlob": "2719f795f73d6229755c51b402db8d4018d4850d",
+        "sha256": "42fe6b091114eaef011e94148d855e055391ab0576d999760df513446643134f"
+      },
+      "operations": [
+        {
+          "afterEndByte": 696,
+          "afterStartByte": 638,
+          "afterUTF8": "from completed_quota import admit_completed_quota_archive\n",
+          "beforeEndByte": 638,
+          "beforeStartByte": 638,
+          "beforeUTF8": "",
+          "kind": "insert"
+        },
+        {
+          "afterEndByte": 6226,
+          "afterStartByte": 6046,
+          "afterUTF8": "        allowed_suites += [suite[\"displayName\"], '\"' + suite[\"displayName\"] + '\"',\n                           '\"' + suite[\"displayName\"] + '\"' + \" (aka '\" + suite[\"suite\"] + \"')\"]\n",
+          "beforeEndByte": 6071,
+          "beforeStartByte": 5988,
+          "beforeUTF8": "        allowed_suites += [suite[\"displayName\"], '\"' + suite[\"displayName\"] + '\"']\n",
+          "kind": "replace"
+        },
+        {
+          "afterEndByte": 21931,
+          "afterStartByte": 21780,
+          "afterUTF8": "                     \"Scripts/CI/SDKSourceValidation/quota_continuation.py\",\n                     \"Scripts/CI/SDKSourceValidation/completed_quota.py\"]\n",
+          "beforeEndByte": 21702,
+          "beforeStartByte": 21625,
+          "beforeUTF8": "                     \"Scripts/CI/SDKSourceValidation/quota_continuation.py\"]\n",
+          "kind": "replace"
+        },
+        {
+          "afterEndByte": 25644,
+          "afterStartByte": 25610,
+          "afterUTF8": "    reused_completed_quota = None\n",
+          "beforeEndByte": 25381,
+          "beforeStartByte": 25381,
+          "beforeUTF8": "",
+          "kind": "insert"
+        },
+        {
+          "afterEndByte": 31661,
+          "afterStartByte": 28671,
+          "afterUTF8": "        completed_fixed = CONFIG[\"completedQuotaContinuation\"]\n        if source == completed_fixed[\"source\"]:\n            require(reused_quota is not None, \"Completed single quota case also requires its separately admitted original five\")\n            completed_run = api_json(\"completed-quota-run-api\", f'runs/{completed_fixed[\"runID\"]}')\n            completed_jobs = api_json(\"completed-quota-jobs-api\", f'runs/{completed_fixed[\"runID\"]}/jobs?per_page=100')\n            completed_artifact = api_json(\"completed-quota-artifact-api\", f'artifacts/{completed_fixed[\"artifactID\"]}')\n            validate_api(completed_run, completed_jobs, completed_artifact, completed_fixed)\n            run.command(\"completed-quota-artifact\", [\"gh\", \"api\", api + f'artifacts/{completed_fixed[\"artifactID\"]}/zip'],\n                timeout=600, binary_output=True, environment=api_environment,\n                maximum_output_bytes=completed_fixed[\"artifactBytes\"])\n            reused_completed_quota = admit_completed_quota_archive(run.output / \"completed-quota-artifact.zip\",\n                run.output, completed_fixed, before, published, sys.modules[__name__], source)\n            original_five = reused_quota[\"parsed\"][\"methods\"]\n            original_one = reused_completed_quota[\"parsed\"][\"methods\"]\n            require(not set(original_five).intersection(original_one) and\n                    {**original_five, **original_one} == CONFIG[\"suites\"][1][\"expectedMethods\"],\n                    \"Two original executed scopes do not cover the exact six quota methods\")\n            suite_results.append(reused_completed_quota[\"parsed\"])\n            resolved_locks[\"payload-quota\"] = reused_completed_quota[\"resolvedLock\"]\n            run.products.append(reused_completed_quota[\"product\"])\n            write_json(run.output / \"reused-completed-quota-admission.json\", reused_completed_quota[\"admission\"])\n            write_json(run.output / \"payload-quota-actual-results.json\", reused_completed_quota[\"parsed\"])\n            original_lock = materialized / \"Packages/HanlinPresentationSDK/Package.resolved\"\n            require(not original_lock.exists(), \"Presentation source now has a lock; explicit review required\")\n            # The same immutable package will use the actual original0ae resolved\n            # lock for the new iOS build, without repeating its macOS resolver/test.\n            shutil.copyfile(reused_completed_quota[\"lockPath\"], original_lock)\n            shutil.copyfile(original_lock, run.output / \"payload-quota-Package.resolved\")\n            write_json(run.output / \"presentation-reused-lock.json\", {\n                \"origin\": reused_completed_quota[\"parsed\"][\"evidenceOrigin\"],\n                \"sourceSHA256\": sha256(original_lock), \"originalPackageLocalLock\": \"ABSENT\",\n                \"meaning\": \"Exact actual original0ae resolved lock restored into the identical private package; no current quota resolve/test is claimed. The original iOS build must verify its own actual checkouts.\"})\n",
+          "beforeEndByte": 28408,
+          "beforeStartByte": 28408,
+          "beforeUTF8": "",
+          "kind": "insert"
+        },
+        {
+          "afterEndByte": 32100,
+          "afterStartByte": 31908,
+          "afterUTF8": "        if reused_completed_quota is not None and suite[\"name\"] == \"payload-quota\":\n            continue  # Both exact original quota scopes are admitted; zero quota compile/test in this run.\n",
+          "beforeEndByte": 28655,
+          "beforeStartByte": 28655,
+          "beforeUTF8": "",
+          "kind": "insert"
+        },
+        {
+          "afterEndByte": 39107,
+          "afterStartByte": 38297,
+          "afterUTF8": "    if reused_completed_quota is not None:\n        result[\"quotaEvidenceComposition\"] = {\n            \"originalFiveSource\": CONFIG[\"quotaContinuation\"][\"source\"],\n            \"originalFiveRun\": CONFIG[\"quotaContinuation\"][\"runID\"],\n            \"completedSingleSource\": CONFIG[\"completedQuotaContinuation\"][\"source\"],\n            \"completedSingleRun\": CONFIG[\"completedQuotaContinuation\"][\"runID\"],\n            \"originalSixCaseRunStatus\": \"FAILED\", \"originalSingleControllerRunStatus\": \"FAILED\",\n            \"quotaMethodsExecutedThisRun\": 0,\n            \"scope\": \"Five unchanged actual35d passes plus one actual0ae pass are separately admitted from their original failed controller runs. No same-run six-case pass or current quota execution is claimed; only the remaining Widget/iOS obligations execute here.\"}\n",
+          "beforeEndByte": 34852,
+          "beforeStartByte": 34852,
+          "beforeUTF8": "",
+          "kind": "insert"
+        },
+        {
+          "afterEndByte": 39988,
+          "afterStartByte": 39125,
+          "afterUTF8": "\n\ndef console_failure(value, environment):\n    \"\"\"Bound console diagnostics; original first/secondary causes stay in evidence.\"\"\"\n    if value is None:\n        return None\n    text = str(value)\n    for name, secret in environment.items():\n        if secret and re.search(r\"(?:TOKEN|SECRET|PASSWORD|CREDENTIAL|PRIVATE_KEY|API_KEY)\", name, re.I):\n            text = text.replace(secret, \"[redacted credential]\")\n    text = re.sub(r\"https?://[^\\s<>\\\"']+\", \"[redacted URL]\", text, flags=re.I)\n    text = re.sub(r\"(?:Bearer|Basic)\\s+[A-Za-z0-9._~+/=-]+\", \"[redacted authorization]\", text, flags=re.I)\n    text = re.sub(r\"(?:gh[pousr]_[A-Za-z0-9_]+|github_pat_[A-Za-z0-9_]+)\", \"[redacted credential]\", text)\n    text = re.sub(r\"(?:password|secret|token|api[-_]key)\\s*[:=]\\s*[^\\s,;]+\", \"[redacted credential]\", text, flags=re.I)\n    return \" \".join(text.split())[:2048]\n",
+          "beforeEndByte": 34870,
+          "beforeStartByte": 34870,
+          "beforeUTF8": "",
+          "kind": "insert"
+        },
+        {
+          "afterEndByte": 43313,
+          "afterStartByte": 43004,
+          "afterUTF8": "    print(json.dumps({\"status\": result[\"status\"], \"source\": result.get(\"source\"), \"evidence\": str(output),\n                      \"error\": console_failure(result.get(\"error\"), os.environ),\n                      \"productPreservationError\": console_failure(result.get(\"productPreservationError\"), os.environ)}))\n",
+          "beforeEndByte": 37995,
+          "beforeStartByte": 37886,
+          "beforeUTF8": "    print(json.dumps({\"status\": result[\"status\"], \"source\": result.get(\"source\"), \"evidence\": str(output)}))\n",
+          "kind": "replace"
+        }
+      ],
+      "path": "Scripts/CI/SDKSourceValidation/run.py",
+      "restoredOriginal": {
+        "bytes": 38159,
+        "gitBlob": "2719f795f73d6229755c51b402db8d4018d4850d",
+        "sha256": "42fe6b091114eaef011e94148d855e055391ab0576d999760df513446643134f"
+      },
+      "result": "PASS_BYTE_EXACT_ORIGINAL_RECONSTRUCTION"
+    },
+    {
+      "after": {
+        "bytes": 34928,
+        "gitBlob": "ed5b9600d49129e8a3c6490e47252b26b2cb8ac0",
+        "sha256": "11f2dc93ae4844905f2fa3990d55080010581130d516256f4bb0d722d85be34e"
+      },
+      "before": {
+        "bytes": 27915,
+        "gitBlob": "b32f02ecf396391f25004b02464d715fe7ca035f",
+        "sha256": "fdfac125835c8902f8f2aec84493228fe24a0d060648f711b8692d8ad8d35aa8"
+      },
+      "operations": [
+        {
+          "afterEndByte": 765,
+          "afterStartByte": 682,
+          "afterUTF8": "from completed_quota import validate_recorded_scope, admit_completed_quota_archive\n",
+          "beforeEndByte": 682,
+          "beforeStartByte": 682,
+          "beforeUTF8": "",
+          "kind": "insert"
+        },
+        {
+          "afterEndByte": 34881,
+          "afterStartByte": 27951,
+          "afterUTF8": "class CompletedQuotaControls(unittest.TestCase):\n    def test_actual_completed_quota_terminal_accepts_only_its_source_declared_alias(self):\n        fixture = HERE / \"Fixtures/original-45968129203-quota-terminal.log\"\n        provenance = json.loads((HERE / \"Fixtures/original-45968129203-quota-terminal-provenance.json\").read_text())\n        self.assertEqual(hashlib.sha256(fixture.read_bytes()).hexdigest(), provenance[\"terminalSHA256\"])\n        self.assertEqual(len(fixture.read_bytes()), provenance[\"terminalBytes\"])\n        suite = control.selected_quota_suite(CONFIG[\"suites\"][1], True)\n        result = control.parse_swift_testing(fixture.read_text(), suite)\n        self.assertEqual(result[\"methods\"], {CONFIG[\"completedQuotaContinuation\"][\"method\"]: 1})\n        self.assertEqual(result[\"reportedSuite\"], '\"Original code-fence retained payload ownership\" (aka \\'ChatCodeFencePayloadRetentionTests\\')')\n        self.assertEqual((result[\"methodCount\"], result[\"caseCount\"]), (1, 1))\n\n    def test_completed_alias_refuses_wrong_pair_duplicate_partial_skip_or_foreign_method(self):\n        original = (HERE / \"Fixtures/original-45968129203-quota-terminal.log\").read_text()\n        suite = control.selected_quota_suite(CONFIG[\"suites\"][1], True)\n        one = next(x for x in original.splitlines(True) if x.startswith(\"\u2714 Test cache\"))\n        variants = [original.replace(\"aka 'ChatCodeFencePayloadRetentionTests'\", \"aka 'ForeignSuite'\"),\n                    original.replace(\"Original code-fence retained payload ownership\", \"Foreign display\"),\n                    original.replace(\" (aka 'ChatCodeFencePayloadRetentionTests')\", \" (aka 'ChatCodeFencePayloadRetentionTests.extra')\"),\n                    original + one, original.replace(one, \"\"),\n                    original + \"\u25c7 Test foreign() started.\\n\",\n                    original + \"\u25c7 Test foreign() skipped.\\n\",\n                    original + \"\u2714 Test foreign() passed after 0.1 seconds.\\n\",\n                    original.replace(\"with 1 test in 1 suite\", \"with 0 tests in 1 suite\")]\n        for variant in variants:\n            with self.subTest(length=len(variant)), self.assertRaises(RuntimeError):\n                control.parse_swift_testing(variant, suite)\n\n    def test_completed_original_api_and_recorded_scope_are_exact_but_not_archive_admission(self):\n        fixed = CONFIG[\"completedQuotaContinuation\"]\n        fixture = json.loads((HERE / \"Fixtures/original-45968129203-recorded-scope.json\").read_text())\n        raw = lambda name: fixture[name].encode()\n        for name, text in fixture.items():\n            self.assertEqual({\"bytes\": len(text.encode()), \"sha256\": hashlib.sha256(text.encode()).hexdigest()}, fixed[\"members\"][name])\n        run = json.loads((HERE / \"Fixtures/original-45968129203-run.json\").read_text())\n        jobs = json.loads((HERE / \"Fixtures/original-45968129203-jobs.json\").read_text())\n        artifact = json.loads((HERE / \"Fixtures/original-45968129203-artifact.json\").read_text())\n        validate_api(run, jobs, artifact, fixed)\n        result = validate_recorded_scope(raw, fixed, json.loads(raw(\"original-source-files.json\")), control, fixed[\"source\"])\n        self.assertFalse(result[\"fullArchiveAdmission\"])\n        self.assertEqual((len(result[\"commands\"]), len(result[\"checkouts\"]), len(result[\"product\"][\"files\"])), (90, 18, 267))\n        self.assertEqual(result[\"continuity\"][\"reviewedInventoryChanges\"], [])\n        for changed in ({**artifact, \"digest\": \"sha256:\" + \"0\" * 64}, {**artifact, \"expired\": True}):\n            with self.assertRaises(RuntimeError):\n                validate_api(run, jobs, changed, fixed)\n        with self.assertRaises(RuntimeError):\n            validate_api(run, {**jobs, \"jobs\": jobs[\"jobs\"][:-1]}, artifact, fixed)\n\n    def test_completed_recorded_scope_rejects_late_lock_change_live_worker_and_changed_source(self):\n        fixed = CONFIG[\"completedQuotaContinuation\"]\n        fixture = json.loads((HERE / \"Fixtures/original-45968129203-recorded-scope.json\").read_text())\n        original = {name: json.loads(text) for name, text in fixture.items()}\n        variants = []\n        changed = copy.deepcopy(original)\n        first = next(iter(changed[\"payload-quota-posttest-checkouts.json\"]))\n        changed[\"payload-quota-posttest-checkouts.json\"][first][\"head\"] = \"f\" * 40\n        variants.append(changed)\n        changed = copy.deepcopy(original)\n        row = next(x for x in changed[\"commands.json\"] if x[\"label\"] == \"payload-quota-tests\")\n        row[\"groupCustody\"][\"groupAbsent\"] = False\n        changed[\"result.json\"][\"commands\"] = changed[\"commands.json\"]\n        variants.append(changed)\n        changed = copy.deepcopy(original)\n        changed[\"result.json\"][\"error\"] = \"A different failure\"\n        variants.append(changed)\n        for changed in variants:\n            with self.assertRaises(RuntimeError):\n                validate_recorded_scope(lambda name: json.dumps(changed[name]).encode(), fixed,\n                    original[\"original-source-files.json\"], control, fixed[\"source\"])\n        current = copy.deepcopy(original[\"original-source-files.json\"])\n        current[0][\"sha256\"] = \"0\" * 64\n        with self.assertRaises(RuntimeError):\n            validate_recorded_scope(lambda name: fixture[name].encode(), fixed, current, control, fixed[\"source\"])\n        with self.assertRaises(RuntimeError):\n            validate_recorded_scope(lambda name: fixture[name].encode(), fixed,\n                original[\"original-source-files.json\"], control, CONFIG[\"quotaContinuation\"][\"source\"])\n\n    def test_completed_archive_requires_exact_original_zip_before_creating_any_reuse_output(self):\n        with tempfile.TemporaryDirectory() as temporary:\n            root = Path(temporary); archive = root / \"wrong.zip\"\n            archive.write_bytes(b\"CONTROL_ONLY_NOT_AN_ACTIONS_ARTIFACT\")\n            with self.assertRaisesRegex(RuntimeError, \"ZIP bytes differ\"):\n                admit_completed_quota_archive(archive, root, CONFIG[\"completedQuotaContinuation\"], [], {}, control,\n                    CONFIG[\"completedQuotaContinuation\"][\"source\"])\n            self.assertEqual(list(root.iterdir()), [archive])\n\n    def test_console_first_cause_is_bounded_and_redacts_urls_authorization_and_environment_credentials(self):\n        cause = \"Original parser failed; https://example.invalid/artifact?sig=private-value Bearer abc.def GH-value token=inline-value\"\n        result = control.console_failure(cause, {\"GH_TOKEN\": \"GH-value\"})\n        self.assertTrue(result.startswith(\"Original parser failed;\"))\n        for private in (\"example.invalid\", \"private-value\", \"abc.def\", \"GH-value\", \"inline-value\"):\n            self.assertNotIn(private, result)\n        self.assertEqual(control.console_failure(None, {}), None)\n        self.assertEqual(len(control.console_failure(\"x\" * 3000, {})), 2048)\n        self.assertNotIn(\"\\n\", control.console_failure(\"first\\nsecond\", {}))\n\n\n",
+          "beforeEndByte": 27868,
+          "beforeStartByte": 27868,
+          "beforeUTF8": "",
+          "kind": "insert"
+        }
+      ],
+      "path": "Scripts/CI/SDKSourceValidation/test_control.py",
+      "restoredOriginal": {
+        "bytes": 27915,
+        "gitBlob": "b32f02ecf396391f25004b02464d715fe7ca035f",
+        "sha256": "fdfac125835c8902f8f2aec84493228fe24a0d060648f711b8692d8ad8d35aa8"
+      },
+      "result": "PASS_BYTE_EXACT_ORIGINAL_RECONSTRUCTION"
+    }
+  ],
+  "operationCount": 13,
+  "originalControlTestsClass": {
+    "bytes": 25263,
+    "gitBlob": "bbe7017576eb2eae31bea0524eba137060a67f9f",
+    "sha256": "62edbe2e624883ced316d03c25711806b1f2d602e8bda7dd9536957ec6450fa2"
+  },
+  "originalController": "c46884bff261863c3c1271279294dac7efcfafdb",
+  "proofMethod": "Apply literal UTF8 inverse replacements at verified byte offsets in reverse order, then require equality with each complete original c468 file. No compiled/native test was rerun.",
+  "schema": "literal-byte-inverse-v1",
+  "unchangedFiles": [
+    {
+      "bytes": 219117,
+      "gitBlob": "b819f3a8634a8466f821c7d33f3ba11ba03e8a59",
+      "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "sha256": "e1c50b40b2c93f77c22243c755cb8bcb0f9447b44199f5f2ec2518a1640dc423"
+    },
+    {
+      "bytes": 17320,
+      "gitBlob": "c109231b6fa4aac18640657ff17b4d5d4d458645",
+      "path": "Scripts/CI/SDKSourceValidation/continuation.py",
+      "sha256": "9fd78bf1886e7fda6789a488fb84512c08b6a9826572332f620b9105613c3243"
+    },
+    {
+      "bytes": 15805,
+      "gitBlob": "1bb32828b65a9f64437166512fe66e6cf099abce",
+      "path": "Scripts/CI/SDKSourceValidation/quota_continuation.py",
+      "sha256": "0d2e8081ecdcb802b3d211b041febd016c603ecdd149eae49e414acc4d5510ca"
+    }
+  ],
+  "unchangedRunDeclarations": [
+    {
+      "bytes": 110,
+      "gitBlob": "ae07044fc86d16eedaf2fcf13e8cd44da40be8d9",
+      "name": "require",
+      "sha256": "23f95a5c024c37e264c643d4fa3249dd7fa0fed4946127720cb45fc3d79a5daa"
+    },
+    {
+      "bytes": 258,
+      "gitBlob": "ab7d32d22f0fb4bcd2d80d0c040ba24f52b26591",
+      "name": "write_json",
+      "sha256": "98d80b3e9cfe340b28efc925f319e61ac6045c516515ece64b52ad5d411e8194"
+    },
+    {
+      "bytes": 221,
+      "gitBlob": "74a2f1f9d28462d99e1c95cbea20b3f3a9a441be",
+      "name": "sha256",
+      "sha256": "474e84f9d1f6b11f415ad58b964a31c1e1e7148b31447b58fadead7b56bd0d66"
+    },
+    {
+      "bytes": 121,
+      "gitBlob": "2193f2835a82a7d1a266a2f4ee3f38da9dad7218",
+      "name": "blob_sha",
+      "sha256": "b717fc2c55e96ce4ec59be8d2822a15e4d72473d5b31665291f00e6a72e7947d"
+    },
+    {
+      "bytes": 309,
+      "gitBlob": "e758f3a9575d9250155738043e8d9fd969a3925b",
+      "name": "protected_blobs",
+      "sha256": "210fa8b4f338a1a7706d1b66a1b7b1850b4d583e8856d832fc1afdc854c7aa34"
+    },
+    {
+      "bytes": 1316,
+      "gitBlob": "bd56f56f9cbd853561b554477fe790e801eab31f",
+      "name": "validate_inputs",
+      "sha256": "1cf653e154bf4552a831a591f1da341d68f9db1e4f4637bec655b63e0e85c64d"
+    },
+    {
+      "bytes": 484,
+      "gitBlob": "0c8e36c55260b3435b447b5b943a63d54161f594",
+      "name": "selected_quota_suite",
+      "sha256": "c450dba81e93a5f55bf73a470a214f13c9920f251653868d47b8089543f1c318"
+    },
+    {
+      "bytes": 102,
+      "gitBlob": "47f45845180953ac73d53063e895dda76a944cd3",
+      "name": "normalized_location",
+      "sha256": "396c17e810b23cf1844aa499615f225670ec5beb947752c38c9fe32b477a1fe0"
+    },
+    {
+      "bytes": 743,
+      "gitBlob": "4ccf2332123060eaf604893c7a823465a0348e68",
+      "name": "lock_records",
+      "sha256": "f44fc4ad8e4f8939fb771d709a75127f2c4ba72012d2e633abd22cd74e8b909e"
+    },
+    {
+      "bytes": 369,
+      "gitBlob": "89829c81c915904ecd942a24fe76bb2d3d1994f7",
+      "name": "validate_lock",
+      "sha256": "bc11631d3f2fcf1fe0df4fb10238bb99384309e6c4a41e4c0b55cd6991c6175e"
+    },
+    {
+      "bytes": 1549,
+      "gitBlob": "6b865eb2474a03fde4ad1ebb41b4896e1a8fa711",
+      "name": "finish_original_process_group",
+      "sha256": "a11d7c8009d2f2b139f8814f8a909c9329d7102241fe7c93954e535f703c8947"
+    },
+    {
+      "bytes": 8416,
+      "gitBlob": "7191f67f2d376e3b6153309829091a4470c75409",
+      "name": "Run",
+      "sha256": "501c5472f385b5fa0fb51dce9374fdddb7e51bbc9c152d87816b342bed1865e7"
+    },
+    {
+      "bytes": 1100,
+      "gitBlob": "f0fd18b4b36e485a009cdd44395c04a0c84d16ad",
+      "name": "source_inventory",
+      "sha256": "20286d08b7faf8e3503ff04f30b5c73565160d66f84a90212b048fb85c66e9c1"
+    }
+  ]
+}

@@ -23,6 +23,7 @@ import traceback
 
 from continuation import admit_archive, validate_api, validate_continuation_source
 from quota_continuation import admit_quota_archive
+from completed_quota import admit_completed_quota_archive
 
 
 HERE = Path(__file__).resolve().parent
@@ -127,7 +128,8 @@ def parse_swift_testing(text: str, suite: dict) -> dict:
     passed_suites = re.findall(r"^✔ Suite (.+?) passed after [^\n]+$", text, re.M)
     allowed_suites = [suite["suite"]]
     if suite.get("displayName"):
-        allowed_suites += [suite["displayName"], '"' + suite["displayName"] + '"']
+        allowed_suites += [suite["displayName"], '"' + suite["displayName"] + '"',
+                           '"' + suite["displayName"] + '"' + " (aka '" + suite["suite"] + "')"]
     require(len(passed_suites) == 1 and passed_suites[0] in allowed_suites and
             re.findall(r"^◇ Suite (.+?) started\.$", text, re.M) == passed_suites,
             "Missing, duplicate or foreign suite; only exact source-declared names are admitted")
@@ -406,7 +408,8 @@ def execute(run: Run, source: str, continue_original_agent: bool = False) -> dic
     control_paths = [".github/workflows/build-ios26-unsigned-ipa.yml",
                      "Scripts/CI/SDKSourceValidation/run.py", "Scripts/CI/SDKSourceValidation/obligations.json",
                      "Scripts/CI/SDKSourceValidation/continuation.py",
-                     "Scripts/CI/SDKSourceValidation/quota_continuation.py"]
+                     "Scripts/CI/SDKSourceValidation/quota_continuation.py",
+                     "Scripts/CI/SDKSourceValidation/completed_quota.py"]
     controls = {}
     for path in control_paths:
         data = (run.root / path).read_bytes()
@@ -459,6 +462,7 @@ def execute(run: Run, source: str, continue_original_agent: bool = False) -> dic
     suite_results = []
     resolved_locks = {}
     reused_quota = None
+    reused_completed_quota = None
     if continue_original_agent:
         fixed = CONFIG["continuation"]
         validate_continuation_source(source, fixed)
@@ -499,10 +503,44 @@ def execute(run: Run, source: str, continue_original_agent: bool = False) -> dic
             run.products.append(reused_quota["product"])
             write_json(run.output / "reused-quota-admission.json", reused_quota["admission"])
             write_json(run.output / "prior-quota-five-actual-results.json", reused_quota["parsed"])
+        completed_fixed = CONFIG["completedQuotaContinuation"]
+        if source == completed_fixed["source"]:
+            require(reused_quota is not None, "Completed single quota case also requires its separately admitted original five")
+            completed_run = api_json("completed-quota-run-api", f'runs/{completed_fixed["runID"]}')
+            completed_jobs = api_json("completed-quota-jobs-api", f'runs/{completed_fixed["runID"]}/jobs?per_page=100')
+            completed_artifact = api_json("completed-quota-artifact-api", f'artifacts/{completed_fixed["artifactID"]}')
+            validate_api(completed_run, completed_jobs, completed_artifact, completed_fixed)
+            run.command("completed-quota-artifact", ["gh", "api", api + f'artifacts/{completed_fixed["artifactID"]}/zip'],
+                timeout=600, binary_output=True, environment=api_environment,
+                maximum_output_bytes=completed_fixed["artifactBytes"])
+            reused_completed_quota = admit_completed_quota_archive(run.output / "completed-quota-artifact.zip",
+                run.output, completed_fixed, before, published, sys.modules[__name__], source)
+            original_five = reused_quota["parsed"]["methods"]
+            original_one = reused_completed_quota["parsed"]["methods"]
+            require(not set(original_five).intersection(original_one) and
+                    {**original_five, **original_one} == CONFIG["suites"][1]["expectedMethods"],
+                    "Two original executed scopes do not cover the exact six quota methods")
+            suite_results.append(reused_completed_quota["parsed"])
+            resolved_locks["payload-quota"] = reused_completed_quota["resolvedLock"]
+            run.products.append(reused_completed_quota["product"])
+            write_json(run.output / "reused-completed-quota-admission.json", reused_completed_quota["admission"])
+            write_json(run.output / "payload-quota-actual-results.json", reused_completed_quota["parsed"])
+            original_lock = materialized / "Packages/HanlinPresentationSDK/Package.resolved"
+            require(not original_lock.exists(), "Presentation source now has a lock; explicit review required")
+            # The same immutable package will use the actual original0ae resolved
+            # lock for the new iOS build, without repeating its macOS resolver/test.
+            shutil.copyfile(reused_completed_quota["lockPath"], original_lock)
+            shutil.copyfile(original_lock, run.output / "payload-quota-Package.resolved")
+            write_json(run.output / "presentation-reused-lock.json", {
+                "origin": reused_completed_quota["parsed"]["evidenceOrigin"],
+                "sourceSHA256": sha256(original_lock), "originalPackageLocalLock": "ABSENT",
+                "meaning": "Exact actual original0ae resolved lock restored into the identical private package; no current quota resolve/test is claimed. The original iOS build must verify its own actual checkouts."})
         run.free_floor(2 * 1024**3)
     for suite in CONFIG["suites"]:
         if continue_original_agent and suite["name"] == "agent-stop":
             continue  # The exact original named execution was admitted above; no duplicate compile/test.
+        if reused_completed_quota is not None and suite["name"] == "payload-quota":
+            continue  # Both exact original quota scopes are admitted; zero quota compile/test in this run.
         run.free_floor(2 * 1024**3)
         suite = selected_quota_suite(suite, reused_quota is not None)
         label = suite["name"]
@@ -582,7 +620,31 @@ def execute(run: Run, source: str, continue_original_agent: bool = False) -> dic
         result["quotaEvidenceComposition"] = {"originalFiveSource": CONFIG["quotaContinuation"]["source"],
             "currentSingleSource": source, "originalSixCaseRunStatus": "FAILED",
             "scope": "Five exact unchanged declarations retain their original actual pass evidence; only the corrected failed method executed anew. No six-case successor run or prior whole-suite pass is claimed."}
+    if reused_completed_quota is not None:
+        result["quotaEvidenceComposition"] = {
+            "originalFiveSource": CONFIG["quotaContinuation"]["source"],
+            "originalFiveRun": CONFIG["quotaContinuation"]["runID"],
+            "completedSingleSource": CONFIG["completedQuotaContinuation"]["source"],
+            "completedSingleRun": CONFIG["completedQuotaContinuation"]["runID"],
+            "originalSixCaseRunStatus": "FAILED", "originalSingleControllerRunStatus": "FAILED",
+            "quotaMethodsExecutedThisRun": 0,
+            "scope": "Five unchanged actual35d passes plus one actual0ae pass are separately admitted from their original failed controller runs. No same-run six-case pass or current quota execution is claimed; only the remaining Widget/iOS obligations execute here."}
     return result
+
+
+def console_failure(value, environment):
+    """Bound console diagnostics; original first/secondary causes stay in evidence."""
+    if value is None:
+        return None
+    text = str(value)
+    for name, secret in environment.items():
+        if secret and re.search(r"(?:TOKEN|SECRET|PASSWORD|CREDENTIAL|PRIVATE_KEY|API_KEY)", name, re.I):
+            text = text.replace(secret, "[redacted credential]")
+    text = re.sub(r"https?://[^\s<>\"']+", "[redacted URL]", text, flags=re.I)
+    text = re.sub(r"(?:Bearer|Basic)\s+[A-Za-z0-9._~+/=-]+", "[redacted authorization]", text, flags=re.I)
+    text = re.sub(r"(?:gh[pousr]_[A-Za-z0-9_]+|github_pat_[A-Za-z0-9_]+)", "[redacted credential]", text)
+    text = re.sub(r"(?:password|secret|token|api[-_]key)\s*[:=]\s*[^\s,;]+", "[redacted credential]", text, flags=re.I)
+    return " ".join(text.split())[:2048]
 
 
 def main() -> int:
@@ -629,7 +691,9 @@ def main() -> int:
         inventory = [{"path": str(p.relative_to(output)), "bytes": p.stat().st_size, "sha256": sha256(p)}
                      for p in sorted(output.rglob("*")) if p.is_file() and not p.is_symlink()]
         write_json(output / "evidence-files.json", inventory)
-    print(json.dumps({"status": result["status"], "source": result.get("source"), "evidence": str(output)}))
+    print(json.dumps({"status": result["status"], "source": result.get("source"), "evidence": str(output),
+                      "error": console_failure(result.get("error"), os.environ),
+                      "productPreservationError": console_failure(result.get("productPreservationError"), os.environ)}))
     return 0 if result["status"] == "PASS_SELECTED_ORIGINAL_SDK_OBLIGATIONS_AND_IOS_PRODUCT_BUILD" else 1
 
 

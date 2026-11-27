@@ -1,0 +1,69 @@
+{
+  "actual26ControlsReceiptSHA256": "5f34f2dbefdfb904f79d6061c61248aff8bf29f948765b2064e7f32b2d098488",
+  "appAcceptance": false,
+  "baseControl": "c46884bff261863c3c1271279294dac7efcfafdb",
+  "changedBytes": 1094139,
+  "completeOriginalInverses": [
+    {
+      "inverseOperations": 1,
+      "original": {
+        "bytes": 21316,
+        "gitBlob": "b3b66e2d099e01af1d787d9d8896c3429613cf55",
+        "sha256": "3a40c5d02bb27e6208f36369bcd9bc807abbb93207eed413d34feeace446b8d6"
+      },
+      "path": "Scripts/CI/SDKSourceValidation/README.md"
+    },
+    {
+      "inverseOperations": 1,
+      "original": {
+        "bytes": 26647,
+        "gitBlob": "b4d831449b1642629ae72d0d79f9545f997fd9c1",
+        "sha256": "85ac7100b4776ad3ef9ccc51d7f8f493258dc0706f0fe96cc06a5e18a2c87af1"
+      },
+      "path": "Scripts/CI/SDKSourceValidation/obligations.json"
+    },
+    {
+      "inverseOperations": 9,
+      "original": {
+        "bytes": 38159,
+        "gitBlob": "2719f795f73d6229755c51b402db8d4018d4850d",
+        "sha256": "42fe6b091114eaef011e94148d855e055391ab0576d999760df513446643134f"
+      },
+      "path": "Scripts/CI/SDKSourceValidation/run.py"
+    },
+    {
+      "inverseOperations": 2,
+      "original": {
+        "bytes": 27915,
+        "gitBlob": "b32f02ecf396391f25004b02464d715fe7ca035f",
+        "sha256": "fdfac125835c8902f8f2aec84493228fe24a0d060648f711b8692d8ad8d35aa8"
+      },
+      "path": "Scripts/CI/SDKSourceValidation/test_control.py"
+    }
+  ],
+  "dispatchPerformed": false,
+  "exactChangedFiles": 25,
+  "indexSHA256": "df01c5241b41dfcdd44e9e69a4b8fd0742ca3cfa3ecc6c85e7f0c06af320445d",
+  "literalInverseOperations": 13,
+  "manualReview": [
+    "Exact display-name/class-alias pair only; original duplicate,foreign,start-end,outcome filters preserved.",
+    "Fixed c468 full646621691B archive hash precedes member parse; exact114memberclosure,1005sourcefiles/source-declaredsuite,90commandsdrained,18cleanlockeddependenciesbothphases,267inertproducts.",
+    "Source0ae and full selected inventory identical; original35d five plus0ae one independently admitted; no failed controller relabeled.",
+    "Restored real4880B package lock is verified against published graph and actual iOS checkouts; only Widget2+iOS execute.",
+    "Whole Run class, process lifecycle and prioradmissionreaders byteexact; firsterror remains separate from productpreservationerror.",
+    "FullnewTARadmission remains NOT_RUN locally and mandatory insideactualhostedjob before reuse."
+  ],
+  "newNativeOrSwiftExecutions": 0,
+  "newTestsExecutedByRoot": 0,
+  "old20ControlClassUnchanged": true,
+  "originalAgentAndFiveQuotaReadersUnchanged": true,
+  "originalRootCompleteZIPProofSHA256": "b0792499b6f3a187866afaa0f35262d3f099fa938101b044e909249a359b43ef",
+  "originalRunDeclarationsUnchanged": 13,
+  "releaseAcceptance": false,
+  "schema": "pinkha-root-independent-sdk-alias-continuation-review/v1",
+  "sdkProductSourceModified": false,
+  "source": "0ae1920d316b9592cbad0462bea96a07fd1ca351",
+  "sourceTree": "761851ab3909f8b419a0459a2e4739afa2776f7d",
+  "status": "PASS_SOURCE_REVIEW_FOR_NORMAL_PUBLICATION_HOSTED_ADMISSION_REQUIRED",
+  "workflowAndDispatchUnchanged": true
+}

@@ -1,0 +1,12 @@
+Build complete! (141.33 sec)
+◇ Test run started.
+↳ Swift Standard Library Version: 6.4
+↳ Swift Compiler Version: 6.4.2
+↳ Testing Library Version: 2403
+↳ Target Platform: arm64e-apple-macos14.0
+↳ OS Version: 27.0.1 (26A434)
+◇ Suite "Original code-fence retained payload ownership" (aka 'ChatCodeFencePayloadRetentionTests') started.
+◇ Test cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge() started.
+✔ Test cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge() passed after 0.001 seconds.
+✔ Suite "Original code-fence retained payload ownership" (aka 'ChatCodeFencePayloadRetentionTests') passed after 0.001 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.002 seconds.

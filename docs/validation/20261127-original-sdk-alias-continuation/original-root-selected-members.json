@@ -1,0 +1,238 @@
+{
+  "absentRequestedMembers": [
+    "45968129203-1/payload-quota-actual-results.json",
+    "45968129203-1/widgets-tests.log",
+    "45968129203-1/ios-original-product.log",
+    "45968129203-1/widgets-Package.resolved",
+    "45968129203-1/widgets-checkouts.json"
+  ],
+  "artifactID": 15183909230,
+  "controlCommit": "c46884bff261863c3c1271279294dac7efcfafdb",
+  "fullZIPHashVerified": false,
+  "fullZIPStored": false,
+  "priorFullStreamFailureSHA256": "76a594fc565c240c1e6362442248efa6bbd5386ba5adc5dc6fcd53fd9e605a6c",
+  "qualificationLimit": "Exact bounded original ZIP member ranges and CRC verified; full archive hash is PENDING in a separate stream.",
+  "rangeRequests": [
+    {
+      "bytes": 698875,
+      "first": 645922816,
+      "last": 646621690,
+      "sha256": "9d6c51bb24c9f39630d73264d2a9f9873e98b81e9f3b048aaa75f87044f5c14d"
+    },
+    {
+      "bytes": 1048576,
+      "first": 100663296,
+      "last": 101711871,
+      "sha256": "7269761e8da8402e835f73fe38c4d1c00ee55268e69114b0762b72bc954a9695"
+    },
+    {
+      "bytes": 1048576,
+      "first": 0,
+      "last": 1048575,
+      "sha256": "c31742f5025ee6ec507725f4994834f2c531ff4f34f720aa51385b4687b0f44f"
+    },
+    {
+      "bytes": 1048576,
+      "first": 177209344,
+      "last": 178257919,
+      "sha256": "259eeee2a9829fb47227a7ddb3281889b3fbc24ce0f3545f1f1e1c4d0deddab9"
+    },
+    {
+      "bytes": 1048576,
+      "first": 100663296,
+      "last": 101711871,
+      "sha256": "7269761e8da8402e835f73fe38c4d1c00ee55268e69114b0762b72bc954a9695"
+    },
+    {
+      "bytes": 698875,
+      "first": 645922816,
+      "last": 646621690,
+      "sha256": "9d6c51bb24c9f39630d73264d2a9f9873e98b81e9f3b048aaa75f87044f5c14d"
+    },
+    {
+      "bytes": 1048576,
+      "first": 0,
+      "last": 1048575,
+      "sha256": "c31742f5025ee6ec507725f4994834f2c531ff4f34f720aa51385b4687b0f44f"
+    },
+    {
+      "bytes": 1048576,
+      "first": 588251136,
+      "last": 589299711,
+      "sha256": "77c7f22fbc9c3f53b2a9131c1b9481ccf49fe89b56f8101770b07a3e5b8f5a02"
+    },
+    {
+      "bytes": 1048576,
+      "first": 118489088,
+      "last": 119537663,
+      "sha256": "8e6d29797f3a3f0e37da10302ddcae2c88ad5c34b82489dbc203d5b66cdc6d29"
+    },
+    {
+      "bytes": 1048576,
+      "first": 177209344,
+      "last": 178257919,
+      "sha256": "259eeee2a9829fb47227a7ddb3281889b3fbc24ce0f3545f1f1e1c4d0deddab9"
+    },
+    {
+      "bytes": 698875,
+      "first": 645922816,
+      "last": 646621690,
+      "sha256": "9d6c51bb24c9f39630d73264d2a9f9873e98b81e9f3b048aaa75f87044f5c14d"
+    },
+    {
+      "bytes": 1048576,
+      "first": 100663296,
+      "last": 101711871,
+      "sha256": "7269761e8da8402e835f73fe38c4d1c00ee55268e69114b0762b72bc954a9695"
+    },
+    {
+      "bytes": 698875,
+      "first": 645922816,
+      "last": 646621690,
+      "sha256": "9d6c51bb24c9f39630d73264d2a9f9873e98b81e9f3b048aaa75f87044f5c14d"
+    }
+  ],
+  "runID": 45968129203,
+  "schema": "pinkha-original-artifact-bounded-selection/v1",
+  "seconds": 35.13696997798979,
+  "selectedBytes": 1708943,
+  "selectedMembers": [
+    {
+      "bytes": 72832,
+      "crc32": 1562623269,
+      "name": "45968129203-1/result.json",
+      "sha256": "57a3898f54ccadde66d4e6607ea536e9fbe7011a29d2c78b03bca4378c9ffdaf"
+    },
+    {
+      "bytes": 1274,
+      "crc32": 3551418727,
+      "name": "45968129203-1/controller-error.log",
+      "sha256": "4aafef8d2663a8e3ced95b0600549c0e6c3315c0b06f8ac2de746cb8dfc4f252"
+    },
+    {
+      "bytes": 65883,
+      "crc32": 59303018,
+      "name": "45968129203-1/commands.json",
+      "sha256": "e9e005261a64c889ef3a4c6cab464277b120ec059ccb4e68d27a7aee993f3428"
+    },
+    {
+      "bytes": 3540,
+      "crc32": 1996830324,
+      "name": "45968129203-1/admitted-source.json",
+      "sha256": "6e3fbb20c493399296bc526dd8a515bd6d7fc6a43453bb2030d30c7583861bc3"
+    },
+    {
+      "bytes": 1036503,
+      "crc32": 1692689105,
+      "name": "45968129203-1/payload-quota-tests.log",
+      "sha256": "45d579668fffe19d4f8c8f5600cf9b3324f84ca18013b545fbc31ad51eb1de79"
+    },
+    {
+      "bytes": 1094,
+      "crc32": 3574351371,
+      "name": "45968129203-1/controller-identity.json",
+      "sha256": "ab085862830a82b7d6ef5311b1f94cef95680049417d11deeeb208bdf7388d12"
+    },
+    {
+      "bytes": 827,
+      "crc32": 1057365328,
+      "name": "45968129203-1/dispatch-inputs.json",
+      "sha256": "f966ce1f05c24c97b5ac8be9238455f7c7b2f47d7e31c6dcd2416eae4a71117c"
+    },
+    {
+      "bytes": 305259,
+      "crc32": 2155003209,
+      "name": "45968129203-1/original-source-files.json",
+      "sha256": "8b316a5093caf12f957a7e2dd06cbcdbf321ea7d3cbe47c54150c0ee657a6bca"
+    },
+    {
+      "bytes": 179033,
+      "crc32": 1590231715,
+      "name": "45968129203-1/original-products.json",
+      "sha256": "0c2508c398c8645120990b66667a7b1d26d2e3178b07ce0a2daccbcfe84d6ce7"
+    },
+    {
+      "bytes": 17951,
+      "crc32": 2929962701,
+      "name": "45968129203-1/evidence-files.json",
+      "sha256": "a04d9a9e61c80e36bb9c9baf06333b666f228b7fda5289c30c2072734691a08c"
+    },
+    {
+      "bytes": 2751,
+      "crc32": 2663272905,
+      "name": "45968129203-1/reused-agent-admission.json",
+      "sha256": "81e9b08af0e72018f4a1f6a84011907c7a60a75354ec8c823c6ca6bed8050ee4"
+    },
+    {
+      "bytes": 3136,
+      "crc32": 1228151418,
+      "name": "45968129203-1/reused-quota-admission.json",
+      "sha256": "cd95eb955255f2d132b2ff139016ec1b77925edc287b03bea805f8ec68f66b5c"
+    },
+    {
+      "bytes": 1565,
+      "crc32": 1956204732,
+      "name": "45968129203-1/agent-stop-actual-results.json",
+      "sha256": "8da08ccf0669499b02655923435aa6f8d2c7f6b7a9029eb470cf1004d18fbccf"
+    },
+    {
+      "bytes": 1454,
+      "crc32": 708050018,
+      "name": "45968129203-1/prior-quota-five-actual-results.json",
+      "sha256": "26d92688b9ed4a4102462c19a7e58d0e8ff14afd863d52312d0114bdf34832aa"
+    },
+    {
+      "bytes": 4880,
+      "crc32": 2924164453,
+      "name": "45968129203-1/payload-quota-Package.resolved",
+      "sha256": "2498e965486f4a40ed5aada9745475d785a98117b41caf03b88c5781d1969180"
+    },
+    {
+      "bytes": 3521,
+      "crc32": 2502759755,
+      "name": "45968129203-1/payload-quota-checkouts.json",
+      "sha256": "ff2d924954e598839c7d9a5de7ab8e0b4be6cc007f6e99c5a78db9972f908f90"
+    },
+    {
+      "bytes": 3521,
+      "crc32": 2502759755,
+      "name": "45968129203-1/payload-quota-posttest-checkouts.json",
+      "sha256": "ff2d924954e598839c7d9a5de7ab8e0b4be6cc007f6e99c5a78db9972f908f90"
+    },
+    {
+      "bytes": 31,
+      "crc32": 4283013301,
+      "name": "45968129203-1/xcode.log",
+      "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7"
+    },
+    {
+      "bytes": 128,
+      "crc32": 925403282,
+      "name": "45968129203-1/swift.log",
+      "sha256": "448e3f9c46706640fe62ea0140ecfccbb330baba2076b2916c0423af9642ee06"
+    },
+    {
+      "bytes": 66,
+      "crc32": 2894203878,
+      "name": "45968129203-1/macos.log",
+      "sha256": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c"
+    },
+    {
+      "bytes": 5,
+      "crc32": 1330186854,
+      "name": "45968129203-1/simulator-sdk.log",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b"
+    },
+    {
+      "bytes": 3689,
+      "crc32": 2611343716,
+      "name": "controller-tests.log",
+      "sha256": "9f1f3e0c672242515e20cf2d2f1ee669ac05a12e416f4b5d24965c237d960b08"
+    }
+  ],
+  "skippedPayloadsRetainedAtOriginalArtifact": true,
+  "status": "PASS_ORIGINAL_RANGE_SELECTION_FULL_ZIP_HASH_PENDING",
+  "storageETag": "\"0x8DF4C6401DD1773\"",
+  "storageHost": "productionresultssa11.blob.core.windows.net",
+  "testsExecuted": 0
+}
