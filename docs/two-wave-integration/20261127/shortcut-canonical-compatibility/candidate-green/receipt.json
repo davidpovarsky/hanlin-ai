@@ -1,0 +1,26 @@
+{
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "-m",
+    "unittest",
+    "-v",
+    "test_shortcut_surface_observer.ShortcutEvidenceControls.test_recorded_partial_native_action_is_admitted_without_rewriting_catalog",
+    "test_shortcut_surface_observer.ShortcutEvidenceControls.test_recorded_partial_native_action_still_rejects_invalid_contracts",
+    "test_shortcut_surface_observer.ShortcutEvidenceControls.test_primary_catalog_requires_enabled_current_supported_action"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-shortcut-compatibility-e86e779d/Scripts/ProductSplit/Tests",
+  "startedAt": "2026-11-27T21:43:08.592330+00:00",
+  "finishedAt": "2026-11-27T21:43:08.717344+00:00",
+  "seconds": 0.1250168066471815,
+  "exitCode": 0,
+  "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSHA256": "5848a4b2b4de1987db1920d5a16d90133ba9d1ceb7b1df14ee8deec9e711b4d8",
+  "readerSHA256": "8246b68f0125d31c2a83819e31c6e7e0dd2f385a731914d25b2eb60a95c342f3",
+  "testSHA256": "1f815e35156e64bb63ee7a13fc06b1e790ff079f76d7db09607bfd4aed79f2a1",
+  "canonicalFixtureSHA256": "5babc16bfe0a33eaa723f8915f4b64eb4292fefd075da0a047201fca09722d70",
+  "scope": "Pure temporary-directory observer controls; no native or external acceptance evidence"
+}

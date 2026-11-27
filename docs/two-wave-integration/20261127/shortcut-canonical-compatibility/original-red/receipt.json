@@ -1,0 +1,24 @@
+{
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "-m",
+    "unittest",
+    "-v",
+    "test_shortcut_surface_observer.ShortcutEvidenceControls.test_recorded_partial_native_action_is_admitted_without_rewriting_catalog"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-shortcut-compatibility-e86e779d/Scripts/ProductSplit/Tests",
+  "startedAt": "2026-11-27T21:43:08.434849+00:00",
+  "finishedAt": "2026-11-27T21:43:08.591231+00:00",
+  "seconds": 0.15638022869825363,
+  "exitCode": 1,
+  "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSHA256": "94b3e58b3c91fcc409bab2219ce00e7e4e0a764edc950fa6c7c7ef122bdac33d",
+  "readerSHA256": "ed9116aaaf7bf8bab3a77d273a30560760e4e8cc2051cf2e0ee64438b60edf79",
+  "testSHA256": "1f815e35156e64bb63ee7a13fc06b1e790ff079f76d7db09607bfd4aed79f2a1",
+  "canonicalFixtureSHA256": "5babc16bfe0a33eaa723f8915f4b64eb4292fefd075da0a047201fca09722d70",
+  "scope": "Pure temporary-directory observer controls; no native or external acceptance evidence"
+}

@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w1_review_resume",
+  "recordedAtUTC": "2026-11-27T21:48:51.040765+00:00",
+  "status": "APPROVED_CANONICAL_OBSERVER_SOURCE_CORRECTION",
+  "base": "e86e779d5d4bf85db3c9802e569c032283515ad6",
+  "patchSHA256": "36302ac70461c1d86b7f0ce7736910136d961a4971347ea269b277b9d9d97208",
+  "sourceFiles": {
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": {
+      "beforeSHA256": "ed9116aaaf7bf8bab3a77d273a30560760e4e8cc2051cf2e0ee64438b60edf79",
+      "afterSHA256": "8246b68f0125d31c2a83819e31c6e7e0dd2f385a731914d25b2eb60a95c342f3",
+      "beforeBytes": 65230,
+      "afterBytes": 65405
+    },
+    "Scripts/ProductSplit/Tests/test_shortcut_surface_observer.py": {
+      "beforeSHA256": "4581c3cf410440a8dd6d279dab30c4d5c384d055ee49e8a84ea06f582dfd7e85",
+      "afterSHA256": "1f815e35156e64bb63ee7a13fc06b1e790ff079f76d7db09607bfd4aed79f2a1",
+      "beforeBytes": 24299,
+      "afterBytes": 28326
+    }
+  },
+  "wholeOriginalReaderInverseExact": true,
+  "wholeOriginalTestFileRecoveredByRemovingOnlyAdditiveBlock": true,
+  "allOriginalTestMethodASTsIdentical": 20,
+  "newTestMethods": [
+    "test_recorded_partial_native_action_is_admitted_without_rewriting_catalog",
+    "test_recorded_partial_native_action_still_rejects_invalid_contracts"
+  ],
+  "newNegativeContractMutations": 12,
+  "originalCanonicalFixture": {
+    "path": "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinCanonicalEntrypointProjectionTests.swift",
+    "sha256": "5babc16bfe0a33eaa723f8915f4b64eb4292fefd075da0a047201fca09722d70",
+    "unchanged": true,
+    "retainedWholeRegistrySHA256": "66fea131922d3106c90b0341c4fff02f86de0c06932be22bb21db6d1e0c5fea8"
+  },
+  "rawResultsReviewed": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-shortcut-canonical-compatibility-e86e779d-r3/original-red/receipt.json",
+      "sha256": "e161fb782f04db909589428c9acf25f86902cd8182afa4c7d0f70e3d68b5a3e6",
+      "exitCode": 1,
+      "testCases": 1,
+      "rawStderrSHA256": "94b3e58b3c91fcc409bab2219ce00e7e4e0a764edc950fa6c7c7ef122bdac33d"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-shortcut-canonical-compatibility-e86e779d-r3/candidate-green/receipt.json",
+      "sha256": "eb4274624e394cb8e656101e477e896835307f49ad1fe5f1ef8199b4c71e7ba4",
+      "exitCode": 0,
+      "testCases": 3,
+      "rawStderrSHA256": "5848a4b2b4de1987db1920d5a16d90133ba9d1ceb7b1df14ee8deec9e711b4d8"
+    }
+  ],
+  "findings": [
+    "The original analyzer emits declared native actions with partial compatibility. The current production publisher matches runtime/policy/action/handler rather than requiring supported. Accepting exactly supported or partial aligns this evidence reader with that canonical representation.",
+    "All existing package enabled/identity/generation, exact entrypoint cardinality, kind, execution context, native runtime profile, policy, exported action and handler checks remain byte-identical.",
+    "Tuple membership rejects unsupported, unknown, None and non-string dictionaries without inventing a successful native row or mutating stored bytes. The new positive reads the unchanged retained semantic registry fixture and verifies no catalog rewrite.",
+    "The actual RED control fails at the original compound guard, and actual three affected GREEN controls pass, including the existing supported-action control. These are portable reader controls only.",
+    "All20 previous test-method ASTs and the entire prior test file are preserved; no new UI, selectors, timeout, budgets, product or SDK source changes."
+  ],
+  "sdkInputCount": 396,
+  "sdkPathIntersection": [],
+  "sdkInputComparisonSHA256": "788f20ef5f7b613f7139c9520059b64d0f803dd81d9f484629e7b7352ab4c619",
+  "nativeLimitation": "Actual LR4 failed twice before catalog readiness and twice at a compound identity guard. Its exact failing catalog row was not retained. This correction fixes a demonstrated source/fixture schema mismatch, not proof of the sole native failure cause or any native PASS.",
+  "testsRerunByReviewer": 0,
+  "nativeExecutionByReviewer": 0,
+  "sourceEditsByReviewer": 0,
+  "dispatchesByReviewer": 0
+}

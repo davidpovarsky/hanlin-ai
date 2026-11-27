@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "base": "e86e779d5d4bf85db3c9802e569c032283515ad6",
+  "sourceCommit": "57cca4ea0a6b9d795c6de1f6d75584fc5360a44f",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 1915,
+      "sha256": "e0204d9058ae81a482773e6636ee6ef73649510c0bd4d62eac4f119326f80ee1"
+    },
+    {
+      "path": "candidate-green/receipt.json",
+      "bytes": 1328,
+      "sha256": "eb4274624e394cb8e656101e477e896835307f49ad1fe5f1ef8199b4c71e7ba4"
+    },
+    {
+      "path": "candidate-green/stderr.log.gz",
+      "bytes": 232,
+      "sha256": "fa6f2e19a68e4029ab46ea99c786f6e91dda4bec9c9441c5f9c74e966ba6aeab"
+    },
+    {
+      "path": "candidate-green/stdout.log.gz",
+      "bytes": 20,
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "candidate.patch.gz",
+      "bytes": 1861,
+      "sha256": "13cc9d72be0f6a0641935fd8cd851b2215c8dd0b63cd37591458c4f2e689d5b3"
+    },
+    {
+      "path": "independent-w1-source-review.json",
+      "bytes": 4217,
+      "sha256": "237dbd52e98e0c918c6826a2d240c279508467c0e33b1999b767491bddcd0f4f"
+    },
+    {
+      "path": "original-red/receipt.json",
+      "bytes": 1072,
+      "sha256": "e161fb782f04db909589428c9acf25f86902cd8182afa4c7d0f70e3d68b5a3e6"
+    },
+    {
+      "path": "original-red/stderr.log.gz",
+      "bytes": 478,
+      "sha256": "fadf9ca1094f77e523da1191cfd7a777c5fb9d4be0d94e81f1fe8d1ff8843e75"
+    },
+    {
+      "path": "original-red/stdout.log.gz",
+      "bytes": 20,
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "validation.json",
+      "bytes": 4537,
+      "sha256": "bef1790a0005551e3e6e9d8f21a7bd32a40f8f455921b38e2582b18b96f0db96"
+    }
+  ],
+  "nativeExecuted": false
+}

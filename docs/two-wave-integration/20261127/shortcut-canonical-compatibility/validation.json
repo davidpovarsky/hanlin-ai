@@ -1,0 +1,88 @@
+{
+  "at": "2026-11-27T21:43:08.837394+00:00",
+  "base": "e86e779d5d4bf85db3c9802e569c032283515ad6",
+  "branch": "codex/hanlin-shortcut-canonical-compatibility-20261127",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-shortcut-compatibility-e86e779d",
+  "changedPaths": [
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+    "Scripts/ProductSplit/Tests/test_shortcut_surface_observer.py"
+  ],
+  "sourceHashes": {
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": {
+      "before": "ed9116aaaf7bf8bab3a77d273a30560760e4e8cc2051cf2e0ee64438b60edf79",
+      "after": "8246b68f0125d31c2a83819e31c6e7e0dd2f385a731914d25b2eb60a95c342f3"
+    },
+    "Scripts/ProductSplit/Tests/test_shortcut_surface_observer.py": {
+      "before": "4581c3cf410440a8dd6d279dab30c4d5c384d055ee49e8a84ea06f582dfd7e85",
+      "after": "1f815e35156e64bb63ee7a13fc06b1e790ff079f76d7db09607bfd4aed79f2a1"
+    }
+  },
+  "wholeOriginalReaderRecovered": true,
+  "wholeOriginalTestsRecovered": true,
+  "allOriginalTestMethodASTsPreserved": 20,
+  "newTestMethods": [
+    "ShortcutEvidenceControls.test_recorded_partial_native_action_is_admitted_without_rewriting_catalog",
+    "ShortcutEvidenceControls.test_recorded_partial_native_action_still_rejects_invalid_contracts"
+  ],
+  "canonicalRecordedSwiftFixture": {
+    "path": "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinCanonicalEntrypointProjectionTests.swift",
+    "sha256": "5babc16bfe0a33eaa723f8915f4b64eb4292fefd075da0a047201fca09722d70",
+    "changed": false
+  },
+  "sdkInputCount": 396,
+  "sdkIntersection": [],
+  "originalRed": {
+    "command": [
+      "runuser",
+      "-u",
+      "chatgpt-agent",
+      "--",
+      "python3",
+      "-m",
+      "unittest",
+      "-v",
+      "test_shortcut_surface_observer.ShortcutEvidenceControls.test_recorded_partial_native_action_is_admitted_without_rewriting_catalog"
+    ],
+    "cwd": "/mnt/development/projects/worktrees/hanlin-shortcut-compatibility-e86e779d/Scripts/ProductSplit/Tests",
+    "startedAt": "2026-11-27T21:43:08.434849+00:00",
+    "finishedAt": "2026-11-27T21:43:08.591231+00:00",
+    "seconds": 0.15638022869825363,
+    "exitCode": 1,
+    "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSHA256": "94b3e58b3c91fcc409bab2219ce00e7e4e0a764edc950fa6c7c7ef122bdac33d",
+    "readerSHA256": "ed9116aaaf7bf8bab3a77d273a30560760e4e8cc2051cf2e0ee64438b60edf79",
+    "testSHA256": "1f815e35156e64bb63ee7a13fc06b1e790ff079f76d7db09607bfd4aed79f2a1",
+    "canonicalFixtureSHA256": "5babc16bfe0a33eaa723f8915f4b64eb4292fefd075da0a047201fca09722d70",
+    "scope": "Pure temporary-directory observer controls; no native or external acceptance evidence"
+  },
+  "candidateGreen": {
+    "command": [
+      "runuser",
+      "-u",
+      "chatgpt-agent",
+      "--",
+      "python3",
+      "-m",
+      "unittest",
+      "-v",
+      "test_shortcut_surface_observer.ShortcutEvidenceControls.test_recorded_partial_native_action_is_admitted_without_rewriting_catalog",
+      "test_shortcut_surface_observer.ShortcutEvidenceControls.test_recorded_partial_native_action_still_rejects_invalid_contracts",
+      "test_shortcut_surface_observer.ShortcutEvidenceControls.test_primary_catalog_requires_enabled_current_supported_action"
+    ],
+    "cwd": "/mnt/development/projects/worktrees/hanlin-shortcut-compatibility-e86e779d/Scripts/ProductSplit/Tests",
+    "startedAt": "2026-11-27T21:43:08.592330+00:00",
+    "finishedAt": "2026-11-27T21:43:08.717344+00:00",
+    "seconds": 0.1250168066471815,
+    "exitCode": 0,
+    "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSHA256": "5848a4b2b4de1987db1920d5a16d90133ba9d1ceb7b1df14ee8deec9e711b4d8",
+    "readerSHA256": "8246b68f0125d31c2a83819e31c6e7e0dd2f385a731914d25b2eb60a95c342f3",
+    "testSHA256": "1f815e35156e64bb63ee7a13fc06b1e790ff079f76d7db09607bfd4aed79f2a1",
+    "canonicalFixtureSHA256": "5babc16bfe0a33eaa723f8915f4b64eb4292fefd075da0a047201fca09722d70",
+    "scope": "Pure temporary-directory observer controls; no native or external acceptance evidence"
+  },
+  "nativeExecuted": false,
+  "knownFailureScope": "Actual LR4 had2 catalog readiness failures and2 compound native-entrypoint identity failures before300s. Exact failing catalog row was not retained; source/recorded fixture demonstrates this schema mismatch, not the sole native cause.",
+  "patchSHA256": "36302ac70461c1d86b7f0ce7736910136d961a4971347ea269b277b9d9d97208",
+  "status": "CANDIDATE_READY_FOR_INDEPENDENT_REVIEW"
+}
