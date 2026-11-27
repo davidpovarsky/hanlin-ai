@@ -1,0 +1,129 @@
+{
+  "schema": 1,
+  "recordedAtUTC": "2026-11-27T06:40:12.952941+00:00",
+  "base": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "scope": "One test file only; original2 Swift Testing methods retained. No production, generator, resource, frozen reference, runtime or native flag changes.",
+  "testSource": {
+    "path": "Packages/HanlinPlatform/Tests/HanlinScriptingSDKTests/HanlinScriptingSDKTests.swift",
+    "beforeSHA256": "63fc1a3eb96e04046cf03b648b3d0419c166a97d0f017351e457f02ad0ce2ff8",
+    "afterSHA256": "ea339c19300213388752f744cc69358a142cfede67bdc9ad8b0cbc770dd12416"
+  },
+  "originalUnchangedExpectationLines": [
+    "#expect(source.contains(\"declare namespace Script\"))",
+    "#expect(source.contains(\"declare namespace Navigation\"))",
+    "#expect(source.contains(\"useState\"))",
+    "#expect(!source.contains(\"skipLibCheck\"))",
+    "#expect(declarationFiles.map(\\.name) == HanlinScriptingSDK.declarationFileNames)",
+    "#expect(declarationFiles.allSatisfy { !$0.data.isEmpty })",
+    "#expect(String(data: foundation, encoding: .utf8)?.contains(\"export const Script\") == true)",
+    "#expect(metadata.typescriptVersion == \"7.0.2\")",
+    "#expect(metadata.records.map(\\.symbol) == metadata.records.map(\\.symbol).sorted())",
+    "#expect(metadata.records.allSatisfy { !$0.declarationEvidence.isEmpty })",
+    "#expect(metadata.records.first { $0.symbol == \"fetch\" }?.capability == \"network\")",
+    "#expect(metadata.records.first { $0.symbol == \"URL\" }?.state.rawValue == \"supported\")",
+    "#expect(object[\"schemaVersion\"] as? Int == 1)",
+    "#expect(data.last == 0x0A)"
+  ],
+  "replacedOriginalExpectationLines": [
+    "        #expect(declarationFiles.count == 5)",
+    "        #expect((object[\"files\"] as? [String: String])?.count == 7)"
+  ],
+  "replacementReason": "The actual generator deliberately appends the separate miniapps.d.ts overlay to the original5 declarations; manifest includes those6 plus foundation and runtime metadata (8). Exact filenames and overlay API checks strengthen those original inventories.",
+  "declarationFileNames": [
+    "global.d.ts",
+    "node.d.ts",
+    "safari-ext.d.ts",
+    "scripting.d.ts",
+    "web-fetch.d.ts",
+    "miniapps.d.ts"
+  ],
+  "resourceIntegrity": {
+    "scripting-foundation.d.ts": {
+      "bytes": 2830,
+      "sha256": "0290b74d18975ac699a5fe260b8704c2d5a5686fb7d1d248864ce9db2afebb77",
+      "matchesActualManifest": true
+    },
+    "runtime-registration.json": {
+      "bytes": 974512,
+      "sha256": "2166811a882ef8f935a0a51a32b82fd6d68e9be77ade446c7053b7480f8b5b0e",
+      "matchesActualManifest": true
+    },
+    "global.d.ts": {
+      "bytes": 713964,
+      "sha256": "d5ed4b23de93d9f5c93fcf372736f8288e436e117fa008cdd9ac69a2656a949c",
+      "matchesActualManifest": true
+    },
+    "node.d.ts": {
+      "bytes": 40903,
+      "sha256": "05be426cfb2493524d8ef5a167f9e30128257457289b6c14a87a14c23d5f0602",
+      "matchesActualManifest": true
+    },
+    "safari-ext.d.ts": {
+      "bytes": 12670,
+      "sha256": "b86c4909673f425deb596e67c328cacad2f43022aa12ece1a03aee0e464815ae",
+      "matchesActualManifest": true
+    },
+    "scripting.d.ts": {
+      "bytes": 456732,
+      "sha256": "92155306822de8d1b3c9c31acd604ab562f46c69f0fa70a4cdced63c4a7a5259",
+      "matchesActualManifest": true
+    },
+    "web-fetch.d.ts": {
+      "bytes": 16789,
+      "sha256": "d93cf87b1e46c33c6e672d3fc451f9cfa35f7bae490065b9a7f26b0b08d16938",
+      "matchesActualManifest": true
+    },
+    "miniapps.d.ts": {
+      "bytes": 1462,
+      "sha256": "62382db4f324a3a6791db7ebe263a93bf2cc25a44f53ef8ddea52e442988a160",
+      "matchesActualManifest": true
+    }
+  },
+  "frozenOriginalTypesByteIdentical": {
+    "global.d.ts": "d5ed4b23de93d9f5c93fcf372736f8288e436e117fa008cdd9ac69a2656a949c",
+    "node.d.ts": "05be426cfb2493524d8ef5a167f9e30128257457289b6c14a87a14c23d5f0602",
+    "safari-ext.d.ts": "b86c4909673f425deb596e67c328cacad2f43022aa12ece1a03aee0e464815ae",
+    "scripting.d.ts": "92155306822de8d1b3c9c31acd604ab562f46c69f0fa70a4cdced63c4a7a5259",
+    "web-fetch.d.ts": "d93cf87b1e46c33c6e672d3fc451f9cfa35f7bae490065b9a7f26b0b08d16938"
+  },
+  "overlaySHA256": "62382db4f324a3a6791db7ebe263a93bf2cc25a44f53ef8ddea52e442988a160",
+  "generator": {
+    "path": "Scripts/ScriptingReference/build-scripting-sdk.mjs",
+    "sha256": "a937b3cb083a593b05c0b27230835733681286f7a7ebde732a91b5bc8b129366"
+  },
+  "productionSDKSourceSHA256": "44c09f3c74e2d4cb4ecdc4f0b067c0b82b5ebec174e002dc91936c013f776030",
+  "actualManifestSHA256": "86aff4ad1ec6cf7c34004113aadef16adb4ddd9a8c3a310408dbad40e79d5522",
+  "diffSHA256": "1e9241d1110471d4f0cebb3e2ba3f47c7238a31ca78cfd88d8593efed13b0c22",
+  "checks": {
+    "all8CurrentResourceSHA256MatchManifest": true,
+    "original5FrozenTypesUnchanged": true,
+    "miniAppsOverlayByteIdentity": true,
+    "allOriginalNonCountExpectationsPreserved": true,
+    "originalMethodNamesPreserved": true,
+    "gitDiffCheck": "PASS"
+  },
+  "sourceImpact": {
+    "sdkInputPathManifestSHA256": "59d4ad4748dd615d3f7b6536e012ef93c38bb96f76b3f3f28ebbbed909518235",
+    "sdkInputCount": 392,
+    "sdk392Intersection": [],
+    "completePackageTestsTreeChanged": true,
+    "packageSourcesAndResourcesChanged": false,
+    "native79SelectionExclusion": {
+      "basis": "Mac owner independently read actual866 inventory and58-definition result; not executed by this lane",
+      "inventorySHA256": "a5530408269f296d1cbb743fd52624f74755509623ee68b2bfd0f7e351b78822",
+      "suiteSelected": false,
+      "doNotCarryPrior4of4TreeEqualityForward": true
+    }
+  },
+  "swiftCompilation": "NOT_RUN",
+  "originalSwiftTests": "NOT_RUN",
+  "requiredAcceptance": "Original affected generatedResources and manifest Swift tests must execute on corrected source; static resource qualification is not a native test pass.",
+  "diffArchive": {
+    "path": "docs/two-wave-integration/20261127/sdk-resource-test-controls/source.patch.gz",
+    "encoding": "gzip",
+    "sha256": "0fd5d714f8d862e9748251eff6b49b01f1063e930d05dfe476529ce7e5bd38e7",
+    "originalSHA256": "1e9241d1110471d4f0cebb3e2ba3f47c7238a31ca78cfd88d8593efed13b0c22",
+    "roundTripVerified": true,
+    "reason": "Preserve exact raw unified-diff context spaces without treating artifact content as source trailing whitespace; external original source.patch is unchanged."
+  }
+}
