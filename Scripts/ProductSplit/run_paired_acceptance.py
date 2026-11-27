@@ -131,6 +131,14 @@ SDK04_MINIAPPS_SELECTORS = (
 COMMAND_HEARTBEAT_SECONDS = 30
 
 
+TEST_PLANS['miniapp_shortcut_long_running_os'] = ([
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds",
+], 4)
+
+
 def select_paired_runtime(runtimes, sdk, requested=None):
     identifier = requested or "com.apple.CoreSimulator.SimRuntime.iOS-" + sdk.replace(".", "-")
     if not identifier.startswith("com.apple.CoreSimulator.SimRuntime.iOS-"):
@@ -607,6 +615,62 @@ def shortcut_surface_fixtures(documents):
 
 
 
+def long_running_shortcut_fixtures(documents):
+    """Independent authored packages through the existing shipping SDK/CLI."""
+    work = EVIDENCE / "shortcut-long-running-fixtures"
+    work.mkdir()
+    extracted = work / "original-shipping-sdk"
+    extracted.mkdir()
+    archive = ROOT / "AI_HLY/RuntimeHostResources.zip"
+    archive_sha = hashlib.sha256(archive.read_bytes()).hexdigest()
+    with zipfile.ZipFile(archive) as packed:
+        members = [name for name in packed.namelist() if name.startswith("MiniAppSDK/")]
+        if not members or any(".." in Path(name).parts for name in members):
+            raise RuntimeError("The actual shipping archive has no valid authoring SDK")
+        packed.extractall(extracted, members=members)
+    sdk = extracted / "MiniAppSDK"
+    from observe_shortcut_long_running import FIXTURE_FILES
+    inputs = {"Fixtures/ShortcutLongRunning/" + engine + "/" + name:
+              hashlib.sha256((ROOT / "Fixtures/ShortcutLongRunning" / engine / name).read_bytes()).hexdigest()
+              for engine, names in FIXTURE_FILES.items() for name in names}
+    rows = []
+    try:
+        for engine, name in (("expo", "LongRunningExpo.hanlinExpo"),
+                             ("nativescript", "LongRunningNativeScript.hanlinNativeScript")):
+            project = ROOT / "Fixtures/ShortcutLongRunning" / engine
+            validate_report = work / (engine + "-validate.json")
+            build_report = work / (engine + "-build.json")
+            prepared = work / name
+            base = ["node", "Scripts/MiniApps/miniapp.mjs", "--sdk", str(sdk), "--project", str(project)]
+            command(base[:2] + ["validate"] + base[2:] + ["--report", str(validate_report)],
+                    engine + "-long-running-validate.log", timeout=300)
+            command(base[:2] + ["build"] + base[2:] +
+                    ["--archive", str(prepared), "--report", str(build_report)],
+                    engine + "-long-running-build.log", timeout=600)
+            for report in (validate_report, build_report):
+                if json.loads(report.read_text()).get("succeeded") is not True:
+                    raise RuntimeError("The original long-running authoring operation did not succeed")
+            destination = documents / name
+            if destination.exists():
+                raise RuntimeError("The owned simulator already has a long-running fixture archive")
+            shutil.copy2(prepared, destination)
+            digest = hashlib.sha256(prepared.read_bytes()).hexdigest()
+            if hashlib.sha256(destination.read_bytes()).hexdigest() != digest:
+                raise RuntimeError("Original fixture bytes changed during staging")
+            rows.append({"engine": engine, "archive": name, "archiveSHA256": digest,
+                         "validateReportSHA256": hashlib.sha256(validate_report.read_bytes()).hexdigest(),
+                         "buildReportSHA256": hashlib.sha256(build_report.read_bytes()).hexdigest()})
+        if any(hashlib.sha256((ROOT / name).read_bytes()).hexdigest() != expected for name, expected in inputs.items()):
+            raise RuntimeError("The original authoring operation changed a fixture input")
+        receipt = {"status": "BUILT_AND_STAGED_INPUTS_ONLY", "shippingArchiveSHA256": archive_sha,
+                   "sourceFiles": inputs, "archives": rows,
+                   "scope": "Independent original authoring inputs only; no system execution is inferred"}
+        (work / "provenance.json").write_text(json.dumps(receipt, indent=2) + "\n")
+        return receipt
+    finally:
+        shutil.rmtree(extracted)
+
+
 def system_surface_inputs(surface_inputs):
     """Retain actual archive inputs and two real Safari pages for the original ten cases."""
     seed = str(uuid.uuid4())
@@ -844,15 +908,20 @@ def start_shortcut_observer(derived, simulator, state):
     bundle = info.get("CFBundleIdentifier", "")
     if not bundle.endswith(".xctrunner"):
         raise RuntimeError("The actual XCTest runner bundle has an invalid identity")
+    long_running = TEST_SCOPE == "miniapp_shortcut_long_running_os"
     concurrency = TEST_SCOPE == "miniapp_shortcut_concurrency_os"
-    observer_script = "observe_shortcut_concurrency.py" if concurrency else "observe_shortcut_surfaces.py"
-    observer_name = "shortcut-concurrency-observer" if concurrency else "shortcut-observer"
+    observer_script = "observe_shortcut_long_running.py" if long_running else ("observe_shortcut_concurrency.py" if concurrency else "observe_shortcut_surfaces.py")
+    observer_name = "shortcut-long-running-observer" if long_running else ("shortcut-concurrency-observer" if concurrency else "shortcut-observer")
     observer_output = EVIDENCE / observer_name
     argv = [sys.executable, "Scripts/ProductSplit/" + observer_script,
             "--device", simulator, "--runner-bundle-id", bundle,
             "--output", str(observer_output), "--duration",
             "7200" if TEST_SCOPE in {"miniapp_studio_gallery_os", "miniapp_studio_editor_os"} else
             "5400" if TEST_SCOPE == "miniapp_system_surfaces_os" else "2100"]
+    if long_running:
+        from observe_shortcut_long_running import create_inputs
+        state["long_running_inputs"] = create_inputs(ROOT, EVIDENCE, runner, test, state, simulator)
+        argv += ["--inputs", state["long_running_inputs"]["path"]]
     if TEST_SCOPE == "miniapp_system_surfaces_os":
         argv += ["--system-inputs", state["system_surface_inputs"]["path"]]
     if TEST_SCOPE == "miniapp_studio_editor_os":
@@ -919,6 +988,9 @@ def main():
         if RUN_EXTRA26:
             state["requested_test_scope"] = REQUESTED_TEST_SCOPE
             state["continuation_scope"] = "Original paired54, then the unchanged original extra26 on these same products"
+        if TEST_SCOPE == "miniapp_shortcut_long_running_os":
+            state["long_running_scope"] = {"cases": 4, "profile": "paced-35-v1",
+                "scope": "Real saved background return/cancel after >300s on both engines; paced finite work, Simulator only"}
         if TEST_SCOPE == "miniapp_shortcuts_os":
             state["scope"] = "Four additional real Shortcuts cases: current installed action, saved background/foreground preference, typed JSON and built-in result chain"
             state["model_boundary"] = "No model response fixture; original authoring SDK, importer, system UI, invocation executor and private/durable results"
@@ -977,7 +1049,7 @@ def main():
         }
         _, raw = command(["xcrun", "simctl", "list", "devicetypes", "-j"], "device-types.json")
         supported = {item["identifier"] for item in runtime["supportedDeviceTypes"]}
-        device_family = "iPad" if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"} else "iPhone"
+        device_family = "iPad" if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"} else "iPhone"
         device = next(item for item in json.loads(raw)["devicetypes"]
             if item.get("productFamily") == device_family and item["identifier"] in supported)
         _, raw = command(["xcrun", "simctl", "create",
@@ -1108,6 +1180,12 @@ def main():
             documents = Path(raw.strip()) / "Documents"
             documents.mkdir(exist_ok=True)
             state["widget_recovery_input"] = widget_recovery_fixture(documents)
+        if TEST_SCOPE == "miniapp_shortcut_long_running_os":
+            _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
+                "com.itorah.hanlinminiapps", "data"], "long-running-mini-data-container.txt")
+            documents = Path(raw.strip()) / "Documents"
+            documents.mkdir(exist_ok=True)
+            state["long_running_fixtures"] = long_running_shortcut_fixtures(documents)
         if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_system_surfaces_os"}:
             _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
                 "com.itorah.hanlinminiapps", "data"], "shortcuts-mini-data-container.txt")
@@ -1218,7 +1296,7 @@ def main():
             if (documents / archive.name).exists():
                 raise RuntimeError("The fresh owned simulator already has a transfer package input")
             shutil.copy2(archive, documents / archive.name)
-        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"}:
+        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"}:
             if TEST_SCOPE == "miniapp_system_surfaces_os":
                 adapter_assets = start_native_adapter_assets(
                     state, system_resources, state["system_surface_inputs"]["value"]["transportLog"])
@@ -1270,7 +1348,7 @@ def main():
                 state.update(status="EXECUTED_PASS", ui="EXECUTED_PASS")
             elif summary.get("failedTests", 0):
                 state.update(status="TEST_FAILED", ui="TEST_FAILED")
-        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"} and not state["shortcut_observer"].get("allSelectedCasesObserved"):
+        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"} and not state["shortcut_observer"].get("allSelectedCasesObserved"):
             state["status"] = "INFRA_ERROR"
             raise RuntimeError("The real system-surface observer did not retain every correlated terminal result")
         if TEST_SCOPE == "miniapp_system_surfaces_os" and not state["system_surface_share_inputs"].get("allSelectedInputsStaged"):
@@ -1330,7 +1408,7 @@ def main():
             thread.join(timeout=5)
         # Retain the actual test attachments for visual inspection of the sheet
         # and repaired app; a final simulator screenshot is not a substitute.
-        if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"}:
+        if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"}:
             state["attachment_exports"] = []
             for name in ["OriginalRuntimes", "Paired"]:
                 bundle = EVIDENCE / (name + ".xcresult")

@@ -2394,4 +2394,314 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         record["copyTextObserved"] = editor.value as? String; record["conflictCopyPath"] = copied
     }
 
+    // Separate authored packages keep every previously qualified surface input
+    // unchanged. These are paced-work Simulator cases, not CPU/network-duration
+    // or physical-device lock/power acceptance.
+    func testExpoSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds() throws {
+        try observeLongRunningShortcut(.expo, cancel: false)
+    }
+
+    func testNativeScriptSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds() throws {
+        try observeLongRunningShortcut(.nativescript, cancel: false)
+    }
+
+    func testExpoSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds() throws {
+        try observeLongRunningShortcut(.expo, cancel: true)
+    }
+
+    func testNativeScriptSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds() throws {
+        try observeLongRunningShortcut(.nativescript, cancel: true)
+    }
+
+    private func observeLongRunningShortcut(_ engine: Engine, cancel: Bool) throws {
+        continueAfterFailure = false
+        executionTimeAllowance = 600
+        deadline = Date().addingTimeInterval(540)
+        let runID = UUID().uuidString.lowercased()
+        let token = UUID().uuidString.lowercased()
+        let appID = "hanlin.longrunning." + engine.rawValue
+        let title = engine == .expo ? "Long Running Expo" : "Long Running NativeScript"
+        let shortcutName = "Hanlin-LR-" + engine.rawValue + "-" + String(runID.prefix(8))
+        let documents = try XCTUnwrap(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
+        let root = documents.appendingPathComponent("HanlinShortcutLongRunningObservation", isDirectory: true)
+        let directory = root.appendingPathComponent(runID, isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        exchange = root; runDirectory = directory
+        record = ["schema": 1, "runID": runID, "token": token, "engine": engine.rawValue,
+                  "surface": "miniAppShortcutLongRunning", "scenario": cancel ? "cancel" : "return",
+                  "fixtureAppID": appID, "fixtureTitle": title, "savedShortcutName": shortcutName,
+                  "startedAt": concurrencyTimestamp(), "status": "RUNNING", "test": name, "phase": "preparing"]
+        try checkpoint("preparing")
+        defer {
+            capture(mini, "long-running-final-mini")
+            capture(shortcuts, "long-running-final-shortcuts")
+            record["finishedAt"] = concurrencyTimestamp()
+            try? writeJSON(record, filename: "case.json")
+            try? checkpoint("finished")
+        }
+        do {
+            mini.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+            mini.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+            mini.launch()
+            try openLongRunningFixture(engine)
+            let status = mini.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "App ID:")).firstMatch
+            try require(wait(20) { status.exists && self.stateFields(status.label)["App ID"] == appID },
+                        "The independent long-running package did not expose its real private state.")
+            let oldChallenge = stateFields(status.label)["Challenge"]
+            let prepare = mini.buttons["Prepare challenge"].firstMatch
+            try tap(prepare, "Prepare a new challenge through the actual installed package UI.")
+            try require(wait(20) {
+                guard status.exists else { return false }
+                let fields = self.stateFields(status.label)
+                return fields["Challenge"] != nil && fields["Challenge"] != oldChallenge &&
+                    fields["Challenge"] != "not-prepared" && fields["Counter"] == "0" && prepare.isEnabled
+            }, "The actual prepared challenge did not finish writing.")
+            let challenge = try XCTUnwrap(stateFields(status.label)["Challenge"])
+            let ownerPID = try observedConcurrencyPID("long-running-prepared")
+            let header = String(mini.debugDescription.split(separator: "\n", maxSplits: 1).first ?? "")
+            record["challenge"] = challenge; record["baselineCounter"] = 0
+            record["ownerProcessID"] = ownerPID; record["ownerAccessibilityHeader"] = header
+            var ownerWindowID: String?
+            if engine == .nativescript {
+                let label = mini.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "Owner window: ")).firstMatch
+                try require(label.exists, "The actual initial NativeScript window identity is unavailable.")
+                ownerWindowID = String(label.label.dropFirst("Owner window: ".count))
+                try require(ownerWindowID?.isEmpty == false, "The original owner window identity is empty.")
+            }
+            if let ownerWindowID { record["ownerWindowID"] = ownerWindowID }
+            else { record["ownerWindowID"] = NSNull() }
+            let options: [String: Any] = ["schema": 1, "token": token, "profile": "paced-35-v1"]
+            let typed: [String: Any] = ["text": "שלום עולם", "count": 42, "enabled": true, "empty": NSNull(),
+                                        "list": [true, 42, "שלום"] as [Any]]
+            let input: [String: Any] = ["surface": "miniAppShortcutLongRunning", "challenge": challenge,
+                                        "longRunning": options, "typed": typed]
+            record["configuredInput"] = input
+            capture(mini, "long-running-prepared")
+            try checkpoint("prepared")
+            let identity = try longRunningResponse("identity.json", timeout: 25, background: false)
+            try require(identity["status"] as? String == "READY" && identity["appID"] as? String == appID,
+                        "The original source/product/installed-generation admission failed.")
+            record["installedIdentity"] = identity
+            try requireSystemApp("shortcuts", identity: identity)
+            shortcuts.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+            shortcuts.launch()
+            // Reuse the original real gallery/entity/typed-input/mode path.
+            // It asserts both new-action defaults before enabling long running.
+            try configureConcurrencyShortcut(["token": token, "savedShortcutName": shortcutName,
+                                              "configuredInput": input], identity: identity)
+            try reopenLongRunningShortcut(shortcutName)
+            try addShortcutAction("Get Text from Input")
+            try addShortcutAction("Show Result")
+            try tap(firstButton(shortcuts, ["Done"]), "Save the actual built-in result chain.")
+            try reopenLongRunningShortcut(shortcutName)
+            let mode = try shortcutModeSwitch()
+            let savedMode = try observedSwitchValue(mode)
+            let longRunning = shortcuts.switches["Allow Long Running"].firstMatch
+            try require(longRunning.waitForExistence(timeout: bounded(10)), "Saved long-running parameter is not observable.")
+            let savedLongRunning = try observedSwitchValue(longRunning)
+            try require(savedMode == false && savedLongRunning == true,
+                        "Save/reopen did not persist background mode and Allow Long Running.")
+            record["savedConfiguration"] = ["savedShortcutName": shortcutName, "reopened": true,
+                "openWhenRun": savedMode, "allowLongRunning": savedLongRunning,
+                "resultChainConfigured": true, "observedAt": concurrencyTimestamp()]
+            capture(shortcuts, "long-running-saved-settings")
+            try require(mini.state != .runningForeground, "The actual Shortcuts UI must own the launch surface.")
+            try checkpoint("before-system-action")
+            let requestedAt = concurrencyTimestamp()
+            try tap(firstButton(shortcuts, ["Run Shortcut", "Run"]), "Run this actual saved system Shortcut once.")
+            record["launch"] = ["savedShortcutName": shortcutName, "systemRunTapped": true,
+                                 "requestedAt": requestedAt, "observedAt": concurrencyTimestamp()]
+            try checkpoint("system-action-sent")
+            let running = try longRunningResponse("running.json", timeout: 25, background: true)
+            try require(running["status"] as? String == "RUNNING_OBSERVED",
+                        "No real current native command, live lease and handler were jointly observed.")
+            record["actualRunningAdmission"] = running
+            record["initialSystemProgress"] = try longRunningSystemProgress(token: token)
+            capture(shortcuts, "long-running-initial-progress")
+            XCUIDevice.shared.press(.home)
+            try require(wait(10) { self.shortcuts.state != .runningForeground && self.mini.state != .runningForeground },
+                        "The actual Home action did not background the system action and MiniApps.")
+            record["homeObservation"] = ["homePressed": true, "miniAppsForeground": false,
+                                          "shortcutsForeground": false, "observedAt": concurrencyTimestamp()]
+            capture(springboard, "long-running-actual-home")
+            try checkpoint("home-observed")
+            // The observer starts its monotonic clock only after jointly seeing
+            // the real command, current lease, handler and original OS process.
+            let longProof = try longRunningResponse("long-running.json", timeout: 325, background: true, home: true)
+            try require(longProof["status"] as? String == "LONG_RUNNING_OBSERVED" &&
+                        ((longProof["elapsedMonotonicSeconds"] as? NSNumber)?.doubleValue ?? 0) > 300,
+                        "The original system action did not remain genuinely pending for more than 300 seconds.")
+            record["actualLongRunning"] = longProof
+            shortcuts.activate()
+            try require(wait(10) { self.shortcuts.state == .runningForeground }, "The running Shortcuts UI is unavailable.")
+            record["finalSystemProgress"] = try longRunningSystemProgress(token: token)
+            capture(shortcuts, "long-running-after-three-hundred-seconds")
+            try checkpoint("after-three-hundred-seconds")
+            if cancel {
+                let visibleName = shortcuts.descendants(matching: .any)
+                    .matching(NSPredicate(format: "label == %@", shortcutName)).firstMatch
+                try require(visibleName.exists && visibleName.isHittable,
+                            "The running saved Shortcut must be identified before using its real Stop control.")
+                let stop = firstButton(shortcuts, ["Stop Shortcut", "Stop"])
+                try require(stop.exists && stop.isEnabled && stop.isHittable,
+                            "The action completed or has no real system Stop control; cancellation is not proved.")
+                capture(shortcuts, "long-running-before-stop")
+                let stopAt = concurrencyTimestamp()
+                try tap(stop, "Stop the genuinely running saved Shortcut after the observed 300-second interval.")
+                record["stop"] = ["token": token, "visibleShortcutName": shortcutName,
+                                  "systemStopObserved": true, "requestedAt": stopAt,
+                                  "observedAt": concurrencyTimestamp()]
+                try checkpoint("system-stop-sent")
+                try require(wait(12) { !stop.exists || !stop.isEnabled }, "The selected system action did not stop.")
+                record["systemCancelledObserved"] = true
+                capture(shortcuts, "long-running-system-stopped")
+            }
+            let terminal = try longRunningResponse("terminal.json", timeout: 110, background: true)
+            try require(terminal["status"] as? String == "TERMINAL_OBSERVED",
+                        "The exact native result, lease/window release or bounded late-result check failed.")
+            record["actualTerminal"] = terminal
+            if !cancel {
+                record["systemChainedResult"] = try longRunningChainedResult(terminal)
+            }
+            // Restore only the already running owner after native termination.
+            mini.activate()
+            try require(wait(15) {
+                status.exists && self.stateFields(status.label)["Challenge"] == challenge &&
+                    self.stateFields(status.label)["Counter"] == "0"
+            }, "Background execution changed the original prepared owner's private state.")
+            record["ownerProcessIDAfter"] = try observedConcurrencyPID("long-running-after-terminal")
+            try require(record["ownerProcessIDAfter"] as? Int == ownerPID, "A replacement process cannot qualify owner survival.")
+            if let ownerWindowID {
+                let label = mini.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "Owner window: ")).firstMatch
+                try require(label.exists && label.label == "Owner window: " + ownerWindowID,
+                            "The original prepared native owner window was replaced.")
+            }
+            try checkpoint("system-result-observed")
+            let complete = try longRunningResponse("completion.json", timeout: 25, background: false)
+            try require(complete["status"] as? String == "EXECUTED_PASS", "The final current source/identity/OS result readback failed.")
+            record["observerCompletion"] = complete; record["status"] = "EXECUTED_PASS"
+        } catch let skipped as XCTSkip {
+            record["status"] = "BLOCKED"; record["reason"] = String(describing: skipped); throw skipped
+        } catch {
+            record["status"] = "FAILED"; record["reason"] = String(describing: error); throw error
+        }
+    }
+
+    private func openLongRunningFixture(_ engine: Engine) throws {
+        let title = engine == .expo ? "Long Running Expo" : "Long Running NativeScript"
+        let archiveName = engine == .expo ? "LongRunningExpo" : "LongRunningNativeScript"
+        let close = mini.buttons["hanlin-script-app-close"].firstMatch
+        if close.exists && close.isHittable { close.tap() }
+        let manage = mini.buttons["hanlin-apps-add"].firstMatch
+        try require(manage.waitForExistence(timeout: bounded(25)), "The shipping MiniApps catalog is unavailable.")
+        let card = mini.buttons["hanlin-package-card-" + title].firstMatch
+        if !card.exists {
+            try tap(manage, "Open the original package importer.")
+            try tap(mini.buttons["hanlin-import-script-package"].firstMatch, "Open original package import.")
+            let list = mini.collectionViews["hanlin-package-import-list"].firstMatch
+            try require(list.waitForExistence(timeout: bounded(15)), "The original import list is unavailable.")
+            let archive = list.buttons[archiveName].firstMatch
+            try reveal(archive, in: list, message: "The independent original-produced long-running archive is absent.")
+            try tap(archive, "Import the exact independently authored archive.")
+            let install = mini.buttons["hanlin-package-install"].firstMatch
+            let importError = mini.descendants(matching: .any)["hanlin-import-error-message"].firstMatch
+            let diagnostics = mini.descendants(matching: .any)["hanlin-import-diagnostics-sheet"].firstMatch
+            try require(wait(120) { install.exists || importError.exists || diagnostics.exists },
+                        "Original strict validation did not reach an actual outcome.")
+            capture(mini, "long-running-import-preview")
+            try require(!importError.exists && !diagnostics.exists && install.exists,
+                        "The real compiler/importer rejected the independent fixture.")
+            try tap(install, "Install through the original production preview.")
+            try require(wait(45) { !install.exists || importError.exists }, "The real installer did not finish.")
+            try require(!importError.exists, "The real installer reported an error.")
+            try tap(mini.buttons["hanlin-package-import-done"].firstMatch, "Dismiss the completed importer.")
+            try tap(mini.buttons["hanlin-apps-add-done"].firstMatch, "Return to the actual catalog.")
+        }
+        try reveal(card, in: mini, message: "The installed independent package is absent.")
+        try tap(card, "Open the actual installed long-running package.")
+        try require(mini.buttons["Prepare challenge"].firstMatch.waitForExistence(timeout: bounded(30)),
+                    "The actual independent package runtime UI did not load.")
+    }
+
+    private func reopenLongRunningShortcut(_ name: String) throws {
+        let saved = shortcuts.descendants(matching: .any).matching(NSPredicate(format: "label == %@", name)).firstMatch
+        try require(saved.waitForExistence(timeout: bounded(15)), "The actual saved Shortcut is absent from the system collection.")
+        saved.press(forDuration: 1.2)
+        try tap(firstButton(shortcuts, ["Edit", "Edit Shortcut"]), "Reopen the saved Shortcut without executing it.")
+        capture(shortcuts, "long-running-reopened")
+    }
+
+    private func longRunningSystemProgress(token: String) throws -> [String: Any] {
+        let pattern = try NSRegularExpression(pattern: "LR " + NSRegularExpression.escapedPattern(for: token) + " ([0-9]+)/35 receipts")
+        var observed: [String: Any]?
+        try require(wait(15) {
+            let elements = self.shortcuts.staticTexts.allElementsBoundByIndex + self.shortcuts.progressIndicators.allElementsBoundByIndex
+            for element in elements where element.exists {
+                for text in [element.label, element.value as? String ?? ""] {
+                    guard let match = pattern.firstMatch(in: text, range: NSRange(text.startIndex..<text.endIndex, in: text)),
+                          let whole = Range(match.range(at: 0), in: text), let count = Range(match.range(at: 1), in: text),
+                          let completed = Int(text[count]) else { continue }
+                    observed = ["token": token, "text": String(text[whole]), "completed": completed,
+                                "label": element.label, "value": element.value as? String ?? "",
+                                "observedAt": self.concurrencyTimestamp()]
+                    return true
+                }
+            }
+            return false
+        }, "The actual system UI did not expose this invocation's native completed-work progress; inspect its retained AX/screenshot.")
+        return try XCTUnwrap(observed)
+    }
+
+    private func longRunningResponse(_ filename: String, timeout: TimeInterval, background: Bool, home: Bool = false) throws -> [String: Any] {
+        let directory = try XCTUnwrap(runDirectory)
+        let file = directory.appendingPathComponent(filename)
+        let failure = directory.appendingPathComponent("failure.json")
+        let end = Date().addingTimeInterval(bounded(timeout))
+        var observations = [[String: Any]]()
+        var lastSample = -Double.infinity
+        while Date() < end {
+            if FileManager.default.fileExists(atPath: failure.path) {
+                let value = try response("failure.json", timeout: 1)
+                throw ObservationFailure(description: "Actual long-running observation failed: " + (value["reason"] as? String ?? "unknown"))
+            }
+            if background {
+                try require(mini.state != .runningForeground && mini.state != .notRunning,
+                            "The background action presented or lost its original MiniApps process.")
+                if home { try require(shortcuts.state != .runningForeground, "Shortcuts unexpectedly left the observed background interval.") }
+            }
+            let monotonic = ProcessInfo.processInfo.systemUptime
+            if monotonic - lastSample >= 1 {
+                observations.append(["at": concurrencyTimestamp(), "uptime": monotonic,
+                    "miniAppsState": mini.state.rawValue, "shortcutsState": shortcuts.state.rawValue])
+                lastSample = monotonic
+            }
+            if FileManager.default.fileExists(atPath: file.path) { break }
+            RunLoop.current.run(until: Date().addingTimeInterval(0.1))
+        }
+        try writeJSON(["schema": 1, "runID": try string(record, "runID"), "response": filename,
+                       "observations": observations], filename: filename + ".application-states.json")
+        return try response(filename, timeout: 1)
+    }
+
+    private func longRunningChainedResult(_ terminal: [String: Any]) throws -> [String: Any] {
+        let challenge = try string(record, "challenge")
+        let journal = try XCTUnwrap(terminal["journal"] as? [String: Any])
+        let native = try XCTUnwrap(journal["value"] as? [String: Any])
+        var displayed: [String: Any]?
+        try require(wait(15) {
+            let texts = self.shortcuts.staticTexts.allElementsBoundByIndex.map(\.label) +
+                self.shortcuts.textViews.allElementsBoundByIndex.compactMap { $0.value as? String }
+            for text in texts where text.contains(challenge) {
+                if let bytes = text.data(using: .utf8), let value = try? JSONSerialization.jsonObject(with: bytes) as? [String: Any],
+                   value["challenge"] as? String == challenge { displayed = value; return true }
+            }
+            return false
+        }, "The actual Get Text → Show Result chain did not display this invocation's complete result.")
+        let value = try XCTUnwrap(displayed)
+        try require(equalTypedJSON(value, native), "The displayed OS result changed exact JSON types or actual runtime receipts.")
+        capture(shortcuts, "long-running-chained-result")
+        if shortcuts.buttons["Done"].firstMatch.exists { shortcuts.buttons["Done"].firstMatch.tap() }
+        return value
+    }
+
 }
