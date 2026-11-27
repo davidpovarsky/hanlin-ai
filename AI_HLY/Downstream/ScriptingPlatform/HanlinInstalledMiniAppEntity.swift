@@ -62,16 +62,20 @@ public struct HanlinInstalledMiniAppQuery: EnumerableEntityQuery, EntityStringQu
         }.map(HanlinInstalledMiniAppEntity.init)
     }
 
-    @MainActor
-    public func reindexEntities(for identifiers: [String], indexDescription: CSSearchableIndexDescription) async throws {
-        // A complete reconciliation also removes entities that were disabled or
-        // uninstalled while Spotlight retained an older identifier.
-        _ = await currentRecords()
-        try await HanlinMiniAppSystemEntrypoints.shared.reindexSpotlight()
+    public nonisolated func reindexEntities(for identifiers: [String], indexDescription: CSSearchableIndexDescription) async throws {
+        try await reconcileSpotlight()
+    }
+
+    public nonisolated func reindexAllEntities(indexDescription: CSSearchableIndexDescription) async throws {
+        try await reconcileSpotlight()
     }
 
     @MainActor
-    public func reindexAllEntities(indexDescription: CSSearchableIndexDescription) async throws {
+    private func reconcileSpotlight() async throws {
+        // The SDK's non-Sendable index description stays with the protocol
+        // caller. Only the existing catalog/index work enters the main actor.
+        // A complete reconciliation also removes entities that were disabled or
+        // uninstalled while Spotlight retained an older identifier.
         _ = await currentRecords()
         try await HanlinMiniAppSystemEntrypoints.shared.reindexSpotlight()
     }
