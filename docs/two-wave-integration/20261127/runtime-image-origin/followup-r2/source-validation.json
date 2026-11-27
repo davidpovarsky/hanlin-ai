@@ -1,0 +1,28 @@
+{
+  "changes": {
+    "Scripts/CI/Tests/test_runtime_image_origin.py": {
+      "afterSHA256": "d98a32551662d14c4c4c11dcc782e3a78417a9cb207924636b63c197b4431c1a",
+      "beforeSHA256": "1eb6d11cb8b54314dae14c12e1e75608fd68bd313b789736ad6794edf9af9cc6",
+      "bytes": 18836
+    },
+    "Scripts/ProductSplit/observe_runtime_image_origin.py": {
+      "afterSHA256": "fab2f99e9ee1cdb251c949453d8cfcef23a9b38a26d034c0b31d82e7831bc9e1",
+      "beforeSHA256": "4d9832562f68643cbefa307e423f094f41ba51ba1e1ce2275cef2058a6f23be1",
+      "bytes": 43046
+    }
+  },
+  "nativeResult": "NOT_RUN",
+  "parentCommit": "6f6c37bac32add5982b56d4e250d76560d403c78",
+  "patchSHA256": "b788622d3dc55460943056752dc7636fd0affbc4c8d8cdea35b03b63345fcf96",
+  "portableReceiptSHA256": "36b842fb7e8dbfbc255bfe92e786e417a4cdce10bb9419293a5b844448f3577a",
+  "portableResult": {
+    "failed": 0,
+    "passed": 15,
+    "skipped": 0,
+    "total": 15
+  },
+  "runtimeTopologySHA256": "36c5e19b708916a656c230d1804e1a0e6bce1f53f46e5a81a09adbed8bbfccd1",
+  "sdk392Intersection": [],
+  "unchangedRunner": "ad292cae96fe84b8c7672c21b83d790b97b12d3f73ec344466993e595db8f7b3",
+  "unchangedUI": "3a989ba8a8dad3d76441ef206d8b41d91c1202672f5141054215fd2c94e77607"
+}

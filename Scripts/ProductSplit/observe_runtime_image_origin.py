@@ -35,7 +35,10 @@ CHECKPOINTS = {
     "expo": "testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
 }
 REQUIRED_IMAGES = {
-    "nativescript": ("Frameworks/NativeScript.framework/NativeScript",),
+    # The original checkpoint has already executed these embedded runtimes in
+    # this app process, so their loaded producer images are all mandatory.
+    "nativescript": ("Frameworks/NativeScript.framework/NativeScript",
+                     "Frameworks/NodeMobile.framework/NodeMobile", "Frameworks/Python.framework/Python"),
     "expo": ("Frameworks/React.framework/React", "Frameworks/hermesvm.framework/hermesvm"),
 }
 MAGICS = {b"\xcf\xfa\xed\xfe", b"\xfe\xed\xfa\xcf", b"\xca\xfe\xba\xbe",

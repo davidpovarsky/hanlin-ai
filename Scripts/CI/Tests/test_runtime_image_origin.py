@@ -42,6 +42,8 @@ class RuntimeImageOriginTests(unittest.TestCase):
             ("Frameworks/NativeScript.framework/NativeScript", "22222222-2222-4222-8222-222222222222"),
             ("Frameworks/React.framework/React", "33333333-3333-4333-8333-333333333333"),
             ("Frameworks/hermesvm.framework/hermesvm", "44444444-4444-4444-8444-444444444444"),
+            ("Frameworks/NodeMobile.framework/NodeMobile", "66666666-6666-4666-8666-666666666666"),
+            ("Frameworks/Python.framework/Python", "77777777-7777-4777-8777-777777777777"),
         ]:
             path = self.app / name
             path.parent.mkdir(parents=True, exist_ok=True)
@@ -145,7 +147,7 @@ class RuntimeImageOriginTests(unittest.TestCase):
 
     def test_loaded_product_bytes_uuid_and_architecture_must_match_frozen_built_catalog(self):
         result = self.classify(self.sample())
-        self.assertEqual(len(result["productImages"]), 2)
+        self.assertEqual(len(result["productImages"]), 4)
         sample = self.sample()
         sample["images"][1]["uuid"] = "e" * 36
         with self.assertRaises(RuntimeError):
@@ -182,10 +184,23 @@ class RuntimeImageOriginTests(unittest.TestCase):
         result = self.classify(sample)
         self.assertEqual(result["platformToolchainImages"][0]["qualification"],
                          "RECORDED_PLATFORM_TOOLCHAIN_IMAGE_NOT_PRODUCT_SOURCE_PROOF")
-        sample["images"] = [sample["images"][0], sample["images"][2]]
+        sample["images"] = [sample["images"][0], sample["images"][-1]]
         with self.assertRaises(RuntimeError):
             self.classify(sample)
         self.assertEqual(len(self.classify(self.sample("expo"), "expo")["productImages"]), 3)
+
+    def test_nativescript_checkpoint_requires_each_actually_exercised_embedded_runtime_image(self):
+        for relative in ("Frameworks/NodeMobile.framework/NodeMobile", "Frameworks/Python.framework/Python"):
+            sample = self.sample()
+            sample["images"] = [row for row in sample["images"] if row["path"] != str(self.app / relative)]
+            with self.subTest(missing=relative), self.assertRaisesRegex(RuntimeError, "omitted"):
+                self.classify(sample)
+            sample = self.sample()
+            for row in sample["images"]:
+                if row["path"] == str(self.app / relative):
+                    row["uuid"] = "99999999-9999-4999-8999-999999999999"
+            with self.subTest(wrong_loaded_uuid=relative), self.assertRaisesRegex(RuntimeError, "UUID"):
+                self.classify(sample)
 
     def test_descriptor_only_injects_fresh_attempt_in_the_one_original_ui_target(self):
         for version in (1, 2):
