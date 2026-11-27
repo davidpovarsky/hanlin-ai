@@ -1,10 +1,8 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "8a97425e922aca83c81d75ed6cdb13774fde0893",
+  "sourceCommit": "0456adbe395cde2fb986cf058c4a9497c38d1d21",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
-  "uncommittedSourcePaths": [
-    "Scripts/Audit/audit_miniapp_reachability.py"
-  ],
+  "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
   "sdkAuthority": "source-inventory.json",
   "sdkSources": [
