@@ -48,6 +48,9 @@ UI_PLANS = {
         'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines'], 1),
 }
 
+# Same original 25 cases; only this explicit scope admits live image observation.
+UI_PLANS['production_runtimes_with_origin'] = UI_PLANS['production_runtimes']
+
 
 def command(argv, name, timeout=60, env=None):
     started = time.monotonic()
@@ -540,7 +543,7 @@ def main():
                        and r['identifier'].endswith('iOS-'+sdk.replace('.', '-')))
         types = json.loads(command(['xcrun', 'simctl', 'list', 'devicetypes', '-j'], 'devicetypes.json'))['devicetypes']
         supported = {t['identifier'] for t in runtime['supportedDeviceTypes']}
-        family = 'iPad' if TEST_SCOPE in {'production_runtimes', 'cross_app', 'notification_os'} else 'iPhone'
+        family = 'iPad' if TEST_SCOPE in {'production_runtimes', 'cross_app', 'notification_os', 'production_runtimes_with_origin'} else 'iPhone'
         device = next(t for t in types if t.get('productFamily') == family and t['identifier'] in supported)
         simulator = command(['xcrun', 'simctl', 'create', 'HanlinSplit-'+os.environ.get('GITHUB_RUN_ID','local'),
                              device['identifier'], runtime['identifier']], 'created-simulator.txt').strip()
@@ -684,7 +687,7 @@ def main():
             destination = app_product/source.name
             if not destination.is_file() or hashlib.sha256(destination.read_bytes()).digest() != hashlib.sha256(source.read_bytes()).digest():
                 raise RuntimeError('Built app is missing or changed an existing Runtime resource: '+resource)
-        if TEST_SCOPE in {'cross_app', 'production_runtimes'}:
+        if TEST_SCOPE in {'cross_app', 'production_runtimes', 'production_runtimes_with_origin'}:
             # Publish only the already verified original build, never a native UI
             # pass. Consumers may start their own acceptance while this gate runs.
             # The separate evidence directory is immutable once its manifest hashes
@@ -800,7 +803,7 @@ def main():
                 provenance.append({'source': source.relative_to(ROOT).as_posix(), 'sha256': digest,
                                    'destination': str(destination), 'bytes': source.stat().st_size})
             (EVIDENCE/'runtime-fixtures.json').write_text(json.dumps(provenance, indent=2)+'\n')
-        if TEST_SCOPE in {'cross_app', 'production_runtimes'}:
+        if TEST_SCOPE in {'cross_app', 'production_runtimes', 'production_runtimes_with_origin'}:
             command([sys.executable, 'Scripts/ProductSplit/stage_external_modal_fixture.py',
                      '--simulator-udid', simulator, '--app-path', str(app_product),
                      '--evidence', str(EVIDENCE/'external-modal')],
@@ -821,6 +824,10 @@ def main():
         with (EVIDENCE/'xcodebuild.log').open('wb') as log:
             if TEST_SCOPE == 'notification_os':
                 process = run_notification_test(argv, log, state, derived, inputs)
+            elif TEST_SCOPE == 'production_runtimes_with_origin':
+                from observe_runtime_image_origin import run_original_with_origin
+                process = run_original_with_origin(argv, log, state, derived, inputs, ROOT, EVIDENCE,
+                                                   UI_PLANS['production_runtimes'][0])
             else:
                 process = subprocess.run(argv, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, timeout=1200)
         result = EVIDENCE/'MiniApps.xcresult'
@@ -850,7 +857,7 @@ def main():
                 '--results', str(EVIDENCE/'test-nodes.json'), '--selectors', ','.join(selectors)],
                 'requested-tests.log')
             if process.returncode == 0 and passed == expected_tests and failed == 0 and summary.get('skippedTests',0) == 0:
-                if TEST_SCOPE in {'cross_app', 'production_runtimes'}:
+                if TEST_SCOPE in {'cross_app', 'production_runtimes', 'production_runtimes_with_origin'}:
                     state.update(status='RUNTIME_RESULT_VALIDATION_FAILED', ui='EXECUTED_PASS')
                     staging = json.loads((EVIDENCE/'external-modal/staging.json').read_text())
                     command(staging['verify_command'], 'external-modal-actual-result.json')
@@ -864,6 +871,11 @@ def main():
                 if TEST_SCOPE == 'notification_os':
                     state.update(status='NOTIFICATION_OS_VALIDATION_FAILED', ui='EXECUTED_PASS')
                     state['notification_os'] = validate_notification_observations(state['notification_os_controller'])
+                if TEST_SCOPE == 'production_runtimes_with_origin':
+                    from observe_runtime_image_origin import validate_origin_terminal
+                    state.update(status='RUNTIME_IMAGE_ORIGIN_VALIDATION_FAILED', ui='EXECUTED_PASS')
+                    state['runtime_image_origin_result'] = validate_origin_terminal(
+                        state['runtime_image_origin'], EVIDENCE)
                 state.update(status='EXECUTED_PASS',ui='EXECUTED_PASS')
             elif failed:
                 state.update(status='TEST_FAILED',ui='TEST_FAILED')
@@ -923,7 +935,7 @@ def main():
         state['duration_seconds'] = time.time()-state['started_at']
         (EVIDENCE/'native-acceptance-duration-seconds.txt').write_text(str(int(state['duration_seconds']))+'\n')
         (EVIDENCE/'acceptance.json').write_text(json.dumps(state,indent=2)+'\n')
-        if TEST_SCOPE in {'cross_app', 'production_runtimes'} and state.get('build') == 'EXECUTED_PASS':
+        if TEST_SCOPE in {'cross_app', 'production_runtimes', 'production_runtimes_with_origin'} and state.get('build') == 'EXECUTED_PASS':
             # Consumers require the actual built app. Preserve genuine UI/build
             # passes, but an absent export must not leave the delivery gate green.
             try:

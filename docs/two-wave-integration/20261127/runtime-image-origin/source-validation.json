@@ -1,0 +1,99 @@
+{
+  "baseCommit": "d165b9fc6a1c4e810a21957c063bfeae52eecb59",
+  "files": {
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": {
+      "bytes": 97358,
+      "sha256": "3a989ba8a8dad3d76441ef206d8b41d91c1202672f5141054215fd2c94e77607"
+    },
+    "Scripts/CI/Tests/test_runtime_image_origin.py": {
+      "bytes": 17801,
+      "sha256": "1eb6d11cb8b54314dae14c12e1e75608fd68bd313b789736ad6794edf9af9cc6"
+    },
+    "Scripts/ProductSplit/observe_runtime_image_origin.py": {
+      "bytes": 42789,
+      "sha256": "4d9832562f68643cbefa307e423f094f41ba51ba1e1ce2275cef2058a6f23be1"
+    },
+    "Scripts/ProductSplit/run_native_acceptance.py": {
+      "bytes": 64064,
+      "sha256": "ad292cae96fe84b8c7672c21b83d790b97b12d3f73ec344466993e595db8f7b3"
+    }
+  },
+  "nativeExecution": "NOT_RUN",
+  "notificationDonor": "658d80215f9c6b3c5b84311cf79a796375f0bdad",
+  "onlyChangedOriginalRunnerFunction": "main",
+  "originalUITestCount": 23,
+  "originalUITests": [
+    "testStandaloneCatalogOpensRealCompiledApp",
+    "testPrivateStateSurvivesStandaloneProcessRelaunch",
+    "testPackageImportUsesExistingPreviewScreen",
+    "testInstalledScriptUIAppearsAndRunsAfterRestart",
+    "testOriginalCardMenuHideRestoreAndSearch",
+    "testOriginalPhotoStudyActionOpensCapture",
+    "testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+    "testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+    "testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
+    "testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
+    "testStandaloneExpoManualInputLayoutAndDataAdapters",
+    "testStandaloneExpoManualPresentationAdaptersAndDismissalEvents",
+    "testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+    "testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+    "testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+    "testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+    "testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+    "testStandaloneExpoGeneratedModifierNativeContainerContexts",
+    "testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication",
+    "testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+    "testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+    "testStandaloneModularSearchLoadsActualSefariaText",
+    "testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines"
+  ],
+  "portableEvidence": "portable-r1/receipt.json",
+  "producerInputs": {
+    "base": "d165b9fc6a1c4e810a21957c063bfeae52eecb59",
+    "baseFileHashes": {
+      "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "87be423d2e5bbe9e8fbd4ab97182f2dc1415ca7538f6a705a5bec46d85cf9cc0",
+      "Scripts/ProductSplit/run_native_acceptance.py": "b10f64e508e512b4099dba2fab430dca915287d46c8afa5b6d472994965d316b"
+    },
+    "branchExists": "",
+    "changedPaths": [
+      "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "Scripts/ProductSplit/run_native_acceptance.py",
+      "Scripts/ProductSplit/observe_runtime_image_origin.py",
+      "Scripts/CI/Tests/test_runtime_image_origin.py"
+    ],
+    "inputCount": 392,
+    "inputFingerprint": "0a9d3ca8f320af72485cab3d998be4861c1d858fe758c5f79e7b15d555937c50",
+    "intersection": [],
+    "manifestPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/host-sdk-1ee9c457-complete-pass-proof/miniapp-sdk.json",
+    "manifestSHA256": "e7aa424015d509dc7d99b3158b85f6dbcbcc72fc17b3671d247382331e87e649"
+  },
+  "runnerInverseExact": true,
+  "runnerOriginalSHA256": "b10f64e508e512b4099dba2fab430dca915287d46c8afa5b6d472994965d316b",
+  "scopeCounts": {
+    "baseline": 7,
+    "cross_app": 23,
+    "notification_os": 1,
+    "production_runtimes": 25,
+    "production_runtimes_with_origin": 25
+  },
+  "simulatorSample": "NOT_RUN",
+  "sourcePatchSHA256": "fd9cd2f24adfcbd58f3b9b17d89e7415a61634fab86616524a8cd501dbee1032",
+  "swiftCompilation": "NOT_RUN",
+  "uiInverseExact": true,
+  "uiOriginalSHA256": "87be423d2e5bbe9e8fbd4ab97182f2dc1415ca7538f6a705a5bec46d85cf9cc0",
+  "unchangedRunnerFunctions": [
+    "command",
+    "notification_check",
+    "notification_file",
+    "notification_equal",
+    "notification_source",
+    "notification_bundle",
+    "notification_products",
+    "notification_container",
+    "notification_active",
+    "notification_containers",
+    "notification_stop",
+    "run_notification_test",
+    "validate_notification_observations"
+  ]
+}

@@ -185,6 +185,18 @@ final class HanlinMiniAppsUITests: XCTestCase {
 }
 
 
+private struct RuntimeImageOriginResponse: Decodable {
+    let schema: Int
+    let attempt: String
+    let source: String
+    let checkpoint: String
+    let requestID: String
+    let pid: Int
+    let status: String
+    let sampleSHA256: String
+    let receiptSHA256: String
+}
+
 /// The original runtime packages and runtime assertions, now exercised through the
 /// actual shipping companion's catalog/import/launch UI. No AI-only test surface,
 /// substitute engine, preinstalled package, manufactured grant or response is used.
@@ -194,6 +206,7 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
     private let parityPackageName = "HanlinScript Parity"
     private let probeAPackageName = "Expo SwiftUI Probe A"
     private var parityChallengeNonce = ""
+    private var capturedRuntimeImageOrigins: Set<String> = []
 
     override func setUpWithError() throws {
         continueAfterFailure = false
@@ -1442,7 +1455,10 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
     }
 
     private func closeNativeScriptApp() { closeRuntimeApplication() }
-    private func closeExpoApp() { closeRuntimeApplication() }
+    private func closeExpoApp() {
+        observeRuntimeImageOriginIfRequested(checkpoint: "expo")
+        closeRuntimeApplication()
+    }
 
     private func closeRuntimeApplication() {
         let close = app.buttons["hanlin-script-app-close"].firstMatch
@@ -1464,6 +1480,9 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
     }
 
     private func capture(name: String) {
+        if name == "Parity-Runtimes-Verified" {
+            observeRuntimeImageOriginIfRequested(checkpoint: "nativescript")
+        }
         let screenshot = XCTAttachment(screenshot: app.screenshot())
         screenshot.name = name
         screenshot.lifetime = .keepAlways
@@ -1472,6 +1491,77 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         tree.name = name + "-accessibility"
         tree.lifetime = .keepAlways
         add(tree)
+    }
+
+    /// Only the additive production_runtimes_with_origin controller sets this
+    /// exact attempt identity. Ordinary tests do not create an exchange or wait.
+    /// The observer can read the live process and reply here; product storage,
+    /// runtime APIs, and the original engine/window assertions stay untouched.
+    private func observeRuntimeImageOriginIfRequested(checkpoint: String) {
+        guard let attempt = ProcessInfo.processInfo.environment["HANLIN_RUNTIME_IMAGE_ORIGIN_ATTEMPT"] else { return }
+        guard !capturedRuntimeImageOrigins.contains(checkpoint) else { return }
+        do {
+            let canonicalAttempt = try XCTUnwrap(UUID(uuidString: attempt))
+            XCTAssertEqual(canonicalAttempt.uuidString.lowercased(), attempt)
+            let source = try XCTUnwrap(ProcessInfo.processInfo.environment["HANLIN_RUNTIME_IMAGE_ORIGIN_SOURCE"])
+            XCTAssertNotNil(source.range(of: "^[0-9a-f]{40}$", options: .regularExpression))
+            XCTAssertTrue(["nativescript", "expo"].contains(checkpoint))
+            let method = checkpoint == "nativescript"
+                ? "testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch"
+                : "testStandaloneExpoRendersNativeControlsAndRunsReactEvents"
+            XCTAssertTrue(name.contains(method), "Only the selected original runtime case can publish this checkpoint.")
+
+            // The observer independently verifies this public AX PID against
+            // the owned simulator's installed bundle and actual OS process.
+            let header = String(app.debugDescription.split(separator: "\n", maxSplits: 1).first ?? "")
+            let pattern = try NSRegularExpression(pattern: "^Attributes: Application, .*?, pid: ([0-9]+),")
+            let match = try XCTUnwrap(pattern.firstMatch(
+                in: header, range: NSRange(header.startIndex..<header.endIndex, in: header)))
+            let range = try XCTUnwrap(Range(match.range(at: 1), in: header))
+            let pid = try XCTUnwrap(Int(header[range]))
+            XCTAssertGreaterThan(pid, 1)
+            let documents = try XCTUnwrap(FileManager.default.urls(
+                for: .documentDirectory, in: .userDomainMask).first)
+            let directory = documents.appendingPathComponent("HanlinRuntimeImageOrigin", isDirectory: true)
+                .appendingPathComponent(attempt, isDirectory: true)
+                .appendingPathComponent(checkpoint, isDirectory: true)
+            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+            let requestURL = directory.appendingPathComponent("request.json")
+            let responseURL = directory.appendingPathComponent("response.json")
+            XCTAssertFalse(FileManager.default.fileExists(atPath: requestURL.path), "This checkpoint must be fresh.")
+            XCTAssertFalse(FileManager.default.fileExists(atPath: responseURL.path), "An earlier observation cannot qualify.")
+            let requestID = UUID().uuidString.lowercased()
+            let request: [String: Any] = [
+                "schema": 1, "attempt": attempt, "source": source,
+                "checkpoint": checkpoint, "requestID": requestID,
+                "pid": pid, "runnerPID": Int(ProcessInfo.processInfo.processIdentifier),
+                "bundleID": "com.itorah.hanlinminiapps", "caseName": name,
+                "at": Date().timeIntervalSince1970, "accessibilityHeader": header
+            ]
+            let requestBytes = try JSONSerialization.data(withJSONObject: request, options: [.sortedKeys])
+            try requestBytes.write(to: requestURL, options: .atomic)
+            XCTAssertTrue(waitUntil(timeout: 30) {
+                FileManager.default.fileExists(atPath: responseURL.path)
+            }, "The real process observation must finish within this checkpoint's bounded wait.")
+            let responseBytes = try Data(contentsOf: responseURL)
+            let response = try JSONDecoder().decode(RuntimeImageOriginResponse.self, from: responseBytes)
+            XCTAssertEqual(response.schema, 1)
+            XCTAssertEqual(response.attempt, attempt)
+            XCTAssertEqual(response.source, source)
+            XCTAssertEqual(response.checkpoint, checkpoint)
+            XCTAssertEqual(response.requestID, requestID)
+            XCTAssertEqual(response.pid, pid)
+            XCTAssertEqual(response.status, "OBSERVED_BOUND_LOADED_IMAGES")
+            XCTAssertNotNil(response.sampleSHA256.range(of: "^[0-9a-f]{64}$", options: .regularExpression))
+            XCTAssertNotNil(response.receiptSHA256.range(of: "^[0-9a-f]{64}$", options: .regularExpression))
+            let evidence = XCTAttachment(data: responseBytes, uniformTypeIdentifier: "public.json")
+            evidence.name = "runtime-image-origin-" + checkpoint
+            evidence.lifetime = .keepAlways
+            add(evidence)
+            capturedRuntimeImageOrigins.insert(checkpoint)
+        } catch {
+            XCTFail("Actual runtime image-origin observation failed: \(error)")
+        }
     }
 }
 
