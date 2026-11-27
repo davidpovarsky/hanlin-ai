@@ -878,6 +878,53 @@ def write_response(directory, name, value):
     os.replace(temporary, target)
 
 
+
+
+def original_system_fixture(request, roots, identity, catalog, inputs):
+    from observe_share_translation_surfaces import input_document, verify_installed_fixture_archive
+    manifest, parent = input_document(inputs)
+    return verify_installed_fixture_archive(
+        roots["data"], identity["identity"], catalog,
+        manifest["surfaceArchives"][request["engine"]], parent)
+
+
+def load_system_inputs(path, evidence):
+    """Bind the original runner's retained inputs; no OS success is inferred."""
+    path = Path(path)
+    parent = evidence.parent.resolve(strict=True)
+    require(path.is_absolute() and path == parent / "system-surface-inputs.json",
+            "The original system input manifest must be in this runner's evidence")
+    document = read_document(path, parent)
+    value = document["value"]
+    require(type(value.get("schema")) is int and value["schema"] == 1,
+            "Unknown original system input manifest")
+    seed = value.get("seed")
+    require(isinstance(seed, str) and str(uuid.UUID(seed)) == seed,
+            "The original producer must retain a fresh input UUID")
+    expected = {"expo": "SurfaceExpo.hanlinExpo", "nativescript": "SurfaceNativeScript.hanlinNativeScript"}
+    archives, translations = value.get("surfaceArchives"), value.get("translation")
+    require(isinstance(archives, dict) and set(archives) == set(expected)
+            and isinstance(translations, dict) and set(translations) == set(expected),
+            "The original two-engine input set is incomplete")
+    for engine, name in expected.items():
+        row = archives[engine]
+        require(isinstance(row, dict) and set(row) == {"path", "sha256"}
+                and row["path"] == str(parent / "shortcut-surface-fixtures" / name)
+                and isinstance(row["sha256"], str) and re.fullmatch(r"[0-9a-f]{64}", row["sha256"]),
+                "The authored archive must be the retained original producer output")
+        page = translations[engine]
+        require(isinstance(page, dict) and set(page) == {"url", "text", "htmlSHA256"}
+                and page["url"] == "http://localhost:49173/surfaces/" + seed + "/" + engine
+                and page["text"] == "Hanlin Translation input " + seed + " " + engine + " שלום עולם"
+                and isinstance(page["htmlSHA256"], str) and re.fullmatch(r"[0-9a-f]{64}", page["htmlSHA256"]),
+                "The genuine Safari input must bind this original producer run")
+    require(value.get("transportLog") == str(parent / "system-surface-http-requests.jsonl")
+            and value.get("shareInputProducer") == {
+                "requestRoot": str(evidence), "responseRoot": str(parent / "system-surface-share-inputs")},
+            "The original producer/transport must use only its owned evidence paths")
+    return document
+
+
 def observe(args, stopping=lambda: False):
     evidence = Path(args.output).resolve()
     roots = product_roots(args.device, args.bundle_id)
@@ -886,6 +933,7 @@ def observe(args, stopping=lambda: False):
     evidence.mkdir(parents=True, exist_ok=False)
     apps = system_app_observation(args.device, evidence)
     widget_fixture = load_widget_fixture(args.widget_fixture) if args.widget_fixture else None
+    system_inputs = load_system_inputs(args.system_inputs, evidence) if args.system_inputs else None
     seen = {}
     last_error = None
     end = time.monotonic() + args.duration
@@ -911,13 +959,32 @@ def observe(args, stopping=lambda: False):
                 last_error = None
                 time.sleep(0.25)
                 continue
+            if request.get("surface") in ("widget", "liveActivity"):
+                from observe_widget_action_surfaces import observe_case
+                observe_case(args, request, directory, evidence, seen, system_inputs, apps)
+                last_error = None
+                time.sleep(0.25)
+                continue
+            if request.get("surface") in ("share", "translation"):
+                from observe_share_translation_surfaces import observe_case
+                observe_case(args, request, directory, evidence, seen, system_inputs, apps)
+                last_error = None
+                time.sleep(0.25)
+                continue
             validate_request(request)
+            if system_inputs is not None:
+                require(type(request.get("schema")) is int and request["schema"] == 1,
+                        "The original system request schema must be explicit")
             case = seen.get(run_id)
             if case is None:
                 require(request.get("phase") == "prepared",
                         "Observer must bind post-XCTest containers before an action")
                 roots = product_roots(args.device, args.bundle_id)
             else:
+                if system_inputs is not None:
+                    require(case["exchangeDirectory"] == str(directory) and equal_typed_json(
+                        {key: request[key] for key in case["requestIdentity"]}, case["requestIdentity"]),
+                        "The prepared original Shortcuts request changed")
                 roots = case["rootsAtPreparation"]
                 if request.get("phase") != case["phase"]:
                     actual_roots = product_roots(args.device, args.bundle_id)
@@ -942,9 +1009,20 @@ def observe(args, stopping=lambda: False):
                             "productInfoSHA256": roots["infoSHA256"],
                             "actualContainers": {key: str(roots[key]) for key in ("app", "data", "group")},
                             "preparedProof": prepared, "catalog": catalog}
+                installed_fixture = original_system_fixture(
+                    request, roots, identity, catalog, system_inputs) if system_inputs is not None else None
+                if installed_fixture is not None:
+                    response["installedFixture"] = installed_fixture
+                    response["inputManifest"] = system_inputs
                 write_response(directory, "identity.json", response)
                 case = {"identity": identity, "baselineIDs": set(commands), "finished": False,
                         "rootsAtPreparation": roots, "phase": request.get("phase")}
+                if system_inputs is not None:
+                    case["exchangeDirectory"] = str(directory)
+                    case["requestIdentity"] = {key: request[key] for key in (
+                        "schema", "runID", "engine", "surface", "fixtureAppID", "fixtureTitle",
+                        "challenge", "baselineCounter", "startedAt", "visibleStateBefore")}
+                    case["installedFixture"] = installed_fixture
                 seen[run_id] = case
                 case_evidence = evidence / run_id
                 case_evidence.mkdir(exist_ok=False)
@@ -961,6 +1039,22 @@ def observe(args, stopping=lambda: False):
                             "Actual product MCM containers changed before terminal observation")
                     require(request.get("systemLaunchObserved") is True,
                             "The real system action was not observed by XCTest")
+                    if system_inputs is not None:
+                        current_snapshot = snapshot_document(actual_roots["extensions"])
+                        current_identity = action_identity(request, current_snapshot)
+                        current_catalog = installed_catalog(actual_roots["data"], current_identity)
+                        require(current_identity["identity"] == identity["identity"]
+                                and current_identity["hostActionHandler"] == identity["hostActionHandler"],
+                                "The original Shortcuts publication changed before completion")
+                        current_fixture = original_system_fixture(
+                            request, actual_roots, current_identity, current_catalog, system_inputs)
+                        require(equal_typed_json(current_fixture, case["installedFixture"]),
+                                "The actual original Shortcuts source changed before completion")
+                        final_roots = product_roots(args.device, args.bundle_id)
+                        require(all(final_roots[key] == roots[key] for key in
+                                    ("app", "data", "group", "extensions", "configuration", "infoSHA256")),
+                                "The actual original Shortcuts product changed at terminal observation")
+                        result["installedFixture"] = current_fixture
                     write_response(directory, "completion.json", result)
                     (evidence / run_id / "completion.json").write_text(
                         json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2) + "\n")
@@ -992,6 +1086,8 @@ def main():
     parser.add_argument("--duration", type=float, default=1200)
     parser.add_argument("--widget-fixture", type=Path,
                         help="Exact original Matrix archive, only for the separate widget recovery scope")
+    parser.add_argument("--system-inputs", type=Path,
+                        help="Original runner input manifest, only for the original ten system-surface methods")
     args = parser.parse_args()
     require(0 < args.duration <= 7200, "Observer lifetime must be bounded")
     require(args.runner_bundle_id.endswith(".xctrunner"), "An actual XCTest runner bundle is required")

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "scope": "Pure ordinary-input producer controls only; native and OS acceptance NOT_RUN",
+  "argv": [
+    "/usr/bin/python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/ProductSplit/Tests",
+    "-p",
+    "test_system_surface_input_producer.py",
+    "-v"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-miniapps-widget-recovery-os-20261127",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "startedUTC": "2026-11-27T06:14:46.170527+00:00",
+  "returncode": 0,
+  "seconds": 0.2841149177402258,
+  "sourceFiles": {
+    "Scripts/ProductSplit/run_paired_acceptance.py": "924638734de3b20866541f84d53433a18945fc35ad3cca8f1b108dbd7068bd97",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "204a13ff3915017d49763ab1dde3e886c3c08cc52b24cfed7e26db6827ed1624",
+    "Scripts/ProductSplit/Tests/test_system_surface_input_producer.py": "d559f1f201d600a4b415f2bd2b5163113c8b9471286cc2053e036c3506db534e"
+  },
+  "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSHA256": "49c59ca13726805da82a6459258421d4ed3e40442eff9cf5f820cd069d3db05d",
+  "stderr": "test_both_engines_receive_exact_ordinary_files_and_input_provenance_only (test_system_surface_input_producer.OriginalSystemInputProducerTests.test_both_engines_receive_exact_ordinary_files_and_input_provenance_only) ... ok\ntest_changed_manifest_or_cancelled_producer_cannot_write_inputs (test_system_surface_input_producer.OriginalSystemInputProducerTests.test_changed_manifest_or_cancelled_producer_cannot_write_inputs) ... ok\ntest_changed_private_preparation_during_staging_never_writes_provenance (test_system_surface_input_producer.OriginalSystemInputProducerTests.test_changed_private_preparation_during_staging_never_writes_provenance) ... ok\ntest_linked_request_or_documents_cannot_escape_the_owned_input_path (test_system_surface_input_producer.OriginalSystemInputProducerTests.test_linked_request_or_documents_cannot_escape_the_owned_input_path) ... ok\ntest_old_or_replaced_mcm_never_receives_a_ready_input_response (test_system_surface_input_producer.OriginalSystemInputProducerTests.test_old_or_replaced_mcm_never_receives_a_ready_input_response) ... ok\ntest_replay_cannot_overwrite_existing_files_or_provenance (test_system_surface_input_producer.OriginalSystemInputProducerTests.test_replay_cannot_overwrite_existing_files_or_provenance) ... ok\ntest_translation_pages_are_retained_real_input_bytes_without_a_transport_claim (test_system_surface_input_producer.OriginalSystemInputProducerTests.test_translation_pages_are_retained_real_input_bytes_without_a_transport_claim) ... ok\ntest_unprepared_or_consistently_rebound_request_cannot_create_inputs (test_system_surface_input_producer.OriginalSystemInputProducerTests.test_unprepared_or_consistently_rebound_request_cannot_create_inputs) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.093s\n\nOK\n"
+}

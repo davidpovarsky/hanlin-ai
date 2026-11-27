@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "baseline": "5ce4d1263c48e24e3d8858a10b3cb9125f2c99b1",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-miniapps-widget-recovery-os-20261127",
+  "sourceFiles": {
+    "Scripts/ProductSplit/run_paired_acceptance.py": "c26854c9737a085f907a352a724bad42dcf364fe1514d9a731d8768c45df686f",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "c857061c584eca56a97ede1b750347096213887bfa0c72c38b91ba5ca6c4dcb3",
+    "Scripts/ProductSplit/observe_widget_action_surfaces.py": "535d08e24e918779bb4ff90d2a2ec4c95710486ef99a4913d62191c35a9f3f4a",
+    "Scripts/ProductSplit/Tests/test_widget_action_surface_observer.py": "e740b14315777d527665223e8619b2061c545a7e600e3a6ca7789f870d3024b7",
+    "Scripts/ProductSplit/Tests/test_system_surface_input_producer.py": "d559f1f201d600a4b415f2bd2b5163113c8b9471286cc2053e036c3506db534e"
+  },
+  "patch": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-system-surfaces-source-5ce4d126/source-r2.patch",
+    "sha256": "868624d3c8ebe3b7cf3e137e63513037ac2f969bb8dcf251053ce5c2994bed04",
+    "bytes": 100334
+  },
+  "preservation": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-system-surfaces-source-5ce4d126/source-preservation.json",
+    "sha256": "4238fd252da7d9dd16df53ade8905633cf5c1772371a9b43d295495763feea72"
+  },
+  "portableReceipts": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-system-surfaces-source-5ce4d126/widget-activity-controls-r1/receipt.json",
+      "sha256": "194ed0a1302c874fb71a4f8082ac2ad83d673a69c662fdede2eebae7086b947b"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-system-surfaces-source-5ce4d126/input-producer-controls-r1/receipt.json",
+      "sha256": "cffd40fdfa4a28897ec643a98c53c2b50fde410eab929f0f73287ffcf84d2926"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-system-surfaces-source-5ce4d126/widget-activity-controls-r2/receipt.json",
+      "sha256": "48a1cbc264399b843fd4b1ddc1ff87f962caff3c506e80b68d4d641fbc781c3a"
+    }
+  ],
+  "dependency": {
+    "owner": "/root/w1_review_resume",
+    "path": "Scripts/ProductSplit/observe_share_translation_surfaces.py",
+    "expectedSHA256": "6702a1bb58c11b9f2e6d285eb62dee7db9f12ad1ddd6d466396d36cda91bee0a",
+    "status": "SEAL_PENDING",
+    "reason": "Canonical installed archive/source binding and the Share/Translation four-case observer"
+  },
+  "native": "NOT_RUN",
+  "OS": "NOT_RUN",
+  "scope": "Ten unchanged original UI methods admitted through original runner; five owned Python files only"
+}

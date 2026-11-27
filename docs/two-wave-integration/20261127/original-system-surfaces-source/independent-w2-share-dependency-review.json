@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w2_source_resume",
+  "decision": "APPROVED_SOURCE_FOR_ORIGINAL_OS_PILOT",
+  "candidate": "aea34fc0dd594fa4d0b4153fe37332e6343aa921",
+  "base": "46663fe6228c0edcb7b9dacb3e8aa5403a80c473",
+  "sourceFiles": {
+    "Scripts/ProductSplit/observe_share_translation_surfaces.py": "6702a1bb58c11b9f2e6d285eb62dee7db9f12ad1ddd6d466396d36cda91bee0a",
+    "Scripts/ProductSplit/Tests/test_share_translation_surface_observer.py": "d74749a52261d4ae45ea62ccc01f6becb255aa397a2a853f52f5b7ba1874a245",
+    "Fixtures/HostActionSurfaces/nativescript/proof.ts": "19925e21c3f63170e4cf1284702fd675130b5674ffd2289ab36da6e6640b9d28",
+    "Fixtures/HostActionSurfaces/nativescript/index.ts": "22312e186a363920e470437571e8bdddef2b753372758b66f9a363bfef637a2e",
+    "Scripts/ProductSplit/Tests/test_share_input_fixture.mjs": "81eeeb88553f68878b7553276ba6f56066bbbfeb4cc7155bab6a209c4c5f7c8e"
+  },
+  "reviewed": [
+    "Full Share/Translation observer source, unchanged common helper dependency and exact original-runner input contract.",
+    "Exact actual two-file NativeScript Git diff against base466; the existing normal run body, original request, runtime calls and output remain unchanged.",
+    "Fresh canonical batch UUID/Foundation date, exact selected bytes and actual native command/resolved handler payload/five-runtime result/private window correlation.",
+    "Actual Translation publication, Safari transport and legacy nil-delivery route without invented native provenance.",
+    "Prepared identity and exchange immutability; fresh actual MCM/configuration/source checks immediately before completion.",
+    "Exact imported archive digest chain and retained source artifact fingerprint from primary source.",
+    "Atomic evidence-only producer request publication prevents partial input requests; old prepared root-State is supported while the new Share window must retain its distinct owned path and actual attachment."
+  ],
+  "primarySource": {
+    "PackageCenter": {
+      "commit": "46663fe6228c0edcb7b9dacb3e8aa5403a80c473",
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinPackageCenter.swift",
+      "sha256": "cd98b6ffb24ec4c0463d021a30204b68bcb96f1bd8dc3e2749ca5862f21dac2b",
+      "excerpt": "85:             let byteCount = Int64(sourceValues.fileSize ?? 0)\n86:             guard byteCount >= 0, byteCount <= archivePolicy.limits.maximumArchiveBytes else {\n87:                 throw HanlinPackageCenterError.sourceTooLarge\n88:             }\n89: \n90:             try fileManager.createDirectory(\n91:                 at: stagingRoot,\n92:                 withIntermediateDirectories: false\n93:             )\n94:             try fileManager.copyItem(at: sourceURL, to: archiveURL)\n95:             let archiveData = try Data(contentsOf: archiveURL, options: .mappedIfSafe)\n96:             let digest = SHA256.hash(data: archiveData).map { String(format: \"%02x\", $0) }.joined()\n97:             let centralCount = try Self.centralDirectoryEntryCount(in: archiveData)\n98:             let archive = try Archive(url: archiveURL, accessMode: .read)\n99:             let zipEntries = Array(archive)\n100:             let entries = try zipEntries.map { entry in\n101:                 HanlinArchiveEntryMetadata(\n102:                     path: entry.path,\n103:                     kind: Self.kind(entry.type),\n104:                     compressedBytes: try Self.int64(entry.compressedSize),\n105:                     uncompressedBytes: try Self.int64(entry.uncompressedSize)\n106:                 )\n107:             }\n108:             let inspection = archivePolicy.inspect(\n109:                 entries: entries,\n110:                 centralDirectoryEntryCount: centralCount,\n111:                 archiveBytes: byteCount\n139:             } catch {\n140:                 throw HanlinPackageCenterError.malformedManifest\n141:             }\n142:             Self.logger.info(\n143:                 \"phase=manifest-resolution root=\\(packageRoot.lastPathComponent, privacy: .public) manifest=script.json format=\\(format.rawValue, privacy: .public) version=\\(manifest.version, privacy: .public)\"\n144:             )\n145:             return HanlinStagedPackage(\n146:                 source: .init(\n147:                     originalFileName: sourceURL.lastPathComponent,\n148:                     format: format,\n149:                     contentSHA256: digest,\n150:                     byteCount: byteCount,\n151:                     importedAt: importedAt\n152:                 ),\n153:                 stagingRoot: stagingRoot,\n154:                 archiveURL: archiveURL,\n155:                 packageRoot: packageRoot,\n156:                 inspection: inspection,\n157:                 manifest: manifest\n158:             )\n159:         } catch {\n160:             try? fileManager.removeItem(at: stagingRoot)\n161:             throw error\n162:         }\n163:     }"
+    },
+    "Bundler": {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptingBundler.swift",
+      "sha256": "307afa1ce693a21d812686f7aae776eab452437a55aa29d28c44f0042ddc37ae",
+      "lines": "281;327;395–449",
+      "finding": "packageContentDigest retains source.contentSHA256; complete packageRoot copied to source/; sorted logicalPath:sha256 digest defines source-inclusive fingerprint."
+    },
+    "AtomicStore": {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift",
+      "lines": "142–155;577–632;731–769",
+      "finding": "Source/packageContentDigest equality, generation metadata/current primary record and verified artifact members."
+    }
+  },
+  "actualPortableEvidence": {
+    "portable-r1/receipt.json": {
+      "sha256": "ac3f65294e0588770cdea4b82b5376349aa5a97b658aec4ceda10468b90a303b",
+      "bytes": 3831
+    },
+    "portable-r2/receipt.json": {
+      "sha256": "ce6b153087ef98670f9aeeb0e5bf91a01c81b727eedf0ae4f8a39b58050aede5",
+      "bytes": 1598
+    },
+    "portable-r3/receipt.json": {
+      "sha256": "715143e337a2f362e83bfb31bccc63e0de62bf3d7f37ca1e573d12f88999e667",
+      "bytes": 1241
+    },
+    "portable-r1/python14.stderr": {
+      "sha256": "a09a1cd5787275d2bfc7ce8707b304cfd44c1be6fe4337fff03b78da63accab9",
+      "bytes": 3545
+    },
+    "portable-r1/node7.stdout": {
+      "sha256": "fdc2f1c0fc110bec05f8e42812227d004d46406bb0e1071197789a56fee8ab74",
+      "bytes": 831
+    },
+    "portable-r2/python15.stderr": {
+      "sha256": "b9be7e11dad4fdfbe596dcd85b30a5b4b7237ef055aa93394ab2cff819a2ac85",
+      "bytes": 3795
+    },
+    "portable-r3/python2.stderr": {
+      "sha256": "54ffa58fc7bd7afe0d7bcb24c716f0188b42b2681d3b897939cd6018c45659d5",
+      "bytes": 598
+    }
+  },
+  "portableInterpretation": "Original14 reader PASS; subsequent15 reader PASS; final two affected owner-path controls PASS at final6702. Original pinned Node24.5.0 seven fixture controls PASS with exact unchanged NS sources. No duplicate tests were executed by reviewer; no fresh final15 run is inferred.",
+  "native": "NOT_RUN_BY_REVIEWER",
+  "OS": "NOT_RUN",
+  "boundary": "Source and pure-control approval only. Existing original runner must build/import exact shipping-SDK fixtures and pass all selected real OS UI tests with zero skips."
+}

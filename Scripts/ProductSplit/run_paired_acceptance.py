@@ -1,9 +1,13 @@
 """Exercise both shipping products on one owned simulator and retain native evidence."""
 from pathlib import Path
 import hashlib
+import datetime
+import html
 import json
 import os
 import plistlib
+import re
+import stat
 import shutil
 import subprocess
 import sys
@@ -70,6 +74,20 @@ TEST_PLANS["miniapp_shortcut_concurrency_os"] = ([
     "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
     "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts",
 ], 2)
+
+# Admit the original ten existing real-system methods; do not duplicate paired54.
+TEST_PLANS["miniapp_system_surfaces_os"] = ([
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoPlacedWidgetInvokesAllFiveRuntimes",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptPlacedWidgetInvokesAllFiveRuntimes",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoLiveActivityInvokesAllFiveRuntimes",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptLiveActivityInvokesAllFiveRuntimes",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoShortcutInvokesAllFiveRuntimes",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptShortcutInvokesAllFiveRuntimes",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoSystemShareInvokesAllFiveRuntimes",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptSystemShareInvokesAllFiveRuntimes",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoSystemTranslationInvokesAllFiveRuntimes",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptSystemTranslationInvokesAllFiveRuntimes",
+], 10)
 
 SDK04_MINIAPPS_SELECTORS = (
     "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
@@ -385,7 +403,7 @@ def verify_native_result(result, prefix, selectors, expected, code):
     return summary
 
 
-def start_native_adapter_assets(state):
+def start_native_adapter_assets(state, extra_resources=None, request_log=None):
     """Own a real loopback image transport; never synthesize an adapter result."""
     image_path = ROOT / "Fixtures/ExpoSwiftUIProbe/native-adapter-assets/pixel.png"
     image = image_path.read_bytes()
@@ -393,6 +411,20 @@ def start_native_adapter_assets(state):
         raise RuntimeError("The native adapter PNG fixture is missing or malformed")
     requests = []
     origin = "http://localhost:49173"
+    resources = {"/health": (200, "text/plain", b"ready"),
+                 "/pixel.png": (200, "image/png", image)}
+    for path, row in (extra_resources or {}).items():
+        if not re.fullmatch(r"/surfaces/[0-9a-f-]{36}/(expo|nativescript)", path) \
+                or type(row) is not tuple or len(row) != 3 or row[:2] != (200, "text/html; charset=utf-8") \
+                or type(row[2]) is not bytes or len(row[2]) > 65536:
+            raise RuntimeError("Only bounded original Translation pages may extend the owned HTTP endpoint")
+        resources[path] = row
+    if request_log is not None:
+        request_log = Path(request_log)
+        if request_log.parent.resolve(strict=True) != EVIDENCE.resolve(strict=True):
+            raise RuntimeError("The actual HTTP transport log must stay in owned evidence")
+        with request_log.open("x"):
+            pass
 
     class AssetHandler(BaseHTTPRequestHandler):
         def setup(self):
@@ -401,18 +433,24 @@ def start_native_adapter_assets(state):
 
         def do_GET(self):
             resource = urlsplit(self.path).path
-            status, content_type, body = {
-                "/health": (200, "text/plain", b"ready"),
-                "/pixel.png": (200, "image/png", image),
-            }.get(resource, (404, "text/plain", b"Missing native adapter fixture"))
+            status, content_type, body = resources.get(
+                resource, (404, "text/plain", b"Missing native adapter fixture"))
             self.send_response(status)
             self.send_header("Content-Type", content_type)
             self.send_header("Content-Length", str(len(body)))
             self.send_header("Cache-Control", "no-store")
             self.end_headers()
             self.wfile.write(body)
-            requests.append({"path": resource, "status": status, "bytes": len(body),
-                "sha256": hashlib.sha256(body).hexdigest(), "at": time.time()})
+            observed = {"path": resource, "status": status, "bytes": len(body),
+                        "sha256": hashlib.sha256(body).hexdigest(), "at": time.time()}
+            if request_log is not None:
+                observed.update(at=datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="microseconds"),
+                                method="GET", userAgent=self.headers.get("User-Agent", ""))
+                with request_log.open("a") as stream:
+                    stream.write(json.dumps(observed, ensure_ascii=False, sort_keys=True) + "\n")
+                    stream.flush()
+                    os.fsync(stream.fileno())
+            requests.append(observed)
 
         def log_message(self, format, *args):
             pass
@@ -439,6 +477,12 @@ def start_native_adapter_assets(state):
         "sha256": hashlib.sha256(image).hexdigest(),
         "scope": "Exact PNG and real HTTP404 only; no mocked renderer, adapter or event.",
         "requests": requests, "native_request_proof": "NOT_RUN"}
+    if extra_resources:
+        state["native_adapter_assets"]["system_surface_pages"] = {
+            path: {"bytes": len(row[2]), "sha256": hashlib.sha256(row[2]).hexdigest()}
+            for path, row in extra_resources.items()}
+        state["native_adapter_assets"]["system_surface_transport_log"] = str(request_log)
+        state["native_adapter_assets"]["scope"] += " Real Safari pages are input transport only."
     return server, thread
 
 
@@ -534,6 +578,226 @@ def shortcut_surface_fixtures(documents):
         shutil.rmtree(extracted)
 
 
+
+def system_surface_inputs(surface_inputs):
+    """Retain actual archive inputs and two real Safari pages for the original ten cases."""
+    seed = str(uuid.uuid4())
+    archives = {}
+    expected = {"expo": "SurfaceExpo.hanlinExpo", "nativescript": "SurfaceNativeScript.hanlinNativeScript"}
+    rows = surface_inputs.get("archives", [])
+    if len(rows) != 2 or {row.get("engine") for row in rows} != set(expected):
+        raise RuntimeError("Both original authored surface archives are required")
+    for row in rows:
+        engine = row["engine"]
+        path = EVIDENCE / "shortcut-surface-fixtures" / expected[engine]
+        if row.get("archive") != path.name or path.is_symlink() or not path.is_file():
+            raise RuntimeError("The actual produced surface archive is missing")
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        if digest != row.get("archiveSHA256"):
+            raise RuntimeError("The produced surface archive changed before OS admission")
+        archives[engine] = {"path": str(path.resolve()), "sha256": digest}
+    pages = EVIDENCE / "system-surface-pages"
+    pages.mkdir()
+    translations, resources = {}, {}
+    for engine in expected:
+        text = "Hanlin Translation input " + seed + " " + engine + " שלום עולם"
+        route = "/surfaces/" + seed + "/" + engine
+        body = ("<!doctype html><html><head><meta charset=\"utf-8\">"
+                "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
+                "<title>MiniApps Translation input</title></head><body>"
+                "<p style=\"font-size:24px;margin:48px\" dir=\"auto\">" + html.escape(text) +
+                "</p></body></html>\n").encode("utf-8")
+        (pages / (engine + ".html")).write_bytes(body)
+        translations[engine] = {"url": "http://localhost:49173" + route, "text": text,
+                                "htmlSHA256": hashlib.sha256(body).hexdigest()}
+        resources[route] = (200, "text/html; charset=utf-8", body)
+    responses = EVIDENCE / "system-surface-share-inputs"
+    responses.mkdir()
+    # The observer exclusively creates its own request/evidence directory later.
+    value = {"schema": 1, "seed": seed, "surfaceArchives": archives,
+             "translation": translations,
+             "transportLog": str((EVIDENCE / "system-surface-http-requests.jsonl").resolve()),
+             "shareInputProducer": {"requestRoot": str((EVIDENCE / "shortcut-observer").resolve()),
+                                    "responseRoot": str(responses.resolve())}}
+    data = (json.dumps(value, ensure_ascii=False, sort_keys=True, indent=2) + "\n").encode("utf-8")
+    path = EVIDENCE / "system-surface-inputs.json"
+    with path.open("xb") as stream:
+        stream.write(data)
+    return {"path": str(path.resolve()), "sha256": hashlib.sha256(data).hexdigest(),
+            "bytes": len(data), "value": value}, resources
+
+
+def stage_system_surface_share_input(request_path, inputs, resolve_data, stopping=lambda: False):
+    """Create only ordinary Files inputs after the actual UI-prepared challenge.
+
+    This producer never writes the observer exchange or a production grant,
+    command, receipt, catalog or private proof. Its response is input provenance.
+    """
+    from observe_shortcut_surfaces import (
+        read_document, require, proof_documents, prepared_proof, _epoch_milliseconds)
+    manifest_path = Path(inputs["path"])
+    evidence = manifest_path.parent.resolve(strict=True)
+    actual_manifest = read_document(manifest_path, evidence)
+    require(actual_manifest["sha256"] == inputs["sha256"]
+            and actual_manifest["value"] == inputs["value"], "The admitted input manifest changed")
+    manifest = inputs["value"]
+    require(type(manifest.get("schema")) is int and manifest["schema"] == 1,
+            "Unknown original input manifest")
+    producer = manifest["shareInputProducer"]
+    request_root = evidence / "shortcut-observer"
+    response_root = evidence / "system-surface-share-inputs"
+    require(producer == {"requestRoot": str(request_root), "responseRoot": str(response_root)}
+            and response_root.is_dir() and not response_root.is_symlink(),
+            "Input producer paths must be the original owned evidence directories")
+    request_path = Path(request_path)
+    require(request_path.parent.parent == request_root
+            and request_path.name == "share-input-request.json",
+            "Only the original observer's per-run input request is accepted")
+    document = read_document(request_path, evidence)
+    require(document["bytes"] <= 65536, "The ordinary input request exceeds its bound")
+    request = document["value"]
+    fields = {"schema", "runID", "engine", "appID", "seed", "challenge",
+              "preparedProofSHA256", "dataContainer", "startedAt"}
+    require(isinstance(request, dict) and set(request) == fields
+            and type(request.get("schema")) is int and request["schema"] == 1,
+            "Unknown ordinary Share input request")
+    run_id, engine, seed = request["runID"], request["engine"], request["seed"]
+    require(isinstance(run_id, str) and str(uuid.UUID(run_id)) == run_id
+            and request_path.parent.name == run_id
+            and isinstance(seed, str) and str(uuid.UUID(seed)) == seed
+            and seed == manifest["seed"], "The ordinary input request belongs to another run")
+    require(engine in ("expo", "nativescript")
+            and request["appID"] == "hanlin.surface." + engine,
+            "The input request must name an original authored fixture")
+    require(isinstance(request["challenge"], str) and len(request["challenge"]) <= 256
+            and re.fullmatch(r"[a-z0-9]+-[a-z0-9]+-[a-z0-9]+", request["challenge"])
+            and isinstance(request["preparedProofSHA256"], str)
+            and re.fullmatch(r"[0-9a-f]{64}", request["preparedProofSHA256"]),
+            "The input must bind a fresh observed preparation")
+    _epoch_milliseconds(request["startedAt"])
+    declared = Path(request["dataContainer"])
+    require(declared.is_absolute() and not declared.is_symlink(), "Invalid actual product container")
+    actual_data = Path(resolve_data())
+    require(actual_data.is_absolute() and not actual_data.is_symlink()
+            and actual_data.resolve(strict=True) == declared
+            and declared.is_dir(), "The OS-provided MiniApps container changed")
+    documents = declared / "Documents"
+    require(documents.is_dir() and not documents.is_symlink(),
+            "Use only the actual MiniApps Documents directory")
+    prepared = prepared_proof(
+        {"fixtureAppID": request["appID"], "challenge": request["challenge"], "baselineCounter": 0},
+        proof_documents(declared, request["appID"]))
+    require(prepared["sha256"] == request["preparedProofSHA256"],
+            "The private UI preparation changed before ordinary input staging")
+    require(not stopping(), "Input staging stopped before writing ordinary files")
+    response_path = response_root / (run_id + ".json")
+    require(not response_path.exists() and not response_path.is_symlink(),
+            "This run already has an input producer response")
+    folder_name = "HanlinSurfaceInputs-" + run_id
+    folder = documents / folder_name
+    folder.mkdir(exist_ok=False)
+    shared = {"schema": 1, "kind": "hanlin.surface.share-input", "runID": run_id,
+              "appID": request["appID"], "seed": seed, "challenge": request["challenge"]}
+    contents = {
+        "share-input.json": json.dumps(shared, ensure_ascii=False, sort_keys=True, indent=2) + "\n",
+        "share-note.txt": "Hanlin Share input " + seed + " " + run_id + " " + engine +
+                          " " + request["challenge"] + "\n",
+    }
+    files = []
+    for name, text in contents.items():
+        data = text.encode("utf-8")
+        path = folder / name
+        with path.open("xb") as stream:
+            stream.write(data)
+            stream.flush()
+            os.fsync(stream.fileno())
+        info = path.lstat()
+        require(stat.S_ISREG(info.st_mode) and info.st_nlink == 1
+                and path.read_bytes() == data, "The ordinary staged input bytes changed")
+        files.append({"name": name, "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest(),
+                      "text": text})
+    require(not stopping(), "Input staging stopped before provenance admission")
+    current_data = Path(resolve_data())
+    require(not current_data.is_symlink() and current_data.resolve(strict=True) == declared,
+            "The actual product container changed during ordinary input staging")
+    current = prepared_proof(
+        {"fixtureAppID": request["appID"], "challenge": request["challenge"], "baselineCounter": 0},
+        proof_documents(declared, request["appID"]))
+    require(current["sha256"] == prepared["sha256"]
+            and read_document(request_path, evidence)["sha256"] == document["sha256"],
+            "The preparation/request changed during ordinary input staging")
+    require(not stopping(), "Input staging stopped before retaining provenance")
+    response = {**request, "status": "STAGED_INPUTS_ONLY",
+                "producerRequestSHA256": document["sha256"],
+                "shareInputFolder": folder_name, "shareInputFiles": files}
+    with response_path.open("x") as stream:
+        stream.write(json.dumps(response, ensure_ascii=False, sort_keys=True, indent=2) + "\n")
+        stream.flush()
+        os.fsync(stream.fileno())
+    return response
+
+
+def start_system_surface_input_producer(simulator, inputs, state):
+    """Bounded original-runner input coordination; never an acceptance result."""
+    stopped = threading.Event()
+    report = {"status": "RUNNING_INPUT_PRODUCER", "runs": {}, "errors": [],
+              "scope": "Only fresh normal Documents inputs and owned evidence; no OS result is inferred"}
+    state["system_surface_share_inputs"] = report
+    request_root = Path(inputs["value"]["shareInputProducer"]["requestRoot"])
+    processed = set()
+
+    def resolve_data():
+        result = subprocess.run(["xcrun", "simctl", "get_app_container", simulator,
+                                 "com.itorah.hanlinminiapps", "data"],
+                                capture_output=True, text=True, timeout=20)
+        if result.returncode != 0:
+            raise RuntimeError("The actual OS did not resolve the current MiniApps data container")
+        return Path(result.stdout.strip())
+
+    def produce():
+        try:
+            while not stopped.wait(0.1):
+                if not request_root.exists():
+                    continue
+                if request_root.is_symlink():
+                    raise RuntimeError("The original observer request directory changed")
+                for path in sorted(request_root.glob("*/share-input-request.json")):
+                    if stopped.is_set():
+                        return
+                    if path in processed:
+                        continue
+                    processed.add(path)
+                    if len(processed) > 2:
+                        raise RuntimeError("The original plan permits exactly two Share input runs")
+                    response = stage_system_surface_share_input(path, inputs, resolve_data, stopped.is_set)
+                    if any(item["engine"] == response["engine"] for item in report["runs"].values()):
+                        raise RuntimeError("The original plan cannot stage a duplicate Share engine")
+                    report["runs"][response["runID"]] = response
+        except Exception as error:
+            report["errors"].append(type(error).__name__ + ": " + str(error))
+        finally:
+            report["status"] = "INPUT_PRODUCER_FAILED" if report["errors"] else "INPUT_PRODUCER_STOPPED"
+
+    thread = threading.Thread(target=produce, name="original-share-input-producer", daemon=True)
+    thread.start()
+    return stopped, thread
+
+
+def finish_system_surface_input_producer(producer, state):
+    stopped, thread = producer
+    stopped.set()
+    thread.join(timeout=25)
+    report = state["system_surface_share_inputs"]
+    if thread.is_alive():
+        report["errors"].append("The bounded input producer did not stop")
+        report["status"] = "INPUT_PRODUCER_FAILED"
+    report["allSelectedInputsStaged"] = (
+        not report["errors"] and not thread.is_alive() and len(report["runs"]) == 2
+        and {row["engine"] for row in report["runs"].values()} == {"expo", "nativescript"}
+        and all(row["status"] == "STAGED_INPUTS_ONLY" for row in report["runs"].values()))
+    return report["allSelectedInputsStaged"]
+
+
 def start_shortcut_observer(derived, simulator, state):
     candidates = []
     for runner in (derived / "Build/Products/Debug-iphonesimulator").glob("*-Runner.app"):
@@ -558,7 +822,10 @@ def start_shortcut_observer(derived, simulator, state):
     observer_output = EVIDENCE / observer_name
     argv = [sys.executable, "Scripts/ProductSplit/" + observer_script,
             "--device", simulator, "--runner-bundle-id", bundle,
-            "--output", str(observer_output), "--duration", "2100"]
+            "--output", str(observer_output), "--duration",
+            "5400" if TEST_SCOPE == "miniapp_system_surfaces_os" else "2100"]
+    if TEST_SCOPE == "miniapp_system_surfaces_os":
+        argv += ["--system-inputs", state["system_surface_inputs"]["path"]]
     if TEST_SCOPE == "miniapp_widget_recovery_os":
         argv += ["--widget-fixture", str(ROOT / "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo")]
     output = (EVIDENCE / (observer_name + ".log")).open("w")
@@ -599,6 +866,8 @@ def main():
     simulator = None
     adapter_assets = None
     shortcut_observer = None
+    system_input_producer = None
+    system_resources = None
     try:
         if TEST_SCOPE not in TEST_PLANS:
             raise RuntimeError("Unknown original-product acceptance scope")
@@ -617,6 +886,10 @@ def main():
             state["scope"] = "Two additional genuine Shortcuts cases: one live NativeScript owner plus three background NS actions, actual handler/lease overlap and separate windows, reverse completion or selected system Stop, followed by the original owner callback"
             state["model_boundary"] = "Original authoring/importer, actual OS URLs/Stop UI, real native commands and per-window journals; no production queue, receipt or state seeding"
             state["acceptance_boundary"] = "NS-owner/NS-background iPad Simulator pilot only; Expo combinations, iPhone, multi-scene restoration, duplicate URLs, cold/warm/foreground matrix, actual timeout and physical-device acceptance remain separate"
+        if TEST_SCOPE == "miniapp_system_surfaces_os":
+            state["scope"] = "The original ten system-surface UI methods: both engines through genuine WidgetKit, ActivityKit, legacy Shortcuts, Files Share and system Translation"
+            state["model_boundary"] = "Original authored SDK archives, actual saved inputs/Safari pages and real OS UI; observers read canonical identity, private runtime output and durable native receipts"
+            state["acceptance_boundary"] = "Original iPad Simulator pilot only; all supported Widget families/appearance, seven ActivityKit regions, physical devices and account-backed surfaces remain separate"
         if TEST_SCOPE in {"miniapp_authoring", "miniapp_complete"}:
             state["scope"] = "Original SDK/tools, source diagnostics, native repair sheet, durable AI handoff, actual build/install and NativeScript/Expo runtime controls in both shipping products"
             state["model_boundary"] = "Only the HTTP model response sequence and the native adapter image fixture resources are deterministic. All source edits, TypeScript diagnostics, Metro/ESM production, imports, receipts, native rendering and UI events are original production code."
@@ -647,7 +920,7 @@ def main():
         }
         _, raw = command(["xcrun", "simctl", "list", "devicetypes", "-j"], "device-types.json")
         supported = {item["identifier"] for item in runtime["supportedDeviceTypes"]}
-        device_family = "iPad" if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_widget_recovery_os"} else "iPhone"
+        device_family = "iPad" if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_widget_recovery_os", "miniapp_system_surfaces_os"} else "iPhone"
         device = next(item for item in json.loads(raw)["devicetypes"]
             if item.get("productFamily") == device_family and item["identifier"] in supported)
         _, raw = command(["xcrun", "simctl", "create",
@@ -772,12 +1045,15 @@ def main():
             documents = Path(raw.strip()) / "Documents"
             documents.mkdir(exist_ok=True)
             state["widget_recovery_input"] = widget_recovery_fixture(documents)
-        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os"}:
+        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_system_surfaces_os"}:
             _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
                 "com.itorah.hanlinminiapps", "data"], "shortcuts-mini-data-container.txt")
             documents = Path(raw.strip()) / "Documents"
             documents.mkdir(exist_ok=True)
             state["shortcut_surface_inputs"] = shortcut_surface_fixtures(documents)
+            if TEST_SCOPE == "miniapp_system_surfaces_os":
+                inputs, system_resources = system_surface_inputs(state["shortcut_surface_inputs"])
+                state["system_surface_inputs"] = inputs
         if TEST_SCOPE in {"miniapp_authoring", "miniapp_complete"}:
             _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
                 "com.itorah.hanlinminiapps", "data"], "authoring-mini-data-container.txt")
@@ -879,14 +1155,24 @@ def main():
             if (documents / archive.name).exists():
                 raise RuntimeError("The fresh owned simulator already has a transfer package input")
             shutil.copy2(archive, documents / archive.name)
-        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_widget_recovery_os"}:
+        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_widget_recovery_os", "miniapp_system_surfaces_os"}:
+            if TEST_SCOPE == "miniapp_system_surfaces_os":
+                adapter_assets = start_native_adapter_assets(
+                    state, system_resources, state["system_surface_inputs"]["value"]["transportLog"])
+                system_input_producer = start_system_surface_input_producer(
+                    simulator, state["system_surface_inputs"], state)
             shortcut_observer = start_shortcut_observer(derived, simulator, state)
         result = EVIDENCE / "Paired.xcresult"
         argv = test_base + ["-scheme", "AI_HLY", "test-without-building",
             "-resultBundlePath", str(result),
             "-test-timeouts-enabled", "YES", "-maximum-test-execution-time-allowance", "600"]
         argv += ["-only-testing:" + selector for selector in selectors]
-        code, _ = command(argv, "paired-tests.log", timeout=2100, allow_failure=True)
+        code, _ = command(argv, "paired-tests.log",
+                          timeout=5400 if TEST_SCOPE == "miniapp_system_surfaces_os" else 2100,
+                          allow_failure=True)
+        if system_input_producer:
+            finish_system_surface_input_producer(system_input_producer, state)
+            system_input_producer = None
         if shortcut_observer:
             observer_code = finish_shortcut_observer(shortcut_observer, state)
             shortcut_observer = None
@@ -911,9 +1197,12 @@ def main():
                 state.update(status="EXECUTED_PASS", ui="EXECUTED_PASS")
             elif summary.get("failedTests", 0):
                 state.update(status="TEST_FAILED", ui="TEST_FAILED")
-        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_widget_recovery_os"} and not state["shortcut_observer"].get("allSelectedCasesObserved"):
+        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_widget_recovery_os", "miniapp_system_surfaces_os"} and not state["shortcut_observer"].get("allSelectedCasesObserved"):
             state["status"] = "INFRA_ERROR"
             raise RuntimeError("The real system-surface observer did not retain every correlated terminal result")
+        if TEST_SCOPE == "miniapp_system_surfaces_os" and not state["system_surface_share_inputs"].get("allSelectedInputsStaged"):
+            state["status"] = "INFRA_ERROR"
+            raise RuntimeError("The original Share cases did not receive both actual challenge-bound input sets")
         if state["status"] != "EXECUTED_PASS":
             raise RuntimeError("Original native acceptance did not pass every case in the recorded scope")
     except Exception as error:
@@ -935,6 +1224,8 @@ def main():
                 except Exception as capture:
                     state["diagnostic_errors"].append(str(capture))
     finally:
+        if system_input_producer:
+            finish_system_surface_input_producer(system_input_producer, state)
         if shortcut_observer:
             finish_shortcut_observer(shortcut_observer, state)
         if adapter_assets:
@@ -944,7 +1235,7 @@ def main():
             thread.join(timeout=5)
         # Retain the actual test attachments for visual inspection of the sheet
         # and repaired app; a final simulator screenshot is not a substitute.
-        if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_widget_recovery_os"}:
+        if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_widget_recovery_os", "miniapp_system_surfaces_os"}:
             state["attachment_exports"] = []
             for name in ["OriginalRuntimes", "Paired"]:
                 bundle = EVIDENCE / (name + ".xcresult")
