@@ -1406,6 +1406,37 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
                     "The actual new instance was not published in Package Information.")
     }
 
+    private func tapWidgetInstanceChooseButton(_ message: String) throws {
+        var selectedButton: XCUIElement?
+        try require(wait(12) {
+            selectedButton = nil
+            let screen = self.springboard.frame
+            let rows = self.springboard.cells.containing(.staticText, identifier: "Widget instance")
+                .allElementsBoundByIndex.filter { row in
+                    guard row.exists else { return false }
+                    let frame = row.frame
+                    return frame.minX.isFinite && frame.minY.isFinite &&
+                        frame.maxX.isFinite && frame.maxY.isFinite &&
+                        frame.width > 0 && frame.height > 0 && screen.contains(frame)
+                }
+            guard rows.count == 1 else { return false }
+            let row = rows[0]
+            let buttons = row.buttons.matching(NSPredicate(format: "label == %@", "Choose"))
+                .allElementsBoundByIndex.filter { button in
+                    guard button.exists && button.isEnabled && button.isHittable else { return false }
+                    let frame = button.frame
+                    return frame.minX.isFinite && frame.minY.isFinite &&
+                        frame.maxX.isFinite && frame.maxY.isFinite &&
+                        frame.width > 0 && frame.height > 0 &&
+                        row.frame.contains(frame) && screen.contains(frame)
+                }
+            guard buttons.count == 1 else { return false }
+            selectedButton = buttons[0]
+            return true
+        }, message)
+        try XCTUnwrap(selectedButton, message).tap()
+    }
+
     private func placeMatrixWidget(selecting instanceName: String) throws {
         // This reuses the original SpringBoard gallery/configuration path.
         // A fresh matching native fallback event later proves the actual family.
@@ -1440,9 +1471,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
                     "The new placed widget did not expose its original configuration placeholder.")
         placeholder.press(forDuration: 1.5)
         try tap(springboard.buttons["Edit Widget"].firstMatch, "Configure the genuine placed widget.")
-        let choose = springboard.descendants(matching: .any).matching(
-            NSPredicate(format: "label == 'Choose' OR label == 'Widget instance'")).firstMatch
-        try tap(choose, "Open the original installed-instance entity query.")
+        try tapWidgetInstanceChooseButton("Open the original installed-instance entity query.")
         let entity = springboard.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS %@", instanceName)).firstMatch
         try tap(entity, "Choose the exact fresh instance created by the MiniApps UI.")
