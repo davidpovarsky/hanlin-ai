@@ -1,0 +1,20 @@
+{
+  "sourceCommit": "85f9d2ccab1611eccadd64ff2cdd03ccb8720615",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1581,
+      "sha256": "c2b7200158f6850e4d43e9197a152f52f50211bdb49322e4ef6f47ff60fe09ff"
+    },
+    {
+      "path": "qualification.json",
+      "bytes": 2310,
+      "sha256": "cfb1d4cfca7301fdeaf23c91cfec16e48791f47b8d06e7ab7daa0090c76d026c"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 443,
+      "sha256": "b6d153ce9667a8bd8039d7b150afe61d61686845c48aef59d2230639f71d2e98"
+    }
+  ]
+}
