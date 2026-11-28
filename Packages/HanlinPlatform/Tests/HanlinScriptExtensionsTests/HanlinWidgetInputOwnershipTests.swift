@@ -210,9 +210,9 @@ struct HanlinWidgetInputOwnershipTests {
         let widget = """
         const name = ['shared', 'helper.js'].join('/');
         if (!$import(name)) throw Error('shared helper was removed');
-        $storage.setJSON('missingImport', $import(['missing', 'helper.js'].join('/')));
+        $storage.set('missingImport', $import(['missing', 'helper.js'].join('/')));
         const record = $file.readJSON('assets/record.map');
-        $storage.setJSON('mapCount', record.count);
+        $storage.set('mapCount', record.count);
         $render(<text>{helper(record.count)}</text>);
         """
         let sourcePackage: [String: Any] = ["name": "hanlin.widget.ownership", "version": "1.0.0", "main": "index.ts"]
