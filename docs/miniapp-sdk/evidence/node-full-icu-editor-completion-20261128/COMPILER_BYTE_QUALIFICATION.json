@@ -1,0 +1,125 @@
+{
+  "schema": 1,
+  "recordedAt": "2026-11-28T07:56:03.740338+00:00",
+  "runID": 46109281660,
+  "actualEditorSDKManifestSHA256": "b3d79345329010d2d7be6be34fcda420d34d8ff6778bdbcf5d2d0f9effee2d7e",
+  "retainedGalleryManifest": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-gallery-terminal-success-r1/source-r1/gallery/artifact-selected-members/paired-product/shortcut-observer/studio-sdk-manifests/3463dee88fe7ba8cb8792360a5e11ddb5e131de9bc0a67d4abbff29b6c7a3c83.json",
+    "bytes": 5270276,
+    "sha256": "3463dee88fe7ba8cb8792360a5e11ddb5e131de9bc0a67d4abbff29b6c7a3c83"
+  },
+  "authority": "Original observe_studio_gallery.verify_tooling validates every selected file against original archive+manifest and records the sorted path:SHA256 aggregate; only equality of that selected closure is used here. Whole SDK identities differ.",
+  "selectedClosures": {
+    "expo": {
+      "identityPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-editor-state-voiceover-terminal-r1/selected-r1/editor/artifact-selected-members/paired-product/shortcut-observer/5f5c5c2b-fa30-41ca-8109-7d41ea2b7dd5/identity.json",
+      "identitySHA256": "3ffed680b7378d2788142aa7560a86e8f8dfee313fcdc054568b7f4cb67eb39b",
+      "actual": {
+        "basis": "Every selected original compiler/declaration/tooling file matches bundled ZIP and SDK manifest",
+        "bytes": 165549517,
+        "compilerPath": "expo/node_modules/typescript/lib/typescript.js",
+        "fileCount": 19633,
+        "filesSHA256": "8ab2fee53759cbdaf25311567ecf84e91f2d13e6def35a592181d9bf4a846cbe",
+        "root": "expo"
+      },
+      "galleryManifestSelected": {
+        "fileCount": 19633,
+        "bytes": 165549517,
+        "filesSHA256": "8ab2fee53759cbdaf25311567ecf84e91f2d13e6def35a592181d9bf4a846cbe"
+      },
+      "closureEqual": true
+    },
+    "nativescript": {
+      "identityPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-de-editor-state-voiceover-terminal-r1/selected-r1/editor/artifact-selected-members/paired-product/shortcut-observer/2c3ad34f-7477-4ff2-a71e-e6c88036de8a/identity.json",
+      "identitySHA256": "dc063e08fe2bc5c2553e347e28908948925cad7315d081aa5ab7482f0ee15c37",
+      "actual": {
+        "basis": "Every selected original compiler/declaration/tooling file matches bundled ZIP and SDK manifest",
+        "bytes": 127791036,
+        "compilerPath": "nativescript/node_modules/typescript/lib/typescript.js",
+        "fileCount": 5986,
+        "filesSHA256": "37ec5060494db946d44098e2fb08e9c5a2418d4a97e3f993faeb7b15e0f9feeb",
+        "root": "nativescript"
+      },
+      "galleryManifestSelected": {
+        "fileCount": 5986,
+        "bytes": 127791036,
+        "filesSHA256": "37ec5060494db946d44098e2fb08e9c5a2418d4a97e3f993faeb7b15e0f9feeb"
+      },
+      "closureEqual": true
+    }
+  },
+  "compilerFiles": [
+    {
+      "path": "expo/node_modules/typescript/lib/typescript.js",
+      "manifest": {
+        "path": "expo/node_modules/typescript/lib/typescript.js",
+        "sha256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+        "bytes": 45
+      },
+      "localPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/modular-search-types-ce896542/accepted-sdk/MiniAppSDK/expo/node_modules/typescript/lib/typescript.js",
+      "localBytes": 45,
+      "localSHA256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+      "equalsManifest": true
+    },
+    {
+      "path": "expo/node_modules/@typescript/old/lib/typescript.js",
+      "manifest": {
+        "path": "expo/node_modules/@typescript/old/lib/typescript.js",
+        "sha256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39",
+        "bytes": 9144216
+      },
+      "localPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/modular-search-types-ce896542/accepted-sdk/MiniAppSDK/expo/node_modules/@typescript/old/lib/typescript.js",
+      "localBytes": 9144216,
+      "localSHA256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39",
+      "equalsManifest": true
+    },
+    {
+      "path": "expo/node_modules/@typescript/old/package.json",
+      "manifest": {
+        "path": "expo/node_modules/@typescript/old/package.json",
+        "sha256": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9",
+        "bytes": 3527
+      },
+      "localPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/modular-search-types-ce896542/accepted-sdk/MiniAppSDK/expo/node_modules/@typescript/old/package.json",
+      "localBytes": 3527,
+      "localSHA256": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9",
+      "equalsManifest": true
+    },
+    {
+      "path": "expo/node_modules/typescript/package.json",
+      "manifest": {
+        "path": "expo/node_modules/typescript/package.json",
+        "sha256": "d9b8fb53c67c947fece83bcb73fa8512227ea6a12b110e096fdab8ecdc02b655",
+        "bytes": 841
+      },
+      "localPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/modular-search-types-ce896542/accepted-sdk/MiniAppSDK/expo/node_modules/typescript/package.json",
+      "localBytes": 841,
+      "localSHA256": "d9b8fb53c67c947fece83bcb73fa8512227ea6a12b110e096fdab8ecdc02b655",
+      "equalsManifest": true
+    },
+    {
+      "path": "nativescript/node_modules/typescript/lib/typescript.js",
+      "manifest": {
+        "path": "nativescript/node_modules/typescript/lib/typescript.js",
+        "sha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675",
+        "bytes": 9112572
+      },
+      "localPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/modular-search-types-ce896542/accepted-sdk/MiniAppSDK/nativescript/node_modules/typescript/lib/typescript.js",
+      "localBytes": 9112572,
+      "localSHA256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675",
+      "equalsManifest": true
+    },
+    {
+      "path": "nativescript/node_modules/typescript/package.json",
+      "manifest": {
+        "path": "nativescript/node_modules/typescript/package.json",
+        "sha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6",
+        "bytes": 3620
+      },
+      "localPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/modular-search-types-ce896542/accepted-sdk/MiniAppSDK/nativescript/node_modules/typescript/package.json",
+      "localBytes": 3620,
+      "localSHA256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6",
+      "equalsManifest": true
+    }
+  ],
+  "qualified": true
+}

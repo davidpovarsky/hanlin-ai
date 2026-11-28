@@ -1,0 +1,74 @@
+{
+  "base": "fcedca4d091a3e11d26ef7526764b8d7eae0f3e0",
+  "sourceCommit": "4c81f6eb701ff1c18cdd5211bff5ea4b857f259a",
+  "tree": "89329a5f6f418e18465ec41b166da8c950f5e5b0",
+  "patchSHA256": "76bf603c3097653546d4c23e64183bf6e8666d644552c73984cc9760faea8683",
+  "verifiedGitSourcePaths": [
+    {
+      "path": "RuntimeDependencies.lock.json",
+      "bytes": 7977,
+      "sha256": "9c5b3bb796b56dc2b56f141570bd2d45682e8c16f90a381884d0caf9dca98acb"
+    },
+    {
+      "path": "Scripts/Runtime/build-node-slice.sh",
+      "bytes": 6025,
+      "sha256": "0786657691133f1b32d91526652c62f8ee46450a46173b35b81ff16467df01f8"
+    },
+    {
+      "path": "Scripts/Runtime/assemble-runtime-bundle.sh",
+      "bytes": 10990,
+      "sha256": "54eba6b1e0fd230d61d79c578c3650e02cdf5128104576c00778edcf793b7264"
+    },
+    {
+      "path": "Scripts/Runtime/configure-node-wasm.py",
+      "bytes": 8019,
+      "sha256": "232d1ef2a954cd3ff8f2120dc08491ab9f8f9cd1420952f6a1fb003b5ecabe31"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/node-mobile-smoke.mjs",
+      "bytes": 3903,
+      "sha256": "cd5157190d8cecd4442efc4e86bb2c8cf3a1654686ad8170b7a61a4d31f3460d"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/test_node_intl_configuration.py",
+      "bytes": 8048,
+      "sha256": "ffcef39cb6168e558c717050fd0419ecb03ed12d3a1c0ebef5002ed515f57015"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/NodeIntl/LICENSE.gz",
+      "bytes": 23439,
+      "sha256": "73bff5ca352cbe18fda3d26fca2a97333ef42e08aeb1b0cad5318ed22bcd727e"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/NodeIntl/tools__v8_gypfiles__v8.gyp.gz",
+      "bytes": 10351,
+      "sha256": "ed72f36d624be9e12d97d1974d0e2aaea8aa0e250e7877d56e71290f649fc135"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/NodeIntl/SOURCE.json",
+      "bytes": 3507,
+      "sha256": "5821317d8174f69169e1e38886017e57ec0e1860ec88c74676ce3040fa3ec0c5"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/NodeIntl/tools__ios-framework__NodeMobile.xcodeproj__project.pbxproj.gz",
+      "bytes": 4262,
+      "sha256": "ccfca0d6a5e455a419bd14ff3b0f4d639361a8aed75bf238f0b8140b3ce75899"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/NodeIntl/tools__v8_gypfiles__features.gypi.gz",
+      "bytes": 5814,
+      "sha256": "0227def2b83b759150ad999ba39ef9a656ed8c619ccade440b269fb94339ece4"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/NodeIntl/tools__ios_framework_prepare.sh.gz",
+      "bytes": 1686,
+      "sha256": "663dc6bf29fa5349bfe8df145aa49d0e8290f24ff7faef1008989c6fd1deb0d0"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/NodeIntl/tools__icu__icu-generic.gyp.gz",
+      "bytes": 3526,
+      "sha256": "b302aee81529c8b991a9f19defbe1aea79ed93e4261ad885337983048aaa83ea"
+    }
+  ],
+  "status": "SOURCE_SEALED_CLEAN_NATIVE_NOT_RUN"
+}

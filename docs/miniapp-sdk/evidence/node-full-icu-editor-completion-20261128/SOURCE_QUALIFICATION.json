@@ -1,0 +1,146 @@
+{
+  "schema": 1,
+  "status": "FROZEN_SOURCE_PORTABLE_QUALIFIED_NATIVE_NOT_RUN",
+  "base": "fcedca4d091a3e11d26ef7526764b8d7eae0f3e0",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-node-full-icu-fcedca4d-20261128",
+  "tree": "89329a5f6f418e18465ec41b166da8c950f5e5b0",
+  "sourceRows": [
+    {
+      "path": "RuntimeDependencies.lock.json",
+      "beforeSHA256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+      "afterSHA256": "9c5b3bb796b56dc2b56f141570bd2d45682e8c16f90a381884d0caf9dca98acb",
+      "bytes": 7977
+    },
+    {
+      "path": "Scripts/Runtime/configure-node-wasm.py",
+      "beforeSHA256": "d574019c1173030be7dabeb735667f272179882598c91f717a0d3d2a2c8e02b4",
+      "afterSHA256": "232d1ef2a954cd3ff8f2120dc08491ab9f8f9cd1420952f6a1fb003b5ecabe31",
+      "bytes": 8019
+    },
+    {
+      "path": "Scripts/Runtime/build-node-slice.sh",
+      "beforeSHA256": "b73e78f6cd3331ea10c11515034507574a66c913366d5d2135444153d024d80a",
+      "afterSHA256": "0786657691133f1b32d91526652c62f8ee46450a46173b35b81ff16467df01f8",
+      "bytes": 6025
+    },
+    {
+      "path": "Scripts/Runtime/Tests/node-mobile-smoke.mjs",
+      "beforeSHA256": "7349b19d4325b6d50ca994f6ab3b520e8956ca5c89e8b3006057666abfb5c67e",
+      "afterSHA256": "cd5157190d8cecd4442efc4e86bb2c8cf3a1654686ad8170b7a61a4d31f3460d",
+      "bytes": 3903
+    },
+    {
+      "path": "Scripts/Runtime/assemble-runtime-bundle.sh",
+      "beforeSHA256": "152854dc62eff5cc44d7c1489e93d66ab87e11f804a385ea7d7af7e0480d520a",
+      "afterSHA256": "54eba6b1e0fd230d61d79c578c3650e02cdf5128104576c00778edcf793b7264",
+      "bytes": 10990
+    },
+    {
+      "path": "Scripts/Runtime/Tests/test_node_intl_configuration.py",
+      "beforeSHA256": null,
+      "afterSHA256": "ffcef39cb6168e558c717050fd0419ecb03ed12d3a1c0ebef5002ed515f57015",
+      "bytes": 8048
+    },
+    {
+      "path": "Scripts/Runtime/Tests/NodeIntl/LICENSE.gz",
+      "beforeSHA256": null,
+      "afterSHA256": "73bff5ca352cbe18fda3d26fca2a97333ef42e08aeb1b0cad5318ed22bcd727e",
+      "bytes": 23439
+    },
+    {
+      "path": "Scripts/Runtime/Tests/NodeIntl/SOURCE.json",
+      "beforeSHA256": null,
+      "afterSHA256": "5821317d8174f69169e1e38886017e57ec0e1860ec88c74676ce3040fa3ec0c5",
+      "bytes": 3507
+    },
+    {
+      "path": "Scripts/Runtime/Tests/NodeIntl/tools__icu__icu-generic.gyp.gz",
+      "beforeSHA256": null,
+      "afterSHA256": "b302aee81529c8b991a9f19defbe1aea79ed93e4261ad885337983048aaa83ea",
+      "bytes": 3526
+    },
+    {
+      "path": "Scripts/Runtime/Tests/NodeIntl/tools__ios-framework__NodeMobile.xcodeproj__project.pbxproj.gz",
+      "beforeSHA256": null,
+      "afterSHA256": "ccfca0d6a5e455a419bd14ff3b0f4d639361a8aed75bf238f0b8140b3ce75899",
+      "bytes": 4262
+    },
+    {
+      "path": "Scripts/Runtime/Tests/NodeIntl/tools__ios_framework_prepare.sh.gz",
+      "beforeSHA256": null,
+      "afterSHA256": "663dc6bf29fa5349bfe8df145aa49d0e8290f24ff7faef1008989c6fd1deb0d0",
+      "bytes": 1686
+    },
+    {
+      "path": "Scripts/Runtime/Tests/NodeIntl/tools__v8_gypfiles__features.gypi.gz",
+      "beforeSHA256": null,
+      "afterSHA256": "0227def2b83b759150ad999ba39ef9a656ed8c619ccade440b269fb94339ece4",
+      "bytes": 5814
+    },
+    {
+      "path": "Scripts/Runtime/Tests/NodeIntl/tools__v8_gypfiles__v8.gyp.gz",
+      "beforeSHA256": null,
+      "afterSHA256": "ed72f36d624be9e12d97d1974d0e2aaea8aa0e250e7877d56e71290f649fc135",
+      "bytes": 10351
+    }
+  ],
+  "sourcePatchSHA256": "76bf603c3097653546d4c23e64183bf6e8666d644552c73984cc9760faea8683",
+  "wholeFileInverses": {
+    "RuntimeDependencies.lock.json": true,
+    "Scripts/Runtime/build-node-slice.sh": true,
+    "Scripts/Runtime/assemble-runtime-bundle.sh": true,
+    "Scripts/Runtime/Tests/node-mobile-smoke.mjs": true,
+    "Scripts/Runtime/configure-node-wasm.py": true
+  },
+  "unchangedAdapterFunctions": [
+    "digest",
+    "replace_once",
+    "target_condition",
+    "proposed_changes"
+  ],
+  "originalWasmPreparedHashes": {
+    "features.gypi": "90da41738ea9ec84ed3c633b6c3e92281116f5c83e9b79a4fba5771d0af94396",
+    "v8.gyp": "d55186e1cf0e015994c34f46d3df40b3ce18e642b17e229440ba4cce97a1532a"
+  },
+  "allOriginalHostAndEditorTestBytesUnchanged": true,
+  "sourceInputPathSetAuthority": "Actual retained Gallery SDK manifest 3463dee88fe7ba8cb8792360a5e11ddb5e131de9bc0a67d4abbff29b6c7a3c83",
+  "sourceInputCount": 396,
+  "changedSDKInputPaths": [],
+  "nativeIdentityOld": "d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5",
+  "nativeIdentityNew": "495347df9c4c53f47032f24e0d85b54854b06b3e4ae2f384dd79b247e6e02799",
+  "originalNativeReuseVerifierRejectsOldBinary": true,
+  "actualAdapterControls": 5,
+  "originalEditorResultCounts": [
+    {
+      "phase": "expo-controlled-absent-intl",
+      "tests": 4,
+      "pass": 1,
+      "fail": 3,
+      "cause": "Controlled absent Intl; exact original compiler stack"
+    },
+    {
+      "phase": "expo-actual-linux-full-icu",
+      "tests": 4,
+      "pass": 4,
+      "fail": 0
+    },
+    {
+      "phase": "nativescript-controlled-absent-intl",
+      "tests": 4,
+      "pass": 1,
+      "fail": 3,
+      "cause": "Controlled absent Intl; exact original compiler stack"
+    },
+    {
+      "phase": "nativescript-actual-linux-full-icu",
+      "tests": 4,
+      "pass": 4,
+      "fail": 0
+    }
+  ],
+  "actualDirectCompletionQueries": 2,
+  "actualCompilerFiles": 276,
+  "compilerInputsAndHostUnchanged": true,
+  "nativeNodeMobile": "NOT_RUN",
+  "recordedAt": "2026-11-28T08:24:05.542687+00:00"
+}

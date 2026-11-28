@@ -1,0 +1,92 @@
+{
+  "at": "2026-11-28T08:51:20.558410+00:00",
+  "status": "APPROVED_SOURCE_ONLY_FRESH_NATIVE_REQUIRED",
+  "manifestSHA256": "4544cb12d3d288df36bf48af9492dad7818301bc7e241d8506e84761cb536607",
+  "verifiedPayloads": 66,
+  "payloadBytes": 496944,
+  "sourcePaths": 13,
+  "existingGitPreimages": 5,
+  "patchProjections": [
+    {
+      "base": "fcedca4d091a3e11d26ef7526764b8d7eae0f3e0",
+      "tree": "89329a5f6f418e18465ec41b166da8c950f5e5b0",
+      "paths": 13,
+      "actualPatchInverse": true
+    },
+    {
+      "base": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+      "tree": "33d351aaa166949c943448445df78a6f28d7f2c1",
+      "paths": 13,
+      "actualPatchInverse": true
+    }
+  ],
+  "unchangedAdapterFunctions": 4,
+  "originalUpstreamGitBlobs": 6,
+  "actualPortableAdapterControls": 5,
+  "actualCompilerPayloadsVerified": 276,
+  "actualOriginalHostFilesVerified": 138,
+  "originalEditorPhases": [
+    {
+      "name": "expo-controlled-absent-intl",
+      "returncode": 1,
+      "rawLogsVerified": true
+    },
+    {
+      "name": "expo-actual-linux-full-icu",
+      "returncode": 0,
+      "rawLogsVerified": true
+    },
+    {
+      "name": "expo-actual-string-completion",
+      "returncode": 0,
+      "rawLogsVerified": true
+    },
+    {
+      "name": "nativescript-controlled-absent-intl",
+      "returncode": 1,
+      "rawLogsVerified": true
+    },
+    {
+      "name": "nativescript-actual-linux-full-icu",
+      "returncode": 0,
+      "rawLogsVerified": true
+    },
+    {
+      "name": "nativescript-actual-string-completion",
+      "returncode": 0,
+      "rawLogsVerified": true
+    }
+  ],
+  "sourceGuardChecks": 8,
+  "directInputMembership": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/sdk13-9ee23af8-pass-r2/reconciliation/current396-live-inputs.json",
+      "sha256": "26596817f3023ea07901862d3782a99e60cbd8b2c1630210915a9103598ab074",
+      "count": 396,
+      "changedIntersection": []
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/sdk13-9ee23af8-pass-r2/reconciliation/host99-live-inputs.json",
+      "sha256": "460b6ebe9de738d033f841be7f99d992f5293e9739c208bea2eadbf057847889",
+      "count": 99,
+      "changedIntersection": []
+    }
+  ],
+  "nativeIdentityOld": "d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5",
+  "nativeIdentityNew": "495347df9c4c53f47032f24e0d85b54854b06b3e4ae2f384dd79b247e6e02799",
+  "independentNativeLinkageReview": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/editor-typescript-intl-fcedca4d/independent-mac-review-r1/receipt.json",
+  "pinnedSourceDataReceipt": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/node-pinned-source-icu-sizing-4768489c-r1/receipt.json",
+  "reviewerReranTests": false,
+  "reviewerBuiltNative": false,
+  "conditions": [
+    "Seal unchanged source/proof into a separate successor native identity.",
+    "Fresh original Node device and simulator producer, assembly and embedded Intl smoke required; prior binary hashes remain historical pending-build.",
+    "Native owner must admit actual output roots, chosen smoke simulator, per-phase capacity and original limits; no unrelated device use.",
+    "Requalify consumed Host and SDK binary closure after producer; no native acceptance credit from portable controls."
+  ],
+  "semanticReview": [
+    "The pinned adapter enables full-icu and links only the three actual target archives into the original framework; original WASM branches/settings and pinned versions remain.",
+    "No original compiler, Host/editor production behavior or test assertion was replaced with a stub, fallback or reduced gate.",
+    "Lock inverse equals original except pending status, exact adapter digest and full-icu configuration; old-binary reuse actually rejected."
+  ]
+}

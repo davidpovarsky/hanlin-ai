@@ -1,0 +1,185 @@
+{
+  "started": "2026-11-28T08:42:35.561496+00:00",
+  "pid": 5282,
+  "archiveURL": "https://github.com/heylogin/nodejs-mobile/archive/refs/tags/v24.5.0-mobile.tar.gz",
+  "expectedSHA256": "614b5f1cb6409d7471b80535d3306a5c4a32ac8128c4a2bd9d8147d663e2555c",
+  "freeBytesBefore": 2112958464,
+  "status": "PINNED_ARCHIVE_VERIFIED_AND_LISTED_NO_NATIVE_BUILD",
+  "nativeBuilds": 0,
+  "sourceExtraction": false,
+  "curlPID": 5284,
+  "argv": [
+    "/usr/bin/curl",
+    "--fail",
+    "--location",
+    "--retry",
+    "3",
+    "--retry-all-errors",
+    "--silent",
+    "--show-error",
+    "--output",
+    "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/node-pinned-source-icu-sizing-4768489c-r1/node-source-4768489c.tar.gz",
+    "https://github.com/heylogin/nodejs-mobile/archive/refs/tags/v24.5.0-mobile.tar.gz"
+  ],
+  "curlExit": 0,
+  "archiveBytes": 122872852,
+  "archiveSHA256": "614b5f1cb6409d7471b80535d3306a5c4a32ac8128c4a2bd9d8147d663e2555c",
+  "archiveRoot": "nodejs-mobile-24.5.0-mobile",
+  "entryCount": 46853,
+  "regularFileCount": 42848,
+  "expandedRegularFileBytes": 614809721,
+  "rounded4KiBRegularBytes": 727887872,
+  "rounded16KiBRegularBytes": 1175240704,
+  "sourceTreeDiskQualification": "Tar member logical bytes and rounded file allocation estimates only; actual Mac source, metadata, object/cache growth and APFS sharing still require phase admission. No extraction performed.",
+  "largestFiles": [
+    {
+      "path": "deps/icu-small/source/data/in/icudt77l.dat.bz2",
+      "bytes": 11111695,
+      "mode": "0o664",
+      "type": "0",
+      "linkname": ""
+    },
+    {
+      "path": "test/fixtures/snapshot/typescript.js",
+      "bytes": 10542667,
+      "mode": "0o664",
+      "type": "0",
+      "linkname": ""
+    },
+    {
+      "path": "deps/sqlite/sqlite3.c",
+      "bytes": 9281911,
+      "mode": "0o664",
+      "type": "0",
+      "linkname": ""
+    },
+    {
+      "path": "deps/v8/test/unittests/gay-shortest.cc",
+      "bytes": 6323036,
+      "mode": "0o664",
+      "type": "0",
+      "linkname": ""
+    },
+    {
+      "path": "deps/v8/test/unittests/gay-precision.cc",
+      "bytes": 6130730,
+      "mode": "0o664",
+      "type": "0",
+      "linkname": ""
+    },
+    {
+      "path": "deps/v8/test/unittests/gay-fixed.cc",
+      "bytes": 5791288,
+      "mode": "0o664",
+      "type": "0",
+      "linkname": ""
+    },
+    {
+      "path": "deps/simdjson/simdjson.h",
+      "bytes": 5275379,
+      "mode": "0o664",
+      "type": "0",
+      "linkname": ""
+    },
+    {
+      "path": "test/fixtures/postject-copy/node_modules/postject/dist/api.js",
+      "bytes": 4840137,
+      "mode": "0o664",
+      "type": "0",
+      "linkname": ""
+    },
+    {
+      "path": "deps/amaro/dist/index.js",
+      "bytes": 3459890,
+      "mode": "0o664",
+      "type": "0",
+      "linkname": ""
+    },
+    {
+      "path": "deps/v8/test/mjsunit/asm/poppler/poppler.js",
+      "bytes": 3447275,
+      "mode": "0o664",
+      "type": "0",
+      "linkname": ""
+    },
+    {
+      "path": "deps/openssl/config/archs/BSD-x86_64/asm/crypto/modes/aes-gcm-avx512.s",
+      "bytes": 3413141,
+      "mode": "0o664",
+      "type": "0",
+      "linkname": ""
+    },
+    {
+      "path": "deps/openssl/config/archs/linux-x86_64/asm/crypto/modes/aes-gcm-avx512.s",
+      "bytes": 3413141,
+      "mode": "0o664",
+      "type": "0",
+      "linkname": ""
+    },
+    {
+      "path": "deps/openssl/config/archs/solaris64-x86_64-gcc/asm/crypto/modes/aes-gcm-avx512.s",
+      "bytes": 3413141,
+      "mode": "0o664",
+      "type": "0",
+      "linkname": ""
+    },
+    {
+      "path": "deps/openssl/config/archs/darwin64-x86_64-cc/asm/crypto/modes/aes-gcm-avx512.s",
+      "bytes": 3409569,
+      "mode": "0o664",
+      "type": "0",
+      "linkname": ""
+    },
+    {
+      "path": "deps/openssl/config/archs/VC-WIN64A/asm/crypto/modes/aes-gcm-avx512.asm",
+      "bytes": 3267244,
+      "mode": "0o664",
+      "type": "0",
+      "linkname": ""
+    }
+  ],
+  "icuSelected": [
+    {
+      "path": "deps/icu-small/README-FULL-ICU.txt",
+      "bytes": 329,
+      "sha256": "5b0a565476a58a14c7bdde91748dd360ecb41f932b11fca820905691dc859317",
+      "gitBlob": "ee3fdf50b5e59eb2e73814b5f1abdc63a245fa47",
+      "retainedFile": "selected-deps__icu-small__README-FULL-ICU.txt"
+    },
+    {
+      "path": "deps/icu-small/source/common/unicode/uvernum.h",
+      "bytes": 6480,
+      "sha256": "ede6d900f95bee0f775ff2c7bc4bc3d0e29126870f48dfef4cf3a71256d52184",
+      "gitBlob": "847c49f4cfb8cdd83d6a7c3dfe3c6c7b7dbbcac2",
+      "retainedFile": "selected-deps__icu-small__source__common__unicode__uvernum.h"
+    },
+    {
+      "path": "deps/icu-small/source/data/in/icudt77l.dat.bz2",
+      "bytes": 11111695,
+      "sha256": "488a0a666ba33dace736d0788a8973729c8d83f3f4966d0fed1be7ad162d4729",
+      "gitBlob": "1f298a4c2affe7fba73417966346f96771062dee",
+      "dataDecompressedBytes": 31896432,
+      "dataDecompressedSHA256": "3e07ab54bbe6d54050dac2a408c0331cbfc3c0574fa4a580b7440d06e05c09ef"
+    },
+    {
+      "path": "tools/icu/current_ver.dep",
+      "bytes": 157,
+      "sha256": "a39d95a7df0eaa7d6287951831788cce54bb20452656f817a79ea557dac2c81a",
+      "gitBlob": "da52397ed40e5dc01fddecf00db5afd7eab652a3",
+      "retainedFile": "selected-tools__icu__current_ver.dep"
+    },
+    {
+      "path": "tools/icu/icu_versions.json",
+      "bytes": 26,
+      "sha256": "a455e3ea7bc426bb0e036f2eee982a1d9dd4a6ad03e94ac3e3d9a1b62f38cc56",
+      "gitBlob": "e635d9b841ae93fe69f677231d503501e5ed51bf",
+      "retainedFile": "selected-tools__icu__icu_versions.json"
+    }
+  ],
+  "fullIcuMarkerPresent": true,
+  "sourceDataPresent": true,
+  "inventorySHA256": "9981c218bc22767678c606ccd8591addb82f8a646f65c2d24bd079505899cac3",
+  "freeBytesAfter": 1989259264,
+  "elapsed": 28.993379544466734,
+  "finished": "2026-11-28T08:43:04.554865+00:00"
+}

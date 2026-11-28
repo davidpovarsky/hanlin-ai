@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "at": "2026-11-28T08:34:10.993507+00:00",
+  "status": "APPROVED_SOURCE_AND_LINKAGE_NATIVE_ADMISSION_STILL_REQUIRED",
+  "candidateManifest": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/editor-typescript-intl-fcedca4d/candidate-r1/manifest.json",
+    "sha256": "4544cb12d3d288df36bf48af9492dad7818301bc7e241d8506e84761cb536607"
+  },
+  "patchSHA256": "76bf603c3097653546d4c23e64183bf6e8666d644552c73984cc9760faea8683",
+  "qualificationSHA256": "1dac4a7a34ddf761fb238b3c5f18c6443305f6c9f37ef6e3126aed155d0edebe",
+  "mechanicalSHA256": "8536f6a61fa884cfd7d50ed1066fdfd9d6e3a99e4bc34f36749e4dcd1a6597b4",
+  "verifiedScope": {
+    "packetMembers": 66,
+    "packetBytes": 496944,
+    "sourcePaths": 13,
+    "actualBaseGitPreimagesAndWholePatchProjections": 5,
+    "unchangedAdapterHelpers": [
+      "digest",
+      "replace_once",
+      "target_condition",
+      "proposed_changes"
+    ],
+    "originalTwoWasmBranchesASTEqual": true,
+    "losslessPinnedUpstreamBlobs": 6
+  },
+  "findings": [
+    {
+      "topic": "Internationalization authority",
+      "finding": "Pinned configure.py supports full-icu and sets v8_enable_i18n_support=1. All three original device/simulator configure branches retain their other flags. Existing cross-compiling selects generated C ICU data rather than host-specific assembly. No TypeScript comparator, JS Intl stub or engine version substitution."
+    },
+    {
+      "topic": "Target archives and copy path",
+      "finding": "Pinned ICU GYP declares target icudata and icuucx libraries; icui18n is a target library with a host forwarding branch. icuuc is type none and icutools is host-only. The three actual target archives are inserted into original outputs_common, then copied/moved by the original arm64 device/simulator paths into tools/ios-framework/bin."
+    },
+    {
+      "topic": "Framework linkage",
+      "finding": "Each archive receives one deterministic PBXFileReference and PBXBuildFile, one membership in the original Frameworks group and one membership in the NodeMobile framework link phase. Relative bin paths match the existing libnode sibling. Original -all_load, exported-symbol guard, search paths, platform/architecture checks and other PBX settings remain unchanged. Current original producer builds arm64 device and arm64 Simulator; changing the existing x64 configure branch does not qualify an x64 product."
+    },
+    {
+      "topic": "Fresh source and old products",
+      "finding": "All preimages are validated before writes. The prior WASM-only prepared ios script hash is neither the new preimage nor postimage, so it is rejected. A freshly verified original source tree is required. Pending-build lock values retain historical binary hashes without promoting them; actual unchanged native reuse verification rejects d1e91cbf against current 495347df."
+    },
+    {
+      "topic": "Native smoke",
+      "finding": "Original embedded smoke gains actual Collator availability, en/he/zh-Hans support and numeric ordering; assembly requires result.intl. Original fs/crypto/URL/worker/descriptor/Host/Wasm assertions remain. This is a required future embedded result, not a result inferred from Linux."
+    },
+    {
+      "topic": "Portable result scope",
+      "finding": "Reviewed existing raw five adapter-control PASS and original four Editor cases on each exact Expo/NativeScript compiler: controlled absent-Intl gives 3 FAIL +1 preserved guard PASS; real Linux full ICU gives 4/4 for each. Existing direct completion receipts retain saved bytes and toUpperCase. No control/replay/native execution was repeated by reviewer."
+    }
+  ],
+  "requiredNativeAdmission": [
+    "Pin the integrated successor source and current lock/native identity. Do not stage this pending native identity into the imminent UI-only publication or reuse the old NodeMobile/RuntimeCore binary as current.",
+    "Verify the actual original source-archive SHA256 614b5f1cb6409d7471b80535d3306a5c4a32ac8128c4a2bd9d8147d663e2555c, fresh tree, adapter preimages and source-patch receipts. W1 explicitly retains no full expanded archive, README-FULL-ICU.txt or data file. Qualify the actual bundled ICU data or original configured download/checksum before claiming native input readiness; the deps/icu-small dirname and Linux ICU77.1 are not that proof.",
+    "Use the original device and Simulator producers with their 14400-second compiler limits and complete source/toolchain/platform/archive receipts, then the original assembly and embedded smoke. Derived native outputs and final lock verification stay pending until their real outcomes.",
+    "The original assembly chooses the first available iPhone and has destructive work/output roots. Before execution, bind the actual selected device and those exact roots to the native owner, retain protected products, and fail admission for foreign/unknown ownership. This review does not authorize operating on unrelated simulators.",
+    "Measure per-phase source expansion, object growth, framework/archive duplication, compiler cache allowance and smoke Simulator growth. Current 4.735GB observation alone is not full-build admission. No arbitrary free-space target or relaxed guard is endorsed.",
+    "Requalify actual final Host/SDK consumed inputs and payload after native identity changes. Static absence from the SDK396 path list is not binary closure equivalence. No new Host188/AgentCore/Platform/UI PASS is credited here."
+  ],
+  "unchangedLimits": {
+    "deviceCompilerSeconds": 14400,
+    "simulatorCompilerSeconds": 14400,
+    "originalBuildNodeJobMinutes": 270,
+    "assemblyJobMinutes": 75,
+    "assemblySampleCompilerSeconds": 3600,
+    "assemblyBootSeconds": 900,
+    "assemblySmokePollIterations": 180
+  },
+  "reviewerActions": {
+    "sourceReadsAndHashASTComparison": true,
+    "candidateWrites": false,
+    "portableControlsRun": false,
+    "downloads": false,
+    "nativeBuildsOrTests": false
+  }
+}
