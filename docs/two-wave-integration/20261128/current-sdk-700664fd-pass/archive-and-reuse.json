@@ -1,0 +1,160 @@
+{
+  "currentArchive": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host-700664fd-source-provenance-r1/RuntimeHostResources.zip",
+    "canonicalPath": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81905749,
+    "sha256": "cfda1ac4ae05729f309ac235eec883b57df0fc6fbd158de46e986cd3ebac4158",
+    "testReuseQualificationSHA256": "1a67cff32bb2a8eb12d7e9342d0dedecce08152c26170deded2dac21b3ab0d7b"
+  },
+  "payloadRows": 28810,
+  "currentSDKManifestFiles": 25706,
+  "onlyAllowedFivePayloadByteChanges": [
+    {
+      "path": "MiniAppSDK/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "before": {
+        "path": "MiniAppSDK/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+        "bytes": 145496,
+        "sha256": "72524a70e0fcd3fe0fdf0fbc9192c0aa1c788fc296ef68613c3ee2fdd47ed0ed",
+        "mode": 420
+      },
+      "after": {
+        "path": "MiniAppSDK/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+        "bytes": 145496,
+        "sha256": "317e6089d343684af6ff523722028a9dc48d14b39cb5f1b11da04c10fc90d293",
+        "mode": 420
+      }
+    },
+    {
+      "path": "MiniAppSDK/docs/miniapp-sdk/extension-reachability.json",
+      "before": {
+        "path": "MiniAppSDK/docs/miniapp-sdk/extension-reachability.json",
+        "bytes": 213458,
+        "sha256": "819d483348e2cf5295667d323f53fd6325fac9db9d0409cc2ed02e460e3312d6",
+        "mode": 420
+      },
+      "after": {
+        "path": "MiniAppSDK/docs/miniapp-sdk/extension-reachability.json",
+        "bytes": 213462,
+        "sha256": "478f28ffaf3afce7a90e7e05a9ddf564b733b69582cabcba3d73944124f5d98f",
+        "mode": 420
+      }
+    },
+    {
+      "path": "MiniAppSDK/docs/miniapp-sdk/extension-reachability.md",
+      "before": {
+        "path": "MiniAppSDK/docs/miniapp-sdk/extension-reachability.md",
+        "bytes": 37881,
+        "sha256": "67ab1c6648e9e4b543d1fd9e035fb45ddf7336aef4b27715605c3187d72141be",
+        "mode": 420
+      },
+      "after": {
+        "path": "MiniAppSDK/docs/miniapp-sdk/extension-reachability.md",
+        "bytes": 37885,
+        "sha256": "83fd78d9808674726c7103d58b0692393564f89334e67b8c63b52d8f99ac0262",
+        "mode": 420
+      }
+    },
+    {
+      "path": "MiniAppSDK/docs/miniapp-sdk/source-inventory.json",
+      "before": {
+        "path": "MiniAppSDK/docs/miniapp-sdk/source-inventory.json",
+        "bytes": 569738,
+        "sha256": "cd4911403d683a1ee613584a3cb758bf41edd0d1799e7ade782b7518c240fccd",
+        "mode": 420
+      },
+      "after": {
+        "path": "MiniAppSDK/docs/miniapp-sdk/source-inventory.json",
+        "bytes": 569739,
+        "sha256": "faa5ce452b45e21d9a2a7cd188f17cb286c47ab8f128bc72cec3249a7b93d14d",
+        "mode": 420
+      }
+    },
+    {
+      "path": "MiniAppSDK/miniapp-sdk.json",
+      "before": {
+        "path": "MiniAppSDK/miniapp-sdk.json",
+        "bytes": 5267911,
+        "sha256": "e343105966824d478319096d673c9801b39dca4d753624252903c970ad6ba61d",
+        "mode": 420
+      },
+      "after": {
+        "path": "MiniAppSDK/miniapp-sdk.json",
+        "bytes": 5267911,
+        "sha256": "4819de6f518a2b9ea1c6e3c80a3567dbf46ef0ec886e883be162bb77766be480",
+        "mode": 420
+      }
+    }
+  ],
+  "allOtherPayloadBytesAndAllModesEqualAsRecorded": true,
+  "archiveCRCReadbackRecordedPassed": true,
+  "modeEvidenceScope": "Reconciled the recorded actual archive mode comparison; root did not transfer or reopen the two ZIPs.",
+  "proofAuthorOpenedZIPs": false,
+  "actualModeQualification": {
+    "path": "actual-packed-payload-mode-qualification.json",
+    "bytes": 10160303,
+    "sha256": "df2ef36af5450e26a296c5770e889c88ee4ebc1a60d70cdeefc9427de909700d"
+  },
+  "acceptedCompletePayload": {
+    "path": "raw/original-phases/accepted-archive-complete-payload.json",
+    "bytes": 6653137,
+    "sha256": "d8c054588e49e3ea93e0eba35fd9cec3d386a1e903f9adba91e0715099344879"
+  },
+  "stagedCompletePayload": {
+    "path": "raw/original-phases/staged-complete-closure.json",
+    "bytes": 6653217,
+    "sha256": "3fc8b56a2d02da120f0c5e7c69dbb18e2ff31380043cce4c8eed19fda93ec3bd"
+  },
+  "admittedPayloadDelta": {
+    "path": "raw/original-phases/admitted-payload-delta.json",
+    "bytes": 2507,
+    "sha256": "09376068d77143c57e1e4fc188769a2c0dd9b38f55a1fd67078ee23501c50fbf"
+  },
+  "packedJITlessContracts": [
+    "GET",
+    "Request POST Unicode",
+    "redirect",
+    "HTTP error",
+    "ReadableStream",
+    "clone",
+    "gzip",
+    "multipart File",
+    "abort",
+    "HEAD",
+    "204"
+  ],
+  "host188": {
+    "status": "REUSED_VERIFIED",
+    "actualExecutionSource": "b5475156e7b0253b24c0a4385236b60da21f6f7e",
+    "actualExecutionReceipt": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-preparation-b5475156-original-phases-r1.json",
+    "actualExecutionReceiptSHA256": "ae96e1b3f5cbeafed5645fd26bbd3edfd1a74fd264c5a5dda4837fb1990d43a9",
+    "originalTestSummary": {
+      "tests": 188,
+      "pass": 188,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "actualLongJobProof": {
+      "proof": "actual-node-job-over-300-seconds",
+      "elapsedMilliseconds": 305044.987583,
+      "executionID": "432c5399-ce28-4670-826e-4336fc28dd24"
+    },
+    "testClosureSHA256": "3a48396dfcf27155074296d19b56ebd03eaebe5387e56f4eb76e1c34865bf96c",
+    "testInvocationsThisAttempt": 0,
+    "acceptedPayloadFiles": 28810,
+    "changedPayloadFiles": [
+      "MiniAppSDK/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "MiniAppSDK/docs/miniapp-sdk/extension-reachability.json",
+      "MiniAppSDK/docs/miniapp-sdk/extension-reachability.md",
+      "MiniAppSDK/docs/miniapp-sdk/source-inventory.json",
+      "MiniAppSDK/miniapp-sdk.json"
+    ],
+    "allOtherPayloadBytesAndModesEqual": true,
+    "newArchiveNotYetAccepted": false
+  },
+  "originalHostTestFiles": 99,
+  "unchangedHostTree": "d460ae6fa03c5d28c8a1fbfacc5c57d27662e6bd",
+  "freshHost188Invocations": 0,
+  "freshOriginalTwelvePhasePassClaimed": false,
+  "hostMetadataTestsPassedMeaning": "The unchanged producer schema refers to the exact historical b547 Host188 execution qualified by the archived reuse receipt, not a fresh188 execution."
+}

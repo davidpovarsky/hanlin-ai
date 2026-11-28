@@ -1,0 +1,39 @@
+{
+  "actualSDKSource": "700664fdbf0871321c30433172f39299e706b0f8",
+  "docsOnlyBase": "166d53f1360a9503e94d2a92587046315936532a",
+  "independentRootReviewedSource": "9edbed3a8b52c3dae5e52032b3fd8f6ef40dda37",
+  "interveningDiffPaths": [
+    "docs/two-wave-integration/20261128/native-platform-167219a4-pass/README.md",
+    "docs/two-wave-integration/20261128/native-platform-167219a4-pass/history.json",
+    "docs/two-wave-integration/20261128/native-platform-167219a4-pass/independent-root-full619-review.json",
+    "docs/two-wave-integration/20261128/native-platform-167219a4-pass/independent-root-ten-method-review.json",
+    "docs/two-wave-integration/20261128/native-platform-167219a4-pass/manifest.json",
+    "docs/two-wave-integration/20261128/native-platform-167219a4-pass/raw-evidence-references.json",
+    "docs/two-wave-integration/20261128/native-platform-167219a4-pass/results.json",
+    "docs/two-wave-integration/20261128/native-platform-167219a4-pass/source-bindings.json"
+  ],
+  "interveningDiffOnlyPriorTechnicalProof": true,
+  "interveningSDK396Intersection": [],
+  "sdkSourceInputSHA256": "c4463f0f702e5b070f1e0236c452f90e5e31e8a2fa6a1978e72b9ad55caaf307",
+  "sourceInputCount": 396,
+  "sourceFingerprint": {
+    "path": "admission/current-sdk-fingerprint.json",
+    "bytes": 67312,
+    "sha256": "d576ef3b78fa276dd87579bca9b05dca2fae221bbfc9d63644630883e39768ff"
+  },
+  "sdkManifest": {
+    "path": "sdk/current-miniapp-sdk.json",
+    "bytes": 5267911,
+    "sha256": "4819de6f518a2b9ea1c6e3c80a3567dbf46ef0ec886e883be162bb77766be480"
+  },
+  "rootVerifiedAllCurrentInputsAgainstGit": 396,
+  "sourceDocumentReview": {
+    "path": "admission/independent-w2-source-review.json",
+    "bytes": 5311,
+    "sha256": "e4c52602b877fd3235ad656376bf1b30ba1ec7cbc2523c3946893b9ab5463ba6"
+  },
+  "separateActualFullPlatformSource": "167219a491a844ae838041f195c12abe9800dac3",
+  "separateActualHost188Source": "b5475156e7b0253b24c0a4385236b60da21f6f7e",
+  "generatedAuditBase": "167219a491a844ae838041f195c12abe9800dac3",
+  "generatedAuditBaseMeaning": "Recorded source audit base under original generator semantics, not an assertion of equality to the later documentation commit."
+}

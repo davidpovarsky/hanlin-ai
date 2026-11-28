@@ -1,0 +1,115 @@
+{
+  "immutablePacket": "final-sdk-700664fd-pass",
+  "manifestSHA256": "eb37d1f955874dedf581e051b9c6c6bca4a1960ac2413cef8bdf271765317ecb",
+  "packetMembersRootRehashed": 48,
+  "packetBytesRootRehashed": 34726556,
+  "retainedMembers": [
+    {
+      "path": "admission/refresh-sdk-source-700664fd-r1.py",
+      "bytes": 24917,
+      "sha256": "28cc1c4a6a095f54071370a96d9d6362c822dd44ac776266b2cc2057aa8b7dcc"
+    },
+    {
+      "path": "admission/original-controller-f45.py",
+      "bytes": 22964,
+      "sha256": "6fc7c16fa72d74e27ccb1254a6d07d7ab27fb371aef08f1f5122090dcd3630fb"
+    },
+    {
+      "path": "admission/controller.diff",
+      "bytes": 9933,
+      "sha256": "5a3bac25048742a48435683ccf2dec38dbb6e82abf83eca262b92bf8dfb4967c"
+    },
+    {
+      "path": "admission/independent-root-controller-review.json",
+      "bytes": 1839,
+      "sha256": "f5e0ee7abd182898bf0000f2e3ab8a83fda25aff1b89f4baf9e2b93ad313118a"
+    },
+    {
+      "path": "admission/independent-w1-host188-reuse-review.json",
+      "bytes": 6532,
+      "sha256": "c05645485f11d4d23f1692d9d0cb299f6f4d70d51b23c501a9f396658e3a22d7"
+    },
+    {
+      "path": "raw/controller-receipt.json",
+      "bytes": 20510,
+      "sha256": "06eac022be5b4c3484638c3a069184d08fd7e070f3fe1c40e66a363ee020cab9"
+    },
+    {
+      "path": "reconciliation.json",
+      "bytes": 5597,
+      "sha256": "a4375a665ada1fb68efeefdfac1e7b1455208b655688817e1331247eea849887"
+    },
+    {
+      "path": "actual-packed-payload-mode-qualification.json",
+      "bytes": 10160303,
+      "sha256": "df2ef36af5450e26a296c5770e889c88ee4ebc1a60d70cdeefc9427de909700d"
+    },
+    {
+      "path": "raw/original-phases/accepted-archive-complete-payload.json",
+      "bytes": 6653137,
+      "sha256": "d8c054588e49e3ea93e0eba35fd9cec3d386a1e903f9adba91e0715099344879"
+    },
+    {
+      "path": "raw/original-phases/staged-complete-closure.json",
+      "bytes": 6653217,
+      "sha256": "3fc8b56a2d02da120f0c5e7c69dbb18e2ff31380043cce4c8eed19fda93ec3bd"
+    },
+    {
+      "path": "raw/original-phases/admitted-payload-delta.json",
+      "bytes": 2507,
+      "sha256": "09376068d77143c57e1e4fc188769a2c0dd9b38f55a1fd67078ee23501c50fbf"
+    },
+    {
+      "path": "raw/original-phases/original-test-source-manifest.json",
+      "bytes": 19301,
+      "sha256": "9028657cebf5404853474d2e3a8900e48aefdc7cb109496bae43417409598711"
+    },
+    {
+      "path": "raw/original-phases/original-post-test-packing.sh",
+      "bytes": 130,
+      "sha256": "911a4622f94eef57be7952c184f623cebaa1bad9c8a47ad3bddeb4016b7d91c3"
+    },
+    {
+      "path": "raw/original-phases/original-packed-verification-and-seal.sh",
+      "bytes": 1410,
+      "sha256": "8e4bc5c4a631ea51588ecd0686a468f41d61898647de1f60f9429ca737b696a5"
+    },
+    {
+      "path": "archive/test-reuse-qualification.json",
+      "bytes": 2071,
+      "sha256": "1a67cff32bb2a8eb12d7e9342d0dedecce08152c26170deded2dac21b3ab0d7b"
+    },
+    {
+      "path": "archive/host-metadata.json",
+      "bytes": 358,
+      "sha256": "81d01675efc0b7fe6eb7144b513b75d2b9587b8f2ae9f4b03d4ff234bee3afd0"
+    },
+    {
+      "path": "sdk/current-miniapp-sdk.json",
+      "bytes": 5267911,
+      "sha256": "4819de6f518a2b9ea1c6e3c80a3567dbf46ef0ec886e883be162bb77766be480"
+    },
+    {
+      "path": "historical188/original-controller-receipt.json",
+      "bytes": 20307,
+      "sha256": "ae96e1b3f5cbeafed5645fd26bbd3edfd1a74fd264c5a5dda4837fb1990d43a9"
+    },
+    {
+      "path": "historical188/accepted-miniapp-sdk.json",
+      "bytes": 5267911,
+      "sha256": "e343105966824d478319096d673c9801b39dca4d753624252903c970ad6ba61d"
+    },
+    {
+      "path": "source/actual-full619-reconciliation.json",
+      "bytes": 163791,
+      "sha256": "91a5a92b7f350ee4bb93f3d8ca1753f4c1f643f28cfaf51189cb8fdb79a42473"
+    }
+  ],
+  "rootSemanticReview": {
+    "path": "root-final-sdk-700-verification/receipt.json",
+    "sha256": "5cda06182708fac9d2296fa2f2607083566911e2f3e517740ca97bafd416dfc6",
+    "copiedVerbatim": "independent-root-review.json"
+  },
+  "largeMapsAndZIPsNotDuplicatedInPublicProof": true,
+  "noNativeOrTestsOrPackingByProofAuthor": true
+}

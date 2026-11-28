@@ -1,0 +1,152 @@
+{
+  "classification": "CURRENT_SDK13_FRESH_CHECKS_PASS_WITH_B547_HOST188_REUSED_VERIFIED",
+  "source": "700664fdbf0871321c30433172f39299e706b0f8",
+  "actualFull619Source": "167219a491a844ae838041f195c12abe9800dac3",
+  "actualHost188Source": "b5475156e7b0253b24c0a4385236b60da21f6f7e",
+  "nativeHost188InvocationsThisAttempt": 0,
+  "freshOriginal12PhasePassClaimed": false,
+  "freshPhaseCount": 13,
+  "allFreshPhasesExit0NoStops": true,
+  "phases": [
+    {
+      "name": "node-version",
+      "exitCode": 0,
+      "logSHA256": "2f30156cd7f9137514ea68d53554f583cf6541fd107dbc8ae8a19253379a735a"
+    },
+    {
+      "name": "current-scriptwidget-types-check",
+      "exitCode": 0,
+      "logSHA256": "778490182e5e05ce51de83f36f55386af20ef093efe1e562ce1c3418ebf539bb"
+    },
+    {
+      "name": "current-sdk-audit",
+      "exitCode": 0,
+      "logSHA256": "6d938ed7d69471fb67d14ac1b2beae53a4383c809514a5f10888d2b14cfb1b06"
+    },
+    {
+      "name": "current-reachability-audit",
+      "exitCode": 0,
+      "logSHA256": "231e3ea5da8cd01dfdc112d6cb7466ce2b2e6f38070dd193d6bbea0e17f7f39b"
+    },
+    {
+      "name": "current-sdk-fingerprint",
+      "exitCode": 0,
+      "logSHA256": "d576ef3b78fa276dd87579bca9b05dca2fae221bbfc9d63644630883e39768ff"
+    },
+    {
+      "name": "restore-accepted-runtime-payload",
+      "exitCode": 0,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "original-sdk-stage",
+      "exitCode": 0,
+      "logSHA256": "abb08ed1826ad56676c7d2fcb92b1dfe6a90299d639977f79a92c8bff60e8216"
+    },
+    {
+      "name": "node-fingerprint",
+      "exitCode": 0,
+      "logSHA256": "5d9368cd4b939d652aab8afbd31375396f6312d3f7b6b30c4843c40aab2f32fe"
+    },
+    {
+      "name": "host-input-fingerprint",
+      "exitCode": 0,
+      "logSHA256": "3cbf18bae127067720e6155a2e92ccdb4b717e50aff4e2dc1f7dde38802540bc"
+    },
+    {
+      "name": "original-post-test-packing",
+      "exitCode": 0,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "original-packed-validation-jitless-and-seal",
+      "exitCode": 0,
+      "logSHA256": "0ca4882425d674b70aab9e8bc421f18e4c4e001db549e49488d359dbf0e2e9b5"
+    },
+    {
+      "name": "original-archive-reuse-validation",
+      "exitCode": 0,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "final-current-sdk-fingerprint",
+      "exitCode": 0,
+      "logSHA256": "d576ef3b78fa276dd87579bca9b05dca2fae221bbfc9d63644630883e39768ff"
+    }
+  ],
+  "actualCurrentSDKInputs": 396,
+  "actualCurrentSDKInputSHA256": "c4463f0f702e5b070f1e0236c452f90e5e31e8a2fa6a1978e72b9ad55caaf307",
+  "currentSDKManifestSHA256": "4819de6f518a2b9ea1c6e3c80a3567dbf46ef0ec886e883be162bb77766be480",
+  "currentArchive": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host-700664fd-source-provenance-r1/RuntimeHostResources.zip",
+    "canonicalPath": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81905749,
+    "sha256": "cfda1ac4ae05729f309ac235eec883b57df0fc6fbd158de46e986cd3ebac4158",
+    "testReuseQualificationSHA256": "1a67cff32bb2a8eb12d7e9342d0dedecce08152c26170deded2dac21b3ab0d7b"
+  },
+  "archiveCRCReadbackPassed": true,
+  "payloadRows": 28810,
+  "allowedFivePayloadRowsOnly": [
+    "MiniAppSDK/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+    "MiniAppSDK/docs/miniapp-sdk/extension-reachability.json",
+    "MiniAppSDK/docs/miniapp-sdk/extension-reachability.md",
+    "MiniAppSDK/docs/miniapp-sdk/source-inventory.json",
+    "MiniAppSDK/miniapp-sdk.json"
+  ],
+  "allOtherBytesAndAllModesEqual": true,
+  "actual188": {
+    "status": "REUSED_VERIFIED",
+    "actualExecutionSource": "b5475156e7b0253b24c0a4385236b60da21f6f7e",
+    "actualExecutionReceipt": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-preparation-b5475156-original-phases-r1.json",
+    "actualExecutionReceiptSHA256": "ae96e1b3f5cbeafed5645fd26bbd3edfd1a74fd264c5a5dda4837fb1990d43a9",
+    "originalTestSummary": {
+      "tests": 188,
+      "pass": 188,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "actualLongJobProof": {
+      "proof": "actual-node-job-over-300-seconds",
+      "elapsedMilliseconds": 305044.987583,
+      "executionID": "432c5399-ce28-4670-826e-4336fc28dd24"
+    },
+    "testClosureSHA256": "3a48396dfcf27155074296d19b56ebd03eaebe5387e56f4eb76e1c34865bf96c",
+    "testInvocationsThisAttempt": 0,
+    "acceptedPayloadFiles": 28810,
+    "changedPayloadFiles": [
+      "MiniAppSDK/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "MiniAppSDK/docs/miniapp-sdk/extension-reachability.json",
+      "MiniAppSDK/docs/miniapp-sdk/extension-reachability.md",
+      "MiniAppSDK/docs/miniapp-sdk/source-inventory.json",
+      "MiniAppSDK/miniapp-sdk.json"
+    ],
+    "allOtherPayloadBytesAndModesEqual": true,
+    "newArchiveNotYetAccepted": false
+  },
+  "rawReceiptSHA256": "06eac022be5b4c3484638c3a069184d08fd7e070f3fe1c40e66a363ee020cab9",
+  "actualAllRecordedPIDsAbsent": true,
+  "pidProbe": {
+    "pids": [
+      57788,
+      57801,
+      57802,
+      57803,
+      57804,
+      57813,
+      57814,
+      57832,
+      57896,
+      57897,
+      57901,
+      57919,
+      57956,
+      57959
+    ],
+    "returncode": 1,
+    "stdout": ""
+  },
+  "trackedSourceClean": true,
+  "at": "2026-11-28T01:07:07.242872+00:00",
+  "boundary": "Fresh source/SDK staging, packed/JITless/archive validation; actual188 remains historical b547 reuse. Current app/iOS/OS gates are separate."
+}
