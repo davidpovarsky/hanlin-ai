@@ -44,6 +44,127 @@ final class OriginalConversationRequestFixture {
     }
 }
 
+@MainActor
+private final class OriginalConversationConsentParticipant {
+    private struct ScriptedCall {
+        let alias: String
+        let arguments: Data
+    }
+
+    private let owner: HanlinAppAgentSessionOwner
+    private let originalRequest: HanlinAppAgentSessionOwner.Request
+    private let expectedCalls: [String: ScriptedCall]
+    private let previous: ((HanlinAppToolConsent.Request, Bool?) -> Void)?
+    private var observedRequestIDs = Set<UUID>()
+    private var createdGrantIDs = Set<UUID>()
+    private var installed = true
+
+    init(owner: HanlinAppAgentSessionOwner,
+         originalRequest: HanlinAppAgentSessionOwner.Request,
+         responses: [String]) throws {
+        self.owner = owner
+        self.originalRequest = originalRequest
+        expectedCalls = try Self.scriptedCalls(in: responses)
+        let previous = owner.consent.onChange
+        self.previous = previous
+        owner.consent.onChange = { [weak self, previous] pending, allowed in
+            // Keep the real owner's operation and approval presentation callbacks.
+            previous?(pending, allowed)
+            guard allowed == nil, let self, self.installed else { return }
+            self.observedRequestIDs.insert(pending.id)
+            Task { @MainActor [weak self] in self?.answer(pending) }
+        }
+    }
+
+    private func answer(_ observed: HanlinAppToolConsent.Request) {
+        guard installed, let pending = owner.consent.pending, pending.id == observed.id else { return }
+        guard let expected = expectedCalls[pending.providerCallID],
+              pending.providerApprovalID == nil,
+              pending.tool == expected.alias,
+              pending.originalArgumentsJSON == expected.arguments,
+              owner.pendingApprovalRowID == originalRequest.rowID,
+              let session = owner.session,
+              session.identity.conversationID == originalRequest.conversationID,
+              session.identity.context.sceneID == originalRequest.sceneID,
+              owner.bindings.contains(where: {
+                  $0.session == session.identity
+                      && $0.reference.rowID == originalRequest.rowID
+                      && $0.reference.uiRunID == originalRequest.uiRunID
+                      && $0.canonicalRunID == pending.canonicalRunID
+              }),
+              let scope = pending.approvalScope, scope.isValid,
+              scope.app == session.identity.context.namespace.app,
+              scope.account == session.identity.context.namespace.account,
+              scope.workspace == session.identity.context.namespace.workspace else {
+            Issue.record("The original consent request did not match its scripted call and admitted conversation row.")
+            owner.consent.answer(id: pending.id, allowed: false)
+            return
+        }
+
+        let grants = HanlinToolApprovalStore.shared
+        let before = grants.grants
+        // remember() supersedes a same-permission grant when its manifest changes.
+        // This fixture must preserve every pre-existing grant, including that case.
+        guard !before.contains(where: {
+            let old = $0.scope
+            return old.app == scope.app && old.account == scope.account
+                && old.workspace == scope.workspace && old.providerID == scope.providerID
+                && old.toolID == scope.toolID
+                && old.permissionFingerprint == scope.permissionFingerprint
+                && old.manifestFingerprint != scope.manifestFingerprint
+        }) else {
+            Issue.record("The scripted consent would supersede a pre-existing grant.")
+            owner.consent.answer(id: pending.id, allowed: false)
+            return
+        }
+
+        let beforeIDs = Set(before.map(\.id))
+        // The same entry point used by the shipping consent sheet performs the grant.
+        owner.consent.answer(id: pending.id, allowed: true)
+        createdGrantIDs.formUnion(grants.grants.filter {
+            $0.scope == scope && !beforeIDs.contains($0.id)
+        }.map(\.id))
+    }
+
+    func finish() {
+        guard installed else { return }
+        installed = false
+        if let pending = owner.consent.pending, observedRequestIDs.contains(pending.id) {
+            owner.consent.answer(id: pending.id, allowed: false)
+        }
+        owner.consent.onChange = previous
+        let grants = HanlinToolApprovalStore.shared
+        for id in createdGrantIDs where grants.grants.contains(where: { $0.id == id }) {
+            #expect(grants.revoke(id: id), "The fixture must remove only the grant it created.")
+        }
+    }
+
+    private static func scriptedCalls(in responses: [String]) throws -> [String: ScriptedCall] {
+        var calls: [String: ScriptedCall] = [:]
+        for response in responses {
+            for line in response.split(whereSeparator: \.isNewline) where line.hasPrefix("data: ") {
+                let raw = String(line.dropFirst(6))
+                if raw == "[DONE]" { continue }
+                let payload = try JSONSerialization.jsonObject(with: Data(raw.utf8))
+                let object = try #require(payload as? [String: Any])
+                let choices = try #require(object["choices"] as? [[String: Any]])
+                for choice in choices {
+                    guard let delta = choice["delta"] as? [String: Any] else { continue }
+                    for call in delta["tool_calls"] as? [[String: Any]] ?? [] {
+                        let id = try #require(call["id"] as? String)
+                        let function = try #require(call["function"] as? [String: Any])
+                        let alias = try #require(function["name"] as? String)
+                        let arguments = try #require(function["arguments"] as? String)
+                        try #require(!id.isEmpty && !alias.isEmpty && calls[id] == nil)
+                        calls[id] = .init(alias: alias, arguments: Data(arguments.utf8))
+                    }
+                }
+            }
+        }
+        return calls
+    }
+}
+
 private final class ScriptedAgentURLProtocol: URLProtocol, @unchecked Sendable {
     private static let lock = NSLock()
     private nonisolated(unsafe) static var responses: [Data] = []
@@ -902,6 +1023,9 @@ struct AgentRuntimeConversationAcceptanceTests {
             let requestGroupID4 = UUID()
             let requestRunID4 = UUID()
             let originalRequest4 = try originalConversation.request(groupID: requestGroupID4, runID: requestRunID4)
+            let consentParticipant = try OriginalConversationConsentParticipant(
+                owner: manager.agentSessionOwner, originalRequest: originalRequest4, responses: responses)
+            defer { consentParticipant.finish() }
             let stream = try await manager.sendStreamRequest(
                 messages: [RequestMessage(
                     role: "user",
