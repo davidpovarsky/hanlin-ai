@@ -1,0 +1,67 @@
+{
+  "at": "2026-11-28T10:07:47.406974+00:00",
+  "base": "04e33c45acedd3f372f836b06f17b805bc91293d",
+  "candidateManifestSHA256": "c04f2977d91963b3209fa13b0d001261788272d52d923adf90b82897c3157a4f",
+  "candidatePayloads": 33,
+  "exactSourcePaths": 13,
+  "actualGitAuthorities": 17,
+  "actualSourceSpans": 45,
+  "sourcePatchSHA256": "d7f34179100a7874ac9b3a9b55ece0f3e3121d8df0636fd58d7ee7a8ac1263d4",
+  "all13PathsActualPatchAndInverse": true,
+  "allOldReaderRequireMessageOccurrences": 65,
+  "oldReaderMessagesRetained": true,
+  "controlASTPreservation": {
+    "Scripts/CI/Tests/test_shortcut_native_lists.py": {
+      "oldFunctions": 28,
+      "oldTests": 24,
+      "newTests": 9
+    },
+    "Scripts/CI/Tests/test_affected_validation.py": {
+      "oldFunctions": 114,
+      "oldTests": 109,
+      "newTests": 2
+    }
+  },
+  "originalNSFixturePaths": [
+    "Fixtures/ShortcutNativeLists/nativescript/hanlin.authoring.json",
+    "Fixtures/ShortcutNativeLists/nativescript/index.ts",
+    "Fixtures/ShortcutNativeLists/nativescript/package.json",
+    "Fixtures/ShortcutNativeLists/nativescript/proof.ts",
+    "Fixtures/ShortcutNativeLists/nativescript/script.json",
+    "Fixtures/ShortcutNativeLists/nativescript/tsconfig.json"
+  ],
+  "exactFixtureOwnersAdded": [
+    "Fixtures/ShortcutNativeLists/expo/App.tsx",
+    "Fixtures/ShortcutNativeLists/expo/hanlin.authoring.json",
+    "Fixtures/ShortcutNativeLists/expo/index.ts",
+    "Fixtures/ShortcutNativeLists/expo/package.json",
+    "Fixtures/ShortcutNativeLists/expo/proof.ts",
+    "Fixtures/ShortcutNativeLists/expo/script.json",
+    "Fixtures/ShortcutNativeLists/expo/tsconfig.json",
+    "Fixtures/ShortcutNativeLists/nativescript/hanlin.authoring.json",
+    "Fixtures/ShortcutNativeLists/nativescript/index.ts",
+    "Fixtures/ShortcutNativeLists/nativescript/package.json",
+    "Fixtures/ShortcutNativeLists/nativescript/proof.ts",
+    "Fixtures/ShortcutNativeLists/nativescript/script.json",
+    "Fixtures/ShortcutNativeLists/nativescript/tsconfig.json"
+  ],
+  "originalPortableResult": {
+    "runCount": 1,
+    "methods": 35,
+    "pass": 35,
+    "failed": 0,
+    "skipped": 0,
+    "receiptSHA256": "027789afb1d93a84c8c8891cfbf524759f972770c353a9da6ee9deac39454714",
+    "stderrSHA256": "0b8067c55f68a00063492a6b4c7663d301e7435e470d651269b47b57ad3c9628"
+  },
+  "independentUIFixtureReviewSHA256": "e6fc8f3fb66016044064caae8fe069d29c691a2310445da45f28813587043b29",
+  "combinedUIWithQueryFixSHA256": "6b6ae68459977419cfe8539d14bfd96c09100ccb5d488dbd5790608ba5f7a738",
+  "sdk396Intersection": [],
+  "host99Intersection": [],
+  "workflowSeparateExactTwoInsertionsApproved": true,
+  "workflowCandidateSHA256": "65f761168a3274a3f5e2215e4c8e1edadd3f7f9f9782999de13c874aaf5692e5",
+  "nativeRuns": 0,
+  "strictExpoAuthoringCLI": "NOT_RUN; original paired runner includes this mandatory gate before OS acceptance",
+  "migration": "NOT_RUN; separate genuine old product/save/run/update required",
+  "scope": "Root reviewed actual reader/runner/controls/ownership route, preserved NS window checks, Expo exact installed-package State/command ID, original safe read, dynamic contract discrimination and unchanged old assertions/budgets. Existing W1 review supplies independent UI+fixture check."
+}

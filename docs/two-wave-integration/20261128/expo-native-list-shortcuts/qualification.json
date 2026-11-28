@@ -1,0 +1,137 @@
+{
+  "schema": 1,
+  "frozenAt": "2026-11-28T09:56:58.371966+00:00",
+  "base": "04e33c45acedd3f372f836b06f17b805bc91293d",
+  "scope": "Four additional saved native-list Expo UI cases and the necessary NativeScript lexical path comparison; no production API/runtime/pin change.",
+  "sourcePaths": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": {
+      "bytes": 271749,
+      "sha256": "496c4dd27806a5152a410a1e928fc1a38c9e8f937dd2a97618a87df647531078",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Scripts/ProductSplit/observe_shortcut_native_lists.py": {
+      "bytes": 31668,
+      "sha256": "d81d55f260df28bde7946e9d46862a69818d61cb653b2a8893ca7c26a0a2248c",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "bytes": 108251,
+      "sha256": "33b817d5ea7c4e6f010f52c537c431bb9ad9f2e06139a64c22a38b084c0d20af",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Scripts/CI/Tests/test_shortcut_native_lists.py": {
+      "bytes": 31248,
+      "sha256": "492b158fd693e06d452b8579a03b96acb9f62f1d351b83696db45a76716e606e",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Scripts/CI/Tests/test_affected_validation.py": {
+      "bytes": 89542,
+      "sha256": "2258992f08bf4168fae41ec2e746fc02d4f455368638557f6386b5dc90ed6ff3",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Scripts/CI/affected-validation-map.json": {
+      "bytes": 81209,
+      "sha256": "804ef959062859f3933a38a71521b42ffbb4a9f86399a3cfe9d0a6c908c8b8d1",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Fixtures/ShortcutNativeLists/expo/App.tsx": {
+      "bytes": 2014,
+      "sha256": "1dc14ca1b0594eac76b6ab621f63d51af3db618aa3b408d03ae95aec8b855f2f",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Fixtures/ShortcutNativeLists/expo/hanlin.authoring.json": {
+      "bytes": 118,
+      "sha256": "57239928efb0bd0e6760bf64443e70bf021eb963f074908332de3f5b7959a5a3",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Fixtures/ShortcutNativeLists/expo/index.ts": {
+      "bytes": 117,
+      "sha256": "e6ff990a5f73c39cebfecc539611b23872e530f1287c6b0d0d8447fbc9a832ee",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Fixtures/ShortcutNativeLists/expo/package.json": {
+      "bytes": 298,
+      "sha256": "f77503c19530960bd9d5d40d4c42e91f2da6395f1cf8be2279d7974e904ea36d",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Fixtures/ShortcutNativeLists/expo/proof.ts": {
+      "bytes": 737,
+      "sha256": "1c3cf09fe914c496d10cd01f6eabe989bc683f7a6194a80ae1b699c554515210",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Fixtures/ShortcutNativeLists/expo/script.json": {
+      "bytes": 814,
+      "sha256": "49c8ac12904493e4657d27d14b18b8bbfcdf355e18660e822b78a2b94728b194",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Fixtures/ShortcutNativeLists/expo/tsconfig.json": {
+      "bytes": 69,
+      "sha256": "40d7c93d27898a4c2f676e917017a532edd471abbe9e76b620104ef272d7d466",
+      "uid": 1002,
+      "gid": 1002
+    }
+  },
+  "sourcePatchSHA256": "d7f34179100a7874ac9b3a9b55ece0f3e3121d8df0636fd58d7ee7a8ac1263d4",
+  "sourcePatchGzipSHA256": "9cede4dde9db3e4bf9ed61fa14f8fe3cf09a2ac31b08ae06162fe9bd8ccd36af",
+  "reversePatchCheck": {
+    "argv": [
+      "git",
+      "apply",
+      "--check",
+      "--reverse",
+      "source.patch"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "preservation": {
+    "originalUIMethods": 42,
+    "originalNSMethods": 4,
+    "originalNSFixtureFiles": 6,
+    "originalNativeListControls": 24,
+    "originalPlannerFunctions": 114,
+    "allBodiesOrASTAndWholeFileInverse": "PASS",
+    "originalNativeCaseSeconds": 360,
+    "originalRunnerObserverSeconds": 2100,
+    "originalWorkflowJobMinutes": 210,
+    "newExpoMethods": 4,
+    "newExpoNativeInvocationsPerCase": 2,
+    "newPortableControls": 9,
+    "newPlannerControls": 2
+  },
+  "portable": {
+    "receipt": "portable-r1/receipt.json",
+    "sha256": "027789afb1d93a84c8c8891cfbf524759f972770c353a9da6ee9deac39454714",
+    "actualMethods": 35,
+    "pass": 35,
+    "fail": 0,
+    "original24Preserved": true,
+    "executionCount": 1
+  },
+  "nativeStatus": "NOT_RUN",
+  "newExpoOriginalCLI": "NOT_RUN",
+  "migration": "NOT_RUN; no retained old standalone product",
+  "pathComparisonQualification": "NS State// spelling is source-derived from unchanged storage provider/fixture and corroborated by another actual NS surface run; no native Lists failure has been observed. Only the original statePath comparison accepts repeated separators, retaining raw spelling and all ownership/containment/link checks.",
+  "expoBinding": "Real handler invocation.id must equal the canonical command.id; actual package State file is selected only by admitted installedPackageID and the fresh validated filename. Native canonical Int/Double tags are checked separately from JSON.",
+  "workflow": "Separate two-insertion candidate; no workflow source edit/POST.",
+  "unrelatedCompileRepair": "W1 two-query source fix is composed separately in ui-composition.json; this donor leaves its owned functions unchanged.",
+  "limits": [
+    "Portable controls inject OS/source observations and do not establish native API/editor availability.",
+    "Expo fixture strict authoring, original iOS build and the eight real saved-action executions remain required.",
+    "The migration plan is an actual old-build/save/run -> current update sequence; metadata equality alone is not migration.",
+    "No claim of rich heterogeneous native Dictionary/Any, every nested/file mode, physical-device, RTL, Home Screen or snippet acceptance."
+  ]
+}

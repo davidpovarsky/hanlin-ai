@@ -1,0 +1,109 @@
+{
+  "startedAt": "2026-11-28T09:51:40.499487+00:00",
+  "finishedAt": "2026-11-28T09:51:41.115948+00:00",
+  "argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "-v",
+    "Scripts.CI.Tests.test_shortcut_native_lists",
+    "Scripts.CI.Tests.test_affected_validation.AffectedValidationPlannerTests.test_native_list_fixture_inputs_use_the_original_split_owner",
+    "Scripts.CI.Tests.test_affected_validation.AffectedValidationPlannerTests.test_unreviewed_native_list_fixture_siblings_still_fail_closed"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-expo-native-lists-20261128",
+  "timeoutSeconds": 60,
+  "elapsedSeconds": 0.6152783595025539,
+  "exit": 0,
+  "python": "Python 3.12.3",
+  "sourceBase": "04e33c45acedd3f372f836b06f17b805bc91293d",
+  "sourceFiles": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": {
+      "bytes": 271749,
+      "sha256": "496c4dd27806a5152a410a1e928fc1a38c9e8f937dd2a97618a87df647531078",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Scripts/ProductSplit/observe_shortcut_native_lists.py": {
+      "bytes": 31668,
+      "sha256": "d81d55f260df28bde7946e9d46862a69818d61cb653b2a8893ca7c26a0a2248c",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "bytes": 108251,
+      "sha256": "33b817d5ea7c4e6f010f52c537c431bb9ad9f2e06139a64c22a38b084c0d20af",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Scripts/CI/Tests/test_shortcut_native_lists.py": {
+      "bytes": 31248,
+      "sha256": "492b158fd693e06d452b8579a03b96acb9f62f1d351b83696db45a76716e606e",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Scripts/CI/Tests/test_affected_validation.py": {
+      "bytes": 89542,
+      "sha256": "2258992f08bf4168fae41ec2e746fc02d4f455368638557f6386b5dc90ed6ff3",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Scripts/CI/affected-validation-map.json": {
+      "bytes": 81209,
+      "sha256": "804ef959062859f3933a38a71521b42ffbb4a9f86399a3cfe9d0a6c908c8b8d1",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Fixtures/ShortcutNativeLists/expo/App.tsx": {
+      "bytes": 2014,
+      "sha256": "1dc14ca1b0594eac76b6ab621f63d51af3db618aa3b408d03ae95aec8b855f2f",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Fixtures/ShortcutNativeLists/expo/hanlin.authoring.json": {
+      "bytes": 118,
+      "sha256": "57239928efb0bd0e6760bf64443e70bf021eb963f074908332de3f5b7959a5a3",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Fixtures/ShortcutNativeLists/expo/index.ts": {
+      "bytes": 117,
+      "sha256": "e6ff990a5f73c39cebfecc539611b23872e530f1287c6b0d0d8447fbc9a832ee",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Fixtures/ShortcutNativeLists/expo/package.json": {
+      "bytes": 298,
+      "sha256": "f77503c19530960bd9d5d40d4c42e91f2da6395f1cf8be2279d7974e904ea36d",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Fixtures/ShortcutNativeLists/expo/proof.ts": {
+      "bytes": 737,
+      "sha256": "1c3cf09fe914c496d10cd01f6eabe989bc683f7a6194a80ae1b699c554515210",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Fixtures/ShortcutNativeLists/expo/script.json": {
+      "bytes": 814,
+      "sha256": "49c8ac12904493e4657d27d14b18b8bbfcdf355e18660e822b78a2b94728b194",
+      "uid": 1002,
+      "gid": 1002
+    },
+    "Fixtures/ShortcutNativeLists/expo/tsconfig.json": {
+      "bytes": 69,
+      "sha256": "40d7c93d27898a4c2f676e917017a532edd471abbe9e76b620104ef272d7d466",
+      "uid": 1002,
+      "gid": 1002
+    }
+  },
+  "stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "bytes": 6716,
+    "sha256": "0b8067c55f68a00063492a6b4c7663d301e7435e470d651269b47b57ad3c9628"
+  },
+  "status": "PASS",
+  "scope": "Original native-list reader module plus two exact new original-planner controls; no native/Shortcuts or authoring CLI run"
+}

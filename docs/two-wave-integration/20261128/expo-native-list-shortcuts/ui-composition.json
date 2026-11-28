@@ -1,0 +1,20 @@
+{
+  "base": "04e33c45acedd3f372f836b06f17b805bc91293d",
+  "candidateSHA256": "496c4dd27806a5152a410a1e928fc1a38c9e8f937dd2a97618a87df647531078",
+  "independentFixCommit": "6bec7f7091c47df1e4fbddf52c43e492de13c19a",
+  "independentFixGitContext": "/mnt/development/projects/worktrees/hanlin-native-list-query-04e33c45-20261128",
+  "independentFixSHA256": "503a8d58e2b59fd83a4296954f63222c6668a913c46b8dce2f36a05cbf9556b8",
+  "composedSHA256": "6b6ae68459977419cfe8539d14bfd96c09100ccb5d488dbd5790608ba5f7a738",
+  "commutes": true,
+  "changes": [
+    {
+      "old": "shortcuts.buttons[kind.title].allElementsBoundByIndex",
+      "new": "shortcuts.buttons.matching(identifier: kind.title).allElementsBoundByIndex"
+    },
+    {
+      "old": "editor.buttons[\"Done\"].allElementsBoundByIndex",
+      "new": "editor.buttons.matching(identifier: \"Done\").allElementsBoundByIndex"
+    }
+  ],
+  "scope": "Read-only composition only. The two fixes remain W1/root-owned and are not edits in this donor."
+}

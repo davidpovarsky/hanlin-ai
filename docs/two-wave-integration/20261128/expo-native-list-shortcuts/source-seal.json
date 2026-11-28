@@ -1,0 +1,86 @@
+{
+  "at": "2026-11-28T10:09:02.546446+00:00",
+  "sourceCommit": "7fc9776f8996cd8b3b8838ceaf3fd8f11fddcf29",
+  "tree": "113549fd06439ba274071d0b91f98f3c1e5ca09b",
+  "parent": "04e33c45acedd3f372f836b06f17b805bc91293d",
+  "branch": "codex/hanlin-expo-native-lists-20261128",
+  "paths": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": {
+      "gitBlob": "15796ab1fdaf9f68082e626ac25c5798692d9b12",
+      "sha256": "496c4dd27806a5152a410a1e928fc1a38c9e8f937dd2a97618a87df647531078",
+      "bytes": 271749
+    },
+    "Scripts/ProductSplit/observe_shortcut_native_lists.py": {
+      "gitBlob": "e4f4d83df736506b23a22a2eaca498c841323d37",
+      "sha256": "d81d55f260df28bde7946e9d46862a69818d61cb653b2a8893ca7c26a0a2248c",
+      "bytes": 31668
+    },
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "gitBlob": "bc2c2c74acc300afcfcadadf091badc6b5f7f8a8",
+      "sha256": "33b817d5ea7c4e6f010f52c537c431bb9ad9f2e06139a64c22a38b084c0d20af",
+      "bytes": 108251
+    },
+    "Scripts/CI/Tests/test_shortcut_native_lists.py": {
+      "gitBlob": "3683b674945b1290e6712206785a7a2d238fba91",
+      "sha256": "492b158fd693e06d452b8579a03b96acb9f62f1d351b83696db45a76716e606e",
+      "bytes": 31248
+    },
+    "Scripts/CI/Tests/test_affected_validation.py": {
+      "gitBlob": "69857b8fad26299cf33ae2027815dc5919c229d7",
+      "sha256": "2258992f08bf4168fae41ec2e746fc02d4f455368638557f6386b5dc90ed6ff3",
+      "bytes": 89542
+    },
+    "Scripts/CI/affected-validation-map.json": {
+      "gitBlob": "c43425bec3bf296bac9d6ffcbedad521fa309409",
+      "sha256": "804ef959062859f3933a38a71521b42ffbb4a9f86399a3cfe9d0a6c908c8b8d1",
+      "bytes": 81209
+    },
+    "Fixtures/ShortcutNativeLists/expo/App.tsx": {
+      "gitBlob": "e40ecc9f74a17d832aab4925101d1b094df004f9",
+      "sha256": "1dc14ca1b0594eac76b6ab621f63d51af3db618aa3b408d03ae95aec8b855f2f",
+      "bytes": 2014
+    },
+    "Fixtures/ShortcutNativeLists/expo/hanlin.authoring.json": {
+      "gitBlob": "c894586a4146012ad1e7d2c4666877f5f5857f3d",
+      "sha256": "57239928efb0bd0e6760bf64443e70bf021eb963f074908332de3f5b7959a5a3",
+      "bytes": 118
+    },
+    "Fixtures/ShortcutNativeLists/expo/index.ts": {
+      "gitBlob": "3a07b1fa2536a70032db56a4772cbac9e8d3f8e4",
+      "sha256": "e6ff990a5f73c39cebfecc539611b23872e530f1287c6b0d0d8447fbc9a832ee",
+      "bytes": 117
+    },
+    "Fixtures/ShortcutNativeLists/expo/package.json": {
+      "gitBlob": "1e185e5c34a30ffa16ad190228907410c6105b06",
+      "sha256": "f77503c19530960bd9d5d40d4c42e91f2da6395f1cf8be2279d7974e904ea36d",
+      "bytes": 298
+    },
+    "Fixtures/ShortcutNativeLists/expo/proof.ts": {
+      "gitBlob": "3e18662a37d012a2f79640ec2bc78e3ee4605457",
+      "sha256": "1c3cf09fe914c496d10cd01f6eabe989bc683f7a6194a80ae1b699c554515210",
+      "bytes": 737
+    },
+    "Fixtures/ShortcutNativeLists/expo/script.json": {
+      "gitBlob": "e512e64caa4cb0bc7c08102878378b1afcbdea78",
+      "sha256": "49c8ac12904493e4657d27d14b18b8bbfcdf355e18660e822b78a2b94728b194",
+      "bytes": 814
+    },
+    "Fixtures/ShortcutNativeLists/expo/tsconfig.json": {
+      "gitBlob": "da30bbbbe787e28e4d982570bbb6ec11ec1a3bf6",
+      "sha256": "40d7c93d27898a4c2f676e917017a532edd471abbe9e76b620104ef272d7d466",
+      "bytes": 69
+    }
+  },
+  "explicitIgnoredPathsAdded": [
+    "Fixtures/ShortcutNativeLists/expo/tsconfig.json"
+  ],
+  "sourcePatchSHA256": "d7f34179100a7874ac9b3a9b55ece0f3e3121d8df0636fd58d7ee7a8ac1263d4",
+  "candidateManifestSHA256": "c04f2977d91963b3209fa13b0d001261788272d52d923adf90b82897c3157a4f",
+  "rootReviewSHA256": "006273ddc5e19a2b6c71b76a354063aeb31ce09695a013f31fe2994c2d1d3b5e",
+  "w1ReviewSHA256": "e6fc8f3fb66016044064caae8fe069d29c691a2310445da45f28813587043b29",
+  "status": "",
+  "diffCheck": "PASS",
+  "commitOutput": "[codex/hanlin-expo-native-lists-20261128 7fc9776f8] test: add Expo saved native list acceptance\n 13 files changed, 573 insertions(+), 64 deletions(-)\n create mode 100644 Fixtures/ShortcutNativeLists/expo/App.tsx\n create mode 100644 Fixtures/ShortcutNativeLists/expo/hanlin.authoring.json\n create mode 100644 Fixtures/ShortcutNativeLists/expo/index.ts\n create mode 100644 Fixtures/ShortcutNativeLists/expo/package.json\n create mode 100644 Fixtures/ShortcutNativeLists/expo/proof.ts\n create mode 100644 Fixtures/ShortcutNativeLists/expo/script.json\n create mode 100644 Fixtures/ShortcutNativeLists/expo/tsconfig.json\n",
+  "nativeRuns": 0,
+  "portableRepeated": false
+}
