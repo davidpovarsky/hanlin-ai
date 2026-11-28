@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "status": "NOT_RUN",
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "candidateScope": "Two existing AI_HLYTests Swift files; no new test methods or product source.",
+  "originalAffectedMethod": "ProductionProviderConformanceTests.testP01SkillsExposureAndExecution()",
+  "exactSignatureSelector": "AI_HLYTests/ProductionProviderConformanceTests/testP01SkillsExposureAndExecution()",
+  "selectorQualification": "Source signature is exact. Use the repository original Swift Testing identity reconciliation; a listed or zero-case suite is not PASS. Root/Mac own choosing the existing original route and all invocation/build/resource limits.",
+  "expectedExecution": {
+    "methodDefinitions": 1,
+    "parameters": 0,
+    "requiredBusinessOutput": "Actual Python result42 in round2, final42 / LOCAL_PYTHON_COMPLETE, completed diagnostics, two tool calls.",
+    "requiredValidators": [
+      "round0load_skill exposed but Python hidden",
+      "round1Python newly exposed and real load_skill result",
+      "round2actual call-py-2 result42"
+    ]
+  },
+  "reusedImplementation": "Existing approved scoped participant code unchanged except internal test visibility.",
+  "additionalCoverage": "Original Conversation suite behavior and all other provider fixture callers unchanged by exact inverse; no new synthetic consent-control implementation or duplicate tests added.",
+  "currentDe90": "No execution or mutation of the currently running de7758 original90 source.",
+  "nativeStatus": "NOT_RUN"
+}

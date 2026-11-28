@@ -1,0 +1,47 @@
+{
+  "status": "SHARED_GRANT_SCOPE_AND_UNPROVEN_GLOBAL_SERIALIZATION_EXPLICIT",
+  "rootReviewSHA256": "b9518db51d0882dbf87a46781ee0cfd2df2c2ae6925e64e8a05cf3d62d871a0a",
+  "answerBinding": [
+    "actual owner pending request",
+    "scripted provider call ID/alias/original arguments",
+    "original conversation and scene",
+    "persisted response row/UI run/canonical run"
+  ],
+  "rememberedGrantScope": [
+    "app",
+    "account",
+    "workspace",
+    "provider",
+    "tool",
+    "manifest fingerprint",
+    "permission fingerprint"
+  ],
+  "sameNamespace": true,
+  "notGrantIdentity": [
+    "conversation",
+    "scene",
+    "run",
+    "call"
+  ],
+  "cleanup": "Preserve pre-existing grants; deny a request that would supersede an unrelated pre-existing manifest grant; revoke only newly created grant IDs in defer finish and restore the previous real-owner callback.",
+  "crossSuiteLimit": "Concurrent unrelated suites using an identical remembered scope could borrow or revoke the same grant. The fixture is not represented as having per-conversation grant isolation.",
+  "executionRoute": "The original workflow retains -parallel-testing-enabled NO and the recorded old suite lifetimes do not overlap. Neither is treated here as proof of global Swift Testing cross-suite serialization in installed Xcode27.2.",
+  "decision": "Preserve the original execution route and expose actual overlap/outcomes at native acceptance. No broad mutex, new global approval state, timeout change or production refactor is introduced for an unobserved parallel failure.",
+  "primarySemantics": "https://docs.swift.org/latest/documentation/testing/parallelizationtrait/",
+  "actualOldSuiteOrder": {
+    "rawSHA256": "a0c49b474235a9fd86cfc841b101ee910c8c335c8e138d08d592710fcf29fac2",
+    "conversationSuiteLines": [
+      230913,
+      231511
+    ],
+    "providerSuiteLines": [
+      239769,
+      240304
+    ]
+  },
+  "boundedReadOnlyPacket": {
+    "relativeHandoffPath": "p01-scoped-consent-3634078f/shared-grant-boundary-r1",
+    "manifestSHA256": "8212d38b5682c27571b2b5ae8a6b9944d4b14d9d5ebeb2fa403c4a89346405e0",
+    "qualification": "The independent root review supersedes its earlier globally-nonparallel wording; the underlying source/old-run bytes are retained."
+  }
+}
