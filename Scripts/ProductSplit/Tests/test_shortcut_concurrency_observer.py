@@ -167,6 +167,79 @@ def owner(request):
 
 
 class ConcurrencyObserverControls(unittest.TestCase):
+    def test_repeated_separators_preserve_actual_owner_and_headless_paths(self):
+        req = request()
+        canonical = BASE + "/Windows/original-owner/State/surface-proof.json"
+        req["ownerStatePath"] = canonical
+        done = terminal(req)
+        before, after = owner(req)
+        visible = canonical.replace("/State/", "/State//")
+        req["ownerStatePath"] = visible
+        after["value"]["lastResult"]["presentationSamples"][0]["statePath"] = visible
+        after = document(after["value"], canonical)
+        self.assertNotEqual(canonical, visible)
+        self.assertTrue(observer.same_private_path(before["path"], visible))
+        self.assertEqual(observer.contract(req)["ownerStatePath"], visible)
+
+        commands, journals = observed(req)
+        for index, row in enumerate(journals):
+            row["value"]["presentationSamples"][0]["statePath"] = row["path"].replace("/State/", "/State//")
+            journals[index] = document(row["value"], row["path"])
+        actual = observer.collect(req, IDENTITY, set(), commands, journals)
+        self.assertEqual(len(actual), 3)
+        for row in actual.values():
+            self.assertIn("/State//", row["journal"]["value"]["presentationSamples"][0]["statePath"])
+            self.assertNotIn("/State//", row["journal"]["path"])
+
+        result = observer.owner_completion(req, before, after, done, mapping(req, finished=True))
+        self.assertEqual(result["status"], "EXECUTED_PASS")
+        self.assertEqual(result["ownerProof"]["path"], canonical)
+        self.assertEqual(result["ownerProof"]["value"]["lastResult"]["presentationSamples"][0]["statePath"], visible)
+        self.assertEqual(req["ownerStatePath"], visible)
+
+    def test_path_equivalence_rejects_escapes_and_foreign_owner_or_handler(self):
+        req = request()
+        req["ownerStatePath"] = BASE + "/Windows/original-owner/State/surface-proof.json"
+        done = terminal(req)
+        before, after = owner(req)
+        current = mapping(req, finished=True)
+        mutations = (
+            ("relative", lambda path: path.lstrip("/")),
+            ("double-root", lambda path: "/" + path),
+            ("trailing-separator", lambda path: path + "/"),
+            ("dot", lambda path: path.replace("/State/", "/State/./")),
+            ("parent", lambda path: path.replace("/State/", "/State/../State/")),
+            ("container", lambda path: path.replace("/data/", "/foreign/")),
+            ("window", lambda path: path.replace("/Windows/", "/Windows/foreign/")),
+            ("file", lambda path: path + ".foreign"),
+            ("nul", lambda path: path + "\0"),
+            ("absent", lambda path: None),
+            ("non-string", lambda path: {}),
+        )
+        for name, mutate in mutations:
+            invalid = mutate(before["path"])
+            with self.subTest(change=name, boundary="admission"):
+                self.assertFalse(observer.same_private_path(before["path"], invalid))
+            bad = copy.deepcopy(req)
+            bad["ownerStatePath"] = invalid
+            with self.subTest(change=name, boundary="final-owner"), self.assertRaises(ObservationError):
+                observer.owner_completion(bad, before, after, done, current)
+            bad_after = copy.deepcopy(after)
+            bad_after["value"]["lastResult"]["presentationSamples"][0]["statePath"] = invalid
+            with self.subTest(change=name, boundary="foreground-sample"), self.assertRaises(ObservationError):
+                observer.owner_completion(req, before, bad_after, done, current)
+            commands, journals = observed(req)
+            journals[0]["value"]["presentationSamples"][0]["statePath"] = mutate(journals[0]["path"])
+            with self.subTest(change=name, boundary="headless-sample"), self.assertRaises(ObservationError):
+                observer.collect(req, IDENTITY, set(), commands, journals)
+
+        commands, journals = observed(req)
+        sample = journals[0]["value"]["presentationSamples"][0]
+        sample["statePath"] = journals[0]["path"].replace("/State/", "/State//")
+        sample["windowID"] = "foreign-window"
+        with self.assertRaises(ObservationError):
+            observer.collect(req, IDENTITY, set(), commands, journals)
+
     def test_exact_request_and_unique_actual_system_launch_contract(self):
         req = request()
         self.assertEqual(observer.validate_request(req), req["runID"])

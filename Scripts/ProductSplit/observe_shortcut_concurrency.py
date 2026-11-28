@@ -47,6 +47,18 @@ def native_uuid(value):
     return type(value) is str and valid_uuid(value.lower())
 
 
+def same_private_path(actual, observed):
+    """Compare a validated reader path with raw UI/handler spelling, without resolving links."""
+    if type(actual) is not str or type(observed) is not str:
+        return False
+    if (not observed.startswith("/") or observed.startswith("//")
+            or observed.endswith("/") or "\0" in observed):
+        return False
+    if any(part in (".", "..") for part in observed.split("/")):
+        return False
+    return actual == re.sub(r"/{2,}", "/", observed)
+
+
 def validate_request(request):
     require(type(request) is dict and type(request.get("schema")) is int
             and request["schema"] == 1, "Invalid concurrency request schema")
@@ -227,7 +239,7 @@ def collect(request, identity, baseline_ids, commands, journals):
         for sample in samples:
             require(type(sample) is dict and type(sample.get("windowID")) is str
                     and sample["windowID"] and sample["windowID"] != request["ownerWindowID"]
-                    and sample.get("statePath") == document["path"]
+                    and same_private_path(document["path"], sample.get("statePath"))
                     and sample.get("attached") is False
                     and sample.get("executionMode") == "headless-action"
                     and path.parts[-4:] == ("Windows", sample["windowID"], "State", filename),
@@ -412,7 +424,8 @@ def owner_completion(request, prepared, owner, terminal_proof, mapping):
             and request["ownerProcessIDAfter"] == request["ownerProcessID"]
             and request.get("ownerCallbackObserved") is True,
             "The original owner process must remain alive and execute its real callback")
-    require(owner["path"] == prepared["path"] == request["ownerStatePath"],
+    require(owner["path"] == prepared["path"]
+            and same_private_path(prepared["path"], request["ownerStatePath"]),
             "The owner callback changed private state storage")
     state = owner["value"]
     require(state.get("schemaVersion") == 1 and state.get("appID") == request["fixtureAppID"]
@@ -435,7 +448,8 @@ def owner_completion(request, prepared, owner, terminal_proof, mapping):
             "The owner must expose actual window observations")
     windows = {row.get("windowID") for row in samples}
     require(windows == {request["ownerWindowID"]}
-            and all(row.get("statePath") == prepared["path"] and row.get("executionMode") == "foreground"
+            and all(same_private_path(prepared["path"], row.get("statePath"))
+                    and row.get("executionMode") == "foreground"
                     for row in samples) and any(row.get("attached") is True for row in samples),
             "The actual owner callback did not retain its attached foreground window")
     require(not (windows & {row["windowID"] for row in mapping.values()}),
@@ -531,7 +545,7 @@ def observe(args, stopping=lambda: False):
                 roots = original.product_roots(args.device, args.bundle_id)
                 identity = current_identity(request, roots)
                 prepared = original.prepared_proof(request, original.proof_documents(roots["data"], request["fixtureAppID"]))
-                require(prepared["path"] == request["ownerStatePath"],
+                require(same_private_path(prepared["path"], request["ownerStatePath"]),
                         "Visible owner state path differs from its actual private preparation")
                 case_evidence = evidence / run_id
                 case_evidence.mkdir(exist_ok=False)
