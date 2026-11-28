@@ -1,0 +1,195 @@
+{
+  "runID": 46109194525,
+  "runURL": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/46109194525",
+  "sourceCommit": "de7758a9647122e302e996e72f3b9c63776764cc",
+  "workflowConclusion": "cancelled",
+  "unitResultJSON": {
+    "sha256": "3cc4a9d1660dd13e6328780b43c416c9c85ecaf451308b0f9a3e7926094a658b",
+    "bytes": 578993
+  },
+  "fullOriginalUnitLogRawSHA256": "6fcc2975e7197b406e77b869d45308c1c76a55735ce706fbbb689c32cd2f135f",
+  "retainedTerminalManifestSHA256": "f30b244838a1d3d0a3b10776667139f2512ff37e06f42e50dad3b14e4c1382b1",
+  "actualFailedCaseNodes": [
+    {
+      "children": [
+        {
+          "name": "Caught error: .incompleteProviderResponse(reason: \"stop\")",
+          "nodeType": "Failure Message",
+          "sourceLocation": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+            "lineNumber": 0
+          }
+        }
+      ],
+      "duration": "0.084s",
+      "durationInSeconds": 0.08409476280212402,
+      "name": "differentOwnerCannotUseTheDrainBarrierToBypassALiveWriter()",
+      "nodeIdentifier": "HanlinAppAgentSessionOwnerTests/differentOwnerCannotUseTheDrainBarrierToBypassALiveWriter()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/differentOwnerCannotUseTheDrainBarrierToBypassALiveWriter()",
+      "nodeType": "Test Case",
+      "result": "Failed"
+    },
+    {
+      "children": [
+        {
+          "name": "Caught error: .incompleteProviderResponse(reason: \"stop\")",
+          "nodeType": "Failure Message",
+          "sourceLocation": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+            "lineNumber": 0
+          }
+        }
+      ],
+      "duration": "0.055s",
+      "durationInSeconds": 0.054556846618652344,
+      "name": "deletedOriginalRowDuringInternalInvalidationCannotConstructANewEngine()",
+      "nodeIdentifier": "HanlinAppAgentSessionOwnerTests/deletedOriginalRowDuringInternalInvalidationCannotConstructANewEngine()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/deletedOriginalRowDuringInternalInvalidationCannotConstructANewEngine()",
+      "nodeType": "Test Case",
+      "result": "Failed"
+    }
+  ],
+  "allSixAffectedFixtureConsumers": [
+    {
+      "method": "sameOwnerRestartJoinsItsCancelledOriginalWriterBeforeAdmission",
+      "constructorLine": 258,
+      "actualMethodNode": {
+        "duration": "0.26s",
+        "durationInSeconds": 0.26425600051879883,
+        "name": "sameOwnerRestartJoinsItsCancelledOriginalWriterBeforeAdmission()",
+        "nodeIdentifier": "HanlinAppAgentSessionOwnerTests/sameOwnerRestartJoinsItsCancelledOriginalWriterBeforeAdmission()",
+        "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/sameOwnerRestartJoinsItsCancelledOriginalWriterBeforeAdmission()",
+        "nodeType": "Test Case",
+        "result": "Passed"
+      }
+    },
+    {
+      "method": "differentOwnerCannotUseTheDrainBarrierToBypassALiveWriter",
+      "constructorLine": 298,
+      "actualMethodNode": {
+        "children": [
+          {
+            "name": "Caught error: .incompleteProviderResponse(reason: \"stop\")",
+            "nodeType": "Failure Message",
+            "sourceLocation": {
+              "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+              "lineNumber": 0
+            }
+          }
+        ],
+        "duration": "0.084s",
+        "durationInSeconds": 0.08409476280212402,
+        "name": "differentOwnerCannotUseTheDrainBarrierToBypassALiveWriter()",
+        "nodeIdentifier": "HanlinAppAgentSessionOwnerTests/differentOwnerCannotUseTheDrainBarrierToBypassALiveWriter()",
+        "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/differentOwnerCannotUseTheDrainBarrierToBypassALiveWriter()",
+        "nodeType": "Test Case",
+        "result": "Failed"
+      }
+    },
+    {
+      "method": "cancellationDuringPriorDrainCannotAdmitALateReplacement",
+      "constructorLine": 331,
+      "actualMethodNode": {
+        "duration": "0.069s",
+        "durationInSeconds": 0.06893801689147949,
+        "name": "cancellationDuringPriorDrainCannotAdmitALateReplacement()",
+        "nodeIdentifier": "HanlinAppAgentSessionOwnerTests/cancellationDuringPriorDrainCannotAdmitALateReplacement()",
+        "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/cancellationDuringPriorDrainCannotAdmitALateReplacement()",
+        "nodeType": "Test Case",
+        "result": "Passed"
+      }
+    },
+    {
+      "method": "activeClearAdmitsANewWriterOnlyAfterTheOriginalCASConflictDrains",
+      "constructorLine": 388,
+      "actualMethodNode": {
+        "children": [
+          {
+            "duration": "0.13s",
+            "durationInSeconds": 0.1335439682006836,
+            "name": "false",
+            "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/activeClearAdmitsANewWriterOnlyAfterTheOriginalCASConflictDrains(temporary:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+            "nodeType": "Arguments",
+            "result": "Passed"
+          },
+          {
+            "duration": "0.023s",
+            "durationInSeconds": 0.023233890533447266,
+            "name": "true",
+            "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/activeClearAdmitsANewWriterOnlyAfterTheOriginalCASConflictDrains(temporary:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+            "nodeType": "Arguments",
+            "result": "Passed"
+          }
+        ],
+        "duration": "0.078s",
+        "durationInSeconds": 0.07838892936706543,
+        "name": "activeClearAdmitsANewWriterOnlyAfterTheOriginalCASConflictDrains(temporary:)",
+        "nodeIdentifier": "HanlinAppAgentSessionOwnerTests/activeClearAdmitsANewWriterOnlyAfterTheOriginalCASConflictDrains(temporary:)",
+        "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/activeClearAdmitsANewWriterOnlyAfterTheOriginalCASConflictDrains(temporary:)",
+        "nodeType": "Test Case",
+        "result": "Passed"
+      }
+    },
+    {
+      "method": "changedOrFailedActiveClearCannotForgiveAnUnqualifiedWriter",
+      "constructorLine": 446,
+      "actualMethodNode": {
+        "children": [
+          {
+            "duration": "0.11s",
+            "durationInSeconds": 0.11314225196838379,
+            "name": "false",
+            "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/changedOrFailedActiveClearCannotForgiveAnUnqualifiedWriter(temporary:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+            "nodeType": "Arguments",
+            "result": "Passed"
+          },
+          {
+            "duration": "0.021s",
+            "durationInSeconds": 0.021429061889648438,
+            "name": "true",
+            "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/changedOrFailedActiveClearCannotForgiveAnUnqualifiedWriter(temporary:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+            "nodeType": "Arguments",
+            "result": "Passed"
+          }
+        ],
+        "duration": "0.067s",
+        "durationInSeconds": 0.06728565692901611,
+        "name": "changedOrFailedActiveClearCannotForgiveAnUnqualifiedWriter(temporary:)",
+        "nodeIdentifier": "HanlinAppAgentSessionOwnerTests/changedOrFailedActiveClearCannotForgiveAnUnqualifiedWriter(temporary:)",
+        "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/changedOrFailedActiveClearCannotForgiveAnUnqualifiedWriter(temporary:)",
+        "nodeType": "Test Case",
+        "result": "Passed"
+      }
+    },
+    {
+      "method": "deletedOriginalRowDuringInternalInvalidationCannotConstructANewEngine",
+      "constructorLine": 506,
+      "actualMethodNode": {
+        "children": [
+          {
+            "name": "Caught error: .incompleteProviderResponse(reason: \"stop\")",
+            "nodeType": "Failure Message",
+            "sourceLocation": {
+              "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+              "lineNumber": 0
+            }
+          }
+        ],
+        "duration": "0.055s",
+        "durationInSeconds": 0.054556846618652344,
+        "name": "deletedOriginalRowDuringInternalInvalidationCannotConstructANewEngine()",
+        "nodeIdentifier": "HanlinAppAgentSessionOwnerTests/deletedOriginalRowDuringInternalInvalidationCannotConstructANewEngine()",
+        "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/deletedOriginalRowDuringInternalInvalidationCannotConstructANewEngine()",
+        "nodeType": "Test Case",
+        "result": "Failed"
+      }
+    }
+  ],
+  "limitations": [
+    "These are real prior failures, not a new native reproduction.",
+    "Four other consumer definitions passed before this fixture change; that is not proof that the changed helper passes them.",
+    "The deletion test failed before installing its deletion callback; it did not execute the intended deletion exclusion.",
+    "The production real-engine empty-response guard is unchanged.",
+    "No native or portable mirror run was performed for this source correction."
+  ]
+}

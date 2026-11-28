@@ -1,0 +1,41 @@
+[
+  {
+    "path": "AI_HLYTests/HanlinAppSplitOriginTests.swift",
+    "currentSHA256": "476b3a6cca2635a68dc2436f2aba261a5f32633a268d4e163edc0cb0c75277a0",
+    "baseSHA256": "476b3a6cca2635a68dc2436f2aba261a5f32633a268d4e163edc0cb0c75277a0",
+    "equal": true,
+    "spans": [
+      {
+        "startLine": 12,
+        "endLine": 39,
+        "text": "12: @testable import AI_Hanlin\n13: \n14: private actor SplitModelCounter { var value = 0; func next() -> Int { value += 1; return value } }\n15: private struct SplitComponentModel: LanguageModelV3 {\n16:     let provider = \"split-app-component\", modelId = \"split-app-component\"\n17:     let counter = SplitModelCounter()\n18:     func doGenerate(options: LanguageModelV3CallOptions) async throws -> LanguageModelV3GenerateResult { throw HanlinHostError.unsupportedProviderCapability }\n19:     func doStream(options: LanguageModelV3CallOptions) async throws -> LanguageModelV3StreamResult {\n20:         let index = await counter.next()\n21:         return .init(stream: AsyncThrowingStream { c in\n22:             if index == 1 {\n23:                 c.yield(.toolCall(.init(toolCallId: \"original-split-call\", toolName: \"open_mini_app\",\n24:                     input: #\"{\"target\":\"hanlin.demo.swift-parity\",\"action\":\"share.value\",\"payload\":null}\"#)))\n25:                 c.yield(.finish(finishReason: .init(unified: .toolCalls), usage: .init(), providerMetadata: nil))\n26:             } else {\n27:                 c.yield(.textStart(id: \"original\", providerMetadata: nil))\n28:                 c.yield(.textDelta(id: \"original\", delta: \"Actual original tool continuation\", providerMetadata: nil))\n29:                 c.yield(.textEnd(id: \"original\", providerMetadata: nil))\n30:                 c.yield(.finish(finishReason: .init(unified: .stop), usage: .init(), providerMetadata: nil))\n31:             }\n32:             c.finish()\n33:         })\n34:     }\n35: }\n36: \n37: private enum SplitComponentError: Error { case timeout, cancelled, missing }\n38: @MainActor private final class SplitOpenProbe {\n39:     var request: SplitBridgeRequest?"
+      }
+    ]
+  },
+  {
+    "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift",
+    "currentSHA256": "043ae321551f2a6678ff1b2e83c05595e1c0188ef2b71876de827f0a2686f5e4",
+    "baseSHA256": "043ae321551f2a6678ff1b2e83c05595e1c0188ef2b71876de827f0a2686f5e4",
+    "equal": true,
+    "spans": [
+      {
+        "startLine": 15,
+        "endLine": 45,
+        "text": "15: private struct ToolScriptModel: LanguageModelV3 {\n16:     let provider = \"fixture\"\n17:     let modelId = \"scripted\"\n18:     let counter = StepCounter()\n19:     let toolName: String\n20:     let arguments: String\n21:     init(toolName: String = \"fixture_create\", arguments: String = #\"{\"text\":\"test\"}\"#) {\n22:         self.toolName = toolName; self.arguments = arguments\n23:     }\n24:     func doGenerate(options: LanguageModelV3CallOptions) async throws -> LanguageModelV3GenerateResult { throw HanlinHostError.unsupportedProviderCapability }\n25:     func doStream(options: LanguageModelV3CallOptions) async throws -> LanguageModelV3StreamResult {\n26:         let index = await counter.next()\n27:         return .init(stream: AsyncThrowingStream { c in\n28:             if index == 1 {\n29:                 c.yield(.toolCall(.init(toolCallId: \"opaque/fixture-call\", toolName: toolName, input: arguments)))\n30:                 c.yield(.finish(finishReason: .init(unified: .toolCalls), usage: .init(), providerMetadata: nil))\n31:             } else {\n32:                 c.yield(.textStart(id: \"answer\", providerMetadata: nil))\n33:                 c.yield(.textDelta(id: \"answer\", delta: \"Fixture completed\", providerMetadata: nil))\n34:                 c.yield(.textEnd(id: \"answer\", providerMetadata: nil))\n35:                 c.yield(.finish(finishReason: .init(unified: .stop), usage: .init(), providerMetadata: nil))\n36:             }\n37:             c.finish()\n38:         }, request: nil, response: nil)\n39:     }\n40: }\n41: \n42: private enum SessionFixtureError: Error { case unsupportedNavigation }\n43: \n44: private actor GeneralMutationFixtureHost: HanlinHostIntegration {\n45:     nonisolated let apiVersion = HanlinAPIVersion(major: 1, minor: 1)"
+      }
+    ]
+  },
+  {
+    "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+    "sourceCommit": "c8f9443dcd34015f0e7bbcdb84d36374379ca35c",
+    "sha256": "454a3cb784d8c0e64541bf3204ee77ebd4852d79e8e4bd98d1768f41ff93cf29",
+    "unchangedFromOriginalNativeSource": true,
+    "spans": [
+      {
+        "startLine": 526,
+        "endLine": 528,
+        "text": "                                guard finalVisibleCharacters > 0 || hasSuccessfulToolAction || hasStructuredContent || hasDeniedToolAction else {\n                                    throw HanlinAISDKError.incompleteProviderResponse(reason: rawReason ?? reason.rawValue)\n                                }"
+      }
+    ]
+  }
+]

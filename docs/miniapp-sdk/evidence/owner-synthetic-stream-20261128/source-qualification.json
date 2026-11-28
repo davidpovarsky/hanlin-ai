@@ -1,0 +1,627 @@
+{
+  "recordedAt": "2026-11-28T10:27:32.680636+00:00",
+  "agent": "/root/w1_review_resume",
+  "baseCommit": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-owner-synthetic-stream-fc5ce1ba-20261128",
+  "branch": "codex/w1-owner-synthetic-stream-fc5ce1ba-20261128",
+  "onlyChangedPath": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+  "beforeSHA256": "cab45c3fe1e7733cc772e6e08cc0cc3fddef2c8254a0d98e219f392e1f17408f",
+  "afterSHA256": "c48f33bd0179cc95b0fbf1c5f7455c8e49831ddc612e32ce2eef6fa55a6cb474",
+  "patchSHA256": "241d3b8c83e97595d20e6f2055d6fde09f214cb47fc1a699af6a074331217b74",
+  "addedLines": 3,
+  "removedLines": 0,
+  "wholeFileInverseExact": true,
+  "allUnchangedFunctionBlocks": [
+    {
+      "name": "next",
+      "sha256": "9994fe6c4fd9fd1141b7929faeefab226e2437415de6a66aeb715db1e781d743",
+      "bytes": 245
+    },
+    {
+      "name": "doGenerate",
+      "sha256": "224fc6d415d65d96e08a8ac37536509f3445bb7dd70898ba3c5fd2f84c12b731",
+      "bytes": 170
+    },
+    {
+      "name": "doStream",
+      "sha256": "6568fedaeeb689864c3105b656eff146e10fa8ff32ecca44c62149daaeb3987f",
+      "bytes": 455
+    },
+    {
+      "name": "installed",
+      "sha256": "2d9f4ce683391a23ca6647d27cebcb532803397a8fba434889e8e7dfeef60466",
+      "bytes": 326
+    },
+    {
+      "name": "validateCompleteParts",
+      "sha256": "13478062ada29634a95f931ec07e1684f6dd22c747562b7a9c3d2f1ad715bc20",
+      "bytes": 239
+    },
+    {
+      "name": "receive",
+      "sha256": "e292252fcb1ec6924c49872db4a7c2c62ef896878a4c2869376105ee8049346f",
+      "bytes": 164
+    },
+    {
+      "name": "completed",
+      "sha256": "8333211eee4716114fdee765572d71f7691be3d91871f06a2df74ed83282ffe2",
+      "bytes": 342
+    },
+    {
+      "name": "invalidated",
+      "sha256": "7e38184d6c42ac721e57e09428c23aece8ccebfb4001b18d81ba266aa5660066",
+      "bytes": 280
+    },
+    {
+      "name": "producerStreamDrained",
+      "sha256": "aa0fe85f0410d91a4037a47f7d393de2695c49471f44b547c3740a4913cc6158",
+      "bytes": 226
+    },
+    {
+      "name": "replay",
+      "sha256": "3821e74524420553ea83c20b57b15048f2156d2316cddec8d7abcd6c10fe222c",
+      "bytes": 156
+    },
+    {
+      "name": "pause",
+      "sha256": "5227a25eb20e4ef02346c6342ac0dd7b95cf3eeaf57d1ba8f67a990525a81a1f",
+      "bytes": 178
+    },
+    {
+      "name": "waitUntilPaused",
+      "sha256": "05f7a6f0aa9ca25bfac3b7f3b71ad8da555de0b776398e14696e482bde1fbac3",
+      "bytes": 133
+    },
+    {
+      "name": "release",
+      "sha256": "114dc0d714a95b619c7ce087048ed809deaec9fcb14d9f97c09f270955d6e1ed",
+      "bytes": 734
+    },
+    {
+      "name": "requested",
+      "sha256": "81ffae5098cd69c029f29c41b100500a93dd432e825f836fcd9e7313cbd12dd6",
+      "bytes": 330
+    },
+    {
+      "name": "responded",
+      "sha256": "6bd41746fd522b32dc7ce92a17053bd1f4e1a020e1daf9f805c732d7e19a91cd",
+      "bytes": 272
+    },
+    {
+      "name": "open",
+      "sha256": "722e9cd4848ceab1b951696baf9062e50dc41d3db73c92a399c70ca6833ffd07",
+      "bytes": 298
+    },
+    {
+      "name": "rowIdentity",
+      "sha256": "60093f5817a6a1f0878e18756ea3222a8b0815248bff4ef678ae9e5b2f075bc6",
+      "bytes": 854
+    },
+    {
+      "name": "references",
+      "sha256": "e347af3efb8c93c94e9e70641477e078c8721d76de3b6c5aecc2c189247e1acb",
+      "bytes": 830
+    },
+    {
+      "name": "removeOwnedFixture",
+      "sha256": "fa51f18f221845cd6c982ae662663f5279dcc2e40dc9a0bd3b50d2a2b1e7ebf9",
+      "bytes": 520
+    },
+    {
+      "name": "install",
+      "sha256": "e160af0c879437aa93a616c18ba3120fe0cbc1362d3dc4080d57b272b2fdde03",
+      "bytes": 269
+    },
+    {
+      "name": "waitUntilInstalled",
+      "sha256": "a758e3b2f861e54d289fd37dba38327fd23c68cc7913779814befc974eca155c",
+      "bytes": 141
+    },
+    {
+      "name": "doGenerate",
+      "sha256": "224fc6d415d65d96e08a8ac37536509f3445bb7dd70898ba3c5fd2f84c12b731",
+      "bytes": 170
+    },
+    {
+      "name": "doStream",
+      "sha256": "99cfd8bc961a4286136215034f44b7d5366dfb77178cf0ebd02b85845d70631c",
+      "bytes": 137
+    },
+    {
+      "name": "sameOwnerRestartJoinsItsCancelledOriginalWriterBeforeAdmission",
+      "sha256": "a0d489ad17857e1669a5b190816381031fed1f4d79f61b7bf6e802a802584f63",
+      "bytes": 2672
+    },
+    {
+      "name": "differentOwnerCannotUseTheDrainBarrierToBypassALiveWriter",
+      "sha256": "a6d8729c1a19c044e3ceb2eb1b7bbfe5575289c90a1bb5b94f053698619d684b",
+      "bytes": 2322
+    },
+    {
+      "name": "cancellationDuringPriorDrainCannotAdmitALateReplacement",
+      "sha256": "c2e2d1432b4eaef88ac2a8c5425115742b705f5293c0ca0cdd1d08074c16aea8",
+      "bytes": 3320
+    },
+    {
+      "name": "activeClearAdmitsANewWriterOnlyAfterTheOriginalCASConflictDrains",
+      "sha256": "ea5a9879e8c2b3a36addea2986d5e00482425895548a4041d812f3aad9895342",
+      "bytes": 3854
+    },
+    {
+      "name": "changedOrFailedActiveClearCannotForgiveAnUnqualifiedWriter",
+      "sha256": "772ef0babbd6e82c807fce8faf1f549cea07a8079bfe035040289dac2c9c5a65",
+      "bytes": 4349
+    },
+    {
+      "name": "deletedOriginalRowDuringInternalInvalidationCannotConstructANewEngine",
+      "sha256": "1401dfbca36cd7c86f8cd248da2ac99f2dcc13968505ab7cf7b4aed0ea5b5670",
+      "bytes": 2709
+    },
+    {
+      "name": "originalConsentExpiresRevokesAndRejectsStaleSheetAnswers",
+      "sha256": "59e02f05124a41267718b7b60d5564ffb3b92dcfcafd292caddc175acc663344",
+      "bytes": 3290
+    },
+    {
+      "name": "invocation",
+      "sha256": "3f0b38627006abd699bd244d9df387842f2b80907b12e95190f403f0d668eebe",
+      "bytes": 598
+    },
+    {
+      "name": "nativeConsentUsesOriginalOperationAcrossForeignAnswerContextAndRevocation",
+      "sha256": "754ed0aab0a8d0090703cb78c4e4481021196bf0940ab95ac3184134701003c2",
+      "bytes": 4737
+    },
+    {
+      "name": "actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow",
+      "sha256": "11ea64a9886023def42543139a6782eb6d24a0977938ecea97b5c567bfa2d1d2",
+      "bytes": 6836
+    },
+    {
+      "name": "originalProviderCredentialRowsReopenAndRecoverWithoutSchemaChanges",
+      "sha256": "91cfcb0dadaa0ee1cdec3ea405459609c72bfabc3f84473dead5e45fb596dc81",
+      "bytes": 747
+    },
+    {
+      "name": "originalCredentialEditorRemainsTransientAndLegacyCompatible",
+      "sha256": "588d925ca0f49948050f27374522b7d8b85047049537217ac7a45d2a12a04686",
+      "bytes": 2145
+    },
+    {
+      "name": "originalCredentialStaleContextCannotCheckpointOverNewerSavedValue",
+      "sha256": "45efa7eb17039f06fe5ee205c73be38f4e0e078a3dc8f477cb5aeafa802ddad9",
+      "bytes": 1523
+    },
+    {
+      "name": "originalSecuredCredentialRotationRetainsPredecessorAndRejectsStaleDraft",
+      "sha256": "907e0b2fcedf1eed6bd2f33cfdd9d720fe5e827dbcde8ea7028e7e800b358c21",
+      "bytes": 2589
+    },
+    {
+      "name": "originalDiscoveryAndProbesUseUnsavedCredentialWithoutImplicitFallback",
+      "sha256": "a30349a2dfc02d09276bb0823a3d4bdb31d3b56ef429befd00c23c6085844e16",
+      "bytes": 4505
+    },
+    {
+      "name": "originalCredentialCommitSurvivesPublicationFailureAndRetryDoesNotResave",
+      "sha256": "3a7f55261f3dd303f881a17b46e57149a919d651d23b4af8559f57bebca79ba7",
+      "bytes": 2931
+    },
+    {
+      "name": "protectedCredentialMetadataSavesPreserveOriginalRowsAndGenerations",
+      "sha256": "97fa7621d0d6323c346f30e8a3c5a8f77ebe319fe5aee0f45c0775b76db3e41b",
+      "bytes": 1011
+    },
+    {
+      "name": "protectedCredentialMetadataSaveRetainsNilAndEmptyRepresentations",
+      "sha256": "642c7984423e29585226afd503ad315ee598ef48e616eb21201064c38d5e7f1f",
+      "bytes": 1595
+    },
+    {
+      "name": "protectedCredentialExplicitMigrationIsTargetedAndRecoverable",
+      "sha256": "d28056d4caccdeb50c22fe2d37d561235fec8da334e4f8293638ff010b7cddd4",
+      "bytes": 783
+    },
+    {
+      "name": "protectedCredentialMigrationRejectsBuiltInMarkersAndEmptyKeys",
+      "sha256": "89f7d0ffb6cd145598e88a5332b56edf5002b8a930399fbe34ff7fbf3e8aebc8",
+      "bytes": 1101
+    },
+    {
+      "name": "protectedCredentialNewProviderCommitsOnlyReferenceAndFailedInsertRetainsExistingRows",
+      "sha256": "9cc951f5f06b3d2931f0c23af9bb28d92c825c3001a4638a0738cc39803a8493",
+      "bytes": 1681
+    },
+    {
+      "name": "protectedCredentialExplicitReplacementRecoversMissingReferenceWithoutPlaintextFallback",
+      "sha256": "3f5841a37f4d5f1e5b2cc3ca6b001e4fbc99390c89f0398f01eafffff82b2168",
+      "bytes": 1846
+    },
+    {
+      "name": "protectedCredentialMetadataFailureAndStaleDraftPreserveOriginalDiskRow",
+      "sha256": "ecb0c4c929e9163635bba6849a0c3b42511e8195a9e55762ad0c6d11193990cd",
+      "bytes": 2553
+    },
+    {
+      "name": "originalCredentialStageFailureLeavesOriginalDiskRowUnchanged",
+      "sha256": "f4342ab30b7ad2f7849f378fd3f7fd23de357f4c2b2ef4aedd4249b9c190fe8b",
+      "bytes": 1314
+    },
+    {
+      "name": "originalCredentialReadOnlySaveRetainsStagedRecoveryWithoutReplacingLegacyRow",
+      "sha256": "7cd388b4e572e5284548de3cde16ce70d1b22c084cdbdacf78967415067eb774",
+      "bytes": 1624
+    },
+    {
+      "name": "originalCredentialHandlesFailClosedAndPreserveCurrentRequestAuthority",
+      "sha256": "6b598265a5c55aadf2f7bec708ba53f71f41c4b336ef6297e1f4762666ebb44c",
+      "bytes": 3309
+    },
+    {
+      "name": "originalSecuredSearchSelectionSurvivesUnavailableKeychain",
+      "sha256": "57e842db8d9c742f82777678b69f578fd2205b7bf9455a2cc85c62339d3ae0aa",
+      "bytes": 909
+    },
+    {
+      "name": "originalCompactPublisherExportsOnlySecuredReferenceAndRetainsLegacyCompatibility",
+      "sha256": "a2b9ac6d6098873bd6a879b1bf601183bd10394b782ec2bfdf5b3e96f5dc6743",
+      "bytes": 2336
+    },
+    {
+      "name": "originalProviderAdmissionRejectsChangesDuringDiagnosticAwait",
+      "sha256": "3c8485ed40aec1a90005c6a514556f7c4fe65a7cf685d65e3a2b3237e10d59a8",
+      "bytes": 4537
+    },
+    {
+      "name": "originalDirectTransportRechecksOwnerInsideItsProducer",
+      "sha256": "75f814dd683a62e0454b2ee958d2b7acd04e640fa57364f7de0c9e986c0c6e02",
+      "bytes": 2976
+    },
+    {
+      "name": "originalReusedSDKEngineUsesEachTurnsManagerAndTransport",
+      "sha256": "dba9aa46d6b8ffc2bd27e4fd48aa46e0325b48b54910a786e19d846ff0244f61",
+      "bytes": 4846
+    },
+    {
+      "name": "originalInjectedProviderCannotBeReplacedByTurnTransport",
+      "sha256": "281cb9c5a03b965e156f331dbb09e44f9e84d822443ee5bbcada8f6a7d852d79",
+      "bytes": 1610
+    },
+    {
+      "name": "originalCredentialPortRejectsForeignModelNamespaceRequestAndDeletedOrigin",
+      "sha256": "75b3c8082a1635d5c0892048210b24bf3829d5aa5867c0ffbfe71dc109971432",
+      "bytes": 3313
+    },
+    {
+      "name": "originalMemoryPortRechecksOptInsAndCannotReplaceOriginlessRows",
+      "sha256": "7d9629e43db971e4f81b09cd1bafbca47b0b09b357312a0f962e9436281647f4",
+      "bytes": 3750
+    },
+    {
+      "name": "originalDataEpochSurvivesEngineReplacementAndIsRevokedDuringPreparation",
+      "sha256": "2ccf1cd91ce24ed616bc36d110dac64a36642d6a80b9debacc526da5d090c437",
+      "bytes": 2802
+    },
+    {
+      "name": "deletingConversationDuringOriginalEnginePreparationCannotAdmitLateSession",
+      "sha256": "157fe2f65d68c3e86991569c7f76b8aada832f61b3ebb46e9a5c28417b056406",
+      "bytes": 1943
+    },
+    {
+      "name": "stoppingInlineToolReleasesOnlyItsLeaseBeforeNonCooperativeExecutorDrains",
+      "sha256": "9193c1fc3dd3a00fb4f1b64599159de430be7be0711fff561704eafa710e1151",
+      "bytes": 4992
+    },
+    {
+      "name": "originalTypedAttachmentStorePreservesBytesAndRejectsForeignSessionMetadataAndTurn",
+      "sha256": "b1bee4a6e930ce48f088d8c0b0d4ef80bd0aee7b686e87068a3142079169fcfd",
+      "bytes": 3289
+    },
+    {
+      "name": "actualSDKAdapterUsesOriginalAttachmentTurnAcrossDiagnosticsRoundsAndRevocation",
+      "sha256": "89d75db9d54bafe01d8b0087c870863c775b5a51da3876c6256145e734449c2b",
+      "bytes": 7401
+    },
+    {
+      "name": "existingSwiftDataRowPreservesLegacyFieldsAndRejectsConflictForeignScopeAndDeletion",
+      "sha256": "03927d50ff10c187dfbaade94defec2055e8ac5a0d9d0eac61bc2916b2b8a560",
+      "bytes": 1945
+    },
+    {
+      "name": "clearHistoryCommitsCanonicalBarrierAndVisibleReplacementToOriginalDiskStore",
+      "sha256": "9153d9e558dc15f2c665554720c6031a676d07f50e3df8fa4eb902de76b7bbb6",
+      "bytes": 5004
+    },
+    {
+      "name": "database",
+      "sha256": "44d6c996ffeaa715df8137bc642f9b7e720767a0eeba41d1eac1ab620dc1200b",
+      "bytes": 235
+    },
+    {
+      "name": "clearOriginalStore",
+      "sha256": "f7b31f74079889cbc2d9b28559fe9623fc1403df39bf43d63fd94d07b61da209",
+      "bytes": 2463
+    },
+    {
+      "name": "clearHistoryRejectsAlreadySuspendedOriginalStoreWriter",
+      "sha256": "8acc85c61991f9617c9167b584146bb732402b247c9e106ca7c1cda2f5ba196f",
+      "bytes": 2781
+    },
+    {
+      "name": "clearHistorySaveFailureRestoresOriginalDiskContentWithoutSuccessMarker",
+      "sha256": "68029286f04dc25b263d658fe741fdc8a648107a6aadfedba08bb1bd1826d916",
+      "bytes": 3685
+    },
+    {
+      "name": "database",
+      "sha256": "09db4c178e32277a8e17a9ced567b038da444fa909ddd2827e3859f2925812bc",
+      "bytes": 252
+    },
+    {
+      "name": "seed",
+      "sha256": "6807c7a5a2e0fbbeb30dbac12d6d2ed5e17fbb0a70d7972c5b825012b377a153",
+      "bytes": 675
+    },
+    {
+      "name": "rejectReadOnlyClear",
+      "sha256": "dfa715cd9a8d068e030bcef20d09c0b02399a0c8562e523a6aa698591dc25b8b",
+      "bytes": 1294
+    },
+    {
+      "name": "temporaryClearHistoryDropsOriginalSessionHistoryWithoutInsertingStoreRows",
+      "sha256": "b1478d5a7f8a6dd61a8740d8fd746f87301c84e75ebffb7abd01df6e72129113",
+      "bytes": 2118
+    },
+    {
+      "name": "clearHistoryPreservesUnrecognizedOrExhaustedCanonicalRecord",
+      "sha256": "6fa21533997c4b9f3765c364bc69b1ff9bf78e55020a7f0e6c68468533140b8c",
+      "bytes": 1819
+    },
+    {
+      "name": "diskBackedOriginalConversationReopensWithoutLosingLegacyOrCanonicalHistory",
+      "sha256": "9020ba6ada87acf53853eea2b179cec031279965c8e38619cd33e3b96cf04da6",
+      "bytes": 5103
+    },
+    {
+      "name": "openDatabase",
+      "sha256": "ddbe9e80d9604f348a2f7cf7672398dd5b6828d9d74572402d863a4c9c59c0a6",
+      "bytes": 216
+    },
+    {
+      "name": "seedOriginalStore",
+      "sha256": "1a66805ab2bb4a8ffd37099b3aad9624b7c9b1849e5ea0d34c502ba01ea29310",
+      "bytes": 754
+    },
+    {
+      "name": "reopenAndRejectFutureFormat",
+      "sha256": "cd18e22aa0fe2b5b66a4df98c9c215ae6ce5388c89f96b4fd7a457382656b416",
+      "bytes": 1502
+    },
+    {
+      "name": "originalStoreKeepsItsContainerAliveAcrossDeferredPersistenceAfterCreatorReturns",
+      "sha256": "155efebb0dcdccda28b30bdde9ea649ce89f177f5239b8169d23d289ec64a2e3",
+      "bytes": 2483
+    },
+    {
+      "name": "makeStore",
+      "sha256": "f05e55eec685c9242d938192a9d50382e29d2d5b254595bc1c0f3f0eded0f3c4",
+      "bytes": 1021
+    },
+    {
+      "name": "identicalContentAndPartIDsKeepExactRowRunBindingAndOriginalReplaySession",
+      "sha256": "2c2f7e13040d5a37581ec3e8c91a603d3cafe6a9b968af43208d45a43b18cb40",
+      "bytes": 3559
+    },
+    {
+      "name": "originalHostActionContinuesThroughTheSameOwnerEngineAndCanonicalStore",
+      "sha256": "49a810f5f39037162874d02ea07866c50a56a3048388c0ea45d54b7263d1460b",
+      "bytes": 2598
+    },
+    {
+      "name": "temporaryCanonicalMetadataSurvivesCancellationWithoutDatabaseWrite",
+      "sha256": "e7d576cda3de969618574cfa686ae0b2fb1870ee5a2793ac0a891313fdf11687",
+      "bytes": 1549
+    },
+    {
+      "name": "historyOpenRejectsDeletedForeignAndCancelledOriginsWithoutCreatingSession",
+      "sha256": "eb48993e81e84e072852128e861000de2202e2da6395c85662c89335e6977ed5",
+      "bytes": 1666
+    },
+    {
+      "name": "historicalReceiptDedupRejectsChangedLargeIntegerOutcomeAndPreservesBytes",
+      "sha256": "29adfad04d26687c432892fa32c411fa313fbf877394acc1e0d7d7613c5e1c86",
+      "bytes": 3783
+    },
+    {
+      "name": "receipt",
+      "sha256": "17df11c2d91cee58e90e0f64a248d4e257c59c152fa238c286592068bfe0a751",
+      "bytes": 704
+    },
+    {
+      "name": "liveSettledAndProvisionalReceiptsHaveDistinctReconciliationRules",
+      "sha256": "af68b8df3f998292d68d4119b98bad4e6d318152de9266caa9a2aa01a411e9c9",
+      "bytes": 5307
+    },
+    {
+      "name": "receipt",
+      "sha256": "ae0287ad87f032f26bd236a29e37fe0035eb81531665ff2a2f73eb3127b348ed",
+      "bytes": 816
+    },
+    {
+      "name": "acceptedOriginAcknowledgementCannotClearAnotherWindowOrNewerDelivery",
+      "sha256": "17d0be0b83fc6039c513ca2d7ebd356519771c4b456b64f7dd1ce8279737993c",
+      "bytes": 2982
+    },
+    {
+      "name": "request",
+      "sha256": "c88a581f274d46ad6efe9e5196b9aba1935a6d023555ffac86277dc92d967725",
+      "bytes": 573
+    },
+    {
+      "name": "actualNativeBoundaryPreservesExactInputsAndRejectsInvalidOrChangedContextBeforeEffects",
+      "sha256": "09b98f507d3aaefed88847f646ff4ad4d1916a1785d58e942561c5bddfbddc0b",
+      "bytes": 5159
+    },
+    {
+      "name": "officialToolPayloadUsesOriginalRendererAndPersistsExactBytesWithoutInferringArbitraryJSON",
+      "sha256": "6d244083ca01657c1769004e9277ccfed5c392684b2358591f3e6020889b2363",
+      "bytes": 1383
+    },
+    {
+      "name": "cachedSearchCatalogKeepsOriginalRoutesAndInvalidatesChangedSchemasBeforeDispatch",
+      "sha256": "f17620799a4616e5eec8292219889479ca5baa6bed05708aba7ad27ab3addaad",
+      "bytes": 6663
+    },
+    {
+      "name": "appHostInvokesOriginalExecutorOnceAndUsesExplicitNativeOutcome",
+      "sha256": "f5e9005413d17fba297b926837933bc7b4b9885619612784da4f142006f07899",
+      "bytes": 5280
+    }
+  ],
+  "originalAssertionLines": 655,
+  "originalAssertionLinesExact": true,
+  "originalTimingLines": 15,
+  "originalTimingLinesExact": true,
+  "sharedFixtureConsumers": [
+    {
+      "method": "sameOwnerRestartJoinsItsCancelledOriginalWriterBeforeAdmission",
+      "constructorLine": 258,
+      "actualMethodNode": {
+        "duration": "0.26s",
+        "durationInSeconds": 0.26425600051879883,
+        "name": "sameOwnerRestartJoinsItsCancelledOriginalWriterBeforeAdmission()",
+        "nodeIdentifier": "HanlinAppAgentSessionOwnerTests/sameOwnerRestartJoinsItsCancelledOriginalWriterBeforeAdmission()",
+        "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/sameOwnerRestartJoinsItsCancelledOriginalWriterBeforeAdmission()",
+        "nodeType": "Test Case",
+        "result": "Passed"
+      }
+    },
+    {
+      "method": "differentOwnerCannotUseTheDrainBarrierToBypassALiveWriter",
+      "constructorLine": 298,
+      "actualMethodNode": {
+        "children": [
+          {
+            "name": "Caught error: .incompleteProviderResponse(reason: \"stop\")",
+            "nodeType": "Failure Message",
+            "sourceLocation": {
+              "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+              "lineNumber": 0
+            }
+          }
+        ],
+        "duration": "0.084s",
+        "durationInSeconds": 0.08409476280212402,
+        "name": "differentOwnerCannotUseTheDrainBarrierToBypassALiveWriter()",
+        "nodeIdentifier": "HanlinAppAgentSessionOwnerTests/differentOwnerCannotUseTheDrainBarrierToBypassALiveWriter()",
+        "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/differentOwnerCannotUseTheDrainBarrierToBypassALiveWriter()",
+        "nodeType": "Test Case",
+        "result": "Failed"
+      }
+    },
+    {
+      "method": "cancellationDuringPriorDrainCannotAdmitALateReplacement",
+      "constructorLine": 331,
+      "actualMethodNode": {
+        "duration": "0.069s",
+        "durationInSeconds": 0.06893801689147949,
+        "name": "cancellationDuringPriorDrainCannotAdmitALateReplacement()",
+        "nodeIdentifier": "HanlinAppAgentSessionOwnerTests/cancellationDuringPriorDrainCannotAdmitALateReplacement()",
+        "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/cancellationDuringPriorDrainCannotAdmitALateReplacement()",
+        "nodeType": "Test Case",
+        "result": "Passed"
+      }
+    },
+    {
+      "method": "activeClearAdmitsANewWriterOnlyAfterTheOriginalCASConflictDrains",
+      "constructorLine": 388,
+      "actualMethodNode": {
+        "children": [
+          {
+            "duration": "0.13s",
+            "durationInSeconds": 0.1335439682006836,
+            "name": "false",
+            "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/activeClearAdmitsANewWriterOnlyAfterTheOriginalCASConflictDrains(temporary:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+            "nodeType": "Arguments",
+            "result": "Passed"
+          },
+          {
+            "duration": "0.023s",
+            "durationInSeconds": 0.023233890533447266,
+            "name": "true",
+            "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/activeClearAdmitsANewWriterOnlyAfterTheOriginalCASConflictDrains(temporary:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+            "nodeType": "Arguments",
+            "result": "Passed"
+          }
+        ],
+        "duration": "0.078s",
+        "durationInSeconds": 0.07838892936706543,
+        "name": "activeClearAdmitsANewWriterOnlyAfterTheOriginalCASConflictDrains(temporary:)",
+        "nodeIdentifier": "HanlinAppAgentSessionOwnerTests/activeClearAdmitsANewWriterOnlyAfterTheOriginalCASConflictDrains(temporary:)",
+        "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/activeClearAdmitsANewWriterOnlyAfterTheOriginalCASConflictDrains(temporary:)",
+        "nodeType": "Test Case",
+        "result": "Passed"
+      }
+    },
+    {
+      "method": "changedOrFailedActiveClearCannotForgiveAnUnqualifiedWriter",
+      "constructorLine": 446,
+      "actualMethodNode": {
+        "children": [
+          {
+            "duration": "0.11s",
+            "durationInSeconds": 0.11314225196838379,
+            "name": "false",
+            "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/changedOrFailedActiveClearCannotForgiveAnUnqualifiedWriter(temporary:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+            "nodeType": "Arguments",
+            "result": "Passed"
+          },
+          {
+            "duration": "0.021s",
+            "durationInSeconds": 0.021429061889648438,
+            "name": "true",
+            "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/changedOrFailedActiveClearCannotForgiveAnUnqualifiedWriter(temporary:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+            "nodeType": "Arguments",
+            "result": "Passed"
+          }
+        ],
+        "duration": "0.067s",
+        "durationInSeconds": 0.06728565692901611,
+        "name": "changedOrFailedActiveClearCannotForgiveAnUnqualifiedWriter(temporary:)",
+        "nodeIdentifier": "HanlinAppAgentSessionOwnerTests/changedOrFailedActiveClearCannotForgiveAnUnqualifiedWriter(temporary:)",
+        "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/changedOrFailedActiveClearCannotForgiveAnUnqualifiedWriter(temporary:)",
+        "nodeType": "Test Case",
+        "result": "Passed"
+      }
+    },
+    {
+      "method": "deletedOriginalRowDuringInternalInvalidationCannotConstructANewEngine",
+      "constructorLine": 506,
+      "actualMethodNode": {
+        "children": [
+          {
+            "name": "Caught error: .incompleteProviderResponse(reason: \"stop\")",
+            "nodeType": "Failure Message",
+            "sourceLocation": {
+              "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+              "lineNumber": 0
+            }
+          }
+        ],
+        "duration": "0.055s",
+        "durationInSeconds": 0.054556846618652344,
+        "name": "deletedOriginalRowDuringInternalInvalidationCannotConstructANewEngine()",
+        "nodeIdentifier": "HanlinAppAgentSessionOwnerTests/deletedOriginalRowDuringInternalInvalidationCannotConstructANewEngine()",
+        "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/deletedOriginalRowDuringInternalInvalidationCannotConstructANewEngine()",
+        "nodeType": "Test Case",
+        "result": "Failed"
+      }
+    }
+  ],
+  "productionSourceModified": false,
+  "SDK396Intersection": [],
+  "Host99Intersection": [],
+  "nativeExecution": "NOT_RUN",
+  "portableMirrorTests": "NOT_RUN_NOT_REQUIRED",
+  "preexistingNativeFailures": "Original de two Owner failures remain immutable; current candidate is source-only."
+}
