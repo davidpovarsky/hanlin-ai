@@ -544,6 +544,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         continueAfterFailure = false
         executionTimeAllowance = 420
         deadline = Date().addingTimeInterval(420)
+        let orientationPreparation = try prepareWidgetFamilyInitialOrientation()
         let prior = XCUIDevice.shared.orientation
         let priorName = widgetFamilyOrientationName()
         let runID = UUID().uuidString.lowercased()
@@ -557,6 +558,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
                   "fixtureTitle": "Interactive Widget Matrix", "instanceName": instanceName,
                   "expectedFamily": family, "sizeLabel": sizeLabel, "priorOrientation": priorName,
                   "status": "RUNNING", "test": name, "startedAt": widgetStateTimestamp()]
+        if let orientationPreparation { record["orientationPreparation"] = orientationPreparation }
         var boundPlacement = false
         var removed = false
         var restored = false
@@ -666,6 +668,37 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
             record["status"] = "FAILED"; record["error"] = String(describing: error)
             throw error
         }
+    }
+
+    private func prepareWidgetFamilyInitialOrientation() throws -> [String: Any]? {
+        let initial = XCUIDevice.shared.orientation
+        guard initial == .unknown else { return nil }
+        var preparation: [String: Any] = [
+            "schema": 1, "initialDeviceOrientation": "unknown", "initialRawValue": initial.rawValue,
+            "requestedBaseline": "portrait", "startedAt": widgetStateTimestamp(),
+            "scope": "Explicit owned-simulator preparation; the boot orientation is not inferred."
+        ]
+        XCUIDevice.shared.press(.home)
+        XCUIDevice.shared.orientation = .portrait
+        let ready = wait(25) {
+            self.widgetFamilyOrientationName() == "portrait" && self.widgetFamilyScreenMatches("portrait")
+        }
+        let observed = widgetFamilyOrientationName()
+        let geometryMatches = widgetFamilyScreenMatches("portrait")
+        let verified = ready && observed == "portrait" && geometryMatches
+        preparation["observedOrientation"] = observed
+        preparation["homeGeometryMatches"] = geometryMatches
+        preparation["status"] = verified ? "OBSERVED_BASELINE" : "FAILED"
+        preparation["finishedAt"] = widgetStateTimestamp()
+        if springboard.state == .runningForeground {
+            preparation["homeFrame"] = widgetStateFrame(springboard.frame)
+        }
+        let attachment = XCTAttachment(string: try jsonString(preparation))
+        attachment.name = "widget-family-orientation-preparation"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+        try require(verified, "The explicit starting orientation was not observed through the public device state and Home Screen geometry.")
+        return preparation
     }
 
     private func widgetFamilyOrientationName() -> String {
@@ -2517,10 +2550,14 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         try require(!mini.alerts["Editor"].firstMatch.exists, "The actual editor refused its source save.")
     }
 
-    private func studioReplaceText(_ field: XCUIElement, with value: String, usingKeyboardSelection: Bool = false) throws {
+    private func studioReplaceText(_ field: XCUIElement, with value: String, clearingObservedValue: Bool = false) throws {
         try tap(field, "Focus the actual native source/path field.")
-        if usingKeyboardSelection {
-            field.typeKey("a", modifierFlags: .command)
+        if clearingObservedValue {
+            let original = try XCTUnwrap(field.value as? String, "The actual path field has no readable current value.")
+            if !original.isEmpty {
+                field.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: original.count))
+            }
+            try require(field.value as? String == "", "The actual path field did not become empty before replacement.")
         } else if let original = field.value as? String, !original.isEmpty {
             field.press(forDuration: 1.2)
             var selectAll = mini.menuItems["Select All"].firstMatch
@@ -2540,7 +2577,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
     private func studioPathAlert(_ title: String, field: String, value: String) throws {
         let alert = mini.alerts[title].firstMatch
         try require(alert.waitForExistence(timeout: bounded(15)), "The actual source/path alert did not open.")
-        try studioReplaceText(alert.textFields[field].firstMatch, with: value, usingKeyboardSelection: true)
+        try studioReplaceText(alert.textFields[field].firstMatch, with: value, clearingObservedValue: true)
         try tap(alert.buttons["Save"].firstMatch, "Commit the actual path operation through the shipping UI.")
         try require(wait(20) { !alert.exists }, "The actual path operation did not complete.")
         try require(!mini.alerts["Project unavailable"].exists && !mini.alerts["Editor"].exists,
@@ -2730,6 +2767,8 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
 
     private func studioVisibleFilesControl(_ labels: [String], in application: XCUIApplication,
                                            buttons: Bool = false) -> XCUIElement? {
+        let state = application.state
+        guard state != .notRunning && state != .unknown else { return nil }
         let exact = NSPredicate(format: "label IN %@ OR identifier IN %@", labels as NSArray, labels as NSArray)
         let queries = buttons ? [application.buttons] : [application.cells, application.staticTexts]
         return queries.flatMap { $0.matching(exact).allElementsBoundByAccessibilityElement }
@@ -2749,6 +2788,8 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
     private func studioLocalFilesProvider(_ message: String) throws -> XCUIApplication {
         let candidates = [mini, files]
         for application in candidates {
+            let state = application.state
+            if state == .notRunning || state == .unknown { continue }
             let browse = application.buttons["Browse"].firstMatch
             if browse.exists && browse.isEnabled && browse.isHittable { browse.tap(); break }
         }
