@@ -807,7 +807,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         try reveal(archive, in: list, message: "The exact component source package was not staged.")
         try tap(archive, "Import the authored components through the original Widget compiler.")
         let install = mini.buttons["hanlin-package-install"].firstMatch
-        let importError = mini.descendants(matching: .any)["hanlin-import-error-message"].firstMatch
+        let importError = mini.staticTexts["hanlin-import-error-message"].firstMatch
         let diagnostics = mini.descendants(matching: .any)["hanlin-import-diagnostics-sheet"].firstMatch
         try require(wait(120) { install.exists || importError.exists || diagnostics.exists },
                     "The component import did not reach a concrete original compiler outcome.")
@@ -1695,7 +1695,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         try reveal(archive, in: list, message: "The exact original Matrix archive was not staged.")
         try tap(archive, "Import the authored Matrix through the original compiler.")
         let install = mini.buttons["hanlin-package-install"].firstMatch
-        let importError = mini.descendants(matching: .any)["hanlin-import-error-message"].firstMatch
+        let importError = mini.staticTexts["hanlin-import-error-message"].firstMatch
         let diagnostics = mini.descendants(matching: .any)["hanlin-import-diagnostics-sheet"].firstMatch
         try require(wait(120) { install.exists || importError.exists || diagnostics.exists },
                     "The original Matrix import did not reach a concrete outcome.")
@@ -1938,7 +1938,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
             try reveal(archive, in: list, message: "The exact staged surface archive is absent.")
             try tap(archive, "Import the exact surface archive.")
             let install = mini.buttons["hanlin-package-install"].firstMatch
-            let importError = mini.descendants(matching: .any)["hanlin-import-error-message"].firstMatch
+            let importError = mini.staticTexts["hanlin-import-error-message"].firstMatch
             let diagnostics = mini.descendants(matching: .any)["hanlin-import-diagnostics-sheet"].firstMatch
             try require(wait(120) { install.exists || importError.exists || diagnostics.exists },
                         "Original strict package validation did not reach an actual outcome.")
@@ -2076,10 +2076,33 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
 
     private func shortcutActionSearchFields() -> [XCUIElement] {
         let labels = ["Search Actions", "Search for apps and actions"]
-        return shortcuts.searchFields.allElementsBoundByIndex.filter { field in
-            field.exists &&
-                (labels.contains(field.label) || labels.contains(field.placeholderValue ?? "")) &&
-                field.isEnabled && field.isHittable
+        let fields = shortcuts.searchFields.allElementsBoundByIndex.filter {
+            $0.exists && $0.isEnabled && $0.isHittable
+        }
+        let named = fields.filter {
+            labels.contains($0.label) || labels.contains($0.placeholderValue ?? "")
+        }
+        if !named.isEmpty { return named }
+
+        // The observed manual editor calls its action search simply "Search".
+        // Bind it to this new/recorded shortcut, never the All Shortcuts library.
+        let newName = "New Shortcut(?: [1-9][0-9]*)?"
+        let savedName = record["savedShortcutName"] as? String ?? ""
+        let editorBars = shortcuts.navigationBars.matching(NSPredicate(
+            format: "identifier MATCHES %@ OR label MATCHES %@ OR (%@ != '' AND (identifier == %@ OR label == %@))",
+            newName, newName, savedName, savedName, savedName
+        )).allElementsBoundByIndex.filter { bar in
+            guard bar.exists else { return false }
+            let frame = bar.frame
+            return !frame.isEmpty && frame.intersects(self.shortcuts.frame) &&
+                !bar.buttons.matching(identifier: "Editor").firstMatch.exists
+        }
+        guard editorBars.count == 1 else { return [] }
+        let libraryFrames = shortcuts.navigationBars.matching(identifier: "All Shortcuts")
+            .searchFields.allElementsBoundByIndex.filter { $0.exists }.map { $0.frame }
+        return fields.filter { field in
+            (field.label == "Search" || field.placeholderValue == "Search") &&
+                !libraryFrames.contains(field.frame)
         }
     }
 
@@ -2099,8 +2122,10 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
             }
             guard fields.isEmpty && navigateFromNewShortcut else { return false }
             if !enteredEditor {
-                let editors = self.shortcuts.navigationBars.matching(identifier: "New Shortcut")
-                    .buttons.matching(identifier: "Editor").allElementsBoundByIndex
+                let newName = "New Shortcut(?: [1-9][0-9]*)?"
+                let editors = self.shortcuts.navigationBars.matching(NSPredicate(
+                    format: "identifier MATCHES %@ OR label MATCHES %@", newName, newName
+                )).buttons.matching(identifier: "Editor").allElementsBoundByIndex
                     .filter { $0.exists && $0.isEnabled && $0.isHittable }
                 guard editors.count <= 1 else { return false }
                 if let editor = editors.first {
@@ -2245,7 +2270,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         let search = try findShortcutActionSearch(
             "Search for the original built-in " + title + " action.", navigateFromNewShortcut: false)
         if let current = search.value as? String, !current.isEmpty,
-           current != "Search Actions" && current != "Search for apps and actions" {
+           current != "Search Actions" && current != "Search for apps and actions" && current != "Search" {
             search.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: current.count))
         }
         search.typeText(title)
@@ -3010,7 +3035,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
             try tap(mini.buttons["miniapps-studio-build-install"].firstMatch, "Build and install through the shipping Studio action.")
             record["buildPressed"] = true
             let install = mini.buttons["hanlin-package-install"].firstMatch
-            let importError = mini.descendants(matching: .any)["hanlin-import-error-message"].firstMatch
+            let importError = mini.staticTexts["hanlin-import-error-message"].firstMatch
             let diagnostics = mini.descendants(matching: .any)["hanlin-import-diagnostics-sheet"].firstMatch
             try require(wait(360) { install.exists || importError.exists || diagnostics.exists || editorError.exists },
                         "The original Studio build did not reach a real import preview or error.")
@@ -4004,7 +4029,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
             try reveal(archive, in: list, message: "The independent original-produced long-running archive is absent.")
             try tap(archive, "Import the exact independently authored archive.")
             let install = mini.buttons["hanlin-package-install"].firstMatch
-            let importError = mini.descendants(matching: .any)["hanlin-import-error-message"].firstMatch
+            let importError = mini.staticTexts["hanlin-import-error-message"].firstMatch
             let diagnostics = mini.descendants(matching: .any)["hanlin-import-diagnostics-sheet"].firstMatch
             try require(wait(120) { install.exists || importError.exists || diagnostics.exists },
                         "Original strict validation did not reach an actual outcome.")
@@ -4301,7 +4326,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
             try reveal(archive, in: list, message: "The original-produced native-list archive is absent.")
             try tap(archive, "Read the exact independent native-list archive.")
             let install = mini.buttons["hanlin-package-install"].firstMatch
-            let failure = mini.descendants(matching: .any)["hanlin-import-error-message"].firstMatch
+            let failure = mini.staticTexts["hanlin-import-error-message"].firstMatch
             let diagnostics = mini.descendants(matching: .any)["hanlin-import-diagnostics-sheet"].firstMatch
             try require(wait(120) { install.exists || failure.exists || diagnostics.exists },
                         "The original strict importer did not finish.")
