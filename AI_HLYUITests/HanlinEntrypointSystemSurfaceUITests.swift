@@ -1727,14 +1727,101 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         try tap(action, "Tap the actual Live Activity action.")
     }
 
+    private func createSystemShortcut(_ message: String) throws {
+        // Onboarding and the observed expanded sidebar share the original
+        // creation allowance; no navigation tap substitutes for actual creation.
+        var continuedWhatsNew = false
+        var hidSidebar = false
+        var create = shortcuts.buttons["Create Shortcut"].firstMatch
+        try require(wait(12) {
+            let whatsNew = self.shortcuts.staticTexts["What’s New in Shortcuts"].firstMatch
+            if whatsNew.exists {
+                let next = self.shortcuts.buttons["Continue"].firstMatch
+                guard !continuedWhatsNew && whatsNew.isHittable &&
+                        next.exists && next.isEnabled && next.isHittable else { return false }
+                continuedWhatsNew = true
+                next.tap()
+                return false
+            }
+            create = self.firstButton(self.shortcuts, ["Create Shortcut", "Add", "New Shortcut"])
+            if create.exists && create.isEnabled && create.isHittable { return true }
+
+            let newShortcut = self.shortcuts.buttons["New Shortcut"].firstMatch
+            guard !hidSidebar && newShortcut.exists && newShortcut.isEnabled &&
+                    !newShortcut.isHittable else { return false }
+            let sidebarBars = self.shortcuts.navigationBars
+                .containing(.button, identifier: "sidebar.button.edit").allElementsBoundByIndex
+                .filter { $0.buttons["sidebar.button.newfolder"].firstMatch.exists }
+            guard sidebarBars.count == 1 else { return false }
+            let hideButtons = sidebarBars[0].buttons.matching(identifier: "Hide Sidebar")
+                .allElementsBoundByIndex.filter { $0.exists && $0.isEnabled && $0.isHittable }
+            guard hideButtons.count == 1 else { return false }
+            hidSidebar = true
+            hideButtons[0].tap()
+            return false
+        }, message)
+        create.tap()
+    }
+
+    private func shortcutActionSearchFields() -> [XCUIElement] {
+        let labels = ["Search Actions", "Search for apps and actions"]
+        return shortcuts.searchFields.allElementsBoundByIndex.filter { field in
+            field.exists &&
+                (labels.contains(field.label) || labels.contains(field.placeholderValue ?? "")) &&
+                field.isEnabled && field.isHittable
+        }
+    }
+
+    private func findShortcutActionSearch(
+        _ message: String, navigateFromNewShortcut: Bool = true
+    ) throws -> XCUIElement {
+        // The original search allowance includes only observed navigation.
+        // All Shortcuts' generic Search is never an action-gallery candidate.
+        var enteredEditor = false
+        var openedActions = false
+        var search = shortcuts.searchFields["Search Actions"].firstMatch
+        try require(wait(12) {
+            let fields = self.shortcutActionSearchFields()
+            if fields.count == 1 {
+                search = fields[0]
+                return true
+            }
+            guard fields.isEmpty && navigateFromNewShortcut else { return false }
+            if !enteredEditor {
+                let editors = self.shortcuts.navigationBars.matching(identifier: "New Shortcut")
+                    .buttons.matching(identifier: "Editor").allElementsBoundByIndex
+                    .filter { $0.exists && $0.isEnabled && $0.isHittable }
+                guard editors.count <= 1 else { return false }
+                if let editor = editors.first {
+                    enteredEditor = true
+                    editor.tap()
+                    return false
+                }
+            }
+            if !openedActions {
+                for label in ["Add Action", "Search Actions"] {
+                    let buttons = self.shortcuts.buttons.matching(identifier: label)
+                        .allElementsBoundByIndex.filter { $0.exists && $0.isEnabled && $0.isHittable }
+                    guard buttons.count <= 1 else { return false }
+                    if let button = buttons.first {
+                        openedActions = true
+                        button.tap()
+                        return false
+                    }
+                }
+            }
+            return false
+        }, message)
+        search.tap()
+        return search
+    }
+
     private func runShortcut(_ engine: Engine, identity: [String: Any]) throws {
         try requireSystemApp("shortcuts", identity: identity)
         shortcuts.launch()
         capture(shortcuts, "shortcuts-start")
-        try tap(firstButton(shortcuts, ["Create Shortcut", "Add"]), "Create one actual system Shortcut.")
-        if shortcuts.buttons["Add Action"].firstMatch.exists { shortcuts.buttons["Add Action"].firstMatch.tap() }
-        let search = shortcuts.searchFields.firstMatch
-        try tap(search, "Search the real Shortcuts action gallery.")
+        try createSystemShortcut("Create one actual system Shortcut.")
+        let search = try findShortcutActionSearch("Search the real Shortcuts action gallery.")
         search.typeText("Hanlin MiniApps")
         let app = shortcuts.staticTexts["Hanlin MiniApps"].firstMatch
         try require(app.waitForExistence(timeout: bounded(15)),
@@ -1763,27 +1850,8 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         shortcuts.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         shortcuts.launch()
         capture(shortcuts, "miniapp-shortcuts-start")
-        // The observed first-launch sheet and creation button share the original
-        // 12-second creation allowance, already bounded by this case's deadline.
-        var continuedWhatsNew = false
-        var createButton = shortcuts.buttons["Create Shortcut"].firstMatch
-        try require(wait(12) {
-            let whatsNew = self.shortcuts.staticTexts["What’s New in Shortcuts"].firstMatch
-            if whatsNew.exists {
-                let next = self.shortcuts.buttons["Continue"].firstMatch
-                guard !continuedWhatsNew && whatsNew.isHittable &&
-                        next.exists && next.isEnabled && next.isHittable else { return false }
-                continuedWhatsNew = true
-                next.tap()
-                return false
-            }
-            createButton = self.firstButton(self.shortcuts, ["Create Shortcut", "Add", "New Shortcut"])
-            return createButton.exists && createButton.isEnabled && createButton.isHittable
-        }, "Create an actual new system Shortcut.")
-        createButton.tap()
-        if shortcuts.buttons["Add Action"].firstMatch.exists { shortcuts.buttons["Add Action"].firstMatch.tap() }
-        let search = shortcuts.searchFields.firstMatch
-        try tap(search, "Search the functioning Shortcuts gallery.")
+        try createSystemShortcut("Create an actual new system Shortcut.")
+        let search = try findShortcutActionSearch("Search the functioning Shortcuts gallery.")
         search.typeText("Hanlin MiniApps")
         let app = shortcuts.staticTexts["Hanlin MiniApps"].firstMatch
         try require(app.waitForExistence(timeout: bounded(15)),
@@ -1860,11 +1928,11 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
     }
 
     private func addShortcutAction(_ title: String) throws {
-        if !shortcuts.searchFields.firstMatch.exists {
+        if shortcutActionSearchFields().isEmpty {
             try tap(firstButton(shortcuts, ["Add Action", "Search Actions"]), "Open the system action search.")
         }
-        let search = shortcuts.searchFields.firstMatch
-        try tap(search, "Search for the original built-in " + title + " action.")
+        let search = try findShortcutActionSearch(
+            "Search for the original built-in " + title + " action.", navigateFromNewShortcut: false)
         if let current = search.value as? String, !current.isEmpty,
            current != "Search Actions" && current != "Search for apps and actions" {
             search.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: current.count))
@@ -2400,27 +2468,8 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
     }
 
     private func configureConcurrencyShortcut(_ spec: [String: Any], identity: [String: Any]) throws {
-        // The observed first-launch sheet and creation button share the original
-        // 12-second creation allowance, already bounded by this case's deadline.
-        var continuedWhatsNew = false
-        var createButton = shortcuts.buttons["Create Shortcut"].firstMatch
-        try require(wait(12) {
-            let whatsNew = self.shortcuts.staticTexts["What’s New in Shortcuts"].firstMatch
-            if whatsNew.exists {
-                let next = self.shortcuts.buttons["Continue"].firstMatch
-                guard !continuedWhatsNew && whatsNew.isHittable &&
-                        next.exists && next.isEnabled && next.isHittable else { return false }
-                continuedWhatsNew = true
-                next.tap()
-                return false
-            }
-            createButton = self.firstButton(self.shortcuts, ["Create Shortcut", "Add", "New Shortcut"])
-            return createButton.exists && createButton.isEnabled && createButton.isHittable
-        }, "Create one actual saved concurrency Shortcut.")
-        createButton.tap()
-        if shortcuts.buttons["Add Action"].firstMatch.exists { shortcuts.buttons["Add Action"].firstMatch.tap() }
-        let search = shortcuts.searchFields.firstMatch
-        try tap(search, "Find the actual MiniApps system action.")
+        try createSystemShortcut("Create one actual saved concurrency Shortcut.")
+        let search = try findShortcutActionSearch("Find the actual MiniApps system action.")
         search.typeText("Hanlin MiniApps")
         let app = shortcuts.staticTexts["Hanlin MiniApps"].firstMatch
         try require(app.waitForExistence(timeout: bounded(15)),
@@ -3938,22 +3987,9 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
     private func createNativeListShortcut(_ kind: NativeListKind, identity: [String: Any]) throws {
         shortcuts.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         shortcuts.launch()
-        var continued = false
-        var create = shortcuts.buttons["Create Shortcut"].firstMatch
-        try require(wait(12) {
-            let whatsNew = self.shortcuts.staticTexts["What’s New in Shortcuts"].firstMatch
-            if whatsNew.exists {
-                let next = self.shortcuts.buttons["Continue"].firstMatch
-                guard !continued && whatsNew.isHittable && next.exists && next.isEnabled && next.isHittable else { return false }
-                continued = true; next.tap(); return false
-            }
-            create = self.firstButton(self.shortcuts, ["Create Shortcut", "Add", "New Shortcut"])
-            return create.exists && create.isEnabled && create.isHittable
-        }, "The real system creation UI did not become available.")
-        create.tap()
-        if shortcuts.buttons["Add Action"].firstMatch.exists { shortcuts.buttons["Add Action"].firstMatch.tap() }
-        let search = shortcuts.searchFields.firstMatch
-        try tap(search, "Search the real indexed MiniApps actions."); search.typeText("Hanlin MiniApps")
+        try createSystemShortcut("The real system creation UI did not become available.")
+        let search = try findShortcutActionSearch("Search the real indexed MiniApps actions.")
+        search.typeText("Hanlin MiniApps")
         try tap(shortcuts.staticTexts["Hanlin MiniApps"].firstMatch, "Open the indexed standalone app.")
         try tap(shortcuts.staticTexts["Run MiniApp Action"].firstMatch, "Add the shipping typed action.")
         try tap(firstButton(shortcuts, ["Action", "Script Action"]), "Choose the installed native-list action.")
