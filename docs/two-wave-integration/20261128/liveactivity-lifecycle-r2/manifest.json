@@ -1,0 +1,88 @@
+{
+  "sourceCommit": "753ec72e7522252778c788503914cd399bcd3758",
+  "base": "55c2eb343399543eac327720f25e8eacf86bba15",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 2458,
+      "sha256": "5acb39fe4033e315a402c09d529eedefb3b9ae65dc0d5fc01bc30e3a0df3f4e4"
+    },
+    {
+      "path": "apple-typecheck/manifest.json",
+      "bytes": 5146,
+      "sha256": "6dcbaaae9aefa251d4791cab79341e7bb2a486ccb503632b6d90bbe549c88938"
+    },
+    {
+      "path": "apple-typecheck/native-receipt.json",
+      "bytes": 2347,
+      "sha256": "7ac20f2772a5cd62f1d15e0f2aacaf77562987bf5d42770f8a60baae5a63c1fb"
+    },
+    {
+      "path": "apple-typecheck/native.tar.gz",
+      "bytes": 121476,
+      "sha256": "14bee0d6440ae13c4a01ee2470071bd8c839c08e0482e549b456977e948ac7c7"
+    },
+    {
+      "path": "apple-typecheck/reconciliation.json",
+      "bytes": 1053,
+      "sha256": "c8564fa0accbb726688dd1a5ccb523aa5422b859316bbc9a649d1da47351222d"
+    },
+    {
+      "path": "apple-typecheck/root-verification.json",
+      "bytes": 2279,
+      "sha256": "65100c498aaa740a517716225910cc0d32eb7047bfa3365259dbbc190fb64161"
+    },
+    {
+      "path": "composition-inverse.json",
+      "bytes": 14032,
+      "sha256": "f8d2c0d23deec0679eaac037acb91077b83909e2ecbdf650b8ac9fcd2e2f527b"
+    },
+    {
+      "path": "composition-review.json",
+      "bytes": 2953,
+      "sha256": "2c3f2a2d136f992b93ddf8f79f138f05f263efcf81ef42d4dd5dc341a59819c4"
+    },
+    {
+      "path": "donor-source-validation.json",
+      "bytes": 13230,
+      "sha256": "e79e6713314efb5cd9fd0bff48744afd2aa3a68bb64fdab739e28698420b570f"
+    },
+    {
+      "path": "r2-canonical-owner-authorities.json",
+      "bytes": 26329,
+      "sha256": "92626c327310d3f29822f063c5a2e08c0318a0ac3cd07c5b25fa599fa9772b8a"
+    },
+    {
+      "path": "root-donor-review.json",
+      "bytes": 7469,
+      "sha256": "15e58de039fe9c77ccfe3188d1b120bb8489b428f7a867bc949a735c8a3ca474"
+    },
+    {
+      "path": "source-contract.json",
+      "bytes": 10227,
+      "sha256": "30375e8f1ad57020cf7db7de398d908da8bb2efba2c288d7a2bccbadd0bcfe69"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 27276,
+      "sha256": "75cb0ee79ef5b7032c1bf363d5741dc1912c37fdcb31182a386aa07a26fb5748"
+    },
+    {
+      "path": "workflow-candidate.yml",
+      "bytes": 36731,
+      "sha256": "242c6cc5f873510ef5aa7d32eebae8df8952ea5109c09ae09eca168a12ef6af3"
+    },
+    {
+      "path": "workflow.patch.gz",
+      "bytes": 836,
+      "sha256": "0624d676e20fa1cdf1bed1a604968cca4fc704d7fb6c350368ad5974d7ce1a9a",
+      "uncompressedSHA256": "2af9801aedc6896239e91d7fd9afb4073f8abcd388fec2b77f41b3b597dd4161",
+      "uncompressedBytes": 4453
+    }
+  ],
+  "payloadCount": 15,
+  "payloadBytes": 273842,
+  "native": "NOT_RUN",
+  "originalCI": "PENDING",
+  "proofEncoding": "Exact unified workflow patch stored as gzip to retain context bytes without introducing whitespace warnings."
+}

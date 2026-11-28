@@ -1,0 +1,168 @@
+{
+  "bounds": {
+    "caseSeconds": 420,
+    "fixtureBuildSeconds": 600,
+    "fixtureValidateSeconds": 300,
+    "nativeXcodeInvocationSeconds": 2100,
+    "observerSeconds": 2100,
+    "oldSystem10SelectorsUnchanged": true,
+    "oldSystem10XcodeSeconds": 5400,
+    "original47UIMethodsAndHelpersUnchanged": true
+  },
+  "cases": {
+    "expo": {
+      "appID": "hanlin.activity.lifecycle.expo",
+      "archive": "LiveActivityLifecycleExpo.hanlinExpo",
+      "fixture": "Fixtures/LiveActivityLifecycle/expo",
+      "method": "testExpoLiveActivityLifecycleKeepsTwoActualIDsAndSystemViewsIndependent",
+      "scope": "miniapp_liveactivity_lifecycle_expo_os"
+    },
+    "nativescript": {
+      "appID": "hanlin.activity.lifecycle.nativescript",
+      "archive": "LiveActivityLifecycleNativeScript.hanlinNativeScript",
+      "fixture": "Fixtures/LiveActivityLifecycle/nativescript",
+      "method": "testNativeScriptLiveActivityLifecycleKeepsTwoActualIDsAndSystemViewsIndependent",
+      "scope": "miniapp_liveactivity_lifecycle_nativescript_os"
+    }
+  },
+  "cleanup": "On success use the real End A/End B sequence. On failure, only the currently admitted own run/slot IDs may be ended through the existing fixture UI within remaining case time; preserve original failure and any missing cleanup. No end-all, state deletion, foreign activity mutation, private APIs or added grace period.",
+  "device": {
+    "architecture": "arm64",
+    "dynamicIslandAuthority": "https://support.apple.com/en-us/121031",
+    "freshDevicePerEngine": true,
+    "name": "iPhone 16 Pro",
+    "nativeAdmission": "Actual built standalone app and Widgets extension metadata/entitlements, NSSupportsLiveActivities, runtime/device/product identities and expected owner namespace; original current builds and actual original CLI reports/archive are retained",
+    "noFallbackToIPadOrDifferentIPhoneOrRuntime": true,
+    "orientation": "portrait",
+    "productFamily": "iPhone",
+    "requiresActualInstalledInventoryAndOwnedCreatedBootedUDID": true,
+    "retainedInventoryQualification": "Original local f45 build reads show this device in available 27.0/24A434 and 27.2/24B8117 supportedDeviceTypes; future actual runner must independently observe its installed profile",
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+    "runtimeBuild": "24B8117",
+    "toolchains": {
+      "hosted": {
+        "build": "27B52",
+        "iphoneSimulatorSDK": "27.2",
+        "xcode": "27.2"
+      },
+      "local": {
+        "build": "27A266a",
+        "iphoneSimulatorSDK": "27.0",
+        "runtime": "27.2/24B8117",
+        "status": "Distinct local build profile; never hosted equality",
+        "xcode": "27.0"
+      }
+    },
+    "type": "com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro",
+    "version": "27.2"
+  },
+  "execution": {
+    "CLI": 0,
+    "native": 0,
+    "phase": "Contract/source preparation only; root reviews frozen source before execution",
+    "tests": 0
+  },
+  "listObservation": "List is a genuine UI action. If a native listing is transitional after an awaited end, only additional real List taps within the same original case deadline may refresh it; retain every ordinal/call/outcome. No synthetic list, sleep-based completion, retry of Start/Update/End or timeout extension.",
+  "observation": {
+    "absence": "Retain actual per-region absence readbacks, actual system app/window/frame/AX/PNG and contemporaneous real owner List result. Do not emit a synthetic OS dismissal or renderer receipt.",
+    "application": "Actual com.apple.springboard foreground context; MiniApps background; real screenshot/AX attachment with step/UUID/actual timestamps. Separate actual fixture/private observations from system UI.",
+    "conditionalRegion": "minimal is retained only if the system actually exposes this owned marker; it is never forced, inferred from two same-app activities, or a hidden pass requirement",
+    "freshness": "Observer arms before Prepare, actual UI tap bounds/call requested-return timestamps and append-only ordinal prefix; displayed marker must match this run and the acknowledged current revision.",
+    "geometry": "Actual finite nonempty frames inside the observed SpringBoard window/screen; immutable captured step/run context. No native visibility credit from prepared JSON.",
+    "marker": "LA|<fresh UUID>|<A or B>|<authored region>|R<submitted revision>",
+    "query": "Use exact run/slot/region/revision marker label/value through public filtered XCUIElementQuery; observe actual elementType, label, value, identifier and frame. No invented Gauge/Activity element type, broad Any enumeration or assumed positive AX availability.",
+    "requiredRegions": [
+      "compact-leading",
+      "compact-trailing",
+      "expanded-leading",
+      "expanded-trailing",
+      "expanded-center",
+      "expanded-bottom",
+      "banner"
+    ]
+  },
+  "openAcceptance": [
+    "System-selected minimal presentation when not actually displayed",
+    "Physical or OS-authenticated locked-device state; public XCUIDevice.Button has no lock case",
+    "APNs/push authorization and real remote delivery",
+    "Restoration after process termination/reboot",
+    "Activity buttons/deeplinks",
+    "StaleDate/relevance behavior and all appearance/accessibility/family requirements",
+    "Cross-package/cross-engine simultaneous isolation and physical-device acceptance"
+  ],
+  "ownership": {
+    "expo": "Exact package-private State path; original owner-qualified factory registration; actual native activity-registration ID maps to package/generation/session/product and the fresh run name. Registration alone is not active/rendered proof.",
+    "installed": "Exact enabled catalog appID/packageID/installedPackageID/activeGeneration and original fixture ZIP/sourceDigest/generation source bytes, using the existing strict archive verifier",
+    "nativescript": "Exact current default ScriptWidget instance/identity/program, actual foreground window-owned State path and ownerWindowID, original package-filtered liveActivities API. Retain returned ID linkage separately from prepared snapshot values. No cross-window search/fallback. R2 binds the raw Codable default variant and canonical Default display name, verifies the publisher's fixture-title + Default template name, and retains exact raw instance fields for continuity; computed isDefault/entityID are not expected in encoded JSON.",
+    "source": "Freeze current source and fixture/CLI/SDK/product/test identities; refuse source/generation/session/UDID rewrite after initial admission"
+  },
+  "primarySources": [
+    {
+      "basis": "System chooses compact/minimal presentation; touch-and-hold expands. Lock Screen presentation and Dynamic Island are distinct. Source and API returns do not prove any displayed presentation.",
+      "url": "https://developer.apple.com/documentation/activitykit/displaying-live-data-with-live-activities.md"
+    },
+    {
+      "basis": "Public configuration has compact leading/trailing, minimal and expanded regions.",
+      "url": "https://developer.apple.com/documentation/widgetkit/dynamicisland.md"
+    },
+    {
+      "basis": "Public button enumeration lists home, volume, action and camera; no lock call is used.",
+      "url": "https://developer.apple.com/documentation/xcuiautomation/xcuidevice/button.md"
+    },
+    {
+      "basis": "iPhone16Pro is documented with Dynamic Island.",
+      "url": "https://support.apple.com/en-us/121031"
+    }
+  ],
+  "revision": "R2",
+  "schema": 1,
+  "scope": "Two additional standalone MiniApps local LiveActivity lifecycle pilots; not complete Task07 acceptance",
+  "sequence": [
+    {
+      "action": "UI enters one fresh XCTest UUID and taps Prepare challenge",
+      "journal": "First ordinal prepare; exact UUID; initial actual owner/factory List empty; no existing private journal; no slots",
+      "nativeView": "Actual fixture foreground status, no system render claim",
+      "stage": "prepared"
+    },
+    {
+      "action": "Tap Start A, then genuine List",
+      "journal": "Actual nonempty bounded ID A, owner/factory List exactly A",
+      "nativeView": "On Home, actual A compact-leading and compact-trailing markers; actual long press of observed marker, then all four expanded A0 markers",
+      "stage": "a-started"
+    },
+    {
+      "action": "Reactivate same fixture session; tap Start B then List",
+      "journal": "ID A unchanged; fresh ID B distinct; List exactly A+B",
+      "nativeView": "Actual pull-down system banner markers A0+B0; record any system-selected compact/minimal presentations only when present",
+      "stage": "both-started"
+    },
+    {
+      "action": "Reactivate same fixture; tap Update A then List",
+      "journal": "Actual returned update for A; same A+B IDs; submitted A revision1 and B0",
+      "nativeView": "Actual banner A1+B0 demonstrates observed sibling isolation; actual A0 not accepted as update",
+      "stage": "a-updated"
+    },
+    {
+      "action": "Reactivate same fixture; tap End A then actual List",
+      "journal": "Actual original immediate end return; keep A ID; owner/factory List exactly B",
+      "nativeView": "In actual system capture A markers absent and B0 banner retained; API return alone is never dismissal evidence",
+      "stage": "a-ended"
+    },
+    {
+      "action": "Reactivate same fixture; tap End B then actual List",
+      "journal": "Same B ID ended through original API; actual owner/factory List empty",
+      "nativeView": "Actual SpringBoard captures contain no owned run markers after the same public Home/pull-down route; record observed absence, not invented ActivityKit acknowledgment",
+      "stage": "both-ended"
+    }
+  ],
+  "sourcePaths": [
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+    "Scripts/ProductSplit/run_paired_acceptance.py",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+    "Scripts/ProductSplit/observe_liveactivity_lifecycle.py",
+    "Scripts/CI/Tests/test_liveactivity_lifecycle.py"
+  ],
+  "sourceSHA": "f350a0f12c54121d0b3afb4217472ae8143fc83a",
+  "status": "FROZEN_DEVICE_AND_OBSERVATION_CONTRACT_SOURCE_ONLY",
+  "workflow": "Separate two explicit choices plus their artifact upload condition; root owns composition/publication"
+}

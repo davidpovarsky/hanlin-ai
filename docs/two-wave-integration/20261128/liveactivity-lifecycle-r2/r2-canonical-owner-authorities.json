@@ -1,0 +1,134 @@
+{
+  "admission": "Exact current default identity; fresh canonical name; exact authored package title remains required in installed archive and template; original source/artifact checks remain",
+  "authorities": {
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift": {
+      "base": "f350a0f12c54121d0b3afb4217472ae8143fc83a",
+      "byteEqualAtCurrent": true,
+      "bytes": 187710,
+      "currentReadOnlyRef": "55c2eb343399543eac327720f25e8eacf86bba15",
+      "gitBlob": "2182b4d68b0149d140328fd7c3de03672768aff1",
+      "sha256": "dadde747dfad34c4ac8efdd8199253624376146956204babe52d90701404b950",
+      "spans": [
+        {
+          "first": 1954,
+          "last": 1977,
+          "sha256": "7e726b4ba146aca85bddceaa1eb56d1b7f18c262b55b8081599f9e9e308091b5",
+          "text": "        var packageDiagnostics: [HanlinInstalledPackageID: HanlinWidgetStorageDiagnostic] = [:]\n        var failedWidgetPackageIDs = Set<HanlinInstalledPackageID>()\n\n        for package in installedPackages where package.enabled {\n            do {\n                #if DEBUG || HANLIN_TESTING\n                trace(\"artifact-root.begin\")\n                #endif\n                let artifactRoot = try await store.activeArtifactURL(for: package.record.installedPackageID)\n                #if DEBUG || HANLIN_TESTING\n                trace(\"artifact-root.returned\")\n                #endif\n                let displayName = package.manifest?.name ?? package.record.packageID.rawValue\n                let nativeDeclarations = try package.manifest.map(HanlinNativePresentationMetadata.declarations) ?? [:]\n                func publishNativePresentation(_ entrypointID: String) throws -> HanlinNativePresentationDescriptor? {\n                    guard let declaration = nativeDeclarations[entrypointID] else { return nil }\n                    let path = HanlinNativePresentationMetadata.artifactPath(for: entrypointID)\n                    let bytes = try Data(contentsOf: artifactRoot.appending(path: path))\n                    let program = try JSONDecoder().decode(HanlinWidgetProgram.self, from: bytes)\n                    try program.validate(engine: declaration.engine)\n                    let artifact = try extensionStore.storeArtifact(data: bytes,\n                        installedPackageID: package.record.installedPackageID, generation: package.record.activeGeneration)\n                    return .init(engine: declaration.engine, programRef: artifact.ref,\n                        programSHA256: artifact.sha256, input: declaration.input)\n"
+        },
+        {
+          "first": 2052,
+          "last": 2102,
+          "sha256": "040fc43d3e5e01116ffc8cb1d4d6168612903bb0fe2a1a99d4fa5e7c1ba69740",
+          "text": "                        isBeta: isBeta,\n                        entrypointID: entrypoint.id,\n                        rootNode: rootNode,\n                        nativePresentation: nativePresentation\n                    ))\n                }\n\n                let extensionEntrypoints = package.entrypoints.filter {\n                    ($0.runtimeProfile == .scriptingJSC || $0.runtimeProfile == .hanlinNativeScript || $0.runtimeProfile == .hanlinExpo)\n                        && ($0.kind == .widget || $0.kind == .appIntent)\n                }\n                guard !extensionEntrypoints.isEmpty else { continue }\n\n                for entrypoint in extensionEntrypoints {\n                    let identity = HanlinScriptExtensionIdentity(\n                        installedPackageID: package.record.installedPackageID,\n                        packageID: package.record.packageID,\n                        generation: package.record.activeGeneration,\n                        entrypointID: entrypoint.id,\n                        variantID: \"default\"\n                    )\n\n                    if entrypoint.kind == .widget {\n                        // Records predating the explicit engine contract are legacy.\n                        // A filename is never authority to execute another engine.\n                        let engine = entrypoint.widgetEngine ?? .legacy\n\n                        let widgetURL = artifactRoot.appending(path: entrypoint.sourcePath)\n                        let widgetData = try? Data(contentsOf: widgetURL)\n\n                        switch engine {\n                        case .expo, .scriptwidget:\n                            guard let widgetData else { throw HanlinWidgetProgramError.invalidProgram }\n                            let program = try JSONDecoder().decode(HanlinWidgetProgram.self, from: widgetData)\n                            try program.validate(engine: engine)\n                            let artifact = try extensionStore.storeArtifact(data: widgetData,\n                                installedPackageID: package.record.installedPackageID, generation: package.record.activeGeneration)\n                            let payload: HanlinWidgetPayload = engine == .expo\n                                ? .expo(.init(layout: \"\", layoutRef: artifact.ref, layoutSHA256: artifact.sha256))\n                                : .scriptwidget(.init(script: \"\", scriptRef: artifact.ref, scriptSHA256: artifact.sha256))\n                            let fallback = HanlinScriptUINode(kind: .text, properties: [\"text\": .string(\"Open Hanlin to configure this native widget\")])\n                            for family in program.families {\n                                widgets.append(.init(identity: identity, displayName: displayName, family: family,\n                                    actionIdentity: identity, validUntil: .distantFuture, engine: engine, payload: payload, root: fallback))\n                            }\n\n                        case .legacy:\n                            if entrypoint.sourcePath.hasSuffix(\".json\"),\n                               let data = widgetData,\n                               let rootNode = try? JSONDecoder().decode(HanlinScriptUINode.self, from: data) {\n                                for family in [\"systemSmall\", \"systemMedium\", \"systemLarge\", \"systemExtraLarge\"] {\n"
+        },
+        {
+          "first": 2365,
+          "last": 2379,
+          "sha256": "f505563b6b6e01e3a3e37ceabce2e1e57d998e4c2710828c9ac899964bf6dab7",
+          "text": "\n        let newSnapshot: HanlinScriptExtensionSnapshot\n        do {\n            #if DEBUG || HANLIN_TESTING\n            trace(\"snapshot-publish.begin\")\n            #endif\n            newSnapshot = try extensionStore.publishWidgetTemplates(\n                widgets,\n                intentEntities: intentEntities,\n                translationApps: translationApps,\n                nativePresentations: nativePresentations,\n                installedPackageIDs: Set(installedPackages.map { $0.record.installedPackageID })\n            )\n            #if DEBUG || HANLIN_TESTING\n            trace(\"snapshot-publish.returned\")\n"
+        }
+      ]
+    },
+    "Fixtures/LiveActivityLifecycle/nativescript/script.json": {
+      "base": "f350a0f12c54121d0b3afb4217472ae8143fc83a",
+      "byteEqualAtCurrent": true,
+      "bytes": 700,
+      "currentReadOnlyRef": "55c2eb343399543eac327720f25e8eacf86bba15",
+      "gitBlob": "0a3fab0d7ee957203b3a93601bceb700bc9cdd34",
+      "sha256": "bb4dbd0fa034e6f9e29bf39d76f00146f5a7e5e770fa38265ac7c60f37a22885",
+      "spans": [
+        {
+          "first": 1,
+          "last": 25,
+          "sha256": "bb4dbd0fa034e6f9e29bf39d76f00146f5a7e5e770fa38265ac7c60f37a22885",
+          "text": "{\n  \"name\": \"Live Activity Lifecycle NativeScript\",\n  \"version\": \"1.0.0\",\n  \"description\": \"Separate original API lifecycle fixture with real activity IDs, eight authored region markers, and a private returned-operation journal.\",\n  \"hanlinAppID\": \"hanlin.activity.lifecycle.nativescript\",\n  \"entry\": \"nativescript/app/bundle.mjs\",\n  \"runInApp\": true,\n  \"hanlinRuntime\": \"hanlin-nativescript\",\n  \"icon\": \"rectangle.badge.clock\",\n  \"color\": \"#2455B2\",\n  \"capabilities\": [\n    \"storage\",\n    \"live-activity\"\n  ],\n  \"actions\": [],\n  \"widgetEngine\": \"scriptwidget\",\n  \"hanlinWidget\": {\n    \"abiVersion\": 1,\n    \"sourceFormat\": \"jsx\",\n    \"families\": [\n      \"systemMedium\"\n    ],\n    \"actions\": []\n  }\n}\n"
+        }
+      ]
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionContracts.swift": {
+      "base": "f350a0f12c54121d0b3afb4217472ae8143fc83a",
+      "byteEqualAtCurrent": true,
+      "bytes": 31677,
+      "currentReadOnlyRef": "55c2eb343399543eac327720f25e8eacf86bba15",
+      "gitBlob": "56a1e10a0fcad9a6f35b16736946e1f0db36dc76",
+      "sha256": "1298b4e420292a4e331cad7903f119861ae6df675a4fc90456fbde2bae24efd9",
+      "spans": [
+        {
+          "first": 155,
+          "last": 235,
+          "sha256": "ca78fa4246a221d33323b7fcd6757710eb4ba3956ec4e373523350cd24170fd0",
+          "text": "public struct HanlinScriptWidgetSnapshot: Codable, Hashable, Sendable {\n    public let identity: HanlinScriptExtensionIdentity\n    public let displayName: String\n    public let family: String\n    public let actionIdentity: HanlinScriptExtensionIdentity?\n    public let validUntil: Date\n    public let relevance: Double\n    public let engine: HanlinWidgetEngine\n    public let payload: HanlinWidgetPayload?\n    public let root: HanlinScriptUINode\n    public let deepLink: URL?\n    let engineIsExplicit: Bool\n\n    public init(\n        identity: HanlinScriptExtensionIdentity,\n        displayName: String,\n        family: String = \"systemMedium\",\n        actionIdentity: HanlinScriptExtensionIdentity? = nil,\n        validUntil: Date,\n        relevance: Double = 0,\n        engine: HanlinWidgetEngine = .legacy,\n        payload: HanlinWidgetPayload? = nil,\n        root: HanlinScriptUINode,\n        deepLink: URL? = nil\n    ) {\n        self.identity = identity\n        self.displayName = displayName\n        self.family = family\n        self.actionIdentity = actionIdentity\n        self.validUntil = validUntil\n        self.relevance = relevance\n        self.engine = engine\n        self.payload = payload ?? (engine == .legacy ? .legacy(root) : nil)\n        self.root = root\n        self.deepLink = deepLink\n        self.engineIsExplicit = true\n    }\n\n    private enum CodingKeys: String, CodingKey {\n        case identity, displayName, family, actionIdentity, validUntil, relevance, engine, payload, root, deepLink\n    }\n\n    public init(from decoder: Decoder) throws {\n        let container = try decoder.container(keyedBy: CodingKeys.self)\n        identity = try container.decode(HanlinScriptExtensionIdentity.self, forKey: .identity)\n        displayName = try container.decode(String.self, forKey: .displayName)\n        family = try container.decodeIfPresent(String.self, forKey: .family) ?? \"systemMedium\"\n        actionIdentity = try container.decodeIfPresent(HanlinScriptExtensionIdentity.self, forKey: .actionIdentity)\n        validUntil = try container.decode(Date.self, forKey: .validUntil)\n        relevance = try container.decodeIfPresent(Double.self, forKey: .relevance) ?? 0\n        let rawEngine = try? container.decode(String.self, forKey: .engine)\n        engineIsExplicit = container.contains(.engine)\n        engine = rawEngine.flatMap(HanlinWidgetEngine.init(rawValue:)) ?? .legacy\n        if engineIsExplicit && rawEngine == nil {\n            payload = .malformed(\"Widget engine must be a string\")\n        } else if let rawEngine, HanlinWidgetEngine(rawValue: rawEngine) == nil {\n            payload = .malformed(\"Unsupported widget engine: \\(rawEngine)\")\n        } else {\n            do { payload = try container.decodeIfPresent(HanlinWidgetPayload.self, forKey: .payload) }\n            catch { payload = .malformed(\"Invalid \\(engine.rawValue) widget payload: \\(error)\") }\n        }\n        if let decodedRoot = try container.decodeIfPresent(HanlinScriptUINode.self, forKey: .root) {\n            root = decodedRoot\n        } else {\n            root = HanlinScriptUINode(kind: .text, properties: [\"text\": .string(displayName)])\n        }\n        deepLink = try container.decodeIfPresent(URL.self, forKey: .deepLink)\n    }\n\n    public func encode(to encoder: Encoder) throws {\n        var container = encoder.container(keyedBy: CodingKeys.self)\n        try container.encode(identity, forKey: .identity)\n        try container.encode(displayName, forKey: .displayName)\n        try container.encode(family, forKey: .family)\n        try container.encodeIfPresent(actionIdentity, forKey: .actionIdentity)\n        try container.encode(validUntil, forKey: .validUntil)\n        try container.encode(relevance, forKey: .relevance)\n        try container.encode(engine, forKey: .engine)\n        try container.encodeIfPresent(payload, forKey: .payload)\n        try container.encode(root, forKey: .root)\n        try container.encodeIfPresent(deepLink, forKey: .deepLink)\n"
+        },
+        {
+          "first": 480,
+          "last": 505,
+          "sha256": "a06a3781936554103122cd00ec4fa6d188ae52f2548e23125f1812ca0f806d48",
+          "text": "        case inactiveWidgetInstallations, widgetLastSuccessfulRenders\n    }\n\n    public init(from decoder: Decoder) throws {\n        let container = try decoder.container(keyedBy: CodingKeys.self)\n        schemaVersion = try container.decodeIfPresent(UInt32.self, forKey: .schemaVersion) ?? 1\n        generatedAt = try container.decode(Date.self, forKey: .generatedAt)\n        let decodedWidgets = try container.decodeIfPresent([HanlinScriptWidgetSnapshot].self, forKey: .widgets) ?? []\n        let version = schemaVersion\n        widgets = decodedWidgets.map { widget in\n            guard version == 2, !widget.engineIsExplicit else { return widget }\n            return .init(identity: widget.identity, displayName: widget.displayName, family: widget.family,\n                actionIdentity: widget.actionIdentity, validUntil: widget.validUntil, relevance: widget.relevance,\n                engine: .legacy, payload: .malformed(\"Schema v2 widget is missing its engine declaration\"), root: widget.root, deepLink: widget.deepLink)\n        }\n        intentEntities = try container.decodeIfPresent([HanlinScriptIntentEntityRecord].self, forKey: .intentEntities) ?? []\n        liveActivities = try container.decodeIfPresent([HanlinScriptLiveActivityDescriptor].self, forKey: .liveActivities) ?? []\n        translationApps = try container.decodeIfPresent([HanlinScriptTranslationUISnapshot].self, forKey: .translationApps) ?? []\n        nativePresentations = try container.decodeIfPresent([HanlinNativePresentationSnapshot].self, forKey: .nativePresentations) ?? []\n        widgetInstances = try container.decodeIfPresent([HanlinWidgetInstance].self, forKey: .widgetInstances) ?? []\n        widgetStates = try container.decodeIfPresent([HanlinWidgetInstanceState].self, forKey: .widgetStates) ?? []\n        widgetEntityMigrations = try container.decodeIfPresent([String: String].self, forKey: .widgetEntityMigrations) ?? [:]\n        inactiveWidgetInstallations = try container.decodeIfPresent([String].self, forKey: .inactiveWidgetInstallations) ?? []\n        widgetLastSuccessfulRenders = try container.decodeIfPresent([HanlinWidgetLastSuccessfulRender].self, forKey: .widgetLastSuccessfulRenders) ?? []\n    }\n}\n"
+        }
+      ]
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetInstance.swift": {
+      "base": "f350a0f12c54121d0b3afb4217472ae8143fc83a",
+      "byteEqualAtCurrent": true,
+      "bytes": 17614,
+      "currentReadOnlyRef": "55c2eb343399543eac327720f25e8eacf86bba15",
+      "gitBlob": "61b29dd8b94edbb4377d1837b5ab212e2c56dbf8",
+      "sha256": "55483e2e8500c1be80fd0d6c8a1c034be4cfab2014dfaf2160fe8f4fcaa4cd1c",
+      "spans": [
+        {
+          "first": 1,
+          "last": 27,
+          "sha256": "5d42f89d223a41d836a98125a57620e74966e47c12d5023d11873fe1f695c216",
+          "text": "import Foundation\nimport HanlinPlatformContracts\n\npublic struct HanlinWidgetInstance: Codable, Hashable, Sendable, Identifiable {\n    public var id: String { identity.variantID }\n    public var isDefault: Bool { identity.variantID == \"default\" }\n    public let identity: HanlinScriptExtensionIdentity\n    public let engine: HanlinWidgetEngine\n    public let displayName: String\n    public let settings: [String: HanlinValue]\n\n    public init(identity: HanlinScriptExtensionIdentity, engine: HanlinWidgetEngine,\n                displayName: String, settings: [String: HanlinValue] = [:]) {\n        self.identity = identity\n        self.engine = engine\n        self.displayName = displayName\n        self.settings = settings\n    }\n\n    /// Exact, versioned and delimiter-safe. A stale generation never resolves\n    /// by partial package name or by the first available widget.\n    public var entityID: String {\n        let fields = [identity.installedPackageID.rawValue, identity.packageID.rawValue,\n                      String(identity.generation), identity.entrypointID, engine.rawValue, identity.variantID]\n        return \"widget-v2:\" + fields.map { Data($0.utf8).base64EncodedString() }.joined(separator: \".\")\n    }\n}\n"
+        },
+        {
+          "first": 163,
+          "last": 175,
+          "sha256": "8544bb61ad518764b39a1b9dd1e1b8ea1c7121ca74f3b9982d7ddfbe4ca58adf",
+          "text": "    }\n}\n\nextension HanlinScriptWidgetSnapshot {\n    public func forInstance(_ instance: HanlinWidgetInstance) -> Self {\n        let actionIdentity = actionIdentity.map {\n            HanlinScriptExtensionIdentity(installedPackageID: $0.installedPackageID, packageID: $0.packageID,\n                generation: $0.generation, entrypointID: $0.entrypointID, variantID: instance.identity.variantID)\n        }\n        let baseName = displayName.components(separatedBy: \" · \").first ?? displayName\n        return .init(identity: instance.identity, displayName: \"\\(baseName) · \\(instance.displayName)\", family: family,\n            actionIdentity: actionIdentity, validUntil: validUntil, relevance: relevance, engine: engine, payload: payload, root: root, deepLink: deepLink)\n    }\n"
+        },
+        {
+          "first": 220,
+          "last": 268,
+          "sha256": "15dfea1760412036657bcf9d79e22dd5655f5cb7d8ab4c250813a4a5e1bec305",
+          "text": "    public func publishWidgetTemplates(\n        _ templates: [HanlinScriptWidgetSnapshot], intentEntities: [HanlinScriptIntentEntityRecord],\n        translationApps: [HanlinScriptTranslationUISnapshot],\n        nativePresentations: [HanlinNativePresentationSnapshot] = [],\n        installedPackageIDs: Set<HanlinInstalledPackageID>\n    ) throws -> HanlinScriptExtensionSnapshot {\n        try update { current in\n            let current = current ?? .init(schemaVersion: 2, generatedAt: .now)\n            var instances: [HanlinWidgetInstance] = []\n            var widgets: [HanlinScriptWidgetSnapshot] = []\n            var migrations = current.widgetEntityMigrations\n            var seen: Set<String> = []\n            let activeIDs = Set(templates.map { $0.identity.installedPackageID })\n            let activePresentationIDs = Set(intentEntities.filter { $0.nativePresentation != nil }.map { $0.identity.installedPackageID })\n                .union(translationApps.filter { $0.nativePresentation != nil }.map { $0.identity.installedPackageID })\n                .union(nativePresentations.map { $0.identity.installedPackageID })\n            for template in templates {\n                let base = HanlinWidgetInstance(identity: template.identity, engine: template.engine, displayName: \"Default\")\n                guard seen.insert(base.entityID).inserted else { continue }\n                let previous = current.widgetInstances.filter {\n                    $0.identity.installedPackageID == template.identity.installedPackageID\n                        && $0.identity.packageID == template.identity.packageID\n                        && $0.identity.entrypointID == template.identity.entrypointID && $0.engine == template.engine\n                }\n                let hasDefault = previous.contains { $0.isDefault || $0.identity.variantID == base.identity.variantID }\n                var candidateVariants = previous\n                if !hasDefault {\n                    candidateVariants.insert(base, at: 0)\n                }\n                var seenVariants: Set<String> = []\n                var deduped: [HanlinWidgetInstance] = []\n                for item in candidateVariants {\n                    if seenVariants.insert(item.identity.variantID).inserted {\n                        deduped.append(item)\n                    }\n                }\n                let variants = deduped.map { old in\n                    let identity = HanlinScriptExtensionIdentity(installedPackageID: template.identity.installedPackageID,\n                        packageID: template.identity.packageID, generation: template.identity.generation,\n                        entrypointID: template.identity.entrypointID, variantID: old.identity.variantID)\n                    let migrated = HanlinWidgetInstance(identity: identity, engine: template.engine, displayName: old.displayName, settings: old.settings)\n                    if migrated.entityID != old.entityID { migrations[old.entityID] = migrated.entityID }\n                    return migrated\n                }\n                instances.append(contentsOf: variants)\n                let families = templates.filter { $0.identity == template.identity && $0.engine == template.engine }\n                for variant in variants { widgets.append(contentsOf: families.map { $0.forInstance(variant) }) }\n            }\n            // Disabled installs retain configuration; uninstall removes their\n"
+        }
+      ]
+    },
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": {
+      "base": "f350a0f12c54121d0b3afb4217472ae8143fc83a",
+      "baseSHA256": "7d001d486ad668fa4efd68bc244ce08daf943756cc344612542550c83cbc6380",
+      "completeFileEqualityClaimed": false,
+      "currentReadOnlyRef": "55c2eb343399543eac327720f25e8eacf86bba15",
+      "currentSHA256": "a503e1e9dea29bfe151164b5f4fb2ffb4565d919344853a308415a6156b2be46",
+      "exactUnchangedFunctions": {
+        "read_document": {
+          "sha256": "d9ea664cba59d37d8b6baea6f5faf81ae1d438cf57bc23074f96ec838f6b863a",
+          "text": "def read_document(path, trusted_root):\n    \"\"\"Reject links beneath the already-resolved OS container/evidence root.\"\"\"\n    require(not Path(trusted_root).is_symlink(), \"The trusted observation root is a symbolic link\")\n    root = Path(trusted_root).resolve(strict=True)\n    path = Path(path)\n    require(path.is_absolute(), \"Observation paths must be absolute\")\n    try:\n        parts = path.relative_to(root).parts\n    except ValueError as error:\n        raise ObservationError(\"Observation path left its actual container\") from error\n    require(parts and all(p not in (\"\", \".\", \"..\") for p in parts), \"Invalid observation path\")\n    cursor = root\n    for part in parts:\n        cursor = cursor / part\n        require(not cursor.is_symlink(), \"A managed observation path is a symbolic link\")\n    fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK)\n    try:\n        info = os.fstat(fd)\n        require(stat.S_ISREG(info.st_mode) and info.st_nlink == 1,\n                \"Observation source must be one regular file\")\n        require(info.st_size <= MAX_OBSERVATION_BYTES, \"Observation file exceeds the reader bound\")\n        with os.fdopen(fd, \"rb\", closefd=False) as stream:\n            data = stream.read(MAX_OBSERVATION_BYTES + 1)\n        require(len(data) <= MAX_OBSERVATION_BYTES, \"Observation file changed beyond the reader bound\")\n    finally:\n        os.close(fd)\n    return {\"path\": str(path), \"sha256\": digest(data), \"bytes\": len(data),\n            \"value\": parse_json(data)}\n"
+        },
+        "snapshot_document": {
+          "sha256": "7b886abf3255782a6e5f4c442e2df8ffc99a7b6b212039451ed9e5aff01d313d",
+          "text": "def snapshot_document(root):\n    before = read_document(root / \"commit.json\", root)\n    commit = before[\"value\"]\n    key = commit.get(\"snapshotHash\")\n    require(commit.get(\"version\") == 1 and isinstance(key, str)\n            and re.fullmatch(r\"[0-9a-f]{64}\", key), \"Invalid actual snapshot commit\")\n    revision = read_document(root / \"Revisions\" / (key + \".json\"), root)\n    require(revision[\"sha256\"] == key, \"The actual committed snapshot hash differs\")\n    after = read_document(root / \"commit.json\", root)\n    require(before[\"sha256\"] == after[\"sha256\"], \"Snapshot changed during observation\")\n    envelope = revision[\"value\"]\n    require(isinstance(envelope, dict) and isinstance(envelope.get(\"snapshot\"), dict),\n            \"Invalid snapshot envelope\")\n    return revision\n"
+        },
+        "widget_artifact": {
+          "sha256": "f208be57920ec9a7ab12d36533592bb201e572f2484e9a60d9981b2aa086f34e",
+          "text": "def widget_artifact(root, identity, reference, expected):\n    require(isinstance(expected, str) and re.fullmatch(r\"[0-9a-f]{64}\", expected),\n            \"Invalid widget artifact digest\")\n    exact = \"Packages/{}/generations/{}/artifacts/{}\".format(\n        identity[\"installedPackageID\"], identity[\"generation\"], expected)\n    require(reference == exact, \"Widget artifact reference is not its exact current generation\")\n    result = read_document(root / reference, root)\n    require(result[\"sha256\"] == expected, \"Widget artifact bytes do not match the committed digest\")\n    return result\n"
+        }
+      }
+    }
+  },
+  "computedNotEncoded": [
+    "id",
+    "isDefault",
+    "entityID"
+  ],
+  "encodedInstanceFields": [
+    "identity",
+    "engine",
+    "displayName",
+    "settings"
+  ],
+  "freshInstanceName": "Default",
+  "originalArchiveTitleConditionUnchanged": "author.get(\"hanlinAppID\") == fixed[\"appID\"] and author.get(\"name\") == fixed[\"title\"]",
+  "publishedTemplateName": "<manifest.name> · Default"
+}

@@ -1,0 +1,117 @@
+{
+  "at": "2026-11-28T14:39:41.216061+00:00",
+  "status": "R2_SOURCE_REVIEWED_COMPOSITION_CONFLICTS_PENDING",
+  "base": "f350a0f12c54121d0b3afb4217472ae8143fc83a",
+  "current": "55c2eb343399543eac327720f25e8eacf86bba15",
+  "r1PayloadsVerified": 16,
+  "r2PayloadsVerified": 20,
+  "r2PayloadBytes": 757939,
+  "r2LeafWholeInverse": true,
+  "r2ControlWholeInverse": true,
+  "old8ControlASTExact": true,
+  "controlsAuthored": 10,
+  "controlsExecuted": 0,
+  "baseGitAuthorityCount": 30,
+  "canonicalR2AuthorityCount": 5,
+  "snapshotDateEncoding": {
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift",
+    "sha256": "0085600e6e48bb8e40565a85e081403854639279e82f2bc72664cf7f56e69248",
+    "actualMillisecondsSince1970": true
+  },
+  "sourceFiles": [
+    {
+      "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "new": false,
+      "bytes": 340169,
+      "sha256": "e95c21f143c1593d69b4c6535e674355c9498fe4a9a4b798a5dcadb80e18d730",
+      "mergeExit": 5
+    },
+    {
+      "path": "Scripts/CI/Tests/test_liveactivity_lifecycle.py",
+      "new": true,
+      "bytes": 20867,
+      "sha256": "e1f3bf4e6a9be9b1f4e1a35cc1eca601c9bb79191f0a95f0ebb95ced81d6cbaf"
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_liveactivity_lifecycle.py",
+      "new": true,
+      "bytes": 48746,
+      "sha256": "d68b34b421d210894c9d3fbab26b043d36bab12741f7aaf3613f5c5b9e071410"
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "new": false,
+      "bytes": 69645,
+      "sha256": "9c0fed04c4cac33aba267a677fce5bbbf3211a0da9d2e15f78077f7ed702bd22",
+      "mergeExit": 2
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "new": false,
+      "bytes": 125114,
+      "sha256": "48223195b016c0664478f0475e760d0aa33196e23459214d44b18bd738c390bf",
+      "mergeExit": 4
+    }
+  ],
+  "conflicts": [
+    {
+      "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "code": 5,
+      "stderr": "",
+      "conflicts": [
+        "<<<<<<< /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift.current",
+        "=======",
+        ">>>>>>> /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift.r2",
+        "<<<<<<< /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift.current",
+        "=======",
+        ">>>>>>> /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift.r2",
+        "<<<<<<< /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift.current",
+        "=======",
+        ">>>>>>> /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift.r2",
+        "<<<<<<< /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift.current",
+        "=======",
+        ">>>>>>> /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift.r2",
+        "<<<<<<< /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift.current",
+        "=======",
+        ">>>>>>> /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift.r2"
+      ]
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "code": 2,
+      "stderr": "",
+      "conflicts": [
+        "<<<<<<< /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/Scripts/ProductSplit/observe_shortcut_surfaces.py.current",
+        "=======",
+        ">>>>>>> /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/Scripts/ProductSplit/observe_shortcut_surfaces.py.r2",
+        "<<<<<<< /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/Scripts/ProductSplit/observe_shortcut_surfaces.py.current",
+        "=======",
+        ">>>>>>> /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/Scripts/ProductSplit/observe_shortcut_surfaces.py.r2"
+      ]
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "code": 4,
+      "stderr": "",
+      "conflicts": [
+        "<<<<<<< /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/Scripts/ProductSplit/run_paired_acceptance.py.current",
+        "=======",
+        ">>>>>>> /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/Scripts/ProductSplit/run_paired_acceptance.py.r2",
+        "<<<<<<< /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/Scripts/ProductSplit/run_paired_acceptance.py.current",
+        "=======",
+        ">>>>>>> /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/Scripts/ProductSplit/run_paired_acceptance.py.r2",
+        "<<<<<<< /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/Scripts/ProductSplit/run_paired_acceptance.py.current",
+        "=======",
+        ">>>>>>> /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/Scripts/ProductSplit/run_paired_acceptance.py.r2",
+        "<<<<<<< /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/Scripts/ProductSplit/run_paired_acceptance.py.current",
+        "=======",
+        ">>>>>>> /mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/merge-inputs/Scripts/ProductSplit/run_paired_acceptance.py.r2"
+      ]
+    }
+  ],
+  "workflowSHA256": "242c6cc5f873510ef5aa7d32eebae8df8952ea5109c09ae09eca168a12ef6af3",
+  "wholeWorkflowInverseToCurrent": true,
+  "sourceMutations": 0,
+  "nativeOrCompilerExecution": 0,
+  "publicSourceLease": "55c held for W1 three original unique bindings"
+}
