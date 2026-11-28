@@ -201,7 +201,7 @@ struct HanlinWidgetInputOwnershipTests {
         let script: [String: Any] = [
             "name": "Widget ownership regression", "version": "1.0.0", "hanlinAppID": "hanlin.widget.ownership",
             "entry": "nativescript/app/bundle.mjs", "runInApp": true, "hanlinRuntime": "hanlin-nativescript",
-            "widgetEngine": "scriptwidget", "hanlinWidget": ["abiVersion": 1, "sourceFormat": "jsx", "families": ["systemMedium"]]
+            "widgetEngine": "scriptwidget", "hanlinWidget": ["abiVersion": 1, "sourceFormat": "jsx", "actions": [], "families": ["systemMedium"]]
         ]
         let scriptBytes = try json(script)
         let author: [String: Any] = ["schemaVersion": 1, "engine": "nativescript", "entry": "index.ts",
