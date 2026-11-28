@@ -190,6 +190,67 @@ def notification_owned_path(path, root, *, directory):
     return path
 
 
+def capture_notification_descriptor_candidates(derived, products, candidates):
+    """Retain bounded metadata on the existing descriptor-count failure only."""
+    try:
+        def describe(path):
+            row = {'path': str(path)}
+            try:
+                value = path.lstat()
+                mode = value.st_mode
+                row.update(type='symlink' if stat.S_ISLNK(mode) else
+                           'directory' if stat.S_ISDIR(mode) else
+                           'regular' if stat.S_ISREG(mode) else 'other',
+                           mode=mode, device=value.st_dev, inode=value.st_ino,
+                           bytes=value.st_size, mtimeNs=value.st_mtime_ns)
+            except OSError as error:
+                row.update(type='unavailable', error=type(error).__name__, errno=error.errno)
+            return row
+
+        debug = products / 'Debug-iphonesimulator'
+        runner = debug / 'HanlinMiniAppsUITests-Runner.app'
+        paths = (products, debug, debug / 'HanlinMiniApps.app', runner,
+                 runner / 'PlugIns', runner / 'PlugIns/HanlinMiniAppsUITests.xctest')
+        directories, product_rows = set(), []
+        for path in paths:
+            if path != products and path.parent not in directories:
+                row = {'path': str(path), 'type': 'uninspected',
+                       'reason': 'parent is not an observed directory'}
+            else:
+                row = describe(path)
+                if row.get('type') == 'directory':
+                    directories.add(path)
+            product_rows.append(row)
+        candidate_rows = [
+            describe(path) if products in directories else
+            {'path': str(path), 'type': 'uninspected',
+             'reason': 'products is not an observed directory'}
+            for path in candidates[:64]]
+        snapshot = {
+            'schema': 1, 'recordedAt': time.time(),
+            'status': 'ORIGINAL_DESCRIPTOR_COUNT_REJECTED',
+            'derivedData': str(derived),
+            'derivedDataArgument': os.environ.get('SPLIT_DERIVED_DATA'),
+            'products': str(products), 'candidateCount': len(candidates),
+            'candidateRows': candidate_rows,
+            'omittedCandidateRows': max(0, len(candidates) - len(candidate_rows)),
+            'expectedProductPaths': product_rows,
+            'buildReceiptFiles': ['acceptance.json', 'commands.jsonl'],
+            'boundary': 'Metadata only; no descriptor content or native execution.'}
+        path = EVIDENCE / 'notification-descriptor-candidates.json'
+        with path.open('x', encoding='utf-8') as stream:
+            json.dump(snapshot, stream, indent=2, allow_nan=False)
+            stream.write('\n')
+    except Exception as error:
+        # Diagnostics cannot replace the original admission error or prior evidence.
+        try:
+            print('Notification descriptor diagnostic unavailable: ' +
+                  type(error).__name__ + ' errno=' + str(getattr(error, 'errno', None)),
+                  file=sys.stderr)
+        except OSError:
+            pass
+
+
 def notification_descriptor(derived):
     derived = Path(derived)
     notification_check(derived.is_absolute() and derived.is_dir() and not derived.is_symlink(),
@@ -197,6 +258,8 @@ def notification_descriptor(derived):
     derived = derived.resolve(strict=True)
     products = notification_owned_path(derived / 'Build/Products', derived, directory=True)
     candidates = sorted(products.glob('*.xctestrun'))
+    if len(candidates) != 1:
+        capture_notification_descriptor_candidates(derived, products, candidates)
     notification_check(len(candidates) == 1, 'the original build descriptor is missing or ambiguous')
     path = notification_owned_path(candidates[0], products, directory=False)
     with os.fdopen(os.open(path, os.O_RDONLY | os.O_NOFOLLOW), 'rb') as stream:

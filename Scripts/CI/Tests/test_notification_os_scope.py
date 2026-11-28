@@ -517,6 +517,70 @@ class NotificationScopeTests(unittest.TestCase):
                     runner.validate_notification_observations(receipt)
 
 
+    def test_descriptor_count_failure_retains_bounded_metadata_without_content_reads(self):
+        diagnostic = self.evidence / 'notification-descriptor-candidates.json'
+        self.assertFalse(diagnostic.exists())
+        self.descriptor.unlink()
+        failure = 'Notification OS admission: the original build descriptor is missing or ambiguous'
+        with patch.object(runner.plistlib, 'loads', side_effect=AssertionError('no descriptor content')):
+            with self.assertRaisesRegex(RuntimeError, failure):
+                runner.notification_descriptor(self.derived)
+        missing = json.loads(diagnostic.read_text())
+        self.assertEqual(missing['candidateCount'], 0)
+        self.assertEqual(missing['candidateRows'], [])
+        self.assertEqual(missing['omittedCandidateRows'], 0)
+        self.assertEqual(len(missing['expectedProductPaths']), 6)
+        diagnostic.unlink()
+        foreign = self.root / 'foreign-descriptor'
+        foreign.write_bytes(b'never read or changed')
+        for number in range(70):
+            path = self.descriptor.with_name(f'{number:04d}.xctestrun')
+            if number == 0:
+                path.symlink_to(foreign)
+            else:
+                path.write_bytes(b'not parsed')
+        with patch.object(runner.plistlib, 'loads', side_effect=AssertionError('no descriptor content')):
+            with self.assertRaisesRegex(RuntimeError, failure):
+                runner.notification_descriptor(self.derived)
+        multiple = json.loads(diagnostic.read_text())
+        self.assertEqual(multiple['candidateCount'], 70)
+        self.assertEqual(len(multiple['candidateRows']), 64)
+        self.assertEqual(multiple['omittedCandidateRows'], 6)
+        self.assertEqual(multiple['candidateRows'][0]['type'], 'symlink')
+        self.assertEqual(Path(multiple['candidateRows'][-1]['path']).name, '0063.xctestrun')
+        self.assertEqual(foreign.read_bytes(), b'never read or changed')
+        self.assertEqual(self.descriptor_original,
+                         (self.evidence / 'notification-original.xctestrun').read_bytes())
+
+    def test_descriptor_diagnostic_failure_preserves_original_error_and_prior_evidence(self):
+        self.descriptor.unlink()
+        diagnostic = self.evidence / 'notification-descriptor-candidates.json'
+        foreign = self.root / 'prior-evidence'
+        foreign.write_bytes(b'preserved')
+        diagnostic.symlink_to(foreign)
+        failure = 'Notification OS admission: the original build descriptor is missing or ambiguous'
+        errors = io.StringIO()
+        with patch.object(sys, 'stderr', errors):
+            with self.assertRaisesRegex(RuntimeError, failure):
+                runner.notification_descriptor(self.derived)
+        self.assertTrue(diagnostic.is_symlink())
+        self.assertEqual(foreign.read_bytes(), b'preserved')
+        self.assertIn('FileExistsError', errors.getvalue())
+        diagnostic.unlink()
+        diagnostic.write_bytes(b'prior diagnostic')
+        with patch.object(sys, 'stderr', io.StringIO()):
+            with self.assertRaisesRegex(RuntimeError, failure):
+                runner.notification_descriptor(self.derived)
+        self.assertEqual(diagnostic.read_bytes(), b'prior diagnostic')
+        diagnostic.unlink()
+        errors = io.StringIO()
+        with patch.object(Path, 'open', side_effect=PermissionError('diagnostic unavailable')), \
+                patch.object(sys, 'stderr', errors):
+            with self.assertRaisesRegex(RuntimeError, failure):
+                runner.notification_descriptor(self.derived)
+        self.assertIn('PermissionError', errors.getvalue())
+        self.assertFalse(diagnostic.exists())
+
     def descriptor_document(self):
         return plistlib.loads(self.descriptor_original)
 
