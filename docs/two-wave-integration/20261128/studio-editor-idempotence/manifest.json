@@ -1,0 +1,36 @@
+{
+  "sourceCommit": "951d6f2d5b5206361135da197cae0e407c915bb1",
+  "base": "53329e1a9dde33432d886ec5ffbee7c3d44d2014",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3441,
+      "sha256": "dba95b1535449c7555bb6f0cfe2bc8e5353bd637c82a6f7f0a5f6327e7ad3c1c"
+    },
+    {
+      "path": "independent-root-source-review.json",
+      "bytes": 1159,
+      "sha256": "d3104d41dec7b8dbd7c9de9cfac165693b874a72d6fdd2b2588701e49fb37611"
+    },
+    {
+      "path": "inverse-substitutions.json",
+      "bytes": 1092,
+      "sha256": "cb568e7590e0cfcdeb4a2fd6133a4a3c4128c9be60b7c4246c5a1b6687601b6c"
+    },
+    {
+      "path": "original-gallery-selectors.txt",
+      "bytes": 909,
+      "sha256": "ed16ddbd4a80406040ac61a27c2456becb8b727e43a399446043784be3597c45"
+    },
+    {
+      "path": "qualification.json",
+      "bytes": 3542,
+      "sha256": "35f8a938c01de4e687e0048a0180a16c8f2e4beea67ef39bcd429a0f8a301df6"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 673,
+      "sha256": "db2e4cfad4f0ab7cdd144df82e21d8a8293c23f4962e75df7c09ba3810c82184"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "classification": "MINIMAL_EDITOR_IDEMPOTENCE_SOURCE_CANDIDATE_NATIVE_NOT_RUN",
+  "base": "53329e1a9dde33432d886ec5ffbee7c3d44d2014",
+  "path": "HanlinMiniAppsApp/MiniAppsDeveloperStudio.swift",
+  "preimageSHA256": "1471af7b39899452fd3ab797bf24cd9d4e1c2273807e438795564ebe259608d7",
+  "candidateSHA256": "28058e1a2b8189a16e6a517d20e64db7ff76c9aebc6ddc120cde16963baa8c4c",
+  "patchSHA256": "9d6cbdeb0fbff3eeb0b46fe9f857c31b06a7a9d28027e731edfed59a4cacec2c",
+  "change": "Five equality guards only: UIKit editability/font and outgoing text/selection/caret bindings.",
+  "directSourceRationale": [
+    "The original updateUIView assigns the same font/editability on every update without comparison.",
+    "The original delegate writes each binding even when equal; the text setter calls project.edited(), which increments revision and persists/removes a recovery draft.",
+    "Selection is used in the inspection task identity; caret is used for suggestion placement. Avoiding equal writes removes unnecessary updates without changing new values."
+  ],
+  "preservation": {
+    "wholeFileFiveSubstitutionInverse": true,
+    "outsideMiniAppsCodeTextViewByteIdentical": true,
+    "existingUITextAndSelectionChecksByteIdentical": true,
+    "caretGeometryExpressionByteIdentical": true,
+    "textChangeStillCallsOriginalBindingSetter": true,
+    "selectionAndCaretUpdateStillCalledAfterTextCallback": true,
+    "noAsyncDeferral": true,
+    "noDelegateSuppression": true,
+    "noNewTaskTimerAPIOrTest": true,
+    "originalTestTreesUnchanged": true,
+    "SDK396Intersection": []
+  },
+  "evidenceLimits": [
+    "Four original own-PID samples contain repeated font-update and separate scroll-to-caret setter paths.",
+    "No sampled caret-setter ancestor chain includes updateUIView. These samples do not prove the proposed synchronous cycle.",
+    "The paired log names four Studio cases when reporting state-during-update warnings, including Departure and Table, but does not provide a warning source backtrace or PID.",
+    "Apple documents textViewDidChange for user-initiated changes, not programmatic changes; this proposal does not claim the font setter calls project.edited().",
+    "Native causal improvement and original Gallery/editor acceptance remain unproven until the same original routes execute."
+  ],
+  "authorities": {
+    "sdkInputSHA256": "e8ddacfefcdb51912270c230a60de97c5a2be3499e3f7bd6496e6b5707f9f4fc",
+    "sdkListSHA256": "a9e7468bc7b3898a6408587ef48a80dc83e389ab945c84ec77cc8d48b692710b",
+    "modelSourceSHA256": "849851553729e4bbcedd623441a5e75c5320d76bdf0a0f48130c9bfe6ff20df1",
+    "appleUpdate": "https://developer.apple.com/documentation/swiftui/uiviewrepresentable/updateuiview(_:context:)",
+    "appleDelegate": "https://developer.apple.com/documentation/uikit/uitextviewdelegate/textviewdidchange(_:).md"
+  },
+  "executed": {
+    "native": "NOT_RUN",
+    "Swift": "NOT_RUN",
+    "portableTests": "NOT_RUN",
+    "mechanicalInverse": "PASS"
+  },
+  "gitPatchSHA256": "676ac81ae586f51e4273ee9819296cef6c0247b78d000e05af3e83ac80260831",
+  "diffCheckExit": 0,
+  "sealedSourceCommit": "951d6f2d5b5206361135da197cae0e407c915bb1",
+  "sourceReviewSHA256": "d3104d41dec7b8dbd7c9de9cfac165693b874a72d6fdd2b2588701e49fb37611",
+  "packetManifestSHA256": "9ddc0a2f132d779238d26c20cd8e9dbde3dac1f3f1df59ca64833f8d30070dc6",
+  "rawPatchEncoding": {
+    "file": "source.patch.gz",
+    "compression": "gzip",
+    "expandedSHA256": "9d6cbdeb0fbff3eeb0b46fe9f857c31b06a7a9d28027e731edfed59a4cacec2c",
+    "bytesPreserved": true
+  }
+}

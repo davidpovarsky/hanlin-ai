@@ -1,0 +1,22 @@
+[
+  [
+    "        view.isEditable = isEnabled\n",
+    "        if view.isEditable != isEnabled { view.isEditable = isEnabled }\n"
+  ],
+  [
+    "        view.font = UIFont(name: fontName, size: fontSize) ?? .monospacedSystemFont(ofSize: fontSize, weight: .regular)\n",
+    "        let font = UIFont(name: fontName, size: fontSize) ?? .monospacedSystemFont(ofSize: fontSize, weight: .regular)\n        if view.font != font { view.font = font }\n"
+  ],
+  [
+    "            parent.text = textView.text\n",
+    "            if parent.text != textView.text { parent.text = textView.text }\n"
+  ],
+  [
+    "            parent.selection = view.selectedRange\n",
+    "            if parent.selection != view.selectedRange { parent.selection = view.selectedRange }\n"
+  ],
+  [
+    "            parent.caret = view.caretRect(for: range.end).offsetBy(dx: -view.contentOffset.x, dy: -view.contentOffset.y)\n",
+    "            let rect = view.caretRect(for: range.end).offsetBy(dx: -view.contentOffset.x, dy: -view.contentOffset.y)\n            if parent.caret != rect { parent.caret = rect }\n"
+  ]
+]
