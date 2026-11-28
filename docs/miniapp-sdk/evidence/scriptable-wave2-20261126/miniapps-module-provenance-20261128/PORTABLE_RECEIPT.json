@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "scope": "Focused portable compiler-evidence containment and failure propagation only",
+  "nativeExecution": "NOT_RUN",
+  "argv": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_swift_module_provenance.py",
+    "-v"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-miniapps-module-provenance-20261128",
+  "startedAt": "2026-11-28T03:03:36.322473+00:00",
+  "timeoutSeconds": 60,
+  "sourceBefore": {
+    "Scripts/ProductSplit/capture_swift_module_provenance.py": {
+      "bytes": 14031,
+      "sha256": "dd2c3ba670a5b74f139b4a57e29d9c6dce72ae9ef529d3fbfc68fcbe88ee7b06"
+    },
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "bytes": 97454,
+      "sha256": "d26555b15ba50e8890ffe4a3a83e56ec9f8cdaec91a6ae6137ed0c9068d34320"
+    },
+    "Scripts/ProductSplit/run_native_acceptance.py": {
+      "bytes": 64540,
+      "sha256": "f9982e58d166f780781f7181692877592b60d3b15cd7374dbaa458de37331a3f"
+    },
+    "Scripts/CI/Tests/test_swift_module_provenance.py": {
+      "bytes": 17618,
+      "sha256": "72bb3d2b40fd7c5ed18ca3bd25dbbf0d541564b8a8c2c0721d3ddd1d9dc52e4d"
+    }
+  },
+  "exit": 0,
+  "elapsedSeconds": 0.6940867668017745,
+  "finishedAt": "2026-11-28T03:03:37.016551+00:00",
+  "sourceAfter": {
+    "Scripts/ProductSplit/capture_swift_module_provenance.py": {
+      "bytes": 14031,
+      "sha256": "dd2c3ba670a5b74f139b4a57e29d9c6dce72ae9ef529d3fbfc68fcbe88ee7b06"
+    },
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "bytes": 97454,
+      "sha256": "d26555b15ba50e8890ffe4a3a83e56ec9f8cdaec91a6ae6137ed0c9068d34320"
+    },
+    "Scripts/ProductSplit/run_native_acceptance.py": {
+      "bytes": 64540,
+      "sha256": "f9982e58d166f780781f7181692877592b60d3b15cd7374dbaa458de37331a3f"
+    },
+    "Scripts/CI/Tests/test_swift_module_provenance.py": {
+      "bytes": 17618,
+      "sha256": "72bb3d2b40fd7c5ed18ca3bd25dbbf0d541564b8a8c2c0721d3ddd1d9dc52e4d"
+    }
+  },
+  "raw": {
+    "stdout": {
+      "bytes": 1469,
+      "sha256": "53c0ab7ceda5abc0dbeb9fc6de36dcf587dff0c76571264cec9fa5ae0e93813c"
+    },
+    "stderr": {
+      "bytes": 3245,
+      "sha256": "c2308d2b28882edc7dfb06c9374174265549a1bf7e463e2f9f907aabf8128a65"
+    }
+  },
+  "sourceUnchanged": true
+}

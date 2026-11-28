@@ -1,0 +1,28 @@
+{
+  "files": [
+    {
+      "path": "source.patch.gz",
+      "encoding": "gzip",
+      "originalBytes": 35327,
+      "originalSHA256": "da163ca1e8da3594bd630d58fec7014a3a528df5916cf219ace15201737b8995",
+      "gzipSHA256": "fe84957c1f87b075d471248c87c694703cdf06d2c5f314d88672b5eec88caa7d",
+      "roundtripVerified": true
+    },
+    {
+      "path": "portable-stdout.log.gz",
+      "encoding": "gzip",
+      "originalBytes": 1469,
+      "originalSHA256": "53c0ab7ceda5abc0dbeb9fc6de36dcf587dff0c76571264cec9fa5ae0e93813c",
+      "gzipSHA256": "1e5a4823609779229e24f3fe75df57edfd9f98118f73243f6d186097bee70641",
+      "roundtripVerified": true
+    },
+    {
+      "path": "portable-stderr.log.gz",
+      "encoding": "gzip",
+      "originalBytes": 3245,
+      "originalSHA256": "c2308d2b28882edc7dfb06c9374174265549a1bf7e463e2f9f907aabf8128a65",
+      "gzipSHA256": "2579b27a54c7bc11a129ef91e25ed904f33e25090be54826025f3693f7d8c5dc",
+      "roundtripVerified": true
+    }
+  ]
+}

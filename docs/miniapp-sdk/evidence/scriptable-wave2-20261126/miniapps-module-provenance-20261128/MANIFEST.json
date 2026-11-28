@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "08a6e52a6f03ac3223de1f0e9e35e59936ddf318",
+  "sourceBase": "3ab83672440fa6f588611fe91db5d746099b038c",
+  "native": "NOT_RUN",
+  "files": [
+    {
+      "path": "INDEPENDENT_MAC_REVIEW.json",
+      "bytes": 7947,
+      "sha256": "39f5438807041409addda51dc2c097ab932af77b3a701e1a9696214f0a2cd9de"
+    },
+    {
+      "path": "LOSSLESS_ENCODINGS.json",
+      "bytes": 974,
+      "sha256": "3869ef75a6c5db0a5377b49af07e7048e0f174fb76a641a994eee6db457bf32d"
+    },
+    {
+      "path": "PACKING_RECONCILIATION.json",
+      "bytes": 845,
+      "sha256": "e13da9b1505263a919bce298c94b179bbb3690f041fed16c33836cdf3bb52a4e"
+    },
+    {
+      "path": "PORTABLE_RECEIPT.json",
+      "bytes": 2389,
+      "sha256": "4791013d943b3f2c08bfd5359fecd89124668e4ea807410dc33336c46fd32ca8"
+    },
+    {
+      "path": "PREPARED_NATIVE_INPUT_INTERSECTIONS.json",
+      "bytes": 1769,
+      "sha256": "16bd4c2683514b4bb43dd9e5af61faec30e3dccc7c45568640878e6febc682b9"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4410,
+      "sha256": "1b3823eeac5897b78895d0013d8df13d9a8b612ef2bb9d32c5aa0f2e06187310"
+    },
+    {
+      "path": "SDK_INPUT_INTERSECTION.json",
+      "bytes": 1035,
+      "sha256": "a3da0c57e89bde600bd99afdfdbfbcf88eff7568737493830d68d356465305c5"
+    },
+    {
+      "path": "SOURCE_PROOF.json",
+      "bytes": 3682,
+      "sha256": "14fa22e66f879650ef6c5a016678ad9abb274776b15df148ed030d0351daa6cd"
+    },
+    {
+      "path": "SOURCE_SEAL.json",
+      "bytes": 1451,
+      "sha256": "8c979b6ccedad8e330c87d472ae7faa0748a1d6eb040a50d0338c02cc77cd745"
+    },
+    {
+      "path": "portable-stderr.log.gz",
+      "bytes": 737,
+      "sha256": "2579b27a54c7bc11a129ef91e25ed904f33e25090be54826025f3693f7d8c5dc"
+    },
+    {
+      "path": "portable-stdout.log.gz",
+      "bytes": 191,
+      "sha256": "1e5a4823609779229e24f3fe75df57edfd9f98118f73243f6d186097bee70641"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 8684,
+      "sha256": "fe84957c1f87b075d471248c87c694703cdf06d2c5f314d88672b5eec88caa7d"
+    }
+  ]
+}

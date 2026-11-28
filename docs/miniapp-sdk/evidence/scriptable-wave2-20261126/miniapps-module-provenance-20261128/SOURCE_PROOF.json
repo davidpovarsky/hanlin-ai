@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "status": "SOURCE_REVIEW_AND_PORTABLE_CONTROLS_ONLY",
+  "base": "3ab83672440fa6f588611fe91db5d746099b038c",
+  "source": [
+    {
+      "path": "Scripts/ProductSplit/capture_swift_module_provenance.py",
+      "afterSHA256": "dd2c3ba670a5b74f139b4a57e29d9c6dce72ae9ef529d3fbfc68fcbe88ee7b06",
+      "bytes": 14031
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "afterSHA256": "d26555b15ba50e8890ffe4a3a83e56ec9f8cdaec91a6ae6137ed0c9068d34320",
+      "bytes": 97454,
+      "beforeSHA256": "38b7c4e8a3cc3051018497f5eb5edcbb94bb73ba41953eb0cc0562fab71337a7"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_native_acceptance.py",
+      "afterSHA256": "f9982e58d166f780781f7181692877592b60d3b15cd7374dbaa458de37331a3f",
+      "bytes": 64540,
+      "beforeSHA256": "ad292cae96fe84b8c7672c21b83d790b97b12d3f73ec344466993e595db8f7b3"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_swift_module_provenance.py",
+      "afterSHA256": "72bb3d2b40fd7c5ed18ca3bd25dbbf0d541564b8a8c2c0721d3ddd1d9dc52e4d",
+      "bytes": 17618
+    }
+  ],
+  "runnerInverses": {
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "beforeSHA256": "38b7c4e8a3cc3051018497f5eb5edcbb94bb73ba41953eb0cc0562fab71337a7",
+      "removedHookSHA256": "271ef1586f2f639064b8559cdcc914c79e40223f121caa1a4707f6a7518a2f33",
+      "removedHookLines": 11,
+      "wholeFileByteInverse": true,
+      "wholeASTInverse": true,
+      "unchangedFunctionCount": 18,
+      "unchangedFunctions": [
+        "select_paired_runtime",
+        "command_phase_status",
+        "record_build_phases",
+        "capture_app_intents_metadata",
+        "fixture_archive",
+        "authoring_fixtures",
+        "verify_native_result",
+        "start_native_adapter_assets",
+        "widget_recovery_fixture",
+        "shortcut_surface_fixtures",
+        "long_running_shortcut_fixtures",
+        "system_surface_inputs",
+        "stage_system_surface_share_input",
+        "start_system_surface_input_producer",
+        "finish_system_surface_input_producer",
+        "start_shortcut_observer",
+        "finish_shortcut_observer",
+        "main"
+      ],
+      "onlyChangedFunction": "command"
+    },
+    "Scripts/ProductSplit/run_native_acceptance.py": {
+      "beforeSHA256": "ad292cae96fe84b8c7672c21b83d790b97b12d3f73ec344466993e595db8f7b3",
+      "removedHookSHA256": "98f04c53e95e9f6220c0db3dfa0eb80249d240924fd8538aafaa165cfd81dc30",
+      "removedHookLines": 7,
+      "wholeFileByteInverse": true,
+      "wholeASTInverse": true,
+      "unchangedFunctionCount": 13,
+      "unchangedFunctions": [
+        "notification_check",
+        "notification_file",
+        "notification_equal",
+        "notification_source",
+        "notification_bundle",
+        "notification_products",
+        "notification_container",
+        "notification_active",
+        "notification_containers",
+        "notification_stop",
+        "run_notification_test",
+        "validate_notification_observations",
+        "main"
+      ],
+      "onlyChangedFunction": "command"
+    }
+  },
+  "patchSHA256": "da163ca1e8da3594bd630d58fec7014a3a528df5916cf219ace15201737b8995",
+  "native": "NOT_RUN",
+  "portableReceipt": {
+    "path": "../portable-r1/receipt.json",
+    "sha256": "4791013d943b3f2c08bfd5359fecd89124668e4ea807410dc33336c46fd32ca8",
+    "tests": 15,
+    "exit": 0
+  },
+  "deadline": "Original monotonic command deadline, original54 existing job-clock remaining cap, child at most min(8 seconds, remaining), cooperative at most6 seconds",
+  "originalWorkflowChanged": false,
+  "originalProductOrSwiftSourceChanged": false,
+  "originalCacheBehaviorChanged": false,
+  "diffCheckExit": 0
+}

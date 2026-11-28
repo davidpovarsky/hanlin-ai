@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "sourceAndTestsUnchangedThroughoutPacking": true,
+  "testsRepeated": false,
+  "events": [
+    {
+      "stage": "proof preparation",
+      "error": "Wrong sibling SDK packet path; corrected without source edits."
+    },
+    {
+      "stage": "commit preparation",
+      "error": "Isolated checkout lacked author identity; reused prior W1 ChatGPT identity per command only."
+    },
+    {
+      "stage": "input-impact packaging",
+      "error": "Single candidate row list needed element[0] before tuple unpacking; corrected without source edits."
+    },
+    {
+      "stage": "after successful source commit",
+      "error": "Automatic Git maintenance encountered permissions on unrelated worktree metadata; source commit/parent/clean status verified, no unrelated path repair attempted."
+    }
+  ],
+  "native": "NOT_RUN"
+}
