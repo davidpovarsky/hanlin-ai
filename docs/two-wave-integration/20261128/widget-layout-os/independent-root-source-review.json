@@ -1,0 +1,145 @@
+{
+  "schema": 1,
+  "at": "2026-11-28T05:50:32.903400+00:00",
+  "reviewer": "root",
+  "decision": "APPROVED_SOURCE_ONLY",
+  "base": "9ee23af8c3556502ba6da8ba7fccd05a8c35adb1",
+  "currentIntegration": "5f827bac46543271991668a089830650893cd72d",
+  "sourcePacketManifestSHA256": "64a5e56dace2c478f7b087694e7a63f8642c3703254b00b26bfaac8692189db0",
+  "sourcePatchSHA256": "946e9f43b59586f9cc0eace43e9e42dd48dbb90999c7c9cd8a954d89db736a76",
+  "separateWorkflowPatchSHA256": "c84c8c1302269d312e7eaf7ca5194cc3b7b8b9e39ac71e5ee0dfde2096ae3178",
+  "mechanicalChecks": {
+    "manifestMembers": 26,
+    "memberBytes": 756572,
+    "losslessSourcePatch": true,
+    "head": "5f827bac46543271991668a089830650893cd72d",
+    "gitClean": true,
+    "runnerDispatcherWholeByteInverse": true,
+    "uiWholeByteInverse": true,
+    "workflowOnlyThreeAdditions": true,
+    "originalAuthorities": 11,
+    "controls": [
+      {
+        "method": "test_complete_medium_action_and_rotation_evidence_is_admitted",
+        "executedPacket": "portable-r3",
+        "qualified": true
+      },
+      {
+        "method": "test_wrong_family_selector_variant_or_future_start_is_rejected",
+        "executedPacket": "portable-r1",
+        "qualified": true
+      },
+      {
+        "method": "test_source_attempt_and_actual_container_changes_are_rejected",
+        "executedPacket": "portable-r1",
+        "qualified": true
+      },
+      {
+        "method": "test_original_producer_fixture_manifest_and_current_source_must_match",
+        "executedPacket": "portable-r1",
+        "qualified": true
+      },
+      {
+        "method": "test_other_instance_program_generation_or_settings_changes_are_rejected",
+        "executedPacket": "portable-r1",
+        "qualified": true
+      },
+      {
+        "method": "test_missing_hidden_disabled_or_wrong_valued_controls_cannot_qualify",
+        "executedPacket": "portable-r1",
+        "qualified": true
+      },
+      {
+        "method": "test_wrong_window_owner_ambiguity_or_noncontaining_window_is_rejected",
+        "executedPacket": "portable-r1",
+        "qualified": true
+      },
+      {
+        "method": "test_clipped_nonfinite_or_zero_area_control_frames_are_rejected",
+        "executedPacket": "portable-r1",
+        "qualified": true
+      },
+      {
+        "method": "test_pairwise_control_overlap_is_rejected_even_inside_the_widget",
+        "executedPacket": "portable-r1",
+        "qualified": true
+      },
+      {
+        "method": "test_layout_requires_fresh_named_configuration_and_ordered_wall_and_monotonic_times",
+        "executedPacket": "portable-r1",
+        "qualified": true
+      },
+      {
+        "method": "test_assigning_rotation_without_actual_changed_geometry_cannot_pass",
+        "executedPacket": "portable-r1",
+        "qualified": true
+      },
+      {
+        "method": "test_missing_revision_nonce_or_actual_refresh_commit_is_rejected",
+        "executedPacket": "portable-r3",
+        "qualified": true
+      },
+      {
+        "method": "test_native_uuid_letter_case_is_preserved_but_case_equivalent_replay_is_rejected",
+        "executedPacket": "portable-r3",
+        "qualified": true
+      },
+      {
+        "method": "test_original_toggle_add_and_refresh_value_semantics_cannot_be_replaced",
+        "executedPacket": "portable-r3",
+        "qualified": true
+      },
+      {
+        "method": "test_invalid_or_out_of_order_action_identity_is_rejected",
+        "executedPacket": "portable-r2",
+        "qualified": true
+      },
+      {
+        "method": "test_actual_placement_time_is_frozen_and_preplacement_render_cannot_qualify",
+        "executedPacket": "portable-r1",
+        "qualified": true
+      },
+      {
+        "method": "test_pending_native_action_has_no_acknowledgment_and_tap_interval_cannot_be_rewritten",
+        "executedPacket": "portable-r1",
+        "qualified": true
+      },
+      {
+        "method": "test_completion_cannot_omit_actions_rotations_or_leave_an_action_pending",
+        "executedPacket": "portable-r1",
+        "qualified": true
+      }
+    ],
+    "testHelpersUnchanged": true,
+    "allR2MethodASTsUnchanged": true,
+    "onlyLeafFunctionChangedSinceR1": [
+      "require_transition"
+    ]
+  },
+  "rootSourceReview": {
+    "actualStateContract": "Original Matrix0/false -> native Toggle1/true -> Add2/true -> Refresh2/true. Executor skips values for reload while still committing revision and fresh UUID. Native uppercase UUID accepted, case-equivalent replay rejected.",
+    "sourceAdmission": "Original25-output producer and exact current source, attempt, fixture, product/extension/test code, MCM container identity before and after; no new fixture or native product modifications.",
+    "actualUIEvidence": "Six ordered measurements including real portrait/landscapeLeft/portrait geometry, one named Medium configuration, actual SpringBoard window, count+Toggle+Add+Refresh contained and pairwise nonoverlapping, AX and PNG.",
+    "actionAdmission": "Each action armed against current native state; immutable actual tap interval; no acknowledgment until original typed state/revision/nonce and fresh native family render agree.",
+    "cleanup": "Owned widget removal, prior orientation restoration, exact final container/product/extension and source recheck required for terminal acceptance.",
+    "reuse": "Four latest affected controls actually passed;14 unaffected controls retain matching method/helper ASTs, original PASS logs and unchanged reached leaf paths. Initial17-method failed receipt and two-method correction retained. No test rerun for review.",
+    "workflow": "Exactly one manual choice and existing fixture-producer/upload condition extensions; all original choices, actions, bounds and original producer preserved.",
+    "scope": "One added420-second Medium layout UI method; existing2100-second command/observer and210-minute workflow cap unchanged.",
+    "otherUIReview": "W1 independent bounded SwiftUI review approved whole-original-file inverse; separate sealed receipt will be bound at root integration."
+  },
+  "limitations": [
+    "No native/typecheck execution by this source review",
+    "No RTL/appearance/Today View/accessory/other-family/physical-device acceptance",
+    "Tasks03/08 remain open pending their full scopes"
+  ],
+  "files": {
+    "mechanical-review.stdout": {
+      "bytes": 9333,
+      "sha256": "ddd9c97491ecdbcb03f08a5852f34ca3352368ee5e6c97f30c642a122717f89c"
+    },
+    "mechanical-review.py": {
+      "bytes": 5059,
+      "sha256": "ae0f9af1db51a2a5d97151472454619eeb871472fbc68496859eeeaeb6458171"
+    }
+  }
+}

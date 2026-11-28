@@ -1,0 +1,79 @@
+{
+  "base": "9ee23af8c3556502ba6da8ba7fccd05a8c35adb1",
+  "files": {
+    "Scripts/Widgets/samples.mjs": {
+      "gitBlob": "fad738ee4f4e4ff29256a78fff40e1ec66aea47a",
+      "sha256": "5c36e26e3b7d86cbb017c67660070e5d3ea2f06faaae807ea72e7ce2c6fa9b82",
+      "bytes": 11242
+    },
+    "Scripts/Widgets/build-sample-packages.mjs": {
+      "gitBlob": "1c099bf45fa1e9df78feef41149af232e66fffd5",
+      "sha256": "ab9684c50845292b29f259264425caf70706e0c63eb3ea24a253c2dfe2575c3c",
+      "bytes": 1360
+    },
+    "Scripts/Widgets/deterministic-zip.mjs": {
+      "gitBlob": "961bea239d697ed09fde949891f228934da9fc6f",
+      "sha256": "853b5c831fe3cc80c6c52f87991095930f5084c99d43f5999990782cdd4c1da0",
+      "bytes": 2215
+    },
+    "Scripts/ProductSplit/prepare_widget_fixtures.py": {
+      "gitBlob": "fc3e8f869ec964932f5dc6a7dc0919bf88d4cb85",
+      "sha256": "2c24e64319ffd6547243b445260ef1448588a9c639dfe2a1103d74dc68e1273a",
+      "bytes": 15458
+    },
+    "Fixtures/Widgets/SHA256.json": {
+      "gitBlob": "4749753f17a58c8f52fa295319bfe5341e5fa9db",
+      "sha256": "2c3fac22ca5647ab476bbbfddd6286565959da7b9c1a21438a956c94b64d0466",
+      "bytes": 4242
+    },
+    "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": {
+      "gitBlob": "fce35a3656fc70e4ae17aa956f12259af000a814",
+      "sha256": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995",
+      "bytes": 1953
+    },
+    "Scripts/ProductSplit/observe_widget_families.py": {
+      "gitBlob": "399b6606282c4f39611d6634a8b0774ab8c50ab2",
+      "sha256": "a4f86b96afff19a1f1b6158cf91d9069c590520c396986b44e05b8bc89b9de40",
+      "bytes": 25760
+    },
+    "Scripts/ProductSplit/observe_widget_state.py": {
+      "gitBlob": "d61ddb3e772717e1052d501c16b0c230f0c9ab5b",
+      "sha256": "68b84fcc6475a125e1424c774c9337dde5fbde06f92becec1e6b3782389e8be6",
+      "bytes": 30167
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetActionExecutor.swift": {
+      "gitBlob": "b3d988be6d2d10e7c033a96c1cd2cd8022343653",
+      "sha256": "781efebc72d75d0942f0d8a48b7713d3c3cfe2057947fdfbcfa04b000ea59ca6",
+      "bytes": 10953
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift": {
+      "gitBlob": "662a9dd7a4dcebd8a2cb9f8b010497aead35f834",
+      "sha256": "c6de1ead190c0228ea9cb9a842ecbe4d840c53f7bffaa69bf1770fef71d14115",
+      "bytes": 12268
+    },
+    "Scripts/CI/affected-validation-map.json": {
+      "gitBlob": "b114d6aa032c51733f446aba411a761bec5ea822",
+      "sha256": "c8b6811c5baffadb75be3971afce303e80cb2832864a239ae06e6f6e015308cb",
+      "bytes": 80410
+    }
+  },
+  "existingOwnership": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": [
+      "canonical_product_split"
+    ],
+    "Scripts/ProductSplit/observe_widget_layout.py": [
+      "canonical_product_split"
+    ],
+    "Scripts/CI/Tests/test_widget_layout_observer.py": [
+      "ci_router"
+    ],
+    "Scripts/ProductSplit/run_paired_acceptance.py": [
+      "canonical_product_split"
+    ],
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": [
+      "canonical_product_split"
+    ]
+  },
+  "packageTree": "326086571a5960c19eb6aa0afef742b25230a826",
+  "fixtureTree": "748ad17954872ecedad92ac4b7a1207830cc1b43"
+}

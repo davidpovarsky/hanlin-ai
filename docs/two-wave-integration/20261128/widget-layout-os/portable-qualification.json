@@ -1,0 +1,218 @@
+{
+  "schema": 1,
+  "scope": "Portable source/evidence controls only",
+  "currentTotalControls": 18,
+  "freshAffectedLatestRun": 4,
+  "unchangedQualifiedPriorExecutions": 14,
+  "perMethod": [
+    {
+      "method": "test_complete_medium_action_and_rotation_evidence_is_admitted",
+      "result": "EXECUTED_PASS",
+      "executionPacket": "portable-r3",
+      "methodASTSHA256": "2779ea9d111cfa1f4a79e002b47714498bffd5a7e93444bbf6b494e7cb1dc4a9"
+    },
+    {
+      "method": "test_wrong_family_selector_variant_or_future_start_is_rejected",
+      "result": "REUSED_VERIFIED_PASS",
+      "executionPacket": "portable-r1",
+      "methodASTSHA256": "49fb882137ddbc161ff6f6d5dd5309b0080f3e07ee9555e2ce5735f009d583d2"
+    },
+    {
+      "method": "test_source_attempt_and_actual_container_changes_are_rejected",
+      "result": "REUSED_VERIFIED_PASS",
+      "executionPacket": "portable-r1",
+      "methodASTSHA256": "786892c06ea65a70a41cb655bca143c3aabf0bd02010443f428d01fc5e247af1"
+    },
+    {
+      "method": "test_original_producer_fixture_manifest_and_current_source_must_match",
+      "result": "REUSED_VERIFIED_PASS",
+      "executionPacket": "portable-r1",
+      "methodASTSHA256": "5024e4952f6936e22aee9d735a21adcd524350ed302d62538df6fafd03dfb8ee"
+    },
+    {
+      "method": "test_other_instance_program_generation_or_settings_changes_are_rejected",
+      "result": "REUSED_VERIFIED_PASS",
+      "executionPacket": "portable-r1",
+      "methodASTSHA256": "aa69d418f567dd2eb546bbe08dedf5236470e5c4b16c3f70f1bd17f41ba22984"
+    },
+    {
+      "method": "test_missing_hidden_disabled_or_wrong_valued_controls_cannot_qualify",
+      "result": "REUSED_VERIFIED_PASS",
+      "executionPacket": "portable-r1",
+      "methodASTSHA256": "999cf375f057024c5584e960bb538c1f28528b3e1129432ef557b0b3bb1e2628"
+    },
+    {
+      "method": "test_wrong_window_owner_ambiguity_or_noncontaining_window_is_rejected",
+      "result": "REUSED_VERIFIED_PASS",
+      "executionPacket": "portable-r1",
+      "methodASTSHA256": "ee77833aca90c64411ae1026340e9abf5da8e868ba61eac206d3400c7e719aca"
+    },
+    {
+      "method": "test_clipped_nonfinite_or_zero_area_control_frames_are_rejected",
+      "result": "REUSED_VERIFIED_PASS",
+      "executionPacket": "portable-r1",
+      "methodASTSHA256": "6ab347278074e6653542a8cf6a8246aa5d68c28df6c47413866eb4cbfc4c3c00"
+    },
+    {
+      "method": "test_pairwise_control_overlap_is_rejected_even_inside_the_widget",
+      "result": "REUSED_VERIFIED_PASS",
+      "executionPacket": "portable-r1",
+      "methodASTSHA256": "40fe2be034d05e9ef7fde84f226bbab2a33322d5ac333c8f1be78a0c8ed4fddf"
+    },
+    {
+      "method": "test_layout_requires_fresh_named_configuration_and_ordered_wall_and_monotonic_times",
+      "result": "REUSED_VERIFIED_PASS",
+      "executionPacket": "portable-r1",
+      "methodASTSHA256": "b11441d8bf5d5d13539faed59979e3567f7eca3a894c7828d7c1f0d4f71b17fc"
+    },
+    {
+      "method": "test_assigning_rotation_without_actual_changed_geometry_cannot_pass",
+      "result": "REUSED_VERIFIED_PASS",
+      "executionPacket": "portable-r1",
+      "methodASTSHA256": "1537899f790a247438c9f9e41d8281711821dd231d171af670baa2756f588753"
+    },
+    {
+      "method": "test_missing_revision_nonce_or_actual_refresh_commit_is_rejected",
+      "result": "EXECUTED_PASS",
+      "executionPacket": "portable-r3",
+      "methodASTSHA256": "a1a5e037c932cc1c655648c432fb5d2e202e55238a2ca220c2502203c562515d"
+    },
+    {
+      "method": "test_native_uuid_letter_case_is_preserved_but_case_equivalent_replay_is_rejected",
+      "result": "EXECUTED_PASS",
+      "executionPacket": "portable-r3",
+      "methodASTSHA256": "044e5940184dd75d6a272c60b7df9a2146eeb6a57ba8e6ab28d0ad16e3129f4b"
+    },
+    {
+      "method": "test_original_toggle_add_and_refresh_value_semantics_cannot_be_replaced",
+      "result": "EXECUTED_PASS",
+      "executionPacket": "portable-r3",
+      "methodASTSHA256": "5ac6b4e5edb4d3da9701b371648620bdec2c1fcb283c3f68462f8ea2565a104a"
+    },
+    {
+      "method": "test_invalid_or_out_of_order_action_identity_is_rejected",
+      "result": "REUSED_VERIFIED_PASS",
+      "executionPacket": "portable-r2",
+      "methodASTSHA256": "1956dbe86d9fc97369f6e2603422937dcf7e14588d75caae74d58a94356a4882"
+    },
+    {
+      "method": "test_actual_placement_time_is_frozen_and_preplacement_render_cannot_qualify",
+      "result": "REUSED_VERIFIED_PASS",
+      "executionPacket": "portable-r1",
+      "methodASTSHA256": "39fe2b100c205d280279f2e09d8cd572edf424d03b58e7654124922bc645ede0"
+    },
+    {
+      "method": "test_pending_native_action_has_no_acknowledgment_and_tap_interval_cannot_be_rewritten",
+      "result": "REUSED_VERIFIED_PASS",
+      "executionPacket": "portable-r1",
+      "methodASTSHA256": "af1057ee955badeae0fd6ccff0f283395fb094e83796696d582716f8af03c0b4"
+    },
+    {
+      "method": "test_completion_cannot_omit_actions_rotations_or_leave_an_action_pending",
+      "result": "REUSED_VERIFIED_PASS",
+      "executionPacket": "portable-r1",
+      "methodASTSHA256": "c50c0ce427c9a64e847dd3d464758604f13bb4367fccd3b7a52e9810ccb69a3c"
+    }
+  ],
+  "initialFailure": {
+    "packet": "portable-r1",
+    "methodsRun": 17,
+    "methodsPassed": 15,
+    "methodsErrored": 2,
+    "errorSubcases": 4,
+    "cause": "Two newly authored controls expected ObservationError for malformed UUIDs; original shared validator correctly rejected them with ValueError. Original dispatcher catches and records ValueError."
+  },
+  "selectiveCorrection": {
+    "portable-r2": "Only the two corrected methods executed and passed",
+    "portable-r3": "Only three methods affected by native UUID spelling admission plus its new compatibility/replay control executed and passed"
+  },
+  "native": "NOT_RUN",
+  "executions": {
+    "portable-r1": {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/CI/Tests",
+        "-p",
+        "test_widget_layout_observer.py",
+        "-v"
+      ],
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "startedAt": "2026-11-28T05:29:47.315075+00:00",
+      "durationSeconds": 0.21665419824421406,
+      "exitCode": 1,
+      "timeoutSeconds": 60,
+      "rawLog": {
+        "bytes": 10456,
+        "sha256": "bdf36b5b955187282f359cfb69787aa4f9599bb7d8e3bfb806cbe275d952a080"
+      },
+      "source": {
+        "Scripts/ProductSplit/observe_widget_layout.py": "4282f94e219c6a49bad2d33b6a2876c5a6da1ddb2c71abe842566043626d9dae",
+        "Scripts/CI/Tests/test_widget_layout_observer.py": "3e05506af3985f6f4a6836c06cb4550d75b417f358e34a770570e6ba67b6390a"
+      },
+      "python": "Python 3.12.3",
+      "originalReceiptSHA256": "e0f2d4645584c76e793ce6440b79fcec455587a82d8d6696e0495631ffb84f6e"
+    },
+    "portable-r2": {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "-v",
+        "Scripts.CI.Tests.test_widget_layout_observer.WidgetLayoutEvidenceControls.test_invalid_or_out_of_order_action_identity_is_rejected",
+        "Scripts.CI.Tests.test_widget_layout_observer.WidgetLayoutEvidenceControls.test_missing_revision_nonce_or_actual_refresh_commit_is_rejected"
+      ],
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "startedAt": "2026-11-28T05:31:15.453865+00:00",
+      "durationSeconds": 0.19831077381968498,
+      "exitCode": 0,
+      "timeoutSeconds": 60,
+      "rawLog": {
+        "bytes": 508,
+        "sha256": "570419003259a60a316b8f7133d07ca216086d462e61def478fe052e7b144783"
+      },
+      "source": {
+        "Scripts/ProductSplit/observe_widget_layout.py": "4282f94e219c6a49bad2d33b6a2876c5a6da1ddb2c71abe842566043626d9dae",
+        "Scripts/CI/Tests/test_widget_layout_observer.py": "54b7339277e4dfa62acdafbfebb54ae7c21a250e6adb513ed03d0706e58b3550"
+      },
+      "python": "Python 3.12.3",
+      "originalReceiptSHA256": "d901d4b101b7f2ba041fdffd11f24fc6dda948913defc96c9c45f47f26d30956"
+    },
+    "portable-r3": {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "-v",
+        "Scripts.CI.Tests.test_widget_layout_observer.WidgetLayoutEvidenceControls.test_complete_medium_action_and_rotation_evidence_is_admitted",
+        "Scripts.CI.Tests.test_widget_layout_observer.WidgetLayoutEvidenceControls.test_missing_revision_nonce_or_actual_refresh_commit_is_rejected",
+        "Scripts.CI.Tests.test_widget_layout_observer.WidgetLayoutEvidenceControls.test_original_toggle_add_and_refresh_value_semantics_cannot_be_replaced",
+        "Scripts.CI.Tests.test_widget_layout_observer.WidgetLayoutEvidenceControls.test_native_uuid_letter_case_is_preserved_but_case_equivalent_replay_is_rejected"
+      ],
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "startedAt": "2026-11-28T05:34:58.421712+00:00",
+      "durationSeconds": 0.1541694439947605,
+      "exitCode": 0,
+      "timeoutSeconds": 60,
+      "rawLog": {
+        "bytes": 990,
+        "sha256": "fa2646fc718d22d892263473ddecf73bb27f38bd5fbf8dbf52395e6c76fc57aa"
+      },
+      "source": {
+        "Scripts/ProductSplit/observe_widget_layout.py": "f33202df502e6d0b67be2d15cfdc293da5f704300f871823d14ad42b37659eee",
+        "Scripts/CI/Tests/test_widget_layout_observer.py": "00b0ac00cf4fe2caee4044b2975d1b94e6c96cb12167124646464a5239d74e04"
+      },
+      "python": "Python 3.12.3",
+      "originalReceiptSHA256": "4b553c39bcd85a42e4ceb27be90f7497ce171da135cf61650501d6201cb5ffc7"
+    }
+  }
+}
