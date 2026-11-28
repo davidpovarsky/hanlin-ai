@@ -1,0 +1,60 @@
+{
+  "at": "2026-11-28T03:50:47.045282+00:00",
+  "verdict": "APPROVED_SOURCE_ONLY_FOR_DONOR_SEAL",
+  "base": "c9908a25ebeda3562170f16d2cf852ec4fd788b1",
+  "manifestSHA256": "4e9e91a41b7b522426333365e44f70769af5ed302152a40e177c3a04dfb39ed4",
+  "verifiedPayloads": 26,
+  "verifiedBytes": 638512,
+  "patchSHA256": "934c5d84737b1f68219238f51ea8ae538b947816f1f4ba623f689609ece6b264",
+  "patchLosslessGzip": true,
+  "actualSevenFilePatchAndBaseToCandidateVerification": [
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "baseSHA256": "5b70df51a40bb8bad27a531cba6e931c19bb68686c4ba7e28b490b133da97808",
+      "candidateSHA256": "16d57d2ba64e9b39b3a7fdf2536a823d6f59055d2222517a8dab49f73560fcc9",
+      "allUnifiedHunksAppliedToActualBaseObject": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "baseSHA256": "4d194e70793361169dd40c8c3d6fa01e9b5622bfa99f364835b358a93a4feb05",
+      "candidateSHA256": "d090962be655a754cda61d861a1cf86989191f2befe206e6ccc2520c9ba9a8de",
+      "allUnifiedHunksAppliedToActualBaseObject": true
+    },
+    {
+      "path": "Scripts/CI/Tests/test_affected_validation.py",
+      "baseSHA256": "b60b444b9b044e05a972e45dc88426fa97e0322f6b54296040ba91e3ca445fda",
+      "candidateSHA256": "6b5ce01b577b6c45f66a46634aa9e3b2d999bedc0dc976ecb90b30aa274d4526",
+      "allUnifiedHunksAppliedToActualBaseObject": true
+    },
+    {
+      "path": "Scripts/CI/Tests/test_original_source_fixtures.py",
+      "baseSHA256": "1b5a0f3673a191bc28fcab14a1de3b7064c27117fdb569897ae8fbe1b083d934",
+      "candidateSHA256": "11b4eb48d1d6f30f3dcc0fe832a9b1e91289bc1e8e354df5c2997d88971f95c6",
+      "allUnifiedHunksAppliedToActualBaseObject": true
+    },
+    {
+      "path": "Scripts/CI/affected-validation-map.json",
+      "baseSHA256": "80ba317cb913d930f638be33963c31ef2a2ec94204b03233663432a00d34a7b1",
+      "candidateSHA256": "c8b6811c5baffadb75be3971afce303e80cb2832864a239ae06e6f6e015308cb",
+      "allUnifiedHunksAppliedToActualBaseObject": true
+    },
+    {
+      "path": "Scripts/CI/original-source-fixtures.xcfilelist",
+      "baseSHA256": "36e5bab991c5207ef490edc299d6d444150816a63e359d2bc41ccd406f9d7b6d",
+      "candidateSHA256": "9e86e0a86ac80ef640af50991022b78f75e94027eb05f7e82b55eae864b2e2b5",
+      "allUnifiedHunksAppliedToActualBaseObject": true
+    },
+    {
+      "path": "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2_APPROVED_TRANSITION_467cfcab.json",
+      "baseSHA256": null,
+      "candidateSHA256": "75c2332849daa13718451e8bdf6695901fe9e0af8176fbb70669d07523da2e8b",
+      "allUnifiedHunksAppliedToActualBaseObject": true
+    }
+  ],
+  "reversePatchCheck": 0,
+  "immutableV2SHA256": "169e270d596fa000ce9cb043fa55f765cda62fd6043df49eb3bad8e2e160e6e3",
+  "exactApprovedTransitionRehashedFromBoth467GitObjectsAndCurrentSource": true,
+  "review": "Pinned immutable single-entry amendment; unchanged original bodies and assertions, exact V2 authority/preimage/path/approved source/whole amendment digest validation. Delivery and routing include the new immutable fixture. No production APIManager or workflow changes. Original failing native result remains FAILED; no retroactive PASS.",
+  "portable": "Retained exact11 PASS reviewed; no duplicate execution.",
+  "native": "NOT_RUN; original source-guard suite plus original90 remains necessary."
+}

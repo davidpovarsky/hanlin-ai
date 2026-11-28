@@ -1,0 +1,274 @@
+{
+  "base": "c9908a25ebeda3562170f16d2cf852ec4fd788b1",
+  "v2": {
+    "sha256": "169e270d596fa000ce9cb043fa55f765cda62fd6043df49eb3bad8e2e160e6e3",
+    "byteIdentical": true,
+    "schemaVersion": 2,
+    "protectedFiles": 19,
+    "identifierOwners": 7,
+    "appDelegations": 3
+  },
+  "amendment": {
+    "path": "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2_APPROVED_TRANSITION_467cfcab.json",
+    "sha256": "75c2332849daa13718451e8bdf6695901fe9e0af8176fbb70669d07523da2e8b",
+    "bytes": 1491,
+    "transition": {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "from": {
+        "normalizedBytes": 225611,
+        "normalizedSHA256": "1e65885f3fa5aa398cf6a315cd365705986f092de9838692eb305ce87dc78b12"
+      },
+      "to": {
+        "normalizedBytes": 226115,
+        "normalizedSHA256": "fa423e890c1447a77dd8c978bc3124e9385d12098b04aec472303562d312be25"
+      }
+    },
+    "baseAndApprovedTuplesVerifiedFromActualGitObjects": true
+  },
+  "swift": {
+    "wholeFileInverse": true,
+    "originalFileSHA256": "4d194e70793361169dd40c8c3d6fa01e9b5622bfa99f364835b358a93a4feb05",
+    "candidateSHA256": "d090962be655a754cda61d861a1cf86989191f2befe206e6ccc2520c9ba9a8de",
+    "bothOriginalTestBodiesByteIdentical": true,
+    "originalAssertionLines": 364,
+    "allOriginalAssertionsRetainedInOrder": true,
+    "addedAssertionLines": 6,
+    "allOriginalMethodIdentitiesRetained": true,
+    "newNativeMethod": "approvedSourceAmendmentRejectsUnreviewedTransitions",
+    "negativeCases": 4,
+    "nativeValidation": "NOT_RUN",
+    "originalWaitsAndDeadlines": "Recovered by exact full-file inverse; no original bodies changed."
+  },
+  "literalInverses": {
+    "Scripts/CI/Tests/test_affected_validation.py": {
+      "originalSHA256": "b60b444b9b044e05a972e45dc88426fa97e0322f6b54296040ba91e3ca445fda",
+      "candidateSHA256": "6b5ce01b577b6c45f66a46634aa9e3b2d999bedc0dc976ecb90b30aa274d4526",
+      "wholeFileInverse": true
+    },
+    "Scripts/CI/Tests/test_original_source_fixtures.py": {
+      "originalSHA256": "1b5a0f3673a191bc28fcab14a1de3b7064c27117fdb569897ae8fbe1b083d934",
+      "candidateSHA256": "11b4eb48d1d6f30f3dcc0fe832a9b1e91289bc1e8e354df5c2997d88971f95c6",
+      "wholeFileInverse": true
+    },
+    "Scripts/CI/affected-validation-map.json": {
+      "originalSHA256": "80ba317cb913d930f638be33963c31ef2a2ec94204b03233663432a00d34a7b1",
+      "candidateSHA256": "c8b6811c5baffadb75be3971afce303e80cb2832864a239ae06e6f6e015308cb",
+      "wholeFileInverse": true
+    },
+    "Scripts/CI/original-source-fixtures.xcfilelist": {
+      "originalSHA256": "36e5bab991c5207ef490edc299d6d444150816a63e359d2bc41ccd406f9d7b6d",
+      "candidateSHA256": "9e86e0a86ac80ef640af50991022b78f75e94027eb05f7e82b55eae864b2e2b5",
+      "wholeFileInverse": true
+    }
+  },
+  "project": {
+    "onlyAddedOutput": "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2_APPROVED_TRANSITION_467cfcab.json",
+    "wholeFileSingleLineInverse": true,
+    "originalDeclaredOutputs": 40,
+    "candidateDeclaredOutputs": 41,
+    "originalGeneratorSourceUnchanged": true,
+    "producerSourceUnchanged": true
+  },
+  "routing": {
+    "originalComponents": 118,
+    "onlyAddedPattern": "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2_APPROVED_TRANSITION_467cfcab.json",
+    "allOtherMapSemanticsExact": true,
+    "originalControlMethods": 108,
+    "originalControlASTsByteEquivalent": true,
+    "newControlMethods": 1,
+    "methodIdentityScope": "Qualified class/function identities; original whole-file literal inverse additionally verifies every preexisting byte.",
+    "newMethodIdentities": [
+      "AffectedValidationPlannerTests.test_original_source_amendment_routes_to_the_native_preservation_guard"
+    ]
+  },
+  "fixtureControls": {
+    "all10OriginalMethodsRetained": true,
+    "unchangedMethodASTs": 7,
+    "changedMethods": [
+      "test_declared_inputs_cover_the_original_contract_and_final12",
+      "test_rebuild_copies_changed_source_without_regenerating_the_expectation",
+      "test_sandbox_outputs_cover_the_actual_copied_tree_with_sandboxing_enabled"
+    ],
+    "changes": "Add exactly the one immutable fixture, update24-input/25-file counts, require its unchanged verbatim copy after actual source changes."
+  },
+  "protectedSource": [
+    {
+      "path": "AI_HLY/Views/Components/ChatViewComponents.swift",
+      "sha256": "15875a20addac6bc43ada66e7c3b929118a0f8ad19159d91ace9a8274e9448c9",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "AI_HLY/Views/Components/ChatandFile.swift",
+      "sha256": "3260125c5dece237c8775806b21c470275c9cb5a88328fa6fba2f283c8f3e26d",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "sha256": "fa423e890c1447a77dd8c978bc3124e9385d12098b04aec472303562d312be25",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift",
+      "sha256": "ae38210d8943e7a76aab9695d3b545666349f45a47d0e6c2ec1e90ad4f0cf99c",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatMessagePreview.swift",
+      "sha256": "a5c6ff27cae6a5269fc4b79ef70dee52e5e2ac5cef18772ec3e6425891d44839",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatMessagePreviewMetrics.swift",
+      "sha256": "36440a0086cb4a20a9207d037fe14a1d7902c7f2648b40329e333480fa9f2439",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinFileContentView.swift",
+      "sha256": "cae1895609127a867a0a028f5716e602026e5c87d4f669f051e9c4e665457801",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinImageViewer.swift",
+      "sha256": "8427d5bfafea323a84d0f62f9c272aaed848241ed26af6e3f832d767b5a57f13",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActionBar.swift",
+      "sha256": "f559b1b5fb3ab8f858399a710e79024bd8fe25b6267c84a9ef843ab7150e004e",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActions.swift",
+      "sha256": "40561523428c78730dc052ed23349669860a3891638981c96a34dc2d68ef8d39",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageBubble.swift",
+      "sha256": "c8ca0b950b08a84e2a8feb73f638668a3e614a28e10fb1667395fb12572f4720",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageDocumentAttachments.swift",
+      "sha256": "02c3a8a8f3560afd95c6638a12ab07e6a05e028b5c0c962df06a2e82367ce733",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageImageAttachments.swift",
+      "sha256": "7d89b9d5a6996f9e6ae36b7d0ff43ed48a0160c1f7d3bd0ac69ae7eae82a4e0f",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageMarkdownView.swift",
+      "sha256": "fd09ce372d0936da5d3388b30c638ad33fce00227f01cb9352294211a8a0b2b6",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessagePreview.swift",
+      "sha256": "3ffe0ba0d520f0a8489388bab991bf51316c9cec21b411986e77e885b6dd73b1",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessagePreviewMetrics.swift",
+      "sha256": "5faf31d6d9278f3488cfcf35188c7fe722c7a4f91393d5ac128a659cc6076be8",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageSelectionView.swift",
+      "sha256": "b53108a0ddc25c49eb10ba5992f67e908ae3bba7f5cea3b417adacc5e941c52b",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinVisualEffectBlur.swift",
+      "sha256": "9f87a1d6c1a28314d90c49e5e5f0776315ab21e398b32faed8db3f6fb5340a49",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinWritingTool.swift",
+      "sha256": "4d6d6679d1669aa0c071223c59af8e4b9ce0a696e6b0966b3aaa4a549e529661",
+      "unchangedFromBase": true
+    }
+  ],
+  "unchangedGitTrees": {
+    "Packages": "6ca9aa6021c09a89387acf990b2a89f206796c24",
+    "AI_HLY/Services/ChatServices/APIManager.swift": "227fb87a9f1a608a751baa89f7fd8d495cb1edbf"
+  },
+  "gitDiffCheck": {
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "classification": "REVIEWED_SOURCE_AMENDMENT_NATIVE_NOT_RUN",
+  "sourceCommit": "e0c801a5012c2f79c95944d674b26baa61d79152",
+  "sourceCommitGitObjects": [
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "gitBlob": "a93401eb9de2d569563baaac6dac8c83770f47ef",
+      "bytes": 272874,
+      "sha256": "16d57d2ba64e9b39b3a7fdf2536a823d6f59055d2222517a8dab49f73560fcc9"
+    },
+    {
+      "path": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "gitBlob": "a278297d45aab609c178d03fba374814d5678064",
+      "bytes": 101380,
+      "sha256": "d090962be655a754cda61d861a1cf86989191f2befe206e6ccc2520c9ba9a8de"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_affected_validation.py",
+      "gitBlob": "1aad80543e3fdf9866f5850231cb1e2ec930268a",
+      "bytes": 87017,
+      "sha256": "6b5ce01b577b6c45f66a46634aa9e3b2d999bedc0dc976ecb90b30aa274d4526"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_original_source_fixtures.py",
+      "gitBlob": "375b53c06aa26927d4072d7e5c9d01bcfe4a35c3",
+      "bytes": 9869,
+      "sha256": "11b4eb48d1d6f30f3dcc0fe832a9b1e91289bc1e8e354df5c2997d88971f95c6"
+    },
+    {
+      "path": "Scripts/CI/affected-validation-map.json",
+      "gitBlob": "b114d6aa032c51733f446aba411a761bec5ea822",
+      "bytes": 80410,
+      "sha256": "c8b6811c5baffadb75be3971afce303e80cb2832864a239ae06e6f6e015308cb"
+    },
+    {
+      "path": "Scripts/CI/original-source-fixtures.xcfilelist",
+      "gitBlob": "0749710dc2c6eb0b1160d3962fbf51f608e75c0a",
+      "bytes": 1964,
+      "sha256": "9e86e0a86ac80ef640af50991022b78f75e94027eb05f7e82b55eae864b2e2b5"
+    },
+    {
+      "path": "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2_APPROVED_TRANSITION_467cfcab.json",
+      "gitBlob": "174f4bdc45c28ce6f7a37251beb2a6aa1d908d4b",
+      "bytes": 1491,
+      "sha256": "75c2332849daa13718451e8bdf6695901fe9e0af8176fbb70669d07523da2e8b"
+    }
+  ],
+  "candidatePatchSHA256": "934c5d84737b1f68219238f51ea8ae538b947816f1f4ba623f689609ece6b264",
+  "sdk": {
+    "inputCount": 396,
+    "manifestSHA256": "4819de6f518a2b9ea1c6e3c80a3567dbf46ef0ec886e883be162bb77766be480",
+    "changedPathIntersection": [],
+    "qualification": "Static path intersection and unchanged package/source bytes; no new collector/native/SDK execution."
+  },
+  "portable": {
+    "result": "11 EXECUTED_PASS",
+    "receiptSHA256": "ee8d9fc92b1046dca926bb30c401300b1dcd9c9bb65a0898a762c7551e97e295",
+    "nativeValidatorExecuted": false,
+    "wholeCIExecuted": false
+  },
+  "priorFailure": {
+    "status": "FAILED_UNCHANGED",
+    "runID": 46093875911,
+    "jobID": 140821068669,
+    "source": "9a76309c29d716d3f5676e392457937ec8846e56",
+    "method": "OriginalSourceNonRegressionTests.protectedFilesAndReferenceMetadataRemainIntact",
+    "issues": [
+      1776,
+      1777
+    ],
+    "rawOwnExcerptSHA256": "7eb644ed67ea49028121f82f1a2c237c64c4b123644f8dcbe849291a4acd4e0a",
+    "partialReceiptSHA256": "031be5f3ce4b203941273d32e911cf8a97342033f6a04ae24fbd52a0eaddd6fc",
+    "diagnosisManifestSHA256": "48f312801f5cb04fdd163e35eb56beb2b1e6d946f62ce215712615addc9aa4a9",
+    "wholeRunScope": "Only retained partial snapshot; no terminal outcome inferred."
+  }
+}
