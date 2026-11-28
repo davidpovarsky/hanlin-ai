@@ -568,9 +568,10 @@ private struct MiniAppsCodeTextView: UIViewRepresentable {
 
     func updateUIView(_ view: UITextView, context: Context) {
         context.coordinator.parent = self
-        view.isEditable = isEnabled
+        if view.isEditable != isEnabled { view.isEditable = isEnabled }
         if view.text != text { view.text = text }
-        view.font = UIFont(name: fontName, size: fontSize) ?? .monospacedSystemFont(ofSize: fontSize, weight: .regular)
+        let font = UIFont(name: fontName, size: fontSize) ?? .monospacedSystemFont(ofSize: fontSize, weight: .regular)
+        if view.font != font { view.font = font }
         if view.selectedRange != selection, NSMaxRange(selection) <= (view.text as NSString).length { view.selectedRange = selection }
     }
 
@@ -580,7 +581,7 @@ private struct MiniAppsCodeTextView: UIViewRepresentable {
         var parent: MiniAppsCodeTextView
         init(_ parent: MiniAppsCodeTextView) { self.parent = parent }
         func textViewDidChange(_ textView: UITextView) {
-            parent.text = textView.text
+            if parent.text != textView.text { parent.text = textView.text }
             updateSelection(textView)
         }
         func textViewDidChangeSelection(_ textView: UITextView) { updateSelection(textView) }
@@ -588,12 +589,13 @@ private struct MiniAppsCodeTextView: UIViewRepresentable {
             if let text = scrollView as? UITextView { updateCaret(text) }
         }
         private func updateSelection(_ view: UITextView) {
-            parent.selection = view.selectedRange
+            if parent.selection != view.selectedRange { parent.selection = view.selectedRange }
             updateCaret(view)
         }
         private func updateCaret(_ view: UITextView) {
             guard let range = view.selectedTextRange else { return }
-            parent.caret = view.caretRect(for: range.end).offsetBy(dx: -view.contentOffset.x, dy: -view.contentOffset.y)
+            let rect = view.caretRect(for: range.end).offsetBy(dx: -view.contentOffset.x, dy: -view.contentOffset.y)
+            if parent.caret != rect { parent.caret = rect }
         }
     }
 }
