@@ -16,6 +16,34 @@ public enum HanlinShortcutValueCodec {
         }
     }
 
+    /// Native homogeneous Shortcuts lists avoid an intermediate String/JSON
+    /// conversion. Nested or mixed values continue to use the existing JSON input.
+    public enum NativeList: Sendable {
+        case text([String])
+        case integers([Int])
+        case numbers([Double])
+        case booleans([Bool])
+    }
+
+    public static func decodeNativeList(_ input: NativeList) throws -> HanlinValue {
+        switch input {
+        case .text(let values):
+            return .array(values.map(HanlinValue.string))
+        case .integers(let values):
+            return .array(try values.enumerated().map { index, value in
+                guard let integer = Int64(exactly: value) else {
+                    throw HanlinContractError.integerOutOfRange(
+                        value: String(value), destination: "Int64", path: "/\(index)")
+                }
+                return .integer(integer)
+            })
+        case .numbers(let values):
+            return .array(try values.map(HanlinValue.finiteNumber))
+        case .booleans(let values):
+            return .array(values.map(HanlinValue.bool))
+        }
+    }
+
     public static func decode(_ input: String, as format: Input) throws -> HanlinValue {
         if format == .text { return .string(input) }
         let value = try HanlinJSONValue.decodeCanonicalJSON(Data(input.utf8), limits: .unbounded)
