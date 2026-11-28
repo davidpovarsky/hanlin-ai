@@ -1,0 +1,257 @@
+{
+  "baseSHA": "064b7b58c923af0beff84a1852af84071f4409d8",
+  "bounds": {
+    "currentOriginalAIBuild": 1800,
+    "currentOriginalMiniBuild": 3600,
+    "newOneUpgrade": 300,
+    "newUIEach": 420,
+    "observer": 2100,
+    "oldSeparateBuild": 2400,
+    "originalInitialInstallEach": 300,
+    "originalPairedXcodeInvocation": 2100,
+    "originalWorkflowMinutes": 210
+  },
+  "compressedPatch": {
+    "bytes": 27259,
+    "sha256": "5411e68ac427f0b2dbbee1e17549ceefe6f4e753b372bd46083c30568ccda8a8"
+  },
+  "currentComposition": {
+    "otherTrackedPreimagesEqual": true,
+    "scope": "Read-only actual current Git composition; root gallery helper preserved",
+    "sourceSHA": "f350a0f12c54121d0b3afb4217472ae8143fc83a",
+    "uiAfter": {
+      "bytes": 309946,
+      "sha256": "1df5f72e0fc7913ad2f4e7643557ca326a4edf843401251c5c8a95403d8df03a"
+    },
+    "uiBefore": {
+      "bytes": 294721,
+      "sha256": "94287f72d62edf8e15a77a01cc6b7869d46b591575f811886e0c5fe3661eeb93"
+    },
+    "wholeCurrentInverse": true
+  },
+  "newControls": {
+    "addedR2Methods": [
+      "test_actual_old_input_alternative_permutation_preserves_complete_metadata",
+      "test_metadata_comparison_rejects_missing_duplicate_changed_and_other_order_drift"
+    ],
+    "count": 17,
+    "methods": [
+      "test_actual_current_metadata_and_controlled_old_shape_are_distinct",
+      "test_actual_old_input_alternative_permutation_preserves_complete_metadata",
+      "test_metadata_comparison_rejects_missing_duplicate_changed_and_other_order_drift",
+      "test_current_product_cannot_substitute_for_old_baseline",
+      "test_wrong_or_duplicate_original_parameter_is_rejected",
+      "test_mixed_native_scalar_tags_reject_equal_number_bool_and_foreign_uuid",
+      "test_both_real_handler_contracts_accept_the_mixed_array",
+      "test_stale_duplicate_and_replayed_commands_cannot_prove_upgrade",
+      "test_foreign_generation_or_expo_invocation_cannot_prove_our_saved_action",
+      "test_running_failed_retried_and_leased_commands_are_not_completed",
+      "test_saved_name_mode_raw_input_and_chain_are_required",
+      "test_actual_ai_only_descriptor_shape_retains_original_environment",
+      "test_descriptor_rejects_miniapps_dependency_and_disguised_bundle",
+      "test_descriptor_rejects_escape_duplicate_and_changed_test_selection",
+      "test_upgrade_requires_actual_not_running_observations_without_guessing_raw_enum_values",
+      "test_restarted_setup_rejects_existing_install_intent_before_any_os_access",
+      "test_same_containers_are_required_after_in_place_install"
+    ],
+    "originalR1MethodsASTExact": 15,
+    "status": "NOT_RUN"
+  },
+  "patch": {
+    "bytes": 112663,
+    "sha256": "5d547dbd3cdebca170c0829dc9e9d1dfad5ae04706f83fac52e435ec9287ca16"
+  },
+  "priorR1": {
+    "manifest": {
+      "bytes": 5667,
+      "sha256": "d233d809d59b0f160238cee7baa466022d70da9f04a471638e491e54af6cb2c7"
+    },
+    "packet": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-genuine-migration-064b7b58/candidate-r1",
+    "preservedVerbatim": true
+  },
+  "r2Delta": {
+    "normalization": "Only originalParameters.input.resolvableInputTypes complete-object Counter; every other field and array/order exact",
+    "oneActualComparisonOnly": true,
+    "patch": {
+      "bytes": 5341,
+      "sha256": "31d75428443e1b2e2e1ea2c771ab45458ab215d866a621ce4fbaf1c4f753f5da"
+    },
+    "paths": [
+      "Scripts/ProductSplit/shortcut_migration_contract.py",
+      "Scripts/ProductSplit/upgrade_shortcut_migration.py",
+      "Scripts/CI/Tests/test_shortcut_migration.py"
+    ],
+    "rawMetadataRetained": true,
+    "wholeR1Inverse": true
+  },
+  "revision": "R2",
+  "runnerDispatcherWholeInverses": true,
+  "schema": 1,
+  "sourcePaths": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": {
+      "before": {
+        "bytes": 294243,
+        "sha256": "0242e3cd6074290011b8239626b1406009973ebe0a267b1082a12df7bfd2a2ed"
+      },
+      "candidate": {
+        "bytes": 309468,
+        "sha256": "c9fb860cca44af91ce40c986ecb31815f302f7fd3b2423a3fb532923fad223b2"
+      },
+      "mode": "0o644"
+    },
+    "Scripts/CI/Tests/test_shortcut_migration.py": {
+      "before": null,
+      "candidate": {
+        "bytes": 17280,
+        "sha256": "a2918b865e9bdc2210de8b15610dfb9e8af3ad9f9a386bd616ba1d32f588db77"
+      },
+      "mode": "0o644"
+    },
+    "Scripts/ProductSplit/observe_shortcut_migration.py": {
+      "before": null,
+      "candidate": {
+        "bytes": 21091,
+        "sha256": "a4530ff78bea59e0794e0184b7f13fa6cf35465f0c0e13390e5cad51fcd66685"
+      },
+      "mode": "0o644"
+    },
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": {
+      "before": {
+        "bytes": 68044,
+        "sha256": "7d001d486ad668fa4efd68bc244ce08daf943756cc344612542550c83cbc6380"
+      },
+      "candidate": {
+        "bytes": 68492,
+        "sha256": "a503e1e9dea29bfe151164b5f4fb2ffb4565d919344853a308415a6156b2be46"
+      },
+      "mode": "0o644"
+    },
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "before": {
+        "bytes": 110066,
+        "sha256": "7a386466c5df2caa8c1d72eaf9204eed36b6477ce21a15ed5521b5e6db4245aa"
+      },
+      "candidate": {
+        "bytes": 114033,
+        "sha256": "f1fe4b512f88dc083ad0ff483f7497c385cc8af450766a7cb35be94bd28222e0"
+      },
+      "mode": "0o644"
+    },
+    "Scripts/ProductSplit/shortcut_migration_contract.py": {
+      "before": null,
+      "candidate": {
+        "bytes": 23282,
+        "sha256": "20c83ee0cb50bf4ecf628e1d346083dea13b7628c7c51c7c451251d7bdcf53d7"
+      },
+      "mode": "0o644"
+    },
+    "Scripts/ProductSplit/upgrade_shortcut_migration.py": {
+      "before": null,
+      "candidate": {
+        "bytes": 18993,
+        "sha256": "4e4078b1478ca20176e9e1869053656f8d96a6196ee070436cf6b3ec40de639f"
+      },
+      "mode": "0o644"
+    }
+  },
+  "staticChecks": {
+    "gitDiffCheck": 0,
+    "gitReverseApplyCheck": 0,
+    "nativeCommandsExecuted": 0,
+    "originalWholeFileInverses": "PASS",
+    "pythonASTParse": "PASS",
+    "r2ReverseApplyCheck": 0,
+    "testsExecuted": 0
+  },
+  "status": "SOURCE_ONLY_FROZEN_NOT_EXECUTED",
+  "ui": {
+    "addedMethods": [
+      "testNativeScriptSavedJSONListSurvivesFiveToNineParameterAppUpgrade",
+      "testExpoSavedJSONListSurvivesFiveToNineParameterAppUpgrade"
+    ],
+    "addition": {
+      "bytes": 15225,
+      "sha256": "07fd5c8d27dcfcd78adc28e5a325ae0464f53adc4ca63cd88555c3a20143b0cf"
+    },
+    "after": {
+      "bytes": 309468,
+      "sha256": "c9fb860cca44af91ce40c986ecb31815f302f7fd3b2423a3fb532923fad223b2"
+    },
+    "before": {
+      "bytes": 294243,
+      "sha256": "0242e3cd6074290011b8239626b1406009973ebe0a267b1082a12df7bfd2a2ed"
+    },
+    "candidateCount": 49,
+    "newCaseAllowanceSeconds": 420,
+    "newCaseDeadlineSeconds": 420,
+    "originalCount": 47,
+    "originalMethods": [
+      "testExpoPlacedWidgetInvokesAllFiveRuntimes",
+      "testNativeScriptPlacedWidgetInvokesAllFiveRuntimes",
+      "testExpoLiveActivityInvokesAllFiveRuntimes",
+      "testNativeScriptLiveActivityInvokesAllFiveRuntimes",
+      "testExpoShortcutInvokesAllFiveRuntimes",
+      "testNativeScriptShortcutInvokesAllFiveRuntimes",
+      "testExpoSystemShareInvokesAllFiveRuntimes",
+      "testNativeScriptSystemShareInvokesAllFiveRuntimes",
+      "testExpoSystemTranslationInvokesAllFiveRuntimes",
+      "testNativeScriptSystemTranslationInvokesAllFiveRuntimes",
+      "testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult",
+      "testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult",
+      "testExpoRunMiniAppActionSavedForegroundReturnsTypedResult",
+      "testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult",
+      "testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers",
+      "testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState",
+      "testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues",
+      "testMiniAppsLargeWidgetComponentsTrackActualNativeState",
+      "testMiniAppsMediumWidgetNativeControlsStayVisibleAcrossStateAndRotation",
+      "testMiniAppsSmallWidgetRetainsFamilyAndInstanceAcrossRotation",
+      "testMiniAppsMediumWidgetRetainsFamilyAndInstanceAcrossRotation",
+      "testMiniAppsLargeWidgetRetainsFamilyAndInstanceAcrossRotation",
+      "testMiniAppsExtraLargeWidgetRetainsFamilyAndInstanceAcrossRotation",
+      "testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+      "testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts",
+      "testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+      "testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+      "testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+      "testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+      "testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns",
+      "testStudioExpoCreatesMovesStylesAndReopensSource",
+      "testStudioNativeScriptCreatesMovesStylesAndReopensSource",
+      "testStudioOriginalTypeScriptHelpPreferencesAndLiveLogExport",
+      "testStudioImportsActualFilesSourceAndReopensIndependentEdit",
+      "testStudioTwoRealWindowsConflictReloadAndRecoverSeparateCopy",
+      "testExpoSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds",
+      "testNativeScriptSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds",
+      "testExpoSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds",
+      "testNativeScriptSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds",
+      "testNativeScriptSavedTextListReopensThenClearsToEmpty",
+      "testNativeScriptSavedIntegerListReopensThenClearsToEmpty",
+      "testNativeScriptSavedNumberListReopensThenClearsToEmpty",
+      "testNativeScriptSavedBooleanListReopensThenClearsToEmpty",
+      "testExpoSavedTextListReopensThenClearsToEmpty",
+      "testExpoSavedIntegerListReopensThenClearsToEmpty",
+      "testExpoSavedNumberListReopensThenClearsToEmpty",
+      "testExpoSavedBooleanListReopensThenClearsToEmpty"
+    ],
+    "wholeOriginalInverse": true
+  },
+  "workflow": {
+    "candidate": {
+      "bytes": 36623,
+      "sha256": "ea3e285aa1efe08cff29edaf1bd1ad9c615d67b82c3de1a84d8f0bde4a028baa"
+    },
+    "change": "Two explicit choices and their always-upload condition; no original route/default/budget changes",
+    "nativeDispatch": "BLOCKED_UNTIL_ACTUAL_OLD_ARTIFACT_ADMISSION_AND_ENVIRONMENT_BINDING",
+    "original": {
+      "bytes": 36399,
+      "sha256": "65f761168a3274a3f5e2215e4c8e1edadd3f7f9f9782999de13c874aaf5692e5"
+    },
+    "patch": {
+      "bytes": 4253,
+      "sha256": "4221838b7022f1a0d322804655ddbdb6d1eddeea60c6cabae3f96d0c6a2a2c0e"
+    },
+    "separateFromSource": true,
+    "wholeInverse": true
+  }
+}

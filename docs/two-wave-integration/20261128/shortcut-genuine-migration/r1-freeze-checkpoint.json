@@ -1,0 +1,74 @@
+{
+  "status": "SOURCE_FILES_FROZEN_FOR_REVIEW",
+  "base": "064b7b58c923af0beff84a1852af84071f4409d8",
+  "paths": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": {
+      "before": {
+        "bytes": 294243,
+        "sha256": "0242e3cd6074290011b8239626b1406009973ebe0a267b1082a12df7bfd2a2ed"
+      },
+      "candidate": {
+        "bytes": 309468,
+        "sha256": "c9fb860cca44af91ce40c986ecb31815f302f7fd3b2423a3fb532923fad223b2"
+      },
+      "mode": "0o644"
+    },
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "before": {
+        "bytes": 110066,
+        "sha256": "7a386466c5df2caa8c1d72eaf9204eed36b6477ce21a15ed5521b5e6db4245aa"
+      },
+      "candidate": {
+        "bytes": 114033,
+        "sha256": "f1fe4b512f88dc083ad0ff483f7497c385cc8af450766a7cb35be94bd28222e0"
+      },
+      "mode": "0o644"
+    },
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": {
+      "before": {
+        "bytes": 68044,
+        "sha256": "7d001d486ad668fa4efd68bc244ce08daf943756cc344612542550c83cbc6380"
+      },
+      "candidate": {
+        "bytes": 68492,
+        "sha256": "a503e1e9dea29bfe151164b5f4fb2ffb4565d919344853a308415a6156b2be46"
+      },
+      "mode": "0o644"
+    },
+    "Scripts/ProductSplit/shortcut_migration_contract.py": {
+      "before": null,
+      "candidate": {
+        "bytes": 22260,
+        "sha256": "95ba38d3c66e4ae08bc9ce08f9237908d05482579e8bbd98a75ad9c00c61648b"
+      },
+      "mode": "0o644"
+    },
+    "Scripts/ProductSplit/observe_shortcut_migration.py": {
+      "before": null,
+      "candidate": {
+        "bytes": 21091,
+        "sha256": "a4530ff78bea59e0794e0184b7f13fa6cf35465f0c0e13390e5cad51fcd66685"
+      },
+      "mode": "0o644"
+    },
+    "Scripts/ProductSplit/upgrade_shortcut_migration.py": {
+      "before": null,
+      "candidate": {
+        "bytes": 18912,
+        "sha256": "23723c3caad59f27959f86bc1cdca94f761617bf667deb9d17a9004af52cc8b2"
+      },
+      "mode": "0o644"
+    },
+    "Scripts/CI/Tests/test_shortcut_migration.py": {
+      "before": null,
+      "candidate": {
+        "bytes": 14918,
+        "sha256": "2fac946b2de6d3f8dc25568249080a6c70251b0d7e746692f692af03d55c8ea5"
+      },
+      "mode": "0o644"
+    }
+  },
+  "tests": 0,
+  "native": 0,
+  "scope": "Seven source paths, separate uncommitted workflow proposal. Supplemental read-only authority/impact documentation follows without changing source."
+}

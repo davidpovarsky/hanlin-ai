@@ -1,0 +1,347 @@
+{
+  "actualMetadata": {
+    "everyOtherFullOriginalParameterRecordExact": true,
+    "existingControlledFixtureFullCommonMetadataMatchesActualCurrent": true,
+    "rows": {
+      "controlledCurrent": {
+        "actualParameterNames": [
+          "action",
+          "inputType",
+          "input",
+          "jsonFile",
+          "allowLongRunning",
+          "textItems",
+          "integerItems",
+          "numberItems",
+          "booleanItems"
+        ],
+        "bytes": 14837,
+        "inputRecord": {
+          "capabilities": 1,
+          "dynamicOptionsSupport": 0,
+          "inputConnectionBehavior": 0,
+          "isInput": false,
+          "isOptional": false,
+          "name": "input",
+          "resolvableInputTypes": [
+            {
+              "kindValue": 0,
+              "valueType": {
+                "primitive": {
+                  "wrapper": {
+                    "typeIdentifier": 0
+                  }
+                }
+              }
+            },
+            {
+              "kindValue": 0,
+              "valueType": {
+                "primitive": {
+                  "wrapper": {
+                    "typeIdentifier": 2
+                  }
+                }
+              }
+            },
+            {
+              "kindValue": 0,
+              "valueType": {
+                "array": {
+                  "wrapper": {
+                    "capabilities": 3,
+                    "memberValueType": {
+                      "primitive": {
+                        "wrapper": {
+                          "typeIdentifier": 2
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "title": {
+            "alternatives": [],
+            "key": "Input",
+            "table": "HanlinAppIntents"
+          },
+          "typeSpecificMetadata": [
+            "LNValueTypeSpecificMetadataKeyDefaultValue",
+            {
+              "string": {
+                "wrapper": ""
+              }
+            }
+          ],
+          "valueType": {
+            "primitive": {
+              "wrapper": {
+                "typeIdentifier": 0
+              }
+            }
+          }
+        },
+        "path": "git:064b7b58c923af0beff84a1852af84071f4409d8:Scripts/CI/Tests/fixtures/native_lists_actionsdata.json",
+        "sha256": "0de9d507de2f706ae25d2d899e0db0ffcbabaed73d5f008a3702a97926af613f"
+      },
+      "current": {
+        "actualParameterNames": [
+          "action",
+          "inputType",
+          "input",
+          "jsonFile",
+          "allowLongRunning",
+          "textItems",
+          "integerItems",
+          "numberItems",
+          "booleanItems"
+        ],
+        "bytes": 76061,
+        "inputRecord": {
+          "capabilities": 1,
+          "dynamicOptionsSupport": 0,
+          "inputConnectionBehavior": 0,
+          "isInput": false,
+          "isOptional": false,
+          "name": "input",
+          "resolvableInputTypes": [
+            {
+              "kindValue": 0,
+              "valueType": {
+                "primitive": {
+                  "wrapper": {
+                    "typeIdentifier": 0
+                  }
+                }
+              }
+            },
+            {
+              "kindValue": 0,
+              "valueType": {
+                "primitive": {
+                  "wrapper": {
+                    "typeIdentifier": 2
+                  }
+                }
+              }
+            },
+            {
+              "kindValue": 0,
+              "valueType": {
+                "array": {
+                  "wrapper": {
+                    "capabilities": 3,
+                    "memberValueType": {
+                      "primitive": {
+                        "wrapper": {
+                          "typeIdentifier": 2
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "title": {
+            "alternatives": [],
+            "key": "Input",
+            "table": "HanlinAppIntents"
+          },
+          "typeSpecificMetadata": [
+            "LNValueTypeSpecificMetadataKeyDefaultValue",
+            {
+              "string": {
+                "wrapper": ""
+              }
+            }
+          ],
+          "valueType": {
+            "primitive": {
+              "wrapper": {
+                "typeIdentifier": 0
+              }
+            }
+          }
+        },
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/typed-list-a195a6ed-built-metadata/Metadata.appintents/extract.actionsdata",
+        "sha256": "af021fda98731b8485f7f2f4468a0b18585e7253af0ee40a8337a19782b78660"
+      },
+      "old": {
+        "actualParameterNames": [
+          "action",
+          "inputType",
+          "input",
+          "jsonFile",
+          "allowLongRunning"
+        ],
+        "bytes": 72144,
+        "inputRecord": {
+          "capabilities": 1,
+          "dynamicOptionsSupport": 0,
+          "inputConnectionBehavior": 0,
+          "isInput": false,
+          "isOptional": false,
+          "name": "input",
+          "resolvableInputTypes": [
+            {
+              "kindValue": 0,
+              "valueType": {
+                "primitive": {
+                  "wrapper": {
+                    "typeIdentifier": 2
+                  }
+                }
+              }
+            },
+            {
+              "kindValue": 0,
+              "valueType": {
+                "array": {
+                  "wrapper": {
+                    "capabilities": 3,
+                    "memberValueType": {
+                      "primitive": {
+                        "wrapper": {
+                          "typeIdentifier": 2
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "kindValue": 0,
+              "valueType": {
+                "primitive": {
+                  "wrapper": {
+                    "typeIdentifier": 0
+                  }
+                }
+              }
+            }
+          ],
+          "title": {
+            "alternatives": [],
+            "key": "Input",
+            "table": "HanlinAppIntents"
+          },
+          "typeSpecificMetadata": [
+            "LNValueTypeSpecificMetadataKeyDefaultValue",
+            {
+              "string": {
+                "wrapper": ""
+              }
+            }
+          ],
+          "valueType": {
+            "primitive": {
+              "wrapper": {
+                "typeIdentifier": 0
+              }
+            }
+          }
+        },
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/old-five-prefix-f45d6edc-terminal-r1/metadata-discrepancy/extract.actionsdata",
+        "sha256": "c37f688d78362bf040dc8b63e2c793a5caf3d4c7a7410494cca542522b70ac41"
+      }
+    },
+    "singlePathFullObjectMultiset": true
+  },
+  "baseSHA": "064b7b58c923af0beff84a1852af84071f4409d8",
+  "delta": {
+    "normalization": "Only originalParameters.input.resolvableInputTypes complete-object Counter; every other field and array/order exact",
+    "oneActualComparisonOnly": true,
+    "patch": {
+      "bytes": 5341,
+      "sha256": "31d75428443e1b2e2e1ea2c771ab45458ab215d866a621ce4fbaf1c4f753f5da"
+    },
+    "paths": [
+      "Scripts/ProductSplit/shortcut_migration_contract.py",
+      "Scripts/ProductSplit/upgrade_shortcut_migration.py",
+      "Scripts/CI/Tests/test_shortcut_migration.py"
+    ],
+    "rawMetadataRetained": true,
+    "wholeR1Inverse": true
+  },
+  "existing15ControlASTsExact": true,
+  "fullOriginal47UIAndRunnerDispatcherInversesReused": true,
+  "immutableR1": {
+    "manifest": {
+      "bytes": 5667,
+      "sha256": "d233d809d59b0f160238cee7baa466022d70da9f04a471638e491e54af6cb2c7"
+    },
+    "packet": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-genuine-migration-064b7b58/candidate-r1",
+    "preservedVerbatim": true
+  },
+  "nativeLimits": "Actual old product build outcome is separately owned by Mac; saved-action migration and any current UI/native execution remain NOT_RUN",
+  "newControls": {
+    "addedR2Methods": [
+      "test_actual_old_input_alternative_permutation_preserves_complete_metadata",
+      "test_metadata_comparison_rejects_missing_duplicate_changed_and_other_order_drift"
+    ],
+    "count": 17,
+    "methods": [
+      "test_actual_current_metadata_and_controlled_old_shape_are_distinct",
+      "test_actual_old_input_alternative_permutation_preserves_complete_metadata",
+      "test_metadata_comparison_rejects_missing_duplicate_changed_and_other_order_drift",
+      "test_current_product_cannot_substitute_for_old_baseline",
+      "test_wrong_or_duplicate_original_parameter_is_rejected",
+      "test_mixed_native_scalar_tags_reject_equal_number_bool_and_foreign_uuid",
+      "test_both_real_handler_contracts_accept_the_mixed_array",
+      "test_stale_duplicate_and_replayed_commands_cannot_prove_upgrade",
+      "test_foreign_generation_or_expo_invocation_cannot_prove_our_saved_action",
+      "test_running_failed_retried_and_leased_commands_are_not_completed",
+      "test_saved_name_mode_raw_input_and_chain_are_required",
+      "test_actual_ai_only_descriptor_shape_retains_original_environment",
+      "test_descriptor_rejects_miniapps_dependency_and_disguised_bundle",
+      "test_descriptor_rejects_escape_duplicate_and_changed_test_selection",
+      "test_upgrade_requires_actual_not_running_observations_without_guessing_raw_enum_values",
+      "test_restarted_setup_rejects_existing_install_intent_before_any_os_access",
+      "test_same_containers_are_required_after_in_place_install"
+    ],
+    "originalR1MethodsASTExact": 15,
+    "status": "NOT_RUN"
+  },
+  "schema": 1,
+  "sourceFiles": {
+    "Scripts/CI/Tests/test_shortcut_migration.py": {
+      "r1": {
+        "bytes": 14918,
+        "sha256": "2fac946b2de6d3f8dc25568249080a6c70251b0d7e746692f692af03d55c8ea5"
+      },
+      "r2": {
+        "bytes": 17280,
+        "sha256": "a2918b865e9bdc2210de8b15610dfb9e8af3ad9f9a386bd616ba1d32f588db77"
+      }
+    },
+    "Scripts/ProductSplit/shortcut_migration_contract.py": {
+      "r1": {
+        "bytes": 22260,
+        "sha256": "95ba38d3c66e4ae08bc9ce08f9237908d05482579e8bbd98a75ad9c00c61648b"
+      },
+      "r2": {
+        "bytes": 23282,
+        "sha256": "20c83ee0cb50bf4ecf628e1d346083dea13b7628c7c51c7c451251d7bdcf53d7"
+      }
+    },
+    "Scripts/ProductSplit/upgrade_shortcut_migration.py": {
+      "r1": {
+        "bytes": 18912,
+        "sha256": "23723c3caad59f27959f86bc1cdca94f761617bf667deb9d17a9004af52cc8b2"
+      },
+      "r2": {
+        "bytes": 18993,
+        "sha256": "4e4078b1478ca20176e9e1869053656f8d96a6196ee070436cf6b3ec40de639f"
+      }
+    }
+  },
+  "status": "SOURCE_ONLY_R2_NOT_EXECUTED",
+  "tests": {
+    "executed": 0,
+    "policy": "Next required root full discovery only"
+  }
+}

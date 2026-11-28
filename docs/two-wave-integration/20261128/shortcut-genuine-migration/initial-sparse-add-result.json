@@ -1,0 +1,27 @@
+[
+  {
+    "argv": [
+      "rev-parse",
+      "HEAD"
+    ],
+    "exitCode": 0,
+    "stdout": "064b7b58c923af0beff84a1852af84071f4409d8\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "add",
+      "--",
+      "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "Scripts/ProductSplit/run_paired_acceptance.py",
+      "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "Scripts/ProductSplit/shortcut_migration_contract.py",
+      "Scripts/ProductSplit/observe_shortcut_migration.py",
+      "Scripts/ProductSplit/upgrade_shortcut_migration.py",
+      "Scripts/CI/Tests/test_shortcut_migration.py"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": "The following paths and/or pathspecs matched paths that exist\noutside of your sparse-checkout definition, so will not be\nupdated in the index:\nScripts/CI/Tests/test_shortcut_migration.py\nhint: If you intend to update such entries, try one of the following:\nhint: * Use the --sparse option.\nhint: * Disable or modify the sparsity rules.\nhint: Disable this message with \"git config advice.updateSparsePath false\"\n"
+  }
+]

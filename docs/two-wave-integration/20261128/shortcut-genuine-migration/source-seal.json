@@ -1,0 +1,66 @@
+{
+  "createdAt": "2026-11-28T13:23:02.526143+00:00",
+  "sourceCommit": "54b7d81c736ccc9e4c1081296ceafc525fe506f0",
+  "parent": "064b7b58c923af0beff84a1852af84071f4409d8",
+  "tree": "b131145d9e07a7382c1725f7f5af1d6f7f926eb3",
+  "files": [
+    {
+      "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "bytes": 309468,
+      "sha256": "c9fb860cca44af91ce40c986ecb31815f302f7fd3b2423a3fb532923fad223b2",
+      "gitBlob": "7590d9e82238ed84221fefc5a528b8c6b866bd8d"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 114033,
+      "sha256": "f1fe4b512f88dc083ad0ff483f7497c385cc8af450766a7cb35be94bd28222e0",
+      "gitBlob": "9c6e7663521ee910861e94ffe64830dfe2a70ca5"
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "bytes": 68492,
+      "sha256": "a503e1e9dea29bfe151164b5f4fb2ffb4565d919344853a308415a6156b2be46",
+      "gitBlob": "bdc429c8755cc708b692a035dcc1d8e79d3d15bf"
+    },
+    {
+      "path": "Scripts/ProductSplit/shortcut_migration_contract.py",
+      "bytes": 23282,
+      "sha256": "20c83ee0cb50bf4ecf628e1d346083dea13b7628c7c51c7c451251d7bdcf53d7",
+      "gitBlob": "9a28712bee174d932a6bd86239b4a3753422f14d"
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_migration.py",
+      "bytes": 21091,
+      "sha256": "a4530ff78bea59e0794e0184b7f13fa6cf35465f0c0e13390e5cad51fcd66685",
+      "gitBlob": "db0b01b82cbc51b38504b2ff6a32b5d0490d840a"
+    },
+    {
+      "path": "Scripts/ProductSplit/upgrade_shortcut_migration.py",
+      "bytes": 18993,
+      "sha256": "4e4078b1478ca20176e9e1869053656f8d96a6196ee070436cf6b3ec40de639f",
+      "gitBlob": "4ec18a6dc6bcde001b50c97a55fb3f7a7431f037"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_shortcut_migration.py",
+      "bytes": 17280,
+      "sha256": "a2918b865e9bdc2210de8b15610dfb9e8af3ad9f9a386bd616ba1d32f588db77",
+      "gitBlob": "9a13ba1bdd25df2d6006d4bd15cf5083cd242c6a"
+    }
+  ],
+  "frozenPatchSHA256": "5d547dbd3cdebca170c0829dc9e9d1dfad5ae04706f83fac52e435ec9287ca16",
+  "gitPatchSHA256": "2f10d16202b700cfe0a42a8766e65dee1b47b55bbfaa2acb4b5d52d0ea12f87f",
+  "frozenReverseAgainstActualIndexExit": 0,
+  "status": "",
+  "initialChecks": [
+    {
+      "receipt": "source-git-operations.json",
+      "outcome": "git add rejected the explicit new test path outside the sparse pattern; --sparse added only the seven reviewed paths, with no configuration change."
+    },
+    {
+      "receipt": "source-git-sparse-retry.json",
+      "outcome": "Over-strict raw patch equality assertion rejected Git headers/file order versus the original difflib patch. Both immutable patches retained; actual seven index blobs match reviewed hashes and frozen patch reverse check passed."
+    }
+  ],
+  "testsRun": 0,
+  "nativeRuns": 0
+}

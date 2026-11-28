@@ -1,0 +1,91 @@
+{
+  "status": "EXACT_SINGLE_COLLECTION_PERMUTATION_ONLY",
+  "source": "f45d6edcf20ab18f31fb7b25e33358754e3602d0",
+  "path": "parameters[name=input].resolvableInputTypes",
+  "actualOrder": [
+    {
+      "kindValue": 0,
+      "valueType": {
+        "primitive": {
+          "wrapper": {
+            "typeIdentifier": 2
+          }
+        }
+      }
+    },
+    {
+      "kindValue": 0,
+      "valueType": {
+        "array": {
+          "wrapper": {
+            "capabilities": 3,
+            "memberValueType": {
+              "primitive": {
+                "wrapper": {
+                  "typeIdentifier": 2
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "kindValue": 0,
+      "valueType": {
+        "primitive": {
+          "wrapper": {
+            "typeIdentifier": 0
+          }
+        }
+      }
+    }
+  ],
+  "expectedOrder": [
+    {
+      "kindValue": 0,
+      "valueType": {
+        "primitive": {
+          "wrapper": {
+            "typeIdentifier": 0
+          }
+        }
+      }
+    },
+    {
+      "kindValue": 0,
+      "valueType": {
+        "primitive": {
+          "wrapper": {
+            "typeIdentifier": 2
+          }
+        }
+      }
+    },
+    {
+      "kindValue": 0,
+      "valueType": {
+        "array": {
+          "wrapper": {
+            "capabilities": 3,
+            "memberValueType": {
+              "primitive": {
+                "wrapper": {
+                  "typeIdentifier": 2
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "exactCompleteObjectMultisetEqual": true,
+  "multiplicities": [
+    1,
+    1,
+    1
+  ],
+  "everyOtherFieldAndArrayExact": true,
+  "testsOrRebuilds": 0
+}
