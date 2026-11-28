@@ -4229,6 +4229,40 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                     let finalErrorText = modelText.isEmpty ? fallbackErrorText : modelText
                     let executionID = "\(callID):execution"
 
+                    let safeError = AgentSafeError(message: finalErrorText)
+                    let errorBlocks: [NativeUIBlock] = safeError.message.isEmpty ? [] : [
+                        NativeUIBlock(
+                            type: .error,
+                            title: profile.activity.failedTitle ?? name,
+                            body: safeError.message,
+                            systemImage: "exclamationmark.triangle"
+                        )
+                    ]
+                    let presentationDecision = ToolResultPresentationCoordinator.decide(
+                        call: parsedCall,
+                        profile: profile,
+                        hasPayload: !errorBlocks.isEmpty,
+                        hasModelText: !safeError.message.isEmpty,
+                        isError: true
+                    )
+                    let resultEvent: AgentEvent
+                    if presentationDecision.shouldPresent {
+                        resultEvent = .toolExecutionCompleted(
+                            id: executionID,
+                            result: AgentToolResult(
+                                modelText: safeError.message,
+                                userText: safeError.message,
+                                richResultBlocks: errorBlocks,
+                                hasLegacyPresentationPayload: false,
+                                isError: true,
+                                semanticOutcome: .invalidArguments,
+                                duration: 0
+                            )
+                        )
+                    } else {
+                        resultEvent = .toolExecutionFailed(id: executionID, error: safeError)
+                    }
+
                     continuation.yield(StreamData(agentEvents: [
                         .toolCallStarted(parsedCall),
                         .toolCallCompleted(parsedCall),
@@ -4238,10 +4272,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                             name: name,
                             startedAt: Date()
                         )),
-                        .toolExecutionFailed(
-                            id: executionID,
-                            error: AgentSafeError(message: finalErrorText)
-                        )
+                        resultEvent
                     ]))
 
                     if let stepID = currentStepID {
@@ -4259,7 +4290,8 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                             duration: 0,
                             outcome: .invalidArguments,
                             diagnostics: diag,
-                            error: finalErrorText
+                            error: finalErrorText,
+                            presentationDecision: presentationDecision
                         )
                     }
                     toolAdapter.completedCallIDs.insert(callID)
