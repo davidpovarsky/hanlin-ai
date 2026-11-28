@@ -168,26 +168,46 @@ struct RuntimeAutonomyV3Tests {
 
     @Test(.timeLimit(.minutes(2)))
     func stoppingTypeScriptCancelsItsActualWorkerAndPreservesTheReceipt() async throws {
+        let observation = TypeScriptEntryFailureObservation()
         let core = AppRuntimeCore.shared
         _ = try await core.ensureStarted(.node)
         let service = TypeScriptRuntimeService(node: core.node)
         _ = try await service.healthCheck()
+        observation.mark("healthReturned")
         let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "typescript-stop-\(UUID().uuidString)")
         defer { try? FileManager.default.removeItem(at: workspace) }
         let request = RuntimeExecutionRequest(source: "", workspace: workspace)
+        observation.bind(request.id)
+        let inheritedReporter = RuntimeJobProgress.reporter
+        let reporter: RuntimeJobProgress.Reporter = { record in
+            observation.record(record)
+            if let inheritedReporter { await inheritedReporter(record) }
+        }
         let task = Task {
-            try await service.compileAndExecute(
-                source: "console.log('actual TypeScript worker entered'); export default new Promise(resolve => setTimeout(() => resolve(17), 30000));",
-                request: request
-            )
+            observation.mark("taskEntered")
+            return try await RuntimeJobProgress.$reporter.withValue(reporter) {
+                do {
+                    let result = try await service.compileAndExecute(
+                        source: "console.log('actual TypeScript worker entered'); export default new Promise(resolve => setTimeout(() => resolve(17), 30000));",
+                        request: request
+                    )
+                    observation.returned(result)
+                    return result
+                } catch {
+                    observation.threw(error)
+                    throw error
+                }
+            }
         }
         defer { task.cancel() }
         let deadline = ContinuousClock.now.advanced(by: .seconds(15))
+        observation.mark("entryClockArmed")
         var entered = false
         while ContinuousClock.now < deadline {
             if let record = try await core.jobs.refresh(id: request.id, kind: .node), record.stdoutBytes > 0 { entered = true; break }
             try await Task.sleep(for: .milliseconds(10))
         }
+        if !entered { observation.emitFailure() }
         try #require(entered, "The actual compiled TypeScript worker did not produce entry bytes")
         _ = await service.stop()
         let receipt = try #require(try await task.value.execution)
@@ -1427,4 +1447,168 @@ struct RuntimeAutonomyV3Tests {
         #expect(try RuntimeExecutionLimits(timeout: .seconds(600)).timeoutMilliseconds() == 600_000)
     }
 
+}
+
+
+// Test-local observation only. It never polls, stops or joins the operation.
+@MainActor
+private final class TypeScriptEntryFailureObservation {
+    private let started = ContinuousClock.now
+    private var requestID: UUID?
+    private var compilerID: UUID?
+    private var phases: [String: Double] = [:]
+    private var compiler: [String: String]?
+    private var execution: [String: String]?
+    private var firstUnexpectedID: UUID?
+    private var unexpectedCallbacks = 0
+    private var result: [String: Any]?
+    private var failure: [String: Any]?
+
+    func mark(_ phase: String) { phases[phase] = elapsed() }
+    func bind(_ id: UUID) { requestID = id }
+
+    func record(_ record: RuntimeJobSnapshot) {
+        let isExecution = record.executionID == requestID
+        if !isExecution {
+            if let compilerID, compilerID != record.executionID {
+                firstUnexpectedID = firstUnexpectedID ?? record.executionID
+                unexpectedCallbacks = min(unexpectedCallbacks + 1, 1_000)
+                return
+            }
+            compilerID = record.executionID
+        }
+        let previous = isExecution ? execution : compiler
+        let now = String(elapsed())
+        var value: [String: String] = [
+            "executionID": record.executionID.uuidString,
+            "state": record.state.rawValue,
+            "stdoutBytes": String(record.stdoutBytes),
+            "stderrBytes": String(record.stderrBytes),
+            "cancellationRequested": String(record.cancellationRequested),
+            "hasResult": String(record.result != nil),
+            "firstObservedSeconds": previous?["firstObservedSeconds"] ?? now,
+            "lastObservedSeconds": now
+        ]
+        if let terminal = record.result {
+            value["exitCodePresent"] = String(terminal.exitCode != nil)
+            if let exitCode = terminal.exitCode { value["exitCode"] = String(exitCode) }
+            value["wasCancelled"] = String(terminal.wasCancelled)
+            value["didTimeOut"] = String(terminal.didTimeOut)
+            if let receipt = terminal.value, case .object(let object) = receipt,
+               let succeeded = object["succeeded"], case .boolean(let flag) = succeeded {
+                value["compilerReceiptSucceeded"] = String(flag)
+            }
+        }
+        if isExecution { execution = value } else { compiler = value }
+    }
+
+    func returned(_ value: TypeScriptExecutionResult) {
+        let compiled = value.compilation
+        var summary: [String: Any] = [
+            "observedSeconds": elapsed(),
+            "succeeded": compiled.succeeded,
+            "compilerID": compiled.executionID?.uuidString ?? "absent",
+            "executionPresent": value.execution != nil,
+            "diagnosticCount": compiled.diagnostics.count,
+            "diagnosticsTruncated": compiled.diagnostics.count > 16
+        ]
+        if let version = compiled.compilerVersion { summary["compilerVersion"] = clipped(version, bytes: 128) }
+        if let receipt = value.execution {
+            summary["executionID"] = receipt.executionID.uuidString
+            summary["exitCodePresent"] = receipt.exitCode != nil
+            if let exitCode = receipt.exitCode { summary["exitCode"] = exitCode }
+            summary["wasCancelled"] = receipt.wasCancelled
+        }
+        let outputs: [(String, String?)] = [("javaScript", compiled.javaScript), ("sourceMap", compiled.sourceMap)]
+        for (name, text) in outputs {
+            if let text {
+                summary[name + "Bytes"] = text.utf8.count
+                summary[name + "SHA256"] = digest(text)
+            }
+        }
+        summary["diagnostics"] = compiled.diagnostics.prefix(16).map { diagnostic -> [String: Any] in
+            var item: [String: Any] = ["code": diagnostic.code, "message": clipped(diagnostic.message, bytes: 512)]
+            if let file = diagnostic.file { item["file"] = clipped(URL(filePath: file).lastPathComponent, bytes: 128) }
+            if let line = diagnostic.line { item["line"] = line }
+            if let column = diagnostic.column { item["column"] = column }
+            return item
+        }
+        result = summary
+    }
+
+    func threw(_ error: any Error) {
+        let native = error as NSError
+        let description = error.localizedDescription
+        failure = [
+            "observedSeconds": elapsed(),
+            "type": clipped(String(reflecting: type(of: error)), bytes: 128),
+            "domain": clipped(native.domain, bytes: 128),
+            "code": native.code,
+            "descriptionBytes": description.utf8.count,
+            "descriptionSHA256": digest(description)
+        ]
+    }
+
+    func emitFailure() {
+        var document: [String: Any] = [
+            "event": "TYPESCRIPT_ENTRY_FAILURE_V1",
+            "observationKind": "last_observed_callbacks_not_current_engine_state",
+            "requestID": requestID?.uuidString ?? "not-bound",
+            "pid": Int(ProcessInfo.processInfo.processIdentifier),
+            "elapsedSeconds": elapsed(),
+            "phases": phases,
+            "compilerObserved": compiler != nil,
+            "executionObserved": execution != nil,
+            "taskReturnObserved": result != nil,
+            "taskErrorObserved": failure != nil,
+            "unexpectedCallbacksCappedAt1000": unexpectedCallbacks
+        ]
+        if let compiler { document["compiler"] = compiler }
+        if let execution { document["execution"] = execution }
+        if let firstUnexpectedID { document["firstUnexpectedID"] = firstUnexpectedID.uuidString }
+        if let result { document["returnedResult"] = result }
+        if let failure { document["thrownError"] = failure }
+        let prefix = "TYPESCRIPT_ENTRY_FAILURE "
+        let byteBudget = 16_384 - prefix.utf8.count - 1 // Include the prefix and print's newline.
+        do {
+            var bytes = try JSONSerialization.data(withJSONObject: document, options: [.sortedKeys])
+            if bytes.count > byteBudget {
+                document["detailsOmittedForByteBudget"] = true
+                document["unabridgedObservationBytes"] = bytes.count
+                if let result {
+                    var limited: [String: Any] = [:]
+                    for key in ["observedSeconds", "succeeded", "compilerID", "executionPresent", "diagnosticCount"] {
+                        limited[key] = result[key]
+                    }
+                    document["returnedResult"] = limited
+                }
+                bytes = try JSONSerialization.data(withJSONObject: document, options: [.sortedKeys])
+            }
+            if bytes.count <= byteBudget {
+                print(prefix + String(decoding: bytes, as: UTF8.self))
+            } else {
+                print("TYPESCRIPT_ENTRY_FAILURE observation_exceeded_byte_budget requestID=\(requestID?.uuidString ?? "not-bound")")
+            }
+        } catch {
+            print("TYPESCRIPT_ENTRY_FAILURE observation_encoding_failed requestID=\(requestID?.uuidString ?? "not-bound")")
+        }
+    }
+
+    private func elapsed() -> Double {
+        let parts = started.duration(to: ContinuousClock.now).components
+        return Double(parts.seconds) + Double(parts.attoseconds) / 1_000_000_000_000_000_000
+    }
+
+    private func clipped(_ value: String, bytes: Int) -> [String: Any] {
+        [
+            "text": String(decoding: value.utf8.prefix(bytes), as: UTF8.self),
+            "originalUTF8Bytes": value.utf8.count,
+            "utf8PrefixBytes": min(bytes, value.utf8.count),
+            "truncated": value.utf8.count > bytes
+        ]
+    }
+
+    private func digest(_ value: String) -> String {
+        SHA256.hash(data: Data(value.utf8)).map { String(format: "%02x", $0) }.joined()
+    }
 }
