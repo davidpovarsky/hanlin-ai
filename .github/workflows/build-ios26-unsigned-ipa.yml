@@ -1266,8 +1266,8 @@ jobs:
           mkdir -p "$LOG_DIR" build/acceptance/miniapp-upstreams
           trap 'cp build/acceptance/miniapp-upstreams/resolution.json "$LOG_DIR/miniapp-upstream-resolution.json" 2>/dev/null || true; git diff --binary > "$LOG_DIR/miniapp-upstream-inputs.patch"' EXIT
           node Scripts/MiniApps/resolve-upstreams.mjs --apply --cache="$RUNNER_TEMP/hanlin-miniapp-upstreams" 2>&1 | tee "$LOG_DIR/miniapp-upstream-resolution.log"
-          tar -czf build/acceptance/miniapp-upstreams/adapted-native-source-inputs.tar.gz -C "$RUNNER_TEMP/hanlin-miniapp-upstreams/candidate-inputs" Packages
           node Scripts/Widgets/build-sample-packages.mjs
+          tar -czf build/acceptance/miniapp-upstreams/adapted-native-source-inputs.tar.gz -C "$RUNNER_TEMP/hanlin-miniapp-upstreams/candidate-inputs" Packages
 
       - name: Preserve current original MiniApp build inputs
         if: always()
@@ -2179,8 +2179,8 @@ jobs:
           mkdir -p "$LOG_DIR" build/acceptance/miniapp-upstreams
           trap 'cp build/acceptance/miniapp-upstreams/resolution.json "$LOG_DIR/miniapp-upstream-resolution.json" 2>/dev/null || true; git diff --binary > "$LOG_DIR/miniapp-upstream-inputs.patch"' EXIT
           node Scripts/MiniApps/resolve-upstreams.mjs --apply --cache="$RUNNER_TEMP/hanlin-miniapp-upstreams" 2>&1 | tee "$LOG_DIR/miniapp-upstream-resolution.log"
-          tar -czf build/acceptance/miniapp-upstreams/adapted-native-source-inputs.tar.gz -C "$RUNNER_TEMP/hanlin-miniapp-upstreams/candidate-inputs" Packages
           node Scripts/Widgets/build-sample-packages.mjs
+          tar -czf build/acceptance/miniapp-upstreams/adapted-native-source-inputs.tar.gz -C "$RUNNER_TEMP/hanlin-miniapp-upstreams/candidate-inputs" Packages
 
       - name: Preserve current original MiniApp build inputs
         if: always()
