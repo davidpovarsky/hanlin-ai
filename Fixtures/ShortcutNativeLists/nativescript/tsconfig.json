@@ -1,0 +1,6 @@
+{
+  "include": [
+    "index.ts",
+    "proof.ts"
+  ]
+}

@@ -61,6 +61,13 @@ TEST_PLANS["miniapp_complete"] = (
 
 # Additional real-system route in this original runner. The original paired54
 # selectors/counts remain unchanged and are not replaced by this scope.
+TEST_PLANS["miniapp_native_lists_nativescript_os"] = ([
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptSavedTextListReopensThenClearsToEmpty",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptSavedIntegerListReopensThenClearsToEmpty",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptSavedNumberListReopensThenClearsToEmpty",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptSavedBooleanListReopensThenClearsToEmpty",
+], 4)
+
 TEST_PLANS["miniapp_shortcuts_os"] = ([
     "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult",
     "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult",
@@ -644,6 +651,73 @@ def shortcut_surface_fixtures(documents):
 
 
 
+
+def native_list_shortcut_fixture(documents):
+    """One independent NS fixture through the original shipping SDK/strict CLI."""
+    from observe_shortcut_native_lists import FIXTURE, FIXTURE_FILES, ARCHIVE
+    work = EVIDENCE / "shortcut-native-list-fixture"
+    work.mkdir()
+    extracted = work / "original-shipping-sdk"
+    extracted.mkdir()
+    archive = ROOT / "AI_HLY/RuntimeHostResources.zip"
+    archive_sha = hashlib.sha256(archive.read_bytes()).hexdigest()
+    project = ROOT / FIXTURE
+    generated = project / ".hanlin-build"
+    if generated.exists() or generated.is_symlink():
+        raise RuntimeError("The new fixture must have no pre-existing generated output")
+    inputs = {FIXTURE + "/" + name: hashlib.sha256((project / name).read_bytes()).hexdigest()
+              for name in FIXTURE_FILES}
+    try:
+        with zipfile.ZipFile(archive) as packed:
+            members = [name for name in packed.namelist() if name.startswith("MiniAppSDK/")]
+            if not members or any(".." in Path(name).parts or Path(name).is_absolute() for name in members):
+                raise RuntimeError("The actual shipping archive has no valid authoring SDK")
+            packed.extractall(extracted, members=members)
+        sdk = extracted / "MiniAppSDK"
+        validate_report, build_report = work / "validate.json", work / "build.json"
+        prepared = work / ARCHIVE
+        base = ["node", "Scripts/MiniApps/miniapp.mjs", "--sdk", str(sdk), "--project", str(project)]
+        command(base[:2] + ["validate"] + base[2:] + ["--report", str(validate_report)],
+                "native-list-validate.log", timeout=300)
+        command(base[:2] + ["build"] + base[2:] + ["--archive", str(prepared), "--report", str(build_report)],
+                "native-list-build.log", timeout=600)
+        for report in (validate_report, build_report):
+            if json.loads(report.read_text()).get("succeeded") is not True:
+                raise RuntimeError("The original native-list authoring operation did not succeed")
+        if any(hashlib.sha256((ROOT / name).read_bytes()).hexdigest() != expected for name, expected in inputs.items()):
+            raise RuntimeError("Original authoring changed a native-list input")
+        if generated.is_symlink() or any(path.is_symlink() for path in generated.rglob("*")):
+            raise RuntimeError("Generated native-list output contains a link")
+        inventory = {path.relative_to(generated).as_posix(): {
+            "bytes": path.stat().st_size, "mode": path.stat().st_mode & 0o7777,
+            "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+            for path in sorted(generated.rglob("*")) if path.is_file()}
+        retained = work / "generated-hanlin-build"
+        generated.rename(retained)
+        after = {path.relative_to(retained).as_posix(): {
+            "bytes": path.stat().st_size, "mode": path.stat().st_mode & 0o7777,
+            "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+            for path in sorted(retained.rglob("*")) if path.is_file()}
+        if not inventory or after != inventory:
+            raise RuntimeError("Actual generated output did not retain its exact identity")
+        destination = documents / ARCHIVE
+        if destination.exists() or destination.is_symlink():
+            raise RuntimeError("The owned simulator already has a native-list archive")
+        shutil.copy2(prepared, destination)
+        digest = hashlib.sha256(prepared.read_bytes()).hexdigest()
+        if hashlib.sha256(destination.read_bytes()).hexdigest() != digest:
+            raise RuntimeError("Actual native-list archive changed during staging")
+        value = {"status": "BUILT_AND_STAGED_INPUTS_ONLY", "shippingArchiveSHA256": archive_sha,
+            "sourceFiles": inputs, "generatedFiles": inventory,
+            "archives": [{"engine": "nativescript", "archive": ARCHIVE, "archiveSHA256": digest,
+                          "validateReportSHA256": hashlib.sha256(validate_report.read_bytes()).hexdigest(),
+                          "buildReportSHA256": hashlib.sha256(build_report.read_bytes()).hexdigest()}],
+            "scope": "Authored input only; actual Shortcuts/native array execution remains required"}
+        (work / "provenance.json").write_text(json.dumps(value, indent=2) + "\n")
+        return value
+    finally:
+        shutil.rmtree(extracted)
+
 def long_running_shortcut_fixtures(documents):
     """Independent authored packages through the existing shipping SDK/CLI."""
     work = EVIDENCE / "shortcut-long-running-fixtures"
@@ -947,6 +1021,10 @@ def start_shortcut_observer(derived, simulator, state):
             "--output", str(observer_output), "--duration",
             "7200" if TEST_SCOPE in {"miniapp_studio_gallery_os", "miniapp_studio_editor_os"} else
             "5400" if TEST_SCOPE == "miniapp_system_surfaces_os" else "2100"]
+    if TEST_SCOPE == "miniapp_native_lists_nativescript_os":
+        from observe_shortcut_native_lists import create_inputs
+        state["native_list_inputs"] = create_inputs(ROOT, EVIDENCE, runner, test, state, simulator)
+        argv += ["--native-list-inputs", state["native_list_inputs"]["path"]]
     if long_running:
         from observe_shortcut_long_running import create_inputs
         state["long_running_inputs"] = create_inputs(ROOT, EVIDENCE, runner, test, state, simulator)
@@ -1102,7 +1180,7 @@ def main():
         }
         _, raw = command(["xcrun", "simctl", "list", "devicetypes", "-j"], "device-types.json")
         supported = {item["identifier"] for item in runtime["supportedDeviceTypes"]}
-        device_family = "iPad" if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"} else "iPhone"
+        device_family = "iPad" if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_native_lists_nativescript_os", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"} else "iPhone"
         device = next(item for item in json.loads(raw)["devicetypes"]
             if item.get("productFamily") == device_family and item["identifier"] in supported)
         _, raw = command(["xcrun", "simctl", "create",
@@ -1233,6 +1311,12 @@ def main():
             documents = Path(raw.strip()) / "Documents"
             documents.mkdir(exist_ok=True)
             state["widget_recovery_input"] = widget_recovery_fixture(documents)
+        if TEST_SCOPE == "miniapp_native_lists_nativescript_os":
+            _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
+                "com.itorah.hanlinminiapps", "data"], "native-list-mini-data-container.txt")
+            documents = Path(raw.strip()) / "Documents"
+            documents.mkdir(exist_ok=True)
+            state["native_list_fixtures"] = native_list_shortcut_fixture(documents)
         if TEST_SCOPE == "miniapp_shortcut_long_running_os":
             _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
                 "com.itorah.hanlinminiapps", "data"], "long-running-mini-data-container.txt")
@@ -1349,7 +1433,7 @@ def main():
             if (documents / archive.name).exists():
                 raise RuntimeError("The fresh owned simulator already has a transfer package input")
             shutil.copy2(archive, documents / archive.name)
-        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"}:
+        if TEST_SCOPE in {"miniapp_native_lists_nativescript_os", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"}:
             if TEST_SCOPE == "miniapp_system_surfaces_os":
                 adapter_assets = start_native_adapter_assets(
                     state, system_resources, state["system_surface_inputs"]["value"]["transportLog"])
@@ -1401,7 +1485,7 @@ def main():
                 state.update(status="EXECUTED_PASS", ui="EXECUTED_PASS")
             elif summary.get("failedTests", 0):
                 state.update(status="TEST_FAILED", ui="TEST_FAILED")
-        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"} and not state["shortcut_observer"].get("allSelectedCasesObserved"):
+        if TEST_SCOPE in {"miniapp_native_lists_nativescript_os", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"} and not state["shortcut_observer"].get("allSelectedCasesObserved"):
             state["status"] = "INFRA_ERROR"
             raise RuntimeError("The real system-surface observer did not retain every correlated terminal result")
         if TEST_SCOPE == "miniapp_system_surfaces_os" and not state["system_surface_share_inputs"].get("allSelectedInputsStaged"):
@@ -1461,7 +1545,7 @@ def main():
             thread.join(timeout=5)
         # Retain the actual test attachments for visual inspection of the sheet
         # and repaired app; a final simulator screenshot is not a substitute.
-        if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"}:
+        if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_native_lists_nativescript_os", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"}:
             state["attachment_exports"] = []
             for name in ["OriginalRuntimes", "Paired"]:
                 bundle = EVIDENCE / (name + ".xcresult")

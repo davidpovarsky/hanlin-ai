@@ -3657,4 +3657,372 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         return value
     }
 
+    // Additive native-array pilot. Every save/reopen/clear uses public Shortcuts
+    // controls. An unrecognized editor is retained and fails this case honestly.
+    private enum NativeListKind: String {
+        case text, integer, number, boolean
+        var title: String {
+            switch self {
+            case .text: return "Text List"
+            case .integer: return "Integer List"
+            case .number: return "Number List"
+            case .boolean: return "Boolean List"
+            }
+        }
+        var mode: String { rawValue + "List" }
+        var parameter: String {
+            switch self {
+            case .text: return "textItems"
+            case .integer: return "integerItems"
+            case .number: return "numberItems"
+            case .boolean: return "booleanItems"
+            }
+        }
+        var method: String {
+            "testNativeScriptSaved" + rawValue.prefix(1).uppercased() +
+                String(rawValue.dropFirst()) + "ListReopensThenClearsToEmpty"
+        }
+        func values(runID: String) -> [Any] {
+            switch self {
+            case .text: return ["שלום", "汉字", runID]
+            case .integer: return [-7, 0, 42]
+            case .number: return [-1.25, 0.5, 42.125]
+            case .boolean: return [true, false]
+            }
+        }
+    }
+
+    func testNativeScriptSavedTextListReopensThenClearsToEmpty() throws {
+        try nativeListShortcut(.text)
+    }
+    func testNativeScriptSavedIntegerListReopensThenClearsToEmpty() throws {
+        try nativeListShortcut(.integer)
+    }
+    func testNativeScriptSavedNumberListReopensThenClearsToEmpty() throws {
+        try nativeListShortcut(.number)
+    }
+    func testNativeScriptSavedBooleanListReopensThenClearsToEmpty() throws {
+        try nativeListShortcut(.boolean)
+    }
+
+    private func nativeListShortcut(_ kind: NativeListKind) throws {
+        continueAfterFailure = false
+        executionTimeAllowance = 360
+        deadline = Date().addingTimeInterval(360)
+        let runID = UUID().uuidString.lowercased()
+        let root = try XCTUnwrap(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
+            .appendingPathComponent("HanlinSystemSurfaceObservation", isDirectory: true)
+        let directory = root.appendingPathComponent(runID, isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        exchange = root; runDirectory = directory
+        record = ["schema": 1, "runID": runID, "engine": "nativescript", "surface": "nativeLists",
+                  "fixtureAppID": "hanlin.shortcutlists.nativescript", "listKind": kind.rawValue,
+                  "testMethod": kind.method, "startedAt": timestamp(), "status": "RUNNING"]
+        try checkpoint("preparing")
+        defer {
+            capture(shortcuts, "native-lists-final-shortcuts")
+            capture(mini, "native-lists-final-miniapps")
+            try? writeJSON(record, filename: "case.json")
+            try? checkpoint("finished")
+        }
+        do {
+            mini.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+            mini.launch()
+            try openNativeListFixture()
+            try checkpoint("native-list-installed")
+            let identity = try response("identity.json", timeout: 30)
+            try require(identity["status"] as? String == "READY", "The current fixture was not admitted.")
+            try requireSystemApp("shortcuts", identity: identity)
+            try createNativeListShortcut(kind, identity: identity)
+            let name = "Hanlin-lists-" + kind.rawValue + "-" + String(runID.prefix(8))
+            record["savedShortcutName"] = name
+            let values = kind.values(runID: runID)
+            var editor = try nativeListEditor(kind)
+            try appendNativeListValues(kind, values: values, editor: editor)
+            _ = try readNativeListRows(kind, expected: values, editor: editor)
+            try closeNativeListEditor(editor)
+            let mode = try shortcutModeSwitch()
+            let initialBackgroundMode = try observedSwitchValue(mode)
+            try require(initialBackgroundMode == false, "A new saved list action must default to background.")
+            try addShortcutAction("Get Text from Input")
+            try addShortcutAction("Show Result")
+            record["builtInChain"] = ["Get Text from Input", "Show Result"]
+            try renameShortcut(name)
+            for step in 0...1 {
+                // This loop shares the original 360-second case deadline.
+                if step == 1 {
+                    editor = try nativeListEditor(kind)
+                    _ = try readNativeListRows(kind, expected: values, editor: editor)
+                    try clearNativeListRows(kind, count: values.count, editor: editor)
+                    _ = try readNativeListRows(kind, expected: [], editor: editor)
+                    try closeNativeListEditor(editor)
+                }
+                try tap(firstButton(shortcuts, ["Done"]), "Save the actual native-list Shortcut.")
+                capture(shortcuts, "native-lists-saved-\(step)")
+                shortcuts.terminate(); mini.terminate(); shortcuts.launch()
+                try reopenLongRunningShortcut(name)
+                let reopenedModeControl = try shortcutModeSwitch()
+                let reopenedMode = try observedSwitchValue(reopenedModeControl)
+                try require(reopenedMode == false, "The saved Shortcut changed its background choice.")
+                editor = try nativeListEditor(kind)
+                let observed = try readNativeListRows(kind, expected: step == 0 ? values : [], editor: editor)
+                record["editor"] = ["inputMode": kind.mode, "parameter": kind.parameter, "label": kind.title,
+                    "savedAndReopened": true, "processRestarted": true, "openWhenRun": false,
+                    "rowCount": observed.values.count, "values": observed.values, "rawRows": observed.raw]
+                capture(shortcuts, "native-lists-reopened-\(step)")
+                try closeNativeListEditor(editor)
+                record["step"] = step
+                record["systemLaunchObserved"] = false
+                try checkpoint("native-list-arm")
+                let armed = try response("armed-\(step).json", timeout: 30)
+                try require(armed["status"] as? String == "ARMED" && armed["step"] as? Int == step,
+                            "The observer did not arm this exact saved list step.")
+                try require(shortcuts.state == .runningForeground && mini.state != .runningForeground,
+                            "The real Shortcuts app must own the execution surface.")
+                try tap(firstButton(shortcuts, ["Run Shortcut", "Run"]),
+                        "Run the saved native array through the real built-in result chain.")
+                record["systemLaunchObserved"] = true
+                try checkpoint("native-list-sent")
+                let completion = try nativeListCompletion(step)
+                try require(completion["status"] as? String == "EXECUTED_PASS",
+                            "The native list did not produce a correlated terminal.")
+                let result = try XCTUnwrap(completion["result"] as? [String: Any])
+                record["renderedResult"] = try readNativeListShownResult(result, step: step)
+                try checkpoint("native-list-chain-read")
+                if step == 0 {
+                    let acknowledged = try response("chain-0.json", timeout: 15)
+                    try require(acknowledged["status"] as? String == "CHAIN_READ",
+                                "The first real built-in chain was not acknowledged.")
+                    try tap(firstButton(shortcuts, ["Done", "Close"]), "Dismiss the actual first Show Result.")
+                } else {
+                    let final = try response("completion.json", timeout: 15)
+                    try require(final["status"] as? String == "EXECUTED_PASS" &&
+                                final["nativeExecutions"] as? Int == 2,
+                                "Both nonempty and cleared-empty saved-list executions must pass.")
+                    record["completion"] = final
+                }
+            }
+            record["status"] = "EXECUTED_PASS"
+        } catch {
+            record["status"] = "FAILED"; record["error"] = String(describing: error)
+            throw error
+        }
+    }
+
+    private func openNativeListFixture() throws {
+        let title = "Native Lists NativeScript"
+        let close = mini.buttons["hanlin-script-app-close"].firstMatch
+        if close.exists && close.isHittable { close.tap() }
+        let manage = mini.buttons["hanlin-apps-add"].firstMatch
+        try require(manage.waitForExistence(timeout: bounded(25)), "The original MiniApps catalog is unavailable.")
+        let card = mini.buttons["hanlin-package-card-" + title].firstMatch
+        if !card.exists {
+            try tap(manage, "Open the original package importer.")
+            try tap(mini.buttons["hanlin-import-script-package"].firstMatch, "Import the actual native-list package.")
+            let list = mini.collectionViews["hanlin-package-import-list"].firstMatch
+            try require(list.waitForExistence(timeout: bounded(15)), "The original import list is unavailable.")
+            let archive = list.buttons["NativeListsNativeScript"].firstMatch
+            try reveal(archive, in: list, message: "The original-produced native-list archive is absent.")
+            try tap(archive, "Read the exact independent native-list archive.")
+            let install = mini.buttons["hanlin-package-install"].firstMatch
+            let failure = mini.descendants(matching: .any)["hanlin-import-error-message"].firstMatch
+            let diagnostics = mini.descendants(matching: .any)["hanlin-import-diagnostics-sheet"].firstMatch
+            try require(wait(120) { install.exists || failure.exists || diagnostics.exists },
+                        "The original strict importer did not finish.")
+            capture(mini, "native-lists-import-preview")
+            try require(install.exists && !failure.exists && !diagnostics.exists,
+                        "The original compiler/importer rejected the native-list fixture.")
+            try tap(install, "Install using the real production preview.")
+            try require(wait(45) { !install.exists || failure.exists }, "The real installation did not finish.")
+            try require(!failure.exists, "The original installation failed.")
+            try tap(mini.buttons["hanlin-package-import-done"].firstMatch, "Dismiss the original importer.")
+            try tap(mini.buttons["hanlin-apps-add-done"].firstMatch, "Return to the real catalog.")
+        }
+        try reveal(card, in: mini, message: "The installed native-list package is missing.")
+        try tap(card, "Open the actual installed NativeScript fixture.")
+        let ready = mini.descendants(matching: .any)["native-lists-ready"].firstMatch
+        try require(ready.waitForExistence(timeout: bounded(30)) &&
+                    (ready.label == "hanlin.shortcutlists.nativescript" ||
+                     ready.value as? String == "hanlin.shortcutlists.nativescript"),
+                    "The actual NativeScript factory did not expose its app identity.")
+        capture(mini, "native-lists-installed")
+    }
+
+    private func createNativeListShortcut(_ kind: NativeListKind, identity: [String: Any]) throws {
+        shortcuts.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        shortcuts.launch()
+        var continued = false
+        var create = shortcuts.buttons["Create Shortcut"].firstMatch
+        try require(wait(12) {
+            let whatsNew = self.shortcuts.staticTexts["What’s New in Shortcuts"].firstMatch
+            if whatsNew.exists {
+                let next = self.shortcuts.buttons["Continue"].firstMatch
+                guard !continued && whatsNew.isHittable && next.exists && next.isEnabled && next.isHittable else { return false }
+                continued = true; next.tap(); return false
+            }
+            create = self.firstButton(self.shortcuts, ["Create Shortcut", "Add", "New Shortcut"])
+            return create.exists && create.isEnabled && create.isHittable
+        }, "The real system creation UI did not become available.")
+        create.tap()
+        if shortcuts.buttons["Add Action"].firstMatch.exists { shortcuts.buttons["Add Action"].firstMatch.tap() }
+        let search = shortcuts.searchFields.firstMatch
+        try tap(search, "Search the real indexed MiniApps actions."); search.typeText("Hanlin MiniApps")
+        try tap(shortcuts.staticTexts["Hanlin MiniApps"].firstMatch, "Open the indexed standalone app.")
+        try tap(shortcuts.staticTexts["Run MiniApp Action"].firstMatch, "Add the shipping typed action.")
+        try tap(firstButton(shortcuts, ["Action", "Script Action"]), "Choose the installed native-list action.")
+        try tap(shortcuts.staticTexts[try string(identity, "actionDisplayName")].firstMatch,
+                "Select the exact current installed action entity.")
+        if shortcuts.buttons["Show More"].firstMatch.exists { shortcuts.buttons["Show More"].firstMatch.tap() }
+        try tap(shortcuts.buttons["Input Type"].firstMatch, "Choose the shipping native array mode.")
+        try tap(shortcuts.staticTexts[kind.title].firstMatch, "Choose the actual " + kind.title + " enum case.")
+        capture(shortcuts, "native-lists-selected-mode")
+    }
+
+    private func nativeListEditor(_ kind: NativeListKind) throws -> XCUIElement {
+        let parameter = shortcuts.buttons[kind.title].allElementsBoundByIndex.filter { $0.exists && $0.isHittable }
+        try require(parameter.count == 1,
+                    "The current native " + kind.title + " parameter must be uniquely exposed; inspect retained AX.")
+        parameter[0].tap()
+        var containers: [XCUIElement] = []
+        try require(wait(10) {
+            let candidates = self.shortcuts.sheets.allElementsBoundByIndex +
+                self.shortcuts.popovers.allElementsBoundByIndex + self.shortcuts.dialogs.allElementsBoundByIndex
+            containers = candidates.filter {
+                $0.exists && $0.isHittable &&
+                ($0.label == kind.title || $0.staticTexts[kind.title].firstMatch.exists ||
+                 $0.navigationBars[kind.title].firstMatch.exists)
+            }
+            return containers.count == 1
+        }, "No unique public native array editor was observed; JSON/scalar fallback is forbidden.")
+        capture(shortcuts, "native-lists-editor-" + kind.rawValue)
+        return containers[0]
+    }
+
+    private func nativeListControls(_ kind: NativeListKind, editor: XCUIElement) -> [XCUIElement] {
+        if kind == .boolean { return editor.switches.allElementsBoundByIndex.filter { $0.exists } }
+        return editor.textFields.allElementsBoundByIndex.filter { $0.exists }
+    }
+
+    private func appendNativeListValues(_ kind: NativeListKind, values: [Any], editor: XCUIElement) throws {
+        try require(nativeListControls(kind, editor: editor).isEmpty, "The newly selected array must start empty.")
+        for (index, value) in values.enumerated() {
+            let adds = editor.buttons.allElementsBoundByIndex.filter {
+                $0.exists && $0.isHittable && ["Add New Item", "Add new item", "Add Item"].contains($0.label)
+            }
+            try require(adds.count == 1, "The array editor has no unique real Add Item control.")
+            adds[0].tap()
+            try require(wait(5) { self.nativeListControls(kind, editor: editor).count == index + 1 },
+                        "The public editor did not add exactly one actual row.")
+            let control = nativeListControls(kind, editor: editor)[index]
+            if kind == .boolean {
+                let wanted = try XCTUnwrap(value as? Bool)
+                if try observedSwitchValue(control) != wanted { try tap(control, "Set the actual new boolean row.") }
+            } else {
+                let before = control.value as? String ?? ""
+                try require(before.isEmpty || before == control.placeholderValue,
+                            "A new native list row unexpectedly has prior content.")
+                try tap(control, "Enter the actual new native array item.")
+                control.typeText(String(describing: value))
+            }
+            _ = try readNativeListRows(kind, expected: Array(values.prefix(index + 1)), editor: editor)
+        }
+    }
+
+    private func readNativeListRows(_ kind: NativeListKind, expected: [Any], editor: XCUIElement)
+        throws -> (values: [Any], raw: [[String: String]]) {
+        let controls = nativeListControls(kind, editor: editor)
+        try require(controls.count == expected.count, "The actual native editor row count differs.")
+        var values: [Any] = []; var raw: [[String: String]] = []
+        for control in controls {
+            let value = try XCTUnwrap(control.value as? String, "The actual native row has no public value.")
+            raw.append(["label": control.label, "value": value, "identifier": control.identifier])
+            switch kind {
+            case .text: values.append(value)
+            case .integer: values.append(try XCTUnwrap(Int(value), "The native integer row is not an exact Int."))
+            case .number:
+                let number = try XCTUnwrap(Double(value), "The native decimal row is not a number.")
+                try require(number.isFinite, "The native decimal row is non-finite."); values.append(number)
+            case .boolean: values.append(try observedSwitchValue(control))
+            }
+        }
+        try require(equalTypedJSON(values, expected), "Actual reopened native list values/order differ.")
+        return (values, raw)
+    }
+
+    private func clearNativeListRows(_ kind: NativeListKind, count: Int, editor: XCUIElement) throws {
+        for remaining in stride(from: count, through: 1, by: -1) {
+            try require(nativeListControls(kind, editor: editor).count == remaining, "The current clear row count differs.")
+            let deletes = editor.buttons.allElementsBoundByIndex.filter {
+                $0.exists && $0.isHittable && ["Delete Item", "Remove Item", "Delete"].contains($0.label)
+            }
+            try require(deletes.count == remaining,
+                        "Each actual array row must expose its own public deletion control; no blind clear.")
+            deletes.last?.tap()
+            try require(wait(5) { self.nativeListControls(kind, editor: editor).count == remaining - 1 },
+                        "The public delete did not remove exactly one native array item.")
+        }
+    }
+
+    private func closeNativeListEditor(_ editor: XCUIElement) throws {
+        let done = editor.buttons["Done"].allElementsBoundByIndex.filter { $0.exists && $0.isHittable }
+        try require(done.count == 1, "The actual native editor has no unique Done control.")
+        done[0].tap()
+        try require(wait(5) { !editor.exists || !editor.isHittable }, "The real native editor did not close.")
+    }
+
+    private func nativeListCompletion(_ step: Int) throws -> [String: Any] {
+        let directory = try XCTUnwrap(runDirectory)
+        let filename = "completion-\(step).json"
+        let end = Date().addingTimeInterval(bounded(100))
+        var observations: [[String: Any]] = []
+        while Date() < end && !FileManager.default.fileExists(atPath: directory.appendingPathComponent(filename).path) {
+            observations.append(["at": timestamp(), "miniAppsState": mini.state.rawValue,
+                                 "shortcutsState": shortcuts.state.rawValue])
+            try require(mini.state != .runningForeground, "The background native list presented MiniApps.")
+            RunLoop.current.run(until: Date().addingTimeInterval(0.1))
+        }
+        record["applicationStates-\(step)"] = observations
+        try require(mini.state != .runningForeground, "The terminal background list presented MiniApps.")
+        return try response(filename, timeout: 1)
+    }
+
+    private func nativeListJSONEqual(_ left: Any, _ right: Any) -> Bool {
+        switch (left, right) {
+        case (let a as NSNumber, let b as NSNumber):
+            let ab = CFGetTypeID(a) == CFBooleanGetTypeID()
+            let bb = CFGetTypeID(b) == CFBooleanGetTypeID()
+            if ab || bb { return ab && bb && a.boolValue == b.boolValue }
+            return a.doubleValue.isFinite && b.doubleValue.isFinite && a.compare(b) == .orderedSame
+        case (let a as String, let b as String): return a.utf8.elementsEqual(b.utf8)
+        case (let a as [Any], let b as [Any]):
+            return a.count == b.count && zip(a, b).allSatisfy { nativeListJSONEqual($0.0, $0.1) }
+        case (let a as [String: Any], let b as [String: Any]):
+            return Set(a.keys) == Set(b.keys) && a.allSatisfy { key, value in
+                b[key].map { nativeListJSONEqual(value, $0) } ?? false
+            }
+        case (_ as NSNull, _ as NSNull): return true
+        default: return false
+        }
+    }
+
+    private func readNativeListShownResult(_ expected: [String: Any], step: Int) throws -> [String: Any] {
+        let nonce = try string(expected, "nonce")
+        var actual: [String: Any]?
+        try require(wait(20) {
+            let elements = self.shortcuts.textViews.allElementsBoundByIndex + self.shortcuts.staticTexts.allElementsBoundByIndex
+            for element in elements where element.exists && element.isHittable {
+                for text in [element.value as? String ?? "", element.label] where text.contains(nonce) {
+                    if let data = text.data(using: .utf8),
+                       let parsed = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                       self.nativeListJSONEqual(parsed, expected) {
+                        actual = parsed; return true
+                    }
+                }
+            }
+            return false
+        }, "Real Get Text from Input → Show Result did not display this exact returned JSON.")
+        capture(shortcuts, "native-lists-show-result-\(step)")
+        return try XCTUnwrap(actual)
+    }
+
 }
