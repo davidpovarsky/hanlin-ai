@@ -1,0 +1,32 @@
+{
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "proposedPath": "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+  "preimageSHA256": "b7a9d76ca340f66e176f42c55c4e110c84e8cf2cc028c134355ab6fb9f95dcc4",
+  "productionEdits": [],
+  "packageEdits": [],
+  "newTestMethods": 0,
+  "sourceStatus": "UNCOMMITTED_SOURCE_CANDIDATE_NATIVE_NOT_RUN",
+  "rowAuthorities": [
+    {
+      "group": "sdk396",
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/sdk13-9ee23af8-pass-r2/reconciliation/current396-live-inputs.json",
+      "sha256": "26596817f3023ea07901862d3782a99e60cbd8b2c1630210915a9103598ab074",
+      "count": 396,
+      "proposedPathPresent": false
+    },
+    {
+      "group": "host99",
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/sdk13-9ee23af8-pass-r2/reconciliation/host99-live-inputs.json",
+      "sha256": "460b6ebe9de738d033f841be7f99d992f5293e9739c208bea2eadbf057847889",
+      "count": 99,
+      "proposedPathPresent": false
+    }
+  ],
+  "sdkIntersection": 0,
+  "hostIntersection": 0,
+  "candidateSHA256": "02015ecd575ff3c445d56c555636a3db7715da5668e0ee564b5d4d637b9a470b",
+  "sourceChanges": [
+    "AI_HLYTests/RuntimeAutonomyV3Tests.swift"
+  ],
+  "revision": "R2"
+}

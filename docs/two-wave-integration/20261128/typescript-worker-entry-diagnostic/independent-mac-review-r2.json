@@ -1,0 +1,40 @@
+{
+  "status": "APPROVED_SOURCE_ONLY_NATIVE_COMPILATION_AND_ACCEPTANCE_PENDING",
+  "reviewer": "mac_build_resume",
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "packet": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/typescript-worker-entry-diagnostic-3634078f/candidate-r2",
+  "manifestSHA256": "14a7c28f0a499d88eb0de1a0ee31187b8e49aa111b7eacddb1118cd005349f19",
+  "verifiedMembers": 17,
+  "verifiedPayloadBytes": 235704,
+  "candidateSHA256": "02015ecd575ff3c445d56c555636a3db7715da5668e0ee564b5d4d637b9a470b",
+  "r1Review": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/typescript-worker-entry-diagnostic-3634078f/independent-mac-review-r1/receipt.json",
+    "sha256": "f0e09a31db1c3f801e431fbae9e45c362bd06cec9eddd6a251375700e109831d",
+    "status": "RETAINED_NOT_APPROVED"
+  },
+  "r2DeltaSHA256": "7f307098b9baf6e5bd32605a908f3fd7f5fe8388807388c96b05284ac71f1ef3",
+  "twoSiteInverseRecoversEntireR1": true,
+  "wholeOriginalFileInverseExact": true,
+  "original43AnnotationsAnd294AssertionLinesExact": true,
+  "candidateMethodAndOriginalTimingCancellationTailUnchangedFromReviewedR1": true,
+  "optionalExitCodeFindingResolved": {
+    "callback": "Presence is recorded explicitly; String receives only the unwrapped Int.",
+    "returnedSummary": "Presence is a Bool; only an unwrapped Int is inserted. An absent exit code remains absent instead of a boxed Optional."
+  },
+  "sourceAndConcurrencyReview": "Retains the actual MainActor Sendable async reporter contract, scoped task-local binding and awaited inherited forwarding. No new Task, polling, join, cancellation, stop, filesystem walk or output-file reads. Actual compileAndExecute authorities and source preimage were independently read and hashed in R1 review.",
+  "outputReview": "Failure-only output; total UTF-8 line cap remains16384 including prefix/newline. Existing size/hash-only JS/source-map/error descriptions and explicit clipping/fallback remain unchanged. Fixed synthetic source bounds diagnostic-message scope.",
+  "qualifications": [
+    "Snapshots are last observed callbacks, not atomic fresh engine state.",
+    "Observation can perturb scheduling; original15s/10ms/30s/two-minute rules remain.",
+    "Old31.100s is an observed duration, not an execution budget.",
+    "No native compile/runtime/OS result is supplied by this source review."
+  ],
+  "inputIntersection": {
+    "sdk396": 0,
+    "host99": 0
+  },
+  "reviewPreparationError": "Initial read assumed R1 manifest key members; R2 uses files. The read-only KeyError is retained; actual17 files were then all verified. No candidate mutation or test execution occurred.",
+  "nativeExecuted": false,
+  "portableControlsRepeated": false,
+  "candidateEdited": false
+}

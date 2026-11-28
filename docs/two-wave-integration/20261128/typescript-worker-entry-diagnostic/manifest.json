@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "sourceCommit": "ed88f17bc4248f882ed11fb1865c2d05a2c61b77",
+  "sourceBase": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2873,
+      "sha256": "66cae8f775573759cae9251162e947bd6adf3de0548d1ad81224d86795e1ef61"
+    },
+    {
+      "path": "diagnosis-reference.json",
+      "bytes": 666,
+      "sha256": "4adaf46d109747f26405c08c1840fb2339e9c9c27b473d6421c3801f17191a6f"
+    },
+    {
+      "path": "independent-mac-review-r1.json",
+      "bytes": 3498,
+      "sha256": "f0e09a31db1c3f801e431fbae9e45c362bd06cec9eddd6a251375700e109831d"
+    },
+    {
+      "path": "independent-mac-review-r2.json",
+      "bytes": 2781,
+      "sha256": "850151c17a32630d27db60b9e510c165a09f17a135d32f00a80bdfc4b2c424d7"
+    },
+    {
+      "path": "independent-root-source-review-r2.json",
+      "bytes": 1824,
+      "sha256": "4e43f38765c453fc76bffb1c152b0f3cf1b28e1811e0658efdce690db0fe85db"
+    },
+    {
+      "path": "input-impact.json",
+      "bytes": 1264,
+      "sha256": "06ac5f770c88efa3c82d7828a496a0565f2cf82f57dada297dccb6d15794193c"
+    },
+    {
+      "path": "qualification.json",
+      "bytes": 2734,
+      "sha256": "b59f3ab449510162f60d2bcc7d45460850274c0049437086ffda713d64db4816"
+    },
+    {
+      "path": "r1-to-r2.patch.gz",
+      "bytes": 475,
+      "sha256": "e5ca1b413c82186d7a5429944ca29e2328ceb55504f1c2d5d36859933233e3a1"
+    },
+    {
+      "path": "source-validation.json",
+      "bytes": 1559,
+      "sha256": "25ee1a1114d8ba30b9045495ce745eef64a331d1e2298ae58076e7af22ceaede"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 3226,
+      "sha256": "79b4e8341a13d6299ed6a25e43c025ec0ea6ba97df8e6696196f659306de9440"
+    }
+  ],
+  "native": "NOT_RUN",
+  "testsRun": []
+}

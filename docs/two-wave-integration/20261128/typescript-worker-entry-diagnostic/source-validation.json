@@ -1,0 +1,37 @@
+{
+  "source": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "path": "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+  "preimageSHA256": "b7a9d76ca340f66e176f42c55c4e110c84e8cf2cc028c134355ab6fb9f95dcc4",
+  "candidateSHA256": "02015ecd575ff3c445d56c555636a3db7715da5668e0ee564b5d4d637b9a470b",
+  "patchSHA256": "2da570ed625d81a2bca943d708e868d81e48bbbbf6d2ad2242ef3eff82eea891",
+  "wholeFileInverse": true,
+  "inverseRule": "Remove the exact appended test-local helper and replace the exact one observed method with its original bytes.",
+  "originalTestAnnotations": 43,
+  "allOriginalTestAnnotationsExact": true,
+  "originalAssertionLines": 294,
+  "allOriginalAssertionsExact": true,
+  "originalTaskExpressions": 5,
+  "addedTasks": 0,
+  "unchangedEntryLoop": "15 seconds; 10 ms polls; exact original body",
+  "originalPromiseMilliseconds": 30000,
+  "wholeTestLimitMinutes": 2,
+  "oldActualDurationSeconds": 31.1,
+  "oldDurationIsNotDeadline": true,
+  "productionFilesChanged": [],
+  "newTestMethods": 0,
+  "sourceOnlyDiffCheck": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "native": "NOT_RUN",
+  "testsRun": [],
+  "outputCapBytesIncludingPrefixAndNewline": 16384,
+  "localDraftReview": {
+    "priorDraftSHA256": "7d7aa5e98370ae6133c61ecf72622525048770291279427b4a1d43be5dc56fc3",
+    "changes": "Before the first frozen review, made the ContinuousClock reference explicit and included the print prefix/newline inside the 16KiB output cap.",
+    "nativeOrTestsRun": false
+  },
+  "revision": "R2",
+  "r2ExactTwoSubstitutionInverseRecoversR1": true
+}

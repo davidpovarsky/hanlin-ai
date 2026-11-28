@@ -1,0 +1,11 @@
+{
+  "packet": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/typescript-worker-entry-diagnostic-3634078f",
+  "manifestSHA256": "33fccf43f5da5d27a46385024a9bb7038c7c996c9dfee17ffcdd90560e1c8413",
+  "diagnosisSHA256": "6c43d481cbdfa0fa3b6032ddee48ffb07984f4e2f89685ecc9735e7f9095483c",
+  "sourceAuthoritiesSHA256": "1112fd3c69a7d622b0c2ffc8889da0974f855e0270087425b9dfd3de3ff190fa",
+  "originalRawJobSHA256": "a0c49b474235a9fd86cfc841b101ee910c8c335c8e138d08d592710fcf29fac2",
+  "oldNativeFailureRetained": true,
+  "oldActualCompilerAndExecutionUUIDs": "NOT_RETAINED",
+  "nativeCause": "NOT_ESTABLISHED",
+  "noSourceCauseInvented": true
+}

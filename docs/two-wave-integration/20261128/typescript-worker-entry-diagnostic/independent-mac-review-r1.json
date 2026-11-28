@@ -1,0 +1,67 @@
+{
+  "status": "R1_NOT_APPROVED_OPTIONAL_EXIT_CODE_CORRECTION_REQUIRED",
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "manifestSHA256": "81c5ac02c24f890780c4ccb7d5b075547f822f18866b4759f91d287b11e60cfd",
+  "verifiedMembers": 15,
+  "verifiedBytes": 230507,
+  "candidateSHA256": "ece9305e6510d6b4adb93ee3c2dd9d044c83fb7cc9a7372b518aec1c781f781f",
+  "originalGitPreimageExact": true,
+  "wholeFileInverseExact": true,
+  "original43AnnotationsExact": true,
+  "original294AssertionLinesExact": true,
+  "allFiveTaskExpressionsRetainedNoAddedTask": true,
+  "originalEntryLoopExactAfterObservationOnlyInverse": true,
+  "originalStopReceiptAssertionAndCancellationTailExact": true,
+  "authorities": {
+    "AI_HLYTests/RuntimeAutonomyV3Tests.swift": {
+      "sha256": "b7a9d76ca340f66e176f42c55c4e110c84e8cf2cc028c134355ab6fb9f95dcc4",
+      "bytes": 93463
+    },
+    "AI_HLY/Downstream/RuntimeCore/Core/RuntimeJobStore.swift": {
+      "sha256": "45af1982217198bb8bb75f5a5a8dba8aa888aad3d1c9152154af660a0c49e142",
+      "bytes": 9933
+    },
+    "AI_HLY/Downstream/RuntimeCore/Core/RuntimeModels.swift": {
+      "sha256": "b9ea45c988129aa39bae892edc43f1e19bb007986f4fa1ba640b074a889e6283",
+      "bytes": 9678
+    },
+    "AI_HLY/Downstream/RuntimeCore/Node/TypeScriptRuntimeService.swift": {
+      "sha256": "9948d3a34a425bb64d407e80732836ea761b66f7b117950daea3698b3fb5fbcd",
+      "bytes": 6883
+    },
+    "AI_HLY/Downstream/RuntimeCore/Node/NodeRuntimeService.swift": {
+      "sha256": "ea9011913312038bf72413fb457b9d4e3d7e50f89d10b1ccc79db7f74120e24d",
+      "bytes": 52551
+    },
+    "AI_HLY/Downstream/RuntimeCore/Node/RuntimeHostConnection+Operations.swift": {
+      "sha256": "6bc736e9d927d75f1b9a30b8a2b7e925ac7a4dd4b4e2a3066ce8dd1d0b35c28d",
+      "bytes": 4324
+    },
+    "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteSkillResourceTool.swift": {
+      "sha256": "6e13d3be36d088982b1f3bb601ea6517269c4333b4df4e2b625291e154271080",
+      "bytes": 16424
+    }
+  },
+  "blockingFinding": {
+    "field": "RuntimeExecutionResult.exitCode: Int?",
+    "candidateExpression": "String(terminal.exitCode)",
+    "reason": "The added callback passes an Optional Int to the unlabeled String initializer. Explicit optional handling is required; no Apple compile has run.",
+    "alsoRequested": "Make returned-result optional exitCode insertion explicit so absence cannot become a boxed Optional JSON value."
+  },
+  "positiveReview": [
+    "Actual reporter is MainActor/Sendable/async and inherited reporter is awaited after recording every admitted callback.",
+    "The original task-local scope covers only the actual compileAndExecute call. Source allocates a compiler UUID and reuses the original request ID for execution.",
+    "Observer state is MainActor isolated; no new task, polling, joins, stop or cancellation operations are added.",
+    "Only the original entered=false branch prints, before its unchanged require.",
+    "Generated JavaScript, source maps and error descriptions are length/hash only; compiler diagnostic excerpts are bounded for the original fixed synthetic source.",
+    "Final line cap includes prefix/newline; oversized JSON is reduced then explicitly reports failure if still oversized.",
+    "Snapshots are explicitly last observed callbacks; timing perturbation and lack of fresh engine state remain qualified."
+  ],
+  "inputIntersection": {
+    "sdk396": 0,
+    "host99": 0
+  },
+  "nativeExecuted": false,
+  "portableControlsRepeated": false,
+  "candidateEdited": false
+}
