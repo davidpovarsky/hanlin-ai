@@ -527,6 +527,292 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
     }
 
 
+    func testMiniAppsMediumWidgetNativeControlsStayVisibleAcrossStateAndRotation() throws {
+        let family = "systemMedium"
+        let sizeLabel = "Medium"
+        continueAfterFailure = false
+        executionTimeAllowance = 420
+        deadline = Date().addingTimeInterval(420)
+        let orientationPreparation = try prepareWidgetFamilyInitialOrientation()
+        let prior = XCUIDevice.shared.orientation
+        let priorName = widgetFamilyOrientationName()
+        let runID = UUID().uuidString.lowercased()
+        let instanceName = "Layout-" + family + "-" + runID
+        let documents = try XCTUnwrap(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
+        let root = documents.appendingPathComponent("HanlinSystemSurfaceObservation", isDirectory: true)
+        let directory = root.appendingPathComponent(runID, isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        exchange = root; runDirectory = directory
+        record = ["schema": 1, "runID": runID, "engine": "expo", "surface": "widgetLayout",
+                  "fixtureTitle": "Interactive Widget Matrix", "instanceName": instanceName,
+                  "expectedFamily": family, "sizeLabel": sizeLabel, "priorOrientation": priorName,
+                  "status": "RUNNING", "test": name, "startedAt": widgetStateTimestamp()]
+        if let orientationPreparation { record["orientationPreparation"] = orientationPreparation }
+        var boundPlacement = false
+        var removed = false
+        var restored = false
+        defer {
+            // Only a configuration already read as this exact fresh name may
+            // be removed. An unbound placement is retained as a failed case.
+            if boundPlacement && !removed {
+                do { record["cleanup"] = try removeWidgetLayout(named: instanceName); removed = true }
+                catch { record["cleanupFailure"] = String(describing: error) }
+            }
+            if !restored {
+                XCUIDevice.shared.orientation = prior
+                if wait(25, until: { self.widgetFamilyOrientationName() == priorName && self.widgetFamilyScreenMatches(priorName) }) {
+                    record["orientationRestoration"] = widgetFamilyRestoration(priorName)
+                } else {
+                    record["restorationFailure"] = "The initial orientation was assigned but not effectively observed."
+                }
+            }
+            capture(mini, "widget-layout-final-mini")
+            capture(springboard, "widget-layout-final-system")
+            record["finishedAt"] = widgetStateTimestamp()
+            try? writeJSON(record, filename: "case.json")
+            try? checkpoint("finished")
+        }
+        do {
+            try require(priorName != "unknown", "A real initial screen orientation is required before changing it.")
+            try checkpoint("preparing")
+            mini.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+            mini.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+            mini.launch()
+            try importMatrixWidgetAndCreateInstance(named: instanceName)
+            capture(mini, "widget-layout-instance-created")
+            try checkpoint("widget-layout-instance-created")
+            let identity = try response("identity.json", timeout: 25)
+            try require(identity["status"] as? String == "READY", "The actual new family instance was not admitted.")
+            record["attemptID"] = try string(identity, "attemptID")
+            record["sourceSHA"] = try string(identity, "sourceSHA")
+            record["installedIdentity"] = identity
+
+            XCUIDevice.shared.press(.home)
+            try setWidgetFamilyOrientation("portrait")
+            try openWidgetFamilyGallery(sizeLabel: sizeLabel)
+            try checkpoint("widget-layout-arm-placement")
+            let armed = try response("placement-armed.json", timeout: 25)
+            try require(armed["status"] as? String == "READY", "The named placement was not armed before the real Add Widget action.")
+            record["placementArm"] = armed
+            let add = try widgetFamilyUnique(springboard.buttons.matching(
+                NSPredicate(format: "label MATCHES %@", "\\s*Add Widget\\s*")), "The selected gallery has no unique Add Widget action.")
+            try tap(add, "Place the actually observed family page.")
+            record["addWidgetTappedAt"] = widgetStateTimestamp()
+            record["unboundPlacementCreated"] = true
+            if springboard.buttons["Done"].firstMatch.exists { try tap(springboard.buttons["Done"].firstMatch, "Finish the actual Home Screen placement.") }
+            let placeholders = springboard.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Choose a widget instance"))
+            try require(wait(25) { self.widgetFamilyVisible(placeholders).count == 1 },
+                        "The newly added, previously absent configuration placeholder is missing or ambiguous.")
+            let placeholder = try XCTUnwrap(widgetFamilyVisible(placeholders).first)
+            record["placeholderFrame"] = widgetStateFrame(placeholder.frame)
+            capture(springboard, "widget-layout-new-placeholder")
+            placeholder.press(forDuration: 1.5)
+            try tap(springboard.buttons["Edit Widget"].firstMatch, "Configure this new physical widget.")
+            let choose = try widgetFamilyUnique(springboard.descendants(matching: .any).matching(
+                NSPredicate(format: "label == 'Choose' OR label == 'Widget instance'")), "The actual instance configuration control is unavailable.")
+            try tap(choose, "Open the original installed-instance query.")
+            let entity = try widgetFamilyUnique(springboard.descendants(matching: .any).matching(
+                NSPredicate(format: "label CONTAINS %@", instanceName)), "The fresh named instance is not offered by the actual query.")
+            try tap(entity, "Select this case's exact named variant.")
+            XCUIDevice.shared.press(.home)
+            mini.terminate()
+            try require(mini.state == .notRunning, "The host must be terminated before observing the placed family.")
+
+            let initialAt = widgetStateTimestamp()
+            let initialUptime = ProcessInfo.processInfo.systemUptime
+            let initialBinding = try confirmWidgetLayout(named: instanceName, count: 0,
+                                                        label: "widget-layout-configuration-0")
+            boundPlacement = true
+            record["unboundPlacementCreated"] = false
+            var observations = [try captureWidgetLayout(index: 0, count: 0, orientation: "portrait",
+                requestedAt: initialAt, requestedUptime: initialUptime, configuration: initialBinding)]
+            record["observations"] = observations
+            record["hostTerminated"] = mini.state == .notRunning
+            try checkpoint("widget-layout-placed")
+            let placement = try response("observation-0.json", timeout: 35)
+            try require(placement["status"] as? String == "READY", "The actual Medium placement and initial control layout were not admitted.")
+
+            var count = 0
+            var completedActionIDs: [String] = []
+            for (offset, action) in ["toggle", "add", "refresh"].enumerated() {
+                let index = offset + 1
+                let actionID = UUID().uuidString.lowercased()
+                let step: [String: Any] = ["index": index, "actionID": actionID, "action": action,
+                                           "desiredValue": action == "toggle" ? true as Any : NSNull()]
+                record["step"] = step
+                record["armConfiguration"] = try confirmWidgetLayout(named: instanceName, count: count,
+                    label: "widget-layout-arm-configuration-" + String(index))
+                record["armUI"] = try widgetLayoutObservation(count: count)
+                try checkpoint("widget-layout-arm-action")
+                let arm = try response("armed-" + String(index) + ".json", timeout: 25)
+                try require(arm["status"] as? String == "READY", "The actual control action was not armed against current native state.")
+                let elements = try widgetLayoutElements(count: count)
+                var tapObservation: [String: Any] = ["actionID": actionID, "beganAt": widgetStateTimestamp(),
+                    "beganUptime": ProcessInfo.processInfo.systemUptime]
+                if action == "toggle" {
+                    try require(elements.controls.toggle.value as? String == "0", "The original real Toggle must start false.")
+                    try tap(elements.controls.toggle, "Set the real native Widget notifications Toggle to true.")
+                } else if action == "add" {
+                    try tap(elements.controls.add, "Invoke the original native Add action.")
+                } else {
+                    try tap(elements.controls.refresh, "Invoke the original native Refresh action.")
+                }
+                tapObservation["returnedAt"] = widgetStateTimestamp()
+                tapObservation["returnedUptime"] = ProcessInfo.processInfo.systemUptime
+                record["tap"] = tapObservation
+                // The unchanged Matrix increments count for Toggle and Add.
+                // Refresh preserves values but must commit its own native nonce.
+                if action != "refresh" { count += 1 }
+                let requestedAt = widgetStateTimestamp()
+                let requestedUptime = ProcessInfo.processInfo.systemUptime
+                let configuration = try confirmWidgetLayout(named: instanceName, count: count,
+                    label: "widget-layout-configuration-" + String(index))
+                observations.append(try captureWidgetLayout(index: index, count: count, orientation: "portrait",
+                    requestedAt: requestedAt, requestedUptime: requestedUptime, configuration: configuration))
+                record["observations"] = observations
+                record["hostTerminated"] = mini.state == .notRunning
+                try checkpoint("widget-layout-applied")
+                let applied = try response("observation-" + String(index) + ".json", timeout: 35)
+                try require(applied["status"] as? String == "READY", "The actual control bounds/native revision/nonce did not qualify.")
+                completedActionIDs.append(actionID)
+                record["completedActionIDs"] = completedActionIDs
+            }
+
+            for (offset, orientation) in ["landscapeLeft", "portrait"].enumerated() {
+                let index = offset + 4
+                let requestedAt = widgetStateTimestamp()
+                let requestedUptime = ProcessInfo.processInfo.systemUptime
+                try setWidgetFamilyOrientation(orientation)
+                let configuration = try confirmWidgetLayout(named: instanceName, count: count,
+                    label: "widget-layout-configuration-" + String(index))
+                observations.append(try captureWidgetLayout(index: index, count: count, orientation: orientation,
+                    requestedAt: requestedAt, requestedUptime: requestedUptime, configuration: configuration))
+                record["observations"] = observations
+                record["hostTerminated"] = mini.state == .notRunning
+                try checkpoint("widget-layout-rotated")
+                let rotated = try response("observation-" + String(index) + ".json", timeout: 35)
+                try require(rotated["status"] as? String == "READY", "Actual rotated control/PNG geometry did not qualify.")
+            }
+            record["cleanup"] = try removeWidgetLayout(named: instanceName)
+            removed = true
+            XCUIDevice.shared.orientation = prior
+            try require(wait(25) { self.widgetFamilyOrientationName() == priorName && self.widgetFamilyScreenMatches(priorName) },
+                        "The actual initial device orientation was not restored.")
+            record["orientationRestoration"] = widgetFamilyRestoration(priorName)
+            capture(springboard, "widget-layout-restored")
+            restored = true
+            try checkpoint("widget-layout-complete")
+            let completion = try response("completion.json", timeout: 30)
+            try require(completion["status"] as? String == "EXECUTED_PASS", "Final native/source/container/cleanup qualification did not pass.")
+            record["status"] = "EXECUTED_PASS"
+        } catch {
+            record["status"] = "FAILED"; record["error"] = String(describing: error)
+            throw error
+        }
+    }
+
+    private func widgetLayoutElements(count: Int) throws
+        -> (controls: WidgetStateControls, marker: XCUIElement, window: XCUIElement) {
+        let label = "Matrix count: " + String(count)
+        let query = springboard.staticTexts.matching(NSPredicate(format: "label == %@", label))
+        try require(wait(25) { self.widgetFamilyMarkerCount() == 1 && self.widgetFamilyVisible(query).count == 1 },
+                    "A second or stale Matrix could alias this actual layout; require one visible marker.")
+        let controls = try widgetStateControls(count: count)
+        let marker = try XCTUnwrap(widgetFamilyVisible(query).first)
+        let windows = springboard.windows.containing(.staticText, identifier: label).allElementsBoundByIndex.filter {
+            $0.exists && $0.isHittable && $0.frame.width > 0 && $0.frame.height > 0
+                && springboard.frame.contains($0.frame) && $0.frame.contains(controls.container.frame)
+        }
+        try require(windows.count == 1, "The real AX hierarchy must bind this widget to one visible SpringBoard window.")
+        let window = try XCTUnwrap(windows.first)
+        try require(controls.container.frame != springboard.frame && controls.container.frame.contains(marker.frame)
+                    && mini.state == .notRunning, "The actual widget/container/host association is invalid.")
+        return (controls, marker, window)
+    }
+
+    private func widgetLayoutControl(_ element: XCUIElement, kind: String) -> [String: Any] {
+        ["kind": kind, "label": element.label, "value": element.value as? String ?? "",
+         "exists": element.exists, "hittable": element.isHittable, "enabled": element.isEnabled,
+         "frame": widgetStateFrame(element.frame)]
+    }
+
+    private func widgetLayoutObservation(count: Int) throws -> [String: Any] {
+        let elements = try widgetLayoutElements(count: count)
+        return ["visibleMatrixCount": widgetFamilyMarkerCount(), "hostTerminated": mini.state == .notRunning,
+                "orientation": widgetFamilyOrientationName(), "screenFrame": widgetStateFrame(springboard.frame),
+                "widgetFrame": widgetStateFrame(elements.controls.container.frame),
+                "window": ["owner": "com.apple.springboard", "kind": "window", "matchingWindowCount": 1,
+                           "identifier": elements.window.identifier, "exists": elements.window.exists,
+                           "hittable": elements.window.isHittable, "frame": widgetStateFrame(elements.window.frame)],
+                "controls": ["count": widgetLayoutControl(elements.marker, kind: "staticText"),
+                             "toggle": widgetLayoutControl(elements.controls.toggle, kind: "switch"),
+                             "add": widgetLayoutControl(elements.controls.add, kind: "button"),
+                             "refresh": widgetLayoutControl(elements.controls.refresh, kind: "button")]]
+    }
+
+    private func confirmWidgetLayout(named name: String, count: Int, label: String) throws -> [String: Any] {
+        let before = try widgetLayoutElements(count: count)
+        let frame = before.controls.container.frame
+        let windowFrame = before.window.frame
+        before.controls.container.press(forDuration: 1.5)
+        try tap(springboard.buttons["Edit Widget"].firstMatch, "Read this layout's exact saved named configuration.")
+        let selected = try widgetFamilyUnique(springboard.descendants(matching: .any).matching(
+            NSPredicate(format: "label CONTAINS %@ OR value CONTAINS %@", name, name)),
+            "The actual configuration does not expose this fresh named layout instance.")
+        let selectedLabel = selected.label; let value = selected.value as? String ?? ""
+        try require(selectedLabel.contains(name) || value.contains(name), "A different instance cannot qualify this layout.")
+        capture(springboard, label)
+        XCUIDevice.shared.press(.home)
+        let after = try widgetLayoutElements(count: count)
+        try require(after.controls.container.frame == frame && after.window.frame == windowFrame
+                    && mini.state == .notRunning, "Reading configuration changed the physical association or opened MiniApps.")
+        return ["instanceName": name, "label": selectedLabel, "value": value,
+                "frame": widgetStateFrame(frame), "verifiedAt": widgetStateTimestamp(),
+                "verifiedUptime": ProcessInfo.processInfo.systemUptime, "attachmentLabel": label]
+    }
+
+    private func captureWidgetLayout(index: Int, count: Int, orientation: String,
+                                     requestedAt: String, requestedUptime: TimeInterval,
+                                     configuration: [String: Any]) throws -> [String: Any] {
+        var row = try widgetLayoutObservation(count: count)
+        row["index"] = index; row["requestedOrientation"] = orientation
+        row["requestedAt"] = requestedAt; row["requestedUptime"] = requestedUptime
+        row["configuration"] = configuration
+        let label = "widget-layout-observation-" + String(index)
+        row["attachmentLabel"] = label
+        capture(springboard, label)
+        row["capturedAt"] = widgetStateTimestamp()
+        row["capturedUptime"] = ProcessInfo.processInfo.systemUptime
+        return row
+    }
+
+    private func removeWidgetLayout(named name: String) throws -> [String: Any] {
+        let markers = widgetFamilyVisible(springboard.staticTexts.matching(
+            NSPredicate(format: "label BEGINSWITH %@", "Matrix count: ")))
+        try require(markers.count == 1, "Cleanup must not choose between multiple physical Matrix widgets.")
+        let marker = try XCTUnwrap(markers.first)
+        let count = try XCTUnwrap(Int(marker.label.dropFirst("Matrix count: ".count)),
+                                 "The actual unique Matrix count is not a nonnegative integer.")
+        try require(count >= 0, "A malformed count cannot identify the owned widget for removal.")
+        let binding = try confirmWidgetLayout(named: name, count: count, label: "widget-family-cleanup-configuration")
+        let elements = try widgetLayoutElements(count: count)
+        elements.controls.container.press(forDuration: 1.5)
+        try tap(springboard.buttons["Remove Widget"].firstMatch, "Remove only this freshly verified named layout widget.")
+        let confirmation = springboard.alerts.buttons.matching(NSPredicate(format: "label == 'Remove' OR label == 'Remove Widget'"))
+        let confirm = try widgetFamilyUnique(confirmation, "The actual widget-removal confirmation is unavailable.")
+        let confirmationLabel = confirm.label
+        capture(springboard, "widget-family-remove-confirmation")
+        try tap(confirm, "Confirm the real owned-widget removal.")
+        try require(wait(25) { self.widgetFamilyMarkerCount() == 0 }, "The owned layout widget remains visible after removal.")
+        try require(mini.state == .notRunning, "Removing the widget unexpectedly opened MiniApps.")
+        capture(springboard, "widget-family-removed")
+        return ["instanceName": name, "configuration": binding, "action": "Remove Widget",
+                "confirmationLabel": confirmationLabel, "visibleMatrixCountAfter": widgetFamilyMarkerCount(),
+                "hostTerminated": mini.state == .notRunning, "removedAt": widgetStateTimestamp(),
+                "removedUptime": ProcessInfo.processInfo.systemUptime]
+    }
+
+
     func testMiniAppsSmallWidgetRetainsFamilyAndInstanceAcrossRotation() throws {
         try observeWidgetFamily("systemSmall", sizeLabel: "Small")
     }
