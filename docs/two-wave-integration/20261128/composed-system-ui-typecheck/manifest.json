@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "sourceCommit": "c8f9443dcd34015f0e7bbcdb84d36374379ca35c",
+  "payloads": [
+    {
+      "path": "README.md",
+      "bytes": 1374,
+      "sha256": "6f6c4590afc29166a21e26239a2268129e547ca4bd12d72dfd0a567b684f78c5"
+    },
+    {
+      "path": "actual-admission.json",
+      "bytes": 5619,
+      "sha256": "1c2c0e386cca43949ebbba41119f36a2fe2b6f57dabadea76595dd4e49239d16"
+    },
+    {
+      "path": "actual-receipt.json",
+      "bytes": 2337,
+      "sha256": "bd1c2f85a6e5f9e746e64e59775b4272899f44c4519852817918d8ac628c80fd"
+    },
+    {
+      "path": "actual-toolchain.json",
+      "bytes": 679,
+      "sha256": "93b89016d1d078a043b7832273cdcfcff359047a5c61c8507005a3b30a237ab0"
+    },
+    {
+      "path": "root-review.json",
+      "bytes": 2711,
+      "sha256": "9b2cbbd3e33bc38188c388a54aff9d210868d1c938f970f1de1ac3017480e2d2"
+    },
+    {
+      "path": "selected-native-manifest.json",
+      "bytes": 4135,
+      "sha256": "a638fc61d069096031972cecd911a03d619466209274183d60d8eecf74ecd2e6"
+    },
+    {
+      "path": "selected-native-proof.tar.gz",
+      "bytes": 109038,
+      "sha256": "6ee5571b1555e4686b06a9fd5f181ad33794ff91126dceb195f8f8062df99fb9"
+    }
+  ]
+}
