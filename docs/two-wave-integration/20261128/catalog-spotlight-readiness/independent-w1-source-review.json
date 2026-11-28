@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/w1_review_resume",
+  "reviewedAtUTC": "2026-11-28T04:28:20.218911+00:00",
+  "verdict": "APPROVED_SOURCE_ONLY_NATIVE_NOT_RUN",
+  "base": "4d6809376bcdd65666c1410aa2c35ddc1f27e86b",
+  "manifest": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/catalog-spotlight-readiness-4d680937/manifest-r1.json",
+    "bytes": 2490,
+    "sha256": "9b99abfc5d56af2b4b73be51ab1189d5e517991ae10a938044aed2ba7921146f"
+  },
+  "patch": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/catalog-spotlight-readiness-4d680937/candidate-r1.patch",
+    "bytes": 31043,
+    "sha256": "70222bef183169c8b91d4ec8f5e0f65c4bd93ab01210079078cff0318a809d7a"
+  },
+  "source": [
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
+      "beforeSHA256": "411e14d15044a86e6313b2c75bce1a1b29a24b0601db4938d05b57fa2a2a3bc4",
+      "afterSHA256": "1de0f3645c522a9ebe38fd94dbba7f4705ae39d368ab5a47c400768821b973ed",
+      "beforeBytes": 13148,
+      "afterBytes": 17522
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "beforeSHA256": "bfdd4be6c3e5bb28a15c43be589cb87c9ee58ce80daa794ef8fd4adf478c7b50",
+      "afterSHA256": "fef6a058c6b06838e64089933424803e66deeb30bbe9ecac1e7e24aca839fa95",
+      "beforeBytes": 187575,
+      "afterBytes": 187644
+    },
+    {
+      "path": "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests.swift",
+      "beforeSHA256": "1fab9f68f93dc039eac8056ece59c324c6be50b00cdd462a3f569e557707bec2",
+      "afterSHA256": "92eeb439bd1682a607cb45ebfbffd89e43d3b8bc70ef6dbb4d7e3d8feec35f89",
+      "beforeBytes": 23843,
+      "afterBytes": 38617
+    }
+  ],
+  "mechanical": {
+    "manifestMembers": 13,
+    "allMemberLengthsAndSHA256Verified": true,
+    "allPatchHunksAndOutsideSpansVerified": [
+      {
+        "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
+        "hunks": 7,
+        "allBeforeAfterHunksAndUnchangedSpansExact": true
+      },
+      {
+        "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+        "hunks": 1,
+        "allBeforeAfterHunksAndUnchangedSpansExact": true
+      },
+      {
+        "path": "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests.swift",
+        "hunks": 1,
+        "allBeforeAfterHunksAndUnchangedSpansExact": true
+      }
+    ],
+    "gzipPatchLossless": true,
+    "platformOnePredicateWholeByteInverse": true,
+    "testInsertionWholeByteInverse": true,
+    "originalMethods": 9,
+    "addedMethods": 6,
+    "originalMethodBodiesAssertionsHelpersDeadlinesExact": true,
+    "unchangedAuthoritiesReadFromExactBase": [
+      {
+        "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift",
+        "bytes": 15879,
+        "sha256": "b5c85cdbef728883979b16785fac3b1acce0c839966046f352ef0d6cb22cc5c7",
+        "unchangedFromC990": true
+      },
+      {
+        "path": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
+        "bytes": 10013,
+        "sha256": "416b7a39e1a2ccd11c2761639ace808d731edd5ec25b6725e69ed1cd9ce3bd67",
+        "unchangedFromC990": true
+      },
+      {
+        "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+        "bytes": 8150,
+        "sha256": "30c9f16a73a7a485ec6dffbb5fc4eaebb62182ba0c84ac09eee8473d64d47028",
+        "unchangedFromC990": true
+      },
+      {
+        "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift",
+        "bytes": 10883,
+        "sha256": "c1a226e995240acf6c200faf15d10cbcb391c0b702f6bc3e77bc25842494a83b",
+        "unchangedFromC990": true
+      },
+      {
+        "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemCatalog.swift",
+        "bytes": 5208,
+        "sha256": "2d98c0ad4f27a1da489a2a4ea295e42450e3c083b8e07bb5a617ed5d9da0290a",
+        "unchangedFromC990": true
+      }
+    ],
+    "sdkInputMeasurement": {
+      "manifest": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/final-sdk-700664fd-pass/sdk/current-miniapp-sdk.json",
+        "sha256": "4819de6f518a2b9ea1c6e3c80a3567dbf46ef0ec886e883be162bb77766be480"
+      },
+      "sourceInputShape": "list",
+      "sourceInputCount": 396,
+      "intersection": [
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift"
+      ]
+    }
+  },
+  "sourceFindings": [
+    "The retained worker is MainActor-isolated and registered before the publication caller can suspend. Reentrant publication updates current records and a single pending flag; only one worker loop is owned at a time.",
+    "The original caller/Capture reconciliation loop still awaits the same default Capture coordinator. Capture, provider, entity callback, presentation and catalog files remain byte-identical; only Spotlight completion leaves catalog readiness.",
+    "The previous-write Task chain continues to serialize actual delete/index operations. Each active or queued write increments ownership before suspension and releases it on success or thrown failure.",
+    "The previous success cache is invalidated immediately before the actual possibly partial write and committed only on success inside its serialized Task. A late older caller cannot overwrite a newer committed cache.",
+    "The explicit reindex callback still awaits and propagates actual operation failure. If the published desired records advance while it waits, it serializes and completes the then-current records before returning.",
+    "The transfer predicate counts the original Capture owner, retained worker and active/queued writes, not the retained completed tail. Entry points reject new work during transfer. Source inspection confirms receive/rollback end transfer before their final refresh publication.",
+    "Default dependencies preserve actual Bundle identity, the existing named product index, the shared Platform transfer state, real CoreSpotlight calls and shared Capture coordinator. Alternate dependencies occur only in the six new tests.",
+    "All six additive tests use the existing real installed-package/catalog fixture and controlled async gates. They distinguish Capture readiness from held index acknowledgment, first/latest coalescing, failed partial writes/cache repair, visible worker errors/no autonomous retry, explicit latest acknowledgment, and pending-work/transfer guards.",
+    "Each new held test gate is one-shot and released in defer. The explicit test also awaits its own reindex Task. The internal drain waits only the retained reconciliation worker; it does not independently promise to join unrelated explicit callers."
+  ],
+  "controlAndNativeExecution": {
+    "reviewerRanPortableControls": false,
+    "reviewerRanSwift": false,
+    "reviewerRanSimulatorOrOS": false,
+    "candidateCompiledOrExecutedInThisReview": false
+  },
+  "scopeLimits": [
+    "The controlled tests replace the index operation; actual CoreSpotlight, catalog, Capture and transfer behavior still require the original Apple gate.",
+    "The new transfer test checks the ownership predicate and transfer-active rejection; actual Platform product transfer execution is not claimed from that controlled fixture.",
+    "Existing explicit reindex calls still propagate errors to their caller; this review does not add a claim that explicit calls independently rewrite the worker's UI spotlightError field.",
+    "A genuinely pending OS operation remains owned and keeps transfer busy. No timeout, forced cancellation, OS success fabrication or proven callback-cycle repair is claimed.",
+    "Only two of the accepted 396 SDK inputs change. Package native619 is not re-executed or promoted to this app behavior by this review."
+  ],
+  "requestedNativeCoverage": {
+    "existingWholeSuite": "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests",
+    "original90RequestSelectsWholeSuite": true,
+    "expectedSourceDefinitionsAfterIntegration": 15
+  }
+}

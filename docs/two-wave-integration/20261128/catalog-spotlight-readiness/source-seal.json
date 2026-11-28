@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "baseCommit": "4d6809376bcdd65666c1410aa2c35ddc1f27e86b",
+  "sourceCommit": "2e1909d61c1ca31e8783c97dd694156c518883db",
+  "status": "REVIEWED_SEALED_SOURCE_NATIVE_NOT_RUN",
+  "source": [
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
+      "sha256": "1de0f3645c522a9ebe38fd94dbba7f4705ae39d368ab5a47c400768821b973ed",
+      "bytes": 17522,
+      "actualGitObjectVerified": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "sha256": "fef6a058c6b06838e64089933424803e66deeb30bbe9ecac1e7e24aca839fa95",
+      "bytes": 187644,
+      "actualGitObjectVerified": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests.swift",
+      "sha256": "92eeb439bd1682a607cb45ebfbffd89e43d3b8bc70ef6dbb4d7e3d8feec35f89",
+      "bytes": 38617,
+      "actualGitObjectVerified": true
+    }
+  ],
+  "patchSHA256": "70222bef183169c8b91d4ec8f5e0f65c4bd93ab01210079078cff0318a809d7a",
+  "sourceReviewPacketManifestSHA256": "9b99abfc5d56af2b4b73be51ab1189d5e517991ae10a938044aed2ba7921146f",
+  "independentReviewSHA256": "424c3c6a3ddf74ef0506360d6dff1e83dc240dccc4e6dc7aa486f5816c205faa",
+  "rootReviewSHA256": "66e5834f97afe76fde09eac08e51f26aa5767342b92d1f0595d2bcd422d717ae",
+  "originalMethods": 9,
+  "additiveMethods": 6,
+  "sourceAndTestsExecuted": false,
+  "sourceCommitReceiptSHA256": "f1f5645c3d60f69aaf63e50faa5bf2b43dc47bc8af6f3fc2e3c3dca6c69586c3"
+}
