@@ -2086,11 +2086,14 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
 
         // The observed manual editor calls its action search simply "Search".
         // Bind it to this new/recorded shortcut, never the All Shortcuts library.
-        let newName = "New Shortcut(?: [1-9][0-9]*)?"
+        // Admit only the exact leading title decoration retained in the owned AX.
+        let titleDecoration = "\u{200C}\u{2009}      \u{2009}\u{200C}"
+        let newName = "(?:" + titleDecoration + ")?New Shortcut(?: [1-9][0-9]*)?"
         let savedName = record["savedShortcutName"] as? String ?? ""
+        let savedPattern = "(?:" + titleDecoration + ")?" + NSRegularExpression.escapedPattern(for: savedName)
         let editorBars = shortcuts.navigationBars.matching(NSPredicate(
-            format: "identifier MATCHES %@ OR label MATCHES %@ OR (%@ != '' AND (identifier == %@ OR label == %@))",
-            newName, newName, savedName, savedName, savedName
+            format: "identifier MATCHES %@ OR label MATCHES %@ OR (%@ != '' AND (identifier MATCHES %@ OR label MATCHES %@))",
+            newName, newName, savedName, savedPattern, savedPattern
         )).allElementsBoundByIndex.filter { bar in
             guard bar.exists else { return false }
             let frame = bar.frame
