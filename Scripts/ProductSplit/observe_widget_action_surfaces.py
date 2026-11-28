@@ -379,7 +379,9 @@ def observe_case(args, request, directory, evidence, seen, inputs, apps):
     anchor["installedRecord"] = catalog["value"]["packages"][
         anchor["identity"]["installedPackageID"]]["record"]
     commands = common.queue_documents(roots["extensions"])
-    proofs = common.proof_documents(roots["data"], request["fixtureAppID"])
+    proofs = common.proof_documents(roots["data"], request["fixtureAppID"],
+                                    expo_installed_package_id=anchor["identity"]["installedPackageID"]
+                                    if request["engine"] == "expo" else None)
     publication = widget_publication(request, roots, anchor, fixture)
     if case is None:
         source = installed_fixture(request, roots, anchor, catalog, inputs)

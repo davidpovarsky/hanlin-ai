@@ -822,6 +822,38 @@ def system_surface_inputs(surface_inputs):
             "bytes": len(data), "value": value}, resources
 
 
+def system_surface_share_installed_record(data_root, request):
+    """Read the exact enabled installation named by the observed Share request."""
+    from observe_shortcut_surfaces import read_document, require
+    identity = request.get("installedIdentity")
+    require(isinstance(identity, dict)
+            and set(identity) == {"installedPackageID", "packageID", "generation", "entrypointID", "variantID"},
+            "Unknown bound Share installation identity")
+    installed_id = identity["installedPackageID"]
+    require(type(installed_id) is str and installed_id not in ("", ".", "..")
+            and "/" not in installed_id and "\\" not in installed_id and "\0" not in installed_id
+            and identity["packageID"] == request["appID"]
+            and type(identity["generation"]) is int and identity["generation"] > 0
+            and identity["entrypointID"] == "surface-share" and identity["variantID"] == "default",
+            "The Share input request does not name its current installed generation")
+    path = data_root / "Library" / "Application Support" / "Hanlin" / "ScriptingPlatform" / "Installed" / "registry" / "catalog.json"
+    catalog = read_document(path, data_root)["value"]
+    require(type(catalog.get("schemaVersion")) is int and catalog["schemaVersion"] == 1
+            and type(catalog.get("revision")) is int and isinstance(catalog.get("packages"), dict),
+            "The Share input catalog has an unknown schema")
+    entry = catalog["packages"].get(installed_id)
+    require(isinstance(entry, dict) and entry.get("enabled") is True,
+            "The bound Share installation is missing or disabled")
+    record = entry.get("record")
+    require(isinstance(record, dict) and type(record.get("schemaVersion")) is int
+            and record["schemaVersion"] == 1 and record.get("installedPackageID") == installed_id
+            and record.get("packageID") == identity["packageID"]
+            and type(record.get("activeGeneration")) is int
+            and record["activeGeneration"] == identity["generation"],
+            "The bound Share installation or generation changed")
+    return record
+
+
 def stage_system_surface_share_input(request_path, inputs, resolve_data, stopping=lambda: False):
     """Create only ordinary Files inputs after the actual UI-prepared challenge.
 
@@ -852,7 +884,7 @@ def stage_system_surface_share_input(request_path, inputs, resolve_data, stoppin
     require(document["bytes"] <= 65536, "The ordinary input request exceeds its bound")
     request = document["value"]
     fields = {"schema", "runID", "engine", "appID", "seed", "challenge",
-              "preparedProofSHA256", "dataContainer", "startedAt"}
+              "preparedProofSHA256", "dataContainer", "startedAt", "installedIdentity"}
     require(isinstance(request, dict) and set(request) == fields
             and type(request.get("schema")) is int and request["schema"] == 1,
             "Unknown ordinary Share input request")
@@ -879,9 +911,12 @@ def stage_system_surface_share_input(request_path, inputs, resolve_data, stoppin
     documents = declared / "Documents"
     require(documents.is_dir() and not documents.is_symlink(),
             "Use only the actual MiniApps Documents directory")
+    installed_record = system_surface_share_installed_record(declared, request)
     prepared = prepared_proof(
         {"fixtureAppID": request["appID"], "challenge": request["challenge"], "baselineCounter": 0},
-        proof_documents(declared, request["appID"]))
+        proof_documents(declared, request["appID"],
+            expo_installed_package_id=request["installedIdentity"]["installedPackageID"]
+            if engine == "expo" else None))
     require(prepared["sha256"] == request["preparedProofSHA256"],
             "The private UI preparation changed before ordinary input staging")
     require(not stopping(), "Input staging stopped before writing ordinary files")
@@ -915,9 +950,13 @@ def stage_system_surface_share_input(request_path, inputs, resolve_data, stoppin
     current_data = Path(resolve_data())
     require(not current_data.is_symlink() and current_data.resolve(strict=True) == declared,
             "The actual product container changed during ordinary input staging")
+    require(system_surface_share_installed_record(declared, request) == installed_record,
+            "The bound Share installation changed during ordinary input staging")
     current = prepared_proof(
         {"fixtureAppID": request["appID"], "challenge": request["challenge"], "baselineCounter": 0},
-        proof_documents(declared, request["appID"]))
+        proof_documents(declared, request["appID"],
+            expo_installed_package_id=request["installedIdentity"]["installedPackageID"]
+            if engine == "expo" else None))
     require(current["sha256"] == prepared["sha256"]
             and read_document(request_path, evidence)["sha256"] == document["sha256"],
             "The preparation/request changed during ordinary input staging")

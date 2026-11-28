@@ -138,7 +138,12 @@ def validate_launches(request, require_all=False):
     return {row["token"]: row for row in launches}
 
 
-def journal_documents(data_root, app_id):
+def journal_documents(data_root, app_id, *, expo_installed_package_id=None):
+    if expo_installed_package_id is not None:
+        paths = sorted(original.expo_state_directory(data_root, expo_installed_package_id)
+                       .glob("surface-invocation-*.json"))
+        require(len(paths) <= 512, "The authored journal inventory exceeds this bounded pilot")
+        return [original.read_document(path, data_root) for path in paths]
     base = data_root / "Library" / "Application Support" / "Hanlin" / "MiniApps" / app_id
     paths = sorted((base / "State").glob("surface-invocation-*.json"))
     windows = base / "Windows"

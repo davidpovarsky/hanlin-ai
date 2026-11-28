@@ -58,13 +58,22 @@ class OriginalSystemInputProducerTests(unittest.TestCase):
         run_id = str(uuid.uuid4())
         app_id = "hanlin.surface." + engine
         challenge = "actual-prepared-123"
-        proof = self.data / "Library/Application Support/Hanlin/MiniApps" / app_id / "State/surface-proof.json"
+        identity = {"installedPackageID": "installed-" + engine, "packageID": app_id,
+                    "generation": 7, "entrypointID": "surface-share", "variantID": "default"}
+        catalog = {"schemaVersion": 1, "revision": 1, "packages": {
+            identity["installedPackageID"]: {"enabled": True, "record": {
+                "schemaVersion": 1, "installedPackageID": identity["installedPackageID"],
+                "packageID": app_id, "activeGeneration": identity["generation"]}}}}
+        write_json(self.data / "Library/Application Support/Hanlin/ScriptingPlatform/Installed/registry/catalog.json", catalog)
+        proof = (self.data / "Library/Application Support/HanlinPackages" /
+                 identity["installedPackageID"] / "State/surface-proof.json") if engine == "expo" else (
+                 self.data / "Library/Application Support/Hanlin/MiniApps" / app_id / "State/surface-proof.json")
         sha = write_json(proof, {"schemaVersion": 1, "appID": app_id,
                                 "challenge": challenge, "counter": 0, "lastResult": None})
         value = {"schema": 1, "runID": run_id, "engine": engine, "appID": app_id,
                  "seed": self.inputs["value"]["seed"], "challenge": challenge,
                  "preparedProofSHA256": sha, "dataContainer": str(self.data),
-                 "startedAt": "2026-11-27T05:00:00.123456+00:00"}
+                 "startedAt": "2026-11-27T05:00:00.123456+00:00", "installedIdentity": identity}
         path = self.evidence / "shortcut-observer" / run_id / "share-input-request.json"
         write_json(path, value)
         return path, value, proof
@@ -213,6 +222,77 @@ class OriginalSystemInputProducerTests(unittest.TestCase):
             self.assertIn(page["text"].encode("utf-8"), body)
             self.assertEqual(page["url"], "http://localhost:49173" + route)
         self.assertFalse(Path(actual["value"]["transportLog"]).exists())
+
+
+    def test_request_installation_identity_and_generation_cannot_be_rebound(self):
+        for mutation in ("missing", "other-id", "other-app", "generation", "bool-generation",
+                         "traversal", "absolute", "entrypoint", "variant", "extra"):
+            with self.subTest(mutation=mutation):
+                path, value, proof = self.request()
+                before = proof.read_bytes()
+                identity = value["installedIdentity"]
+                if mutation == "missing": del value["installedIdentity"]
+                if mutation == "other-id": identity["installedPackageID"] = "uninstalled-sibling"
+                if mutation == "other-app": identity["packageID"] = "hanlin.surface.nativescript"
+                if mutation == "generation": identity["generation"] += 1
+                if mutation == "bool-generation": identity["generation"] = True
+                if mutation == "traversal": identity["installedPackageID"] = "../installed-expo"
+                if mutation == "absolute": identity["installedPackageID"] = str(self.data)
+                if mutation == "entrypoint": identity["entrypointID"] = "surface-translation"
+                if mutation == "variant": identity["variantID"] = "other"
+                if mutation == "extra": identity["unexpected"] = "unbound"
+                write_json(path, value)
+                with self.assertRaises(common.ObservationError):
+                    runner.stage_system_surface_share_input(path, self.inputs, lambda: self.data)
+                self.assertFalse(self.response_path(value).exists())
+                self.assertFalse((self.data / "Documents" / ("HanlinSurfaceInputs-" + value["runID"])).exists())
+                self.assertEqual(proof.read_bytes(), before)
+
+    def test_catalog_identity_is_revalidated_before_and_after_input_writes(self):
+        catalog_path = self.data / "Library/Application Support/Hanlin/ScriptingPlatform/Installed/registry/catalog.json"
+        for boundary in (1, 2):
+            for mutation in ("missing", "disabled", "id", "app", "generation", "bool-generation"):
+                with self.subTest(boundary=boundary, mutation=mutation):
+                    path, value, proof = self.request()
+                    before = proof.read_bytes()
+                    calls = []
+                    def resolve():
+                        calls.append(True)
+                        if len(calls) == boundary:
+                            catalog = json.loads(catalog_path.read_text())
+                            installed_id = value["installedIdentity"]["installedPackageID"]
+                            entry = catalog["packages"][installed_id]
+                            if mutation == "missing": del catalog["packages"][installed_id]
+                            if mutation == "disabled": entry["enabled"] = False
+                            if mutation == "id": entry["record"]["installedPackageID"] = "other"
+                            if mutation == "app": entry["record"]["packageID"] = "other"
+                            if mutation == "generation": entry["record"]["activeGeneration"] += 1
+                            if mutation == "bool-generation": entry["record"]["activeGeneration"] = True
+                            write_json(catalog_path, catalog)
+                        return self.data
+                    with self.assertRaises(common.ObservationError):
+                        runner.stage_system_surface_share_input(path, self.inputs, resolve)
+                    self.assertEqual(len(calls), boundary)
+                    self.assertFalse(self.response_path(value).exists())
+                    if boundary == 1:
+                        self.assertFalse((self.data / "Documents" / ("HanlinSurfaceInputs-" + value["runID"])).exists())
+                    self.assertEqual(proof.read_bytes(), before)
+
+    def test_enabled_sibling_package_proof_cannot_replace_the_bound_installation(self):
+        path, value, proof = self.request()
+        sibling = self.data / "Library/Application Support/HanlinPackages/installed-sibling/State/surface-proof.json"
+        sibling.parent.mkdir(parents=True)
+        proof.rename(sibling)
+        catalog_path = self.data / "Library/Application Support/Hanlin/ScriptingPlatform/Installed/registry/catalog.json"
+        catalog = json.loads(catalog_path.read_text())
+        sibling_entry = copy.deepcopy(catalog["packages"][value["installedIdentity"]["installedPackageID"]])
+        sibling_entry["record"]["installedPackageID"] = "installed-sibling"
+        catalog["packages"]["installed-sibling"] = sibling_entry
+        write_json(catalog_path, catalog)
+        with self.assertRaises(common.ObservationError):
+            runner.stage_system_surface_share_input(path, self.inputs, lambda: self.data)
+        self.assertFalse(self.response_path(value).exists())
+        self.assertFalse(list((self.data / "Documents").iterdir()))
 
 
 if __name__ == "__main__":

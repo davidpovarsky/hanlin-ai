@@ -276,7 +276,8 @@ def share_producer_request(request, case, value, evidence):
     result = {"schema": 1, "runID": request["runID"], "engine": request["engine"],
               "appID": request["fixtureAppID"], "seed": value["seed"],
               "challenge": request["challenge"], "preparedProofSHA256": case["prepared"]["sha256"],
-              "dataContainer": str(case["roots"]["data"]), "startedAt": request["startedAt"]}
+              "dataContainer": str(case["roots"]["data"]), "startedAt": request["startedAt"],
+              "installedIdentity": case["facts"]["identity"]}
     path = case["output"] / "share-input-request.json"
     require(not path.exists() and not path.is_symlink(), "A Share producer request must not be overwritten")
     temporary = case["output"] / "share-input-request.json.observer-tmp"
@@ -525,7 +526,10 @@ def observe_case(args, request, directory, evidence, seen, inputs, apps):
         require(binding["authorManifest"].get("hanlinAppID") == request["fixtureAppID"]
                 and binding["authorManifest"].get("hanlinRuntime") == "hanlin-" + request["engine"],
                 "The actual produced archive belongs to another authored fixture")
-        prepared = shared.prepared_proof(request, shared.proof_documents(roots["data"], request["fixtureAppID"]))
+        prepared = shared.prepared_proof(request, shared.proof_documents(
+            roots["data"], request["fixtureAppID"],
+            expo_installed_package_id=facts["identity"]["installedPackageID"]
+            if request["engine"] == "expo" else None))
         output = evidence / run_id
         output.mkdir(exist_ok=False)
         case = {"kind": "originalShareTranslation", "directory": str(directory),
@@ -600,7 +604,9 @@ def observe_case(args, request, directory, evidence, seen, inputs, apps):
         transport = translation_transport(request, case, value, input_root)
         payload = {"query": transport["input"]["text"], "source": "translationUI"}
     result = terminal_result(request, case, shared.queue_documents(roots["extensions"]),
-                             shared.proof_documents(roots["data"], request["fixtureAppID"]), payload, batch)
+                             shared.proof_documents(roots["data"], request["fixtureAppID"],
+                                 expo_installed_package_id=current["identity"]["installedPackageID"]
+                                 if request["engine"] == "expo" else None), payload, batch)
     if result is None:
         return
     # Resolve MCM and current source again at the final boundary. No stale root

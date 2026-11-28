@@ -279,7 +279,23 @@ def queue_documents(root):
     return found
 
 
-def proof_documents(data_root, app_id):
+def expo_state_directory(data_root, installed_package_id):
+    """Exact private file scope of the current installed Expo host context."""
+    require(type(installed_package_id) is str and installed_package_id not in ("", ".", "..")
+            and "/" not in installed_package_id and "\\" not in installed_package_id
+            and "\0" not in installed_package_id, "Invalid bound Expo installation path component")
+    path = Path(data_root)
+    require(path.is_absolute() and not path.is_symlink(), "Invalid actual private data root")
+    for component in ("Library", "Application Support", "HanlinPackages", installed_package_id, "State"):
+        path = path / component
+        require(not path.is_symlink(), "Package state storage is a symbolic link")
+    return path
+
+
+def proof_documents(data_root, app_id, *, expo_installed_package_id=None):
+    if expo_installed_package_id is not None:
+        path = expo_state_directory(data_root, expo_installed_package_id) / "surface-proof.json"
+        return [read_document(path, data_root)] if path.exists() else []
     base = data_root / "Library" / "Application Support" / "Hanlin" / "MiniApps" / app_id
     paths = [base / "State" / "surface-proof.json"]
     windows = base / "Windows"
@@ -1042,7 +1058,9 @@ def observe(args, stopping=lambda: False):
             identity["installedRecord"] = catalog["value"]["packages"][
                 identity["identity"]["installedPackageID"]]["record"]
             commands = queue_documents(roots["extensions"])
-            proofs = proof_documents(roots["data"], request["fixtureAppID"])
+            proofs = proof_documents(roots["data"], request["fixtureAppID"],
+                                     expo_installed_package_id=identity["identity"]["installedPackageID"]
+                                     if request["engine"] == "expo" else None)
             if case is None:
                 require(request.get("phase") == "prepared",
                         "Observer must bind the actual preparation before a system action")

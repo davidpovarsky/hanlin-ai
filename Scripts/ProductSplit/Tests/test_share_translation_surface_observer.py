@@ -328,7 +328,9 @@ class ShareTranslationObserverTests(unittest.TestCase):
             req = request("nativescript"); seed = str(uuid.uuid4()); output = evidence / req["runID"]; output.mkdir()
             response_root = evidence / "responses"; response_root.mkdir()
             value = {"seed": seed, "shareInputProducer": {"requestRoot": str(evidence), "responseRoot": str(response_root)}}
-            case = {"prepared": {"sha256": "a" * 64}, "roots": {"data": data}, "output": output}
+            case = {"prepared": {"sha256": "a" * 64}, "roots": {"data": data}, "output": output,
+                    "facts": {"identity": {"installedPackageID": "installed-test", "packageID": req["fixtureAppID"],
+                                           "generation": 7, "entrypointID": "surface-share", "variantID": "default"}}}
             case["producerRequest"] = observer.share_producer_request(req, case, value, evidence)
             expected = observer.expected_share_files(req, seed)
             folder = "HanlinSurfaceInputs-" + req["runID"]
@@ -349,7 +351,9 @@ class ShareTranslationObserverTests(unittest.TestCase):
     def test_polled_share_request_is_published_only_after_complete_atomic_write(self):
         with tempfile.TemporaryDirectory() as temporary:
             evidence = Path(temporary); req = request("nativescript"); output = evidence / req["runID"]; output.mkdir()
-            case = {"prepared": {"sha256": "a" * 64}, "roots": {"data": Path("/actual/data")}, "output": output}
+            case = {"prepared": {"sha256": "a" * 64}, "roots": {"data": Path("/actual/data")}, "output": output,
+                    "facts": {"identity": {"installedPackageID": "installed-test", "packageID": req["fixtureAppID"],
+                                           "generation": 7, "entrypointID": "surface-share", "variantID": "default"}}}
             value = {"seed": str(uuid.uuid4()), "shareInputProducer": {"requestRoot": str(evidence)}}
             original_replace = os.replace
             observed = []
@@ -358,7 +362,7 @@ class ShareTranslationObserverTests(unittest.TestCase):
                 self.assertFalse(destination.exists(), "Producer must never see a partial JSON document")
                 complete = common.parse_json(source.read_bytes())
                 self.assertEqual(complete["challenge"], req["challenge"])
-                self.assertEqual(len(complete), 9)
+                self.assertEqual(len(complete), 10)
                 observed.append(complete)
                 return original_replace(source, destination)
             with patch.object(observer.os, "replace", side_effect=publish):

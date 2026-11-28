@@ -511,7 +511,10 @@ def observe(args, stopping=lambda: False):
                 roots = shared.product_roots(args.device, args.bundle_id)
                 verify_current(args, roots, admitted["value"])
                 identity, source = facts(request, roots, admitted["value"], evidence)
-                prepared = shared.prepared_proof(request, shared.proof_documents(roots["data"], request["fixtureAppID"]))
+                prepared = shared.prepared_proof(request, shared.proof_documents(
+                    roots["data"], request["fixtureAppID"],
+                    expo_installed_package_id=identity["identity"]["installedPackageID"]
+                    if request["engine"] == "expo" else None))
                 process = process_observation(args, request, roots)
                 folder = evidence / run_id; folder.mkdir(exist_ok=False)
                 case = {"roots": roots, "identity": identity, "source": source, "prepared": prepared,
@@ -536,7 +539,9 @@ def observe(args, stopping=lambda: False):
             if not validate_saved_launch(request):
                 time.sleep(0.5); continue
             row = collect(request, case["identity"], case["baseline"], shared.queue_documents(roots["extensions"]),
-                          concurrency.journal_documents(roots["data"], request["fixtureAppID"]))
+                          concurrency.journal_documents(roots["data"], request["fixtureAppID"],
+                              expo_installed_package_id=case["identity"]["identity"]["installedPackageID"]
+                              if request["engine"] == "expo" else None))
             if row is None:
                 time.sleep(0.5); continue
             require(row["command"]["value"]["createdAt"] >= shared._epoch_milliseconds(request["launch"]["requestedAt"]),
