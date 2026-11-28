@@ -1,0 +1,137 @@
+{
+  "base": "34dc92c16b37c7e14453e86f25f14d8e5063556a",
+  "candidateManifestSHA256": "5748d4ccc60c237e0e088efef79ae0b30418be35bae57dff5f8e5bfbe7dd1567",
+  "diffCheck": {
+    "exit": 0,
+    "stderr": "",
+    "stdout": ""
+  },
+  "files": {
+    "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift": {
+      "bytes": 32842,
+      "sha256": "84f13725a823e11c473b97c62a807858c6acb5fb03370ecb750f8bcab3a72dd2"
+    },
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests.swift": {
+      "bytes": 16869,
+      "sha256": "35f2f46958ede390460b2811220a4ec0c1fdff3a80a57d6c937e53093c4e85c3"
+    }
+  },
+  "frozenInputsAndOriginalPaths": {
+    "Packages/HanlinPlatform/Fixtures/ImportRegressions/SurfaceExpo-39006.hanlinExpo": {
+      "bytes": 2018717,
+      "sha256": "dae2e23187170548f197f532a991aa26fc3fca1f394613499d2e24696f7199ed",
+      "unchanged": true
+    },
+    "Packages/HanlinPlatform/Fixtures/ImportRegressions/SurfaceNativeScript-39006.hanlinNativeScript": {
+      "bytes": 33751,
+      "sha256": "3441747a86120c936135f6a472be1a8e029f1b3480ea020a484585d25225d4b3",
+      "unchanged": true
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptingBundler.swift": {
+      "bytes": 22741,
+      "sha256": "307afa1ce693a21d812686f7aae776eab452437a55aa29d28c44f0042ddc37ae",
+      "unchanged": true
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift": {
+      "bytes": 26538,
+      "sha256": "fa62de1025c7ae06406794e9c397e3f64ed0e32a8fb0fc3584e43fa2e28bd066",
+      "unchanged": true
+    },
+    "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/prepare-widget.js": {
+      "bytes": 11782,
+      "sha256": "5053e0587036008a1ae85d24b4d469271d5f6c880e1a1244e752ec436b32813c",
+      "unchanged": true
+    },
+    "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinRetainedExpoWidgetArtifactTests.swift": {
+      "bytes": 8903,
+      "sha256": "52907705daa74d07c31e9c71a59e697ff6dd97666f96825da6ad703479b5aefa",
+      "unchanged": true
+    },
+    "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinRetainedSurfaceImportTests.swift": {
+      "bytes": 5120,
+      "sha256": "fd74bce046b8801ebc0d1c0ebefd533d9050375c895e80ba49ebe0889631bec4",
+      "unchanged": true
+    },
+    "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json": {
+      "bytes": 255664,
+      "sha256": "9f734715989941ac4cdb8bfdb3196b5f36cce4d06ffadcf9aa645b9589516cc9",
+      "unchanged": true
+    }
+  },
+  "insertionSHA256": "76004816d1dd34a5425d541b4d0a964cdf20e3ddfaa68388a07c312d8bbca06f",
+  "limitations": [
+    "Inventory integrity and canonical producer relations are not publisher authentication.",
+    "Only visible inventories are complete/rehashed; original hidden-file enumeration is unchanged.",
+    "Unknown native outputs and dependencies remain in original Widget input; no arbitrary app-directory or extension deletion.",
+    "Source-map ownership requires a canonical output path and retained source bytes, not map names or compiledHashes alone.",
+    "No new native compile/GREEN, application installation, hosted UI or SDK qualification is claimed.",
+    "The Expo retained discriminator isolates Widget preparation/writing, not current native version admission."
+  ],
+  "nativeRed": {
+    "expoProgramBytes": 8997211,
+    "failures": 2,
+    "issues": 3,
+    "manifestSHA256": "fa55594b20cd341b6a22253c95796e863b67c3b9e9e6a322cdf467135069e4b7",
+    "nativeLogSHA256": "aa269ad8fb90852490100d717a75012ecb8573f282a5838231bbd69204c1f926",
+    "reconciliationSHA256": "120ebdf9fbf310bfa25223675413c94edf923238c6dadc0c35cb9fc157c4b402",
+    "tests": 2,
+    "verifiedMembers": 21
+  },
+  "newMethodCount": 8,
+  "newMethods": [
+    "mixedNativeWidgetKeepsDynamicImportsAndResourceAliases",
+    "compiledInventoryDoesNotHideUnrecognizedPublishedHelpers",
+    "configuredDebuggerSourceRootDoesNotChangeOwnership",
+    "declaredSharedModuleAndMapOverrideForegroundPairClassification",
+    "incompleteOrChangedVisibleInventoriesFailClosed",
+    "escapingChangedAndAmbiguousResourceCopiesFailClosed",
+    "explicitlySharedLargeResourceStillHitsOriginalArtifactLimit",
+    "bundleOnlyAndUnrecognizedAuthoringKeepOriginalInputs"
+  ],
+  "newNativeExecution": "NOT_RUN",
+  "originalCompilerSHA256": "e9d0ff9247fa5673803d643c80bd5f6a7ce612f39b638292a209cde2ccf19c8f",
+  "originalCompilerWholeFileInverse": true,
+  "originalSourceValidationSHA256": "56dfe4a776f26fd45a87346de4ee130107f4909835071641a8e729cda9d7a075",
+  "patchSHA256": "3b2ea44985b0ca72b89778db495c307a93c3f582fd294fa4236c96c54d01e753",
+  "portableRuntimeExecution": "NOT_RUN",
+  "rawPatches": {
+    "source-r1-to-r2.patch.gz": {
+      "encoding": "gzip, lossless, mtime=0",
+      "gzipBytes": 1942,
+      "gzipSHA256": "85e91f913eb8e986e40196d50a4ef8e683db459c90ba6bf60d998c4a1205b900",
+      "rawBytes": 7208,
+      "rawSHA256": "630cf88a373c41ed92b36f8d7ee4eee7336bc8b12e836cc99ee40460c75e248b"
+    },
+    "source-r2.patch.gz": {
+      "encoding": "gzip, lossless, mtime=0",
+      "gzipBytes": 8613,
+      "gzipSHA256": "ccd1b4af5c174205b30538896af49de379d6c36b8732bc939f54ef6ebfffb06c",
+      "rawBytes": 37942,
+      "rawSHA256": "3b2ea44985b0ca72b89778db495c307a93c3f582fd294fa4236c96c54d01e753"
+    }
+  },
+  "reviewSHA256": {
+    "independent-root-source-review-r2.json": "39022e689ac8ae428ae6f724c6a8e08040cde87abdd979108e7cbf776e724940",
+    "independent-w1-source-review-r2.json": "13cc23fe2e56060d0ec36316ec5b6d56bbd5b8778c50bc68a35183b8538a5485"
+  },
+  "schemaVersion": 1,
+  "sdkImpact": {
+    "actualManifestSHA256": "9510c4feeffad1d70a8243ae2bdb7eaacd1d147a654758f8fb60674a0ae7d994",
+    "executedByThisLane": false,
+    "freshCollectorAndProducerRequired": true,
+    "inputCount": 396,
+    "intersection": [
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
+        "sha256": "e9d0ff9247fa5673803d643c80bd5f6a7ce612f39b638292a209cde2ccf19c8f"
+      }
+    ]
+  },
+  "sourceChecks": "Exact hashes, whole-file inverse, original byte preservation, current actual SDK membership and retained RED packet integrity only; no new compiler/parser/runtime execution",
+  "sourceCommit": "4aff8526c3037d1b18a2af831911771e342d7742",
+  "status": "SOURCE_SEALED_NATIVE_GREEN_NOT_RUN",
+  "upstreamProvenance": {
+    "compilerRowInWidgetUpstreamManifest": false,
+    "manifestUnchanged": true
+  }
+}

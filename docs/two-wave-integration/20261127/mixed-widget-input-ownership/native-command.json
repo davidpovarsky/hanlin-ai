@@ -1,0 +1,25 @@
+{
+  "command": [
+    "swift",
+    "test",
+    "--package-path",
+    "Packages/HanlinPlatform",
+    "--filter",
+    "(retainedNativeScriptSurfaceArchivePassesOriginalImportAnalysis|retainedExpoWidgetMaterializesWithOriginalArtifactWriter|HanlinWidgetInputOwnershipTests)"
+  ],
+  "expectedMethodDefinitions": 10,
+  "newMethods": [
+    "mixedNativeWidgetKeepsDynamicImportsAndResourceAliases",
+    "compiledInventoryDoesNotHideUnrecognizedPublishedHelpers",
+    "configuredDebuggerSourceRootDoesNotChangeOwnership",
+    "declaredSharedModuleAndMapOverrideForegroundPairClassification",
+    "incompleteOrChangedVisibleInventoriesFailClosed",
+    "escapingChangedAndAmbiguousResourceCopiesFailClosed",
+    "explicitlySharedLargeResourceStillHitsOriginalArtifactLimit",
+    "bundleOnlyAndUnrecognizedAuthoringKeepOriginalInputs"
+  ],
+  "originalControllerAndBudgets": "Preserve the existing native controller, execution limits, and evidence directory contract.",
+  "originalRetainedMethods": 2,
+  "owner": "/root/mac_build_resume",
+  "status": "PROPOSED_AFTER_ROOT_INTEGRATION_NOT_EXECUTED"
+}
