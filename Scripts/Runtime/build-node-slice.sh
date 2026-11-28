@@ -61,7 +61,8 @@ if [[ "$(node -e 'process.stdout.write(require(process.argv[1]).node.buildConfig
 const fs = require('node:fs');
 const actual = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
 const lock = JSON.parse(fs.readFileSync(process.argv[3], 'utf8'));
-if (actual.sourceCommit !== lock.node.commit || actual.wasmInterpreter !== 'drumbrake' || !actual.jitless || !actual.explicitBoundsChecks) {
+if (actual.sourceCommit !== lock.node.commit || actual.wasmInterpreter !== 'drumbrake' || !actual.jitless || !actual.explicitBoundsChecks
+    || actual.internationalization !== 'full-icu' || lock.node.buildConfiguration.internationalization !== 'full-icu') {
   throw new Error('The native source build adapter did not establish the required interpreter configuration.');
 }
 NODE

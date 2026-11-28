@@ -5,7 +5,7 @@
     "releaseRepository": "davidpovarsky/hanlin-ai",
     "releaseTagPrefix": "runtime-core-v1-",
     "sha256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
-    "verificationStatus": "verified",
+    "verificationStatus": "pending-build",
     "artifactDependencyHash": "2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
     "nativeInputSHA256": "d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5",
     "sourceCommit": "4784dd99c3e5892ef726e7a3cce6587eb7847997"
@@ -23,7 +23,7 @@
       "sha256": "614b5f1cb6409d7471b80535d3306a5c4a32ac8128c4a2bd9d8147d663e2555c"
     },
     "xcframeworkSha256": "21c404e94c38e7d91ec446ce0ca07d7fed9120ec3e42b80cc8352052dd1db207",
-    "verificationStatus": "verified",
+    "verificationStatus": "pending-build",
     "license": "MIT with bundled third-party notices",
     "sourcePatches": [
       {
@@ -48,11 +48,12 @@
       "explicitBoundsChecks": true,
       "adapter": {
         "path": "Scripts/Runtime/configure-node-wasm.py",
-        "sha256": "d574019c1173030be7dabeb735667f272179882598c91f717a0d3d2a2c8e02b4"
+        "sha256": "232d1ef2a954cd3ff8f2120dc08491ab9f8f9cd1420952f6a1fb003b5ecabe31"
       },
       "pointerCompression": true,
       "pointerCompressionSharedCage": true,
-      "taggedHeapAddressSpaceBytes": 4294967296
+      "taggedHeapAddressSpaceBytes": 4294967296,
+      "internationalization": "full-icu"
     }
   },
   "python": {

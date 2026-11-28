@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Wire pinned V8's existing DrumBrake sources into Node Mobile's GYP build.
+"""Wire pinned V8 DrumBrake and full ICU into Node Mobile's native build.
 
 This downstream build adapter is not an upstream backport. It does not enable
 JIT, remove bounds checks, change engine versions or fabricate verification.
@@ -16,12 +16,16 @@ PREIMAGES = {
     "tools/v8_gypfiles/features.gypi": "afbcb2609a6c4f684a092485fbf9a7666f2f44a4f20eb5931b58ec0b3d49b7a3",
     "tools/v8_gypfiles/v8.gyp": "371223b2620db3f0c3a65e8be09096acdeb549435a2d23fe22b2dced6f717230",
     "tools/ios_framework_prepare.sh": "864dbf89ceed04b93c88bcd03cb35c63ad1d5ec08bb8e3447fba10885c82b8a7",
+    "tools/ios-framework/NodeMobile.xcodeproj/project.pbxproj": "6f51f4053699f68d2b3b6e76622a422037864fb7dab69948b0e7c1a3f70cf321",
 }
 POSTIMAGES = {
     "tools/v8_gypfiles/features.gypi": "90da41738ea9ec84ed3c633b6c3e92281116f5c83e9b79a4fba5771d0af94396",
     "tools/v8_gypfiles/v8.gyp": "d55186e1cf0e015994c34f46d3df40b3ce18e642b17e229440ba4cce97a1532a",
-    "tools/ios_framework_prepare.sh": "1d08245dd2b0382b5097533b9628eb40e5a36a2dc39adb2753b2539c4953d052",
+    "tools/ios_framework_prepare.sh": "d866694dd403a4df5c081e05b6d0747688d6503765d80166e90fb0300bec166f",
+    "tools/ios-framework/NodeMobile.xcodeproj/project.pbxproj": "c60f1ab6463764a584aee899dd429ae303031d1cf9c29700179d0ee90f2f68fd",
 }
+ICU_LIBRARIES = ("libicudata.a", "libicui18n.a", "libicuucx.a")
+
 INTERPRETER_SOURCES = [
     "src/wasm/interpreter/wasm-interpreter-objects.cc",
     "src/wasm/interpreter/wasm-interpreter-runtime.cc",
@@ -76,11 +80,35 @@ def transform(name: str, text: str) -> str:
         return text
     if name.endswith("ios_framework_prepare.sh"):
         before = "--v8-options=--jitless \\\n"
-        if text.count(before) != 3:
+        if text.count(before) != 3 or text.count("--with-intl=none") != 3:
             raise ValueError("Unexpected pinned iOS configure commands")
-        return text.replace(before,
+        text = text.replace(before,
             "--v8-options='--jitless --wasm-jitless' \\\n"
             "    --experimental-enable-pointer-compression \\\n")
+        # Use the pinned Node/ICU data and original cross-compile rules. Small
+        # ICU's default English-only data is insufficient for he/zh-Hans.
+        text = text.replace("--with-intl=none", "--with-intl=full-icu")
+        return replace_once(text, '  "libhistogram.a"\n',
+            '  "libhistogram.a"\n' + "".join(f'  "{library}"\n' for library in ICU_LIBRARIES))
+    if name.endswith("project.pbxproj"):
+        for library in ICU_LIBRARIES:
+            file_id = digest(("Hanlin Node ICU file " + library).encode())[:24].upper()
+            build_id = digest(("Hanlin Node ICU build " + library).encode())[:24].upper()
+            if file_id in text or build_id in text:
+                raise ValueError("Pinned Node ICU project identity already exists")
+            text = replace_once(text, "/* End PBXBuildFile section */",
+                f"\t\t{build_id} /* {library} in Frameworks */ = {{isa = PBXBuildFile; fileRef = {file_id} /* {library} */; }};\n"
+                "/* End PBXBuildFile section */")
+            text = replace_once(text, "/* End PBXFileReference section */",
+                f'\t\t{file_id} /* {library} */ = {{isa = PBXFileReference; lastKnownFileType = archive.ar; name = {library}; path = bin/{library}; sourceTree = "<group>"; }};\n'
+                "/* End PBXFileReference section */")
+            anchor = "\t\t\t\tA36728F42E53580A004DF2FB /* libnode.a in Frameworks */,\n"
+            text = replace_once(text, anchor,
+                f"\t\t\t\t{build_id} /* {library} in Frameworks */,\n" + anchor)
+            anchor = "\t\t\t\t3376C91D1EC3922F0007AD59 /* libnode.a */,\n"
+            text = replace_once(text, anchor,
+                f"\t\t\t\t{file_id} /* {library} */,\n" + anchor)
+        return text
     raise ValueError("Unknown native build adapter target")
 
 def proposed_changes(source: Path) -> list[tuple[Path, bytes, dict]]:
@@ -114,6 +142,7 @@ def main() -> None:
             target.write_bytes(contents)
     print(json.dumps({"sourceCommit": SOURCE_COMMIT, "wasmInterpreter": "drumbrake", "jitless": True,
         "explicitBoundsChecks": True, "pointerCompression": True,
+        "internationalization": "full-icu", "icuLibraries": list(ICU_LIBRARIES),
         "files": [item[2] for item in changes]}, sort_keys=True))
 
 if __name__ == "__main__":

@@ -1,0 +1,67 @@
+{
+  "repository": "https://github.com/heylogin/nodejs-mobile",
+  "commit": "4768489cd0cfa3bb0c27786e958c6446c004f1bd",
+  "encoding": "Lossless gzip of original pinned Git blobs. No native build outputs. LICENSE is retained in full.",
+  "files": [
+    {
+      "sourcePath": "tools/ios_framework_prepare.sh",
+      "file": "tools__ios_framework_prepare.sh.gz",
+      "bytes": 8115,
+      "sha256": "864dbf89ceed04b93c88bcd03cb35c63ad1d5ec08bb8e3447fba10885c82b8a7",
+      "compressedBytes": 1686,
+      "compressedSHA256": "663dc6bf29fa5349bfe8df145aa49d0e8290f24ff7faef1008989c6fd1deb0d0",
+      "gitBlob": "dcb8172f1b2fe0fb79916eaea6b9574f2af09185",
+      "url": "https://github.com/heylogin/nodejs-mobile/blob/4768489cd0cfa3bb0c27786e958c6446c004f1bd/tools/ios_framework_prepare.sh"
+    },
+    {
+      "sourcePath": "tools/ios-framework/NodeMobile.xcodeproj/project.pbxproj",
+      "file": "tools__ios-framework__NodeMobile.xcodeproj__project.pbxproj.gz",
+      "bytes": 26885,
+      "sha256": "6f51f4053699f68d2b3b6e76622a422037864fb7dab69948b0e7c1a3f70cf321",
+      "compressedBytes": 4262,
+      "compressedSHA256": "ccfca0d6a5e455a419bd14ff3b0f4d639361a8aed75bf238f0b8140b3ce75899",
+      "gitBlob": "3b973924f4eb9b3c4fde7801bc61e9ccf0c55b9b",
+      "url": "https://github.com/heylogin/nodejs-mobile/blob/4768489cd0cfa3bb0c27786e958c6446c004f1bd/tools/ios-framework/NodeMobile.xcodeproj/project.pbxproj"
+    },
+    {
+      "sourcePath": "tools/v8_gypfiles/features.gypi",
+      "file": "tools__v8_gypfiles__features.gypi.gz",
+      "bytes": 19324,
+      "sha256": "afbcb2609a6c4f684a092485fbf9a7666f2f44a4f20eb5931b58ec0b3d49b7a3",
+      "compressedBytes": 5814,
+      "compressedSHA256": "0227def2b83b759150ad999ba39ef9a656ed8c619ccade440b269fb94339ece4",
+      "gitBlob": "9b2917e4fc9f383bd5ea574f84e13fe06fe11755",
+      "url": "https://github.com/heylogin/nodejs-mobile/blob/4768489cd0cfa3bb0c27786e958c6446c004f1bd/tools/v8_gypfiles/features.gypi"
+    },
+    {
+      "sourcePath": "tools/v8_gypfiles/v8.gyp",
+      "file": "tools__v8_gypfiles__v8.gyp.gz",
+      "bytes": 89783,
+      "sha256": "371223b2620db3f0c3a65e8be09096acdeb549435a2d23fe22b2dced6f717230",
+      "compressedBytes": 10351,
+      "compressedSHA256": "ed72f36d624be9e12d97d1974d0e2aaea8aa0e250e7877d56e71290f649fc135",
+      "gitBlob": "7c6b6cd80eca58ff540a28ddd326cfef01e98561",
+      "url": "https://github.com/heylogin/nodejs-mobile/blob/4768489cd0cfa3bb0c27786e958c6446c004f1bd/tools/v8_gypfiles/v8.gyp"
+    },
+    {
+      "sourcePath": "tools/icu/icu-generic.gyp",
+      "file": "tools__icu__icu-generic.gyp.gz",
+      "bytes": 19607,
+      "sha256": "9c9015c5c71a2988797bb01e92f5804f06a63b60cb8c072d93c2e4a265388d3a",
+      "compressedBytes": 3526,
+      "compressedSHA256": "b302aee81529c8b991a9f19defbe1aea79ed93e4261ad885337983048aaa83ea",
+      "gitBlob": "f007c65232c0d694970da3fac972d5e540202392",
+      "url": "https://github.com/heylogin/nodejs-mobile/blob/4768489cd0cfa3bb0c27786e958c6446c004f1bd/tools/icu/icu-generic.gyp"
+    },
+    {
+      "sourcePath": "LICENSE",
+      "file": "LICENSE.gz",
+      "bytes": 142067,
+      "sha256": "1f15e76a631ad6b7d120ed4516865751b916b43061a22a34f0e17dcbdf49a705",
+      "compressedBytes": 23439,
+      "compressedSHA256": "73bff5ca352cbe18fda3d26fca2a97333ef42e08aeb1b0cad5318ed22bcd727e",
+      "gitBlob": "632097c25807e7c16cb8f8e6fe04741e2b60be1d",
+      "url": "https://github.com/heylogin/nodejs-mobile/blob/4768489cd0cfa3bb0c27786e958c6446c004f1bd/LICENSE"
+    }
+  ]
+}

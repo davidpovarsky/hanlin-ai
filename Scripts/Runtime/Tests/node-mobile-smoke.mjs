@@ -17,6 +17,7 @@ const result = {
   fs: false,
   crypto: false,
   url: false,
+  intl: false,
   fetch: false,
   workerThreads: false,
   descriptorOwnership: false,
@@ -34,6 +35,11 @@ try {
   result.fs = await fs.readFile(path.join(runtimeRoot, 'runtime', 'fs-smoke.txt'), 'utf8') === result.hebrew;
   result.crypto = createHash('sha256').update('hanlin').digest('hex').length === 64;
   result.url = new URL('https://example.com/runtime').pathname === '/runtime';
+  result.intl = typeof Intl === 'object' && typeof Intl.Collator === 'function'
+    && ['en', 'he', 'zh-Hans'].every(locale =>
+      Intl.Collator.supportedLocalesOf([locale], {localeMatcher: 'lookup'}).length === 1
+      && new Intl.Collator(locale, {usage: 'sort', sensitivity: 'variant', numeric: true})
+        .compare('item2', 'item10') < 0);
   result.tls = typeof tls.createSecureContext === 'function' && Boolean(tls.DEFAULT_MIN_VERSION);
   const fetchResponse = await fetch('data:text/plain;charset=utf-8,hanlin');
   result.fetch = fetchResponse.ok && await fetchResponse.text() === 'hanlin';
