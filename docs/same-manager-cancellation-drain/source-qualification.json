@@ -1,0 +1,203 @@
+{
+  "recordedAt": "2026-11-28T12:17:23.898591+00:00",
+  "status": "FROZEN_R3_SOURCE_ONLY_NATIVE_AND_TESTS_NOT_RUN",
+  "base": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-same-manager-drain-fc5ce1ba-20261128",
+  "sourceFiles": [
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/AgentRunLifecycleCoordinator.swift",
+      "before": {
+        "gitObject": "c6c06f823bddc5181ffb0344b321ab8d694a8ce0",
+        "bytes": 3865,
+        "sha256": "ecd09b57a4aa346b28e5a0497dd52abcffbea83c91e6e4e69fea67fe6121712d"
+      },
+      "after": {
+        "bytes": 5960,
+        "sha256": "4d02db2ff447c049de237dc26b8296b2d4fc0ff485809b23c7617659ea9b9caa"
+      },
+      "changedSinceR2": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "before": {
+        "gitObject": "10dad76217f3fc727790c9360bcad36c3e84fee4",
+        "bytes": 42634,
+        "sha256": "85bedf129a20d6f911056127a1d2680447be7bc22cc67c7c2c877c0feaf4a882"
+      },
+      "after": {
+        "bytes": 47301,
+        "sha256": "5796e44564f289b8c71e7911c18a2aae303a57d6c36c50edcf14102acb83ebf1"
+      },
+      "changedSinceR2": false
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "before": {
+        "gitObject": "227fb87a9f1a608a751baa89f7fd8d495cb1edbf",
+        "bytes": 226115,
+        "sha256": "fa423e890c1447a77dd8c978bc3124e9385d12098b04aec472303562d312be25"
+      },
+      "after": {
+        "bytes": 230472,
+        "sha256": "34458e752f6dc96742904c5fc6d9fcc769e698921c3b3b037bb5d7925f07582f"
+      },
+      "changedSinceR2": true
+    },
+    {
+      "path": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "before": {
+        "gitObject": "b37fda2411c3bde21f471395115e1c104d249fb2",
+        "bytes": 37030,
+        "sha256": "b32bdaf18f3f107603bd62c6c4dbf64e56a9b81e872010a2e451bf7acb498433"
+      },
+      "after": {
+        "bytes": 50957,
+        "sha256": "86ba4ec861fa6010c24847f0b98e55b527f493759edc8e5058c951d46f7ca6ac"
+      },
+      "changedSinceR2": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "before": {
+        "gitObject": "8bf265b2492534879cc7324d21fb574221522d0c",
+        "bytes": 197131,
+        "sha256": "cab45c3fe1e7733cc772e6e08cc0cc3fddef2c8254a0d98e219f392e1f17408f"
+      },
+      "after": {
+        "bytes": 206198,
+        "sha256": "4d0f94e20044abcf438097af6abde6b77c8cfb6fef397b1f454b1a3dda663982"
+      },
+      "changedSinceR2": false
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+      "before": {
+        "gitObject": "bf1f6ab587fda90020c137e5a48200774144fcbb",
+        "bytes": 36041,
+        "sha256": "45e9de16a08e4eb2c72bcbab12fea95b8166a8404dfae398c8864de25e1511d6"
+      },
+      "after": {
+        "bytes": 39414,
+        "sha256": "0f33a5a924f267c7d797f49c1cfaec010c63e09ecb408b1988044e7c6c00df69"
+      },
+      "changedSinceR2": false
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostDispatcher.swift",
+      "before": {
+        "gitObject": "889fd8071ee18fd3fe9ccb611094e6273d54c4b9",
+        "bytes": 16079,
+        "sha256": "8c7289779a6cce63dd58bb43a3ba877abfba357680609dc38c2dbd8cd8b738a1"
+      },
+      "after": {
+        "bytes": 17622,
+        "sha256": "e5d6d0fb7d9f6d71408497bd68e3140c80ac5956aeb218460beffc7ac58207d0"
+      },
+      "changedSinceR2": false
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift",
+      "before": {
+        "gitObject": "5f786841725d434a24d35af3b5d106675568fd35",
+        "bytes": 72496,
+        "sha256": "043ae321551f2a6678ff1b2e83c05595e1c0188ef2b71876de827f0a2686f5e4"
+      },
+      "after": {
+        "bytes": 89008,
+        "sha256": "5c495c2035906be7498e582a2e65c589a3eb8e7a59275e40f5949397fd4e1fdf"
+      },
+      "changedSinceR2": false
+    }
+  ],
+  "changedPathCount": 8,
+  "productionPathCount": 5,
+  "r1ManifestSHA256": "aa19886dd8a0252d6b16dd46cc6b7501cca3ddc429515522743cba74dfa440fb",
+  "r2ManifestSHA256": "7c2fa9ca2fff66164db220eaabe871bcbf63b980d86fbf3a45afab5311571e49",
+  "r1AndR2RetainedUnchanged": true,
+  "r2All35PayloadsRehashed": true,
+  "r2ToR3ChangedPaths": [
+    "AI_HLY/Downstream/AgentActivity/AgentRunLifecycleCoordinator.swift",
+    "AI_HLY/Services/ChatServices/APIManager.swift",
+    "AI_HLYTests/AgentRoundPresentationTests.swift"
+  ],
+  "wholeEightFileForwardAndReverseProjection": true,
+  "wholeIncrementalForwardAndReverseProjection": true,
+  "wholeOriginalSessionTestInverse": true,
+  "wholeOriginalOwnerTestInverse": true,
+  "wholeOriginalCoordinatorTestInverse": true,
+  "wholeOriginalCoordinatorInverse": true,
+  "fiveR1FilesByteExact": true,
+  "newDefinitions": {
+    "session": 3,
+    "owner": 3,
+    "coordinator": 6
+  },
+  "newSemanticCases": {
+    "session": 9,
+    "owner": 4,
+    "coordinator": 9
+  },
+  "r3AddedDefinitions": 3,
+  "r3AddedSemanticCases": 4,
+  "r2AddedTestSetupDelta": "Six new R2 reservation values now use try #require on the optional reservation result; its cancellation-only method becomes async throws. Original pre-fix test methods and assertions remain byte-exact.",
+  "privateRootComposition": {
+    "source": "064b7b58c923af0beff84a1852af84071f4409d8",
+    "rootSourceDeltaSHA256": "02cf3d37eac9b109f4cae67d451a6901942a1fa41e34856072dcfe5043424250",
+    "bothApplicationOrdersEqual": true,
+    "files": [
+      {
+        "path": "AI_HLY/Downstream/AgentActivity/AgentRunLifecycleCoordinator.swift",
+        "bytes": 5960,
+        "sha256": "4d02db2ff447c049de237dc26b8296b2d4fc0ff485809b23c7617659ea9b9caa"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+        "bytes": 47301,
+        "sha256": "5796e44564f289b8c71e7911c18a2aae303a57d6c36c50edcf14102acb83ebf1"
+      },
+      {
+        "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+        "bytes": 232119,
+        "sha256": "6830f2541fb965402b0f86ddbd9ce278591151a184314fcfcdd66a4010541d84"
+      },
+      {
+        "path": "AI_HLYTests/AgentRoundPresentationTests.swift",
+        "bytes": 50957,
+        "sha256": "86ba4ec861fa6010c24847f0b98e55b527f493759edc8e5058c951d46f7ca6ac"
+      },
+      {
+        "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+        "bytes": 206505,
+        "sha256": "34a8e40fee8f274b2b7831ff106d649b7812ddb97028750b8d653734561ee649"
+      },
+      {
+        "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+        "bytes": 39414,
+        "sha256": "0f33a5a924f267c7d797f49c1cfaec010c63e09ecb408b1988044e7c6c00df69"
+      },
+      {
+        "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostDispatcher.swift",
+        "bytes": 17622,
+        "sha256": "e5d6d0fb7d9f6d71408497bd68e3140c80ac5956aeb218460beffc7ac58207d0"
+      },
+      {
+        "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift",
+        "bytes": 89008,
+        "sha256": "5c495c2035906be7498e582a2e65c589a3eb8e7a59275e40f5949397fd4e1fdf"
+      }
+    ]
+  },
+  "limits": {
+    "testsExecuted": 0,
+    "nativeExecuted": 0,
+    "newProductionTimeouts": 0,
+    "effectRetries": 0,
+    "workflowOrSelectorChanges": 0,
+    "actualOriginalNativeThrowSite": "UNKNOWN; unresolvedWrite failure lacks a production throw frame",
+    "cancellationRequestIsNotDrainCompletion": true
+  },
+  "preparationNotes": [
+    "The first R3 edit preflight expected seven optional-setup replacements but found the actual six and stopped before any source write. Corrected to the exact six existing R2 setup lines; no tests ran.",
+    "The source-only projection uses pinned private root064b7b58; final execution requires a fresh exact composed-source binding."
+  ]
+}

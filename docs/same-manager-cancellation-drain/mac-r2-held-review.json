@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "mac_build_resume",
+  "status": "R2_HELD_SOURCE_ONLY_PENDING_NARROW_R3",
+  "sourceBase": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "candidate": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/same-manager-cancellation-drain-fc5ce1ba-candidate-r2",
+    "manifestSHA256": "7c2fa9ca2fff66164db220eaabe871bcbf63b980d86fbf3a45afab5311571e49",
+    "payloadCount": 35,
+    "payloadBytes": 1473991,
+    "incrementalPatchSHA256": "8a7c9f1733630e35a60cb210304020392eb60d280f248c1b939f8e37c9a2c2f4",
+    "fullPatchSHA256": "3224ad72448b8d2c17cae24419b6bb64e52b3cf4147c86d416be563102f96e00"
+  },
+  "priorReview": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/same-manager-drain-independent-implementation-review-fc5ce1ba-r1/independent-review.json",
+    "sha256": "5d276b4df1b9ff1cedaef3b2551edf11263fb37e6ad0f71d24ee615489a36fca",
+    "immutable": true
+  },
+  "verification": {
+    "all35PayloadHashes": true,
+    "all8ActualGitPreimages": true,
+    "all8WholeForwardReverse": true,
+    "threeIncrementalFilesWholeInverse": true,
+    "fiveR1CandidateFilesExact": [
+      "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+      "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostDispatcher.swift",
+      "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift"
+    ],
+    "all3OriginalTestFilesRecoverExactly": true,
+    "productionCallerInventory": "Actual fc5 Swift production source has only APIManager.sendStreamRequest invoking this Coordinator beginRun. R2 replaces that call with the reserved entry; no downstream production same-run legacy beginRun was found. Legacy direct calls in original tests remain."
+  },
+  "findings": [
+    {
+      "id": "CROSS_MANAGER_ORDER_R1",
+      "status": "RESOLVED_IN_R2_SOURCE",
+      "evidence": "A global opaque RunAdmission is reserved before the new suspension. The reserved begin rejects a superseded token before cancelling another producer or replacing its recorder. Original async/sync begin entries reserve anew; matching Stop cannot revoke a different run's token; an old finish preserves a later reservation."
+    },
+    {
+      "id": "CANCELLED_RESERVED_BEGIN",
+      "status": "BLOCKS_R2",
+      "evidence": "Coordinator.beginRun(admission:recorder:) checks only isCurrentAdmission before task/recorder mutation, and its return does not test task cancellation. APIManager's preceding Task.checkCancellation is not atomic with a later external task cancellation. A still-current but cancelled task can therefore cancel the previous global producer before the subsequent API check rejects it.",
+      "requiredNarrowCorrection": "Check Task cancellation in the reserved method before any mutation and after the existing recorder await. Retain original legacy overload semantics and add a controlled pre-entry/during-recorder cancellation regression without sleeps or deadline extensions."
+    },
+    {
+      "id": "GLOBAL_PRODUCER_CANCELLATION_DELAY",
+      "status": "BLOCKS_R2",
+      "evidence": "reserveRunAdmission only changes latestAdmission. A new request C on manager M2 can wait for its own older D while the globally current A on manager M1 still runs. Session.requireActive checks own Task/invalidated/activeRun and Dispatcher checks own Task/context; neither consults Coordinator admission. API's main event loop still sees isCurrentRun(A). New callback token checks do not constitute a Host dispatch gate.",
+      "requiredNarrowCorrection": "Preserve the original synchronous global producer cancellation request when a noncancelled new reservation is accepted, without clearing the active identity, recorder, retained task, canonical writer or claiming completion. Keep actual drains and the later guarded begin. A controlled held global A / held own D should verify cancellation was requested before the new wait while the actual drain remains pending."
+    }
+  ],
+  "unchangedConstraintQualification": [
+    "Same-manager epoch/Owner revocation and destructive row checks remain as reviewed in R1.",
+    "Captured outer producer and Session-owned tool tasks still join real Host return and original CAS, without synthetic completion.",
+    "Both canonical writer guards and unresolved/uncertain/store-conflict protections remain exact.",
+    "Historical metadata accessor still binds full original identity, argument bytes and captured output limits; no historical live delivery/replay.",
+    "Idle Session preservation and starting-generation tracking remain exact R1."
+  ],
+  "newControls": {
+    "coordinatorDefinitions": 3,
+    "coordinatorSemanticCases": 5,
+    "ownerDefinitions": 3,
+    "ownerSemanticCases": 4,
+    "sessionDefinitions": 3,
+    "sessionSemanticCases": 9,
+    "execution": "NOT_RUN"
+  },
+  "nativeLimits": {
+    "testsExecutedByReviewer": 0,
+    "compilerInvocations": 0,
+    "nativeInvocations": 0,
+    "sourceEdits": 0,
+    "dispatches": 0,
+    "originalFailureThrowSite": "UNKNOWN; source review does not establish native correction or the exact historical throw frame"
+  },
+  "watchObservation": {
+    "at": "2026-11-28T12:06:52.335076+00:00",
+    "runID": 46130310047,
+    "terminalReceipt": false,
+    "deviceJob": 140934003764,
+    "simulatorJob": 140934003767,
+    "state": "Both existing slice jobs still report Build one Node slice with heartbeat in the sole watcher's retained output.",
+    "newPoller": false
+  },
+  "preparationNotes": [
+    "Git read-only calls returned existing info/grafts and info/attributes permission warnings with exit zero; exact blob bytes were verified. No permissions/configuration/source were changed.",
+    "Some direct model displays were output-truncated after the complete structured tool result was stored; bounded stored extracts were subsequently inspected. No source or native rerun."
+  ],
+  "recordedAt": "2026-11-28T12:08:46.887440+00:00"
+}

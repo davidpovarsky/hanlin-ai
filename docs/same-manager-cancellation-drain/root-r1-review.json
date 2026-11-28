@@ -1,0 +1,62 @@
+{
+  "at": "2026-11-28T11:50:20.082728+00:00",
+  "status": "SOURCE_REVIEW_PASS_NATIVE_PENDING",
+  "base": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "currentPrivateHead": "064b7b58c923af0beff84a1852af84071f4409d8",
+  "candidateManifestSHA256": "aa19886dd8a0252d6b16dd46cc6b7501cca3ddc429515522743cba74dfa440fb",
+  "candidatePayloadsVerified": 24,
+  "candidatePatchSHA256": "edbab2924bb75952e45decbbc1d830329cad048c88b8c31cdffcbb9cb0c629bc",
+  "allSixOriginalSourcesEqualActualGit": true,
+  "wholeOriginalTestFilesRecoveredExactly": true,
+  "actualCleanRootIndexCheck": "PASS",
+  "projectedComposedSources": [
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "bytes": 47301,
+      "sha256": "5796e44564f289b8c71e7911c18a2aae303a57d6c36c50edcf14102acb83ebf1"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "bytes": 230764,
+      "sha256": "d006e72d6c45b5858336165d0f40492711ce13ae5a81865b4fd6733b32d9280e"
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "bytes": 206505,
+      "sha256": "34a8e40fee8f274b2b7831ff106d649b7812ddb97028750b8d653734561ee649"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+      "bytes": 39414,
+      "sha256": "0f33a5a924f267c7d797f49c1cfaec010c63e09ecb408b1988044e7c6c00df69"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostDispatcher.swift",
+      "bytes": 17622,
+      "sha256": "e5d6d0fb7d9f6d71408497bd68e3140c80ac5956aeb218460beffc7ac58207d0"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift",
+      "bytes": 89008,
+      "sha256": "5c495c2035906be7498e582a2e65c589a3eb8e7a59275e40f5949397fd4e1fdf"
+    }
+  ],
+  "findings": [
+    "APIManager reserves a replacement epoch synchronously, captures and joins its previous outer producer, joins Owner invalidation before replacing request/diagnostics, and rechecks admission after intervening awaits.",
+    "Owner admission retains original row/context/container/registration; same-manager live retirement requires exact captured original request; C/Stop/deletion revoke waiting B. Original idle Session and normal next-turn reuse remain retained.",
+    "Session tracks actual entered Host tasks through metadata CAS; isRunning includes them. Invalidation cancels then joins actual completions and original writer chain, without rerunning effects.",
+    "Dispatcher historical accessor requires actual same session/context/run/step/provider/alias/arguments/invocation/logical tool and original limits, repeats output bound before metadata projection, and cannot execute or authorize live delivery.",
+    "Both normal and historical receipts persist one actual result identity and redacted metadata through the original ordered CAS. Live callbacks require current manager epoch, owner run and global run. Historical receipt cannot reach onHostResult or replacement presentation.",
+    "Pending/malformed/oversized/uncertain replies remain unresolved; failed/deleted/conflicting CAS remains blocking. Newly added tests use held real Session/Dispatcher execution and CAS boundaries, not a substituted drain implementation.",
+    "All original Session and Owner test bytes, assertions, helpers and budgets are preserved exactly; only six definitions/thirteen semantic controls added. Existing two native same-manager failures are unchanged and still require original app acceptance."
+  ],
+  "testDefinitionsAdded": 6,
+  "semanticCasesAdded": 13,
+  "controlsExecuted": 0,
+  "nativeExecuted": 0,
+  "limits": [
+    "The two original unresolvedWrite native methods do not identify a unique production throw frame; this repairs verified lifetime/persistence gaps, not a proven unique historical cause.",
+    "Independent Mac implementation review and original AgentSDK/app native commands remain required.",
+    "Task cancellation remains a request; an actually unreturned Host or failed CAS does not receive artificial completion."
+  ]
+}

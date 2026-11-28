@@ -1,0 +1,22 @@
+[
+  {
+    "path": "source.patch.gz",
+    "encoding": "gzip",
+    "compressedBytes": 15831,
+    "compressedSHA256": "ff0e572228b89b8b6b71c503d321d99022d8538d5f44515c68ae02229aec994f",
+    "originalName": "source.patch",
+    "originalBytes": 83848,
+    "originalSHA256": "afa7e61df8aec6475401902dab263c45b37b446b90d38c7117c3e61cc7393ed2",
+    "roundTripEqual": true
+  },
+  {
+    "path": "source-r2-to-r3.patch.gz",
+    "encoding": "gzip",
+    "compressedBytes": 2674,
+    "compressedSHA256": "ca560a9ac81071398b0e4196beadb9c7b5429b6ea961909e3832fb73515d3027",
+    "originalName": "source-r2-to-r3.patch",
+    "originalBytes": 14646,
+    "originalSHA256": "474c82434a70d04ed5c4de17dd5229b5aa349c96bbb785af40502a289b84cc2b",
+    "roundTripEqual": true
+  }
+]

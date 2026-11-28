@@ -1,0 +1,44 @@
+{
+  "status": "PREPARATION_ONLY_NO_EXECUTION_OR_DISPATCH",
+  "session": {
+    "originalRequest": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-session-de7758a9-dispatch/request.json",
+    "requestSHA256": "5d42c2f7e71e4de061c822e5dda9c894770d5da5505b5cdfe097d266e3401696",
+    "wholeSuites": [
+      "HanlinAgentCoreTests/AgentSessionTests",
+      "HanlinHostContractsTests/ContextTests",
+      "HanlinPersistenceAdaptersTests/StoreTests"
+    ],
+    "originalDefinitions": 33,
+    "newDefinitions": 3,
+    "expectedDefinitions": 36,
+    "expectedSemanticInvocations": 42,
+    "jobMinutes": 60,
+    "coupledPresentationJobMinutes": 15,
+    "qualification": "Source-derived expectation only; original runner/verifier plus actual parameter identities must reconcile after native execution."
+  },
+  "app": {
+    "originalRequest": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-de7758a9-original-acceptance-dispatch/original90/request.json",
+    "requestSHA256": "9d8b2f79587165581d5408ba4738fef011fb73f55bc6878a8d6e4d24678b867c",
+    "unchangedWholeSuiteSelectors": [
+      "AI_HLYTests/AgentRoundPresentationTests",
+      "AI_HLYTests/HanlinAppAgentSessionOwnerTests"
+    ],
+    "addedOwnerDefinitions": 3,
+    "addedOwnerCases": 4,
+    "addedCoordinatorDefinitions": 6,
+    "addedCoordinatorCases": 9,
+    "originalFailedMethods": [
+      "AgentRuntimeConversationAcceptanceTests/startingNewRunCancelsOldRunWithoutGhostWork()",
+      "ProductionProviderConformanceTests/testP11OverlappingRunBSupercedesA()"
+    ],
+    "limits": "Original whole request/80+10 selector order, assertions and budgets unchanged. No app PASS inferred from package cases."
+  },
+  "freshPrerequisites": [
+    "Independent frozen R3 source reviews",
+    "Exact committed composed-source binding",
+    "Original full CI and publication",
+    "Fresh all-branch same-scope concurrency gate before one root-authorized POST"
+  ],
+  "nativeExecuted": 0,
+  "portableControlsExecuted": 0
+}

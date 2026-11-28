@@ -1,0 +1,15 @@
+{
+  "ok": false,
+  "interpreter": "python3",
+  "sudo": false,
+  "cwd": null,
+  "cleanup": true,
+  "command": [
+    "python3",
+    "/var/lib/sentinelx/uploads/.sentinelx_uploads/script_job_586a4eceebab4fee914416662216bcda/script.py"
+  ],
+  "output": "Traceback (most recent call last):\n  File \"/var/lib/sentinelx/uploads/.sentinelx_uploads/script_job_586a4eceebab4fee914416662216bcda/script.py\", line 19, in <module>\n    git(['add','--']+paths)\n  File \"/var/lib/sentinelx/uploads/.sentinelx_uploads/script_job_586a4eceebab4fee914416662216bcda/script.py\", line 12, in git\n    assert r.returncode==0,(args,r.returncode,r.stdout.decode(),r.stderr.decode())\n           ^^^^^^^^^^^^^^^\nAssertionError: (['add', '--', 'AI_HLY/Downstream/AgentActivity/AgentRunLifecycleCoordinator.swift', 'AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift', 'AI_HLY/Services/ChatServices/APIManager.swift', 'AI_HLYTests/AgentRoundPresentationTests.swift', 'AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift', 'Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift', 'Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostDispatcher.swift', 'Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift'], 1, '', 'The following paths and/or pathspecs matched paths that exist\\noutside of your sparse-checkout definition, so will not be\\nupdated in the index:\\nAI_HLY/Downstream/AgentActivity/AgentRunLifecycleCoordinator.swift\\nAI_HLYTests/AgentRoundPresentationTests.swift\\nhint: If you intend to update such entries, try one of the following:\\nhint: * Use the --sparse option.\\nhint: * Disable or modify the sparsity rules.\\nhint: Disable this message with \"git config advice.updateSparsePath false\"\\n')",
+  "duration": 0.26,
+  "returncode": 1,
+  "hub_request_id": "hreq_65fbf286ac904c24"
+}

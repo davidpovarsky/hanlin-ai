@@ -1,0 +1,90 @@
+{
+  "at": "2026-11-28T12:26:37.054753+00:00",
+  "status": "APPROVED_SOURCE_ONLY_NATIVE_PENDING",
+  "reviewer": "root",
+  "candidateManifestSHA256": "865332058e33702f9a99f914b12fee119320415d8a977387b2ec518e381914f3",
+  "sourceDonor": "c48140a7d00d0c5de1ec0933e15738acf930e7e9",
+  "currentPrivateBase": "0d73e9c4a87dda339abfdae19f6661b99677760d",
+  "verifiedCandidatePayloads": 40,
+  "verifiedCandidateBytes": 1511949,
+  "wholeEightOriginalGitBlobs": true,
+  "wholeEightSealedDonorBlobs": true,
+  "currentRootEightInputsEqualQualified064Inputs": true,
+  "wholeCurrentRootForwardReverseProjection": true,
+  "wholeFc5Inverse": true,
+  "composedFiles": [
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/AgentRunLifecycleCoordinator.swift",
+      "bytes": 5960,
+      "sha256": "4d02db2ff447c049de237dc26b8296b2d4fc0ff485809b23c7617659ea9b9caa"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "bytes": 47301,
+      "sha256": "5796e44564f289b8c71e7911c18a2aae303a57d6c36c50edcf14102acb83ebf1"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "bytes": 232119,
+      "sha256": "6830f2541fb965402b0f86ddbd9ce278591151a184314fcfcdd66a4010541d84"
+    },
+    {
+      "path": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "bytes": 50957,
+      "sha256": "86ba4ec861fa6010c24847f0b98e55b527f493759edc8e5058c951d46f7ca6ac"
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "bytes": 206505,
+      "sha256": "34a8e40fee8f274b2b7831ff106d649b7812ddb97028750b8d653734561ee649"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+      "bytes": 39414,
+      "sha256": "0f33a5a924f267c7d797f49c1cfaec010c63e09ecb408b1988044e7c6c00df69"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostDispatcher.swift",
+      "bytes": 17622,
+      "sha256": "e5d6d0fb7d9f6d71408497bd68e3140c80ac5956aeb218460beffc7ac58207d0"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift",
+      "bytes": 89008,
+      "sha256": "5c495c2035906be7498e582a2e65c589a3eb8e7a59275e40f5949397fd4e1fdf"
+    }
+  ],
+  "independentReviewer": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/same-manager-drain-independent-delta-review-fc5ce1ba-r3/independent-review.json",
+    "sha256": "08f0a2879684871a55bc7a788191dd79a1a0cb001c39442cef7446da84793927"
+  },
+  "retainedPriorFindings": [
+    {
+      "rootR1": "c6e176ef2931cddb928af71085bb5500c3ebb75a6352b2ba14374937565ebf35",
+      "rootCrossManagerHold": "41fc91ae5127911f3b4f89cc56f2dcb1fd26732e7c6361f63d7e4aac5aae8644"
+    },
+    {
+      "macR2": "3cd60d2046909c3df02cee792ed7e86a2db2ebf998d757e811fb2103772c921b",
+      "status": "Prior cancellation-boundary holds remain retained and are closed by reviewed R3 source."
+    }
+  ],
+  "reviewedSemantics": [
+    "Accepted global reservation requests cancellation of the registered real producer synchronously before per-manager drain, retaining task, recorder and active identity until original paths.",
+    "Already cancelled reservation returns nil before global mutation. Reserved begin checks cancellation and shared token before mutation and after original recorder suspension.",
+    "A stale B cannot cancel newer C when B returns from draining A. Legacy begin paths publish a fresh token then preserve exact original bodies.",
+    "Stop revokes matching pending admission; old finish cannot revoke newer different-run admission. API rechecks global admission, manager epoch and owner row/context/generation after awaits.",
+    "R1 actual outer producer join, actual entered Host task and metadata CAS completion, strict captured call/result identity and output limits remain unchanged.",
+    "No effect retry, no fake writer completion, no new production timeout or relaxed unresolved-write guard."
+  ],
+  "originalTestsPreservedByExactInverses": true,
+  "newDefinitions": 12,
+  "newSemanticCases": 22,
+  "sourceChangesOnly": true,
+  "testsExecuted": 0,
+  "nativeExecuted": 0,
+  "historicalUnresolvedWriteThrowSite": "UNKNOWN",
+  "nextGates": [
+    "Original whole Session/Context/Store suites: 36 definitions and 42 expected invocations; original60-minute job.",
+    "Original coupled Presentation15-minute job, then original full app acceptance request unchanged except additive tests."
+  ]
+}

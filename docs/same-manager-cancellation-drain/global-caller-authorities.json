@@ -1,0 +1,122 @@
+{
+  "source": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "separateManagerConstructors": [
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "gitObject": "7a87309ead9ecbc0b84b7cce876fc60906056bef",
+      "sha256": "afabef618a250e2908c11c7db358f2c07ac3ebf3b2e5f7ebc0b56125a09a6aa5",
+      "bytes": 117336,
+      "lines": [
+        {
+          "line": 1900,
+          "text": "        if let conversationID = chatRecord.id {"
+        },
+        {
+          "line": 1901,
+          "text": "            originalSDKRequest = .init(conversation: chatRecord, conversationID: conversationID,"
+        },
+        {
+          "line": 1902,
+          "text": "                sceneID: sessionScopeID, rowID: assistantPlaceholder.id, uiRunID: agentCoordinator.runID,"
+        },
+        {
+          "line": 1903,
+          "text": "                temporary: TemporaryRecord, interaction: nativeInteraction)"
+        },
+        {
+          "line": 1904,
+          "text": "        } else { originalSDKRequest = nil }"
+        },
+        {
+          "line": 1905,
+          "text": "        let requestAPIManager = APIManager(context: context, agentSessionOwner: agentSessionOwner)"
+        },
+        {
+          "line": 1906,
+          "text": "        requestAPIManager.presentationInstructions = richPresentation.instructions(conversation: chatRecord, conversationID: effectiveChatSessionID)"
+        },
+        {
+          "line": 1907,
+          "text": "        _ = richPresentation.state(for: assistantPlaceholder, conversation: chatRecord, conversationID: effectiveChatSessionID, context: context, temporary: TemporaryRecord)"
+        },
+        {
+          "line": 1908,
+          "text": "        self.apiManager = requestAPIManager"
+        },
+        {
+          "line": 1909,
+          "text": "        "
+        },
+        {
+          "line": 1910,
+          "text": "        let turnProjection = HanlinConversationStreamProjection(record: chatRecord, context: context,"
+        }
+      ]
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinConversationController.swift",
+      "gitObject": "cb8b2ab49d1ce74a1bcd8b001572d32ed9a81f8e",
+      "sha256": "30cd41c658111209f73b5696ed3487ddbddf7b845fcc712da6259261057f2bf6",
+      "bytes": 24788,
+      "lines": [
+        {
+          "line": 330,
+          "text": "                providerID: model.company, modelID: modelName)"
+        },
+        {
+          "line": 331,
+          "text": "            assistant.agentRun = coordinator.run"
+        },
+        {
+          "line": 332,
+          "text": "            let projection = HanlinConversationStreamProjection(record: record, context: context,"
+        },
+        {
+          "line": 333,
+          "text": "                messages: rows, assistant: assistant, coordinator: coordinator, lease: activeLease)"
+        },
+        {
+          "line": 334,
+          "text": "            self.projection = projection"
+        },
+        {
+          "line": 335,
+          "text": "            let manager = APIManager(context: context, agentSessionOwner: sessionOwner)"
+        },
+        {
+          "line": 336,
+          "text": "            manager.presentationInstructions = richPresentation.instructions("
+        },
+        {
+          "line": 337,
+          "text": "                conversation: record, conversationID: conversationID)"
+        },
+        {
+          "line": 338,
+          "text": "            _ = richPresentation.state(for: assistant, conversation: record,"
+        },
+        {
+          "line": 339,
+          "text": "                conversationID: conversationID, context: context, temporary: false)"
+        },
+        {
+          "line": 340,
+          "text": "            apiManager = manager"
+        }
+      ]
+    }
+  ],
+  "originalCoordinatorSHA256": "ecd09b57a4aa346b28e5a0497dd52abcffbea83c91e6e4e69fea67fe6121712d",
+  "singleManagerInvariant": "NOT_VALID: two production construction sites use distinct instances",
+  "r1Finding": "An older B waiting for its same-manager A drain could otherwise call global beginRun after later C on another manager, cancelling C.",
+  "r3": {
+    "globalProducerCancellation": "successful cancellable reservation calls cancel() without clearing the retained task, recorder, or activeRunID",
+    "cancelledReservation": "nil before token publication or producer mutation",
+    "reservedBeginCancellation": "checked before first mutation and after original recorder await",
+    "legacyEntryBehavior": "two original overloads publish a fresh token through private nonthrowing helper; original cancellation/recorder bodies remain byte-identical",
+    "productionAPIEntryCountBefore": 1,
+    "productionAPIEntryCountAfter": 1,
+    "nestedLegacyEntryFromReservedBody": false,
+    "cancellationCompletionClaim": false
+  }
+}

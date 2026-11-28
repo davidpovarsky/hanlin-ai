@@ -1,0 +1,24 @@
+{
+  "status": "PREPARED_NOT_EXECUTED_NOT_DISPATCHED",
+  "sourceDonor": "c48140a7d00d0c5de1ec0933e15738acf930e7e9",
+  "admissionPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/same-manager-drain-original-session-native-admission-r3/admission.json",
+  "admissionSHA256": "3523fcc4747b03035843b85103c97301c4493bced45c4e0a40ff75f983386603",
+  "manifestSHA256": "a5da36b7064e93a0d51d609927e1852b6f79fb18d485c58ae005d8d047b07a8f",
+  "sourceProjectionBase": "0d73e9c4a87dda339abfdae19f6661b99677760d",
+  "finalExecutionSource": null,
+  "originalSessionJobMinutes": 60,
+  "coupledPresentationJobMinutes": 15,
+  "originalRequestSHA256": "5d42c2f7e71e4de061c822e5dda9c894770d5da5505b5cdfe097d266e3401696",
+  "expectedSessionDefinitions": 36,
+  "expectedSessionSemanticInvocations": 42,
+  "originalDefinitionsRetained": 33,
+  "actualNativeResult": "NOT_RUN",
+  "requirements": [
+    "Exact final composed-source binding",
+    "Original full CI and publication on the integration branch",
+    "Fresh original same-scope concurrency admission",
+    "Single authorized original request",
+    "Actual xcresult method and parameter reconciliation",
+    "Separate original application acceptance; no application credit from the package route"
+  ]
+}
