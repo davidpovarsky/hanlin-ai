@@ -2336,7 +2336,24 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
     }
 
     private func configureConcurrencyShortcut(_ spec: [String: Any], identity: [String: Any]) throws {
-        try tap(firstButton(shortcuts, ["Create Shortcut", "Add"]), "Create one actual saved concurrency Shortcut.")
+        // The observed first-launch sheet and creation button share the original
+        // 12-second creation allowance, already bounded by this case's deadline.
+        var continuedWhatsNew = false
+        var createButton = shortcuts.buttons["Create Shortcut"].firstMatch
+        try require(wait(12) {
+            let whatsNew = self.shortcuts.staticTexts["What’s New in Shortcuts"].firstMatch
+            if whatsNew.exists {
+                let next = self.shortcuts.buttons["Continue"].firstMatch
+                guard !continuedWhatsNew && whatsNew.isHittable &&
+                        next.exists && next.isEnabled && next.isHittable else { return false }
+                continuedWhatsNew = true
+                next.tap()
+                return false
+            }
+            createButton = self.firstButton(self.shortcuts, ["Create Shortcut", "Add", "New Shortcut"])
+            return createButton.exists && createButton.isEnabled && createButton.isHittable
+        }, "Create one actual saved concurrency Shortcut.")
+        createButton.tap()
         if shortcuts.buttons["Add Action"].firstMatch.exists { shortcuts.buttons["Add Action"].firstMatch.tap() }
         let search = shortcuts.searchFields.firstMatch
         try tap(search, "Find the actual MiniApps system action.")
