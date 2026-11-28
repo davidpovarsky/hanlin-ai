@@ -336,6 +336,7 @@ jobs:
           set -euo pipefail
           trap 'cp build/acceptance/miniapp-upstreams/resolution.json "$SPLIT_EVIDENCE/upstream-resolution.json" 2>/dev/null || true; git diff --binary > "$SPLIT_EVIDENCE/upstream-inputs.patch"' EXIT
           node Scripts/MiniApps/resolve-upstreams.mjs --apply --cache="$RUNNER_TEMP/hanlin-miniapp-upstreams" 2>&1 | tee "$SPLIT_EVIDENCE/upstream-resolution.log"
+          tar -czf "$SPLIT_EVIDENCE/adapted-native-source-inputs.tar.gz" -C "$RUNNER_TEMP/hanlin-miniapp-upstreams/candidate-inputs" Packages
           cp build/acceptance/miniapp-upstreams/resolution.json "$SPLIT_EVIDENCE/upstream-resolution.json"
           git diff --binary > "$SPLIT_EVIDENCE/upstream-inputs.patch"
       - name: Generate and bind original Widget fixtures for paired system acceptance
