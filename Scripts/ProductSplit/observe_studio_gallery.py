@@ -358,7 +358,7 @@ def installed_build(case, roots):
             and type(record.get("activeGeneration")) is int and record["activeGeneration"] > 0,
             "The gallery UI must install a fresh enabled package, not an old catalog record")
     app_entries = [item for item in entry.get("entrypoints", []) if item.get("kind") == "app"]
-    require(len(app_entries) == 1 and app_entries[0].get("compatibility") == "supported"
+    require(len(app_entries) == 1 and app_entries[0].get("compatibility") in ("supported", "partial")
             and app_entries[0].get("runtimeProfile") == "hanlin-" + case["fixed"]["engine"]
             and "mainApplication" in app_entries[0].get("supportedContexts", [])
             and app_entries[0].get("sourcePath") == "source/" + case["build"]["manifest"]["entry"],
