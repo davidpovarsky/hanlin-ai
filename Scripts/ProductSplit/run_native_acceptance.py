@@ -8,6 +8,7 @@ import plistlib
 import re
 import shutil
 import signal
+import stat
 import subprocess
 import sys
 import tempfile
@@ -15,6 +16,7 @@ import time
 import uuid
 
 from simulator_entitlements import read_simulator_entitlements
+from observe_runtime_image_origin import descriptor_target, descriptor_path, origin_test_command
 from verify_targets import native_ui_typecheck_command, validate_native_test_membership
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -82,6 +84,9 @@ def command(argv, name, timeout=60, env=None):
 NOTIFICATION_APP = 'com.itorah.hanlinminiapps'
 NOTIFICATION_RUNNER = 'com.itorah.hanlinminiapps.integration.uitests.xctrunner'
 NOTIFICATION_WORKER = 'Scripts/CI/observe_notification_os_delivery.py'
+NOTIFICATION_DESCRIPTOR_HELPER = 'Scripts/ProductSplit/observe_runtime_image_origin.py'
+NOTIFICATION_DESCRIPTOR_HELPER_SHA256 = hashlib.sha256(
+    Path(descriptor_target.__code__.co_filename).read_bytes()).hexdigest()
 NOTIFICATION_FIXTURES = (
     'DemoMiniApps/hanlin-script-parity.hanlinNativeScript',
     'AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo',
@@ -108,9 +113,11 @@ def notification_source(source, inputs):
     current = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, timeout=5).decode().strip()
     notification_check(re.fullmatch(r'[0-9a-f]{40}', source) and current == source,
                        'the actual source commit changed')
-    required = {NOTIFICATION_WORKER, 'Scripts/ProductSplit/run_native_acceptance.py',
+    required = {NOTIFICATION_WORKER, NOTIFICATION_DESCRIPTOR_HELPER, 'Scripts/ProductSplit/run_native_acceptance.py',
                 'HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift'}
-    notification_check(required.issubset(inputs), 'the original worker, UI case or runner is unbound')
+    notification_check(required.issubset(inputs), 'the original worker, UI case, runner or descriptor helper is unbound')
+    notification_check(inputs[NOTIFICATION_DESCRIPTOR_HELPER] == NOTIFICATION_DESCRIPTOR_HELPER_SHA256,
+                       'the loaded original descriptor helper differs from prepared source')
     for relative, expected in inputs.items():
         path = ROOT / relative
         notification_check(not Path(relative).is_absolute() and '..' not in Path(relative).parts
@@ -163,6 +170,137 @@ def notification_products(derived):
             'runner': notification_bundle(runner, NOTIFICATION_RUNNER),
             'test': notification_bundle(test, NOTIFICATION_RUNNER.removesuffix('.xctrunner')),
             'configuration': configuration}
+
+
+def notification_owned_path(path, root, *, directory):
+    root, path = Path(root), Path(path)
+    notification_check(root.is_absolute() and root.is_dir() and not root.is_symlink()
+                       and path.is_absolute() and '..' not in path.parts and path.is_relative_to(root),
+                       'descriptor path escaped the owned build products')
+    current = root
+    for part in path.relative_to(root).parts:
+        current = current / part
+        try:
+            mode = current.lstat().st_mode
+        except OSError as error:
+            raise RuntimeError('Notification OS admission: missing or unreadable owned descriptor/product path') from error
+        notification_check(not stat.S_ISLNK(mode)
+                           and (stat.S_ISDIR(mode) if current != path or directory else stat.S_ISREG(mode)),
+                           'descriptor or product path contains a link or wrong file type')
+    return path
+
+
+def notification_descriptor(derived):
+    derived = Path(derived)
+    notification_check(derived.is_absolute() and derived.is_dir() and not derived.is_symlink(),
+                       'the original DerivedData directory is not owned')
+    derived = derived.resolve(strict=True)
+    products = notification_owned_path(derived / 'Build/Products', derived, directory=True)
+    candidates = sorted(products.glob('*.xctestrun'))
+    notification_check(len(candidates) == 1, 'the original build descriptor is missing or ambiguous')
+    path = notification_owned_path(candidates[0], products, directory=False)
+    with os.fdopen(os.open(path, os.O_RDONLY | os.O_NOFOLLOW), 'rb') as stream:
+        before = os.fstat(stream.fileno())
+        notification_check(stat.S_ISREG(before.st_mode) and before.st_nlink == 1
+                           and before.st_size <= 4 * 1024 * 1024,
+                           'the build descriptor is linked or unexpectedly large')
+        raw = stream.read(4 * 1024 * 1024 + 1)
+        after = os.fstat(stream.fileno())
+    current = path.lstat()
+    notification_check((before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns, before.st_mode)
+                       == (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns, after.st_mode)
+                       == (current.st_dev, current.st_ino, current.st_size, current.st_mtime_ns, current.st_mode)
+                       and len(raw) == before.st_size,
+                       'the descriptor changed while being read')
+    try:
+        document = plistlib.loads(raw)
+        notification_check(type(document) is dict, 'the descriptor root is not a dictionary')
+        target = descriptor_target(document)
+    except (ValueError, TypeError, plistlib.InvalidFileException) as error:
+        raise RuntimeError('Notification OS admission: invalid original build descriptor') from error
+    for key in ('SkipTestIdentifiers', 'OnlyTestIdentifiers'):
+        notification_check(key not in target or (type(target[key]) is list and not target[key]),
+                           'the build descriptor carries a different test selection')
+
+    def product(value, host=None):
+        notification_check(type(value) is str and value, 'missing descriptor product path')
+        expanded = value.replace('__TESTROOT__', str(products))
+        if host is not None:
+            expanded = expanded.replace('__TESTHOST__', str(host))
+        original = notification_owned_path(Path(expanded), products, directory=True)
+        resolved = descriptor_path(value, products, host)
+        notification_check(resolved == original, 'the descriptor resolves through a different product')
+        return resolved
+
+    host = product(target.get('TestHostPath'))
+    app = product(target.get('UITargetAppPath'))
+    test = product(target.get('TestBundlePath'), host)
+    expected_host = products / 'Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app'
+    notification_check(host == expected_host
+                       and app == products / 'Debug-iphonesimulator/HanlinMiniApps.app'
+                       and test == expected_host / 'PlugIns/HanlinMiniAppsUITests.xctest',
+                       'the descriptor points to different original UI products')
+    for key, expected in [('TestHostBundleIdentifier', NOTIFICATION_RUNNER),
+                          ('UITargetAppBundleIdentifier', NOTIFICATION_APP)]:
+        notification_check(key not in target or target[key] == expected,
+                           'the descriptor bundle identifier changed: ' + key)
+    return {'path': str(path), 'file': {'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()},
+            'products': {'host': str(host), 'app': str(app), 'test': str(test)}}
+
+
+def prepare_notification_descriptor(argv, state, derived, inputs):
+    notification_check(state.get('build') == 'EXECUTED_PASS' and state.get('reused_passes') == [],
+                       'the descriptor requires the original fresh build')
+    build = state.get('build_command')
+    notification_check(type(build) is list and build.count('build-for-testing') == 1
+                       and build.count('-resultBundlePath') == 1
+                       and build.index('-resultBundlePath') + 1 < len(build)
+                       and build[build.index('-resultBundlePath') + 1] == str(EVIDENCE / 'Build.xcresult'),
+                       'the original build command is not bound')
+    expected = list(build)
+    expected[expected.index('build-for-testing')] = 'test-without-building'
+    expected[expected.index('-resultBundlePath') + 1] = str(EVIDENCE / 'MiniApps.xcresult')
+    expected += ['-only-testing:' + value for value in UI_PLANS['notification_os'][0]]
+    notification_check(argv == expected, 'the test command no longer follows the original build')
+    source, products = notification_source(state['sha'], inputs), notification_products(derived)
+    binding = notification_descriptor(derived)
+    actual = origin_test_command(argv, binding['path'], UI_PLANS['notification_os'][0])
+    copy_path, admission_path = EVIDENCE / 'notification-original.xctestrun', EVIDENCE / 'notification-descriptor-admission.json'
+    notification_check(not copy_path.exists() and not copy_path.is_symlink()
+                       and not admission_path.exists() and not admission_path.is_symlink(),
+                       'descriptor admission evidence must be fresh')
+    raw = Path(binding['path']).read_bytes()
+    notification_check({'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()} == binding['file'],
+                       'the descriptor changed before retaining its original bytes')
+    copy_path.write_bytes(raw)
+    admission = {'schema': 1, 'source': source, 'products': products, 'descriptor': binding,
+                 'originalCommand': list(argv), 'command': actual,
+                 'helperSHA256': inputs[NOTIFICATION_DESCRIPTOR_HELPER]}
+    admission_path.write_text(json.dumps(admission, indent=2) + '\n')
+    state['notification_xctestrun'] = admission
+    return actual
+
+
+def notification_descriptor_current(argv, state, derived, source, products):
+    admission = state.get('notification_xctestrun')
+    notification_check(type(admission) is dict
+                       and notification_equal(admission.get('source'), source)
+                       and notification_equal(admission.get('products'), products)
+                       and admission.get('helperSHA256') == NOTIFICATION_DESCRIPTOR_HELPER_SHA256,
+                       'the current descriptor source/products are not the admitted build')
+    saved = EVIDENCE / 'notification-descriptor-admission.json'
+    copy_path = EVIDENCE / 'notification-original.xctestrun'
+    notification_check(not saved.is_symlink() and not copy_path.is_symlink()
+                       and notification_equal(json.loads(saved.read_bytes()), admission),
+                       'the original descriptor admission changed')
+    binding = notification_descriptor(derived)
+    notification_check(notification_equal(binding, admission.get('descriptor'))
+                       and notification_file(copy_path) == binding['file'],
+                       'the original descriptor bytes or paths changed')
+    actual = origin_test_command(admission['originalCommand'], binding['path'], UI_PLANS['notification_os'][0])
+    notification_check(argv == actual == admission.get('command'),
+                       'the actual descriptor invocation changed')
+    return binding
 
 
 def notification_container(path, identifier, device, group=False):
@@ -273,11 +411,12 @@ def run_notification_test(argv, log, state, derived, inputs):
                        and not (EVIDENCE / 'MiniApps.xcresult').exists(), 'worker and XCTest output must be fresh')
     source = notification_source(state['sha'], inputs)
     products = notification_products(derived)
+    descriptor = notification_descriptor_current(argv, state, derived, source, products)
     device = str(uuid.UUID(state['simulator'])).upper()
     notification_check(device == state['simulator']
                        and (EVIDENCE / 'created-simulator.txt').read_text().strip() == device,
                        'the simulator is not this runner\'s newly created device')
-    controller = {'source': source, 'products': products, 'device': device,
+    controller = {'source': source, 'products': products, 'descriptor': descriptor, 'device': device,
                   'status': 'NOT_RUN', 'testAllowanceSeconds': 600, 'testCommandTimeoutSeconds': 1200,
                   'workerTimeoutSeconds': 650, 'startedAfter': time.time(), 'stopReason': None}
     state['notification_os_controller'] = controller
@@ -334,6 +473,8 @@ def run_notification_test(argv, log, state, derived, inputs):
                         notification_check(roots['runnerData'] == root, 'runner changed while binding the fresh exchange')
                         notification_check(notification_source(state['sha'], inputs) == source,
                                            'source changed before worker admission')
+                        controller['descriptorBeforeWorker'] = notification_descriptor_current(
+                            argv, state, derived, source, notification_products(derived))
                         controller.update(active=active, containers=roots, status='RUNNING')
                         worker_argv = [sys.executable, str(ROOT / NOTIFICATION_WORKER), '--device', device,
                             '--runner-data', roots['runnerData']['path'], '--app-data', roots['appData']['path'],
@@ -371,6 +512,13 @@ def run_notification_test(argv, log, state, derived, inputs):
                 controller.setdefault('cleanupErrors', []).append({'child': 'worker-log', 'error': str(error)})
                 controller['stopReason'] = controller['stopReason'] or 'OWNED_CHILD_CLEANUP_FAILED'
                 controller['status'] = 'OWNED_CHILD_CLEANUP_FAILED'
+        try:
+            controller['descriptorAtTerminal'] = notification_descriptor_current(
+                argv, state, derived, source, notification_products(derived))
+        except Exception as error:
+            controller['descriptorTerminalError'] = str(error)
+            controller['stopReason'] = controller['stopReason'] or 'ORIGINAL_XCTEST_DESCRIPTOR_CHANGED'
+            controller['status'] = 'ORIGINAL_XCTEST_DESCRIPTOR_CHANGED'
         controller.update(testExitCode=native.returncode if native is not None else None,
                           workerExitCode=worker.returncode if worker is not None else None,
                           elapsedSeconds=time.monotonic() - started)
@@ -826,6 +974,8 @@ def main():
         argv = base + ['test-without-building',
                 '-resultBundlePath', str(EVIDENCE/'MiniApps.xcresult')]
         argv += ['-only-testing:' + selector for selector in selectors]
+        if TEST_SCOPE == 'notification_os':
+            argv = prepare_notification_descriptor(argv, state, derived, inputs)
         state['command'] = argv
         (EVIDENCE/'command.json').write_text(json.dumps(argv,indent=2)+'\n')
         with (EVIDENCE/'xcodebuild.log').open('wb') as log:

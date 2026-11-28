@@ -58,8 +58,14 @@ class NotificationScopeTests(unittest.TestCase):
         self.state = {'sha': self.sha, 'simulator': self.device, 'build': 'EXECUTED_PASS',
                       'reused_passes': [],
                       'simulator_signing': 'ORIGINAL_ENTITLEMENTS_VERIFIED_AD_HOC_NOT_DISTRIBUTION_SIGNING'}
-        self.argv = ['xcodebuild', '-parallel-testing-enabled', 'NO', 'test-without-building',
-                     '-only-testing:' + runner.UI_PLANS['notification_os'][0][0]]
+        base = ['xcodebuild', '-project', 'AI_HLY.xcodeproj', '-scheme', 'HanlinMiniApps',
+                '-destination', 'platform=iOS Simulator,id=' + self.device + ',arch=arm64',
+                '-parallel-testing-enabled', 'NO', '-derivedDataPath', str(self.derived),
+                '-skipPackagePluginValidation', '-skipMacroValidation',
+                'CODE_SIGNING_ALLOWED=YES', 'CODE_SIGNING_REQUIRED=YES', 'CODE_SIGN_IDENTITY=-']
+        self.state['build_command'] = base + ['build-for-testing', '-resultBundlePath', str(self.evidence / 'Build.xcresult')]
+        self.original_argv = base + ['test-without-building', '-resultBundlePath', str(self.evidence / 'MiniApps.xcresult'),
+                                    '-only-testing:' + runner.UI_PLANS['notification_os'][0][0]]
         root_patch = patch.object(runner, 'ROOT', self.source)
         evidence_patch = patch.object(runner, 'EVIDENCE', self.evidence)
         home_patch = patch.object(Path, 'home', return_value=self.home)
@@ -68,11 +74,14 @@ class NotificationScopeTests(unittest.TestCase):
             item.start()
             self.addCleanup(item.stop)
         self.inputs = {}
-        for name in [runner.NOTIFICATION_WORKER, 'Scripts/ProductSplit/run_native_acceptance.py',
+        for name in [runner.NOTIFICATION_WORKER, runner.NOTIFICATION_DESCRIPTOR_HELPER, 'Scripts/ProductSplit/run_native_acceptance.py',
                      'HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift']:
             path = self.source / name
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text('bound source for ' + name)
+            if name == runner.NOTIFICATION_DESCRIPTOR_HELPER:
+                path.write_bytes((ROOT / name).read_bytes())
+            else:
+                path.write_text('bound source for ' + name)
             self.inputs[name] = runner.notification_file(path)['sha256']
         self.write(self.evidence / 'source-identity.json', {
             'commit': self.sha, 'tracked_file_sha256': self.inputs,
@@ -112,6 +121,20 @@ class NotificationScopeTests(unittest.TestCase):
             destination = self.paths['appData'] / 'Documents' / original.name
             destination.parent.mkdir(exist_ok=True)
             shutil.copyfile(original, destination)
+
+        self.descriptor = self.derived / 'Build/Products/HanlinMiniApps_iphonesimulator27.2-arm64.xctestrun'
+        target = {'BlueprintName': 'HanlinMiniAppsUITests', 'IsUITestBundle': True,
+                  'TestHostBundleIdentifier': runner.NOTIFICATION_RUNNER,
+                  'UITargetAppBundleIdentifier': runner.NOTIFICATION_APP,
+                  'TestHostPath': '__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app',
+                  'UITargetAppPath': '__TESTROOT__/Debug-iphonesimulator/HanlinMiniApps.app',
+                  'TestBundlePath': '__TESTHOST__/PlugIns/HanlinMiniAppsUITests.xctest'}
+        self.descriptor_original = plistlib.dumps({
+            '__xctestrun_metadata__': {'FormatVersion': 2},
+            'TestConfigurations': [{'Name': 'Original', 'IsEnabled': True, 'TestTargets': [target]}]},
+            sort_keys=False)
+        self.descriptor.write_bytes(self.descriptor_original)
+        self.argv = runner.prepare_notification_descriptor(self.original_argv, self.state, self.derived, self.inputs)
 
     def write(self, path, value):
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -492,6 +515,241 @@ class NotificationScopeTests(unittest.TestCase):
                     self.assertEqual(receipt['workerExitCode'], 0)
                 with self.assertRaises(RuntimeError):
                     runner.validate_notification_observations(receipt)
+
+
+    def descriptor_document(self):
+        return plistlib.loads(self.descriptor_original)
+
+    def write_descriptor(self, document):
+        self.descriptor.write_bytes(plistlib.dumps(document, sort_keys=False))
+
+    def test_original_descriptor_bytes_and_other_command_arguments_are_preserved(self):
+        self.assertEqual(self.descriptor.read_bytes(), self.descriptor_original)
+        self.assertEqual((self.evidence / 'notification-original.xctestrun').read_bytes(), self.descriptor_original)
+        expected = list(self.original_argv)
+        for option in ('-project', '-scheme', '-derivedDataPath'):
+            index = expected.index(option)
+            del expected[index:index + 2]
+        self.assertEqual(self.argv, expected + ['-xctestrun', str(self.descriptor)])
+        self.assertEqual(self.state['notification_xctestrun']['originalCommand'], self.original_argv)
+        self.assertEqual([x for x in self.argv if x.startswith('-only-testing:')],
+                         ['-only-testing:' + runner.UI_PLANS['notification_os'][0][0]])
+        target = self.descriptor_document()['TestConfigurations'][0]['TestTargets'][0]
+        for document in (self.descriptor_document(), {
+                '__xctestrun_metadata__': {'FormatVersion': 1}, 'HanlinMiniAppsUITests': target}):
+            self.write_descriptor(document)
+            before = self.descriptor.read_bytes()
+            bound = runner.notification_descriptor(self.derived)
+            self.assertEqual(bound['products']['host'], str(self.test_runner))
+            self.assertEqual(self.descriptor.read_bytes(), before)
+
+    def test_missing_ambiguous_disabled_and_restricted_descriptors_are_rejected(self):
+        self.descriptor.unlink()
+        with self.assertRaises(RuntimeError):
+            runner.notification_descriptor(self.derived)
+        self.descriptor.write_bytes(self.descriptor_original)
+        duplicate = self.descriptor.with_name('another-build.xctestrun')
+        duplicate.write_bytes(self.descriptor_original)
+        with self.assertRaises(RuntimeError):
+            runner.notification_descriptor(self.derived)
+        duplicate.unlink()
+        documents = []
+        for key, value in [('IsEnabled', False), ('IsUITestBundle', False), ('UseDestinationArtifacts', True),
+                           ('BlueprintName', 'OtherUITests'), ('SkipTestIdentifiers', ['Any/Test']),
+                           ('OnlyTestIdentifiers', ['Other/Test']), ('SkipTestIdentifiers', False),
+                           ('OnlyTestIdentifiers', {})]:
+            document = self.descriptor_document()
+            document['TestConfigurations'][0]['TestTargets'][0][key] = value
+            documents.append(document)
+        document = self.descriptor_document()
+        document['TestConfigurations'][0]['IsEnabled'] = False
+        documents.append(document)
+        document = self.descriptor_document()
+        document['TestConfigurations'][0]['TestTargets'] *= 2
+        documents.append(document)
+        for document in documents:
+            with self.subTest(document=document):
+                self.write_descriptor(document)
+                with self.assertRaises(RuntimeError):
+                    runner.notification_descriptor(self.derived)
+        self.descriptor.write_bytes(b'not a property list')
+        with self.assertRaises(RuntimeError):
+            runner.notification_descriptor(self.derived)
+
+    def test_foreign_escaped_and_wrong_product_descriptor_paths_are_rejected(self):
+        foreign = self.root / 'foreign.app'
+        foreign.mkdir()
+        for key, value in [
+                ('TestHostPath', '__TESTROOT__/Debug-iphonesimulator/HanlinMiniApps.app'),
+                ('UITargetAppPath', '__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app'),
+                ('TestBundlePath', '__TESTHOST__'),
+                ('UITargetAppPath', str(foreign)),
+                ('TestHostPath', '__TESTROOT__/../Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app'),
+                ('TestBundlePath', '__FOREIGN__/Other.xctest'),
+                ('TestHostBundleIdentifier', runner.NOTIFICATION_APP),
+                ('UITargetAppBundleIdentifier', runner.NOTIFICATION_RUNNER)]:
+            with self.subTest(key=key, value=value):
+                document = self.descriptor_document()
+                document['TestConfigurations'][0]['TestTargets'][0][key] = value
+                self.write_descriptor(document)
+                with self.assertRaises(RuntimeError):
+                    runner.notification_descriptor(self.derived)
+
+    def test_descriptor_links_and_symlinked_product_components_are_rejected(self):
+        retained = self.root / 'retained-original.xctestrun'
+        retained.write_bytes(self.descriptor_original)
+        self.descriptor.unlink()
+        self.descriptor.symlink_to(retained)
+        with self.assertRaises(RuntimeError):
+            runner.notification_descriptor(self.derived)
+        self.descriptor.unlink()
+        os.link(retained, self.descriptor)
+        with self.assertRaises(RuntimeError):
+            runner.notification_descriptor(self.derived)
+        self.descriptor.unlink()
+        self.descriptor.write_bytes(self.descriptor_original)
+        for path in (self.app, self.test_runner,
+                     self.test_runner / 'PlugIns/HanlinMiniAppsUITests.xctest',
+                     self.derived / 'Build/Products'):
+            with self.subTest(path=path):
+                moved = path.with_name(path.name + '-original')
+                path.rename(moved)
+                path.symlink_to(moved, target_is_directory=True)
+                try:
+                    with self.assertRaises(RuntimeError):
+                        runner.notification_descriptor(self.derived)
+                finally:
+                    path.unlink()
+                    moved.rename(path)
+
+    def test_raw_descriptor_mutation_or_unbound_helper_never_launches(self):
+        self.descriptor.write_bytes(self.descriptor_original + b'\n')
+        with patch.object(runner.subprocess, 'Popen') as launch, self.assertRaises(RuntimeError):
+            runner.run_notification_test(self.argv, io.BytesIO(), self.state, self.derived, self.inputs)
+        launch.assert_not_called()
+        self.descriptor.write_bytes(self.descriptor_original)
+        inputs = dict(self.inputs)
+        del inputs[runner.NOTIFICATION_DESCRIPTOR_HELPER]
+        with patch.object(runner.subprocess, 'Popen') as launch, self.assertRaises(RuntimeError):
+            runner.run_notification_test(self.argv, io.BytesIO(), self.state, self.derived, inputs)
+        launch.assert_not_called()
+        with patch.object(runner, 'NOTIFICATION_DESCRIPTOR_HELPER_SHA256', 'b' * 64), \
+                patch.object(runner.subprocess, 'Popen') as launch, self.assertRaises(RuntimeError):
+            runner.run_notification_test(self.argv, io.BytesIO(), self.state, self.derived, self.inputs)
+        launch.assert_not_called()
+
+    def test_changed_original_build_or_transformed_command_cannot_select_another_run(self):
+        wrong_build = copy.deepcopy(self.state)
+        wrong_build['build_command'][wrong_build['build_command'].index('-scheme') + 1] = 'OtherScheme'
+        with self.assertRaises(RuntimeError):
+            runner.prepare_notification_descriptor(self.original_argv, wrong_build, self.derived, self.inputs)
+        variants = [
+            self.argv + ['-skip-testing:' + runner.UI_PLANS['notification_os'][0][0]],
+            self.argv + ['-only-testing:Other/Test'],
+            self.argv[:-1] + [str(self.root / 'foreign.xctestrun')],
+            [x if x != 'NO' else 'YES' for x in self.argv],
+        ]
+        for argv in variants:
+            with self.subTest(argv=argv), patch.object(runner.subprocess, 'Popen') as launch:
+                with self.assertRaises(RuntimeError):
+                    runner.run_notification_test(argv, io.BytesIO(), self.state, self.derived, self.inputs)
+                launch.assert_not_called()
+
+    def test_retained_admission_and_raw_copy_cannot_be_substituted(self):
+        path = self.evidence / 'notification-descriptor-admission.json'
+        original = path.read_bytes()
+        changed = json.loads(original)
+        changed['originalCommand'].append('OTHER_SETTING=1')
+        path.write_text(json.dumps(changed))
+        with patch.object(runner.subprocess, 'Popen') as launch, self.assertRaises(RuntimeError):
+            runner.run_notification_test(self.argv, io.BytesIO(), self.state, self.derived, self.inputs)
+        launch.assert_not_called()
+        path.write_bytes(original)
+        (self.evidence / 'notification-original.xctestrun').write_bytes(self.descriptor_original + b'\n')
+        with patch.object(runner.subprocess, 'Popen') as launch, self.assertRaises(RuntimeError):
+            runner.run_notification_test(self.argv, io.BytesIO(), self.state, self.derived, self.inputs)
+        launch.assert_not_called()
+
+    def test_descriptor_change_before_worker_stops_only_the_already_owned_native_child(self):
+        children, stopped = [], []
+
+        class Child:
+            pid = 410
+            returncode = None
+
+            def poll(self):
+                return self.returncode
+
+        def launch(argv, **kwargs):
+            self.assertEqual(argv, self.argv)
+            self.assertTrue(kwargs['start_new_session'])
+            child = Child()
+            children.append(child)
+            self.exchange()
+            self.descriptor.write_bytes(self.descriptor_original + b'\n')
+            return child
+
+        def stop(child):
+            if child is not None:
+                stopped.append(child.pid)
+                child.returncode = -15
+
+        with patch.object(runner.subprocess, 'Popen', side_effect=launch), \
+                patch.object(runner, 'command', side_effect=lambda argv, name, timeout: str(self.probe(argv[-2], argv[-1]))), \
+                patch.object(runner, 'notification_stop', side_effect=stop), patch.object(runner.time, 'sleep'):
+            with self.assertRaises(RuntimeError):
+                runner.run_notification_test(self.argv, io.BytesIO(), self.state, self.derived, self.inputs)
+        self.assertEqual(len(children), 1)
+        self.assertEqual(stopped, [410])
+        receipt = json.loads((self.evidence / 'notification-controller.json').read_bytes())
+        self.assertEqual(receipt['stopReason'], 'CONTROLLER_FAILED')
+        self.assertIsNone(receipt['workerExitCode'])
+        self.assertIn('descriptorTerminalError', receipt)
+
+    def test_terminal_descriptor_change_rejects_zero_exit_and_preserves_native_failure(self):
+        for native_exit in (0, 7):
+            with self.subTest(native_exit=native_exit):
+                self.descriptor.write_bytes(self.descriptor_original)
+                (self.evidence / 'notification-controller.json').unlink(missing_ok=True)
+                children = []
+                mutated = [False]
+
+                class Child:
+                    def __init__(self, pid):
+                        self.pid, self.returncode = pid, None
+
+                    def poll(child):
+                        if child is children[0] and (native_exit != 0 or len(children) == 2):
+                            child.returncode = native_exit
+                            if not mutated[0]:
+                                self.descriptor.write_bytes(self.descriptor_original + b'\n')
+                                mutated[0] = True
+                        return child.returncode
+
+                def launch(argv, **kwargs):
+                    self.assertTrue(kwargs['start_new_session'])
+                    child = Child(420 + len(children))
+                    children.append(child)
+                    if len(children) == 1:
+                        self.assertEqual(argv, self.argv)
+                        self.exchange()
+                    else:
+                        child.returncode = 0
+                    return child
+
+                with patch.object(runner.subprocess, 'Popen', side_effect=launch), \
+                        patch.object(runner, 'command', side_effect=lambda argv, name, timeout: str(self.probe(argv[-2], argv[-1]))), \
+                        patch.object(runner.time, 'sleep'):
+                    result = runner.run_notification_test(self.argv, io.BytesIO(), self.state, self.derived, self.inputs)
+                self.assertEqual(result.returncode, native_exit)
+                receipt = json.loads((self.evidence / 'notification-controller.json').read_bytes())
+                self.assertEqual(receipt['testExitCode'], native_exit)
+                self.assertEqual(receipt['stopReason'], 'ORIGINAL_XCTEST_DESCRIPTOR_CHANGED' if native_exit == 0 else 'ORIGINAL_XCTEST_FAILED')
+                self.assertIn('descriptorTerminalError', receipt)
+                self.assertEqual(receipt['workerExitCode'], 0 if native_exit == 0 else None)
+                with self.assertRaises(RuntimeError):
+                    runner.validate_notification_observations(receipt)
+
 
 
 if __name__ == '__main__':
