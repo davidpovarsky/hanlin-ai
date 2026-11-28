@@ -1,0 +1,36 @@
+{
+  "status": "ACTUAL_OLD_FIVE_PARAMETER_METADATA_EMITTED_AND_BOUND",
+  "source": "f45d6edcf20ab18f31fb7b25e33358754e3602d0",
+  "productCodeBaseline": "445e2cb514012110cd865bdd33a3dbb8e6b8143d",
+  "actionsDataSHA256": "c37f688d78362bf040dc8b63e2c793a5caf3d4c7a7410494cca542522b70ac41",
+  "parameterIdentifiers": [
+    "action",
+    "inputType",
+    "input",
+    "jsonFile",
+    "allowLongRunning"
+  ],
+  "enumCases": [
+    "text",
+    "json",
+    "jsonFile"
+  ],
+  "files": [
+    {
+      "path": "extract.actionsdata",
+      "bytes": 72144,
+      "sha256": "c37f688d78362bf040dc8b63e2c793a5caf3d4c7a7410494cca542522b70ac41"
+    },
+    {
+      "path": "extract.packagedata",
+      "bytes": 229,
+      "sha256": "4300377e471d9441cbb228ffdefa1658762970bc582d0b368296a8b71abadfc6"
+    },
+    {
+      "path": "version.json",
+      "bytes": 53,
+      "sha256": "dd4247d69cd8c750931505420148b52da7955333be2932b866fef83e3c713ac4"
+    }
+  ],
+  "savedShortcutOrMigrationAcceptance": "NOT_RUN"
+}

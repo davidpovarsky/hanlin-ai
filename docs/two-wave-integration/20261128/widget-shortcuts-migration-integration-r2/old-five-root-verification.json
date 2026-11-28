@@ -1,0 +1,32 @@
+{
+  "createdAt": "2026-11-28T13:25:31.554224+00:00",
+  "status": "INDEPENDENT_RETAINED_OLD_PRODUCT_AND_METADATA_EVIDENCE_VERIFIED",
+  "qualificationActualStatus": "RETAINED_F45_BUILD_PRODUCTS_AND_FIVE_PARAMETER_METADATA_QUALIFIED",
+  "qualificationSHA256": "b5e38b3f0e9d99986524a133f2fb4488c60637ad35022b76dc1b9111cf32cbd2",
+  "manifestSHA256": "45c26f24716ecef4082aa57fc64d0d5a4d695b37bf4582c444cad0add501d4c4",
+  "productHandoffSHA256": "ad53f84c22043a62213a1fdcc71e7fae6d943dc62ce1e497e8e589a95867eabb",
+  "source": "f45d6edcf20ab18f31fb7b25e33358754e3602d0",
+  "productCodeBaseline": "445e2cb514012110cd865bdd33a3dbb8e6b8143d",
+  "qualifiedDurationSeconds": 5.723296999989543,
+  "originalSoleNativeBuildSeconds": 160.76164775004145,
+  "productsBeforeAfterExact": true,
+  "sourceBeforeAfterExact": true,
+  "inputs": {
+    "inputSHA256": "3937e17d6fc49f39b01d29f7bf24613e8e4fa63822670ab809ad32c50b282eb7",
+    "sourceInputs": 396,
+    "criticalInputs": 35,
+    "runtimeResources": 18
+  },
+  "actual41PinRecordsBeforeAfterExact": true,
+  "originalProductMapSHA256": "e2c072c3fa4861d9ecde4366b4b163c9781f6ba6c09604c0a580b2849cd98041",
+  "originalDescriptorSHA256": "249bec01aa2a623e2f543d3f3b96ff39460827f692cdff74efebf07f96e0f8ff",
+  "actualMetadataSHA256": "c37f688d78362bf040dc8b63e2c793a5caf3d4c7a7410494cca542522b70ac41",
+  "actualBundledSDKManifestSHA256": "9510c4feeffad1d70a8243ae2bdb7eaacd1d147a654758f8fb60674a0ae7d994",
+  "originalNativeBuildLogUncompressedVerified": true,
+  "actualSDKManifestUncompressedSHA256AndCRCVerified": true,
+  "retainedR1Failure": true,
+  "retainedR2ReadOnlyFailure": true,
+  "newBuilds": 0,
+  "newTests": 0,
+  "savedShortcutMigration": "NOT_RUN"
+}

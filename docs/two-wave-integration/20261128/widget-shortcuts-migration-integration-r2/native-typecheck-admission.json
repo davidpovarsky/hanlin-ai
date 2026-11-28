@@ -1,0 +1,158 @@
+{
+  "schema": 1,
+  "status": "PREPARED_SOURCE_BOUND_COMMAND_NO_NATIVE_EXECUTION",
+  "source": "1ea6ab198151169236f473ab906993ff18d0c74c",
+  "sourceRows": [
+    {
+      "path": "Scripts/ProductSplit/verify_targets.py",
+      "bytes": 15644,
+      "sha256": "7d98c480a0a9866115527277abd093e897671705a6164e86b5952e00093c1602"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/project_graph.py",
+      "bytes": 25273,
+      "sha256": "b55b15a969fb438d32f78db491e65ea51d755019d3f2d563e61e1cffe9f9afbd"
+    },
+    {
+      "path": "Scripts/ProductSplit/extension_inventory.py",
+      "bytes": 4263,
+      "sha256": "969011d17099fada7c7010528579ec8b3a256b8c7bb25fcfd609789e800068a8"
+    },
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "bytes": 272874,
+      "sha256": "16d57d2ba64e9b39b3a7fdf2536a823d6f59055d2222517a8dab49f73560fcc9"
+    },
+    {
+      "path": "AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinMiniApps.xcscheme",
+      "bytes": 3843,
+      "sha256": "45badd3c80274ccba347b3a511b3a1f889b6a0e9e2adfa53198870cc79eaaad7"
+    },
+    {
+      "path": "AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme",
+      "bytes": 5513,
+      "sha256": "1a37dc5e015ee2e29e873f3e6d6035d6e933ec4eb27848c1263e51c9958af480"
+    }
+  ],
+  "composedSource": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-ui-shortcuts-widget-migration-composed-1ea6ab19-r2/source/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+    "bytes": 315041,
+    "sha256": "c70c629f41cdea005e556f3a46a703be2dc53fa38d0b73ad6c227c68676db264",
+    "macPath": "/Users/m1/builds/hanlin-two-wave-root-20261126/composed-ui-typecheck-1ea6ab19-r2/source/HanlinEntrypointSystemSurfaceUITests.swift"
+  },
+  "settings": {
+    "HanlinMiniAppsUITests": {
+      "configuration": "Debug",
+      "compilerSettings": {
+        "SWIFT_VERSION": "6.0",
+        "IPHONEOS_DEPLOYMENT_TARGET": "27.0",
+        "ENABLE_TESTABILITY": "YES",
+        "SWIFT_ACTIVE_COMPILATION_CONDITIONS": "DEBUG $(inherited)",
+        "SWIFT_DEFAULT_ACTOR_ISOLATION": null,
+        "SWIFT_STRICT_CONCURRENCY": null
+      }
+    },
+    "AI_HLYUITests": {
+      "configuration": "Debug",
+      "compilerSettings": {
+        "SWIFT_VERSION": "6.0",
+        "IPHONEOS_DEPLOYMENT_TARGET": "27.0",
+        "ENABLE_TESTABILITY": "YES",
+        "SWIFT_ACTIVE_COMPILATION_CONDITIONS": "DEBUG $(inherited)",
+        "SWIFT_DEFAULT_ACTOR_ISOLATION": null,
+        "SWIFT_STRICT_CONCURRENCY": null
+      }
+    }
+  },
+  "originalHelperSHA256": "3dc9e1ed954b9d8cfe4364dc078aff035e40142fc7fbb1179dbbbd630b6712db",
+  "boundHelperSHA256": "04c648cb934a1b2493b472ab986f2fcf17fe200dc71861e62520ead02154b688",
+  "wholeOriginalHelperInverseExact": true,
+  "literalBindingsOnly": [
+    "target HanlinMiniAppsUITests -> AI_HLYUITests",
+    "scheme HanlinMiniApps -> AI_HLY",
+    "module HanlinMiniAppsUITests -> AI_HLYUITests"
+  ],
+  "originalCommand": [
+    "xcrun",
+    "--sdk",
+    "iphonesimulator",
+    "swiftc",
+    "-typecheck",
+    "-module-name",
+    "HanlinMiniAppsUITests",
+    "-swift-version",
+    "6",
+    "-target",
+    "arm64-apple-ios27.0-simulator",
+    "-sdk",
+    "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk",
+    "-Isystem",
+    "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib",
+    "-module-alias",
+    "Testing=_Testing_Unavailable",
+    "-F",
+    "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks",
+    "-F",
+    "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks",
+    "-enable-experimental-feature",
+    "DebugDescriptionMacro",
+    "-enable-testing",
+    "-D",
+    "DEBUG",
+    "/Users/m1/builds/hanlin-two-wave-root-20261126/composed-ui-typecheck-1ea6ab19-r2/source/HanlinEntrypointSystemSurfaceUITests.swift"
+  ],
+  "command": [
+    "xcrun",
+    "--sdk",
+    "iphonesimulator",
+    "swiftc",
+    "-typecheck",
+    "-module-name",
+    "AI_HLYUITests",
+    "-swift-version",
+    "6",
+    "-target",
+    "arm64-apple-ios27.0-simulator",
+    "-sdk",
+    "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk",
+    "-Isystem",
+    "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib",
+    "-module-alias",
+    "Testing=_Testing_Unavailable",
+    "-F",
+    "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks",
+    "-F",
+    "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks",
+    "-enable-experimental-feature",
+    "DebugDescriptionMacro",
+    "-enable-testing",
+    "-D",
+    "DEBUG",
+    "/Users/m1/builds/hanlin-two-wave-root-20261126/composed-ui-typecheck-1ea6ab19-r2/source/HanlinEntrypointSystemSurfaceUITests.swift"
+  ],
+  "argvDelta": [
+    {
+      "index": 6,
+      "original": "HanlinMiniAppsUITests",
+      "current": "AI_HLYUITests"
+    }
+  ],
+  "deadlineSeconds": 120,
+  "originalDeadlineAuthority": "run_native_acceptance.py command(ui_compile, 'ui-source-typecheck.log', timeout=120)",
+  "scope": "Actual entire composed shared file Apple API/typecheck with actual AI Debug settings and installed Xcode27.0/SDK27.0; not Xcode27.2 app build or UI acceptance.",
+  "native": "NOT_RUN",
+  "noNewAppBuild": true,
+  "noSourceOrTestMutation": true,
+  "atUTC": "2026-11-28T13:36:19.627390+00:00",
+  "sourceProjection": "Exact1ea6ab19 base plus root-reviewed R2 composed full shared UIc70c629f including exact observed contextual title prefix; actual source copied without live oldf45 checkout mutation.",
+  "candidateReviewSHA256": "8240a4f2b137dd010481aaf43ed65be1ed2f0c431a535eff1fc1e9290827c4ed",
+  "rootReviewSHA256": "8240a4f2b137dd010481aaf43ed65be1ed2f0c431a535eff1fc1e9290827c4ed",
+  "priorAcceptedAdmissionSHA256": "a40df22ee61cc8e2ebd466055af73d83518f441bca8798d2e8e08549c7af8671",
+  "reviewedComposition": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-ui-shortcuts-widget-migration-composed-1ea6ab19-r2",
+    "manifestSHA256": "8fe28ece94fe6d3b44c26dc287130e20652119b699d37828ded5dec21f1eaa83",
+    "receiptSHA256": "8240a4f2b137dd010481aaf43ed65be1ed2f0c431a535eff1fc1e9290827c4ed",
+    "originalMethods": 47,
+    "additiveMigrationMethods": 2
+  }
+}

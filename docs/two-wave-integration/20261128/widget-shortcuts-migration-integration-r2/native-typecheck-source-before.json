@@ -1,0 +1,37 @@
+[
+  {
+    "path": "source/HanlinEntrypointSystemSurfaceUITests.swift",
+    "bytes": 315041,
+    "sha256": "c70c629f41cdea005e556f3a46a703be2dc53fa38d0b73ad6c227c68676db264"
+  },
+  {
+    "path": "source-authorities/Scripts/ProductSplit/verify_targets.py",
+    "bytes": 15644,
+    "sha256": "7d98c480a0a9866115527277abd093e897671705a6164e86b5952e00093c1602"
+  },
+  {
+    "path": "source-authorities/Scripts/CI/IntegrationValidation/project_graph.py",
+    "bytes": 25273,
+    "sha256": "b55b15a969fb438d32f78db491e65ea51d755019d3f2d563e61e1cffe9f9afbd"
+  },
+  {
+    "path": "source-authorities/Scripts/ProductSplit/extension_inventory.py",
+    "bytes": 4263,
+    "sha256": "969011d17099fada7c7010528579ec8b3a256b8c7bb25fcfd609789e800068a8"
+  },
+  {
+    "path": "source-authorities/AI_HLY.xcodeproj/project.pbxproj",
+    "bytes": 272874,
+    "sha256": "16d57d2ba64e9b39b3a7fdf2536a823d6f59055d2222517a8dab49f73560fcc9"
+  },
+  {
+    "path": "source-authorities/AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinMiniApps.xcscheme",
+    "bytes": 3843,
+    "sha256": "45badd3c80274ccba347b3a511b3a1f889b6a0e9e2adfa53198870cc79eaaad7"
+  },
+  {
+    "path": "source-authorities/AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme",
+    "bytes": 5513,
+    "sha256": "1a37dc5e015ee2e29e873f3e6d6035d6e933ec4eb27848c1263e51c9958af480"
+  }
+]

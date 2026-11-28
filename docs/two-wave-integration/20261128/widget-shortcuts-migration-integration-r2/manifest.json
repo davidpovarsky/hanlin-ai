@@ -1,0 +1,124 @@
+{
+  "sourceCommit": "b52b345b4dc3efa0a5c5d8fec9982d3c4d05c52e",
+  "scope": "Reviewed source integration, exact wholeUI compile and genuineoldproduct qualification; nativeacceptance pending",
+  "compressedSources": {
+    "background-source.patch.gz": {
+      "sourceSHA256": "6f33bc0f4767b41678a5091899a728a9ea2ef8a49c6a5b13008ccf51dad9cee1",
+      "sourceBytes": 5865
+    },
+    "composed-source.patch.gz": {
+      "sourceSHA256": "d552f9f93d2811baf3bb641b53cb219923f12775dbfd61fbc0a012109bb10ede",
+      "sourceBytes": 129181
+    },
+    "old-five-native-qualification.json.gz": {
+      "sourceSHA256": "b5e38b3f0e9d99986524a133f2fb4488c60637ad35022b76dc1b9111cf32cbd2",
+      "sourceBytes": 45180
+    },
+    "old-five-product-handoff.json.gz": {
+      "sourceSHA256": "ad53f84c22043a62213a1fdcc71e7fae6d943dc62ce1e497e8e589a95867eabb",
+      "sourceBytes": 6678
+    }
+  },
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2280,
+      "sha256": "0b67c039b192a76a5d53a06dba8cf02017d1cf0a85763a11dde18ccdd19c93f7"
+    },
+    {
+      "path": "background-candidate-manifest.json",
+      "bytes": 939,
+      "sha256": "696769332d2cc3e17e6d6c7cb99e71e4e46b5b411acff3ad866a9a406a6fcd72"
+    },
+    {
+      "path": "background-independent-review.json",
+      "bytes": 2437,
+      "sha256": "ec86292bc28959a046e3440c61ddf043c7eb85339cd8bb6a6b7a632d08e7051e"
+    },
+    {
+      "path": "background-qualification.json",
+      "bytes": 4008,
+      "sha256": "539ae4483e6b11a5f909c1b486d2bb934ade0c59e66a8b8cf87e8f43c61e0841"
+    },
+    {
+      "path": "background-source.patch.gz",
+      "bytes": 1933,
+      "sha256": "83b1ba6d56a0fdb641d82174b76884de4fd6a852ac861353728ac05c00e8ee60"
+    },
+    {
+      "path": "composed-source-receipt.json",
+      "bytes": 6582,
+      "sha256": "8240a4f2b137dd010481aaf43ed65be1ed2f0c431a535eff1fc1e9290827c4ed"
+    },
+    {
+      "path": "composed-source.patch.gz",
+      "bytes": 31033,
+      "sha256": "3818885552ff68d9577f708ed76db926dc092aea37ee424f1c5f4455ef0f9a85"
+    },
+    {
+      "path": "native-typecheck-admission.json",
+      "bytes": 6564,
+      "sha256": "c86170f55bc4b1d202aa904f3107e7f2e6f083b67125f67d165e0335d9f0450f"
+    },
+    {
+      "path": "native-typecheck-controller-inverse.json",
+      "bytes": 589,
+      "sha256": "05409abd8ed60f787f6b7df0866a7309dc0e77604936802ff635c4c028332eb6"
+    },
+    {
+      "path": "native-typecheck-manifest.json",
+      "bytes": 5118,
+      "sha256": "7e01878457e7f6866b0e8bd1cbcca0a91b1e4f1c47c00bd1d4e1268d18ffb950"
+    },
+    {
+      "path": "native-typecheck-receipt.json",
+      "bytes": 2340,
+      "sha256": "32368a9c608f171b07240aa9162d7d10f1da7224708c72d201f72ce4c0e2970c"
+    },
+    {
+      "path": "native-typecheck-source-after.json",
+      "bytes": 1327,
+      "sha256": "fc46e15414dcbacf4f47243a67f3567c2e8f9b25f16f55522ad0e9c8bfcc932c"
+    },
+    {
+      "path": "native-typecheck-source-before.json",
+      "bytes": 1327,
+      "sha256": "fc46e15414dcbacf4f47243a67f3567c2e8f9b25f16f55522ad0e9c8bfcc932c"
+    },
+    {
+      "path": "old-five-metadata-admission.json",
+      "bytes": 985,
+      "sha256": "a564ad3fe80f57ec98c5a3e38614084a14dbb2839d3950681ae4a8ed8f53314f"
+    },
+    {
+      "path": "old-five-native-manifest.json",
+      "bytes": 10647,
+      "sha256": "45c26f24716ecef4082aa57fc64d0d5a4d695b37bf4582c444cad0add501d4c4"
+    },
+    {
+      "path": "old-five-native-qualification.json.gz",
+      "bytes": 5884,
+      "sha256": "1611d37760b1424416224441ce24dbf45cee4184831e3500d52f5adb820cb1b8"
+    },
+    {
+      "path": "old-five-product-handoff.json.gz",
+      "bytes": 2189,
+      "sha256": "44fa3b57a4bd2a3cb65d414a093609e700a3c1469b06ef031f458dc39d608d5a"
+    },
+    {
+      "path": "old-five-root-verification.json",
+      "bytes": 1687,
+      "sha256": "3e616169d4e3d8db39b33d957b66941793ad3166727b20e978aa8cc685171768"
+    },
+    {
+      "path": "root-source-integration.json",
+      "bytes": 10380,
+      "sha256": "262c309f8ef5b51dd717d5d9ee1fec51fcaecd71699e5df33399cbc8cff44243"
+    },
+    {
+      "path": "root-typecheck-verification.json",
+      "bytes": 1005,
+      "sha256": "7e6bbc7c4287e3966a867881f3b82063c8ee16e4a8829e700e095e2128c6f7ed"
+    }
+  ]
+}

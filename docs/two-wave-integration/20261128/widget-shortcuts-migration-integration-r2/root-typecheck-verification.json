@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-28T13:41:44.926967+00:00",
+  "status": "INDEPENDENT_WHOLE_COMPOSED_UI_TYPECHECK_VERIFIED",
+  "sourceCommit": "b52b345b4dc3efa0a5c5d8fec9982d3c4d05c52e",
+  "compiledUI": "c70c629f41cdea005e556f3a46a703be2dc53fa38d0b73ad6c227c68676db264",
+  "nativeReceiptSHA256": "32368a9c608f171b07240aa9162d7d10f1da7224708c72d201f72ce4c0e2970c",
+  "nativeManifestSHA256": "7e01878457e7f6866b0e8bd1cbcca0a91b1e4f1c47c00bd1d4e1268d18ffb950",
+  "verifiedPayloads": 26,
+  "verifiedBytes": 677011,
+  "sixGitAuthorityFilesExact": true,
+  "allSevenBeforeAfterInputsExact": true,
+  "wholeR1ControllerInverse": true,
+  "commandSeconds": 2.036879792052787,
+  "originalTimeoutSeconds": 120,
+  "commandExit": 0,
+  "diagnosticsBytes": 0,
+  "original47CaseBodiesRetained": true,
+  "newMigrationCases": 2,
+  "nativeAppBuildOrTest": "NOT_RUN",
+  "prior1f9CompileRetained": true,
+  "scope": "Apple Xcode27.0/SDK27.0 compile of exact whole current49-case sharedUI. Actualhosted27.2/nativeacceptance remains separate."
+}

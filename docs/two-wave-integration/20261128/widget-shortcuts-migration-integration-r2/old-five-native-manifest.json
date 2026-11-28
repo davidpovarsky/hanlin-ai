@@ -1,0 +1,219 @@
+{
+  "files": [
+    {
+      "path": "actual-old-app-metadata/extract.actionsdata",
+      "bytes": 72144,
+      "sha256": "c37f688d78362bf040dc8b63e2c793a5caf3d4c7a7410494cca542522b70ac41",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/old-five-metadata-retained-products-f45d6edc-r3/actual-old-app-metadata/extract.actionsdata",
+      "sourceMode": 420
+    },
+    {
+      "path": "actual-old-app-metadata/extract.packagedata",
+      "bytes": 229,
+      "sha256": "4300377e471d9441cbb228ffdefa1658762970bc582d0b368296a8b71abadfc6",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/old-five-metadata-retained-products-f45d6edc-r3/actual-old-app-metadata/extract.packagedata",
+      "sourceMode": 420
+    },
+    {
+      "path": "actual-old-app-metadata/selected-five-parameter-metadata.json",
+      "bytes": 10116,
+      "sha256": "55ec78a1c49af23c7743cad7f8cd94f85057959880fbd368ad33c1d3ea5c5e01",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/old-five-metadata-retained-products-f45d6edc-r3/actual-old-app-metadata/selected-five-parameter-metadata.json",
+      "sourceMode": 420
+    },
+    {
+      "path": "actual-old-app-metadata/version.json",
+      "bytes": 53,
+      "sha256": "dd4247d69cd8c750931505420148b52da7955333be2932b866fef83e3c713ac4",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/old-five-metadata-retained-products-f45d6edc-r3/actual-old-app-metadata/version.json",
+      "sourceMode": 420
+    },
+    {
+      "path": "actual-old-metadata-admission.json",
+      "bytes": 985,
+      "sha256": "a564ad3fe80f57ec98c5a3e38614084a14dbb2839d3950681ae4a8ed8f53314f",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/old-five-metadata-retained-products-f45d6edc-r3/old-five-metadata-admission.json",
+      "sourceMode": 420
+    },
+    {
+      "path": "controller/actual41-cache-checkouts.json",
+      "bytes": 20006,
+      "sha256": "6d246473c1eb752090afffea125ec78e5db86c1207bf103128eeeddb596990a5",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/handoff/old-five-metadata-retained-products-f45d6edc-r3/actual41-cache-checkouts.json",
+      "sourceMode": 420
+    },
+    {
+      "path": "controller/continuation.admitted.json",
+      "bytes": 5157,
+      "sha256": "f2b34f93e051521655338a104899e03929cac873a7c5cf984f5dbeb0f502065e",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/handoff/old-five-metadata-retained-products-f45d6edc-r3/continuation.admitted.json",
+      "sourceMode": 420
+    },
+    {
+      "path": "controller/independent-root-review.json",
+      "bytes": 1517,
+      "sha256": "2fa9c6beab098bc3adb6b9f264ddf0b11202322057e91346aa104276b390e518",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/handoff/old-five-metadata-retained-products-f45d6edc-r3/independent-root-review.json",
+      "sourceMode": 420
+    },
+    {
+      "path": "controller/launch.json",
+      "bytes": 784,
+      "sha256": "a4d4e5cdb994257dbb5dfe2f9f17d0cfcf8797ac16da202ce407f2d4d6eab691",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/handoff/old-five-metadata-retained-products-f45d6edc-r3/launch.json",
+      "sourceMode": 420
+    },
+    {
+      "path": "controller/old_intent_metadata.py",
+      "bytes": 3899,
+      "sha256": "83e4811f7199bbb4ed489c363e5dff3b60b07d0b7b1966060174db03094aefe1",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/handoff/old-five-metadata-retained-products-f45d6edc-r3/old_intent_metadata.py",
+      "sourceMode": 420
+    },
+    {
+      "path": "controller/product_checkpoint.py",
+      "bytes": 4771,
+      "sha256": "a483883aaa94ffa3fb3936752e3ab086fed0b56563506dcd387bf390df8044d3",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/handoff/old-five-metadata-retained-products-f45d6edc-r3/product_checkpoint.py",
+      "sourceMode": 420
+    },
+    {
+      "path": "controller/retained_product_continuation.py",
+      "bytes": 14667,
+      "sha256": "c520cec498622416bf9befb332651fe43402bb578c3971c1be3a0b0de6f07b4a",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/handoff/old-five-metadata-retained-products-f45d6edc-r3/retained_product_continuation.py",
+      "sourceMode": 420
+    },
+    {
+      "path": "controller/supervisor.stderr.log",
+      "bytes": 30,
+      "sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/handoff/old-five-metadata-retained-products-f45d6edc-r3/supervisor.stderr.log",
+      "sourceMode": 420
+    },
+    {
+      "path": "controller/supervisor.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/handoff/old-five-metadata-retained-products-f45d6edc-r3/supervisor.stdout.log",
+      "sourceMode": 420
+    },
+    {
+      "path": "original-binding.admitted.json",
+      "bytes": 27959,
+      "sha256": "f1a2ff1ad4cdbcac28d50b2b100857f6fe74bf579498b1eb45644fea68917e86",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/handoff/old-five-prefix-native-controller-f45d6edc-r1/binding.admitted.json",
+      "sourceMode": 420
+    },
+    {
+      "path": "original-native/acceptance.json",
+      "bytes": 24580,
+      "sha256": "5922df2980808d43a14fd25409cba16e34d71eae7734963db61108ff2f126c08",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/old-five-prefix-f45d6edc-r1/original-native/acceptance.json",
+      "sourceMode": 420
+    },
+    {
+      "path": "original-native/bootstatus.log",
+      "bytes": 5904,
+      "sha256": "d567d32c72a83a74551e4ed3c8ccb4cae3ff8416ba39b889bed51fc2df606abc",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/old-five-prefix-f45d6edc-r1/original-native/bootstatus.log",
+      "sourceMode": 420
+    },
+    {
+      "path": "original-native/build.log.gz",
+      "bytes": 137848,
+      "sha256": "19b8207e59bf1cd71b2d3c5876c4eb4de8510b3ee8f5fd1f77fff8029a1c37d7",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/old-five-prefix-f45d6edc-r1/original-native/build.log",
+      "sourceMode": 420,
+      "uncompressedBytes": 2849921,
+      "uncompressedSHA256": "9aa7f30d9b67e3f4085eacb182709431884b5899f4f756027299dcada743957a"
+    },
+    {
+      "path": "original-native/commands.jsonl",
+      "bytes": 7784,
+      "sha256": "8e3bbdc3aad18362636277fdc1dc9f7cd5a6b9bec0fe85cc4d7cff84023dfd85",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/old-five-prefix-f45d6edc-r1/original-native/commands.jsonl",
+      "sourceMode": 420
+    },
+    {
+      "path": "original-native/prefix-attribution.json",
+      "bytes": 631,
+      "sha256": "6a1d94b7b5004e54b1a5d3958b4c0055330c20dadbaa7c590eb2e3648a0df36f",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/old-five-prefix-f45d6edc-r1/original-native/prefix-attribution.json",
+      "sourceMode": 420
+    },
+    {
+      "path": "original-native/ui-source-typecheck.log",
+      "bytes": 26704,
+      "sha256": "346c8f28116012a26d2c783f467b0bacbd601364d24a5e626072ffab193e7146",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/old-five-prefix-f45d6edc-r1/original-native/ui-source-typecheck.log",
+      "sourceMode": 420
+    },
+    {
+      "path": "original-products.json.gz",
+      "bytes": 244728,
+      "sha256": "69b7d58916d8397ceead390a56cf315583cd6fb7108f72ac4852d504daf6a670",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/old-five-metadata-retained-products-f45d6edc-r3/original-three-bundle-products.json",
+      "sourceMode": 420,
+      "uncompressedBytes": 1824466,
+      "uncompressedSHA256": "e2c072c3fa4861d9ecde4366b4b163c9781f6ba6c09604c0a580b2849cd98041"
+    },
+    {
+      "path": "original-r1-failed-controller.json",
+      "bytes": 7395,
+      "sha256": "df0bbb2de0aea54d0a70ddf039ce1643798b539f957af59eedcbdfe8fb013bf4",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/old-five-prefix-f45d6edc-r1.json",
+      "sourceMode": 420
+    },
+    {
+      "path": "original-r2-failed-continuation.json",
+      "bytes": 4912,
+      "sha256": "7af8b7596e8fc364ff347cf58a0cee46ed85bccc22313f54df5bc0350cee1ad2",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/old-five-metadata-retained-products-f45d6edc-r2.json",
+      "sourceMode": 420
+    },
+    {
+      "path": "product-handoff/HanlinMiniApps.xctestrun",
+      "bytes": 18525,
+      "sha256": "249bec01aa2a623e2f543d3f3b96ff39460827f692cdff74efebf07f96e0f8ff",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/handoff/old-five-f45-qualified-product-handoff-r1/HanlinMiniApps.xctestrun",
+      "sourceMode": 420
+    },
+    {
+      "path": "product-handoff/actual-app-bundled-miniapp-sdk.json.gz",
+      "bytes": 1312808,
+      "sha256": "40166911a8b75813999b8a2e7f9f752666619d0afbef60ad1c67fd51c3298eb1",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/handoff/old-five-f45-qualified-product-handoff-r1/actual-app-bundled-miniapp-sdk.json.gz",
+      "sourceMode": 420
+    },
+    {
+      "path": "product-handoff/app-Info.plist",
+      "bytes": 5488,
+      "sha256": "a3997489cacde941ea0df317215ab63f51b1b1938e18b926e9cffb85c86e9232",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/handoff/old-five-f45-qualified-product-handoff-r1/app-Info.plist",
+      "sourceMode": 420
+    },
+    {
+      "path": "product-handoff/app-RuntimeManifest.json",
+      "bytes": 3763,
+      "sha256": "bb6db1a327039e1beaffd8d11fa870a8ae6d545f2500cfd592bc6416f5fbc89d",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/handoff/old-five-f45-qualified-product-handoff-r1/app-RuntimeManifest.json",
+      "sourceMode": 420
+    },
+    {
+      "path": "product-handoff/receipt.json",
+      "bytes": 6678,
+      "sha256": "ad53f84c22043a62213a1fdcc71e7fae6d943dc62ce1e497e8e589a95867eabb",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/handoff/old-five-f45-qualified-product-handoff-r1/receipt.json",
+      "sourceMode": 420
+    },
+    {
+      "path": "qualification.json",
+      "bytes": 45180,
+      "sha256": "b5e38b3f0e9d99986524a133f2fb4488c60637ad35022b76dc1b9111cf32cbd2",
+      "sourcePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/old-five-metadata-retained-products-f45d6edc-r3.json",
+      "sourceMode": 420
+    }
+  ],
+  "scope": "Actual single old build PASS plus reviewed read-only product/metadata qualification; R1 and R2 failures retained; no saved-Shortcut migration or new native execution."
+}
