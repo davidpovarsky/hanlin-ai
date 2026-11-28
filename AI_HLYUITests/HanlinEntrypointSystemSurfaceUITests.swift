@@ -1436,9 +1436,68 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         return nil
     }
 
+    private func enterWidgetFamilyHomeScreenEditMode() throws {
+        let homeQuery = springboard.otherElements.matching(identifier: "Home screen icons")
+        try require(homeQuery.count == 1,
+                    "The actual Home Screen must expose exactly one icon container.")
+        let home = try widgetFamilyUnique(homeQuery,
+                                         "The actual Home Screen icon container is unavailable or ambiguous.")
+        let screen = springboard.frame
+        let snapshot = try home.snapshot()
+        try require(snapshot.frame == screen && screen.width > 0 && screen.height > 0,
+                    "The Home Screen background does not cover the actual screen.")
+        var pending: [any XCUIElementSnapshot] = [snapshot]
+        var inspected = 0, backgroundCount = 0
+        var occupied: [CGRect] = []
+        while let node = pending.popLast() {
+            inspected += 1
+            try require(inspected <= 1024 && Date() < deadline,
+                        "The actual Home Screen snapshot exceeded this case's observation bound.")
+            let children = node.children
+            pending.append(contentsOf: children)
+            let frame = node.frame
+            guard [frame.minX, frame.minY, frame.width, frame.height].allSatisfy({ $0.isFinite }),
+                  frame.width > 0, frame.height > 0, frame.intersects(screen) else { continue }
+            if node.elementType == .other && children.isEmpty && frame == screen &&
+                node.identifier.isEmpty && node.label.isEmpty {
+                backgroundCount += 1
+                continue
+            }
+            if children.isEmpty || node.elementType == .icon {
+                occupied.append(frame.intersection(screen))
+            }
+        }
+        try require(backgroundCount == 1 && occupied.count <= 256,
+                    "The actual Home Screen has no unique observed background or too many occupied frames.")
+        let offsets: [CGVector] = [0.6, 0.5, 0.7, 0.4].flatMap { y in
+            [0.5, 0.25, 0.75].map { x in CGVector(dx: x, dy: y) }
+        }
+        let offset = try XCTUnwrap(offsets.first { candidate in
+            let point = CGPoint(x: screen.minX + screen.width * candidate.dx,
+                                y: screen.minY + screen.height * candidate.dy)
+            return !occupied.contains { $0.insetBy(dx: -16, dy: -16).contains(point) }
+        }, "No observed empty Home Screen background point is available for editing.")
+        let point = CGPoint(x: screen.minX + screen.width * offset.dx,
+                            y: screen.minY + screen.height * offset.dy)
+        record["homeScreenEditGesture"] = ["method": "observed-background-long-press",
+            "screenFrame": widgetStateFrame(screen), "point": [Double(point.x), Double(point.y)],
+            "occupiedFrames": occupied.map { widgetStateFrame($0) }, "clearance": 16,
+            "observedBackgroundCount": backgroundCount, "at": widgetStateTimestamp(),
+            "uptime": ProcessInfo.processInfo.systemUptime]
+        try require(Date() < deadline, "The Home Screen gesture exceeded this case's original deadline.")
+        home.coordinate(withNormalizedOffset: offset).press(forDuration: 1.2)
+        let edit = springboard.buttons.matching(NSPredicate(format: "label == %@", "Edit"))
+        try require(edit.firstMatch.waitForExistence(timeout: bounded(15)),
+                    "The observed background gesture did not open actual Home Screen edit mode.")
+        try require(edit.count == 1,
+                    "The actual Home Screen must expose exactly one Edit control.")
+        try tap(widgetFamilyUnique(edit, "The actual Home Screen Edit control is unavailable or ambiguous."),
+                "Open the actual Home Screen editing menu.")
+    }
+
     private func openWidgetFamilyGallery(sizeLabel: String) throws {
         let selectedIcon = try widgetHomeScreenIcon()
-        let icon = try XCTUnwrap(selectedIcon, "The installed MiniApps Home Screen icon is absent.")
+        _ = try XCTUnwrap(selectedIcon, "The installed MiniApps Home Screen icon is absent.")
         let placeholders = springboard.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Choose a widget instance"))
         try require(widgetFamilyMarkerCount() == 0 && widgetFamilyVisible(placeholders).isEmpty,
                     "This placement page already has an unowned Matrix or placeholder; do not reuse or remove it.")
@@ -1446,11 +1505,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
             "screenFrame": widgetStateFrame(springboard.frame), "orientation": widgetFamilyOrientationName(),
             "at": widgetStateTimestamp(), "uptime": ProcessInfo.processInfo.systemUptime]
         capture(springboard, "widget-family-before-placement")
-        icon.press(forDuration: 1.2)
-        let editHome = springboard.buttons["Edit Home Screen"].firstMatch
-        if !editHome.exists && springboard.buttons["Options"].firstMatch.exists { springboard.buttons["Options"].firstMatch.tap() }
-        try tap(editHome, "Open the actual Home Screen edit mode.")
-        if springboard.buttons["Edit"].firstMatch.exists { springboard.buttons["Edit"].firstMatch.tap() }
+        try enterWidgetFamilyHomeScreenEditMode()
         try tap(firstButton(springboard, ["Add Widget", "Add Widgets"]), "Open the real widget gallery.")
         let search = springboard.searchFields.firstMatch
         try tap(search, "Search the actual MiniApps widget provider."); search.typeText("Hanlin MiniApps")
