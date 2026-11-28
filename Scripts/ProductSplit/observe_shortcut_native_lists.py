@@ -3,7 +3,8 @@
 XCTest alone edits, saves, reopens, clears and runs the real system Shortcut.
 This reader writes only attempt evidence and the XCTest-owned exchange. Native
 integer/number tags are inspected in the original command; JS typeof/JSON alone
-cannot establish that distinction. Expo and pre-change migration remain separate.
+cannot establish that distinction. Each engine is a separate four-case scope;
+pre-change saved-action migration remains a separate obligation.
 """
 from pathlib import Path
 import hashlib
@@ -18,6 +19,7 @@ import uuid
 import observe_shortcut_surfaces as shared
 import observe_shortcut_long_running as products
 import observe_share_translation_surfaces as archive_binding
+from observe_shortcut_concurrency import same_private_path
 
 require = shared.require
 equal = shared.equal_typed_json
@@ -53,6 +55,53 @@ SOURCE_FILES = tuple(FIXTURE + "/" + name for name in FIXTURE_FILES) + (
     "Scripts/CI/Tests/test_shortcut_native_lists.py",
     "Scripts/CI/Tests/fixtures/native_lists_actionsdata.json",
 )
+
+
+# Keep the original NativeScript scope/fixtures independently selectable.
+# Host storage and channel sources bind the different engine-owned evidence.
+SHARED_SOURCE_FILES = SOURCE_FILES[len(FIXTURE_FILES):] + (
+    "Scripts/ProductSplit/observe_shortcut_concurrency.py",
+)
+SOURCE_FILES = tuple(FIXTURE + "/" + name for name in FIXTURE_FILES) + SHARED_SOURCE_FILES + (
+    "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowSession.swift",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/index.mjs",
+)
+EXPO_FIXTURE_FILES = ("package.json", "script.json", "tsconfig.json", "hanlin.authoring.json",
+                      "index.ts", "proof.ts", "App.tsx")
+EXPO_METHODS = {
+    kind: "testExpoSaved" + kind.title() + "ListReopensThenClearsToEmpty"
+    for kind in KINDS
+}
+ENGINE_CONTRACTS = {
+    "nativescript": {"scope": SCOPE, "appID": APP_ID, "fixture": FIXTURE, "archive": ARCHIVE,
+                     "fixtureFiles": FIXTURE_FILES, "methods": METHODS,
+                     "handler": "nativescript/app/bundle.mjs"},
+    "expo": {"scope": "miniapp_native_lists_expo_os", "appID": "hanlin.shortcutlists.expo",
+             "fixture": "Fixtures/ShortcutNativeLists/expo", "archive": "NativeListsExpo.hanlinExpo",
+             "fixtureFiles": EXPO_FIXTURE_FILES, "methods": EXPO_METHODS, "handler": "bundle.js"},
+}
+
+
+def engine_contract(engine):
+    require(type(engine) is str and engine in ENGINE_CONTRACTS, "Unknown native-list engine")
+    return ENGINE_CONTRACTS[engine]
+
+
+def source_files(engine):
+    contract = engine_contract(engine)
+    if engine == "nativescript":
+        return SOURCE_FILES
+    return tuple(contract["fixture"] + "/" + name for name in contract["fixtureFiles"]) + SHARED_SOURCE_FILES + (
+        "Packages/HanlinExpoUI/src/miniapp-actions.ts",
+        "Packages/HanlinExpoUI/src/host-services.ts",
+        "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+        "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
+        "AI_HLY/Downstream/HostServices/Data/HanlinFileService.swift",
+        "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppActionChannel.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+        "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
+    )
 
 
 def expected_values(kind, run_id, step):
@@ -132,18 +181,21 @@ def file_record(path):
     return products.file_record(path)
 
 
-def create_inputs(root, evidence, runner, test, state, simulator):
+def create_inputs(root, evidence, runner, test, state, simulator, engine="nativescript"):
+    contract = engine_contract(engine)
     root, evidence, runner, test = (Path(p).resolve(strict=True) for p in (root, evidence, runner, test))
     require(subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip() == state["sha"],
             "Current source HEAD differs from original runner")
-    source_files = {name: file_record(root / name) for name in SOURCE_FILES}
-    for name, row in source_files.items():
+    source_rows = {name: file_record(root / name) for name in source_files(engine)}
+    for name, row in source_rows.items():
         raw = subprocess.check_output(["git", "show", state["sha"] + ":" + name], cwd=root)
         require(shared.digest(raw) == row["sha256"], "A native-list source differs from admitted Git")
     built = state["native_list_fixtures"]
-    require(built["status"] == "BUILT_AND_STAGED_INPUTS_ONLY" and len(built["archives"]) == 1,
+    require(built["status"] == "BUILT_AND_STAGED_INPUTS_ONLY" and len(built["archives"]) == 1
+            and built["archives"][0]["engine"] == engine
+            and built["archives"][0]["archive"] == contract["archive"],
             "The original single-fixture CLI did not succeed")
-    archive = evidence / "shortcut-native-list-fixture" / ARCHIVE
+    archive = evidence / "shortcut-native-list-fixture" / contract["archive"]
     require(file_record(archive)["sha256"] == built["archives"][0]["archiveSHA256"],
             "Produced native-list archive changed")
     app = runner.parent / "HanlinMiniApps.app"
@@ -151,15 +203,15 @@ def create_inputs(root, evidence, runner, test, state, simulator):
     require(len(metadata) == 1, "The actual standalone product metadata is missing")
     meta = shared.read_document(metadata[0], app)
     value = {
-        "schema": 1, "scope": SCOPE, "device": simulator, "sourceSHA": state["sha"],
-        "root": str(root), "sourceFiles": source_files,
+        "schema": 1, "scope": contract["scope"], "engine": engine, "device": simulator, "sourceSHA": state["sha"],
+        "root": str(root), "sourceFiles": source_rows,
         "archive": {"path": str(archive), **file_record(archive)},
         "fixture": built, "app": products.product_records(app),
         "runner": products.product_records(runner), "test": products.product_records(test),
         "testRelativePath": test.relative_to(runner).as_posix(),
         "metadataRelativePath": metadata[0].relative_to(app).as_posix(),
         "metadataFile": file_record(metadata[0]), "metadataContract": metadata_contract(meta["value"]),
-        "expectedCases": METHODS,
+        "expectedCases": contract["methods"],
     }
     path = evidence / "shortcut-native-lists-inputs.json"
     with path.open("x") as stream:
@@ -167,20 +219,22 @@ def create_inputs(root, evidence, runner, test, state, simulator):
     return {"path": str(path), **file_record(path)}
 
 
-def current_inputs(args, evidence, roots):
+def current_inputs(args, evidence, roots, engine="nativescript"):
+    contract = engine_contract(engine)
     path = Path(args.native_list_inputs)
     require(path == evidence.parent / "shortcut-native-lists-inputs.json", "Manifest is outside owned attempt")
     document = shared.read_document(path, evidence.parent)
     value = document["value"]
-    require(value.get("schema") == 1 and value.get("scope") == SCOPE and value.get("device") == args.device
-            and value.get("expectedCases") == METHODS, "Native-list input manifest differs")
+    require(value.get("schema") == 1 and value.get("scope") == contract["scope"]
+            and value.get("engine") == engine and value.get("device") == args.device
+            and value.get("expectedCases") == contract["methods"], "Native-list input manifest differs")
     root = Path(value["root"]).resolve(strict=True)
-    require(set(value["sourceFiles"]) == set(SOURCE_FILES), "Incomplete source closure")
+    require(set(value["sourceFiles"]) == set(source_files(engine)), "Incomplete source closure")
     require(subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip() == value["sourceSHA"],
             "Source HEAD changed during acceptance")
     require(all(file_record(root / name) == row for name, row in value["sourceFiles"].items()),
             "Actual native-list source changed")
-    require(value["archive"]["path"] == str(evidence.parent / "shortcut-native-list-fixture" / ARCHIVE)
+    require(value["archive"]["path"] == str(evidence.parent / "shortcut-native-list-fixture" / contract["archive"])
             and file_record(Path(value["archive"]["path"]))["sha256"] == value["archive"]["sha256"],
             "Original archive binding changed")
     runner = shared.os_container(args.device, args.runner_bundle_id, "app")
@@ -198,10 +252,11 @@ def current_inputs(args, evidence, roots):
     return document
 
 
-def current_identity(roots):
+def current_identity(roots, engine="nativescript"):
+    contract = engine_contract(engine)
     snapshot = shared.snapshot_document(roots["extensions"])
     rows = [row for row in snapshot["value"]["snapshot"].get("intentEntities", [])
-            if row.get("appID") == APP_ID and row.get("id") == ACTION
+            if row.get("appID") == contract["appID"] and row.get("id") == ACTION
             and row.get("identity", {}).get("entrypointID") == ENTRYPOINT]
     require(len(rows) == 1, "The actual installed native-list action is missing or ambiguous")
     row = rows[0]
@@ -210,8 +265,8 @@ def current_identity(roots):
             and all(type(identity[k]) is str and identity[k] for k in identity if k != "generation")
             and type(identity["generation"]) is int and identity["generation"] > 0
             and type(row.get("displayName")) is str and row["displayName"]
-            and row.get("hostActionHandler") == "nativescript/app/bundle.mjs", "Invalid action identity")
-    result = {"identity": identity, "appID": APP_ID, "actionID": ACTION,
+            and row.get("hostActionHandler") == contract["handler"], "Invalid action identity")
+    result = {"identity": identity, "appID": contract["appID"], "actionID": ACTION,
               "actionDisplayName": row["displayName"], "hostActionHandler": row["hostActionHandler"]}
     catalog = shared.installed_catalog(roots["data"], result)
     return result, catalog
@@ -255,6 +310,8 @@ def validate_editor(request, step):
 
 
 def terminal_result(request, identity, baseline_ids, commands, armed_at):
+    engine = request.get("engine", "nativescript")
+    contract = engine_contract(engine)
     kind, step = request["listKind"], request["step"]
     expected = validate_editor(request, step)
     matches = []
@@ -280,28 +337,63 @@ def terminal_result(request, identity, baseline_ids, commands, armed_at):
             and type(receipt.get("attempt")) is int and receipt["attempt"] == 1,
             "The real action did not finish once without failure/cancellation/lease")
     delivery = invocation.get("delivery", {})
-    require(delivery.get("schemaVersion") == 1 and delivery.get("appID") == APP_ID
+    require(delivery.get("schemaVersion") == 1 and delivery.get("appID") == contract["appID"]
             and delivery.get("source") == "shortcuts" and delivery.get("userGesturePresent") is True
             and delivery.get("canPresentUI") is False and invocation.get("continueInForeground") is False,
             "The real OS delivery or saved background mode differs")
     result = shared.decode_value(receipt.get("value"))
     if type(result) is str:
         result = shared.parse_json(result)
-    require(type(result) is dict and result.get("schema") == 1 and result.get("appID") == APP_ID
+    require(type(result) is dict and result.get("schema") == 1 and result.get("appID") == contract["appID"]
             and result.get("actionID") == ACTION, "Returned fixture identity differs")
     result_values(result.get("values"), expected)
     js_type = {"text": "string", "integer": "number", "number": "number", "boolean": "boolean"}[kind]
     require(result.get("observedTypes") == [js_type] * len(expected), "Actual JS scalar observations differ")
-    require(type(result.get("nonce")) is str and re.fullmatch(r"[a-z0-9]+-[a-z0-9]+", result["nonce"])
-            and type(result.get("caller")) is str and result["caller"]
-            and result.get("executionMode") == "headless-action" and result.get("attached") is False,
-            "Actual native handler identity/presentation is missing")
-    window_id = result.get("windowID")
-    require(type(window_id) is str and re.fullmatch(r"[A-Za-z0-9_-]{1,128}", window_id),
-            "Invalid actual window identifier")
+    if engine == "nativescript":
+        require(type(result.get("nonce")) is str and re.fullmatch(r"[a-z0-9]+-[a-z0-9]+", result["nonce"])
+                and type(result.get("caller")) is str and result["caller"]
+                and result.get("executionMode") == "headless-action" and result.get("attached") is False,
+                "Actual native handler identity/presentation is missing")
+        window_id = result.get("windowID")
+        require(type(window_id) is str and re.fullmatch(r"[A-Za-z0-9_-]{1,128}", window_id),
+                "Invalid actual window identifier")
+    else:
+        require(type(result.get("nonce")) is str and re.fullmatch(r"[a-z0-9]+-[a-z0-9]+", result["nonce"])
+                and result.get("caller") == "hanlin.host", "Actual Expo handler identity is missing")
+        invocation_id = result.get("invocationID")
+        require(type(invocation_id) is str and str(uuid.UUID(invocation_id)) == command_id.lower(),
+                "Expo handler invocation is not the original queued command")
+        require(result.get("stateFile") == "native-list-" + result["nonce"] + ".json",
+                "Expo result is not its invocation-owned state filename")
     require(shared._epoch_milliseconds(result.get("observedAt")) >= armed_at,
             "Returned handler evidence predates this run")
     return {"invocationID": command_id, "command": document, "result": result}
+
+
+def result_document(roots, identity, payload, engine):
+    engine_contract(engine)
+    if engine == "nativescript":
+        path = roots["data"] / "Library/Application Support/Hanlin/MiniApps" / APP_ID / "Windows" \
+            / payload["windowID"] / "State" / ("native-list-" + payload["nonce"] + ".json")
+        require(same_private_path(str(path), payload.get("statePath")),
+                "Result escaped its actual native window state")
+    else:
+        filename = payload.get("stateFile")
+        require(type(filename) is str and re.fullmatch(r"native-list-[a-z0-9]+-[a-z0-9]+\.json", filename)
+                and filename == "native-list-" + payload["nonce"] + ".json",
+                "Expo result is not its invocation-owned state filename")
+        path = shared.expo_state_directory(roots["data"], identity["identity"]["installedPackageID"]) / filename
+    return shared.read_document(path, roots["data"])
+
+
+def validate_expo_presentation(request, step, armed_at):
+    presentation = request.get("completionPresentation")
+    require(type(presentation) is dict and type(presentation.get("step")) is int
+            and presentation["step"] == step and presentation.get("shortcutsForeground") is True
+            and presentation.get("miniAppsForeground") is False,
+            "The actual completed Expo action must leave Shortcuts in the foreground")
+    require(shared._epoch_milliseconds(presentation.get("observedAt")) >= armed_at,
+            "Expo presentation evidence predates the armed execution")
 
 
 def write_reply(directory, evidence, filename, value):
@@ -319,11 +411,15 @@ def write_reply(directory, evidence, filename, value):
 def observe_case(args, request, directory, evidence, seen):
     run_id = request.get("runID"); kind = request.get("listKind")
     expected_values(kind, run_id, 0)
-    require(request.get("schema") == 1 and request.get("engine") == "nativescript"
-            and request.get("surface") == "nativeLists" and request.get("fixtureAppID") == APP_ID
-            and request.get("testMethod") == METHODS[kind], "Unexpected native-list case")
+    engine = request.get("engine")
+    contract = engine_contract(engine)
+    require(request.get("schema") == 1
+            and request.get("surface") == "nativeLists" and request.get("fixtureAppID") == contract["appID"]
+            and request.get("testMethod") == contract["methods"][kind], "Unexpected native-list case")
     shared._epoch_milliseconds(request.get("startedAt"))
     case = seen.get(run_id)
+    if case is not None:
+        require(case["engine"] == engine, "A case cannot change its admitted native-list engine")
     phase = request.get("phase")
     if case is not None and case["phase"] == phase:
         # A pending terminal is re-read; other immutable phase replies need no polling work.
@@ -334,8 +430,8 @@ def observe_case(args, request, directory, evidence, seen):
         roots, inputs, identity, installed = (case[key] for key in ("actualRoots", "inputs", "identity", "installed"))
     else:
         roots = shared.product_roots(args.device, args.bundle_id)
-        inputs = current_inputs(args, evidence, roots)
-        identity, catalog = current_identity(roots)
+        inputs = current_inputs(args, evidence, roots, engine)
+        identity, catalog = current_identity(roots, engine)
         installed = archive_binding.verify_installed_fixture_archive(
             roots["data"], identity["identity"], catalog, inputs["value"]["archive"], evidence.parent)
     commands = shared.queue_documents(roots["extensions"])
@@ -343,7 +439,7 @@ def observe_case(args, request, directory, evidence, seen):
         require(phase == "native-list-installed", "Bind actual installation before opening Shortcuts")
         target = evidence / run_id; target.mkdir()
         apps = shared.system_app_observation(args.device, target)
-        case = {"phase": phase, "kind": kind, "startedAt": request["startedAt"],
+        case = {"phase": phase, "kind": kind, "engine": engine, "startedAt": request["startedAt"],
                 "directory": str(directory), "identity": identity, "installed": installed,
                 "roots": {k: str(roots[k]) for k in ("app", "group", "data")},
                 "inputsSHA256": inputs["sha256"], "steps": [], "armed": None,
@@ -388,8 +484,8 @@ def observe_case(args, request, directory, evidence, seen):
                 return
             if repeated_pending:
                 fresh_roots = shared.product_roots(args.device, args.bundle_id)
-                fresh_inputs = current_inputs(args, evidence, fresh_roots)
-                fresh_identity, fresh_catalog = current_identity(fresh_roots)
+                fresh_inputs = current_inputs(args, evidence, fresh_roots, engine)
+                fresh_identity, fresh_catalog = current_identity(fresh_roots, engine)
                 fresh_installed = archive_binding.verify_installed_fixture_archive(
                     fresh_roots["data"], fresh_identity["identity"], fresh_catalog,
                     fresh_inputs["value"]["archive"], evidence.parent)
@@ -397,10 +493,7 @@ def observe_case(args, request, directory, evidence, seen):
                         and fresh_inputs["sha256"] == inputs["sha256"] and fresh_identity == identity
                         and equal(fresh_installed, installed), "Live terminal product/source/installation changed")
             payload = result["result"]
-            path = roots["data"] / "Library/Application Support/Hanlin/MiniApps" / APP_ID / "Windows" \
-                / payload["windowID"] / "State" / ("native-list-" + payload["nonce"] + ".json")
-            require(payload.get("statePath") == str(path), "Result escaped its actual native window state")
-            private = shared.read_document(path, roots["data"])
+            private = result_document(roots, identity, payload, engine)
             require(json_equal(private["value"], payload), "Returned JSON differs from its real private file")
             require(all(row["result"]["nonce"] != payload["nonce"] for row in case["steps"]),
                     "The cleared list reused an old handler result")
@@ -411,6 +504,8 @@ def observe_case(args, request, directory, evidence, seen):
         arm = case["armed"]
         require(arm is not None and "terminal" in arm and request.get("step") == arm["step"],
                 "A real terminal must precede the built-in result-chain readback")
+        if engine == "expo":
+            validate_expo_presentation(request, arm["step"], arm["at"])
         require(json_equal(request.get("renderedResult"), arm["terminal"]["result"])
                 and request.get("builtInChain") == ["Get Text from Input", "Show Result"],
                 "Actual Get Text/Show Result content differs from this handler result")
@@ -422,7 +517,9 @@ def observe_case(args, request, directory, evidence, seen):
                     and case["steps"][1]["result"]["values"] == [], "Empty clearing did not execute independently")
             write_reply(directory, target, "completion.json", {**prefix, "status": "EXECUTED_PASS",
                 "steps": case["steps"], "caseKind": kind, "nativeExecutions": 2,
-                "scope": "Current NativeScript saved native list only; no Expo or pre-change migration claim"})
+                "scope": ("Current NativeScript saved native list only; no Expo or pre-change migration claim"
+                          if engine == "nativescript" else
+                          "Current Expo saved native list only; no NativeScript or pre-change migration claim")})
             case["finished"] = True
     else:
         raise shared.ObservationError("Unexpected native-list exchange phase")

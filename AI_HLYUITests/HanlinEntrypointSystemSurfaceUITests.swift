@@ -3818,6 +3818,11 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
             "testNativeScriptSaved" + rawValue.prefix(1).uppercased() +
                 String(rawValue.dropFirst()) + "ListReopensThenClearsToEmpty"
         }
+        func method(for engine: Engine) -> String {
+            if engine == .nativescript { return method }
+            return "testExpoSaved" + rawValue.prefix(1).uppercased() +
+                String(rawValue.dropFirst()) + "ListReopensThenClearsToEmpty"
+        }
         func values(runID: String) -> [Any] {
             switch self {
             case .text: return ["שלום", "汉字", runID]
@@ -3841,7 +3846,21 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         try nativeListShortcut(.boolean)
     }
 
-    private func nativeListShortcut(_ kind: NativeListKind) throws {
+
+    func testExpoSavedTextListReopensThenClearsToEmpty() throws {
+        try nativeListShortcut(.text, engine: .expo)
+    }
+    func testExpoSavedIntegerListReopensThenClearsToEmpty() throws {
+        try nativeListShortcut(.integer, engine: .expo)
+    }
+    func testExpoSavedNumberListReopensThenClearsToEmpty() throws {
+        try nativeListShortcut(.number, engine: .expo)
+    }
+    func testExpoSavedBooleanListReopensThenClearsToEmpty() throws {
+        try nativeListShortcut(.boolean, engine: .expo)
+    }
+
+    private func nativeListShortcut(_ kind: NativeListKind, engine: Engine = .nativescript) throws {
         continueAfterFailure = false
         executionTimeAllowance = 360
         deadline = Date().addingTimeInterval(360)
@@ -3851,9 +3870,9 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         let directory = root.appendingPathComponent(runID, isDirectory: true)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         exchange = root; runDirectory = directory
-        record = ["schema": 1, "runID": runID, "engine": "nativescript", "surface": "nativeLists",
-                  "fixtureAppID": "hanlin.shortcutlists.nativescript", "listKind": kind.rawValue,
-                  "testMethod": kind.method, "startedAt": timestamp(), "status": "RUNNING"]
+        record = ["schema": 1, "runID": runID, "engine": engine.rawValue, "surface": "nativeLists",
+                  "fixtureAppID": "hanlin.shortcutlists." + engine.rawValue, "listKind": kind.rawValue,
+                  "testMethod": kind.method(for: engine), "startedAt": timestamp(), "status": "RUNNING"]
         try checkpoint("preparing")
         defer {
             capture(shortcuts, "native-lists-final-shortcuts")
@@ -3864,7 +3883,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         do {
             mini.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
             mini.launch()
-            try openNativeListFixture()
+            try openNativeListFixture(engine)
             try checkpoint("native-list-installed")
             let identity = try response("identity.json", timeout: 30)
             try require(identity["status"] as? String == "READY", "The current fixture was not admitted.")
@@ -3923,6 +3942,15 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
                 try require(completion["status"] as? String == "EXECUTED_PASS",
                             "The native list did not produce a correlated terminal.")
                 let result = try XCTUnwrap(completion["result"] as? [String: Any])
+                if engine == .expo {
+                    let shortcutsForeground = shortcuts.state == .runningForeground
+                    let miniAppsForeground = mini.state == .runningForeground
+                    record["completionPresentation"] = ["step": step,
+                        "shortcutsForeground": shortcutsForeground, "miniAppsForeground": miniAppsForeground,
+                        "observedAt": timestamp()]
+                    try require(shortcutsForeground && !miniAppsForeground,
+                                "The completed Expo list must leave the real Shortcuts app in the foreground.")
+                }
                 record["renderedResult"] = try readNativeListShownResult(result, step: step)
                 try checkpoint("native-list-chain-read")
                 if step == 0 {
@@ -3945,8 +3973,9 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         }
     }
 
-    private func openNativeListFixture() throws {
-        let title = "Native Lists NativeScript"
+    private func openNativeListFixture(_ engine: Engine = .nativescript) throws {
+        let title = engine == .nativescript ? "Native Lists NativeScript" : "Native Lists Expo"
+        let appID = "hanlin.shortcutlists." + engine.rawValue
         let close = mini.buttons["hanlin-script-app-close"].firstMatch
         if close.exists && close.isHittable { close.tap() }
         let manage = mini.buttons["hanlin-apps-add"].firstMatch
@@ -3957,7 +3986,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
             try tap(mini.buttons["hanlin-import-script-package"].firstMatch, "Import the actual native-list package.")
             let list = mini.collectionViews["hanlin-package-import-list"].firstMatch
             try require(list.waitForExistence(timeout: bounded(15)), "The original import list is unavailable.")
-            let archive = list.buttons["NativeListsNativeScript"].firstMatch
+            let archive = list.buttons[engine == .nativescript ? "NativeListsNativeScript" : "NativeListsExpo"].firstMatch
             try reveal(archive, in: list, message: "The original-produced native-list archive is absent.")
             try tap(archive, "Read the exact independent native-list archive.")
             let install = mini.buttons["hanlin-package-install"].firstMatch
@@ -3975,12 +4004,13 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
             try tap(mini.buttons["hanlin-apps-add-done"].firstMatch, "Return to the real catalog.")
         }
         try reveal(card, in: mini, message: "The installed native-list package is missing.")
-        try tap(card, "Open the actual installed NativeScript fixture.")
+        try tap(card, engine == .nativescript ? "Open the actual installed NativeScript fixture." :
+                    "Open the actual installed Expo fixture.")
         let ready = mini.descendants(matching: .any)["native-lists-ready"].firstMatch
         try require(ready.waitForExistence(timeout: bounded(30)) &&
-                    (ready.label == "hanlin.shortcutlists.nativescript" ||
-                     ready.value as? String == "hanlin.shortcutlists.nativescript"),
-                    "The actual NativeScript factory did not expose its app identity.")
+                    (ready.label == appID || ready.value as? String == appID),
+                    engine == .nativescript ? "The actual NativeScript factory did not expose its app identity." :
+                    "The actual Expo app did not expose its app identity.")
         capture(mini, "native-lists-installed")
     }
 

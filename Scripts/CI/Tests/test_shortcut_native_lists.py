@@ -289,5 +289,204 @@ class NativeListReaderTests(unittest.TestCase):
 
 
 
+
+class NativeListEngineAndStorageTests(unittest.TestCase):
+    def expo_example(self, kind="integer", step=0, command_id=COMMAND):
+        request, commands, armed = example(kind, step)
+        request["engine"] = "expo"
+        row = commands[COMMAND]["value"]
+        row["id"] = command_id
+        row["invocation"]["delivery"]["appID"] = "hanlin.shortcutlists.expo"
+        payload = reader.shared.decode_value(row["receipt"]["value"])
+        for name in ("windowID", "statePath", "executionMode", "attached"):
+            del payload[name]
+        payload.update(appID="hanlin.shortcutlists.expo", caller="hanlin.host",
+                       invocationID=command_id, stateFile="native-list-" + payload["nonce"] + ".json")
+        row["receipt"]["value"] = wire(payload)
+        return request, {command_id: {"value": row}}, armed
+
+    def test_expo_four_native_modes_and_cleared_empty_keep_original_command(self):
+        for kind in ("text", "integer", "number", "boolean"):
+            for step in (0, 1):
+                with self.subTest(kind=kind, step=step):
+                    request, commands, armed = self.expo_example(kind, step)
+                    result = reader.terminal_result(request, IDENTITY, set(), commands, armed)
+                    self.assertEqual(result["invocationID"], COMMAND)
+                    self.assertEqual(result["result"]["invocationID"], COMMAND)
+                    self.assertEqual(result["result"]["values"], request["editor"]["values"])
+                    self.assertNotIn("windowID", result["result"])
+
+    def test_expo_handler_command_caller_and_filename_cannot_be_substituted(self):
+        for key, value in (("invocationID", RUN), ("invocationID", "not-a-uuid"),
+                           ("caller", "foreign-caller"), ("stateFile", "../outside.json"),
+                           ("stateFile", "native-list-old-result.json"), ("appID", reader.APP_ID)):
+            request, commands, armed = self.expo_example()
+            row = commands[COMMAND]["value"]
+            result = reader.shared.decode_value(row["receipt"]["value"])
+            result[key] = value
+            row["receipt"]["value"] = wire(result)
+            with self.subTest(key=key, value=value), self.assertRaises(ValueError):
+                reader.terminal_result(request, IDENTITY, set(), commands, armed)
+
+    def test_expo_native_tag_owner_generation_and_lease_guards_remain_required(self):
+        request, commands, armed = self.expo_example()
+        commands[COMMAND]["value"]["invocation"]["parameters"]["value"][0] = wire(-7, forced="number")
+        with self.assertRaises(ValueError):
+            reader.terminal_result(request, IDENTITY, set(), commands, armed)
+        for key, value in (("installedPackageID", "another-installation"), ("generation", 2)):
+            request, commands, armed = self.expo_example()
+            commands[COMMAND]["value"]["invocation"]["identity"][key] = value
+            with self.subTest(key=key):
+                self.assertIsNone(reader.terminal_result(request, IDENTITY, set(), commands, armed))
+        for key, value in (("leaseID", COMMAND), ("attempt", 2), ("cancellationRequested", True)):
+            request, commands, armed = self.expo_example()
+            commands[COMMAND]["value"]["receipt"][key] = value
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                reader.terminal_result(request, IDENTITY, set(), commands, armed)
+
+    def exercise_expo_steps(self, damage=None):
+        # The real reader and private-file checks run. Only external OS/source
+        # observations are injected; this is never Simulator/Shortcuts evidence.
+        from tempfile import TemporaryDirectory
+        from types import SimpleNamespace
+        with TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            evidence = base / "attempt" / "shortcut-observer"; evidence.mkdir(parents=True)
+            directory = base / "runner" / RUN; directory.mkdir(parents=True)
+            roots = {key: base / key for key in ("app", "data", "group", "extensions")}
+            for path in roots.values(): path.mkdir()
+            inputs = {"sha256": "fixed-inputs", "value": {"archive": {"path": "injected", "sha256": "fixed"}}}
+            identity = {**IDENTITY, "appID": "hanlin.shortcutlists.expo", "actionID": reader.ACTION,
+                        "hostActionHandler": "bundle.js", "actionDisplayName": "Actual Expo action"}
+            request, _, armed = self.expo_example()
+            request.update(schema=1, surface="nativeLists", fixtureAppID="hanlin.shortcutlists.expo",
+                           testMethod="testExpoSavedIntegerListReopensThenClearsToEmpty",
+                           startedAt="2026-11-28T08:00:00Z", phase="native-list-installed")
+            queue = {}; seen = {}
+            args = SimpleNamespace(device="owned", bundle_id="app", runner_bundle_id="runner")
+            with patch.object(reader.shared, "product_roots", return_value=roots), \
+                 patch.object(reader, "current_inputs", return_value=inputs) as admission, \
+                 patch.object(reader, "current_identity", return_value=(identity, {})), \
+                 patch.object(reader.archive_binding, "verify_installed_fixture_archive", return_value={"bound": True}), \
+                 patch.object(reader.shared, "queue_documents", side_effect=lambda _: copy.deepcopy(queue)), \
+                 patch.object(reader.shared, "system_app_observation", return_value={}), \
+                 patch.object(reader.time, "time", return_value=armed / 1000):
+                reader.observe_case(args, request, directory, evidence, seen)
+                self.assertEqual(json.loads((directory / "identity.json").read_text())["appID"],
+                                 "hanlin.shortcutlists.expo")
+                for step in (0, 1):
+                    command_id = COMMAND if step == 0 else "33333333-3333-4333-8333-333333333333"
+                    update, commands, _ = self.expo_example(step=step, command_id=command_id)
+                    request.update(update, phase="native-list-arm")
+                    if damage == "engine-switch":
+                        request.update(engine="nativescript", fixtureAppID=reader.APP_ID,
+                                       testMethod=reader.METHODS["integer"])
+                    reader.observe_case(args, request, directory, evidence, seen)
+                    row = commands[command_id]["value"]
+                    payload = reader.shared.decode_value(row["receipt"]["value"])
+                    payload["nonce"] += str(step)
+                    payload["stateFile"] = "native-list-" + payload["nonce"] + ".json"
+                    owner = "another-installation" if damage == "foreign-package" else "owned-package"
+                    # An independent expected location, not the helper under test.
+                    target = roots["data"] / "Library/Application Support/HanlinPackages" / owner \
+                        / "State" / payload["stateFile"]
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_text(json.dumps(payload))
+                    if damage == "private-link":
+                        target.unlink()
+                        outside = base / "outside.json"; outside.write_text(json.dumps(payload))
+                        target.symlink_to(outside)
+                    row["receipt"]["value"] = wire(payload); row["receipt"]["status"] = "running"
+                    queue[command_id] = {"value": row}
+                    request.update(phase="native-list-sent", systemLaunchObserved=True)
+                    reader.observe_case(args, request, directory, evidence, seen)
+                    self.assertFalse((directory / ("completion-" + str(step) + ".json")).exists())
+                    count = admission.call_count
+                    row["receipt"]["status"] = "succeeded"
+                    if damage == "changed-source":
+                        admission.return_value = {**inputs, "sha256": "changed-source"}
+                    reader.observe_case(args, request, directory, evidence, seen)
+                    self.assertEqual(admission.call_count, count + 1)
+                    step_reply = json.loads((directory / ("completion-" + str(step) + ".json")).read_text())
+                    self.assertEqual(step_reply["privateProof"]["path"], str(target))
+                    request.update(phase="native-list-chain-read", renderedResult=copy.deepcopy(payload),
+                                   completionPresentation={"step": step, "shortcutsForeground": True,
+                                                           "miniAppsForeground": False,
+                                                           "observedAt": "2026-11-28T08:00:00.200Z"})
+                    if damage == "missing-presentation":
+                        del request["completionPresentation"]
+                    elif damage == "foreground":
+                        request["completionPresentation"]["miniAppsForeground"] = True
+                    elif damage == "stale-presentation":
+                        request["completionPresentation"]["observedAt"] = "2026-11-28T07:59:59Z"
+                    elif damage == "wrong-chain":
+                        request["renderedResult"]["values"] = [99]
+                    reader.observe_case(args, request, directory, evidence, seen)
+                    self.assertEqual(seen[RUN]["finished"], step == 1)
+                final = json.loads((directory / "completion.json").read_text())
+                self.assertEqual(final["nativeExecutions"], 2)
+                self.assertEqual([row["result"]["values"] for row in final["steps"]], [[-7, 0, 42], []])
+                self.assertEqual([row["invocationID"] for row in final["steps"]],
+                                 [COMMAND, "33333333-3333-4333-8333-333333333333"])
+                self.assertNotEqual(final["steps"][0]["result"]["nonce"], final["steps"][1]["result"]["nonce"])
+                self.assertTrue(seen[RUN]["finished"])
+
+    def test_expo_two_saved_steps_bind_exact_package_file_and_real_chain(self):
+        self.exercise_expo_steps()
+
+    def test_expo_foreign_package_and_symbolic_link_do_not_supply_private_proof(self):
+        for damage in ("foreign-package", "private-link"):
+            with self.subTest(damage=damage), self.assertRaises((ValueError, OSError)):
+                self.exercise_expo_steps(damage)
+
+    def test_expo_ready_case_cannot_switch_engine_or_source_at_terminal(self):
+        for damage in ("engine-switch", "changed-source"):
+            with self.subTest(damage=damage), self.assertRaises(ValueError):
+                self.exercise_expo_steps(damage)
+
+    def test_expo_background_observation_and_actual_chain_are_required(self):
+        for damage in ("missing-presentation", "foreground", "stale-presentation", "wrong-chain"):
+            with self.subTest(damage=damage), self.assertRaises(ValueError):
+                self.exercise_expo_steps(damage)
+
+    def test_nativescript_double_separator_reads_same_file_and_retains_observed_path(self):
+        from tempfile import TemporaryDirectory
+        with TemporaryDirectory() as temporary:
+            data = Path(temporary)
+            request, commands, armed = example()
+            payload = reader.terminal_result(request, IDENTITY, set(), commands, armed)["result"]
+            path = data / "Library/Application Support/Hanlin/MiniApps" / reader.APP_ID \
+                / "Windows" / payload["windowID"] / "State" / ("native-list-" + payload["nonce"] + ".json")
+            path.parent.mkdir(parents=True)
+            payload["statePath"] = str(path.parent) + "//" + path.name
+            path.write_text(json.dumps(payload))
+            document = reader.result_document({"data": data}, IDENTITY, payload, "nativescript")
+            self.assertEqual(document["path"], str(path))
+            self.assertEqual(document["value"]["statePath"], payload["statePath"])
+            self.assertIn("/State//", document["value"]["statePath"])
+
+    def test_nativescript_equivalence_rejects_owner_escape_and_links(self):
+        from tempfile import TemporaryDirectory
+        with TemporaryDirectory() as temporary:
+            data = Path(temporary)
+            request, commands, armed = example()
+            payload = reader.terminal_result(request, IDENTITY, set(), commands, armed)["result"]
+            path = data / "Library/Application Support/Hanlin/MiniApps" / reader.APP_ID \
+                / "Windows" / payload["windowID"] / "State" / ("native-list-" + payload["nonce"] + ".json")
+            path.parent.mkdir(parents=True); path.write_text(json.dumps(payload))
+            for observed in (str(path).replace("/actual-window/", "/foreign-window/"),
+                             str(path.parent) + "/../State/" + path.name,
+                             str(path.parent) + "/./" + path.name,
+                             "/another-container" + str(path), "//" + str(path).lstrip("/")):
+                payload["statePath"] = observed
+                with self.subTest(observed=observed), self.assertRaises(ValueError):
+                    reader.result_document({"data": data}, IDENTITY, payload, "nativescript")
+            payload["statePath"] = str(path.parent) + "//" + path.name
+            path.unlink()
+            outside = data / "outside.json"; outside.write_text(json.dumps(payload)); path.symlink_to(outside)
+            with self.assertRaises(ValueError):
+                reader.result_document({"data": data}, IDENTITY, payload, "nativescript")
+
+
 if __name__ == "__main__":
     unittest.main()
