@@ -1,0 +1,31 @@
+{
+  "actualRunID": 46137598503,
+  "actualCase": "testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts",
+  "actualOwnPID": 24392,
+  "AX": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-concurrency-terminal-r1/attachments-r1/concurrency/artifact-selected-members/paired-product/paired-attachments/10B35C4D-3B3C-4097-B451-23065A1EE4D1.txt",
+    "bytes": 32202,
+    "sha256": "ba445a7ca22a9c0ff98480c12a26e3faa620092b2668919616e12f21378ffd22"
+  },
+  "line": 21,
+  "identifier": "‌        ‌New Shortcut",
+  "prefixCodepoints": [
+    "U+200C",
+    "U+2009",
+    "U+0020",
+    "U+0020",
+    "U+0020",
+    "U+0020",
+    "U+0020",
+    "U+0020",
+    "U+2009",
+    "U+200C"
+  ],
+  "prefixUTF8Hex": "e2808ce28089202020202020e28089e2808c",
+  "ASCIIspaces": 6,
+  "prefixScalarCount": 10,
+  "plainSuffix": "New Shortcut",
+  "actualManualSearchLine": 65,
+  "qualification": "R1 exact identity predicate would not admit this actual decorated manual title. R2 allows only this exact optional leading prefix before the old new-title pattern or escaped exact saved name; it does not trim arbitrary characters.",
+  "initialNarrativeCorrection": "An initial visual count said seven spaces. Direct scalar read establishes six; the new source uses six and the raw AX is unchanged."
+}

@@ -1,0 +1,45 @@
+{
+  "createdAt": "2026-11-28T13:34:48.981725+00:00",
+  "status": "ROOT_EXACT_TITLE_DELTA_APPROVED_NEW_COMPOSED_TYPECHECK_NATIVE_PENDING",
+  "candidateManifestSHA256": "0f0b218e1d172db080bdb02683bf660e92f1169ea3bb1b86450d7ffdc4815eba",
+  "sourceSHA256": "6875c6f374231eb68299e5a525f5c836a6ab96d35ea1f64fcbec66da25d80ec5",
+  "patchSHA256": "ae412b81df5ea28286ac8679fe44745022c9d4e5b074f7e9ee5115b90ef549ff",
+  "verifiedPayloads": 9,
+  "verifiedPayloadBytes": 617489,
+  "wholeR1InverseExact": true,
+  "all187OtherMethodsByteExact": true,
+  "all47OriginalTestsByteExact": true,
+  "actualOwnAXSHA256": "ba445a7ca22a9c0ff98480c12a26e3faa620092b2668919616e12f21378ffd22",
+  "actualOwnPNGRootVisuallyInspected": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-concurrency-terminal-r1/attachments-r1/concurrency/artifact-selected-members/paired-product/paired-attachments/41297562-6F4D-4DE0-9394-3E73D23F27A9.png",
+    "bytes": 498960,
+    "sha256": "ba64c1a9ae72754c603769ac1fe318d3c2b44204087482f825e205f32103dd2f"
+  },
+  "actualRunID": 46137598503,
+  "actualCaseFailureCount": 2,
+  "exactPrefixCodepoints": [
+    "U+200C",
+    "U+2009",
+    "U+0020",
+    "U+0020",
+    "U+0020",
+    "U+0020",
+    "U+0020",
+    "U+0020",
+    "U+2009",
+    "U+200C"
+  ],
+  "exactPrefixUTF8Hex": "e2808ce28089202020202020e28089e2808c",
+  "semanticReview": "Only one exact optional observed10-scalar prefix is admitted before the original numberedNewShortcut pattern or regex-escaped exactnonempty recorded savedname. Every context/Editorabsence/libraryexclusion/uniqueenabledhittablefield/original12s guard is unchanged.",
+  "priorRootR1ReviewSHA256": "8f47fe06413dc824e82695045c2ff59b35d8314623808549a145fa17d391f549",
+  "priorComposedUITypecheck": {
+    "sha256": "1f9de292cfb6bbf99448dd08c44110bd1914a211700f11efbe49c23eb611855c",
+    "receiptSHA256": "3f4d782b7e4cb0aa57ec5753b6a0fa4eeddc84088da1b3c247a64bad166cafb5",
+    "retained": true,
+    "qualifiesR2": false
+  },
+  "typecheckRequired": "Exactlyone original120 wholefile compile of newlycomposedR2bytes; do not repeat prioridenticalUI.",
+  "nativeScope": "Originalconcurrencyfailed beforeactionconfiguration/three-actionlaunch; no nativeowner/cancellation failure orpass inferred.",
+  "testsRun": 0,
+  "nativeRun": 0
+}

@@ -1,0 +1,238 @@
+{
+  "at": "2026-11-28T13:31:49.536087+00:00",
+  "status": "ACTUAL_TWO_CASE_FAILURES_BEFORE_SHORTCUT_ACTION_CONFIGURATION",
+  "source": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "runID": 46137598503,
+  "attempt": 1,
+  "jobID": 140956292569,
+  "artifactID": 15264425349,
+  "actualNativeCases": [
+    {
+      "name": "testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts()",
+      "nodeIdentifier": "HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts()",
+      "durationInSeconds": 184.46400499343872,
+      "result": "Failed"
+    },
+    {
+      "name": "testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder()",
+      "nodeIdentifier": "HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder()",
+      "durationInSeconds": 58.82159399986267,
+      "result": "Failed"
+    }
+  ],
+  "actualSummary": {
+    "totalTestCount": 2,
+    "passedTests": 0,
+    "failedTests": 2,
+    "skippedTests": 0,
+    "testFailures": [
+      {
+        "failureText": "failed: caught error: \"Find the actual MiniApps system action.\"",
+        "targetName": "AI_HLYUITests",
+        "testIdentifier": 1,
+        "testIdentifierString": "HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts()",
+        "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts",
+        "testName": "testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts()"
+      },
+      {
+        "failureText": "failed: caught error: \"Find the actual MiniApps system action.\"",
+        "targetName": "AI_HLYUITests",
+        "testIdentifier": 2,
+        "testIdentifierString": "HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder()",
+        "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+        "testName": "testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder()"
+      }
+    ],
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "A5B062BB-5784-490F-976D-0D2500B4550E",
+          "deviceName": "HanlinPaired-46137598503",
+          "modelName": "iPad mini (A20 Pro)",
+          "osBuildNumber": "24B8117",
+          "osVersion": "27.2",
+          "platform": "iOS Simulator"
+        },
+        "expectedFailures": 0,
+        "failedTests": 2,
+        "passedTests": 0,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ]
+  },
+  "actualOriginalCommands": [
+    {
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=A5B062BB-5784-490F-976D-0D2500B4550E",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-scheme",
+        "HanlinMiniApps",
+        "build",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult"
+      ],
+      "exit": 0,
+      "seconds": 947.2663295,
+      "log": "mini-build.log",
+      "sha256": "8ee917a09052973fc7b6049f935e721d2f6a600e05e6b3c73762b937ee718863"
+    },
+    {
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=A5B062BB-5784-490F-976D-0D2500B4550E",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-scheme",
+        "AI_HLY",
+        "build-for-testing",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/AIBuild.xcresult"
+      ],
+      "exit": 0,
+      "seconds": 422.4049977909999,
+      "log": "ai-build.log",
+      "sha256": "21ccd9b4751e58f47af1589be0c3462e38029f63f0f73ad7901a89aa39502181"
+    },
+    {
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=A5B062BB-5784-490F-976D-0D2500B4550E",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-collect-test-diagnostics",
+        "never",
+        "-scheme",
+        "AI_HLY",
+        "test-without-building",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/Paired.xcresult",
+        "-test-timeouts-enabled",
+        "YES",
+        "-maximum-test-execution-time-allowance",
+        "600",
+        "-only-testing:AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+        "-only-testing:AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts"
+      ],
+      "exit": 65,
+      "seconds": 310.56560112499983,
+      "log": "paired-tests.log",
+      "sha256": "4084e314d71128b1f8dae62d08c44360e5f40dc6cf3b0d6957cc2233e08c8688"
+    }
+  ],
+  "originalIdentityReadbacks": [
+    {
+      "file": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-concurrency-terminal-r1/selected-r1/concurrency/artifact-selected-members/paired-product/shortcut-concurrency-observer/bc85b1eb-8159-4a59-bde7-95c71b487304/identity.json",
+        "bytes": 7285,
+        "sha256": "364a2c8244b37ced3287f8c612825ae8f8e70036bab121eeae934873887471de"
+      },
+      "runID": "bc85b1eb-8159-4a59-bde7-95c71b487304",
+      "status": "READY",
+      "identity": {
+        "entrypointID": "surface-intent",
+        "generation": 1,
+        "installedPackageID": "install-hanlin.surface.nativescript",
+        "packageID": "hanlin.surface.nativescript",
+        "variantID": "default"
+      },
+      "actualContainers": {
+        "app": "/Users/runner/Library/Developer/CoreSimulator/Devices/A5B062BB-5784-490F-976D-0D2500B4550E/data/Containers/Bundle/Application/FC3449AF-7945-4C5B-8D87-34A4BE116282/HanlinMiniApps.app",
+        "data": "/Users/runner/Library/Developer/CoreSimulator/Devices/A5B062BB-5784-490F-976D-0D2500B4550E/data/Containers/Data/Application/70CD6795-054D-436F-B63E-E295C735AD7D",
+        "group": "/Users/runner/Library/Developer/CoreSimulator/Devices/A5B062BB-5784-490F-976D-0D2500B4550E/data/Containers/Shared/AppGroup/5BFE5124-0D25-4309-9F7A-93FE9322265E"
+      }
+    },
+    {
+      "file": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-concurrency-terminal-r1/selected-r1/concurrency/artifact-selected-members/paired-product/shortcut-concurrency-observer/e8662ce0-6234-4943-86a3-d479773e85f2/identity.json",
+        "bytes": 7298,
+        "sha256": "6548590b4b4e5b77b0577c3690c8ecd88cb051159896728661b6708ff1e8f13c"
+      },
+      "runID": "e8662ce0-6234-4943-86a3-d479773e85f2",
+      "status": "READY",
+      "identity": {
+        "entrypointID": "surface-intent",
+        "generation": 1,
+        "installedPackageID": "install-hanlin.surface.nativescript",
+        "packageID": "hanlin.surface.nativescript",
+        "variantID": "default"
+      },
+      "actualContainers": {
+        "app": "/Users/runner/Library/Developer/CoreSimulator/Devices/A5B062BB-5784-490F-976D-0D2500B4550E/data/Containers/Bundle/Application/FC3449AF-7945-4C5B-8D87-34A4BE116282/HanlinMiniApps.app",
+        "data": "/Users/runner/Library/Developer/CoreSimulator/Devices/A5B062BB-5784-490F-976D-0D2500B4550E/data/Containers/Data/Application/70CD6795-054D-436F-B63E-E295C735AD7D",
+        "group": "/Users/runner/Library/Developer/CoreSimulator/Devices/A5B062BB-5784-490F-976D-0D2500B4550E/data/Containers/Shared/AppGroup/5BFE5124-0D25-4309-9F7A-93FE9322265E"
+      }
+    }
+  ],
+  "observer": {
+    "status": "OBSERVER_FINISHED",
+    "scope": "Read-only coordination; the actual XCTest owns OS acceptance",
+    "runs": {
+      "bc85b1eb-8159-4a59-bde7-95c71b487304": {
+        "completionWritten": false,
+        "failed": false
+      },
+      "e8662ce0-6234-4943-86a3-d479773e85f2": {
+        "completionWritten": false,
+        "failed": false
+      }
+    },
+    "lastObservationError": null
+  },
+  "rawControllerStatus": "INFRA_ERROR",
+  "rawControllerError": "The real system-surface observer did not retain every correlated terminal result",
+  "classification": [
+    "Both original product builds passed; original two-case XCTest failed before any three-action overlap/cancellation result.",
+    "Both real identity records are READY, and no prior State//path rejection is observed.",
+    "The first case taps Editor169.04s then repeatedly reads the real manual action Search; the original label-only filter rejects it. Its exact owned AX reveals the decorated navigation identifier that was missing from R1.",
+    "The second case remains in New Shortcut2 creation pane with Editor and separate library Search; the original unnumbered navigation query does not enter its editor.",
+    "No native owner-supersession or cancellation contract failure is established by these two setup failures.",
+    "R2 source repair remains compilation/native pending; no retry or success is inferred."
+  ],
+  "rawPayloadsVerified": 30,
+  "newNative": 0,
+  "newDispatches": 0,
+  "acquisition": "Existing terminal:111915 index bytes +413177 core compressed bytes +1004816 own-attachment compressed bytes, plus complete original5,215,126-byte job log. No whole artifact/app/video copy."
+}
