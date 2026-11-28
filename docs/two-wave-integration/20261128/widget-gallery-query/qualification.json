@@ -1,0 +1,32 @@
+{
+  "schema": "hanlin.widget-gallery-query.public-source-qualification.v1",
+  "recordedAt": "2026-11-28T08:53:53.048972+00:00",
+  "base": "0b7e2807e6e84f0bfd1de010299df428a68a451c",
+  "sourceCommit": "57f69d269b28f86ff33c1f1de6923670f8cbb8a2",
+  "sourceTree": "9a6ceb4abb4d3f6b5504480f3754e2f4ac1858c5",
+  "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "sourceSHA256": "2cdc9ff12bc12b37bce5d95b8fadf5d826f139880b4c9a6e55fd6d9c9a0c237d",
+  "patchSHA256": "61a354f1f34d6b3d78d07b638a38a31be2d2f936ac1ccc70636e1132b37f038e",
+  "reviewPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-typed-gallery-review-r1/receipt.json",
+  "reviewSHA256": "aaeb5347166745bb36c507089114ca12d16bd733e93cc9f88642571fc65cb572",
+  "candidateManifestSHA256": "ffd8a51a44ae6830fb6836eb19cf5f9dcc64083032e277998fd3e2ec07a590ca",
+  "status": "clean",
+  "nativeExecution": "NOT_RUN",
+  "newTests": "None",
+  "sourceSealSHA256": "b701191c87c2a82f1f84ed3ab358bac0b73bbd87a38c68e8604560406c3f072b",
+  "currentIntegrationPreimage": {
+    "commit": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+    "sourceSHA256": "cc01c8fa77a3c1f41532861b47845aac35b11c822cdc2b7684dfb93b57d5f56b",
+    "reviewedProjectedTree": "8b09fcc2facad3462de2cb4ff1b027fa888cfe0c"
+  },
+  "actualPriorOutcome": {
+    "run": 46113099237,
+    "source": "5f827bac46543271991668a089830650893cd72d",
+    "started": 4,
+    "passed": 0,
+    "failed": 4,
+    "skipped": 0
+  },
+  "nativeCandidateStatus": "NOT_RUN",
+  "scope": "One original UI helper observation changes; no product, fixture, observer, workflow, test-body, assertion or deadline changes."
+}

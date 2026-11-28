@@ -1,0 +1,278 @@
+{
+  "schema": 1,
+  "base": "0b7e2807e6e84f0bfd1de010299df428a68a451c",
+  "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "preimageSHA256": "cc01c8fa77a3c1f41532861b47845aac35b11c822cdc2b7684dfb93b57d5f56b",
+  "candidateSHA256": "2cdc9ff12bc12b37bce5d95b8fadf5d826f139880b4c9a6e55fd6d9c9a0c237d",
+  "patchSHA256": "61a354f1f34d6b3d78d07b638a38a31be2d2f936ac1ccc70636e1132b37f038e",
+  "wholeFileInverse": {
+    "replaceExactAfterWithBefore": true,
+    "recoveredSHA256": "cc01c8fa77a3c1f41532861b47845aac35b11c822cdc2b7684dfb93b57d5f56b"
+  },
+  "functionCount": 172,
+  "changedFunctions": [
+    "openWidgetFamilyGallery"
+  ],
+  "originalTestCount": 42,
+  "originalTestBodies": [
+    {
+      "name": "testExpoPlacedWidgetInvokesAllFiveRuntimes",
+      "sha256": "a339280b3adf81a7e8ddf9488bc8e4a4742780ce1e969d9543f5f6ce7b3704e7",
+      "candidateExact": true
+    },
+    {
+      "name": "testNativeScriptPlacedWidgetInvokesAllFiveRuntimes",
+      "sha256": "f4543c25185b8c1ff3e6880d3f16f7824261867b17f3220285fc3fc3fba73419",
+      "candidateExact": true
+    },
+    {
+      "name": "testExpoLiveActivityInvokesAllFiveRuntimes",
+      "sha256": "56917a318c72c1d42bfc8e72129c38c8d0f1ce5817c1a2cbcf396cd6443ebc19",
+      "candidateExact": true
+    },
+    {
+      "name": "testNativeScriptLiveActivityInvokesAllFiveRuntimes",
+      "sha256": "21fe9a429a32d06ffa4b52ebfd17995c4d8b93d9e69c07cb8d725c65eeba983c",
+      "candidateExact": true
+    },
+    {
+      "name": "testExpoShortcutInvokesAllFiveRuntimes",
+      "sha256": "62b0dbb0973f5be3753db6442bde96103c2e9adb6257f450151c921c51483ee0",
+      "candidateExact": true
+    },
+    {
+      "name": "testNativeScriptShortcutInvokesAllFiveRuntimes",
+      "sha256": "c0c8edfde73e324a03c280649e591c84146e8b435c2d139771a6febbfb344edd",
+      "candidateExact": true
+    },
+    {
+      "name": "testExpoSystemShareInvokesAllFiveRuntimes",
+      "sha256": "c171fa3e08db692c366ac04a6f1c0fd3572ead2a592ed23e6974eeb3225fc44f",
+      "candidateExact": true
+    },
+    {
+      "name": "testNativeScriptSystemShareInvokesAllFiveRuntimes",
+      "sha256": "7b1cabe97334b330e355e93cee90d96eb7e510612a9c101905f492e782ed4a4b",
+      "candidateExact": true
+    },
+    {
+      "name": "testExpoSystemTranslationInvokesAllFiveRuntimes",
+      "sha256": "f54186b5d29334c7fa6ec6ab27ec11809d47e04965b541dd1756e207db78edf6",
+      "candidateExact": true
+    },
+    {
+      "name": "testNativeScriptSystemTranslationInvokesAllFiveRuntimes",
+      "sha256": "c886610313f2584232ccbd022008ba0f6832cd2cb572b8707fcc2aae94383eae",
+      "candidateExact": true
+    },
+    {
+      "name": "testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult",
+      "sha256": "8c37973631f1b592a10d0fb7cedc44c004cf693275ebce0dfca734cc196b93eb",
+      "candidateExact": true
+    },
+    {
+      "name": "testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult",
+      "sha256": "0b7b72bc06e0e38a17b93666220cbe3664b54f248804e8ec22ffffa675147ed3",
+      "candidateExact": true
+    },
+    {
+      "name": "testExpoRunMiniAppActionSavedForegroundReturnsTypedResult",
+      "sha256": "0a92b592c0239fb99d6c81b35e804187c371b4c14890343c676f5a82c7604ec0",
+      "candidateExact": true
+    },
+    {
+      "name": "testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult",
+      "sha256": "0325329f23a56790dd1ea99a6cb64e9a8a432e558f35fda98cbedc6b4283c59a",
+      "candidateExact": true
+    },
+    {
+      "name": "testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers",
+      "sha256": "dc0e242f5e482780c84ce96d6cd57501eb3fa0a9c69e54435f2afcdf72d99ebf",
+      "candidateExact": true
+    },
+    {
+      "name": "testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState",
+      "sha256": "f4ceac06e53c493e62387c82504d6638a109a954c13f4a794259cfc82e08f4e2",
+      "candidateExact": true
+    },
+    {
+      "name": "testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues",
+      "sha256": "651683dfc29fb72d3a76b9772b2da5be09c672a75f711fa617c56884b826309c",
+      "candidateExact": true
+    },
+    {
+      "name": "testMiniAppsMediumWidgetNativeControlsStayVisibleAcrossStateAndRotation",
+      "sha256": "39697bb2a22e28065aaf317c86e2802a98dbd979583d1ad924d3a40a3f2b196d",
+      "candidateExact": true
+    },
+    {
+      "name": "testMiniAppsSmallWidgetRetainsFamilyAndInstanceAcrossRotation",
+      "sha256": "38e40077370f6ae5bdd9c82d3a451b652bafb7e027b3414e80a7b3543d0b96c6",
+      "candidateExact": true
+    },
+    {
+      "name": "testMiniAppsMediumWidgetRetainsFamilyAndInstanceAcrossRotation",
+      "sha256": "920d48acdd2bedbef2a0a4ff93d33b8a23851e4eb36b13983af5f3c9f889d95b",
+      "candidateExact": true
+    },
+    {
+      "name": "testMiniAppsLargeWidgetRetainsFamilyAndInstanceAcrossRotation",
+      "sha256": "1014d6f709d621a2c50fa2849bfc896929020ae5486e83f9bccef53824c777b0",
+      "candidateExact": true
+    },
+    {
+      "name": "testMiniAppsExtraLargeWidgetRetainsFamilyAndInstanceAcrossRotation",
+      "sha256": "8d3a6f227bd159f38b412a78d70baff9bc75f0790eaf92362d0d67ab7415ab60",
+      "candidateExact": true
+    },
+    {
+      "name": "testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+      "sha256": "67a613f7abab69d488d858625b802cd43a2eae3d39ccd7b4c0e2e500749a5cd3",
+      "candidateExact": true
+    },
+    {
+      "name": "testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts",
+      "sha256": "ea82291ea9dbf87b4d3597a2d6dbfb8faf7d7478130ff58d4de1b1ccebe8a84e",
+      "candidateExact": true
+    },
+    {
+      "name": "testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+      "sha256": "f7104b90a733a3b9723a34b4088213fa1bf4085561ab1f33f1c2218a2cd1f8c6",
+      "candidateExact": true
+    },
+    {
+      "name": "testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+      "sha256": "a29e21877b36d8eded11fd2956a7778cc7f064c9abab66217ceac7df712c7bf7",
+      "candidateExact": true
+    },
+    {
+      "name": "testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+      "sha256": "8a8aed58c3d54d705df94cc5e5dbbcd038498109db8416738354dd5b7ed2b5db",
+      "candidateExact": true
+    },
+    {
+      "name": "testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+      "sha256": "418cbc11a471520730e55603f94ac3308a11184540bfceecf8fa7858949911aa",
+      "candidateExact": true
+    },
+    {
+      "name": "testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns",
+      "sha256": "c4bdf16abe403480c038e10019ba95693fb68773a3a7dda6acbfe49498413c82",
+      "candidateExact": true
+    },
+    {
+      "name": "testStudioExpoCreatesMovesStylesAndReopensSource",
+      "sha256": "ef91721d4b6fb6fd41140625bbdfd76619382cae5c17a08fb1e75a49a48a4ca9",
+      "candidateExact": true
+    },
+    {
+      "name": "testStudioNativeScriptCreatesMovesStylesAndReopensSource",
+      "sha256": "3d35491690630c15bfb6bb77df27c50e386b5e5a8c9bf5bac8574bea8728ca16",
+      "candidateExact": true
+    },
+    {
+      "name": "testStudioOriginalTypeScriptHelpPreferencesAndLiveLogExport",
+      "sha256": "ab5f1184cb61967e836acf763659b85f69ca6c04d817b19a54b4e06970d9eff5",
+      "candidateExact": true
+    },
+    {
+      "name": "testStudioImportsActualFilesSourceAndReopensIndependentEdit",
+      "sha256": "59a1a242f63fb2a0a57c14300f31d6936c737646ff67774b5677289deeb08632",
+      "candidateExact": true
+    },
+    {
+      "name": "testStudioTwoRealWindowsConflictReloadAndRecoverSeparateCopy",
+      "sha256": "dec6b1f70f4b1def0f40218a3bd15aa75feae4091f9af026a82c8bd487830fe3",
+      "candidateExact": true
+    },
+    {
+      "name": "testExpoSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds",
+      "sha256": "f3b1725a0e15d14f90e666b90c5e41917fab08fbf980a2b97a5d83047de39a5f",
+      "candidateExact": true
+    },
+    {
+      "name": "testNativeScriptSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds",
+      "sha256": "f3fb25691b9b8b8cb9e163e3c33dcb2450c2809b3a1b6fc95efc0503865fe375",
+      "candidateExact": true
+    },
+    {
+      "name": "testExpoSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds",
+      "sha256": "b6747df2ba37f74e3df7d58ccd936b9aea3fced3f8f5b50139095432d7d182e1",
+      "candidateExact": true
+    },
+    {
+      "name": "testNativeScriptSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds",
+      "sha256": "f5dcaed2834d0811b28b98805dad9c8d01efbb1b9a806179815124e91c81fa95",
+      "candidateExact": true
+    },
+    {
+      "name": "testNativeScriptSavedTextListReopensThenClearsToEmpty",
+      "sha256": "83dec1b7b9404eebfec665b9bc5d8acf3af6453bac65640b7f971efe3d03ae90",
+      "candidateExact": true
+    },
+    {
+      "name": "testNativeScriptSavedIntegerListReopensThenClearsToEmpty",
+      "sha256": "5482966a2cc271d2651ac0ede5060eceae391eeb32d0b3d5bc94accb2cfc7cb0",
+      "candidateExact": true
+    },
+    {
+      "name": "testNativeScriptSavedNumberListReopensThenClearsToEmpty",
+      "sha256": "7676f94890a3167ec9388aa4ff4687d4f55e3c90a553a2aa39de6b21fdb8737f",
+      "candidateExact": true
+    },
+    {
+      "name": "testNativeScriptSavedBooleanListReopensThenClearsToEmpty",
+      "sha256": "0efb9eb09c6ce99eef40684b3b1c6fa432f12b4b04bd37cfc4402886d615ae88",
+      "candidateExact": true
+    }
+  ],
+  "assertionLines": 457,
+  "assertionLinesExact": true,
+  "allOriginalBoundsLinesExact": true,
+  "unchangedCriticalHelpers": [
+    {
+      "name": "widgetHomeScreenIcon",
+      "sha256": "dec2d6f755b89fa18e559883cfb3606113c5c83aef15d3ee942146e350abafad"
+    },
+    {
+      "name": "tapWidgetInstanceChooseButton",
+      "sha256": "249a38a52b3de578be91d54312dd3bb44750ba95b4361f0a310ed2a6a0dbe074"
+    },
+    {
+      "name": "studioReplaceText",
+      "sha256": "93b661e48919ff9bd77612655e77894aa9e6f32ca50bb08ffc8542d155b7cb9f"
+    },
+    {
+      "name": "studioVisibleFilesControl",
+      "sha256": "19c8b1915b24181a559c655c3555b80ce71cb54368ec701d50c579d8abb4af0a"
+    },
+    {
+      "name": "runShortcut",
+      "sha256": "78908681dc5706dd7ca925e7c4c0270e85b7a4d2486307850c433f4ab140ce72"
+    },
+    {
+      "name": "runMiniAppShortcut",
+      "sha256": "01dadfbec3bc541fc6be809a838a06d202d298f4c007aad578edc46ab63fecf4"
+    },
+    {
+      "name": "configureConcurrencyShortcut",
+      "sha256": "5c0be08f34fa0cae5209c15a82f97b8ed3270d2c6aefa5e55348b61556380b95"
+    },
+    {
+      "name": "createNativeListShortcut",
+      "sha256": "f420ae489ce9ba9da4bf4c04bc1d19d03063d6a25c015aaf17ff090d66e3da76"
+    },
+    {
+      "name": "addShortcutAction",
+      "sha256": "b46039219f5d71c398dc7a8f963f3704bf396967fa85adbb8e18aa7f30d85cd1"
+    }
+  ],
+  "helperBeforeSHA256": "f4b2d597e681daff891bb041072d78b53ae3ebc2ae1a2238791c9339b888a040",
+  "helperAfterSHA256": "6c7c077e37244f19998e8ac942778c9ab74b45e7441ed417913958b7b2787798",
+  "diffCheck": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "verificationKind": "Source/inverse/identity checks only. No Swift compiler, portable test suite, native or UI execution."
+}

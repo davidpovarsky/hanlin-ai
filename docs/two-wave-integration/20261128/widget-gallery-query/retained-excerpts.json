@@ -1,0 +1,24 @@
+[
+  {
+    "path": "native-1353-1458.log.gz",
+    "source": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-5f-shortcuts-families-terminal-r1/selected-r1/families/artifact-selected-members/paired-product/paired-tests.log.gz",
+    "sourceRawSHA256": "5dc8e72913d6fe7fe5c049283286bf29ca0306b3196ba86b064d81283e923878",
+    "startLine": 1353,
+    "endLine": 1458,
+    "rawBytes": 11599,
+    "rawSHA256": "ced59bf467894a0f8e06b78d7a92c3efdeb2ffcebd096cdbde0c307c272322d4",
+    "gzipSHA256": "e36fac5775182a59f933b33f47d6c59d9f38cc139f309f2a6d3b9131ffd0702b",
+    "transformation": "Exact contiguous original line bytes, lossless gzip mtime=0."
+  },
+  {
+    "path": "spindump-145-180.log.gz",
+    "source": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-5f-shortcuts-families-terminal-r1/attachments-r1/families/artifact-selected-members/paired-product/paired-attachments/DDBDDF94-EC38-437D-8AB2-0EB61404BF26.txt",
+    "sourceRawSHA256": "215241c7830f54ae84dff6625cc306f038ab6a2e780e69c9a667caeba8ecd1f3",
+    "startLine": 145,
+    "endLine": 180,
+    "rawBytes": 9938,
+    "rawSHA256": "7126c2f6467a0934052dc33c55a7cfa56ae4781e37d25c27442e679afebb3bcd",
+    "gzipSHA256": "1077d3e8a535aa3b422bf99c15e4962feaf02349d272262fc265199064ebad29",
+    "transformation": "Exact contiguous original line bytes, lossless gzip mtime=0."
+  }
+]
