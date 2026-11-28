@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 1747,
+      "sha256": "ba4f15877b5d4691813abe7ba80069fffb9d01684a9e4bdab46c0befe93f536d"
+    },
+    {
+      "path": "ROOT_REVIEW.json",
+      "bytes": 1338,
+      "sha256": "04175196dbc601f7e7af913505738aee0a9f6f7bee1b709be2c7e1d0fddeacae"
+    },
+    {
+      "path": "SOURCE_PROOF.json",
+      "bytes": 1724,
+      "sha256": "e391de46d7397593e60ae876c7d00c8fa145c2fa961a68133619ebaa24804fb5"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 728,
+      "sha256": "7a5a33cc7a4b774587e2a7434681d056ccde7888f8a43290462470236da38c78"
+    }
+  ],
+  "compressedPatch": {
+    "path": "source.patch.gz",
+    "encoding": "gzip",
+    "rawBytes": 1927,
+    "rawSHA256": "4c131edd07dbdf079b1f4119eee8835dffba29f891bd2d2857a60fc17ae197cd"
+  }
+}

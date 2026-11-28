@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "base": "5f827bac46543271991668a089830650893cd72d",
+  "sourceCommit": "b7586988dc706d08e799673e2fc2b718b86ddb8e",
+  "sourcePath": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "before": {
+    "bytes": 220207,
+    "sha256": "a04e44dd1dfb6b7eb6e56a540f951453152a510b47fed29f97731bcb1ad43278"
+  },
+  "after": {
+    "bytes": 221154,
+    "sha256": "5e5d2bb1db9ebd78383e4128c2194ca4a2402d9c1745c4f710343736c11b6adb"
+  },
+  "patch": {
+    "bytes": 1927,
+    "sha256": "4c131edd07dbdf079b1f4119eee8835dffba29f891bd2d2857a60fc17ae197cd"
+  },
+  "wholeFileInverse": true,
+  "original37SelectorsAndBodiesExact": true,
+  "runMiniAppShortcutByteExact": true,
+  "concurrencyAndLongRunningCallerBodiesExact": true,
+  "onlyChangedRegion": "configureConcurrencyShortcut initial creation tap",
+  "singleCreationWaitSeconds": 12,
+  "concurrencyOriginalAllowance": {
+    "internalDeadline": 540,
+    "xctestExecution": 600
+  },
+  "approvedBlockSHA256": "b930187a51ec0cb4afe4f46c56d30917a8e57e721a96b401818c0610a5ccafe3",
+  "priorSourceProof": "docs/miniapp-sdk/evidence/shortcuts-creation-ui-20261128",
+  "priorRootReviewSHA256": "4a1f68e5cc2320850a2ddc1b067830e376cc0a893b92dbdf465326f2a3f1c18e",
+  "independentRootReviewSHA256": "04175196dbc601f7e7af913505738aee0a9f6f7bee1b709be2c7e1d0fddeacae",
+  "native": "NOT_RUN",
+  "testsRun": 0,
+  "causalQualification": "Shared actual system UI creation risk; the historical2 concurrency catalog failures occurred before this action. Later long-running identity/300s/Stop acceptance is not inferred.",
+  "rootIntegration": "Root independently verified the separate new layout insertion and current38-method projection; this donor retains its own37-method5f base."
+}
