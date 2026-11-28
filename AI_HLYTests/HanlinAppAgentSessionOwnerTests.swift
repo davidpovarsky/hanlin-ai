@@ -229,6 +229,9 @@ private actor OwnerControlledTextSource {
     }
 
     func finish() {
+        continuation?.yield(.textStart(id: "owner-drain-fixture", providerMetadata: nil))
+        continuation?.yield(.textDelta(id: "owner-drain-fixture", delta: "Original controlled response", providerMetadata: nil))
+        continuation?.yield(.textEnd(id: "owner-drain-fixture", providerMetadata: nil))
         continuation?.yield(.finish(finishReason: .init(unified: .stop), usage: .init(), providerMetadata: nil))
         continuation?.finish()
     }
