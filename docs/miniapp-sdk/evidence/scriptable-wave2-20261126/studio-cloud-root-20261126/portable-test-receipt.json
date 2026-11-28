@@ -1,0 +1,33 @@
+{
+  "startedAtUTC": "2026-11-26T18:11:27.866988+00:00",
+  "sourceBase": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "scope": "Exact original Foundation workspace and original tests plus four new root-lifecycle methods; no UIKit/Apple/iCloud execution",
+  "sources": {
+    "HanlinMiniAppsApp/MiniAppsDeveloperWorkspace.swift": {
+      "sha256": "ab466b2429bca4c4fc91fc0142202c2890101f1b53782be76cb5ca5596078921",
+      "bytes": 14023,
+      "portablePath": "Sources/HanlinMiniApps/MiniAppsDeveloperWorkspace.swift"
+    },
+    "HanlinMiniAppsTests/MiniAppsDeveloperWorkspaceTests.swift": {
+      "sha256": "200c2783b7da02fd6c9647326bc1ee81f16b9f37e53418cdeaf46625f245edac",
+      "bytes": 9689,
+      "portablePath": "Tests/HanlinMiniAppsTests/MiniAppsDeveloperWorkspaceTests.swift"
+    }
+  },
+  "retainedFailure": "portable-test-receipt-r1.json and portable-tests-r1.log; Swift Testing cannot wrap mutating calls directly, so evaluate those same calls before unchanged requirements/expectations",
+  "command": [
+    "swift",
+    "test",
+    "--package-path",
+    "/mnt/development/projects/builds/hanlin-studio-cloud-root-20261126/portable-proof",
+    "--scratch-path",
+    "/mnt/development/projects/builds/hanlin-studio-cloud-root-20261126/products",
+    "--jobs",
+    "2"
+  ],
+  "toolchain": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu\n",
+  "exitCode": 0,
+  "finishedAtUTC": "2026-11-26T18:11:37.520723+00:00",
+  "logSHA256": "1642e8b2b97cc7f6d9e9ad07466ba3fe4e78c2fbbb1f9de5174cfae8903aee2d",
+  "sourceStillIdentical": true
+}

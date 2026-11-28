@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "scope": "Actual original Gallery five-case native acceptance on de plus prepared source; no later source promotion",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2914,
+      "sha256": "1928749174e8e0bc41b0c8cb3c9c9ea89aa598ed624b78eb3422078532f24901"
+    },
+    {
+      "path": "effective-source-qualification.json",
+      "bytes": 16048,
+      "sha256": "c4b3f3574806054e818e06022bfd0ab3a794e3c16488037958f4ad1cf7e912f1"
+    },
+    {
+      "path": "independent-root-review.json",
+      "bytes": 3935,
+      "sha256": "ad7add1732fcccde67eaaf9b4cf743d267c4971597476e8bcd270ee99479ecc6"
+    },
+    {
+      "path": "native-case-events.json",
+      "bytes": 3721,
+      "sha256": "93044394175db45fc0f38d03fabfdb33ac477b9f6f3469ae7780b8be032b8c65"
+    },
+    {
+      "path": "normalized-gallery-terminal.json",
+      "bytes": 30513,
+      "sha256": "730ee4cbfc156ffc89ae5ec57d7558dd6a109d1ab9488d64506c614cc296a571"
+    },
+    {
+      "path": "paired-tests.log.gz",
+      "bytes": 27583,
+      "sha256": "ed555df10b6401ed7c57c17fb916df8368fae4734c41bfa9615fcff20beeabe2"
+    },
+    {
+      "path": "private-packet-manifest.json",
+      "bytes": 28627,
+      "sha256": "20c2875c6e5d458eab34d984c6722ac480b582d1a4990c6f5a0bb281869cfa20"
+    },
+    {
+      "path": "test-nodes.json",
+      "bytes": 5605,
+      "sha256": "ba611fc667c52407649c702e0c942d152264912bd0a2b624b3d3874c75623c0f"
+    },
+    {
+      "path": "test-summary.json",
+      "bytes": 1731,
+      "sha256": "db2df7a9e64c85bdc10b923254987dfe986e231096f41d35688b687ad5ce57d2"
+    }
+  ]
+}

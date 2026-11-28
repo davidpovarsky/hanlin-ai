@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "originalReceiptSHA256": "fe597727a8de252bd38ab562d6f79de1b72ba10b0d6d350932a24b6cb939ce76",
+  "rawReceiptPreserved": true,
+  "sourceCommit": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "actualCombinedProductIntegration": "9bd3eb1aeb8269e8afaeca509934e973cd2515b4",
+  "staleMetadataField": "sourceCandidate",
+  "staleMetadataValue": "9c0879ee168b6aec78a4cc80fd071514c8787887",
+  "explanation": "The reused controller metadata sourceCandidate label remained9c; the executed --head-sha, sourceCommit, and generated plan all bind866. This addendum corrects the label without modifying original evidence."
+}

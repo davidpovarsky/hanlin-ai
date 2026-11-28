@@ -1,0 +1,10 @@
+{
+  "source": "certifi/python-certifi",
+  "version": "2026.10.23",
+  "license": "MPL-2.0",
+  "wheelURL": "https://files.pythonhosted.org/packages/32/d1/a3652fe2c19134d0d15922177821d863cbd7e842d53a21bbe7e8e3a1b5ac/certifi-2026.10.23-py3-none-any.whl",
+  "wheelSHA256": "e9b54de76e530bb6cf0ccd036787103acb58fd42ba930ea8bf948ddbaa2f61d1",
+  "file": "HanlinPythonCACertificates.pem",
+  "sha256": "2ef52ad56b4803e264045c915e55c236cbfa045b84b81efefc218a19eb44bd2b",
+  "policy": "Unmodified Mozilla CA roots distributed by certifi; TLS certificate and hostname verification remain required. Update from an authenticated release."
+}

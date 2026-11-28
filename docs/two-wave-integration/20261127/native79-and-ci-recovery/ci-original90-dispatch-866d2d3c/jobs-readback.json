@@ -1,0 +1,1490 @@
+{
+  "total_count": 26,
+  "jobs": [
+    {
+      "id": 140311020552,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzBECA",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311020552",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311020552",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-27T04:24:14Z",
+      "started_at": "2026-11-27T04:24:15Z",
+      "completed_at": "2026-11-27T04:25:34Z",
+      "name": "Plan affected validation and tests",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-27T04:24:16Z",
+          "completed_at": "2026-11-27T04:24:17Z"
+        },
+        {
+          "name": "Live Activity \u00c3\u201a\u00c2\u00b7 refresh",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 2,
+          "started_at": "2026-11-27T04:24:17Z",
+          "completed_at": "2026-11-27T04:24:17Z"
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-27T04:24:17Z",
+          "completed_at": "2026-11-27T04:24:26Z"
+        },
+        {
+          "name": "Set up Python 3.12",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-27T04:24:26Z",
+          "completed_at": "2026-11-27T04:24:26Z"
+        },
+        {
+          "name": "Run affected validation planner",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-27T04:24:26Z",
+          "completed_at": "2026-11-27T04:25:31Z"
+        },
+        {
+          "name": "Upload validation plan artifact",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-27T04:25:31Z",
+          "completed_at": "2026-11-27T04:25:32Z"
+        },
+        {
+          "name": "Post Set up Python 3.12",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-27T04:25:32Z",
+          "completed_at": "2026-11-27T04:25:32Z"
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-27T04:25:32Z",
+          "completed_at": "2026-11-27T04:25:32Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-27T04:25:32Z",
+          "completed_at": "2026-11-27T04:25:32Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311020552",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000026856,
+      "runner_name": "GitHub Actions 1000026856",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 140311021555,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzBH8w",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311021555",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311021555",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:14Z",
+      "started_at": "2026-11-27T04:24:14Z",
+      "completed_at": "2026-11-27T04:24:13Z",
+      "name": "One SDK-explicit eligibility-gated frozen Composer diagnostic",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311021555",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311021791,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzBI3w",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311021791",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311021791",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:14Z",
+      "started_at": "2026-11-27T04:24:14Z",
+      "completed_at": "2026-11-27T04:24:13Z",
+      "name": "One guarded native hosted Composer component diagnostic",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311021791",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311021799,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzBI5w",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311021799",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311021799",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:14Z",
+      "started_at": "2026-11-27T04:24:14Z",
+      "completed_at": "2026-11-27T04:24:13Z",
+      "name": "focused-code-fence-webkit-tests",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311021799",
+      "labels": [],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311021816,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzBI-A",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311021816",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311021816",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:14Z",
+      "started_at": "2026-11-27T04:24:14Z",
+      "completed_at": "2026-11-27T04:24:13Z",
+      "name": "Compile reusable presentation on iOS 27 and test isolated state",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311021816",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311021849,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzBJGQ",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311021849",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311021849",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:14Z",
+      "started_at": "2026-11-27T04:24:14Z",
+      "completed_at": "2026-11-27T04:24:13Z",
+      "name": "focused-diagnostics-capture-tests",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311021849",
+      "labels": [],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311021859,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzBJIw",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311021859",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311021859",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:14Z",
+      "started_at": "2026-11-27T04:24:14Z",
+      "completed_at": "2026-11-27T04:24:13Z",
+      "name": "Actual compiled Swift Mini App UI on iPhone and iPad 27",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311021859",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311021889,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzBJQQ",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311021889",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311021889",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:14Z",
+      "started_at": "2026-11-27T04:24:14Z",
+      "completed_at": "2026-11-27T04:24:14Z",
+      "name": "upload-chavrusachat-to-testflight",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311021889",
+      "labels": [],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311021942,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzBJdg",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311021942",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311021942",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:14Z",
+      "started_at": "2026-11-27T04:24:14Z",
+      "completed_at": "2026-11-27T04:24:13Z",
+      "name": "Verify original media lifecycle controls on current native sources",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311021942",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311021952,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzBJgA",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311021952",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311021952",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:14Z",
+      "started_at": "2026-11-27T04:24:14Z",
+      "completed_at": "2026-11-27T04:24:13Z",
+      "name": "Read installed stable simulator environment only",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311021952",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311021996,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzBJrA",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311021996",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311021996",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:14Z",
+      "started_at": "2026-11-27T04:24:14Z",
+      "completed_at": "2026-11-27T04:24:13Z",
+      "name": "Resolve exact SDK producer in all six existing Apple package graphs",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311021996",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311022038,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzBJ1g",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311022038",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311022038",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:14Z",
+      "started_at": "2026-11-27T04:24:14Z",
+      "completed_at": "2026-11-27T04:24:13Z",
+      "name": "Two frozen Composer metadata queries only",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311022038",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311022074,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzBJ-g",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311022074",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311022074",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:14Z",
+      "started_at": "2026-11-27T04:24:14Z",
+      "completed_at": "2026-11-27T04:24:13Z",
+      "name": "Native chat regression before and after sources",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311022074",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311022093,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzBKDQ",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311022093",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311022093",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:14Z",
+      "started_at": "2026-11-27T04:24:14Z",
+      "completed_at": "2026-11-27T04:24:13Z",
+      "name": "Probe pinned NativeScript SDK metadata",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311022093",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311022094,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzBKDg",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311022094",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311022094",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:14Z",
+      "started_at": "2026-11-27T04:24:14Z",
+      "completed_at": "2026-11-27T04:24:13Z",
+      "name": "inputs.exact_test_selector == 'MotionUITests/testDRapidInputDiagnosticOnly' && 'Original Motion input diagnostic (D)' || inputs.exact_test_selector == 'MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach' && 'Original Motion preset cycles (A)' || inputs.exact_test_selector == 'MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion' && 'Original Motion visual capture (C)' || inputs.exact_test_selector == 'MotionUITests/testBRapidReversalPresetSwitchAndPersistence' && 'Original Motion reversal acceptance (B)' || 'Original Motion interaction acceptance (B and C)'",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311022094",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311050114,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzC3gg",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311050114",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311050114",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:20Z",
+      "started_at": "2026-11-27T04:24:20Z",
+      "completed_at": "2026-11-27T04:24:14Z",
+      "name": "focused-scripting-package-tests",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311050114",
+      "labels": [],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311050514,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzC5Eg",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311050514",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311050514",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:20Z",
+      "started_at": "2026-11-27T04:24:20Z",
+      "completed_at": "2026-11-27T04:24:13Z",
+      "name": "Resolve original Yams in the actual app graph only",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311050514",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311051047,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzC7Jw",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311051047",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311051047",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:20Z",
+      "started_at": "2026-11-27T04:24:20Z",
+      "completed_at": "2026-11-27T04:24:13Z",
+      "name": "Verify whole Composer and UIKit components on iOS 27",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311051047",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311055964,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzDOXA",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311055964",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311055964",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:21Z",
+      "started_at": "2026-11-27T04:24:21Z",
+      "completed_at": "2026-11-27T04:24:13Z",
+      "name": "Inspect existing native failure evidence only",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311055964",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311060447,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzDf3w",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311060447",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311060447",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:22Z",
+      "started_at": "2026-11-27T04:24:22Z",
+      "completed_at": "2026-11-27T04:24:13Z",
+      "name": "Exact-source Agent SDK Apple tests",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311060447",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311061219,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzDi4w",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311061219",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311061219",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:22Z",
+      "started_at": "2026-11-27T04:24:22Z",
+      "completed_at": "2026-11-27T04:24:13Z",
+      "name": "focused-markdown-renderer-tests",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311061219",
+      "labels": [],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311069572,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzEDhA",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311069572",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311069572",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:24:24Z",
+      "started_at": "2026-11-27T04:24:24Z",
+      "completed_at": "2026-11-27T04:24:13Z",
+      "name": "inputs.target_validation_group != 'product_split_integration' && 'Verify exact-pin A2UI on macOS 27' || 'Verify MiniApps provider and focused tests on iOS 27'",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311069572",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311440311,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzartw",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311440311",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311440311",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-27T04:25:34Z",
+      "started_at": "2026-11-27T04:25:37Z",
+      "completed_at": "2026-11-27T04:30:15Z",
+      "name": "Validate baseline, contracts, tests, and iOS compilation",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-27T04:25:38Z",
+          "completed_at": "2026-11-27T04:25:40Z"
+        },
+        {
+          "name": "Live Activity \u00c3\u201a\u00c2\u00b7 refresh",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 2,
+          "started_at": "2026-11-27T04:25:40Z",
+          "completed_at": "2026-11-27T04:25:40Z"
+        },
+        {
+          "name": "Select newest stable Xcode and print environment",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-27T04:25:40Z",
+          "completed_at": "2026-11-27T04:26:08Z"
+        },
+        {
+          "name": "Check out exact validation commit cleanly",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-27T04:26:08Z",
+          "completed_at": "2026-11-27T04:26:27Z"
+        },
+        {
+          "name": "Confirm clean exact checkout",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-27T04:26:27Z",
+          "completed_at": "2026-11-27T04:26:29Z"
+        },
+        {
+          "name": "Set up pinned baseline Node",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-27T04:26:29Z",
+          "completed_at": "2026-11-27T04:26:36Z"
+        },
+        {
+          "name": "Prepare declaration-only metadata tool",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-27T04:26:36Z",
+          "completed_at": "2026-11-27T04:26:40Z"
+        },
+        {
+          "name": "Prepare pinned NativeScript iOS dependency closure",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-27T04:26:40Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Prepare validation logs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Test Xcode cache input normalization",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 10,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Restore Phase 1 SwiftPM build cache",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 11,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Restore Phase 1 simulator compiler cache",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 12,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Restore Phase 1 device compiler cache",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 13,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Report Phase 1 cache mode",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Discard Phase 1 compiler state for forced clean build",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 15,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Verify Scripting baseline integrity and reproducibility",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 16,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Validate JSON and internal JSON Schema references",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 17,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Verify exact TypeScript 7.0.2 Scripting artifacts",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 18,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Scripting Production Compiler Acceptance",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 19,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Resolve the Phase 1 Swift package",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 20,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Compile the Phase 1 Swift package",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 21,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Live Activity \u00c3\u201a\u00c2\u00b7 refresh",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 22,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Compile and execute all Phase 1 contract tests",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 23,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Save successful Phase 1 SwiftPM build cache",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 24,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Discover the generated Xcode package scheme",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 25,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Compile contracts for generic iOS Simulator",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 26,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Save successful Phase 1 simulator compiler cache",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 27,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Compile contracts for generic iOS device",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 28,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Compile the NativeScript runtime package for simulator and device",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 29,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:29:55Z"
+        },
+        {
+          "name": "Save successful Phase 1 device compiler cache",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 30,
+          "started_at": "2026-11-27T04:29:55Z",
+          "completed_at": "2026-11-27T04:29:55Z"
+        },
+        {
+          "name": "Summarize compiler warnings",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 31,
+          "started_at": "2026-11-27T04:29:55Z",
+          "completed_at": "2026-11-27T04:29:56Z"
+        },
+        {
+          "name": "Live Activity \u00c3\u201a\u00c2\u00b7 refresh",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 32,
+          "started_at": "2026-11-27T04:29:56Z",
+          "completed_at": "2026-11-27T04:29:56Z"
+        },
+        {
+          "name": "Retain Phase 1 validation evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 33,
+          "started_at": "2026-11-27T04:29:56Z",
+          "completed_at": "2026-11-27T04:29:59Z"
+        },
+        {
+          "name": "Post Set up pinned baseline Node",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 65,
+          "started_at": "2026-11-27T04:29:59Z",
+          "completed_at": "2026-11-27T04:30:00Z"
+        },
+        {
+          "name": "Post Check out exact validation commit cleanly",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 66,
+          "started_at": "2026-11-27T04:30:00Z",
+          "completed_at": "2026-11-27T04:30:02Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 67,
+          "started_at": "2026-11-27T04:30:02Z",
+          "completed_at": "2026-11-27T04:30:10Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311440311",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": 1000026858,
+      "runner_name": "GitHub Actions 1000026858",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 140311440445,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqzasPQ",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311440445",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311440445",
+      "status": "in_progress",
+      "conclusion": null,
+      "created_at": "2026-11-27T04:25:34Z",
+      "started_at": "2026-11-27T04:25:36Z",
+      "completed_at": null,
+      "name": "Launch full app on iPad Simulator",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-27T04:25:37Z",
+          "completed_at": "2026-11-27T04:25:39Z"
+        },
+        {
+          "name": "Live Activity \u00c3\u201a\u00c2\u00b7 refresh",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 2,
+          "started_at": "2026-11-27T04:25:39Z",
+          "completed_at": "2026-11-27T04:25:39Z"
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-27T04:25:39Z",
+          "completed_at": "2026-11-27T04:25:56Z"
+        },
+        {
+          "name": "Set up pinned RuntimeCore host Node",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-27T04:25:56Z",
+          "completed_at": "2026-11-27T04:26:04Z"
+        },
+        {
+          "name": "Verify original OpenClaw source closure and parity",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-27T04:26:04Z",
+          "completed_at": "2026-11-27T04:26:38Z"
+        },
+        {
+          "name": "Prepare simulator logs and select stable Xcode",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-27T04:26:38Z",
+          "completed_at": "2026-11-27T04:26:52Z"
+        },
+        {
+          "name": "Read the installed FoundationModels tool continuation interface",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-27T04:26:52Z",
+          "completed_at": "2026-11-27T04:27:02Z"
+        },
+        {
+          "name": "Retain FoundationModels declarations before the application build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-27T04:27:02Z",
+          "completed_at": "2026-11-27T04:27:04Z"
+        },
+        {
+          "name": "Resolve current original MiniApp sources and exact build graph",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-27T04:27:04Z",
+          "completed_at": "2026-11-27T04:28:06Z"
+        },
+        {
+          "name": "Preserve current original MiniApp build inputs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-27T04:28:06Z",
+          "completed_at": "2026-11-27T04:28:08Z"
+        },
+        {
+          "name": "Prepare declaration-only metadata tool",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-27T04:28:08Z",
+          "completed_at": "2026-11-27T04:28:13Z"
+        },
+        {
+          "name": "Prepare resolved original MiniApp native dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-27T04:28:13Z",
+          "completed_at": "2026-11-27T04:41:17Z"
+        },
+        {
+          "name": "Restore simulator cloned Swift package dependencies",
+          "status": "in_progress",
+          "conclusion": null,
+          "number": 13,
+          "started_at": "2026-11-27T04:41:17Z",
+          "completed_at": null
+        },
+        {
+          "name": "Restore compatible simulator compiler state",
+          "status": "pending",
+          "conclusion": null,
+          "number": 14,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Report simulator cache mode",
+          "status": "pending",
+          "conclusion": null,
+          "number": 15,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Discard simulator compiler state for forced clean build",
+          "status": "pending",
+          "conclusion": null,
+          "number": 16,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Create CI Config.xcconfig",
+          "status": "pending",
+          "conclusion": null,
+          "number": 17,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Prepare verified embedded RuntimeCore",
+          "status": "pending",
+          "conclusion": null,
+          "number": 18,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Package current RuntimeCore host resources",
+          "status": "pending",
+          "conclusion": null,
+          "number": 19,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Run RuntimeCore preflight",
+          "status": "pending",
+          "conclusion": null,
+          "number": 20,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Export original prepared Hanlin SDK native artifacts",
+          "status": "pending",
+          "conclusion": null,
+          "number": 21,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Retain prepared Hanlin SDK native artifacts",
+          "status": "pending",
+          "conclusion": null,
+          "number": 22,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Resolve Swift Package dependencies",
+          "status": "pending",
+          "conclusion": null,
+          "number": 23,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Record resolved diagnostics build provenance",
+          "status": "pending",
+          "conclusion": null,
+          "number": 24,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Save validated simulator Swift package dependencies",
+          "status": "pending",
+          "conclusion": null,
+          "number": 25,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Record simulator SourcePackages save status",
+          "status": "pending",
+          "conclusion": null,
+          "number": 26,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Restore unchanged simulator build input metadata",
+          "status": "pending",
+          "conclusion": null,
+          "number": 27,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Capture simulator build input metadata",
+          "status": "pending",
+          "conclusion": null,
+          "number": 28,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Stage modular headers into simulator Swift Package checkouts",
+          "status": "pending",
+          "conclusion": null,
+          "number": 29,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Stage exact original A2UI plugin schemas for the combined app graph",
+          "status": "pending",
+          "conclusion": null,
+          "number": 30,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Retain prior unit manifests before the current test build",
+          "status": "pending",
+          "conclusion": null,
+          "number": 31,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Build full arm64 simulator app",
+          "status": "pending",
+          "conclusion": null,
+          "number": 32,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Measure same-run simulator no-op rebuild",
+          "status": "pending",
+          "conclusion": null,
+          "number": 33,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Validate the current build-for-testing unit products",
+          "status": "pending",
+          "conclusion": null,
+          "number": 34,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Save successful simulator compiler state",
+          "status": "pending",
+          "conclusion": null,
+          "number": 35,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Record simulator DerivedData save status",
+          "status": "pending",
+          "conclusion": null,
+          "number": 36,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Locate and scan simulator app",
+          "status": "pending",
+          "conclusion": null,
+          "number": 37,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Live Activity \u00c3\u201a\u00c2\u00b7 refresh",
+          "status": "pending",
+          "conclusion": null,
+          "number": 38,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Boot iPad Simulator and stage fixtures",
+          "status": "pending",
+          "conclusion": null,
+          "number": 39,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Live Activity \u00c3\u201a\u00c2\u00b7 refresh",
+          "status": "pending",
+          "conclusion": null,
+          "number": 40,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Stage the existing live provider account privately",
+          "status": "pending",
+          "conclusion": null,
+          "number": 41,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Run simulator test suite",
+          "status": "pending",
+          "conclusion": null,
+          "number": 42,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Verify bounded live evidence and remove the owned private account",
+          "status": "pending",
+          "conclusion": null,
+          "number": 43,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Upload sanitized original live-provider acceptance",
+          "status": "pending",
+          "conclusion": null,
+          "number": 44,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Verify affected Motion on the prepared app simulator",
+          "status": "pending",
+          "conclusion": null,
+          "number": 45,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Analyze performance benchmark results",
+          "status": "pending",
+          "conclusion": null,
+          "number": 46,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Run full Runtime Tooling acceptance and collect every group",
+          "status": "pending",
+          "conclusion": null,
+          "number": 47,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Launch full app and verify runtime acceptance",
+          "status": "pending",
+          "conclusion": null,
+          "number": 48,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Live Activity \u00c3\u201a\u00c2\u00b7 refresh",
+          "status": "pending",
+          "conclusion": null,
+          "number": 49,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Collect simulator diagnostics",
+          "status": "pending",
+          "conclusion": null,
+          "number": 50,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Clean up the owned compact UI simulator",
+          "status": "pending",
+          "conclusion": null,
+          "number": 51,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Upload simulator smoke evidence",
+          "status": "pending",
+          "conclusion": null,
+          "number": 52,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Post Set up pinned RuntimeCore host Node",
+          "status": "pending",
+          "conclusion": null,
+          "number": 103,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "pending",
+          "conclusion": null,
+          "number": 104,
+          "started_at": null,
+          "completed_at": null
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311440445",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": 1000026859,
+      "runner_name": "GitHub Actions 1000026859",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 140311443257,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqza3OQ",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311443257",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311443257",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:25:34Z",
+      "started_at": "2026-11-27T04:25:34Z",
+      "completed_at": "2026-11-27T04:25:34Z",
+      "name": "Build unsigned IPA with Xcode 26",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311443257",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 140311443343,
+      "run_id": 45939727401,
+      "workflow_name": "Build iOS 26 Unsigned IPA",
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45939727401",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgqza3jw",
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/140311443343",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45939727401/job/140311443343",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-27T04:25:34Z",
+      "started_at": "2026-11-27T04:25:34Z",
+      "completed_at": "2026-11-27T04:25:34Z",
+      "name": "Run split RuntimeCore bundle pipeline",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/140311443343",
+      "labels": [],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    }
+  ]
+}

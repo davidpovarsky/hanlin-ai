@@ -1,0 +1,206 @@
+{
+  "base": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "execution": {
+    "SwiftTypecheck": "NOT_RUN",
+    "authoringCLI": "NOT_RUN_NOT_SELECTED_WIDGET_ONLY_PATH",
+    "nativeOS": "NOT_RUN",
+    "originalCasesRerun": 0,
+    "originalZIPRecipe": "NOT_RUN",
+    "portableControls": "NOT_RUN",
+    "workflowPOSTs": 0
+  },
+  "newCaseSeconds": 420,
+  "newObserverControlMethods": [
+    "test_individual_components_and_real_zero_to_one_contract",
+    "test_missing_wrong_or_hidden_component_cannot_pass",
+    "test_wrong_window_outside_frame_and_overlap_are_rejected",
+    "test_family_instance_selector_and_current_source_binding_are_exact",
+    "test_capture_and_configuration_must_follow_real_action",
+    "test_render_requires_current_identity_family_and_post_placement_time",
+    "test_native_nonce_revision_and_values_cannot_be_substituted",
+    "test_missing_owned_cleanup_or_real_orientation_restoration_cannot_pass"
+  ],
+  "newPlannerControlMethods": 1,
+  "originalObserverSeconds": 2100,
+  "plan": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/appearance-activities-components-04e33c45-r1/coverage-and-next-pilots.json",
+    "sha256": "8efa4c1ba1b3c2fab6cc953511037f2b77c7d199e0bd3d3623b430d800298808"
+  },
+  "recordedAt": "2026-11-28T11:18:18.343171+00:00",
+  "rows": [
+    {
+      "candidateBytes": 294243,
+      "candidateSHA256": "0242e3cd6074290011b8239626b1406009973ebe0a267b1082a12df7bfd2a2ed",
+      "new": false,
+      "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "preimageBytes": 271791,
+      "preimageGitBlob": "04ae403fceecaf4fb632ff8a71ccff5335701ddb",
+      "preimageSHA256": "6b6ae68459977419cfe8539d14bfd96c09100ccb5d488dbd5790608ba5f7a738"
+    },
+    {
+      "candidateBytes": 34243,
+      "candidateSHA256": "49cb57bc123ca0e92170c730e6cca15b81efa47ba7fb62c35e7c24689d1998d9",
+      "new": true,
+      "path": "Scripts/ProductSplit/observe_widget_components.py"
+    },
+    {
+      "candidateBytes": 110066,
+      "candidateSHA256": "7a386466c5df2caa8c1d72eaf9204eed36b6477ce21a15ed5521b5e6db4245aa",
+      "new": false,
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "preimageBytes": 108251,
+      "preimageGitBlob": "bc2c2c74acc300afcfcadadf091badc6b5f7f8a8",
+      "preimageSHA256": "33b817d5ea7c4e6f010f52c537c431bb9ad9f2e06139a64c22a38b084c0d20af"
+    },
+    {
+      "candidateBytes": 68044,
+      "candidateSHA256": "7d001d486ad668fa4efd68bc244ce08daf943756cc344612542550c83cbc6380",
+      "new": false,
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "preimageBytes": 67581,
+      "preimageGitBlob": "a0924ecfdd00496c097024077efc5c6df488c3ba",
+      "preimageSHA256": "422c418689c6194268dccb54e8232711da44068925ca0a66fb27f1800610941a"
+    },
+    {
+      "candidateBytes": 13690,
+      "candidateSHA256": "ee1c83513932fb72e072d84096c2a69edc08ccbe8d18aac3ceebe8d9f806b334",
+      "new": true,
+      "path": "Scripts/CI/Tests/test_widget_components_observer.py"
+    },
+    {
+      "candidateBytes": 567,
+      "candidateSHA256": "fbfc54b66d4c02d3c7ceaa4762d2d28fe762b247bc30a7a3f9788f96a8c4a58b",
+      "new": true,
+      "path": "Fixtures/WidgetComponents/script.json"
+    },
+    {
+      "candidateBytes": 1903,
+      "candidateSHA256": "81dcce5aefcab558b150605d23bdc8c5021e7c78ece6bbe83458d876e33e1005",
+      "new": true,
+      "path": "Fixtures/WidgetComponents/widget.jsx"
+    },
+    {
+      "candidateBytes": 81306,
+      "candidateSHA256": "d411b9de7096f9c0e210f81e86ac63a6732c3615d992754551def919fd6dfbc8",
+      "new": false,
+      "path": "Scripts/CI/affected-validation-map.json",
+      "preimageBytes": 81209,
+      "preimageGitBlob": "c43425bec3bf296bac9d6ffcbedad521fa309409",
+      "preimageSHA256": "804ef959062859f3933a38a71521b42ffbb4a9f86399a3cfe9d0a6c908c8b8d1"
+    },
+    {
+      "candidateBytes": 90765,
+      "candidateSHA256": "f925db372a8a2e82941d5fbd29246ea3423598b3a09459c6df4af465996fef7f",
+      "new": false,
+      "path": "Scripts/CI/Tests/test_affected_validation.py",
+      "preimageBytes": 89542,
+      "preimageGitBlob": "69857b8fad26299cf33ae2027815dc5919c229d7",
+      "preimageSHA256": "2258992f08bf4168fae41ec2e746fc02d4f455368638557f6386b5dc90ed6ff3"
+    }
+  ],
+  "schema": 1,
+  "sourceChecks": {
+    "UIWholeOriginalInverse": true,
+    "candidateUITestMethods": 47,
+    "gitDiffCheck": {
+      "exit": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    "gitReverseApplyCheck": {
+      "exit": 0,
+      "stderr": "",
+      "stdout": ""
+    },
+    "newUISelector": "testMiniAppsLargeWidgetComponentsTrackActualNativeState",
+    "originalPlannerMapRecovered": true,
+    "originalPythonProjection": {
+      "Scripts/CI/Tests/test_affected_validation.py": {
+        "candidateFunctionDefinitions": 117,
+        "inverseASTSHA256": "28a410f3c5e541bb538ef26882610075281115a247fa76f65905a05da59741b3",
+        "originalASTSHA256": "28a410f3c5e541bb538ef26882610075281115a247fa76f65905a05da59741b3",
+        "originalFunctionDefinitions": 116,
+        "wholeOriginalASTRecovered": true
+      },
+      "Scripts/ProductSplit/observe_shortcut_surfaces.py": {
+        "candidateFunctionDefinitions": 40,
+        "inverseASTSHA256": "90169568d6965df140d2578910e796cdecfe0d76a5b7e277519e39778cd1eb77",
+        "originalASTSHA256": "90169568d6965df140d2578910e796cdecfe0d76a5b7e277519e39778cd1eb77",
+        "originalFunctionDefinitions": 40,
+        "wholeOriginalASTRecovered": true
+      },
+      "Scripts/ProductSplit/run_paired_acceptance.py": {
+        "candidateFunctionDefinitions": 28,
+        "inverseASTSHA256": "829e188e9c52bb4888fd7cf7ae29291300f240fe27c3db45a71cc0cc575a5778",
+        "originalASTSHA256": "829e188e9c52bb4888fd7cf7ae29291300f240fe27c3db45a71cc0cc575a5778",
+        "originalFunctionDefinitions": 28,
+        "wholeOriginalASTRecovered": true
+      }
+    },
+    "originalUISelectors": [
+      "testExpoPlacedWidgetInvokesAllFiveRuntimes",
+      "testNativeScriptPlacedWidgetInvokesAllFiveRuntimes",
+      "testExpoLiveActivityInvokesAllFiveRuntimes",
+      "testNativeScriptLiveActivityInvokesAllFiveRuntimes",
+      "testExpoShortcutInvokesAllFiveRuntimes",
+      "testNativeScriptShortcutInvokesAllFiveRuntimes",
+      "testExpoSystemShareInvokesAllFiveRuntimes",
+      "testNativeScriptSystemShareInvokesAllFiveRuntimes",
+      "testExpoSystemTranslationInvokesAllFiveRuntimes",
+      "testNativeScriptSystemTranslationInvokesAllFiveRuntimes",
+      "testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult",
+      "testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult",
+      "testExpoRunMiniAppActionSavedForegroundReturnsTypedResult",
+      "testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult",
+      "testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers",
+      "testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState",
+      "testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues",
+      "testMiniAppsMediumWidgetNativeControlsStayVisibleAcrossStateAndRotation",
+      "testMiniAppsSmallWidgetRetainsFamilyAndInstanceAcrossRotation",
+      "testMiniAppsMediumWidgetRetainsFamilyAndInstanceAcrossRotation",
+      "testMiniAppsLargeWidgetRetainsFamilyAndInstanceAcrossRotation",
+      "testMiniAppsExtraLargeWidgetRetainsFamilyAndInstanceAcrossRotation",
+      "testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+      "testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts",
+      "testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+      "testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+      "testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+      "testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+      "testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns",
+      "testStudioExpoCreatesMovesStylesAndReopensSource",
+      "testStudioNativeScriptCreatesMovesStylesAndReopensSource",
+      "testStudioOriginalTypeScriptHelpPreferencesAndLiveLogExport",
+      "testStudioImportsActualFilesSourceAndReopensIndependentEdit",
+      "testStudioTwoRealWindowsConflictReloadAndRecoverSeparateCopy",
+      "testExpoSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds",
+      "testNativeScriptSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds",
+      "testExpoSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds",
+      "testNativeScriptSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds",
+      "testNativeScriptSavedTextListReopensThenClearsToEmpty",
+      "testNativeScriptSavedIntegerListReopensThenClearsToEmpty",
+      "testNativeScriptSavedNumberListReopensThenClearsToEmpty",
+      "testNativeScriptSavedBooleanListReopensThenClearsToEmpty",
+      "testExpoSavedTextListReopensThenClearsToEmpty",
+      "testExpoSavedIntegerListReopensThenClearsToEmpty",
+      "testExpoSavedNumberListReopensThenClearsToEmpty",
+      "testExpoSavedBooleanListReopensThenClearsToEmpty"
+    ],
+    "originalUITestMethods": 46,
+    "pythonSyntaxOnly": "PASS",
+    "uiInsertionSHA256": "f0bc6e89412c0e38f89264cb4664e65e38e24de9f436b37f8a142631c0c554d3"
+  },
+  "sourcePatchGzipSHA256": "56356e9d637201d086c116a1cb11cb7668f0a4ad65557ac70b33f1607a076bc3",
+  "sourcePatchSHA256": "35713569efdd5a8e46822f81b220fc81b0dd7f857489c6e7996854108b2edd08",
+  "workflow": {
+    "baseSHA256": "65f761168a3274a3f5e2215e4c8e1edadd3f7f9f9782999de13c874aaf5692e5",
+    "candidateSHA256": "eae8f665317f0d289148857518f0bb266719a514ff9e302ff7d1e5ce16cc1946",
+    "exactInsertions": 2,
+    "original210MinuteEnvelopePreserved": true,
+    "original25OutputProducerConditionUntouched": true,
+    "patchSHA256": "856a4e8c22a1779c865aa29dfab3cc53ac06ecdacf1044b08d063e9d664942d6",
+    "path": ".github/workflows/validate-app-split.yml",
+    "wholeOriginalByteInverse": true,
+    "worktreeFileNotEdited": true
+  },
+  "worktree": "/mnt/development/projects/worktrees/hanlin-widget-components-fc5-20261128"
+}

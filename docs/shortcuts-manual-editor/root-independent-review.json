@@ -1,0 +1,54 @@
+{
+  "createdAt": "2026-11-28T13:22:59.840392+00:00",
+  "status": "ROOT_SOURCE_AND_VISUAL_REVIEW_APPROVED_COMPOSED_TYPECHECK_NATIVE_PENDING",
+  "base": "1ea6ab198151169236f473ab906993ff18d0c74c",
+  "candidateManifestSHA256": "9dc54a956f7974390a3f89fc12c4993e294b6ed8e3855e759b2699b42436cba3",
+  "sourceSHA256": "9db4c641cc130f036c828a60f0bfe32615dc4c0407dfcaac5deecfc6c581a95b",
+  "patchSHA256": "ec95a19b8cf3bd51be28e8c8d92a5f88abb3cdea2b3f72d11eb7e12be4625d27",
+  "verifiedPayloads": 16,
+  "verifiedPayloadBytes": 818783,
+  "externalFilesRehashed": 67,
+  "currentRawMembersRehashedAndCRCVerified": 47,
+  "oldTypedAXMembersRehashedAndCRCVerified": 4,
+  "original47TestBodiesByteExact": true,
+  "original188MethodNamesExact": true,
+  "unchangedOtherMethods": 179,
+  "changedHelpers": [
+    "importWidgetComponentsAndCreateInstance",
+    "importMatrixWidgetAndCreateInstance",
+    "openInstalledFixture",
+    "shortcutActionSearchFields",
+    "findShortcutActionSearch",
+    "addShortcutAction",
+    "observeStudioGallery",
+    "openLongRunningFixture",
+    "openNativeListFixture"
+  ],
+  "wholeFileForwardAndReverseExact": true,
+  "rootActuallyViewedPNGs": [
+    {
+      "name": "AC790666-56EB-4977-97AE-B2D1573DAE91.png",
+      "sha256": "9fb9537b1f7f1db102796f78f46650b29032432053605924d66f447ce9e3ede2",
+      "observation": "Actual New Shortcut manual action editor, right-hand Search and Hanlin MiniApps row; no selected action/result yet."
+    },
+    {
+      "name": "41DE78C5-F044-4ED8-A467-592E0DE460DC.png",
+      "sha256": "0bcc23e2f70189aa2707278564753e6fafd206a1303b3be2b5cc32282e1c2629",
+      "observation": "Actual New Shortcut2 placeholder with Edit control and separate All Shortcuts library Search; manual actioneditor notentered."
+    }
+  ],
+  "semanticReview": [
+    "Exact typedStaticText importerror queries match unchangedshipping SwiftUILabel+observed actualAX. Originalerror/diagnostic/install oracles and120s import boundremain.",
+    "Original2actionsearchlabels remain. GenericSearch admitted onlywithin onevisible new/exactrecordedsaved-shortcut navcontext withEditorabsent, excluding actualAllShortcutssearchframes.",
+    "Actualnumberednewtitle patternroutes to originalEditorbutton. Original12s wait/uniqueenabled/hittable requirements retained.",
+    "OnlyobservedSearchplaceholder excludedfromdelete-text handling; originalactionchain/save/reopen/assertions retained."
+  ],
+  "limitations": [
+    "No late manualeditor AX is invented; two actualPNGs plus originalquerylogs establish navigationboundary. Final-system AX are SpringBoard.",
+    "Sampledimport matchingSnapshots shows a concrete queryboundary; no appdeadlock, finalimportoutcome orperformanceguarantee is claimed.",
+    "Savedname Search context extends to newmigration whose record.savedShortcutName is set beforesearch; actualnativeoutcome remainsrequired."
+  ],
+  "testsRun": 0,
+  "typechecks": 0,
+  "nativeRun": 0
+}

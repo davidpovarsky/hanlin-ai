@@ -1,0 +1,18 @@
+[
+  {
+    "rawName": "planner.stdout.log",
+    "rawBytes": 0,
+    "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gzipName": "planner.stdout.log.gz",
+    "gzipBytes": 20,
+    "gzipSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+  },
+  {
+    "rawName": "planner.stderr.log",
+    "rawBytes": 623,
+    "rawSHA256": "49b78e4bd7cd744058cbf844f2096a34d1fb26eb1f4d01f13c5f69ba27a07246",
+    "gzipName": "planner.stderr.log.gz",
+    "gzipBytes": 275,
+    "gzipSHA256": "46fa1ba58f90a50b3597d0ff98afe59cd634ec6b635101bbc27ab2e1623cb688"
+  }
+]

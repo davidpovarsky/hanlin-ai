@@ -1,0 +1,41 @@
+✔ only complete, current, protected and explicitly enabled evidence can qualify (5.9798ms)
+✔ merge refuses missing checks (1.8888ms)
+✔ merge refuses failed CI (0.4628ms)
+✔ merge refuses skipped CI (1.8711ms)
+✔ merge refuses pending CI (2.864ms)
+✔ merge refuses wrong check source (0.9418ms)
+✔ merge refuses stale check head (0.6546ms)
+✔ merge refuses stale receipt (0.8185ms)
+✔ merge refuses unknown impact (0.5417ms)
+✔ merge refuses native ABI (0.6955ms)
+✔ merge refuses major (0.9971ms)
+✔ merge refuses missing license (0.4147ms)
+✔ merge refuses missing checksum (0.2896ms)
+✔ merge refuses no gates (0.8461ms)
+✔ merge refuses no rollback (0.2413ms)
+✔ merge refuses unprotected branch (0.4762ms)
+✔ merge refuses merge not enabled (0.4347ms)
+✔ merge correct protected set requires every exact server context on the same head (3.4911ms)
+✔ merge protected-but-wrong-gate cannot substitute lint for the upstream gate (0.4351ms)
+✔ merge extra-required-failed blocks even after upstream validation passes (0.259ms)
+✔ merge extra-required-pending blocks even after upstream validation passes (0.1752ms)
+✔ merge extra-required-skipped blocks even after upstream validation passes (0.1739ms)
+✔ merge server context preserves the original raw prefixed check name (0.4244ms)
+✔ merge missing or ambiguous server configuration stays blocked (0.5114ms)
+✔ merge app binding is enforced for additional required gates (0.2626ms)
+✔ merge checks-only server configuration is supported without losing app bindings (0.2359ms)
+✔ merge legacy any-app context requires an unambiguous authenticated check run (0.2646ms)
+✔ merge required status-only or missing gate is unknown rather than silently omitted (0.2758ms)
+✔ merge extra required check cannot borrow another head result (0.23ms)
+✔ merge unrelated failed checks do not replace the configured required set (0.2325ms)
+✔ merge unknown or additional effective branch rules require explicit review (0.3435ms)
+✔ merge caller protectedBranch boolean cannot bypass absent server configuration (0.3278ms)
+✔ merge missing execution accounting cannot qualify despite a passed CI boolean (0.3083ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1167.131

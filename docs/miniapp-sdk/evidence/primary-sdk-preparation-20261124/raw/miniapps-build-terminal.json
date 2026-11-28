@@ -1,0 +1,173 @@
+{
+  "readAt": "2026-11-24T20:18:40.651735+00:00",
+  "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/mini-build.log",
+  "bytes": 5340384,
+  "sha256": "97914eff511dd01491868bfa0232ccae43d6a81632d45cf9ae0897b84e7de3e3",
+  "lines": 53001,
+  "headers": [
+    {
+      "line": 88,
+      "text": "skipping cache due to an error: The file \u201ctmp_graph_qhK4kV\u201d doesn\u2019t exist.",
+      "context": [
+        "",
+        "Fetching from https://github.com/NativeScript/ios-spm.git (cached)",
+        "skipping cache due to an error: The file \u201ctmp_graph_qhK4kV\u201d doesn\u2019t exist.",
+        "Creating working copy of package \u2018XMLCoder\u2019",
+        "",
+        "Checking out 0.14.0 of package \u2018XMLCoder\u2019",
+        ""
+      ]
+    },
+    {
+      "line": 49428,
+      "text": "138 |     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {",
+      "context": [
+        "136 |         }",
+        "137 |     }",
+        "138 |     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {",
+        "    |          |- note: main actor-isolated instance method 'locationManager(_:didFailWithError:)' cannot satisfy nonisolated requirement",
+        "    |          `- note: mark instance method 'locationManager(_:didFailWithError:)' 'nonisolated'",
+        "139 |         status = error.localizedDescription",
+        "140 |     }"
+      ]
+    },
+    {
+      "line": 49734,
+      "text": "138 |     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {",
+      "context": [
+        "136 |         }",
+        "137 |     }",
+        "138 |     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {",
+        "    |          |- note: main actor-isolated instance method 'locationManager(_:didFailWithError:)' cannot satisfy nonisolated requirement",
+        "    |          `- note: mark instance method 'locationManager(_:didFailWithError:)' 'nonisolated'",
+        "139 |         status = error.localizedDescription",
+        "140 |     }"
+      ]
+    },
+    {
+      "line": 52543,
+      "text": "error: Clang dependency scanning failure:  (in target 'HanlinExpoRuntime' from project 'HanlinSDK')",
+      "context": [
+        "    cd /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLY.xcodeproj",
+        "    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -parse-as-library -module-name HanlinExpoRuntime -Onone @/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoRuntime-t.build/Objects-normal/arm64/HanlinExpoRuntime.SwiftFileList -DSWIFT_PACKAGE -DDEBUG -DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE -Xcc -fmodule-map-file\\=/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include/module.modulemap -Xcc -fmodule-map-file\\=/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/include/module.modulemap -DXcode -cxx-interoperability-mode\\=default -Xcc -std\\=gnu++20 -Xcc -std\\=gnu++20 -Xcc -DREACT_NATIVE_PRODUCTION\\=1 -Xcc -DRN_DEBUG_STRING_CONVERTIBLE\\=0 -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/../HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/../HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge -Xcc -F/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -FArtifacts/ModularFrameworks -Xcc -FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -IArtifacts/ReactModularHeaders -Xcc -IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -IArtifacts/ModularFrameworks/react.framework/Headers -Xcc -IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -IArtifacts/ModularFrameworks/react.framework/Headers/react -Xcc -IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -IArtifacts/ReactNativeDependencies.xcframework/Headers -Xcc -IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -target arm64-apple-ios27.0-simulator -g -module-cache-path /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 6 -I /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -emit-localized-strings -emit-localized-strings-path /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoRuntime-t.build/Objects-normal/arm64 -c -j10 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache -output-file-map /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoRuntime-t.build/Objects-normal/arm64/HanlinExpoRuntime-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/ModuleCache.noindex -sdk-module-cache-path /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoRuntime-t.build/Objects-normal/arm64/HanlinExpoRuntime.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoRuntime-t.build/Objects-normal/arm64/HanlinExpoRuntime-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\\=86400 -Xcc -fmodules-prune-after\\=345600 -package-name hanlin_ai_ce49e30d_miniapp_complete -emit-const-values -const-gather-protocols-list /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoRuntime-t.build/Objects-normal/arm64/HanlinExpoRuntime_const_extract_protocols.json -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/include -Xcc -I/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoRuntime-t.build/DerivedSources-normal/arm64 -Xcc -I/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoRuntime-t.build/DerivedSources/arm64 -Xcc -I/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoRuntime-t.build/DerivedSources -Xcc -DSWIFT_PACKAGE -Xcc -DDEBUG\\=1 -emit-objc-header -emit-objc-header-path /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoRuntime-t.build/Objects-normal/arm64/HanlinExpoRuntime-Swift.h -working-directory /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLY.xcodeproj -experimental-emit-module-separately -disable-cmo",
+        "error: Clang dependency scanning failure:  (in target 'HanlinExpoRuntime' from project 'HanlinSDK')",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift:11:29: error: Unable to resolve module dependency: 'React_RCTAppDelegate' (in target 'HanlinExpoRuntime' from project 'HanlinSDK')",
+        "    note: A dependency of main module 'HanlinExpoRuntime'",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift:11:29: note: A dependency of main module 'HanlinExpoRuntime'",
+        "@_implementationOnly import React_RCTAppDelegate"
+      ]
+    },
+    {
+      "line": 52544,
+      "text": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift:11:29: error: Unable to resolve module dependency: 'React_RCTAppDelegate' (in target 'HanlinExpoRuntime' from project 'HanlinSDK')",
+      "context": [
+        "    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -parse-as-library -module-name HanlinExpoRuntime -Onone @/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoRuntime-t.build/Objects-normal/arm64/HanlinExpoRuntime.SwiftFileList -DSWIFT_PACKAGE -DDEBUG -DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE -Xcc -fmodule-map-file\\=/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include/module.modulemap -Xcc -fmodule-map-file\\=/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/include/module.modulemap -DXcode -cxx-interoperability-mode\\=default -Xcc -std\\=gnu++20 -Xcc -std\\=gnu++20 -Xcc -DREACT_NATIVE_PRODUCTION\\=1 -Xcc -DRN_DEBUG_STRING_CONVERTIBLE\\=0 -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/../HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/../HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge -Xcc -F/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -FArtifacts/ModularFrameworks -Xcc -FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -IArtifacts/ReactModularHeaders -Xcc -IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -IArtifacts/ModularFrameworks/react.framework/Headers -Xcc -IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -IArtifacts/ModularFrameworks/react.framework/Headers/react -Xcc -IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -IArtifacts/ReactNativeDependencies.xcframework/Headers -Xcc -IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -target arm64-apple-ios27.0-simulator -g -module-cache-path /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 6 -I /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -emit-localized-strings -emit-localized-strings-path /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoRuntime-t.build/Objects-normal/arm64 -c -j10 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache -output-file-map /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoRuntime-t.build/Objects-normal/arm64/HanlinExpoRuntime-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/ModuleCache.noindex -sdk-module-cache-path /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoRuntime-t.build/Objects-normal/arm64/HanlinExpoRuntime.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoRuntime-t.build/Objects-normal/arm64/HanlinExpoRuntime-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\\=86400 -Xcc -fmodules-prune-after\\=345600 -package-name hanlin_ai_ce49e30d_miniapp_complete -emit-const-values -const-gather-protocols-list /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoRuntime-t.build/Objects-normal/arm64/HanlinExpoRuntime_const_extract_protocols.json -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/include -Xcc -I/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoRuntime-t.build/DerivedSources-normal/arm64 -Xcc -I/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoRuntime-t.build/DerivedSources/arm64 -Xcc -I/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoRuntime-t.build/DerivedSources -Xcc -DSWIFT_PACKAGE -Xcc -DDEBUG\\=1 -emit-objc-header -emit-objc-header-path /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoRuntime-t.build/Objects-normal/arm64/HanlinExpoRuntime-Swift.h -working-directory /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLY.xcodeproj -experimental-emit-module-separately -disable-cmo",
+        "error: Clang dependency scanning failure:  (in target 'HanlinExpoRuntime' from project 'HanlinSDK')",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift:11:29: error: Unable to resolve module dependency: 'React_RCTAppDelegate' (in target 'HanlinExpoRuntime' from project 'HanlinSDK')",
+        "    note: A dependency of main module 'HanlinExpoRuntime'",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift:11:29: note: A dependency of main module 'HanlinExpoRuntime'",
+        "@_implementationOnly import React_RCTAppDelegate",
+        "                            ^ (in target 'HanlinExpoRuntime' from project 'HanlinSDK')"
+      ]
+    }
+  ],
+  "tail": [
+    "",
+    "PruneExplicitPrecompiledModules /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules",
+    "",
+    "note: Run script build phase 'Generate NativeScript metadata' will be run during every build because the option to run the script phase \"Based on dependency analysis\" is unchecked. (in target 'HanlinMiniApps' from project 'AI_HLY')",
+    "note: Run script build phase 'Process Python libraries' will be run during every build because the option to run the script phase \"Based on dependency analysis\" is unchecked. (in target 'HanlinMiniApps' from project 'AI_HLY')",
+    "warning: 'AISDKZodAdapter' is missing a dependency on 'AISDKProvider' because dependency scan of Swift module 'AISDKZodAdapter' discovered a dependency on 'AISDKProvider'",
+    "warning: 'HanlinMiniAppCore' is missing a dependency on 'HanlinPlatformContracts' because dependency scan of Swift module 'HanlinMiniAppCore' discovered a dependency on 'HanlinPlatformContracts'",
+    "warning: 'AISDKProviderUtils' is missing a dependency on 'AISDKZodAdapter' because dependency scan of Swift module 'AISDKProviderUtils' discovered a dependency on 'AISDKZodAdapter'",
+    "warning: 'AISDKProviderUtils' is missing a dependency on 'EventSourceParser' because dependency scan of Swift module 'AISDKProviderUtils' discovered a dependency on 'EventSourceParser'",
+    "warning: 'AISDKProviderUtils' is missing a dependency on 'AISDKProvider' because dependency scan of Swift module 'AISDKProviderUtils' discovered a dependency on 'AISDKProvider'",
+    "",
+    "Result bundle written to path:",
+    "\t/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/MiniBuild.xcresult",
+    "",
+    "** TEST BUILD FAILED **",
+    "",
+    "",
+    "The following build commands failed:",
+    "\tSwiftDriver HanlinExpoRuntime normal arm64 com.apple.xcode.tools.swift.compiler (in target 'HanlinExpoRuntime' from project 'HanlinSDK')",
+    "\tBuilding project AI_HLY for testing with scheme HanlinMiniApps",
+    "(2 failures)",
+    "Resolve Package Graph"
+  ],
+  "acceptance.json": {
+    "status": "BUILD_FAILED",
+    "ui": "NOT_RUN",
+    "build": "EXECUTED_FAIL",
+    "mini_build": "EXECUTED_FAIL",
+    "ai_build": "NOT_RUN",
+    "physical_device": "NOT_RUN",
+    "provisioned_distribution": "NOT_RUN",
+    "scope": "Original SDK/tools, source diagnostics, native repair sheet, durable AI handoff, actual build/install and NativeScript/Expo runtime controls in both shipping products",
+    "model_boundary": "Only the HTTP model response sequence and the native adapter image fixture resources are deterministic. All source edits, TypeScript diagnostics, Metro/ESM production, imports, receipts, native rendering and UI events are original production code.",
+    "started_at": 1795550700.5633972,
+    "test_scope": "miniapp_complete",
+    "selected_tests": [
+      "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings",
+      "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft",
+      "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic",
+      "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair",
+      "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource",
+      "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode",
+      "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+      "AI_HLYTests/HanlinNativePresentationTests",
+      "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+      "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+      "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
+      "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+      "AI_HLYUITests/MiniAppAuthoringUITests",
+      "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+      "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"
+    ],
+    "sha": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+    "simulator": "4D9924A2-66E1-429D-A61C-82836C6FA3AF",
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+    "device": "iPad Pro 13-inch (M5) (16GB)",
+    "app_intents_metadata": {},
+    "error": "xcodebuild exit 65; inspect mini-build.log",
+    "diagnostic_errors": [],
+    "attachment_exports": [],
+    "build_commands": {
+      "mini_build": {
+        "log": "mini-build.log",
+        "command_id": "1b8a595309b6499ab3186090fbde2f54",
+        "status": "completed",
+        "completion_recorded": true,
+        "exit": 65,
+        "observed_returncode": 65
+      }
+    },
+    "result_bundles": [
+      "MiniBuild.xcresult"
+    ],
+    "duration_seconds": 247.3405499458313
+  },
+  "active-command.json": {
+    "command_id": "b6428f42ee21486d80077ef64468c565",
+    "argv": [
+      "xcrun",
+      "simctl",
+      "io",
+      "4D9924A2-66E1-429D-A61C-82836C6FA3AF",
+      "screenshot",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/failure.png"
+    ],
+    "log": "screenshot.log",
+    "runner_pid": 39397,
+    "pid": 44396,
+    "started_at": 1795550946.1409569,
+    "timeout": 30,
+    "status": "completed",
+    "observed_at": 1795550947.901079,
+    "seconds": 1.7601530000029015,
+    "log_bytes": 278,
+    "completion_recorded": true,
+    "exit": 0,
+    "observed_returncode": 0
+  }
+}

@@ -1,0 +1,3 @@
+import HanlinChatUI
+
+typealias ChatMessagePreviewMetrics = HanlinMessagePreviewMetrics

@@ -1,0 +1,9 @@
+{
+  "operation": "swiftc -frontend -parse",
+  "toolchain": "Windows Swift 6.3.3+Asserts",
+  "returncode": 0,
+  "fileCount": 79,
+  "stdout": "",
+  "stderr": "",
+  "scope": "SYNTAX ONLY; cannot typecheck UIKit/SwiftUI on Windows"
+}

@@ -1,0 +1,3 @@
+To https://github.com/davidpovarsky/hanlin-ai.git
+ ! [remote rejected]     HEAD -> codex/hanlin-two-wave-integration-20261126 (refusing to allow an OAuth App to create or update workflow `.github/workflows/dispatch-runtime-dependency-updates.yml` without `workflow` scope)
+error: failed to push some refs to 'https://github.com/davidpovarsky/hanlin-ai.git'

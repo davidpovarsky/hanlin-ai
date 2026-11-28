@@ -1,0 +1,831 @@
+warning: 'zipfoundation': /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/checkouts/ZIPFoundation/Package@swift-5.9.swift:23:61: warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+21 |     name: "ZIPFoundation",
+22 |     platforms: [
+23 |         .macOS(.v10_13), .iOS(.v12), .tvOS(.v12), .watchOS(.v4), .visionOS(.v1)
+   |                                                             `- warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+24 |     ],
+25 |     products: [
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+Building for debugging...
+[Computing dependencies]
+[Provisioning 1 / 66]
+[2 / 137] ZIPFoundation_ZIPFoundation
+[2 / 136]
+[11 / 87] HanlinScriptingSDKTests-product
+[14 / 93] HanlinScriptStoreTests-product
+[15 / 95] HanlinScriptingSDKTests-product
+[16 / 98] HanlinScriptStoreTests-product
+[19 / 102] HanlinScriptingSDKTests-product
+[25 / 103] HanlinScriptDeviceServicesTests-product
+[27 / 103] HanlinScriptCompilerTests-product
+[29 / 105] HanlinPlatformContractsTests-product
+[31 / 111] HanlinScriptCompilerTests-product
+[33 / 115] HanlinPlatformContractsTests-product
+[34 / 115] HanlinChatCoreTests-product
+[36 / 117] HanlinScriptingSDKTests-product
+[52 / 132] HanlinScriptingApplicationRuntimeTests-product
+[54 / 132] HanlinScriptingSDKTests-product
+[69 / 143] HanlinScriptStoreTests-product
+[70 / 143] HanlinScriptUITests-product
+[71 / 142] HanlinScriptUITests-product
+[79 / 146] HanlinScriptRuntimeTests-product
+[87 / 149] HanlinScriptRuntimeTests-product
+[103 / 160] HanlinScriptContractsTests-product
+[104 / 160] HanlinScriptRuntimeTests-product
+[119 / 168] HanlinScriptCompilerTests-product
+[123 / 168] HanlinScriptExtensionsTests-product
+[131 / 171] HanlinPlatformContractsTests-product
+[132 / 171] HanlinScriptCompilerTests-product
+[139 / 174] HanlinChatCoreTests-product
+[145 / 174] HanlinPlatformContractsTests-product
+[147 / 171]
+[148 / 169] HanlinScriptStoreTests-product
+[150 / 163]
+[152 / 163]
+[154 / 161] HanlinScriptContractsTests-product
+[157 / 161] HanlinPlatformContractsTests-product
+[157 / 161] HanlinChatCoreTests-product
+[159 / 159] HanlinChatCoreTests-product
+Build complete! (12.94 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Generated Scripting SDK foundation" started.
+◇ Test "Generated manifest is stable canonical JSON" started.
+◇ Test "Loads integrity-checked declarations and registration metadata" started.
+✔ Test "Generated manifest is stable canonical JSON" passed after 0.004 seconds.
+✔ Test "Loads integrity-checked declarations and registration metadata" passed after 0.051 seconds.
+✔ Suite "Generated Scripting SDK foundation" passed after 0.052 seconds.
+✔ Test run with 2 tests in 1 suite passed after 0.052 seconds.
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Scripting application runtime" started.
+◇ Test "Compiles and renders independently of the application target" started.
+✔ Test "Compiles and renders independently of the application target" passed after 0.025 seconds.
+◇ Test "Renders a family-specific widget and preserves its reload date" started.
+✔ Test "Renders a family-specific widget and preserves its reload date" passed after 0.004 seconds.
+◇ Test "Registers bounded App Intent actions without requiring application UI" started.
+✔ Test "Registers bounded App Intent actions without requiring application UI" passed after 0.006 seconds.
+◇ Test "Receives intent inputs and captures typed Script.exit results" started.
+✔ Test "Receives intent inputs and captures typed Script.exit results" passed after 0.004 seconds.
+◇ Test "Projects the native device snapshot into an immutable Scripting Device object" started.
+✔ Test "Projects the native device snapshot into an immutable Scripting Device object" passed after 0.004 seconds.
+◇ Test "Runs FileManager and nativ-ai Pasteboard and Safari calls through the native system channel" started.
+✔ Test "Runs FileManager and nativ-ai Pasteboard and Safari calls through the native system channel" passed after 0.006 seconds.
+◇ Test "Denies Pasteboard and open-URL operations before invoking the native system loader" started.
+✔ Test "Denies Pasteboard and open-URL operations before invoking the native system loader" passed after 0.005 seconds.
+◇ Test "Routes deprecated Clipboard through the Pasteboard capability" started.
+✔ Test "Routes deprecated Clipboard through the Pasteboard capability" passed after 0.004 seconds.
+◇ Test "Bridges typed Pasteboard items and privacy options without losing value types" started.
+✔ Test "Bridges typed Pasteboard items and privacy options without losing value types" passed after 0.011 seconds.
+◇ Test "Runs CryptoKit hashes, HMAC, key generation, UUID, and AES-GCM" started.
+✔ Test "Runs CryptoKit hashes, HMAC, key generation, UUID, and AES-GCM" passed after 0.006 seconds.
+◇ Test "Runs the nativ-ai Reminder creation flow and returns the EventKit identifier" started.
+✔ Test "Runs the nativ-ai Reminder creation flow and returns the EventKit identifier" passed after 0.005 seconds.
+◇ Test "Bridges Reminder CRUD, filtered queries, and reminder calendars" started.
+✔ Test "Bridges Reminder CRUD, filtered queries, and reminder calendars" passed after 0.006 seconds.
+◇ Test "Rejects malformed Reminder payloads before invoking EventKit" started.
+✔ Test "Rejects malformed Reminder payloads before invoking EventKit" passed after 0.001 seconds.
+◇ Test "Imports FileManager selections and previews the package copy through system UI" started.
+✔ Test "Imports FileManager selections and previews the package copy through system UI" passed after 0.026 seconds.
+◇ Test "Runs the exact nativ-ai photo attachment primitives with real encoded image values" started.
+✔ Test "Runs the exact nativ-ai photo attachment primitives with real encoded image values" passed after 0.005 seconds.
+◇ Test "Runs FileManager and nativ-ai Dialog interactions through native modal results" started.
+✔ Test "Runs FileManager and nativ-ai Dialog interactions through native modal results" passed after 0.004 seconds.
+◇ Test "Runs the exact FileManager EditorController presentation and content lifecycle" started.
+✔ Test "Runs the exact FileManager EditorController presentation and content lifecycle" passed after 0.005 seconds.
+◇ Test "Decodes bounded Assistant requests and emits Web-compatible chunks" started.
+✔ Test "Decodes bounded Assistant requests and emits Web-compatible chunks" passed after 0.001 seconds.
+◇ Test "SQLite executes parameterized statements and returns typed rows" started.
+✔ Test "SQLite executes parameterized statements and returns typed rows" passed after 0.017 seconds.
+◇ Test "Location requests validate capabilities, coordinates, locales, and accuracy" started.
+✔ Test "Location requests validate capabilities, coordinates, locales, and accuracy" passed after 0.001 seconds.
+◇ Test "Health and Notification payloads reject unsupported or unbounded requests" started.
+✔ Test "Health and Notification payloads reject unsupported or unbounded requests" passed after 0.001 seconds.
+◇ Test "Runs smart-eating Health statistics and recurring Notification primitives end to end" started.
+✔ Test "Runs smart-eating Health statistics and recurring Notification primitives end to end" passed after 0.009 seconds.
+✔ Suite "Scripting application runtime" passed after 0.164 seconds.
+✔ Test run with 22 tests in 1 suite passed after 0.164 seconds.
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "ScriptUI reconciler" started.
+◇ Test "Unknown routes and invalid pops fail closed" started.
+◇ Test "Rendered navigation destinations synchronize path and native back events" started.
+◇ Test "Interactive acceptance primitives retain their wire representation" started.
+◇ Test "Model dispatches events and disposes effects" started.
+◇ Test "Reorders keyed children before applying their property patches" started.
+◇ Test "Rejects duplicate keys and bounded patch overflow" started.
+◇ Test "Rendered presentation nodes drive native modal state" started.
+◇ Test "Navigation, presentation, scene, and resume state are explicit" started.
+◇ Test "Produces deterministic patches that recreate an unkeyed tree" started.
+◇ Test "SVG sanitizer accepts local vector markup and rejects active or remote content" started.
+✔ Test "Reorders keyed children before applying their property patches" passed after 0.001 seconds.
+✔ Test "Produces deterministic patches that recreate an unkeyed tree" passed after 0.001 seconds.
+✔ Test "Rendered navigation destinations synchronize path and native back events" passed after 0.001 seconds.
+✔ Test "Rejects duplicate keys and bounded patch overflow" passed after 0.001 seconds.
+✔ Test "Unknown routes and invalid pops fail closed" passed after 0.002 seconds.
+✔ Test "Interactive acceptance primitives retain their wire representation" passed after 0.002 seconds.
+✔ Test "Model dispatches events and disposes effects" passed after 0.002 seconds.
+✔ Test "SVG sanitizer accepts local vector markup and rejects active or remote content" passed after 0.002 seconds.
+✔ Test "Rendered presentation nodes drive native modal state" passed after 0.002 seconds.
+✔ Test "Navigation, presentation, scene, and resume state are explicit" passed after 0.003 seconds.
+✔ Suite "ScriptUI reconciler" passed after 0.003 seconds.
+✔ Test run with 10 tests in 1 suite passed after 0.003 seconds.
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Atomic Scripting installation store" started.
+◇ Suite "Script Mini App registration and discovery" started.
+◇ Test "Failed update promotion restores the previous active generation" started.
+◇ Test "Artifact corruption fails before catalog mutation" started.
+◇ Test "Install, update, rollback, disable, restore, and uninstall preserve stable identity" started.
+◇ Test "Missing artifact manifest fails deterministically before catalog mutation" started.
+◇ Test "Unified catalog retains native and installed script authorities" started.
+◇ Test "Cold restoration through a symlinked root preserves the active manifest while pruning staging" started.
+◇ Test "Install recovery is atomic at every persisted transition" started.
+◇ Test "Required capabilities are rejected until the production grant representation approves them" started.
+◇ Test "Uninstall recovery restores or completes according to its commit point" started.
+◇ Test "Capability grants persist and revocation is package scoped" started.
+◇ Test "Stored package snapshot conforms to HanlinMiniAppRegistration and validates" started.
+◇ Test "Unknown and future exposure raw values survive Codable round-trip" started.
+◇ Test "Exposure-only package does not get fake .app entrypoint and retains declared exposures in catalog snapshot" started.
+◇ Test "NativeScript package preserves nativeScript implementation, runtimeProfile, and exposures" started.
+◇ Test case passing 1 argument point → .journalPersisted to "Install recovery is atomic at every persisted transition" started.
+◇ Test "Normal legacy foreground script package gets expected app/index.tsx behavior" started.
+◇ Test "Legacy descriptor JSON without supportedExposures decodes seamlessly with default derivation" started.
+◇ Test "Legacy-format NativeScript package with hanlinRuntime manifest field resolves to .nativeScript" started.
+◇ Test case passing 1 argument point → .artifactStaged to "Install recovery is atomic at every persisted transition" started.
+◇ Test case passing 1 argument point → .uninstallMoved to "Uninstall recovery restores or completes according to its commit point" started.
+◇ Test "HanlinScriptPackageDiscovery discovers registrations and builds catalog snapshot" started.
+◇ Test "Package entrypoint kinds bridge bidirectionally to canonical kinds" started.
+◇ Test case passing 1 argument point → .generationPromoted to "Install recovery is atomic at every persisted transition" started.
+◇ Test case passing 1 argument point → .uninstallRegistryCommitted to "Uninstall recovery restores or completes according to its commit point" started.
+◇ Test "Manifest declared supportedExposures (translation_ui, widget, app_intent) are exposed in appDescriptor" started.
+◇ Test case passing 1 argument point → .registryCommitted to "Install recovery is atomic at every persisted transition" started.
+✔ Test "Artifact corruption fails before catalog mutation" passed after 0.048 seconds.
+✔ Test "Missing artifact manifest fails deterministically before catalog mutation" passed after 0.048 seconds.
+✔ Test "Failed update promotion restores the previous active generation" passed after 0.048 seconds.
+✔ Test "Install, update, rollback, disable, restore, and uninstall preserve stable identity" passed after 0.048 seconds.
+✔ Test "Unified catalog retains native and installed script authorities" passed after 0.049 seconds.
+✔ Test "Cold restoration through a symlinked root preserves the active manifest while pruning staging" passed after 0.050 seconds.
+✔ Test "Install recovery is atomic at every persisted transition" with 4 test cases passed after 0.051 seconds.
+✔ Test "Required capabilities are rejected until the production grant representation approves them" passed after 0.051 seconds.
+✔ Test "Uninstall recovery restores or completes according to its commit point" with 2 test cases passed after 0.051 seconds.
+✔ Test "Stored package snapshot conforms to HanlinMiniAppRegistration and validates" passed after 0.027 seconds.
+✔ Test "Unknown and future exposure raw values survive Codable round-trip" passed after 0.027 seconds.
+✔ Test "Exposure-only package does not get fake .app entrypoint and retains declared exposures in catalog snapshot" passed after 0.027 seconds.
+✔ Test "Normal legacy foreground script package gets expected app/index.tsx behavior" passed after 0.023 seconds.
+✔ Test "NativeScript package preserves nativeScript implementation, runtimeProfile, and exposures" passed after 0.027 seconds.
+✔ Test "Legacy-format NativeScript package with hanlinRuntime manifest field resolves to .nativeScript" passed after 0.023 seconds.
+✔ Test "HanlinScriptPackageDiscovery discovers registrations and builds catalog snapshot" passed after 0.019 seconds.
+✔ Test "Package entrypoint kinds bridge bidirectionally to canonical kinds" passed after 0.019 seconds.
+✔ Test "Legacy descriptor JSON without supportedExposures decodes seamlessly with default derivation" passed after 0.023 seconds.
+✔ Test "Manifest declared supportedExposures (translation_ui, widget, app_intent) are exposed in appDescriptor" passed after 0.011 seconds.
+✔ Test "Capability grants persist and revocation is package scoped" passed after 0.051 seconds.
+✔ Suite "Script Mini App registration and discovery" passed after 0.051 seconds.
+✔ Suite "Atomic Scripting installation store" passed after 0.052 seconds.
+✔ Test run with 20 tests in 2 suites passed after 0.052 seconds.
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Capability-gated Scripting service brokers" started.
+◇ Test "Audit storage is bounded and contains no payload data" started.
+◇ Test "Permission authority matches subject, capability, origin, gesture, expiry, and revocation" started.
+◇ Test "Dialog, device, URL, pasteboard, and Assistant remain brokered" started.
+◇ Test "Network broker enforces HTTPS, redirects, response limits, and grants" started.
+◇ Test "Storage and VFS are package-namespaced, bounded, and traversal-safe" started.
+✔ Test "Permission authority matches subject, capability, origin, gesture, expiry, and revocation" passed after 0.001 seconds.
+✔ Test "Audit storage is bounded and contains no payload data" passed after 0.001 seconds.
+✔ Test "Dialog, device, URL, pasteboard, and Assistant remain brokered" passed after 0.001 seconds.
+✔ Test "Network broker enforces HTTPS, redirects, response limits, and grants" passed after 0.001 seconds.
+✔ Test "Storage and VFS are package-namespaced, bounded, and traversal-safe" passed after 0.001 seconds.
+✔ Suite "Capability-gated Scripting service brokers" passed after 0.001 seconds.
+✔ Test run with 5 tests in 1 suite passed after 0.002 seconds.
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Scripting runtime v2 session coordinator" started.
+◇ Test "Rejects cross-session envelopes and inbound replay" started.
+◇ Test "Owns and releases promises, callbacks, subscriptions, and handles" started.
+◇ Test "Applies quotas and queue backpressure" started.
+◇ Test "Enforces the complete lifecycle and idempotent close" started.
+◇ Test "Context policies are distinct and valid" started.
+✔ Test "Owns and releases promises, callbacks, subscriptions, and handles" passed after 0.001 seconds.
+✔ Test "Context policies are distinct and valid" passed after 0.001 seconds.
+✔ Test "Enforces the complete lifecycle and idempotent close" passed after 0.001 seconds.
+✔ Test "Rejects cross-session envelopes and inbound replay" passed after 0.001 seconds.
+✔ Test "Applies quotas and queue backpressure" passed after 0.001 seconds.
+✔ Suite "Scripting runtime v2 session coordinator" passed after 0.001 seconds.
+✔ Test run with 5 tests in 1 suite passed after 0.001 seconds.
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Scripting extension snapshot store" started.
+◇ Test "HanlinTranslationSessionContext substitution into HanlinScriptUINode" started.
+◇ Test "HanlinScriptTranslationUISnapshot round-trip in extension store" started.
+◇ Test "HanlinCompactAgentConfigStore save, load, and clear round-trip" started.
+◇ Test "Rejects malformed Live Activity region trees" started.
+◇ Test "Decodes the visual properties used by the smart-eating widgets" started.
+◇ Test "Persists an integrity-checked extension-safe snapshot" started.
+◇ Test "Extracts every Scripting Live Activity presentation region" started.
+✔ Test "HanlinTranslationSessionContext substitution into HanlinScriptUINode" passed after 0.002 seconds.
+✔ Test "Rejects malformed Live Activity region trees" passed after 0.002 seconds.
+✔ Test "Decodes the visual properties used by the smart-eating widgets" passed after 0.002 seconds.
+✔ Test "HanlinCompactAgentConfigStore save, load, and clear round-trip" passed after 0.002 seconds.
+✔ Test "Extracts every Scripting Live Activity presentation region" passed after 0.002 seconds.
+✔ Test "HanlinScriptTranslationUISnapshot round-trip in extension store" passed after 0.003 seconds.
+✔ Test "Persists an integrity-checked extension-safe snapshot" passed after 0.006 seconds.
+✔ Suite "Scripting extension snapshot store" passed after 0.006 seconds.
+✔ Test run with 7 tests in 1 suite passed after 0.006 seconds.
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Apple Scripting service availability" started.
+◇ Test "Sensitive frameworks declare their signing and privacy requirements" started.
+◇ Test "Every implemented family has one explicit availability record" started.
+◇ Test "Health and notification bridge values preserve declared Scripting semantics" started.
+◇ Test "Location and placemark values preserve modern MapKit result fields" started.
+✔ Test "Health and notification bridge values preserve declared Scripting semantics" passed after 0.001 seconds.
+✔ Test "Location and placemark values preserve modern MapKit result fields" passed after 0.001 seconds.
+✔ Test "Sensitive frameworks declare their signing and privacy requirements" passed after 0.001 seconds.
+✔ Test "Every implemented family has one explicit availability record" passed after 0.001 seconds.
+✔ Suite "Apple Scripting service availability" passed after 0.001 seconds.
+✔ Test run with 4 tests in 1 suite passed after 0.001 seconds.
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Full Scripting contracts" started.
+◇ Test "Preview installability fails closed on archive or analyzer errors" started.
+◇ Test "Preserves unknown script.json fields without granting behavior" started.
+◇ Test "Release performance budgets are versioned and deterministic" started.
+◇ Test "Capability approval normalizes requests and retains explicit grants" started.
+◇ Test "Legacy installed entrypoint migrates to its historical QuickJS profile" started.
+◇ Test "Installed records and artifact manifests round trip deterministically" started.
+✔ Test "Preview installability fails closed on archive or analyzer errors" passed after 0.001 seconds.
+✔ Test "Release performance budgets are versioned and deterministic" passed after 0.001 seconds.
+✔ Test "Legacy installed entrypoint migrates to its historical QuickJS profile" passed after 0.001 seconds.
+✔ Test "Capability approval normalizes requests and retains explicit grants" passed after 0.001 seconds.
+✔ Test "Preserves unknown script.json fields without granting behavior" passed after 0.001 seconds.
+✔ Test "Installed records and artifact manifests round trip deterministically" passed after 0.001 seconds.
+✔ Suite "Full Scripting contracts" passed after 0.001 seconds.
+✔ Test run with 6 tests in 1 suite passed after 0.001 seconds.
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Scripting Package Center" started.
+◇ Suite "Scripting archive safety" started.
+◇ Suite "Deterministic Scripting bundler" started.
+◇ Suite "Static Scripting analyzer" started.
+◇ Test "Imports archives whose source paths contain Unicode and spaces" started.
+◇ Test "Imports archives from File Provider paths containing spaces" started.
+◇ Test "Production exporter round trips through production archive import" started.
+◇ Test rejectsEscapingPaths(path:) started.
+◇ Test "Stages, validates, extracts, and decodes without executing source" started.
+◇ Test "Imports prepared NativeScript packages containing ESM bundles" started.
+◇ Test "Malformed manifests fail before a staged package can escape" started.
+◇ Test "Rejects ambiguous manifests and case collisions" started.
+◇ Test "Rejects links, normalization collisions, bombs, and hidden encrypted entries" started.
+◇ Test "Accepts prepared NativeScript ESM bundle artifacts" started.
+◇ Test "Accepts one wrapped Scripting manifest and ignores macOS metadata" started.
+◇ Test "Fails closed on preview errors and compiler identity mismatch" started.
+◇ Test "Install artifact writer atomically closes the bundler-store manifest contract" started.
+◇ Test "Rejects unresolved graphs and compiler output traversal" started.
+◇ Test "Writes only validated JavaScript, maps, and a sorted manifest" started.
+◇ Test "Builds a closed virtual project and deterministic artifact manifest" started.
+◇ Test "Production compiler profile excludes DOM libraries and cannot drift" started.
+◇ Test "Routes only explicitly declared NativeScript packages to the native runtime" started.
+◇ Test "Validates the embedded NativeScript SwiftUI plugin contract without changing ordinary Scripting" started.
+◇ Test case passing 1 argument path → "../script.json" to rejectsEscapingPaths(path:) started.
+◇ Test "Rejects dynamic imports, eval, unresolved paths, and arbitrary bare modules" started.
+◇ Test "Detects capability-bearing ambient Scripting globals" started.
+◇ Test case passing 1 argument path → "/script.json" to rejectsEscapingPaths(path:) started.
+◇ Test "Validates declared @nativescript/core dependency compatibility" started.
+◇ Test "Discovers entrypoints, resolves modules, and derives capabilities deterministically" started.
+◇ Test case passing 1 argument path → "C:/script.json" to rejectsEscapingPaths(path:) started.
+◇ Test "Routes original Python entrypoint deterministically without engine fallback" started.
+◇ Test case passing 1 argument path → "folder/../../script.json" to rejectsEscapingPaths(path:) started.
+◇ Test "Validates the embedded Expo SwiftUI plugin contract" started.
+✔ Test "Imports archives whose source paths contain Unicode and spaces" passed after 0.018 seconds.
+✔ Test "Imports archives from File Provider paths containing spaces" passed after 0.018 seconds.
+✔ Test rejectsEscapingPaths(path:) with 4 test cases passed after 0.020 seconds.
+✔ Test "Production exporter round trips through production archive import" passed after 0.023 seconds.
+✔ Test "Stages, validates, extracts, and decodes without executing source" passed after 0.025 seconds.
+✔ Test "Rejects ambiguous manifests and case collisions" passed after 0.028 seconds.
+✔ Test "Accepts prepared NativeScript ESM bundle artifacts" passed after 0.028 seconds.
+✔ Test "Malformed manifests fail before a staged package can escape" passed after 0.028 seconds.
+✔ Test "Accepts one wrapped Scripting manifest and ignores macOS metadata" passed after 0.028 seconds.
+✔ Test "Rejects links, normalization collisions, bombs, and hidden encrypted entries" passed after 0.028 seconds.
+✔ Test "Imports prepared NativeScript packages containing ESM bundles" passed after 0.028 seconds.
+✔ Test "Rejects unresolved graphs and compiler output traversal" passed after 0.028 seconds.
+✔ Test "Fails closed on preview errors and compiler identity mismatch" passed after 0.028 seconds.
+✔ Test "Builds a closed virtual project and deterministic artifact manifest" passed after 0.028 seconds.
+✔ Test "Production compiler profile excludes DOM libraries and cannot drift" passed after 0.028 seconds.
+✔ Test "Writes only validated JavaScript, maps, and a sorted manifest" passed after 0.028 seconds.
+✔ Test "Install artifact writer atomically closes the bundler-store manifest contract" passed after 0.028 seconds.
+✔ Test "Validates the embedded NativeScript SwiftUI plugin contract without changing ordinary Scripting" passed after 0.022 seconds.
+✔ Test "Rejects dynamic imports, eval, unresolved paths, and arbitrary bare modules" passed after 0.022 seconds.
+✔ Test "Detects capability-bearing ambient Scripting globals" passed after 0.022 seconds.
+✔ Test "Routes only explicitly declared NativeScript packages to the native runtime" passed after 0.022 seconds.
+✔ Test "Routes original Python entrypoint deterministically without engine fallback" passed after 0.019 seconds.
+✔ Test "Discovers entrypoints, resolves modules, and derives capabilities deterministically" passed after 0.021 seconds.
+✔ Test "Validates declared @nativescript/core dependency compatibility" passed after 0.021 seconds.
+✔ Suite "Scripting Package Center" passed after 0.029 seconds.
+✔ Suite "Scripting archive safety" passed after 0.029 seconds.
+✔ Suite "Deterministic Scripting bundler" passed after 0.029 seconds.
+✔ Test "Validates the embedded Expo SwiftUI plugin contract" passed after 0.023 seconds.
+✔ Suite "Static Scripting analyzer" passed after 0.033 seconds.
+✔ Test run with 25 tests in 4 suites passed after 0.033 seconds.
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Exposure catalog and composite discovery" started.
+◇ Test valueSchemasValidateAndRoundTrip() started.
+◇ Test embeddedPresentationDefaultsAreMinimal() started.
+◇ Test standardJSONPromotesToRichValuesWithoutNumericCollapse() started.
+◇ Test jsonDecoderRejectsDuplicateKeysAndOutOfRangeIntegers() started.
+◇ Test scriptManifestRejectsUnsafePathsDuplicateToolsAndUnsupportedABI() started.
+◇ Test wireEnvelopeRejectsUnknownVersionMalformedKindAndOversizedPayload() started.
+◇ Test toolPresentationMigratesLegacyExpandedPayloadToCanonicalDescriptor() started.
+◇ Test toolPresentationWithExecutionAndEmbeddedRoundTrips() started.
+◇ Test logicalToolIdentityIsProviderQualifiedAndAliasesAreNotIdentity() started.
+◇ Test manifestSchemaResourceIsValidJSONAndUnknownFieldsAreTolerated() started.
+◇ Test manifestRejectsUnsafePathsAndUnsupportedVersions() started.
+◇ Test manifestRoundTripsDeterministically() started.
+◇ Test toolPresentationCanonicalEmbeddedIsAuthoritativeOverLegacyFlag() started.
+◇ Test appDescriptorRejectsDuplicateSkillIDs() started.
+◇ Test toolPresentationBackwardCompatibleWhenNewFieldsAbsent() started.
+◇ Test embeddedSizePresetsAllRoundTrip() started.
+◇ Test jsonObjectsSortByUnmodifiedUTF8KeyBytes() started.
+◇ Test wireEnvelopeRoundTripsAndEnforcesRequestIdentity() started.
+◇ Test appAndRuntimeSessionSnapshotsRemainPortableValues() started.
+◇ Test canonicalLimitsRejectExcessiveDepthAndSize() started.
+◇ Test jsonPrimitivesUseCanonicalLexicalForms() started.
+◇ Test runtimeProfilesDeclareHonestIsolationAndTrustCapabilities() started.
+◇ Test embeddedResultEntryPointKindExists() started.
+◇ Test hostVersionRangeRejectsInversion() started.
+◇ Test descriptorAndCatalogRevisionsHaveSeparateSemantics() started.
+◇ Test conversionsRejectLossAndNonFiniteNumbers() started.
+◇ Test binary64ExtremesRoundTripBitIdentically() started.
+◇ Test entryPointDescriptorWithEmbeddedResultRoundTrips() started.
+◇ Test packageVersionsUseStableTotalOrdering() started.
+◇ Test jsonSchemaDocumentsPreserveUnknownAndNarrowingKeywords() started.
+◇ Test permissionValuesKeepDeclarationDecisionGrantAndEffectivenessSeparate() started.
+◇ Test toolExecutionPresentationRoundTrips() started.
+◇ Test expansionMoDesAllRoundTrip() started.
+◇ Test appDescriptorWithEmbeddedResultEntryPointRoundTrips() started.
+◇ Test appDescriptorRejectsUnsafeResourcePaths() started.
+◇ Test scriptingWireV2IsAdditiveAndRequiresExplicitV2Support() started.
+◇ Test manifestRejectsDuplicateCanonicalIdentifiers() started.
+◇ Test skillDescriptorEncodesAndDecodesCorrectly() started.
+◇ Test scriptManifestValidatesAndEncodesDeterministically() started.
+◇ Test majorMinorVersionsRejectNonCanonicalAndUnknownVersions() started.
+◇ Test embeddedPresentationDescriptorRoundTrips() started.
+◇ Test expansionModeBridgesToPresentationIntent() started.
+◇ Test skillIDsValidateAndRoundTripCanonically() started.
+◇ Test appDescriptorDecodesLegacyPayloadWithoutSkills() started.
+◇ Test correlationAndInstanceIdentitiesRemainDistinctTypedValues() started.
+◇ Test identifiersValidateAndRoundTripCanonically() started.
+◇ Test richValuesUseExactTaggedIntegerNumberAndDataRepresentations() started.
+◇ Test executionPresentationFamilyIDIsExtensible() started.
+◇ Test "Exposure classifications round-trip through JSON" started.
+◇ Test "Composite discovery aggregates and deduplicates across providers" started.
+◇ Test "Exposure catalog defines standard classifications for near-term surfaces" started.
+✔ Test embeddedPresentationDefaultsAreMinimal() passed after 0.007 seconds.
+✔ Test standardJSONPromotesToRichValuesWithoutNumericCollapse() passed after 0.007 seconds.
+✔ Test valueSchemasValidateAndRoundTrip() passed after 0.008 seconds.
+✔ Test jsonDecoderRejectsDuplicateKeysAndOutOfRangeIntegers() passed after 0.008 seconds.
+✔ Test toolPresentationMigratesLegacyExpandedPayloadToCanonicalDescriptor() passed after 0.008 seconds.
+✔ Test toolPresentationWithExecutionAndEmbeddedRoundTrips() passed after 0.008 seconds.
+✔ Test logicalToolIdentityIsProviderQualifiedAndAliasesAreNotIdentity() passed after 0.008 seconds.
+✔ Test scriptManifestRejectsUnsafePathsDuplicateToolsAndUnsupportedABI() passed after 0.008 seconds.
+✔ Test manifestRejectsUnsafePathsAndUnsupportedVersions() passed after 0.008 seconds.
+✔ Test wireEnvelopeRejectsUnknownVersionMalformedKindAndOversizedPayload() passed after 0.008 seconds.
+✔ Test toolPresentationCanonicalEmbeddedIsAuthoritativeOverLegacyFlag() passed after 0.008 seconds.
+✔ Test appDescriptorRejectsDuplicateSkillIDs() passed after 0.008 seconds.
+✔ Test toolPresentationBackwardCompatibleWhenNewFieldsAbsent() passed after 0.008 seconds.
+✔ Test embeddedSizePresetsAllRoundTrip() passed after 0.008 seconds.
+✔ Test jsonObjectsSortByUnmodifiedUTF8KeyBytes() passed after 0.008 seconds.
+✔ Test wireEnvelopeRoundTripsAndEnforcesRequestIdentity() passed after 0.008 seconds.
+✔ Test appAndRuntimeSessionSnapshotsRemainPortableValues() passed after 0.008 seconds.
+✔ Test manifestRoundTripsDeterministically() passed after 0.008 seconds.
+✔ Test jsonPrimitivesUseCanonicalLexicalForms() passed after 0.008 seconds.
+✔ Test runtimeProfilesDeclareHonestIsolationAndTrustCapabilities() passed after 0.008 seconds.
+✔ Test embeddedResultEntryPointKindExists() passed after 0.008 seconds.
+✔ Test canonicalLimitsRejectExcessiveDepthAndSize() passed after 0.008 seconds.
+✔ Test hostVersionRangeRejectsInversion() passed after 0.008 seconds.
+✔ Test descriptorAndCatalogRevisionsHaveSeparateSemantics() passed after 0.008 seconds.
+✔ Test conversionsRejectLossAndNonFiniteNumbers() passed after 0.008 seconds.
+✔ Test entryPointDescriptorWithEmbeddedResultRoundTrips() passed after 0.008 seconds.
+✔ Test binary64ExtremesRoundTripBitIdentically() passed after 0.008 seconds.
+✔ Test packageVersionsUseStableTotalOrdering() passed after 0.008 seconds.
+✔ Test permissionValuesKeepDeclarationDecisionGrantAndEffectivenessSeparate() passed after 0.008 seconds.
+✔ Test jsonSchemaDocumentsPreserveUnknownAndNarrowingKeywords() passed after 0.008 seconds.
+✔ Test toolExecutionPresentationRoundTrips() passed after 0.008 seconds.
+✔ Test expansionMoDesAllRoundTrip() passed after 0.008 seconds.
+✔ Test appDescriptorRejectsUnsafeResourcePaths() passed after 0.008 seconds.
+✔ Test manifestSchemaResourceIsValidJSONAndUnknownFieldsAreTolerated() passed after 0.009 seconds.
+✔ Test scriptingWireV2IsAdditiveAndRequiresExplicitV2Support() passed after 0.008 seconds.
+✔ Test appDescriptorWithEmbeddedResultEntryPointRoundTrips() passed after 0.008 seconds.
+✔ Test skillDescriptorEncodesAndDecodesCorrectly() passed after 0.008 seconds.
+✔ Test manifestRejectsDuplicateCanonicalIdentifiers() passed after 0.008 seconds.
+✔ Test majorMinorVersionsRejectNonCanonicalAndUnknownVersions() passed after 0.008 seconds.
+✔ Test expansionModeBridgesToPresentationIntent() passed after 0.008 seconds.
+✔ Test embeddedPresentationDescriptorRoundTrips() passed after 0.008 seconds.
+✔ Test skillIDsValidateAndRoundTripCanonically() passed after 0.008 seconds.
+✔ Test correlationAndInstanceIdentitiesRemainDistinctTypedValues() passed after 0.007 seconds.
+✔ Test identifiersValidateAndRoundTripCanonically() passed after 0.007 seconds.
+✔ Test appDescriptorDecodesLegacyPayloadWithoutSkills() passed after 0.008 seconds.
+✔ Test executionPresentationFamilyIDIsExtensible() passed after 0.007 seconds.
+✔ Test scriptManifestValidatesAndEncodesDeterministically() passed after 0.008 seconds.
+✔ Test richValuesUseExactTaggedIntegerNumberAndDataRepresentations() passed after 0.007 seconds.
+✔ Test "Composite discovery aggregates and deduplicates across providers" passed after 0.002 seconds.
+✔ Test "Exposure catalog defines standard classifications for near-term surfaces" passed after 0.002 seconds.
+✔ Test "Exposure classifications round-trip through JSON" passed after 0.002 seconds.
+✔ Suite "Exposure catalog and composite discovery" passed after 0.009 seconds.
+✔ Test run with 51 tests in 1 suite passed after 0.009 seconds.
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Canonical Mini App core" started.
+◇ Test "Per-entrypoint engine resolution works for hybrid descriptors" started.
+◇ Test "Catalog combines Swift and NativeScript engines, de-duplicates stable IDs, and omits legacy Scripting" started.
+◇ Test "Data is durable, namespaced, traversal-safe, and quota-bound" started.
+◇ Test "Expo runtime profile resolves to .expo engine and valid launch plan" started.
+◇ Test "Inter-app requests enforce routes, capability, authorization, size, and timeout" started.
+◇ Test "Launch runtime is selected from the requested entrypoint" started.
+✔ Test "Per-entrypoint engine resolution works for hybrid descriptors" passed after 0.001 seconds.
+✔ Test "Expo runtime profile resolves to .expo engine and valid launch plan" passed after 0.001 seconds.
+✔ Test "Catalog combines Swift and NativeScript engines, de-duplicates stable IDs, and omits legacy Scripting" passed after 0.001 seconds.
+✔ Test "Launch runtime is selected from the requested entrypoint" passed after 0.001 seconds.
+✔ Test "Inter-app requests enforce routes, capability, authorization, size, and timeout" passed after 0.001 seconds.
+✔ Test "Data is durable, namespaced, traversal-safe, and quota-bound" passed after 0.005 seconds.
+✔ Suite "Canonical Mini App core" passed after 0.006 seconds.
+✔ Test run with 6 tests in 1 suite passed after 0.006 seconds.
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "HanlinAISDKAgentEngine Integration Tests" started.
+◇ Suite "Provider Long Horizon & Investigation Tests" started.
+◇ Suite "HanlinNonEmptyLanguageModel Retry Tests" started.
+◇ Suite "HanlinAISDK Provider Factory Tests" started.
+◇ Suite "HanlinChatCore Tests" started.
+◇ Suite "Direct Chat Path Conformance Tests" started.
+◇ Suite "Provider Fault Injection & Finish Reason Tests" started.
+◇ Suite "Provider Conformance Scenario Tests" started.
+◇ Suite "Provider Routing & Inventory Conformance Tests" started.
+◇ Test "Dynamic tool exposure via prepareStep filters active tools" started.
+◇ Test "Advertised tool schema preserves original required, properties, and constraints" started.
+◇ Test "Invalid and extra arguments reach Hanlin executor and return non-fatal error" started.
+◇ Test "Parallel tool execution in a single model step" started.
+◇ Test "Unknown tool call produces non-fatal tool error and allows multi-step recovery" started.
+◇ Test "Real provider or transport error terminates stream" started.
+◇ Test "Tool continuation regression test: provider-native tool call and response pairing" started.
+◇ Test "S04: Sequential 5-tool chain executing 6 provider steps with monotonic history" started.
+◇ Test "S13: Multi-turn conversation preserves prior tool and answer history without stale run state" started.
+◇ Test "Section 19: Offline reproduction of OpenRouter reasoning_details and finish=other failure class" started.
+◇ Test "S11: Long 20-step tool-heavy run with strict per-round request validation" started.
+◇ Test "P12B: Structured assistant tool-call and tool-result history survives into next provider model request" started.
+◇ Test "E08: normal text -> no retry" started.
+◇ Test "S12: Engine step limit boundary (configured stopWhen: stepCountIs(32)) terminates cleanly" started.
+◇ Test "E01: truly empty stream -> retry -> empty -> emptyProviderResponse(2)" started.
+◇ Test "E09: reasoning-only nonempty -> no retry" started.
+◇ Test "OpenRouter descriptor includes HTTP-Referer and X-Title headers" started.
+◇ Test "E05: empty deltas + finish only -> retry" started.
+◇ Test "E03: metadata + finish(other) only -> retry" started.
+◇ Test "E10: valid tool call -> no retry" started.
+◇ Test "OpenAI direct descriptor and options" started.
+◇ Test "Google Gemini descriptor and options" started.
+◇ Test "E11: abrupt transport error -> no retry" started.
+◇ Test "Anthropic direct descriptor and options" started.
+◇ Test "Custom OpenAI compatible endpoint normalization" started.
+◇ Test "E06: first attempt empty, second attempt valid text -> exactly one visible completion" started.
+◇ Test "E04: usage-only + finish only -> retry" started.
+◇ Test "E12: cancellation during first attempt -> cancelled, no retry" started.
+◇ Test "E07: first attempt finish-only, second attempt valid tool call -> tool executes exactly once" started.
+◇ Test "E02: finish(other)-only -> retry -> empty -> error" started.
+◇ Test "HanlinChatStreamParser correctly parses Gemini SSE events" started.
+◇ Test "HanlinChatModelConfiguration uses the shared default and preserves explicit maxTokens" started.
+◇ Test "Full and compact message adapters produce the same production request" started.
+◇ Test "HanlinChatStreamParser correctly parses OpenAI SSE content, reasoning, and done events" started.
+◇ Test "HanlinChatRequestBuilder creates correct Gemini native request" started.
+◇ Test "Direct chat path parses OpenAI plain streamed text and reasoning" started.
+◇ Test "HanlinChatStreamParser extracts <think> tags into reasoning events" started.
+◇ Test "Direct chat path tolerates empty deltas, malformed lines, and tool-shaped payloads" started.
+◇ Test "Direct chat path parses Gemini SSE events" started.
+◇ Test "HanlinChatRequestBuilder creates the configured OpenAI/OpenRouter request" started.
+◇ Test "HanlinChatStreamParser correctly parses Anthropic SSE events" started.
+◇ Test "Direct chat path normalizes inline <think> tags" started.
+◇ Test "HanlinChatRequestBuilder creates correct Anthropic native request" started.
+◇ Test "Direct chat path parses Anthropic SSE events" started.
+◇ Test "Direct chat request builder generates correct headers and URL for OpenRouter" started.
+◇ Test "Gemini direct finish reason normalization matrix" started.
+◇ Test "F09: Malformed JSON payload in SSE stream aborts stream without tool execution or completed event" started.
+◇ Test "F07: Duplicate content chunk delta does not abort parser" started.
+◇ Test "F05: Empty delta noise does not corrupt parser or yield empty text events" started.
+◇ Test "F01: Empty provider stream retries once and throws emptyProviderResponse after 2 empty streams" started.
+◇ Test "F04: Stream ending after finish without explicit [DONE] still terminates cleanly" started.
+◇ Test "Section 18: OpenAI finish_reason mapping table" started.
+◇ Test "Section 18: Anthropic finish_reason mapping table" started.
+◇ Test "F02: HTTP 200 with finish_reason='other' and 0 text/tools is retried then throws emptyProviderResponse" started.
+◇ Test "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test "Section 18: Google finish_reason mapping table" started.
+◇ Test "F03: Abrupt stream close mid-text terminates with transport error and no completed event" started.
+◇ Test "F06: Final usage-only chunk is processed for token usage and not treated as text" started.
+◇ Test "Anthropic Native: Parallel tool use and tool results" started.
+◇ Test "S01: Plain text baseline across all provider profiles" started.
+◇ Test "S09: Multi-Skill exposure enforces monotonic visibility across rounds" started.
+◇ Test "S07: Stream tool arguments fragmented across Hebrew UTF-8 and JSON escape boundaries" started.
+◇ Test "S02: Single tool call with provider-native continuation pairing" started.
+◇ Test "S10 R1: OpenAI-compatible reasoning_content multi-turn reasoning tool loop" started.
+◇ Test "S10 R2: OpenAI-compatible reasoning field multi-turn reasoning tool loop" started.
+◇ Test "S10: Reasoning + tool continuation across multiple turns for reasoning profiles" started.
+◇ Test "Validate multi-assistant tool call regression in harness validator" started.
+◇ Test "S14: Large deterministic tool result containing Unicode, newlines, and structured JSON" started.
+◇ Test "S10 R5: Anthropic native thinking signature multi-turn reasoning tool loop" started.
+◇ Test "S05: Parallel tool calls in a single model step across OpenAI, Anthropic, and Google" started.
+◇ Test "S03: Production skill activation: load_skill exposes python dynamically" started.
+◇ Test "S15: Empty tool result succeeds and continuation remains valid without mismatch" started.
+◇ Test "Google Native: Parallel thoughtSignature placement on first functionCall part only" started.
+◇ Test "S16: Hebrew prompt, Hebrew arguments, Hebrew result, and Hebrew final response" started.
+◇ Test "OpenAI native routing for api.openai.com" started.
+◇ Test "Anthropic Native: Tool result error is properly flagged and recovered" started.
+◇ Test "LAN and local host routing to openAICompatible" started.
+◇ Test "S08: Unknown tool call returns non-fatal tool error and allows continuation" started.
+◇ Test "S06: Tool returns non-fatal error and model recovers on next turn" started.
+◇ Test "Gemini company name routes to native google provider" started.
+◇ Test "S10 R3: OpenRouter reasoning_details multi-turn reasoning tool loop" started.
+◇ Test "Anthropic Native: Thinking signature round-trip across multi-tool turns" started.
+◇ Test "Custom third-party providers route to openAICompatible" started.
+◇ Test "All configured provider companies map to known conformance profiles" started.
+◇ Test "Google Native: Sequential thoughtSignature preserved exactly across requests" started.
+◇ Test "OpenAI with custom host routes to openAICompatible" started.
+◇ Test "S10 R4: Google native thoughtSignature multi-turn reasoning tool loop" started.
+◇ Test "Query parameters are preserved during endpoint normalization" started.
+◇ Test "Anthropic routing and endpoint normalization" started.
+◇ Test "Google Generative AI routing and endpoint normalization" started.
+◇ Test "OpenAI-Response routing characterization (Section 6 mandatory test)" started.
+◇ Test "OpenRouter profile sets HTTP-Referer, X-Title, and openAICompatible kind" started.
+◇ Test case passing 2 arguments rawReason → "STOP", expectedNormalized → "stop" to "Gemini direct finish reason normalization matrix" started.
+◇ Test case passing 2 arguments rawReason → "MAX_TOKENS", expectedNormalized → "length" to "Gemini direct finish reason normalization matrix" started.
+◇ Test case passing 1 argument profile → .openAINativeChat to "F09: Malformed JSON payload in SSE stream aborts stream without tool execution or completed event" started.
+◇ Test case passing 1 argument profile → .openAINativeChat to "F07: Duplicate content chunk delta does not abort parser" started.
+◇ Test case passing 1 argument profile → .openAICompatiblePlain to "F09: Malformed JSON payload in SSE stream aborts stream without tool execution or completed event" started.
+◇ Test case passing 1 argument profile → .openRouterReasoningDetails to "F09: Malformed JSON payload in SSE stream aborts stream without tool execution or completed event" started.
+◇ Test case passing 1 argument profile → .anthropicNative to "F09: Malformed JSON payload in SSE stream aborts stream without tool execution or completed event" started.
+◇ Test case passing 1 argument profile → .openAICompatiblePlain to "F07: Duplicate content chunk delta does not abort parser" started.
+◇ Test case passing 1 argument profile → .googleNative to "F09: Malformed JSON payload in SSE stream aborts stream without tool execution or completed event" started.
+◇ Test case passing 2 arguments rawReason → "MALFORMED_FUNCTION_CALL", expectedNormalized → "malformed_function_call" to "Gemini direct finish reason normalization matrix" started.
+◇ Test case passing 1 argument profile → .openRouterReasoningDetails to "F07: Duplicate content chunk delta does not abort parser" started.
+◇ Test case passing 2 arguments rawReason → "SAFETY", expectedNormalized → "safety" to "Gemini direct finish reason normalization matrix" started.
+◇ Test case passing 2 arguments rawReason → "BLOCKLIST", expectedNormalized → "blocklist" to "Gemini direct finish reason normalization matrix" started.
+◇ Test case passing 1 argument profile → .openAINativeChat to "F05: Empty delta noise does not corrupt parser or yield empty text events" started.
+◇ Test case passing 2 arguments rawReason → "PROHIBITED_CONTENT", expectedNormalized → "prohibited_content" to "Gemini direct finish reason normalization matrix" started.
+◇ Test case passing 1 argument profile → .openAINativeChat to "F01: Empty provider stream retries once and throws emptyProviderResponse after 2 empty streams" started.
+◇ Test case passing 1 argument profile → .openAICompatiblePlain to "F05: Empty delta noise does not corrupt parser or yield empty text events" started.
+◇ Test case passing 1 argument profile → .openRouterReasoningDetails to "F05: Empty delta noise does not corrupt parser or yield empty text events" started.
+◇ Test case passing 1 argument profile → .openAICompatiblePlain to "F01: Empty provider stream retries once and throws emptyProviderResponse after 2 empty streams" started.
+◇ Test case passing 1 argument profile → .openRouterReasoningDetails to "F01: Empty provider stream retries once and throws emptyProviderResponse after 2 empty streams" started.
+◇ Test case passing 2 arguments rawReason → "SPII", expectedNormalized → "spii" to "Gemini direct finish reason normalization matrix" started.
+◇ Test case passing 2 arguments rawReason → "RECITATION", expectedNormalized → "recitation" to "Gemini direct finish reason normalization matrix" started.
+◇ Test case passing 1 argument profile → .anthropicNative to "F01: Empty provider stream retries once and throws emptyProviderResponse after 2 empty streams" started.
+◇ Test case passing 1 argument profile → .googleNative to "F01: Empty provider stream retries once and throws emptyProviderResponse after 2 empty streams" started.
+◇ Test case passing 2 arguments rawReason → "OTHER", expectedNormalized → "other" to "Gemini direct finish reason normalization matrix" started.
+◇ Test case passing 1 argument profile → .openAINativeChat to "F04: Stream ending after finish without explicit [DONE] still terminates cleanly" started.
+◇ Test case passing 1 argument profile → .openAICompatiblePlain to "F04: Stream ending after finish without explicit [DONE] still terminates cleanly" started.
+◇ Test case passing 2 arguments rawReason → "FINISH_REASON_UNSPECIFIED", expectedNormalized → "finish_reason_unspecified" to "Gemini direct finish reason normalization matrix" started.
+◇ Test case passing 1 argument profile → .openRouterReasoningDetails to "F04: Stream ending after finish without explicit [DONE] still terminates cleanly" started.
+◇ Test case passing 2 arguments rawReason → "stop", expectedUnified → "stop" to "Section 18: OpenAI finish_reason mapping table" started.
+◇ Test case passing 2 arguments rawReason → "length", expectedUnified → "length" to "Section 18: OpenAI finish_reason mapping table" started.
+◇ Test case passing 2 arguments rawReason → "end_turn", expectedUnified → "stop" to "Section 18: Anthropic finish_reason mapping table" started.
+◇ Test case passing 2 arguments rawReason → "content_filter", expectedUnified → "content-filter" to "Section 18: OpenAI finish_reason mapping table" started.
+◇ Test case passing 2 arguments rawReason → "stop_sequence", expectedUnified → "stop" to "Section 18: Anthropic finish_reason mapping table" started.
+◇ Test case passing 2 arguments rawReason → "tool_calls", expectedUnified → "tool-calls" to "Section 18: OpenAI finish_reason mapping table" started.
+◇ Test case passing 2 arguments rawReason → "tool_use", expectedUnified → "tool-calls" to "Section 18: Anthropic finish_reason mapping table" started.
+◇ Test case passing 2 arguments rawReason → "function_call", expectedUnified → "tool-calls" to "Section 18: OpenAI finish_reason mapping table" started.
+◇ Test case passing 2 arguments rawReason → "max_tokens", expectedUnified → "length" to "Section 18: Anthropic finish_reason mapping table" started.
+◇ Test case passing 2 arguments rawReason → "unrecognized_raw_finish", expectedUnified → "other" to "Section 18: OpenAI finish_reason mapping table" started.
+◇ Test case passing 2 arguments profile → .openAINativeChat, statusCode → 400 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 2 arguments rawReason → "model_context_window_exceeded", expectedUnified → "length" to "Section 18: Anthropic finish_reason mapping table" started.
+◇ Test case passing 2 arguments profile → .openAINativeChat, statusCode → 401 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 2 arguments rawReason → "refusal", expectedUnified → "content-filter" to "Section 18: Anthropic finish_reason mapping table" started.
+◇ Test case passing 2 arguments profile → .openAINativeChat, statusCode → 429 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 2 arguments rawReason → "pause_turn", expectedUnified → "other" to "Section 18: Anthropic finish_reason mapping table" started.
+◇ Test case passing 2 arguments profile → .openAINativeChat, statusCode → 500 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 2 arguments rawReason → "STOP", expectedUnified → "stop" to "Section 18: Google finish_reason mapping table" started.
+◇ Test case passing 2 arguments rawReason → "unrecognized_reason", expectedUnified → "other" to "Section 18: Anthropic finish_reason mapping table" started.
+◇ Test case passing 2 arguments rawReason → "MAX_TOKENS", expectedUnified → "length" to "Section 18: Google finish_reason mapping table" started.
+◇ Test case passing 2 arguments profile → .openAINativeChat, statusCode → 503 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 2 arguments rawReason → "MALFORMED_FUNCTION_CALL", expectedUnified → "other" to "Section 18: Google finish_reason mapping table" started.
+◇ Test case passing 2 arguments profile → .openAICompatiblePlain, statusCode → 400 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 1 argument profile → .openAINativeChat to "F03: Abrupt stream close mid-text terminates with transport error and no completed event" started.
+◇ Test case passing 2 arguments rawReason → "SAFETY", expectedUnified → "content-filter" to "Section 18: Google finish_reason mapping table" started.
+◇ Test case passing 2 arguments profile → .openAICompatiblePlain, statusCode → 401 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 1 argument profile → .openAICompatiblePlain to "F03: Abrupt stream close mid-text terminates with transport error and no completed event" started.
+◇ Test case passing 2 arguments rawReason → "BLOCKLIST", expectedUnified → "content-filter" to "Section 18: Google finish_reason mapping table" started.
+◇ Test case passing 2 arguments profile → .openAICompatiblePlain, statusCode → 429 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 1 argument profile → .openRouterReasoningDetails to "F03: Abrupt stream close mid-text terminates with transport error and no completed event" started.
+◇ Test case passing 2 arguments rawReason → "PROHIBITED_CONTENT", expectedUnified → "content-filter" to "Section 18: Google finish_reason mapping table" started.
+◇ Test case passing 1 argument profile → .anthropicNative to "F03: Abrupt stream close mid-text terminates with transport error and no completed event" started.
+◇ Test case passing 2 arguments profile → .openAICompatiblePlain, statusCode → 500 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 1 argument profile → .googleNative to "F03: Abrupt stream close mid-text terminates with transport error and no completed event" started.
+◇ Test case passing 2 arguments rawReason → "SPII", expectedUnified → "content-filter" to "Section 18: Google finish_reason mapping table" started.
+◇ Test case passing 2 arguments profile → .openAICompatiblePlain, statusCode → 503 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 2 arguments rawReason → "RECITATION", expectedUnified → "other" to "Section 18: Google finish_reason mapping table" started.
+◇ Test case passing 2 arguments profile → .openRouterReasoningDetails, statusCode → 400 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 2 arguments rawReason → "OTHER", expectedUnified → "other" to "Section 18: Google finish_reason mapping table" started.
+◇ Test case passing 1 argument profile → .openAINativeChat to "F06: Final usage-only chunk is processed for token usage and not treated as text" started.
+◇ Test case passing 1 argument profile → .openAICompatiblePlain to "F06: Final usage-only chunk is processed for token usage and not treated as text" started.
+◇ Test case passing 2 arguments profile → .openRouterReasoningDetails, statusCode → 401 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 2 arguments rawReason → "FINISH_REASON_UNSPECIFIED", expectedUnified → "other" to "Section 18: Google finish_reason mapping table" started.
+◇ Test case passing 1 argument profile → .openRouterReasoningDetails to "F06: Final usage-only chunk is processed for token usage and not treated as text" started.
+◇ Test case passing 2 arguments profile → .openRouterReasoningDetails, statusCode → 429 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 2 arguments profile → .openRouterReasoningDetails, statusCode → 500 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 2 arguments profile → .openRouterReasoningDetails, statusCode → 503 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 2 arguments profile → .anthropicNative, statusCode → 400 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 2 arguments profile → .anthropicNative, statusCode → 401 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 2 arguments profile → .anthropicNative, statusCode → 500 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 2 arguments profile → .anthropicNative, statusCode → 503 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 2 arguments profile → .googleNative, statusCode → 400 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 2 arguments profile → .googleNative, statusCode → 401 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 2 arguments profile → .anthropicNative, statusCode → 429 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 2 arguments profile → .googleNative, statusCode → 429 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 2 arguments profile → .googleNative, statusCode → 500 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 2 arguments profile → .googleNative, statusCode → 503 to "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" started.
+◇ Test case passing 1 argument profile → .openAINativeChat to "S01: Plain text baseline across all provider profiles" started.
+◇ Test case passing 1 argument profile → .openAICompatiblePlain to "S01: Plain text baseline across all provider profiles" started.
+◇ Test case passing 1 argument profile → .openAICompatibleReasoningContent to "S01: Plain text baseline across all provider profiles" started.
+◇ Test case passing 1 argument profile → .openAICompatibleReasoning to "S01: Plain text baseline across all provider profiles" started.
+◇ Test case passing 1 argument profile → .openRouterReasoningDetails to "S01: Plain text baseline across all provider profiles" started.
+◇ Test case passing 1 argument profile → .anthropicNative to "S01: Plain text baseline across all provider profiles" started.
+◇ Test case passing 1 argument profile → .googleNative to "S01: Plain text baseline across all provider profiles" started.
+◇ Test case passing 1 argument profile → .openAINativeChat to "S02: Single tool call with provider-native continuation pairing" started.
+◇ Test case passing 1 argument profile → .openAICompatiblePlain to "S02: Single tool call with provider-native continuation pairing" started.
+◇ Test case passing 1 argument profile → .anthropicNative to "S02: Single tool call with provider-native continuation pairing" started.
+◇ Test case passing 1 argument profile → .googleNative to "S02: Single tool call with provider-native continuation pairing" started.
+◇ Test case passing 1 argument profile → .openAINativeChat to "S05: Parallel tool calls in a single model step across OpenAI, Anthropic, and Google" started.
+◇ Test case passing 1 argument profile → .anthropicNative to "S05: Parallel tool calls in a single model step across OpenAI, Anthropic, and Google" started.
+◇ Test case passing 1 argument profile → .googleNative to "S05: Parallel tool calls in a single model step across OpenAI, Anthropic, and Google" started.
+✔ Test "OpenRouter descriptor includes HTTP-Referer and X-Title headers" passed after 0.013 seconds.
+✔ Test "Google Gemini descriptor and options" passed after 0.013 seconds.
+✔ Test "OpenAI direct descriptor and options" passed after 0.013 seconds.
+✔ Test "Anthropic direct descriptor and options" passed after 0.013 seconds.
+✔ Test "Custom OpenAI compatible endpoint normalization" passed after 0.013 seconds.
+✔ Test "HanlinChatStreamParser correctly parses Gemini SSE events" passed after 0.013 seconds.
+✔ Test "HanlinChatModelConfiguration uses the shared default and preserves explicit maxTokens" passed after 0.013 seconds.
+✔ Test "HanlinChatStreamParser correctly parses OpenAI SSE content, reasoning, and done events" passed after 0.013 seconds.
+✔ Test "HanlinChatRequestBuilder creates correct Gemini native request" passed after 0.013 seconds.
+✔ Test "HanlinChatStreamParser extracts <think> tags into reasoning events" passed after 0.013 seconds.
+✔ Test "Direct chat path parses OpenAI plain streamed text and reasoning" passed after 0.013 seconds.
+✔ Test "Direct chat path parses Gemini SSE events" passed after 0.013 seconds.
+✔ Test "Full and compact message adapters produce the same production request" passed after 0.013 seconds.
+✔ Test "Direct chat path tolerates empty deltas, malformed lines, and tool-shaped payloads" passed after 0.013 seconds.
+✔ Test "HanlinChatStreamParser correctly parses Anthropic SSE events" passed after 0.013 seconds.
+✔ Test "Direct chat path normalizes inline <think> tags" passed after 0.013 seconds.
+✔ Test "HanlinChatRequestBuilder creates the configured OpenAI/OpenRouter request" passed after 0.013 seconds.
+✔ Test "Direct chat path parses Anthropic SSE events" passed after 0.013 seconds.
+✔ Test "Direct chat request builder generates correct headers and URL for OpenRouter" passed after 0.013 seconds.
+✔ Test "HanlinChatRequestBuilder creates correct Anthropic native request" passed after 0.013 seconds.
+✔ Test "Gemini direct finish reason normalization matrix" with 10 test cases passed after 0.013 seconds.
+✔ Test "Validate multi-assistant tool call regression in harness validator" passed after 0.012 seconds.
+✔ Test "OpenAI native routing for api.openai.com" passed after 0.012 seconds.
+✔ Test "LAN and local host routing to openAICompatible" passed after 0.012 seconds.
+✔ Test "Gemini company name routes to native google provider" passed after 0.012 seconds.
+✔ Test "Custom third-party providers route to openAICompatible" passed after 0.012 seconds.
+✔ Test "All configured provider companies map to known conformance profiles" passed after 0.012 seconds.
+✔ Test "OpenAI with custom host routes to openAICompatible" passed after 0.012 seconds.
+✔ Test "Query parameters are preserved during endpoint normalization" passed after 0.012 seconds.
+✔ Test "Anthropic routing and endpoint normalization" passed after 0.012 seconds.
+✔ Test "Google Generative AI routing and endpoint normalization" passed after 0.012 seconds.
+✔ Test "OpenAI-Response routing characterization (Section 6 mandatory test)" passed after 0.012 seconds.
+✔ Test "OpenRouter profile sets HTTP-Referer, X-Title, and openAICompatible kind" passed after 0.012 seconds.
+✔ Test "E08: normal text -> no retry" passed after 0.020 seconds.
+✔ Test "E05: empty deltas + finish only -> retry" passed after 0.020 seconds.
+✔ Test "E01: truly empty stream -> retry -> empty -> emptyProviderResponse(2)" passed after 0.020 seconds.
+✔ Test "E09: reasoning-only nonempty -> no retry" passed after 0.021 seconds.
+✔ Test "E03: metadata + finish(other) only -> retry" passed after 0.021 seconds.
+✔ Suite "HanlinAISDK Provider Factory Tests" passed after 0.021 seconds.
+✔ Test "E10: valid tool call -> no retry" passed after 0.021 seconds.
+✔ Test "E04: usage-only + finish only -> retry" passed after 0.021 seconds.
+✔ Test "E12: cancellation during first attempt -> cancelled, no retry" passed after 0.021 seconds.
+✔ Test "E06: first attempt empty, second attempt valid text -> exactly one visible completion" passed after 0.021 seconds.
+✔ Test "E07: first attempt finish-only, second attempt valid tool call -> tool executes exactly once" passed after 0.021 seconds.
+✔ Suite "HanlinChatCore Tests" passed after 0.021 seconds.
+✔ Test "E02: finish(other)-only -> retry -> empty -> error" passed after 0.021 seconds.
+✔ Test "E11: abrupt transport error -> no retry" passed after 0.021 seconds.
+✔ Suite "Direct Chat Path Conformance Tests" passed after 0.021 seconds.
+✔ Suite "Provider Routing & Inventory Conformance Tests" passed after 0.061 seconds.
+✔ Suite "HanlinNonEmptyLanguageModel Retry Tests" passed after 0.069 seconds.
+streamText error: AI_APICallError: HTTP error 400
+streamText error: AI_APICallError: HTTP error 401
+streamText error: AI_APICallError: HTTP error 400
+streamText error: AI_APICallError: HTTP error 401
+streamText error: AI_APICallError: HTTP error 400
+streamText error: AI_APICallError: HTTP error 401
+streamText error: AI_APICallError: Unauthorized
+streamText error: AI_APICallError: Unauthorized
+streamText error: AI_APICallError: Bad Request
+streamText error: AI_APICallError: Bad Request
+streamText error: providerError(AISDKProvider.JSONValue.string("AI_JSONParseError: JSON parsing failed: Text: {unquoted_broken_json.\nError message: The data couldn’t be read because it isn’t in the correct format.\nCaused by: Error Domain=NSCocoaErrorDomain Code=3840 \"No string key for value in object around line 1, column 1.\" UserInfo={NSDebugDescription=No string key for value in object around line 1, column 1., NSJSONSerializationErrorIndex=1}"))
+streamText error: providerError(AISDKProvider.JSONValue.object(["text": AISDKProvider.JSONValue.string("[{\"candidates\": {malformed_syntax"), "message": AISDKProvider.JSONValue.string("JSON parsing failed: Text: [{\"candidates\": {malformed_syntax.\nError message: The data couldn’t be read because it isn’t in the correct format."), "name": AISDKProvider.JSONValue.string("AI_JSONParseError")]))
+streamText error: Error Domain=NSURLErrorDomain Code=-1005 "(null)"
+streamText error: Error Domain=NSURLErrorDomain Code=-1005 "(null)"
+streamText error: providerError(AISDKProvider.JSONValue.string("AI_JSONParseError: JSON parsing failed: Text: {\"choices\": [{\"delta\": {unquoted_broken_json.\nError message: The data couldn’t be read because it isn’t in the correct format.\nCaused by: Error Domain=NSCocoaErrorDomain Code=3840 \"No string key for value in object around line 1, column 24.\" UserInfo={NSDebugDescription=No string key for value in object around line 1, column 24., NSJSONSerializationErrorIndex=24}"))
+streamText error: providerError(AISDKProvider.JSONValue.string("AI_JSONParseError: JSON parsing failed: Text: {\"choices\": [{\"delta\": {unquoted_broken_json.\nError message: The data couldn’t be read because it isn’t in the correct format.\nCaused by: Error Domain=NSCocoaErrorDomain Code=3840 \"No string key for value in object around line 1, column 24.\" UserInfo={NSDebugDescription=No string key for value in object around line 1, column 24., NSJSONSerializationErrorIndex=24}"))
+streamText error: providerError(AISDKProvider.JSONValue.string("AI_JSONParseError: JSON parsing failed: Text: {\"choices\": [{\"delta\": {unquoted_broken_json.\nError message: The data couldn’t be read because it isn’t in the correct format.\nCaused by: Error Domain=NSCocoaErrorDomain Code=3840 \"No string key for value in object around line 1, column 24.\" UserInfo={NSDebugDescription=No string key for value in object around line 1, column 24., NSJSONSerializationErrorIndex=24}"))
+streamText error: Error Domain=NSURLErrorDomain Code=-1005 "(null)"
+streamText error: Error Domain=NSURLErrorDomain Code=-1005 "(null)"
+streamText error: Error Domain=NSURLErrorDomain Code=-1005 "(null)"
+✔ Test "F09: Malformed JSON payload in SSE stream aborts stream without tool execution or completed event" with 5 test cases passed after 0.132 seconds.
+✔ Test "Section 18: Google finish_reason mapping table" with 10 test cases passed after 0.132 seconds.
+✔ Test "F03: Abrupt stream close mid-text terminates with transport error and no completed event" with 5 test cases passed after 0.132 seconds.
+✔ Test "Advertised tool schema preserves original required, properties, and constraints" passed after 0.133 seconds.
+✔ Test "F07: Duplicate content chunk delta does not abort parser" with 3 test cases passed after 0.133 seconds.
+✔ Test "F05: Empty delta noise does not corrupt parser or yield empty text events" with 3 test cases passed after 0.133 seconds.
+✔ Test "F04: Stream ending after finish without explicit [DONE] still terminates cleanly" with 3 test cases passed after 0.133 seconds.
+✔ Test "F06: Final usage-only chunk is processed for token usage and not treated as text" with 3 test cases passed after 0.133 seconds.
+✔ Test "S01: Plain text baseline across all provider profiles" with 7 test cases passed after 0.133 seconds.
+✔ Test "Section 18: Anthropic finish_reason mapping table" with 8 test cases passed after 0.134 seconds.
+streamText error: emptyProviderResponse(attempts: 2)
+streamText error: emptyProviderResponse(attempts: 2)
+streamText error: emptyProviderResponse(attempts: 2)
+streamText error: emptyProviderResponse(attempts: 2)
+✔ Test "Section 18: OpenAI finish_reason mapping table" with 6 test cases passed after 0.135 seconds.
+streamText error: emptyProviderResponse(attempts: 2)
+streamText error: emptyProviderResponse(attempts: 2)
+✔ Test "F01: Empty provider stream retries once and throws emptyProviderResponse after 2 empty streams" with 5 test cases passed after 0.136 seconds.
+✔ Test "F02: HTTP 200 with finish_reason='other' and 0 text/tools is retried then throws emptyProviderResponse" passed after 0.137 seconds.
+✔ Test "Unknown tool call produces non-fatal tool error and allows multi-step recovery" passed after 0.139 seconds.
+✔ Test "S08: Unknown tool call returns non-fatal tool error and allows continuation" passed after 0.136 seconds.
+✔ Test "Invalid and extra arguments reach Hanlin executor and return non-fatal error" passed after 0.140 seconds.
+✔ Test "Dynamic tool exposure via prepareStep filters active tools" passed after 0.140 seconds.
+✔ Test "P12B: Structured assistant tool-call and tool-result history survives into next provider model request" passed after 0.139 seconds.
+✔ Test "Tool continuation regression test: provider-native tool call and response pairing" passed after 0.140 seconds.
+✔ Test "Google Native: Parallel thoughtSignature placement on first functionCall part only" passed after 0.137 seconds.
+✔ Test "Section 19: Offline reproduction of OpenRouter reasoning_details and finish=other failure class" passed after 0.140 seconds.
+✔ Test "S07: Stream tool arguments fragmented across Hebrew UTF-8 and JSON escape boundaries" passed after 0.139 seconds.
+✔ Test "S15: Empty tool result succeeds and continuation remains valid without mismatch" passed after 0.139 seconds.
+✔ Test "Parallel tool execution in a single model step" passed after 0.141 seconds.
+✔ Test "S14: Large deterministic tool result containing Unicode, newlines, and structured JSON" passed after 0.139 seconds.
+✔ Test "S16: Hebrew prompt, Hebrew arguments, Hebrew result, and Hebrew final response" passed after 0.139 seconds.
+✔ Test "S10 R2: OpenAI-compatible reasoning field multi-turn reasoning tool loop" passed after 0.141 seconds.
+✔ Test "S10 R1: OpenAI-compatible reasoning_content multi-turn reasoning tool loop" passed after 0.141 seconds.
+✔ Test "S10: Reasoning + tool continuation across multiple turns for reasoning profiles" passed after 0.141 seconds.
+✔ Test "S03: Production skill activation: load_skill exposes python dynamically" passed after 0.141 seconds.
+✔ Test "S06: Tool returns non-fatal error and model recovers on next turn" passed after 0.141 seconds.
+✔ Test "S10 R4: Google native thoughtSignature multi-turn reasoning tool loop" passed after 0.141 seconds.
+✔ Test "Google Native: Sequential thoughtSignature preserved exactly across requests" passed after 0.141 seconds.
+✔ Test "S13: Multi-turn conversation preserves prior tool and answer history without stale run state" passed after 0.145 seconds.
+✔ Test "S10 R3: OpenRouter reasoning_details multi-turn reasoning tool loop" passed after 0.143 seconds.
+✔ Test "S09: Multi-Skill exposure enforces monotonic visibility across rounds" passed after 0.143 seconds.
+✔ Test "S02: Single tool call with provider-native continuation pairing" with 4 test cases passed after 0.144 seconds.
+✔ Test "S05: Parallel tool calls in a single model step across OpenAI, Anthropic, and Google" with 3 test cases passed after 0.144 seconds.
+✔ Test "Anthropic Native: Tool result error is properly flagged and recovered" passed after 0.144 seconds.
+✔ Test "Anthropic Native: Parallel tool use and tool results" passed after 0.145 seconds.
+✔ Test "Anthropic Native: Thinking signature round-trip across multi-tool turns" passed after 0.146 seconds.
+✔ Test "S10 R5: Anthropic native thinking signature multi-turn reasoning tool loop" passed after 0.146 seconds.
+✔ Suite "Provider Conformance Scenario Tests" passed after 0.149 seconds.
+✔ Test "S04: Sequential 5-tool chain executing 6 provider steps with monotonic history" passed after 0.150 seconds.
+✔ Test "S11: Long 20-step tool-heavy run with strict per-round request validation" passed after 0.169 seconds.
+✔ Test "S12: Engine step limit boundary (configured stopWhen: stepCountIs(32)) terminates cleanly" passed after 0.186 seconds.
+✔ Suite "Provider Long Horizon & Investigation Tests" passed after 0.187 seconds.
+streamText error: AI_RetryError: Failed after 3 attempts. Last error: Cannot connect to API: The operation couldn’t be completed. (NSURLErrorDomain error -1004.)
+Caused by: AI_APICallError: Cannot connect to API: The operation couldn’t be completed. (NSURLErrorDomain error -1004.)
+Caused by: Error Domain=NSURLErrorDomain Code=-1004 "(null)"
+streamText error: AI_RetryError: Failed after 3 attempts. Last error: HTTP error 500
+Caused by: AI_APICallError: HTTP error 500
+streamText error: AI_RetryError: Failed after 3 attempts. Last error: HTTP error 429
+Caused by: AI_APICallError: HTTP error 429
+streamText error: AI_RetryError: Failed after 3 attempts. Last error: HTTP error 503
+Caused by: AI_APICallError: HTTP error 503
+streamText error: AI_RetryError: Failed after 3 attempts. Last error: HTTP error 500
+Caused by: AI_APICallError: HTTP error 500
+streamText error: AI_RetryError: Failed after 3 attempts. Last error: HTTP error 429
+Caused by: AI_APICallError: HTTP error 429
+streamText error: AI_RetryError: Failed after 3 attempts. Last error: HTTP error 500
+Caused by: AI_APICallError: HTTP error 500
+streamText error: AI_RetryError: Failed after 3 attempts. Last error: HTTP error 429
+Caused by: AI_APICallError: HTTP error 429
+streamText error: AI_RetryError: Failed after 3 attempts. Last error: HTTP error 503
+Caused by: AI_APICallError: HTTP error 503
+streamText error: AI_RetryError: Failed after 3 attempts. Last error: HTTP error 503
+Caused by: AI_APICallError: HTTP error 503
+streamText error: AI_RetryError: Failed after 3 attempts. Last error: Client Error
+Caused by: AI_APICallError: Client Error
+streamText error: AI_RetryError: Failed after 3 attempts. Last error: Internal Server Error
+Caused by: AI_APICallError: Internal Server Error
+streamText error: AI_RetryError: Failed after 3 attempts. Last error: Internal Server Error
+Caused by: AI_APICallError: Internal Server Error
+streamText error: AI_RetryError: Failed after 3 attempts. Last error: Service Unavailable
+Caused by: AI_APICallError: Service Unavailable
+streamText error: AI_RetryError: Failed after 3 attempts. Last error: Service Unavailable
+Caused by: AI_APICallError: Service Unavailable
+✔ Test "Real provider or transport error terminates stream" passed after 6.241 seconds.
+✔ Suite "HanlinAISDKAgentEngine Integration Tests" passed after 6.241 seconds.
+streamText error: AI_RetryError: Failed after 3 attempts. Last error: Client Error
+Caused by: AI_APICallError: Client Error
+✔ Test "F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution" with 25 test cases passed after 6.243 seconds.
+✔ Suite "Provider Fault Injection & Finish Reason Tests" passed after 6.244 seconds.
+✔ Test run with 92 tests in 9 suites passed after 6.244 seconds.

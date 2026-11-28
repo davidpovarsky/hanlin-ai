@@ -1,0 +1,61 @@
+
+                        ▒▒▓▓▓▓▒▒
+                     ▒▓▓▓▒▒░░▒▒▓▓▓▒
+                  ▒▓▓▓▓░░░▒▒▒▒░░░▓▓▓▓▒
+                 ▓▓▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▓▓
+                 ▓▓░░░░░▒▓▓▓▓▓▓▒░░░░░▓▓
+                 ▓▓░░▓▓▒░░░▒▒░░░▒▓▒░░▓▓
+                 ▓▓░░▓▓▓▓▓▒▒▒▒▓▓▓▓▒░░▓▓
+                 ▓▓░░▓▓▓▓▓▓▓▓▓▓▓▓▓▒░░▓▓
+                 ▓▓▒░░▒▒▓▓▓▓▓▓▓▓▒░░░▒▓▓
+                  ▒▓▓▓▒░░░▒▓▓▒░░░▒▓▓▓▒
+                     ▒▓▓▓▒░░░░▒▓▓▓▒
+                        ▒▒▓▓▓▓▒▒
+
+
+                Welcome to Metro v0.87.1
+              Fast - Scalable - Integrated
+
+
+Copying 1 asset files
+Done copying assets
+{
+  "schemaVersion": 1,
+  "engine": "expo",
+  "operation": "build",
+  "succeeded": true,
+  "diagnostics": [],
+  "sourceRoot": "/dev/shm/hanlin-miniapp-integration-20261123/expo-asset",
+  "sdk": {
+    "packageVersions": {
+      "@expo/ui": "58.0.3",
+      "@hanlin/expo-native-api": "1.0.0",
+      "@hanlin/expo-ui": "1.0.0",
+      "@nativescript/react-native": "9.1.2",
+      "expo": "58.0.0",
+      "expo-brownfield": "58.0.3",
+      "expo-modules-core": "58.0.3",
+      "expo-modules-jsi": "58.0.2",
+      "react": "19.3.0",
+      "react-native": "0.88.0",
+      "react-native-worklets": "0.13.1",
+      "@babel/core": "7.29.7",
+      "@react-native-community/cli": "20.2.0",
+      "@react-native/codegen": "0.88.0",
+      "@react-native/metro-config": "0.88.0",
+      "@types/react": "19.3.0",
+      "babel-preset-expo": "58.0.20",
+      "esbuild": "0.25.12",
+      "typescript": "6.0.2"
+    },
+    "manifestSHA256": "c4c68340c27658d9d5ef277baf7df4bb6ca4049b3ef94e6ddbc3d57db80898f8",
+    "compilerVersion": "6.0.3"
+  },
+  "typecheck": {
+    "strict": true,
+    "skipLibCheck": false,
+    "dependencyDeclarationsChecked": true
+  },
+  "preparedPackagePath": "/dev/shm/hanlin-miniapp-integration-20261123/expo-asset/.hanlin-build/3770f6dc-8603-478c-96d6-f0f559edbb7a/package",
+  "archivePath": "/dev/shm/hanlin-miniapp-integration-20261123/expo-asset/.hanlin-build/3770f6dc-8603-478c-96d6-f0f559edbb7a/MiniApp.hanlinExpo"
+}

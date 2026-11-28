@@ -1,0 +1,17 @@
+{
+  "name": "skills-policy-offline-cache",
+  "replaces_run": "44425850134",
+  "inputs": {
+    "target_validation_group": "exact_test_selector",
+    "exact_test_selector": "AI_HLYTests/SkillOpenClawPolicyTests/originalPolicyRunsInTheActualEmbeddedNode(),AI_HLYTests/SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation(),AI_HLYTests/SkillRuntimeProductTests/ordinaryInstructionsSurviveUnrelatedPolicyInspectionFailure(),AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)",
+    "fast_validation_only": "true",
+    "simulator_e2e_only": "false",
+    "compare_base_sha": "6f294a8fe2047e028f5b5f75df485825027badf0",
+    "full_validation": "false",
+    "testflight_upload": "false",
+    "runtime_publish_release": "false",
+    "runtime_bundle_artifact_run_id": "42926628418"
+  },
+  "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+  "dispatch_started_at": "2026-11-19T00:31:12.586326+00:00"
+}

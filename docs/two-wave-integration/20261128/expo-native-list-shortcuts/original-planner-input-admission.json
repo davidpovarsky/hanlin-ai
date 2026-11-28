@@ -1,0 +1,39 @@
+{
+  "at": "2026-11-28T09:48:08.891938+00:00",
+  "source": "04e33c45acedd3f372f836b06f17b805bc91293d",
+  "originalMapSHA256": "c8b6811c5baffadb75be3971afce303e80cb2832864a239ae06e6f6e015308cb",
+  "originalPlannerSHA256": "267df1696402e912c330b726aa9c73b2a1b371d18b39a2717b77a8a2b310f021",
+  "changedFiles": [
+    "Fixtures/ShortcutNativeLists/expo/App.tsx",
+    "Fixtures/ShortcutNativeLists/expo/hanlin.authoring.json",
+    "Fixtures/ShortcutNativeLists/expo/index.ts",
+    "Fixtures/ShortcutNativeLists/expo/package.json",
+    "Fixtures/ShortcutNativeLists/expo/proof.ts",
+    "Fixtures/ShortcutNativeLists/expo/script.json",
+    "Fixtures/ShortcutNativeLists/expo/tsconfig.json",
+    "Fixtures/ShortcutNativeLists/nativescript/hanlin.authoring.json",
+    "Fixtures/ShortcutNativeLists/nativescript/index.ts",
+    "Fixtures/ShortcutNativeLists/nativescript/package.json",
+    "Fixtures/ShortcutNativeLists/nativescript/proof.ts",
+    "Fixtures/ShortcutNativeLists/nativescript/script.json",
+    "Fixtures/ShortcutNativeLists/nativescript/tsconfig.json"
+  ],
+  "function": "plan_affected_validation",
+  "nativeRuns": 0,
+  "status": "ORIGINAL_PLANNER_REJECTS_UNMAPPED_INPUTS",
+  "unmappedPaths": [
+    "Fixtures/ShortcutNativeLists/expo/App.tsx",
+    "Fixtures/ShortcutNativeLists/expo/hanlin.authoring.json",
+    "Fixtures/ShortcutNativeLists/expo/index.ts",
+    "Fixtures/ShortcutNativeLists/expo/package.json",
+    "Fixtures/ShortcutNativeLists/expo/proof.ts",
+    "Fixtures/ShortcutNativeLists/expo/script.json",
+    "Fixtures/ShortcutNativeLists/expo/tsconfig.json",
+    "Fixtures/ShortcutNativeLists/nativescript/hanlin.authoring.json",
+    "Fixtures/ShortcutNativeLists/nativescript/index.ts",
+    "Fixtures/ShortcutNativeLists/nativescript/package.json",
+    "Fixtures/ShortcutNativeLists/nativescript/proof.ts",
+    "Fixtures/ShortcutNativeLists/nativescript/script.json",
+    "Fixtures/ShortcutNativeLists/nativescript/tsconfig.json"
+  ]
+}

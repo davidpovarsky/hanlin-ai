@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "status": "REUSED_VERIFIED",
+  "currentSource": "700664fdbf0871321c30433172f39299e706b0f8",
+  "currentArchiveSHA256": "cfda1ac4ae05729f309ac235eec883b57df0fc6fbd158de46e986cd3ebac4158",
+  "currentSDKInputSHA256": "c4463f0f702e5b070f1e0236c452f90e5e31e8a2fa6a1978e72b9ad55caaf307",
+  "original188": {
+    "status": "REUSED_VERIFIED",
+    "actualExecutionSource": "b5475156e7b0253b24c0a4385236b60da21f6f7e",
+    "actualExecutionReceipt": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-preparation-b5475156-original-phases-r1.json",
+    "actualExecutionReceiptSHA256": "ae96e1b3f5cbeafed5645fd26bbd3edfd1a74fd264c5a5dda4837fb1990d43a9",
+    "originalTestSummary": {
+      "tests": 188,
+      "pass": 188,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "actualLongJobProof": {
+      "proof": "actual-node-job-over-300-seconds",
+      "elapsedMilliseconds": 305044.987583,
+      "executionID": "432c5399-ce28-4670-826e-4336fc28dd24"
+    },
+    "testClosureSHA256": "3a48396dfcf27155074296d19b56ebd03eaebe5387e56f4eb76e1c34865bf96c",
+    "testInvocationsThisAttempt": 0,
+    "acceptedPayloadFiles": 28810,
+    "changedPayloadFiles": [
+      "MiniAppSDK/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "MiniAppSDK/docs/miniapp-sdk/extension-reachability.json",
+      "MiniAppSDK/docs/miniapp-sdk/extension-reachability.md",
+      "MiniAppSDK/docs/miniapp-sdk/source-inventory.json",
+      "MiniAppSDK/miniapp-sdk.json"
+    ],
+    "allOtherPayloadBytesAndModesEqual": true,
+    "newArchiveNotYetAccepted": false
+  },
+  "stagedClosure": {
+    "sha256": "467d5d5f0b19503931c56d1d85a5544ed0673657b9b5e2750d1d624179486214",
+    "files": 28810,
+    "deltaSHA256": "09376068d77143c57e1e4fc188769a2c0dd9b38f55a1fd67078ee23501c50fbf"
+  },
+  "newHostTestInvocations": 0,
+  "freshOriginalTwelvePhasePassClaimed": false,
+  "note": "host-metadata.json retains the unchanged producer schema tests=passed. Its test proof is the exact historical b547 original188 execution qualified here; JITless and packed checks were freshly executed."
+}

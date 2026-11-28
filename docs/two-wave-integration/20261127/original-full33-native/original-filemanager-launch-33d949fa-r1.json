@@ -1,0 +1,10 @@
+{
+  "status": "DETACHED_OWNED_FOCUSED_CONTROLLER_STARTED",
+  "controllerPID": 36363,
+  "controllerPGID": 36363,
+  "at": "2026-11-27T08:42:54.361326+00:00",
+  "controllerSHA256": "5b9c5bdcc89d58ed6f02ff13ca2d04b5ab7a8a4c8f4e11b922f6a256e77836e1",
+  "source": "33d949fa8d91d238ba93a9ef09373c5eafe58b84",
+  "originalTestSourceUnchanged": true,
+  "transportTimeoutSeconds": 15
+}

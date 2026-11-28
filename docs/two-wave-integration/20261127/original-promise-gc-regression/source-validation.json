@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "base": "f592c100552bab43bdb1e16d7434d35780851786",
+  "sourcePath": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalPromiseLifetimeTests.swift",
+  "sourceSHA256": "2f7f8d4bccb94e9f2957067d48ac9e96bd7ababf9491788bd71f33b7f0623394",
+  "bytes": 8351,
+  "patchSHA256": "2e368948e2b675f0509866314334bcf3f7082443293650168282ac7b49fc7359",
+  "productionMatchesActualFailed33Source": {
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift": "13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5",
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3",
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift": "f7b50ceacdf034833c92554a769fe692abebe296b87e55091e7a2fb09146d9da"
+  },
+  "SDKInputIntersection": [],
+  "scope": "Two additive native regression methods in the original SwiftPM test target. Actual original session, ScriptWidgetRuntimePromise, callback queue, public JSGarbageCollect and managed observation. Native operation completion timing is controlled; production delivery is not replaced. Existing test bodies, assertions, timeout and package configuration are unchanged.",
+  "selectors": [
+    "HanlinOriginalPromiseLifetimeTests/originalPromiseRetainsPendingContinuationThroughGarbageCollection",
+    "HanlinOriginalPromiseLifetimeTests/originalPromiseCancellationReleasesPendingContinuationAndDisposesContext"
+  ],
+  "native": "NOT_RUN; expected old-source outcome is not claimed",
+  "actualFailureEvidence": "handoff/full-platform-33d949fa-r1/handoff/full-platform-33d949fa-r1/http-exact-stage-wire-timings.json",
+  "actualFailureEvidenceSHA256": "46744af6cfea36febb8500525972ce64369e4877618a298024a69ad989273b69",
+  "primaryContracts": [
+    "https://developer.apple.com/documentation/javascriptcore/jsvirtualmachine/addmanagedreference(_:withowner:)",
+    "https://developer.apple.com/documentation/javascriptcore/jsmanagedvalue"
+  ],
+  "limits": "The actual HTTP failure has no native-delivery trace. A reproduced GC lifetime defect is not by itself proof that it caused the full-suite timeout."
+}

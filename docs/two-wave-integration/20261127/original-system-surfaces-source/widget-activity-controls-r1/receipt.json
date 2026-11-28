@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "startedAtUTC": "2026-11-27T05:56:13.880543+00:00",
+  "finishedAtUTC": "2026-11-27T05:56:14.101351+00:00",
+  "argv": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/ProductSplit/Tests",
+    "-p",
+    "test_widget_action_surface_observer.py",
+    "-v"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-miniapps-widget-recovery-os-20261127",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "exitCode": 0,
+  "durationSeconds": 0.22014389839023352,
+  "sourceSHA256": {
+    "Scripts/ProductSplit/observe_widget_action_surfaces.py": "3bcff4b8588cd7cb16718dc015a2d16ef701bfa36d1f56a82feddcbb0fecc865",
+    "Scripts/ProductSplit/Tests/test_widget_action_surface_observer.py": "2a52716f79d4740569c9cb719345571e1ab72eea6d85b3999e0119bbee8005e5",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "72530c9c8f70b6eb35572e2d4180ac2d0161d1a641c08d1e49505554d021b65c"
+  },
+  "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSHA256": "4b5231db2fa842b027b6454a3b272f96f85597e86bd101f99459983e5808a58c",
+  "scope": "Pure temporary reader controls only; no previous20 tests, native build, simulator or OS action."
+}

@@ -1,0 +1,681 @@
+{
+  "recorded_at": "2026-11-19T03:11:56.834148+00:00",
+  "published_source": "1480b347f519073b384cd86f7efc506e9c2d1aab",
+  "original_task_count": 30,
+  "current_asana_completed": [
+    "1220542174541844"
+  ],
+  "phase_2": "IN_PROGRESS",
+  "phase_3": "IN_PROGRESS",
+  "release": "NO_GO",
+  "native_runs": [
+    {
+      "run": 44448313143,
+      "source_sha": "1480b347f519073b384cd86f7efc506e9c2d1aab",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44448313143",
+      "scope": "Full original SDK05 scope plus5 typed ports, registry/SDK/MCP and split origin",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44447388017,
+      "source_sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447388017",
+      "scope": "Original live Gemini/Python/consent/cold-reopen with owned cleanup",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44447129341,
+      "source_sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447129341",
+      "scope": "Original paired product/share8 with Storage fixture and keyboard fixes",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44447126258,
+      "source_sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447126258",
+      "scope": "Complete original iPad scope plus geometry, Canvas, reasoning and selection",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44447123515,
+      "source_sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447123515",
+      "scope": "Original iPhone2 with actual-editor keyboard ownership",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44446182012,
+      "source_sha": "8a505675eca035fbca3877afd1f8776f00f629d0",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44446182012",
+      "scope": "Corrected CMS wire flags and bounded owned signing settings",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44443891179,
+      "source_sha": "a7d6762c4d2d9c18ca987dfe6ce3f077d4c4e164",
+      "workflow_status": "completed",
+      "workflow_conclusion": "cancelled",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44443891179",
+      "scope": "Old23 SDK05 cases replaced before native by complete expanded44448313143",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "TERMINAL_RECORDED_SCOPE"
+    },
+    {
+      "run": 44440354095,
+      "source_sha": "589420f3da0db240df8aa5a466bba9303a6bf4c5",
+      "workflow_status": "queued",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44440354095",
+      "scope": "23 maintained original packages +2Cairo +4Yams +local Python wheel (30)",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44437763739,
+      "source_sha": "ca49d1381d186dcc481eeb7c7eb753dd19bd0085",
+      "workflow_status": "in_progress",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44437763739",
+      "scope": "Original Motion D coherent accessibility diagnostic",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44434893361,
+      "source_sha": "c91732b21456f964c8e1cf612b06497277ae9fdf",
+      "workflow_status": "completed",
+      "workflow_conclusion": "cancelled",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44434893361",
+      "scope": "Old maintained29 scope replaced before native by30-case44440354095",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "TERMINAL_RECORDED_SCOPE"
+    },
+    {
+      "run": 44431826560,
+      "source_sha": "e564dc29d24239309b113244bec4556c211c5b2d",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431826560",
+      "scope": "CMS/signing tiny admission diagnostic; native profile discovery failed",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "TERMINAL_RECORDED_SCOPE"
+    },
+    {
+      "run": 44431811538,
+      "source_sha": "e564dc29d24239309b113244bec4556c211c5b2d",
+      "workflow_status": "in_progress",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431811538",
+      "scope": "CodeFence plus8 original UI/Skills/consent/Safari routes",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44429728630,
+      "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+      "workflow_status": "completed",
+      "workflow_conclusion": "cancelled",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429728630",
+      "scope": "Old queued iPad scope replaced by full superset44447126258",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "TERMINAL_RECORDED_SCOPE"
+    },
+    {
+      "run": 44429703865,
+      "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+      "workflow_status": "in_progress",
+      "workflow_conclusion": null,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429703865",
+      "scope": "Original two compact iPhone cases on prior source (already running; retained)",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "PENDING_RAW_NATIVE_ACCEPTANCE"
+    },
+    {
+      "run": 44429680236,
+      "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+      "workflow_status": "completed",
+      "workflow_conclusion": "success",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429680236",
+      "scope": "Original isolated npm install/update/failure/uninstall lifecycle",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "TERMINAL_RECORDED_SCOPE"
+    },
+    {
+      "run": 44429654565,
+      "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+      "workflow_status": "completed",
+      "workflow_conclusion": "success",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429654565",
+      "scope": "4 methods/25 generated-fixture and policy/cache cases",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "counts": {
+        "total": 25,
+        "passed": 25,
+        "failed": 0,
+        "skipped": 0
+      },
+      "status": "VERIFIED_NATIVE_SUBSET_PASS",
+      "source_qualification": {
+        "note": "The authenticated build records trackedWorkspaceModified=true. Runtime preparation logs record a generated RuntimeManifest and updated Host source modules with unchanged locked dependencies. An exhaustive tracked diff is not retained, so this is not described as a clean-tree binary. The exact original policy artifact/declaration closure is independently authenticated by the native witness. Evidence applies to this recorded run, not newer source commits.",
+        "packageResolvedSHA256": "aabb429fa9f62273e681917748c5d4528fbac58596245216dec36f4bc27d224a",
+        "resolved_pin_states_match_committed_lock": true,
+        "sourceCommit": "3a87634b8b478833ddd90c896fe494bd4becda82",
+        "trackedWorkspaceModified": true
+      },
+      "artifact": {
+        "all_zip_crcs_verified": true,
+        "bytes": 2592144,
+        "id": 14494480413,
+        "members": 144,
+        "name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+        "official_digest_matches": true,
+        "sha256": "a1a893e852f679288f523de367bd2ae1b33b664656ca7847e71b0748d9a653e1",
+        "uncompressed_bytes": 17191368
+      }
+    },
+    {
+      "run": 44428114202,
+      "source_sha": "d6cb7d0b704abf11d0296e77eea246700c390f5c",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428114202",
+      "scope": "Live case not run: owned simulator app installation timed out before credentials",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "status": "TERMINAL_RECORDED_SCOPE"
+    },
+    {
+      "run": 44428104345,
+      "source_sha": "d6cb7d0b704abf11d0296e77eea246700c390f5c",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428104345",
+      "scope": "6 exact native cases:4pass,2fail; Canvas local result/disclosure reached",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "counts": {
+        "total": 6,
+        "passed": 4,
+        "failed": 2,
+        "skipped": 0
+      },
+      "status": "TERMINAL_RECORDED_SCOPE"
+    },
+    {
+      "run": 44426526923,
+      "source_sha": "90314963decf82ff64d4265346fbaf8279ffc965",
+      "workflow_status": "completed",
+      "workflow_conclusion": "failure",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426526923",
+      "scope": "Original paired8:4Hostpass,4UIfail",
+      "observed_at": "2026-11-19T03:11:56.834148+00:00",
+      "acceptance_claim": false,
+      "counts": {
+        "total": 8,
+        "passed": 4,
+        "failed": 4,
+        "skipped": 0
+      },
+      "status": "TERMINAL_RECORDED_SCOPE"
+    }
+  ],
+  "added_evidence": [
+    {
+      "id": "SKILLS25_NATIVE_20261119_3A",
+      "status": "VERIFIED_NATIVE_SUBSET_PASS",
+      "run": 44429654565,
+      "sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+      "scope": "25 native cases, Node24.5.0 ios/arm64 JITless; original28/64 and11 adapter contracts; six offline observer controls; cache invalidation witnesses.22 generated fixtures, not maintained corpus; dirty preparation qualification retained.",
+      "report": "acceptance/checkpoint-20261119-0312/skills-native25/verification.json"
+    },
+    {
+      "id": "UI6_D6_AUTHENTICATED_20261119",
+      "status": "FOUR_PASS_TWO_FAIL",
+      "run": 44428104345,
+      "sha": "d6cb7d0b704abf11d0296e77eea246700c390f5c",
+      "scope": "Reasoning2, UI04 and original selection/save/preview pass; UI01 corruption and missing regular-width Canvas Cancel fail; cold Canvas reopen not reached.",
+      "report": "acceptance/compact-keyboard-canvas-20261119/native-d6-results.json"
+    },
+    {
+      "id": "COMPACT_KEYBOARD_CANVAS_7E_20261119",
+      "status": "PUBLISHED_NATIVE_PENDING",
+      "sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+      "runs": [
+        44447123515,
+        44447126258,
+        44447129341,
+        44447388017
+      ],
+      "scope": "Exact existing editor/window keyboard ownership, original native popover dismissal, metadata-only editor diagnostics and unchanged typed expectations.",
+      "report": "acceptance/compact-keyboard-canvas-20261119/root-review.json"
+    },
+    {
+      "id": "SDK05_SECRET_AND_TYPED_DATA_1480_20261119",
+      "status": "PUBLISHED_NATIVE_PENDING",
+      "sha": "1480b347f519073b384cd86f7efc506e9c2d1aab",
+      "run": 44448313143,
+      "scope": "Original Keychain commit ordering/read-error retention, disk SwiftData reopen, actual credential/memory/attachment ports and request revocation. Account/CloudKit/full erase and APIKeys migration remain open.",
+      "report": "acceptance/sdk05-typed-data-ports-20261119/root-review.json"
+    },
+    {
+      "id": "PYTHON_FACTS_MAINTAINED30_589_20261119",
+      "status": "PUBLISHED_NATIVE_PENDING",
+      "sha": "589420f3da0db240df8aa5a466bba9303a6bf4c5",
+      "run": 44440354095,
+      "scope": "Import-free original Python facts and genuine local wheel/cache acceptance plus maintained23/Cairo2/Yams4.",
+      "report": "acceptance/checkpoint-20261119-0312/CONTINUATION_CHECKPOINT.json"
+    },
+    {
+      "id": "SIGNING_CMS_WIRE_8A_20261119",
+      "status": "NATIVE_ADMISSION_FAILURE_CORRECTION_PENDING",
+      "sha": "8a505675eca035fbca3877afd1f8776f00f629d0",
+      "runs": [
+        44431826560,
+        44446182012
+      ],
+      "scope": "Actual CMS flags were integer1 and valid; tiny Xcode archive still rejected original profile. Correct native wire type and bounded exact-project diagnostic,28portable passes, no product export yet.",
+      "report": "acceptance/signing-native-wire-and-owned-settings-20261119/root-verification.json"
+    },
+    {
+      "id": "LIVE_PREPARATION_F780_20261119",
+      "status": "PUBLISHED_NATIVE_PENDING",
+      "sha": "f780cc12800b1f3c27295e9456d93b3947c43a7d",
+      "runs": [
+        44428114202,
+        44447388017
+      ],
+      "scope": "Preserve atomic simulator ownership before install, sanitized install-failure evidence and cleanup. Prior live case never ran; original temporary credential route used and cleaned for new run.",
+      "report": "acceptance/checkpoint-20261119-0312/dispatch-live.json"
+    },
+    {
+      "id": "UPSTREAM_V3_REAL_CI_PR_20261119",
+      "status": "REAL_RENOVATE_PR_SOURCE_FIX_PUBLISHED_NATIVE_PENDING",
+      "sha": "d6e2e3f062633fe7a55c0f44b922c5b3321aaf4a",
+      "runs": [
+        44443862765,
+        44448070120
+      ],
+      "scope": "Actual original bot created PR13 then gh child failed missing GH_TOKEN. v3 supplies same existing token, preserves exact strict/app-bound checks. Native candidate/negative/same-head green/merge/rollback remain.",
+      "report": "acceptance/checkpoint-20261119-0312/upstream-v3-activation.json"
+    },
+    {
+      "id": "ANYTYPE_COMPONENT77_UI22_20261119",
+      "status": "VERIFIED_RECORDED_NATIVE_SUBSETS",
+      "sha": "833dddee4d5c4e6cd0f89354e5a73096750d8e77",
+      "runs": [
+        44437298303,
+        44437308455
+      ],
+      "scope": "76methods/77 expanded component passes and1whole-document UI with22 named checks. iPhone selection, Debug app-group mismatch and logout lifecycle/banner remain open; no whole consumer acceptance.",
+      "report": "acceptance/checkpoint-20261119-0312/anytype-components77.json"
+    },
+    {
+      "id": "ORIGINAL_PAIRED_STORAGE_FIX_20261119",
+      "status": "FOUR_HOST_PASS_FOUR_UI_FAIL_REPAIR_PUBLISHED",
+      "sha": "b32e50846551d8e870dd5b58230ae01f13487c87",
+      "runs": [
+        44426526923,
+        44447129341
+      ],
+      "scope": "Original compiler reproduced invalid Storage named import and accepts corrected global API fixture; all8 original native selectors retained, typing and keyboard evidence separate.",
+      "report": "acceptance/paired-transfer-storage-20261119"
+    },
+    {
+      "id": "NPM_GENERATIONS_NATIVE_20261119_3A",
+      "status": "VERIFIED_NATIVE_SUBSET_PASS",
+      "run": 44429680236,
+      "sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+      "scope": "One original real embedded npm lifecycle passed: install7/import, update6/preserved old generation, rejected9999 without active publication, uninstall/import failure; generation policy/environment identities verified.39pins match; trackedWorkspaceModified qualification retained.",
+      "report": "acceptance/checkpoint-20261119-0312/npm-native1/verification.json"
+    },
+    {
+      "id": "ANYTYPE_DEBUG_GROUPS_8B_20261119",
+      "status": "PUBLISHED_NATIVE_PENDING",
+      "run": 44449673030,
+      "sha": "8b79d35cf35dd7feef5d0a3021c9fef13e0cc8c2",
+      "scope": "Original Debug main/Share/Notification configs select existing .dev entitlement files; original Swift constants and selected-block UI assertions unchanged.91portable controls pass; original iPhone selection dispatched. Hittability causality and logout UI acceptance remain unproven.",
+      "report": "acceptance/checkpoint-20261119-0312/anytype-debug-groups-publication.json"
+    }
+  ],
+  "copy_provenance": [
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429654565\\README.md",
+      "path": "acceptance/checkpoint-20261119-0312/skills-native25/README.md",
+      "original_sha256": "a3f193f2ef6cc1c9dd03e0d3cc811ad44fe5af579840d3dba69a32a1601440df",
+      "repository_sha256": "a3f193f2ef6cc1c9dd03e0d3cc811ad44fe5af579840d3dba69a32a1601440df",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429654565\\verification.json",
+      "path": "acceptance/checkpoint-20261119-0312/skills-native25/verification.json",
+      "original_sha256": "2d4a7e31ee050b99b8de290493cab3f5a5b193c0a1257138bad548f9551ec95a",
+      "repository_sha256": "2d4a7e31ee050b99b8de290493cab3f5a5b193c0a1257138bad548f9551ec95a",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429654565\\native-tests.json",
+      "path": "acceptance/checkpoint-20261119-0312/skills-native25/native-tests.json",
+      "original_sha256": "07ac323ee7b54b746fdd1df675ede46643ba077bcc3fd2e21f1b6e313a1c64e0",
+      "repository_sha256": "07ac323ee7b54b746fdd1df675ede46643ba077bcc3fd2e21f1b6e313a1c64e0",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429654565\\native-policy-report.json",
+      "path": "acceptance/checkpoint-20261119-0312/skills-native25/native-policy-report.json",
+      "original_sha256": "ea6a64471ee884667d46b50f5939c27470cf6a4d2aa8dce0331ce80f6d06ca58",
+      "repository_sha256": "ea6a64471ee884667d46b50f5939c27470cf6a4d2aa8dce0331ce80f6d06ca58",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429654565\\native-witnesses.json",
+      "path": "acceptance/checkpoint-20261119-0312/skills-native25/native-witnesses.json",
+      "original_sha256": "c28925abb97f644b2bcf6699cce91db1e00dc350efa9117c314a519b7bdf94c8",
+      "repository_sha256": "c28925abb97f644b2bcf6699cce91db1e00dc350efa9117c314a519b7bdf94c8",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429654565\\raw\\simulator-logs\\01-environment.log",
+      "path": "acceptance/checkpoint-20261119-0312/skills-native25/raw/simulator-logs/01-environment.log",
+      "original_sha256": "3b668dcda21f7e87d5347b8dc8e7c8df185996680caf8451bf4ded423cab9b26",
+      "repository_sha256": "3b668dcda21f7e87d5347b8dc8e7c8df185996680caf8451bf4ded423cab9b26",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429654565\\raw\\simulator-logs\\02-prepare-runtime-core.log",
+      "path": "acceptance/checkpoint-20261119-0312/skills-native25/raw/simulator-logs/02-prepare-runtime-core.log",
+      "original_sha256": "aba6326a9492f9a08a3f6b9bd07853fe2647611edc92d454077ef173b50ae634",
+      "repository_sha256": "aba6326a9492f9a08a3f6b9bd07853fe2647611edc92d454077ef173b50ae634",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429654565\\raw\\simulator-logs\\05-cache-input-capture.log",
+      "path": "acceptance/checkpoint-20261119-0312/skills-native25/raw/simulator-logs/05-cache-input-capture.log",
+      "original_sha256": "85c00b8809ea80cbd38f8e5efebbafa9f6d4cc2cbc001af0eea3583da6dee7b1",
+      "repository_sha256": "85c00b8809ea80cbd38f8e5efebbafa9f6d4cc2cbc001af0eea3583da6dee7b1",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429654565\\raw\\simulator-logs\\05-cache-input-restore.log",
+      "path": "acceptance/checkpoint-20261119-0312/skills-native25/raw/simulator-logs/05-cache-input-restore.log",
+      "original_sha256": "a5bf995d21a9e06858d48a1ec228f9fdac6356a1dd62df88f713fb5043323127",
+      "repository_sha256": "a5bf995d21a9e06858d48a1ec228f9fdac6356a1dd62df88f713fb5043323127",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429654565\\raw\\simulator-logs\\06-diagnostics-build-provenance.json",
+      "path": "acceptance/checkpoint-20261119-0312/skills-native25/raw/simulator-logs/06-diagnostics-build-provenance.json",
+      "original_sha256": "15af5ed3bbad85e448058ce846869c4726938415b5f2587e34044c35ad88e15f",
+      "repository_sha256": "15af5ed3bbad85e448058ce846869c4726938415b5f2587e34044c35ad88e15f",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429654565\\raw\\simulator-logs\\08-downstream-unit-test-results.json",
+      "path": "acceptance/checkpoint-20261119-0312/skills-native25/raw/simulator-logs/08-downstream-unit-test-results.json",
+      "original_sha256": "b39bb46aea8b4aba3176026fa4dfb0152541d97a96f5f59a54a5a4ed5d62cb58",
+      "repository_sha256": "b39bb46aea8b4aba3176026fa4dfb0152541d97a96f5f59a54a5a4ed5d62cb58",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429654565\\raw\\simulator-logs\\08-downstream-unit-tests-duration-seconds.txt",
+      "path": "acceptance/checkpoint-20261119-0312/skills-native25/raw/simulator-logs/08-downstream-unit-tests-duration-seconds.txt",
+      "original_sha256": "78f135d64d5e1307cac651608256a4181a0c5e0795521cf6680b75966df4911d",
+      "repository_sha256": "78f135d64d5e1307cac651608256a4181a0c5e0795521cf6680b75966df4911d",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429654565\\raw\\simulator-logs\\08-downstream-unit-tests.log",
+      "path": "acceptance/checkpoint-20261119-0312/skills-native25/raw/simulator-logs/08-downstream-unit-tests.log",
+      "original_sha256": "d2742b71b3987de5e54165bea0640073cb10a7818f4b23d35eef2cede46eb87b",
+      "repository_sha256": "d2742b71b3987de5e54165bea0640073cb10a7818f4b23d35eef2cede46eb87b",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429654565\\raw\\simulator-logs\\openclaw-original-policy-parity.log",
+      "path": "acceptance/checkpoint-20261119-0312/skills-native25/raw/simulator-logs/openclaw-original-policy-parity.log",
+      "original_sha256": "fe661b2f892ad9f8fdb11ee50db09a32ac645b72c09ce3f7a912387f563894e2",
+      "repository_sha256": "fe661b2f892ad9f8fdb11ee50db09a32ac645b72c09ce3f7a912387f563894e2",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429654565\\raw\\simulator-logs\\Resolved-Package.resolved",
+      "path": "acceptance/checkpoint-20261119-0312/skills-native25/raw/simulator-logs/Resolved-Package.resolved",
+      "original_sha256": "aabb429fa9f62273e681917748c5d4528fbac58596245216dec36f4bc27d224a",
+      "repository_sha256": "aabb429fa9f62273e681917748c5d4528fbac58596245216dec36f4bc27d224a",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429654565\\raw\\simulator-logs\\validation-profile.txt",
+      "path": "acceptance/checkpoint-20261119-0312/skills-native25/raw/simulator-logs/validation-profile.txt",
+      "original_sha256": "cffee7641abdb8b4a93cb55524477c34b40985d60ed98f6d364da8ab906b7043",
+      "repository_sha256": "cffee7641abdb8b4a93cb55524477c34b40985d60ed98f6d364da8ab906b7043",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429654565\\raw\\simulator-logs\\verified-simulator-environment.json",
+      "path": "acceptance/checkpoint-20261119-0312/skills-native25/raw/simulator-logs/verified-simulator-environment.json",
+      "original_sha256": "fc3ae8d3add2309d9f1e717507e1f5808c9c8ff247ff72b047a01c6241bd3ef1",
+      "repository_sha256": "fc3ae8d3add2309d9f1e717507e1f5808c9c8ff247ff72b047a01c6241bd3ef1",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\ASANA_ORIGINAL30_CURRENT_20261119_0312.json",
+      "path": "acceptance/checkpoint-20261119-0312/asana-original30-current.json",
+      "original_sha256": "9408396703eea06bf113ea367c86408eefb0efe92007e0078ccf3e5130e0bd8d",
+      "repository_sha256": "9408396703eea06bf113ea367c86408eefb0efe92007e0078ccf3e5130e0bd8d",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-ui-20261119-0250\\asana-readbacks.json",
+      "path": "acceptance/checkpoint-20261119-0312/asana-ui-signing-paired-readbacks.json",
+      "original_sha256": "380c7a52a752c16473f737033c98a77e5ffcf46a1100d4cd3f651c8a3fc52fd9",
+      "repository_sha256": "380c7a52a752c16473f737033c98a77e5ffcf46a1100d4cd3f651c8a3fc52fd9",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-typed-data-20261119\\asana-readback.json",
+      "path": "acceptance/checkpoint-20261119-0312/asana-sdk05-readback.json",
+      "original_sha256": "e3d01b05056ebb7ebb4cf7413680215b407d6eb245a36fb2f3f78a3ad457eb62",
+      "repository_sha256": "e3d01b05056ebb7ebb4cf7413680215b407d6eb245a36fb2f3f78a3ad457eb62",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-ui-20261119-0250\\ipad-queued-replacement.json",
+      "path": "acceptance/checkpoint-20261119-0312/ipad-replacement.json",
+      "original_sha256": "4bed30632b3527e249981ac12419c240b3515e66baac2f7ddfffdaebb4625592",
+      "repository_sha256": "4bed30632b3527e249981ac12419c240b3515e66baac2f7ddfffdaebb4625592",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-typed-data-20261119\\original23-replacement.json",
+      "path": "acceptance/checkpoint-20261119-0312/sdk05-replacement.json",
+      "original_sha256": "c11a9d8821f4b79d8d2bb2c7dd654af4d010f8b0507c34fabe43d90a539e58e3",
+      "repository_sha256": "c11a9d8821f4b79d8d2bb2c7dd654af4d010f8b0507c34fabe43d90a539e58e3",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\upstream-activation\\execution\\v3\\V3_ACTIVATION_MILESTONE.json",
+      "path": "acceptance/checkpoint-20261119-0312/upstream-v3-activation.json",
+      "original_sha256": "6ced2fe6d39c9043e9e64ac047489b9527dcd114557a4c18d40d64a4394f92c2",
+      "repository_sha256": "6ced2fe6d39c9043e9e64ac047489b9527dcd114557a4c18d40d64a4394f92c2",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\upstream-activation\\execution\\v2\\actual-ci-pr13-credential-outcome.json",
+      "path": "acceptance/checkpoint-20261119-0312/upstream-v2-actual-pr13.json",
+      "original_sha256": "984e91f086d1bf1cbe8d167cf3bd067a0ed8f3a96e372a586060a91de8f5c21d",
+      "repository_sha256": "984e91f086d1bf1cbe8d167cf3bd067a0ed8f3a96e372a586060a91de8f5c21d",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\anytype-consumer-20261119\\components-44437298303\\VERIFIED_COMPONENT_NATIVE_SUMMARY.json",
+      "path": "acceptance/checkpoint-20261119-0312/anytype-components77.json",
+      "original_sha256": "037bb6fde7e0783ce9867bdccf0579147d3304a1524798d8f0d108286042a488",
+      "repository_sha256": "c6b49663edd4123240ffa070490895a3570a095506ee953b25599af7b3945b47",
+      "normalization": "CRLF to LF"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\anytype-consumer-20261119\\whole-document-44437308455\\VERIFIED_UI22_NATIVE_SUMMARY.json",
+      "path": "acceptance/checkpoint-20261119-0312/anytype-ui22.json",
+      "original_sha256": "f0c187923743fedadb70843326c9d0419102b56e54a6b18a1c06fbddd5a413f9",
+      "repository_sha256": "f0c187923743fedadb70843326c9d0419102b56e54a6b18a1c06fbddd5a413f9",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-ui-20261119-0250\\iphone-dispatch.json",
+      "path": "acceptance/checkpoint-20261119-0312/dispatch-iphone.json",
+      "original_sha256": "0d3467715924408705209179d2c5d251f04b72f0986b78ae5ac6e5738f5861fa",
+      "repository_sha256": "0d3467715924408705209179d2c5d251f04b72f0986b78ae5ac6e5738f5861fa",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-ui-20261119-0250\\ipad-dispatch.json",
+      "path": "acceptance/checkpoint-20261119-0312/dispatch-ipad.json",
+      "original_sha256": "b62ee59d35a4fea09640c7bae39d32e6184a9175bfee79540f2daa40c20b399d",
+      "repository_sha256": "b62ee59d35a4fea09640c7bae39d32e6184a9175bfee79540f2daa40c20b399d",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-ui-20261119-0250\\paired-dispatch.json",
+      "path": "acceptance/checkpoint-20261119-0312/dispatch-paired.json",
+      "original_sha256": "c849482401d13f55ebcf9f9c8a5bd61c949f94b435479cd24c1c875efb56900b",
+      "repository_sha256": "c849482401d13f55ebcf9f9c8a5bd61c949f94b435479cd24c1c875efb56900b",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-ui-20261119-0250\\live-dispatch.json",
+      "path": "acceptance/checkpoint-20261119-0312/dispatch-live.json",
+      "original_sha256": "45a8bedbbe98a0b3ede08288c89c4272956ffe7a31243777655d709888426177",
+      "repository_sha256": "45a8bedbbe98a0b3ede08288c89c4272956ffe7a31243777655d709888426177",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-typed-data-20261119\\dispatch.json",
+      "path": "acceptance/checkpoint-20261119-0312/dispatch-sdk05.json",
+      "original_sha256": "73c8995ef18fab24a1dc935de24421bc04aaba770b916f3ff3ef852a8bf14e5f",
+      "repository_sha256": "73c8995ef18fab24a1dc935de24421bc04aaba770b916f3ff3ef852a8bf14e5f",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\dispatch-8a505675\\dispatch-receipt.json",
+      "path": "acceptance/checkpoint-20261119-0312/dispatch-signing.json",
+      "original_sha256": "9a370a8eb3bd3deb104e79f30fffa8b14fbdde712d50125ccbd98bf399a11580",
+      "repository_sha256": "9a370a8eb3bd3deb104e79f30fffa8b14fbdde712d50125ccbd98bf399a11580",
+      "normalization": "NONE"
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429680236\\verification.json",
+      "destination": "acceptance/checkpoint-20261119-0312/npm-native1/verification.json",
+      "source_sha256": "e3180ec0d3d59cc460ab1c2b13719f31e929804e6a26a68ac226a9a30193666b",
+      "repository_sha256": "e3180ec0d3d59cc460ab1c2b13719f31e929804e6a26a68ac226a9a30193666b",
+      "line_endings_normalized": false
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429680236\\native-generations.json",
+      "destination": "acceptance/checkpoint-20261119-0312/npm-native1/native-generations.json",
+      "source_sha256": "28383c68559b666e408171fccbd2b98f0346fe03ddb9378f4e00686d9c1a0961",
+      "repository_sha256": "28383c68559b666e408171fccbd2b98f0346fe03ddb9378f4e00686d9c1a0961",
+      "line_endings_normalized": false
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429680236\\asana-readback.json",
+      "destination": "acceptance/checkpoint-20261119-0312/npm-native1/asana-readback.json",
+      "source_sha256": "c1c31aebf9121b6cafb4049754cafbb5763962c02df27ca410f21e7e11d74003",
+      "repository_sha256": "c1c31aebf9121b6cafb4049754cafbb5763962c02df27ca410f21e7e11d74003",
+      "line_endings_normalized": false
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429680236\\extracted\\simulator-logs\\08-downstream-unit-test-results.json",
+      "destination": "acceptance/checkpoint-20261119-0312/npm-native1/raw/08-downstream-unit-test-results.json",
+      "source_sha256": "2553b3a5ef8943bec235c5e8e1bdf4cda341f973db7493c92dd1a42478092266",
+      "repository_sha256": "2553b3a5ef8943bec235c5e8e1bdf4cda341f973db7493c92dd1a42478092266",
+      "line_endings_normalized": false
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429680236\\extracted\\simulator-logs\\06-diagnostics-build-provenance.json",
+      "destination": "acceptance/checkpoint-20261119-0312/npm-native1/raw/06-diagnostics-build-provenance.json",
+      "source_sha256": "15af5ed3bbad85e448058ce846869c4726938415b5f2587e34044c35ad88e15f",
+      "repository_sha256": "15af5ed3bbad85e448058ce846869c4726938415b5f2587e34044c35ad88e15f",
+      "line_endings_normalized": false
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44429680236\\extracted\\simulator-logs\\02-prepare-runtime-core.log",
+      "destination": "acceptance/checkpoint-20261119-0312/npm-native1/raw/02-prepare-runtime-core.log",
+      "source_sha256": "96403ab3679d61581b629ef66799d6bf47325db00bd64804248f9f3d9aad298f",
+      "repository_sha256": "96403ab3679d61581b629ef66799d6bf47325db00bd64804248f9f3d9aad298f",
+      "line_endings_normalized": false
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\anytype-consumer-20261119\\debug-app-group-fix\\publication.json",
+      "destination": "acceptance/checkpoint-20261119-0312/anytype-debug-groups-publication.json",
+      "source_sha256": "8561a7c8797826ec03941cf8beeeefa8f659a2f436cdf1366d3712d147d0e55d",
+      "repository_sha256": "8f407fad1607863c2670ef1e92865523541547549eea2bc0daa93a6badceb717",
+      "line_endings_normalized": true
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\anytype-consumer-20261119\\debug-app-group-fix\\source-validation.json",
+      "destination": "acceptance/checkpoint-20261119-0312/anytype-debug-groups-source-validation.json",
+      "source_sha256": "7eb820bebc9b03fb93aba92401c37d20132381c51d854ddc6624902edeb0308f",
+      "repository_sha256": "88a4f00a5afb3f3849f2cc2543cdc0cbcb4d58991ef770671a93c6eed0cad699",
+      "line_endings_normalized": true
+    },
+    {
+      "source": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\anytype-consumer-20261119\\debug-app-group-fix\\iphone-selection-dispatch.json",
+      "destination": "acceptance/checkpoint-20261119-0312/anytype-debug-groups-dispatch.json",
+      "source_sha256": "4eec6ec98fe1e1635b3d3eba59c89871bd6774013aef554a791af61bab571552",
+      "repository_sha256": "d735c72435cb42791e5ffbab7dda2f0a1d6afa368ed66b53a21a3adde4376b29",
+      "line_endings_normalized": true
+    }
+  ],
+  "active_observers": {
+    "new_ui_and_data": "job_1462d9115d05",
+    "earlier_native": "job_b34e7b7ce3aa",
+    "upstream_v3": "job_d9a33358f300",
+    "signing": "job_6492587240c3"
+  },
+  "source_edits_pending": "Unapplied original clear-history canonical revision-barrier proposal is under root review. Anytype Debug group correction is published at8b79d35c; original iPhone selection run44449673030 is pending. Full original logout route is being strengthened separately.",
+  "supplement_recorded_at": "2026-11-19T03:20:09.979869+00:00",
+  "external_repository_runs": [
+    {
+      "repository": "davidpovarsky/anytype-swift",
+      "run": 44449673030,
+      "sha": "8b79d35cf35dd7feef5d0a3021c9fef13e0cc8c2",
+      "state": "dispatched; native result not yet verified",
+      "url": "https://github.com/davidpovarsky/anytype-swift/actions/runs/44449673030"
+    }
+  ]
+}

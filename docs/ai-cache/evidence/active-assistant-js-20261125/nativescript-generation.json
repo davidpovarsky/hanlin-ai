@@ -1,0 +1,20 @@
+{
+  "sourceHEAD": "e0a98a2d7c495644f643c44e7cc417e4522185ab",
+  "command": [
+    "node",
+    "Scripts/NativeScript/build-host-services.mjs",
+    "--typescript-module",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/NativeScript/node_modules/typescript/lib/typescript.js",
+    "--write"
+  ],
+  "exitCode": 0,
+  "typescriptVersion": "5.9.3",
+  "typescriptSHA256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675",
+  "inputs": {
+    "Scripts/NativeScript/host-services.ts": "e405a962b090e5786466ef0be2509cd629b16ba2d6d70f40f83dd92fb1e5f442",
+    "Scripts/NativeScript/build-host-services.mjs": "1ca742df46a70d3ee838de98d4ac128eebeeea99d93c9cfa6475e388fee28cc3",
+    "Packages/HanlinExpoUI/src/miniapp-assistant.ts": "2e0e25875906f15876b8035d0863482510163ae4a82865eb376b788ff95e3c2c",
+    "Packages/HanlinExpoUI/src/system-surfaces.ts": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f",
+    "Scripts/NativeScript/Fixtures/HostServices/assistant.ts": "0c0d2964715e4da0f8418c5925fad3171c6776c64ba310a7be4b54c662965198"
+  }
+}

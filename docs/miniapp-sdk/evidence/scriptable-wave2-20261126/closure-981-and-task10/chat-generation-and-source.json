@@ -1,0 +1,56 @@
+{
+  "recordedAtUTC": "2026-11-26T18:23:53.919644+00:00",
+  "sourceRevision": "3f7c4a6f3cafa3919301750086cd1abf5c459955",
+  "acceptedSource": "730bbb6d70e8c9f136c5ee21437f78cc5b6e7bfb",
+  "command": [
+    "python3",
+    "Scripts/SDK/generate_manifest.py",
+    "--products",
+    "HanlinChatPresentation",
+    "HanlinPresentationKit",
+    "HanlinChatUI"
+  ],
+  "generatorExit": 0,
+  "generatorLogSHA256": "1da9ff62853d9f296d985d0f678a636f09206526926216a6e0dcc540cfcc6236",
+  "generatedPackageSHA256": "83823bf6d107dc14f3b9f03e6ab6e4289c62728279cd34ca1da39dbba07c1e6a",
+  "retainedPackageSHA256": "83823bf6d107dc14f3b9f03e6ab6e4289c62728279cd34ca1da39dbba07c1e6a",
+  "generatedPackageByteIdentical": true,
+  "roots": [
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts",
+    "Packages/HanlinPresentationSDK/Sources/HanlinLocalization",
+    "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatPresentation",
+    "Packages/HanlinPresentationSDK/Sources/HanlinRichUI",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI"
+  ],
+  "oldSourceCount": 419,
+  "currentSourceCount": 421,
+  "changed": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift",
+      "oldSHA256": "52cef01505c00514be2df9a1f59bf6acb14b800b88687ac6a292510106d0536b",
+      "currentSHA256": "6ddfa1da79db8f84f26c5cd1894043c2f9a8b5626fabbe674ac8541c3456d2bb"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+      "oldSHA256": "2d0f3ced366774bac16af0bfaa29047f7a1cb2d413b9940515668c59bfc44d12",
+      "currentSHA256": "2fed91226c1e8ebe152bc7445d97306897f95c1bfb75ed125d50af7e7bb55aaf"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+      "oldSHA256": "c0404a95196bc872936344588b87e5fae8df7e862d8bea279933e60806bb73f4",
+      "currentSHA256": "f90466b98c617432e6bd2e971fe111cc2f11a7302ae5c67868fb5e1b1882dc1f"
+    }
+  ],
+  "added": [
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinShortcutProgress.swift",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinShortcutValueCodec.swift"
+  ],
+  "removed": [],
+  "fixturesAndExactFiveTestSources": {
+    "count": 4,
+    "equal": 4,
+    "changes": []
+  },
+  "native": "NOT_RUN"
+}

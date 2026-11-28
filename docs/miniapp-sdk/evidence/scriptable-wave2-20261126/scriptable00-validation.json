@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-26T18:41:22.215610+00:00",
+  "status": "DOCS_SOURCE_MAPPING_VALIDATED",
+  "featureAcceptance": "OPEN",
+  "nativeExecution": "NOT_RUN_BY_THIS_DOCS_TASK",
+  "documentationBase": "4373c1897b1460718593ef2f9b5de73f7e17d883",
+  "sourceRevision": "b80f897a5b890fb2ade8e272ffefbb25ec601844",
+  "sourceTree": "ed83f3e517c8fae1e73c8999d6a1b839e272f49a",
+  "releaseItems": 28,
+  "perVersion": {
+    "1.8": 19,
+    "1.8.1": 2,
+    "1.8.2": 6,
+    "1.8.3": 1
+  },
+  "classificationCounts": {
+    "COMPARISON_ONLY": 1,
+    "IMPLEMENT_GAP": 1,
+    "PROBE_UNKNOWN": 10,
+    "VERIFY_REGRESSION": 16
+  },
+  "hashedFilesVerified": 137,
+  "localLinksVerified": 53,
+  "exactCacheFilesEqual": 12,
+  "shippingBundles": 13,
+  "nativeDiscoveryCaptureSelectors": 9,
+  "unboundGenericBrokerMethods": 17,
+  "docsOnly": true,
+  "failures": [],
+  "artifacts": {
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/CAPABILITY_MATRIX.md": {
+      "bytes": 49354,
+      "sha256": "ea23e633b7fed251a1abaf3218c386c6c8ea6a0a9124671c00f2420e9739f12f"
+    },
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/scriptable00-host-evidence.json": {
+      "bytes": 6972,
+      "sha256": "906fabbf4e3488a664f2a1c113bd0ca7f8a4b9dadf8e495be2583b4e10f4cd57"
+    },
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/scriptable00-pr22-cache-equivalence.json": {
+      "bytes": 5502,
+      "sha256": "3f977323f23ef637139ca3274c198cb29a26facd97f4153bc7ee1dfd977cb0d5"
+    },
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/scriptable00-release-api-map.json": {
+      "bytes": 16868,
+      "sha256": "88bbe1787acda9cfc37a0a5284d62717e7c1a5541c8d24c466a4b9137d9922ce"
+    },
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/scriptable00-source-audit.json": {
+      "bytes": 72503,
+      "sha256": "cd899316a8846b27f3041f7d5c1a05301e478e558d21606e83c4f2fbb4474452"
+    },
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/closure-981-and-task10/README.md": {
+      "bytes": 6259,
+      "sha256": "f86769231c929a0e41373a5aff8b77292c2a86850ebd178e43b9fc7c113ada38"
+    },
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/closure-981-and-task10/chat-generation-and-source.json": {
+      "bytes": 2400,
+      "sha256": "e49e1e5e501226293f2df4b0e37a762bca93c6fe3aa8976f501938279acfb56f"
+    },
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/closure-981-and-task10/chat-selected-Package.swift": {
+      "bytes": 2780,
+      "sha256": "83823bf6d107dc14f3b9f03e6ab6e4289c62728279cd34ca1da39dbba07c1e6a"
+    },
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/closure-981-and-task10/chat-selected-manifest.json": {
+      "bytes": 2763,
+      "sha256": "6cb7f882749d9fecb7dca9acba10c7b8603074fdba89be0beecda0c8ef95926c"
+    },
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/closure-981-and-task10/closure-qualification.json": {
+      "bytes": 9977,
+      "sha256": "39fd888bd8266d84e5c676759104e61ea0e5f6225c31ac622e754a969ab40a9f"
+    },
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/closure-981-and-task10/current-source-resource-manifest.json": {
+      "bytes": 99996,
+      "sha256": "e814279d94e70f670e742487693e146500c229f508eddc0cff9d6f110ed13e05"
+    },
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/closure-981-and-task10/motion-generation.json": {
+      "bytes": 11323,
+      "sha256": "e61e9f97b3f33f29b87462890270e46fc4f607a3698e25b4c4b578d8c628acd9"
+    },
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/closure-981-and-task10/motion-selected-Package.swift": {
+      "bytes": 2454,
+      "sha256": "61b583342dc4c35519a7b7614c3269140edbd10590f7faf5269467b997e2bdc4"
+    },
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/closure-981-and-task10/motion-selected-manifest.json": {
+      "bytes": 2645,
+      "sha256": "08210da5320a92740df212c03485d95e8e29c8f08eb459c7603ab7ab3611c48b"
+    },
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/closure-981-and-task10/scriptable10-scope.json": {
+      "bytes": 4845,
+      "sha256": "04f034d9552d406ca08bc2419b1ba66dbeeb76e62f1249e73ab36360dddbb900"
+    }
+  },
+  "previousDocumentationCommit": "0b24c5918a5bcbe7b4861d2dc9ad45ca4ff9f1b5",
+  "reviewCorrectionsApplied": true,
+  "scopeFollowup": "closure-981-and-task10/scriptable10-scope.json",
+  "closureQualification": "closure-981-and-task10/closure-qualification.json"
+}

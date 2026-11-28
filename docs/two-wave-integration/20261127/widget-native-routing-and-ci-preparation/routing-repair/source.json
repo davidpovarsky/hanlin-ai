@@ -1,0 +1,18 @@
+{
+  "sourceBase": "31d5b6780786b7bd3a6de5f3972ea1e6b6495ac4",
+  "sourcePatchSHA256": "f19735cd4b623435b2a9988fd8765d09d2cc06495b9e5a48e07d627275d5b7c1",
+  "files": [
+    {
+      "path": "Scripts/CI/affected-validation-map.json",
+      "beforeSHA256": "368d9e6a896bea2ec5e2a2e095f9e7b4397255333a1192014b1b08456a39c44a",
+      "sha256": "9eff93c20337ae4330ef4dea0fd4865bc6680631cb6c2f6f0355598c7ebcbec2"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_affected_validation.py",
+      "beforeSHA256": "102745b59e722c1e9dc951ed6b464aac549718f67fc21a80c1e1557dc5db0151",
+      "sha256": "c821c9c541f392d1c0fe5690f6d32925099da31eff3ce9c390e95a93c5408001"
+    }
+  ],
+  "nativeExecuted": false,
+  "previousPatchSHA256": "775cebe89ba8ebc2b4fdee42b87cb3502e1eed93daa5352d00567d5561f9df1b"
+}

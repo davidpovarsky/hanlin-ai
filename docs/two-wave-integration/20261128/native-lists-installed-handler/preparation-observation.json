@@ -1,0 +1,8 @@
+{
+  "phase": "Local functions.exec JavaScript parse before any remote tool call",
+  "error": "SyntaxError: Unexpected identifier source",
+  "cause": "Unescaped Markdown backticks inside a JavaScript template literal used for the proposed README",
+  "remoteExecution": false,
+  "sourceMutation": false,
+  "recovery": "Reissued the preparation script with plain-text README literals; no test/native/producer retry."
+}

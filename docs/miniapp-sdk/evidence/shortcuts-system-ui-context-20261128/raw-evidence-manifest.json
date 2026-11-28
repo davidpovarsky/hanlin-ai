@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "members": [
+    {
+      "path": "diagnosis/actual-native-excerpts.json",
+      "bytes": 14436,
+      "sha256": "fd4838113038e07b378bb29cbe9860b06f8547d68d3e52f203aeaddcb21f019b"
+    },
+    {
+      "path": "diagnosis/actual-observer-excerpts.json",
+      "bytes": 1787,
+      "sha256": "79e335abd450ffc48fd92fb4e96661041d4dae60a824a60f9a6c9c473ea3566c"
+    },
+    {
+      "path": "diagnosis/actual-own-case-evidence.json",
+      "bytes": 16910,
+      "sha256": "a5d7332e1b7810b3f5943c2a2e8eae36b45c664fdeba059b19e3efa2311ba483"
+    },
+    {
+      "path": "native/attachments/0CB5BE43-6330-4098-AA21-052D2022B907.png",
+      "bytes": 116876,
+      "sha256": "abe5e7c6f1d15c620b280092d0e2fb9fa1a6d36170724d70f557f51499dbb852"
+    },
+    {
+      "path": "native/attachments/3021DBCE-3C51-428C-A39A-F5001840BF21.png",
+      "bytes": 287685,
+      "sha256": "8ea6e478d82e87538ba9af1d692e5b2b798a47b24351528eccd92f6b38d1afda"
+    },
+    {
+      "path": "native/attachments/4CB13029-85DF-4170-88FF-333A310B94CF.txt",
+      "bytes": 24644,
+      "sha256": "fcfc54d262c7956daa9e7cd0cba5eadd8b4b9d1c7a3e1afe0b34be4528cfa5dd"
+    },
+    {
+      "path": "native/attachments/90F44EAA-6419-4328-9F3D-267CBC8A8D09.txt",
+      "bytes": 18300,
+      "sha256": "9bd0a0b92580437f64f1b1c0d711acb8b37cb032392da48a685ca836cf462110"
+    },
+    {
+      "path": "native/attachments/B32ABB75-C5D1-440E-947F-1276283FFB37.png",
+      "bytes": 231752,
+      "sha256": "944d1b319cb289f15370f26d6d120bd4c5e2cd998d0c6cec4347615ed4435aad"
+    },
+    {
+      "path": "native/attachments/C71469CB-E488-4622-8936-442CD7E6FEFC.png",
+      "bytes": 341042,
+      "sha256": "4a0117468de0e132ba0a14d0733520526d76c503a6482ce3277f3cd0e07310eb"
+    },
+    {
+      "path": "native/attachments/C917C75E-6050-4C6F-B95C-7EA3D47B2087.txt",
+      "bytes": 7421,
+      "sha256": "df096ab5c710ff4af308651f9c80e9720f347fa04931cb8ff4444c47243bf61f"
+    },
+    {
+      "path": "native/attachments/D91B1EA2-79D7-4209-8D0A-B7872344636A.txt",
+      "bytes": 5922,
+      "sha256": "502ea7b0a99cbc315b81e354ac45c69c523327abdd6f76a732085c2a32b528bd"
+    },
+    {
+      "path": "native/paired-tests.log.gz",
+      "bytes": 9207,
+      "sha256": "7c36b500e9c11e87d3948ca4611a67f17320b6558a3e41727f9b1230d4a4d788"
+    },
+    {
+      "path": "preparation/first-freeze-preparation-reconciliation.json",
+      "bytes": 457,
+      "sha256": "50ecdfdcfc48d914b710596ec68fcd3509a84dd8d82c5f741b22232f87fff8c0"
+    },
+    {
+      "path": "preparation/first-freeze-preparation.stderr.log",
+      "bytes": 6036,
+      "sha256": "6310728e966fe0ee7dfbfe0ddf869fb456b0cf634b8070593eb57d0a43193136"
+    },
+    {
+      "path": "source/exact-replacements.json",
+      "bytes": 28480,
+      "sha256": "5b4c6e3dabfa7f757395c00438fdeb394fc93aa00bfcaf82f04eaf4806eec152"
+    },
+    {
+      "path": "source/new-helpers.swift",
+      "bytes": 4302,
+      "sha256": "6f3829e654ca6edc5cbe2c769fa907f7e4ff79732fc4eed3ee37711590364aaa"
+    }
+  ],
+  "nativeLogEncoding": {
+    "member": "native/paired-tests.log.gz",
+    "encoding": "gzip",
+    "originalBytes": 65737,
+    "originalSHA256": "73863f67ea0040b363ef3ad972cac6cfd06bcf8fb4d62052c792eaf5e5404c11"
+  },
+  "sourcePatchEncoding": {
+    "member": "source.patch.gz",
+    "encoding": "gzip",
+    "originalBytes": 12448,
+    "originalSHA256": "98272e51ce9c00330081dc833e4e0408adc3a36a1f0aa4a24537d4964fd6f89b"
+  }
+}

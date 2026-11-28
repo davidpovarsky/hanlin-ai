@@ -1,0 +1,13 @@
+test_both_engines_receive_exact_ordinary_files_and_input_provenance_only (test_system_surface_input_producer.OriginalSystemInputProducerTests.test_both_engines_receive_exact_ordinary_files_and_input_provenance_only) ... ok
+test_changed_manifest_or_cancelled_producer_cannot_write_inputs (test_system_surface_input_producer.OriginalSystemInputProducerTests.test_changed_manifest_or_cancelled_producer_cannot_write_inputs) ... ok
+test_changed_private_preparation_during_staging_never_writes_provenance (test_system_surface_input_producer.OriginalSystemInputProducerTests.test_changed_private_preparation_during_staging_never_writes_provenance) ... ok
+test_linked_request_or_documents_cannot_escape_the_owned_input_path (test_system_surface_input_producer.OriginalSystemInputProducerTests.test_linked_request_or_documents_cannot_escape_the_owned_input_path) ... ok
+test_old_or_replaced_mcm_never_receives_a_ready_input_response (test_system_surface_input_producer.OriginalSystemInputProducerTests.test_old_or_replaced_mcm_never_receives_a_ready_input_response) ... ok
+test_replay_cannot_overwrite_existing_files_or_provenance (test_system_surface_input_producer.OriginalSystemInputProducerTests.test_replay_cannot_overwrite_existing_files_or_provenance) ... ok
+test_translation_pages_are_retained_real_input_bytes_without_a_transport_claim (test_system_surface_input_producer.OriginalSystemInputProducerTests.test_translation_pages_are_retained_real_input_bytes_without_a_transport_claim) ... ok
+test_unprepared_or_consistently_rebound_request_cannot_create_inputs (test_system_surface_input_producer.OriginalSystemInputProducerTests.test_unprepared_or_consistently_rebound_request_cannot_create_inputs) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.093s
+
+OK

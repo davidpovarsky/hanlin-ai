@@ -1,0 +1,7 @@
+// Original shared implementation is owned by the SDK.
+import HanlinAgentActivityCore
+
+typealias AgentSourceClaimAnchor = HanlinAgentActivityCore.AgentSourceClaimAnchor
+typealias AgentSourceCitation = HanlinAgentActivityCore.AgentSourceCitation
+typealias AgentEvidenceKind = HanlinAgentActivityCore.AgentEvidenceKind
+typealias AgentEvidenceItem = HanlinAgentActivityCore.AgentEvidenceItem

@@ -1,0 +1,238 @@
+{
+  "status": "ORIGINAL_STRICT_NATIVE_SCRIPT_SURFACE_VALIDATE_BUILD_SOURCE_RECONCILED_PASS",
+  "actualSource": "78ec8f97a607f5e1f8c01de5109ae850791b9e04",
+  "hostExecutionSource": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+  "rawControllerReceiptSHA256": "9113cc27ddd42f8f1e107f26a5fa288dc040847302ea0c1fdb20b9e78938eb48",
+  "rawControllerStatusPreserved": "ORIGINAL_STRICT_SURFACE_CLI_FAILED",
+  "sourceBoundReconciliationSHA256": "30e002ae5c63db3a1ed2fcaa5255355aa9616922f1bc0d4e124c8ea735bcc57d",
+  "originalNativeExitCodes": [
+    0,
+    0
+  ],
+  "originalDeadlinesSeconds": [
+    300,
+    600
+  ],
+  "nativeCommandsRerun": false,
+  "sevenOriginalInputsUnchanged": true,
+  "actualShippingArchiveSHA256": "7e37a818f7502a44dc44c6369d3ca19164d8fae072504166aa18bf9e86cba241",
+  "actualSDKInputSHA256": "7e2d370d0753b37bb1c589e4c2b28e3e8383c6fb948b09b0556e651efcfa4a9e",
+  "actualTypecheckPolicy": {
+    "strict": true,
+    "checkJs": false,
+    "skipLibCheck": true,
+    "dependencyDeclarationsChecked": false
+  },
+  "archive": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/validation/ns-surface-764ed325-sdk396-r1/SurfaceNativeScript.hanlinNativeScript",
+    "bytes": 33750,
+    "sha256": "48240b0eb9180d722071fd2ad29afe95e73fae948295dfc77f25c061062dcda5",
+    "zipMembers": [
+      "hanlin.authoring.json",
+      "hanlin.validation.json",
+      "nativescript/app/bundle.mjs",
+      "nativescript/app/modules/index.mjs",
+      "nativescript/app/modules/index.mjs.map",
+      "nativescript/app/modules/proof.mjs",
+      "nativescript/app/modules/proof.mjs.map",
+      "nativescript/app/modules/widget.jsx",
+      "nativescript/app/package.json",
+      "script.json",
+      "source/hanlin.authoring.json",
+      "source/index.ts",
+      "source/package.json",
+      "source/proof.ts",
+      "source/script.json",
+      "source/tsconfig.json",
+      "source/widget.jsx",
+      "widget.jsx"
+    ],
+    "duplicateWindowFactoryBundled": false
+  },
+  "noAppOrOSAcceptanceClaimed": true,
+  "members": [
+    {
+      "path": "original-evidence/SurfaceNativeScript.hanlinNativeScript",
+      "bytes": 33750,
+      "sha256": "48240b0eb9180d722071fd2ad29afe95e73fae948295dfc77f25c061062dcda5"
+    },
+    {
+      "path": "original-evidence/nativescript-build.json",
+      "bytes": 1316,
+      "sha256": "65339a34b5481a3e3314692d81f062ac2a49cc7f34806b163985487c978f2bbb"
+    },
+    {
+      "path": "original-evidence/nativescript-surface-build.log",
+      "bytes": 1316,
+      "sha256": "65339a34b5481a3e3314692d81f062ac2a49cc7f34806b163985487c978f2bbb"
+    },
+    {
+      "path": "original-evidence/nativescript-surface-validate.log",
+      "bytes": 990,
+      "sha256": "ece2b079e6bbd9dc184e22bc78c724dbd5c409e6855def08d3d4ce37f699ec6f"
+    },
+    {
+      "path": "original-evidence/nativescript-validate.json",
+      "bytes": 990,
+      "sha256": "ece2b079e6bbd9dc184e22bc78c724dbd5c409e6855def08d3d4ce37f699ec6f"
+    },
+    {
+      "path": "original-evidence/original-generated-project-build/fb59813a-1626-49b8-b7b4-2be6698317be/package/hanlin.authoring.json",
+      "bytes": 2359,
+      "sha256": "9c8ac928f2df430451858aae4b482003a99d8ef67b5735782f4024aa08dae712"
+    },
+    {
+      "path": "original-evidence/original-generated-project-build/fb59813a-1626-49b8-b7b4-2be6698317be/package/hanlin.validation.json",
+      "bytes": 899,
+      "sha256": "d079d06e097bfca83b1138eeea17f198ee2d848817faaea27c3910e699dfab32"
+    },
+    {
+      "path": "original-evidence/original-generated-project-build/fb59813a-1626-49b8-b7b4-2be6698317be/package/nativescript/app/bundle.mjs",
+      "bytes": 30,
+      "sha256": "77326621f8ddcf98a2eccfc7deb128f535b962f1969f914b562a8d3823a7d049"
+    },
+    {
+      "path": "original-evidence/original-generated-project-build/fb59813a-1626-49b8-b7b4-2be6698317be/package/nativescript/app/modules/index.mjs",
+      "bytes": 7284,
+      "sha256": "a8f80b361e8ce4496830a66e83a5bc3c92574156cd3d40ba09dac5ee21220e16"
+    },
+    {
+      "path": "original-evidence/original-generated-project-build/fb59813a-1626-49b8-b7b4-2be6698317be/package/nativescript/app/modules/index.mjs.map",
+      "bytes": 13097,
+      "sha256": "5cc3193bcd50f68453852a11583721247c4be810ca7956b3f51c09a5aa376da4"
+    },
+    {
+      "path": "original-evidence/original-generated-project-build/fb59813a-1626-49b8-b7b4-2be6698317be/package/nativescript/app/modules/proof.mjs",
+      "bytes": 19011,
+      "sha256": "618807adee9d8d784328ea31005b41ca7f9837e67d7245d278bc0c188cf2bc8c"
+    },
+    {
+      "path": "original-evidence/original-generated-project-build/fb59813a-1626-49b8-b7b4-2be6698317be/package/nativescript/app/modules/proof.mjs.map",
+      "bytes": 35947,
+      "sha256": "054e81a1dcc4ab7b76b23c3a98e1357dc0ebd8f6006c9a11d73f4c0744954215"
+    },
+    {
+      "path": "original-evidence/original-generated-project-build/fb59813a-1626-49b8-b7b4-2be6698317be/package/nativescript/app/modules/widget.jsx",
+      "bytes": 988,
+      "sha256": "e2f6676b1de3b9130aeb93176c5c8463b03b75d9a3b8fa7cb863ad32409eabb5"
+    },
+    {
+      "path": "original-evidence/original-generated-project-build/fb59813a-1626-49b8-b7b4-2be6698317be/package/nativescript/app/package.json",
+      "bytes": 334,
+      "sha256": "3ddc8209869e7747f95ca9b3729cbf8b008f031f93722fbf9455e117b5afda84"
+    },
+    {
+      "path": "original-evidence/original-generated-project-build/fb59813a-1626-49b8-b7b4-2be6698317be/package/script.json",
+      "bytes": 1856,
+      "sha256": "1169067328625b7475d527b0e2e8f454e0b31bc474157b182377d9aad15de07f"
+    },
+    {
+      "path": "original-evidence/original-generated-project-build/fb59813a-1626-49b8-b7b4-2be6698317be/package/source/hanlin.authoring.json",
+      "bytes": 146,
+      "sha256": "228cd8d7c2d312b4f5c1ef2ba89a4c4a2e02f9b750a82411346c0da9885971c5"
+    },
+    {
+      "path": "original-evidence/original-generated-project-build/fb59813a-1626-49b8-b7b4-2be6698317be/package/source/index.ts",
+      "bytes": 6421,
+      "sha256": "22312e186a363920e470437571e8bdddef2b753372758b66f9a363bfef637a2e"
+    },
+    {
+      "path": "original-evidence/original-generated-project-build/fb59813a-1626-49b8-b7b4-2be6698317be/package/source/package.json",
+      "bytes": 282,
+      "sha256": "048e5efb91e28f9d198c885297cfdf7c7a0081b6e4c3c7b945398797dc283e4a"
+    },
+    {
+      "path": "original-evidence/original-generated-project-build/fb59813a-1626-49b8-b7b4-2be6698317be/package/source/proof.ts",
+      "bytes": 19076,
+      "sha256": "19925e21c3f63170e4cf1284702fd675130b5674ffd2289ab36da6e6640b9d28"
+    },
+    {
+      "path": "original-evidence/original-generated-project-build/fb59813a-1626-49b8-b7b4-2be6698317be/package/source/script.json",
+      "bytes": 1856,
+      "sha256": "1169067328625b7475d527b0e2e8f454e0b31bc474157b182377d9aad15de07f"
+    },
+    {
+      "path": "original-evidence/original-generated-project-build/fb59813a-1626-49b8-b7b4-2be6698317be/package/source/tsconfig.json",
+      "bytes": 91,
+      "sha256": "445e657d8cb59b84146fa8b52b768b67fa9c4ec58e0e601e9e14deb0e922c5e5"
+    },
+    {
+      "path": "original-evidence/original-generated-project-build/fb59813a-1626-49b8-b7b4-2be6698317be/package/source/widget.jsx",
+      "bytes": 988,
+      "sha256": "e2f6676b1de3b9130aeb93176c5c8463b03b75d9a3b8fa7cb863ad32409eabb5"
+    },
+    {
+      "path": "original-evidence/original-generated-project-build/fb59813a-1626-49b8-b7b4-2be6698317be/package/widget.jsx",
+      "bytes": 988,
+      "sha256": "e2f6676b1de3b9130aeb93176c5c8463b03b75d9a3b8fa7cb863ad32409eabb5"
+    },
+    {
+      "path": "original-evidence/original-generated-project-build-inventory.json",
+      "bytes": 5733,
+      "sha256": "5800a154c335b235ac024ad7b9b5bc89f3ccdd12fcdcd350c3b43c6deeddfe7e"
+    },
+    {
+      "path": "original-evidence/source-bound-original-reconciliation.json",
+      "bytes": 5253,
+      "sha256": "30e002ae5c63db3a1ed2fcaa5255355aa9616922f1bc0d4e124c8ea735bcc57d"
+    },
+    {
+      "path": "ns-surface-764ed325-sdk396-r1.json",
+      "bytes": 5381,
+      "sha256": "9113cc27ddd42f8f1e107f26a5fa288dc040847302ea0c1fdb20b9e78938eb48"
+    },
+    {
+      "path": "run-original-ns-surface-764ed325.py",
+      "bytes": 7076,
+      "sha256": "a0bb1080d4d32bdaa43c656e7cbdcee44f814ea0c993b42fbd9e3ed85c4e2fca"
+    },
+    {
+      "path": "ns-surface-764ed325-sdk396-r1-launch.json",
+      "bytes": 503,
+      "sha256": "a71f0f7ce33cf537488f285d3d7b957d99ef91dde22b6de8ba6e42b68f038adb"
+    },
+    {
+      "path": "ns-surface-764ed325-sdk396-r1-controller.log",
+      "bytes": 223,
+      "sha256": "cc13b52d48c048e81695fec13955ac016ceaf120792f4b377da9578cc5c815ea"
+    },
+    {
+      "path": "authored-source/package.json",
+      "bytes": 282,
+      "sha256": "048e5efb91e28f9d198c885297cfdf7c7a0081b6e4c3c7b945398797dc283e4a"
+    },
+    {
+      "path": "authored-source/script.json",
+      "bytes": 1856,
+      "sha256": "1169067328625b7475d527b0e2e8f454e0b31bc474157b182377d9aad15de07f"
+    },
+    {
+      "path": "authored-source/tsconfig.json",
+      "bytes": 91,
+      "sha256": "445e657d8cb59b84146fa8b52b768b67fa9c4ec58e0e601e9e14deb0e922c5e5"
+    },
+    {
+      "path": "authored-source/hanlin.authoring.json",
+      "bytes": 146,
+      "sha256": "228cd8d7c2d312b4f5c1ef2ba89a4c4a2e02f9b750a82411346c0da9885971c5"
+    },
+    {
+      "path": "authored-source/index.ts",
+      "bytes": 6421,
+      "sha256": "22312e186a363920e470437571e8bdddef2b753372758b66f9a363bfef637a2e"
+    },
+    {
+      "path": "authored-source/proof.ts",
+      "bytes": 19076,
+      "sha256": "19925e21c3f63170e4cf1284702fd675130b5674ffd2289ab36da6e6640b9d28"
+    },
+    {
+      "path": "authored-source/widget.jsx",
+      "bytes": 988,
+      "sha256": "e2f6676b1de3b9130aeb93176c5c8463b03b75d9a3b8fa7cb863ad32409eabb5"
+    }
+  ],
+  "memberCount": 36,
+  "payloadBytes": 203044,
+  "createdAt": "2026-11-27T15:51:14.706561+00:00"
+}

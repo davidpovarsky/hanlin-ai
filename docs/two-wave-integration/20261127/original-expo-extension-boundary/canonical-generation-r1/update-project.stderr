@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-resource-test-20261127/Scripts/SDK/update_project.py", line 556, in <module>
+    text=update()
+         ^^^^^^^^
+  File "/mnt/development/projects/worktrees/hanlin-sdk-resource-test-20261127/Scripts/SDK/update_project.py", line 523, in update
+    if not OUTPUT.exists() or OUTPUT.read_text() != render():
+                                                    ^^^^^^^^
+  File "/mnt/development/projects/worktrees/hanlin-sdk-resource-test-20261127/Scripts/SDK/generate_app_intents_resources.py", line 78, in render
+    catalog = json.loads(SOURCE.read_text())
+                         ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1029, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/development/projects/worktrees/hanlin-sdk-resource-test-20261127/Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/Localizable.xcstrings'

@@ -1,0 +1,11 @@
+{
+  "archivePreserved": true,
+  "case": "pinned-input-sparse",
+  "controlSHA256": "a9fee2d128b62e5b75f783fd5f3d94c7f2c721960d8cf228c0292ee5b7bfa3ae",
+  "error": null,
+  "gitRevision": "289ce9e20f6ae5035fc7d095122af266fdacdce8",
+  "installerSHA256": "12c414e91f33df22f7cdb1660108a0a11684551219fee1c71724bb2057e62dd3",
+  "nativeScriptSHA256": "bd5a5b2eebcc39a05b1da54940ebdf997e83eb38643e50c8405ff14c2167f96b",
+  "receiptPreserved": true,
+  "scope": "ACTUAL_GIT_CONTROLLER_CONTROL_NOT_NATIVE_ACCEPTANCE"
+}

@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "sourceBase": "5ce4d1263c48e24e3d8858a10b3cb9125f2c99b1",
+  "sourceFiles": {
+    "Scripts/ProductSplit/run_paired_acceptance.py": "c26854c9737a085f907a352a724bad42dcf364fe1514d9a731d8768c45df686f",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "c857061c584eca56a97ede1b750347096213887bfa0c72c38b91ba5ca6c4dcb3",
+    "Scripts/ProductSplit/observe_widget_action_surfaces.py": "535d08e24e918779bb4ff90d2a2ec4c95710486ef99a4913d62191c35a9f3f4a",
+    "Scripts/ProductSplit/Tests/test_widget_action_surface_observer.py": "e740b14315777d527665223e8619b2061c545a7e600e3a6ca7789f870d3024b7",
+    "Scripts/ProductSplit/Tests/test_system_surface_input_producer.py": "d559f1f201d600a4b415f2bd2b5163113c8b9471286cc2053e036c3506db534e"
+  },
+  "decision": "REVIEWED_ADDITIVE_ORIGINAL_TEN_CASE_OS_ADMISSION",
+  "preparedUTC": "2026-11-27T06:36:48.441548+00:00",
+  "reviews": {
+    "runnerSharedProducer": "root-original10-runner-independent-review.json",
+    "widgetActivity": "w1-widget-activity-independent-review.json",
+    "shareDependency": "independent-w2-share-dependency-review.json"
+  },
+  "dependency": {
+    "commit": "aea34fc0dd594fa4d0b4153fe37332e6343aa921",
+    "path": "Scripts/ProductSplit/observe_share_translation_surfaces.py",
+    "sha256": "6702a1bb58c11b9f2e6d285eb62dee7db9f12ad1ddd6d466396d36cda91bee0a",
+    "required": "Integrate the exact shared source binder, four-case leaf and own-window authored Share input before executing this scope"
+  },
+  "portable": {
+    "widgetActivity": "Original8 controls retained; corrected final11 PASS/0FAIL/0SKIP after the three independent review findings; original eight test bodies unchanged",
+    "inputProducer": "Actual8 PASS/0FAIL/0SKIP. Producer function bodies and manifest loader AST-identical at final source; only the new ten-selector expression expanded into explicit literals after that run",
+    "legacyTests": "Original20 reader test file and all17 existing UI method bodies byte-identical; not rerun by this source lane"
+  },
+  "preservation": "source-preservation.json",
+  "nativeAdmission": {
+    "scope": "miniapp_system_surfaces_os",
+    "command": "SPLIT_EVIDENCE=<fresh-owned-evidence-root> PAIRED_TEST_SCOPE=miniapp_system_surfaces_os python3 Scripts/ProductSplit/run_paired_acceptance.py",
+    "selectedOriginalCases": 10,
+    "requirements": [
+      "Source-qualified shipping RuntimeHostResources.zip and original producer SDK",
+      "Original two authored fixture validate/build/archive commands",
+      "Owned iPad Simulator on the exact admitted stable runtime",
+      "Real original XCTest surface UI, all selected cases and zero skips",
+      "Read-only canonical source/identity/input/native-receipt/private-five-runtime observation",
+      "Only the original runner stages fresh normal Share files; no production grants/queues/receipts/proof seeding"
+    ],
+    "native": "NOT_RUN",
+    "OS": "NOT_RUN",
+    "boundary": "Ten original surface pilots do not close every Widget family/appearance, ActivityKit region, Studio/iCloud, physical-device or Shortcuts matrix requirement"
+  },
+  "SDK392": "Zero path intersection in the retained actual392-path manifest; no new SDK/Host qualification inferred",
+  "evidence": {
+    "source-r2.json": {
+      "sha256": "4b94b27e9923efa4a11a7b578375a854a080d9249a72458d13136d8ce0968848",
+      "bytes": 2732
+    },
+    "source-preservation.json": {
+      "sha256": "4238fd252da7d9dd16df53ade8905633cf5c1772371a9b43d295495763feea72",
+      "bytes": 4185
+    },
+    "root-original10-runner-independent-review.json": {
+      "sha256": "21b538153fe6c2ada641cfa4ba6cebd2667addb0a6c4d6f3dd5be5e93d11c55e",
+      "bytes": 2490
+    },
+    "w1-widget-activity-independent-review.json": {
+      "sha256": "12b8bdd63ab90c4d9c67d8a7426ea73985d66bb38e960dc83af7637b2fbacc1c",
+      "bytes": 1953
+    },
+    "widget-activity-controls-r1/receipt.json": {
+      "sha256": "194ed0a1302c874fb71a4f8082ac2ad83d673a69c662fdede2eebae7086b947b",
+      "bytes": 1238
+    },
+    "widget-activity-controls-r1/stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "widget-activity-controls-r1/stderr.log": {
+      "sha256": "4b5231db2fa842b027b6454a3b272f96f85597e86bd101f99459983e5808a58c",
+      "bytes": 1800
+    },
+    "input-producer-controls-r1/receipt.json": {
+      "sha256": "cffd40fdfa4a28897ec643a98c53c2b50fde410eab929f0f73287ffcf84d2926",
+      "bytes": 2987
+    },
+    "input-producer-controls-r1/stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "input-producer-controls-r1/stderr.log": {
+      "sha256": "49c59ca13726805da82a6459258421d4ed3e40442eff9cf5f820cd069d3db05d",
+      "bytes": 1806
+    },
+    "widget-activity-controls-r2/receipt.json": {
+      "sha256": "48a1cbc264399b843fd4b1ddc1ff87f962caff3c506e80b68d4d641fbc781c3a",
+      "bytes": 3678
+    },
+    "widget-activity-controls-r2/stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "widget-activity-controls-r2/stderr.log": {
+      "sha256": "d37b4dd7725726f9f3f6493a103ec4950784e5b4079afdf4e471100b736dfa70",
+      "bytes": 2481
+    },
+    "independent-w2-share-dependency-review.json": {
+      "sha256": "86381024658385b686d44e67f8d5a6de544f4351496edc7163500a23b57cbb03",
+      "bytes": 7290
+    },
+    "source-r2.patch.gz": {
+      "sha256": "21e7b0660bba3ca2d2533c0892e30bc2da1dc7ca9c1ba33c81e05e76e8a194d8",
+      "bytes": 22595,
+      "uncompressedSHA256": "868624d3c8ebe3b7cf3e137e63513037ac2f969bb8dcf251053ce5c2994bed04"
+    }
+  }
+}

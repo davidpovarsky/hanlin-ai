@@ -1,0 +1,4 @@
+{"version":"1.0","updateComponents":{"surfaceId":"form-a","components":[{"id":"greeting","component":"Text","text":123}]}}
+{"version":"1.0","updateComponents":{"surfaceId":"form-a","components":[{"id":"name","component":"TextField","label":"Name","value":false}]}}
+{"version":"1.0","updateComponents":{"surfaceId":"form-a","components":[{"id":"submit","component":"Button","child":"submitLabel","action":{"event":{"name":7}}}]}}
+{"version":"1.0","updateComponents":{"surfaceId":"form-a","components":[{"id":"submit-label","component":"Text","text":"Must be rejected"}]}}

@@ -1,0 +1,7 @@
+{
+  "originalPath": "/tmp/hanlin-camera-reachability-audit-20261126-zpkn4sj0/original-extension-bundle-tests.log",
+  "sha256": "ec93a419c91bf48ad2adb3ffbc8659b1d69a779c3fe91cd8e7e484068c3dac27",
+  "bytes": 1193,
+  "encoding": "utf-8",
+  "text": "test_duplicate_identity_across_containers_is_rejected (__main__.ExportedBundleTargetsTests.test_duplicate_identity_across_containers_is_rejected) ... ok\ntest_extension_cannot_duplicate_main_application_identity (__main__.ExportedBundleTargetsTests.test_extension_cannot_duplicate_main_application_identity) ... ok\ntest_miniapps_app_only_cannot_satisfy_source_extension_coverage (__main__.ExportedBundleTargetsTests.test_miniapps_app_only_cannot_satisfy_source_extension_coverage) ... ok\ntest_missing_extensionkit_identity_is_rejected (__main__.ExportedBundleTargetsTests.test_missing_extensionkit_identity_is_rejected) ... ok\ntest_original_ipa_includes_extensionkit_and_plugin_extensions (__main__.ExportedBundleTargetsTests.test_original_ipa_includes_extensionkit_and_plugin_extensions) ... ok\ntest_profile_selection_retains_both_disjoint_original_app_families (__main__.ExportedBundleTargetsTests.test_profile_selection_retains_both_disjoint_original_app_families) ... ok\ntest_unexpected_extension_is_rejected (__main__.ExportedBundleTargetsTests.test_unexpected_extension_is_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.016s\n\nOK\n"
+}

@@ -1,0 +1,233 @@
+{
+  "observedAtUTC": "2026-11-26T19:02:51.849971+00:00",
+  "reviewRevision": "a6eaf6ee77fbc0a48e9997b434dc28d2c15b916d",
+  "initialReviewRevision": "e34a86a79310d310d5635faff65d262f9c85dced",
+  "sourceGuardContractSHA256": "169e270d596fa000ce9cb043fa55f765cda62fd6043df49eb3bad8e2e160e6e3",
+  "changedProtectedOwnerIntersection": [],
+  "protectedFiles": [
+    {
+      "path": "AI_HLY/Views/Components/ChatViewComponents.swift",
+      "bytes": 216385,
+      "sha256": "15875a20addac6bc43ada66e7c3b929118a0f8ad19159d91ace9a8274e9448c9",
+      "equal": true
+    },
+    {
+      "path": "AI_HLY/Views/Components/ChatandFile.swift",
+      "bytes": 1966,
+      "sha256": "3260125c5dece237c8775806b21c470275c9cb5a88328fa6fba2f283c8f3e26d",
+      "equal": true
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "bytes": 225611,
+      "sha256": "1e65885f3fa5aa398cf6a315cd365705986f092de9838692eb305ce87dc78b12",
+      "equal": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift",
+      "bytes": 9587,
+      "sha256": "ae38210d8943e7a76aab9695d3b545666349f45a47d0e6c2ec1e90ad4f0cf99c",
+      "equal": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatMessagePreview.swift",
+      "bytes": 761,
+      "sha256": "a5c6ff27cae6a5269fc4b79ef70dee52e5e2ac5cef18772ec3e6425891d44839",
+      "equal": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatMessagePreviewMetrics.swift",
+      "bytes": 87,
+      "sha256": "36440a0086cb4a20a9207d037fe14a1d7902c7f2648b40329e333480fa9f2439",
+      "equal": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinFileContentView.swift",
+      "bytes": 3473,
+      "sha256": "cae1895609127a867a0a028f5716e602026e5c87d4f669f051e9c4e665457801",
+      "equal": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinImageViewer.swift",
+      "bytes": 7597,
+      "sha256": "8427d5bfafea323a84d0f62f9c272aaed848241ed26af6e3f832d767b5a57f13",
+      "equal": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActionBar.swift",
+      "bytes": 9732,
+      "sha256": "f559b1b5fb3ab8f858399a710e79024bd8fe25b6267c84a9ef843ab7150e004e",
+      "equal": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActions.swift",
+      "bytes": 5256,
+      "sha256": "40561523428c78730dc052ed23349669860a3891638981c96a34dc2d68ef8d39",
+      "equal": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageBubble.swift",
+      "bytes": 5601,
+      "sha256": "c8ca0b950b08a84e2a8feb73f638668a3e614a28e10fb1667395fb12572f4720",
+      "equal": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageDocumentAttachments.swift",
+      "bytes": 4378,
+      "sha256": "02c3a8a8f3560afd95c6638a12ab07e6a05e028b5c0c962df06a2e82367ce733",
+      "equal": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageImageAttachments.swift",
+      "bytes": 4536,
+      "sha256": "7d89b9d5a6996f9e6ae36b7d0ff43ed48a0160c1f7d3bd0ac69ae7eae82a4e0f",
+      "equal": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageMarkdownView.swift",
+      "bytes": 4665,
+      "sha256": "fd09ce372d0936da5d3388b30c638ad33fce00227f01cb9352294211a8a0b2b6",
+      "equal": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessagePreview.swift",
+      "bytes": 7115,
+      "sha256": "3ffe0ba0d520f0a8489388bab991bf51316c9cec21b411986e77e885b6dd73b1",
+      "equal": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessagePreviewMetrics.swift",
+      "bytes": 659,
+      "sha256": "5faf31d6d9278f3488cfcf35188c7fe722c7a4f91393d5ac128a659cc6076be8",
+      "equal": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageSelectionView.swift",
+      "bytes": 5909,
+      "sha256": "b53108a0ddc25c49eb10ba5992f67e908ae3bba7f5cea3b417adacc5e941c52b",
+      "equal": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinVisualEffectBlur.swift",
+      "bytes": 522,
+      "sha256": "9f87a1d6c1a28314d90c49e5e5f0776315ab21e398b32faed8db3f6fb5340a49",
+      "equal": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinWritingTool.swift",
+      "bytes": 523,
+      "sha256": "4d6d6679d1669aa0c071223c59af8e4b9ce0a696e6b0966b3aaa4a549e529661",
+      "equal": true
+    }
+  ],
+  "identifiers": [
+    {
+      "identifier": "hanlin-user-bubble",
+      "owner": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageBubble.swift",
+      "present": true
+    },
+    {
+      "identifier": "hanlin-assistant-bubble",
+      "owner": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageBubble.swift",
+      "present": true
+    },
+    {
+      "identifier": "hanlin-search-bubble",
+      "owner": "AI_HLY/Views/Components/ChatViewComponents.swift",
+      "present": true
+    },
+    {
+      "identifier": "hanlin-info-bubble",
+      "owner": "AI_HLY/Views/Components/ChatViewComponents.swift",
+      "present": true
+    },
+    {
+      "identifier": "hanlin-action-buttons-row",
+      "owner": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActionBar.swift",
+      "present": true
+    },
+    {
+      "identifier": "hanlin-code-block-row",
+      "owner": "AI_HLY/Views/Components/ChatViewComponents.swift",
+      "present": true
+    },
+    {
+      "identifier": "hanlin-html-web-bubble",
+      "owner": "AI_HLY/Views/Components/ChatViewComponents.swift",
+      "present": true
+    }
+  ],
+  "delegations": [
+    {
+      "delegation": "HanlinUserMessageBubble(text:",
+      "present": true
+    },
+    {
+      "delegation": "HanlinAssistantMessageBubble(isResponding:",
+      "present": true
+    },
+    {
+      "delegation": "HanlinMessageActionBar(actions: originalMessageActions, state: originalMessageActionState)",
+      "present": true
+    }
+  ],
+  "reviewedFiles": {
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift": {
+      "bytes": 18267,
+      "sha256": "a39e7d674cd4ecba7c95a0162dfd97f4aba7ce9f05af64f194ec2002277e922c"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationExecutor.swift": {
+      "bytes": 5180,
+      "sha256": "450f3a5e0308c5cca03b07d863d71f2c96f04f9ec381fab9f49cc0201a08dcd3"
+    },
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift": {
+      "bytes": 183247,
+      "sha256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65"
+    },
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift": {
+      "bytes": 10883,
+      "sha256": "c1a226e995240acf6c200faf15d10cbcb391c0b702f6bc3e77bc25842494a83b"
+    },
+    "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift": {
+      "bytes": 28350,
+      "sha256": "b35644d9aa1abd6002f1d00e4c6c009d80ad63eb0b445cd002c96c49f91a6207"
+    },
+    "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift": {
+      "bytes": 13476,
+      "sha256": "b1ed3e326e5fe968671a15900c18cffb3606641674aafa9c47dd36fd49b6b5bd"
+    },
+    "HanlinMiniAppsTests/MiniAppsShortcutIntentTests.swift": {
+      "bytes": 7022,
+      "sha256": "7924240896003356d83cf65d484087719ad01f217e6eb9d90fee28131d652f7e"
+    },
+    "HanlinMiniAppsTests/NativeScriptShortcutConcurrencyTests.swift": {
+      "bytes": 37376,
+      "sha256": "235493a3b33d2a796da655f71c84a6cace6852e9046def2d7562bb162dc4a0f2"
+    }
+  },
+  "findings": [
+    {
+      "id": "successful_result_cancelled_by_cleanup",
+      "fixedBy": "559f77b04ff701c4bc50669e25630b2ccbbc0882",
+      "result": "SOURCE_CORRECTION_REVIEWED_NATIVE_PENDING"
+    },
+    {
+      "id": "running_close_loses_explicit_runtime_cleanup_owner",
+      "fixedBy": "82673cef95c547c1b1f27dff3be63bbb4e8fe2a5",
+      "result": "SOURCE_CORRECTION_REVIEWED_NATIVE_PENDING"
+    },
+    {
+      "id": "container_disappearance_bypasses_owned_drain",
+      "fixedBy": "a6eaf6ee77fbc0a48e9997b434dc28d2c15b916d",
+      "result": "SOURCE_CORRECTION_REVIEWED_NATIVE_PENDING"
+    }
+  ],
+  "conclusion": "No additional blocking source issue found in bounded queue/executor/foreground ownership/cancellation review. Exact atomic command identity, live lease, terminal receipt and explicit runtime cleanup remain authoritative.",
+  "nativeExecution": "NOT_RUN_BY_REVIEW",
+  "unresolvedGates": [
+    "actual original-engine/native tests",
+    "AppIntent macro/typechecking and OS-selected mode behavior",
+    "real Shortcuts and foreground-window presentation/cancellation",
+    "physical-device/OS background acceptance"
+  ]
+}

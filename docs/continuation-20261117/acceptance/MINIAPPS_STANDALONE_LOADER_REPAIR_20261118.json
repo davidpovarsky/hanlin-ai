@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-18T08:51:22.922502+00:00",
+  "failed_native_run": {
+    "id": 44263872088,
+    "sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44263872088",
+    "build": "EXECUTED_PASS",
+    "ui": "NOT_RUN",
+    "simulator_entitlements": "Original two App Groups verified from actual Mach-O; ad-hoc signature verified",
+    "first_launch": "NSPOSIXErrorDomain code 3: no process handle",
+    "acceptance_sha256": "79beb755305d57c91b68bc66f73bbf5507c4cf923ee184a190b0948f98bb9f62",
+    "build_log_sha256": "03ae016375ae54cbf03167bf8e9d390041ec97d46b329c43b437d988af7fe25f",
+    "first_launch_log_sha256": "5ee5c52d8f985faae2df8c6398d2e18bba59893d5a77b830bf55aaefbb9b2a33",
+    "screenshot_sha256": "a8993d6e50e8cb38e6d11b2861b4e4fe6d62b004da335d7399eac96e7392bc43"
+  },
+  "observed_packaging_defect": {
+    "configurations": [
+      "F80000000000000000000015",
+      "F80000000000000000000016"
+    ],
+    "finding": "Both original MiniApps application configurations lacked LD_RUNPATH_SEARCH_PATHS for bundled Frameworks. Native linker output also lacks those app-relative directories.",
+    "native_linker_output": [
+      {
+        "output_name": "HanlinMiniApps.debug.dylib",
+        "rpaths": [
+          "@loader_path",
+          "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks"
+        ]
+      },
+      {
+        "output_name": "HanlinMiniApps",
+        "rpaths": [
+          "@executable_path",
+          "@loader_path",
+          "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks"
+        ]
+      }
+    ],
+    "limits": "The old capture contains no actual dyld crash report. Missing bundled-framework runpaths is an independently verified packaging defect and plausible launch cause, not yet a proven complete diagnosis."
+  },
+  "repair": [
+    "Add inherited @executable_path/Frameworks and @loader_path/Frameworks to MiniApps Debug and Release only.",
+    "Verify required runpaths from the actual linked simulator Mach-O before launch; preserve source entitlements and mandatory independent launch and OS-container gates.",
+    "Capture actual dependency load commands plus same-run MiniApps crash reports and SpringBoard/runningboardd launch logs if startup fails."
+  ],
+  "validation": {
+    "python_syntax": "PASS",
+    "original_target_graph_validator": "PASS",
+    "git_diff_check": "PASS",
+    "native_after_repair": "NOT_RUN_BUILD_TIMEOUT_44270714044"
+  },
+  "reference": "https://developer.apple.com/forums/thread/736719",
+  "unchanged": [
+    "Original runtime engines, package fixtures, all UI assertions, identifiers, entitlements and data remain unchanged.",
+    "No simulator first-launch error is ignored or retried and no synthetic group directories are introduced."
+  ],
+  "subsequent_attempt": {
+    "run": 44270714044,
+    "sha": "f6eafaac1d5a7bb50015a142a0e4882e1d5017d6",
+    "build": "TIMED_OUT_AFTER_1200_SECONDS",
+    "startup_and_ui": "NOT_RUN",
+    "report": "docs/continuation-20261117/acceptance/MINIAPPS_COLD_BUILD_BUDGET_20261118.json"
+  }
+}

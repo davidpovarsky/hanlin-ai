@@ -1,0 +1,229 @@
+import AISDKProvider
+import Foundation
+import JSON
+import HanlinExactJSONSchema
+import HanlinPlatformContracts
+
+/// A transient, bounded validation plan. JSON/JSONSchema are implementation details, not a
+/// second canonical value, transcript, permission authority or persistent store.
+public struct HanlinHostSchemaValidation: Sendable {
+    public enum Failure: Error, Equatable, Sendable {
+        case inputTooLarge, invalidArguments, lossyProjection, unsupportedSchema
+    }
+
+    private let plan: CompiledJSONSchema
+    private static let maximumBytes = 1_048_576
+    private static var limits: JSONLimits {
+        var limits = JSONLimits.conservative
+        limits[.inputBytes] = UInt64(maximumBytes)
+        limits[.schemaBytes] = UInt64(maximumBytes)
+        return limits
+    }
+    private static var options: JSONSchemaOptions { .init(limits: limits, formatAssertion: false,
+        output: .basic, diagnosticPolicy: .complete, collectAnnotations: false) }
+
+    public init(schemaJSON: Data) throws {
+        try Task.checkCancellation()
+        let schema = try Self.parse(schemaJSON)
+        // Explicit empty offline registry: unresolved external refs fail; no network fetching.
+        plan = try JSONSchemaCompiler(options: Self.options).compileWithReport(schema, registry: .empty).result
+        try Task.checkCancellation()
+    }
+
+    public func validate(argumentsJSON: Data) throws {
+        try Task.checkCancellation()
+        let value = try Self.parse(argumentsJSON)
+        let verdict = try plan.validate(value, options: Self.options)
+        guard verdict.isValid, verdict.diagnosticsComplete else { throw Failure.invalidArguments }
+        try Task.checkCancellation()
+    }
+
+    /// Capture exact schema values at the original MCP wire boundary, before MCP.Value
+    /// or Foundation dictionaries can round numbers or coalesce Unicode keys.
+    /// Keys are base64 UTF-8 tool names, preserving scalar spelling across Swift dictionaries.
+    public static func mcpToolSchemas(responseJSON: Data) throws -> [String: Data] {
+        let root = try parse(responseJSON)
+        guard case .object(let envelope) = root,
+              case .object(let result)? = envelope["result"],
+              case .array(let tools)? = result["tools"] else { return [:] }
+        guard tools.count <= 256 else { throw Failure.inputTooLarge }
+        var schemas: [String: Data] = [:]
+        for item in tools {
+            guard case .object(let tool) = item, case .string(let name)? = tool["name"],
+                  !name.isEmpty, let schema = tool["inputSchema"] else { throw Failure.invalidArguments }
+            let key = Data(name.utf8).base64EncodedString()
+            guard schemas[key] == nil else { throw Failure.invalidArguments }
+            var bounded = limits
+            bounded[.outputBytes] = UInt64(maximumBytes)
+            schemas[key] = try JSONWriter(options: .init(limits: bounded, keyOrder: .scalar, numberStyle: .normalized)).write(schema)
+        }
+        return schemas
+    }
+
+    /// Proves semantic identity using exact decimals and scalar keys/strings with a finite budget.
+    /// Only the named top-level host metadata keys may be removed by the existing executor adapter.
+    public static func requireSameValue(originalJSON: Data, projectedJSON: Data,
+                                        removingMetadataKeys: [String] = []) throws {
+        try Task.checkCancellation()
+        var original = try parse(originalJSON)
+        if !removingMetadataKeys.isEmpty {
+            guard removingMetadataKeys.count <= 2 else { throw Failure.lossyProjection }
+            if case .object(var object) = original {
+                for key in removingMetadataKeys { object = try object.removing(JSONKey(key), limits: limits) }
+                original = .object(object)
+            }
+        }
+        let projection = try parse(projectedJSON)
+        guard try JSONComparison.equals(original, projection, limits: limits) else { throw Failure.lossyProjection }
+        try Task.checkCancellation()
+    }
+
+    /// Compare already-owned MCP wire documents without changing schema/consent limits.
+    /// Every value, including metadata, must survive the wire SDK's projection exactly.
+    /// Each parser and the comparator has its own finite, input-derived ledger; the
+    /// original structural, numeric, key and cancellation limits still apply.
+    public static func requireSameMCPWireValue(originalJSON: Data, projectedJSON: Data) throws {
+        try Task.checkCancellation()
+        let originalLimits = try mcpWireParseLimits(inputByteCount: originalJSON.count)
+        let projectedLimits = try mcpWireParseLimits(inputByteCount: projectedJSON.count)
+        let comparisonLimits = try mcpWireComparisonLimits(
+            originalByteCount: originalJSON.count, projectedByteCount: projectedJSON.count
+        )
+        let original = try JSONParser(options: .init(limits: originalLimits)).parse(originalJSON)
+        try Task.checkCancellation()
+        let projection = try JSONParser(options: .init(limits: projectedLimits)).parse(projectedJSON)
+        try Task.checkCancellation()
+        guard try JSONComparison.equals(original, projection, limits: comparisonLimits) else {
+            throw Failure.lossyProjection
+        }
+        try Task.checkCancellation()
+    }
+
+    // Internal policy construction permits boundary checks without allocating huge inputs.
+    // These are logical parser budgets, not limits on caller-owned Data or process RSS.
+    static func mcpWireParseLimits(inputByteCount: Int) throws -> JSONLimits {
+        let bytes = try mcpWireByteCount(inputByteCount)
+        var bounded = limits
+        bounded[.inputBytes] = bytes
+        bounded[.stringBytes] = bytes
+        bounded[.aggregateTextBytes] = bytes
+        // Owned input, decoded text, and the transient closing-string copy.
+        bounded[.retainedBytes] = try mcpWireBudget(base: bounded[.retainedBytes], bytes: bytes, factor: 3)
+        // Input copy/scan, closing-string copy, escape output, and two key fingerprints.
+        // The original residual work quota still bounds structural/collision overhead.
+        bounded[.workUnits] = try mcpWireBudget(base: bounded[.workUnits], bytes: bytes, factor: 6)
+        try bounded.validate()
+        return bounded
+    }
+
+    static func mcpWireComparisonLimits(originalByteCount: Int, projectedByteCount: Int) throws -> JSONLimits {
+        let originalBytes = try mcpWireByteCount(originalByteCount)
+        let projectedBytes = try mcpWireByteCount(projectedByteCount)
+        let (combinedBytes, overflow) = originalBytes.addingReportingOverflow(projectedBytes)
+        guard !overflow else { throw Failure.inputTooLarge }
+        var bounded = limits
+        bounded[.stringBytes] = max(originalBytes, projectedBytes)
+        // JSONComparison admits BOTH values into its one comparison ledger.
+        bounded[.aggregateTextBytes] = combinedBytes
+        // Both admissions plus exact text/key comparison; no owned text copy here.
+        bounded[.workUnits] = try mcpWireBudget(base: bounded[.workUnits], bytes: combinedBytes, factor: 2)
+        try bounded.validate()
+        return bounded
+    }
+
+    private static func mcpWireByteCount(_ count: Int) throws -> UInt64 {
+        guard let bytes = UInt64(exactly: count) else { throw Failure.inputTooLarge }
+        return bytes
+    }
+
+    private static func mcpWireBudget(base: UInt64, bytes: UInt64, factor: UInt64) throws -> UInt64 {
+        let (scaled, multiplicationOverflow) = bytes.multipliedReportingOverflow(by: factor)
+        guard !multiplicationOverflow else { throw Failure.inputTooLarge }
+        let (total, additionOverflow) = base.addingReportingOverflow(scaled)
+        guard !additionOverflow else { throw Failure.inputTooLarge }
+        return total
+    }
+
+    /// The portable DTO deliberately uses binary64 numbers. Prove that it is the
+    /// deterministic projection of the retained original; it is never an executor input.
+    /// Exact original-schema and original-to-executor comparisons remain mandatory.
+    public static func requirePortableProjection(originalJSON: Data, projected: HanlinJSONValue) throws {
+        _ = try parse(originalJSON)
+        let expected = try HanlinJSONValue.decodeCanonicalJSON(originalJSON)
+        guard try expected.canonicalJSONData() == projected.canonicalJSONData() else {
+            throw Failure.lossyProjection
+        }
+        try Task.checkCancellation()
+    }
+
+    /// Reads only declared identity fields for a consent scope. Non-string identities
+    /// fail closed; other payload data never enters a durable grant.
+    public static func topLevelStringFields(argumentsJSON: Data, keys: [String]) throws -> [String: String] {
+        guard keys.count <= 32, keys.allSatisfy({ !$0.isEmpty && $0.utf8.count <= 128 }) else {
+            throw Failure.inputTooLarge
+        }
+        guard case .object(let object) = try parse(argumentsJSON) else { throw Failure.invalidArguments }
+        var fields: [String: String] = [:]
+        for key in keys {
+            guard let value = object[key] else { continue }
+            guard case .string(let text) = value else { throw Failure.invalidArguments }
+            fields[key] = text
+        }
+        return fields
+    }
+
+    /// Removes only the named top-level host fields using exact decimal/scalar JSON.
+    /// Nested coordinates, integers, object keys, and string spellings are retained.
+    public static func extractStringMetadata(
+        argumentsJSON: Data, keys: [String]
+    ) throws -> (argumentsJSON: Data, strings: [String: String], presentKeys: Set<String>) {
+        guard keys.count <= 2, Set(keys).count == keys.count else { throw Failure.lossyProjection }
+        let root = try parse(argumentsJSON)
+        guard case .object(var object) = root else { return (argumentsJSON, [:], []) }
+        var strings: [String: String] = [:]
+        var present: Set<String> = []
+        for key in keys {
+            guard let value = object[key] else { continue }
+            present.insert(key)
+            if case .string(let text) = value { strings[key] = text }
+            object = try object.removing(JSONKey(key), limits: limits)
+        }
+        // Do not rewrite an untouched document at all.
+        guard !present.isEmpty else { return (argumentsJSON, strings, present) }
+        var bounded = limits
+        bounded[.outputBytes] = UInt64(maximumBytes)
+        let bytes = try JSONWriter(options: .init(
+            limits: bounded, keyOrder: .scalar, numberStyle: .normalized
+        )).write(.object(object))
+        try Task.checkCancellation()
+        return (bytes, strings, present)
+    }
+
+    /// The existing provider schema API uses Double and String dictionaries. Check its actual
+    /// encode/decode projection before publishing any schema to the model. Unsupported fidelity
+    /// fails closed rather than advertising a weakened assertion. Returned bytes remain original.
+    public static func providerSchema(_ originalJSON: Data) throws -> Data {
+        _ = try parse(originalJSON)
+        let projected = try JSONDecoder().decode(AISDKProvider.JSONValue.self, from: originalJSON)
+        try requireSameValue(originalJSON: originalJSON, projectedJSON: JSONEncoder().encode(projected))
+        return originalJSON
+    }
+
+    /// Deterministic exact JSON bytes for DTO fingerprints. Uses the already approved bounded
+    /// parser/writer, scalar key ordering and exact decimal normalization, never a Double bridge.
+    /// This is a local encoding contract, not a claim of an external signature canonicalization.
+    public static func deterministicJSONData(_ originalJSON: Data) throws -> Data {
+        try Task.checkCancellation()
+        let value = try parse(originalJSON)
+        var bounded = limits
+        bounded[.outputBytes] = UInt64(maximumBytes)
+        let bytes = try JSONWriter(options: .init(limits: bounded, keyOrder: .scalar, numberStyle: .normalized)).write(value)
+        try Task.checkCancellation()
+        return bytes
+    }
+
+    private static func parse(_ data: Data) throws -> JSON {
+        guard data.count <= maximumBytes else { throw Failure.inputTooLarge }
+        return try JSONParser(options: .init(limits: limits)).parse(data)
+    }
+}

@@ -1,0 +1,98 @@
+[
+  {
+    "name": "skills-policy-offline-cache",
+    "replaces_run": "44425850134",
+    "inputs": {
+      "target_validation_group": "exact_test_selector",
+      "exact_test_selector": "AI_HLYTests/SkillOpenClawPolicyTests/originalPolicyRunsInTheActualEmbeddedNode(),AI_HLYTests/SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation(),AI_HLYTests/SkillRuntimeProductTests/ordinaryInstructionsSurviveUnrelatedPolicyInspectionFailure(),AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)",
+      "fast_validation_only": "true",
+      "simulator_e2e_only": "false",
+      "compare_base_sha": "6f294a8fe2047e028f5b5f75df485825027badf0",
+      "full_validation": "false",
+      "testflight_upload": "false",
+      "runtime_publish_release": "false",
+      "runtime_bundle_artifact_run_id": "42926628418"
+    },
+    "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+    "dispatch_started_at": "2026-11-19T00:31:12.586326+00:00",
+    "id": "44429654565",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429654565",
+    "status": "queued",
+    "conclusion": null,
+    "head_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+    "workflow": "build-ios26-unsigned-ipa.yml",
+    "recorded_at": "2026-11-19T00:31:18.266129+00:00"
+  },
+  {
+    "name": "isolated-global-npm-cache",
+    "replaces_run": "44425855469",
+    "inputs": {
+      "target_validation_group": "exact_test_selector",
+      "exact_test_selector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualGlobalNpmInstallUpdateImportAndRemovalUsePreservedGenerations()",
+      "fast_validation_only": "true",
+      "simulator_e2e_only": "false",
+      "compare_base_sha": "6f294a8fe2047e028f5b5f75df485825027badf0",
+      "full_validation": "false",
+      "testflight_upload": "false",
+      "runtime_publish_release": "false",
+      "runtime_bundle_artifact_run_id": "42926628418"
+    },
+    "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+    "dispatch_started_at": "2026-11-19T00:31:24.877722+00:00",
+    "id": "44429680236",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429680236",
+    "status": "in_progress",
+    "conclusion": null,
+    "head_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+    "workflow": "build-ios26-unsigned-ipa.yml",
+    "recorded_at": "2026-11-19T00:31:31.364931+00:00"
+  },
+  {
+    "name": "compact-keyboard-iphone",
+    "replaces_run": "44426497443",
+    "inputs": {
+      "target_validation_group": "exact_test_selector",
+      "exact_test_selector": "AI_HLYUITests/HanlinMorphComposerUITests/testCompactNavigationKeepsDraft,AI_HLYUITests/HanlinMorphComposerUITests/testCompactLargeTextWithAttachment",
+      "fast_validation_only": "false",
+      "simulator_e2e_only": "false",
+      "compare_base_sha": "3de8cf6c4f884c9041dd1c833abda0b0f45cfce5",
+      "full_validation": "false",
+      "testflight_upload": "false",
+      "runtime_publish_release": "false",
+      "runtime_bundle_artifact_run_id": "42926628418"
+    },
+    "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+    "dispatch_started_at": "2026-11-19T00:31:35.587794+00:00",
+    "id": "44429703865",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429703865",
+    "status": "in_progress",
+    "conclusion": null,
+    "head_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+    "workflow": "build-ios26-unsigned-ipa.yml",
+    "recorded_at": "2026-11-19T00:31:42.562508+00:00"
+  },
+  {
+    "name": "editor-a2ui-ipad",
+    "replaces_run": "44426508137",
+    "inputs": {
+      "target_validation_group": "exact_test_selector",
+      "exact_test_selector": "AI_HLYTests/NativeComposerLineSizingTests,AI_HLYUITests/AgentRuntimeConversationUITests/testRealChatUISendsPromptShowsToolActivityAndFinalAnswer,AI_HLYUITests/AgentRuntimeConversationUITests/testUI01UnifiedHistoryPinSearchSwitchDraftPreservation,AI_HLYUITests/HanlinMorphComposerUITests/testLargeTextLongDraftFitsWithKeyboardAndAfterPalette,AI_HLYUITests/HanlinMorphComposerUITests/testRTLToolChipKeepsLongDraftAndAccessibleLabel,AI_HLYUITests/HanlinMorphComposerUITests/testWideNavigationKeepsDraft,AI_HLYUITests/HanlinNativeA2UIChatUITests,AI_HLYUITests/AgentRuntimeConversationUITests/testCompactToolsManagementDestinationsPreserveDraft,AI_HLYUITests/AgentRuntimeConversationUITests/testModelPopoverZoomWithKeyboardAndDraft",
+      "fast_validation_only": "false",
+      "simulator_e2e_only": "false",
+      "compare_base_sha": "3de8cf6c4f884c9041dd1c833abda0b0f45cfce5",
+      "full_validation": "false",
+      "testflight_upload": "false",
+      "runtime_publish_release": "false",
+      "runtime_bundle_artifact_run_id": "42926628418"
+    },
+    "source_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+    "dispatch_started_at": "2026-11-19T00:31:46.777989+00:00",
+    "id": "44429728630",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429728630",
+    "status": "queued",
+    "conclusion": null,
+    "head_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+    "workflow": "build-ios26-unsigned-ipa.yml",
+    "recorded_at": "2026-11-19T00:31:52.774650+00:00"
+  }
+]

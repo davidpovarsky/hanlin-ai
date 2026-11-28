@@ -1,0 +1,36 @@
+[
+  {
+    "_type": {
+      "_name": "IssueSummary"
+    },
+    "issueType": {
+      "_type": {
+        "_name": "String"
+      },
+      "_value": "Swift Compiler Error"
+    },
+    "message": {
+      "_type": {
+        "_name": "String"
+      },
+      "_value": "Precompiled file '/Users/m1/caches/DerivedData/hanlin-composer-app-20261124/ModuleCache.noindex/1DMYBG2U74F55/SwiftShims-ETMZL06LU75E.pcm' was compiled with module cache path '/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/ModuleCache.noindex/1DMYBG2U74F55', but the path is currently '/Users/m1/caches/DerivedData/hanlin-composer-app-20261124/ModuleCache.noindex/1DMYBG2U74F55'"
+    }
+  },
+  {
+    "_type": {
+      "_name": "IssueSummary"
+    },
+    "issueType": {
+      "_type": {
+        "_name": "String"
+      },
+      "_value": "Swift Compiler Error"
+    },
+    "message": {
+      "_type": {
+        "_name": "String"
+      },
+      "_value": "Missing required module 'SwiftShims'"
+    }
+  }
+]

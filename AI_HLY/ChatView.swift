@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  Views/ChatView.swift
 //  AI_HLY
@@ -6,25 +7,56 @@
 //
 
 import SwiftUI
+import HanlinChatUI
+import HanlinPresentationKit
+import HanlinRichUI
 import AVFoundation
 import SwiftData
 import UniformTypeIdentifiers
+import HanlinHostContracts
+import HanlinPlatformContracts
 
 // 聊天界面
 @MainActor
 struct ChatView: View {
+    @Environment(\.locale) private var hanlinLocalizationLocale
+
     var chatRecord: ChatRecords
-    
+    var surface: HanlinConversationSurface = .full
+    var externalComposerBottomInset: CGFloat? = nil
+    var availableComposerWorkspaceSize: CGSize? = nil
+    @Environment(\.scenePhase) private var chatScenePhase
     // 输入与会话状态相关
-    @State private var message = ""                        // 用户输入的消息
+    @State private var composerDraft = HanlinComposerDraft()
+    @State private var capabilitySendError = ""
+    @State private var showsCapabilitySendError = false
+
+    // One owner for native edits, restored drafts and send clears. Keeping the
+    // value behind the original ChatView's stable reference lets the external
+    // compact composer read it before SwiftUI refreshes a retained Binding.
+    private var message: String {
+        get { composerDraft.text }
+        nonmutating set { composerDraft.text = newValue }
+    }
+
+    private var messageBinding: Binding<String> {
+        let draft = composerDraft
+        return Binding(get: { draft.text }, set: { draft.text = $0 })
+    }
     @State private var isResponding = false                // 是否处于系统响应状态
     @State private var isCancelled = false                 // 是否被打断
     @State private var respondIndex = 0                    // 当前响应请求的索引
     @FocusState private var isInputActive: Bool            // 输入框是否聚焦
     @State private var isObserving = false                 // 是否处于观察模式
     @State private var isRetry = false                     // 是否为重试请求
+    @State private var retryMessagesOverride: [ChatMessages]?
+    @State private var sessionScopeID = UUID()
 
-    @State private var chatTitle = "新群聊"                 // 群聊标题
+    private var effectiveChatSessionID: UUID {
+        chatRecord.id ?? sessionScopeID
+    }
+
+    @State private var chatTitle = String(localized: "新群聊", bundle: HanlinLocalization.bundle)                 // 群聊标题
     @State private var isEditingTitle = false              // 是否正在编辑群聊标题
     @State private var newChatTitle = ""                   // 编辑群聊标题时的临时变量
 
@@ -68,7 +100,6 @@ struct ChatView: View {
     // 反馈与动画相关
     @State private var isFeedBack = false                   // 是否需要震动反馈
     @State private var isOutPut = false                     // 输出反馈状态（用于触发动画）
-    @State private var lastUpdateTime = Date()              // 最近更新时间，用于刷新控制
     @State private var outPutFeedBackEnabled: Bool = true   // 是否启用输出反馈震动
 
     // 聊天数据管理相关
@@ -79,19 +110,88 @@ struct ChatView: View {
     @State private var useSystemMessage: Bool = true        // 是否自定义系统消息
     @State private var systemMessage: String = ""           // 是否系统消息内容
     @State private var showSystemMessageSheet = false       // 打开系统消息设置
-    let refreshInterval: TimeInterval = 0.3                 // 刷新间隔时间
     @State private var operationalState: String = ""        // 操作状态文本
     @State private var operationalDescription: String = ""  // 操作描述文本
     @State private var apiManager: APIManager?
+    @State private var agentSessionOwner = HanlinAppAgentSessionOwner()
+    @State private var richPresentation = HanlinAppRichPresentation()
+    @State private var showsResearchSources = false
+    @Environment(\.openURL) private var openRichURL
+
+    #if HANLIN_A2UI_POC
+    @State private var a2uiPresentation: HanlinA2UIAppPresentation?
+    @State private var a2uiSubmittingAction: HanlinA2UIAppPresentation.PendingAction?
+    @State private var a2uiOriginalModelChoice: A2UIModelChoice?
+    @State private var a2uiHistoryUnavailable = false
+
+    private struct A2UIModelChoice: Equatable, Sendable {
+        let id: UUID
+        let company: String?
+        let name: String?
+    }
+
+    private struct A2UIHistoryScope: Equatable, Sendable {
+        let conversationID: UUID?
+        let temporary: Bool
+        let model: A2UIModelChoice?
+        let session: HanlinHostSession?
+    }
+
+    private var a2uiModelChoice: A2UIModelChoice? {
+        guard modelTemp.indices.contains(selectedModelIndex) else { return nil }
+        let model = modelTemp[selectedModelIndex]
+        return .init(id: model.id, company: model.company, name: model.name)
+    }
+    #endif
+    @State private var activeAgentCoordinator: AgentRunCoordinator?
+    @State private var activeTurnProjection: HanlinConversationStreamProjection?
+    @State private var agentRunReadCache = HanlinAgentRunReadCache()
+    @State private var activeAgentRun: AgentRun?
+    @State private var activeAgentMessage: ChatMessages?
 
     // URL解析与多选操作相关
     @State private var selectedURLs: [String] = []          // 解析出的 URL 列表
     @State private var isMultiSelectMode: Bool = false      // 是否开启多选模式
     @State private var selectedMessageIDs: Set<UUID> = []   // 选中的消息 ID 集合
+    @Environment(\.chatSourceDestination) private var sourceDestination
+    @State private var nativeSelectionIDs: Set<UUID> = []
+    @State private var pendingSourceScroll: UUID?
+    @State private var sourceScrollTask: Task<Void, Never>?
+    @State private var sourceScrollGeneration = UUID()
+    @State private var sourceScrollHasRevealed = false
+    @State private var sourceScrollNeedsCorrection = false
+    @State private var revealedSourceRequest: UUID?
+    private var effectiveMatchedMessageID: UUID? {
+        if let sourceDestination, sourceDestination.chatRecordID == chatRecord.id { return sourceDestination.messageID }
+        return matchedMessageID
+    }
     var matchedMessageID: UUID?                             // 匹配的消息 ID
-    @State private var showScrollToBottomButton = false     // 控制滚动到底部按钮显示
+    private var showScrollToBottomButton: Bool { autoFollowController.showsScrollToBottomButton }
+
+    private var scrollToBottomVisibility: Binding<Bool> {
+        // The persistent external composer outlives individual ChatView renders.
+        // Capture the shared observable owner, not a State Binding's cached value.
+        Binding(get: { [autoFollowController] in autoFollowController.showsScrollToBottomButton },
+                set: { [autoFollowController] in autoFollowController.updateNearBottom(!$0) })
+    }
     @State private var needScrollToBottomButton = false     // 是否需要显示滚动到底部按钮
-    @State private var ifScroll = false                     // 控制滚动相关状态
+    @State private var autoFollowController = ChatAutoFollowController(onTrace: { event, fields in
+        #if DEBUG || HANLIN_TESTING
+        if ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1" {
+            // Controller fields contain geometry, counters and policy state only.
+            print("HANLIN_TRANSCRIPT_AUTOFOLLOW event=\(event) fields=\(fields)")
+        }
+        #endif
+        guard AgentDiagnosticsConfiguration.level != .off else { return }
+        NativeToolTraceLogger.shared.log(event, fields)
+    })
+    @State private var transcriptScrollView = ChatScrollViewHandle()
+    @State private var measuredComposerHeight: CGFloat = 0
+    @State private var chatContainerWidth: CGFloat = 0
+
+    private struct TranscriptBottomTarget: Hashable {
+        let conversationID: UUID
+    }
 
     // 提示词管理相关
     @State private var selectedPrompts: [PromptRepo] = []   // 选中的提示词
@@ -112,6 +212,7 @@ struct ChatView: View {
     @State private var importError: String? = nil           // 导入错误信息
     @State private var isShowingImportErrorAlert = false    // 是否显示导入错误弹窗
     @State private var showClearChatConfirmation = false    // 清空聊天记录确认弹窗显示标志
+    @State private var showClearChatError = false
     @State private var showImportExplanationAlert = false   // 导入聊天记录说明弹窗显示标志
     
     // 便捷输入
@@ -120,7 +221,13 @@ struct ChatView: View {
     
     @Environment(\.modelContext) private var context: ModelContext
     @Environment(\.dismiss) private var dismiss
-    
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.hanlinExternalCompactComposerHost) private var isExternalCompactComposerHost
+    @Environment(\.hanlinExternalDockHeight) private var externalDockHeight
+    @Environment(\.hanlinComposerSessionBridge) private var sessionBridge
+
+    @State private var composerRegistrationToken = UUID()
+    @State private var measuredWorkspaceSize: CGSize = .zero
     @State private var chatTemps: [ChatMessages] = []
     @State private var modelTemp: [AllModels] = []
     @Query private var userInfos: [UserInfo]
@@ -145,6 +252,9 @@ struct ChatView: View {
         
         // 同步参数设置
         message = chatRecord.input ?? ""
+        composerDraft.capabilityAttachments = chatRecord.capabilityDraftData.flatMap {
+            try? JSONDecoder().decode([HanlinCapabilityAttachment].self, from: $0)
+        } ?? []
         temperature = chatRecord.temperature
         topP = chatRecord.topP
         maxTokens = chatRecord.maxTokens
@@ -154,11 +264,11 @@ struct ChatView: View {
         
         // 对聊天记录和模型数据排序
         let sortedMessages = messages.sorted { $0.timestamp < $1.timestamp }
-        let firstVisibleModelIndex = modelTemp.firstIndex(where: { !$0.isHidden }) ?? 0
+        let firstVisibleModelIndex = HanlinDefaultChatPolicy.defaultModelIndex(in: modelTemp) ?? 0
         
         // 根据匹配消息决定加载数量
         let targetCount: Int
-        if let matchedID = matchedMessageID,
+        if let matchedID = effectiveMatchedMessageID,
            let matchedIndex = sortedMessages.firstIndex(where: { $0.id == matchedID }) {
             let matchedFromBottom = sortedMessages.count - matchedIndex
             targetCount = (matchedFromBottom <= 20) ? 20 : ((matchedFromBottom + 9) / 10) * 10
@@ -166,11 +276,8 @@ struct ChatView: View {
             targetCount = 20
         }
         
-        // 根据设备类型动态调整 ifScroll 阈值
-        let threshold = UIDevice.current.userInterfaceIdiom == .phone ? 6 : 12
         allMessages = sortedMessages
         loadedMessageCount = min(targetCount, sortedMessages.count)
-        ifScroll = (loadedMessageCount < threshold)
         chatTemps = Array(sortedMessages.suffix(loadedMessageCount))
         topVisibleMessageID = chatTemps.first?.id
         
@@ -203,111 +310,382 @@ struct ChatView: View {
         }
     }
     
-    private func dynamicBottomPadding() -> CGFloat {
-        var baseHeight: CGFloat = 216 // 默认最小间距
-        if !selectedURLs.isEmpty { baseHeight += 36 }
-        if !selectedImages.isEmpty { baseHeight += 86 }
-        if !selectedDocumentURLs.isEmpty { baseHeight += 36 }
-        if showPhotoSourceOptions { baseHeight += 146 }
-        if !selectedPrompts.isEmpty { baseHeight += 66 }
+    static func calculateDynamicBottomPadding(
+        measuredComposerHeight: CGFloat,
+        hasURLs: Bool,
+        hasImages: Bool,
+        hasDocuments: Bool,
+        showPhotoSourceOptions: Bool,
+        hasPrompts: Bool
+    ) -> CGFloat {
+        if measuredComposerHeight.isFinite, measuredComposerHeight > 40 {
+            return max(96, min(measuredComposerHeight + 20, 680))
+        }
+        var baseHeight: CGFloat = 116
+        if hasURLs { baseHeight += 32 }
+        if hasImages { baseHeight += 44 }
+        if hasDocuments { baseHeight += 32 }
+        if showPhotoSourceOptions { baseHeight += 110 }
+        if hasPrompts { baseHeight += 44 }
         return baseHeight
     }
-    
-    var body: some View {
-        VStack {
-            
-            ZStack(alignment: .bottom) {
-                
-                // 第一部分：可滚动聊天区
-                ScrollViewReader { scrollViewProxy in
-                    buildScrollContent(scrollViewProxy)
-                        .padding(.bottom, 6)
+
+    private func dynamicBottomPadding() -> CGFloat {
+        if let inset = externalComposerBottomInset, inset.isFinite { return max(0, inset) }
+        if isExternalCompactComposerHost {
+            let height = externalDockHeight + 24
+            return height.isFinite ? max(24, height) : 24
+        }
+        return Self.calculateDynamicBottomPadding(
+            measuredComposerHeight: measuredComposerHeight,
+            hasURLs: !selectedURLs.isEmpty,
+            hasImages: !selectedImages.isEmpty,
+            hasDocuments: !selectedDocumentURLs.isEmpty,
+            showPhotoSourceOptions: showPhotoSourceOptions,
+            hasPrompts: !selectedPrompts.isEmpty
+        )
+    }
+
+    private func makeExternalComposerEndpoint() -> HanlinActiveComposerSessionBridge.Endpoint {
+        HanlinActiveComposerSessionBridge.Endpoint(
+            sessionID: effectiveChatSessionID,
+            registrationToken: composerRegistrationToken,
+            isReadyToSend: !loadHistoryMessages && !modelTemp.isEmpty,
+            chatRecord: chatRecord,
+            modelTemp: modelTemp,
+            temporaryRecord: TemporaryRecord,
+            respondIndex: respondIndex,
+            selectedModelIndex: $selectedModelIndex,
+            showScrollToBottomButton: scrollToBottomVisibility,
+            needScrollToBottomButton: $needScrollToBottomButton,
+            isMultiSelectMode: $isMultiSelectMode,
+            selectedMessageIDs: $selectedMessageIDs,
+            chatTemps: $chatTemps,
+            showTemperatureSlider: $showTemperatureSlider,
+            temperature: $temperature,
+            showTopPSlider: $showTopPSlider,
+            topP: $topP,
+            showMaxTokensSlider: $showMaxTokensSlider,
+            maxTokens: $maxTokens,
+            showMaxMessagesNumSlider: $showMaxMessagesNumSlider,
+            maxMessagesNum: $maxMessagesNum,
+            message: messageBinding,
+            selectedImages: $selectedImages,
+            selectedDocumentURLs: $selectedDocumentURLs,
+            selectedURLs: $selectedURLs,
+            selectedPrompts: $selectedPrompts,
+            showPhotoSourceOptions: $showPhotoSourceOptions,
+            showModelSuggestions: $showModelSuggestions,
+            filteredModels: $filteredModels,
+            isResponding: agentBusyBinding,
+            isFeedBack: $isFeedBack,
+            ifKnowledge: $ifKnowledge,
+            ifSearch: $ifSearch,
+            ifToolUse: $ifToolUse,
+            ifThink: $ifThink,
+            ifAudio: $ifAudio,
+            ifPlanning: $ifPlanning,
+            thinkingLength: $thinkingLength,
+            showKnowledgeAlert: $showKnowledgeAlert,
+            knowledgeAlertMessage: $KnowledgeAlertMessgae,
+            showSearchAlert: $showSearchAlert,
+            selectedImageSize: $selectedImageSize,
+            imageReversePrompt: $imageReversePrompt,
+            onSelectModel: selectModel,
+            onSendUser: { handleMessageSending(ifObservingMode: false) },
+            onSendObserve: { handleMessageSending(ifObservingMode: true) },
+            onCancel: handleCancellation,
+            validateSendAcceptance: { [self] in
+                isResponding || chatTemps.contains(where: { $0.role == "user" })
+            },
+            readCurrentMessageState: { [composerDraft] in composerDraft.snapshot },
+            capabilityDraft: composerDraft
+        )
+    }
+
+    private struct ComposerBridgeSyncState: Equatable {
+        var showScrollToBottomButton: Bool
+        var temporaryRecord: Bool
+        var respondIndex: Int
+        var isResponding: Bool
+        var selectedImagesCount: Int
+        var selectedDocumentURLs: [URL]
+        var selectedURLs: [String]
+        var selectedPromptsCount: Int
+        var selectedModelIndex: Int
+        var ifKnowledge: Bool
+        var ifSearch: Bool
+        var ifToolUse: Bool
+        var ifThink: Bool
+        var ifAudio: Bool
+        var ifPlanning: Bool
+    }
+
+    private var agentBusyBinding: Binding<Bool> {
+        Binding(get: { isResponding || agentSessionOwner.inlineToolIsRunning }, set: { isResponding = $0 })
+    }
+
+    private var composerBridgeSyncState: ComposerBridgeSyncState {
+        ComposerBridgeSyncState(
+            showScrollToBottomButton: showScrollToBottomButton,
+            temporaryRecord: TemporaryRecord,
+            respondIndex: respondIndex,
+            isResponding: isResponding || agentSessionOwner.inlineToolIsRunning,
+            selectedImagesCount: selectedImages.count,
+            selectedDocumentURLs: selectedDocumentURLs,
+            selectedURLs: selectedURLs,
+            selectedPromptsCount: selectedPrompts.count,
+            selectedModelIndex: selectedModelIndex,
+            ifKnowledge: ifKnowledge,
+            ifSearch: ifSearch,
+            ifToolUse: ifToolUse,
+            ifThink: ifThink,
+            ifAudio: ifAudio,
+            ifPlanning: ifPlanning
+        )
+    }
+
+    private func syncComposerEndpointWithBridge() {
+        guard let sessionBridge else { return }
+        sessionBridge.update(endpoint: makeExternalComposerEndpoint())
+    }
+
+    private var resolvedChatShell: ShellDescriptor {
+        (try? richPresentation.profile(for: chatRecord, conversationID: effectiveChatSessionID).shell)
+            ?? .init(id: "hanlin.standard", title: "Hanlin")
+    }
+
+    @ViewBuilder
+    private var chatWorkspaceStack: some View {
+        if resolvedChatShell.usesSourcesSidebar {
+            HanlinResearchShell(showsSources: $showsResearchSources) {
+                canonicalChatWorkspace
+            } sources: {
+                List(researchSources, id: \.link) { source in
+                    if let url = URL(string: source.link) { Link(source.title, destination: url) }
                 }
-                
-                // 渐变背景
-                LinearGradient(
-                    gradient: Gradient(colors: [Color(.systemBackground).opacity(0), Color(.systemBackground)]),
-                    startPoint: .top,
-                    endPoint: .center
-                )
-                .frame(height: 160)
-                .zIndex(0)
-                
-                ChatViewBottom(
-                    chatRecord: chatRecord,
-                    modelTemp: modelTemp,
-                    TemporaryRecord: TemporaryRecord,
-                    respondIndex: respondIndex,
-                    onSelectModel: selectModel,
-                    onSendUser: { handleMessageSending(ifObservingMode: false) },
-                    onSendObserve: { handleMessageSending(ifObservingMode: true) },
-                    onCancel: handleCancellation,
-                    selectedModelIndex: $selectedModelIndex,
-                    showScrollToBottomButton: $showScrollToBottomButton,
-                    needScrollToBottomButton: $needScrollToBottomButton,
-                    isMultiSelectMode: $isMultiSelectMode,
-                    selectedMessageIDs: $selectedMessageIDs,
-                    chatTemps: $chatTemps,
-                    showTemperatureSlider: $showTemperatureSlider,
-                    temperature: $temperature,
-                    showTopPSlider: $showTopPSlider,
-                    topP: $topP,
-                    showMaxTokensSlider: $showMaxTokensSlider,
-                    maxTokens: $maxTokens,
-                    showMaxMessagesNumSlider: $showMaxMessagesNumSlider,
-                    maxMessagesNum: $maxMessagesNum,
-                    message: $message,
-                    selectedImages: $selectedImages,
-                    selectedDocumentURLs: $selectedDocumentURLs,
-                    selectedURLs: $selectedURLs,
-                    selectedPrompts: $selectedPrompts,
-                    showPhotoSourceOptions: $showPhotoSourceOptions,
-                    showModelSuggestions: $showModelSuggestions,
-                    filteredModels: $filteredModels,
-                    isResponding: $isResponding,
-                    isFeedBack: $isFeedBack,
-                    ifKnowledge: $ifKnowledge,
-                    ifSearch: $ifSearch,
-                    ifToolUse: $ifToolUse,
-                    ifThink: $ifThink,
-                    ifAudio: $ifAudio,
-                    ifPlanning: $ifPlanning,
-                    thinkingLength: $thinkingLength,
-                    showKnowledgeAlert: $showKnowledgeAlert,
-                    knowledgeAlertMessage: $KnowledgeAlertMessgae,
-                    showSearchAlert: $showSearchAlert,
-                    selectedImageSize: $selectedImageSize,
-                    imageReversePrompt: $imageReversePrompt,
-                    isInputActive: $isInputActive
-                )
+                .navigationTitle(Text("Sources", bundle: HanlinLocalization.bundle))
+            }
+        } else { canonicalChatWorkspace }
+    }
+
+    private var researchSources: [Resource] {
+        var seen = Set<String>()
+        return chatTemps.flatMap { $0.resources ?? [] }.filter { seen.insert($0.link).inserted }
+    }
+
+    @ViewBuilder
+    private var canonicalComposer: some View {
+        if !isExternalCompactComposerHost {
+            HanlinMountedComposerContent(endpoint: makeExternalComposerEndpoint(),
+                isInputActive: $isInputActive,
+                availableWorkspaceSize: availableComposerWorkspaceSize ?? measuredWorkspaceSize)
+        }
+    }
+
+    private var canonicalChatWorkspace: some View {
+        Group {
+            if surface == .composer {
+                canonicalComposer
+            } else {
+                HanlinChatView(shell: resolvedChatShell,
+                               showsComposerBackdrop: !isExternalCompactComposerHost) {
+                    ScrollViewReader { scrollViewProxy in
+                        buildScrollContent(scrollViewProxy).padding(.bottom, 6)
+                    }
+                    // A reader may retain a pending scroll context until its native
+                    // scroll view attaches. Never carry that context to another chat.
+                    // Keyboard, split-view resizing and activity updates keep this ID.
+                    .id(effectiveChatSessionID)
+                } composer: {
+                    canonicalComposer
+                }
             }
         }
-        .toolbar(.hidden, for: .tabBar)
+            .onGeometryChange(for: CGSize.self) { proxy in
+                proxy.size
+            } action: { newSize in
+                guard newSize.width.isFinite, newSize.height.isFinite,
+                      newSize.width > 0, newSize.height > 0 else { return }
+                if abs(measuredWorkspaceSize.width - newSize.width) > 1 || abs(measuredWorkspaceSize.height - newSize.height) > 1 {
+                    measuredWorkspaceSize = newSize
+                }
+            }
+            .onPreferenceChange(ComposerHeightPreferenceKey.self) { newHeight in
+                guard newHeight.isFinite, newHeight > 0,
+                      abs(measuredComposerHeight - newHeight) > 1 else { return }
+                measuredComposerHeight = newHeight
+            }
+    }
+
+    // Opaque boundaries keep the original modifier order without adding layout containers.
+    private var agentConnectedWorkspace: some View {
+        chatWorkspaceStack
+        .chatMotionPreferences()
+        .toolbar {
+            ToolbarItem(placement: .secondaryAction) {
+                Menu {
+                    Button(hanlin: "Standard conversation") { richPresentation.select("hanlin.standard", conversation: chatRecord,
+                        conversationID: effectiveChatSessionID, context: context, temporary: TemporaryRecord) }
+                    Button(hanlin: "Research conversation") { richPresentation.select("hanlin.research", conversation: chatRecord,
+                        conversationID: effectiveChatSessionID, context: context, temporary: TemporaryRecord) }
+                    if resolvedChatShell.usesSourcesSidebar { Button(hanlin: "Sources") { showsResearchSources.toggle() } }
+                } label: { Label(hanlin: "Conversation presentation", systemImage: "rectangle.3.group") }
+                .disabled(isResponding)
+            }
+        }
+        #if HANLIN_A2UI_POC
+        .environment(\.hanlinA2UIAppPresentation, a2uiPresentation)
+        .environment(\.hanlinA2UIResultProjectionSource, a2uiPresentation?.toolSource)
+        #if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
+        .safeAreaInset(edge: .top) {
+            if HanlinNativeA2UIAcceptanceProvider.isEnabled {
+                HanlinA2UIAcceptanceStatusView(isResponding: isResponding, conversationID: chatRecord.id)
+            } else if AgentRuntimeUIAcceptanceProvider.phase2StoreID != nil {
+                HanlinPhase2AcceptanceStatusView(isResponding: isResponding, conversationID: chatRecord.id)
+            }
+        }
+        #endif
+        .task(id: A2UIHistoryScope(conversationID: chatRecord.id, temporary: TemporaryRecord,
+            model: a2uiModelChoice, session: agentSessionOwner.session?.identity)) { @MainActor in
+            guard let originalID = chatRecord.id else { return }
+            let originalConversation = chatRecord
+            let originalScene = sessionScopeID
+            let originalTemporary = TemporaryRecord || sessionBridge?.isTemporaryChat(originalID) == true
+            if a2uiPresentation == nil { a2uiPresentation = HanlinA2UIAppPresentation() }
+            agentSessionOwner.presentation = a2uiPresentation
+            a2uiHistoryUnavailable = false
+            do {
+                try await agentSessionOwner.restoreHistory(conversation: originalConversation,
+                    conversationID: originalID, sceneID: originalScene,
+                    temporary: originalTemporary, modelContext: context)
+                for run in chatTemps.compactMap(\.agentRun) where run.id != activeAgentRun?.id {
+                    a2uiPresentation?.synchronizeTools(run, isLive: false)
+                }
+            } catch is CancellationError {
+                return
+            } catch let error as HanlinHostError where error == .staleContext || error == .cancelled {
+                return
+            } catch {
+                guard !Task.isCancelled, chatRecord === originalConversation, sessionScopeID == originalScene else { return }
+                a2uiHistoryUnavailable = true
+                NativeToolTraceLogger.shared.log("a2ui_history_restore_failed", ["code": "unavailable"])
+            }
+        }
+        .safeAreaInset(edge: .top) {
+            if a2uiHistoryUnavailable {
+                Label(hanlin: "Some rich content could not be restored.", systemImage: "exclamationmark.bubble")
+                    .font(HanlinTypography.footnote).foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading).padding(8)
+                    .accessibilityIdentifier("hanlin-a2ui-history-unavailable")
+            }
+        }
+        .onChange(of: a2uiPresentation?.pendingAction?.request.requestID) { _, _ in
+            guard let action = a2uiPresentation?.takePendingAction(), !isResponding,
+                  a2uiPresentation?.isCurrent(action) == true,
+                  a2uiModelChoice == a2uiOriginalModelChoice else { return }
+            a2uiSubmittingAction = action
+            handleMessageSending(ifObservingMode: false, continuationText: String(localized: "Form submitted", bundle: HanlinLocalization.bundle))
+        }
+        .onChange(of: a2uiModelChoice) { _, current in
+            guard let original = a2uiOriginalModelChoice, original != current else { return }
+            if isResponding { handleCancellation() }
+            agentSessionOwner.cancel()
+            a2uiOriginalModelChoice = nil
+        }
+        #endif
+    }
+
+    private var lifecycleWorkspace: some View {
+        agentConnectedWorkspace
+        .toolbar((horizontalSizeClass == .compact || isExternalCompactComposerHost) ? .hidden : .visible, for: .tabBar)
         .background(Color(.systemBackground))
+        .alert(String(localized: "Attached capability", bundle: HanlinLocalization.bundle), isPresented: $showsCapabilitySendError) {
+            Button(String(localized: "OK", bundle: HanlinLocalization.bundle), role: .cancel) { }
+        } message: { Text(capabilitySendError) }
+        .background {
+            // Observe typing below the transcript. Neither the workspace nor
+            // its SwiftData conversation changes for every native keystroke.
+            HanlinDraftPersistence(draft: composerDraft, record: chatRecord, temporary: TemporaryRecord)
+        }
         .onAppear {
+            #if HANLIN_A2UI_POC
+            if a2uiPresentation == nil { a2uiPresentation = HanlinA2UIAppPresentation() }
+            agentSessionOwner.presentation = a2uiPresentation
+            #endif
+            composerRegistrationToken = UUID()
+            if sessionBridge?.isTemporaryChat(effectiveChatSessionID) == true {
+                TemporaryRecord = true
+            }
             handleOnAppear()
-            NotificationCenter.default.post(name: .hideTabBar, object: true) // 隐藏 TabBar
+            // Inline and external composers share the mounted chat's send endpoint.
+            // Imported first turns must also dispatch in the wide iPad layout.
+            sessionBridge?.register(endpoint: makeExternalComposerEndpoint())
+            if horizontalSizeClass == .compact || isExternalCompactComposerHost {
+                NotificationCenter.default.post(name: .hideTabBar, object: true) // 仅在紧凑模式下隐藏 TabBar
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: HanlinConversationMutation.didChange)) { notification in
+            guard let change = HanlinConversationMutation.change(from: notification, in: context.container),
+                  change.originalRow == ObjectIdentifier(chatRecord) else { return }
+            applyConversationChange(change)
+        }
+        .onChange(of: chatScenePhase) { _, phase in
+            if phase != .active, !TemporaryRecord {
+                openHistory()
+            }
+        }
+        .onChange(of: TemporaryRecord) { _, newValue in
+            if isResponding { handleCancellation() }
+            agentSessionOwner.cancel()
+            sessionBridge?.setTemporaryChat(newValue, for: effectiveChatSessionID)
+        }
+        .onChange(of: chatRecord.id) { _, _ in
+            agentSessionOwner.cancel()
+            cancelSourceScroll()
+            autoFollowController.invalidateLayout()
+            autoFollowController.resumeFollowing(reason: "conversationChanged")
+            transcriptScrollView.activate(conversationID: effectiveChatSessionID)
+        }
+        .onChange(of: sessionBridge?.expectedActiveSessionID) { _, current in
+            if sessionBridge != nil, current != effectiveChatSessionID { agentSessionOwner.cancel() }
+        }
+        .onChange(of: composerBridgeSyncState) { _, _ in
+            syncComposerEndpointWithBridge()
         }
         .onDisappear {
-            NotificationCenter.default.post(name: .hideTabBar, object: false) // 显示 TabBar
+            // The workspace router supplies actual selection ownership. A sheet/full-screen
+            // result that leaves that original selection mounted does not revoke its Session.
+            if let sessionBridge, sessionBridge.expectedActiveSessionID != effectiveChatSessionID {
+                agentSessionOwner.cancel()
+            }
+            sessionBridge?.unregister(sessionID: effectiveChatSessionID, token: composerRegistrationToken)
+            if horizontalSizeClass == .compact || isExternalCompactComposerHost {
+                NotificationCenter.default.post(name: .hideTabBar, object: false) // 显示 TabBar
+            }
             openHistory()
-            if TemporaryRecord {
-                context.delete(chatRecord)
+            if TemporaryRecord && sessionBridge?.isTransitioningLayoutMode != true {
+                agentSessionOwner.cancel() // Revoke synchronously before deleting the original conversation.
+                sessionBridge?.clearCachedDraft(for: effectiveChatSessionID)
                 do {
-                    try context.save()
+                    try HanlinConversationMutation.delete(chatRecord, in: context, temporary: true)
                 } catch {
                     print("退出时删除临时聊天记录失败: \(error)")
                 }
             }
         }
+    }
+
+    private var navigationWorkspace: some View {
+        lifecycleWorkspace
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             // 群聊名称（中间，带有可编辑功能）
             ToolbarItem(placement: .principal) {
                 if TemporaryRecord {
                     HStack {
-                        Text(" 临 时 对 话 模 式 ")
-                            .font(.caption)
+                        Text(" 临 时 对 话 模 式 ", bundle: HanlinLocalization.bundle)
+                            .font(HanlinTypography.caption)
                             .padding(6)
                     }
                     .background(
@@ -321,7 +699,7 @@ struct ChatView: View {
                     ZStack {
                         // 普通显示模式
                         Text(chatTitle)
-                            .font(.headline)
+                            .font(HanlinTypography.headline)
                             .foregroundColor(.primary)
                             .lineLimit(1)
                             .truncationMode(.tail)
@@ -332,31 +710,17 @@ struct ChatView: View {
                             }
                         
                         // 编辑模式
-                        TextField("请输入群聊名称", text: $newChatTitle, onCommit: {
+                        TextField(String(localized: "请输入群聊名称", bundle: HanlinLocalization.bundle, locale: hanlinLocalizationLocale), text: $newChatTitle, onCommit: {
                             if !newChatTitle.isEmpty {
                                 if chatTitle != newChatTitle {
-                                    chatTitle = newChatTitle
-                                    let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-                                    
-                                    let text: String
-                                    if currentLanguage.hasPrefix("zh") {
-                                        text = "群聊名称被修改为“\(chatTitle)”"
-                                    } else {
-                                        text = "Group chat name has been changed to \"\(chatTitle)\""
-                                    }
-                                    
-                                    let newMessage = ChatMessages(
-                                        role: "information",
-                                        text: text,
-                                        modelDisplayName: "system",
-                                        timestamp: Date(),
-                                        record: chatRecord
-                                    )
-                                    chatRecord.name = chatTitle
-                                    chatTemps.append(newMessage)
-                                    context.insert(newMessage)
                                     do {
-                                        try context.save()
+                                        let newMessage = try HanlinConversationMutation.rename(chatRecord,
+                                            title: newChatTitle, announceChange: true, in: context,
+                                            temporary: TemporaryRecord)
+                                        chatTitle = newChatTitle
+                                        if let newMessage, !chatTemps.contains(where: { $0.id == newMessage.id }) {
+                                            chatTemps.append(newMessage)
+                                        }
                                     } catch {
                                         print("Failed to save message: \(error)")
                                     }
@@ -365,7 +729,7 @@ struct ChatView: View {
                             isEditingTitle = false
                         })
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .frame(width: UIScreen.main.bounds.width * 0.3) // 限制输入框宽度
+                        .frame(minWidth: 120, maxWidth: 220) // 限制输入框宽度
                         .multilineTextAlignment(.center)
                         .opacity(isEditingTitle ? 1 : 0) // 仅编辑模式可见
                     }
@@ -379,13 +743,13 @@ struct ChatView: View {
                 }) {
                     if TemporaryRecord {
                         Image(systemName: "exclamationmark.bubble.fill")
-                            .font(.body)
+                            .font(HanlinTypography.body)
                             .foregroundColor(.primary)
                             .transition(.opacity.combined(with: .move(edge: .trailing)))
                             .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: TemporaryRecord)
                     } else {
                         Image(systemName: "checkmark.bubble")
-                            .font(.body)
+                            .font(HanlinTypography.body)
                             .foregroundColor(.primary)
                             .transition(.opacity.combined(with: .move(edge: .leading)))
                             .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: TemporaryRecord)
@@ -398,14 +762,14 @@ struct ChatView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
                     // ------ 调整参数 ------
-                    Menu("调整模型参数", systemImage: "slider.horizontal.3"){
+                    Menu(hanlin: "调整模型参数", systemImage: "slider.horizontal.3"){
                         Button(action: {
                             showTopPSlider = false
                             showMaxTokensSlider = false
                             showMaxMessagesNumSlider = false
                             showTemperatureSlider.toggle()
                         }) {
-                            Label("调整采样温度", systemImage: "thermometer.variable")
+                            Label(hanlin: "调整采样温度", systemImage: "thermometer.variable")
                         }
                         
                         Button(action: {
@@ -414,7 +778,7 @@ struct ChatView: View {
                             showMaxMessagesNumSlider = false
                             showTopPSlider.toggle()
                         }) {
-                            Label("调整累积概率", systemImage: "percent")
+                            Label(hanlin: "调整累积概率", systemImage: "percent")
                         }
                         
                         Button(action: {
@@ -423,7 +787,7 @@ struct ChatView: View {
                             showMaxMessagesNumSlider = false
                             showMaxTokensSlider.toggle()
                         }) {
-                            Label("最大回复长度", systemImage: "textformat.characters.arrow.left.and.right")
+                            Label(hanlin: "最大回复长度", systemImage: "textformat.characters.arrow.left.and.right")
                         }
                         
                         Button(action: {
@@ -432,16 +796,16 @@ struct ChatView: View {
                             showMaxTokensSlider = false
                             showMaxMessagesNumSlider.toggle()
                         }) {
-                            Label("消息数量上限", systemImage: "arrow.up.and.down.text.horizontal")
+                            Label(hanlin: "消息数量上限", systemImage: "arrow.up.and.down.text.horizontal")
                         }
                     }
                     
                     // ------ 聊天记录管理 ------
-                    Menu("聊天记录管理", systemImage: "bubble.left.and.bubble.right"){
+                    Menu(hanlin: "聊天记录管理", systemImage: "bubble.left.and.bubble.right"){
                         Button(action: {
                             showSystemMessageSheet = true
                         }) {
-                            Label("设置系统消息", systemImage: "paintbrush.pointed")
+                            Label(hanlin: "设置系统消息", systemImage: "paintbrush.pointed")
                         }
                         Button(action: {
                             isMultiSelectMode.toggle()
@@ -452,31 +816,35 @@ struct ChatView: View {
                         Button(action: {
                             showingExportOptions = true
                         }) {
-                            Label("导出聊天记录", systemImage: "square.and.arrow.up")
+                            Label(hanlin: "导出聊天记录", systemImage: "square.and.arrow.up")
                         }
                         
                         Button(action: {
                             showImportExplanationAlert = true
                         }) {
-                            Label("导入聊天记录", systemImage: "square.and.arrow.down")
+                            Label(hanlin: "导入聊天记录", systemImage: "square.and.arrow.down")
                         }
                         
                         Button(action: {
                             showClearChatConfirmation = true
                         }) {
-                            Label("清空聊天记录", systemImage: "eraser.line.dashed")
+                            Label(hanlin: "清空聊天记录", systemImage: "eraser.line.dashed")
                         }
                     }
                 } label: {
                     Image(systemName: "slider.horizontal.3")
-                        .font(.body)
+                        .font(HanlinTypography.body)
                         .foregroundColor(.primary)
                         .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: TemporaryRecord)
                 }
             }
         }
-        .confirmationDialog("选择导出格式", isPresented: $showingExportOptions, titleVisibility: .visible) {
-            Button("纯文本 (.txt)") {
+    }
+
+    var body: some View {
+        navigationWorkspace
+        .confirmationDialog(Text("选择导出格式", bundle: HanlinLocalization.bundle), isPresented: $showingExportOptions, titleVisibility: .visible) {
+            Button(hanlin: "纯文本 (.txt)") {
                 exportUTType = UTType.plainText
                 let exportText = generateExportText(for: .txt)
                 let fileName = "ChatExport.txt"
@@ -489,7 +857,7 @@ struct ChatView: View {
                     print("写入临时文件失败：\(error)")
                 }
             }
-            Button("JSON文件 (.json)（文本）") {
+            Button(hanlin: "JSON文件 (.json)（文本）") {
                 exportUTType = UTType.json
                 let exportText = generateExportText(for: .json, includeImages: false)
                 let fileName = "ChatExport_text.json"
@@ -502,7 +870,7 @@ struct ChatView: View {
                     print("写入临时文件失败：\(error)")
                 }
             }
-            Button("JSON文件 (.json)（多模态）") {
+            Button(hanlin: "JSON文件 (.json)（多模态）") {
                 exportUTType = UTType.json
                 let exportText = generateExportText(for: .json, includeImages: true)
                 let fileName = "ChatExport_multimodal.json"
@@ -515,7 +883,7 @@ struct ChatView: View {
                     print("写入临时文件失败：\(error)")
                 }
             }
-            Button("取消", role: .cancel) { }
+            Button(hanlin: "取消", role: .cancel) { }
         }
         .sheet(isPresented: $showShareSheet, onDismiss: {
             // 分享结束后清除临时文件 URL
@@ -536,63 +904,72 @@ struct ChatView: View {
             allowedContentTypes: [.json],
             allowsMultipleSelection: false
         ) { result in
-            switch result {
-            case .success(let urls):
-                if let url = urls.first {
-                    guard url.startAccessingSecurityScopedResource() else {
-                        importError = "无法访问所选文件的权限。"
-                        isShowingImportErrorAlert = true
-                        return
-                    }
-                    defer { url.stopAccessingSecurityScopedResource() }
-                    do {
-                        let data = try Data(contentsOf: url)
-                        // 尝试先按多模态 JSON 格式解析
-                        if let importedMessages = try? JSONDecoder().decode([ExportMessage].self, from: data) {
-                            importMessages(importedMessages: importedMessages)
-                        }
-                        // 如果失败，再尝试解析纯文本 JSON 格式
-                        else if let simpleMessages = try? JSONDecoder().decode([[String: String]].self, from: data) {
-                            importSimpleMessages(simpleMessages: simpleMessages)
-                        } else {
-                            importError = "文件格式错误，请检查文件是否为导出时的正确格式。"
-                            isShowingImportErrorAlert = true
-                        }
-                    } catch {
-                        importError = error.localizedDescription
-                        isShowingImportErrorAlert = true
-                    }
-                }
-            case .failure(let error):
-                importError = error.localizedDescription
-                isShowingImportErrorAlert = true
-            }
+            receiveChatImport(result)
         }
         .alert(isPresented: $isShowingImportErrorAlert) {
-            Alert(title: Text("导入错误"),
+            Alert(title: Text("导入错误", bundle: HanlinLocalization.bundle),
                   message: Text(importError ?? "未知错误"),
-                  dismissButton: .default(Text("确定")))
+                  dismissButton: .default(Text("确定", bundle: HanlinLocalization.bundle)))
         }
-        .alert("确认清空聊天记录", isPresented: $showClearChatConfirmation) {
-            Button("删除", role: .destructive) {
+        .alert(Text("确认清空聊天记录", bundle: HanlinLocalization.bundle), isPresented: $showClearChatConfirmation) {
+            Button(hanlin: "删除", role: .destructive) {
                 newConversation()
             }
-            Button("取消", role: .cancel) { }
+            Button(hanlin: "取消", role: .cancel) { }
         } message: {
-            Text("是否要删除所有聊天记录？删除后不可恢复。")
+            Text("是否要删除所有聊天记录？删除后不可恢复。", bundle: HanlinLocalization.bundle)
                 .multilineTextAlignment(.leading)
         }
-        .alert("导入聊天记录说明", isPresented: $showImportExplanationAlert) {
-            Button("继续") {
+        .alert(Text("Unable to clear chat history", bundle: HanlinLocalization.bundle), isPresented: $showClearChatError) {
+            Button(hanlin: "OK", role: .cancel) { }
+        } message: {
+            Text("The conversation was not cleared. Please try again.", bundle: HanlinLocalization.bundle)
+        }
+        .alert(Text("导入聊天记录说明", bundle: HanlinLocalization.bundle), isPresented: $showImportExplanationAlert) {
+            Button(hanlin: "继续") {
                 isShowingImportPicker = true
             }
-            Button("取消", role: .cancel) { }
+            Button(hanlin: "取消", role: .cancel) { }
         } message: {
-            Text("请提供 JSON 文件，格式要求与本软件导出的 JSON 文件格式一致，本软件采用 OpenAI 的请求 JSON 格式，包括文本对话和含图片的多模态对话，图片使用 base64 数据。")
+            Text("请提供 JSON 文件，格式要求与本软件导出的 JSON 文件格式一致，本软件采用 OpenAI 的请求 JSON 格式，包括文本对话和含图片的多模态对话，图片使用 base64 数据。", bundle: HanlinLocalization.bundle)
                     .multilineTextAlignment(.leading)
         }
         .tint(TemporaryRecord ? .primary : nil)
     }
+    private func receiveChatImport(_ result: Result<[URL], Error>) {
+        switch result {
+        case .success(let urls):
+            if let url = urls.first {
+                guard url.startAccessingSecurityScopedResource() else {
+                    importError = "无法访问所选文件的权限。"
+                    isShowingImportErrorAlert = true
+                    return
+                }
+                defer { url.stopAccessingSecurityScopedResource() }
+                do {
+                    let data = try Data(contentsOf: url)
+                    // 尝试先按多模态 JSON 格式解析
+                    if let importedMessages = try? JSONDecoder().decode([ExportMessage].self, from: data) {
+                        importMessages(importedMessages: importedMessages)
+                    }
+                    // 如果失败，再尝试解析纯文本 JSON 格式
+                    else if let simpleMessages = try? JSONDecoder().decode([[String: String]].self, from: data) {
+                        importSimpleMessages(simpleMessages: simpleMessages)
+                    } else {
+                        importError = "文件格式错误，请检查文件是否为导出时的正确格式。"
+                        isShowingImportErrorAlert = true
+                    }
+                } catch {
+                    importError = error.localizedDescription
+                    isShowingImportErrorAlert = true
+                }
+            }
+        case .failure(let error):
+            importError = error.localizedDescription
+            isShowingImportErrorAlert = true
+        }
+    }
+
     /// 用于触发滚动的状态集合
     private struct ScrollTriggerState: Equatable {
         var lastID: UUID?
@@ -609,6 +986,78 @@ struct ChatView: View {
         var showImageSize: Bool
     }
     
+    /// Route saved excerpts through this existing chat, preserving its composer/run.
+    /// First reveal the lazy row, then correct its position after Markdown finishes layout.
+    @MainActor
+    private func revealMatchedSource(using proxy: ScrollViewProxy) {
+        guard let id = effectiveMatchedMessageID,
+              let index = allMessages.firstIndex(where: { $0.id == id }) else {
+            cancelSourceScroll()
+            return
+        }
+        cancelSourceScroll()
+        revealedSourceRequest = sourceDestination?.id
+        autoFollowController.cancelPendingScroll()
+        autoFollowController.pauseFollowing(reason: "savedSource")
+        let count = allMessages.count - index
+        if count > loadedMessageCount {
+            loadedMessageCount = min(allMessages.count, max(count + 5, loadedMessageCount))
+            chatTemps = Array(allMessages.suffix(loadedMessageCount))
+        }
+        pendingSourceScroll = id
+        scheduleSourceScroll(using: proxy)
+    }
+
+    /// The initial reveal and Markdown correction share a cancellable request.
+    /// A retained proxy must never position a detached or replaced transcript.
+    private func scheduleSourceScroll(using proxy: ScrollViewProxy) {
+        guard let id = pendingSourceScroll else { return }
+        guard effectiveMatchedMessageID == id, chatTemps.contains(where: { $0.id == id }) else {
+            cancelSourceScroll()
+            return
+        }
+        guard !sourceScrollHasRevealed || sourceScrollNeedsCorrection,
+              sourceScrollTask == nil, nativeSelectionIDs.isEmpty,
+              !autoFollowController.state.isUserInteracting else { return }
+        let conversationID = effectiveChatSessionID
+        guard transcriptScrollView.layout(conversationID: conversationID) != nil else { return }
+        let viewportGeneration = transcriptScrollView.generation
+        let requestGeneration = sourceScrollGeneration
+        sourceScrollTask = Task { @MainActor in
+            await Task.yield()
+            guard !Task.isCancelled, sourceScrollGeneration == requestGeneration else { return }
+            sourceScrollTask = nil
+            guard pendingSourceScroll == id else { return }
+            guard effectiveMatchedMessageID == id, effectiveChatSessionID == conversationID,
+                  chatTemps.contains(where: { $0.id == id }) else {
+                cancelSourceScroll()
+                return
+            }
+            guard nativeSelectionIDs.isEmpty, !autoFollowController.state.isUserInteracting,
+                  let layout = transcriptScrollView.layout(conversationID: conversationID,
+                      expectedGeneration: viewportGeneration) else { return }
+            if layout.hasScrollableContent {
+                var transaction = Transaction(animation: nil)
+                transaction.disablesAnimations = true
+                withTransaction(transaction) { proxy.scrollTo(id, anchor: .center) }
+            }
+            sourceScrollHasRevealed = true
+            if sourceScrollNeedsCorrection {
+                pendingSourceScroll = nil
+                sourceScrollNeedsCorrection = false
+            }
+        }
+    }
+
+    private func cancelSourceScroll() {
+        sourceScrollTask?.cancel()
+        sourceScrollTask = nil
+        sourceScrollGeneration = UUID()
+        pendingSourceScroll = nil
+        sourceScrollHasRevealed = false
+        sourceScrollNeedsCorrection = false
+    }
+
     private var scrollTriggerState: ScrollTriggerState {
         ScrollTriggerState(
             lastID: chatTemps.last?.id,
@@ -636,7 +1085,7 @@ struct ChatView: View {
                         Spacer()
                         if loadHistoryMessages {
                             ProgressView()
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                                 .padding()
                         }
                         Spacer()
@@ -645,7 +1094,6 @@ struct ChatView: View {
                     // 聊天记录
                     ForEach(chatTemps) { msg in
                         createChatBubble(for: msg)
-                            .sensoryFeedback(.success, trigger: isOutPut)
                             .id(msg.id)
                     }
 
@@ -653,77 +1101,296 @@ struct ChatView: View {
 
                     // 底部留白
                     Color.clear
-                        .padding(.bottom, dynamicBottomPadding())
+                        // Give the lazy scroll target an actual finite extent;
+                        // padding around an unconstrained Color has no intrinsic
+                        // content height during initial/reattachment measurement.
+                        .frame(height: dynamicBottomPadding())
                         .animation(.easeInOut(duration: 0.5), value: dynamicBottomPadding())
-                        .id("BottomPadding")
+                        .id(TranscriptBottomTarget(conversationID: effectiveChatSessionID))
+                }
+                .onChange(of: agentSessionOwner.consent.pending?.id) { _, _ in
+                    traceAutoFollowBoundary("consent-changed")
+                    scheduleAutoFollow(using: scrollViewProxy, animated: true)
                 }
                 .padding(.horizontal)
                 .frame(maxWidth: .infinity)
+                .chatScrollImmediateContentTouches { [transcriptScrollView, conversationID = effectiveChatSessionID] scrollView in
+                    transcriptScrollView.bind(scrollView, conversationID: conversationID)
+                    traceAutoFollowBoundary(scrollView == nil ? "viewport-unbound" : "viewport-bound")
+                    scheduleScrollWhenViewportReady(using: scrollViewProxy)
+                }
             }
-            .defaultScrollAnchor(ifScroll ? .top : .bottom)
+            .hanlinFeedback(.success, trigger: isOutPut)
+            // One measured policy owns positioning. A mutable default bottom
+            // anchor also restores offsets during HostingScrollView attachment,
+            // bypassing the finite-viewport and current-request checks below.
             .scrollIndicators(.hidden)
+            .accessibilityIdentifier("hanlin-chat-transcript")
             .refreshable {
                 loadMoreMessages()
             }
-            .onChange(of: scrollTriggerState) {
-                if !showScrollToBottomButton {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        scrollToLastMessage(using: scrollViewProxy)
-                    }
+            .onChange(of: needScrollToBottomButton) {
+                cancelSourceScroll()
+                autoFollowController.resumeFollowing()
+                scheduleAutoFollow(using: scrollViewProxy, animated: true, force: true)
+            }
+            .task(id: sourceDestination?.id) {
+                revealMatchedSource(using: scrollViewProxy)
+            }
+            .onChange(of: allMessages.count) {
+                if let sourceDestination, revealedSourceRequest != sourceDestination.id {
+                    revealMatchedSource(using: scrollViewProxy)
                 }
             }
-            .onChange(of: [needScrollToBottomButton, ifScroll]) {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    scrollToLastMessage(using: scrollViewProxy)
-                }
+            .task(id: effectiveMatchedMessageID) {
+                revealMatchedSource(using: scrollViewProxy)
             }
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    if let matchedID = matchedMessageID {
-                        if chatTemps.contains(where: { $0.id == matchedID }) {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                scrollViewProxy.scrollTo(matchedID, anchor: .center)
-                            }
-                        } else {
-                            print("⚠️ matchedMessageID 不在 chatTemps 中，无法滚动")
-                        }
-                    }
-                }
-            }
-            .onTapGesture {
-                isInputActive = false
-                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                showTemperatureSlider = false
-                showTopPSlider = false
-                showMaxTokensSlider = false
-                showMaxMessagesNumSlider = false
-            }
+            .environment(\.chatMarkdownSelectionActivity, { id, active in
+                if active, !nativeSelectionIDs.contains(id) {
+                    nativeSelectionIDs.insert(id)
+                    cancelSourceScroll()
+                    autoFollowController.pauseFollowing(reason: "textSelection")
+                } else if !active, nativeSelectionIDs.contains(id) { nativeSelectionIDs.remove(id) }
+            })
+            .environment(\.chatMarkdownDidRender, { messageID in
+                guard pendingSourceScroll == messageID else { return }
+                sourceScrollNeedsCorrection = true
+                scheduleSourceScroll(using: scrollViewProxy)
+            })
+            // The original text views own link and selection interactions.
+            // Dismiss composer controls alongside their tap recognizers instead
+            // of cancelling the native link tap before its delegate can route it.
             .simultaneousGesture(
-                DragGesture().onChanged { _ in
+                TapGesture().onEnded { _ in
                     isInputActive = false
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    if nativeSelectionIDs.isEmpty {
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    }
                     showTemperatureSlider = false
                     showTopPSlider = false
                     showMaxTokensSlider = false
                     showMaxMessagesNumSlider = false
                 }
             )
-            .onScrollGeometryChange(for: Bool.self) { geometry in
-                let isScrolledToBottom = geometry.contentOffset.y + geometry.containerSize.height > geometry.contentSize.height - geometry.contentInsets.bottom - geometry.containerSize.height/2
-                return isScrolledToBottom
-            } action: { wasScrolledToBottom, isScrolledToBottom in
-                withAnimation {
-                    showScrollToBottomButton = !isScrolledToBottom
+            .simultaneousGesture(
+                DragGesture().onChanged { _ in
+                    isInputActive = false
+                    if nativeSelectionIDs.isEmpty {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
+                    showTemperatureSlider = false
+                    showTopPSlider = false
+                    showMaxTokensSlider = false
+                    showMaxMessagesNumSlider = false
+                }
+            )
+            .onScrollGeometryChange(for: CGFloat.self) { geometry in
+                geometry.containerSize.width
+            } action: { _, newWidth in
+                if newWidth.isFinite, newWidth > 0, abs(chatContainerWidth - newWidth) > 1 {
+                    chatContainerWidth = newWidth
                 }
             }
+            .onScrollGeometryChange(for: ChatAutoFollowPosition.self) { geometry in
+                ChatAutoFollowPosition(
+                    layout: ChatAutoFollowLayout(contentHeight: Double(geometry.contentSize.height).rounded(),
+                        viewportHeight: Double(geometry.containerSize.height).rounded(),
+                        topInset: Double(geometry.contentInsets.top).rounded(),
+                        bottomInset: Double(geometry.contentInsets.bottom).rounded()),
+                    contentOffsetY: Double(geometry.contentOffset.y).rounded())
+            } action: { previous, position in
+                withAnimation(.easeOut(duration: 0.16)) {
+                    autoFollowController.updatePosition(position)
+                }
+                guard previous.layout != position.layout else { return }
+                scheduleSourceScroll(using: scrollViewProxy)
+                scheduleAutoFollow(using: scrollViewProxy, animated: false, measuredLayout: position.layout)
+            }
+            .onScrollPhaseChange { _, newPhase in
+                switch newPhase {
+                case .tracking, .interacting, .decelerating:
+                    cancelSourceScroll()
+                    autoFollowController.userInteractionBegan()
+                case .idle:
+                    refreshSettledScrollPosition()
+                    autoFollowController.userInteractionEnded()
+                case .animating:
+                    break
+                @unknown default:
+                    break
+                }
+            }
+            .onAppear {
+                transcriptScrollView.activate(conversationID: effectiveChatSessionID)
+                autoFollowController.invalidateLayout()
+                scheduleScrollWhenViewportReady(using: scrollViewProxy)
+            }
+            .task(id: effectiveChatSessionID) {
+                guard !Task.isCancelled else { return }
+                transcriptScrollView.activate(conversationID: effectiveChatSessionID)
+                scheduleScrollWhenViewportReady(using: scrollViewProxy)
+            }
+            .onDisappear {
+                guard transcriptScrollView.deactivate(conversationID: effectiveChatSessionID) else { return }
+                cancelSourceScroll()
+                autoFollowController.invalidateLayout()
+            }
+    }
+
+    private func scheduleScrollWhenViewportReady(using proxy: ScrollViewProxy) {
+        let conversationID = effectiveChatSessionID
+        transcriptScrollView.whenReady(conversationID: conversationID) {
+            guard effectiveChatSessionID == conversationID else { return }
+            refreshSettledScrollPosition()
+            scheduleSourceScroll(using: proxy)
+            scheduleAutoFollow(using: proxy, animated: false)
+        }
     }
     
-    // 聊天时滚动到最底层
-    private func scrollToLastMessage(using scrollViewProxy: ScrollViewProxy) {
-        // 使用带弹性的 Spring 动画，让滚动更柔和
-        withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.8, blendDuration: 0.5)) {
-            scrollViewProxy.scrollTo("BottomPadding", anchor: .bottom)
+    private func refreshSettledScrollPosition() {
+        guard let position = transcriptScrollView.position(conversationID: effectiveChatSessionID) else {
+            autoFollowController.invalidateLayout()
+            return
         }
+        withAnimation(.easeOut(duration: 0.16)) {
+            autoFollowController.updatePosition(position)
+        }
+    }
+
+    // 聊天时滚动到最底层
+    private func scrollToLastMessage(using scrollViewProxy: ScrollViewProxy, animated: Bool = true) {
+        let target = TranscriptBottomTarget(conversationID: effectiveChatSessionID)
+        if animated {
+            withAnimation(.easeOut(duration: 0.18)) {
+                scrollViewProxy.scrollTo(target, anchor: .bottom)
+            }
+        } else {
+            scrollViewProxy.scrollTo(target, anchor: .bottom)
+        }
+    }
+
+    private func scheduleAutoFollow(
+        using scrollViewProxy: ScrollViewProxy,
+        animated: Bool,
+        force: Bool = false,
+        measuredLayout: ChatAutoFollowLayout? = nil
+    ) {
+        guard pendingSourceScroll == nil, force || nativeSelectionIDs.isEmpty else {
+            traceAutoFollowBoundary("request-blocked-by-selection-or-source")
+            return
+        }
+        let conversationID = effectiveChatSessionID
+        guard let attachedLayout = transcriptScrollView.layout(conversationID: conversationID) else {
+            autoFollowController.invalidateLayout()
+            traceAutoFollowBoundary("request-without-current-viewport")
+            return
+        }
+        // SwiftUI can report content growth before UIKit commits contentSize.
+        // Keep that current measurement for admission instead of overwriting it
+        // with the earlier native size. Execution still rechecks the actual
+        // attached viewport, generation and scroll range below.
+        let layout = measuredLayout ?? attachedLayout
+        autoFollowController.updateLayout(layout)
+        traceAutoFollowBoundary("request", layout: layout)
+        let viewportGeneration = transcriptScrollView.generation
+        autoFollowController.scheduleScroll(animated: animated, force: force) { animate in
+            guard pendingSourceScroll == nil, force || nativeSelectionIDs.isEmpty,
+                  effectiveChatSessionID == conversationID,
+                  transcriptScrollView.layout(conversationID: conversationID,
+                      expectedGeneration: viewportGeneration)?.hasScrollableContent == true else {
+                traceAutoFollowBoundary("execution-rejected")
+                return
+            }
+            traceAutoFollowBoundary("perform")
+            scrollToLastMessage(using: scrollViewProxy, animated: animate)
+        }
+    }
+
+    private func traceAutoFollowBoundary(_ event: String, layout: ChatAutoFollowLayout? = nil) {
+        #if DEBUG || HANLIN_TESTING
+        guard ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1" else { return }
+        // Never include draft text, request arguments or tool results.
+        let geometry = layout.map {
+            "content=\($0.contentHeight) viewport=\($0.viewportHeight) top=\($0.topInset) bottom=\($0.bottomInset)"
+        } ?? "layout=unmeasured"
+        print("HANLIN_TRANSCRIPT_BOUNDARY event=\(event) mode=\(autoFollowController.state.mode.rawValue) nearBottom=\(autoFollowController.state.isNearBottom) interacting=\(autoFollowController.state.isUserInteracting) sourcePending=\(pendingSourceScroll != nil) nativeSelection=\(!nativeSelectionIDs.isEmpty) generation=\(transcriptScrollView.generation) \(geometry)")
+        #endif
+    }
+
+    private func richMessageContext(for row: ChatMessages) -> HanlinRichMessageContext? {
+        guard row.role == "assistant", let state = richPresentation.state(for: row, conversation: chatRecord,
+            conversationID: effectiveChatSessionID, context: context, temporary: TemporaryRecord) else { return nil }
+        return .init(state: state, isStreaming: isResponding && row.groupID == chatTemps.last(where: { $0.role == "assistant" })?.groupID,
+            perform: performRichAction)
+    }
+
+    @MainActor
+    private func performRichAction(_ action: PresentationAction) async throws -> PresentationValue {
+        let appID = HanlinApplicationContextRegistry.configuration(for: context.container).appIdentifier
+        guard action.identity.appID == appID, action.identity.conversationID == effectiveChatSessionID,
+              let source = chatTemps.first(where: { $0.id == action.identity.messageID && $0.role == "assistant" }),
+              !isResponding else { throw HanlinHostError.staleContext }
+        if action.name == "tool" {
+            guard modelTemp.indices.contains(selectedModelIndex), source.modelName == modelTemp[selectedModelIndex].name,
+                  let alias = action.parameters["name"]?.string else { throw HanlinHostError.staleContext }
+            let arguments = try HanlinJSONValue.decodeCanonicalJSON(JSONEncoder().encode(action.parameters["args"] ?? .object([:])))
+            guard let row = chatTemps.first(where: { $0.groupID == source.groupID && $0.agentRun != nil }),
+                  row.agentRun != nil else { throw HanlinHostError.staleContext }
+            var coordinator: AgentRunCoordinator?
+            var deniedThisInvocation = false
+            let originalSession = agentSessionOwner.session?.identity
+            func canPublish() -> Bool {
+                originalSession != nil && agentSessionOwner.session?.identity == originalSession
+                    && !chatRecord.isDeleted && !row.isDeleted
+            }
+            func publish() {
+                guard canPublish(), let coordinator else { return }
+                row.agentRun = coordinator.run
+                if activeAgentRun?.id == coordinator.runID { activeAgentRun = coordinator.run }
+                #if HANLIN_A2UI_POC
+                a2uiPresentation?.synchronizeTools(coordinator.run, isLive: true)
+                #endif
+            }
+            do {
+                let result = try await agentSessionOwner.executeInlineTool(rowID: source.id, partID: action.partID,
+                    alias: alias, arguments: arguments) { event in
+                        if case .toolApprovalChanged(let approval) = event, approval.disposition == .notApproved { deniedThisInvocation = true }
+                        if coordinator == nil, let latest = row.agentRun { coordinator = AgentRunCoordinator(continuingActivity: latest) }
+                        coordinator?.consume([event]); publish()
+                    }
+                guard canPublish() else { throw HanlinHostError.staleContext }
+                coordinator?.complete(); publish()
+                if !TemporaryRecord { try context.save() }
+                return (try? JSONDecoder().decode(PresentationValue.self, from: Data(result.utf8))) ?? .string(result)
+            } catch {
+                if Task.isCancelled || error as? HanlinHostError == .cancelled { coordinator?.cancel() }
+                else if deniedThisInvocation { coordinator?.complete() }
+                else { coordinator?.fail(error) }
+                publish()
+                if canPublish(), !TemporaryRecord { try? context.save() }
+                throw error
+            }
+        }
+        guard let event = action.parameters["event"]?.object,
+              let type = event["type"]?.string else { throw HanlinHostError.invalidArguments }
+        if type == "open_url" {
+            guard let destination = event["params"]?.object?["url"]?.string, let url = URL(string: destination),
+                  ["https", "http"].contains(url.scheme?.lowercased() ?? "") else { throw HanlinHostError.invalidArguments }
+            return await withCheckedContinuation { continuation in
+                openRichURL(url) { accepted in continuation.resume(returning: .bool(accepted)) }
+            }
+        }
+        guard type == "continue_conversation" else { throw HanlinHostError.unknownTool }
+        let arguments = try HanlinJSONValue.decodeCanonicalJSON(JSONEncoder().encode(PresentationValue.object(event)))
+        let request: HanlinHostInteractionRequest?
+        if agentSessionOwner.session != nil {
+            request = try agentSessionOwner.inlineInteraction(rowID: source.id, partID: action.partID,
+                actionID: type, arguments: arguments)
+        } else { request = nil }
+        let label = event["humanFriendlyMessage"]?.string ?? String(localized: "Form submitted", bundle: HanlinLocalization.bundle)
+        let data = String(decoding: try arguments.canonicalJSONData(), as: UTF8.self)
+        handleMessageSending(ifObservingMode: false, continuationText: label + "\n" + data, richInteraction: request)
+        return .object(["submitted": .bool(true)])
     }
 
     // 创建聊天信息
@@ -799,12 +1466,58 @@ struct ChatView: View {
                   let last = groupIndices.last else { return false }
             return idx == (first + last) / 2
         }()
+
+        let groupMessages = groupIDs.compactMap { groupID in
+            chatTemps.first(where: { $0.id == groupID })
+        }
+        let precedingSearchMessages: [ChatMessages] = {
+            guard let firstGroupIndex = groupIndices.first, firstGroupIndex > 0 else { return [] }
+            var messages: [ChatMessages] = []
+            var index = firstGroupIndex - 1
+            while index >= 0, let candidate = chatTemps[safe: index], candidate.role == "search" {
+                messages.insert(candidate, at: 0)
+                index -= 1
+            }
+            return messages
+        }()
+        let storedActivityRun = (activeAgentRun?.groupID == msg.groupID ? activeAgentRun : nil)
+            ?? groupMessages.lazy.compactMap { agentRunReadCache.run(for: $0) }.first
+        let activityRun = storedActivityRun
+            ?? LegacyAgentActivityAdapter.run(for: precedingSearchMessages + groupMessages)
+        let rawMsgText = (msg.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        let fallbackFinalAnswer = splitMarker && !groupMessages.contains(where: { !($0.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty })
+            ? (AgentTranscriptValidation.finalAnswer(in: storedActivityRun?.transcriptItems ?? [])?
+                .trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
+            : ""
+        let legacyBubbleText = !rawMsgText.isEmpty ? rawMsgText : fallbackFinalAnswer
+        #if HANLIN_A2UI_POC
+        let exactCanonicalBody = a2uiPresentation?.projection(uiRunID: activityRun?.id,
+            rowID: msg.id, text: msg.text ?? "") != nil
+        let bubbleText = exactCanonicalBody ? (msg.text ?? "") : legacyBubbleText
+        #else
+        let bubbleText = legacyBubbleText
+        #endif
         
+        let toolApproval: ChatToolApprovalPresentation? = {
+            guard groupIDs.first == msg.id,
+                  let pendingRowID = agentSessionOwner.pendingApprovalRowID,
+                  groupIDs.contains(pendingRowID),
+                  let request = agentSessionOwner.consent.pending else { return nil }
+            return ChatToolApprovalPresentation.original(request) { allowed in
+                agentSessionOwner.consent.answer(id: request.id, allowed: allowed)
+            }
+        }()
+
         // 1. 构造基础气泡
-        let bubble = ChatBubbleView(
+        let bubble = VStack(alignment: .leading, spacing: 8) {
+        if msg.role == "user", !msg.capabilityAttachments.isEmpty {
+            HanlinCapabilityAttachmentSummary(attachments: msg.capabilityAttachments)
+        }
+        ChatBubbleView(
             temporaryRecord: TemporaryRecord,
+            containerWidth: chatContainerWidth,
             id: msg.id,
-            text: msg.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "",
+            text: bubbleText,
             saveTranlatedText: msg.translatedText,
             images: msg.imageArray,
             imagesText: msg.images_text,
@@ -816,7 +1529,7 @@ struct ChatView: View {
             isToolContentExpanded: toolContentExpandedBinding,
             uploadDocument: msg.documentURLs,
             documentText: msg.document_text,
-            resources: msg.resources,
+            resources: groupIDs.last == msg.id ? groupMessages.flatMap { $0.resources ?? [] } : msg.resources,
             prompts: msg.promptUse,
             locations: msg.locationsInfo,
             routes: msg.routeInfos,
@@ -825,6 +1538,13 @@ struct ChatView: View {
             healthCards: msg.healthData,
             codeBlocks: msg.codeBlockData,
             knowledgeCard: msg.knowledgeCard,
+            nativeUIBlocks: msg.nativeUIBlocks,
+            agentRun: activityRun,
+            toolApproval: toolApproval,
+            showsAgentActivitySummary: groupIDs.first == msg.id,
+            showsAllSources: groupIDs.last == msg.id,
+            isAgentTranscriptOwner: false,
+            isRenderedByAgentTranscript: false,
             searchEngine: msg.searchEngine,
             audioAssets: msg.audioAssets,
             isVoiceExpanded: audioExpandedBinding,
@@ -842,6 +1562,10 @@ struct ChatView: View {
             operationalState: operationalState,
             operationalDescription: operationalDescription,
             onRetry: (msg.role == "assistant" || msg.role == "error") ? { retryRequest(for: msg) } : nil,
+            onContinue: msg.role == "assistant" && msg.modelFinishReason == "length" ? {
+                guard !isResponding else { return }
+                handleMessageSending(ifObservingMode: false, continuationText: String(localized: "Continue from where the answer stopped. Preserve the previous answer and do not repeat completed actions or tool calls.", bundle: HanlinLocalization.bundle))
+            } : nil,
             onDelete: {
                 // 如果是助手组消息，删除整组，否则删除单条
                 if msg.role == "assistant" {
@@ -861,6 +1585,12 @@ struct ChatView: View {
                 }
             }
         )
+        }
+        .environment(\.hanlinRichMessageContext, richMessageContext(for: msg))
+        .environment(\.chatExcerptSource, ChatExcerptSource(
+            chatRecordID: chatRecord.id, messageID: msg.id, groupID: msg.groupID,
+            runID: activityRun?.id, title: chatRecord.name ?? String(localized: "Conversation", bundle: HanlinLocalization.bundle)
+        ))
         
         // 2. 多选模式下，只在"用户消息"或"助手中点"显示勾选框
         return AnyView(Group {
@@ -907,7 +1637,7 @@ struct ChatView: View {
                                     (msg.role == "assistant"
                                      ? groupIDs.contains(where: { selectedMessageIDs.contains($0) })
                                      : selectedMessageIDs.contains(msg.id))
-                                    ? .hlGreen
+                                    ? .hanlinHLGreen
                                     : .gray)
                             }
                         }
@@ -920,11 +1650,16 @@ struct ChatView: View {
     }
     
     private func openHistory() {
+        // A disappearing/deleted view must not mutate a detached original row.
+        guard (try? HanlinConversationMutation.requireOriginal(chatRecord, in: context,
+            temporary: TemporaryRecord)) != nil else { return }
         // 如果输入框有草稿内容，则优先保存草稿
-        if !message.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            chatRecord.infoDescription = "[草稿] \(message)"
+        if !message.isEmpty {
+            chatRecord.infoDescription = "[\(String(localized: "Draft", bundle: HanlinLocalization.bundle))] \(message)"
             chatRecord.input = message
-        } else if let lastMessage = chatTemps.last {
+        } else {
+            chatRecord.input = ""
+            if let lastMessage = chatTemps.last {
             if let text = lastMessage.text,
                !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 // 如果最后一条消息有文字，则保存文字预览
@@ -940,12 +1675,13 @@ struct ChatView: View {
                 if chatTemps.count >= 2 {
                     let secondLastMessage = chatTemps[chatTemps.count - 2]
                     let previewText = secondLastMessage.text?.replacingOccurrences(of: "\n", with: " ").prefix(80)
-                    chatRecord.infoDescription = "[图像] \(previewText ?? "")"
+                    chatRecord.infoDescription = "[\(String(localized: "Image", bundle: HanlinLocalization.bundle))] \(previewText ?? "")"
                 } else {
-                    chatRecord.infoDescription = "[图像]"
+                    chatRecord.infoDescription = "[\(String(localized: "Image", bundle: HanlinLocalization.bundle))]"
                 }
-            } else {
-                chatRecord.infoDescription = ""
+                } else {
+                    chatRecord.infoDescription = ""
+                }
             }
         }
         do {
@@ -956,106 +1692,114 @@ struct ChatView: View {
     }
     
     private func newConversation() {
-        // 新建对话逻辑
-        deleteChatMessages()
-        insertDeleteMessage()
-    }
-    
-    // 插入清空消息
-    private func insertDeleteMessage() {
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        
-        ifScroll = true
-        
-        // 适配清空聊天记录的提示
-        let clearChatText: String
-        if currentLanguage.hasPrefix("zh") {
-            clearChatText = "一切都是崭新的✨"
-        } else {
-            clearChatText = "Everything is brand new ✨"
-        }
-
-        // 创建清空聊天记录的消息
-        let welcomeMessage = ChatMessages(
-            role: "information",
-            text: clearChatText,
-            reasoning: "",
-            modelDisplayName: "系统",
-            timestamp: Date(),
-            record: chatRecord
-        )
-        
-        chatTemps.append(welcomeMessage)
-        context.insert(welcomeMessage)
+        if isResponding { handleCancellation() }
+        let clearedText = HanlinConversationMutation.originalClearedText
         do {
-            try context.save()
+            guard let conversationID = chatRecord.id else { throw HanlinHostError.staleContext }
+            let replacement = try agentSessionOwner.clearHistory(conversation: chatRecord,
+                conversationID: conversationID, modelContext: context, temporary: TemporaryRecord,
+                replacementText: clearedText)
+            // Publish the success state only after the single original-store save succeeds.
+            applyClearedHistory(replacement)
         } catch {
-            print("Failed to save message: \(error)")
+            showClearChatError = true
         }
     }
-    
-    // 删除聊天记录
-    private func deleteChatMessages() {
-        chatTemps.removeAll()
-        
-        if let messages = chatRecord.messages {
-            for message in messages {
-                context.delete(message)
-            }
-        }
 
-        do {
-            try context.save()
-        } catch {
-            print("Failed to delete messages from database: \(error)")
-        }
+    private func applyClearedHistory(_ replacement: ChatMessages) {
+        guard chatTemps.count != 1 || chatTemps.first?.id != replacement.id else { return }
+        allMessages = [replacement]
+        loadedMessageCount = 1
+        chatTemps = [replacement]
+        topVisibleMessageID = replacement.id
+        selectedMessageIDs.removeAll()
+        isMultiSelectMode = false
+        cancelSourceScroll()
+        autoFollowController.invalidateLayout()
+        autoFollowController.resumeFollowing(reason: "conversationCleared")
     }
-    
-    // MARK: - 自动生成标题
-    /// 异步独立执行，不阻塞主对话
-    /// 触发条件：chatRecord.name == "新群聊" 且 user 消息数 >= 1 且 <= 3
-    private func autoGenerateTitleIfNeeded() {
-        // 检查是否为新群聊
-        guard chatRecord.name == "新群聊" else { return }
-        
-        // 统计用户消息数量
-        let userMessages = chatTemps.filter { $0.role == "user" }
-        let userCount = userMessages.count
-        guard userCount >= 1 && userCount <= 3 else { return }
-        
-        // 构建历史消息文本
-        let historyMessage = userMessages
-            .map { "- " + ($0.text ?? "") + ($0.images_text ?? "") + ($0.document_text ?? "") }
-            .joined(separator: "\n")
-        guard !historyMessage.isEmpty else { return }
-        
-        // 捕获需要的值，避免在 Task 中访问 MainActor 隔离属性
-        let currentContext = context
-        let record = chatRecord
-        
-        // 启动异步任务，不阻塞主对话
-        Task {
-            do {
-                let optimizer = SystemOptimizer(context: currentContext)
-                let title = try await optimizer.autoChatName(historyMessage: historyMessage)
-                if !title.isEmpty {
-                    await MainActor.run {
-                        chatTitle = title
-                        record.name = title
-                    }
-                }
-            } catch {
-                print("自动命名失败: \(error.localizedDescription)")
+
+    private func applyConversationChange(_ change: HanlinConversationMutation.Change) {
+        switch change.kind {
+        case .metadata:
+            chatTitle = chatRecord.name ?? "Unknown"
+            if let id = change.messageID,
+               let announcement = chatRecord.messages?.first(where: { $0.id == id }),
+               !chatTemps.contains(where: { $0.id == id }) { chatTemps.append(announcement) }
+        case .historyCleared:
+            if let id = change.messageID, let replacement = chatRecord.messages?.first(where: { $0.id == id }) {
+                applyClearedHistory(replacement)
             }
+        case .deleted:
+            chatTemps = []
+            allMessages = []
+            loadedMessageCount = 0
+            selectedMessageIDs.removeAll()
+            cancelSourceScroll()
         }
     }
-    
+
+    // MARK: - Shared automatic conversation metadata
+    private func autoGenerateTitleIfNeeded(fallbackModelID: UUID?) {
+        HanlinConversationAutoMetadata.schedule(for: chatRecord, messages: chatTemps,
+            in: context, temporary: TemporaryRecord, fallbackModelID: fallbackModelID)
+    }
+
     // 处理消息发送
-    private func handleMessageSending(ifObservingMode: Bool) {
+    private func handleMessageSending(ifObservingMode: Bool, continuationText: String? = nil, richInteraction: HanlinHostInteractionRequest? = nil) {
+        guard !agentSessionOwner.inlineToolIsRunning else { return }
+        guard modelTemp.indices.contains(selectedModelIndex) else { return }
+        let requestModelName = modelTemp[selectedModelIndex].name ?? "Unknown"
+        let requestModelID = modelTemp[selectedModelIndex].id
+        let requestModelCompany = modelTemp[selectedModelIndex].company
+        let requestCapabilities = (
+            search: modelTemp[selectedModelIndex].supportsSearch,
+            tools: modelTemp[selectedModelIndex].supportsToolUse,
+            reasoning: modelTemp[selectedModelIndex].supportsReasoning,
+            voice: modelTemp[selectedModelIndex].supportsVoiceGen)
+        let nativeInteraction: HanlinHostInteractionRequest?
+        #if HANLIN_A2UI_POC
+        let originalAction = a2uiSubmittingAction
+        a2uiSubmittingAction = nil
+        if let originalAction {
+            guard a2uiPresentation?.isCurrent(originalAction) == true,
+                  a2uiModelChoice == a2uiOriginalModelChoice else { return }
+        } else { a2uiOriginalModelChoice = a2uiModelChoice }
+        nativeInteraction = richInteraction ?? originalAction?.request
+        #else
+        nativeInteraction = richInteraction
+        #endif
+        if nativeInteraction != nil { isRetry = false; isObserving = false; retryMessagesOverride = nil }
+
+        let capabilityAttachments: [HanlinCapabilityAttachment]
+        let capabilityData: Data?
+        do {
+            if nativeInteraction != nil || ifObservingMode || continuationText != nil {
+                capabilityAttachments = []
+            } else if isRetry {
+                capabilityAttachments = try (retryMessagesOverride ?? chatTemps)
+                    .last(where: { $0.role == "user" })?.decodedCapabilityAttachments() ?? []
+            } else {
+                capabilityAttachments = composerDraft.capabilitySnapshot
+            }
+            try HanlinComposerCapabilities.validate(capabilityAttachments)
+            if !capabilityAttachments.isEmpty && !requestCapabilities.tools {
+                throw HanlinComposerCapabilityError.toolsUnsupported
+            }
+            capabilityData = capabilityAttachments.isEmpty ? nil : try JSONEncoder().encode(capabilityAttachments)
+        } catch {
+            capabilitySendError = error.localizedDescription
+            showsCapabilitySendError = true
+            return
+        }
+
+        let turnLease: HanlinConversationRunLease
+        do {
+            turnLease = try .acquire(container: context.container, conversationID: effectiveChatSessionID)
+        } catch { return }
         
         isFeedBack.toggle()
         var userMessage: ChatMessages?
-        var isSearch: Bool = false
         showPhotoSourceOptions = false
         operationalState = ""
         operationalDescription = ""
@@ -1066,30 +1810,35 @@ struct ChatView: View {
                 // 新消息建立
                 userMessage = ChatMessages(
                     role: "user",
-                    text: message,
-                    images: selectedImages,
+                    text: continuationText ?? message,
+                    images: continuationText == nil ? selectedImages : [],
                     reasoning: "",
-                    documents: selectedDocumentURLs.map { $0.absoluteString },
+                    documents: continuationText == nil ? selectedDocumentURLs.map { $0.absoluteString } : [],
                     modelName: modelTemp[selectedModelIndex].name,
                     modelDisplayName: modelTemp[selectedModelIndex].displayName,
                     timestamp: Date(),
                     record: chatRecord
                 )
-                if !selectedPrompts.isEmpty {
+                if continuationText == nil && !selectedPrompts.isEmpty {
                     let promptCards = selectedPrompts.map { PromptCard(name: $0.name ?? "无名称", content: $0.content ?? "无内容") }
                     userMessage?.promptUse = promptCards
                 }
+                userMessage?.capabilityAttachmentsData = capabilityData
                 // 写入用户发送的信息
                 if let userMessage = userMessage, !isObserving, !isRetry {
                     chatTemps.append(userMessage)
                     context.insert(userMessage)
-                    // 异步自动命名（不阻塞主对话）
-                    autoGenerateTitleIfNeeded()
                 }
-                message = ""
-                selectedImages.removeAll()
-                selectedDocumentURLs = []
-                isInputActive = false
+                if continuationText == nil {
+                    message = ""
+                    if nativeInteraction == nil {
+                        composerDraft.clearCapabilities()
+                        chatRecord.capabilityDraftData = nil
+                    }
+                    selectedImages.removeAll()
+                    selectedDocumentURLs = []
+                    isInputActive = false
+                }
             }
         } else {
             message = ""
@@ -1102,26 +1851,12 @@ struct ChatView: View {
         isObserving = ifObservingMode
         isResponding = true
         respondIndex = ifObservingMode ? 2 : 1
+        autoFollowController.beginRun()
         
         // 传输数据准备
-        var maxMessage = maxMessagesNum
-        if maxMessage < 0 {
-            maxMessage = 999
-        }
-        let messagesToSend = chatTemps.suffix(maxMessage).map { chat in
-            RequestMessage(
-                role: chat.role ?? "system",
-                text: chat.text ?? "",
-                images: chat.imageArray.isEmpty ? nil : chat.imageArray,
-                imageText: chat.images_text ?? "",
-                document: (chat.documentURLs?.isEmpty == false) ? chat.documentURLs : nil,
-                documentText: chat.document_text ?? "",
-                htmlContent: chat.htmlContent ?? "",
-                prompt: chat.promptUse,
-                modelName: chat.modelName ?? "Unknown",
-                modelDisplayName: chat.modelDisplayName ?? "Unknown"
-            )
-        }
+        let requestHistory = retryMessagesOverride ?? chatTemps
+        let messagesToSend = HanlinConversationStreamProjection.requestMessages(
+            from: requestHistory, limit: maxMessagesNum)
         
         let thisGroupID = UUID()
         // 创建助手消息占位符，并保存引用以便后续高效更新
@@ -1138,462 +1873,177 @@ struct ChatView: View {
             record: chatRecord
         )
         chatTemps.append(assistantPlaceholder)
-        var assistantMessage = assistantPlaceholder  // 保存引用，避免反复查找
         let groupBeginMessage = assistantPlaceholder
+        let agentCoordinator = AgentRunCoordinator(
+            groupID: thisGroupID,
+            providerID: requestModelCompany,
+            modelID: requestModelName
+        )
+        groupBeginMessage.agentRun = agentCoordinator.run
+                    #if HANLIN_A2UI_POC
+                    a2uiPresentation?.synchronizeTools(agentCoordinator.run, isLive: true)
+                    #endif
+        activeAgentCoordinator = agentCoordinator
+        activeAgentRun = agentCoordinator.run
+        activeAgentMessage = groupBeginMessage
+        agentSessionOwner.onApprovalEvent = { rowID, approval in
+            guard rowID == groupBeginMessage.id, activeAgentCoordinator === agentCoordinator else { return }
+            agentCoordinator.consume([.toolApprovalChanged(approval)])
+            groupBeginMessage.agentRun = agentCoordinator.run
+            activeAgentRun = agentCoordinator.run
+        }
         
         // 进行API请求
-        self.apiManager = APIManager(context: context)
+        // Register the already-created original row, not a second SDK-specific message.
+        context.insert(assistantPlaceholder)
+        let originalSDKRequest: HanlinAppAgentSessionOwner.Request?
+        if let conversationID = chatRecord.id {
+            originalSDKRequest = .init(conversation: chatRecord, conversationID: conversationID,
+                sceneID: sessionScopeID, rowID: assistantPlaceholder.id, uiRunID: agentCoordinator.runID,
+                temporary: TemporaryRecord, interaction: nativeInteraction)
+        } else { originalSDKRequest = nil }
+        let requestAPIManager = APIManager(context: context, agentSessionOwner: agentSessionOwner)
+        requestAPIManager.presentationInstructions = richPresentation.instructions(conversation: chatRecord, conversationID: effectiveChatSessionID)
+        _ = richPresentation.state(for: assistantPlaceholder, conversation: chatRecord, conversationID: effectiveChatSessionID, context: context, temporary: TemporaryRecord)
+        self.apiManager = requestAPIManager
         
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        
-        var reasoningStart: Date? = nil
-        var reasoningEnd: Date?   = nil
-        var reasoningTotal: Double? = nil
-        
+        let turnProjection = HanlinConversationStreamProjection(record: chatRecord, context: context,
+            messages: chatTemps, assistant: assistantPlaceholder, coordinator: agentCoordinator, lease: turnLease)
+        activeTurnProjection = turnProjection
+        turnLease.onRevoke {
+            guard activeTurnProjection === turnProjection else { return }
+            handleCancellation()
+        }
+
         Task {
+            defer { turnLease.release() }
             do {
-                let stream: AsyncThrowingStream<StreamData, Swift.Error> = try await apiManager!.sendStreamRequest(
+                let originalToolScope = await MCPRuntimeProvider.shared.requestScope(
+                    chatID: effectiveChatSessionID,
+                    temporary: TemporaryRecord
+                )
+                let assistantToolScope = try HanlinComposerCapabilities.scope(originalToolScope, attachments: capabilityAttachments)
+                guard activeAgentCoordinator === agentCoordinator, !Task.isCancelled else { return }
+                #if HANLIN_A2UI_POC
+                if let originalAction, a2uiPresentation?.isCurrent(originalAction) != true {
+                    throw HanlinHostError.staleContext
+                }
+                #endif
+                let stream: AsyncThrowingStream<StreamData, Swift.Error> = try await requestAPIManager.sendStreamRequest(
                     messages: messagesToSend,
-                    modelName: modelTemp[selectedModelIndex].name ?? "Unknown",
+                    modelName: requestModelName,
+                    modelRecordID: requestModelID,
                     groupID: thisGroupID,
-                    ifSearch: modelTemp[selectedModelIndex].supportsSearch && ifSearch,
-                    ifKnowledge: modelTemp[selectedModelIndex].supportsSearch && ifKnowledge,
-                    ifToolUse: modelTemp[selectedModelIndex].supportsToolUse && ifToolUse,
-                    ifThink: modelTemp[selectedModelIndex].supportsReasoning && ifThink,
-                    ifAudio: modelTemp[selectedModelIndex].supportsVoiceGen && ifAudio,
-                    ifPlanning: !modelTemp[selectedModelIndex].supportsReasoning && ifPlanning,
+                    runID: agentCoordinator.runID,
+                    ifSearch: requestCapabilities.search && ifSearch,
+                    ifKnowledge: requestCapabilities.search && ifKnowledge,
+                    ifToolUse: requestCapabilities.tools && (ifToolUse || !capabilityAttachments.isEmpty),
+                    assistantToolScope: assistantToolScope,
+                    ifThink: requestCapabilities.reasoning && ifThink,
+                    ifAudio: requestCapabilities.voice && ifAudio,
+                    ifPlanning: !requestCapabilities.reasoning && ifPlanning,
                     thinkingLength: thinkingLength,
                     isObservation: ifObservingMode,
                     temperature: temperature,
                     topP: topP,
                     maxTokens: maxTokens,
                     canvasData: chatRecord.canvas ?? CanvasData(),
-                    selectedURLs: selectedURLs,
-                    selectedPromptsContent: selectedPrompts.compactMap { $0.content },
+                    selectedURLs: nativeInteraction == nil ? selectedURLs : [],
+                    selectedPromptsContent: nativeInteraction == nil ? selectedPrompts.compactMap { $0.content } : [],
                     systemMessage: useSystemMessage ? "Default" : systemMessage,
                     selectedImageSize: selectedImageSize,
-                    imageReversePrompt: imageReversePrompt
+                    imageReversePrompt: imageReversePrompt,
+                    agentSDKRequest: originalSDKRequest
                 )
                 
                 // 接受流式数据
-                for try await data in stream {
-                    await MainActor.run {
-                        if isCancelled { return }
-                        
-                        var updated = false
-                        
-                        // 普通回复文本
-                        if let content = data.content {
-                            assistantMessage.text?.append(content)
-                            if !operationalState.isEmpty { operationalState = "" }
-                            if let start = reasoningStart, let end = reasoningEnd {
-                                let seg = end.timeIntervalSince(start)
-                                reasoningTotal = (reasoningTotal ?? 0) + seg
-                            }
-                            reasoningStart = nil
-                            reasoningEnd   = nil
-                            updated = true
-                        }
-                        
-                        // 推理文本
-                        if let reasoning = data.reasoning {
-                            let now = Date()
-                            if reasoningStart == nil { reasoningStart = now }
-                            reasoningEnd = now
-
-                            // 初始化一下，防止 nil
-                            if groupBeginMessage.reasoning == nil {
-                                groupBeginMessage.reasoning = ""
-                            }
-                            // 追加原始流出的推理片段
-                            groupBeginMessage.reasoning! += reasoning
-
-                            // 清除 <think> 标签
-                            groupBeginMessage.reasoning = groupBeginMessage.reasoning?
-                                .replacingOccurrences(
-                                    of: "<\\/?think[^>]*>?",
-                                    with: "",
-                                    options: .regularExpression
-                                )
-
-                            if !operationalState.isEmpty { operationalState = "" }
-                            updated = true
-                        }
-                        
-                        // 工具文本
-                        if let toolContent = data.toolContent {
-                            assistantMessage.toolContent = toolContent
-                            if let toolName = data.toolName {
-                                assistantMessage.toolName = toolName
-                            }
-                            updated = true
-                        }
-                        
-                        // 搜索资源信息
-                        if let resources = data.resources {
-                            assistantMessage.resources = resources
-                            updated = true
-                        }
-                        
-                        // 搜索引擎信息
-                        if let searchEngine = data.searchEngine {
-                            assistantMessage.searchEngine = searchEngine
-                            updated = true
-                        }
-                        
-                        // 图像内容
-                        if let imageContent = data.image_content, !imageContent.isEmpty {
-                            assistantMessage.imageArray = imageContent
-                            if !operationalState.isEmpty { operationalState = "" }
-                            if let start = reasoningStart, let end = reasoningEnd {
-                                let seg = end.timeIntervalSince(start)
-                                reasoningTotal = (reasoningTotal ?? 0) + seg
-                            }
-                            reasoningStart = nil
-                            reasoningEnd = nil
-                            updated = true
-                        }
-                        
-                        // 图像描述文本
-                        if let imageText = data.image_text, !imageText.isEmpty {
-                            if let index = chatTemps.lastIndex(where: { !$0.imageArray.isEmpty && ($0.images_text?.isEmpty ?? true) }),
-                               index < chatTemps.count {
-                                chatTemps[index].images_text = imageText
-                                updated = true
-                            }
-                        }
-
-                        // 文件内容文本
-                        if let documentText = data.document_text, !documentText.isEmpty {
-                            if let index = chatTemps.lastIndex(where: { $0.documents != nil && ($0.document_text?.isEmpty ?? true) }),
-                               index < chatTemps.count {
-                                chatTemps[index].document_text = documentText
-                                updated = true
-                            }
-                        }
-                        
-                        // 搜索返回文本
-                        if let searchText = data.search_text, !searchText.isEmpty {
-                            let newSearchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
-                            let searchMessage = ChatMessages(
-                                role: "search",
-                                text: newSearchText,
-                                searchEngine: data.searchEngine,
-                                modelName: "system",
-                                modelDisplayName: "system",
-                                timestamp: Date(),
-                                record: chatRecord
-                            )
-                            if let assistantIndex = chatTemps.lastIndex(where: { $0.role == "assistant" }) {
-                                chatTemps.insert(searchMessage, at: assistantIndex)
-                            } else {
-                                chatTemps.append(searchMessage)
-                            }
-                            isSearch = true
-                            updated = true
-                        }
-                        
-                        // 位置信息
-                        if let locationsInfo = data.locations_info, !locationsInfo.isEmpty {
-                            assistantMessage.locationsInfo = locationsInfo
-                            updated = true
-                        }
-                        
-                        // 路线信息
-                        if let routeInfo = data.route_info, !routeInfo.isEmpty {
-                            assistantMessage.routeInfos = routeInfo
-                            updated = true
-                        }
-                        
-                        // 事件信息
-                        if let eventsInfo = data.events, !eventsInfo.isEmpty {
-                            assistantMessage.events = eventsInfo
-                            updated = true
-                        }
-                        
-                        // 网页信息
-                        if let htmlContent = data.htmlContent, !htmlContent.isEmpty {
-                            assistantMessage.htmlContent = htmlContent
-                            updated = true
-                        }
-                        
-                        // 健康信息
-                        if let healthCard = data.health_info, !healthCard.isEmpty {
-                            assistantMessage.healthData = healthCard
-                            updated = true
-                        }
-                        
-                        // 代码信息
-                        if let codeBlock = data.code_info, !codeBlock.isEmpty {
-                            assistantMessage.codeBlockData = codeBlock
-                            updated = true
-                        }
-                        
-                        // 知识卡片
-                        if let knowledgeCard = data.knowledge_card, !knowledgeCard.isEmpty {
-                            assistantMessage.knowledgeCard = knowledgeCard
-                            updated = true
-                        }
-                        
-                        // 画布信息
-                        if let canvasInfo = data.canvas_info {
-                            do {
-                                // 调用保存接口，将未保存的 canvasInfo 持久化到 chatRecord
-                                _ = try CanvasServices.saveCanvas(
-                                    canvasInfo,
-                                    to: chatRecord,
-                                    in: context
-                                )
-                                assistantMessage.showCanvas = true
-                                updated = true
-                            } catch {
-                                // 保存失败时的处理
-                                print("保存画布失败：\(error)")
-                                // 可根据需要弹 alert 或者设置一个 error 状态供 UI 展示
-                            }
-                        }
-                        
-                        // 语音信息
-                        if let asset = data.audioAsset {
-                            assistantMessage.audioAssets = [asset]
-                            assistantMessage.audioExpanded = true
-                            updated = true
-                        }
-                        
-                        // 更新操作状态文本
-                        if let stateText = data.operationalState, !stateText.isEmpty {
-                            operationalState = stateText
-                            updated = true
-                        }
-                        
-                        // 更新操作状态描述
-                        if let descriptionText = data.operationalDescription, !descriptionText.isEmpty {
-                            // 1. 去掉首尾空格和换行
-                            let trimmed = descriptionText
-                                .trimmingCharacters(in: .whitespacesAndNewlines)
-                            
-                            // 2. 折叠多行间的连续空白（包括空格、制表符）成一个换行
-                            let collapsedNewlines = trimmed.replacingOccurrences(
-                                of: "\\s*\\n+\\s*",
-                                with: "\n",
-                                options: .regularExpression
-                            )
-                            
-                            // 3. 折叠多余的连续空格或制表符成一个普通空格
-                            let normalized = collapsedNewlines.replacingOccurrences(
-                                of: "[ \\t]{2,}",
-                                with: " ",
-                                options: .regularExpression
-                            )
-                            
-                            // 4. 再追加到 operationalDescription
-                            operationalDescription.append("\n\(normalized)")
-                            updated = true
-                        }
-                        
-                        // 更新信息
-                        if updated {
-                            let currentTime = Date()
-                            if currentTime.timeIntervalSince(lastUpdateTime) > refreshInterval {
-                                assistantMessage.id = UUID()
-                                assistantMessage.timestamp = currentTime
-//                                if outPutFeedBackEnabled { isOutPut.toggle() }
-                                lastUpdateTime = currentTime
-                            }
-                            
-                            if let start = reasoningStart, let end = reasoningEnd {
-                                let closed = reasoningTotal ?? 0
-                                let openSeg = end.timeIntervalSince(start)
-                                let totalSeconds = closed + openSeg
-                                
-                                let text: String
-                                if currentLanguage.hasPrefix("zh") {
-                                    if totalSeconds < 60 {
-                                        text = String(format: "已思考%.1f秒", totalSeconds)
-                                    } else if totalSeconds < 3600 {
-                                        let minutes = Int(totalSeconds) / 60
-                                        let seconds = totalSeconds - Double(minutes * 60)
-                                        text = String(format: "已思考%d分钟%.1f秒", minutes, seconds)
-                                    } else {
-                                        // 支持小时
-                                        let hours = Int(totalSeconds) / 3600
-                                        let remainder = Int(totalSeconds) % 3600
-                                        let minutes = remainder / 60
-                                        let seconds = Double(remainder % 60)
-                                        text = String(format: "已思考%d小时%d分钟%.1f秒", hours, minutes, seconds)
-                                    }
-                                } else {
-                                    if totalSeconds < 60 {
-                                        text = String(format: "Thought for %.1f sec", totalSeconds)
-                                    } else if totalSeconds < 3600 {
-                                        let minutes = Int(totalSeconds) / 60
-                                        let seconds = totalSeconds - Double(minutes * 60)
-                                        text = String(format: "Thought for %d min %.1f sec", minutes, seconds)
-                                    } else {
-                                        // 支持小时
-                                        let hours = Int(totalSeconds) / 3600
-                                        let remainder = Int(totalSeconds) % 3600
-                                        let minutes = remainder / 60
-                                        let seconds = Double(remainder % 60)
-                                        text = String(format: "Thought for %d hr %d min %.1f sec", hours, minutes, seconds)
-                                    }
-                                }
-                                if text != groupBeginMessage.reasoningTime, !text.isEmpty {
-                                    groupBeginMessage.reasoningTime = text
-                                }
-                            }
-                        }
-                        
-                        if let split = data.splitMarkers {
-                            assistantMessage.reasoning = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines)
-                            context.insert(assistantMessage)
-                            // 创建助手消息占位符，并保存引用以便后续高效更新
-                            let newPlaceholder = ChatMessages(
-                                role: "assistant",
-                                text: "",
-                                images: nil,
-                                reasoning: "",
-                                documents: nil,
-                                modelName: split.modelName,
-                                modelDisplayName: split.modelDisplayName,
-                                groupID: split.groupID,
-                                timestamp: Date(),
-                                record: chatRecord
-                            )
-                            chatTemps.append(newPlaceholder)
-                            assistantMessage = newPlaceholder
-                        }
-                        
-                        // 异常提醒
-                        if let error = data.errorInfo, !error.isEmpty {
-                            var errorMessage = ""
-                            if error == "length" {
-                                errorMessage = currentLanguage.hasPrefix("zh") ? "⚠️ 输出长度到达模型最大输出长度！可在右上角模型参数中重新设置输出长度。" : "⚠️ The output length has reached the model's maximum output length! You can reset the output length in the model parameters at the top right corner."
-                            } else if error == "sensitive" {
-                                errorMessage = currentLanguage.hasPrefix("zh") ? "⚠️ 包含敏感内容！" : "⚠️ Contains sensitive content!"
-                            } else {
-                                errorMessage = error
-                            }
-                            if !errorMessage.isEmpty {
-                                let infoMessage = ChatMessages(
-                                    role: "information",
-                                    text: errorMessage,
-                                    images: [],
-                                    reasoning: "",
-                                    documents: nil,
-                                    modelName: "system",
-                                    modelDisplayName: "system",
-                                    timestamp: Date(),
-                                    record: chatRecord
-                                )
-                                
-                                chatTemps.append(infoMessage)
-                            }
-                        }
-                    }
+                let presentationBuffer = HanlinChatStreamBuffer { data in
+                    guard !isCancelled, activeAgentCoordinator === agentCoordinator else { return }
+                    #if HANLIN_A2UI_POC
+                    let canonical = a2uiPresentation?.hasCanonicalParts(
+                        uiRunID: agentCoordinator.runID, rowID: groupBeginMessage.id) == true
+                    #else
+                    let canonical = false
+                    #endif
+                    turnProjection.messages = chatTemps
+                    turnProjection.consume(data, hasCanonicalParts: canonical)
+                    activeAgentRun = agentCoordinator.run
+                    #if HANLIN_A2UI_POC
+                    a2uiPresentation?.synchronizeTools(agentCoordinator.run, isLive: true)
+                    #endif
+                    chatTemps = turnProjection.messages
+                    operationalState = turnProjection.operationalState
+                    operationalDescription = turnProjection.operationalDescription
                 }
-                
-                // 流结束后的处理必须在主线程执行
+                // Deliver pending text before finalization or an error. A cancelled
+                // or replaced run is rejected by the callback's ownership guard.
+                defer { presentationBuffer.flush(); presentationBuffer.cancel() }
+                for try await data in stream {
+                    try Task.checkCancellation()
+                    presentationBuffer.append(data)
+                }
+                presentationBuffer.flush()
+
                 await MainActor.run {
+                    guard activeAgentCoordinator === agentCoordinator else { return }
                     isObserving = false
                     isResponding = false
                     respondIndex = 0
-                    
-                    // 最终判断：仅当助手消息既没有文本又没有图片时，视为请求异常
-                    if chatTemps.firstIndex(where: { $0 === assistantMessage }) != nil {
-                        let textContent = assistantMessage.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-                        let reasoningContent = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-                        if textContent.isEmpty && reasoningContent.isEmpty && assistantMessage.imageArray.isEmpty {
-                            operationalState = ""
-                            operationalDescription = ""
-                            assistantMessage.text = currentLanguage.hasPrefix("zh") ? "⚠️ 生成内容为空，请重新尝试！" : "⚠️ Generated content is empty, please try again!"
-                            assistantMessage.role = "error"
-                            assistantMessage.modelName = "system"
-                            assistantMessage.modelDisplayName = "system"
-                        } else {
-                            
-                            // 一切正常，进行数据库保存操作
-                            do {
-                                if outPutFeedBackEnabled { isOutPut.toggle() }
-                                operationalState = ""
-                                operationalDescription = ""
-                                // 去除文本两端的换行符
-                                assistantMessage.text = textContent
-                                assistantMessage.reasoning = assistantMessage.reasoning?.trimmingCharacters(in: .whitespacesAndNewlines)
-                                
-                                // 写入搜索消息（如果存在）
-                                if let searchMessage = chatTemps.last(where: { $0.role == "search" }), isSearch {
-                                    searchMessage.record = chatRecord
-                                    context.insert(searchMessage)
-                                }
-                                
-                                context.insert(assistantMessage)
-                                
-                                if let outputText = assistantMessage.text?
-                                    .replacingOccurrences(of: "\n", with: " ")
-                                    .trimmingCharacters(in: .whitespacesAndNewlines),
-                                   !outputText.isEmpty {
-                                    let previewText = outputText.prefix(80)
-                                    chatRecord.infoDescription = "\(previewText)"
-                                    chatRecord.lastEdited = assistantMessage.timestamp
-                                } else if !assistantMessage.imageArray.isEmpty {
-                                    if chatTemps.count >= 2,
-                                       let previousMessage = chatTemps[safe: chatTemps.count - 2] {
-                                        let previewText = previousMessage.text?
-                                            .replacingOccurrences(of: "\n", with: " ")
-                                            .trimmingCharacters(in: .whitespacesAndNewlines)
-                                            .prefix(80) ?? ""
-                                        chatRecord.infoDescription = "[图像] \(previewText)"
-                                        chatRecord.lastEdited = previousMessage.timestamp
-                                    } else {
-                                        chatRecord.infoDescription = "[图像]"
-                                        chatRecord.lastEdited = assistantMessage.timestamp
-                                    }
-                                }
-                                
-                                try context.save()
-                                
-                            } catch {
-                                let syncErrorText: String
-                                if currentLanguage.hasPrefix("zh") {
-                                    syncErrorText = "⚠️ 数据同步失败: \(error.localizedDescription)，本轮问答不会被同步。"
-                                } else {
-                                    syncErrorText = "⚠️ Data synchronization failed: \(error.localizedDescription). This round of Q&A will not be synchronized."
-                                }
-                                let errorMessageShow = ChatMessages(
-                                    role: "information",
-                                    text: syncErrorText,
-                                    modelDisplayName: "system",
-                                    timestamp: Date(),
-                                    record: chatRecord
-                                )
-                                chatTemps.append(errorMessageShow)
-                                operationalState = ""
-                                operationalDescription = ""
-                            }
-                        }
+                    #if HANLIN_A2UI_POC
+                    let canonical = a2uiPresentation?.hasCanonicalParts(
+                        uiRunID: agentCoordinator.runID, rowID: groupBeginMessage.id) == true
+                    let structured = a2uiPresentation?.hasStructuredContent(
+                        uiRunID: agentCoordinator.runID, rowID: groupBeginMessage.id,
+                        text: (canonical ? groupBeginMessage : turnProjection.assistantMessage).text ?? "") == true
+                    #else
+                    let canonical = false
+                    let structured = false
+                    #endif
+                    do {
+                        turnProjection.messages = chatTemps
+                        try turnProjection.finish(hasCanonicalParts: canonical, hasStructuredContent: structured)
+                        if turnProjection.completionStatus == "completed", outPutFeedBackEnabled { isOutPut.toggle() }
+                    } catch {
+                        turnProjection.appendPersistenceError(error)
+                    }
+                    Task { await requestAPIManager.completeAgentDiagnostics(status: turnProjection.completionStatus) }
+                    #if HANLIN_A2UI_POC
+                    a2uiPresentation?.synchronizeTools(agentCoordinator.run, isLive: true)
+                    #endif
+                    chatTemps = turnProjection.messages
+                    operationalState = turnProjection.operationalState
+                    operationalDescription = turnProjection.operationalDescription
+                    activeAgentRun = agentCoordinator.run
+                    autoFollowController.runEnded()
+                    activeAgentCoordinator = nil
+                    activeAgentMessage = nil
+                    activeTurnProjection = nil
+                    if turnProjection.completionStatus == "completed", !turnLease.isRevoked, !Task.isCancelled {
+                        // Release the primary model before background metadata, especially LOCAL.
+                        turnLease.release()
+                        autoGenerateTitleIfNeeded(fallbackModelID: requestModelID)
                     }
                 }
                 
             } catch {
                 // 响应异常处理
                 await MainActor.run {
-                    if let index = chatTemps.lastIndex(where: { $0.role == "assistant" }),
-                       index < chatTemps.count {
-                        operationalState = ""
-                        operationalDescription = ""
-                        let responseErrorText: String
-                        if currentLanguage.hasPrefix("zh") {
-                            responseErrorText = "⚠️ 响应错误：\(error.localizedDescription)"
-                        } else {
-                            responseErrorText = "⚠️ Response error: \(error.localizedDescription)"
-                        }
-                        chatTemps[index].text = responseErrorText
-                        chatTemps[index].role = "error"
-                        chatTemps[index].modelDisplayName = "system"
-                        isResponding = false
-                        respondIndex = 0
-                    }
+                    guard activeAgentCoordinator === agentCoordinator else { return }
+                    turnProjection.fail(error)
+                    Task { await requestAPIManager.completeAgentDiagnostics(status: "failed", error: error) }
+                    #if HANLIN_A2UI_POC
+                    a2uiPresentation?.synchronizeTools(agentCoordinator.run, isLive: true)
+                    #endif
+                    chatTemps = turnProjection.messages
+                    operationalState = turnProjection.operationalState
+                    operationalDescription = turnProjection.operationalDescription
+                    activeAgentRun = agentCoordinator.run
+                    autoFollowController.runEnded()
+                    activeAgentCoordinator = nil
+                    activeAgentMessage = nil
+                    activeTurnProjection = nil
+                    isResponding = false
+                    respondIndex = 0
                 }
             }
         }
@@ -1601,37 +2051,37 @@ struct ChatView: View {
     
     // 打断操作
     private func handleCancellation() {
+        agentSessionOwner.cancel()
         
         isFeedBack.toggle()
         isCancelled = true
         
-        apiManager?.cancelCurrentRequest()
+        let cancelledAPIManager = apiManager
+        cancelledAPIManager?.cancelCurrentRequest()
+        Task { await cancelledAPIManager?.completeAgentDiagnostics(status: "cancelled") }
+        if let projection = activeTurnProjection {
+            projection.messages = chatTemps
+            projection.cancel()
+            chatTemps = projection.messages
+            activeAgentRun = projection.agentCoordinator.run
+            #if HANLIN_A2UI_POC
+            a2uiPresentation?.synchronizeTools(projection.agentCoordinator.run, isLive: true)
+            #endif
+        } else {
+            HanlinConversationStreamProjection.appendCancellation(
+                to: &chatTemps, record: chatRecord, context: context)
+        }
+        activeTurnProjection = nil
+        activeAgentCoordinator = nil
+        autoFollowController.runEnded()
+        autoFollowController.cancelPendingScroll()
+        activeAgentMessage = nil
         
         isObserving = false
         isResponding = false
         respondIndex = 0
         operationalState = ""
         operationalDescription = ""
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        let responseInterruptedText: String
-        if currentLanguage.hasPrefix("zh") {
-            responseInterruptedText = "🛑 响应已打断"
-        } else {
-            responseInterruptedText = "🛑 Response interrupted"
-        }
-        
-        let infoMessage = ChatMessages(
-            role: "information",
-            text: responseInterruptedText,
-            modelName: "system",
-            modelDisplayName: "system",
-            timestamp: Date(),
-            record: chatRecord
-        )
-        
-        chatTemps.append(infoMessage)
-        context.insert(infoMessage)
-        
         if isRetry {
             isRetry = false
         }
@@ -1642,54 +2092,23 @@ struct ChatView: View {
     
     // 重新请求
     private func retryRequest(for message: ChatMessages) {
-        // 1. 获取 record.messages 和 chatTemps 中的索引
-        guard let recordMsgs = chatRecord.messages,
-              let startIndex = recordMsgs.lastIndex(where: { $0.id == message.id }),
-              let tempIndex  = chatTemps.lastIndex(where:     { $0.id == message.id })
-        else { return }
-
-        let targetGroupID = message.groupID
-
-        // 2. 向前回溯，寻找连续的 assistant 同组消息的起点
-        var deleteStartIndex = startIndex
-        var backIdx = startIndex - 1
-        while backIdx >= 0 {
-            let prev = recordMsgs[backIdx]
-            if prev.role == "assistant" && prev.groupID == targetGroupID {
-                deleteStartIndex = backIdx
-                backIdx -= 1
-            } else {
-                break
+        let previousMessages = chatTemps
+        guard ChatTurnStateOperations.cleanupTurnForRetry(
+            targetMessage: message,
+            chatTemps: &chatTemps,
+            context: nil
+        ) else { return }
+        let remainingIDs = Set(chatTemps.map(\.id))
+        let removedMessages = previousMessages.filter { !remainingIDs.contains($0.id) }
+        let ctx = context
+        DispatchQueue.main.async {
+            for removed in removedMessages {
+                ctx.delete(removed)
             }
+            try? ctx.save()
         }
 
-        // 3. 删除 record 中从 deleteStartIndex 到末尾的所有消息
-        for idx in deleteStartIndex..<recordMsgs.count {
-            context.delete(recordMsgs[idx])
-        }
-        do {
-            try context.save()
-        } catch {
-            print("删除消息失败: \(error)")
-            return
-        }
-
-        // 4. 在 chatTemps 数组中，同样向前回溯再删除
-        var tempDeleteStart = tempIndex
-        var tempBack = tempIndex - 1
-        while tempBack >= 0 {
-            guard let prevTemp = chatTemps[safe: tempBack] else { break }
-            if prevTemp.role == "assistant" && prevTemp.groupID == targetGroupID {
-                tempDeleteStart = tempBack
-                tempBack -= 1
-            } else {
-                break
-            }
-        }
-        // 从 tempDeleteStart 到末尾一起移除
-        chatTemps.removeSubrange(tempDeleteStart...)
-
-        // 5. 标记重试并重新发送
+        retryMessagesOverride = nil
         isRetry = true
         handleMessageSending(ifObservingMode: isObserving)
         isRetry = false
@@ -1906,4 +2325,78 @@ struct ChatView: View {
 
 extension Notification.Name {
     static let scrollToModelIndex = Notification.Name("scrollToModelIndex")
+}
+
+@MainActor
+enum ChatTurnStateOperations {
+    @discardableResult
+    static func upsertSearchMessage(
+        existing: ChatMessages?,
+        text: String,
+        searchEngine: String?,
+        assistantMessage: ChatMessages,
+        record: ChatRecords,
+        in chatTemps: inout [ChatMessages]
+    ) -> ChatMessages {
+        if let existing {
+            existing.text = text
+            if let searchEngine, !searchEngine.isEmpty {
+                existing.searchEngine = searchEngine
+            }
+            if !chatTemps.contains(where: { $0.id == existing.id }) {
+                if let assistantIndex = chatTemps.firstIndex(where: { $0.id == assistantMessage.id }) {
+                    chatTemps.insert(existing, at: assistantIndex)
+                } else {
+                    chatTemps.append(existing)
+                }
+            }
+            return existing
+        }
+
+        let searchMsg = ChatMessages(
+            role: "search",
+            text: text,
+            searchEngine: searchEngine,
+            modelName: "system",
+            modelDisplayName: "system",
+            timestamp: Date(),
+            record: record
+        )
+        if let assistantIndex = chatTemps.firstIndex(where: { $0.id == assistantMessage.id }) {
+            chatTemps.insert(searchMsg, at: assistantIndex)
+        } else {
+            chatTemps.append(searchMsg)
+        }
+        return searchMsg
+    }
+
+    @discardableResult
+    static func cleanupTurnForRetry(
+        targetMessage: ChatMessages,
+        chatTemps: inout [ChatMessages],
+        context: ModelContext? = nil
+    ) -> Bool {
+        guard let tempIndex = chatTemps.lastIndex(where: { $0.id == targetMessage.id }) else {
+            return false
+        }
+        var groupStart = tempIndex
+        while groupStart > 0 {
+            guard let previous = chatTemps[safe: groupStart - 1] else { break }
+            if previous.role != "user" {
+                groupStart -= 1
+            } else {
+                break
+            }
+        }
+
+        let removedMessages = Array(chatTemps.suffix(from: groupStart))
+        if let context {
+            for removed in removedMessages {
+                context.delete(removed)
+            }
+            try? context.save()
+        }
+        chatTemps.removeSubrange(groupStart..<chatTemps.count)
+        return true
+    }
 }

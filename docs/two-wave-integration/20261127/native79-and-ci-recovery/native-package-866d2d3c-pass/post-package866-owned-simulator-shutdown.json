@@ -1,0 +1,11 @@
+{
+  "status": "ONLY_OWNED_PACKAGE_SIMULATOR_SHUTDOWN_AFTER_EXACT79_PASS",
+  "uuid": "233DB080-C913-4EE6-BF3D-99659F5CD475",
+  "source": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "at": "2026-11-27T05:17:11.428210+00:00",
+  "stateBefore": "Booted",
+  "stateAfter": "Shutdown",
+  "nativeReceiptSHA256": "a8743f6401561b7f54b05c2f2cb4f78ed2fcb2b2c90554c0c8d7a7669e507224",
+  "reconciliationSHA256": "e99daf1bb7bb98c14d98d33b153d88531e7e016c7e295bc964a1e4f10af2bf64",
+  "scope": "No device deletion or file cleanup; all native results, products, source and foreign simulators preserved."
+}

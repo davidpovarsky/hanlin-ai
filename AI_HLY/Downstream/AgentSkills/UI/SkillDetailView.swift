@@ -1,0 +1,661 @@
+import HanlinLocalization
+import SwiftUI
+import HanlinPlatformContracts
+
+@MainActor
+struct SkillDetailView: View {
+    let skillID: HanlinSkillID
+
+    @State private var descriptor: HanlinSkillDescriptor?
+    @State private var record: StoredSkillRecord?
+    @State private var instructionsText: String = ""
+    @State private var isEnabled: Bool = true
+    @State private var isOverride: Bool = false
+    @State private var isCustomOrImported: Bool = false
+    @State private var resources: [SkillResourceFile] = []
+
+    @State private var showEditor: Bool = false
+    @State private var showDeleteConfirm: Bool = false
+    @State private var resourceToDelete: String? = nil
+    @State private var previewResource: SkillResourceFile?
+    @State private var showAddResource: Bool = false
+    @State private var newResourcePath: String = ""
+    @State private var newResourceContent: String = ""
+    @State private var addResourceError: String? = nil
+    @State private var binaryMetadataResource: SkillResourceFile?
+    @State private var editingResource: SkillResourceFile? = nil
+    @State private var editingResourceContent: String = ""
+    @State private var editResourceError: String? = nil
+    @State private var showFileImporter: Bool = false
+
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        List {
+            headerSection
+            statusSection
+            SkillExecutionPlanSection(skillID: skillID, resources: resources)
+            summarySection
+            instructionsSection
+            preferredToolsSection
+            resourcesSection
+            sourceMetadataSection
+            actionsSection
+        }
+        .accessibilityIdentifier("hanlin-skill-detail-list")
+        .navigationTitle(descriptor?.title.preferredValue() ?? skillID.rawValue)
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            loadSkillData()
+        }
+        .sheet(isPresented: $showEditor) {
+            editorSheet
+        }
+        .sheet(item: $previewResource) { res in
+            resourcePreviewSheet(res)
+        }
+        .sheet(item: $editingResource) { res in
+            editResourceSheet(res)
+        }
+        .sheet(isPresented: $showAddResource) {
+            addResourceSheet
+        }
+        .sheet(item: $binaryMetadataResource) { res in
+            binaryMetadataSheet(res)
+        }
+        .fileImporter(
+            isPresented: $showFileImporter,
+            allowedContentTypes: [.item],
+            allowsMultipleSelection: false
+        ) { result in
+            handleFileImport(result)
+        }
+        .confirmationDialog(
+            SkillL10n.string("Delete Skill"),
+            isPresented: $showDeleteConfirm,
+            titleVisibility: .visible
+        ) {
+            Button(SkillL10n.string("Delete"), role: .destructive) {
+                deleteSkill()
+            }
+            Button(SkillL10n.string("Cancel"), role: .cancel) {}
+        } message: {
+            Text(SkillL10n.string("Are you sure you want to delete this skill?"))
+        }
+        .confirmationDialog(
+            Text("Delete Resource", bundle: HanlinLocalization.bundle),
+            isPresented: Binding(
+                get: { resourceToDelete != nil },
+                set: { if !$0 { resourceToDelete = nil } }
+            ),
+            titleVisibility: .visible
+        ) {
+            Button(SkillL10n.string("Delete"), role: .destructive) {
+                if let path = resourceToDelete {
+                    deleteResource(path)
+                    resourceToDelete = nil
+                }
+            }
+            Button(SkillL10n.string("Cancel"), role: .cancel) {
+                resourceToDelete = nil
+            }
+        } message: {
+            Text("Are you sure you want to delete this resource?", bundle: HanlinLocalization.bundle)
+        }
+    }
+
+    private var headerSection: some View {
+        Section {
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(alignment: .center, spacing: 12) {
+                    Image(systemName: iconName)
+                        .font(HanlinTypography.fixed(size: 32))
+                        .foregroundColor(.accentColor)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(descriptor?.title.preferredValue() ?? skillID.rawValue)
+                            .font(HanlinTypography.headline)
+                        Text(skillID.rawValue)
+                            .font(HanlinTypography.caption)
+                            .foregroundColor(.secondary)
+                    }
+
+                    Spacer()
+
+                    sourceBadge
+                }
+            }
+            .padding(.vertical, 4)
+        }
+    }
+
+    private var statusSection: some View {
+        Section {
+            HStack {
+                Text(SkillL10n.string("Enabled"))
+                Spacer()
+                Toggle(hanlin: "", isOn: Binding(
+                    get: { isEnabled },
+                    set: { newValue in
+                        isEnabled = newValue
+                        SkillStore.shared.setSkillEnabled(id: skillID, enabled: newValue)
+                        loadSkillData()
+                    }
+                ))
+                .labelsHidden()
+                .accessibilityLabel(SkillL10n.string("Enabled"))
+                .accessibilityIdentifier("hanlin-skill-detail-enable-toggle")
+            }
+        }
+    }
+
+    private var summarySection: some View {
+        Section(header: Text(SkillL10n.string("Description"))) {
+            Text(descriptor?.summary.preferredValue() ?? "")
+                .font(HanlinTypography.subheadline)
+        }
+    }
+
+    private var instructionsSection: some View {
+        Section(header: Text(SkillL10n.string("Instructions"))) {
+            if instructionsText.isEmpty {
+                Text("No instructions provided.", bundle: HanlinLocalization.bundle)
+                    .font(HanlinTypography.footnote)
+                    .foregroundColor(.secondary)
+            } else {
+                Text(instructionsText)
+                    .font(HanlinTypography.footnote.monospaced())
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
+    }
+
+    private var preferredToolsSection: some View {
+        Section(header: Text(SkillL10n.string("Preferred Tools"))) {
+            let tools = descriptor?.preferredToolIDs ?? []
+            if tools.isEmpty {
+                Text("None specified.", bundle: HanlinLocalization.bundle)
+                    .font(HanlinTypography.footnote)
+                    .foregroundColor(.secondary)
+            } else {
+                ForEach(tools, id: \.self) { tool in
+                    HStack {
+                        Image(systemName: "wrench.and.screwdriver")
+                            .font(HanlinTypography.caption)
+                            .foregroundColor(.secondary)
+                        Text(tool)
+                            .font(HanlinTypography.subheadline.monospaced())
+                    }
+                }
+            }
+        }
+    }
+
+    private var resourcesSection: some View {
+        Section(header: HStack {
+            Text(SkillL10n.string("Resources"))
+            Spacer()
+            if isCustomOrImported {
+                HStack(spacing: 12) {
+                    Button {
+                        showFileImporter = true
+                    } label: {
+                        Image(systemName: "square.and.arrow.down")
+                            .font(HanlinTypography.caption)
+                    }
+                    .accessibilityIdentifier("hanlin-skill-detail-import-resource-button")
+
+                    #if targetEnvironment(simulator) || DEBUG
+                    Button {
+                        importFixtureResource()
+                    } label: {
+                        Image(systemName: "doc.badge.plus")
+                            .font(HanlinTypography.caption)
+                    }
+                    .accessibilityIdentifier("hanlin-skill-detail-import-fixture-resource-button")
+                    #endif
+
+                    Button {
+                        newResourcePath = ""
+                        newResourceContent = ""
+                        addResourceError = nil
+                        showAddResource = true
+                    } label: {
+                        Image(systemName: "plus")
+                            .font(HanlinTypography.caption)
+                    }
+                    .accessibilityIdentifier("hanlin-skill-detail-add-resource-button")
+                }
+            }
+        }) {
+            if resources.isEmpty {
+                Text(SkillL10n.string("No resources"))
+                    .font(HanlinTypography.footnote)
+                    .foregroundColor(.secondary)
+            } else {
+                ForEach(resources) { res in
+                    HStack {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(res.relativePath)
+                                .font(HanlinTypography.subheadline.monospaced())
+                            Text(ByteCountFormatter.string(fromByteCount: res.byteCount, countStyle: .file))
+                                .font(HanlinTypography.caption2)
+                                .foregroundColor(.secondary)
+                        }
+
+                        Spacer()
+
+                        if !res.isBinary {
+                            Button(hanlin: "View") {
+                                previewResource = res
+                            }
+                            .buttonStyle(.bordered)
+                            .font(HanlinTypography.caption)
+                            .accessibilityIdentifier("hanlin-skill-detail-view-resource-\(res.relativePath)")
+
+                            if isCustomOrImported {
+                                Button(hanlin: "Edit") {
+                                    startEditingResource(res)
+                                }
+                                .buttonStyle(.bordered)
+                                .font(HanlinTypography.caption)
+                                .accessibilityIdentifier("hanlin-skill-detail-edit-resource-\(res.relativePath)")
+                            }
+                        } else {
+                            Button {
+                                binaryMetadataResource = res
+                            } label: {
+                                Text("Binary", bundle: HanlinLocalization.bundle)
+                                    .font(HanlinTypography.caption2)
+                                    .padding(.horizontal, 6)
+                                    .padding(.vertical, 2)
+                                    .background(Color.secondary.opacity(0.1))
+                                    .cornerRadius(4)
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityIdentifier("hanlin-skill-detail-binary-resource-\(res.relativePath)")
+                        }
+
+                        if isCustomOrImported {
+                            Button(role: .destructive) {
+                                resourceToDelete = res.relativePath
+                            } label: {
+                                Image(systemName: "trash")
+                                    .font(HanlinTypography.caption)
+                                    .foregroundColor(.red)
+                            }
+                            .buttonStyle(.borderless)
+                            .accessibilityIdentifier("hanlin-skill-detail-delete-resource-\(res.relativePath)")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var sourceMetadataSection: some View {
+        if let rec = record, (rec.originURL != nil || rec.sha256 != nil) {
+            Section(header: Text("Package Origin & Integrity", bundle: HanlinLocalization.bundle)) {
+                if let origin = rec.originURL {
+                    LabeledContent(hanlin: "Origin URL", value: origin)
+                        .accessibilityIdentifier("hanlin-skill-detail-origin-url")
+                }
+                if let sha = rec.sha256 {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("SHA-256", bundle: HanlinLocalization.bundle)
+                            .font(HanlinTypography.caption)
+                            .foregroundColor(.secondary)
+                        Text(sha)
+                            .font(HanlinTypography.caption2.monospaced())
+                            .foregroundColor(.primary)
+                    }
+                    .accessibilityIdentifier("hanlin-skill-detail-sha256")
+                }
+                LabeledContent(hanlin: "Installed", value: rec.installedAt.formatted(date: .abbreviated, time: .shortened))
+                LabeledContent(hanlin: "Updated", value: rec.updatedAt.formatted(date: .abbreviated, time: .shortened))
+            }
+        }
+    }
+
+    private var actionsSection: some View {
+        Section {
+            if isCustomOrImported {
+                Button {
+                    showEditor = true
+                } label: {
+                    Label(SkillL10n.string("Edit Skill"), systemImage: "pencil")
+                }
+                .accessibilityIdentifier("hanlin-skill-detail-edit-button")
+
+                Button(role: .destructive) {
+                    showDeleteConfirm = true
+                } label: {
+                    Label(SkillL10n.string("Delete Skill"), systemImage: "trash")
+                }
+                .accessibilityIdentifier("hanlin-skill-detail-delete-button")
+
+            } else if isOverride {
+                Button {
+                    showEditor = true
+                } label: {
+                    Label(SkillL10n.string("Edit Override"), systemImage: "pencil")
+                }
+                .accessibilityIdentifier("hanlin-skill-detail-edit-button")
+
+                Button(role: .destructive) {
+                    resetOverride()
+                } label: {
+                    Label(SkillL10n.string("Reset to Default"), systemImage: "arrow.uturn.backward")
+                }
+                .accessibilityIdentifier("hanlin-skill-detail-reset-button")
+
+            } else {
+                Button {
+                    showEditor = true
+                } label: {
+                    Label(SkillL10n.string("Customize (Override)"), systemImage: "slider.horizontal.3")
+                }
+                .accessibilityIdentifier("hanlin-skill-detail-override-button")
+            }
+        }
+    }
+
+    private var sourceBadge: some View {
+        let text: String
+        let color: Color
+        if isOverride {
+            text = SkillL10n.string("Overrides")
+            color = .orange
+        } else if let rec = record {
+            switch rec.sourceKind {
+            case .custom:
+                text = SkillL10n.string("Custom")
+                color = .purple
+            case .imported:
+                text = "Imported"
+                color = .blue
+            case .builtin:
+                text = SkillL10n.string("System")
+                color = .secondary
+            case .appPackage:
+                text = "Package"
+                color = .teal
+            }
+        } else {
+            text = SkillL10n.string("System")
+            color = .secondary
+        }
+
+        return Text(text)
+            .font(HanlinTypography.caption2)
+            .bold()
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(color.opacity(0.15))
+            .foregroundColor(color)
+            .cornerRadius(6)
+    }
+
+    private var iconName: String {
+        switch skillID.rawValue {
+        case "code": return "apple.terminal"
+        case "memory": return "archivebox"
+        case "calendar": return "calendar"
+        case "maps_location": return "map"
+        case "web_research": return "magnifyingglass"
+        case "knowledge": return "backpack"
+        case "canvas": return "pencil.and.outline"
+        case "weather": return "cloud.sun"
+        case "health": return "heart"
+        default: return "sparkles.rectangle.stack"
+        }
+    }
+
+    @ViewBuilder
+    private var editorSheet: some View {
+        if let rec = record, !isOverride {
+            SkillEditorView(mode: .editCustom(rec)) {
+                loadSkillData()
+            }
+        } else if let desc = descriptor {
+            SkillEditorView(mode: .editOverride(baseSkill: desc, existingOverride: record)) {
+                loadSkillData()
+            }
+        }
+    }
+
+    private func resourcePreviewSheet(_ res: SkillResourceFile) -> some View {
+        NavigationStack {
+            ScrollView {
+                if let url = SkillStore.shared.safeResourceURL(for: skillID, relativePath: res.relativePath),
+                   let text = try? String(contentsOf: url, encoding: .utf8) {
+                    Text(text)
+                        .font(HanlinTypography.caption.monospaced())
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                } else {
+                    Text("Unable to load resource.", bundle: HanlinLocalization.bundle)
+                        .foregroundColor(.secondary)
+                        .padding()
+                }
+            }
+            .navigationTitle(res.relativePath)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(SkillL10n.string("Close")) {
+                        previewResource = nil
+                    }
+                }
+            }
+        }
+    }
+
+    private var addResourceSheet: some View {
+        NavigationStack {
+            Form {
+                if let err = addResourceError {
+                    Section {
+                        Text(err)
+                            .foregroundColor(.red)
+                            .font(HanlinTypography.footnote)
+                    }
+                }
+
+                Section(header: Text("Resource Relative Path", bundle: HanlinLocalization.bundle)) {
+                    TextField(hanlin: "references/guide.md", text: $newResourcePath)
+                        .autocorrectionDisabled()
+                        .textInputAutocapitalization(.never)
+                        .accessibilityIdentifier("hanlin-skill-resource-path-input")
+                }
+
+                Section(header: Text("Content", bundle: HanlinLocalization.bundle)) {
+                    TextEditor(text: $newResourceContent)
+                        .frame(minHeight: 180)
+                        .font(HanlinTypography.body.monospaced())
+                        .accessibilityIdentifier("hanlin-skill-resource-content-input")
+                }
+            }
+            .navigationTitle(Text("Add Resource", bundle: HanlinLocalization.bundle))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(hanlin: "Cancel") {
+                        showAddResource = false
+                    }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(hanlin: "Save") {
+                        saveNewResource()
+                    }
+                    .bold()
+                    .disabled(newResourcePath.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    .accessibilityIdentifier("hanlin-skill-resource-save-button")
+                }
+            }
+        }
+    }
+
+    private func binaryMetadataSheet(_ res: SkillResourceFile) -> some View {
+        NavigationStack {
+            List {
+                Section(header: Text("Binary Resource Info", bundle: HanlinLocalization.bundle)) {
+                    LabeledContent(hanlin: "Relative Path", value: res.relativePath)
+                    LabeledContent(hanlin: "File Size", value: ByteCountFormatter.string(fromByteCount: res.byteCount, countStyle: .file))
+                    LabeledContent(hanlin: "Bytes", value: "\(res.byteCount)")
+                    LabeledContent(hanlin: "MIME Type", value: res.mimeType)
+                }
+            }
+            .navigationTitle(res.relativePath)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(hanlin: "Close") {
+                        binaryMetadataResource = nil
+                    }
+                }
+            }
+        }
+    }
+
+    private func editResourceSheet(_ res: SkillResourceFile) -> some View {
+        NavigationStack {
+            Form {
+                if let err = editResourceError {
+                    Section {
+                        Text(err)
+                            .foregroundColor(.red)
+                            .font(HanlinTypography.footnote)
+                    }
+                }
+
+                Section(header: Text(res.relativePath)) {
+                    TextEditor(text: $editingResourceContent)
+                        .frame(minHeight: 220)
+                        .font(HanlinTypography.body.monospaced())
+                        .accessibilityIdentifier("hanlin-skill-resource-edit-content-input")
+                }
+            }
+            .navigationTitle(Text("Edit Resource", bundle: HanlinLocalization.bundle))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(hanlin: "Cancel") {
+                        editingResource = nil
+                    }
+                    .accessibilityIdentifier("hanlin-skill-detail-edit-resource-cancel")
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(hanlin: "Save") {
+                        saveEditedResource(res)
+                    }
+                    .bold()
+                    .accessibilityIdentifier("hanlin-skill-detail-save-edit-resource-button")
+                }
+            }
+        }
+    }
+
+    private func startEditingResource(_ res: SkillResourceFile) {
+        if let url = SkillStore.shared.safeResourceURL(for: skillID, relativePath: res.relativePath),
+           let content = try? String(contentsOf: url, encoding: .utf8) {
+            editingResourceContent = content
+        } else {
+            editingResourceContent = ""
+        }
+        editResourceError = nil
+        editingResource = res
+    }
+
+    private func saveEditedResource(_ res: SkillResourceFile) {
+        do {
+            try SkillStore.shared.addOrUpdateTextResource(for: skillID, relativePath: res.relativePath, content: editingResourceContent)
+            editingResource = nil
+            loadSkillData()
+        } catch {
+            editResourceError = error.localizedDescription
+        }
+    }
+
+    private func importFixtureResource() {
+        let fixturePath = "references/fixture.txt"
+        let fixtureContent = "Deterministic fixture resource content for UI acceptance."
+        do {
+            try SkillStore.shared.addOrUpdateTextResource(for: skillID, relativePath: fixturePath, content: fixtureContent)
+            loadSkillData()
+        } catch {
+            print("Failed to import fixture resource: \(error)")
+        }
+    }
+
+    private func handleFileImport(_ result: Result<[URL], Error>) {
+        switch result {
+        case .success(let urls):
+            guard let fileURL = urls.first else { return }
+            let accessed = fileURL.startAccessingSecurityScopedResource()
+            defer { if accessed { fileURL.stopAccessingSecurityScopedResource() } }
+            let relative = "references/\(fileURL.lastPathComponent)"
+            do {
+                try SkillStore.shared.addResourceFile(for: skillID, relativePath: relative, sourceFileURL: fileURL)
+                loadSkillData()
+            } catch {
+                print("Failed to import resource file: \(error)")
+            }
+        case .failure(let error):
+            print("File import failed: \(error)")
+        }
+    }
+
+    private func saveNewResource() {
+        let clean = newResourcePath.trimmingCharacters(in: .whitespacesAndNewlines)
+        do {
+            try SkillStore.shared.addOrUpdateTextResource(for: skillID, relativePath: clean, content: newResourceContent)
+            showAddResource = false
+            loadSkillData()
+        } catch {
+            addResourceError = error.localizedDescription
+        }
+    }
+
+    private func deleteResource(_ relativePath: String) {
+        do {
+            try SkillStore.shared.deleteResource(for: skillID, relativePath: relativePath)
+            loadSkillData()
+        } catch {
+            print("Failed to delete resource: \(error)")
+        }
+    }
+
+    private func loadSkillData() {
+        let store = SkillStore.shared
+        isEnabled = store.isSkillEnabled(id: skillID)
+        isOverride = store.hasOverride(for: skillID)
+
+        let allRecords = store.allStoredRecords()
+        record = allRecords.first(where: { $0.descriptor.id == skillID })
+        isCustomOrImported = (record != nil && !record!.isOverride)
+
+        let catalog = HanlinSkillCatalog.shared
+        // Disabled Skills remain inspectable; the active execution catalog correctly omits them.
+        descriptor = catalog.resolve(id: skillID) ?? record?.descriptor
+
+        resources = store.listResources(for: skillID)
+
+        if let desc = descriptor {
+            Task {
+                instructionsText = await catalog.loadInstructions(for: desc)
+            }
+        }
+    }
+
+    private func resetOverride() {
+        SkillStore.shared.resetOverride(skillID: skillID)
+        loadSkillData()
+    }
+
+    private func deleteSkill() {
+        SkillStore.shared.deleteCustomSkill(skillID: skillID)
+        dismiss()
+    }
+}

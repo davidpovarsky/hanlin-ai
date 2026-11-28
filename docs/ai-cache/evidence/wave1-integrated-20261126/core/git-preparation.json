@@ -1,0 +1,116 @@
+{
+  "started": "2026-11-26T12:38:49.425598+00:00",
+  "steps": [
+    {
+      "command": [
+        "git",
+        "clone",
+        "--shared",
+        "--no-checkout",
+        "/Users/m1/builds/hanlin-testflight-149101-20261125/source",
+        "/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/source"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Cloning into '/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/source'...\ndone.\n"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/source",
+        "bundle",
+        "verify",
+        "/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/source-f3b55fdd.bundle"
+      ],
+      "exit": 0,
+      "stdout": "The bundle contains this ref:\nf3b55fdd3926330a9169d104bd245d877ac942c4 refs/heads/codex/hanlin-wave1-shared-chat-actions-20261126\nThe bundle requires these 15 refs:\n6d62957852ffcb428810b065b4252e5384f1374b \n58c7b3f3f289e7d9daf233d8804b7011255a90ce \n788354f8e9e863eb5e4c9007a8b58ea71d028b19 \n116cc6be0654a5d11bc56ba00e0310031107ee36 \n89f758d56a4945acc52dfe604b78835539d5df85 \nc309eb4028f905f0909777ce86e176ecdeb10251 \n40fc40cc192579c9651693cc58272f16c9fa8c04 \n8a1c9fd657030181aa6eb891b988f03eba3b82a3 \ndc13aea1585058978469679f2d15a34fa632a61a \n85e374570dba0ca464f9b64c9085b8e9f8d445d4 \naaeb055ee89d93692165d9f8290af1753323fcfe \naec179de037c439566c1699777dd4cfb492de860 \n1776ba419b9666b8fdc62fe13b3d4b68a02c9c35 \n5204240a3d0d5e05e366123bb7f7bbdb9d0ebfd0 \nbd42deb1b6fd5884f5c0f2aad8ae2e4ab1dadff4 \nThe bundle uses this hash algorithm: sha1\n",
+      "stderr": "/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/source-f3b55fdd.bundle is okay\n"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/source",
+        "fetch",
+        "--no-tags",
+        "/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/source-f3b55fdd.bundle",
+        "refs/heads/codex/hanlin-wave1-shared-chat-actions-20261126:refs/heads/wave1-validation"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "From /Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/source-f3b55fdd.bundle\n * [new branch]        codex/hanlin-wave1-shared-chat-actions-20261126 -> wave1-validation\n"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/source",
+        "sparse-checkout",
+        "init",
+        "--cone"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/source",
+        "sparse-checkout",
+        "set",
+        "Packages",
+        "Scripts",
+        "AI_HLYTests",
+        "AI_HLYUITests",
+        "docs/ai-cache/evidence/native-core-20261125/final-pin",
+        "docs/composer-capabilities"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/source",
+        "checkout",
+        "wave1-validation"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Switched to branch 'wave1-validation'\n"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/source",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit": 0,
+      "stdout": "f3b55fdd3926330a9169d104bd245d877ac942c4\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/source",
+        "status",
+        "--porcelain=v1"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "head": "f3b55fdd3926330a9169d104bd245d877ac942c4",
+  "status": "",
+  "state": "READY",
+  "finished": "2026-11-26T12:38:52.061193+00:00"
+}

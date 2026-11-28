@@ -1,0 +1,37 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/ProductSplit/Tests",
+    "-p",
+    "test_widget_state_observer.py",
+    "-v"
+  ],
+  "cwd": "/workspace/scratch/d49eec8920ef/w2-widget-state/candidate",
+  "durationSeconds": 0.31756659900565865,
+  "exitCode": 0,
+  "finishedAt": "2026-11-27T14:36:26.029563+00:00",
+  "raw": {
+    "stderr.log": {
+      "bytes": 3165,
+      "sha256": "0c9d5f8c3f0c19a25f76ff7deb856cf91a38a02df27273bc3ec516f6e631c4a0"
+    },
+    "stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "scope": "Pure observer evidence controls; no native/OS execution",
+  "sources": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "7afb1614ee417a1657f2705900cbf78df90d651c575f27f5dddc5808b757f779",
+    "Scripts/ProductSplit/Tests/test_widget_state_observer.py": "210b22c143fbbfacb9a4bfbe2b293e24400cbdde67af81659b22a3bc05459752",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "d0c5304fe391893e17877f704956e9563f20b72358f25f00f661851bdd9ca6ab",
+    "Scripts/ProductSplit/observe_widget_state.py": "06b3cf57e2607498a0ba675db2d7c200a5790e6c21f44fd27e60e761dbfef88d",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "0911b606567504151a1c2a3202e6fa41ccc281b574c40092a9b0081fdad3cfe3"
+  },
+  "startedAt": "2026-11-27T14:36:25.711995+00:00",
+  "status": "PASS"
+}

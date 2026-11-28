@@ -1,0 +1,273 @@
+{
+  "schemaVersion": 1,
+  "auditedProductCommit": "c3f9076d3d8c5d0c29b002b6e20de2fb16f009bf",
+  "initiallyInspectedCommit": "fba37e3636da21f897d6a86298b52f2149b462dd",
+  "agent": "/root/wave2_miniapps",
+  "scope": "Read-only mapping of original OS acceptance routes. No native job, workflow dispatch, alternate harness, pin change or other owner's cache mutation.",
+  "currentOSAcceptance": "NOT_RUN_BY_THIS_AUDIT",
+  "originalRealWidgetRoute": {
+    "testTarget": "AI_HLYUITests",
+    "hostProduct": "Hanlin",
+    "selectors": [
+      "AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeLegacyWidgetWithHostTerminated",
+      "AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeExpoWidgetSourceActionsWithHostTerminated",
+      "AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeScriptWidgetBooleanWithHostTerminated"
+    ],
+    "fixtureProducer": "node Scripts/Widgets/build-sample-packages.mjs",
+    "fixtureArchives": [
+      "Fixtures/Widgets/Hanlin-Widget-Legacy-Regression.scripting",
+      "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting"
+    ],
+    "originalWorkflow": ".github/workflows/validate-expo-runtime-spike.yml",
+    "originalInputs": {
+      "validation_scope": "full",
+      "simulator_suite": "native-widgets",
+      "simulator_tests": "Optional comma-separated exact XCTest selectors; requires qualified unchanged package evidence."
+    },
+    "originalTestCommand": "xcodebuild test-without-building -project \"$PROJECT_PATH\" -scheme \"$SCHEME_NAME\" -configuration \"$CONFIGURATION\" -destination \"platform=iOS Simulator,id=$SIMULATOR_UDID\" -derivedDataPath \"$DERIVED_DATA_PATH\" -clonedSourcePackagesDirPath \"$CLONED_PACKAGES_PATH\" -skipPackagePluginValidation -skipMacroValidation -parallel-testing-enabled NO -test-timeouts-enabled YES -maximum-test-execution-time-allowance 600 \"${selected_tests[@]}\" -resultBundlePath build/ExpoE2EResults.xcresult",
+    "evidenceCollector": "python3 Scripts/Widgets/capture-simulator-widget-state.py --device \"$SIMULATOR_UDID\" --bundle-id \"$BUNDLE_ID\" --group group.com.itorah.chavrusachat --output \"$LOG_DIR/widgets/widget-state-trace.json\"",
+    "proofBoundary": "Actual SpringBoard placement, source actions and ScriptWidget Toggle while Hanlin host is terminated. Does not qualify standalone MiniApps identity, all eight families, new Expo Toggle, transparency, LKG OS refresh or new Shortcuts intent.",
+    "preparationConstraint": "Original workflow line219 invokes resolve-upstreams.mjs --apply. A fresh dispatch can change pins; do not equate it with the frozen current candidate. The native owner can reuse the existing exact test-without-building route and original fixture/setup against current source-qualified built products."
+  },
+  "originalSystemSurfaceCompanion": {
+    "testTarget": "AI_HLYUITests",
+    "hostProduct": "MiniApps via XCUIApplication(com.itorah.hanlinminiapps)",
+    "selectors": [
+      "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoPlacedWidgetInvokesAllFiveRuntimes",
+      "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoLiveActivityInvokesAllFiveRuntimes",
+      "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoShortcutInvokesAllFiveRuntimes",
+      "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoSystemShareInvokesAllFiveRuntimes",
+      "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoSystemTranslationInvokesAllFiveRuntimes",
+      "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptPlacedWidgetInvokesAllFiveRuntimes",
+      "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptLiveActivityInvokesAllFiveRuntimes",
+      "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptShortcutInvokesAllFiveRuntimes",
+      "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptSystemShareInvokesAllFiveRuntimes",
+      "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptSystemTranslationInvokesAllFiveRuntimes"
+    ],
+    "methodCount": 10,
+    "sourceMembership": "AI_HLYUITests is a PBXFileSystemSynchronizedRootGroup included in the AI_HLYUITests target.",
+    "fixtureArchives": [
+      "SurfaceExpo",
+      "SurfaceNativeScript"
+    ],
+    "fixtureTitles": [
+      "Surface Expo",
+      "Surface NativeScript"
+    ],
+    "fixtureAppIDs": [
+      "hanlin.surface.expo",
+      "hanlin.surface.nativescript"
+    ],
+    "requires": "Original external read-only observer resolving actual post-XCTest installed identities/MCM containers and writing actual identity.json, surface observations and completion.json under the test runner Documents/HanlinSystemSurfaceObservation/<runUUID>. Fresh challenge, counter+1, actual invocation/durable receipt, and all five original engines are required.",
+    "forbidden": "Do not seed commands, grants, result receipts or queue state. Do not manufacture missing observer replies.",
+    "controllerLocator": "UNVERIFIED",
+    "fixtureProducerLocator": "UNVERIFIED",
+    "trackedWorkflowInvocation": "NOT_FOUND",
+    "protectedExternalOwnerLocator": "/Users/m1/builds/hanlin-current-entrypoints-20261126",
+    "externalOwnerObservation": "Source75c21 at17:50; not a terminal OS acceptance receipt.",
+    "legacyShortcutAction": "Run Script Action",
+    "legacyShortcutParameters": {
+      "Entrypoint": "surface-intent",
+      "Action": "surface.run",
+      "Parameters": "ordinary JSON with surface=shortcuts and fresh challenge"
+    },
+    "forcedLocale": {
+      "AppleLanguages": "(en)",
+      "AppleLocale": "en_US"
+    },
+    "availability": "Original test requires actual systemApps availability observation. A truly absent required simulator app may produce BLOCKED/XCTSkip with its observation; missing product registration on an available surface is a product failure.",
+    "readiness": "NOT_READY_WITHOUT_ORIGINAL_FIXTURES_AND_OBSERVER",
+    "doesNotProve": [
+      "Run MiniApp Action",
+      "Open When Run toggle/default/persistence",
+      "saved Home Screen shortcut",
+      "typed new-intent result chaining",
+      "snippet UI",
+      "OS cancellation or progress",
+      "HE/RTL",
+      "all Dynamic Island presentations"
+    ]
+  },
+  "pairedRoute": {
+    "runner": "Scripts/ProductSplit/run_paired_acceptance.py",
+    "workflow": ".github/workflows/validate-app-split.yml",
+    "scope": "miniapp_complete",
+    "runnerEnvironment": {
+      "SPLIT_EVIDENCE": "owned evidence directory",
+      "PAIRED_TEST_SCOPE": "miniapp_complete",
+      "PAIRED_SIM_RUNTIME": "com.apple.CoreSimulator.SimRuntime.iOS-27-2"
+    },
+    "command": "python3 Scripts/ProductSplit/run_paired_acceptance.py",
+    "prerequisites": "Existing original workflow preparation, both shipping products installed on one owned simulator, actual OS AppGroup container equality, verified product identities/entitlements/resources, original archives and HTTP adapter fixture server.",
+    "boundary": "54 original paired methods are app/runtime/authoring/native API acceptance. They do not operate the Shortcuts app and do not replace actual OS surfaces. Separate single-product runs are not a paired54 pass.",
+    "runnerExpectedCaseCounts": {
+      "Hanlin": 29,
+      "MiniApps": 25
+    },
+    "expectedObservedBoundary": "Original runner configuration counts, not an executed or independently enumerated current native result. Preserve selectors and reconcile actual collected cases; this audit grants no paired PASS."
+  },
+  "remainingGates": [
+    {
+      "gate": "New Run MiniApp Action and typed result chain",
+      "existingInternal": "HanlinMiniAppsTests/MiniAppsShortcutIntentTests; HanlinMiniAppsTests/NativeScriptShortcutConcurrencyTests; HanlinPlatformContractsTests/HanlinShortcutValueCodecTests",
+      "originalOSSelector": null,
+      "disposition": "Use actual Shortcuts UI on an available owned iOS27.2 simulator or signed device; native metadata/codec tests are not OS indexing/chaining proof."
+    },
+    {
+      "gate": "Open When Run default, off/on behavior and saved persistence",
+      "existingInternal": "New standalone supportedModes=[background,foreground(immediate)] and systemContext.currentMode branch; legacy Run Script Action remains foreground(immediate).",
+      "originalOSSelector": null,
+      "disposition": "Actual new and saved Shortcuts UI action required. Inspect off/on behavior, save/reopen and process restart. Never infer a user foreground request from canContinueInForeground."
+    },
+    {
+      "gate": "Saved Home Screen shortcut",
+      "existingInternal": "Prepared saved package/action admission; expiring mailbox deep link remains an invocation link.",
+      "originalOSSelector": null,
+      "disposition": "Actual Shortcuts Details > Add to Home Screen, then launch saved shortcut after process restart. Possible simulator UI coverage only if the real OS operation is available; final requested device acceptance remains separate."
+    },
+    {
+      "gate": "Native snippet and legacy Wait result UI",
+      "existingInternal": "AI_HLYTests/HanlinNativePresentationTests/testNativeSnippetHasIndependentDurableSessionsWithoutWidgetInstances; HanlinShowMiniAppSnippetIntent; HanlinInvocationSnippetIntent; HanlinAwaitInvocationResultIntent",
+      "originalOSSelector": null,
+      "disposition": "Actual Shortcuts Show MiniApp Snippet and Run/Wait result chain interaction needed. Original legacy system-surface suite does not assert snippet controls."
+    },
+    {
+      "gate": "Long-running OS progress and cancellation",
+      "existingInternal": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests plus MiniApps native ownership/executor tests",
+      "originalOSSelector": null,
+      "disposition": "Actual running shortcut cancellation and progress, foreground close, background no-UI, terminal receipt and no late replay must be observed. Existing tests exercise the owner/store, not OS cancellation."
+    },
+    {
+      "gate": "All8 widget families, new Expo Toggle, transparency and LKG OS refresh",
+      "existingInternal": "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo; AI_HLYTests/HanlinOriginalExpoWidgetTests and renderer/package regressions",
+      "originalOSSelector": "Three legacy/shared-renderer UI methods listed above provide only their explicit scope.",
+      "disposition": "Place actual standalone widgets in supported OS families/surfaces and observe appearance, desired-value interaction and refresh. Accessory placement uses the actual lock-screen/gallery interaction; fixture compilation does not prove placement."
+    },
+    {
+      "gate": "Live Activity and Dynamic Island",
+      "existingInternal": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/actualActivityKitStartsUpdatesAndEndsTheOriginalProgram(); AI_HLYTests/HanlinNativePresentationTests/testOriginalDynamicIslandCapturesAllSevenNativeRegionsAndFunctionComponents",
+      "originalOSSelector": "Expo/NativeScript LiveActivity companion cases, conditional on original observer/fixtures.",
+      "disposition": "Native case invokes real ActivityKit API but is not a visual OS proof. Companion selects notification-centre/lock-screen UI; compact/minimal/expanded Dynamic Island still needs actual supported surface and screenshots."
+    },
+    {
+      "gate": "HE/RTL system surfaces",
+      "existingInternal": "MiniAppsShortcutIntentTests language cases en/he/zh-Hans; MiniAppsCrossAppPreferencesUITests/testPreferencesUsesEnglishAndHebrewNativeToolbarLayouts; HanlinNativeWidgetRendererTests/testOriginalShapesStacksImagesLinksAndModifiersMatchNativeReferences",
+      "originalOSSelector": null,
+      "disposition": "Language strings/app toolbar/native RTL raster are bounded proof. Existing system companion forces en_US, so actual Hebrew Shortcuts/snippet/widget/foreground OS layouts remain open."
+    },
+    {
+      "gate": "Locked physical device and background lifecycle",
+      "existingInternal": "Native tests/Simulator provide bounded code and UI proof.",
+      "originalOSSelector": null,
+      "disposition": "The authorized task's real-device, locked/background and signed extension acceptance remains a physical-device gate even when parts can be simulated. No fresh device inventory or physical pass is claimed by this audit."
+    }
+  ],
+  "appleReferences": [
+    "https://developer.apple.com/documentation/appintents/appintent/supportedmodes.md",
+    "https://developer.apple.com/documentation/appintents/intentmodes/foregroundmode/immediate.md",
+    "https://developer.apple.com/documentation/appintents/intentmodes/current.md",
+    "https://support.apple.com/en-mide/guide/shortcuts/apd735880972/ios",
+    "https://developer.apple.com/documentation/widgetkit/debugging-widgets.md",
+    "https://developer.apple.com/documentation/widgetkit/previewing-widgets-and-live-activities-in-xcode.md",
+    "https://developer.apple.com/documentation/activitykit/displaying-live-data-with-live-activities.md"
+  ],
+  "sources": [
+    {
+      "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "sha256": "1a58143cd1c99691592111f37e85f5031aa63a64386aaca6d4a8f3f82389c683"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinExpoProductionE2ETests.swift",
+      "sha256": "f1448ad05a503f71c1e7324f8b67064ab4ab22b9bf3f13f0a5f58816c14e2dee"
+    },
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "sha256": "52bd71e97d08c1982fe0547d2b0c80374c373533d9abcaf885591adab87dccdb"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "sha256": "d1cc722f9fcbd712377df67afd4f9f85e353a73644cc843bd24d275391495cab"
+    },
+    {
+      "path": ".github/workflows/validate-app-split.yml",
+      "sha256": "062a32f28e96578c542e8244186174a810d60f1f7c787bababd738049c30d113"
+    },
+    {
+      "path": ".github/workflows/validate-expo-runtime-spike.yml",
+      "sha256": "410596b035e364b7e8b9111673b04c33ed7d1bd917179060e4a75d3538521295"
+    },
+    {
+      "path": "Scripts/Widgets/build-sample-packages.mjs",
+      "sha256": "ab9684c50845292b29f259264425caf70706e0c63eb3ea24a253c2dfe2575c3c"
+    },
+    {
+      "path": "Scripts/Widgets/samples.mjs",
+      "sha256": "6d57baad5c835595624e5f913153a045353a90a077b2cfdc888dd22420d5f07c"
+    },
+    {
+      "path": "Scripts/Widgets/capture-simulator-widget-state.py",
+      "sha256": "30c4301aeb77f2efe6ff3e7d81aafca366b22647a88bc96f48f9cbbeccec0402"
+    },
+    {
+      "path": "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift",
+      "sha256": "b1ed3e326e5fe968671a15900c18cffb3606641674aafa9c47dd36fd49b6b5bd"
+    },
+    {
+      "path": "HanlinMiniAppsTests/MiniAppsShortcutIntentTests.swift",
+      "sha256": "7924240896003356d83cf65d484087719ad01f217e6eb9d90fee28131d652f7e"
+    },
+    {
+      "path": "HanlinMiniAppsTests/NativeScriptShortcutConcurrencyTests.swift",
+      "sha256": "235493a3b33d2a796da655f71c84a6cace6852e9046def2d7562bb162dc4a0f2"
+    },
+    {
+      "path": "HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests.swift",
+      "sha256": "1cc69028a11ee5b2276a87931684658e6e726e1bcc77dee0153f274084d49910"
+    },
+    {
+      "path": "AI_HLYTests/HanlinNativeWidgetRendererTests.swift",
+      "sha256": "10459d521834d0070dc827246fb694fcdcc6bb0cff3af67df46be7c42a322251"
+    },
+    {
+      "path": "AI_HLYTests/HanlinNativePresentationTests.swift",
+      "sha256": "200e2c5b9e02b38b2bebbdb91e222893d4622ee3fcaf06186a09c6eda33be182"
+    },
+    {
+      "path": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift",
+      "sha256": "ac03a18a83324a72c9e1a3044640232a5f2e78192617c220100e5575ddbbe9aa"
+    },
+    {
+      "path": "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift",
+      "sha256": "9e80175151ded1703d912155ad74e749239ebcbb46ed9c0ca6fcf837cb0f6c35"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationSnippet.swift",
+      "sha256": "93b2d3061d90c413c1119a711d01a07dcc095df579a0eb14aa561c95bc753b10"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptAppIntentBridge.swift",
+      "sha256": "3d7607cc245162f60963e9c718e3638744c8bfb01602b5a997069d28d688ada4"
+    },
+    {
+      "path": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinNativePresentationView.swift",
+      "sha256": "27e9176daefc266973d251131eb2b02e419f6ce8de4f771d4633ff9ceaedf3ee"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Widget-Legacy-Regression.scripting",
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "sha256": "07bc97e06a1c4b638272dda7eeeb132e2b91499d5546cccfe7fbfd5bfc4cae0e"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting",
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo",
+      "sha256": "c31ea9245556e2c851c89bb79d95dd323cf5f51c0ad8fcb7d6ef6298949027d1"
+    }
+  ]
+}

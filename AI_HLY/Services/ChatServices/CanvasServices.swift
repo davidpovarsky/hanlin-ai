@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftData
-import LLM
+@preconcurrency import LLM
 
 /// CanvasService 相关错误
 enum CanvasServiceError: Error {
@@ -16,6 +16,7 @@ enum CanvasServiceError: Error {
 }
 
 /// 管理 CanvasData 的创建与保存
+@MainActor
 class CanvasServices {
     /// 创建一个新的 CanvasData（尚未保存到任何 ChatRecords）
     ///
@@ -155,6 +156,7 @@ class CanvasServices {
 }
 
 // MARK: 后端流式接口
+@MainActor
 func editCanvasAPI(
     input: String,
     modelInfo: AllModels,
@@ -224,8 +226,7 @@ func editCanvasAPI(
                     var accumulatedOutput = ""
                     
                     // 调用本地模型流式接口，传入翻译提示
-                    await llm.respond(to: userPrompt) { responseStream in
-                        for await delta in responseStream {
+                    await LocalLLMStreamingAdapter.consume(llm, prompt: userPrompt) { delta in
                             accumulatedOutput += delta
                             // 输出本地模型返回的 token
                             continuation.yield(delta)
@@ -233,10 +234,9 @@ func editCanvasAPI(
                             // 检测输出中是否出现停止标记，提前结束生成
                             if accumulatedOutput.contains("<|im_end|>") || accumulatedOutput.contains("<|im_start|>") {
                                 llm.stop()
-                                break
+                                return false
                             }
-                        }
-                        return ""
+                            return true
                     }
                     
                     continuation.finish()
@@ -311,6 +311,7 @@ func editCanvasAPI(
 }
 
 /// 对选中片段进行智能改写
+@MainActor
 func refineSelectedTextAPI(
     fullText: String,           // 整体上下文原文
     selectedText: String,       // 被选中的片段
@@ -382,16 +383,14 @@ func refineSelectedTextAPI(
                         throw NSError(domain: "LocalLLMInit", code: -1, userInfo: [NSLocalizedDescriptionKey: "本地 LLM 初始化失败"])
                     }
                     var accumulatedOutput = ""
-                    await llm.respond(to: userPrompt) { responseStream in
-                        for await delta in responseStream {
+                    await LocalLLMStreamingAdapter.consume(llm, prompt: userPrompt) { delta in
                             accumulatedOutput += delta
                             continuation.yield(delta)
                             if accumulatedOutput.contains("<|im_end|>") || accumulatedOutput.contains("<|im_start|>") {
                                 llm.stop()
-                                break
+                                return false
                             }
-                        }
-                        return ""
+                            return true
                     }
                     continuation.finish()
                 } catch {

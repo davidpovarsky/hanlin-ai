@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "native_run": 45218713371,
+  "source_sha": "7f6a960eb341e3a6642db390d4b5de0b2e3448fc",
+  "job": 137847062949,
+  "status": "FAIL",
+  "failure_step": "Run RuntimeCore preflight",
+  "cause": "Resource IDs and canonical paths remained in the original app resource phase; SDK project serialization removed display comments. Old preflight counted those comments and rejected a valid graph.",
+  "native_compile": "NOT_RUN",
+  "selected_28_groups": "NOT_RUN",
+  "native_export_18": "NOT_RUN",
+  "fix": "Resolve actual AI_Hanlin target resource-phase/build-file/file-reference graph and require exactly one canonical SOURCE_ROOT/raw-text copy of each dictionary; preserve existing built-app byte verification.",
+  "before": {
+    "methods": 4,
+    "failures": 3,
+    "errors": 1
+  },
+  "after": {
+    "status": "PASS",
+    "methods": 4
+  },
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "-v",
+        "Scripts.Runtime.Tests.test_ios_system_project_resources"
+      ],
+      "exit_code": 0,
+      "log": "after-0.log",
+      "sha256": "c1c171bcbd84abe003a6dcb4eba643b9ddc05462c252556b772768c9a48d6362"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/Runtime/validate_ios_system_resources.py",
+        "--repository-root",
+        "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123"
+      ],
+      "exit_code": 0,
+      "log": "after-1.log",
+      "sha256": "7e9e4a6341b276c53337cf6f41fc57c7f0f29343707940cbad9e608fcb6b0d83"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log": "after-2.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "production_swift_changed": false,
+  "dictionary_bytes_changed": false,
+  "secondary_failure": "Provider summary test fixture expected77 catalog methods; separate owner fixes accurate78 expectation."
+}

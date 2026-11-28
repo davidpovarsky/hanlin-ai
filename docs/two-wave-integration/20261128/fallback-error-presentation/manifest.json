@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "sourceCommit": "f470dababcfa368236854fa64e7fb24149216696",
+  "base": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "payloads": [
+    {
+      "path": "README.md",
+      "bytes": 1100,
+      "sha256": "29109d7ac1a41809d9561ea5b47f0b34fe3b90e43670d04a6f02c29bcf178f8e"
+    },
+    {
+      "path": "actual-original-native-failure.json",
+      "bytes": 3129,
+      "sha256": "c25bc2269729d8c6429fb27fef1ec28c2abf1d1fa33e89bf947f4c2038eb13f8"
+    },
+    {
+      "path": "candidate-manifest.json",
+      "bytes": 2550,
+      "sha256": "1d7736a0a7b60e86820c72211fd6792b258f5912fc5ea1015fb2db05ce69a0ac"
+    },
+    {
+      "path": "independent-mac-review.json",
+      "bytes": 7054,
+      "sha256": "1a70ede573ef9fbdf10839e606b0608f4c4122129d9bc2681ab3c0e6ddd345ac"
+    },
+    {
+      "path": "source-binding.json",
+      "bytes": 920,
+      "sha256": "dde4918b2c98315dee1663f4225fa3a860575d779733715b17af5ed0cb5fd00b"
+    },
+    {
+      "path": "source-qualification.json",
+      "bytes": 4293,
+      "sha256": "221af29d98bb3f9ac09cb9038b8ec528240da8ef49d6722d6430977e2f9e9c21"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 963,
+      "sha256": "697761f4dda3a1455aca77c7c002bded443afaf04f2bd9042b43c6adad2f3a6f"
+    }
+  ]
+}

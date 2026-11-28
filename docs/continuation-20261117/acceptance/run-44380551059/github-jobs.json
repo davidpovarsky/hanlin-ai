@@ -1,0 +1,305 @@
+{
+  "jobs": [
+    {
+      "completed_at": "2026-11-18T19:26:40Z",
+      "conclusion": "success",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071273314",
+      "id": 135071273314,
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "name": "Plan affected validation and tests",
+      "started_at": "2026-11-18T19:26:31Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:29Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071274571",
+      "id": 135071274571,
+      "labels": [
+        "xcode-27"
+      ],
+      "name": "Inspect existing native failure evidence only",
+      "started_at": "2026-11-18T19:26:29Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:29Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071274966",
+      "id": 135071274966,
+      "labels": [
+        "xcode-27"
+      ],
+      "name": "Read installed stable simulator environment only",
+      "started_at": "2026-11-18T19:26:29Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:29Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071275221",
+      "id": 135071275221,
+      "labels": [
+        "xcode-27"
+      ],
+      "name": "inputs.target_validation_group != 'product_split_integration' && 'Verify exact-pin A2UI on macOS 27' || 'Verify MiniApps provider and focused tests on iOS 27'",
+      "started_at": "2026-11-18T19:26:30Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:29Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071275384",
+      "id": 135071275384,
+      "labels": [
+        "xcode-27"
+      ],
+      "name": "Resolve exact SDK producer in all six existing Apple package graphs",
+      "started_at": "2026-11-18T19:26:30Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:29Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071275399",
+      "id": 135071275399,
+      "labels": [
+        "xcode-27"
+      ],
+      "name": "One guarded native hosted Composer component diagnostic",
+      "started_at": "2026-11-18T19:26:30Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:29Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071275429",
+      "id": 135071275429,
+      "labels": [],
+      "name": "focused-scripting-package-tests",
+      "started_at": "2026-11-18T19:26:30Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:29Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071275460",
+      "id": 135071275460,
+      "labels": [
+        "xcode-27"
+      ],
+      "name": "Probe pinned NativeScript SDK metadata",
+      "started_at": "2026-11-18T19:26:30Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:29Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071275700",
+      "id": 135071275700,
+      "labels": [
+        "xcode-27"
+      ],
+      "name": "Two frozen Composer metadata queries only",
+      "started_at": "2026-11-18T19:26:30Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:29Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071277120",
+      "id": 135071277120,
+      "labels": [],
+      "name": "upload-chavrusachat-to-testflight",
+      "started_at": "2026-11-18T19:26:30Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:29Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071330719",
+      "id": 135071330719,
+      "labels": [
+        "xcode-27"
+      ],
+      "name": "Exact-source Agent SDK Apple tests",
+      "started_at": "2026-11-18T19:26:35Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:29Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071332719",
+      "id": 135071332719,
+      "labels": [],
+      "name": "focused-code-fence-webkit-tests",
+      "started_at": "2026-11-18T19:26:35Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:29Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071338481",
+      "id": 135071338481,
+      "labels": [
+        "xcode-27"
+      ],
+      "name": "One SDK-explicit eligibility-gated frozen Composer diagnostic",
+      "started_at": "2026-11-18T19:26:36Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:29Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071340090",
+      "id": 135071340090,
+      "labels": [
+        "xcode-27"
+      ],
+      "name": "Exact original Motion UI with full header hit region",
+      "started_at": "2026-11-18T19:26:36Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:29Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071351404",
+      "id": 135071351404,
+      "labels": [
+        "xcode-27"
+      ],
+      "name": "Resolve original Yams in the actual app graph only",
+      "started_at": "2026-11-18T19:26:37Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:29Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071362268",
+      "id": 135071362268,
+      "labels": [
+        "xcode-27"
+      ],
+      "name": "Verify whole Composer and UIKit components on iOS 27",
+      "started_at": "2026-11-18T19:26:38Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:29Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071367349",
+      "id": 135071367349,
+      "labels": [
+        "xcode-27"
+      ],
+      "name": "Compile reusable presentation on iOS 27 and test isolated state",
+      "started_at": "2026-11-18T19:26:38Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:29Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071372846",
+      "id": 135071372846,
+      "labels": [],
+      "name": "focused-diagnostics-capture-tests",
+      "started_at": "2026-11-18T19:26:39Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:29Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071374226",
+      "id": 135071374226,
+      "labels": [
+        "xcode-27"
+      ],
+      "name": "Verify original media lifecycle controls on current native sources",
+      "started_at": "2026-11-18T19:26:39Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:29Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071377592",
+      "id": 135071377592,
+      "labels": [],
+      "name": "focused-markdown-renderer-tests",
+      "started_at": "2026-11-18T19:26:39Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:29Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071379274",
+      "id": 135071379274,
+      "labels": [
+        "xcode-27"
+      ],
+      "name": "Actual compiled Swift Mini App UI on iPhone and iPad 27",
+      "started_at": "2026-11-18T19:26:39Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T20:05:56Z",
+      "conclusion": "success",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071388007",
+      "id": 135071388007,
+      "labels": [
+        "xcode-27"
+      ],
+      "name": "Launch full app on iPad Simulator",
+      "started_at": "2026-11-18T19:30:58Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:40Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071390780",
+      "id": 135071390780,
+      "labels": [
+        "xcode-27"
+      ],
+      "name": "Validate baseline, contracts, tests, and iOS compilation",
+      "started_at": "2026-11-18T19:26:40Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:40Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071390951",
+      "id": 135071390951,
+      "labels": [
+        "xcode-27"
+      ],
+      "name": "Build unsigned IPA with Xcode 26",
+      "started_at": "2026-11-18T19:26:40Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T19:26:40Z",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135071391123",
+      "id": 135071391123,
+      "labels": [],
+      "name": "Run split RuntimeCore bundle pipeline",
+      "started_at": "2026-11-18T19:26:41Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-11-18T20:06:14Z",
+      "conclusion": "success",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059/job/135095555474",
+      "id": 135095555474,
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "name": "Verify provider conformance test summary",
+      "started_at": "2026-11-18T20:05:59Z",
+      "status": "completed"
+    }
+  ],
+  "total_count": 26
+}

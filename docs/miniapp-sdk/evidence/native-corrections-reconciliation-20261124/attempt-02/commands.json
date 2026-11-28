@@ -1,0 +1,41 @@
+[
+  {
+    "command": [
+      "node",
+      "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "--write"
+    ],
+    "returncode": 0,
+    "stdout": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/attempt-02/1.stdout.log",
+    "stderr": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/attempt-02/1.stderr.log"
+  },
+  {
+    "command": [
+      "python3",
+      "Scripts/Audit/audit_miniapp_reachability.py"
+    ],
+    "returncode": 0,
+    "stdout": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/attempt-02/2.stdout.log",
+    "stderr": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/attempt-02/2.stderr.log"
+  },
+  {
+    "command": [
+      "node",
+      "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "--check"
+    ],
+    "returncode": 0,
+    "stdout": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/attempt-02/3.stdout.log",
+    "stderr": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/attempt-02/3.stderr.log"
+  },
+  {
+    "command": [
+      "python3",
+      "Scripts/Audit/audit_miniapp_reachability.py",
+      "--check"
+    ],
+    "returncode": 0,
+    "stdout": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/attempt-02/4.stdout.log",
+    "stderr": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/attempt-02/4.stderr.log"
+  }
+]

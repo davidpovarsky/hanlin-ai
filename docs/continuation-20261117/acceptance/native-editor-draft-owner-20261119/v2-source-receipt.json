@@ -1,0 +1,121 @@
+{
+  "created_at": "2026-11-19T05:14:51.534597+00:00",
+  "base_head": "25c28ae8981eceba18a2beb648da5d1a7660ac63",
+  "current_canonical_head": "e32f2035dc4ffbeca43402fce2beac9f924c1a70",
+  "canonical_modified": false,
+  "files": [
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "before_sha256": "25b3ac311ba66de6a96e757b84378189bc357ca1cdff6a7912beefb4e3e44fcf",
+      "after_sha256": "9bb2ace4ba5e61f640587eb06fd1f9f73324c25477fce2f4764d5449d1c78387",
+      "current_matches_before": true
+    },
+    {
+      "path": "AI_HLY/Views/Components/ChatViewBottom.swift",
+      "before_sha256": "c4c6e9cdaf8d9ed28a5f7197a2098994a6c14872d45df3f98990652711f2b99c",
+      "after_sha256": "a14c170483378a93ab3caeac602b11f5bdbc77694329e6c94e14db5ea2bb2524",
+      "current_matches_before": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinComposerSessionBridge.swift",
+      "before_sha256": "55c2cf70194de76d92d3d6f0b820f2cf9972b92822bcb78c6f4aeccc1210da25",
+      "after_sha256": "1b3cfdfbbfa9cad53a963518188a20340bee5cc977d365f9e6fa001e3aaa5aaa",
+      "current_matches_before": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift",
+      "before_sha256": "78fa43d0ee72b9659db35608a4892e5c8a7b265236e48073a48e03d243977680",
+      "after_sha256": "01eb7b2b93d47a25c99ce8b40cb301d30a0e2b524e5733cf59c207bcc3c6d922",
+      "current_matches_before": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/NativeMultilineTextEditor.swift",
+      "before_sha256": "e708636e028a11e3ced6c0802aa526e0d0013e165dfbe868a188c21f522ebc0c",
+      "after_sha256": "e3421265a7536769cd3f156d4e6703faaa27be4ca235b9826039dc747c715769",
+      "current_matches_before": true
+    },
+    {
+      "path": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "before_sha256": "557d0d364d215d456dc5cbccf7e0e831b9793a83c46cd73d9a06ce9f40f89307",
+      "after_sha256": "6987b7a34b490c77786b91eedc8ab74ef01dedead7077e95ae971004c3a4b5c0",
+      "current_matches_before": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "before_sha256": "bc4c8cb5fd24e91432c7615af18207f01817d5de7da4d6c98562f4ddc8ac5cd9",
+      "after_sha256": "56ec5d7ad37051c2a9970e4df728d4a0eaa7da599672257f1162b8a591e70197",
+      "current_matches_before": true
+    }
+  ],
+  "parse": [
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "exit_code": 0,
+      "diagnostics": ""
+    },
+    {
+      "path": "AI_HLY/Views/Components/ChatViewBottom.swift",
+      "exit_code": 0,
+      "diagnostics": ""
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinComposerSessionBridge.swift",
+      "exit_code": 0,
+      "diagnostics": ""
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift",
+      "exit_code": 0,
+      "diagnostics": ""
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/NativeMultilineTextEditor.swift",
+      "exit_code": 0,
+      "diagnostics": ""
+    },
+    {
+      "path": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "exit_code": 0,
+      "diagnostics": ""
+    },
+    {
+      "path": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "exit_code": 0,
+      "diagnostics": ""
+    }
+  ],
+  "git_apply_check": {
+    "exit_code": 0,
+    "output": ""
+  },
+  "patches": {
+    "UNAPPLIED.patch": {
+      "path": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44447129341\\child-editor-triage\\live-draft-owner-proposal-v2\\UNAPPLIED.patch",
+      "sha256": "5582631dcfbc8207d44628c817f6849151d2135cc453d3dbd1436e92733a2a28",
+      "lines": 691
+    },
+    "v2-from-v1.REVIEW.diff": {
+      "path": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\run-44447129341\\child-editor-triage\\live-draft-owner-proposal-v2\\v2-from-v1.REVIEW.diff",
+      "sha256": "547df606f2d15015abbf035d86cb50908aec0079a843891858e7c6b7dd622dc2",
+      "lines": 476
+    }
+  },
+  "v1_patch_sha256": "3279d9ec427f6f17f1608c17a19a3d55fbb163dd54890727beb4ea2713037e5d",
+  "new_native_methods": {
+    "NativeComposerLineSizingTests/retainedRenderSnapshotPreservesNativeDraftAndCursor(_:)": 3,
+    "NativeComposerLineSizingTests/liveOwnerClearAndReplacementBeforeRenderAcknowledgement()": 1,
+    "ChatComposerSessionBridgeTests/liveDraftOwnerKeepsBridgeSnapshotsCurrent()": 1,
+    "NativeComposerLineSizingTests/equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped()": 1,
+    "NativeComposerLineSizingTests/sameValueClearPrecedesLateNativeDelegate(_:)": 2,
+    "NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)": 2
+  },
+  "native_execution": "NOT_RUN; original Apple suites and unchanged paired/native UI paths still required",
+  "official_api_reference": "https://developer.apple.com/documentation/uikit/uitextinput/unmarktext()",
+  "notes": [
+    "V1 remains byte-for-byte immutable.",
+    "Existing test bodies from the original base are unchanged.",
+    "Explicit ownership/write identity supplements one original draft; no timeout, queued string heuristic, or second persistence writer.",
+    "On original hosts without TextState, the old binding API and native-delegate publication behavior are retained.",
+    "Actual UIKit marked text and real owned-window first responder are required by new regressions; no fake UITextView subclass."
+  ]
+}

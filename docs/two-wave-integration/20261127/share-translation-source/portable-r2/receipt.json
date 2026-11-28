@@ -1,0 +1,28 @@
+{
+  "base": "46663fe6228c0edcb7b9dacb3e8aa5403a80c473",
+  "sourceBefore": {
+    "Scripts/ProductSplit/observe_share_translation_surfaces.py": "b92f260539848c6989f11fa59b832b98aad8964d9e84a28050b27dde9ebfa41b",
+    "Scripts/ProductSplit/Tests/test_share_translation_surface_observer.py": "87ad4496c8deee7f8976ae134ac076597ac4cd09090c3641878b43b129b798e2",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "72530c9c8f70b6eb35572e2d4180ac2d0161d1a641c08d1e49505554d021b65c"
+  },
+  "sourceAfter": {
+    "Scripts/ProductSplit/observe_share_translation_surfaces.py": "b92f260539848c6989f11fa59b832b98aad8964d9e84a28050b27dde9ebfa41b",
+    "Scripts/ProductSplit/Tests/test_share_translation_surface_observer.py": "87ad4496c8deee7f8976ae134ac076597ac4cd09090c3641878b43b129b798e2",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "72530c9c8f70b6eb35572e2d4180ac2d0161d1a641c08d1e49505554d021b65c"
+  },
+  "argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.ProductSplit.Tests.test_share_translation_surface_observer",
+    "-v"
+  ],
+  "startedAtUTC": "2026-11-27T06:24:58.274535+00:00",
+  "completedAtUTC": "2026-11-27T06:24:58.488756+00:00",
+  "exitCode": 0,
+  "elapsedSeconds": 0.21416403632611036,
+  "python": "Python 3.12.3",
+  "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSHA256": "b9be7e11dad4fdfbe596dcd85b30a5b4b7237ef055aa93394ab2cff819a2ac85",
+  "scope": "Final15 pure reader controls including atomic publication and actual canonical delivery defaults; Node7 actual r1 remains exact source unchanged and is not rerun"
+}

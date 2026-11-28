@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 1,
+  "status": "FOCUSED_ORIGINAL_IMPORT_AND_GENERATOR_PASS_FULL_APP_PENDING",
+  "baseCommit": "788354f8e9e863eb5e4c9007a8b58ea71d028b19",
+  "owner": "/root/control_authoring",
+  "actualFailure": {
+    "runID": 45412939674,
+    "sourceCommit": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
+    "phase": "FIRST_MINIAPPS_BUILD_FAILED",
+    "exitCode": 65,
+    "elapsedSeconds": 1263.778639042,
+    "target": "HanlinMiniAppsWidgets",
+    "module": "HanlinMiniAppsWidgetsHost",
+    "logBytes": 887343,
+    "logSHA256": "2547babc01695d8a058d54d57661020aa398dae17176cdb8cd49217bd1d49971",
+    "sourceLog": "/dev/shm/hanlin-native-gate-evidence-45412939674/app-split-evidence/paired-product/mini-build.log",
+    "missingOriginalHeaders": [
+      "ReactCommon/CallInvoker.h",
+      "RCTDeprecation/RCTDeprecation.h",
+      "yoga/Yoga.h",
+      "yoga/YGConfig.h"
+    ],
+    "aiBuild": "NOT_RUN",
+    "native52": "NOT_RUN",
+    "artifact": {
+      "path": "/tmp/hanlin-native-gate-evidence-45412939674/app-split-45412939674.zip",
+      "bytes": 333459051,
+      "sha256": "1c7b453087a1bb7d2e1a07fa2ec94898afc0e0b2dbee6f3ac2dc5d691c80d574"
+    }
+  },
+  "diagnosis": {
+    "headersArePresent": true,
+    "failedNativeConsumerAlreadyHasOriginalClangRoots": true,
+    "observedDifference": "Successful package consumers use explicit module loading; the failed native extension inherits implicit loading from Config.xcconfig. Equivalent fresh-cache actual original import reproduces the four missing headers in implicit mode and succeeds in explicit mode.",
+    "globalConfig": "validate-app-split.yml retains SWIFT_ENABLE_EXPLICIT_MODULES = NO; only proven consumers override it.",
+    "sdkVersionWording": "The generic original-interface SDK/compiler-version message follows the missing headers; the same original interface compiles in the explicit probe, so this evidence does not establish a separate binary incompatibility."
+  },
+  "nativeScope": {
+    "targets": [
+      "HanlinApp",
+      "HanlinMiniApps",
+      "AI_HLYTests",
+      "HanlinMiniAppsTests",
+      "HanlinScriptingWidgets",
+      "HanlinMiniAppsWidgets"
+    ],
+    "configurations": [
+      "Debug",
+      "Release"
+    ],
+    "modifiedConfigurationCount": 12,
+    "directImportTargets": [
+      "HanlinApp",
+      "HanlinMiniApps",
+      "AI_HLYTests",
+      "HanlinScriptingWidgets",
+      "HanlinMiniAppsWidgets"
+    ],
+    "transitiveImportTarget": "HanlinMiniAppsTests imports HanlinMiniApps through @testable in five actual source files. Both widget hosts directly import ExpoWidgets and the existing widget facade.",
+    "settings": [
+      "SWIFT_ENABLE_EXPLICIT_MODULES = YES",
+      "Original evaluated ExpoWidgets Clang import flags appended without removing prior flags",
+      "Existing objcxx interop retained"
+    ],
+    "projectSemanticDelta": "Only12 existing build-configuration objects differ, in explicit-module setting and (for app/test consumers) OTHER_SWIFT_FLAGS; no target membership or other project setting changed.",
+    "cloneOrder": "Existing standalone extension cloning precedes the bounded native import override.",
+    "excludedTargets": "Translation extensions use the independent original WidgetKit subset without the Core/React edge. Share, notification, UI test runners and bootstrap have no demonstrated original Core dependency."
+  },
+  "originalCompilerProbe": {
+    "toolchainEvidence": "mac-preflight.json",
+    "capturedAt": "2026-11-24T15:18:26.236656+00:00",
+    "toolchain": "Xcode27.0/27A266a; Swift6.4.0.34.1; iOS simulator SDK27.0",
+    "capacity": "No active build processes;16GiBRAM;345721651200 bytes free at preflight.",
+    "source": "Probe.swift",
+    "sourceSHA256": "6eb496fccc41ae56a1ab4c1520cfc4973a94e097905b9df5af35077be53c9310",
+    "inputs": "Unmodified authenticated MAIN15 original headers and framework module metadata; every staged input hash checked on the Mac. Exact manifest retained gzip-compressed.",
+    "inputManifestSHA256": "7d0ba79bce3051a24aef83eee18f926a5d8696ea0cb0e219f4b3105f1ab39aa9",
+    "results": "comparison-results.json",
+    "implicit": {
+      "exitCode": 1,
+      "elapsedSeconds": 17.006298583,
+      "fourMissingHeadersReproduced": true,
+      "freshCache": true,
+      "stderrSHA256": "7ae692f6c4625f51fbf50ac36f62edf34ef61abfd6880d5ef58c0c36532bd20a"
+    },
+    "explicit": {
+      "exitCode": 0,
+      "elapsedSeconds": 12.722833834,
+      "freshCache": true,
+      "originalPrivateInterfaceFreshlyCompiled": true,
+      "stderrSHA256": "5f467dde2331117acf63e261ea2f706b3c1d42071925b52954f409bbc253148d"
+    },
+    "onlyBehavioralDifference": "-explicit-module-build; each mode has its own newly created module cache.",
+    "unchanged": "Swift6, C++ interop, application-extension mode, original Clang roots/defines, input source and original interfaces.",
+    "boundary": "This is an actual import typecheck on SDK27.0, without app linking or UI/device execution. Xcode-generated header maps/VFS overlay/statcache were not fabricated. Full configured SDK27.2/52-case acceptance remains pending."
+  },
+  "focusedConfigurationCheck": {
+    "method": "WidgetCxxImportTests.test_real_widget_consumers_preserve_original_expo_cpp_import_contract",
+    "passed": 1,
+    "failed": 0,
+    "executedOnce": true,
+    "rawLog": "consumer-parity.stderr.log",
+    "manifestEvaluation": "Three unchanged real Package.swift inputs evaluated through xcrun swift package dump-package on primary Mac; canonical workspace root relocation only for the existing Python generator/test. No settings/targets/assertions projected.",
+    "manifestMetadata": "manifest-evaluation.json",
+    "checks": [
+      "Original producer Cxx/Clang parity on both existing SwiftPM consumers",
+      "All6 native consumers and bothDebug/Release configs",
+      "Exact original flags retained; scalar app-specific flags preserved",
+      "Actual production updater generates canonical project and second generation is identical",
+      "No unrelated project object/setting altered by the import wiring"
+    ]
+  },
+  "sourceSHA256": {
+    "Scripts/SDK/update_project.py": "5aae859211e8bc7cfeb389c50d7d38817de4e0167f8a3ae54d9f1cf5475be550",
+    "Scripts/SDK/tests/test_widget_cxx_imports.py": "e9e294918807571e154d3112c0ae52c9b0f7853aab1f5deff2bf978e0d6eb863",
+    "AI_HLY.xcodeproj/project.pbxproj": "24206ae0f0f66d3669cae5ccd4ffcff25ae582ec4620359a2becca7ad8e16780"
+  },
+  "unchangedProducerSHA256": {
+    "Package.swift": "24fdf091f56e1c6766730f9cb4eac5e2ce4925919a1e7cb52c020cf37fb54a16",
+    "Packages/HanlinExpoRuntime/Package.swift": "116a910cffe061ff3eea0e289402bc51769d3268daedc94ea5b1e043e6d109a4",
+    "Packages/HanlinWidgetSDK/Package.swift": "970610b13278a21fad358fa9c6f19b15789c6c7cb219fc2984f2aa92298502e6"
+  },
+  "independentReview": {
+    "reviewer": "/root/entrypoints",
+    "status": "PASS_NO_CONCRETE_BLOCKER",
+    "details": "independent-review.json",
+    "sourceHashesUnchanged": true
+  },
+  "provenanceAfterIntegration": {
+    "owner": "/root",
+    "commands": [
+      "python3 Scripts/Audit/audit_miniapp_reachability.py",
+      "python3 Scripts/Audit/audit_miniapp_reachability.py --check"
+    ],
+    "reason": "projectTargets whole-file hash depends on project.pbxproj; no direct SDK/source-inventory inputs changed."
+  },
+  "notClaimed": [
+    "Full configured27.2 native build success",
+    "App or extension link success",
+    "Any of52 native acceptance cases passing",
+    "Device/OS widget rendering",
+    "Additional CI dispatch or download"
+  ],
+  "rawEvidenceSHA256": {
+    "Probe.swift": "6eb496fccc41ae56a1ab4c1520cfc4973a94e097905b9df5af35077be53c9310",
+    "actual-consumer-attributes.json": "e8a561feb7fc7407d765350fa62ffeb7ae7476be1d6331f499e08ca1c86ac866",
+    "comparison-results.json": "2ba8785440118225fdfa84c2c7546888312c15d0de5639c091a26e14cb23bbba",
+    "consumer-import-sources.json": "f431629d2778b6f9c2d4c8a7266b83dc070da0ba023533d093a52bf339056b47",
+    "consumer-parity.command.json": "5cbcb74e0dee2271de3135bf63ba5261ae38f4d9bdbf4fd88da75a5b2333b04b",
+    "consumer-parity.stderr.log": "485da858816efa5da454577856fc7bc424e0f60c3712afb76b33d906c2f9530e",
+    "consumer-parity.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evaluate-original-manifests.py": "320b26befd1490ee9e9392b93ee5493ed18f52e09659c8fa9a6bcbeeebd3c869",
+    "explicit.stderr.log": "5f467dde2331117acf63e261ea2f706b3c1d42071925b52954f409bbc253148d",
+    "explicit.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "expo-manifest.json": "b8ca050600768f7b477da90a0348ec15e9bcaeaa2ac733513e0a6ad8c2dc69a9",
+    "expo-manifest.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "failed-extension-driver.log": "a85b66bec9f36bc85bb0b8698da274637101a612aad1505ee455865014164ff6",
+    "implicit.stderr.log": "7ae692f6c4625f51fbf50ac36f62edf34ef61abfd6880d5ef58c0c36532bd20a",
+    "implicit.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "independent-review.json": "26ed9e4a336223a390308f5e15d3b8ffd6504f01de0c8ab386d1187e6b786205",
+    "input-inventory-summary.json": "42dbaa8b7a442a8ab97b89d8cb475847a24af42e2f6daf531bc1c8b2af69f1bf",
+    "input-manifest.json.gz": "443614998d9330d03d59fb4836fc639e1126bbc2f79545ec588c951bfe5a6c15",
+    "mac-preflight.json": "24b420f856cf9a00b44aba03626528ea48c9cf6e240c3d3c955347dd7ae50e52",
+    "mac-preflight.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mac-preflight.stdout.log": "24b420f856cf9a00b44aba03626528ea48c9cf6e240c3d3c955347dd7ae50e52",
+    "main15-original-header-diagnostics.json": "577b66d4aab41ca42c6abde6edaf6e7eeee62a9198c0cdb645bb6ae82e216ee4",
+    "manifest-evaluation.json": "cde63e4eaafc455ae3a396cd30265c7798af447847fac0750f666277f02ac091",
+    "manifest-evaluation.ssh.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "original-xcc-flags.json": "761ee6820f14b3b701690771b54d3bbeda80d056955c94f1cab9c129ea209e45",
+    "probe-plan.json": "4dafd52027c36c984040f3b13ec214dd36bfcbda3e5c0b1759fe1a09c115532d",
+    "project-generation.command.json": "6ce6fb0c27462f5f849e1f6d1b5b62d39b781d965b7af7a5d2c7646ffe6a8381",
+    "project-generation.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "project-generation.stdout.log": "4165196b4fc7547fe33e8817ec510b89b477ce0b356f08c3a92bb53eab051946",
+    "project-settings-delta.json": "70e93d36acac7d5dca54465ee2439abf087f36d23deff162ec10b78685953a3c",
+    "remote-comparison-command.json": "cef7fef68524dc4fdb9342207fa21e75357a33ca6a1494540c934a21009b6244",
+    "remote-comparison.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remote-comparison.stdout.log": "cb1924d8455066b3f2685c0c7670307324d8d4115de1c0c464e84774720daa8d",
+    "run-focused-parity.py": "fec3c9b066c10146bc1edac85ffb77b8568cda200117486bb943d544f8a0a504",
+    "run-original-import-probe.py": "8d7fa4483544c7224505ba49db8495a396a944d4e3012d73277895ddbdc8244f",
+    "source-hashes.json": "2525d75dfeb7a8e31cfaef14112f493c200ac253d19cf9f91f5fb4eb09584909",
+    "transfer.json": "8296b34346fb8494121fdc3f33f94f292f4b1d8ab6a75868429ae64f330169b7",
+    "transfer.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transfer.stdout.log": "8296b34346fb8494121fdc3f33f94f292f4b1d8ab6a75868429ae64f330169b7",
+    "unified-manifest.json": "cde6fd5efa2b88cd0cce81b0b1fba7ea6b0d2596d4b36d6f6ad770034f395ed3",
+    "unified-manifest.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "widgets-manifest.json": "fb11e5020e3ad34bd5c9b34f5500b4d404396b6f8db5489a89ba794170b4d897",
+    "widgets-manifest.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

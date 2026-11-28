@@ -1,0 +1,32 @@
+{
+  "startedAt": "2026-11-27T15:55:40.830330+00:00",
+  "source": "d077babf9ba9312199aa41cef18f40581edbc52c",
+  "cwd": "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126",
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "controllerPID": 1262709,
+  "processPID": 1263866,
+  "environment": {
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "pythonExecutable": "/usr/bin/python3",
+    "pyyaml": "6.0.1",
+    "pyyamlPath": "/usr/lib/python3/dist-packages/yaml/__init__.py",
+    "node": "v24.5.0",
+    "nodePath": "/mnt/development/projects/toolchains/node-v24.5.0-linux-arm64/bin/node",
+    "NODE_OPTIONS": null,
+    "HANLIN_RUN_PACKAGING_NETWORK": null
+  }
+}

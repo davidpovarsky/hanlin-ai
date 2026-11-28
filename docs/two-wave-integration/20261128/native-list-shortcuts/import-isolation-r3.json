@@ -1,0 +1,33 @@
+{
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "originalR2ManifestSHA256": "5151a6efeb1b88b4db0e77a411232793c4821f46858dfc29d4ee8f21bb4ea014",
+  "oldSHA256": "b10ef294be5d9699997af1d16be372d0fbe7b6c3ac832b79da8f33029d201bfe",
+  "newSHA256": "3739ae95737748100e4b7f3a288083bceec21ef7a20a32f5a546de6bc1b15bc1",
+  "patchSHA256": "c380f8b013190dac0f90da9c702d90af2f7a50ef8ca689b49ad29b72fc992d2d",
+  "changedPaths": [
+    "Scripts/CI/Tests/test_shortcut_native_lists.py"
+  ],
+  "original24MethodBodiesASTExact": true,
+  "wholeByteInverseExact": true,
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_shortcut_native_lists.py",
+    "-v"
+  ],
+  "returncode": 0,
+  "elapsedSeconds": 0.20303029660135508,
+  "nativeExecuted": false,
+  "cliRepeated": false,
+  "sdkProducerRepeated": false,
+  "stageReturncode": 0
+}

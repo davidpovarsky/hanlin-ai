@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "status": "PROPOSED_SOURCE_CONTRACT_NOT_AN_OLD_PRODUCT_ADMISSION",
+  "implementationBase": "064b7b58c923af0beff84a1852af84071f4409d8",
+  "consumer": "Scripts/ProductSplit/shortcut_migration_contract.py:admit_old",
+  "environment": {
+    "SHORTCUT_MIGRATION_OLD_ADMISSION": "Absolute path to the separately reviewed actual old-build admission JSON on the native runner",
+    "SHORTCUT_MIGRATION_OLD_ADMISSION_SHA256": "SHA256 supplied by the owning reviewed attempt, not discovered from an arbitrary admission"
+  },
+  "sourceIdentity": {
+    "sourceSHA": "f45d6edcf20ab18f31fb7b25e33358754e3602d0",
+    "productCodeSourceSHA": "445e2cb514012110cd865bdd33a3dbb8e6b8143d",
+    "meaning": "f45 is the actual original build source; 445 is byte-equal product code. The exact Git difference must contain only the four canonical audit documents."
+  },
+  "requiredFields": {
+    "schema": 1,
+    "status": "EXECUTED_PASS_OLD_APP_BUILD_ONLY",
+    "sourceSHA": "exact f45 above",
+    "productCodeSourceSHA": "exact 445 above",
+    "sourceRoot": "Absolute retained old checkout at actual f45, distinct from current root, tracked files unchanged",
+    "sourceFiles": "Exact eight-path map listed by OLD_SOURCE_FILES, each {bytes,sha256}; live files and actual f45/445 Git blobs must match",
+    "build": "{argv,cwd,exitCode:0,timeoutSeconds:2400,stopReason:null,log:{path,bytes,sha256}}; actual original HanlinMiniApps build-for-testing, no substituted current app",
+    "producerReceipt": "{path,bytes,sha256} of the unchanged actual original native old-build receipt",
+    "preparedSourceAdmission": "{path,bytes,sha256} of the separately reviewed actual complete old preparation/source admission",
+    "app": "Actual shortcut_migration_contract.product(oldAppPath,'old') result: path, executable/Info/debug dylib hashes, actual actionsdata hash and all exact five emitted parameter records, HanlinExtensionHost; runtimeArchive binds the actual sole app-bundled Host ZIP, actual SDK manifest hash/CRC/inputSHA256 and engine package/host/typechecking contracts. Paths inside this product record are relative so an actual installed bundle can be compared.",
+    "fixture": "Engine-specific {engine,sourceFiles,archive:{path,bytes,sha256},originalCLI:{validate:{exitCode:0,timeoutSeconds:300,report:{path,bytes,sha256}},build:{exitCode:0,timeoutSeconds:600,report:{path,bytes,sha256}}}}. Reuse already retained unchanged NativeLists archive/receipts; no fixture rebuilding or import at upgrade.",
+    "sdkManifest": "{path,bytes,sha256} of the actual old prepared SDK manifest; must match the actual old app-bundled SDK manifest bytes/SHA."
+  },
+  "admissionTrust": "The exact top-level admission SHA is externally reviewed and supplied by root/native owner. Retained producer/prepared-source references preserve their original raw receipts. This specification does not create a successful producer result.",
+  "oldParameterNames": [
+    "action",
+    "inputType",
+    "input",
+    "jsonFile",
+    "allowLongRunning"
+  ],
+  "fixtureEngines": [
+    "nativescript",
+    "expo"
+  ],
+  "currentRoute": [
+    "Build current MiniApps and AI products with original paired bounds, retain raw build descriptors/products.",
+    "Admit old f45 product and actual five metadata; compare original five parameter records and actual group entitlements to current nine.",
+    "Read actual fresh current AI descriptor installation closure, retain original bytes, derive one AI_HLYUITests-only copy in the same Products directory; reject any MiniApps product, unexpected dependency, skipped/selected preexisting tests, links or escapes.",
+    "Install actual old MiniApps first on a fresh owned device, original300; import unchanged compatible archive once.",
+    "Run/save/reopen same legacy JSON Shortcut; original observer binds native canonical mixed array/private result/Show Result before setup authorization.",
+    "Separate explicit setup records exclusive intent, checks real app termination, then at most one current simctl install300 in place.",
+    "Reopen same named Shortcut; no action/input write/import/recreation; require second actual command+nonce and same installation/data identity."
+  ],
+  "currentRequiredLimits": [
+    "Native current descriptor and old emitted five metadata are still unobserved gates.",
+    "Historical AI descriptor shape is evidence only, not current installation admission.",
+    "Record actual old .29 and current hosted .30 SDK contracts separately; version differences cannot be treated as equality.",
+    "The old/current source tree, archives, metadata, intent, runtime and original receipts stay immutable. Actual runtime/import incompatibility is a failure to retain, not grounds to replace the migration input."
+  ],
+  "previousProposedContract": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-genuine-migration-064b7b58/old-build-admission-proposed-contract.json",
+    "bytes": 4454,
+    "sha256": "de494d6b0c06fa298786efecb7737d2c199e99e6a03473c045e4ee08e874384b"
+  },
+  "earlyAdmission": "The old receipt is checked before allocating/building current native products, then rechecked before initial install. Missing old admission fails closed without current builds."
+}

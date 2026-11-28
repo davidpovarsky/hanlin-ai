@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.ProductSplit.test_run_paired_acceptance.PairedCommandEvidenceTests.test_failed_minibuild_records_execution_without_starting_ai_or_ui"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124",
+  "startedAt": "2026-11-24T11:46:39.710291+00:00",
+  "exitCode": 0,
+  "env": {
+    "PAIRED_COMMAND_TEST_EVIDENCE": "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/docs/miniapp-sdk/evidence/paired-cold-build-budget-20261124/portable"
+  },
+  "scope": "One affected existing case; real subprocess exits65 through actual main/finally, simulator discovery is stubbed; no native run."
+}

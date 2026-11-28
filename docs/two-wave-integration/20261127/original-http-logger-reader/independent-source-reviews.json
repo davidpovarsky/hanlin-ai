@@ -1,0 +1,18 @@
+{
+  "status": "SOURCE_ONLY_APPROVED_FOR_ORIGINAL_NATIVE_DIAGNOSTIC_RETRY",
+  "candidateSHA256": "50cfade071616aac0c3757f7fce4141e8017716aaa68d9ae092493c8321badb2",
+  "patchSHA256": "2edd429e91d51483739bb06cfeb02022dbde03ce93bc89ff5fa509d9d866918a",
+  "recordedAt": "2026-11-27T11:43:35.024781+00:00",
+  "recordedBy": "/root/w2_source_resume",
+  "source": "Actual collaboration messages recorded verbatim; no native outcome inferred",
+  "reviews": [
+    {
+      "reviewer": "/root",
+      "message": "Root approves exact one-file logger reader50cfade071616aac0c3757f7fce4141e8017716aaa68d9ae092493c8321badb2 / patch2edd429e91d51483739bb06cfeb02022dbde03ce93bc89ff5fa509d9d866918a. Read full bounded diff: private immutable logger reference; all log reads only via observed-main or synchronous-main; copied String array only; new Sendable assertion limited to test-private confinement adapter; outside callbackQueue lock and5s wait. No production/JS/session annotation change. Seal code + raw compiler-failure proof promptly; native compile still pending. Sourceb8c published, package equals6bee; your6bee base will cherry-pick clean. Send sourcecommit first without delaying native retry for optional proof packing."
+    },
+    {
+      "reviewer": "/root/w1_review_resume",
+      "message": "Source-only approval for exact candidate 50cfade0 / patch 2edd429e. I read the entire bounded diff: the private immutable reader owns only the existing logger; its only logs access occurs in messagesOnMain(), reached either on an observed main thread or synchronously through DispatchQueue.main. Only copied [String] values escape; no JS/context/session/state or runtime Sendable annotation is added. Original cleanup/deadline/assertions and diagnostic strings remain unchanged. The prior SDK-signature review was insufficient to predict the compiler\u2019s special main.sync inference; retain the actual 6bee compile failure. Native compiler acceptance of this corrected bridge remains required."
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  ModelManagementView.swift
 //  AI_HLY
@@ -11,6 +12,7 @@ import SwiftData
 // MARK: - 模型管理视图
 struct ModelManagementView: View {
     let apiKey: APIKeys
+    var configurationOverride: ModelRefreshProviderConfiguration? = nil
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
 
@@ -110,15 +112,15 @@ struct ModelManagementView: View {
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 if isLoading {
                     // 加载状态
                     VStack(spacing: 20) {
                         ProgressView()
                             .scaleEffect(1.5)
-                        Text("正在获取模型列表...")
-                            .font(.headline)
+                        Text(String(localized: "正在获取模型列表...", bundle: HanlinLocalization.bundle))
+                            .font(HanlinTypography.headline)
                             .foregroundColor(.secondary)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -126,61 +128,39 @@ struct ModelManagementView: View {
                     // 空状态
                     VStack(spacing: 20) {
                         Image(systemName: "list.bullet.rectangle")
-                            .font(.system(size: 60))
+                            .font(HanlinTypography.fixed(size: 60))
                             .foregroundColor(.secondary)
-                        Text("暂无可用模型")
-                            .font(.headline)
+                        Text(String(localized: "暂无可用模型", bundle: HanlinLocalization.bundle))
+                            .font(HanlinTypography.headline)
                             .foregroundColor(.secondary)
-                        Button("刷新模型列表") {
+                        Button(String(localized: "刷新模型列表", bundle: HanlinLocalization.bundle)) {
                             Task {
                                 await fetchModels()
                             }
                         }
                         .buttonStyle(.borderedProminent)
-                        .tint(.hlBlue)
+                        .tint(.hanlinHLBlue)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
                     // 模型列表
                     List {
-                        // 搜索栏（已添加模型 + 可用模型总数 > 10 时显示）
-                        if totalModelCount > 10 {
-                            Section {
-                                HStack {
-                                    Image(systemName: "magnifyingglass")
-                                        .foregroundColor(.secondary)
-                                    TextField("搜索模型...", text: $searchText)
-                                        .textFieldStyle(.plain)
-                                    if !searchText.isEmpty {
-                                        Button {
-                                            searchText = ""
-                                        } label: {
-                                            Image(systemName: "xmark.circle.fill")
-                                                .foregroundColor(.secondary)
-                                        }
-                                        .buttonStyle(.plain)
-                                    }
-                                }
-                                .padding(.vertical, 4)
-                            }
-                        }
-
-                        Section(footer: Text("注意：自动模型能力探测中可能有一定的API费用消耗")) {
-                            Toggle("自动模型能力探测", isOn: Binding(
+                        Section(footer: Text(String(localized: "注意：自动模型能力探测中可能有一定的API费用消耗", bundle: HanlinLocalization.bundle))) {
+                            Toggle(String(localized: "自动模型能力探测", bundle: HanlinLocalization.bundle), isOn: Binding(
                                 get: { apiKey.autoProbeCapabilities },
                                 set: { newValue in
                                     apiKey.autoProbeCapabilities = newValue
                                     saveChanges()
                                 }
                             ))
-                            .tint(.hlBlue)
+                            .tint(.hanlinHLBlue)
                         }
 
                         // 已添加的模型（支持折叠）
                         if !filteredCompanyModels.isEmpty || (!searchText.isEmpty && !companyModels.isEmpty) {
                             Section(header: 
                                 HStack {
-                                    Text("已添加的模型 (\(filteredCompanyModels.count))")
+                                    Text("已添加的模型 (\(filteredCompanyModels.count))", bundle: HanlinLocalization.bundle)
                                     Spacer()
                                     Button {
                                         withAnimation(.easeInOut(duration: 0.2)) {
@@ -189,7 +169,7 @@ struct ModelManagementView: View {
                                     } label: {
                                         Image(systemName: isAddedModelsExpanded ? "chevron.up" : "chevron.down")
                                             .foregroundColor(.secondary)
-                                            .font(.caption)
+                                            .font(HanlinTypography.caption)
                                     }
                                     .buttonStyle(.plain)
                                 }
@@ -216,7 +196,7 @@ struct ModelManagementView: View {
                         }
 
                         // 可添加的模型
-                        Section(header: Text("可用模型 (\(filteredAPIModels.count))")) {
+                        Section(header: Text("可用模型 (\(filteredAPIModels.count))", bundle: HanlinLocalization.bundle)) {
                             ForEach(filteredAPIModels, id: \.id) { model in
                                 let providerName = (model.owned_by?.isEmpty == false)
                                     ? model.owned_by ?? ""
@@ -226,7 +206,7 @@ struct ModelManagementView: View {
                                     : getCompanyIcon(for: apiKey.company ?? "Unknown")
 
                                 HStack(spacing: 12) {
-                                    Image(iconName)
+                                    Image(hanlinAsset: iconName)
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: size_30, height: size_30)
@@ -234,10 +214,10 @@ struct ModelManagementView: View {
                                     VStack(alignment: .leading, spacing: 4) {
                                         ScrollView(.horizontal, showsIndicators: false) {
                                             Text(model.id)
-                                                .font(.subheadline)
+                                                .font(HanlinTypography.subheadline)
                                         }
-                                        Text("提供者: \(providerName)")
-                                            .font(.caption)
+                                        Text("提供者: \(providerName)", bundle: HanlinLocalization.bundle)
+                                            .font(HanlinTypography.caption)
                                             .foregroundColor(.secondary)
                                     }
                                     Spacer()
@@ -252,9 +232,9 @@ struct ModelManagementView: View {
                                                     removeModelByName(modelName)
                                                 }
                                             } label: {
-                                                Text("删除")
+                                                Text(String(localized: "删除", bundle: HanlinLocalization.bundle))
                                                     .foregroundColor(.red)
-                                                    .font(.caption)
+                                                    .font(HanlinTypography.caption)
                                             }
                                             .buttonStyle(.bordered)
                                         }
@@ -267,12 +247,12 @@ struct ModelManagementView: View {
                                         } label: {
                                             HStack(spacing: 4) {
                                                 Image(systemName: "plus.circle")
-                                                Text("添加")
+                                                Text(String(localized: "添加", bundle: HanlinLocalization.bundle))
                                             }
-                                            .font(.caption)
+                                            .font(HanlinTypography.caption)
                                         }
                                         .buttonStyle(.borderedProminent)
-                                        .tint(.hlBlue)
+                                        .tint(.hanlinHLBlue)
                                     }
                                 }
                                 .padding(.vertical, 4)
@@ -282,11 +262,12 @@ struct ModelManagementView: View {
                     .listStyle(.insetGrouped)
                 }
             }
-            .navigationTitle("模型管理")
+            .searchable(text: $searchText, prompt: String(localized: "搜索模型...", bundle: HanlinLocalization.bundle))
+            .navigationTitle(String(localized: "模型管理", bundle: HanlinLocalization.bundle))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("关闭") {
+                    Button(String(localized: "关闭", bundle: HanlinLocalization.bundle)) {
                         dismiss()
                     }
                 }
@@ -302,13 +283,13 @@ struct ModelManagementView: View {
                 }
             }
         }
-        .alert("错误", isPresented: $showError) {
-            Button("确定", role: .cancel) {}
+        .alert(String(localized: "错误", bundle: HanlinLocalization.bundle), isPresented: $showError) {
+            Button(String(localized: "确定", bundle: HanlinLocalization.bundle), role: .cancel) {}
         } message: {
-            Text(errorMessage ?? "未知错误")
+            Text(errorMessage ?? String(localized: "未知错误", bundle: HanlinLocalization.bundle))
         }
-        .alert("API Key 缺失", isPresented: $showAPIKeyError) {
-            Button("确定", role: .cancel) {}
+        .alert(String(localized: "API Key 缺失", bundle: HanlinLocalization.bundle), isPresented: $showAPIKeyError) {
+            Button(String(localized: "确定", bundle: HanlinLocalization.bundle), role: .cancel) {}
         } message: {
             Text(apiKeyErrorMessage)
         }
@@ -336,7 +317,7 @@ struct ModelManagementView: View {
         AnyView(
             ScrollView(.horizontal, showsIndicators: false) {
                 Text(displayNameForAddedModel(model))
-                    .font(.subheadline)
+                    .font(HanlinTypography.subheadline)
             }
         )
     }
@@ -345,13 +326,16 @@ struct ModelManagementView: View {
         if model.company?.uppercased() == "LOCAL" {
             return true
         }
-        guard let company = model.company, let key = apiKey.key else {
+        guard let company = model.company,
+              let key = configurationOverride?.apiKey ?? apiKey.resolvedKey else {
             return false
         }
-        return !company.isEmpty && !key.isEmpty
+        return company == apiKey.company && !company.isEmpty && !key.isEmpty
     }
 
     private func priceText(for price: Int16) -> String {
+        if price < 0 { return String(localized: "Price unknown", bundle: HanlinLocalization.bundle) }
+        if price == 4 { return String(localized: "Paid", bundle: HanlinLocalization.bundle) }
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         if currentLanguage.hasPrefix("zh") {
             switch price {
@@ -371,6 +355,7 @@ struct ModelManagementView: View {
     }
 
     private func priceColor(for price: Int16) -> Color {
+        if price < 0 { return .secondary }
         switch price {
         case 0: return .green
         case 1: return .yellow
@@ -393,7 +378,14 @@ struct ModelManagementView: View {
         errorMessage = nil
 
         do {
-            apiModels = try await ModelRefreshService.fetchModelsFromAPI(apiKey: apiKey)
+            apiModels = try await ModelRefreshService.fetchModelsFromAPI(apiKey: apiKey, configurationOverride: configurationOverride)
+            let existing = (try? modelContext.fetch(FetchDescriptor<AllModels>())) ?? []
+            for entry in apiModels {
+                if let metadata = entry.catalogMetadata {
+                    for model in existing { ModelRefreshService.applyCatalogMetadata(metadata, to: model) }
+                }
+            }
+            try modelContext.save()
             // 按字母顺序排序
             apiModels.sort { $0.id < $1.id }
         } catch {
@@ -412,7 +404,7 @@ struct ModelManagementView: View {
             return
         }
 
-        if apiKey.autoProbeCapabilities {
+        if apiKey.autoProbeCapabilities && company.uppercased() != "OPENROUTER" {
             showProbeSheet = true
             probeItems = ModelCapabilityProbeStep.allCases.map { step in
                 CapabilityProbeItem(step: step, status: .pending, message: nil)
@@ -422,6 +414,7 @@ struct ModelManagementView: View {
                     modelId: model.id,
                     company: company,
                     context: modelContext,
+                    configurationOverride: configurationOverride,
                     update: { step, status, message in
                         updateProbeItem(step: step, status: status, message: message)
                     }
@@ -431,7 +424,8 @@ struct ModelManagementView: View {
                     displayName: model.id,
                     company: company,
                     context: modelContext,
-                    capabilities: result.capabilities
+                    capabilities: result.capabilities,
+                    catalogMetadata: model.catalogMetadata
                 )
             } catch {
                 errorMessage = "添加失败: \(error.localizedDescription)"
@@ -443,7 +437,8 @@ struct ModelManagementView: View {
                     modelId: model.id,
                     displayName: model.id,
                     company: company,
-                    context: modelContext
+                    context: modelContext,
+                    catalogMetadata: model.catalogMetadata
                 )
             } catch {
                 errorMessage = "添加失败: \(error.localizedDescription)"
@@ -494,7 +489,7 @@ struct QuickModelRefreshButton: View {
         } label: {
             HStack {
                 Image(systemName: "arrow.triangle.2.circlepath")
-                Text("刷新模型列表")
+                Text(String(localized: "刷新模型列表", bundle: HanlinLocalization.bundle))
             }
         }
         .sheet(isPresented: $showModelManagement) {
@@ -516,8 +511,8 @@ struct CapabilityProbeSheet: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            Text("模型能力自动探测")
-                .font(.headline)
+            Text(String(localized: "模型能力自动探测", bundle: HanlinLocalization.bundle))
+                .font(HanlinTypography.headline)
                 .padding(.top, 16)
 
             VStack(spacing: 12) {
@@ -527,10 +522,10 @@ struct CapabilityProbeSheet: View {
                             .frame(width: 20, height: 20)
                         VStack(alignment: .leading, spacing: 4) {
                             Text(item.step.title)
-                                .font(.subheadline)
+                                .font(HanlinTypography.subheadline)
                             if let message = item.message, !message.isEmpty {
                                 Text(message)
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                                     .foregroundColor(.secondary)
                             }
                         }
@@ -541,11 +536,11 @@ struct CapabilityProbeSheet: View {
             }
             .padding(.horizontal)
 
-            Button("完成") {
+            Button(String(localized: "完成", bundle: HanlinLocalization.bundle)) {
                 onClose()
             }
             .buttonStyle(.borderedProminent)
-            .tint(.hlBlue)
+            .tint(.hanlinHLBlue)
             .padding(.bottom, 12)
         }
         .presentationDetents([.medium, .large])
@@ -558,18 +553,18 @@ struct CapabilityProbeSheet: View {
         case .pending:
             Image(systemName: "circle")
                 .foregroundColor(.secondary)
-                .font(.system(size: 16, weight: .semibold))
+                .font(HanlinTypography.fixed(size: 16, weight: .semibold))
         case .running:
             ProgressView()
                 .scaleEffect(0.8)
         case .success:
             Image(systemName: "checkmark.circle.fill")
                 .foregroundColor(.green)
-                .font(.system(size: 16, weight: .semibold))
+                .font(HanlinTypography.fixed(size: 16, weight: .semibold))
         case .failure:
             Image(systemName: "xmark.circle.fill")
                 .foregroundColor(.red)
-                .font(.system(size: 16, weight: .semibold))
+                .font(HanlinTypography.fixed(size: 16, weight: .semibold))
         }
     }
 }

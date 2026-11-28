@@ -1,0 +1,14 @@
+{
+  "source": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "collectorPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-lists-shortcuts-3634078f/candidate-r2/proof/collector-impact/actual-collector.json",
+  "collectorSHA256": "cef96e9d80ac37696df42cc89d2333d580aa2e66aa0dae3b19b1f339ec1cfa22",
+  "actualInputCount": 396,
+  "actualFingerprint": "36b1fa73d649f52580ca83458f668d1184665480eb3d5ad9f83a4ee4b5cce254",
+  "changedPaths": [
+    "Scripts/ProductSplit/run_native_acceptance.py",
+    "Scripts/CI/Tests/test_notification_os_scope.py"
+  ],
+  "intersection": [],
+  "sdkProducerExecuted": false,
+  "laterShareInputChangeNotQualified": true
+}

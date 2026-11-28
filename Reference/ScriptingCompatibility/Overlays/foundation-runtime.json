@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "symbols": [
+    { "symbol": "console", "state": "supported", "operation": "console", "capability": null, "contexts": ["all"] },
+    { "symbol": "setTimeout", "state": "supported", "operation": "timer.schedule", "capability": null, "contexts": ["mainApplication", "backgroundTask"] },
+    { "symbol": "clearTimeout", "state": "supported", "operation": "timer.cancel", "capability": null, "contexts": ["mainApplication", "backgroundTask"] },
+    { "symbol": "Script", "state": "partial", "operation": "script.lifecycle", "capability": null, "contexts": ["all"] },
+    { "symbol": "fetch", "state": "partial", "operation": "network.fetch", "capability": "network", "contexts": ["mainApplication", "backgroundTask", "appIntent"] },
+    { "symbol": "Headers", "state": "partial", "operation": "network.headers", "capability": "network", "contexts": ["mainApplication", "backgroundTask", "appIntent"] },
+    { "symbol": "Request", "state": "partial", "operation": "network.request", "capability": "network", "contexts": ["mainApplication", "backgroundTask", "appIntent"] },
+    { "symbol": "Response", "state": "partial", "operation": "network.response", "capability": "network", "contexts": ["mainApplication", "backgroundTask", "appIntent"] },
+    { "symbol": "AbortController", "state": "partial", "operation": "cancellation.controller", "capability": null, "contexts": ["all"] },
+    { "symbol": "AbortSignal", "state": "partial", "operation": "cancellation.signal", "capability": null, "contexts": ["all"] },
+    { "symbol": "URL", "state": "supported", "operation": "value.url", "capability": null, "contexts": ["all"] },
+    { "symbol": "URLSearchParams", "state": "supported", "operation": "value.urlSearchParams", "capability": null, "contexts": ["all"] },
+    { "symbol": "TextEncoder", "state": "supported", "operation": "value.textEncoder", "capability": null, "contexts": ["all"] },
+    { "symbol": "TextDecoder", "state": "supported", "operation": "value.textDecoder", "capability": null, "contexts": ["all"] }
+  ]
+}

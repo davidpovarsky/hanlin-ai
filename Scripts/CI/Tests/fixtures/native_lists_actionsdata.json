@@ -1,0 +1,515 @@
+{
+  "actions": {
+    "HanlinRunMiniAppShortcutIntent": {
+      "identifier": "HanlinRunMiniAppShortcutIntent",
+      "parameters": [
+        {
+          "capabilities": 0,
+          "dynamicOptionsSupport": 0,
+          "inputConnectionBehavior": 0,
+          "isInput": false,
+          "isOptional": false,
+          "name": "action",
+          "resolvableInputTypes": [],
+          "title": {
+            "alternatives": [],
+            "key": "Action",
+            "table": "HanlinAppIntents"
+          },
+          "typeSpecificMetadata": [],
+          "valueType": {
+            "entity": {
+              "wrapper": {
+                "typeName": "HanlinScriptActionEntity"
+              }
+            }
+          }
+        },
+        {
+          "capabilities": 1,
+          "dynamicOptionsSupport": 0,
+          "inputConnectionBehavior": 0,
+          "isInput": false,
+          "isOptional": false,
+          "name": "inputType",
+          "resolvableInputTypes": [],
+          "title": {
+            "alternatives": [],
+            "key": "Input Type",
+            "table": "HanlinAppIntents"
+          },
+          "typeSpecificMetadata": [
+            "LNValueTypeSpecificMetadataKeyDefaultValue",
+            {
+              "string": {
+                "wrapper": "text"
+              }
+            }
+          ],
+          "valueType": {
+            "linkEnumeration": {
+              "wrapper": {
+                "identifier": "MiniAppsShortcutInputType"
+              }
+            }
+          }
+        },
+        {
+          "capabilities": 1,
+          "dynamicOptionsSupport": 0,
+          "inputConnectionBehavior": 0,
+          "isInput": false,
+          "isOptional": false,
+          "name": "input",
+          "resolvableInputTypes": [
+            {
+              "kindValue": 0,
+              "valueType": {
+                "primitive": {
+                  "wrapper": {
+                    "typeIdentifier": 0
+                  }
+                }
+              }
+            },
+            {
+              "kindValue": 0,
+              "valueType": {
+                "primitive": {
+                  "wrapper": {
+                    "typeIdentifier": 2
+                  }
+                }
+              }
+            },
+            {
+              "kindValue": 0,
+              "valueType": {
+                "array": {
+                  "wrapper": {
+                    "capabilities": 3,
+                    "memberValueType": {
+                      "primitive": {
+                        "wrapper": {
+                          "typeIdentifier": 2
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "title": {
+            "alternatives": [],
+            "key": "Input",
+            "table": "HanlinAppIntents"
+          },
+          "typeSpecificMetadata": [
+            "LNValueTypeSpecificMetadataKeyDefaultValue",
+            {
+              "string": {
+                "wrapper": ""
+              }
+            }
+          ],
+          "valueType": {
+            "primitive": {
+              "wrapper": {
+                "typeIdentifier": 0
+              }
+            }
+          }
+        },
+        {
+          "capabilities": 0,
+          "dynamicOptionsSupport": 0,
+          "inputConnectionBehavior": 0,
+          "isInput": false,
+          "isOptional": true,
+          "name": "jsonFile",
+          "resolvableInputTypes": [
+            {
+              "kindValue": 0,
+              "valueType": {
+                "intents": {
+                  "wrapper": {
+                    "typeIdentifier": 12
+                  }
+                }
+              }
+            }
+          ],
+          "title": {
+            "alternatives": [],
+            "key": "JSON File",
+            "table": "HanlinAppIntents"
+          },
+          "typeSpecificMetadata": [
+            "LNValueTypeMetadataKeyFileSupportedTypes",
+            {
+              "array": {
+                "elements": [
+                  {
+                    "string": {
+                      "wrapper": "public.json"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "valueType": {
+            "intents": {
+              "wrapper": {
+                "typeIdentifier": 12
+              }
+            }
+          }
+        },
+        {
+          "capabilities": 1,
+          "dynamicOptionsSupport": 0,
+          "inputConnectionBehavior": 0,
+          "isInput": false,
+          "isOptional": false,
+          "name": "allowLongRunning",
+          "resolvableInputTypes": [
+            {
+              "kindValue": 0,
+              "valueType": {
+                "primitive": {
+                  "wrapper": {
+                    "typeIdentifier": 1
+                  }
+                }
+              }
+            }
+          ],
+          "title": {
+            "alternatives": [],
+            "key": "Allow Long Running",
+            "table": "HanlinAppIntents"
+          },
+          "typeSpecificMetadata": [
+            "LNValueTypeSpecificMetadataKeyDefaultValue",
+            {
+              "int": {
+                "wrapper": 0
+              }
+            }
+          ],
+          "valueType": {
+            "primitive": {
+              "wrapper": {
+                "typeIdentifier": 1
+              }
+            }
+          }
+        },
+        {
+          "capabilities": 0,
+          "dynamicOptionsSupport": 0,
+          "inputConnectionBehavior": 0,
+          "isInput": false,
+          "isOptional": true,
+          "name": "textItems",
+          "resolvableInputTypes": [],
+          "title": {
+            "alternatives": [],
+            "key": "Text List",
+            "table": "HanlinAppIntents"
+          },
+          "typeSpecificMetadata": [],
+          "valueType": {
+            "array": {
+              "wrapper": {
+                "capabilities": 3,
+                "memberValueType": {
+                  "primitive": {
+                    "wrapper": {
+                      "typeIdentifier": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "capabilities": 0,
+          "dynamicOptionsSupport": 0,
+          "inputConnectionBehavior": 0,
+          "isInput": false,
+          "isOptional": true,
+          "name": "integerItems",
+          "resolvableInputTypes": [],
+          "title": {
+            "alternatives": [],
+            "key": "Integer List",
+            "table": "HanlinAppIntents"
+          },
+          "typeSpecificMetadata": [],
+          "valueType": {
+            "array": {
+              "wrapper": {
+                "capabilities": 3,
+                "memberValueType": {
+                  "primitive": {
+                    "wrapper": {
+                      "typeIdentifier": 2
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "capabilities": 0,
+          "dynamicOptionsSupport": 0,
+          "inputConnectionBehavior": 0,
+          "isInput": false,
+          "isOptional": true,
+          "name": "numberItems",
+          "resolvableInputTypes": [],
+          "title": {
+            "alternatives": [],
+            "key": "Number List",
+            "table": "HanlinAppIntents"
+          },
+          "typeSpecificMetadata": [],
+          "valueType": {
+            "array": {
+              "wrapper": {
+                "capabilities": 3,
+                "memberValueType": {
+                  "primitive": {
+                    "wrapper": {
+                      "typeIdentifier": 7
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "capabilities": 0,
+          "dynamicOptionsSupport": 0,
+          "inputConnectionBehavior": 0,
+          "isInput": false,
+          "isOptional": true,
+          "name": "booleanItems",
+          "resolvableInputTypes": [],
+          "title": {
+            "alternatives": [],
+            "key": "Boolean List",
+            "table": "HanlinAppIntents"
+          },
+          "typeSpecificMetadata": [],
+          "valueType": {
+            "array": {
+              "wrapper": {
+                "capabilities": 3,
+                "memberValueType": {
+                  "primitive": {
+                    "wrapper": {
+                      "typeIdentifier": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "actionConfiguration": {
+        "switchStatement": {
+          "wrapper": {
+            "cases": [
+              {
+                "configuration": {
+                  "actionSummary": {
+                    "wrapper": {
+                      "otherParameterIdentifiers": [
+                        "inputType",
+                        "allowLongRunning"
+                      ],
+                      "summaryString": {
+                        "formatString": "Run ${action} with ${textItems}",
+                        "parameterIdentifiers": [
+                          "action",
+                          "textItems"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "isDefaultCase": false,
+                "value": {
+                  "array": {
+                    "valueType": {
+                      "linkEnumeration": {
+                        "wrapper": {
+                          "identifier": "MiniAppsShortcutInputType"
+                        }
+                      }
+                    },
+                    "values": [
+                      {
+                        "enumeration": {
+                          "identifier": "MiniAppsShortcutInputType",
+                          "value": "textList"
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "configuration": {
+                  "actionSummary": {
+                    "wrapper": {
+                      "otherParameterIdentifiers": [
+                        "inputType",
+                        "allowLongRunning"
+                      ],
+                      "summaryString": {
+                        "formatString": "Run ${action} with ${integerItems}",
+                        "parameterIdentifiers": [
+                          "action",
+                          "integerItems"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "isDefaultCase": false,
+                "value": {
+                  "array": {
+                    "valueType": {
+                      "linkEnumeration": {
+                        "wrapper": {
+                          "identifier": "MiniAppsShortcutInputType"
+                        }
+                      }
+                    },
+                    "values": [
+                      {
+                        "enumeration": {
+                          "identifier": "MiniAppsShortcutInputType",
+                          "value": "integerList"
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "configuration": {
+                  "actionSummary": {
+                    "wrapper": {
+                      "otherParameterIdentifiers": [
+                        "inputType",
+                        "allowLongRunning"
+                      ],
+                      "summaryString": {
+                        "formatString": "Run ${action} with ${numberItems}",
+                        "parameterIdentifiers": [
+                          "action",
+                          "numberItems"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "isDefaultCase": false,
+                "value": {
+                  "array": {
+                    "valueType": {
+                      "linkEnumeration": {
+                        "wrapper": {
+                          "identifier": "MiniAppsShortcutInputType"
+                        }
+                      }
+                    },
+                    "values": [
+                      {
+                        "enumeration": {
+                          "identifier": "MiniAppsShortcutInputType",
+                          "value": "numberList"
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "configuration": {
+                  "actionSummary": {
+                    "wrapper": {
+                      "otherParameterIdentifiers": [
+                        "inputType",
+                        "allowLongRunning"
+                      ],
+                      "summaryString": {
+                        "formatString": "Run ${action} with ${booleanItems}",
+                        "parameterIdentifiers": [
+                          "action",
+                          "booleanItems"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "isDefaultCase": false,
+                "value": {
+                  "array": {
+                    "valueType": {
+                      "linkEnumeration": {
+                        "wrapper": {
+                          "identifier": "MiniAppsShortcutInputType"
+                        }
+                      }
+                    },
+                    "values": [
+                      {
+                        "enumeration": {
+                          "identifier": "MiniAppsShortcutInputType",
+                          "value": "booleanList"
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "configuration": {
+                  "actionSummary": {
+                    "wrapper": {
+                      "otherParameterIdentifiers": [
+                        "inputType",
+                        "jsonFile",
+                        "allowLongRunning"
+                      ],
+                      "summaryString": {
+                        "formatString": "Run ${action} with ${input}",
+                        "parameterIdentifiers": [
+                          "action",
+                          "input"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "isDefaultCase": true
+              }
+            ],
+            "parameterIdentifier": "inputType"
+          }
+        }
+      }
+    }
+  }
+}

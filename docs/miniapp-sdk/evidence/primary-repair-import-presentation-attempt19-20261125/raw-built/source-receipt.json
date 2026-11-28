@@ -1,0 +1,62 @@
+{
+  "capturedAt": "2026-11-25T14:43:30.353780+00:00",
+  "source": "7bf0c2fdc2f7168d6b98dda66f443ae032fe1c11",
+  "SDKProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "miniBuildProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "retainedPrefixSource": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+  "build": {
+    "argv": [
+      "xcodebuild",
+      "-project",
+      "AI_HLY.xcodeproj",
+      "-destination",
+      "platform=iOS Simulator,id=E742FBCD-8FF0-4130-B143-7F8328637138",
+      "-parallel-testing-enabled",
+      "NO",
+      "-derivedDataPath",
+      "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete",
+      "-clonedSourcePackagesDirPath",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages",
+      "-skipPackagePluginValidation",
+      "-skipMacroValidation",
+      "CODE_SIGNING_ALLOWED=YES",
+      "CODE_SIGNING_REQUIRED=YES",
+      "CODE_SIGN_IDENTITY=-",
+      "-scheme",
+      "AI_HLY",
+      "build-for-testing",
+      "-resultBundlePath",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/paired-prefix/AIBuild.xcresult"
+    ],
+    "exit": 0,
+    "seconds": 135.76386762500624,
+    "log": "ai-build.log",
+    "sha256": "87fdfce791af6a9925dc9187a01e65ce03af058558b04c1c52f4940e27fab84e"
+  },
+  "members": [
+    {
+      "path": "built-input-bindings.json",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/built-input-bindings.json",
+      "bytes": 11843,
+      "sha256": "c09fe3337da9e9d0f869560cb22cde7c969d5d22713dcdf61f3a495a3abd8173"
+    },
+    {
+      "path": "staged-inputs.json",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/staged-inputs.json",
+      "bytes": 5833,
+      "sha256": "c9b2b3c790b4014807bbfd5e37a9ba70cb6b04744597d3ad9120bdcd0923655e"
+    },
+    {
+      "path": "commands.jsonl",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/paired-prefix/commands.jsonl",
+      "bytes": 4909,
+      "sha256": "d7dd97ef762db478b0aa841df3344aaa0f4d6c84ecf25fd2029941366bde46b5"
+    },
+    {
+      "path": "original-prefix-state.json",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/original-prefix-state.json",
+      "bytes": 25360,
+      "sha256": "4801986291deaff7bb15e83eabbad48529c72729054cd021225e8a34b71069e0"
+    }
+  ]
+}

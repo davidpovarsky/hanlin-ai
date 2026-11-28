@@ -1,0 +1,126 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "path": "containers/CD73F996-FB42-42E4-B1DE-7287569F3A54/metadata.plist",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/CD73F996-FB42-42E4-B1DE-7287569F3A54/.com.apple.mobile_container_manager.metadata.plist",
+      "bytes": 602,
+      "sha256": "cde9660338425f9d80813bfce0c335fca4780f4390b8e84b108c7f0b306ccf8f"
+    },
+    {
+      "path": "containers/FC80577A-6432-4FB4-A113-DA91458A21B0/metadata.plist",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/FC80577A-6432-4FB4-A113-DA91458A21B0/.com.apple.mobile_container_manager.metadata.plist",
+      "bytes": 632,
+      "sha256": "e33388ed2669b77bf984cc1515bc1cfa7ec61034620aae03cdfda0e74d1e5e80"
+    },
+    {
+      "path": "containers/FC80577A-6432-4FB4-A113-DA91458A21B0/Documents/HanlinNotificationOSProbe/47eb83b9-d554-458d-b8f3-02239bf5a753/expo.request.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/FC80577A-6432-4FB4-A113-DA91458A21B0/Documents/HanlinNotificationOSProbe/47eb83b9-d554-458d-b8f3-02239bf5a753/expo.request.json",
+      "bytes": 181,
+      "sha256": "af1453d31df134df7cd8353e0e6720728a40da1ac65a8e7034e1632d3ce6862e"
+    },
+    {
+      "path": "containers/FC80577A-6432-4FB4-A113-DA91458A21B0/Documents/HanlinNotificationOSProbe/active.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/FC80577A-6432-4FB4-A113-DA91458A21B0/Documents/HanlinNotificationOSProbe/active.json",
+      "bytes": 127,
+      "sha256": "4fe6a8345dc292349af7a4632a5996f8eee057bcc41b1ee2bd39f22c2f7d10e7"
+    }
+  ],
+  "observedAt": "2026-11-25T18:49:43.202492+00:00",
+  "bound": {
+    "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+    "decisionSHA256": "6c6daf1c44424cd0c7e68de78a6a46f8727cac01c392eda43c4ed97648109d88",
+    "observedAt": "2026-11-25T18:41:36.075353+00:00",
+    "device": "E742FBCD-8FF0-4130-B143-7F8328637138",
+    "runnerBundleID": "com.itorah.hanlinminiapps.integration.uitests.xctrunner",
+    "uiRunnerInfoSHA256": "e807c6b2a4c5444448a527d598bb86195f0737209b6c15bc2b8ecc8273f75d87",
+    "runnerData": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/9B37C117-33C4-420A-89D1-1A9A16F75D4B",
+    "appData": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/C129E146-10B3-4B74-81C5-5D5FFF89DC38",
+    "appGroup": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/EAE213D3-0A61-4500-9D46-E8F08D94D8F2",
+    "actionInput": {
+      "source": "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/C129E146-10B3-4B74-81C5-5D5FFF89DC38/Documents/Hanlin-ScriptWidget-Actions.scripting",
+      "bytes": 825,
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+      "status": "STAGED_ORIGINAL_INPUT"
+    },
+    "existingOriginalInputsVerifiedWithoutCopy": [
+      {
+        "source": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+        "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/C129E146-10B3-4B74-81C5-5D5FFF89DC38/Documents/ExpoSwiftUIProbeA.hanlinExpo",
+        "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+      },
+      {
+        "source": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+        "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/C129E146-10B3-4B74-81C5-5D5FFF89DC38/Documents/hanlin-script-parity.hanlinNativeScript",
+        "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199"
+      }
+    ],
+    "boundary": "OS returned current owned-device containers. No permission grant, registry, queue or receipt is manufactured."
+  },
+  "oldRunner": {
+    "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/9B37C117-33C4-420A-89D1-1A9A16F75D4B",
+    "exists": false,
+    "activeExists": false
+  },
+  "matchingContainers": [
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/CD73F996-FB42-42E4-B1DE-7287569F3A54",
+      "identifier": "com.itorah.hanlinminiapps",
+      "metadataUUID": "072BCAF8-6EB2-43AE-84A0-C5F4D2EFEAD0",
+      "metadata": {
+        "MCMMetadataIdentifier": "com.itorah.hanlinminiapps",
+        "MCMMetadataInfo": "{'com.apple.MobileInstallation.ContentProtectionClass': 0}",
+        "MCMMetadataVersion": "9",
+        "MCMMetadataUserIdentity": "{'posixUID': 501, 'posixGID': 20, 'type': 2, 'version': '2'}",
+        "MCMMetadataContentClass": "2",
+        "MCMMetadataUUID": "072BCAF8-6EB2-43AE-84A0-C5F4D2EFEAD0",
+        "MCMMetadataOwnership": "{'uid': 501, 'gid': 20, 'mode': 'u+rwx,g+rx,o+rx', 'version': 1}",
+        "MCMMetadataSchemaVersion": "1",
+        "MCMMetadataCreator": "com.apple.installd",
+        "MCMMetadataActiveDPClass": "0"
+      },
+      "exchangeFiles": []
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/FC80577A-6432-4FB4-A113-DA91458A21B0",
+      "identifier": "com.itorah.hanlinminiapps.integration.uitests.xctrunner",
+      "metadataUUID": "5A2C385A-33F1-4BAE-84D8-086EF0EB29E2",
+      "metadata": {
+        "MCMMetadataIdentifier": "com.itorah.hanlinminiapps.integration.uitests.xctrunner",
+        "MCMMetadataInfo": "{'com.apple.MobileInstallation.ContentProtectionClass': 0}",
+        "MCMMetadataVersion": "9",
+        "MCMMetadataUserIdentity": "{'posixUID': 501, 'posixGID': 20, 'type': 2, 'version': '2'}",
+        "MCMMetadataContentClass": "2",
+        "MCMMetadataUUID": "5A2C385A-33F1-4BAE-84D8-086EF0EB29E2",
+        "MCMMetadataOwnership": "{'uid': 501, 'gid': 20, 'mode': 'u+rwx,g+rx,o+rx', 'version': 1}",
+        "MCMMetadataSchemaVersion": "1",
+        "MCMMetadataCreator": "com.apple.installd",
+        "MCMMetadataActiveDPClass": "0"
+      },
+      "exchangeFiles": [
+        {
+          "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/FC80577A-6432-4FB4-A113-DA91458A21B0/Documents/HanlinNotificationOSProbe/47eb83b9-d554-458d-b8f3-02239bf5a753/expo.request.json",
+          "relative": "Documents/HanlinNotificationOSProbe/47eb83b9-d554-458d-b8f3-02239bf5a753/expo.request.json",
+          "bytes": 181,
+          "sha256": "af1453d31df134df7cd8353e0e6720728a40da1ac65a8e7034e1632d3ce6862e",
+          "mtimeNs": "1795632296376313678",
+          "text": "{\"challenge\":\"notification-os-9707cc07-624f-40e5-9b07-a3987c8ce0b9\",\"packageName\":\"Expo SwiftUI Probe A\",\"runID\":\"47eb83b9-d554-458d-b8f3-02239bf5a753\",\"runtime\":\"expo\",\"version\":1}"
+        },
+        {
+          "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/FC80577A-6432-4FB4-A113-DA91458A21B0/Documents/HanlinNotificationOSProbe/active.json",
+          "relative": "Documents/HanlinNotificationOSProbe/active.json",
+          "bytes": 127,
+          "sha256": "4fe6a8345dc292349af7a4632a5996f8eee057bcc41b1ee2bd39f22c2f7d10e7",
+          "mtimeNs": "1795632191902531058",
+          "text": "{\"challenge\":\"notification-os-9707cc07-624f-40e5-9b07-a3987c8ce0b9\",\"runID\":\"47eb83b9-d554-458d-b8f3-02239bf5a753\",\"version\":1}"
+        }
+      ]
+    }
+  ],
+  "workerOutput": {
+    "exists": true,
+    "files": []
+  },
+  "freshQueueFiles": []
+}

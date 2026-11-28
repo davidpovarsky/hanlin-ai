@@ -1,0 +1,11 @@
+(props) => ({
+  type: 'VStack',
+  props: {
+    spacing: 8,
+    children: [
+      {type: 'Text', props: {children: 'Surface Expo'}},
+      {type: 'Text', props: {children: 'Challenge: ' + (props.challenge || 'Prepare in app')}},
+      {type: 'Button', props: {target: 'surface-host-run', label: 'Run Expo Surface'}}
+    ]
+  }
+})

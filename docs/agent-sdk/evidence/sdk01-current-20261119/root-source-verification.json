@@ -1,0 +1,189 @@
+{
+  "observed_at": "2026-11-19T01:06:02.901509+00:00",
+  "source_sha": "e0089cfb8c192530056aba39c7c8bbf945da75d3",
+  "evaluation_source": "e564dc29d24239309b113244bec4556c211c5b2d",
+  "scope": "SDK01 source/design deliverable only; no new Apple compilation/device execution",
+  "evaluated_input_checks": [
+    {
+      "path": "Packages/HanlinAgentSDK/Package.swift",
+      "sha256": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b",
+      "unchanged_from_evaluated_source": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Package.swift",
+      "sha256": "6fa5cc06b7beb940f4e745ce186bb27b296ccf4583119ab06663da620b51460d",
+      "unchanged_from_evaluated_source": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Package.swift",
+      "sha256": "59272c233aca8fbf72f50a9296539b2ed55b33f625ce34d208a2b1c4e3d569b8",
+      "unchanged_from_evaluated_source": true
+    },
+    {
+      "path": "Packages/HanlinSkillFormat/Package.swift",
+      "sha256": "3878f654329884843943a463a901537c45f894b198a4bc9b9b9169410dc66741",
+      "unchanged_from_evaluated_source": true
+    },
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "sha256": "54e670643fdd31a35276fcaa06bb9ded51dd5ddd506cc655319dd123b28ce35b",
+      "unchanged_from_evaluated_source": true
+    }
+  ],
+  "source_inventory": [
+    {
+      "path": "Packages/HanlinAgentSDK/Package.swift",
+      "bytes": 3056,
+      "sha256": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Package.swift",
+      "bytes": 9599,
+      "sha256": "6fa5cc06b7beb940f4e745ce186bb27b296ccf4583119ab06663da620b51460d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Package.swift",
+      "bytes": 1170,
+      "sha256": "59272c233aca8fbf72f50a9296539b2ed55b33f625ce34d208a2b1c4e3d569b8"
+    },
+    {
+      "path": "Packages/HanlinSkillFormat/Package.swift",
+      "bytes": 662,
+      "sha256": "3878f654329884843943a463a901537c45f894b198a4bc9b9b9169410dc66741"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+      "bytes": 34890,
+      "sha256": "0fadca052c3d9f131b72f31892940e734aefd28898be2d169e6affe177284fd9"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift",
+      "bytes": 9029,
+      "sha256": "c8e0ecfdda95960195c3454f76d35fa5bd6c48c08781e920d39903157416eb92"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift",
+      "bytes": 11497,
+      "sha256": "a1b62896cb60494872843c2bf23a62cb635b8a107c806ed37f5b78fb5ceeb67f"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatEngine.swift",
+      "bytes": 6838,
+      "sha256": "2bccec0d98941fb9ad89b8b8ca2325e773f853908d379e15617ca877af4700ca"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatStreamParser.swift",
+      "bytes": 11530,
+      "sha256": "ff20771a6aed636bd4abbb5de26f4adc350c338f16e30659ba919c6fa1614826"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+      "bytes": 34780,
+      "sha256": "36695f408a3bc147bd3394c6f445846e17e38146478a345745c1e28d7917f2d7"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostDispatcher.swift",
+      "bytes": 11482,
+      "sha256": "bb4a4c7c97559687f6a2d739f5f1e2d2f779a4a6c7d6f0c4a1f6a8d64b2a3e7f"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleOnDeviceProvider.swift",
+      "bytes": 7773,
+      "sha256": "e9cce91de6ae2ad7b93d86efe81d3ee8c550c504fe167c0a6bc17098f7ded22f"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinHostContracts/HanlinHostContext.swift",
+      "bytes": 8843,
+      "sha256": "fd308d1d583a0205fb1305677b87878d6e82396b21eb20082ddd335981be2f6f"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinHostContracts/HanlinHostIntegration.swift",
+      "bytes": 9102,
+      "sha256": "5058e0e331612aa8d9eba2372f77530947719156efc7c8c40c0bee98144df7bf"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinHostContracts/HanlinConversationStore.swift",
+      "bytes": 4841,
+      "sha256": "7a19c8b974a35bae6fc16eebbd71684ab7bc3ed0526a15efa81e5c24d48848ed"
+    },
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "bytes": 130925,
+      "sha256": "e328ce86d07d9a17e4f3d5e3d30895912604b65a452b1f3adc6bdd886fc684bd"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "bytes": 207372,
+      "sha256": "8d56d93d81fd8e2f0389fbac8ba165eb5a43db41df9e84826a2b815fd262a448"
+    },
+    {
+      "path": "AI_HLY/Model/ChatMessages.swift",
+      "bytes": 8620,
+      "sha256": "7badb4ce6ec0202cd7ab9715363ada5189fb10fe7821b910496258dd287e7c44"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "bytes": 25319,
+      "sha256": "71108409eb957acc4af5f9b51fa820bc0905802fcca2186f05853fa1cb496dd6"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppHostIntegration.swift",
+      "bytes": 20374,
+      "sha256": "372c01399b4a5606f42eb01015c354dc1abc8dfa75b42a655753d8ff95ecb800"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppConversationStore.swift",
+      "bytes": 8689,
+      "sha256": "ea99da484aed22dea9352bf8b44a3b8e66b06a7084d2604c021bdaaee715b515"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/HanlinAISDKToolAdapter.swift",
+      "bytes": 48505,
+      "sha256": "9765af93c16ef25d036455801fa238ae52d5fdb9795deed8cf194491772b2f1c"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/AssistantCapabilitySession.swift",
+      "bytes": 5774,
+      "sha256": "3e76f0881bad93daf442dc51ad10a47ce64f9812d7bf73bf6ed5a4bd650337c6"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/AssistantToolExposurePlanner.swift",
+      "bytes": 2708,
+      "sha256": "14033d19f9da93ad0c0a3780c21f23d1f608787a8eeda5e6b2f70b7b99fa61ec"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/HanlinSkillCatalog.swift",
+      "bytes": 21315,
+      "sha256": "456df47c5411edce7e4d1a10cc562639b5672a25f47e6ea361f637e624d53bf2"
+    },
+    {
+      "path": "AI_HLY/Views/Components/ChatViewComponents.swift",
+      "bytes": 254849,
+      "sha256": "132e8a34f732f3182fef9e6ba44db3ce386490474ef4eef8fd33904c5a17e9f2"
+    },
+    {
+      "path": "AI_HLY/Views/Components/ChatViewBottom.swift",
+      "bytes": 88685,
+      "sha256": "bf84eb6b8c238f3d3d25c87ce8e8c259e9e0350a49e51e29272d3130eb25330f"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinChatView.swift",
+      "bytes": 2412,
+      "sha256": "5a4567dd4e3f36434cf5af43a54ae5afdf71f375ac0f27c93f0e1d35aafeae91"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinMorphComposer.swift",
+      "bytes": 15794,
+      "sha256": "769baa617e282b957b33c51e34c413ee1696673d399345faddb4fb2264b5b764"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/NativeMultilineTextEditor.swift",
+      "bytes": 23026,
+      "sha256": "ec30c7861c69a551269407af0ce696aaba817ae4c4bb127fa9c8093ef6fad654"
+    }
+  ],
+  "target_count": 11,
+  "new_native_compilation": "NOT_RUN",
+  "new_simulator_acceptance": "NOT_RUN",
+  "new_device_acceptance": "NOT_RUN"
+}

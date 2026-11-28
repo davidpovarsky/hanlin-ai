@@ -1,0 +1,17 @@
+test_duplicate_current_policy_fails (Scripts.Runtime.Tests.test_validate_shell_acceptance.ShellAcceptanceValidationTests.test_duplicate_current_policy_fails) ... ok
+test_dynamic_catalog_superset_passes (Scripts.Runtime.Tests.test_validate_shell_acceptance.ShellAcceptanceValidationTests.test_dynamic_catalog_superset_passes) ... ok
+test_failed_current_policy_fails (Scripts.Runtime.Tests.test_validate_shell_acceptance.ShellAcceptanceValidationTests.test_failed_current_policy_fails) ... ok
+test_legacy_policy_contract_fails (Scripts.Runtime.Tests.test_validate_shell_acceptance.ShellAcceptanceValidationTests.test_legacy_policy_contract_fails) ... ok
+test_missing_command_fails (Scripts.Runtime.Tests.test_validate_shell_acceptance.ShellAcceptanceValidationTests.test_missing_command_fails) ... ok
+test_missing_current_policy_fails (Scripts.Runtime.Tests.test_validate_shell_acceptance.ShellAcceptanceValidationTests.test_missing_current_policy_fails) ... ok
+test_nonboolean_current_policy_success_fails (Scripts.Runtime.Tests.test_validate_shell_acceptance.ShellAcceptanceValidationTests.test_nonboolean_current_policy_success_fails) ... ok
+test_nonzero_command_fails (Scripts.Runtime.Tests.test_validate_shell_acceptance.ShellAcceptanceValidationTests.test_nonzero_command_fails) ... ok
+test_offline_curl_output_must_identify_curl (Scripts.Runtime.Tests.test_validate_shell_acceptance.ShellAcceptanceValidationTests.test_offline_curl_output_must_identify_curl) ... ok
+test_unexpected_policy_fails (Scripts.Runtime.Tests.test_validate_shell_acceptance.ShellAcceptanceValidationTests.test_unexpected_policy_fails) ... ok
+test_valid_result_passes (Scripts.Runtime.Tests.test_validate_shell_acceptance.ShellAcceptanceValidationTests.test_valid_result_passes) ... ok
+test_workspace_escape_fails (Scripts.Runtime.Tests.test_validate_shell_acceptance.ShellAcceptanceValidationTests.test_workspace_escape_fails) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.003s
+
+OK

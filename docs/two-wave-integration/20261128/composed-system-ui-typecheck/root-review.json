@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "atUTC": "2026-11-28T10:22:25.931017+00:00",
+  "reviewer": "/root",
+  "status": "WHOLE_COMPOSED_UI_APPLE_TYPECHECK_PASS_INDEPENDENTLY_VERIFIED",
+  "integratedSourceCommit": "c8f9443dcd34015f0e7bbcdb84d36374379ca35c",
+  "integratedTree": "ec851028802590295aeeca35bfb9124b9e939726",
+  "originalAdmissionBase": "04e33c45acedd3f372f836b06f17b805bc91293d",
+  "composedFile": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "composedSourceSHA256": "6b6ae68459977419cfe8539d14bfd96c09100ccb5d488dbd5790608ba5f7a738",
+  "all36OriginalPayloadBytesHashesModesVerified": true,
+  "originalArchiveAll37MembersVerified": true,
+  "originalManifestSHA256": "106b6067ad96083bcba506234292ba7b95b4f60a250638b33d9ff650710c8eb0",
+  "originalArchiveSHA256": "f62d1400e2cfe1f7580f51e91251b418aef3830daf85531dee5edd7f5ced6963",
+  "actualNativeReceiptSHA256": "bd1c2f85a6e5f9e746e64e59775b4272899f44c4519852817918d8ac628c80fd",
+  "actualAdmissionSHA256": "1c2c0e386cca43949ebbba41119f36a2fe2b6f57dabadea76595dd4e49239d16",
+  "sixActualSourceAuthoritiesEqualCurrentGit": true,
+  "wholeUIFileEqualCurrentGit": true,
+  "allSevenSourceFilesUnchangedBeforeAfter": true,
+  "helperInverseExact": true,
+  "helperModuleBindingOnlyArgvIndex": 6,
+  "originalDeadlineAuthority": "c8f9443dcd34015f0e7bbcdb84d36374379ca35c:Scripts/ProductSplit/run_native_acceptance.py:834:        command(ui_compile, 'ui-source-typecheck.log', timeout=120)",
+  "originalCommandDeadlineSeconds": 120,
+  "actualCommandSeconds": 2.089931083,
+  "commandExit": 0,
+  "testInvocations": 0,
+  "appBuild": "NOT_RUN",
+  "simulatorExecution": "NOT_RUN",
+  "hosted27_2Acceptance": "NOT_RUN",
+  "actualToolchain": [
+    {
+      "argv": [
+        "xcodebuild",
+        "-version"
+      ],
+      "exit": 0,
+      "stdout": "Xcode 27.0\nBuild version 27A266a\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "xcrun",
+        "--sdk",
+        "iphonesimulator",
+        "--show-sdk-path"
+      ],
+      "exit": 0,
+      "stdout": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "xcrun",
+        "--sdk",
+        "iphonesimulator",
+        "--show-sdk-platform-path"
+      ],
+      "exit": 0,
+      "stdout": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform\n",
+      "stderr": ""
+    }
+  ],
+  "selectedNativeProofPayloads": 19,
+  "selectedNativeArchiveSHA256": "6ee5571b1555e4686b06a9fd5f181ad33794ff91126dceb195f8f8062df99fb9",
+  "selectedNativeArchiveRoundtripExact": true,
+  "scope": "Only whole-file Apple API/typechecking; not any native test or full product acceptance."
+}

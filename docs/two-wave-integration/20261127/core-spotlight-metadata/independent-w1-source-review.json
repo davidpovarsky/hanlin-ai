@@ -1,0 +1,39 @@
+{
+  "reviewer": "/root/w1_review_resume",
+  "status": "APPROVED_FOR_ORIGINAL_NATIVE_BUILD_RETRY_SOURCE_ONLY",
+  "wrapperBeforeSHA256": "577e4d58a3bebd29e379918938199aacff0a4c775cfb1c4923e1f7735686238c",
+  "wrapperAfterSHA256": "9e45c0aa8d951a6a59afa1eb4dbcad6e524fc1f408d2406d6c8e5a9efcdd7f8c",
+  "testBeforeSHA256": "0580017fd708751f845631732bc9f6c6b3a4e334f32d13a0142693f257fb4b84",
+  "testAfterSHA256": "a15bef4c3db22813538a684859034c4d18f90f407f71df70591f9bd6519cebeb",
+  "entireOriginalWrapperRecoveredByRemovingOnlyCoreSpotlightFramework": true,
+  "entireOriginalTestFileRecoveredByRemovingOnlyRequiredHeaderFixtureAndOrderAssertions": true,
+  "onlyChangedTestMethod": "test_host_baseline_keeps_real_host_headers_without_expanding_expo_cpp_roots",
+  "allOtherTestMethodsUnchanged": 15,
+  "guardPreservation": [
+    "Original six host frameworks, dependency closure/native API framework discovery and pinned generator provenance unchanged",
+    "Original full-SDK path remains separate; Expo/React C++ roots still excluded from host baseline",
+    "Required metadata symbols and every original diagnostic failure check unchanged",
+    "Actual public CoreSpotlight umbrella is imported before the provider Swift header; no declaration stub, skipped error or removed AppEntity API"
+  ],
+  "actualReadEvidence": {
+    "redGreenReceiptSHA256": "8db463493e647b943c597b19f18c71e77980cf5a21564bafb53e23b7fc7de387",
+    "baselineExit": 1,
+    "correctedExit": 0,
+    "beforeFailure": "Required CoreSpotlight public umbrella absent from actual generated input",
+    "nativeCompilation": "NOT_RUN"
+  },
+  "sdkInputImpact": {
+    "manifestSHA256": "6b5f28a447bda810a02c287d6e3be8ca5445b1bcf88d7e968353ec5ba23d1375",
+    "actualSource": "226e7cfc",
+    "inputCount": 392,
+    "intersection": [],
+    "changedPaths": [
+      "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+      "Scripts/CI/Tests/test_nativescript_metadata_wrapper.py"
+    ]
+  },
+  "stageSDKSourceSHA256": "a375457668c88aac01634b94b8529c63d4edc072a6f7af37af75ad7fb8bcdee2",
+  "stageSDKSelectionRead": "Explicit sdkInputs and recursive inputReceipt roots; neither changed path is selected. NativeScript directory contributes only package/package-lock/dependency-lock explicitly.",
+  "nativeImpact": "Original application metadata must regenerate and compile; no current native/OS PASS follows from portable controls. No HanlinPlatform source/test or SDK392 input is edited.",
+  "testsExecutedByReviewer": 0
+}

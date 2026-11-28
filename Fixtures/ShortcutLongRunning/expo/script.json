@@ -1,0 +1,38 @@
+{
+  "name": "Long Running Expo",
+  "version": "1.0.0",
+  "description": "Finite paced Shortcuts acceptance workload: 35 real runtime calls, with progress only for verified receipts.",
+  "hanlinAppID": "hanlin.longrunning.expo",
+  "entry": "bundle.js",
+  "runInApp": true,
+  "hanlinRuntime": "hanlin-expo",
+  "icon": "hand.tap",
+  "color": "#2455B2",
+  "capabilities": [
+    "storage",
+    "node",
+    "python",
+    "javascript",
+    "inter-app.share"
+  ],
+  "actions": [
+    {
+      "id": "surface.run",
+      "title": "Run Long Running Expo paced workload",
+      "handler": "bundle.js",
+      "capability": "inter-app.share"
+    }
+  ],
+  "entrypoints": [
+    {
+      "id": "surface-intent",
+      "kind": "appIntent",
+      "sourcePath": "bundle.js",
+      "exportedSymbol": "surface.run"
+    }
+  ],
+  "intentInputTypes": [
+    "Text",
+    "URLs"
+  ]
+}

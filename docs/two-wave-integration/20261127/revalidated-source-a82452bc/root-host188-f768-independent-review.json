@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "reviewer": "/root",
+  "source": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "producerSealedSource": "d2902ba9a4b18d5dba92662430e7eda355744b0c",
+  "decision": "VERIFIED_ORIGINAL_HOST188_PASS",
+  "verifiedRawMembers": 41,
+  "verifiedRawBytes": 20606710,
+  "transferManifestSHA256": "640239c4a68eefcd4f705b5c9abe9d6f0f9439d770d457059e4ae1a851ac9d1c",
+  "hostReceiptSHA256": "4e21fb52599c9986a1e589a4f8305f0d8d31e1159bed6f5a1942b94657eb40c5",
+  "phases": {
+    "count": 12,
+    "allExitZero": true,
+    "allOriginalLogsHashVerified": true
+  },
+  "tests": {
+    "tests": 188,
+    "pass": 188,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "originalTestFileCount": 32,
+  "originalTestSourceSHA256": "3a48396dfcf27155074296d19b56ebd03eaebe5387e56f4eb76e1c34865bf96c",
+  "actualLongJobProof": {
+    "proof": "actual-node-job-over-300-seconds",
+    "elapsedMilliseconds": 305027.835625,
+    "executionID": "6963d8c1-aeff-4370-98da-a3eb847eee34"
+  },
+  "stagedClosureBeforeAfter": {
+    "sha256": "5c76f56ea69a52f034dff8c1274aa596046d58a42a2e5ac4382c29d4218b6e07",
+    "files": 28917,
+    "status": "EXACT_MATCH"
+  },
+  "SDK392": {
+    "everySourceBlobVerifiedAtProducerSealedCommit": true,
+    "inputHash": "4b75c9122e17ff24464a8dfb757b1b3c72d2817d55472b4c0be035e7c71b55cc",
+    "manifestSHA256": "f6603fc7f62b91a80cef33eb72a77e93711504b3b2f0a1851ead62f49c787a7a"
+  },
+  "archive": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host-f768d634-original-phases-r1/RuntimeHostResources.zip",
+    "canonicalPath": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81901081,
+    "sha256": "fae9778f1b6548a069f6bd16bef3e2f22c710445a84d1fb025f4e90a5d1e1718"
+  },
+  "archiveVerificationBoundary": "Original/canonical/shipping ZIP equality verified by Mac producer seal; 82MB ZIP remains there and was not transferred or independently rehashed by root. Root verified all41 transferred proof members and every392 source blob.",
+  "actualNative79ExecutionSource": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "doesNotQualifyChangedSwiftTestSources": true,
+  "appAndOSAcceptance": "NOT_ESTABLISHED_BY_THIS_HOST_RESULT",
+  "atUTC": "2026-11-27T06:41:52.511667+00:00"
+}

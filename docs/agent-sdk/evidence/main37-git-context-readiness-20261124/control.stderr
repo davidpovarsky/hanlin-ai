@@ -1,0 +1,11 @@
+{"event": "current_unit_git_context", "command": ["git", "rev-parse", "HEAD"], "timeout_seconds": 120, "elapsed_seconds": 0.001438, "status": "PASS"}
+{"event": "current_unit_git_context", "command": ["git", "diff", "--binary", "--no-ext-diff", "--no-textconv", "HEAD", "--", "."], "timeout_seconds": 120, "elapsed_seconds": 0.001609, "status": "PASS"}
+{"event": "current_unit_git_context", "command": ["git", "rev-parse", "HEAD"], "timeout_seconds": 120, "elapsed_seconds": 0.001524, "status": "PASS"}
+{"event": "current_unit_git_context", "command": ["git", "diff", "--binary", "--no-ext-diff", "--no-textconv", "HEAD", "--", "."], "timeout_seconds": 120, "elapsed_seconds": 0.001773, "status": "PASS"}
+{"event": "current_unit_git_context", "command": ["git", "rev-parse", "HEAD"], "timeout_seconds": 120, "elapsed_seconds": 0.001548, "status": "PASS"}
+{"event": "current_unit_git_context", "command": ["git", "diff", "--binary", "--no-ext-diff", "--no-textconv", "HEAD", "--", "."], "timeout_seconds": 120, "elapsed_seconds": 0.001787, "status": "PASS"}
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.040s
+
+OK

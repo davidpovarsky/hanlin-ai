@@ -1,0 +1,37 @@
+{
+  "owner_instruction_date": "2026-11-19 Asia/Hebron",
+  "scope": "Current Hanlin original dependency repositories and shared HQ guidance",
+  "changes": [
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-product-completion-20261117\\AGENTS.md",
+      "before_sha256": "5588e95f237ecd4a5606b9c31018288aa7951758befea1c90823beecefe121be",
+      "after_sha256": "2592ed787e1654a43451e3cc95492ca5ed9879f01dff100da75b4d23c083460f"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-product-completion-20261117\\CLAUDE.md",
+      "before_sha256": "868f898ce4f8542bc0d42d569cc74b3bb03ed74982f0d79f50e1c6301e746c53",
+      "after_sha256": "3774dedcff6a98841b3c2a98332faddcfde06d72b918e7561bcddc5940efee6b"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-product-completion-20261117\\docs\\continuation-20261117\\OWNER_AUTHORIZATION_20261118.md",
+      "before_sha256": "b874e29f70dbb544a2f23e299528a785fb9a1acb5927a4341615145d1d2dac5b",
+      "after_sha256": "bb6a179cbd1c38ac42de5bb1ca75f2cbe796379f5230b3a5b7b034d236f96b6e"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\Codex-Agent-HQ\\AGENTS.md",
+      "before_sha256": "02ba33cdbf90787b84bd282fe89ab9401d693a264385ec82fdb242ddac20bdf8",
+      "after_sha256": "f3f99e97059fc8ff5bd37f0664fea0b92de771fec06688ce5c2554179ebdfc76"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-markdown-link-continuation-20261118\\AGENTS.md",
+      "before_sha256": "c3e5b9fff01e9d5036175daed3d6d419fd3904a44a66bae3130a569463718bab",
+      "after_sha256": "bdad12bbbd1c5405ca4b485ad441efd39ae6999b1e8a96a1be2a21034a9c687a"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\swift-ai-sdk-hanlin-raw-tool-input-20261115\\AGENTS.md",
+      "before_sha256": "c08038bc941a1f8c50bd2f3afb468c85a63664047731b35c7f17fadb47240693",
+      "after_sha256": "19ca7d1b8f114412e8cb034ec7fed2ef447f969b328a61a7b4dfb7c855081c0c"
+    }
+  ],
+  "claude_links": "Existing relative AGENTS.md links retained in original Markdown/SDK repositories"
+}

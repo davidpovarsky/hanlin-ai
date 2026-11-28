@@ -1,0 +1,18 @@
+{
+  "cache_and_instruction_witnesses": [
+    {
+      "line": 236,
+      "text": "SKILL_INSTRUCTIONS_POLICY_FAILURE_ISOLATED real_policy_byte_budget / load / read / SDK / enablement"
+    },
+    {
+      "line": 345,
+      "text": "SKILL_PRODUCT CACHE_INVALIDATION hidden-resource verified_before=true same_argv=true receipt_preserved=true"
+    },
+    {
+      "line": 313,
+      "text": "SKILL_PRODUCT CACHE_INVALIDATION reinstall verified_before=true same_argv=true receipt_preserved=true"
+    }
+  ],
+  "policy_report_line": 229,
+  "raw_log": "raw/simulator-logs/08-downstream-unit-tests.log"
+}

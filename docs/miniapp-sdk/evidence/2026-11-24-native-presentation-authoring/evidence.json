@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T00:08:03.165941+00:00",
+  "status": "EXECUTED_PASS",
+  "environment": {
+    "platform": "Linux aarch64",
+    "node": "v24.22.0",
+    "appleNativeRuntime": "NOT_RUN_IN_THIS_EVIDENCE"
+  },
+  "sourceBase": "d4bf7aa9c2a4a62f5230d244a845d11926bbe2db",
+  "implementation": {
+    "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+    "finalSHA256": "5bcd5a5e7b191a4fc32436915afd6cccb80851f8136d43c5003b5cf02947087a",
+    "fullMetroBuildSHA256": "30f0f9901d744976c7bb57612f16656a5f281a102415bb960c9aaab975d86a7e",
+    "postBuildChange": "The final root-adjacent native entry config-isolation branch was then added and passed the four focused integration tests; the canonical sample has its own native subtree config and takes the unchanged branch."
+  },
+  "sdk": {
+    "path": "/dev/shm/hanlin-miniapp-native-presentation-sdk-20261123",
+    "manifestSHA256": "4d798f5cd5734a2d25d933a4d421724a14222067b87540026d44448710426f51",
+    "compilerVersion": "6.0.3",
+    "expoPackageVersions": {
+      "@expo/ui": "58.0.3",
+      "@hanlin/expo-native-api": "1.0.0",
+      "@hanlin/expo-ui": "1.0.0",
+      "@nativescript/react-native": "9.1.2",
+      "expo": "58.0.0",
+      "expo-brownfield": "58.0.3",
+      "expo-modules-core": "58.0.3",
+      "expo-modules-jsi": "58.0.2",
+      "react": "19.3.0",
+      "react-native": "0.88.0",
+      "react-native-worklets": "0.13.1",
+      "@babel/core": "7.29.7",
+      "@react-native-community/cli": "20.2.0",
+      "@react-native/codegen": "0.88.0",
+      "@react-native/metro-config": "0.88.0",
+      "@types/react": "19.3.0",
+      "babel-preset-expo": "58.0.20",
+      "esbuild": "0.25.12",
+      "typescript": "6.0.2"
+    },
+    "provenance": {
+      "baseSDK": "/dev/shm/hanlin-miniapp-sdk-combined-20261123",
+      "description": "Read-only original pinned Expo/NativeScript graph; ScriptWidget declarations regenerated from actual current native presentation source. This is compiler/build evidence, not an Apple binary execution."
+    },
+    "scope": "Preserved original Expo/NativeScript baseline graph with declarations regenerated from actual current ScriptWidget host bindings. This evidence is not a latest-graph or Apple-execution claim."
+  },
+  "checks": [
+    {
+      "name": "original ScriptWidget APIs and actual native presentation globals",
+      "status": "EXECUTED_PASS",
+      "tests": 5,
+      "expectedInvalidConsumers": 16,
+      "nativeObjects": 24,
+      "nativeMethods": 118,
+      "declaredGlobals": 41,
+      "log": "scriptwidget-services.log"
+    },
+    {
+      "name": "isolated native JSX environments, root-adjacent entry, negative TS2322 path and source/resource round trip",
+      "status": "EXECUTED_PASS",
+      "tests": 4,
+      "log": "native-presentation-integration.log"
+    },
+    {
+      "name": "canonical modular text search 1.4 full original Metro build",
+      "status": "EXECUTED_PASS",
+      "diagnostics": [],
+      "typecheck": {
+        "strict": true,
+        "skipLibCheck": false,
+        "dependencyDeclarationsChecked": true
+      },
+      "log": "modular-search14-build.log",
+      "report": "modular-search14-build.json"
+    }
+  ],
+  "artifact": {
+    "archivePath": "/dev/shm/hanlin-modular-search14-baseline-artifact-20261124/MiniApp.hanlinExpo",
+    "archiveSHA256": "d82758248fe080a9faa171a806e0559f99b9f704a16e5c09399793e0e43164be",
+    "archiveBytes": 2143453,
+    "bundleSHA256": "ca9674936ebcbbc4b55b7c186d8c0db941d7fbdd3a2d6b638c887f304d40dc84",
+    "sourceMapSHA256": "5e1c8d46bd92aea0255f8877b3318c6f95d6db096c4f829e737ac09f1442b9e6",
+    "sourceFileCount": 35,
+    "compiledFileCount": 18,
+    "scriptVersion": "1.4.0",
+    "nativeSourceIdentity": [
+      {
+        "path": "native/search.tsx",
+        "sha256": "e1e94967febb0f8aea8be64296e9ad384b7f65d29f7744d7cd39dcfcf775a15b",
+        "preparedBytesMatch": true,
+        "retainedSourceBytesMatch": true,
+        "listedInCompiledHashes": true
+      },
+      {
+        "path": "native/tsconfig.json",
+        "sha256": "04f9897c1e27a4f1bfb0b948d70c482618c84961a61567447ef110ea43dcce93",
+        "preparedBytesMatch": true,
+        "retainedSourceBytesMatch": true,
+        "listedInCompiledHashes": true
+      },
+      {
+        "path": "native/src/intent/snippetViewModel.js",
+        "sha256": "22853b612b79dfe8e3d13822417cf7d63ba55144c29111bf9be533adb6a68787",
+        "preparedBytesMatch": true,
+        "retainedSourceBytesMatch": true,
+        "listedInCompiledHashes": true
+      }
+    ]
+  },
+  "logs": [
+    {
+      "path": "scriptwidget-services.log",
+      "sha256": "1041fd54785609b56d6154e45c62f72bb05d0e3c03638506a7a08592ec2baf49"
+    },
+    {
+      "path": "native-presentation-integration.log",
+      "sha256": "387829e321201e3cb4a5431229b3eb5666853caef4e92502626d94bc4580f1c2"
+    },
+    {
+      "path": "modular-search14-build.log",
+      "sha256": "7b4c386bd9c9704d2b29c58741082bb8be58fefdde68527d0cdb46a5d3f55e00"
+    }
+  ]
+}

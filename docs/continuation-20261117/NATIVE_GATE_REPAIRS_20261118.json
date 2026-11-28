@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-18",
+  "status": "IMPLEMENTED_NATIVE_RECHECK_PENDING",
+  "base_commit": "7b4c58ce53d7768945ed006a7e572af20f326bf7",
+  "miniapps": {
+    "source_run": 44226098581,
+    "inspection_run": 44231962667,
+    "hosted_native": {
+      "passed": 20,
+      "failed": 0,
+      "skipped": 0
+    },
+    "ui": {
+      "passed": 1,
+      "failed": 6,
+      "skipped": 0
+    },
+    "diagnoses": [
+      "Import sheet is present; long lazy List places the file picker and requested archives beyond the visible cells. File picker moved before shared packages; real UI tests scroll the actual list to each requested archive.",
+      "Native LabeledContent exposes the full identity as 'Mini App ID, hanlin.demo.swift-parity', not a separate value-only accessibility element. Assertion now uses the observed complete canonical identity.",
+      "The dismiss toolbar was attached outside compiled providers' existing NavigationStack. Shared optional presentation modifier is now attached inside all four original stacks; the Host enables it only when it owns no other dismiss control."
+    ],
+    "inspection_zip_api_sha256": "59f2ab83fc8e85e63d067fc7af25d8bf9aead8f0dc1758e56c30682e5bafb8d1",
+    "full_zip_digest_recomputed": false
+  },
+  "paired": {
+    "source_run": 44228699119,
+    "build": "FAILED",
+    "ui": "NOT_RUN",
+    "diagnosis": "Lifecycle npm installation was left under Xcode's synchronized AI source group; 164 duplicate resource output errors. Remove only the CI-generated node_modules tree after the canonical RuntimeHostResources.zip has been verified and copied, as the original app workflow already does.",
+    "ai_build_log_sha256": "8f5486af866dcc1125babf0231ec751ad5ba2f25cd3dfb1871d9eb9791d865b7"
+  },
+  "a2ui_core": {
+    "source_run": 44229934112,
+    "passed": 45,
+    "failed": 1,
+    "diagnosis": "The test read a detached resolved-dictionary snapshot after model replacement. It now reads the same retained original gallery node again and requires the updated source and preserved description/identity, while checking the old snapshot remains unchanged. The real UI binding test remains an independent native gate."
+  },
+  "local_validation": {
+    "swift_parse_files": 10,
+    "swift_parse": "PASS",
+    "apple_typecheck": "NOT_RUN",
+    "workflow_yaml": "PASS",
+    "diff_check": "PASS"
+  },
+  "source_sha256": {
+    ".github/workflows/validate-app-split.yml": "ee80c0a578b5cfa824a24372421346e58c20bc8eb03e90405ddeb35f0a9fca69",
+    "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift": "3183dabc3c476469dc0de6c90d76669970cb01352b7e42a4520257b6ade1b07d",
+    "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift": "e9f5fb38c562dd6a85911aa8af25d5958dfc55a19ea6ed80fa9c5a16ce83ffb5",
+    "AI_HLYTests/A2UITests.swift": "3d33b64a3c5b3ae7f897647c544196e381814768c3625ed3d3cb2115c6de9d78",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "1595efd20ba7d264ba2fc70b696d8fa47a6ad003ce1d55ac77738a424db1f174",
+    "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppDismissControl.swift": "260461f29d4c492f206fc428b203c818476b2adc5c6225b3ff8f41db1a88e01e",
+    "Packages/HanlinParityMiniApp/Sources/HanlinParityMiniApp/SwiftParityMiniApp.swift": "61f91827d2de98a5d94ffb47b080e14aa4ec2f0cee381dcdeb27884256d9aca0",
+    "Packages/HanlinSefariaMiniApp/Sources/HanlinSefariaMiniApp/SefariaMiniApp.swift": "d1cb3ee8533d17275f33b802cd67180f7c13cb87346837ff2620ca7e56274f57",
+    "Packages/HanlinTextStudioMiniApp/Sources/HanlinTextStudioMiniApp/TextStudioMiniApp.swift": "41c6f0109cd4b36fe696688f7adfd157ad16f01bc61d432cef9fe23f6a4a66f1",
+    "Packages/HanlinWikipediaMiniApp/Sources/HanlinWikipediaMiniApp/WikipediaMiniApp.swift": "d94d9729cca1d9f92084fe0bd694865d51c3ef602c687b886d2829780dd795c1",
+    "Scripts/CI/IntegrationValidation/MiniAppsProviderUITests.swift": "292479445870694a7e415301e03b03ac02ac4fc1e895a0ebb1dfecdf13d1051f"
+  },
+  "phase2": "IN_PROGRESS",
+  "phase3": "IN_PROGRESS",
+  "release": "NO_GO"
+}

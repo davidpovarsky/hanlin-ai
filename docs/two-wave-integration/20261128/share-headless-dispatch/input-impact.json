@@ -1,0 +1,39 @@
+{
+  "source": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "actualSDKPacket": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/sdk13-9ee23af8-pass-r2",
+    "manifestSHA256": "0087b38f297ee71dbb7317b216d8475ef2992f01a6b330050d69342338bed85f",
+    "sourceInputRowsSHA256": "26596817f3023ea07901862d3782a99e60cbd8b2c1630210915a9103598ab074",
+    "hostInputRowsSHA256": "460b6ebe9de738d033f841be7f99d992f5293e9739c208bea2eadbf057847889",
+    "descriptorSHA256": "7507f7f439446f0299cba51fc2d56d71b12ae7b847211fe803d0ecd45593f7df"
+  },
+  "baseQualification": [
+    {
+      "group": "sdk396",
+      "count": 396,
+      "allBaseGitBlobsMatch": true
+    },
+    {
+      "group": "host99",
+      "count": 99,
+      "allBaseGitBlobsMatch": true
+    }
+  ],
+  "candidateChange": {
+    "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+    "baseSHA256": "fef6a058c6b06838e64089933424803e66deeb30bbe9ecac1e7e24aca839fa95",
+    "candidateSHA256": "dadde747dfad34c4ac8efdd8199253624376146956204babe52d90701404b950",
+    "sdkSourceInputIntersection": 1,
+    "hostDirectInputIntersection": 0
+  },
+  "sdkUnchangedOtherInputs": 395,
+  "hostDirectInputsUnchanged": 99,
+  "packagesTree": "326086571a5960c19eb6aa0afef742b25230a826",
+  "packageSourceChanges": [],
+  "currentFreshSDKStatus": "REQUIRED_AFTER_INTEGRATED_SOURCE_FREEZE",
+  "limits": [
+    "This is a Git/source-input comparison against the actual pinned Mac SDK13 receipt, not a new producer run or automatic native/OS acceptance reuse.",
+    "The historical current SDK archive remains bound to9ee until the root-coordinated producer qualifies the eventual changed source.",
+    "Hosted resolver overlays remain separately qualified; no upstream/pin/metadata rewrite is proposed."
+  ]
+}

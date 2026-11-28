@@ -1,0 +1,17 @@
+{
+  "run_id": 45133911239,
+  "source": "66845991bc06fd008b21dc24bf55d84a9e3a1d56",
+  "artifact_id": 14803110248,
+  "archive_bytes": 1042365,
+  "archive_sha256": "03b9d7c9528ae7c3994ccb7d7f4cb46917a9176b09219928cfadcab1300aec70",
+  "all_zip_crc_verified": true,
+  "original_log_member": "simulator-logs/06-xcodebuild-simulator.log",
+  "log_bytes": 7684890,
+  "log_sha256": "d2511cdc89c268aeab692e5a49e23384e5179d47b42354e47ec70cdb653f21df",
+  "compiler_errors": [
+    "/Users/runner/work/hanlin-ai/hanlin-ai/HanlinScriptingWidgets/HanlinScriptingWidgets.swift:6:1: error: 'HanlinScriptingWidgetBundle' is annotated with '@main' and must provide a main static function of type () -> Void, () throws -> Void, () async -> Void, or () async throws -> Void",
+    "/Users/runner/work/hanlin-ai/hanlin-ai/HanlinScriptingWidgets/HanlinScriptingWidgets.swift:8:20: error: cannot find type 'Widget' in scope",
+    "/Users/runner/work/hanlin-ai/hanlin-ai/HanlinScriptingWidgets/HanlinScriptingWidgets.swift:7:37: error: cannot find type 'WidgetBundle' in scope"
+  ],
+  "unit_and_ui_tests": "NOT_RUN: full app build failed before selected tests"
+}

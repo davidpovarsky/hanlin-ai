@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "assessedAtUTC": "2026-11-25T00:32:17.358000+00:00",
+  "checkpoint": "37a788a4a10a293653e307c05ba1a507d518d1f0",
+  "sdk": {
+    "executionSource": "a3aae0b952b0518cb8c40ed4a511d4cffadab99f",
+    "executionStatus": "EXECUTED_PASS",
+    "actualCases": 11,
+    "statusAtCheckpoint": "REUSED_VERIFIED_PASS",
+    "presentationSDKChangedFiles": [],
+    "platformContractsChangedFiles": [
+      "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift",
+      "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift",
+      "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json"
+    ],
+    "reasoning": [
+      "All shared SDK implementation, test bodies, package manifest and fixtures are byte-identical across the full a3-to-checkpoint range.",
+      "The three changed PlatformContracts files alter generic HanlinAppDescriptor duplicate assistant-entrypoint checks, uppercase support for typed HanlinActionID, and the authoring JSON-schema resource. These eleven tests construct HanlinCapabilityReference/Attachment/ComposerConfiguration directly, use string action IDs, and do not call those generic app-descriptor/action-ID validation paths or load the resource.",
+      "Capability attachment/configuration and HanlinJSONValue implementations used by these tests are unchanged. The later Platform host run compiled the current shared contract package.",
+      "Original Xcode/Swift/SDK, iPhone simulator identity, command, pins and actual case results remain recorded in the SDK receipt. No SDK test is claimed to have executed at this checkpoint."
+    ]
+  },
+  "platform": {
+    "executionSource": "f54aebbb35169ea63eca146a1ba3ef4e8bf4f84d",
+    "latestExecutedPassCount": 6,
+    "priorVerifiedPassCount": 45,
+    "uniqueMethodsCovered": 51,
+    "single51CaseExecution": false,
+    "reuseAssessment": "platform-attempt5-f54aebbb3/reuse-assessment.json",
+    "changesAfterExecution": [
+      "AI_HLYTests/HanlinMiniAppAssistantToolTests.swift",
+      "Scripts/Expo/package-lock.json",
+      "Scripts/Expo/package.json",
+      "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "docs/miniapp-sdk/extension-reachability.json",
+      "docs/miniapp-sdk/extension-reachability.md",
+      "docs/miniapp-sdk/source-inventory.json"
+    ],
+    "reasoning": "Platform implementation, tests, fixtures and lock are byte-identical from f54 to37. Intervening files are generated SDK documentation, the exact Expo React19.3.1 type declaration lock, and an application-only schema fixture correction; none changes the Platform test dependency closure."
+  },
+  "futureSource": {
+    "status": "PENDING_NATIVE_ARTIFACT_INTEGRATION",
+    "reason": "Root still owns native artifact provenance integration and the actual application/native/editor/UI gates. Reassess further source changes before extending reuse beyond37."
+  },
+  "runtimeHostArchiveFreshness": {
+    "status": "EXECUTED_PASS",
+    "sourceCommit": "37a788a4a10a293653e307c05ba1a507d518d1f0",
+    "receipt": "runtime-host-final-attempt3-37a788a4a/runtime-host-final-attempt3.json",
+    "archiveSHA256": "043f27b7c8b884c3095c97a99672d58bcf2ba7a1df5276ce8eaefa7eeae1e9d9"
+  }
+}

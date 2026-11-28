@@ -1,0 +1,504 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-18T09:40:08.800870+00:00",
+  "review_source_sha": "c0ebf13e69601fa50dfd04ababf362803500af87",
+  "status": "AUTHENTICATED_HISTORICAL_NATIVE_COMPONENT_EVIDENCE",
+  "run": {
+    "id": 44233494834,
+    "job_id": 134563951478,
+    "sha": "e56dcc8693bebe0d4febcadaf86ec3bd58962377",
+    "conclusion": "success",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44233494834",
+    "platform": "macOS",
+    "os_version": "27.0.1",
+    "architecture": "arm64",
+    "device_model": "Virtual Machine",
+    "xcode": "27.2",
+    "sdk": "macOS27.2",
+    "scheme": "HanlinA2UIProof-Package",
+    "configuration": "Debug",
+    "official_a2ui_revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079"
+  },
+  "artifact": {
+    "id": 14396801464,
+    "name": "a2ui-exact-pin-44233494834",
+    "zip_bytes": 355825,
+    "zip_sha256": "f618016c93d6fb9493f2488451fea388cb53f0561df61d967c14e55ea76e2592",
+    "entire_zip_hash_matches_github_digest": true,
+    "entry_count": 156,
+    "structured_proof_hashes": {
+      "tests.json": "ba13f6435a4a68ccbfe439e66b90d7071a9f981328cb49a158af09ea3e165294",
+      "actual-case-identities.json": "ae23d11f7ff351c68c6158737f9d1fddb9a4c45885d524fb48f0faaaa0dbdf82",
+      "tested-source-sha256.json": "d6d02f7e66cfd8a574768dade38c0d2d53240b5ab5ce06455501c9dd1cd60831",
+      "proof-inputs.json": "5fef06f55f841ead14137a1a1532b6755dd686cde9821ecd5701f69dc032c936",
+      "workflow-sha256.json": "6de8c558a441ed747b14da6c6925135cef74a0ef3a9dcb7109961eed78b76d1e",
+      "result-validation.json": "821e6b041ed961593d458af362c5163cf0e27ad4347df52a8fce6d87b8b54696"
+    }
+  },
+  "actual_case_count": 46,
+  "mapped_unique_case_count": 16,
+  "actual_cases": [
+    {
+      "name": "buttonEventUsesCurrentBoundValue()",
+      "identifier": "A2UISDKTests/buttonEventUsesCurrentBoundValue()",
+      "result": "passed"
+    },
+    {
+      "name": "independentSurfacesKeepModelsSeparate()",
+      "identifier": "A2UISDKTests/independentSurfacesKeepModelsSeparate()",
+      "result": "passed"
+    },
+    {
+      "name": "deletedSurfaceDropsQueuedOwnedEvents()",
+      "identifier": "A2UISDKTests/deletedSurfaceDropsQueuedOwnedEvents()",
+      "result": "passed"
+    },
+    {
+      "name": "officialSchemasRejectInvalidTextInputButton()",
+      "identifier": "A2UISDKTests/officialSchemasRejectInvalidTextInputButton()",
+      "result": "passed"
+    },
+    {
+      "name": "modelProjectionNeverFollowsReplacedGeneration()",
+      "identifier": "A2UISDKTests/modelProjectionNeverFollowsReplacedGeneration()",
+      "result": "passed"
+    },
+    {
+      "name": "transientOwnerLookupKeepsWireIDsIndependent()",
+      "identifier": "A2UISDKTests/transientOwnerLookupKeepsWireIDsIndependent()",
+      "result": "passed"
+    },
+    {
+      "name": "eventSinkIsWeakAndCannotKeepAuthorityAlive()",
+      "identifier": "A2UISDKTests/eventSinkIsWeakAndCannotKeepAuthorityAlive()",
+      "result": "passed"
+    },
+    {
+      "name": "richMediaSchemasRejectUnboundedCollectionsMissingSourcesAndScripts()",
+      "identifier": "A2UISDKTests/richMediaSchemasRejectUnboundedCollectionsMissingSourcesAndScripts()",
+      "result": "passed"
+    },
+    {
+      "name": "malformedAndUnknownContentFallsBackAndRecovers()",
+      "identifier": "A2UISDKTests/malformedAndUnknownContentFallsBackAndRecovers()",
+      "result": "passed"
+    },
+    {
+      "name": "closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce()",
+      "identifier": "A2UISDKTests/closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce()",
+      "result": "passed"
+    },
+    {
+      "name": "rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound()",
+      "identifier": "A2UISDKTests/rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound()",
+      "result": "passed"
+    },
+    {
+      "name": "presentationCopiesDoNotOwnDiscard()",
+      "identifier": "A2UISDKTests/presentationCopiesDoNotOwnDiscard()",
+      "result": "passed"
+    },
+    {
+      "name": "customMediaCannotAlterOfficialCatalogOrAdmitScriptFields()",
+      "identifier": "A2UISDKTests/customMediaCannotAlterOfficialCatalogOrAdmitScriptFields()",
+      "result": "passed"
+    },
+    {
+      "name": "transientReceiveRejectsWrongIdentityAndSequence()",
+      "identifier": "A2UISDKTests/transientReceiveRejectsWrongIdentityAndSequence()",
+      "result": "passed"
+    },
+    {
+      "name": "modelProjectionRejectsForeignIdentityAndAmbiguousParts()",
+      "identifier": "A2UISDKTests/modelProjectionRejectsForeignIdentityAndAmbiguousParts()",
+      "result": "passed"
+    },
+    {
+      "name": "endingResultCancelsOwnedReceiveTask()",
+      "identifier": "A2UISDKTests/endingResultCancelsOwnedReceiveTask()",
+      "result": "passed"
+    },
+    {
+      "name": "sealedResultRetainsModelsAndRevokesActions()",
+      "identifier": "A2UISDKTests/sealedResultRetainsModelsAndRevokesActions()",
+      "result": "passed"
+    },
+    {
+      "name": "nativeInputBindingWritesAndReadsOfficialModel()",
+      "identifier": "A2UISDKTests/nativeInputBindingWritesAndReadsOfficialModel()",
+      "result": "passed"
+    },
+    {
+      "name": "sealingRunDoesNotRevokeOtherRun()",
+      "identifier": "A2UISDKTests/sealingRunDoesNotRevokeOtherRun()",
+      "result": "passed"
+    },
+    {
+      "name": "stableIDsAndNodeIdentityAcrossUpdates()",
+      "identifier": "A2UISDKTests/stableIDsAndNodeIdentityAcrossUpdates()",
+      "result": "passed"
+    },
+    {
+      "name": "modelPartUsesMessageIdentityWithoutToolCall()",
+      "identifier": "A2UISDKTests/modelPartUsesMessageIdentityWithoutToolCall()",
+      "result": "passed"
+    },
+    {
+      "name": "galleryAndLinkSourcesResolveThroughTheOfficialCatalogAndBindings()",
+      "identifier": "A2UISDKTests/galleryAndLinkSourcesResolveThroughTheOfficialCatalogAndBindings()",
+      "result": "passed"
+    },
+    {
+      "name": "orderedModelProjectionPreservesTextAndRegisteredSurface()",
+      "identifier": "A2UISDKTests/orderedModelProjectionPreservesTextAndRegisteredSurface()",
+      "result": "passed"
+    },
+    {
+      "name": "successfulProducerEOFKeepsOriginalModelActionAndClosesInput()",
+      "identifier": "A2UISDKTests/successfulProducerEOFKeepsOriginalModelActionAndClosesInput()",
+      "result": "passed"
+    },
+    {
+      "name": "retiredSurfaceCannotReanimateQueuedEventsInSameResult()",
+      "identifier": "A2UISDKTests/retiredSurfaceCannotReanimateQueuedEventsInSameResult()",
+      "result": "passed"
+    },
+    {
+      "name": "producerEOFDoesNotSurviveRevocationOrFollowAnotherGeneration()",
+      "identifier": "A2UISDKTests/producerEOFDoesNotSurviveRevocationOrFollowAnotherGeneration()",
+      "result": "passed"
+    },
+    {
+      "name": "surfaceLimitDoesNotRemoveExistingContent()",
+      "identifier": "A2UISDKTests/surfaceLimitDoesNotRemoveExistingContent()",
+      "result": "passed"
+    },
+    {
+      "name": "independentOwnersCanReuseWireSurfaceID()",
+      "identifier": "A2UISDKTests/independentOwnersCanReuseWireSurfaceID()",
+      "result": "passed"
+    },
+    {
+      "name": "hebrewFixtureRetainsBindingsInRTLComposition()",
+      "identifier": "A2UISDKTests/hebrewFixtureRetainsBindingsInRTLComposition()",
+      "result": "passed"
+    },
+    {
+      "name": "unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC()",
+      "identifier": "A2UISDKTests/unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC()",
+      "result": "passed"
+    },
+    {
+      "name": "producerEOFCancelsOnlyItsReceiverAndCannotReplaceFinishedTool()",
+      "identifier": "A2UISDKTests/producerEOFCancelsOnlyItsReceiverAndCannotReplaceFinishedTool()",
+      "result": "passed"
+    },
+    {
+      "name": "unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks()",
+      "identifier": "A2UISDKTests/unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks()",
+      "result": "passed"
+    },
+    {
+      "name": "closeRejectsLateFramesAndDisposesSurfaces()",
+      "identifier": "A2UISDKTests/closeRejectsLateFramesAndDisposesSurfaces()",
+      "result": "passed"
+    },
+    {
+      "name": "replacementRevokesOldGenerationBeforeNewDelivery()",
+      "identifier": "A2UISDKTests/replacementRevokesOldGenerationBeforeNewDelivery()",
+      "result": "passed"
+    },
+    {
+      "name": "deleteDisposesAndRecreateStartsWithNewIdentity()",
+      "identifier": "A2UISDKTests/deleteDisposesAndRecreateStartsWithNewIdentity()",
+      "result": "passed"
+    },
+    {
+      "name": "customMediaCatalogResolvesYouTubeThroughOfficialGraphAndBinding()",
+      "identifier": "A2UISDKTests/customMediaCatalogResolvesYouTubeThroughOfficialGraphAndBinding()",
+      "result": "passed"
+    },
+    {
+      "name": "closeRevokesQueuedAndRetainedActionCallbacks()",
+      "identifier": "A2UISDKTests/closeRevokesQueuedAndRetainedActionCallbacks()",
+      "result": "passed"
+    },
+    {
+      "name": "parsesAndRendersTextCardInputButton()",
+      "identifier": "A2UISDKTests/parsesAndRendersTextCardInputButton()",
+      "result": "passed"
+    },
+    {
+      "name": "rejectsOtherProtocolVersions()",
+      "identifier": "A2UIIngressTests/rejectsOtherProtocolVersions()",
+      "result": "passed"
+    },
+    {
+      "name": "rejectsMalformedAndAmbiguousFrames()",
+      "identifier": "A2UIIngressTests/rejectsMalformedAndAmbiguousFrames()",
+      "result": "passed"
+    },
+    {
+      "name": "acceptsOfficialV1FixtureFrames()",
+      "identifier": "A2UIIngressTests/acceptsOfficialV1FixtureFrames()",
+      "result": "passed"
+    },
+    {
+      "name": "rejectsRPCAndUnnegotiatedCatalogs()",
+      "identifier": "A2UIIngressTests/rejectsRPCAndUnnegotiatedCatalogs()",
+      "result": "passed"
+    },
+    {
+      "name": "boundsUTF8MessageAndComponentBatch()",
+      "identifier": "A2UIIngressTests/boundsUTF8MessageAndComponentBatch()",
+      "result": "passed"
+    },
+    {
+      "name": "componentValidationRemainsWithSDK()",
+      "identifier": "A2UIIngressTests/componentValidationRemainsWithSDK()",
+      "result": "passed"
+    },
+    {
+      "name": "rejectedEnvelopesNeverExportSurfaceCorrelation()",
+      "identifier": "A2UIIngressTests/rejectedEnvelopesNeverExportSurfaceCorrelation()",
+      "result": "passed"
+    },
+    {
+      "name": "preservesUnicodeSurfaceIdentity()",
+      "identifier": "A2UIIngressTests/preservesUnicodeSurfaceIdentity()",
+      "result": "passed"
+    }
+  ],
+  "task_mappings": [
+    {
+      "task_gid": "1220489383643571",
+      "task_code": "A2UI-02",
+      "scope": "Canonical structured model parts and identity",
+      "cases": [
+        {
+          "identifier": "A2UISDKTests/modelPartUsesMessageIdentityWithoutToolCall()",
+          "result": "EXECUTED_PASS_AT_RECORDED_SHA",
+          "assertion_scope": "A model part uses message identity and no tool call; fabricated tool registration/replacement is rejected."
+        },
+        {
+          "identifier": "A2UISDKTests/orderedModelProjectionPreservesTextAndRegisteredSurface()",
+          "result": "EXECUTED_PASS_AT_RECORDED_SHA",
+          "assertion_scope": "Markdown/surface/Markdown order and original text are retained; matching message/run resolves the original stable surface and direct local binding."
+        },
+        {
+          "identifier": "A2UISDKTests/modelProjectionRejectsForeignIdentityAndAmbiguousParts()",
+          "result": "EXECUTED_PASS_AT_RECORDED_SHA",
+          "assertion_scope": "Foreign run/message, duplicate/mismatched part, tool-origin substitution and oversized projection are rejected."
+        },
+        {
+          "identifier": "A2UISDKTests/modelProjectionNeverFollowsReplacedGeneration()",
+          "result": "EXECUTED_PASS_AT_RECORDED_SHA",
+          "assertion_scope": "A projection becomes read-only when sealed and cannot follow replacement generation or register after run discard."
+        }
+      ],
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE_NOT_TASK_ACCEPTANCE",
+      "remaining": [
+        "Real provider structured output and canonical persisted transcript replay",
+        "Inline iOS ChatView layout, expansion and legacy fallback under actual app conditions"
+      ]
+    },
+    {
+      "task_gid": "1220489258419968",
+      "task_code": "A2UI-03",
+      "scope": "Official catalog, bindings and surface identity",
+      "cases": [
+        {
+          "identifier": "A2UISDKTests/parsesAndRendersTextCardInputButton()",
+          "result": "EXECUTED_PASS_AT_RECORDED_SHA",
+          "assertion_scope": "The official Card/TextField/Button model is parsed and BasicCatalog Surface.render returns a view."
+        },
+        {
+          "identifier": "A2UISDKTests/nativeInputBindingWritesAndReadsOfficialModel()",
+          "result": "EXECUTED_PASS_AT_RECORDED_SHA",
+          "assertion_scope": "The original A2UITextField binding writes the official model and bound text; later model update reads back Grace."
+        },
+        {
+          "identifier": "A2UISDKTests/hebrewFixtureRetainsBindingsInRTLComposition()",
+          "result": "EXECUTED_PASS_AT_RECORDED_SHA",
+          "assertion_scope": "Hebrew binding edits propagate; RTL/locale/accessibility-size view construction is exercised, not displayed UI or VoiceOver."
+        },
+        {
+          "identifier": "A2UISDKTests/stableIDsAndNodeIdentityAcrossUpdates()",
+          "result": "EXECUTED_PASS_AT_RECORDED_SHA",
+          "assertion_scope": "Official root/input identity survives fixture updates and updated submit label is present."
+        }
+      ],
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE_NOT_TASK_ACCEPTANCE",
+      "remaining": [
+        "Actual taps/edits in the installed iOS app across all claimed catalog components",
+        "Rendered Hebrew/Latin, Dynamic Type, contrast, VoiceOver and signed physical iPad acceptance"
+      ]
+    },
+    {
+      "task_gid": "1220489257946325",
+      "task_code": "A2UI-04",
+      "scope": "Action values and revocation boundaries",
+      "cases": [
+        {
+          "identifier": "A2UISDKTests/buttonEventUsesCurrentBoundValue()",
+          "result": "EXECUTED_PASS_AT_RECORDED_SHA",
+          "assertion_scope": "An actual official button action emits exactly one submit event containing the current edited value and expected surface/component identity."
+        },
+        {
+          "identifier": "A2UISDKTests/closeRevokesQueuedAndRetainedActionCallbacks()",
+          "result": "EXECUTED_PASS_AT_RECORDED_SHA",
+          "assertion_scope": "Queued and retained actions emit nothing after idempotent close."
+        },
+        {
+          "identifier": "A2UISDKTests/unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC()",
+          "result": "EXECUTED_PASS_AT_RECORDED_SHA",
+          "assertion_scope": "No uninstalled Agent RPC listener or unsolicited response creates authority; unknown functions/arguments are rejected with redacted diagnostics."
+        },
+        {
+          "identifier": "A2UISDKTests/eventSinkIsWeakAndCannotKeepAuthorityAlive()",
+          "result": "EXECUTED_PASS_AT_RECORDED_SHA",
+          "assertion_scope": "Released weak event sink or registration store cannot confer authority to retained actions/presentations."
+        }
+      ],
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE_NOT_TASK_ACCEPTANCE",
+      "remaining": [
+        "Original Host broker approval/denial/cancel and durable side-effect receipt in the actual app",
+        "Real model action roundtrip, repeated tap idempotency and physical device interaction"
+      ]
+    },
+    {
+      "task_gid": "1220489600044406",
+      "task_code": "A2UI-05",
+      "scope": "Completion, isolation and resource lifetime",
+      "cases": [
+        {
+          "identifier": "A2UISDKTests/successfulProducerEOFKeepsOriginalModelActionAndClosesInput()",
+          "result": "EXECUTED_PASS_AT_RECORDED_SHA",
+          "assertion_scope": "Successful EOF preserves the original surface/model identity and legitimate local action while rejecting later input/registration."
+        },
+        {
+          "identifier": "A2UISDKTests/producerEOFDoesNotSurviveRevocationOrFollowAnotherGeneration()",
+          "result": "EXECUTED_PASS_AT_RECORDED_SHA",
+          "assertion_scope": "EOF cannot undo terminal seal/discard or deliver queued/retained revoked events."
+        },
+        {
+          "identifier": "A2UISDKTests/closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce()",
+          "result": "EXECUTED_PASS_AT_RECORDED_SHA",
+          "assertion_scope": "Test-only fault injection into the real SDK proves close cancels an in-flight call before its timeout and rejects later calls as disposed."
+        },
+        {
+          "identifier": "A2UISDKTests/independentSurfacesKeepModelsSeparate()",
+          "result": "EXECUTED_PASS_AT_RECORDED_SHA",
+          "assertion_scope": "Editing surface A and unrelated fallback cannot change surface B model or failure state."
+        }
+      ],
+      "acceptance_status": "PARTIAL_NATIVE_COMPONENT_EVIDENCE_NOT_TASK_ACCEPTANCE",
+      "remaining": [
+        "Canonical persisted transcript/form state after app restart and migration",
+        "Required 1/10/100-node, 5/20/60-tps, 10/50k-character and five-surface device performance traces"
+      ]
+    }
+  ],
+  "direct_tested_source_comparison": {
+    "files": 20,
+    "unchanged": 20,
+    "comparison": {
+      "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIContentLimits.swift": {
+        "tested_sha256": "6a78f5bf5c3c829c608854bce16eac714397a248c94a67bedc21efcc260848e0",
+        "current_sha256": "6a78f5bf5c3c829c608854bce16eac714397a248c94a67bedc21efcc260848e0"
+      },
+      "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIFrameLifetime.swift": {
+        "tested_sha256": "bc0b200e4db97cd200ac571253e878277a7df4d5132018dfb627d0cabb87bca8",
+        "current_sha256": "bc0b200e4db97cd200ac571253e878277a7df4d5132018dfb627d0cabb87bca8"
+      },
+      "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIIngress.swift": {
+        "tested_sha256": "0033c2f4522ac2fcee212becdaff3a2285d6a47349a2101457511116bda2cb1c",
+        "current_sha256": "0033c2f4522ac2fcee212becdaff3a2285d6a47349a2101457511116bda2cb1c"
+      },
+      "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UILocalMedia.swift": {
+        "tested_sha256": "ae58cf03a5da2f3a019a697279e40bb0911d0cc8254a7c7c65e725d6984dd107",
+        "current_sha256": "ae58cf03a5da2f3a019a697279e40bb0911d0cc8254a7c7c65e725d6984dd107"
+      },
+      "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultOwner.swift": {
+        "tested_sha256": "7067198f91a7fa2216e7e5dd244b4575d184823884b8eaf3ea1d6bdc7016d5ab",
+        "current_sha256": "7067198f91a7fa2216e7e5dd244b4575d184823884b8eaf3ea1d6bdc7016d5ab"
+      },
+      "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultProjectionSource.swift": {
+        "tested_sha256": "4420dd5bcd3d8cd3c65018a4a994f2cd65eb5e4f8162b7e318514f5004607f4a",
+        "current_sha256": "4420dd5bcd3d8cd3c65018a4a994f2cd65eb5e4f8162b7e318514f5004607f4a"
+      },
+      "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultView.swift": {
+        "tested_sha256": "afb27c3c95235bfac4d6ff6f0ea0c22ed47f89b03e501d4f4c0de198d0628df1",
+        "current_sha256": "afb27c3c95235bfac4d6ff6f0ea0c22ed47f89b03e501d4f4c0de198d0628df1"
+      },
+      "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UISession.swift": {
+        "tested_sha256": "60b64b4f2720df1d4e99e5222a1e606e425e2e71d4dfe1fd21da24fdcf40e5b3",
+        "current_sha256": "60b64b4f2720df1d4e99e5222a1e606e425e2e71d4dfe1fd21da24fdcf40e5b3"
+      },
+      "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinChatContentProjection.swift": {
+        "tested_sha256": "6523fe65987113da98d161379aad075a550d98fd86aa3cafef3ccfa136d3615f",
+        "current_sha256": "6523fe65987113da98d161379aad075a550d98fd86aa3cafef3ccfa136d3615f"
+      },
+      "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinMediaCatalog.swift": {
+        "tested_sha256": "5548e35e2947ff387a5c2824ad66bd5fb92dbffe35c05e368e2d5a18895f3a98",
+        "current_sha256": "5548e35e2947ff387a5c2824ad66bd5fb92dbffe35c05e368e2d5a18895f3a98"
+      },
+      "AI_HLYTests/A2UIFixtures/form.jsonl": {
+        "tested_sha256": "c3f9f393341162f541321eb3c8462e111724d0f62d0cebc2f418f0967de5891d",
+        "current_sha256": "c3f9f393341162f541321eb3c8462e111724d0f62d0cebc2f418f0967de5891d"
+      },
+      "AI_HLYTests/A2UIFixtures/invalid-components.jsonl": {
+        "tested_sha256": "e761c8070080e37bea0e22c5ed7a19d6424ff4237a214d9c4b0ace0cce51eba3",
+        "current_sha256": "e761c8070080e37bea0e22c5ed7a19d6424ff4237a214d9c4b0ace0cce51eba3"
+      },
+      "AI_HLYTests/A2UIFixtures/malformed.txt": {
+        "tested_sha256": "5471e5d32b13c8a0bcee95f767fb9580fda7fa47ee0e7a4c124bcb3498fe77da",
+        "current_sha256": "5471e5d32b13c8a0bcee95f767fb9580fda7fa47ee0e7a4c124bcb3498fe77da"
+      },
+      "AI_HLYTests/A2UIFixtures/rtl.jsonl": {
+        "tested_sha256": "2e0ce205c2351e8a6baa0ecb184667ecab82e8d73a4c5172dfefa938c4664705",
+        "current_sha256": "2e0ce205c2351e8a6baa0ecb184667ecab82e8d73a4c5172dfefa938c4664705"
+      },
+      "AI_HLYTests/A2UIFixtures/unknown-function.jsonl": {
+        "tested_sha256": "058f52de611a570b1a4db5116ea31a3f6fa01ab061d971249e6f51bb2041e63f",
+        "current_sha256": "058f52de611a570b1a4db5116ea31a3f6fa01ab061d971249e6f51bb2041e63f"
+      },
+      "AI_HLYTests/A2UIFixtures/unknown.jsonl": {
+        "tested_sha256": "14218c93f9e8b4a9b2b05f27f57de89a4a53617f115fe303c9c06f6ef37eb4da",
+        "current_sha256": "14218c93f9e8b4a9b2b05f27f57de89a4a53617f115fe303c9c06f6ef37eb4da"
+      },
+      "AI_HLYTests/A2UIFixtures/update.jsonl": {
+        "tested_sha256": "4ac7c02500a3d797f72b9184a181534949767b75547dd62ca354c1a20b0233a5",
+        "current_sha256": "4ac7c02500a3d797f72b9184a181534949767b75547dd62ca354c1a20b0233a5"
+      },
+      "AI_HLYTests/A2UITests.swift": {
+        "tested_sha256": "3d33b64a3c5b3ae7f897647c544196e381814768c3625ed3d3cb2115c6de9d78",
+        "current_sha256": "3d33b64a3c5b3ae7f897647c544196e381814768c3625ed3d3cb2115c6de9d78"
+      },
+      "docs/a2ui/EXACT_PIN_PROOF_ROUTE.md": {
+        "tested_sha256": "5bec8164a66ffdc990ef12871afb4d137964e3ab1eefa6a832152189d607d339",
+        "current_sha256": "5bec8164a66ffdc990ef12871afb4d137964e3ab1eefa6a832152189d607d339"
+      },
+      "docs/a2ui/prepare_exact_pin_proof.py": {
+        "tested_sha256": "5349c4b2cdadcafda2a7dc52cae3dd25b820eafd90ab66f7ff633218e62cb7e7",
+        "current_sha256": "5349c4b2cdadcafda2a7dc52cae3dd25b820eafd90ab66f7ff633218e62cb7e7"
+      }
+    }
+  },
+  "harness_comparison": {
+    "changed_recorded_workflow_files": [
+      ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "Scripts/CI/IntegrationValidation/miniapps_provider_sources.json",
+      "Scripts/CI/IntegrationValidation/project_graph.py",
+      "Scripts/CI/IntegrationValidation/run_provider.sh",
+      "Scripts/CI/IntegrationValidation/test_project_graph.py"
+    ],
+    "scope": "Direct tested files match; this is not a blanket final-SHA reuse declaration. Original app startup/Host/SwiftData/Composer and actual iOS environment are outside the isolated macOS proof."
+  },
+  "non_claims": [
+    "No new native execution occurred while authenticating or mapping this original artifact.",
+    "The mapped 16 cases are a subset of the original 46, not 16 additional executions.",
+    "No iOS/iPadOS UI, VoiceOver, physical device, live provider, performance or whole-feature acceptance is inferred.",
+    "All four original Asana tasks stay open; 278-feature counts are unchanged."
+  ]
+}

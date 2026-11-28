@@ -1,0 +1,27 @@
+{
+  "observed_at": "2026-11-19T04:29:40.933817+00:00",
+  "run": 44457921366,
+  "artifact": {
+    "id": 14498731890,
+    "node_id": "MDg6QXJ0aWZhY3QxNDQ5ODczMTg5MA==",
+    "name": "ci-validation-plan",
+    "size_in_bytes": 2847,
+    "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14498731890",
+    "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14498731890/zip",
+    "expired": false,
+    "digest": "sha256:2d38dab1bfa9ece87d3839d49d62548bbca1da9e1e677ba9a26bc0fb5395e3b6",
+    "created_at": "2026-11-19T04:23:03Z",
+    "updated_at": "2026-11-19T04:23:03Z",
+    "expires_at": "2026-12-03T04:23:02Z",
+    "workflow_run": {
+      "id": 44457921366,
+      "repository_id": 1295277723,
+      "head_repository_id": 1295277723,
+      "head_branch": "codex/hanlin-product-completion-20261117",
+      "head_sha": "7d5f0a47d7cfb98b28fd9f16d83a2b917618da95"
+    }
+  },
+  "bytes": 2847,
+  "sha256": "2d38dab1bfa9ece87d3839d49d62548bbca1da9e1e677ba9a26bc0fb5395e3b6",
+  "all_crc_pass": true
+}

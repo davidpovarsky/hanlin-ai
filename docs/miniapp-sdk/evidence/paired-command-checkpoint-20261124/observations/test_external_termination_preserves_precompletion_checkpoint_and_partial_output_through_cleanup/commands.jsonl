@@ -1,0 +1,1 @@
+{"argv": ["/usr/bin/python3", "-c", "print('cleanup', flush=True)"], "exit": 0, "seconds": 0.042907887138426304, "log": "cleanup.log", "sha256": "dc3b1813dd4f72a77bda5d401811815b49da242c3fe9a0b72e7f136fbf7b6d7d"}

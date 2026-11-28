@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "mac_build_resume",
+  "status": "R1_HELD_FOR_CROSS_MANAGER_GLOBAL_ADMISSION_ORDERING_FIX",
+  "sourceBase": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "candidate": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/same-manager-cancellation-drain-fc5ce1ba-candidate-r1",
+    "manifestSHA256": "aa19886dd8a0252d6b16dd46cc6b7501cca3ddc429515522743cba74dfa440fb",
+    "payloadCount": 24,
+    "payloadBytes": 1337159,
+    "sourcePatchSHA256": "edbab2924bb75952e45decbbc1d830329cad048c88b8c31cdffcbb9cb0c629bc"
+  },
+  "verification": {
+    "all24HashesAndBytes": true,
+    "allSixOriginalBlobsMatchActualGit": true,
+    "allSixWholeForwardAndInverse": true,
+    "originalTestsWholeByteInverse": true,
+    "bothOriginalCoordinatorWriterGuardExpressionsExact": true
+  },
+  "findings": [
+    {
+      "severity": "BLOCKING",
+      "id": "GLOBAL_REQUEST_ORDER_AFTER_OWNED_DRAIN",
+      "paths": [
+        "AI_HLY/Services/ChatServices/APIManager.swift",
+        "AI_HLY/Downstream/AgentActivity/AgentRunLifecycleCoordinator.swift"
+      ],
+      "candidateLocations": {
+        "localReservation": 3755,
+        "firstDrainAwait": 3763,
+        "globalBeginRun": 3770
+      },
+      "actualCoordinatorSHA256": "ecd09b57a4aa346b28e5a0497dd52abcffbea83c91e6e4e69fea67fe6121712d",
+      "interleaving": [
+        "M1 owns original running A; B on M1 reserves only its manager epoch and Owner generation, then awaits A's actual producer drain.",
+        "Later C on another manager M2 reaches the shared original Coordinator.beginRun, becomes globally active and can start its producer.",
+        "A finishes. B's manager/Owner checks still pass because C did not mutate M1's local epoch or Owner.",
+        "B calls shared beginRun(B). Its original implementation cancels the globally active C and replaces activeRunID before the recorder await. The post-beginRun check therefore cannot prevent this stale mutation."
+      ],
+      "actualMultipleManagerEvidence": [
+        "ChatView.swift constructs APIManager(context:context,agentSessionOwner:agentSessionOwner) at1905.",
+        "HanlinConversationController.swift constructs a manager with its sessionOwner at335."
+      ],
+      "conclusion": "No singleton-only invariant was established. The deferred global admission changes original latest-request ordering across managers. Root and W1 acknowledged R1 must remain held.",
+      "boundedRemedy": "Reserve global request authority in the existing Coordinator before the first new suspension; require that reservation before beginRun can mutate/cancel another run, and recheck after its await. Original direct/synchronous beginRun callers must also supersede stale reservations. Completion/cancellation of A must not revoke an unrelated newer B/C reservation; matching Stop/deletion still defeats waiting B.",
+      "requiredControl": "Hold A's real drain, reserve B, admit later C through another manager or the original Coordinator entry, release A, and prove B does not call beginRun/cancel C/replace its recorder. Use actual gates; preserve original time limits and no sleeps."
+    }
+  ],
+  "constraintReview": [
+    {
+      "constraint": 1,
+      "status": "PARTIAL_BLOCKER",
+      "finding": "Manager-local epoch and captured Owner generation reject same-manager C/Stop/deletion after all new admission awaits. The shared global ordering gap above remains."
+    },
+    {
+      "constraint": 2,
+      "status": "SOURCE_SATISFIED_FOR_SAME_MANAGER",
+      "finding": "Captured outer producer is cancelled and joined before self.agentSDKRequest/dataAccess/recorder replacement. Original outer completion therefore cannot write B's diagnostics while B waits."
+    },
+    {
+      "constraint": 3,
+      "status": "SOURCE_SATISFIED",
+      "finding": "Each entered tool Task is retained in Session through dispatch, validated receipt append and original persistence CAS. invalidateAndDrain captures original producer/writer/tasks before revocation, joins actual completions and final tail. Consumer EOF alone is not used."
+    },
+    {
+      "constraint": 4,
+      "status": "SOURCE_SATISFIED",
+      "finding": "isRunning includes retained actual tool tasks. Both original Owner canonical writer guards remain exact; preparation/inline writers and unresolved records remain blocking."
+    },
+    {
+      "constraint": 5,
+      "status": "SOURCE_SATISFIED",
+      "finding": "Internal Dispatcher accessor binds session/run/step/provider/logical invocation, alias and original argument bytes plus exact captured Hashable limits, then repeats original output-size admission and result event validation."
+    },
+    {
+      "constraint": 6,
+      "status": "SOURCE_SATISFIED",
+      "finding": "Historical metadata uses the same Session append and serialized persistenceTail CAS. Repeated drain joins existing tasks; it does not enumerate/reappend receipts or replay an effect. Uncertain/absent/malformed/oversized results and failed CAS remain blocking."
+    },
+    {
+      "constraint": 7,
+      "status": "SOURCE_SATISFIED",
+      "finding": "Historical receipt path throws the revoked delivery error before onHostResult. Direct adapter UI/progress callbacks require captured manager epoch, original Owner current request and global current run. No historical result is promoted into live callbacks."
+    },
+    {
+      "constraint": 8,
+      "status": "SOURCE_SATISFIED",
+      "finding": "Owner retirement depends on actual live/preparing state, not a nonnil completed outer handle. Its starting generation follows only the same stream's internal engine replacement, allowing later C to supersede a waiting B while A unwinds. Idle Session reuse test is additive."
+    }
+  ],
+  "regressionReview": {
+    "definitions": 6,
+    "semanticCases": 13,
+    "sessionDefinitions": 3,
+    "sessionSemanticCases": 9,
+    "ownerDefinitions": 3,
+    "ownerSemanticCases": 4,
+    "originalBytePreservation": true,
+    "actualControlsExecuted": 0,
+    "scope": "Held Host and held receipt CAS, later real Session, six bad replies, original CAS conflict/deletion, same-manager third request, Stop/deletion and idle reuse/foreign retirement. Additional global competing-manager control is required for R2."
+  },
+  "compilerContractRead": {
+    "limits": "Original HanlinToolInvocationLimits is Hashable/Sendable, throwing initializer, default1,048,576 output bytes. Exact comparison and try usage are source-consistent.",
+    "resultEvent": "Original initializer validates context and both invocation/logical IDs.",
+    "taskAndActors": "Session is MainActor; Dispatcher is actor; accessor calls retain await/throws. Actual compiler acceptance is NOT_RUN.",
+    "callbacks": "Original adapter is MainActor with synchronous callback properties; new live gate is explicitly MainActor/Sendable. Native compiler remains required."
+  },
+  "scope": {
+    "sourceOnly": true,
+    "nativeExecuted": 0,
+    "testsExecuted": 0,
+    "sourceEdited": false,
+    "integrationApproved": false,
+    "originalFailureThrowSite": "UNKNOWN; retained original two unresolvedWrite failures are not rewritten",
+    "originalTestsAndDeadlines": "Preserved",
+    "SDK": "Measured direct396 and99 intersection0 is not whole AgentSDK/native acceptance or automatic current SDK-controller admission. Changed AgentCore/app closures require original applicable native routes."
+  },
+  "reviewerPreparationErrors": [
+    {
+      "kind": "bounded-read-output-truncation",
+      "detail": "An initial full-source response exceeded SentinelX output delivery and could not be JSON-decoded. A later broad grep also matched long non-Swift text. Both completed only read actions; their truncation metadata is retained. Subsequent reads were bounded by exact files/ranges and Swift-only filename searches. No test or candidate edit occurred."
+    }
+  ]
+}

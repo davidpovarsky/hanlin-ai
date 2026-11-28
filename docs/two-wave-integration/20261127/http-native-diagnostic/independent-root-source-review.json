@@ -1,0 +1,7 @@
+{
+  "actualReviewMessage": "Root has read the full diagnostic patch. APPROVED_SOURCE_FOR_ONE_ORIGINAL_SELECTOR_DIAGNOSTIC: only per-stage logging, retained wire/stdout/stderr and stage-labelled same-budget failure; assertions/server/program operations preserved, final assertions-reached-end not labelled PASS. Please seal candidate4f57 with proof now and send commit. Coordinate Mac exact package tree via minimal Git objects or reviewed patch; clean exact candidate preferred, no full SDK rerun. Mac runs Foundation bookmark probe first, then this one original HTTP selector with HANLIN_WIDGET_EVIDENCE_DIR retained. No timeout increase.",
+  "candidateSHA256": "4f57bfd6988de32d0ca3b69ebc46cb3ccc91c943a5f3bfa434c55e7b5214d63c",
+  "decision": "APPROVED_SOURCE_FOR_ONE_ORIGINAL_SELECTOR_DIAGNOSTIC",
+  "nativeExecution": "NOT_RUN",
+  "reviewer": "/root"
+}

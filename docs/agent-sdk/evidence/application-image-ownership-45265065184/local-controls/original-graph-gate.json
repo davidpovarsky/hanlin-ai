@@ -1,0 +1,27 @@
+{
+  "ai_products": [
+    "HanlinAgentCore",
+    "HanlinApplication",
+    "HanlinHostContracts",
+    "HanlinPersistenceAdapters"
+  ],
+  "unit_test_products": [
+    "HanlinAgentCore",
+    "HanlinApplication"
+  ],
+  "miniapps_agent_products": [],
+  "sdk_application_sources": 507,
+  "host_sources": [
+    "AI_HLY.swift"
+  ],
+  "native_adapter": "Model/HanlinAppleModelCatalogAdapter.swift",
+  "linked_application_products": {
+    "AI_Hanlin": [
+      "HanlinApplication"
+    ],
+    "AI_HLYTests": [
+      "HanlinApplication"
+    ]
+  },
+  "apple_compilation": "NOT_RUN"
+}

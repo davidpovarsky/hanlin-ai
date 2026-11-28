@@ -1,0 +1,14 @@
+{
+  "originalControllerSHA256": "c8ee1dfcabe1be1dfa6ba3f1b5a2c238e25a796369a1f5482218d324b4029ea1",
+  "currentControllerSHA256": "b0dbdfb5bd82bde10b9f70bc8c5c35916741d714350553e4f46962b2e4017a6a",
+  "wholeOriginalInverseExact": true,
+  "onlyControllerChanges": [
+    "literal admission SHA256",
+    "attempt-owned root"
+  ],
+  "sourceAuthorityCount": 6,
+  "allCurrentBaseAuthorityBytesEqualPriorAccepted": true,
+  "originalCommandOnlySourcePathChanged": true,
+  "deadlineSeconds": 120,
+  "priorOriginalAdmissionSHA256": "1c2c0e386cca43949ebbba41119f36a2fe2b6f57dabadea76595dd4e49239d16"
+}

@@ -1,0 +1,67 @@
+{
+  "base": "884c41d039dfbf276af4c12299d84ac4c981e082",
+  "proposalBase": "25c28ae8981eceba18a2beb648da5d1a7660ac63",
+  "patchSHA256": "c03136b216e123b665ba3eb04dabdf4bbca05847286757b99716858da47cd2f1",
+  "changedSources": [
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "base_sha256": "86c5c6d55d3a355609e5440baecc6b77a9ea0d31f668fd4d018eadbf3fa8dffb",
+      "proposed_sha256": "2cb0e1f3ea242dc7c2bbcb5cfec5f7e83c6ec79f3bad06110e2601329c56ce2e",
+      "bytes": 215840,
+      "canonical_base_unchanged": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "base_sha256": "4f57a668dca2d6a06047498e9986751d31383e2f8e14f873052626bb9f31a2dd",
+      "proposed_sha256": "45bb5b8041c2cccfd973f58aa26a6aeaf342bff2145af19e561f7c1137263340",
+      "bytes": 32402,
+      "canonical_base_unchanged": true
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+      "base_sha256": "36695f408a3bc147bd3394c6f445846e17e38146478a345745c1e28d7917f2d7",
+      "proposed_sha256": "179e222f04e185d941c0f42416f6df6d391cf308bd79b63af341093c460d1e1b",
+      "bytes": 35047,
+      "canonical_base_unchanged": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatEngine.swift",
+      "base_sha256": "2bccec0d98941fb9ad89b8b8ca2325e773f853908d379e15617ca877af4700ca",
+      "proposed_sha256": "f5c8d5b3c406da5ed3b0d6ef2681ca8195fe066401888538981eb8e784ca343a",
+      "bytes": 7284,
+      "canonical_base_unchanged": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+      "base_sha256": "0fadca052c3d9f131b72f31892940e734aefd28898be2d169e6affe177284fd9",
+      "proposed_sha256": "aaf8ae687d478710c2b4388f19350164a606facd02b70375743c808629cbe524",
+      "bytes": 35975,
+      "canonical_base_unchanged": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift",
+      "base_sha256": "a1b62896cb60494872843c2bf23a62cb635b8a107c806ed37f5b78fb5ceeb67f",
+      "proposed_sha256": "37040bbbf933960cb47046fbedaeaad953b59371607b0ec3062cbbefb1ee1c1a",
+      "bytes": 12237,
+      "canonical_base_unchanged": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "base_sha256": "937d1bbf390512c1332e775b5b0e5ea153240bd42af839f5dede84fd89fe991b",
+      "proposed_sha256": "566f659f3bc906355e74cd2adf17025311c7066a87c6923b76aa13f38e6bb2d1",
+      "bytes": 144044,
+      "canonical_base_unchanged": true
+    }
+  ],
+  "rootReview": "Read all736diff lines and whole review packet; same original owner lease and exact provider/key state rechecked after diagnostics, inside production transport. Per-turn transport prevents retained engine borrowing first APIManager. Nil defaults preserve original callers and injected providers cannot be overridden.",
+  "checks": {
+    "gitApplyCheck": "PASS",
+    "appliedAfterSHA256": "ALL_7_MATCH",
+    "gitDiffCheck": "PASS",
+    "agentWindowsSwiftParse": "ALL_7_PASS",
+    "independentReview": "NO_BLOCKING_FINDING",
+    "AppleTypecheckAndNative": "NOT_RUN"
+  },
+  "qualification": "No atomic SwiftData/Keychain/socket transaction claim; existing account/CloudKit/erasure and full DATA gates remain open.",
+  "nativePlan": "Original12-selector fullDATA lane includes whole originalHanlinAppAgentSessionOwnerTests, retaining phase1+phase2+new10expanded transport cases. Dispatch after current build-for-testing xctestrun CI correction is reviewed/published."
+}

@@ -1,0 +1,56 @@
+{
+  "status": "SOURCE_APPROVED_NATIVE_ACCEPTANCE_PENDING",
+  "at": "2026-11-28T07:10:49.656292+00:00",
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "reviewedIntegrationHead": "3ee173aaf7fc90f02f5e1e2d8f5f9cc9a14b7f1a",
+  "r2ManifestSHA256": "4583cac5cbb96bbeab188f37c9537e16225c9d810e8bd2432c0195c7d3505667",
+  "verifiedR1Payloads": 12,
+  "verifiedR2Payloads": 13,
+  "projectedSourceTree": "d23fbedf95c42083fd57038c670244ff52b5b0dd",
+  "changedPaths": [
+    "Scripts/CI/Tests/test_installed_expo_observer_storage.py",
+    "Scripts/ProductSplit/Tests/test_share_translation_surface_observer.py",
+    "Scripts/ProductSplit/Tests/test_system_surface_input_producer.py",
+    "Scripts/ProductSplit/observe_share_translation_surfaces.py",
+    "Scripts/ProductSplit/observe_shortcut_concurrency.py",
+    "Scripts/ProductSplit/observe_shortcut_long_running.py",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+    "Scripts/ProductSplit/observe_widget_action_surfaces.py",
+    "Scripts/ProductSplit/run_paired_acceptance.py"
+  ],
+  "fullProductionModuleASTInverses": [
+    "Scripts/ProductSplit/observe_share_translation_surfaces.py",
+    "Scripts/ProductSplit/observe_shortcut_concurrency.py",
+    "Scripts/ProductSplit/observe_shortcut_long_running.py",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+    "Scripts/ProductSplit/observe_widget_action_surfaces.py",
+    "Scripts/ProductSplit/run_paired_acceptance.py"
+  ],
+  "defaultNSAppAndWindowsBodiesByteExact": true,
+  "portableCoverage": [
+    {
+      "revision": "R1",
+      "actualPass": 102,
+      "existing": 91,
+      "new": 11,
+      "receiptSHA256": "4ad2344755b94a279fb27225de4f570a4909e27b566c052e8b25628be07f6cbd"
+    },
+    {
+      "revision": "R2",
+      "affectedPass": 8,
+      "otherBodiesUnchangedNotRepeated": 94,
+      "receiptSHA256": "e9915a92677111c6d193f2fe112fab563cade5cccf6d61392e987b1d138e6823"
+    },
+    {
+      "revision": "original-baseline",
+      "retainedStatus": "RED",
+      "receiptSHA256": "c7b7564e798d89d1302acb7797e45b32a9ea4a71385073502525c0e3dcdf419c"
+    }
+  ],
+  "approvedTestMetadataChanges": "Two Share inline cases gain current installed identity; atomic field-count9\u219210; original producer fixture supplies canonical catalog and Expo package-state root. No old substantive assertion removed.",
+  "review": "Exact validated installed-package ID selects only HanlinPackages/<ID>/State; no package glob/app fallback. Existing ID,enabled catalog,generation,archive,challenge/hash,input/receipt checks retained. Share verifies same complete enabled record at both original readback boundaries.",
+  "diagnosisLimit": "Old failed private files were not retained; source root mismatch is established, but this is not a claimed sole cause or repaired native outcome.",
+  "newExecutionByRoot": "None; source/hash/inverse/readback review only.",
+  "uiOrRuntimeOrWorkflowOrBudgetChanges": false,
+  "native": "NOT_RUN"
+}

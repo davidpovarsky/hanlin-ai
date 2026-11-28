@@ -1,0 +1,55 @@
+{
+  "at": "2026-11-28T08:53:11.179335+00:00",
+  "status": "APPROVED_SOURCE_ONLY_NATIVE_PENDING",
+  "candidateSHA256": "2cdc9ff12bc12b37bce5d95b8fadf5d826f139880b4c9a6e55fd6d9c9a0c237d",
+  "packetVerification": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/families-gallery-query-5f827bac/candidate-r1",
+      "manifestSHA256": "ffd8a51a44ae6830fb6836eb19cf5f9dcc64083032e277998fd3e2ec07a590ca",
+      "members": 10
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/families-gallery-query-5f827bac/diagnosis-r1",
+      "manifestSHA256": "3df2ab81c96923952b5bfc8ea17e63cfb5b97a089c6be6f1eb2f8076dfced9e0",
+      "members": 25
+    }
+  ],
+  "actualOriginalRetainedMembersVerified": 51,
+  "rawSHAAndCRCVerified": true,
+  "functions": 172,
+  "unchangedTestBodies": 42,
+  "changedFunctions": [
+    "openWidgetFamilyGallery"
+  ],
+  "exactWholeFileInverse": true,
+  "originalAssertionAndTimeLinesEqual": true,
+  "patchProjections": [
+    {
+      "base": "0b7e2807e6e84f0bfd1de010299df428a68a451c",
+      "tree": "9a6ceb4abb4d3f6b5504480f3754e2f4ac1858c5",
+      "inverse": true
+    },
+    {
+      "base": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+      "tree": "8b09fcc2facad3462de2cb4ff1b027fa888cfe0c",
+      "inverse": true
+    }
+  ],
+  "actualFailures": {
+    "started": 4,
+    "passed": 0,
+    "failed": 4,
+    "skipped": 0
+  },
+  "reasoning": [
+    "Actual first XL420s expiry occurs in the all-Any remote type filter; original raw native times and own spindump support that precise cost.",
+    "Three typed queries admit the exact same mutually exclusive types; all remaining exists/hittable/frame/label/value/count checks and page loop are unchanged.",
+    "Grouping rows by type alters interleaving, not membership. Original page evidence and repeated-page signatures still derive from actual complete rows. No guessed family labels or expanded time allowances.",
+    "Later three failures remain unfinished-first-case admission cascade; earlier Home/menu idleness remains independently observed cost."
+  ],
+  "limits": [
+    "No native positive completion, family availability, placement or rotation credited.",
+    "No independently repeated visual review; the original case's PNG bytes/CRC and retained agent visual readback were verified.",
+    "No portable tests, Swift compilation, downloads or native rerun by root."
+  ]
+}

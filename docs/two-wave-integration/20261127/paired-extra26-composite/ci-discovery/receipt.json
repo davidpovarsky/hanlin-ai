@@ -1,0 +1,36 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_paired_extra26.py",
+    "-v"
+  ],
+  "cwd": "/workspace/scratch/d49eec8920ef/w1-composite/ci-discovery/candidate",
+  "startedAt": "2026-11-27T12:08:39.078497+00:00",
+  "finishedAt": "2026-11-27T12:08:39.293278+00:00",
+  "elapsedSeconds": 0.21478031200240366,
+  "exitCode": 0,
+  "beforePath": "Scripts/ProductSplit/Tests/test_paired_extra26.py",
+  "afterPath": "Scripts/CI/Tests/test_paired_extra26.py",
+  "beforeSHA256": "147b38495d685e35ccc6e0f0cac721169d5df9b77aa9b95651cd3eeeabadb485",
+  "afterSHA256": "0aa342638bfb780733fb23be3c02f5f8c5c0b3cdac4b7eb716a6ce141cc2688e",
+  "helperSHA256": "b3ec17758b36e12fe329ce47cb08e483d906134c4185f7a64ae4a910a393835a",
+  "allOriginal12MethodsAndFixturesASTIdentical": true,
+  "entireOriginalModuleRecoveredByRevertingOnlyTwoPathBindings": true,
+  "logs": {
+    "stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "stderr.log": {
+      "sha256": "7cc5ba86252a307e69a2a93a6c23db674377fd9f894adb1491d7977ae99a1ab9",
+      "bytes": 2317
+    }
+  },
+  "nativeExecuted": false
+}

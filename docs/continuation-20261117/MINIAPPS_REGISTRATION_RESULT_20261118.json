@@ -1,0 +1,49 @@
+{
+  "source_sha": "53cd2344b7d1723d7f512837e58e93475617d361",
+  "run_id": "44255527028",
+  "timestamp": "2026-11-18T07:00:44.836385+00:00",
+  "bundle_id": "com.itorah.hanlinminiapps",
+  "product_name": "Hanlin MiniApps",
+  "status": "REGISTRATION_SCOPE_VERIFIED",
+  "operations": [
+    {
+      "operation": "REGISTER_ORIGINAL_BUNDLE_ID",
+      "status": "API_ACCEPTED"
+    },
+    {
+      "operation": "APP_GROUPS",
+      "status": "API_ACCEPTED"
+    },
+    {
+      "operation": "HEALTHKIT",
+      "status": "API_ACCEPTED"
+    }
+  ],
+  "signing_ready": false,
+  "release_decision": "NO_GO",
+  "scope": "Original MiniApps identifier and documented APP_GROUPS/HEALTHKIT capability toggles only; no signing, publication or credentials transfer",
+  "entitlements_sha256": "8eeb1557fc21f6a664ed1b717f3e259362b3cb85d6c99c60a708c03df2b7e793",
+  "observed_bundle": {
+    "identifier": "com.itorah.hanlinminiapps",
+    "name": "Hanlin MiniApps",
+    "platform": "UNIVERSAL"
+  },
+  "observed_capabilities": [
+    "APP_GROUPS",
+    "HEALTHKIT",
+    "IN_APP_PURCHASE"
+  ],
+  "registration_scope_passed": true,
+  "remaining": [
+    "Assign both original App Groups in the authorized Apple portal/Xcode configuration",
+    "Enable the target's required Extended Virtual Addressing, WeatherKit and Time Sensitive Notifications",
+    "Create a compatible profile for the existing Distribution certificate, verify every requested entitlement",
+    "Create the separate App Store Connect record and complete original native/device/release gates"
+  ],
+  "evidence": {
+    "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44255527028",
+    "artifact_id": 14405018568,
+    "api_zip_sha256": "b8db4402d2a74978c0d907de1a4455556a1950e30a5f891db8ebc5d2d07ebb17",
+    "report_sha256": "62489f1d289bbe5149a557ad8617e7cf29280147ba1576ed7786be247294318a"
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "status": "READ_ONLY_IMPACT_VERIFIED",
+  "observedAt": "2026-11-25T16:36:01.536839+00:00",
+  "source": "4cde88df07a2f3cd86cc99ad87786c79ae207390",
+  "sourceTree": "2d825c811d1bdd543d1473f718ce08381209e605",
+  "target": "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift",
+  "sourceBytes": 27662,
+  "sourceSHA256": "ab893036c8b7cc8b8d8313eaef10ab18468adfec95c2ba1ff68944fc83591f4b",
+  "compilerCaptureSource": "dc53a6c8ff1bb68bfbc52a64667e14ce688055b0",
+  "targetUnchangedSinceCompilerCapture": true,
+  "interveningChangedPaths": [
+    "AI_HLY/Downstream/SDK/MiniAppRepairCoordinator.swift"
+  ],
+  "capturedCompilerAuthority": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v10-receiver-source-impact/receipt.json",
+    "bytes": 73094,
+    "sha256": "4d4c3ae14cd2a9beeab28a1b02e252a65da7e6e549144ab22ea16db520dc3ca2",
+    "scope": "Original V9 completed build-log-linked SwiftFileLists retained in the V10 source-impact packet; no new build or Mac query."
+  },
+  "allCompilerMembersVerified": 87,
+  "groups": {
+    "mini-build.log": {
+      "fileListCount": 44,
+      "entryCount": 704,
+      "matchingLists": [
+        {
+          "member": {
+            "name": "mini-build.log/6.SwiftFileList",
+            "originalPath": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniApps.build/Objects-normal/arm64/HanlinMiniApps.SwiftFileList",
+            "bytes": 9957,
+            "sha256": "139f12c680112b11ffbd33cc1cff0d86f9cc010596798eba03a5d0b191343b6e"
+          },
+          "matches": [
+            {
+              "line": 52,
+              "entry": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift"
+            }
+          ],
+          "entryCount": 83
+        }
+      ],
+      "buildLog": {
+        "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v9/native-result/paired-prefix/mini-build.log",
+        "bytes": 1068019,
+        "sha256": "eb7b4e78aa2e3182c0a0a1872a76f5e4c1ce4a03cc396bf071dde44afab2ede5"
+      }
+    },
+    "ai-build.log": {
+      "fileListCount": 43,
+      "entryCount": 1227,
+      "matchingLists": [
+        {
+          "member": {
+            "name": "ai-build.log/12.SwiftFileList",
+            "originalPath": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/AI_Hanlin-t.build/Objects-normal/arm64/AI_Hanlin.SwiftFileList",
+            "bytes": 59705,
+            "sha256": "0c698567d7bcd4fd4fa65602c1678eac3c4dcc00e7ac3a371d6aed487c96b72f"
+          },
+          "matches": [
+            {
+              "line": 364,
+              "entry": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift"
+            }
+          ],
+          "entryCount": 515
+        }
+      ],
+      "buildLog": {
+        "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v9/native-result/paired-prefix/ai-build.log",
+        "bytes": 1130756,
+        "sha256": "9e5e70dafbe90897ad918ba9a9bc9ccddb110833e3eecde31910dc5e21af9c71"
+      }
+    }
+  },
+  "SDK": {
+    "producerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+    "manifest": {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/extracted-sdk/miniapp-sdk.json",
+      "bytes": 5224120,
+      "sha256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92"
+    },
+    "inputSHA256": "ba8f3f1f09054887eed62532fa1d5ca2ac3bd60e6aa99a98ab1035c7653882a2",
+    "sourceInputCount": 235,
+    "matchingSourceInputs": []
+  },
+  "impact": {
+    "miniConsumer": "INCLUDED_IN_ACTUAL_COMPILE_FILE_LIST",
+    "aiConsumer": "INCLUDED_IN_ACTUAL_COMPILE_FILE_LIST",
+    "sdkArchive": "EXCLUDED_FROM_ALL_235_SOURCE_INPUTS",
+    "inference": "A change to this exact shared Swift file requires both original consumer builds; these retained compile lists and unchanged project membership do not require SDK regeneration."
+  },
+  "candidateSource": null,
+  "candidateFileSHA256": null,
+  "nativeExecution": "NOT_RUN",
+  "mutations": "New Oracle receipt only; no source, canonical worktree, dependency, build, test or simulator mutation."
+}

@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "status": "SOURCE_REVIEWED_NATIVE_NOT_RUN",
+  "executed_failure_source": "c1c9fde5299124953d7ced72748dc09b50b72f7f",
+  "executed_failure_run": 45223225171,
+  "executed_failure_attempt": 2,
+  "failure_evidence_commit": "2bb6324d3dfbaec5f77a3b5ec346da7b04a144e3",
+  "changed_swift_path": "docs/chat-motion/MotionUI/App.swift",
+  "before_sha256": "0c1491dfa227b98332b446e15f3c84de1346f2daf71a9247c6d8e7f6cf2103c2",
+  "after_sha256": "7323a83f5ed539b25d12f944a7bd256faba63c2d5806168d0def42e829454b25",
+  "wrapper_removal_restores_complete_original_file": true,
+  "before_row": "                    // Exact original production ToggleButton, visibility lifted only by the preparer.\n                    ToggleButton(title: \"Thinking\", timeText: String(count), isExpanded: observedExpansion,\n                        isActive: running, numericCount: count, usesAnimatedDisclosure: true)\n                        .accessibilityIdentifier(\"proof-thinking\")\n                    HanlinAnimatedDisclosure(isExpanded: expanded) {\n                        VStack(alignment: .leading, spacing: 6) {\n                            Text(\"A short visible reasoning summary. שלום עולם. مرحبًا بالعالم.\")\n                                .textSelection(.enabled).accessibilityIdentifier(\"proof-summary\")\n                            if longText {\n                                Text(String(repeating: \"**Markdown** `code()` שלום مرحبًا\\n\", count: 24))\n                                    .font(.body).textSelection(.enabled)\n                            }\n                            DisclosureGroup(isExpanded: $toolExpanded) {\n                                Text(\"Tool output, not hidden reasoning.\\nlet value = 17\")\n                                    .font(.body.monospaced()).textSelection(.enabled)\n                                    .accessibilityIdentifier(\"proof-tool-output\")\n                            } label: { Text(\"Repeated tool name\") }\n                                .disclosureGroupStyle(HanlinMotionDisclosureStyle())\n                            Text(\"source call-2: Repeated tool name — cancelled\")\n                            Text(\"source call-3: Repeated tool name — failed; no output\")\n                        }\n                        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: {\n                            telemetry.recordNaturalHeight($0, expanded: expanded)\n                        }\n                    }\n                    .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height in\n                        telemetry.recordVisibleHeight(height, preset: storedID, expanded: expanded)\n                    }\n",
+  "after_row": "                    // Keep header and disclosure in the same lazy row, as in\n                    // HanlinActivityDisclosureStyle and the original D production probe.\n                    VStack(alignment: .leading, spacing: 0) {\n                        // Exact original production ToggleButton, visibility lifted only by the preparer.\n                        ToggleButton(title: \"Thinking\", timeText: String(count), isExpanded: observedExpansion,\n                            isActive: running, numericCount: count, usesAnimatedDisclosure: true)\n                            .accessibilityIdentifier(\"proof-thinking\")\n                        HanlinAnimatedDisclosure(isExpanded: expanded) {\n                            VStack(alignment: .leading, spacing: 6) {\n                                Text(\"A short visible reasoning summary. שלום עולם. مرحبًا بالعالم.\")\n                                    .textSelection(.enabled).accessibilityIdentifier(\"proof-summary\")\n                                if longText {\n                                    Text(String(repeating: \"**Markdown** `code()` שלום مرحبًا\\n\", count: 24))\n                                        .font(.body).textSelection(.enabled)\n                                }\n                                DisclosureGroup(isExpanded: $toolExpanded) {\n                                    Text(\"Tool output, not hidden reasoning.\\nlet value = 17\")\n                                        .font(.body.monospaced()).textSelection(.enabled)\n                                        .accessibilityIdentifier(\"proof-tool-output\")\n                                } label: { Text(\"Repeated tool name\") }\n                                    .disclosureGroupStyle(HanlinMotionDisclosureStyle())\n                                Text(\"source call-2: Repeated tool name — cancelled\")\n                                Text(\"source call-3: Repeated tool name — failed; no output\")\n                            }\n                            .onGeometryChange(for: CGFloat.self) { $0.size.height } action: {\n                                telemetry.recordNaturalHeight($0, expanded: expanded)\n                            }\n                        }\n                        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height in\n                            telemetry.recordVisibleHeight(height, preset: storedID, expanded: expanded)\n                        }\n                    }\n",
+  "unchanged_inputs": [
+    {
+      "path": "docs/chat-motion/MotionUI/MotionUITests.swift",
+      "sha256": "ed053de2cf5013ef001fc198f4d730f7d8d7bf9d55991e784dbc454b90c46724",
+      "unchanged_from_executed_source": true
+    },
+    {
+      "path": "docs/chat-motion/run_motion_ui.sh",
+      "sha256": "0c1b71a5db380c1e14e3210be62a004ff4a993ea913702a03407b6b482b643c7",
+      "unchanged_from_executed_source": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinActivityHierarchy.swift",
+      "sha256": "7d4e19a8520e352ae53031da54b5c4f5a75795084402f6c3f4e4c57731e7a7bb",
+      "unchanged_from_executed_source": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinInlineToolApproval.swift",
+      "sha256": "5fe7e40ae61e4dfeb6e36f0d519bf90f4a7ef5c1b865c3dd030bd3561d35e364",
+      "unchanged_from_executed_source": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift",
+      "sha256": "d8ff25aa0ba06895108f09edf00709db04efe4f7467d1b8302adf1bae1785577",
+      "unchanged_from_executed_source": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionPreferences.swift",
+      "sha256": "709f948ac85ac042d15fb8c258383f1bbb06f5336c0904dc170e04b46f143791",
+      "unchanged_from_executed_source": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatShimmerEffect.swift",
+      "sha256": "40af700d48af8c3229db379cbc9add813484f7d465889523c0acc0a70b552f6a",
+      "unchanged_from_executed_source": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+      "sha256": "91d60f960fd1ca1dea34b1ce34a6a5e99b4e60c2a030be78ac9f996a2533d084",
+      "unchanged_from_executed_source": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinOriginalActivityControls.swift",
+      "sha256": "1a88b02132e48ba6fece0e9227943951e1c0b6a379abda5591e4537241833e71",
+      "unchanged_from_executed_source": true
+    }
+  ],
+  "whitespace_insensitive_diff": "diff --git a/docs/chat-motion/MotionUI/App.swift b/docs/chat-motion/MotionUI/App.swift\nindex 6a798b83..a8568f40 100644\n--- a/docs/chat-motion/MotionUI/App.swift\n+++ b/docs/chat-motion/MotionUI/App.swift\n@@ -208,6 +208,9 @@ private struct MotionProofContent: View {\n                 .accessibilityIdentifier(\"proof-effective-motion\")\n             ScrollView {\n                 LazyVStack(alignment: .leading, spacing: 0) {\n+                    // Keep header and disclosure in the same lazy row, as in\n+                    // HanlinActivityDisclosureStyle and the original D production probe.\n+                    VStack(alignment: .leading, spacing: 0) {\n                         // Exact original production ToggleButton, visibility lifted only by the preparer.\n                         ToggleButton(title: \"Thinking\", timeText: String(count), isExpanded: observedExpansion,\n                             isActive: running, numericCount: count, usesAnimatedDisclosure: true)\n@@ -236,6 +239,7 @@ private struct MotionProofContent: View {\n                         .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height in\n                             telemetry.recordVisibleHeight(height, preset: storedID, expanded: expanded)\n                         }\n+                    }\n                     Text(\"Original content after details\").padding(.top, 6)\n                         .accessibilityIdentifier(\"proof-footer\")\n                 }.padding()\n",
+  "portable_validation": {
+    "swift_frontend_parse": "PASS",
+    "git_diff_check": "PASS",
+    "native_compilation": "NOT_RUN",
+    "native_B": "NOT_RUN",
+    "native_C_on_changed_fixture": "NOT_RUN",
+    "native_A_on_changed_fixture": "NOT_RUN"
+  },
+  "reference": {
+    "production_style": "HanlinActivityDisclosureStyle.makeBody groups header and disclosure inside VStack(alignment:.leading,spacing:0).",
+    "production_path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinActivityHierarchy.swift",
+    "production_source_lines": [
+      74,
+      100
+    ],
+    "diagnostic_probe": "MotionRapidInputDiagnostic.productionProbe in original App.swift uses VStack with the canonical ToggleButton and HanlinAnimatedDisclosure.",
+    "diagnostic_run": 45217195070,
+    "diagnostic_source": "5d0ea90d98b405d38b66bb735198b945225877ba"
+  },
+  "scope_decision": {
+    "next_scope": "affected",
+    "exact_original_tests": [
+      "MotionUITests/testBRapidReversalPresetSwitchAndPersistence",
+      "MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion"
+    ],
+    "C_reason": "C expands this same proof row before long-content, RTL, Dynamic Type and orientation checkpoints; changed topology affects its original layout path.",
+    "historical_C_pass_run": 45166004801,
+    "historical_C_preserved": true,
+    "separate_C_dispatch": false,
+    "A": "Subsequent original cycles gate",
+    "D": "Prior diagnostic evidence retained; no replay"
+  },
+  "limits": [
+    "Grouping matches existing production topology; the causal lifecycle/layout explanation is not established by a changed native result yet.",
+    "No product animation, mounted-state policy, preset, gesture, telemetry, assertion or timeout changes.",
+    "No force-mounted substitute component or full-chat acceptance claim."
+  ]
+}

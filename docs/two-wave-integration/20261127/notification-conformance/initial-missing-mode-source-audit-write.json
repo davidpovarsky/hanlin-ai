@@ -1,0 +1,14 @@
+{
+  "name": "source-audit-write",
+  "argv": [
+    "node",
+    "Scripts/Audit/audit-miniapp-sdk.mjs",
+    "--typescript-module",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-recovery-20261125/Scripts/Expo/node_modules/typescript/lib/typescript.js"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-miniapps-notification-conformance-20261127",
+  "exitCode": 1,
+  "durationSeconds": 1.0984,
+  "stdout": "",
+  "stderr": "file:///mnt/development/projects/worktrees/hanlin-miniapps-notification-conformance-20261127/Scripts/Audit/audit-miniapp-sdk.mjs:256\n} else throw new Error('Use --check for read-only drift verification or --write after auditing changes.');\n             ^\n\nError: Use --check for read-only drift verification or --write after auditing changes.\n    at file:///mnt/development/projects/worktrees/hanlin-miniapps-notification-conformance-20261127/Scripts/Audit/audit-miniapp-sdk.mjs:256:14\n\nNode.js v24.22.0\n"
+}

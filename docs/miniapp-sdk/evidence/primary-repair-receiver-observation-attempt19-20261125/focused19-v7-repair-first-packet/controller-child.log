@@ -1,0 +1,88 @@
+{"observedAt": "2026-11-25T14:01:36.849203+00:00", "status": "RUNNING", "phase": "authenticated-reuse", "elapsedSeconds": 1.5583995264023542e-05, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+{"observedAt": "2026-11-25T14:01:36.849869+00:00", "status": "RUNNING", "phase": "boot.log", "elapsedSeconds": 0.0006770000036340207, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+Paired command starting: boot.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: boot.log; pid=15358; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: boot.log; pid=15358; elapsed=0.7s; log_bytes=0; observed_exit=0
+{"observedAt": "2026-11-25T14:01:37.512431+00:00", "status": "RUNNING", "phase": "bootstatus.log", "elapsedSeconds": 0.6632632919936441, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+Paired command starting: bootstatus.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: bootstatus.log; pid=15418; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: bootstatus.log; pid=15418; elapsed=7.4s; log_bytes=597; observed_exit=0
+{"observedAt": "2026-11-25T14:01:44.953723+00:00", "status": "RUNNING", "phase": "original-a2ui-generator.log", "elapsedSeconds": 8.104592499992577, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+Paired command starting: original-a2ui-generator.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: original-a2ui-generator.log; pid=15515; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: original-a2ui-generator.log; pid=15515; elapsed=2.5s; log_bytes=2622; observed_exit=0
+{"observedAt": "2026-11-25T14:01:47.474522+00:00", "status": "RUNNING", "phase": "ai-build.log", "elapsedSeconds": 10.625379666991648, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+Paired command starting: ai-build.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: ai-build.log; pid=15568; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: ai-build.log; pid=15568; elapsed=30.0s; log_bytes=863; observed_exit=None
+Paired command running: ai-build.log; pid=15568; elapsed=60.0s; log_bytes=97749; observed_exit=None
+Paired command running: ai-build.log; pid=15568; elapsed=90.0s; log_bytes=284888; observed_exit=None
+Paired command running: ai-build.log; pid=15568; elapsed=120.0s; log_bytes=377820; observed_exit=None
+Paired command completed: ai-build.log; pid=15568; elapsed=121.3s; log_bytes=378734; observed_exit=0
+{"observedAt": "2026-11-25T14:03:52.862074+00:00", "status": "RUNNING", "phase": "ai-build.log", "elapsedSeconds": 136.01322354200238, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+{"observedAt": "2026-11-25T14:03:52.863465+00:00", "status": "RUNNING", "phase": "com.itorah.chavrusachat-ios-system-resources.json", "elapsedSeconds": 136.01461479200225, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+Paired command starting: com.itorah.chavrusachat-ios-system-resources.json; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: com.itorah.chavrusachat-ios-system-resources.json; pid=19116; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: com.itorah.chavrusachat-ios-system-resources.json; pid=19116; elapsed=0.1s; log_bytes=680; observed_exit=0
+{"observedAt": "2026-11-25T14:03:52.947160+00:00", "status": "RUNNING", "phase": "com.itorah.chavrusachat-signature.log", "elapsedSeconds": 136.09832212499168, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+Paired command starting: com.itorah.chavrusachat-signature.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: com.itorah.chavrusachat-signature.log; pid=19117; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: com.itorah.chavrusachat-signature.log; pid=19117; elapsed=1.2s; log_bytes=0; observed_exit=0
+{"observedAt": "2026-11-25T14:03:54.188011+00:00", "status": "RUNNING", "phase": "com.itorah.hanlinminiapps-ios-system-resources.json", "elapsedSeconds": 137.3391834590002, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+Paired command starting: com.itorah.hanlinminiapps-ios-system-resources.json; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: com.itorah.hanlinminiapps-ios-system-resources.json; pid=19124; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: com.itorah.hanlinminiapps-ios-system-resources.json; pid=19124; elapsed=0.1s; log_bytes=685; observed_exit=0
+{"observedAt": "2026-11-25T14:03:54.281039+00:00", "status": "RUNNING", "phase": "com.itorah.hanlinminiapps-signature.log", "elapsedSeconds": 137.43220379199192, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+Paired command starting: com.itorah.hanlinminiapps-signature.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: com.itorah.hanlinminiapps-signature.log; pid=19126; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: com.itorah.hanlinminiapps-signature.log; pid=19126; elapsed=0.5s; log_bytes=0; observed_exit=0
+{"observedAt": "2026-11-25T14:03:54.782102+00:00", "status": "RUNNING", "phase": "com.itorah.chavrusachat-install.log", "elapsedSeconds": 137.93328545900295, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+Paired command starting: com.itorah.chavrusachat-install.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: com.itorah.chavrusachat-install.log; pid=19128; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: com.itorah.chavrusachat-install.log; pid=19128; elapsed=18.4s; log_bytes=0; observed_exit=0
+{"observedAt": "2026-11-25T14:04:13.211085+00:00", "status": "RUNNING", "phase": "com.itorah.chavrusachat-group-container.txt", "elapsedSeconds": 156.36232083399955, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+Paired command starting: com.itorah.chavrusachat-group-container.txt; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: com.itorah.chavrusachat-group-container.txt; pid=19312; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: com.itorah.chavrusachat-group-container.txt; pid=19312; elapsed=0.4s; log_bytes=156; observed_exit=0
+{"observedAt": "2026-11-25T14:04:13.605693+00:00", "status": "RUNNING", "phase": "com.itorah.hanlinminiapps-group-container.txt", "elapsedSeconds": 156.756909542004, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+Paired command starting: com.itorah.hanlinminiapps-group-container.txt; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: com.itorah.hanlinminiapps-group-container.txt; pid=19340; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: com.itorah.hanlinminiapps-group-container.txt; pid=19340; elapsed=0.3s; log_bytes=156; observed_exit=0
+{"observedAt": "2026-11-25T14:04:13.874176+00:00", "status": "RUNNING", "phase": "authoring-mini-data-container.txt", "elapsedSeconds": 157.02538841699425, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+Paired command starting: authoring-mini-data-container.txt; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: authoring-mini-data-container.txt; pid=19357; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: authoring-mini-data-container.txt; pid=19357; elapsed=0.3s; log_bytes=157; observed_exit=0
+{"observedAt": "2026-11-25T14:04:14.145968+00:00", "status": "RUNNING", "phase": "authoring-mini-data-container.txt", "elapsedSeconds": 157.29717216700374, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+{"observedAt": "2026-11-25T14:04:14.146744+00:00", "status": "RUNNING", "phase": "authoring-mini-data-container.txt", "elapsedSeconds": 157.29794637499435, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+{"observedAt": "2026-11-25T14:04:14.147318+00:00", "status": "RUNNING", "phase": "FocusedRepair1.log", "elapsedSeconds": 157.29851991699252, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+Paired command starting: FocusedRepair1.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: FocusedRepair1.log; pid=19377; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: FocusedRepair1.log; pid=19377; elapsed=30.0s; log_bytes=5898; observed_exit=None
+Paired command running: FocusedRepair1.log; pid=19377; elapsed=60.0s; log_bytes=6654; observed_exit=None
+Paired command running: FocusedRepair1.log; pid=19377; elapsed=90.0s; log_bytes=11950; observed_exit=None
+Paired command running: FocusedRepair1.log; pid=19377; elapsed=120.0s; log_bytes=18813; observed_exit=None
+Paired command running: FocusedRepair1.log; pid=19377; elapsed=150.1s; log_bytes=18813; observed_exit=None
+Paired command running: FocusedRepair1.log; pid=19377; elapsed=180.1s; log_bytes=18813; observed_exit=None
+Paired command running: FocusedRepair1.log; pid=19377; elapsed=210.1s; log_bytes=18813; observed_exit=None
+Paired command running: FocusedRepair1.log; pid=19377; elapsed=240.1s; log_bytes=18813; observed_exit=None
+Paired command running: FocusedRepair1.log; pid=19377; elapsed=270.1s; log_bytes=20051; observed_exit=None
+Paired command completed: FocusedRepair1.log; pid=19377; elapsed=278.4s; log_bytes=21343; observed_exit=65
+{"observedAt": "2026-11-25T14:08:52.534491+00:00", "status": "RUNNING", "phase": "FocusedRepair1-summary.json", "elapsedSeconds": 435.6863698340021, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+Paired command starting: FocusedRepair1-summary.json; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: FocusedRepair1-summary.json; pid=25520; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: FocusedRepair1-summary.json; pid=25520; elapsed=0.2s; log_bytes=2135; observed_exit=0
+{"observedAt": "2026-11-25T14:08:52.742240+00:00", "status": "RUNNING", "phase": "FocusedRepair1-nodes.json", "elapsedSeconds": 435.89413141699333, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+Paired command starting: FocusedRepair1-nodes.json; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: FocusedRepair1-nodes.json; pid=25525; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: FocusedRepair1-nodes.json; pid=25525; elapsed=0.1s; log_bytes=2369; observed_exit=0
+{"observedAt": "2026-11-25T14:08:52.832915+00:00", "status": "RUNNING", "phase": "FocusedRepair1-selected-tests.log", "elapsedSeconds": 435.9848078340001, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+Paired command starting: FocusedRepair1-selected-tests.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: FocusedRepair1-selected-tests.log; pid=25526; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: FocusedRepair1-selected-tests.log; pid=25526; elapsed=0.1s; log_bytes=57; observed_exit=0
+{"observedAt": "2026-11-25T14:08:52.923925+00:00", "status": "RUNNING", "phase": "FocusedRepair1-selected-tests.log", "elapsedSeconds": 436.07583083400095, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+{"observedAt": "2026-11-25T14:08:52.928446+00:00", "status": "RUNNING", "phase": "FocusedRepair1-attachments-export.log", "elapsedSeconds": 436.0803381250007, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+Paired command starting: FocusedRepair1-attachments-export.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: FocusedRepair1-attachments-export.log; pid=25527; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: FocusedRepair1-attachments-export.log; pid=25527; elapsed=0.1s; log_bytes=5331; observed_exit=0
+{"observedAt": "2026-11-25T14:08:53.064470+00:00", "status": "RUNNING", "phase": "FocusedRepair1-attachments-export.log", "elapsedSeconds": 436.21636004200263, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+{"observedAt": "2026-11-25T14:08:56.864863+00:00", "status": "FOCUSED_FAILED", "phase": null, "elapsedSeconds": 440.01675100000284, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}

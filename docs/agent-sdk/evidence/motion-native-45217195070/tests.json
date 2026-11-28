@@ -1,0 +1,59 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "702B99C3-7821-4D16-A8A2-CA9A22CBBF23",
+      "deviceName" : "Hanlin-Phase2-Motion-45217195070",
+      "modelName" : "iPad Pro 13-inch (M5)",
+      "osBuildNumber" : "24B8117",
+      "osVersion" : "27.2",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 24s",
+                  "durationInSeconds" : 84.16090703010559,
+                  "name" : "testDRapidInputDiagnosticOnly()",
+                  "nodeIdentifier" : "MotionUITests/testDRapidInputDiagnosticOnly()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests/MotionUITests/testDRapidInputDiagnosticOnly",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "MotionUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests/MotionUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "ChatMotionProofUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "ChatMotionProof",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

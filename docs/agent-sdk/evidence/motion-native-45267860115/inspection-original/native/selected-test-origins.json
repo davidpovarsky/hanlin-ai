@@ -1,0 +1,8 @@
+[
+  {
+    "index": 0,
+    "target": "MotionUITests",
+    "test": "MotionUITests/testBRapidReversalPresetSwitchAndPersistence()",
+    "bundle": "Motion.xcresult"
+  }
+]

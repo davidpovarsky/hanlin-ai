@@ -1,0 +1,68 @@
+{
+  "base_head": "d6e2e3f062633fe7a55c0f44b922c5b3321aaf4a",
+  "reviewed_at": "2026-11-19T02:58:09.564074+00:00",
+  "patch_sha256": "d5d1c68abc74316408e0073f81f1079b8c015af8b07a3c9a37831358127cc9d5",
+  "checks": [
+    {
+      "file": "AI_HLY/Downstream/ChatCore/HanlinAppConversationStore.swift",
+      "sha256": "b6bcce0a80f381a372cfb5213092110b1b83f2bc589d849725616d2ff371de0b",
+      "parse": "PASS"
+    },
+    {
+      "file": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "sha256": "02547a1a784cf9902054ba713f20cb5147d975e92c554d4974422c105f158e53",
+      "parse": "PASS"
+    },
+    {
+      "file": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "sha256": "792823155e9ee5964bdc286ff09672a209dbad405c4e4d07159e8332ad0a0aeb",
+      "parse": "PASS"
+    },
+    {
+      "file": "AI_HLY/Services/ChatServices/APIManager+LegacyTools.swift",
+      "sha256": "f16530c97ce00202ac54a037a1f2361deb474ccb351ef1c35092e584f876513e",
+      "parse": "PASS"
+    },
+    {
+      "file": "AI_HLY/Downstream/TorahStudy/AuthorizedAttachmentRegistry.swift",
+      "sha256": "91d5e6ab0a0efecba7d6dc9ec30520b49063f17f8133ebd90462878dbbc93536",
+      "parse": "PASS"
+    },
+    {
+      "file": "AI_HLY/Downstream/AgentSkills/HanlinAISDKToolAdapter.swift",
+      "sha256": "517fda3f0b9e7e439a22df6862958260872a90266bcbc4e4793fc57747ee80cc",
+      "parse": "PASS"
+    },
+    {
+      "file": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "sha256": "bf426a03afae01cc903c94714cdca4c9f276a07800f6f2852418b2b87db7af30",
+      "parse": "PASS"
+    }
+  ],
+  "diff_check": "PASS",
+  "root_review": "Original APIManager request entry, both prompt builders, existing cancellation/scene/conversation revocation, real Session/engine preparation, active original UI turn and typed Host interfaces inspected. Same original storage and registration owner retained.",
+  "new_native": "NOT_RUN",
+  "full_sdk05_acceptance": "OPEN: account/CloudKit migration, original APIKeys Keychain conversion, safe namespace-owned memory replace, process/physical/signed gates remain.",
+  "copied_evidence": [
+    {
+      "file": "REVIEW.md",
+      "original_sha256": "b01eb936f002c798023ed69e0f523e81c8bbb8ffb58f97f133cdde1cff4e6149",
+      "repository_sha256": "b01eb936f002c798023ed69e0f523e81c8bbb8ffb58f97f133cdde1cff4e6149",
+      "only_normalization": "CRLF to LF"
+    },
+    {
+      "file": "receipt.json",
+      "original_sha256": "2dbb99e8749870491db9d199aa75691d4ae67a3caf2e5a71e45d2fc0845c8cac",
+      "repository_sha256": "2dbb99e8749870491db9d199aa75691d4ae67a3caf2e5a71e45d2fc0845c8cac",
+      "only_normalization": "CRLF to LF"
+    },
+    {
+      "file": "native-selectors.json",
+      "original_sha256": "b24b8f29678d3f65146007da60a463107c941ccbd2e71d1b92985b0c1874344e",
+      "repository_sha256": "b24b8f29678d3f65146007da60a463107c941ccbd2e71d1b92985b0c1874344e",
+      "only_normalization": "CRLF to LF"
+    }
+  ],
+  "affected_scope": "AI_HLYTests/HanlinAppAgentSessionOwnerTests,AI_HLYTests/RuntimeAutonomyV3Tests/nativeKeychainReplacementPreservesOriginalServiceIsolation(),AI_HLYTests/RuntimeAutonomyV3Tests/runtimeEnvironmentCommitFailurePreservesTheOriginalSecret(operation:),AI_HLYTests/RuntimeAutonomyV3Tests/mcpEnvironmentPrimaryWriteFailureRetainsBothDurableGenerations(),AI_HLYTests/RuntimeAutonomyV3Tests/mcpEnvironmentUnknownReadAfterBackupCommitPreservesTheStagedCredential(),AI_HLYTests/RuntimeAutonomyV3Tests/mcpEnvironmentPrecommitFailureKeepsOriginalSecretAndRemovesOnlyStagedValue(),AI_HLYTests/RuntimeAutonomyV3Tests/mcpEnvironmentEditPreservesOtherFieldsSharedReferencesAndRejectsStaleDraft(),AI_HLYTests/RuntimeAutonomyV3Tests/savedEnvironmentPrecedenceFollowsScopesAndPreservesUserPaths(),AI_HLYTests/HanlinUnifiedHostServicesTests/authorizedAttachmentRegistryCrossChatDenial(),AI_HLYTests/AgentSkillsExposureTests/fullSDKSkillToToolFlow(),AI_HLYTests/ClassicChatRestorationTests/mcpInstallSelectInvokeUninstallE2E(),AI_HLYTests/HanlinAppSplitOriginTests",
+  "all_original_sdk05_selectors_preserved": true
+}

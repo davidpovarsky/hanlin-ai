@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "sourceBase": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "sourceCommit": "c48140a7d00d0c5de1ec0933e15738acf930e7e9",
+  "candidateManifestSHA256": "865332058e33702f9a99f914b12fee119320415d8a977387b2ec518e381914f3",
+  "status": "SOURCE_REVIEW_APPROVED_NATIVE_AND_CONTROLS_NOT_RUN",
+  "payloadCount": 25,
+  "payloadBytes": 128073,
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 6494,
+      "sha256": "bf4fc86a3866505d2006eb644cbb327bcd593e9572a003294d9fc9bc78716843"
+    },
+    {
+      "path": "expected-session-identities.json",
+      "bytes": 41903,
+      "sha256": "623d14fb3e3201cf25beaf76c4160b9c95a4606ea0529ece61b71c7c79336c38"
+    },
+    {
+      "path": "global-caller-authorities.json",
+      "bytes": 4804,
+      "sha256": "519dad17a58b7cad153eec08435392c315d72dbfde5413f6f2a2275b9b760dce"
+    },
+    {
+      "path": "initial-staging-stop.json",
+      "bytes": 1836,
+      "sha256": "a5dd987ef2e00b88c78517f344ecb41b6b69e533a459a39e756f95510ed58574"
+    },
+    {
+      "path": "lossless-encodings.json",
+      "bytes": 754,
+      "sha256": "fffa4f15ec2aa77d2f3afc8b7d06ad5eed4b287d8cc92586d6fe52b971a02e94"
+    },
+    {
+      "path": "mac-r1-held-review.json",
+      "bytes": 7872,
+      "sha256": "5d276b4df1b9ff1cedaef3b2551edf11263fb37e6ad0f71d24ee615489a36fca"
+    },
+    {
+      "path": "mac-r2-held-review.json",
+      "bytes": 6084,
+      "sha256": "3cd60d2046909c3df02cee792ed7e86a2db2ebf998d757e811fb2103772c921b"
+    },
+    {
+      "path": "mac-r3-review.json",
+      "bytes": 6841,
+      "sha256": "08f0a2879684871a55bc7a788191dd79a1a0cb001c39442cef7446da84793927"
+    },
+    {
+      "path": "native-admission-binding.json",
+      "bytes": 1267,
+      "sha256": "d3df09d2ec9496157692077ad1c146ba541679acf28b65cc0a06e4ab6447a9e1"
+    },
+    {
+      "path": "original-begin-run-call-sites.txt",
+      "bytes": 1560,
+      "sha256": "886d398d59ecca8d88f03506b283a84a066e679966436db9e2380dbbb0feb9ee"
+    },
+    {
+      "path": "original-session-request.json",
+      "bytes": 1097,
+      "sha256": "5d42c2f7e71e4de061c822e5dda9c894770d5da5505b5cdfe097d266e3401696"
+    },
+    {
+      "path": "preparation-reconciliation.json",
+      "bytes": 1369,
+      "sha256": "0ff79106c6dfdf8e8bfbe71da2d26bdff111fb9d5a71094f23be914843eb9812"
+    },
+    {
+      "path": "r3-preparation-stop.json",
+      "bytes": 216,
+      "sha256": "66c298598f5cf2ed904d36059ffbd7a325ff50617a106d4c43aaa74427d30250"
+    },
+    {
+      "path": "root-r1-cross-manager-hold.json",
+      "bytes": 730,
+      "sha256": "41fc91ae5127911f3b4f89cc56f2dcb1fd26732e7c6361f63d7e4aac5aae8644"
+    },
+    {
+      "path": "root-r1-review.json",
+      "bytes": 4071,
+      "sha256": "c6e176ef2931cddb928af71085bb5500c3ebb75a6352b2ba14374937565ebf35"
+    },
+    {
+      "path": "root-r3-preparation-stop.json",
+      "bytes": 2250,
+      "sha256": "4b075695135f887ed1f44af1af4d9457af307dc99478dccd95e33cf09892fdca"
+    },
+    {
+      "path": "root-r3-review.json",
+      "bytes": 4458,
+      "sha256": "e6fc4e473bda2b2e8c1aa5e5ab9e73af3744071c01acf2d1ed23caf1977bef6f"
+    },
+    {
+      "path": "source-edit-receipt.json",
+      "bytes": 1179,
+      "sha256": "b91247db28cb73c1bdc74303f4736592f794176a855780cf697d8c0e566a60ff"
+    },
+    {
+      "path": "source-impact.json",
+      "bytes": 1194,
+      "sha256": "c831d93e7888578b577747a3b76a7934beaeeabad7ec3d2aaa546ab135d87680"
+    },
+    {
+      "path": "source-projection-checks.json",
+      "bytes": 1463,
+      "sha256": "b455a670ee5df252cca015a3b68c7995d8bf341aeb731151cb69aeab0fa67aa2"
+    },
+    {
+      "path": "source-qualification.json",
+      "bytes": 7817,
+      "sha256": "d779bda48a38862d580dce0c2519d588ddc488e96c2ba89d7b39fee21d3cb897"
+    },
+    {
+      "path": "source-r2-to-r3.patch.gz",
+      "bytes": 2674,
+      "sha256": "ca560a9ac81071398b0e4196beadb9c7b5429b6ea961909e3832fb73515d3027"
+    },
+    {
+      "path": "source-seal.json",
+      "bytes": 2284,
+      "sha256": "1619a4500d5bf40a499c9992dd5f3c9e1513197bdb143debc8487825610a6599"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 15831,
+      "sha256": "ff0e572228b89b8b6b71c503d321d99022d8538d5f44515c68ae02229aec994f"
+    },
+    {
+      "path": "successor-native-obligations.json",
+      "bytes": 2025,
+      "sha256": "7a8a9337e034fec61f23597b84e68c9a5a953fb077881e17ca734b782060aab3"
+    }
+  ]
+}

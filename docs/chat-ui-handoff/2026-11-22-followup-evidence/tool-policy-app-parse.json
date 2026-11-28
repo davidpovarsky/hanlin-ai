@@ -1,0 +1,150 @@
+{
+  "status": "passed",
+  "exit_code": 0,
+  "command": [
+    "swiftc",
+    "-frontend",
+    "-parse",
+    "-module-name",
+    "HanlinToolPolicySyntax",
+    "AI_HLY/Downstream/ChatCore/HanlinAppHostIntegration.swift",
+    "AI_HLY/Downstream/ChatCore/HanlinAppToolConsent.swift",
+    "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+    "AI_HLY/Downstream/ChatCore/HanlinToolApprovalStore.swift",
+    "AI_HLY/Downstream/ChatCore/HanlinToolApprovalScopeFactory.swift",
+    "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinToolConsentSheet.swift",
+    "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinToolPermissionsView.swift",
+    "AI_HLY/NativeAgentExtensions/ToolCatalog/NativeToolCatalogEntry.swift",
+    "AI_HLY/NativeAgentExtensions/ToolCatalog/NativeToolCatalog.swift",
+    "AI_HLY/Downstream/CanonicalAdapters/NativeToolCanonicalShadowAdapter.swift",
+    "AI_HLY/Downstream/CanonicalAdapters/MCPCanonicalShadowAdapter.swift",
+    "AI_HLY/Downstream/CanonicalTools/Legacy/LegacyToolCanonicalAdapter.swift",
+    "AI_HLY/Downstream/Scripting/HanlinScriptCanonicalAdapter.swift",
+    "AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift",
+    "AI_HLY/Downstream/MCP/ToolIntegration/MCPToolDescriptor.swift",
+    "AI_HLY/Downstream/MCP/ToolIntegration/MCPToolBridge.swift",
+    "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteLocalPythonTool.swift",
+    "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteJavaScriptTool.swift",
+    "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteTypeScriptTool.swift",
+    "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteSkillResourceTool.swift",
+    "AI_HLY/Downstream/RuntimeCore/Tools/ManageRuntimePackagesTool.swift",
+    "AI_HLY/Downstream/RuntimeCore/Tools/ManageMCPServersTool.swift",
+    "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolInvocationMetadata.swift",
+    "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolPresentationProfile.swift",
+    "AI_HLY/SettingsView.swift",
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+    "AI_HLYTests/HanlinToolApprovalStoreTests.swift"
+  ],
+  "source_closure": [
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppHostIntegration.swift",
+      "sha256": "54ec4bc0495c29554fd8fa96752274afa2def7591350ece4788fd68603fa301e"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppToolConsent.swift",
+      "sha256": "c43051e7a5681c507e69ce8aed378d391fcd1f617f515f6557d910e8dfb50316"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "sha256": "b728b66c60a34b8add68555182d85be74a536caf89362788b32b0c3f1c0e3f65"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinToolApprovalStore.swift",
+      "sha256": "2ed4cf08bf4c3c62e9156b3693c136e68274a5e4f6ed8511f6cc97e249f2627f"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinToolApprovalScopeFactory.swift",
+      "sha256": "64364ff5f116cff1ffbd57ed695bbfa0bfc720bfe7b59bdef086f8caaafd2691"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinToolConsentSheet.swift",
+      "sha256": "d6bce181676dcce4433a8b6baacbfcb1bef202e8ba28395f2b0824fbefabcf20"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinToolPermissionsView.swift",
+      "sha256": "2bcc23b908f4913c962ec1e5dd5c35a8c9dde15d446959969f15e859d456a2b2"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/ToolCatalog/NativeToolCatalogEntry.swift",
+      "sha256": "edd24263833bb641e28c5582981aa0db10ef0f934ebd5a978ee8327913731fb2"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/ToolCatalog/NativeToolCatalog.swift",
+      "sha256": "5fd7186997eaf919011d4991b99c79d1ba530d4abde46bfd2ff7201173c08695"
+    },
+    {
+      "path": "AI_HLY/Downstream/CanonicalAdapters/NativeToolCanonicalShadowAdapter.swift",
+      "sha256": "707c6e936cf15db03aabd4493e70544636ab7f235856c1e8a7695806b142bf34"
+    },
+    {
+      "path": "AI_HLY/Downstream/CanonicalAdapters/MCPCanonicalShadowAdapter.swift",
+      "sha256": "3a8a8080a89123f5af8cbba28409cf6d527b0850f265110fc77eafe5b3302df9"
+    },
+    {
+      "path": "AI_HLY/Downstream/CanonicalTools/Legacy/LegacyToolCanonicalAdapter.swift",
+      "sha256": "b1af06c78dd26357810638cf50f23247423f5b821bfaea132202697e028aaab2"
+    },
+    {
+      "path": "AI_HLY/Downstream/Scripting/HanlinScriptCanonicalAdapter.swift",
+      "sha256": "bc9e8edb69c9967822721060cd320cecd547a3982490aca63a18729ee9da86be"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift",
+      "sha256": "1709d3265d64d511e5d957bbd97dcd52036303dd90e288662a847d0f307a9359"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/ToolIntegration/MCPToolDescriptor.swift",
+      "sha256": "1a6e11a3c029d66ec636503095dc546ea030f062be2b9a41476eda86c1bdffec"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/ToolIntegration/MCPToolBridge.swift",
+      "sha256": "4d07e186e2180495d41040be943e47495cd4c7edff95d8afea1025deb0ed8c26"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteLocalPythonTool.swift",
+      "sha256": "859528aa54361b9fb3161e23b4e181c7f996840634269f78e5a1565e58b9b7f9"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteJavaScriptTool.swift",
+      "sha256": "4bc1fa513b88af6a4598151a4bb9ff8ddd95301d5f2aea64d11248a56db589c5"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteTypeScriptTool.swift",
+      "sha256": "4fca6b2a66e93538b5a5470949e55e78f5bca1e9774abc1c067f959407c68a45"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteSkillResourceTool.swift",
+      "sha256": "6e13d3be36d088982b1f3bb601ea6517269c4333b4df4e2b625291e154271080"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/ManageRuntimePackagesTool.swift",
+      "sha256": "88f47f82044c11cb411de0e13325ad292812f1da95db84c19964e13b64e721b4"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/ManageMCPServersTool.swift",
+      "sha256": "1c32b0dbeddefbdb7b9e5ab35422012e8af23ed63714ee723bcc736765fd38f3"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolInvocationMetadata.swift",
+      "sha256": "c3f61a93935100de5d80142141c501955448e9a96591863fb149f7b938d7a646"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolPresentationProfile.swift",
+      "sha256": "e146502595a8d01d041d387a9568394b32440e550b7afd8a25f3de190241d2f4"
+    },
+    {
+      "path": "AI_HLY/SettingsView.swift",
+      "sha256": "8191e5f709624abd1a36feeb8c770d2fc4ed23c0cf2a9f5579c28d2cbfabf897"
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "sha256": "8a20b07d6a6ebd9f379ae2c34e813f0a2d6774cd3c972db37eef78a5d06e4e8b"
+    },
+    {
+      "path": "AI_HLYTests/HanlinToolApprovalStoreTests.swift",
+      "sha256": "559cb492cbccb54d416fa69652c45ecb1b318e137dc8774c3d0cfd0a6f49b8ee"
+    }
+  ],
+  "output": "",
+  "limitation": "Syntax parsing only; UIKit and SwiftData types are not type-checked on Windows."
+}

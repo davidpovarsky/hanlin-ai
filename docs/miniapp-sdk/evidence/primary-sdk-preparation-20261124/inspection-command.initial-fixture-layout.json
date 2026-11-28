@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "python3",
+    "docs/miniapp-sdk/evidence/primary-sdk-preparation-20261124/inspect_primary_sdk.py"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-primary-sdk-preparation-20261124",
+  "startedAt": "2026-11-24T20:36:11.149189+00:00",
+  "exitCode": 1,
+  "elapsedSeconds": 3.8168473672121763,
+  "scriptSHA256": "6f672ef7f9f01daa0263b2418eecea89628fd9e6d9b5599922ada1864a24d2bd",
+  "purpose": "Read-only artifact and Git data reconciliation; no project compiler or tests."
+}

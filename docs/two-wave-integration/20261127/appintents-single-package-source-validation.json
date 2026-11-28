@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-27T05:39:05.390972+00:00",
+  "sourceBase": "b41233a61a3dca0632b78c7ab7f92e5e620492c4",
+  "implementationAgent": "/root/w1_review_resume",
+  "status": "SCOPED_SOURCE_FIX_PORTABLE_REGRESSION_PASS_APPLE_METADATA_EXPORT_REQUIRED",
+  "source": [
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+      "beforeSHA256": "114cdb71d067a0cf3139fe373af2b25617e275fa5aa040a0be71a0801e1283f8",
+      "afterSHA256": "10f0ae12345b996c282a9b5e7027e07081f86b438a8424c0133a5ecd055c6300"
+    },
+    {
+      "path": "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
+      "beforeSHA256": "65792c17c4dd40c9893b441f746fd13bcd4c471c7c49dabdde1f7e5f7adf6e3b",
+      "afterSHA256": "4d34e6a1a7f50373ccfba3890c547d2df9ab66bb5172deb26afd3fdffa075585"
+    },
+    {
+      "path": "Scripts/SDK/tests/test_system_extension_targets.py",
+      "beforeSHA256": "ea3a0405dd27ace649421d367e4134cd99e0f4eb85cdade1f75d1ec5d4044a80",
+      "afterSHA256": "959f0d685856fb2a52987f1ab2efeb03541a4dfb5d9ed5475a4e4f6fee9cf0f8"
+    }
+  ],
+  "productionChange": "Remove only the empty duplicate shared-file AppIntentsPackage marker and its MiniApps includedPackages entry. All entity/query/OpenIntent implementations are byte-preserved. Each actual module retains its existing aggregate; MiniApps acquires no AI_Hanlin dependency.",
+  "assertionReplacement": {
+    "before": "assertIn(HanlinMiniAppSystemIntentsPackage.self, mini)",
+    "after": "Require the existing unique MiniApps and AI SDK roots, actual MiniApps source membership, original IndexedEntity/query/OpenIntent declarations, no second marker in the shared file, and the original HanlinApp aggregate inclusion.",
+    "unchanged": "All 9 other original test-method ASTs, 2 helper methods, and the existing standalone-publication/camera/shipping/wrong-owner guards."
+  },
+  "portableValidation": {
+    "originalMethodPassed": 1,
+    "skipped": 0,
+    "negativeControlsRejected": 4,
+    "initialAttempt": "The retained r1 failure exposed two wrong literals in the added assertions. Corrected only those literals to the actual original IndexedEntity and HanlinInstalledMiniAppQuery declarations; production source unchanged."
+  },
+  "inputImpact": "Exact current866 SDK392 direct intersection: entity source only. Four actual native79 trees are unchanged; broad input list32/33 equal, with only unrelated paired-app runner excluded. Existing866 Host archive fails strict SDK fingerprint reuse; original staging, audits, packing and archive validation must refresh. Individual Host188 test reuse is not established here.",
+  "generatedDocs": "No generated docs changed. Integrate Mac d930e041 source-audit seal and regenerate original reachability against corrected entity/app hashes. Original source-inventory auditor consumes neither changed Swift file.",
+  "officialSources": [
+    "https://developer.apple.com/documentation/appintents/appintentspackage",
+    "https://developer.apple.com/documentation/appintents/configuring-the-runtime-behavior-of-your-app-intents",
+    "https://developer.apple.com/videos/play/wwdc2025/244/"
+  ],
+  "acceptanceBoundary": "Corrected Swift compilation, AppIntents metadata export, native tests and OS acceptance NOT_RUN here. Real original90/54/device metadata extraction remains required; portable assertions do not satisfy it.",
+  "rawEvidence": [
+    {
+      "path": "appintents-single-package/actual-target-membership.json",
+      "bytes": 1996,
+      "sha256": "cc50b4931758de461f4839db2c0ade53ddfbc37044dc5f826dad9f3de835a94d"
+    },
+    {
+      "path": "appintents-single-package/input-impact.json",
+      "bytes": 3635,
+      "sha256": "985e902017983499bde570eb2408ec7235f3db1ed3b4354a45e6d440effd1d3d"
+    },
+    {
+      "path": "appintents-single-package/negative-controls.json",
+      "bytes": 1683,
+      "sha256": "5ca74b2da4f5e1d2ab91ed01e500b659e4ad49af7e952c3c4868369e9e989b23"
+    },
+    {
+      "path": "appintents-single-package/original-ci-diagnostic.json",
+      "bytes": 8913,
+      "sha256": "611b1d15ede6433a5d1bdfd8e3436c06cd4374b008a681d87c0da1f180a72761"
+    },
+    {
+      "path": "appintents-single-package/original-method-receipt.json",
+      "bytes": 1212,
+      "sha256": "ad17f195c7eed8a31cdf2779a1f92be922f45bc51a965302cb5ef26a836c1fac"
+    },
+    {
+      "path": "appintents-single-package/original-method.stderr",
+      "bytes": 326,
+      "sha256": "d12799d3424874a6573b284be2de53aa1e29de0e5d16758bf45a0ad9d1d0616c"
+    },
+    {
+      "path": "appintents-single-package/original-method.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "appintents-single-package/r1-test-assertion-mismatch/original-method-receipt.json",
+      "bytes": 1213,
+      "sha256": "b157149b13fdf9292ca81b2519ee513d721aad8c26a693a8792e39b280f933ce"
+    },
+    {
+      "path": "appintents-single-package/r1-test-assertion-mismatch/original-method.stderr",
+      "bytes": 5572,
+      "sha256": "40140dfd02e6b904a3402c98a97b0acf05f49eb1ada66e7fa49db89077463e13"
+    },
+    {
+      "path": "appintents-single-package/r1-test-assertion-mismatch/original-method.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "appintents-single-package/source-preservation.json",
+      "bytes": 1053,
+      "sha256": "662577265cbe5f267d7a56c0e1c69ecba5a1acdad8209ecec9ca4e460e00b5a0"
+    },
+    {
+      "path": "appintents-single-package/source.patch",
+      "bytes": 3824,
+      "sha256": "e408a9b8b48010304e2ec11cff2399f21a608a09bc62f3ab3ef595343d685b54"
+    }
+  ]
+}

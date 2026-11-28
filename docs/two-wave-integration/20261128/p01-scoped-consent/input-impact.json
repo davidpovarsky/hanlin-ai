@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "sourceBase": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "changedPaths": [
+    "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift",
+    "AI_HLYTests/ProviderConformance/ProductionProviderConformanceTests.swift"
+  ],
+  "staticSDKPathAuthority": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/final-sdk-700664fd-pass/sdk/current-miniapp-sdk.json",
+    "sha256": "4819de6f518a2b9ea1c6e3c80a3567dbf46ef0ec886e883be162bb77766be480"
+  },
+  "changedPathsInSDKManifest": [],
+  "packagesTreeUnchanged": true,
+  "appProductSourceUnchanged": true,
+  "nativeTestTarget": "Existing AI_HLYTests sources must compile on next root-coordinated original acceptance.",
+  "qualification": "Static membership only; no SDK/Host/native outcome inferred and no generator/staging/build executed."
+}

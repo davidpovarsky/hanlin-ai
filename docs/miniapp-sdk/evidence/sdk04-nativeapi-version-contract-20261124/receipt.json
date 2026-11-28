@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "utc": "2026-11-24T07:48:08.234386+00:00",
+  "baseCommit": "df436d7650bc5918d29707868565fc114e65c445",
+  "scope": "SDK04 exported NativeAPI version drift repair; separate from frozen SDK-only acceptance",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-sdk04-nativeapi-versions-20261124",
+  "status": "EXECUTED_PASS_PORTABLE_VERSION_CONTRACT",
+  "red": {
+    "result": "FAILED_EXPECTED_ACTUAL_DRIFT",
+    "tests": 1,
+    "actual": "0.13.1",
+    "expected": "0.13.0",
+    "receipt": "red.json"
+  },
+  "green": {
+    "result": "EXECUTED_PASS",
+    "tests": 6,
+    "receipt": "green.json",
+    "coverage": "new facade equality/mismatch/future-resolution check; existing runtime-version checks; active preflight version/lock check"
+  },
+  "correction": "Existing upstream resolver now updates two public version constants within its normal write/rollback set. Source audit and active preflight share the same graph equality check. Original native libraries and callable exports are unchanged.",
+  "activeCallers": {
+    ".github/workflows/validate-expo-runtime-spike.yml": [
+      322,
+      323
+    ]
+  },
+  "versions": {
+    "nativeApi": "9.1.2",
+    "worklets": "0.13.0",
+    "reactNative": "0.88.1",
+    "react": "19.3.0",
+    "expo": "58.0.26",
+    "hermes": "260318099.0.5"
+  },
+  "facadeForwardingBytesPreserved": true,
+  "facadeWithoutVersionDeclarationsSHA256": "8753a6cc865de8fe2ae38733773c31631717606e20fe9786782c692b7b3738e0",
+  "inputSHA256": {
+    "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIHostVersions.swift": "3094b19bbeef676478a22be01efe6ad4679039fb5832bb10d0e7630305b5d138",
+    "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIManager.swift": "e714fc23dd1507ba915a674b3beddfd59ecfbf73128d0db655be9ce8dfd1ef48",
+    "Packages/HanlinExpoNativeAPIJS/package.json": "7a46122e4b3ca8e9fb1caa54bb7bdd0a6e4c56226b6c3bdded20e6134bb5909e",
+    "Packages/HanlinExpoNativeAPIJS/src/index.ts": "000de857839c76e86a426123d4bce30f0b56854f7655d4021342b2d932b98390",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift": "01c77d58cb3fe68963400f8b5b230d6255b175a495daa9659e1078f4250cf219",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoBridgeMetadata.swift": "45d95e05bd6def0ab99a87515829f1abeaea5404e312fee8b89d12b4282eabee",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift": "5c28d3e33ecd38d42ddf13e44ddaab9d277d8dfd9b2742bf6d14293675437a8c",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift": "27505a611dbe1b61ab100ca53c393ca9a72aedb76bbc084015c35423f25804c7",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptHostVersions.swift": "caee618f90412968d0390d1cee3c9938417de019fa64a372f70a3ac2682e8d78",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift": "6ef3c5c17c41a513484a1341edd31bad3dfcc4a3b9c72f2157e3f3d6112244d3",
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift": "a31357ce803c24ba80aed6f4c81b7e31f82abde1ec6c2ef00c6ee4a57c272717",
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
+    "Scripts/Audit/Tests/runtime-version-contract.test.mjs": "95f49391aecc82567c7fea4cdadc171c344547660bb36b4a82c8d7721d8c287d",
+    "Scripts/Audit/miniapp-runtime-contract.mjs": "398cf7a2b1415bf869b5be6be5ce95162cc60fd1bdad34857b94d5d32f12525a",
+    "Scripts/Expo/dependency-lock.json": "549d100eca28b6b5f59b0cc6bb55d64c27e7bb88f02fd58eb8f1b2f6097be64f",
+    "Scripts/Expo/package-lock.json": "e3da3f23bf663dd927d1db5f34750053c611603cc968f200f51c309f3f8ccf60",
+    "Scripts/Expo/package.json": "db6fd60dbc8f2b15eac5fee7029781cf14834ffbad53f0c8948fc4c2945c1e91",
+    "Scripts/ExpoNativeAPI/README.md": "ebeb3578d42cede122ce60b481c34197f974c62a4141fbce7dbb34c6a3127d72",
+    "Scripts/ExpoNativeAPI/Tests/lock-integrity.test.mjs": "7f9a69e2d7a863879103484dd4468d88f743f77f0a433534ad9b8a46458a3705",
+    "Scripts/ExpoNativeAPI/dependency-lock.json": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768",
+    "Scripts/ExpoNativeAPI/preflight.mjs": "67260cbf215527ff3aeff429add3a709e61ea13cc2c0fe358333090a5e5879af",
+    "Scripts/MiniApps/refresh-original-sources.mjs": "923113ae997fcea98f24d09d573dc0d84b951564833c168bd2b1dc3884b62e7c",
+    "Scripts/MiniApps/resolve-upstreams.mjs": "873bc51d0bd6e859e5929a4f0cefb934cf340e82ad7cee61aafe6f2b0546a337",
+    "Scripts/MiniApps/upstream-fetch.mjs": "762ec94347f12c2ae7cc8bf3b6f4296d5d730c6980b8689f67abf8427df59743",
+    "Scripts/MiniApps/upstream-resolution.json": "8fa9c33d9df17cd019d1b5893ed65d090c7e91b07613e60f6b500e07405c9513",
+    "Scripts/NativeScript/dependency-lock.json": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5",
+    "Scripts/NativeScript/package.json": "db255f51de179afb603cffa5d42830a27fcf0e2650d3401364f7338f94a328b5",
+    "Tools/SwiftUIBridge/configuration.json": "678d09bd72df34c3a09711aff689ad92daf6a58b5eb0f397026117da332ef2c6"
+  },
+  "artifacts": {
+    "green.json": {
+      "bytes": 1493,
+      "sha256": "a4e66bbd0f336e75607f4f841f94d1d5bea2ab69b5db7ab69adcff8562d6ae70"
+    },
+    "green.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "green.stdout.log": {
+      "bytes": 721,
+      "sha256": "29b115fb9778b81ee58ecd5d9c563c01e57db8dadcd2b552012ac89b6597a421"
+    },
+    "red.json": {
+      "bytes": 865,
+      "sha256": "58c0749dca25176b045e883686b175450ca229b096cce836e921c01ebbb4d8ae"
+    },
+    "red.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "red.stdout.log": {
+      "bytes": 1041,
+      "sha256": "8e718d17d1506cf93faacaed2fabe201091a3a4df4e104a5450004f0de9444f1"
+    },
+    "resolver-apply.json": {
+      "bytes": 777,
+      "sha256": "b14050ae9577b98f1773f9f69b55553ca2dfa19f42e3c6d1e0f6e4c597127e7c"
+    },
+    "resolver-apply.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "resolver-apply.stdout.log": {
+      "bytes": 83,
+      "sha256": "98c2e59d8aa51e300d41f0827f4a0377fd45d39864b56136a039ab0093d66e2c"
+    }
+  },
+  "notRun": [
+    "full native preflight including artifacts",
+    "native build",
+    "native application acceptance",
+    "device acceptance",
+    "network upstream resolution",
+    "CI"
+  ],
+  "integrationRequirement": "Regenerate current source-inventory/reachability snapshots after integration with the other pending source changes. No generated inventory was hand-edited.",
+  "frozenSDKOnlyProof": "Unchanged; its supplied exported SDK and receipts retain their original hashes.",
+  "rawLogPolicy": "Retained exact stdout/stderr bytes, including the Node assertion formatter trailing spaces at red.stdout.log lines 16 and 18. Source diff whitespace check passes; raw logs intentionally remain verbatim."
+}

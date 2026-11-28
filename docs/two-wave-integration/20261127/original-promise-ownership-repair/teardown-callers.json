@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "source": "778ed7e597a2fe19708e1dde5598350b56b25d6d",
+  "status": "READ_ONLY_SOURCE_INVENTORY_NO_NATIVE_EXECUTION",
+  "callers": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntime.swift",
+      "sha256": "15a60ffc1a6171dde86fa442a7a51764fd073eee4f615e329b6593dc5cf9b34a",
+      "snippets": [
+        {
+          "reason": "explicit cancellation",
+          "startLine": 503,
+          "endLine": 505,
+          "source": "    func cancel(_ reason: ScriptWidgetExecutionCancellation = .explicit) {\n        runningState?.executionSession.cancel(reason)\n    }"
+        },
+        {
+          "reason": "widget defer finish and timeout",
+          "startLine": 816,
+          "endLine": 846,
+          "source": "    func executeJSXSyncForWidget(_ JSX: String) -> (ScriptWidgetRuntimeElement? , ScriptWidgetError?) {\n        let trace = ScriptWidgetRuntimeTrace(operation: \"widget\")\n        performanceTrace = trace\n        defer {\n            runningState?.executionSession.finish()\n            trace.finish()\n            performanceTrace = nil\n        }\n        // A synchronous host can occupy the main thread while JSC runs on the\n        // publisher lane. Capture its installed identity and Music snapshot\n        // before waiting; never enqueue a Music read behind that same wait.\n        if Thread.isMainThread, let state = runningState,\n           state.package.readManifest()?.permissions.contains(.music) == true {\n            do {\n                try state.captureManagedEntry(JSX)\n                if let captured = state.executionSnapshot { package = captured.package }\n            } catch {\n                return (nil, .scriptError(\"[package:identity_changed] Reload the managed widget before running again.\"))\n            }\n            if let error = packagePreflightError() { return (nil, error) }\n            ScriptWidgetRuntimeMusic.prepareForSynchronousHost(state)\n        }\n        let result = ScriptWidgetSynchronousResult<ScriptWidgetRuntimeElement>(publisherLane: publisherLane)\n        publisherLane.queue.async {\n            let token = self.internalExecuteJSXForWidget(JSX)\n                .sink(receiveCompletion: { result.finish($0) }, receiveValue: { result.receive($0) })\n            result.install(token)\n        }\n        return result.wait(until: .now() + ScriptWidgetRuntimeContract.executionTimeout) {\n            self.runningState?.executionSession.cancel(.timeout)\n        }"
+        },
+        {
+          "reason": "Dynamic Island defer finish and timeout",
+          "startLine": 1027,
+          "endLine": 1043,
+          "source": "    func executeJSXSyncForDynamicIsland(_ JSX: String) -> (ScriptWidgetDynamicIslandRuntimeElement? , ScriptWidgetError?) {\n        let trace = ScriptWidgetRuntimeTrace(operation: \"dynamic-island\")\n        performanceTrace = trace\n        defer {\n            runningState?.executionSession.finish()\n            trace.finish()\n            performanceTrace = nil\n        }\n        let result = ScriptWidgetSynchronousResult<ScriptWidgetDynamicIslandRuntimeElement>(publisherLane: publisherLane)\n        publisherLane.queue.async {\n            let token = self.internalExecuteJSXForDynamicIsland(JSX)\n                .sink(receiveCompletion: { result.finish($0) }, receiveValue: { result.receive($0) })\n            result.install(token)\n        }\n        return result.wait(until: .now() + ScriptWidgetRuntimeContract.executionTimeout) {\n            self.runningState?.executionSession.cancel(.timeout)\n        }"
+        },
+        {
+          "reason": "function defer finish and timeout",
+          "startLine": 1277,
+          "endLine": 1293,
+          "source": "    func executeJSXSyncForFunction(_ JSX: String, _ functionName: String) -> (String? , ScriptWidgetError?) {\n        let trace = ScriptWidgetRuntimeTrace(operation: \"function\")\n        performanceTrace = trace\n        defer {\n            runningState?.executionSession.finish()\n            trace.finish()\n            performanceTrace = nil\n        }\n        let result = ScriptWidgetSynchronousResult<String>(publisherLane: publisherLane)\n        publisherLane.queue.async {\n            let token = self.internalExecuteJSXForFunction(JSX, functionName)\n                .sink(receiveCompletion: { result.finish($0) }, receiveValue: { result.receive($0) })\n            result.install(token)\n        }\n        return result.wait(until: .now() + ScriptWidgetRuntimeContract.executionTimeout) {\n            self.runningState?.executionSession.cancel(.timeout)\n        }"
+        }
+      ],
+      "unchangedByCandidate": true,
+      "note": "Whole source file unchanged."
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetSession.swift",
+      "sha256": "aaba22894ddd8bf7863a5ddd4e1e61cece90081b579bb8ce7b2a084f751f8f9b",
+      "snippets": [
+        {
+          "reason": "public host finish and cancel",
+          "startLine": 75,
+          "endLine": 82,
+          "source": "        return try transaction.exportValue(forKey: key)\n    }\n    public func setValue(_ value: Any, forKey key: String) throws {\n        try snapshot.validateIdentity()\n        try transaction.setExportedValue(value, forKey: key)\n    }\n    public func finish() { runtime.runningState?.executionSession.finish() }\n    public func cancel() { runtime.cancel(.explicit) }"
+        }
+      ],
+      "unchangedByCandidate": true,
+      "note": "Whole source file unchanged."
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
+      "sha256": "fa62de1025c7ae06406794e9c397e3f64ed0e32a8fb0fc3584e43fa2e28bd066",
+      "snippets": [
+        {
+          "reason": "production host wait then cancel before draining and finish",
+          "startLine": 289,
+          "endLine": 305,
+          "source": "            context.evaluateScript(\"$main().then(__hanlinFinishWidget,function(e){$error(String(e));});\")\n        }\n        let result = completion.wait(until: deadline)\n        native.cancel()\n        // Drain prior native callbacks before releasing the context/package.\n        native.onJavaScriptQueue {\n            native.finish()\n            rendered = nil\n            dynamicRegions.removeAll()\n            context.exceptionHandler = nil\n            for key in [\"$render\", \"$dynamic_island\", \"$component\", \"$error\", \"$storage\", \"$presentation\", \"__hanlinPresentationExpand\", \"__hanlinPresentationFinish\", \"__hanlinKeyboardEdit\", \"__hanlinNotificationAction\", \"__hanlinFinishWidget\", \"__hanlinGetWidgetValue\", \"__hanlinSetWidgetValue\"] {\n                context.setObject(nil, forKeyedSubscript: key as NSString)\n            }\n        }\n        return try result.get()\n    }\n"
+        }
+      ],
+      "unchangedByCandidate": true,
+      "note": "Whole source file unchanged."
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetServicesView.swift",
+      "sha256": "75e3086e3955db3e84986927dc49d8f5655a9366abaef0e11159f43b8023d177",
+      "snippets": [
+        {
+          "reason": "configuration session finished without executing JS",
+          "startLine": 43,
+          "endLine": 51,
+          "source": "            let session = try HanlinOriginalScriptWidgetSession(context: context,\n                root: store.root.appendingPathComponent(\"ScriptWidgetOriginal/v1\", isDirectory: true),\n                identity: try HanlinScriptWidgetRuntime.nativeIdentity(widget.identity, artifactSHA256: digest),\n                preparedJavaScript: program.javaScript, files: program.resources,\n                values: (state?.values ?? [:]).mapValues { $0.toAny() }, environment: [:],\n                isUserInitiatedAction: false)\n            configuration = session.configurationView\n            session.finish()\n        } catch { failure = error.localizedDescription }"
+        }
+      ],
+      "unchangedByCandidate": true,
+      "note": "Whole source file unchanged."
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift",
+      "sha256": "f7b50ceacdf034833c92554a769fe692abebe296b87e55091e7a2fb09146d9da",
+      "snippets": [
+        {
+          "reason": "finish routes to sticky cancellation",
+          "startLine": 112,
+          "endLine": 120,
+          "source": "\n    func finish() {\n        cancel(.completed)\n    }\n}\n\n/// Handles a query completing while its cancellation registration is installed.\nfinal class ScriptWidgetQueryCancellation {\n    private let session: ScriptWidgetExecutionSession"
+        },
+        {
+          "reason": "snapshot invalidation cancels as superseded",
+          "startLine": 332,
+          "endLine": 341,
+          "source": "            else if previewStorage == nil {\n                #if DEBUG\n                let root = storageContainerForTesting ?? HanlinOriginalScriptWidgetEnvironment.containerURL\n                #else\n                let root = HanlinOriginalScriptWidgetEnvironment.containerURL\n                #endif\n                try ScriptWidgetStorageProfiles.validateLegacyExecution(container: root)\n            }\n        } catch { executionSession.cancel(.superseded); throw error }\n    }"
+        }
+      ],
+      "unchangedByCandidate": false,
+      "note": "Only new delivery registry/cancellation additions; finish and snapshot invalidation bodies unchanged."
+    }
+  ],
+  "queueLifetime": "finish queues original delivery without unregistering; takeCallbacks/cancel removes the weak entry only after pair extraction and delivery unlock.",
+  "existingControlCoverage": [
+    "pending actual JS continuation survives observed GC and is delivered",
+    "exactly one original:delivered result",
+    "duplicate resolve and late reject do not change result",
+    "cancellation rejects late delivery",
+    "weak context is nil after explicit cleanup"
+  ],
+  "notClaimed": "No immediate GC collection guarantee and no new-source native result."
+}

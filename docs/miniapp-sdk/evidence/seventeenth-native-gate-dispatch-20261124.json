@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "sequence": 17,
+  "atUTC": "2026-11-24T16:47:05.959975+00:00",
+  "sourceCommit": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+  "branch": "codex/hanlin-miniapps-sdk-completion-20261123",
+  "scope": "miniapp_complete",
+  "selectedCases": 52,
+  "MiniApps": 25,
+  "AI": 27,
+  "workflowSHA256": "677ba19c3a2e281e850b182b3bef8bcde709ee167f58d601c1c3aa6ade665982",
+  "command": [
+    "gh",
+    "workflow",
+    "run",
+    "419196373",
+    "--repo",
+    "davidpovarsky/hanlin-ai",
+    "--ref",
+    "codex/hanlin-miniapps-sdk-completion-20261123",
+    "-f",
+    "paired_product_acceptance=true",
+    "-f",
+    "paired_test_scope=miniapp_complete",
+    "-f",
+    "runtime_bundle_artifact_run_id=42926628418"
+  ],
+  "status": "RUN_IDENTIFIED",
+  "caseStatus": "NOT_RUN",
+  "dispatchOutput": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45441138261\n",
+  "run": {
+    "conclusion": "",
+    "createdAt": "2026-11-24T16:47:07Z",
+    "databaseId": 45441138261,
+    "headSha": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+    "status": "queued",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45441138261"
+  },
+  "runID": 45441138261
+}

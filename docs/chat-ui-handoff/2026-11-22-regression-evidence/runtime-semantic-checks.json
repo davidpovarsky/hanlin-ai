@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "scope": "Actual Foundation operation owner and semantic state checks; OS title publication and app/provider flow are source reviewed, not runtime executed by this check.",
+  "started_at": "2026-11-22T13:14:40.099488+00:00",
+  "finished_at": "2026-11-22T13:15:09.956916+00:00",
+  "source_sha256": {
+    "AI_HLY/Downstream/RuntimeCore/Core/RuntimeUserOperation.swift": "be826abc53bcec771236d731756ced6990fc80dd5a9d3ab04ffe85a2c7f5cb08",
+    "Scripts/CI/RuntimeContinuationChecks.swift": "cee2c69c1e587456a9874845a6afd5cbf706027ad6748370d3a82088e285a279",
+    "AI_HLY/Downstream/RuntimeCore/Core/RuntimeBackgroundContinuation.swift": "cd8f6436b9beee8a0dac4735c4e5f6bcf3099b2e5c7c21fc4c1d243d1d7f1132",
+    "AI_HLY/Services/ChatServices/APIManager.swift": "aea0d4e42dbbebe693799d851d18ca0e16dc1088de94f917868de7dd7ff90456"
+  },
+  "compiler": "Swift version 6.3.3 (swift-6.3.3-RELEASE)\nTarget: x86_64-unknown-windows-msvc\nBuild config: +assertions",
+  "steps": [
+    {
+      "command": [
+        "swiftc",
+        "-swift-version",
+        "6",
+        "-strict-concurrency=complete",
+        "-warnings-as-errors",
+        "C:\\Users\\DAVID\\Code\\hanlin-ipad-interactions-20261122\\AI_HLY\\Downstream\\RuntimeCore\\Core\\RuntimeUserOperation.swift",
+        "C:\\Users\\DAVID\\Code\\hanlin-ipad-interactions-20261122\\Scripts\\CI\\RuntimeContinuationChecks.swift",
+        "-o",
+        "C:\\Users\\DAVID\\Code\\hanlin-testflight-followup-20261122\\runtime-semantic-final-regression.exe"
+      ],
+      "exit_code": 0,
+      "output": "   Creating library C:\\Users\\DAVID\\Code\\hanlin-testflight-followup-20261122\\runtime-semantic-final-regression.lib and object C:\\Users\\DAVID\\Code\\hanlin-testflight-followup-20261122\\runtime-semantic-final-regression.exp\n\n"
+    },
+    {
+      "command": [
+        "C:\\Users\\DAVID\\Code\\hanlin-testflight-followup-20261122\\runtime-semantic-final-regression.exe"
+      ],
+      "exit_code": 0,
+      "output": "PASS: 132 production continuation ownership/progress/semantic UI checks\n"
+    },
+    {
+      "command": [
+        "swiftc",
+        "-frontend",
+        "-parse",
+        "C:\\Users\\DAVID\\Code\\hanlin-ipad-interactions-20261122\\AI_HLY\\Downstream\\RuntimeCore\\Core\\RuntimeBackgroundContinuation.swift",
+        "C:\\Users\\DAVID\\Code\\hanlin-ipad-interactions-20261122\\AI_HLY\\Services\\ChatServices\\APIManager.swift"
+      ],
+      "exit_code": 0,
+      "output": ""
+    }
+  ]
+}

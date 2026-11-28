@@ -1,0 +1,13 @@
+{
+  "reviewed_at_utc": "2026-11-27T02:30:48.701416+00:00",
+  "reviewer": "root",
+  "original_source": "f103996cc03d2cc5321c7e83b6cdf77c3b60e509",
+  "verified_payload_files": 8,
+  "all_payload_sizes_and_sha256_match": true,
+  "unlisted_payloads": 0,
+  "manifest_sha256": "d62039100ffa20f685a511dee57e9b8c7bf1ca1f600c921a961db2b57d4f77aa",
+  "retained_archive_sha256": "7587172364d1199b96ba4e5f3591099681ffa98310147daf11caac2117d89a96",
+  "meaning": "READ_ONLY_COMPLETE_TWO_ORIGINAL_APP_GROUP_PROFILES_STILL_BLOCKED",
+  "native_acceptance_claimed": false,
+  "correction": "Read-only ASC query completed after removing unsupported limit parameter. Existing canonical source already queries this endpoint correctly. Two App Group entitlement gaps remain; no credential/profile change, archive or upload."
+}

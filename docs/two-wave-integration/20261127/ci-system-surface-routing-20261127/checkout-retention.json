@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-27T04:00:29.279283+00:00",
+  "path": "/mnt/development/projects/worktrees/hanlin-ci-router-20261127",
+  "sourceCommit": "716ab4d0e99c68f4d8988db8eafad9ff21237ebd",
+  "scope": "Completed clean full CI checkout reduced to sparse; immutable Git source objects and all external original evidence retained. No ignored caches or foreign files deleted.",
+  "retainedPatterns": "/Scripts/CI/\n/Scripts/ProductSplit/",
+  "freeBeforeBytes": 3182141440,
+  "freeAfterBytes": 3814109184,
+  "observedFreeDeltaBytes": 631967744,
+  "statusAfter": ""
+}

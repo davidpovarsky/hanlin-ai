@@ -1,0 +1,21 @@
+{
+  "artifactDownloads": 0,
+  "files": {
+    "README.md": "644f78b1f8e7425392ca951b769c300c93795c5761cb44d5220adf869950012d",
+    "host-source-records.json": "4b4754a85c9e88d55a61db378f423f0f2b24446dc62eeb390ed5591ea31a5ea0",
+    "latest-qualification.json": "cbf921b405cedeb8117e605d7538d52afe49529bee2c46ec761e394edf78b20f",
+    "metadata-helper-boundary.json": "44a5a3a3d333af285925dbf8eff9c58acd4c04e02ad41e7c197c498eaa9ad69c",
+    "publication-recipe.md": "95b865ac6f08932974147381cfd129e37ad81c3b9238b13bd45215703d25342f",
+    "qualification.json": "cd75377b94e072e2de50d614276bab70f136389081a887d75989cf80f1ed4c6b"
+  },
+  "newInstallerRuns": 0,
+  "newNativeTests": 0,
+  "priorEvidenceCommit": "ea3e486aeade9b4a23c3c4e08ddf4ba42a23bc4a",
+  "publishedAssets": 0,
+  "schemaVersion": 1,
+  "sourceRecordReconstruction": "Exact previously inspected candidate records reconstructed from original installed records plus the already-recorded catalog delta, with all three digests matched to the completed new comparison; no new native/test acceptance.",
+  "status": "SOURCE_READINESS_ONLY",
+  "updatedHostPins": 0,
+  "latestQualification": "latest-qualification.json",
+  "recordedAt": "2026-11-23T20:06:32.005381+00:00"
+}

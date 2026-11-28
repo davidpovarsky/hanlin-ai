@@ -1,0 +1,206 @@
+import Foundation
+import HanlinPlatformContracts
+
+public enum LoadSkillTool {
+    public static let toolName = "load_skill"
+
+    public static var schema: [String: Any] {
+        [
+            "type": "function",
+            "function": [
+                "name": toolName,
+                "description": "Load specialized instructions and enable tool access for a specific skill. Skills provide focused workflows and expose relevant tools on demand.",
+                "parameters": [
+                    "type": "object",
+                    "properties": [
+                        "skill_id": [
+                            "type": "string",
+                            "description": "The unique identifier of the skill to load (e.g. from the skill index)."
+                        ]
+                    ],
+                    "required": ["skill_id"]
+                ]
+            ]
+        ]
+    }
+
+    public struct Arguments: Decodable, Sendable {
+        public let skill_id: String
+    }
+
+    @MainActor
+    public static func execute(
+        argumentsJSON: String,
+        session: AssistantCapabilitySession,
+        catalog: HanlinSkillCatalog = .shared,
+        planner: AssistantToolExposurePlanner = AssistantToolExposurePlanner(),
+        schemaSizes: [String: Int] = [:],
+        availableAliases: Set<String>? = nil,
+        store: SkillStore = .shared
+    ) async -> String {
+        guard let data = argumentsJSON.data(using: .utf8),
+              let args = try? JSONDecoder().decode(Arguments.self, from: data) else {
+            return "Error: Invalid arguments for load_skill. Expected JSON with 'skill_id'."
+        }
+
+        guard let descriptor = catalog.resolve(rawID: args.skill_id) else {
+            if let available = availableAliases, available.contains(args.skill_id) {
+                session.exposeTools(aliases: [args.skill_id])
+                return "Error: '\(args.skill_id)' is a callable tool name, not a skill_id. It is now exposed and ready to call directly as `\(args.skill_id)`."
+            }
+            let visible = await catalog.modelVisibleSkills(store: store)
+            if let matchingSkill = visible.first(where: { $0.preferredToolIDs.contains(args.skill_id) }) {
+                return "Error: '\(args.skill_id)' is a tool name belonging to skill '\(matchingSkill.id.rawValue)'. Call `load_skill(skill_id: \"\(matchingSkill.id.rawValue)\")` or call `\(args.skill_id)` directly."
+            }
+            let available = visible.map { $0.id.rawValue }.joined(separator: ", ")
+            return "Error: Skill '\(args.skill_id)' not found. Available skills: [\(available)]."
+        }
+
+        do {
+            guard try await catalog.permitsInvocation(descriptor.id, source: .model, store: store) else {
+                return "Error: This Skill is disabled for model invocation or its declared requirements are not available. Review it in Skill Center."
+            }
+            try Task.checkCancellation()
+        } catch {
+            return "Error: Could not evaluate this Skill's current invocation policy. Recheck it in Skill Center."
+        }
+
+        let candidateAliases: [String]
+        let unavailableAliases: [String]
+        if let available = availableAliases {
+            candidateAliases = descriptor.preferredToolIDs.filter { available.contains($0) }
+            unavailableAliases = descriptor.preferredToolIDs.filter { !available.contains($0) }
+        } else {
+            candidateAliases = descriptor.preferredToolIDs
+            unavailableAliases = []
+        }
+
+        if session.isSkillLoaded(descriptor.id) {
+            let decision = planner.plan(
+                candidateAliases: candidateAliases,
+                schemaSizes: schemaSizes,
+                currentlyExposedAliases: session.exposedToolAliases
+            )
+
+            if !decision.exposedAliases.isEmpty {
+                session.exposeTools(aliases: decision.exposedAliases)
+            }
+
+            var response = "Skill '\(descriptor.title.preferredValue())' [\(descriptor.id.rawValue)] is already loaded."
+            if !decision.exposedAliases.isEmpty {
+                response += "\n\nNewly exposed tools:\n" + decision.exposedAliases.map { "- `\($0)`" }.joined(separator: "\n")
+            }
+            if !unavailableAliases.isEmpty {
+                response += "\n\nUnavailable or disabled tools:\n" + unavailableAliases.map { "- `\($0)` (disabled)" }.joined(separator: "\n")
+            }
+            let allExposed = session.exposedToolAliases.sorted()
+            if !allExposed.isEmpty {
+                response += "\n\nCurrently exposed tools:\n" + allExposed.map { "- `\($0)`" }.joined(separator: "\n")
+            }
+            return response
+        }
+
+        let instructions = await catalog.loadInstructions(for: descriptor)
+        session.recordSkillLoaded(
+            id: descriptor.id,
+            instructionText: instructions,
+            preferredToolIDs: candidateAliases
+        )
+
+        let decision = planner.plan(
+            candidateAliases: candidateAliases,
+            schemaSizes: schemaSizes,
+            currentlyExposedAliases: session.exposedToolAliases
+        )
+
+        if !decision.exposedAliases.isEmpty {
+            session.exposeTools(aliases: decision.exposedAliases)
+        }
+
+        var response = "Skill '\(descriptor.title.preferredValue())' [\(descriptor.id.rawValue)] loaded successfully.\n\n"
+        if !instructions.isEmpty {
+            response += "### Instructions\n\(instructions)\n\n"
+        }
+
+        if !decision.exposedAliases.isEmpty {
+            response += "The following tools are now exposed and ready to call:\n"
+            for alias in decision.exposedAliases {
+                response += "- `\(alias)`\n"
+            }
+        }
+        if !unavailableAliases.isEmpty {
+            response += "\nPreferred tools currently disabled or unavailable:\n"
+            for alias in unavailableAliases {
+                response += "- `\(alias)` (disabled)\n"
+            }
+        }
+        if !decision.deferredAliases.isEmpty {
+            response += "\nAdditional tools for this skill exceed the immediate schema budget and can be discovered with `tool_search` when needed:\n"
+            for alias in decision.deferredAliases {
+                response += "- `\(alias)`\n"
+            }
+        }
+
+        return response.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    @MainActor
+    public static func userFacingSummary(
+        argumentsJSON: String,
+        result: String,
+        catalog: HanlinSkillCatalog = .shared,
+        language: String = "zh"
+    ) -> String {
+        let isZh = language.hasPrefix("zh")
+        let isHe = language.hasPrefix("he")
+        if result.hasPrefix("Error:") {
+            if isZh {
+                return result
+            } else if isHe {
+                return result.replacingOccurrences(of: "Error: Skill", with: "שגיאה: מיומנות")
+                    .replacingOccurrences(of: "not found", with: "לא נמצאה")
+                    .replacingOccurrences(of: "Available skills", with: "מיומנויות זמינות")
+            } else {
+                return result
+            }
+        }
+        if let data = argumentsJSON.data(using: .utf8),
+           let args = try? JSONDecoder().decode(Arguments.self, from: data) {
+            if let descriptor = catalog.resolve(rawID: args.skill_id) {
+                let title = descriptor.title.preferredValue()
+                let exposedCount = descriptor.preferredToolIDs.count
+                if isZh {
+                    return exposedCount > 0
+                        ? "已加载技能「\(title)」(\(descriptor.id.rawValue))，关联 \(exposedCount) 个工具"
+                        : "已加载技能「\(title)」(\(descriptor.id.rawValue))"
+                } else if isHe {
+                    return exposedCount > 0
+                        ? "נטענה מיומנות '\(title)' (\(descriptor.id.rawValue)) עם \(exposedCount) כלים"
+                        : "נטענה מיומנות '\(title)' (\(descriptor.id.rawValue))"
+                } else {
+                    return exposedCount > 0
+                        ? "Loaded skill '\(title)' (\(descriptor.id.rawValue)) with \(exposedCount) preferred tool(s)"
+                        : "Loaded skill '\(title)' (\(descriptor.id.rawValue))"
+                }
+            }
+            if isZh {
+                return "已加载技能 \(args.skill_id)"
+            } else if isHe {
+                return "נטענה מיומנות \(args.skill_id)"
+            } else {
+                return "Loaded skill '\(args.skill_id)'"
+            }
+        }
+        let firstLine = result.components(separatedBy: .newlines).first?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if !firstLine.isEmpty && !firstLine.contains("### Instructions") {
+            return firstLine
+        }
+        if isZh {
+            return "已加载技能"
+        } else if isHe {
+            return "מיומנות נטענה"
+        } else {
+            return "Skill loaded"
+        }
+    }
+}

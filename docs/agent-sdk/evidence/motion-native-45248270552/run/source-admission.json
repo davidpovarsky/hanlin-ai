@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "source": "9575dd15e816009e11d84ab7f4e21b45cb67c5e8",
+  "reviewed_startup_fix": "646724c2e8e7be8f78289be469def17a1330355e",
+  "original_row_source": "0b74c6c1df60926c09a00560598af478bafb3e75",
+  "scope": "Original affected B+C; changed bounded startup admission experiment",
+  "inputs": [
+    {
+      "path": "docs/chat-motion/MotionUI/App.swift",
+      "sha256": "7323a83f5ed539b25d12f944a7bd256faba63c2d5806168d0def42e829454b25",
+      "identical_to_reviewed": true
+    },
+    {
+      "path": "docs/chat-motion/MotionUI/MotionUITests.swift",
+      "sha256": "ed053de2cf5013ef001fc198f4d730f7d8d7bf9d55991e784dbc454b90c46724",
+      "identical_to_reviewed": true
+    },
+    {
+      "path": "docs/chat-motion/run_motion_ui.sh",
+      "sha256": "0c1b71a5db380c1e14e3210be62a004ff4a993ea913702a03407b6b482b643c7",
+      "identical_to_reviewed": true
+    },
+    {
+      "path": "Scripts/CI/boot_motion_simulator.py",
+      "sha256": "35ab94e861e7e067859616e6046bdea6d2794299b6786a0274972c7fbac6175b",
+      "identical_to_reviewed": true
+    },
+    {
+      "path": "Scripts/CI/owned_simulator_receipts.py",
+      "sha256": "878dba3d6890b6c701cebe8183efdeb4265f86e19818054d6e305eb8a84ebf6a",
+      "identical_to_reviewed": true
+    },
+    {
+      "path": "Scripts/CI/select_installed_simulator.py",
+      "sha256": "869a0d4922337cdd4fed651b904868cb78c60388f86e07171f247feb56885da8",
+      "identical_to_reviewed": true
+    },
+    {
+      "path": "Scripts/CI/select_stable_xcode.py",
+      "sha256": "531237772eeeb10888359064302a5980f42ad47cad135e5bb0b544afe289f05f",
+      "identical_to_reviewed": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift",
+      "sha256": "d8ff25aa0ba06895108f09edf00709db04efe4f7467d1b8302adf1bae1785577",
+      "identical_to_reviewed": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionPreferences.swift",
+      "sha256": "709f948ac85ac042d15fb8c258383f1bbb06f5336c0904dc170e04b46f143791",
+      "identical_to_reviewed": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatShimmerEffect.swift",
+      "sha256": "40af700d48af8c3229db379cbc9add813484f7d465889523c0acc0a70b552f6a",
+      "identical_to_reviewed": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+      "sha256": "91d60f960fd1ca1dea34b1ce34a6a5e99b4e60c2a030be78ac9f996a2533d084",
+      "identical_to_reviewed": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinOriginalActivityControls.swift",
+      "sha256": "1a88b02132e48ba6fece0e9227943951e1c0b6a379abda5591e4537241833e71",
+      "identical_to_reviewed": true
+    }
+  ],
+  "selected_workflow_job_sha256": "e03649f4becd73e4d7693856b0f37581e2f6be9e12126b49d2d60d39ed15d1ed",
+  "selected_workflow_job_identical_to_reviewed": true,
+  "selected_source_resource_count": 364,
+  "selected_source_resource_changes_since_executed_c1": [],
+  "native_status": "NOT_RUN",
+  "prior_original_B": "FAIL at intermediate geometry",
+  "prior_row_B_C": "NOT_RUN on two180s preflight attempts",
+  "constraints": "Original Motion test bodies, timings, assertions and owner guards preserved; bootstatus startup300s, native boot15s, owned shutdown20s, at most one recovery; no A/inspection/paired dispatch."
+}

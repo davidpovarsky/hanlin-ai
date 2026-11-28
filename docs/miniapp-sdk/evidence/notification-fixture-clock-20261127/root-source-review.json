@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "reviewer": "/root",
+  "at": "2026-11-27T22:13:06.211716+00:00",
+  "status": "APPROVED_TEST_FIXTURE_CLOCK_ONLY",
+  "base": "5870896b0aa2bea7a58aeab9bb2d9416700e152a",
+  "path": "Scripts/CI/Tests/test_notification_os_scope.py",
+  "beforeSHA256": "d4837d2817ccbc67b1d4311c82993f3fdf4317709e52c7f3e6aafd5e8d86968d",
+  "afterSHA256": "2aa9904662dc96b13026ab605863130e562e4316f9da19474d317d7437654d2d",
+  "patchSHA256": "b0c27cf1ebecd9edd83e1540899a4882760923604e253a78ad344e32c94c6c34",
+  "all14OriginalMethodBodiesExact": true,
+  "productionRunnerSHA256": "ad292cae96fe84b8c7672c21b83d790b97b12d3f73ec344466993e595db8f7b3",
+  "findings": [
+    "Only the runner module time reference is replaced per test; addCleanup restores it and global time attributes are not mutated.",
+    "Original monotonic deadline source and sleep remain the real functions. No production guard, native selector, deadline, worker protocol or product implementation changes.",
+    "Each ordinary JSON fixture write advances its own representable integer wall clock and explicitly stamps the written file from that clock, keeping the success setup independent of host timestamp ordering.",
+    "The existing stale/nonfinite/future-start/identity negative test bodies remain byte-identical. Rewritten malformed identities are fresh and therefore cannot pass only through a stale-file error.",
+    "Actual originally failed method passed once in affected-r2; raw R1 sparse-import preparation failure ran zero cases. Root did not rerun checks."
+  ],
+  "historicalLimit": "The original624 CI run recorded no startedAfter/mtime/now values. Current16 ordinary-write samples passed. No specific filesystem granularity or clock-step cause is claimed.",
+  "focusedReceiptSHA256": "fd53a8be6c70e98d041fc9a8d319c38ca967d04a99a264303388234fa43f01d4",
+  "testsRerunByReviewer": 0,
+  "nativeExecutedByReviewer": false
+}

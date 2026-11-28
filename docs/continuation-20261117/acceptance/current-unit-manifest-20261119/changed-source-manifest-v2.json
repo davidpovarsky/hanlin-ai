@@ -1,0 +1,20 @@
+[
+  {
+    "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+    "base_sha256": "faa6a40f72b333299ffd817ece80647ac840286d7b9284ec8e42c59f809fb467",
+    "proposed_sha256": "9211672a94444de2abc86699a285784c8d6c71bf91e3082a44d4a33cb6c94dd0",
+    "proposed_bytes": 202037
+  },
+  {
+    "path": "Scripts/CI/current_unit_xctestrun.py",
+    "base_sha256": null,
+    "proposed_sha256": "157e6e474d8a9fe84b534fcee0d482233034dd8fa79f8abcfb5389c23b5e0375",
+    "proposed_bytes": 16251
+  },
+  {
+    "path": "Scripts/CI/Tests/test_current_unit_xctestrun.py",
+    "base_sha256": null,
+    "proposed_sha256": "1a7b0cb63612dd03960fa176d16dcba9ba5bf8e8279294470a93cd8883d0c8d1",
+    "proposed_bytes": 20560
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "time": "2026-11-23T18:25:25.858326+00:00",
+  "run": 45236783905,
+  "owner": "/root/motion_acceptance",
+  "mode": "pidfd wait for the existing sole gh watcher; no second GitHub polling loop",
+  "watcher_pid": null
+}

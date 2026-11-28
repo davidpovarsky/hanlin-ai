@@ -1,0 +1,77 @@
+{
+  "at": "2026-11-28T11:27:27.164457+00:00",
+  "base": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "rootBeforeIntegration": "9d4c4b0bb7f6a9b69e2d21023beb5151d5bb802e",
+  "status": "ROOT_COMPONENT_SOURCE_REVIEW_PASS_EXECUTION_PENDING",
+  "MacPublicAPIReviewSHA256": "9248e62fc093493438b1b246aa32494166199018959e8c592149a5303dfaa944",
+  "candidateManifestSHA256": "5f3d7a829d5767dbd7b40bf8aa7e052b9a3ecbdeb7ca9c7a08f74133c23b7e6c",
+  "payloadsVerified": 25,
+  "bytesVerified": 947087,
+  "gitObjectsVerified": 94,
+  "originalAuthoritiesVerified": 17,
+  "originalFixtureOutputsVerified": 25,
+  "newSourcePaths": [
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+    "Scripts/ProductSplit/observe_widget_components.py",
+    "Scripts/ProductSplit/run_paired_acceptance.py",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+    "Scripts/CI/Tests/test_widget_components_observer.py",
+    "Fixtures/WidgetComponents/script.json",
+    "Fixtures/WidgetComponents/widget.jsx",
+    "Scripts/CI/affected-validation-map.json",
+    "Scripts/CI/Tests/test_affected_validation.py"
+  ],
+  "wholeUIInverseExact": true,
+  "original46MethodsAndAllHelpersExact": true,
+  "newUITestMethods": 1,
+  "newCaseAllowanceAndDeadlineSeconds": 420,
+  "observerSeconds": 2100,
+  "jobMinutes": 210,
+  "ASTProjections": [
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "wholeOriginalASTRecovered": true,
+      "sha256": "829e188e9c52bb4888fd7cf7ae29291300f240fe27c3db45a71cc0cc575a5778"
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "wholeOriginalASTRecovered": true,
+      "sha256": "90169568d6965df140d2578910e796cdecfe0d76a5b7e277519e39778cd1eb77"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_affected_validation.py",
+      "wholeOriginalASTRecovered": true,
+      "sha256": "28a410f3c5e541bb538ef26882610075281115a247fa76f65905a05da59741b3"
+    }
+  ],
+  "plannerWholeInverseExact": true,
+  "workflowOnlyTwoLiteralInsertionsWholeInverseExact": true,
+  "originalWidgetProducerConditionUnchanged": true,
+  "sourceAndWorkflowPatchesApplyToActualCleanPrivateRootIndex": true,
+  "all495InputChangedPathIntersectionEmpty": true,
+  "controlsToRunOnceInOriginalDiscovery": {
+    "newObserverMethods": 8,
+    "newPlannerMethod": 1
+  },
+  "manualReview": {
+    "nativeAuthority": "Actual SpringBoard element attributes, frames, unique window/instance configuration and retained AX/PNG required; prepared nodes alone cannot qualify.",
+    "actionAuthority": "One real Add must produce exactly count0/revision0/no nonce to count1/revision1/one fresh UUID nonce; other variants and metadata exact.",
+    "freshness": "Actual gallery admission/placement, current source/product/runner identity, timestamps, configuration and post-action render bound.",
+    "cleanup": "Exact newly owned named widget removal and real orientation restoration required; missing/ambiguous state fails.",
+    "originalFactsReuse": "Original widget_facts uses passed fixture metadata/actions/source; new fixture keeps eight published metadata families but accepts only actual Large placement. No Matrix action contract relaxed.",
+    "syntheticControls": "Eight finite source-level acceptance/rejection controls explicitly synthetic, no native type/pixel/OS credit.",
+    "sourceInputLimits": "Direct input intersection is source evidence only; actual hosted SDK and compiled app still required."
+  },
+  "testsRun": 0,
+  "recipeRun": 0,
+  "SwiftTypechecks": 0,
+  "nativeRuns": 0,
+  "POSTs": 0,
+  "limits": [
+    "Mac independent actual public component API/Swift review9248e62f passed; full frozen-file typecheck remains required.",
+    "No actual new component accessibility tree, exact native grouping or type/value behavior observed.",
+    "Retained PNG must be inspected for visual semantics; this source review does not prove chart bars/progress fill/symbol pixels.",
+    "No other family, appearance, RTL, VoiceOver speech, preview, asset image, Link navigation, ActivityKit or physical device acceptance.",
+    "W2 proposed focused control command is unexecuted; run9 new controls in next required full original discovery without redundant focused run."
+  ]
+}

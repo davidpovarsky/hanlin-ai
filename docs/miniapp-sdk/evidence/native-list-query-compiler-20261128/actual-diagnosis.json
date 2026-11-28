@@ -1,0 +1,133 @@
+{
+  "recordedAt": "2026-11-28T09:47:35.363838+00:00",
+  "runID": 46128058948,
+  "jobID": 140926955985,
+  "actualSource": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+  "currentSource": "04e33c45acedd3f372f836b06f17b805bc91293d",
+  "sourceAttribution": {
+    "oldCurrentTwoBadExpressionsEqual": true,
+    "trackedPreparationPatch": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-notification-recovery-5facdb20-terminal-r1/selected-r1/recovery/artifact-selected-members/prepared-native/upstream-inputs.patch",
+      "bytes": 248091,
+      "sha256": "6deb83d10e54540552c500da85b2d937c5dc20c3fe75ca357d5e1a391065f1d3"
+    },
+    "trackedOverlayPaths": [
+      "Fixtures/ExpoNativeAPIProbe/package.json",
+      "Fixtures/ExpoSwiftUIProbe/package.json",
+      "Fixtures/ExpoWidgetsProbe/package.json",
+      "Generated/SwiftUIBridge/HanlinGeneratedViews.swift",
+      "Generated/SwiftUIBridge/bridge-manifest.ts",
+      "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
+      "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift",
+      "Packages/HanlinExpoUI/package.json",
+      "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+      "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ViewModifierRegistry.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+      "Scripts/Expo/dependency-lock.json",
+      "Scripts/Expo/package-lock.json",
+      "Scripts/Expo/package.json",
+      "Scripts/ExpoNativeAPI/dependency-lock.json",
+      "Scripts/MiniApps/scriptwidget/upstream/provenance.json",
+      "Scripts/MiniApps/upstream-resolution.json",
+      "Scripts/NativeScript/package-lock.json",
+      "Tools/SwiftUIBridge/configuration.json",
+      "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json"
+    ],
+    "noSharedUIPathInTrackedOverlay": true,
+    "limit": "No independent retained compiled UI-file hash. Actual compiler names and prints both original5fac expressions; current04 has the same two expressions."
+  },
+  "classification": "AI_HLYUITESTS_COMPILE_API_ERROR_UI_NOT_RUN",
+  "actualBuilds": [
+    {
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=94687EBE-F90F-455D-80BF-73DCABF32967",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-scheme",
+        "HanlinMiniApps",
+        "build",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult"
+      ],
+      "exit": 0,
+      "seconds": 660.4607015000001,
+      "log": "mini-build.log",
+      "sha256": "0b4cf1cdd8023a44b7ae8f486495b48f8d3ed2950a5f1e4064b7be038097aba2"
+    },
+    {
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=94687EBE-F90F-455D-80BF-73DCABF32967",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-scheme",
+        "AI_HLY",
+        "build-for-testing",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/AIBuild.xcresult"
+      ],
+      "exit": 65,
+      "seconds": 373.606628041,
+      "log": "ai-build.log",
+      "sha256": "53ccf58e0365ef3195e51de40ff1c6f8f09cbd33969eb986e03a3de32c0acfd0"
+    }
+  ],
+  "actualCompilerLog": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-notification-recovery-5facdb20-terminal-r1/selected-r1/recovery/artifact-selected-members/paired-product/ai-build.log.gz",
+    "bytes": 208684,
+    "sha256": "fdbb8eeccd523ad340d6ec91a79b6204fc245021f8ff2b19e77d15e84f715b5a",
+    "rawSHA256": "53ccf58e0365ef3195e51de40ff1c6f8f09cbd33969eb986e03a3de32c0acfd0",
+    "rawBytes": 6552032
+  },
+  "errorLines": [
+    85340,
+    85348
+  ],
+  "actualErrors": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-list-query-compiler-04e33c45-r1/candidate-r1/actual-compiler-errors.txt",
+    "bytes": 1699,
+    "sha256": "8dbfe9ca1af491e9a457315c7a33f05c9da80bf74e9bb35d68d10159d4faf87e"
+  },
+  "actualAcceptance": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-notification-recovery-5facdb20-terminal-r1/selected-r1/recovery/artifact-selected-members/paired-product/acceptance.json",
+    "bytes": 8661,
+    "sha256": "87d8d462d6cb4a8c02525b241460b4e73db26e7ed53fc98e372475969f5cca29"
+  },
+  "originalReadback": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-notification-recovery-5facdb20-terminal-r1/selected-r1/selected-artifact-members-receipt.json",
+    "bytes": 20954,
+    "sha256": "93af37cda7425dd4318f1901b15d170c43d5812c794364c63f03107417ae2dbf"
+  },
+  "sourceImpact": "The shared file is compiled before selection for every six pending paired route. Original90de is an earlier separate source; notification uses a separate standalone UI target and failed its own descriptor admission.",
+  "noInference": [
+    "Not a Recovery case/assertion failure.",
+    "No cache, stale module, product runtime or upstream-version cause is inferred.",
+    "No actual source-only repair compile/PASS is claimed."
+  ],
+  "minimalRepair": "Enumerate the public button query returned by matching(identifier:), retaining the exact labels, visibility filter, unique count assertion and later interaction."
+}

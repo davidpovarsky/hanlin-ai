@@ -1,0 +1,46 @@
+{
+  "dependencies/expo/package-lock.json": {
+    "bytes": 2010,
+    "sha256": "15aa72daec7aabe90cc77cfc56be4ea83ac90d4b7f93fc6fac710a275710b847"
+  },
+  "dependencies/expo/package.json": {
+    "bytes": 238,
+    "sha256": "1a5072b160847bb71c38eb062269783f1f6d4f4d508d351bc5c65e10e7b9aa7e"
+  },
+  "dependencies/native/package-lock.json": {
+    "bytes": 740,
+    "sha256": "7bf9ce42ef613ed327561bdc14e7fe518b7d868af296a07870d33261da693bce"
+  },
+  "dependencies/native/package.json": {
+    "bytes": 139,
+    "sha256": "c178f928d87e1c15e0578085418afb63f0a3f10137704069fc9fe72cd234acea"
+  },
+  "expo-assistant-tests.log": {
+    "bytes": 2083,
+    "sha256": "a2d175869e981896ed2fd03ee8b06816776c212e62a98ae4a67ddfcb0e7adab6"
+  },
+  "host-facade-tests.log": {
+    "bytes": 899,
+    "sha256": "d698d4337dba5a62eb4edc244c641ccfd4b1b3b0b600e42f5631af250b4d70ff"
+  },
+  "nativescript-generated-check.log": {
+    "bytes": 112,
+    "sha256": "480742f18b8ef01a023f07eff2064a34b4a8f65a59deef55e49b505788f8b263"
+  },
+  "npm-expo.log": {
+    "bytes": 24,
+    "sha256": "f9ad4f2993c8acab1f54b352b6bd5a4a9ef08f85c585cc105e1bfd94af66e729"
+  },
+  "npm-native.log": {
+    "bytes": 23,
+    "sha256": "da13ab9d025b19c91553bc7d4c450975d3e4e36dd7c5fef6f223f8008ba39547"
+  },
+  "receipt.json": {
+    "bytes": 32972,
+    "sha256": "333b6d7e2c5e87d6e99597a46537d2ebeaeeb406c5f13fe801ea0ddeb48ef276"
+  },
+  "run-validation.py": {
+    "bytes": 5539,
+    "sha256": "82da657fe242eeafbd0a2935407e0eb4d108a7d4b4bcc0226991465c19858cf4"
+  }
+}

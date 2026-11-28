@@ -1,0 +1,34 @@
+{
+  "file": "report.ts",
+  "sourceSHA256": "4851aa7e260043c231aa2010d35cc7143f3b8b483c45afb9847eb803bc097abf",
+  "completion": "complete",
+  "provenance": {
+    "scanner": "typescript.CompilerAPI/6.0.3",
+    "engineVersion": "22.17.0"
+  },
+  "findings": [
+    {
+      "kind": "moduleReference",
+      "value": "type-only",
+      "confidence": "literalSyntax",
+      "source": {
+        "file": "report.ts",
+        "line": 1,
+        "utf8Column": 1,
+        "byteOffset": 0,
+        "byteLength": 37
+      },
+      "reason": "typeOnlyImportNotRuntimeRequirement"
+    }
+  ],
+  "visitedNodes": 8,
+  "inputBytes": 38,
+  "limitations": [
+    "syntaxOnlyNotReadinessOrPermission",
+    "noPackageResolutionOrFilesystem",
+    "noReferencedFileReadsOrExecution",
+    "aliasesAndBindingsNotResolved",
+    "conditionalFactsDoNotProveReachability",
+    "parseIsSynchronousInputBoundedNotHardTimeOrRSSCap"
+  ]
+}

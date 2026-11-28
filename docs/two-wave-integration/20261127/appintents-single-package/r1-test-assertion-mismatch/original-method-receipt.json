@@ -1,0 +1,22 @@
+{
+  "sourceBase": "b41233a61a3dca0632b78c7ab7f92e5e620492c4",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.SDK.tests.test_system_extension_targets.SystemExtensionTargetsTests.test_new_system_surfaces_do_not_acquire_hanlin_shipping_or_registration",
+    "-v"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-shortcut-concurrency-os-20261127",
+  "startedAtUTC": "2026-11-27T05:32:38.303151+00:00",
+  "durationSeconds": 0.25684748217463493,
+  "exitCode": 1,
+  "sourceHashes": {
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift": "10f0ae12345b996c282a9b5e7027e07081f86b438a8424c0133a5ecd055c6300",
+    "HanlinMiniAppsApp/HanlinMiniAppsApp.swift": "4d34e6a1a7f50373ccfba3890c547d2df9ab66bb5172deb26afd3fdffa075585",
+    "Scripts/SDK/tests/test_system_extension_targets.py": "e918188ee3d1831154af50d06fa6ca0e556e3e3ea8683fdb48c3ec5204a6d8d8"
+  },
+  "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSHA256": "40140dfd02e6b904a3402c98a97b0acf05f49eb1ada66e7fa49db89077463e13",
+  "boundary": "One original portable regression method. No Swift compilation, AppIntents metadata export, native tests or OS acceptance."
+}

@@ -1,0 +1,12 @@
+{
+  "run": 44426771946,
+  "source_sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
+  "full_job_log_bytes": 286092,
+  "full_job_log_sha256": "6617d04a1b82173f19e3569ad97b6dcefa51c7aa14d9fbf1c1ece448336a8a74",
+  "excerpt_lines_1_based": [
+    867,
+    930
+  ],
+  "excerpt_sha256": "0c7a7ec19a7c8553065eeb5a4a677b6b13602b30a2777be1b3066395b9a1386b",
+  "archive_digest_scope": "API_DIGEST_OBSERVED_FULL_ZIP_REVIEW_PENDING"
+}

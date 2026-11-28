@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w1_review_resume",
+  "recordedAtUTC": "2026-11-27T16:10:45.435661+00:00",
+  "base": "d077babf9ba9312199aa41cef18f40581edbc52c",
+  "sourcePath": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "beforeSHA256": "efe7abe29bd1be36d7991844d67d7d79e12a1f3c1bc639fca741be87fd00480c",
+  "afterSHA256": "82a683b05433ddc872f6428495d2883b0e66e46fab16b2df604b125267c5b1ca",
+  "patchSHA256": "50e9a12dcf119359962f820ae9c1d79e8edcd96c4bd9e81961af09fa9fd2a2b4",
+  "decision": "APPROVED_FOR_ORIGINAL_NATIVE_RETRY",
+  "independentChecks": {
+    "exactWholeFileInverse": true,
+    "all28SelectorsIdentical": true,
+    "existingFilesApplicationReused": true,
+    "noLaunchOrActivate": true,
+    "singleOriginal12SecondProviderBudget": true,
+    "subsequentOriginal12SecondControlBudgets": true,
+    "existingGlobalDeadlineBoundPreserved": true
+  },
+  "assessment": [
+    "The change is confined to the actual source-folder import helper. Export and every original test method remain unchanged.",
+    "Queries are exact labels or identifiers limited to the existing MiniApps and DocumentsApp objects. A candidate must exist and be enabled and hittable; subsequent selection remains bound to the chosen application object.",
+    "The original positive process-ID helper records the selected query owner. This does not infer a private picker-service identity from static bundle metadata.",
+    "Success still requires the actual original folder selection, import confirmation and My Projects return without Project unavailable. No ordinary input or product state is injected."
+  ],
+  "limitations": [
+    "No native or portable tests were executed by this reviewer.",
+    "Actual provider accessibility ownership and successful Files import require the original native retry. A reachable DocumentsApp query is not presumed from the source alone."
+  ],
+  "nativeStatus": "NOT_RUN"
+}

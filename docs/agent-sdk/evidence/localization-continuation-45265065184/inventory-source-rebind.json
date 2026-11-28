@@ -1,0 +1,256 @@
+{
+  "createdUTC": "2026-11-23T20:59:19.426297+00:00",
+  "runSource": "ade2f626e37102abde83050c94d524d19e0726bb",
+  "inventorySource": "7523f45cf8ea180a8e30f511ff0fbd3bb5ccae6d",
+  "counts": {
+    "methodDefinitions": 310,
+    "expectedInvocations": 342,
+    "unitMethodDefinitions": 299,
+    "uiMethodDefinitions": 11,
+    "bySuite": {
+      "A2UISDKTests": {
+        "methodDefinitions": 38,
+        "expectedInvocations": 38
+      },
+      "A2UIIngressTests": {
+        "methodDefinitions": 8,
+        "expectedInvocations": 8
+      },
+      "AgentActivityHeaderPhaseTests": {
+        "methodDefinitions": 14,
+        "expectedInvocations": 14
+      },
+      "AgentRoundPresentationTests": {
+        "methodDefinitions": 25,
+        "expectedInvocations": 25
+      },
+      "CalendarToolTests": {
+        "methodDefinitions": 4,
+        "expectedInvocations": 6
+      },
+      "ChatAutoFollowTests": {
+        "methodDefinitions": 12,
+        "expectedInvocations": 12
+      },
+      "ChatCodeFenceTests": {
+        "methodDefinitions": 5,
+        "expectedInvocations": 5
+      },
+      "ChatPresentationTests": {
+        "methodDefinitions": 15,
+        "expectedInvocations": 16
+      },
+      "ChatScrollViewHandleTests": {
+        "methodDefinitions": 11,
+        "expectedInvocations": 11
+      },
+      "HanlinAppAgentSessionOwnerTests": {
+        "methodDefinitions": 51,
+        "expectedInvocations": 68
+      },
+      "HanlinApplicationEmbeddingTests": {
+        "methodDefinitions": 16,
+        "expectedInvocations": 16
+      },
+      "HanlinApplicationSystemIntegrationTests": {
+        "methodDefinitions": 4,
+        "expectedInvocations": 6
+      },
+      "HanlinCapabilityObservationTests": {
+        "methodDefinitions": 18,
+        "expectedInvocations": 18
+      },
+      "HanlinConversationProjectionTests": {
+        "methodDefinitions": 2,
+        "expectedInvocations": 2
+      },
+      "HanlinMCPEmbeddingTests": {
+        "methodDefinitions": 10,
+        "expectedInvocations": 10
+      },
+      "HanlinNativeWidgetRendererTests": {
+        "methodDefinitions": 7,
+        "expectedInvocations": 7
+      },
+      "PendingFirstTurnTests": {
+        "methodDefinitions": 4,
+        "expectedInvocations": 4
+      },
+      "ModelPopoverZoomOrderTests": {
+        "methodDefinitions": 2,
+        "expectedInvocations": 2
+      },
+      "HanlinRemoteMediaURLTests": {
+        "methodDefinitions": 7,
+        "expectedInvocations": 7
+      },
+      "NativeComposerLineSizingTests": {
+        "methodDefinitions": 14,
+        "expectedInvocations": 22
+      },
+      "RuntimeAutonomyV3Tests": {
+        "methodDefinitions": 1,
+        "expectedInvocations": 1
+      },
+      "ShareInboxHostIntegrationTests": {
+        "methodDefinitions": 4,
+        "expectedInvocations": 4
+      },
+      "VoiceRecordingLifecycleTests": {
+        "methodDefinitions": 22,
+        "expectedInvocations": 22
+      },
+      "AgentRuntimeConversationUITests": {
+        "methodDefinitions": 4,
+        "expectedInvocations": 4
+      },
+      "HanlinNativeA2UIChatUITests": {
+        "methodDefinitions": 7,
+        "expectedInvocations": 7
+      },
+      "HanlinLocalizedControlTests": {
+        "methodDefinitions": 1,
+        "expectedInvocations": 1
+      },
+      "HanlinOriginalAssetTests": {
+        "methodDefinitions": 1,
+        "expectedInvocations": 1
+      },
+      "HanlinLocalizationTests": {
+        "methodDefinitions": 3,
+        "expectedInvocations": 5
+      }
+    }
+  },
+  "testSourceChecks": [
+    {
+      "path": "AI_HLYTests/A2UITests.swift",
+      "sha256": "c66ab3fbd7e6087208336737c8ea6dcfa28c26c3215cdfc9ffe0d00fb6774f89",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "sha256": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "sha256": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/CalendarToolTests.swift",
+      "sha256": "10e2b95d046e55089073f9095822ee8df8cee977b9f524648914889d0cb106da",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "sha256": "c36ac17d0ac2503376ac757cfdaf1b5e4022cc473d8aa8ecc1a5a1968b37b03a",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/ChatCodeFenceTests.swift",
+      "sha256": "0a441d9eb856ee5b7b5c87dd09872d280b81b842801a12367ce6ec4f75ac8fce",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/ChatPresentationTests.swift",
+      "sha256": "6540c94c86d790efe9d0394f8b68596cd1687e0c04d7efde6f16003e6a7bd5a6",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "sha256": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "sha256": "9ee86ec88ce723c8257cef8a26ff46865408ec3b50568314875a5608c7ddfc0a",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "sha256": "d647361dbef8f576f18e13fc852df7f61b7d06a7f5757e5b29bfd503aafc4463",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift",
+      "sha256": "617d5472d978fde04ca74400267cb1bb92244b84fbe224545896bddb26bfa802",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "sha256": "207b4bb7e2821ff0b3e563dde4131922fceb25c2d6b4142084e1461586a95ac4",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinConversationProjectionTests.swift",
+      "sha256": "5689f0ed337357edaabe99cb7fa1ea0c9d7d9792614a39c5dd6ff56e8f5d2da6",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "sha256": "2774f4a60882be0a8eec456f8e6e75ede049981c58f412931311c1db509f6592",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinNativeWidgetRendererTests.swift",
+      "sha256": "c43cd512bb45c120fd06f2903b80c1092220efd1ed85045b9513c88a13c055f6",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "sha256": "0e7366d161edcb410ab9707c408540bf5a4d22eb4c7710d09d2adf06530a6d16",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinRemoteMediaURLTests.swift",
+      "sha256": "8d529ef1da665e792f9e56b92f746659eb26be6c790765c6f233b81016247059",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "sha256": "6eb5c1a7f623dac590311d3040c6c0f81cdbb6baec98fdd943d6617151d0f248",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+      "sha256": "b72a5d8ec0c51144e864776a2e1d4537cbfd0e28e27074b47280af5b108fba7d",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/ShareInboxHostIntegrationTests.swift",
+      "sha256": "c6ba09129bdab7fadcae8ac02468081332a8f7296a656a84df650b78e8db0195",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "sha256": "6140722d3090e41c7465601624a0fa389509c91bd23054e9a91bd80c0fe4c7c1",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "sha256": "3d9755248a7ac026c2d2a0293d744d45e3c7454c9bd154a7a35e91d65175454a",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "sha256": "11b3cb74033aa95a3a37521ee013a1e05245b4a01a0e974bb147a0e259e70edc",
+      "identicalToPreviousCompiledSource": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift",
+      "sha256": "4b20056ba96ba0ed9561d32c3b8e8e93bd89d5a6aa093eb5a1a4d8a1b9f0951e",
+      "identicalToPreviousCompiledSource": true
+    }
+  ],
+  "previousCompiledSource": "0b40a021c6d28e4d1c47ed87060d063c8456ba9f",
+  "previousNativeBuild": "PASS",
+  "previousSelectedInvocations": "NOT_RUN",
+  "changedProduction": [
+    "f353a0ca: canonical localization copy validation",
+    "09a05c71:07431 producer dependency and generic CI pin alignment",
+    "ade2f626: original disclosure retains mounted content across animated collapse"
+  ],
+  "status": "SOURCE_QUALIFIED_RESULTS_PENDING"
+}

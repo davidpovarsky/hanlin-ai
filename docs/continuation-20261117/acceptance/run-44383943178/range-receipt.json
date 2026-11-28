@@ -1,0 +1,110 @@
+{
+  "repo": "davidpovarsky/hanlin-ai",
+  "run": 44383943178,
+  "head_sha": "49923cf6736664587a9da1b3599739e794f94fb6",
+  "status": "completed",
+  "conclusion": "failure",
+  "artifact_id": 14472355631,
+  "official_zip_digest": "sha256:14f01a51a6f58b9d7c376e14aa4bc0e570fdf3ac506bc8c5b200e9571b9ff82f",
+  "full_zip_digest_verification": "pending; authenticated exact HTTP ranges + ZIP member CRC verified",
+  "ranges": [
+    [
+      142874650,
+      142874671
+    ],
+    [
+      142874630,
+      142874649
+    ],
+    [
+      142518255,
+      142874649
+    ],
+    [
+      266008,
+      266037
+    ],
+    [
+      266038,
+      266088
+    ],
+    [
+      266089,
+      269393
+    ],
+    [
+      282417,
+      282446
+    ],
+    [
+      282447,
+      282508
+    ],
+    [
+      282509,
+      284385
+    ],
+    [
+      284526,
+      284555
+    ],
+    [
+      284556,
+      284609
+    ],
+    [
+      284610,
+      301408
+    ],
+    [
+      3453,
+      3482
+    ],
+    [
+      3483,
+      3533
+    ],
+    [
+      3534,
+      5263
+    ]
+  ],
+  "members": [
+    {
+      "name": "simulator-logs/08-downstream-unit-test-results.json",
+      "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\host-editor-44383943178\\08-downstream-unit-test-results.json",
+      "bytes": 23947,
+      "sha256": "02ee6e50dbde98ef3e279b96922974961a52ce618d56548e88167cfc4d1c42d8",
+      "zip_crc32": "176f7c70",
+      "crc_verified_by_zipfile": true,
+      "compressed_bytes": 3305
+    },
+    {
+      "name": "simulator-logs/08-nativescript-production-ui-test-results.json",
+      "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\host-editor-44383943178\\08-nativescript-production-ui-test-results.json",
+      "bytes": 14430,
+      "sha256": "170f78bbefd627e41be19488f4873aca0a35001c4680a13a1e27d66f0d7b624d",
+      "zip_crc32": "f0ac92c7",
+      "crc_verified_by_zipfile": true,
+      "compressed_bytes": 1877
+    },
+    {
+      "name": "simulator-logs/08-nativescript-production-ui-tests.log",
+      "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\host-editor-44383943178\\08-nativescript-production-ui-tests.log",
+      "bytes": 177215,
+      "sha256": "060d93855dc457bef44fee3db7946d4da72a0bfdc14584638679eec0712afe1a",
+      "zip_crc32": "47bb46e8",
+      "crc_verified_by_zipfile": true,
+      "compressed_bytes": 16799
+    },
+    {
+      "name": "simulator-logs/06-diagnostics-build-provenance.json",
+      "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\host-editor-44383943178\\06-diagnostics-build-provenance.json",
+      "bytes": 6966,
+      "sha256": "f73b5b1c1508f44a2b245394e229871c52fc28acdf098f5d512bcb6abf955e0f",
+      "zip_crc32": "45c80b9f",
+      "crc_verified_by_zipfile": true,
+      "compressed_bytes": 1730
+    }
+  ]
+}

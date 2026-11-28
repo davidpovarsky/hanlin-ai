@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w1_review_resume",
+  "recordedAtUTC": "2026-11-27T18:00:03.248366+00:00",
+  "decision": "APPROVED_EXACT_FOUR_GENERATED_DOCUMENT_SEAL",
+  "sourceSeal": "1d94b855ed58c692f028b55b6e14dacdd025fd80",
+  "parent": "b5475156e7b0253b24c0a4385236b60da21f6f7e",
+  "rawPacketManifestSHA256": "c2b3a2aac90ed3d5e7c174bcf679cd468a155a12644d4428c10500b90067c661",
+  "verifiedRawMembers": 7,
+  "bundleSHA256": "a37304f2625c9e94b091efed78f6b73dc1fcf7bc31cba13ff713f1b099ce3013",
+  "bundleVerifiedAgainstActualParentObjects": true,
+  "changedPathsExactlyFourDocs": true,
+  "allBeforeAndAfterGitBlobHashesMatchSeal": true,
+  "manifestReferenceWholeFileInverse": "Only HanlinScriptingPlatform.swift:1980 -> :2023; actual source line text is identical.",
+  "reachabilityMarkdownInverse": "Only original sourceCommit and ten actual +43 line anchors. All prose and acceptance semantics unchanged.",
+  "lineAnchorsVerifiedAgainstActualOldAndCurrentGit": [
+    {
+      "name": "resume",
+      "before": 2394,
+      "after": 2437
+    },
+    {
+      "name": "headless",
+      "before": 1523,
+      "after": 1566
+    },
+    {
+      "name": "expoActionDispatch",
+      "before": 1565,
+      "after": 1608
+    },
+    {
+      "name": "resumeDispatch",
+      "before": 2471,
+      "after": 2514
+    },
+    {
+      "name": "translationContinuation",
+      "before": 1960,
+      "after": 2003
+    },
+    {
+      "name": "notificationForeground",
+      "before": 670,
+      "after": 713
+    },
+    {
+      "name": "systemCatalogPublication",
+      "before": 2343,
+      "after": 2386
+    },
+    {
+      "name": "nativePresentationPublication",
+      "before": 2293,
+      "after": 2336
+    },
+    {
+      "name": "systemEntrypointOpen",
+      "before": 556,
+      "after": 599
+    },
+    {
+      "name": "systemEntrypointAdmission",
+      "before": 2538,
+      "after": 2581
+    }
+  ],
+  "jsonShapeAndArrayCardinalityUnchanged": true,
+  "jsonScalarChangesOnlySourceCommitSHA256AndLine": true,
+  "knownSDKInputImpact": {
+    "countBefore": 396,
+    "countAfter": 396,
+    "generatedInputsChanged": 4,
+    "packagedFingerprint": "7af6ecb6a4041d98d37bd71cf65fa9520ec93978e09ea8f7c9cfe4f1e0cad986",
+    "MANIFEST_REFERENCEIsAnInput": true
+  },
+  "initialThreeDocGuardFailurePreserved": true,
+  "authorIdentityPreparationFailurePreserved": true,
+  "scope": "Mechanical generated-document and original source-line qualification. No native rerun, new app acceptance, or independent reconstruction of the entire Host188 raw packet from this compact packet."
+}

@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/workspace/scratch/d49eec8920ef/w2-studio/source/Scripts/ProductSplit/Tests",
+    "-p",
+    "test_studio_gallery_observer.py",
+    "-v"
+  ],
+  "cwd": "/workspace/scratch/d49eec8920ef/w2-studio",
+  "dependencyPath": "/workspace/scratch/d49eec8920ef/w1-share/source/Scripts/ProductSplit",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "startedUTC": "2026-11-27T07:16:09.018373+00:00",
+  "durationSeconds": 0.3630256409996946,
+  "exitCode": 0,
+  "sourceSHA256": {
+    "/workspace/scratch/d49eec8920ef/w2-studio/source/Scripts/ProductSplit/observe_shortcut_surfaces.py": "5b7aa667a201117b5ffd62861ba4b39e13613373d4c030b0a1ffb0c3ee706d92",
+    "/workspace/scratch/d49eec8920ef/w2-studio/source/Scripts/ProductSplit/observe_studio_gallery.py": "c64e13a04d86e628742e0472fc7c2776ba036ff72b9ecb14480b59c5587f78e8",
+    "/workspace/scratch/d49eec8920ef/w2-studio/source/Scripts/ProductSplit/run_paired_acceptance.py": "68875c48e4a53d2ab1c6bf6884ee7504a74a97fd731bb11e5326f683a3362fc4",
+    "/workspace/scratch/d49eec8920ef/w2-studio/source/Scripts/ProductSplit/Tests/test_studio_gallery_observer.py": "f901da7e28e5863a70cc7586b9eb9ac549f697d75f2cfb8ae816077ad6089ba2",
+    "/workspace/scratch/d49eec8920ef/w2-studio/source/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "07feb9084acb645511dcc221f89a813c262e1ca8a58d5d9d317f0b5f439eea73",
+    "/workspace/scratch/d49eec8920ef/w1-share/source/Scripts/ProductSplit/observe_share_translation_surfaces.py": "6702a1bb58c11b9f2e6d285eb62dee7db9f12ad1ddd6d466396d36cda91bee0a"
+  },
+  "raw": {
+    "python.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "python.stderr": "b088e781430206bf0a5edf9917b08efd27d777d5eb811208a95b5c7496bbf8e0"
+  },
+  "scope": "Pure file-reader controls only; no original compiler, simulator, native test or OS UI executed",
+  "native": "NOT_RUN"
+}

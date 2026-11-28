@@ -1,0 +1,7 @@
+# Original HTTP diagnostic logger reader
+
+The original full603 attempt on 6bee646231c4915bbfdb86d8fc301870bbe0fcfb failed during compilation with Swift6.4 reporting that sending boundaryLogger to the main-isolated closure risks a data race. Zero tests, callback observations or samples executed. The complete 31,975-byte raw compiler log is retained losslessly with its SHA256, together with the actual Mac diagnostic. The earlier Dispatch-signature source review did not predict this compiler inference and is not treated as compiler acceptance.
+
+This correction changes only the HTTP test source. A private macOS test-only reader owns an immutable reference to the existing string-only logger. Its only mutable-log read is private and is reached either on the observed main thread or synchronously through the main queue. Only filtered copied strings leave it. The narrowly scoped unchecked Sendable assertion applies only to this confinement adapter; no runtime, JS, context, state or session type is changed.
+
+The reader is created and used after the unchanged native cancellation/finish/global cleanup and callbackQueue return. The original five-second wait, real transport, all original603 selectors/assertions and previously reviewed DEBUG observations are unchanged. The complete source inverse recovers the exact prior9e14ca1f file. No native execution occurred during this correction; the original full603 compiler/runtime retry remains required.

@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "scope": "actual-hanlin-application-ui",
+  "project": "AI_HLY.xcodeproj",
+  "scheme": "HanlinSimulatorAcceptance",
+  "test_target": "AI_HLYUITests",
+  "app_bundle_id": "com.itorah.chavrusachat",
+  "configuration": "Release",
+  "runtime_major": 27,
+  "device_families": ["iPhone", "iPad"],
+  "locales": ["en", "he"],
+  "required_coverage_tags": ["navigation", "keyboard", "forms", "gestures", "transitions", "rtl", "dynamic_type", "errors_recovery", "rotation", "window_behavior"],
+  "coverage_file": "docs/qa/simulator27/coverage.json",
+  "same_build_reuse": "authenticated-original-successful-release-run-only",
+  "accepted_workflow_paths": [".github/workflows/testflight.yml", ".github/workflows/build-ios26-unsigned-ipa.yml"],
+  "toolkit": {
+    "repository": "https://github.com/conorluddy/ios-simulator-skill",
+    "revision": "86fb9ba90a438bd2ee7ab640165bd77da396d941"
+  }
+}

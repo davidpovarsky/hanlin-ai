@@ -1,0 +1,101 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "096F698B-7016-4922-8F97-82B4A975A2B6",
+      "deviceName" : "Hanlin-Composer-iPad-20261124",
+      "modelName" : "iPad Pro 11-inch (M5)",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertTrue failed",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift",
+                        "lineNumber" : 192
+                      }
+                    }
+                  ],
+                  "duration" : "1m 52s",
+                  "durationInSeconds" : 112.5962769985199,
+                  "name" : "testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing()",
+                  "nodeIdentifier" : "HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertTrue failed",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift",
+                        "lineNumber" : 192
+                      }
+                    }
+                  ],
+                  "duration" : "38s",
+                  "durationInSeconds" : 38.97362995147705,
+                  "name" : "testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity()",
+                  "nodeIdentifier" : "HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertTrue failed",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift",
+                        "lineNumber" : 192
+                      }
+                    }
+                  ],
+                  "duration" : "28s",
+                  "durationInSeconds" : 28.478935956954956,
+                  "name" : "testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend()",
+                  "nodeIdentifier" : "HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                }
+              ],
+              "name" : "HanlinComposerCapabilitiesUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinComposerCapabilitiesUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            }
+          ],
+          "name" : "AI_HLYUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Failed"
+        }
+      ],
+      "name" : "AI_HLY",
+      "nodeType" : "Test Plan",
+      "result" : "Failed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

@@ -1,0 +1,260 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-26T13:43:41.521266+00:00",
+  "rootSource": "7f6af7536db3d2aa9ecc9eb51ec82293fc5db3bc",
+  "mainSource": "595e9953e39e2d704f82bd2de31d2d7b369e68c8",
+  "mergeBase": "37feac32bef465a6cf6395a0a4666b1a2a6fb68e",
+  "candidateTree": "4d481298c4b574a1b4a4b83013de7f9fd69adbe4",
+  "candidateRef": "INDEX",
+  "scope": "Policy/CI reconciliation only; no product input changes and no native tests executed by this reconciliation",
+  "changedPaths": [
+    ".agents/rules/ai-team-router.md",
+    ".agents/skills/asana-team-coordination/SKILL.md",
+    ".github/workflows/dispatch-runtime-dependency-updates.yml",
+    ".github/workflows/live-activity-bridge.yml",
+    ".github/workflows/lorvex-apple-account-preflight.yml",
+    ".github/workflows/lorvex-apple-provision-profiles.yml",
+    ".github/workflows/lorvex-apple-register-identifiers.yml",
+    ".github/workflows/lorvex-beta-internal.yml",
+    ".github/workflows/lorvex-secure-secret-transfer.yml",
+    ".github/workflows/lorvex-signed-testflight.yml",
+    ".github/workflows/lorvex-tester-account-probe.yml",
+    ".github/workflows/upstream-candidate-proof.yml",
+    "AGENTS.md",
+    "GEMINI.md",
+    "docs/ai-team/ASANA_POLICY.md",
+    "docs/ai-team/PLATFORMS.md",
+    "docs/ai-team/PROJECT_ASSIGNMENTS.md",
+    "docs/ai-team/TASK_HANDOFF_TEMPLATE.md",
+    "docs/ai-team/TEAM.md",
+    "docs/ai-team/VALIDATION.md",
+    "tools/ai-team/ensure-team.ps1"
+  ],
+  "evidencePaths": [
+    "docs/integration/main-reconciliation-20261126/README.md",
+    "docs/integration/main-reconciliation-20261126/verify_resolution.py"
+  ],
+  "preservedInputCount": 17132,
+  "preservedInputManifestSHA256": "73aa8317624eb319fe5ecdc92369a7055ec36735fec1ae7c6066eaf1b74fa244",
+  "allOtherTrackedInputsIdentical": true,
+  "originalRootFilesByteIdentical": {
+    "CLAUDE.md": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "437a4bd7d2d3f355e6870df3846e94b6e62050ba"
+    },
+    "PROJECT_BOARD.md": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "5cc830fddee2ca2e001e8ee29084a45e93922492"
+    },
+    "PROJECT_AGENT_GUIDANCE.md": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "5e8d8b3c195ddb5167dc68afac8c4590d0db76b4"
+    },
+    ".github/workflows/build-ios26-unsigned-ipa.yml": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "2e9fbe3b8824efb532619da21be2f3964548e29d"
+    },
+    ".github/workflows/check-runtime-dependency-updates.yml": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "42f2233a198c34a2ca97864598ac7bc2ccebe5a3"
+    }
+  },
+  "mainOnlyFilesByteIdentical": {
+    ".github/workflows/live-activity-bridge.yml": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "0cc79f4feec92e1826817736de6a7ad0de882a26"
+    },
+    ".github/workflows/lorvex-apple-account-preflight.yml": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "f688f17a3a9c5d5d0d6fa37c888c33d76de3504c"
+    },
+    ".github/workflows/lorvex-apple-provision-profiles.yml": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "0efb8aaa105e9a65d5cb118aeb3922af5ab4fed2"
+    },
+    ".github/workflows/lorvex-apple-register-identifiers.yml": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "938f756d1d9d65f773c2838030b26cdd336aed61"
+    },
+    ".github/workflows/lorvex-beta-internal.yml": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "4c27b11999f83260323ddeb37670a9bd6cedf9e7"
+    },
+    ".github/workflows/lorvex-secure-secret-transfer.yml": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "40310d94aa2cf0f5ea5474eb5e423cd4cc4728a7"
+    },
+    ".github/workflows/lorvex-signed-testflight.yml": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "c7952a1316a51ea664c96503f5ea4c0f6fe9344c"
+    },
+    ".github/workflows/lorvex-tester-account-probe.yml": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "7bfd42334e1f15789bb1c725913eb5c0e59abb9c"
+    },
+    ".github/workflows/upstream-candidate-proof.yml": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "27dc650f55c6c940eb41947031614144ff53097d"
+    },
+    "tools/ai-team/ensure-team.ps1": {
+      "mode": "100644",
+      "type": "blob",
+      "oid": "6da00b7dac0c5a564aadcc2a5d22c1a7c4a6f543"
+    }
+  },
+  "workflowSyntax": {
+    ".github/workflows/dispatch-runtime-dependency-updates.yml": {
+      "events": [
+        "workflow_dispatch"
+      ],
+      "jobs": [
+        "dispatch"
+      ],
+      "python_steps_parsed": 1,
+      "shell_steps_syntax_checked": 0
+    },
+    ".github/workflows/live-activity-bridge.yml": {
+      "events": [
+        "workflow_run"
+      ],
+      "jobs": [
+        "bridge"
+      ],
+      "python_steps_parsed": 0,
+      "shell_steps_syntax_checked": 0
+    },
+    ".github/workflows/lorvex-apple-account-preflight.yml": {
+      "events": [
+        "workflow_dispatch"
+      ],
+      "jobs": [
+        "preflight"
+      ],
+      "python_steps_parsed": 0,
+      "shell_steps_syntax_checked": 1
+    },
+    ".github/workflows/lorvex-apple-provision-profiles.yml": {
+      "events": [
+        "workflow_dispatch"
+      ],
+      "jobs": [
+        "provision"
+      ],
+      "python_steps_parsed": 0,
+      "shell_steps_syntax_checked": 1
+    },
+    ".github/workflows/lorvex-apple-register-identifiers.yml": {
+      "events": [
+        "workflow_dispatch"
+      ],
+      "jobs": [
+        "register"
+      ],
+      "python_steps_parsed": 0,
+      "shell_steps_syntax_checked": 1
+    },
+    ".github/workflows/lorvex-beta-internal.yml": {
+      "events": [
+        "workflow_dispatch"
+      ],
+      "jobs": [
+        "configure"
+      ],
+      "python_steps_parsed": 0,
+      "shell_steps_syntax_checked": 1
+    },
+    ".github/workflows/lorvex-secure-secret-transfer.yml": {
+      "events": [
+        "workflow_dispatch"
+      ],
+      "jobs": [
+        "seal"
+      ],
+      "python_steps_parsed": 0,
+      "shell_steps_syntax_checked": 1
+    },
+    ".github/workflows/lorvex-signed-testflight.yml": {
+      "events": [
+        "workflow_dispatch"
+      ],
+      "jobs": [
+        "sign-export-upload"
+      ],
+      "python_steps_parsed": 0,
+      "shell_steps_syntax_checked": 14
+    },
+    ".github/workflows/lorvex-tester-account-probe.yml": {
+      "events": [
+        "workflow_dispatch"
+      ],
+      "jobs": [
+        "probe"
+      ],
+      "python_steps_parsed": 0,
+      "shell_steps_syntax_checked": 1
+    },
+    ".github/workflows/upstream-candidate-proof.yml": {
+      "events": [
+        "workflow_dispatch",
+        "workflow_run"
+      ],
+      "jobs": [
+        "evidence"
+      ],
+      "python_steps_parsed": 0,
+      "shell_steps_syntax_checked": 3
+    }
+  },
+  "dispatcher": {
+    "jobsIdenticalToMain": true,
+    "manualInputsIdenticalToMain": true,
+    "permissionsIdenticalToMain": true,
+    "manualOnly": true,
+    "soleWeeklyProducer": ".github/workflows/check-runtime-dependency-updates.yml"
+  },
+  "teamStaticChecks": {
+    "yamlFrontmatter": [
+      ".agents/agents/tomer.md",
+      ".agents/agents/dana.md",
+      ".agents/agents/eitan.md",
+      ".agents/agents/noam.md",
+      ".agents/agents/maya.md",
+      ".agents/agents/roni.md",
+      ".agents/agents/yael.md",
+      ".agents/rules/ai-team-router.md",
+      ".agents/skills/asana-team-coordination/SKILL.md"
+    ],
+    "toml": [
+      ".codex/agents/maya.toml",
+      ".codex/agents/yael.toml",
+      ".codex/agents/dana.toml",
+      ".codex/agents/noam.toml",
+      ".codex/agents/tomer.toml",
+      ".codex/agents/roni.toml",
+      ".codex/agents/eitan.toml"
+    ],
+    "requiredFilesPresent": 32,
+    "relativeMarkdownLinks": [
+      {
+        "source": "AGENTS.md",
+        "target": "docs/continuation-20261117/OWNER_AUTHORIZATION_20261118.md"
+      }
+    ]
+  },
+  "nativeExecution": "NOT_RUN: product, dependency, fixture and original native CI inputs unchanged from the root source",
+  "independentReview": "PENDING_ROOT: wave2 agent is occupied by a concrete native runtime defect and is not counted as reviewer"
+}

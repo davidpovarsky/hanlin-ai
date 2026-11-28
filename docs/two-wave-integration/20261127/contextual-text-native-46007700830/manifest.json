@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "receiptSHA256": "f712b02b3fce6bf721caf4948f92d0f8c4a8f5e134f298ab1e69799a6ed2172f",
+  "files": {
+    "README.md": {
+      "bytes": 2642,
+      "sha256": "19822f5681a831326f2ebfa34ff91f7fcb0d63dfd63d22f4427983c745db865e"
+    },
+    "original-native-results.json": {
+      "bytes": 2033,
+      "sha256": "443d3da985d7a962f3ca03df7638b07d0cb64f1ece0e802a04850e7ec4d11aea"
+    },
+    "original-product-manifest.json": {
+      "bytes": 1650,
+      "sha256": "9f5fa5f527acf34798336b0e93a70884e1995c4d51d2099760b2745d6978c809"
+    },
+    "original-selector-coverage.json": {
+      "bytes": 349,
+      "sha256": "cf227e97419c3b2eac9439471263bbdf399c1788f795a976414cfe918bb18be8"
+    },
+    "original-ui-test.log.gz": {
+      "bytes": 2769,
+      "sha256": "e2790e09b245bc9260bb4474d87ddc399618409265a7d6b098ba6359efbb9c5e"
+    },
+    "reconciliation.json": {
+      "bytes": 8424,
+      "sha256": "f712b02b3fce6bf721caf4948f92d0f8c4a8f5e134f298ab1e69799a6ed2172f"
+    }
+  },
+  "originalUILog": {
+    "rawBytes": 14113,
+    "rawSHA256": "20a5017bcfb96a914d213c0c973f321f3c924798c3921303d80d5343c48b57e7",
+    "encoding": "Exact original UTF-8 log bytes compressed with gzip mtime0"
+  },
+  "rawArtifactAndPrivateLogRetention": "Original authenticated ZIPs and full raw job log retained in the authorized operational handoff."
+}

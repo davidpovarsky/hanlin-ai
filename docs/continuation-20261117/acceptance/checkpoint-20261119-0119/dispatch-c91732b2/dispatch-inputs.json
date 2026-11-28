@@ -1,0 +1,14 @@
+{
+  "ref": "codex/hanlin-product-completion-20261117",
+  "inputs": {
+    "target_validation_group": "exact_test_selector",
+    "exact_test_selector": "AI_HLYTests/MaintainedSkillCorpusTests/maintainedPackagesFollowOriginalImportPolicyAndReadiness(_:),AI_HLYTests/MaintainedSkillCorpusTests/cairoInvalidInputUsesTheCurrentRuntimePlan(_:),AI_HLYTests/SkillStoreAndImportTests/nestedMetadataSurvivesStoreSaveAndOverride(),AI_HLYTests/SkillStoreAndImportTests/anchoredStoreEditDoesNotRewriteOriginal(),AI_HLYTests/SkillStoreAndImportTests/zipNestedMetadataAndResourcesRemainLossless(),AI_HLYTests/SkillStoreAndImportTests/catalogMetadataFollowsSelectedSource()",
+    "fast_validation_only": "true",
+    "simulator_e2e_only": "false",
+    "compare_base_sha": "e0089cfb8c192530056aba39c7c8bbf945da75d3",
+    "full_validation": "false",
+    "testflight_upload": "false",
+    "runtime_publish_release": "false",
+    "runtime_bundle_artifact_run_id": "42926628418"
+  }
+}

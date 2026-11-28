@@ -1,0 +1,127 @@
+{
+  "actualGitAuthorities": [
+    {
+      "actualGitEqual": true,
+      "bytes": 4961,
+      "path": "AI_HLY/Downstream/AgentActivity/AgentEvent.swift",
+      "sha256": "8848c6253a7f3b4a2e17d7d417279d7e5124dc5eff57367894f77a858183a38d"
+    },
+    {
+      "actualGitEqual": true,
+      "bytes": 27378,
+      "path": "AI_HLY/Downstream/AgentActivity/AgentEventAccumulator.swift",
+      "sha256": "d1c9a3ce85ff65b90e277a6f315aae81a0cab51afd69ebd1b25522bfa5bd14fd"
+    },
+    {
+      "actualGitEqual": true,
+      "bytes": 3220,
+      "path": "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolResultPresentationCoordinator.swift",
+      "sha256": "882dd0e49f2529664379bef9790e85221448fc928a7fe803f6e0b295286c4969"
+    },
+    {
+      "actualGitEqual": true,
+      "bytes": 39038,
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRecorder.swift",
+      "sha256": "68de1592a12ad4e9421651d50d86538798f66643370025230a0d9a5168a7a79c"
+    },
+    {
+      "actualGitEqual": true,
+      "bytes": 50953,
+      "path": "AI_HLY/Downstream/AgentSkills/HanlinAISDKToolAdapter.swift",
+      "sha256": "d15665f526a62376591f7ed2ba89e42a06c542f38ee394856771abaec37366cb"
+    },
+    {
+      "actualGitEqual": true,
+      "bytes": 7548,
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteShellCommandTool.swift",
+      "sha256": "fb4f23ac984f1ad83d887d91406852cf72b050d2e2c0c0a6681f8edc222ddd52"
+    },
+    {
+      "actualGitEqual": true,
+      "bytes": 10588,
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/RuntimeToolSupport.swift",
+      "sha256": "318aafd2fcea288abdfc333e3103e66af4f409daadb54a96d33d57b2fbf82ce9"
+    },
+    {
+      "actualGitEqual": true,
+      "bytes": 52257,
+      "path": "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift",
+      "sha256": "d26270284346c31b011b45aac482ac190fd43a54ec4ffa3ec6a437c7c9404c06"
+    },
+    {
+      "actualGitEqual": true,
+      "bytes": 12810,
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/ToolPresentation/LegacyToolPresentationAdapter.swift",
+      "sha256": "2b4b17b234dfb862fb61c55a70150bd4e7c3832e405d03dd3057f3b7229347aa"
+    },
+    {
+      "actualGitEqual": true,
+      "bytes": 4906,
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/NativeUI/NativeUIBlock.swift",
+      "sha256": "7ca5306bc479ba83e5bb2820133daeba9ced3a5c671b919ca7c754bd2bfbcabd"
+    },
+    {
+      "actualGitEqual": true,
+      "bytes": 9727,
+      "path": "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptAccumulator.swift",
+      "sha256": "6a8335461e0dd2828a53b4eee33ebd33a19364f565e8cc3bbf85f665dc942a41"
+    },
+    {
+      "actualGitEqual": true,
+      "bytes": 21244,
+      "path": "AI_HLY/NativeAgentExtensions/UI/NativeUIRenderer.swift",
+      "sha256": "1c11f56e65f7ee431e68cbe1bfa6e61d812b5952110df02b28b37767a3e8c676"
+    },
+    {
+      "actualGitEqual": true,
+      "bytes": 5736,
+      "path": "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptToolResultView.swift",
+      "sha256": "d49dd7e3e28b23096ebdb88b956001634f486bdb48682b7bcee3c4daedb32e50"
+    },
+    {
+      "actualGitEqual": true,
+      "bytes": 226115,
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "sha256": "fa423e890c1447a77dd8c978bc3124e9385d12098b04aec472303562d312be25"
+    }
+  ],
+  "afterSHA256": "d7dbeebf232d1ab00e251920a7af0bdeeb52cf4ea6838e709f86385ff1d15f02",
+  "base": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "beforeSHA256": "fa423e890c1447a77dd8c978bc3124e9385d12098b04aec472303562d312be25",
+  "candidateManifestSHA256": "1d7736a0a7b60e86820c72211fd6792b258f5912fc5ea1015fb2db05ce69a0ac",
+  "candidatePacket": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/presentation-fallback-error-fc5ce1ba-r1/candidate-r1",
+  "inverse": {
+    "addedLines": 37,
+    "hunks": 3,
+    "removedLines": 5,
+    "wholeOriginalRecoveredExactly": true
+  },
+  "patchSHA256": "d7440d8758f807b24b4f5828e10ab3aac599dfc76dd980ab5ef80b9feed3faf2",
+  "preservation": [
+    "Original tests, all recovery/42/final-answer assertions and deadlines unchanged.",
+    "Original modelText/fallback text selection, duplicate guard, logical IDs, invalidArguments diagnostic, duration0 and resultForModel/resultForUser recorder flow unchanged.",
+    "No source mutation, portable test, native compile, UI run, generator or dispatch by reviewer."
+  ],
+  "recordedAt": "2026-11-28T10:42:09.146537+00:00",
+  "remainingAcceptance": "Original current app production failure/recovery and presentation gates must execute after integration; source inspection is not app compilation or rendering acceptance.",
+  "reviewer": "mac_build_resume",
+  "schemaVersion": 1,
+  "semanticReview": {
+    "canonicalDecision": "Same original coordinator, original explicit call/profile; no forced shouldPresent. Empty redacted text produces no block and remains suppressed. Unsupported profiles retain failed-event fallback.",
+    "errorSemantics": "AgentToolResult.isError=true and semanticOutcome.invalidArguments preserve failed activity/transcript; no fabricated legacy payload or successful outcome. Existing call/execution event ordering and completedCallIDs exclusion stay unchanged.",
+    "nativeFailure": "Original de method only reported suppressed=nil. That actual failure remains immutable; this source review makes no retrospective pass claim.",
+    "realUIRoute": "NativeUIBlock.error uses the actual public initializer. AgentEventAccumulator completion stores the real block, and AgentTranscriptAccumulator inserts it. AgentTranscriptToolResultView handles both modern and legacy nonempty block branches; NativeUIRenderer renders error as NativeCardView.",
+    "recorder": "The exact same canonical decision is passed to the existing optional recorder parameter, so resultPresentationSuppressed becomes the real decision rather than nil. No assertion or recorded boolean is fabricated.",
+    "redaction": "All new error body/modelText/userText use original AgentSafeError.message: trim, existing secret patterns, then500-character cap. No raw finalErrorText is newly introduced into UI. Existing model continuation and sanitized recorder inputs retain their original flow.",
+    "reducerConsistency": "When completion is emitted, rich blocks are nonempty and isError=true. The reducer re-resolves the same presentation fields and reaches the same shouldPresent/renderer result even though its default hasModelText is false. Registry explicit-profile refinement only changes calendar activity/execution, not result/embedded/display-policy fields."
+  },
+  "sourceImpact": {
+    "directHost99Intersection": [],
+    "directSDK396Intersection": [],
+    "scope": "App production APIManager changes; existing frozen native d4 producer and package source are not edited. No current app/Release acceptance is inferred from this direct intersection."
+  },
+  "sourcePath": "AI_HLY/Services/ChatServices/APIManager.swift",
+  "status": "SOURCE_REVIEW_APPROVED_NATIVE_PENDING",
+  "verifiedPayloadBytes": 660774,
+  "verifiedPayloadCount": 13
+}

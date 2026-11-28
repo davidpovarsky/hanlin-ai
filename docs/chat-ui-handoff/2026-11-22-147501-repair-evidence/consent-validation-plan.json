@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "base_commit": "139c6bf93f80ef7301182110dcaf086612d9bbbd",
+  "source_files": {
+    "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift": "4217b5db668047f53ed909154e2105c9ae92cc0af0d94cfc5fe77bfcd6bfae1e",
+    "AI_HLYUITests/AgentRuntimeConversationUITests.swift": "73d3a572ff50696b9d74ac30b84dd5ad5d2b56da9a96fe7fd627fd74d35225e8",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinInlineToolApproval.swift": "ed3d056b73e13220f40ede81af417a624dd9c1aa0a2894ee3f8b2184eb0e5e80",
+    "AI_HLY/Resource/Localizable.xcstrings": "c84abcc423c6f0b27d09002f5a9d43da83d1adc3c7418b903fe8b63afab184c5",
+    "Scripts/CI/validate_chat_localization.py": "3534f785fb69575d785501d24c9f05507a3e4a7bb634bc830199bcc4fdeccc52"
+  },
+  "exact_test_selector": "AI_HLYUITests/AgentRuntimeConversationUITests/testUI03SearchMessageAndDeduplicatedCitations,AI_HLYUITests/AgentRuntimeConversationUITests/testUI03HebrewRTLSearchMessageAndDeduplicatedCitations",
+  "still_running_primary_native_run": "45067928645",
+  "primary_scope_reuse": "Retain actual unit and unaffected lifecycle/selection outcomes; UI03 fixture consent contract is corrected separately.",
+  "changes": [
+    "Verify real local Python consent and actual42 result before original read calls; no permission-policy changes.",
+    "Preserve exact light palette and use contrasting dark approval surface/ink/button colors.",
+    "Fix Hebrew input placeholder/source-content label and neutral Sources footer; require these actual packaged translations."
+  ],
+  "source_localization_check": {
+    "status": "PASS",
+    "catalog_values": 3656,
+    "packaged_values": 0,
+    "errors": []
+  },
+  "native_status": "pending"
+}

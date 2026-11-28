@@ -1,0 +1,46 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project /Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/attempt1/ProfileDiscovery.xcodeproj -scheme ProfileDiscovery -configuration Release -destination generic/platform=iOS -derivedDataPath /Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/attempt1/DerivedData -archivePath /Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/attempt1/ProfileDiscovery.xcarchive archive -allowProvisioningUpdates -authenticationKeyPath /Users/m1/.appstoreconnect/private_keys/AuthKey_BMFQPP6252.p8 -authenticationKeyID BMFQPP6252 -authenticationKeyIssuerID b5ac6a24-597d-4c46-924e-712ad41bf667 PRODUCT_BUNDLE_IDENTIFIER=com.itorah.hanlinminiapps.share CODE_SIGN_STYLE=Automatic DEVELOPMENT_TEAM=NA6HPWARQ2 CODE_SIGN_ENTITLEMENTS=/Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/helpers/HanlinMiniAppsShare.entitlements APS_ENVIRONMENT=production COMPILER_INDEX_STORE_ENABLE=NO
+
+Build settings from command line:
+    APS_ENVIRONMENT = production
+    CODE_SIGN_ENTITLEMENTS = /Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/helpers/HanlinMiniAppsShare.entitlements
+    CODE_SIGN_STYLE = Automatic
+    COMPILER_INDEX_STORE_ENABLE = NO
+    DEVELOPMENT_TEAM = NA6HPWARQ2
+    PRODUCT_BUNDLE_IDENTIFIER = com.itorah.hanlinminiapps.share
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (1 target)
+    Target 'ProfileDiscovery' in project 'ProfileDiscovery' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+Build description signature: 7fa70824282d256b501c4d04e9ede37b
+Build description path: /Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/attempt1/DerivedData/Build/Intermediates.noindex/ArchiveIntermediates/ProfileDiscovery/IntermediateBuildFilesPath/XCBuildData/7fa70824282d256b501c4d04e9ede37b.xcbuilddata
+/Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/attempt1/ProfileDiscovery.xcodeproj: error: Choose a certificate to revoke. Your account has reached the maximum number of certificates. To create a new one, you must choose a certificate to revoke. (in target 'ProfileDiscovery' from project 'ProfileDiscovery')
+/Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/attempt1/ProfileDiscovery.xcodeproj: error: No profiles for 'com.itorah.hanlinminiapps.share' were found: Xcode couldn't find any iOS App Development provisioning profiles matching 'com.itorah.hanlinminiapps.share'. (in target 'ProfileDiscovery' from project 'ProfileDiscovery')
+** ARCHIVE FAILED **
+
+
+The following build commands failed:
+	Archiving project ProfileDiscovery with scheme ProfileDiscovery
+(1 failure)

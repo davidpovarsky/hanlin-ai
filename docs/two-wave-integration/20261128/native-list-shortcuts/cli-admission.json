@@ -1,0 +1,90 @@
+{
+  "sourceBase": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "candidateFixture": {
+    "tsconfig.json": "32212ba114edcbc3f0f923db351e65c228b1c0bc4f2a2339a1bd2eaa90e24e75",
+    "package.json": "daade868d8345954dd06b629b6ab9912e7241adce7f46669e6ecbf1f8d676041",
+    "script.json": "9b61a8b3503d72f2536c579cdea9625c1c9180f66e4cb88d66207c15343f7f08",
+    "hanlin.authoring.json": "5c45d2ab2cfce588d3758665eff52a9511613b2070a9946be001e32f87d517d9",
+    "index.ts": "eac6a0cf6be0d3a956438a3d856784537b98df4ec5f4a89006bc313a5d743e85",
+    "proof.ts": "1c3cf09fe914c496d10cd01f6eabe989bc683f7a6194a80ae1b699c554515210"
+  },
+  "cli": {
+    "Scripts/MiniApps/miniapp.mjs": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs": "06fbe72f889da3befe00c2dfe9b286f062decd59a50c1df9c961df3bcb46b745"
+  },
+  "sdkDirectory": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/modular-search-types-ce896542/accepted-sdk/MiniAppSDK",
+  "actualSDKManifestSHA256": "7f2702e52587fe1d126cef37f068ab3a9e3a26adb275ffafb687cb38a2db9b87",
+  "sdkHistoricalArchiveSHA256": "a088d98b8f85ae1e1ad767fca92132c03f0155d5ddd379d57b8cc98c38f19383",
+  "current9eeManifestSHA256": "7507f7f439446f0299cba51fc2d56d71b12ae7b847211fe803d0ecd45593f7df",
+  "wholeSDKCurrent": false,
+  "enginesEqualCurrent9ee": true,
+  "nativeScriptPayloadFilesEqualCurrent9ee": 5986,
+  "allActualOldSDKFilesVerified": 25707,
+  "onlyManifestPayloadDifferencesFromCurrent": [
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "old": {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "sha256": "c1d0f94b241c3a865c4458914d36779810d871e4f30bc38cb409283260552626",
+        "bytes": 213458
+      },
+      "current": {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "sha256": "ae97f71519bd9d7c7ed3ed995d6c988ad6f8e9b3fad45827321024cc9e3dbe0e",
+        "bytes": 213462
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "old": {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "sha256": "ac061c9dd14633e12c8a0d7e1009c840b3813e228c612d7cbfad18ea3837070c",
+        "bytes": 37881
+      },
+      "current": {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "sha256": "09cd5e791620b7222e5a3e835a8b4fc3e26c983015f8732e0d61fe787312846a",
+        "bytes": 37885
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "old": {
+        "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+        "sha256": "72524a70e0fcd3fe0fdf0fbc9192c0aa1c788fc296ef68613c3ee2fdd47ed0ed",
+        "bytes": 145496
+      },
+      "current": {
+        "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+        "sha256": "6fa3eac86cc64a5ff30c0200164d11cad546a720b0f7696b3f8cc82a3bf21180",
+        "bytes": 145496
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "old": {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "sha256": "cd4911403d683a1ee613584a3cb758bf41edd0d1799e7ade782b7518c240fccd",
+        "bytes": 569738
+      },
+      "current": {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "sha256": "2fbab886540d63b80588cfa45abe8de2a47ab9da00a3f6517bd1de845c391ac9",
+        "bytes": 569739
+      }
+    }
+  ],
+  "node": {
+    "path": "/mnt/development/projects/toolchains/node-v24.5.0-linux-arm64/bin/node",
+    "version": "v24.5.0",
+    "sha256": "47befb5f57df96771ce343d6293349ecf4d46c91110b626423ec3a49d2fee7c1"
+  },
+  "freeBytes": 1411837952,
+  "originalOperationBounds": {
+    "validate": 300,
+    "build": 600
+  },
+  "nativeCommands": 0,
+  "scope": "Original portable authoring with historical immutable SDK; exact current NS/tooling/engine equivalence, no new whole SDK qualification",
+  "hashReadSeconds": 20.974052667617798
+}

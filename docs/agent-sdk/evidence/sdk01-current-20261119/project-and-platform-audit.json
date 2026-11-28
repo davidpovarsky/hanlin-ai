@@ -1,0 +1,327 @@
+{
+  "source_sha": "e564dc29d24239309b113244bec4556c211c5b2d",
+  "project_sha256": "54e670643fdd31a35276fcaa06bb9ded51dd5ddd506cc655319dd123b28ce35b",
+  "linkage": {
+    "ai_products": [
+      "HanlinAgentCore",
+      "HanlinHostContracts",
+      "HanlinPersistenceAdapters"
+    ],
+    "unit_test_products": [
+      "HanlinAgentCore"
+    ],
+    "miniapps_sdk_products": [],
+    "synchronized_adapter": "Model/HanlinAppleModelCatalogAdapter.swift",
+    "apple_compilation": "NOT_RUN"
+  },
+  "targets": [
+    {
+      "name": "HanlinMiniApps",
+      "product_type": "com.apple.product-type.application",
+      "configurations": [
+        {
+          "name": "Debug",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.hanlinminiapps"
+        },
+        {
+          "name": "Release",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.hanlinminiapps"
+        }
+      ],
+      "package_products": [
+        "HanlinPlatformContracts",
+        "HanlinMiniAppCore",
+        "HanlinProductSplit",
+        "HanlinExpoNativeAPI",
+        "HanlinExpoRuntime",
+        "HanlinNativeScriptRuntime",
+        "HanlinParityMiniApp",
+        "HanlinScriptCompiler",
+        "HanlinScriptContracts",
+        "HanlinScriptDeviceServices",
+        "HanlinScriptExtensions",
+        "HanlinScriptStore",
+        "HanlinScriptUI",
+        "HanlinScriptingApplicationRuntime",
+        "HanlinScriptingSDK",
+        "HanlinSefariaMiniApp",
+        "HanlinTextStudioMiniApp",
+        "HanlinWikipediaMiniApp",
+        "IOSSystemLite",
+        "SWCompression",
+        "ZIPFoundation"
+      ]
+    },
+    {
+      "name": "AI_Hanlin",
+      "product_type": "com.apple.product-type.application",
+      "configurations": [
+        {
+          "name": "Debug",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.chavrusachat"
+        },
+        {
+          "name": "Release",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.chavrusachat"
+        }
+      ],
+      "package_products": [
+        "HanlinPresentationKit",
+        "HanlinRichUI",
+        "HanlinChatUI",
+        "A2UISwiftCore",
+        "A2UISwiftUI",
+        "BasicCatalog",
+        "BasicCatalogSwiftUI",
+        "SwiftTreeSitter",
+        "TreeSitter",
+        "TreeSitterBash",
+        "HanlinSkillFormat",
+        "HanlinHostContracts",
+        "HanlinAgentCore",
+        "HanlinPersistenceAdapters",
+        "HanlinParityMiniApp",
+        "HanlinSefariaMiniApp",
+        "TorahLibraryKit",
+        "HanlinWikipediaMiniApp",
+        "HanlinTextStudioMiniApp",
+        "HanlinMiniAppCore",
+        "HanlinNativeScriptRuntime",
+        "HanlinExpoRuntime",
+        "HanlinExpoNativeAPI",
+        "HanlinScriptDeviceServices",
+        "HanlinScriptingApplicationRuntime",
+        "HanlinScriptExtensions",
+        "HanlinScriptingSDK",
+        "HanlinScriptStore",
+        "HanlinScriptCompiler",
+        "HanlinScriptContracts",
+        "HanlinQuickJS",
+        "HanlinPlatformContracts",
+        "IOSSystemLite",
+        "MCP",
+        "SWCompression",
+        "Logging",
+        "CoreXLSX",
+        "RichTextKit",
+        "LaTeXSwiftUI",
+        "ZIPFoundation",
+        "MarkdownUI",
+        "SwiftStreamingMarkdown",
+        "SwiftSoup",
+        "LLM",
+        "HanlinProductSplit"
+      ]
+    },
+    {
+      "name": "AI_HLYTests",
+      "product_type": "com.apple.product-type.bundle.unit-test",
+      "configurations": [
+        {
+          "name": "Debug",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.chavrusachat.tests"
+        },
+        {
+          "name": "Release",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.chavrusachat.tests"
+        }
+      ],
+      "package_products": [
+        "A2UISwiftCore",
+        "A2UISwiftUI",
+        "BasicCatalog",
+        "BasicCatalogSwiftUI",
+        "SwiftTreeSitter",
+        "TreeSitter",
+        "TreeSitterBash",
+        "HanlinSkillFormat",
+        "HanlinAgentCore",
+        "HanlinExpoWidgetNative",
+        "HanlinPlatformContracts",
+        "HanlinNativeScriptRuntime",
+        "HanlinExpoRuntime",
+        "HanlinProductSplit"
+      ]
+    },
+    {
+      "name": "AI_HLYUITests",
+      "product_type": "com.apple.product-type.bundle.ui-testing",
+      "configurations": [
+        {
+          "name": "Debug",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.chavrusachat.uitests"
+        },
+        {
+          "name": "Release",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.chavrusachat.uitests"
+        }
+      ],
+      "package_products": []
+    },
+    {
+      "name": "HanlinScriptingWidgets",
+      "product_type": "com.apple.product-type.app-extension",
+      "configurations": [
+        {
+          "name": "Debug",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.chavrusachat.widgets"
+        },
+        {
+          "name": "Release",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.chavrusachat.widgets"
+        }
+      ],
+      "package_products": [
+        "HanlinExpoWidgetNative",
+        "HanlinScriptExtensions",
+        "HanlinScriptUI",
+        "HanlinPlatformContracts"
+      ]
+    },
+    {
+      "name": "ChavrusaChatShare",
+      "product_type": "com.apple.product-type.app-extension",
+      "configurations": [
+        {
+          "name": "Debug",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.chavrusachat.share"
+        },
+        {
+          "name": "Release",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.chavrusachat.share"
+        }
+      ],
+      "package_products": [
+        "HanlinScriptStore"
+      ]
+    },
+    {
+      "name": "ChavrusaChatTranslationProvider",
+      "product_type": "com.apple.product-type.extensionkit-extension",
+      "configurations": [
+        {
+          "name": "Debug",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.chavrusachat.translation-provider"
+        },
+        {
+          "name": "Release",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.chavrusachat.translation-provider"
+        }
+      ],
+      "package_products": [
+        "HanlinScriptExtensions",
+        "HanlinScriptUI",
+        "HanlinPlatformContracts"
+      ]
+    },
+    {
+      "name": "ChavrusaChatNotificationService",
+      "product_type": "com.apple.product-type.app-extension",
+      "configurations": [
+        {
+          "name": "Debug",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.chavrusachat.notification-service"
+        },
+        {
+          "name": "Release",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.chavrusachat.notification-service"
+        }
+      ],
+      "package_products": []
+    },
+    {
+      "name": "HanlinMiniAppsUITests",
+      "product_type": "com.apple.product-type.bundle.ui-testing",
+      "configurations": [
+        {
+          "name": "Debug",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.hanlinminiapps.integration.uitests"
+        },
+        {
+          "name": "Release",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.hanlinminiapps.integration.uitests"
+        }
+      ],
+      "package_products": []
+    },
+    {
+      "name": "HanlinMiniAppsBootstrapTests",
+      "product_type": "com.apple.product-type.bundle.unit-test",
+      "configurations": [
+        {
+          "name": "Debug",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.hanlinminiapps.integration.bootstrap-tests"
+        },
+        {
+          "name": "Release",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.hanlinminiapps.integration.bootstrap-tests"
+        }
+      ],
+      "package_products": []
+    },
+    {
+      "name": "HanlinMiniAppsTests",
+      "product_type": "com.apple.product-type.bundle.unit-test",
+      "configurations": [
+        {
+          "name": "Debug",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.hanlinminiapps.tests"
+        },
+        {
+          "name": "Release",
+          "minimum_ios": "27.0",
+          "swift_version": "6.0",
+          "bundle_id": "com.itorah.hanlinminiapps.tests"
+        }
+      ],
+      "package_products": [
+        "HanlinProductSplit",
+        "HanlinPlatformContracts",
+        "HanlinScriptExtensions"
+      ]
+    }
+  ],
+  "scope": "Checked-in source target membership and settings; no new Apple compilation."
+}

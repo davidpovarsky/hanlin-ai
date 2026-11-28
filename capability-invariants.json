@@ -1,0 +1,510 @@
+{
+  "invariants": [
+    {
+      "id": "INV-01",
+      "number": 1,
+      "title": "Remote AI provider streaming & Swift AI SDK parity",
+      "description": "Remote AI providers can stream text, surfaced reasoning/summary data, usage, files/sources where supported, and native tool calls through the Swift AI SDK path.",
+      "testIDs": [
+        "SDKAI-01",
+        "SDKAI-02",
+        "SDKAI-03",
+        "SDKAI-04",
+        "SDKAI-05",
+        "SDKAI-06",
+        "E2E-G"
+      ]
+    },
+    {
+      "id": "INV-02",
+      "number": 2,
+      "title": "Swift AI SDK recursive multi-step loop authority",
+      "description": "The SDK, not a parallel Hanlin loop, owns recursive multi-step tool execution for the primary agent path.",
+      "testIDs": [
+        "SDKAI-06",
+        "SDKAI-07",
+        "SDKAI-08",
+        "SDKAI-10",
+        "SDKAI-11",
+        "SDKAI-12",
+        "SDKAI-13",
+        "E2E-G"
+      ]
+    },
+    {
+      "id": "INV-03",
+      "number": 3,
+      "title": "prepareStep dynamic tool visibility & progressive disclosure",
+      "description": "prepareStep continues to support request-scoped dynamic tool visibility and Skill-driven progressive disclosure.",
+      "testIDs": [
+        "SDKAI-09",
+        "DISC-01",
+        "DISC-02",
+        "DISC-05",
+        "DISC-06",
+        "E2E-G"
+      ]
+    },
+    {
+      "id": "INV-04",
+      "number": 4,
+      "title": "Skill-driven discovery & execution flow",
+      "description": "A request can begin with only meta-tools visible, load a Skill or use tool_search, expose a previously hidden tool, execute it, return the result to the model, and continue the same agent run.",
+      "testIDs": [
+        "DISC-01",
+        "DISC-02",
+        "DISC-05",
+        "DISC-07",
+        "SDKAI-06",
+        "SDKAI-09",
+        "E2E-G"
+      ]
+    },
+    {
+      "id": "INV-05",
+      "number": 5,
+      "title": "No hardcoded intent classifier",
+      "description": "No hard-coded Swift intent classifier replaces Skill selection.",
+      "testIDs": [
+        "DISC-13",
+        "DISC-22",
+        "E2E-G"
+      ]
+    },
+    {
+      "id": "INV-06",
+      "number": 6,
+      "title": "Stable canonical tool aliases & collision disambiguation",
+      "description": "Canonical tool aliases remain stable enough for installed Skills, while collisions from different providers remain disambiguated.",
+      "testIDs": [
+        "DISC-04",
+        "DISC-16",
+        "AUD-05",
+        "E2E-C"
+      ]
+    },
+    {
+      "id": "INV-07",
+      "number": 7,
+      "title": "Multi-origin canonical tool registration",
+      "description": "Native/legacy tools, compiled MiniApp tools, Script tools and MCP tools can all enter the canonical authority and become agent-callable.",
+      "testIDs": [
+        "TOOLS-01",
+        "MCPSDK-03",
+        "SCRIPTARCH-07",
+        "APPENG-04",
+        "AUD-05",
+        "E2E-I",
+        "E2E-J"
+      ]
+    },
+    {
+      "id": "INV-08",
+      "number": 8,
+      "title": "Tool activity, diagnostics & embedded results",
+      "description": "Tool execution still emits progress/activity, diagnostics, user-facing presentation, evidence, embedded result payloads and durable result references where applicable.",
+      "testIDs": [
+        "CHAT-02",
+        "CHAT-15",
+        "CHAT-18",
+        "SDKAI-05",
+        "SDKAI-08",
+        "E2E-G"
+      ]
+    },
+    {
+      "id": "INV-09",
+      "number": 9,
+      "title": "NativeUIBlock & rich result family rendering",
+      "description": "NativeUIBlock and every existing rich result family continues to render: maps/routes, calendar/events, health/nutrition, knowledge, code, HTML/web content, evidence/resources, images/audio, canvas, MiniApp launches and future unknown blocks.",
+      "testIDs": [
+        "CHAT-02",
+        "CHAT-09",
+        "CHAT-10",
+        "CHAT-11",
+        "CHAT-12",
+        "CHAT-13",
+        "CHAT-14",
+        "CHAT-15",
+        "CHAT-16",
+        "CHAT-17",
+        "E2E-K",
+        "E2E-O"
+      ]
+    },
+    {
+      "id": "INV-10",
+      "number": 10,
+      "title": "Chat persistence & UI freeze contract",
+      "description": "Existing chat persistence and the current chat UI contract remain unchanged: conversations, role/model metadata, attachments, activity/transcript information, rich results, message behavior and composer behavior must continue to work without a chat-UI migration.",
+      "testIDs": [
+        "CHAT-01",
+        "CHAT-20",
+        "CHAT-22",
+        "CHAT-28",
+        "CHAT-29",
+        "CHAT-30",
+        "CHAT-52",
+        "CHAT-55",
+        "E2E-K",
+        "E2E-O"
+      ]
+    },
+    {
+      "id": "INV-11",
+      "number": 11,
+      "title": "Node JavaScript execution",
+      "description": "Node JavaScript execution works.",
+      "testIDs": [
+        "JS-02",
+        "JS-04",
+        "JS-06",
+        "JS-07",
+        "FINAL-02",
+        "E2E-B",
+        "E2E-H"
+      ]
+    },
+    {
+      "id": "INV-12",
+      "number": 12,
+      "title": "Node TypeScript compilation & execution",
+      "description": "Node TypeScript compilation/execution works.",
+      "testIDs": [
+        "JS-08",
+        "JS-09",
+        "JS-10",
+        "FINAL-02",
+        "E2E-H"
+      ]
+    },
+    {
+      "id": "INV-13",
+      "number": 13,
+      "title": "JavaScriptCore lightweight execution",
+      "description": "JavaScriptCore lightweight execution works where selected.",
+      "testIDs": [
+        "JS-01",
+        "JS-03",
+        "JS-11",
+        "SCRIPTARCH-02"
+      ]
+    },
+    {
+      "id": "INV-14",
+      "number": 14,
+      "title": "QuickJS scripting engine availability",
+      "description": "QuickJS scripting remains available as a distinct engine.",
+      "testIDs": [
+        "SCRIPTARCH-03",
+        "DEP-09"
+      ]
+    },
+    {
+      "id": "INV-15",
+      "number": 15,
+      "title": "Embedded CPython & package persistence",
+      "description": "Embedded CPython works and package persistence survives relaunch.",
+      "testIDs": [
+        "PKGT-04",
+        "ENV-02",
+        "DEP-07",
+        "E2E-B",
+        "E2E-H",
+        "E2E-M"
+      ]
+    },
+    {
+      "id": "INV-16",
+      "number": 16,
+      "title": "ios_system command execution",
+      "description": "ios_system-backed command execution remains agent-callable and is broadened to the real backend capabilities rather than narrowed by Hanlin policy.",
+      "testIDs": [
+        "SH-01",
+        "SH-02",
+        "SH-04",
+        "SH-05",
+        "SH-06",
+        "SH-07",
+        "SH-08",
+        "SH-09",
+        "SH-10",
+        "SH-11",
+        "SH-12",
+        "SH-13",
+        "SH-14",
+        "SH-15",
+        "SH-16",
+        "SH-17",
+        "SH-18",
+        "SH-19",
+        "SH-20",
+        "DEP-08",
+        "CMD-01",
+        "CMD-02",
+        "CMD-03",
+        "CMD-04",
+        "CMD-05",
+        "CMD-06",
+        "CMD-07",
+        "CMD-08",
+        "CMD-09",
+        "CMD-10",
+        "CMD-11",
+        "CMD-12",
+        "CMD-13",
+        "CMD-14",
+        "CMD-15",
+        "CMD-16",
+        "CMD-17",
+        "CMD-18",
+        "CMD-19",
+        "CMD-20",
+        "CMD-21",
+        "CMD-22",
+        "CMD-23"
+      ]
+    },
+    {
+      "id": "INV-17",
+      "number": 17,
+      "title": "Node package management agent tools",
+      "description": "Node package preview/install/list/probe/use/uninstall works through canonical agent tools.",
+      "testIDs": [
+        "PKGT-01",
+        "PKGT-02",
+        "PKGT-03",
+        "PKGT-05",
+        "PKGT-06",
+        "E2E-H"
+      ]
+    },
+    {
+      "id": "INV-18",
+      "number": 18,
+      "title": "Python package management agent tools",
+      "description": "Python package preview/install/list/probe/use/uninstall works through canonical agent tools.",
+      "testIDs": [
+        "PKGT-01",
+        "PKGT-02",
+        "PKGT-04",
+        "PKGT-05",
+        "PKGT-06",
+        "E2E-B",
+        "E2E-H"
+      ]
+    },
+    {
+      "id": "INV-19",
+      "number": 19,
+      "title": "MCP package lifecycle & official Swift SDK",
+      "description": "MCP npm packages can be installed, registered, started in embedded Node, discovered via the official MCP Swift SDK, publish tools, execute tools, restart/recover and remain selectable per chat.",
+      "testIDs": [
+        "MCPSDK-01",
+        "MCPSDK-02",
+        "MCPSDK-03",
+        "MCPSDK-05",
+        "MCPSDK-06",
+        "MCP-01",
+        "MCP-02",
+        "CHAT-39",
+        "E2E-I",
+        "E2E-M"
+      ]
+    },
+    {
+      "id": "INV-20",
+      "number": 20,
+      "title": "MCP tool-list-changed live catalog refresh",
+      "description": "MCP tool-list-change notifications continue to refresh the canonical catalog.",
+      "testIDs": [
+        "MCPSDK-04",
+        "E2E-I"
+      ]
+    },
+    {
+      "id": "INV-21",
+      "number": 21,
+      "title": "Scripting package lifecycle & rollback",
+      "description": "Scripting packages can import/preview/compile/install/relaunch/update/rollback/uninstall according to the package semantics that are actually implemented.",
+      "testIDs": [
+        "SCRIPTARCH-08",
+        "E2E-E",
+        "E2E-M"
+      ]
+    },
+    {
+      "id": "INV-22",
+      "number": 22,
+      "title": "ScriptUI SwiftUI tree & event loop",
+      "description": "ScriptUI can render its native SwiftUI tree and receive events/state updates.",
+      "testIDs": [
+        "SCRIPTARCH-06",
+        "E2E-E",
+        "E2E-J"
+      ]
+    },
+    {
+      "id": "INV-23",
+      "number": 23,
+      "title": "Scripting tools canonical publication",
+      "description": "Scripting tools can publish into the agent catalog and return rich/embedded results.",
+      "testIDs": [
+        "SCRIPTARCH-07",
+        "E2E-E",
+        "E2E-J"
+      ]
+    },
+    {
+      "id": "INV-24",
+      "number": 24,
+      "title": "Shared HostServices across engines",
+      "description": "Host services shared by engines continue to work: files, storage, network, SQLite, Apple/device services, open URL, pasteboard and assistant bridge where implemented.",
+      "testIDs": [
+        "FS-01",
+        "DB-01",
+        "DB-02",
+        "DB-03",
+        "SCRIPTARCH-01",
+        "SCRIPTARCH-04",
+        "SCRIPTARCH-05",
+        "APPENG-03",
+        "E2E-D"
+      ]
+    },
+    {
+      "id": "INV-25",
+      "number": 25,
+      "title": "NativeScript MiniApps (Metadata Bridge + @nativescript/core)",
+      "description": "NativeScript MiniApps continue to support both direct iOS Metadata Bridge access and @nativescript/core, and can present UIKit/SwiftUI through Hanlin.",
+      "testIDs": [
+        "APPENG-01",
+        "APPENG-02",
+        "DEP-11",
+        "E2E-J"
+      ]
+    },
+    {
+      "id": "INV-26",
+      "number": 26,
+      "title": "Expo brownfield MiniApps",
+      "description": "Expo/React Native brownfield MiniApps continue to launch in their engine and coexist with the other engines.",
+      "testIDs": [
+        "APPENG-05",
+        "APPENG-06",
+        "DEP-12",
+        "DEP-13",
+        "E2E-J"
+      ]
+    },
+    {
+      "id": "INV-27",
+      "number": 27,
+      "title": "Native/Swift MiniApps in Apps Hub",
+      "description": "Native/Swift MiniApps continue to appear in the Apps Hub and expose tools/UI.",
+      "testIDs": [
+        "APPENG-07",
+        "APPENG-08",
+        "APPENG-09",
+        "E2E-J"
+      ]
+    },
+    {
+      "id": "INV-28",
+      "number": 28,
+      "title": "Clean cancellation & prompt re-entry",
+      "description": "Cancellation stops the correct run, leaves no stale UI spinner, and a new request can start immediately.",
+      "testIDs": [
+        "CHAT-24",
+        "CHAT-50",
+        "DISC-20",
+        "PKGT-08",
+        "FINAL-11",
+        "E2E-N"
+      ]
+    },
+    {
+      "id": "INV-29",
+      "number": 29,
+      "title": "Cold launch & relaunch state restoration",
+      "description": "Cold launch and relaunch restore installed packages/Skills/runtime state without exposing stale tool schemas from a prior request.",
+      "testIDs": [
+        "DISC-06",
+        "META-11",
+        "FINAL-10",
+        "E2E-M"
+      ]
+    },
+    {
+      "id": "INV-30",
+      "number": 30,
+      "title": "Real runtime capability inspection",
+      "description": "The agent can inspect real runtime capabilities rather than hallucinating that it is isolated merely because a schema is progressively hidden.",
+      "testIDs": [
+        "TOOLS-03",
+        "TOOLS-04",
+        "DISC-12",
+        "FINAL-09"
+      ]
+    },
+    {
+      "id": "INV-31",
+      "number": 31,
+      "title": "Durable result store & long output references",
+      "description": "Long tool results remain retrievable through the result store/reference path without silently truncating semantic output.",
+      "testIDs": [
+        "F07",
+        "E2E-F"
+      ]
+    },
+    {
+      "id": "INV-32",
+      "number": 32,
+      "title": "Built-in domain tools discoverability & execution",
+      "description": "Search/Sefaria/Wikipedia/Text Studio and every current built-in domain tool continue to be discoverable and callable.",
+      "testIDs": [
+        "APPENG-08",
+        "AUD-05",
+        "E2E-G"
+      ]
+    },
+    {
+      "id": "INV-33",
+      "number": 33,
+      "title": "File/document parsing & office archive extraction",
+      "description": "File/document handling, PDF, ZIP-based Office extraction and web parsing remain functional.",
+      "testIDs": [
+        "DEP-01",
+        "DEP-03",
+        "CHAT-22"
+      ]
+    },
+    {
+      "id": "INV-34",
+      "number": 34,
+      "title": "Platform ergonomics: RTL, Dynamic Type, iPad multitasking",
+      "description": "RTL, Dynamic Type, keyboard/pointer interaction, iPad resizing/multitasking and accessibility remain acceptable after the backend/runtime/platform changes; the chat UI itself is frozen except for minimal compatibility fixes required to keep the existing behavior working.",
+      "testIDs": [
+        "CHAT-25",
+        "CHAT-26",
+        "CHAT-27",
+        "CHAT-49"
+      ]
+    },
+    {
+      "id": "INV-35",
+      "number": 35,
+      "title": "Strong functional verification requirement",
+      "description": "No migration may claim success solely because it compiles. Every preserved capability must have functional evidence at the strongest practical layer.",
+      "testIDs": [
+        "FINAL-01",
+        "FINAL-02",
+        "FINAL-03",
+        "FINAL-04",
+        "FINAL-05",
+        "FINAL-08",
+        "FINAL-12"
+      ]
+    }
+  ]
+}

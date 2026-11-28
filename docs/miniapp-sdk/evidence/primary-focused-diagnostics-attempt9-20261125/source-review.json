@@ -1,0 +1,99 @@
+{
+  "schema": 1,
+  "source": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "tree": "d06c5752c33c787df957a01d33461889cf5d7f4e",
+  "review": "Read-only source trace. The statements identify ordering and possible synchronization boundaries; they are not additional native execution or proof of a cold-start cause.",
+  "files": [
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "bytes": 74343,
+      "sha256": "732bc4e23f4f72d8978cdce54e99fe87a7cec9ac9070f0b479524b42fdd50695",
+      "reviewedLineRanges": [
+        "225-248",
+        "1145-1205"
+      ],
+      "observation": "The parity title query may match its catalog card. The unchanged Modular test waits for sourceLink.exists, then unwraps a hittable native CollectionView/Table immediately."
+    },
+    {
+      "path": "DemoMiniApps/hanlin-script-parity/nativescript/app/bundle.mjs",
+      "bytes": 26084,
+      "sha256": "7d0fb4935d1727e04d656bb4ba026509fb0720178d27d442d480b6dfcb102204",
+      "reviewedLineRanges": [
+        "192-205",
+        "210-337",
+        "528-615"
+      ],
+      "observation": "Compatibility synchronous calls precede existing asynchronous alternatives; sequential JSC, Node, Python, fetch and self-request run during module evaluation. UI label changes are enqueued on NSOperationQueue.mainQueue."
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+      "bytes": 22872,
+      "sha256": "e8da50eb4d076d995135132810444f16900a65d55edd901270a2af07132a57a3",
+      "reviewedLineRanges": [
+        "150-207",
+        "225-252",
+        "405-414",
+        "472-517"
+      ],
+      "observation": "Legacy JSC/Node/Python Task paths directly invoke completion; generic executeRuntime uses a separate MainActor path. Self-request invocation is MainActor-routed."
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/NodeRuntimeService.swift",
+      "bytes": 48836,
+      "sha256": "fd0c4d7afcafb33518cde1f2e99dd212b42f763f420c6831975af97aa062891b",
+      "reviewedLineRanges": [
+        "680-707",
+        "862-883"
+      ],
+      "observation": "prepareHostRuntime synchronously hashes/prepares the embedded archive before NodeRuntimeBridge.start and before the Node ready wait. Source provides a possible cold-start stage, not a measured attribution of the entire observed delay."
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
+      "bytes": 12014,
+      "sha256": "6ef3c5c17c41a513484a1341edd31bad3dfcc4a3b9c72f2157e3f3d6112244d3",
+      "reviewedLineRanges": [
+        "95-115"
+      ],
+      "observation": "start calls runMainApplication synchronously before returning."
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeScriptCoreSupport.mm",
+      "bytes": 20414,
+      "sha256": "84ccdc1560eb3798f4d0af5475b53992ed5e56456c4eb3151d9ea43ba12b9199",
+      "reviewedLineRanges": [
+        "184-186"
+      ],
+      "observation": "The RUN_MAIN_OK marker occurs only after the original NativeScript runMainApplication call returns."
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+      "bytes": 37015,
+      "sha256": "e36a9d2ba06dd7878d17df7c9e8f17df8952ac67f087c0a43174742c1c0ebe0c",
+      "reviewedLineRanges": [
+        "33-44",
+        "251-315"
+      ],
+      "observation": "Background callback delivery uses CFRunLoopPerformBlock and WakeUp; synchronous wrappers pump the main run loop. The retained actual installed binary binds this current code."
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "bytes": 152226,
+      "sha256": "44dfc39f53d8b39f6e54675ea02a9e4682578ed36985d5939948c2006335ae6f",
+      "reviewedLineRanges": [
+        "924-960"
+      ],
+      "observation": "The active NativeScript controller is assigned after session.start returns."
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/App.tsx",
+      "bytes": 25362,
+      "sha256": "574e69fa47345e9847cb98b7f9c8a75d92e941854b5fd2764edb3b0d894f0c7a",
+      "reviewedLineRanges": [
+        "195-253",
+        "407-418",
+        "473-574"
+      ],
+      "observation": "The actual Expo NativeResultDetail contains an unconditional native List and its Open in Sefaria Link. getText is only triggered later by the Full text action; opening a search result does not await this HTTP request."
+    }
+  ]
+}

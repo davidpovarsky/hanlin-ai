@@ -1,0 +1,112 @@
+{
+  "runID": 46095649694,
+  "sourceSHA": "9a76309c29d716d3f5676e392457937ec8846e56",
+  "actualUIFileSHA256": "7c5e0a0c64e7bd46444cf71d01439a7738900f278805cead17e153237147f6a4",
+  "caseEvidence": [
+    {
+      "bytes": 18300,
+      "sha256": "edaf35da05f77ad59e1b561da65aa7c1db4cc2d64f6771226152b3ade5599073",
+      "ownApplication": "Attributes: Application, 0x1147870c0, pid: 38800, label: 'Shortcuts'",
+      "matchingLines": [
+        {
+          "line": 53,
+          "text": "                        Button, 0x114819b80, {{295.0, 36.0}, {36.0, 36.0}}, label: 'New Shortcut'"
+        },
+        {
+          "line": 149,
+          "text": "                    StaticText, 0x114813c00, {{154.0, 297.0}, {448.0, 26.5}}, label: 'What’s New in Shortcuts'"
+        },
+        {
+          "line": 181,
+          "text": "                  Button, 0x114816440, {{215.0, 833.0}, {326.0, 52.0}}, label: 'Continue'"
+        },
+        {
+          "line": 182,
+          "text": "                    StaticText, 0x114816580, {{342.0, 848.5}, {72.0, 20.5}}, label: 'Continue'"
+        }
+      ],
+      "artifactMember": "paired-product/paired-attachments/F657F79A-D99D-469E-ACF1-E31C08903F5A.txt"
+    },
+    {
+      "bytes": 287971,
+      "sha256": "9922deeb0ed8ad562e946a62e3f2a45c87433e1f9bc214f477ac26dd6f2a2965",
+      "artifactMember": "paired-product/paired-attachments/63CA2F4F-0B8D-4C33-B13C-51E29D2C663E.png"
+    },
+    {
+      "bytes": 5922,
+      "sha256": "a0cd2d6ef73fd9065802e70b157919a360b855adafba86bf51fbee08f24ed77a",
+      "ownApplication": "Attributes: Application, 0x115bb48c0, pid: 43631, label: 'Shortcuts'",
+      "matchingLines": [
+        {
+          "line": 51,
+          "text": "                        Button, 0x115bb8500, {{295.0, 36.0}, {36.0, 36.0}}, label: 'New Shortcut'"
+        }
+      ],
+      "artifactMember": "paired-product/paired-attachments/96166E4F-FC1B-4B61-915F-8E012B5599F4.txt"
+    },
+    {
+      "bytes": 116341,
+      "sha256": "68c365f64a40437b070590ae0e99d5260e6302f0e0563f27078d77956681218b",
+      "artifactMember": "paired-product/paired-attachments/B6BFB11A-BC62-4973-8DB9-629BCC77CA1F.png"
+    }
+  ],
+  "rawLog": {
+    "encoding": "gzip",
+    "rawBytes": 67838,
+    "rawSHA256": "3c12815ae7755abc2ac2d6659cfb29d282d9aa0f1611abbad415e2c45a3a8bc5",
+    "selectedLines": [
+      {
+        "line": 323,
+        "text": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult]' started."
+      },
+      {
+        "line": 579,
+        "text": "    t =   143.60s Added attachment named 'miniapp-shortcuts-start-accessibility'"
+      },
+      {
+        "line": 580,
+        "text": "    t =   143.84s Added attachment named 'miniapp-shortcuts-start'"
+      },
+      {
+        "line": 582,
+        "text": "    t =   143.98s Checking existence of `\"Add\" Button`"
+      },
+      {
+        "line": 657,
+        "text": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift:1250: error: -[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult] : failed: caught error: \"Create an actual new system Shortcut.\""
+      },
+      {
+        "line": 659,
+        "text": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult]' failed (157.134 seconds)."
+      },
+      {
+        "line": 660,
+        "text": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult]' started."
+      },
+      {
+        "line": 791,
+        "text": "    t =    53.49s Added attachment named 'miniapp-shortcuts-start-accessibility'"
+      },
+      {
+        "line": 792,
+        "text": "    t =    53.67s Added attachment named 'miniapp-shortcuts-start'"
+      },
+      {
+        "line": 794,
+        "text": "    t =    53.76s Checking existence of `\"Add\" Button`"
+      },
+      {
+        "line": 870,
+        "text": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift:1250: error: -[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult] : failed: caught error: \"Create an actual new system Shortcut.\""
+      },
+      {
+        "line": 872,
+        "text": "Test Case '-[AI_HLYUITests.HanlinEntrypointSystemSurfaceUITests testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult]' failed (67.674 seconds)."
+      }
+    ],
+    "artifactMember": "paired-product/paired-tests.log"
+  },
+  "limitation": "No successful Continue tap, shortcut creation, saved action, execution or result is inferred from these failed cases.",
+  "artifactID": 15248128275,
+  "scopeLimitation": "These are the two NativeScript creation failures. The two Expo methods in the same four-case route failed earlier at catalog readiness."
+}

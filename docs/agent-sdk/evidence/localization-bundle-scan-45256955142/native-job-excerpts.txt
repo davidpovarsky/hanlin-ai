@@ -1,0 +1,44 @@
+Source: parent-owned original native-job.log; SHA256 ac299969d6adf47a2f9061006c3c673869c4b8932c89a21dfca6f354ad4cfa4a; numbered exact lines.
+258813	2026-11-23T20:33:37.1900930Z Result bundle written to path:
+258814	2026-11-23T20:33:37.1901770Z 	/Users/runner/work/hanlin-ai/hanlin-ai/simulator-logs/SimulatorBuildResult.xcresult
+258816	2026-11-23T20:33:37.1903360Z ** TEST BUILD SUCCEEDED **
+258818	2026-11-23T20:33:56.0775760Z Resolve Package Graph
+258819	2026-11-23T20:33:57.1099430Z ++ date +%s
+258820	2026-11-23T20:33:57.1422210Z + echo 618
+258821	2026-11-23T20:33:57.1429270Z + APP_PATH=build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app
+258986	2026-11-23T20:34:08.8948150Z + python3 Scripts/SDK/verify_bundle_resources.py --repository-root . --app build/SimulatorRuntimeApp/AI_Hanlin.app --json-output simulator-logs/07-simulator-sdk-bundle-resources.json
+258987	2026-11-23T20:34:19.3292540Z {
+258988	2026-11-23T20:34:19.3295100Z   "bundle": "HanlinSDK_AI_Hanlin.bundle",
+258989	2026-11-23T20:34:19.3295860Z   "bundleCopies": [
+258990	2026-11-23T20:34:19.3296370Z     {
+258991	2026-11-23T20:34:19.3296820Z       "entries": 49,
+258992	2026-11-23T20:34:19.3297790Z       "files": 45,
+258993	2026-11-23T20:34:19.3300160Z       "inventorySHA256": "4f2efaf63079fa86b52ccbd718a52f551a892186f53e3ccb766e53c52427287f",
+258994	2026-11-23T20:34:19.3301900Z       "path": "HanlinSDK_AI_Hanlin.bundle"
+259225	2026-11-23T20:34:19.3764270Z       "source": "AI_HLY/Resource/UpdateNotes.json"
+259226	2026-11-23T20:34:19.3765030Z     }
+259227	2026-11-23T20:34:19.3765540Z   ],
+259228	2026-11-23T20:34:19.3766070Z   "copiedResourceFiles": 37,
+259229	2026-11-23T20:34:19.3766670Z   "errors": [],
+259230	2026-11-23T20:34:19.3767240Z   "module": "AI_Hanlin",
+259231	2026-11-23T20:34:19.3767850Z   "processedResources": [],
+259232	2026-11-23T20:34:19.3768460Z   "status": "PASS"
+259233	2026-11-23T20:34:19.3768990Z }
+259234	2026-11-23T20:34:19.5956640Z {
+259235	2026-11-23T20:34:19.6053620Z   "status": "FAIL",
+259236	2026-11-23T20:34:19.6064110Z   "catalog_values": 3683,
+259237	2026-11-23T20:34:19.6064470Z   "packaged_values": 0,
+259238	2026-11-23T20:34:19.6064780Z   "errors": [
+259239	2026-11-23T20:34:19.6065050Z     {
+259240	2026-11-23T20:34:19.6065620Z       "table": "Localizable",
+259241	2026-11-23T20:34:19.6065990Z       "locale": "en",
+259242	2026-11-23T20:34:19.6066420Z       "reason": "canonical packaged table missing or ambiguous"
+260123	2026-11-23T20:34:19.6405060Z     }
+260124	2026-11-23T20:34:19.6405130Z   ]
+260125	2026-11-23T20:34:19.6405200Z }
+260126	2026-11-23T20:34:19.6517750Z ##[error]Process completed with exit code 1.
+260127	2026-11-23T20:34:19.7019440Z ##[group]Run set -euxo pipefail
+260128	2026-11-23T20:34:19.7020730Z [36;1mset -euxo pipefail[0m
+260129	2026-11-23T20:34:19.7021390Z [36;1mperf_flags=()[0m
+260130	2026-11-23T20:34:19.7022530Z [36;1mif [ "$RUN_FULL_VALIDATION" != "true" ] && [[ "${SIMULATOR_UI_FILTER:-}" != *"HanlinUIPerformanceUITests"* ]]; then[0m
+260131	2026-11-23T20:34:19.7024550Z [36;1m  perf_flags+=("--no-require-canonical-flows")[0m

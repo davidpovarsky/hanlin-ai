@@ -1,0 +1,20 @@
+{
+  "head": "36faa1904e819c92db193d65cafbec0b8bd62ab1",
+  "inputs": [
+    {
+      "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "sha256": "faa6a40f72b333299ffd817ece80647ac840286d7b9284ec8e42c59f809fb467",
+      "bytes": 200473
+    },
+    {
+      "path": "Scripts/CI/owned_simulator_receipts.py",
+      "sha256": "bb02edac757d563d0e92ccb8e1978b79d80c0e509ea4921bc6d807a1a1360686",
+      "bytes": 6731
+    },
+    {
+      "path": "Scripts/CI/affected-validation-map.json",
+      "sha256": "566fbe3826698f67ce0fa0bc45a5caa99417c3cd23dc286b548c8890370159c2",
+      "bytes": 64877
+    }
+  ]
+}

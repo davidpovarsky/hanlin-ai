@@ -1,0 +1,28 @@
+{
+  "observedAt": "2026-11-25T06:06:26.024285+00:00",
+  "fixture": {
+    "name": "Hanlin-ScriptWidget-Actions.scripting",
+    "bytes": 825,
+    "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+    "node": "v24.22.0",
+    "files": [
+      "script.json",
+      "widget.jsx"
+    ]
+  },
+  "operation": "Original deterministicZip(widgetSamples[name].files) in memory; no fixture source/file changed",
+  "sources": [
+    {
+      "path": "Scripts/Widgets/samples.mjs",
+      "sha256": "44cfba8245edef5bf1344314fa010e527357aa45396ae2085d48a652687c508d"
+    },
+    {
+      "path": "Scripts/Widgets/deterministic-zip.mjs",
+      "sha256": "853b5c831fe3cc80c6c52f87991095930f5084c99d43f5999990782cdd4c1da0"
+    },
+    {
+      "path": "Scripts/Widgets/build-sample-packages.mjs",
+      "sha256": "ab9684c50845292b29f259264425caf70706e0c63eb3ea24a253c2dfe2575c3c"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "kind": "RETAINED_SOURCE_ANALYSIS_PERSISTENCE_NOT_NEW_EXECUTION",
+  "recordedAt": "2026-11-25T09:59:28.798731+00:00",
+  "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "sdkManifestSHA256": "1ca059acbc56b0d8d33f3d678c5023fd5aff26c744ac1e5412c3b1663529dfcd",
+  "snapshotReceiptSHA256": "eb18c6769824496ae5b37f2483dc191c36e614f166e799efe4490b3dbcda83f8",
+  "outsideSDKInputs": true,
+  "newRemoteOriginalReads": 0,
+  "newMacQueries": 0,
+  "newGeneratorsOrTests": 0,
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 3395,
+      "sha256": "baa1cc58e6ae31424d2d4a4c470cc3ea7070ebb7ecf3c0db1f610753abe9a693"
+    },
+    {
+      "path": "provenance-analysis.json",
+      "bytes": 10395,
+      "sha256": "90f2ea2229166c003acd1858cd37e9c96cc659defac55344c706e64dba47cb8c"
+    }
+  ],
+  "boundary": "Persists already-completed local-source/provenance analysis; no task closure or runtime acceptance is implied."
+}

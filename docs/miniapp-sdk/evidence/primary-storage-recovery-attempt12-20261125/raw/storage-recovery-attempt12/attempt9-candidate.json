@@ -1,0 +1,115 @@
+{
+  "observedAt": "2026-11-25T03:28:13.854415+00:00",
+  "owner": "/root/native_execution",
+  "source": "1a611764779b0a57cc57d71b26d2cd6449895d8d",
+  "candidate": {
+    "udid": "80E29B83-02CF-4481-B1AF-80A85CDE0247",
+    "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/80E29B83-02CF-4481-B1AF-80A85CDE0247",
+    "device": {
+      "dataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/80E29B83-02CF-4481-B1AF-80A85CDE0247/data",
+      "dataPathSize": 6202273792,
+      "logPath": "/Users/m1/Library/Logs/CoreSimulator/80E29B83-02CF-4481-B1AF-80A85CDE0247",
+      "udid": "80E29B83-02CF-4481-B1AF-80A85CDE0247",
+      "lastUsedAt": "2026-11-25T01:13:49Z",
+      "isAvailable": true,
+      "logPathSize": 274432,
+      "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-16GB",
+      "state": "Shutdown",
+      "name": "HanlinPaired-primary-ce49e30d-20261124"
+    },
+    "logicalDiskKiB": 6308424,
+    "processMatches": [],
+    "ownershipSource": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9/state.json",
+    "recovery": "Dedicated synthetic test simulator only; exact fixtures/source, all full raw xcresults/control logs and sealed focused9/SDK9 receipts retained outside device. Original runner always creates a fresh simulator. No active/planned test depends on this older device."
+  },
+  "sealedReceipts": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/receipt.json",
+      "bytes": 7629,
+      "sha256": "21c64fcc2333fab49acb8515896e40bbeea903b5f85643c1010fb815e70a0225",
+      "exactPublishedGitBytes": true
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/receipt.json",
+      "bytes": 21355,
+      "sha256": "a0e0c906735a77251bd403c1d8ce42013fc173e90caca727c8decac0cd14ba9d",
+      "exactPublishedGitBytes": true
+    }
+  ],
+  "retainedRawBundles": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9/paired-prefix/AIBuild.xcresult",
+      "topLevelEntries": [
+        "Data",
+        "Info.plist"
+      ],
+      "infoSHA256": "a1ac9b1a39b0209ea41e0ca8d0913ab65bdc548714b339c42fb9036feded7883"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9/paired-prefix/FocusedOriginal.xcresult",
+      "topLevelEntries": [
+        "database.sqlite3",
+        "Data",
+        "Info.plist"
+      ],
+      "infoSHA256": "1f5d8c2c96994fcb257e4a72c16ccc796f0a08e413d354dfb15ee2b3c468faad"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9/paired-prefix/MiniBuild.xcresult",
+      "topLevelEntries": [
+        "Data",
+        "Info.plist"
+      ],
+      "infoSHA256": "5452726c03ff16a9d0137ad2cefa2538dac557ec97945b6e183247d9b05b459f"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9/paired-prefix/ModularDiagnostic.xcresult",
+      "topLevelEntries": [
+        "Staging",
+        "Data"
+      ],
+      "infoSHA256": null
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9/paired-prefix/ModularDiagnosticBuild.xcresult",
+      "topLevelEntries": [
+        "Data",
+        "Info.plist"
+      ],
+      "infoSHA256": "b8c434785465a005bd2df98a23af7c63d0380ce1f81bae87ec71727b946c85c7"
+    }
+  ],
+  "retainedLogs": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9/state.json",
+      "bytes": 9813,
+      "sha256": "da6143e29aad6a1347415a464c0df4b85fa248f6f4a3705b064d2dcdd265eb2b"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-launch-attempt9.json",
+      "bytes": 2031,
+      "sha256": "1a6177ebb26c5b4f1f6829eae1dbf12689ef0a0cc0d801cbbbd32443506cb387"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9.log",
+      "bytes": 31723,
+      "sha256": "f3dda98a983a9d6c9c54cfcca1cbb584a226883c738a98506e225081d4328a05"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9/paired-prefix/FocusedOriginal.log",
+      "bytes": 118054,
+      "sha256": "0303d4bae08f882d234230276ff780dfdf8f22676ffb2ac58706d297a9e580a7"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9/paired-prefix/ModularDiagnostic.log",
+      "bytes": 37604,
+      "sha256": "86d7290f113656efc36c1ff442e19425123b0ba34f0eb3077a42b285c4d64692"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9/paired-prefix/commands.jsonl",
+      "bytes": 19068,
+      "sha256": "768d3726444b50e07a19c760337f70f35978875fc95e9c42528304dc78b502f2"
+    }
+  ],
+  "dfBefore": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 428550192  10362688    98% 5782498 103626880    5%   /System/Volumes/Data\n"
+}

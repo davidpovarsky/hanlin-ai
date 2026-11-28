@@ -1,0 +1,75 @@
+{
+  "status": "OLD_CLOSED_SIMULATORS_RETIRED_WITH_BOUNDED_VERIFIED_EVIDENCE",
+  "startedAt": "2026-11-27T04:21:22.937991+00:00",
+  "controllerPID": 11339,
+  "scope": "Only exact older terminal G14 iPad and G15 iPhone. Preserve all app-data containers, shared groups, preferences, logs and device metadata. Original reports, raw xcresults, attachments and source remain at original paths. Regenerable Simulator OS data and compiled app bundles are not copied. This is bounded evidence retention, not a full filesystem snapshot.",
+  "items": [
+    {
+      "generation": 14,
+      "role": "ipad",
+      "uuid": "0DBF669F-10B4-43B4-A561-9AFDF4FEF0CC",
+      "report": "/Users/m1/builds/hanlin-testflight-149101-20261125/post149101-20261126/generation-14/report.json",
+      "reportSHA256": "89558d742b2645f747a56f2c63b8b05c6a110b92cb34cce053ed3698c2b4eb81",
+      "source": "66b4229367a8aecd001edf396288cc44ac3772c0",
+      "status": "RETIRED_WITH_VERIFIED_APP_EVIDENCE_AND_ORIGINAL_RESULTS_RETAINED",
+      "freeBefore": 2261663744,
+      "ownershipConfirmed": true,
+      "retainedOriginalFiles": {
+        "count": 203,
+        "manifest": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-closed-simulator-app-evidence-20261127/generation-14-ipad/retained-original-result-files.json",
+        "sha256": "59bc24ce6f2dd71a56476a7143f7d62829cfca69cf207e4be7617e86dd23747c"
+      },
+      "outsideLogs": {
+        "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-closed-simulator-app-evidence-20261127/generation-14-ipad/outside-device-core-simulator-logs.tar.gz",
+        "bytes": 298,
+        "sha256": "9b1f66a469f42807dfb8755f0699d0f5badb0520923d75e8d68bd83df286a3a6"
+      },
+      "preservedAppData": {
+        "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-closed-simulator-app-evidence-20261127/generation-14-ipad/app-data-preferences-and-logs.tar.gz",
+        "bytes": 92243964,
+        "sha256": "a3e780ac8646d18d615062c47928b95556fd03949a2c6c92937c169aabf4dfd2",
+        "inventory": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-closed-simulator-app-evidence-20261127/generation-14-ipad/retained-device-file-inventory.json",
+        "inventorySHA256": "6c096fb5c7bfc9d72d3439855e679aa684bef0cc8577adcf52af6ae8c8f40d65",
+        "entries": 35299,
+        "allRetainedPayloadHashesVerified": true
+      },
+      "finishedAt": "2026-11-27T04:21:41.513761+00:00",
+      "freeAfter": 2072903680
+    },
+    {
+      "generation": 15,
+      "role": "iphone",
+      "uuid": "BF1A997A-1F6C-425C-9E97-022AECB6349D",
+      "report": "/Users/m1/builds/hanlin-testflight-149101-20261125/post149101-20261126/generation-15/report.json",
+      "reportSHA256": "3dad41b0d6c9c2ec8357610223caa01de186cf3b5cd82beba5009079c60cf121",
+      "source": "c9887913845542a93d57ba9036622e4c51ecbbd2",
+      "status": "RETIRED_WITH_VERIFIED_APP_EVIDENCE_AND_ORIGINAL_RESULTS_RETAINED",
+      "freeBefore": 2075123712,
+      "ownershipConfirmed": true,
+      "retainedOriginalFiles": {
+        "count": 41,
+        "manifest": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-closed-simulator-app-evidence-20261127/generation-15-iphone/retained-original-result-files.json",
+        "sha256": "ceee02348b4a51eb10c6dc95a6076a056c32bddb106f61ba66742d1b3fa67fe1"
+      },
+      "outsideLogs": {
+        "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-closed-simulator-app-evidence-20261127/generation-15-iphone/outside-device-core-simulator-logs.tar.gz",
+        "bytes": 299,
+        "sha256": "e27b423af94f8b9458b6d75e118138299967fcd4dc49e98b05b0852830f30304"
+      },
+      "preservedAppData": {
+        "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-closed-simulator-app-evidence-20261127/generation-15-iphone/app-data-preferences-and-logs.tar.gz",
+        "bytes": 114510839,
+        "sha256": "d1c97d369d4e1ebac5655756b808cd04346b68bddc69813743d178dc0a76083d",
+        "inventory": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-closed-simulator-app-evidence-20261127/generation-15-iphone/retained-device-file-inventory.json",
+        "inventorySHA256": "13652fe3579ee7e5201397174606344e68c89e226219cbaec5baea2feae6a794",
+        "entries": 53545,
+        "allRetainedPayloadHashesVerified": true
+      },
+      "finishedAt": "2026-11-27T04:22:08.138314+00:00",
+      "freeAfter": 4011085824
+    }
+  ],
+  "freeBefore": 2261667840,
+  "finishedAt": "2026-11-27T04:22:08.138800+00:00",
+  "freeAfter": 4019724288
+}

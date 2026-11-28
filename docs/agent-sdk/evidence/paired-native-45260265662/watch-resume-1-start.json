@@ -1,0 +1,12 @@
+{
+  "time": "2026-11-23T21:39:21.225966+00:00",
+  "run": 45260265662,
+  "source": "e59256e8325bcdb71c0e683f6b19e7641642aad8",
+  "owner": "/root/motion_acceptance",
+  "previous_watcher": "job_c2e20a636d71",
+  "previous_watcher_completed": true,
+  "maximum_watch_seconds": 3300,
+  "interval_seconds": 60,
+  "native_job_minutes": 150,
+  "scope": "Sequential observation of the same existing paired3 run; no native dispatch or replay"
+}

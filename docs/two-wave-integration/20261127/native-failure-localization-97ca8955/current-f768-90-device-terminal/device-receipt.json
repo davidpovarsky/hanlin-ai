@@ -1,0 +1,46 @@
+{
+  "label": "device",
+  "runID": 45949460695,
+  "jobID": 140341929366,
+  "source": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "jobName": "Build unsigned IPA with Xcode 26",
+  "status": "completed",
+  "conclusion": "failure",
+  "completedAt": "2026-11-27T07:04:07Z",
+  "failedSteps": [
+    {
+      "name": "Validate packaged IPA dyld closure",
+      "status": "completed",
+      "conclusion": "failure",
+      "number": 41,
+      "started_at": "2026-11-27T07:03:26Z",
+      "completed_at": "2026-11-27T07:03:51Z"
+    }
+  ],
+  "command": [
+    "runuser",
+    "-u",
+    "ubuntu",
+    "--",
+    "gh",
+    "api",
+    "repos/davidpovarsky/hanlin-ai/actions/jobs/140341929366/logs"
+  ],
+  "downloadExitCode": 0,
+  "startedAtUTC": "2026-11-27T07:19:36.109987+00:00",
+  "finishedAtUTC": "2026-11-27T07:19:47.404423+00:00",
+  "files": {
+    "device-job.json": {
+      "sha256": "2d436ae4296537bb2cdc27237aeb50af8e3b165732232639df4b40bb780150af",
+      "bytes": 9689
+    },
+    "device-job.log": {
+      "sha256": "4ca141c9ab8384c8e9df4eec39e4df2694eefd705c6413137b2c931f2adbebb4",
+      "bytes": 25859249
+    },
+    "device-download.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  }
+}

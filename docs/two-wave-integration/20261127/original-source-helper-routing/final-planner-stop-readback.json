@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "recordedAtUTC": "2026-11-27T17:20:20.853826+00:00",
+  "exactWorktree": "/mnt/development/projects/worktrees/hanlin-original-source-fixture-routing-20261127",
+  "matchingCWDOrOriginalPlannerCommandProcesses": [],
+  "newSignalsSent": false,
+  "originalTimeoutSeconds": 150,
+  "legacyPlanPresent": false,
+  "full90NotStarted": true,
+  "boundary": "No original PID tree was captured before the timeout; this is a fresh exact-CWD and exact-command liveness readback, not a claim about unattributed processes."
+}

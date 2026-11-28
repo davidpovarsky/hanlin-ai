@@ -1,0 +1,8 @@
+{
+  "phase": "proof-only packaging",
+  "exitCode": 2,
+  "stdout": "docs/two-wave-integration/20261127/widget-families-os/r1-to-r2.patch:64: trailing whitespace.\n+ \ndocs/two-wave-integration/20261127/widget-families-os/r1-to-r2.patch:106: trailing whitespace.\n+ \n",
+  "stderr": "",
+  "sourceHEAD": "f2e25825c1e462c0394d8787cdc7a097d5c480b8",
+  "reason": "Raw unified diff context contains significant leading-space lines; retain losslesslygzip, do not trim raw patch"
+}

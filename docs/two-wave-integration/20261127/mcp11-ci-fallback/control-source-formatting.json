@@ -1,0 +1,11 @@
+{
+  "path": "Scripts/CI/Tests/test_mcp_wire_supervision.py",
+  "beforeSHA256": "989ae19a5c6c5b10621f474bbb63353bc4ddacdae8ae37ff9bc5102389b9fa80",
+  "afterSHA256": "abc05eab7265f34035caccc612bed076d2b17ea92d83eb4a1adf8bf2f9c4f622",
+  "removedBytes": 1,
+  "change": "Remove one additional LF after final source line; git diff --check rejects the imported blank EOF line.",
+  "wholePythonASTUnchanged": true,
+  "original16MethodsAndAssertionsUnchanged": true,
+  "nativeStatus": "NOT_RUN",
+  "atUTC": "2026-11-27T17:18:57.259119+00:00"
+}

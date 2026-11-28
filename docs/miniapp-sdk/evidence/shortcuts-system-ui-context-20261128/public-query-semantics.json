@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "observedAtUTC": "2026-11-28T09:07:18Z",
+  "classification": "PUBLIC_API_SOURCE_QUALIFICATION_ONLY",
+  "candidate": {
+    "manifestSHA256": "d42f83aa8a6bc4be596f3e18f96ce42f3d1cd4dbe73df1e89957ed2f83232b79",
+    "uiSHA256": "cc5253987c66f16528b5e5423523e96d31a255a278330eeddf07ca0997e1f8a3"
+  },
+  "authority": {
+    "url": "https://developer.apple.com/documentation/xcuiautomation/xcuielementquery/matching(identifier:).md",
+    "publisher": "Apple Developer Documentation",
+    "symbol": "XCUIElementQuery.matching(identifier:)",
+    "preciseIdentifier": "c:objc(cs)XCUIElementQuery(im)matchingIdentifier:"
+  },
+  "finding": "The public matching(identifier:) query considers identifier, title, label, value, and placeholderValue. The observed Editor and Hide Sidebar label queries therefore use an admitted public matching contract even when the AX dump does not expose a separate identifier.",
+  "limits": [
+    "No change to the frozen candidate.",
+    "No native Swift compile, simulator action, or successful control discovery is claimed.",
+    "The action-search labels remain the original source contract, not a newly observed successful action-editor locator."
+  ]
+}

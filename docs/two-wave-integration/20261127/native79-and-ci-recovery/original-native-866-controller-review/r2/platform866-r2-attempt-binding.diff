@@ -1,0 +1,50 @@
+--- build-platform-native-866d2d3c-r1.py
++++ build-platform-native-866d2d3c-r2.py
+@@ -1,7 +1,7 @@
+ import pathlib,subprocess,os,json,hashlib,datetime,time,fcntl,signal,traceback,plistlib
+ stage=pathlib.Path('/Users/m1/builds/hanlin-two-wave-root-20261126');root=stage/'source';package=root/'Packages/HanlinPlatform'
+ source='866d2d3c60525e32eae27564869e6dba024e625c';dd=pathlib.Path('/Users/m1/builds/hanlin-two-wave-root-20261126/derived-data/platform-16b4af44')
+-proof=stage/'validation/platform-866d2d3c/build-r1';receipt=stage/'platform-native-build-866d2d3c-r1.json';uuid='233DB080-C913-4EE6-BF3D-99659F5CD475'
++proof=stage/'validation/platform-866d2d3c/build-r2';receipt=stage/'platform-native-build-866d2d3c-r2.json';uuid='233DB080-C913-4EE6-BF3D-99659F5CD475'
+ now=lambda:datetime.datetime.now(datetime.timezone.utc).isoformat()
+ def digest(p):
+  with p.open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
+@@ -40,6 +40,9 @@
+  fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+  fcntl.flock(maintenance,fcntl.LOCK_SH|fcntl.LOCK_NB)
+  data['coordinationLocks']={'native':'exclusive','existingMaintenance':'shared'}
++ recoveryPath=stage/'platform-sourcepackages-recovery-866d2d3c.json';assert digest(recoveryPath)=='c032a99fa639eccf6e7c5b84d4034e463abfc593026aaec2e9bbb139ecf77e28'
++ recovery=json.loads(recoveryPath.read_text());assert recovery['status']=='SIX_ORIGINAL_PINNED_REPOSITORIES_RECOVERED_NATIVE_NOT_RUN' and recovery['source']==source
++ data['dependencyCacheRecovery']={'path':str(recoveryPath),'sha256':digest(recoveryPath)}
+  assert not proof.exists() and not receipt.exists()
+  proof.mkdir(parents=True)
+  data['retainedWarmBuildBudgetBasis']={'derivedData':str(dd),'historicalBuildReceipt':str(stage/'platform-native-build-16b4af44-r2.json'),'historicalBuildReceiptSHA256':digest(stage/'platform-native-build-16b4af44-r2.json'),'scope':'Existing owned package cache is retained. The original full build-for-testing command recompiles current changed inputs; historical products are not native acceptance. Conservative8073741824-byte admission and original phase limits remain unchanged.'}
+@@ -53,7 +56,7 @@
+  changePath=stage/'source-stage-866d2d3c.json';change=json.loads(changePath.read_text())
+  assert digest(changePath)=='3b8c8a565050df6e1b5b9314a56b90d7230c3f282fe68b25aafebde4dc70e284' and change['status']=='REVIEWED_INTEGRATED_SOURCE_STAGED_FRESH_NATIVE_REQUIRED' and change['sourceAfter']==source
+  data['sourceChangeQualification']={'sourceUpdateReceipt':str(changePath),'sha256':digest(changePath),'source':source,'scope':'Root-integrated reviewed Widget diagnostic, unchanged original native Swift assertions and changed Matrix input resources. Fresh original58/79 and Host188 are required.'}
+- currentReviewPath=stage/'platform-final-controller-review-866d2d3c.json'
++ currentReviewPath=stage/'platform-final-controller-review-866d2d3c-r2.json'
+  currentReview=json.loads(currentReviewPath.read_text())
+  assert currentReview['source']=='866d2d3c60525e32eae27564869e6dba024e625c' and currentReview['decision']=='APPROVED_ORIGINAL_NATIVE_AND_HOST_SOURCE_BINDINGS'
+  assert currentReview['inventorySHA256']=='a5530408269f296d1cbb743fd52624f74755509623ee68b2bfd0f7e351b78822'
+--- run-platform-native-866d2d3c-test-r1.py
++++ run-platform-native-866d2d3c-test-r2.py
+@@ -39,7 +39,7 @@
+  assert subprocess.check_output(['/usr/bin/git','-C',str(root),'rev-parse','HEAD'],text=True).strip()==source
+  assert subprocess.check_output(['/usr/bin/git','-C',str(root),'rev-parse','HEAD:Packages/HanlinPlatform/Sources'],text=True).strip()=='1586a7e95b6a3245bf0bb0ea60600c9b5086bc63'
+  assert not subprocess.check_output(['/usr/bin/git','-C',str(root),'diff','--name-only','HEAD','--','Packages/HanlinPlatform','Fixtures/Widgets'],text=True).strip()
+- builtPath=stage/'platform-native-build-866d2d3c-r1.json';built=json.loads(builtPath.read_text());assert built['status']=='BUILT_FOR_TESTING_AWAITING_ORIGINAL_TEST_EXECUTION' and built['source']==source
++ builtPath=stage/'platform-native-build-866d2d3c-r2.json';built=json.loads(builtPath.read_text());assert built['status']=='BUILT_FOR_TESTING_AWAITING_ORIGINAL_TEST_EXECUTION' and built['source']==source
+  invPath=stage/'platform-test-inventory-866d2d3c.json';inv=json.loads(invPath.read_text());assert inv['sourceCommit']==source
+  assert digest(invPath)=='a5530408269f296d1cbb743fd52624f74755509623ee68b2bfd0f7e351b78822'
+  for rel,sha in inv['sourceSHA256'].items():assert digest(root/rel)==sha,rel
+@@ -57,7 +57,7 @@
+  assert len(expected)==58 and sum(t['expectedInvocations'] for t in expected.values())==79
+  reviewPath=stage/'platform-independent-compatibility-review-16b4af44.json';assert digest(reviewPath)=='6474b813c1a524d1261219c8f3a0ff8b5e1883ad65ba9c66637f739b30fd05fb'
+  review=json.loads(reviewPath.read_text());assert review['source']=='16b4af4490d96c41cb76ed185a1e6d4e828899e7' and review['decision']=='APPROVED_BOUNDED_SOURCE_CORRECTION_NATIVE_ACCEPTANCE_PENDING'
+- currentReviewPath=stage/'platform-final-controller-review-866d2d3c.json'
++ currentReviewPath=stage/'platform-final-controller-review-866d2d3c-r2.json'
+  currentReview=json.loads(currentReviewPath.read_text())
+  assert currentReview['source']=='866d2d3c60525e32eae27564869e6dba024e625c' and currentReview['decision']=='APPROVED_ORIGINAL_NATIVE_AND_HOST_SOURCE_BINDINGS'
+  assert currentReview['inventorySHA256']=='a5530408269f296d1cbb743fd52624f74755509623ee68b2bfd0f7e351b78822'

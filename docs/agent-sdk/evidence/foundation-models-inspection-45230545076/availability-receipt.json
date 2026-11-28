@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "availability": "deviceNotEligible",
+  "executionTarget": "macOS runner host; not iOS Simulator",
+  "hostSystem": "Darwin",
+  "hostArchitecture": "arm64",
+  "modelExecution": "NOT_RUN",
+  "toolExecution": "NOT_RUN",
+  "toolCapability": "NOT_QUERIED",
+  "source": "availability.swift",
+  "sourceSHA256": "27b70911b258ba1eaa53502eef3e61f9efe594a6cdf87341fb8d104c70cdaba6",
+  "commands": [
+    {
+      "command": [
+        "xcodebuild",
+        "-version"
+      ],
+      "timeoutSeconds": 10,
+      "outputLimitBytesPerStream": 65536,
+      "status": "PASS",
+      "returncode": 0,
+      "elapsedSeconds": 0.1497,
+      "stdout": {
+        "path": "xcode-version.stdout.log",
+        "bytes": 31,
+        "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7"
+      },
+      "stderr": {
+        "path": "xcode-version.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "xcrun",
+        "--sdk",
+        "macosx",
+        "--show-sdk-path"
+      ],
+      "timeoutSeconds": 10,
+      "outputLimitBytesPerStream": 65536,
+      "status": "PASS",
+      "returncode": 0,
+      "elapsedSeconds": 2.4985,
+      "stdout": {
+        "path": "sdk-path.stdout.log",
+        "bytes": 104,
+        "sha256": "ef0267694b48b092db5b5d7800411bba8eaad357d65f739b69b5c8b262c50409"
+      },
+      "stderr": {
+        "path": "sdk-path.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "xcrun",
+        "--sdk",
+        "macosx",
+        "--show-sdk-version"
+      ],
+      "timeoutSeconds": 10,
+      "outputLimitBytesPerStream": 65536,
+      "status": "PASS",
+      "returncode": 0,
+      "elapsedSeconds": 1.3608,
+      "stdout": {
+        "path": "sdk-version.stdout.log",
+        "bytes": 5,
+        "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b"
+      },
+      "stderr": {
+        "path": "sdk-version.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "xcrun",
+        "--sdk",
+        "macosx",
+        "swiftc",
+        "--version"
+      ],
+      "timeoutSeconds": 10,
+      "outputLimitBytesPerStream": 65536,
+      "status": "PASS",
+      "returncode": 0,
+      "elapsedSeconds": 2.0907,
+      "stdout": {
+        "path": "compiler-version.stdout.log",
+        "bytes": 98,
+        "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+      },
+      "stderr": {
+        "path": "compiler-version.stderr.log",
+        "bytes": 30,
+        "sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e"
+      }
+    },
+    {
+      "command": [
+        "xcrun",
+        "--sdk",
+        "macosx",
+        "swiftc",
+        "-sdk",
+        "/Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.2.sdk",
+        "-parse-as-library",
+        "-module-cache-path",
+        "/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/hanlin-foundation-models-availability-d35zzl3i/module-cache",
+        "simulator-logs/foundation-models-interface/availability-query/availability.swift",
+        "-o",
+        "/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/hanlin-foundation-models-availability-d35zzl3i/availability-query"
+      ],
+      "timeoutSeconds": 60,
+      "outputLimitBytesPerStream": 65536,
+      "status": "PASS",
+      "returncode": 0,
+      "elapsedSeconds": 7.7531,
+      "stdout": {
+        "path": "compile.stdout.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "compile.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/hanlin-foundation-models-availability-d35zzl3i/availability-query"
+      ],
+      "timeoutSeconds": 10,
+      "outputLimitBytesPerStream": 65536,
+      "status": "PASS",
+      "returncode": 0,
+      "elapsedSeconds": 0.0675,
+      "stdout": {
+        "path": "query.stdout.log",
+        "bytes": 222,
+        "sha256": "a18ec252484933aa75f0d0e08a41a44aa5d78a3f107a54f574dedd888f463bbc"
+      },
+      "stderr": {
+        "path": "query.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "xcode": "Xcode 27.2\nBuild version 27B52",
+  "sdkPath": "/Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.2.sdk",
+  "sdkVersion": "27.2",
+  "compiler": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0",
+  "executableSHA256": "04addc129f65265269b6c53d03842f41bdc921355aa9d74452d42dab8cd8b3d3",
+  "observation": {
+    "availability": "deviceNotEligible",
+    "modelExecution": "NOT_RUN",
+    "osVersion": "Version 27.0.1 (Build 26A434)",
+    "platform": "macOS",
+    "query": "SystemLanguageModel.default.availability",
+    "schemaVersion": 1,
+    "toolExecution": "NOT_RUN"
+  }
+}

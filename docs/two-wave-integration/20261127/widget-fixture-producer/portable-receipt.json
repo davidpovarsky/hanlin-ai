@@ -1,0 +1,33 @@
+{
+  "startedAtUTC": "2026-11-27T20:19:06.909726+00:00",
+  "finishedAtUTC": "2026-11-27T20:19:07.375171+00:00",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_widget_fixture_producer.py",
+    "-v"
+  ],
+  "cwd": "/workspace/scratch/d49eec8920ef/w1-widget-producer/candidate",
+  "exitCode": 0,
+  "sourceSHA256": {
+    "Scripts/ProductSplit/prepare_widget_fixtures.py": "2c24e64319ffd6547243b445260ef1448588a9c639dfe2a1103d74dc68e1273a",
+    "Scripts/ProductSplit/observe_widget_state.py": "68b84fcc6475a125e1424c774c9337dde5fbde06f92becec1e6b3782389e8be6",
+    "Scripts/CI/Tests/test_widget_fixture_producer.py": "28a59303b8c737dbe2511d408caba09350e6b63963db3ac0265ec8c02e69366c"
+  },
+  "nativeTestsExecuted": 0,
+  "actualProducerInvocations": 0,
+  "priorToolOnlyRun": "12 PASS before explicit workspace and independent seven-path assertion refinements; not claimed as this final raw receipt.",
+  "stdout.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr.log": {
+    "bytes": 2503,
+    "sha256": "f62b01245aba4ede8998e5fcb906ce8141ec0f2001fac49ddfa2a6989cd53c09"
+  }
+}

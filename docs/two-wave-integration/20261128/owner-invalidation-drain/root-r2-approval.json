@@ -1,0 +1,53 @@
+{
+  "at": "2026-11-28T04:16:14.683120+00:00",
+  "verdict": "APPROVED_SOURCE_ONLY_FOR_DONOR_SEAL_NATIVE_REQUIRED",
+  "candidateManifestSHA256": "62c6604f266698830682f4dc63f33cf684e2f98473fd2d16241dc1dd6360716d",
+  "verifiedMembers": 17,
+  "verifiedBytes": 917509,
+  "patchSHA256": "d90bdcb50c25b2b3b0d70b2017b3850f7328e714c13b54832bb8d4d70ba286e9",
+  "actualFivePathVerification": [
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "beforeSHA256": "fa07c1f4cf515ea717cc174893168685f24ee190d0ef09d41d006b955efbe59a",
+      "afterSHA256": "85bedf129a20d6f911056127a1d2680447be7bc22cc67c7c2c877c0feaf4a882",
+      "hunksVerifiedAgainstActualBaseGit": true,
+      "removedOriginalLines": 11
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppConversationStore.swift",
+      "beforeSHA256": "adad494a872a28a53b4143dcc7686fe77d8d23611a691f144b4ebe459ccd1593",
+      "afterSHA256": "f98842ff23b4b2c9f7180cb3b30d21702838deebf549840b822ef508999c81a8",
+      "hunksVerifiedAgainstActualBaseGit": true,
+      "removedOriginalLines": 0
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "beforeSHA256": "9ee86ec88ce723c8257cef8a26ff46865408ec3b50568314875a5608c7ddfc0a",
+      "afterSHA256": "cab45c3fe1e7733cc772e6e08cc0cc3fddef2c8254a0d98e219f392e1f17408f",
+      "hunksVerifiedAgainstActualBaseGit": true,
+      "removedOriginalLines": 0
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+      "beforeSHA256": "58b60391c81eaefcfacabd5519eaa3ef32cac46d22a239e07b0c81292eaf09e8",
+      "afterSHA256": "45e9de16a08e4eb2c72bcbab12fea95b8166a8404dfae398c8864de25e1511d6",
+      "hunksVerifiedAgainstActualBaseGit": true,
+      "removedOriginalLines": 0
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift",
+      "beforeSHA256": "bc17417831248d82b532a9c445dc78a263d03ac4dfc839f2737c6b0d8f7abdbb",
+      "afterSHA256": "043ae321551f2a6678ff1b2e83c05595e1c0188ef2b71876de827f0a2686f5e4",
+      "hunksVerifiedAgainstActualBaseGit": true,
+      "removedOriginalLines": 0
+    }
+  ],
+  "bothOriginalWriterGuardsExact": true,
+  "originalFastInvalidateAndTestBodies": "Exact original bytes retained; Session/store/test changes additive only.",
+  "R1Review": "18dd7dd856329db2b1789ffc55619b928c8704964791c56057988085c50e8563",
+  "R1DefectResolution": "After the unchanged actual clear succeeds, the recovery wrapper retains exact old Session and invalidation task, joins it, requires old writer stopped and same store/row/namespace/temporary identity. Only storeConflict may be reconciled against exact empty canonical revision and actual sole replacement object. Failed/changed clear or any other failure remains rejecting. The old Session's own persistence error is not reset.",
+  "postAwaitAdmission": "Original conversation, cancellation, revocation generation, registration and optional lease are checked after each relevant suspension before a new engine/writer. The added nil-lease deletion test uses the real invalidation callback and original SwiftData row.",
+  "testReview": "Nine new definitions/eleven invocations: actual producer/final-save suspension, real save failure, unjoinable preparation, immediate same-owner restart, foreign-writer rejection, revocation during drain, persistent/temporary successful clear and changed/failed clear, nil-dataAccess deletion. No original assertions or time limits altered.",
+  "native": "NOT_RUN; actual original AgentSession/Context/Store and owner/conversation gates remain required.",
+  "scopeLimit": "No Swift compile/runtime ordering proof or repaired original90 PASS is claimed by this review."
+}

@@ -1,0 +1,46 @@
+{
+  "base": "04e33c45acedd3f372f836b06f17b805bc91293d",
+  "candidatePaths": [
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+    "Fixtures/ShortcutNativeLists/expo/App.tsx",
+    "Fixtures/ShortcutNativeLists/expo/hanlin.authoring.json",
+    "Fixtures/ShortcutNativeLists/expo/index.ts",
+    "Fixtures/ShortcutNativeLists/expo/package.json",
+    "Fixtures/ShortcutNativeLists/expo/proof.ts",
+    "Fixtures/ShortcutNativeLists/expo/script.json",
+    "Fixtures/ShortcutNativeLists/expo/tsconfig.json",
+    "Scripts/CI/Tests/test_affected_validation.py",
+    "Scripts/CI/Tests/test_shortcut_native_lists.py",
+    "Scripts/CI/affected-validation-map.json",
+    "Scripts/ProductSplit/observe_shortcut_native_lists.py",
+    "Scripts/ProductSplit/run_paired_acceptance.py"
+  ],
+  "sdkAuthority": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/sdk13-9ee23af8-pass-r2/native/current-miniapp-sdk.json.gz",
+    "gzipSHA256": "1e0e67b0c0bae9d2397191af4d8a4d99473eeffd7e3e196e5b873b5510e3398f",
+    "rawSHA256": "7507f7f439446f0299cba51fc2d56d71b12ae7b847211fe803d0ecd45593f7df",
+    "recordedInputSHA256": "36b1fa73d649f52580ca83458f668d1184665480eb3d5ad9f83a4ee4b5cce254",
+    "sourcePaths": 396,
+    "pathSetSHA256": "e0f87413384f58bb0334523c6251df922feee094bcae283e7786f3af38703853"
+  },
+  "hostAuthority": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/sdk13-9ee23af8-pass-r2/reconciliation/host99-live-inputs.json",
+    "sha256": "460b6ebe9de738d033f841be7f99d992f5293e9739c208bea2eadbf057847889",
+    "sourcePaths": 99,
+    "pathSetSHA256": "00011932f874b13ee9a0622add393dc93894596560d8b6f1ab2844c2f646363b"
+  },
+  "sdkInputIntersection": [],
+  "hostInputIntersection": [],
+  "scope": "Static changed-path intersection against retained actual 9ee producer input sets. No fresh SDK/Host or consumer/native reuse approval is inferred.",
+  "unchangedNativeFixtureFiles": {
+    "Fixtures/ShortcutNativeLists/nativescript/tsconfig.json": "32212ba114edcbc3f0f923db351e65c228b1c0bc4f2a2339a1bd2eaa90e24e75",
+    "Fixtures/ShortcutNativeLists/nativescript/package.json": "daade868d8345954dd06b629b6ab9912e7241adce7f46669e6ecbf1f8d676041",
+    "Fixtures/ShortcutNativeLists/nativescript/script.json": "9b61a8b3503d72f2536c579cdea9625c1c9180f66e4cb88d66207c15343f7f08",
+    "Fixtures/ShortcutNativeLists/nativescript/hanlin.authoring.json": "5c45d2ab2cfce588d3758665eff52a9511613b2070a9946be001e32f87d517d9",
+    "Fixtures/ShortcutNativeLists/nativescript/index.ts": "eac6a0cf6be0d3a956438a3d856784537b98df4ec5f4a89006bc313a5d743e85",
+    "Fixtures/ShortcutNativeLists/nativescript/proof.ts": "1c3cf09fe914c496d10cd01f6eabe989bc683f7a6194a80ae1b699c554515210"
+  },
+  "unchangedRuntimeProductSource": true,
+  "strictNewFixtureCLI": "NOT_RUN",
+  "nativeUI": "NOT_RUN"
+}

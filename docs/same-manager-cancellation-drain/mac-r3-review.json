@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "mac_build_resume",
+  "status": "APPROVED_SOURCE_ONLY_NATIVE_PENDING",
+  "sourceBase": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "candidate": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/same-manager-cancellation-drain-fc5ce1ba-candidate-r3",
+    "manifestSHA256": "865332058e33702f9a99f914b12fee119320415d8a977387b2ec518e381914f3",
+    "payloadCount": 40,
+    "payloadBytes": 1511949,
+    "deltaSHA256": "474c82434a70d04ed5c4de17dd5229b5aa349c96bbb785af40502a289b84cc2b"
+  },
+  "retainedPriorFindings": [
+    {
+      "revision": "R1",
+      "reviewSHA256": "5d276b4df1b9ff1cedaef3b2551edf11263fb37e6ad0f71d24ee615489a36fca",
+      "status": "RETAINED_HELD_CROSS_MANAGER_GAP"
+    },
+    {
+      "revision": "R2",
+      "reviewSHA256": "3cd60d2046909c3df02cee792ed7e86a2db2ebf998d757e811fb2103772c921b",
+      "status": "RETAINED_HELD_CANCELLATION_BOUNDARIES"
+    }
+  ],
+  "verification": {
+    "all40Payloads": true,
+    "all8WholeForwardAndReversePatches": true,
+    "threeR2ToR3WholeInverses": true,
+    "all8OriginalBlobsEqualIndependentlyVerifiedFc5Git": true,
+    "wholeOriginalThreeTestFilesRecoverExactly": true,
+    "wholeOriginalCoordinatorRecoveredAfterNamedAdditions": true,
+    "fiveR1CandidateFilesExact": [
+      "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+      "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostDispatcher.swift",
+      "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift"
+    ],
+    "scope": "Read source and exact bytes only; no compiler, tests, native execution, publication or dispatch."
+  },
+  "resolvedBoundaries": [
+    {
+      "id": "GLOBAL_REQUEST_ORDER",
+      "finding": "The synchronous shared reservation precedes the manager's new await. Both original legacy begin entries publish fresh tokens. A stale waiting request fails the reserved begin guard before cancelling or replacing the newer global run."
+    },
+    {
+      "id": "CANCELLED_RESERVATION",
+      "finding": "Only the new reservation entry is optional. It tests Task.isCancelled before either replacing the token or requesting cancellation of the registered global producer; APIManager unwraps or throws its original cancellation error."
+    },
+    {
+      "id": "EARLY_GLOBAL_CANCEL",
+      "finding": "An accepted reservation immediately requests activeProducerTask.cancel() before the requesting manager awaits its own retired producer. The registered handle, recorder and active identity remain retained; no old Session/writer/effect completion is asserted."
+    },
+    {
+      "id": "CANCELLED_RESERVED_BEGIN",
+      "finding": "The reserved begin tests !Task.isCancelled and exact token before mutations, then tests cancellation/token/current identity after the original recorder await. This closes the check-to-entry cancellation gap without changing the original cancellation/completion ordering."
+    },
+    {
+      "id": "LEGACY_SEMANTICS",
+      "finding": "Original async and sync beginRun use private replaceRunAdmission to supersede pending reservations, followed by their exact original mutation/recorder bodies. They do not gain the new optional-entry cancellation behavior. Exact removal of the named additions recovers the entire original Coordinator."
+    },
+    {
+      "id": "STOP_AND_FINISH",
+      "finding": "Matching Stop revokes only its matching latest token; nil Stop remains global. Old finish is active-run qualified and does not revoke a later different-run reservation. Controlled tests preserve stale B versus C and late A completion."
+    },
+    {
+      "id": "NO_NESTED_LEGACY_BEGIN",
+      "finding": "The actual fc5 production Swift caller inventory contains only APIManager.sendStreamRequest. Its candidate uses reserved begin and has no subsequent legacy begin for the same request. Original direct Coordinator test calls remain."
+    }
+  ],
+  "carriedR1Constraints": [
+    "Manager epoch and Owner generation/row/context/registration are rechecked after actual retirement awaits.",
+    "Actual captured outer producer joins before replacement of request/recorder; completed nonnil handles do not fabricate active Session work.",
+    "Session keeps real entered Host execution tasks through actual metadata CAS in isRunning and drain.",
+    "Original pending-call, uncertain-result, store-CAS, destructive deletion and both foreign-writer guards remain effective.",
+    "Historical result lookup binds original call identity, exact argument bytes and captured output limits, repeats validation, and never becomes live callbacks or an effect replay.",
+    "Idle Session reuse and same-stream starting generation remain the reviewed R1 implementation."
+  ],
+  "regressions": {
+    "newDefinitions": {
+      "session": 3,
+      "owner": 3,
+      "coordinator": 6
+    },
+    "newSemanticCases": {
+      "session": 9,
+      "owner": 4,
+      "coordinator": 9
+    },
+    "sourceTotalDefinitions": 12,
+    "sourceTotalSemanticCases": 22,
+    "r3OnlyDefinitions": 3,
+    "r3OnlyCases": 4,
+    "r3Mechanisms": [
+      "Controlled already-cancelled reserved begin versus cancellation during the original recorder await.",
+      "Held actual registered global A plus held requesting manager's retired D, asserting early cancellation request and no invented A completion.",
+      "Already-cancelled reservation leaves existing token, producer and recorder untouched."
+    ],
+    "timing": "Original controls unchanged; new controls use existing one-minute trait and continuation gates, no sleeps or production timeout.",
+    "execution": "NOT_RUN"
+  },
+  "remainingNativeObligations": {
+    "session": "Original Session/Context/Store whole suites: source expectation 36 definitions / 42 invocations, with coupled original Presentation job. Actual reconciliation required.",
+    "app": "Original full acceptance request includes Owner and AgentRound suites plus the two historical failures. Preserve all original selectors/assertions/limits; package outcomes cannot prove app outcomes.",
+    "historicalCause": "Exact historical unresolvedWrite throw frame remains unknown. This approval establishes source correctness of the scoped repair, not native resolution."
+  },
+  "reviewerPreparation": {
+    "initialInverseError": "The first pure-source inverse treated the exported state and methods as a contiguous region. The export concatenates two separated insertions; splitting at the exact Reserve marker recovered the whole original Coordinator. Failed checker output is retained, candidate unchanged.",
+    "nativeActions": 0,
+    "tests": 0,
+    "sourceWrites": 0
+  },
+  "recordedAt": "2026-11-28T12:21:24.773627+00:00"
+}

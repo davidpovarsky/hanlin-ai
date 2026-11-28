@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "base_commit": "d00ea9ba206f4f81badf1d6f94c73566646849de",
+  "scope": "Preserve an existing returned resource favicon in inline and scoped sources, including canonical page aliases; no citation destinations or authority changed.",
+  "source_files": {
+    "AI_HLY/Downstream/ChatPresentation/HanlinMessageCitations.swift": "d2f84febe70cde64aa3665c06e0b90574a5934b1a413b32a4e99c2fd37c9137e",
+    "AI_HLYTests/AgentRoundPresentationTests.swift": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3"
+  },
+  "native_suite": "AI_HLYTests/AgentRoundPresentationTests",
+  "new_tests": [
+    "suppliedResourceFaviconSurvivesCanonicalSourceAndInlineAliasProjection",
+    "missingOrUnsafeResourceFaviconsKeepTheExistingDefault"
+  ],
+  "native_status": "pending"
+}

@@ -1,0 +1,17 @@
+{
+  "id": 43754712044,
+  "path": ".github/workflows/validate-app-split.yml",
+  "event": "workflow_dispatch",
+  "head_branch": "codex/renovate/semver-7.x",
+  "head_sha": "77a225a5af05de82335f387680c3e5d0b355aaeb",
+  "conclusion": "success",
+  "referenced_workflows": [
+    {
+      "path": "davidpovarsky/hanlin-ai/.github/workflows/check-runtime-dependency-updates.yml@77a225a5af05de82335f387680c3e5d0b355aaeb",
+      "sha": "77a225a5af05de82335f387680c3e5d0b355aaeb",
+      "ref": "refs/heads/codex/renovate/semver-7.x"
+    }
+  ],
+  "created_at": "2026-11-15T19:51:03Z",
+  "updated_at": "2026-11-15T19:52:52Z"
+}

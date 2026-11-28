@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-23T10:55:03.040634+00:00",
+  "command": [
+    "/mnt/development/projects/worktrees/hanlin-sdk-ui-20261123/build/script-ui-reorder-20261123/compiled/out/Products/Debug-linux-aarch64/Reproduce"
+  ],
+  "exit_code": -5,
+  "signal": "SIGTRAP",
+  "duration_seconds": 0.6287982258945704,
+  "core_dump_enabled": false,
+  "expected_original_trap": true,
+  "source": "actual unmodified original HanlinScriptUIReconciler.swift and complete original contract declarations"
+}

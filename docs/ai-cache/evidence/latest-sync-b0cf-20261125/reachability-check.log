@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-ai-cache-notification-sync-20261125/Scripts/Audit/audit_miniapp_reachability.py", line 352, in <module>
+    main()
+  File "/mnt/development/projects/worktrees/hanlin-ai-cache-notification-sync-20261125/Scripts/Audit/audit_miniapp_reachability.py", line 330, in main
+    value = build()
+            ^^^^^^^
+  File "/mnt/development/projects/worktrees/hanlin-ai-cache-notification-sync-20261125/Scripts/Audit/audit_miniapp_reachability.py", line 76, in build
+    raise ValueError(f"SDK authority is stale: {entry['path']}; run its source audit first.")
+ValueError: SDK authority is stale: AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift; run its source audit first.

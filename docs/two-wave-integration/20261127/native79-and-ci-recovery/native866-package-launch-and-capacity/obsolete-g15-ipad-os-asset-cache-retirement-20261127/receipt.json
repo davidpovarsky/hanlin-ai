@@ -1,0 +1,44 @@
+{
+  "status": "OBSOLETE_SHUTDOWN_SIMULATOR_OS_CACHE_RETIRED_APP_DATA_AND_EVIDENCE_RETAINED",
+  "startedAt": "2026-11-27T05:10:52.962678+00:00",
+  "uuid": "93378D29-B4BA-462B-898B-AF89E4E776B9",
+  "source": "c9887913845542a93d57ba9036622e4c51ecbbd2",
+  "reportSHA256": "3dad41b0d6c9c2ec8357610223caa01de186cf3b5cd82beba5009079c60cf121",
+  "supersededBy": [
+    {
+      "generation": 17,
+      "source": "6d4056d80064462cb3ceaca529f9f28c55315146",
+      "ipad": "409CE6B0-10CC-4982-9867-B9D5B5ED1899",
+      "reportSHA256": "dfdaec86712b49712278abdd5045d5b038a7adf7a58aad6ee22c5e924f436c84"
+    },
+    {
+      "generation": 18,
+      "source": "0e51194ab93f002da55bb6f568f3d063bba017c4",
+      "ipad": "9A4BF3F0-10F0-4693-AE3E-E50F8B2634C1",
+      "reportSHA256": "328576c5b6bbddd2e0e14472969a59b15dd64e3fa7cc18e1fc21cf7fe864aab6"
+    }
+  ],
+  "deviceState": {
+    "dataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/93378D29-B4BA-462B-898B-AF89E4E776B9/data",
+    "dataPathSize": 6767435776,
+    "logPath": "/Users/m1/Library/Logs/CoreSimulator/93378D29-B4BA-462B-898B-AF89E4E776B9",
+    "udid": "93378D29-B4BA-462B-898B-AF89E4E776B9",
+    "lastUsedAt": "2026-11-27T01:56:50Z",
+    "isAvailable": true,
+    "logPathSize": 0,
+    "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-12GB",
+    "state": "Shutdown",
+    "name": "Hanlin-Phase2-local-149201-post149101-20261126-15",
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0"
+  },
+  "target": "/Users/m1/Library/Developer/CoreSimulator/Devices/93378D29-B4BA-462B-898B-AF89E4E776B9/data/private/var/MobileAsset/AssetsV2",
+  "freeBefore": 7486390272,
+  "scope": "Only regenerable downloaded OS MobileAsset cache in superseded shutdown test iPad. Device, application data, shared groups, preferences, poster data, logs, original results, source, current G17/G18 devices and all build products remain untouched.",
+  "fileCount": 1703,
+  "logicalBytes": 2415144949,
+  "allocatedBytes": 2409943040,
+  "inventory": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-g15-ipad-os-asset-cache-retirement-20261127/retired-os-asset-file-inventory.json",
+  "inventorySHA256": "a85e149ac84ee62e8c9b61dee77771d949ecdeac344129ec05ac39cc988bbef5",
+  "finishedAt": "2026-11-27T05:10:55.679023+00:00",
+  "freeAfter": 9894195200
+}

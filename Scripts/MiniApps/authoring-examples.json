@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 1,
+  "scope": "Current Hanlin-owned authoring guide fenced blocks; historical evidence and internal host Swift are not executable MiniApp examples.",
+  "documents": [
+    {
+      "path": "docs/hanlin-expo-runtime.md",
+      "blocks": [
+        {
+          "id": "expo.architecture",
+          "language": "mermaid",
+          "kind": "excluded",
+          "reason": "Architecture diagram"
+        },
+        {
+          "id": "expo.inventory-flow",
+          "language": "text",
+          "kind": "excluded",
+          "reason": "Host inventory explanation"
+        },
+        {
+          "id": "expo.host-delegate",
+          "language": "swift",
+          "kind": "excluded",
+          "reason": "Internal Swift host implementation, not a MiniApp source example"
+        },
+        {
+          "id": "expo.host-modifier",
+          "language": "swift",
+          "kind": "excluded",
+          "reason": "Internal Swift modifier implementation, not a MiniApp source example"
+        },
+        {
+          "id": "expo.app",
+          "language": "tsx",
+          "kind": "source"
+        },
+        {
+          "id": "expo.script",
+          "language": "json",
+          "kind": "json"
+        },
+        {
+          "id": "expo.layout",
+          "language": "",
+          "kind": "excluded",
+          "reason": "Directory layout"
+        },
+        {
+          "id": "expo.registration",
+          "language": "typescript",
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "path": "docs/hanlin-nativescript-guide.md",
+      "blocks": [
+        {
+          "id": "ns.construction",
+          "language": "javascript",
+          "kind": "source"
+        },
+        {
+          "id": "ns.initializers",
+          "language": "javascript",
+          "kind": "source"
+        },
+        {
+          "id": "ns.factories",
+          "language": "javascript",
+          "kind": "source"
+        },
+        {
+          "id": "ns.properties",
+          "language": "javascript",
+          "kind": "source"
+        },
+        {
+          "id": "ns.callbacks",
+          "language": "javascript",
+          "kind": "source"
+        },
+        {
+          "id": "ns.presentation",
+          "language": "javascript",
+          "kind": "source"
+        },
+        {
+          "id": "ns.tabs",
+          "language": "javascript",
+          "kind": "source"
+        },
+        {
+          "id": "ns.swiftui-provider",
+          "language": "typescript",
+          "kind": "source"
+        },
+        {
+          "id": "ns.tsconfig",
+          "language": "json",
+          "kind": "json"
+        },
+        {
+          "id": "ns.layout",
+          "language": "",
+          "kind": "excluded",
+          "reason": "Directory layout"
+        },
+        {
+          "id": "ns.script",
+          "language": "json",
+          "kind": "json"
+        },
+        {
+          "id": "ns.package",
+          "language": "json",
+          "kind": "json"
+        }
+      ]
+    },
+    {
+      "path": "docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md",
+      "blocks": [
+        {
+          "id": "widget.services",
+          "language": "tsx",
+          "kind": "source"
+        },
+        {
+          "id": "widget.http",
+          "language": "ts",
+          "kind": "source"
+        },
+        {
+          "id": "widget.presentation",
+          "language": "tsx",
+          "kind": "source"
+        },
+        {
+          "id": "widget.regeneration-commands",
+          "language": "bash",
+          "kind": "excluded",
+          "reason": "Repository shell instructions; not executed by the snippet checker"
+        }
+      ]
+    },
+    {
+      "path": "docs/miniapp-sdk/SCRIPTWIDGET_CONTROLS.md",
+      "blocks": [
+        {
+          "id": "controls.manifest",
+          "language": "json",
+          "kind": "json"
+        },
+        {
+          "id": "controls.handler",
+          "language": "jsx",
+          "kind": "source"
+        }
+      ]
+    },
+    {
+      "path": "docs/miniapp-sdk/AUTHORING_WORKFLOW.md",
+      "blocks": [
+        {
+          "id": "workflow.descriptor",
+          "language": "json",
+          "kind": "json"
+        },
+        {
+          "id": "workflow.commands",
+          "language": "bash",
+          "kind": "excluded",
+          "reason": "Desktop shell instructions with user-provided paths; not executed by the snippet checker"
+        }
+      ]
+    },
+    {
+      "path": "docs/miniapp-sdk/README.md",
+      "blocks": [
+        {
+          "id": "readme.descriptor",
+          "language": "json",
+          "kind": "json"
+        }
+      ]
+    }
+  ]
+}

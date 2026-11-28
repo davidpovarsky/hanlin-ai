@@ -1,0 +1,26 @@
+{
+  "name": "hanlin-nativescript-tooling",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "Fixtures/Source/app.ts",
+  "scripts": {
+    "check:host-services": "node build-host-services.mjs --check",
+    "check:fixture": "tsc --noEmit",
+    "prepare:fixture": "npm run check:fixture && vite build --mode production -- --env.ios",
+    "prepare:ios-dependencies": "node prepare-ios-dependencies.mjs",
+    "prepare:production-package": "node prepare-production-package.mjs",
+    "preflight:ios-dependencies": "node preflight-ios-dependencies.mjs"
+  },
+  "dependencies": {
+    "@nativescript/core": "9.1.4",
+    "@nativescript/swift-ui": "4.0.2"
+  },
+  "devDependencies": {
+    "@nativescript/ios": "9.1.1",
+    "@nativescript/types": "9.1.4",
+    "@nativescript/vite": "8.0.24",
+    "typescript": "5.9.3",
+    "vite": "8.0.0"
+  }
+}

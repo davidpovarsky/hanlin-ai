@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "status": "VERIFIED_EXACT_SDK_SUBSET",
+  "verifiedAt": "2026-11-25T07:19:13.576296+00:00",
+  "sourceSnapshot": "prepared-snapshot-attempt17",
+  "sourceSnapshotReceiptSHA256": "18b3f4d5b4d3da0b13f326eaa48c04de856bcbbd1fa58e055e9ade34de33df4b",
+  "producerSource": "cffe7f75436aa2e37ec5d82891937965c0407d2d",
+  "producerTree": "7c3bb41be526f15302ae523db24e21ae96d02bf7",
+  "consumerTargetSource": "cffe7f75436aa2e37ec5d82891937965c0407d2d",
+  "sourceHostArchive": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt17/files/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81823972,
+    "sha256": "4c71d23f55391e0b7eb87073bea65bec8b323d6f688214b60e49b9600c80e857"
+  },
+  "sdkManifest": {
+    "archiveMember": "MiniAppSDK/miniapp-sdk.json",
+    "bytes": 5224120,
+    "sha256": "0ef02a708019c0401c50222e4186f0bbad2e6576fdc333b7d748eb7702cad66f",
+    "inputSHA256": "d381e9db6bce1c74e1c52ff43d7f948d23f5ad07a103701dbf442327f420ed31",
+    "sourceInputs": 235
+  },
+  "export": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-sdk16/Hanlin-MiniApp-SDK-2026-11-25.zip",
+    "bytes": 68725893,
+    "sha256": "e2aa6797377c3dc805c9557c73beba7d2d9f60af02285e6d04a6687041ab08ec",
+    "files": 25670,
+    "directories": 0,
+    "uncompressedBytes": 299641014,
+    "compressedPayloadBytes": 62779873
+  },
+  "method": "Copied original selected local ZIP records and compressed payloads verbatim; copied central metadata with only relocated offsets and rebuilt EOCD. No recompilation, SDK regeneration, recompression, renaming or extracted SDK tree.",
+  "verification": {
+    "independentSecondRead": true,
+    "sourceAndExportMemberSHA256Equality": 25670,
+    "zipMetadataAttributesEqual": [
+      "filename",
+      "orig_filename",
+      "date_time",
+      "compress_type",
+      "comment",
+      "extra",
+      "create_system",
+      "create_version",
+      "extract_version",
+      "reserved",
+      "flag_bits",
+      "volume",
+      "internal_attr",
+      "external_attr",
+      "CRC",
+      "compress_size",
+      "file_size"
+    ],
+    "allManifestFileRowsMatched": 25669,
+    "manifestByteIdentity": true,
+    "rawCopySeconds": 0.6805254872888327,
+    "independentReadSeconds": 4.006386775523424
+  },
+  "memberLedger": {
+    "path": "verified-members.json.gz",
+    "bytes": 1607100,
+    "sha256": "56c3f8390aead4726869cf85a3151956076944a3b22ce7d28959b21df58bbc42",
+    "uncompressedBytes": 13288722,
+    "uncompressedSHA256": "cbb173def89100ae6a077e6606dc5f5bb56e8d74562507c614996be81657f3cd"
+  },
+  "boundaries": [
+    "This is the exact authoring SDK subset from the completed original source/preparation route.",
+    "Fresh consumer builds, paired52, NS5 and notification OS results are separate; no current pass is inferred.",
+    "All original licenses, modules, declarations, SDK documentation and examples remain exactly as shipped in the verified source archive.",
+    "Existing deterministic declaration compatibility corrections are retained with their original producer evidence; this does not claim every declaration byte is unmodified upstream.",
+    "SDK15 export is preserved separately. No file upload or Library transfer performed by this export."
+  ]
+}

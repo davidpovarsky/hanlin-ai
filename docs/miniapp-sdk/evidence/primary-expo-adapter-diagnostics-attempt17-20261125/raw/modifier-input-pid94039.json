@@ -1,0 +1,1206 @@
+{
+  "observedAt": "2026-11-25T08:10:37.845320+00:00",
+  "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/terminal-diagnostics-attempt17/export/0_Test_HanlinPaired-primary-ce49e30d-20261124_Diagnostics/HanlinMiniAppsUITests-F0F2DE32-618F-4FB9-AB50-1AED4C8728F0-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-5A3F0665-FF7D-4450-8F9F-8A86B29F7E6B/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+  "sourceBytes": 594738177,
+  "pid": 94039,
+  "matches": [
+    {
+      "line": 925167,
+      "text": "2026-11-25 08:42:39.196832+0100 HanlinMiniApps[94039:4473055] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 925169,
+      "text": "2026-11-25 08:42:39.453571+0100 HanlinMiniApps[94039:4472906] HANLIN_EXPO_APP_DEFINES_LOADED"
+    },
+    {
+      "line": 925175,
+      "text": "2026-11-25 08:42:40.339476+0100 HanlinMiniApps[94039:4472906] [XPCErrors] non-launching port is incompatible with service identifier \"com.apple.PointerUI.pointeruid.default-service\""
+    },
+    {
+      "line": 925706,
+      "text": "2026-11-25 08:42:43.087933+0100 HanlinMiniApps[94039:4473064] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 926110,
+      "text": "2026-11-25 08:42:43.222823+0100 HanlinMiniApps[94039:4473064] [Default] Replying to query ↪︎ Descendants matching predicate identifier == \"NotificationShortLookView\" OR elementType == 7 with results: <XCTElementQueryResults: 0x112d7c4e0> (error: (null))"
+    },
+    {
+      "line": 926170,
+      "text": "2026-11-25 08:42:44.094787+0100 HanlinMiniApps[94039:4472906] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 929347,
+      "text": "2026-11-25 08:42:45.285983+0100 HanlinMiniApps[94039:4473056] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 932797,
+      "text": "2026-11-25 08:42:45.478975+0100 HanlinMiniApps[94039:4473058] [Default] Replying to query ↪︎ Descendants matching predicate identifier == \"NotificationShortLookView\" OR elementType == 7 with results: <XCTElementQueryResults: 0x112d7c5d0> (error: (null))"
+    },
+    {
+      "line": 932858,
+      "text": "2026-11-25 08:42:46.177668+0100 HanlinMiniApps[94039:4472906] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 943918,
+      "text": "2026-11-25 08:42:48.798489+0100 HanlinMiniApps[94039:4473064] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 946725,
+      "text": "2026-11-25 08:42:48.984415+0100 HanlinMiniApps[94039:4473064] [Default] Replying to query ↪︎ Descendants matching predicate identifier == \"NotificationShortLookView\" OR elementType == 7 with results: <XCTElementQueryResults: 0x112d7c7e0> (error: (null))"
+    },
+    {
+      "line": 946783,
+      "text": "2026-11-25 08:42:49.294402+0100 HanlinMiniApps[94039:4473065] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 950550,
+      "text": "2026-11-25 08:42:49.493814+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 950569,
+      "text": "2026-11-25 08:42:49.494708+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 950761,
+      "text": "2026-11-25 08:42:49.505108+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 950780,
+      "text": "2026-11-25 08:42:49.505793+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 951385,
+      "text": "2026-11-25 08:42:49.523797+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 951404,
+      "text": "2026-11-25 08:42:49.524566+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 951423,
+      "text": "2026-11-25 08:42:49.525314+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 951442,
+      "text": "2026-11-25 08:42:49.526132+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 952315,
+      "text": "2026-11-25 08:42:49.550034+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 952333,
+      "text": "2026-11-25 08:42:49.550660+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 952343,
+      "text": "2026-11-25 08:42:49.550903+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 952361,
+      "text": "2026-11-25 08:42:49.551489+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 952405,
+      "text": "2026-11-25 08:42:49.552548+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 952423,
+      "text": "2026-11-25 08:42:49.553174+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 952433,
+      "text": "2026-11-25 08:42:49.553408+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 952451,
+      "text": "2026-11-25 08:42:49.554030+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 952495,
+      "text": "2026-11-25 08:42:49.555086+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 952513,
+      "text": "2026-11-25 08:42:49.555734+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 952523,
+      "text": "2026-11-25 08:42:49.556011+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 952541,
+      "text": "2026-11-25 08:42:49.556603+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 952585,
+      "text": "2026-11-25 08:42:49.557631+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 952603,
+      "text": "2026-11-25 08:42:49.558383+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 952613,
+      "text": "2026-11-25 08:42:49.558646+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 952631,
+      "text": "2026-11-25 08:42:49.559312+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 952675,
+      "text": "2026-11-25 08:42:49.560628+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 952693,
+      "text": "2026-11-25 08:42:49.561555+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 952703,
+      "text": "2026-11-25 08:42:49.561893+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 952721,
+      "text": "2026-11-25 08:42:49.562676+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953202,
+      "text": "2026-11-25 08:42:49.575485+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953220,
+      "text": "2026-11-25 08:42:49.576178+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953238,
+      "text": "2026-11-25 08:42:49.576776+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953256,
+      "text": "2026-11-25 08:42:49.577535+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953266,
+      "text": "2026-11-25 08:42:49.577847+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953284,
+      "text": "2026-11-25 08:42:49.578527+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953302,
+      "text": "2026-11-25 08:42:49.579097+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953320,
+      "text": "2026-11-25 08:42:49.580017+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953330,
+      "text": "2026-11-25 08:42:49.580442+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953348,
+      "text": "2026-11-25 08:42:49.581194+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953366,
+      "text": "2026-11-25 08:42:49.581848+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953384,
+      "text": "2026-11-25 08:42:49.582524+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953394,
+      "text": "2026-11-25 08:42:49.582830+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953412,
+      "text": "2026-11-25 08:42:49.583575+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953430,
+      "text": "2026-11-25 08:42:49.584222+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953448,
+      "text": "2026-11-25 08:42:49.585081+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953458,
+      "text": "2026-11-25 08:42:49.585454+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953476,
+      "text": "2026-11-25 08:42:49.586220+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953494,
+      "text": "2026-11-25 08:42:49.586961+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953512,
+      "text": "2026-11-25 08:42:49.587650+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953579,
+      "text": "2026-11-25 08:42:49.589586+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953597,
+      "text": "2026-11-25 08:42:49.590263+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953624,
+      "text": "2026-11-25 08:42:49.591073+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 953642,
+      "text": "2026-11-25 08:42:49.591730+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 973757,
+      "text": "2026-11-25 08:42:50.740865+0100 HanlinMiniApps[94039:4473052] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 977443,
+      "text": "2026-11-25 08:42:50.972027+0100 HanlinMiniApps[94039:4473065] [Default] Replying to query ↪︎ Descendants matching predicate identifier == \"NotificationShortLookView\" OR elementType == 7 with results: <XCTElementQueryResults: 0x112d7c510> (error: (null))"
+    },
+    {
+      "line": 977498,
+      "text": "2026-11-25 08:42:51.386147+0100 HanlinMiniApps[94039:4472906] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 981017,
+      "text": "2026-11-25 08:42:51.553092+0100 HanlinMiniApps[94039:4472906] [Default] Button, label: 'MiniAppTypeError' (AX element pid: 94039, elementOrHash.elementID: 4933495424.494) faulted in {"
+    },
+    {
+      "line": 981021,
+      "text": "2026-11-25 08:42:51.553223+0100 HanlinMiniApps[94039:4472906] [Default] Button, label: 'MiniAppTypeError' (AX element pid: 94039, elementOrHash.elementID: 4933495424.494) faulted in {"
+    },
+    {
+      "line": 981025,
+      "text": "2026-11-25 08:42:51.553355+0100 HanlinMiniApps[94039:4472906] [Default] Button, label: 'MiniAppTypeError' (AX element pid: 94039, elementOrHash.elementID: 4933495424.494) faulted in {"
+    },
+    {
+      "line": 981301,
+      "text": "2026-11-25 08:42:51.562519+0100 HanlinMiniApps[94039:4472906] [Default] Button, identifier: 'MiniAppTypeError', label: 'MiniAppTypeError' (AX element pid: 94039, elementOrHash.elementID: 4933495424.494) faulted in {"
+    },
+    {
+      "line": 982054,
+      "text": "2026-11-25 08:42:51.616773+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 982073,
+      "text": "2026-11-25 08:42:51.617640+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 982265,
+      "text": "2026-11-25 08:42:51.629348+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 982284,
+      "text": "2026-11-25 08:42:51.630143+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 982909,
+      "text": "2026-11-25 08:42:51.649440+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 982928,
+      "text": "2026-11-25 08:42:51.650180+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 982947,
+      "text": "2026-11-25 08:42:51.650661+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 982966,
+      "text": "2026-11-25 08:42:51.651336+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 983903,
+      "text": "2026-11-25 08:42:51.676820+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 983921,
+      "text": "2026-11-25 08:42:51.677632+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 983931,
+      "text": "2026-11-25 08:42:51.677977+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 983949,
+      "text": "2026-11-25 08:42:51.678660+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 983993,
+      "text": "2026-11-25 08:42:51.679897+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 984011,
+      "text": "2026-11-25 08:42:51.680592+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 984021,
+      "text": "2026-11-25 08:42:51.680867+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 984039,
+      "text": "2026-11-25 08:42:51.681558+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 984083,
+      "text": "2026-11-25 08:42:51.682973+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 984101,
+      "text": "2026-11-25 08:42:51.683796+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 984111,
+      "text": "2026-11-25 08:42:51.684065+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 984129,
+      "text": "2026-11-25 08:42:51.684750+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 984173,
+      "text": "2026-11-25 08:42:51.685927+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 984191,
+      "text": "2026-11-25 08:42:51.686564+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 984201,
+      "text": "2026-11-25 08:42:51.686839+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 984219,
+      "text": "2026-11-25 08:42:51.687577+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 984263,
+      "text": "2026-11-25 08:42:51.688813+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 984281,
+      "text": "2026-11-25 08:42:51.689450+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 984291,
+      "text": "2026-11-25 08:42:51.689713+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 984309,
+      "text": "2026-11-25 08:42:51.690529+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 984780,
+      "text": "2026-11-25 08:42:51.703996+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 984798,
+      "text": "2026-11-25 08:42:51.704876+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 984815,
+      "text": "2026-11-25 08:42:51.705270+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 984833,
+      "text": "2026-11-25 08:42:51.705958+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 985003,
+      "text": "2026-11-25 08:42:51.710089+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 985021,
+      "text": "2026-11-25 08:42:51.711032+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 985057,
+      "text": "2026-11-25 08:42:51.712287+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 985075,
+      "text": "2026-11-25 08:42:51.712947+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 985105,
+      "text": "2026-11-25 08:42:51.714185+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 985123,
+      "text": "2026-11-25 08:42:51.714956+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 985150,
+      "text": "2026-11-25 08:42:51.715750+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 985168,
+      "text": "2026-11-25 08:42:51.716472+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 985195,
+      "text": "2026-11-25 08:42:51.717159+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 985213,
+      "text": "2026-11-25 08:42:51.717813+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 985240,
+      "text": "2026-11-25 08:42:51.718561+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 985258,
+      "text": "2026-11-25 08:42:51.719203+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 985285,
+      "text": "2026-11-25 08:42:51.719923+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 985303,
+      "text": "2026-11-25 08:42:51.720682+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 985330,
+      "text": "2026-11-25 08:42:51.721515+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 985338,
+      "text": "2026-11-25 08:42:51.721863+0100 HanlinMiniApps[94039:4472906] [Default] StaticText, label: 'MiniAppTypeError' (AX element pid: 94039, elementOrHash.elementID: 4933492864.511) faulted in {"
+    },
+    {
+      "line": 985342,
+      "text": "2026-11-25 08:42:51.722015+0100 HanlinMiniApps[94039:4472906] [Default] StaticText, label: 'MiniAppTypeError' (AX element pid: 94039, elementOrHash.elementID: 4933492864.511) faulted in {"
+    },
+    {
+      "line": 985346,
+      "text": "2026-11-25 08:42:51.722159+0100 HanlinMiniApps[94039:4472906] [Default] StaticText, label: 'MiniAppTypeError' (AX element pid: 94039, elementOrHash.elementID: 4933492864.511) faulted in {"
+    },
+    {
+      "line": 985348,
+      "text": "2026-11-25 08:42:51.722209+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 985375,
+      "text": "2026-11-25 08:42:51.722919+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] iteration with input StaticText and transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 985393,
+      "text": "2026-11-25 08:42:51.723567+0100 HanlinMiniApps[94039:4472906] [Default] [First Match] no match found for transformer `Elements matching predicate '\"hanlin-import-error-message\" IN identifiers'`"
+    },
+    {
+      "line": 985495,
+      "text": "2026-11-25 08:42:51.727342+0100 HanlinMiniApps[94039:4472906] [Default] StaticText, label: 'MiniAppTypeError' (AX element pid: 94039, elementOrHash.elementID: 4933492864.511) faulted in {"
+    },
+    {
+      "line": 989252,
+      "text": "2026-11-25 08:42:51.880313+0100 HanlinMiniApps[94039:4472906] [Default] Button, label: 'MiniAppTypeError' (AX element pid: 94039, elementOrHash.elementID: 4933495424.494) faulted in {"
+    },
+    {
+      "line": 989256,
+      "text": "2026-11-25 08:42:51.880492+0100 HanlinMiniApps[94039:4472906] [Default] Button, label: 'MiniAppTypeError' (AX element pid: 94039, elementOrHash.elementID: 4933495424.494) faulted in {"
+    },
+    {
+      "line": 989260,
+      "text": "2026-11-25 08:42:51.880655+0100 HanlinMiniApps[94039:4472906] [Default] Button, label: 'MiniAppTypeError' (AX element pid: 94039, elementOrHash.elementID: 4933495424.494) faulted in {"
+    },
+    {
+      "line": 989536,
+      "text": "2026-11-25 08:42:51.889309+0100 HanlinMiniApps[94039:4472906] [Default] Button, identifier: 'MiniAppTypeError', label: 'MiniAppTypeError' (AX element pid: 94039, elementOrHash.elementID: 4933495424.494) faulted in {"
+    },
+    {
+      "line": 990562,
+      "text": "2026-11-25 08:42:53.015788+0100 HanlinMiniApps[94039:4473056] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 991509,
+      "text": "2026-11-25 08:42:53.146329+0100 HanlinMiniApps[94039:4473056] [Default] Replying to query ↪︎ Descendants matching predicate identifier == \"NotificationShortLookView\" OR elementType == 7 with results: <XCTElementQueryResults: 0x112d7c5d0> (error: (null))"
+    },
+    {
+      "line": 991570,
+      "text": "2026-11-25 08:42:53.819970+0100 HanlinMiniApps[94039:4472906] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 992488,
+      "text": "2026-11-25 08:42:54.928426+0100 HanlinMiniApps[94039:4473056] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 993676,
+      "text": "2026-11-25 08:42:55.067590+0100 HanlinMiniApps[94039:4473058] [Default] Replying to query ↪︎ Descendants matching predicate identifier == \"NotificationShortLookView\" OR elementType == 7 with results: <XCTElementQueryResults: 0x112d7c2a0> (error: (null))"
+    },
+    {
+      "line": 993732,
+      "text": "2026-11-25 08:42:55.784234+0100 HanlinMiniApps[94039:4472906] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 994054,
+      "text": "2026-11-25 08:42:56.911266+0100 HanlinMiniApps[94039:4473065] [Default] Replying to query  with results: <XCTElementQueryResults: 0x112d7cb70> (error: (null))"
+    },
+    {
+      "line": 998615,
+      "text": "2026-11-25 08:42:58.672816+0100 HanlinMiniApps[94039:4473065] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 999879,
+      "text": "2026-11-25 08:42:58.790911+0100 HanlinMiniApps[94039:4473065] [Default] Replying to query ↪︎ Descendants matching predicate identifier == \"NotificationShortLookView\" OR elementType == 7 with results: <XCTElementQueryResults: 0x112d7c7e0> (error: (null))"
+    },
+    {
+      "line": 999934,
+      "text": "2026-11-25 08:42:58.928657+0100 HanlinMiniApps[94039:4472906] [HANLIN_EXPO_NATIVEAPI_GATE] Registered session context session=6fc25d34-eb8c-4955-af9d-608a27e29e73 package=script-ec17057f5a2c82aaed6ab6ca gen=0 granted=1"
+    },
+    {
+      "line": 999936,
+      "text": "2026-11-25 08:42:58.931098+0100 HanlinMiniApps[94039:4472906] HANLIN_EXPO_APPCONTEXT_CREATED"
+    },
+    {
+      "line": 999937,
+      "text": "2026-11-25 08:42:58.931147+0100 HanlinMiniApps[94039:4472906] HANLIN_EXPO_HOSTSERVICES_BOUND"
+    },
+    {
+      "line": 999946,
+      "text": "2026-11-25 08:42:59.046709+0100 HanlinMiniApps[94039:4472906] HANLIN_EXPO_MODULES_REGISTERED"
+    },
+    {
+      "line": 999948,
+      "text": "2026-11-25 08:42:59.046847+0100 HanlinMiniApps[94039:4472906] HANLIN_EXPO_REACT_FACTORY_CREATED"
+    },
+    {
+      "line": 999949,
+      "text": "2026-11-25 08:42:59.056497+0100 HanlinMiniApps[94039:4474072] HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=0x00000001260f9600"
+    },
+    {
+      "line": 999950,
+      "text": "2026-11-25 08:42:59.056551+0100 HanlinMiniApps[94039:4474072] HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=0x00000001260f9600"
+    },
+    {
+      "line": 999951,
+      "text": "2026-11-25 08:42:59.056572+0100 HanlinMiniApps[94039:4472906] HANLIN_EXPO_ROOTVIEW_CREATED"
+    },
+    {
+      "line": 999952,
+      "text": "2026-11-25 08:42:59.056794+0100 HanlinMiniApps[94039:4472906] HANLIN_EXPO_INITIALIZED_EXTERNAL_ROOT path=/Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Data/Application/1C3CFB48-C56D-4680-8919-3955B566B098/Library/Application Support/Hanlin/ScriptingPlatform/Installed/packages/install-script-ec17057f5a2c82aaed6ab6ca/generations/5/source/ bundle=bundle.js"
+    },
+    {
+      "line": 999953,
+      "text": "2026-11-25 08:42:59.059718+0100 HanlinMiniApps[94039:4474072] HANLIN_EXPO_SET_RUNTIME_DONE"
+    },
+    {
+      "line": 999954,
+      "text": "2026-11-25 08:42:59.059804+0100 HanlinMiniApps[94039:4474072] HANLIN_EXPO_REGISTERED_MODULES=ExpoAsset, ExpoWidgets, ExpoModulesCoreJSLogger, HanlinExpoUI, ExpoBrownfieldModule, ExpoBrownfieldStateModule, HanlinHostServices, HanlinGeneratedExpoUI, ExpoUI"
+    },
+    {
+      "line": 999986,
+      "text": "2026-11-25 08:42:59.186812+0100 HanlinMiniApps[94039:4473064] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.register"
+    },
+    {
+      "line": 999988,
+      "text": "2026-11-25 08:42:59.286815+0100 HanlinMiniApps[94039:4473064] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.next"
+    },
+    {
+      "line": 999989,
+      "text": "2026-11-25 08:42:59.286825+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.write"
+    },
+    {
+      "line": 999990,
+      "text": "2026-11-25 08:42:59.286836+0100 HanlinMiniApps[94039:4473056] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=widgets.publish"
+    },
+    {
+      "line": 999991,
+      "text": "2026-11-25 08:42:59.290748+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read"
+    },
+    {
+      "line": 999992,
+      "text": "2026-11-25 08:42:59.294095+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.delete"
+    },
+    {
+      "line": 999993,
+      "text": "2026-11-25 08:42:59.294743+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read"
+    },
+    {
+      "line": 999994,
+      "text": "2026-11-25 08:42:59.295400+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.write"
+    },
+    {
+      "line": 999995,
+      "text": "2026-11-25 08:42:59.296153+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read"
+    },
+    {
+      "line": 999996,
+      "text": "2026-11-25 08:42:59.296682+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.delete"
+    },
+    {
+      "line": 999997,
+      "text": "2026-11-25 08:42:59.297119+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read"
+    },
+    {
+      "line": 999998,
+      "text": "2026-11-25 08:42:59.310200+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.write"
+    },
+    {
+      "line": 999999,
+      "text": "2026-11-25 08:42:59.311438+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read"
+    },
+    {
+      "line": 1000000,
+      "text": "2026-11-25 08:42:59.331649+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.delete"
+    },
+    {
+      "line": 1000001,
+      "text": "2026-11-25 08:42:59.332289+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read"
+    },
+    {
+      "line": 1000002,
+      "text": "2026-11-25 08:42:59.332945+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.delete"
+    },
+    {
+      "line": 1000012,
+      "text": "2026-11-25 08:42:59.687069+0100 HanlinMiniApps[94039:4472906] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 1000020,
+      "text": "2026-11-25 08:42:59.720025+0100 HanlinMiniApps[94039:4474083] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=widgets.publish"
+    },
+    {
+      "line": 1000021,
+      "text": "2026-11-25 08:42:59.734512+0100 HanlinMiniApps[94039:4474083] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=widgets.publish"
+    },
+    {
+      "line": 1000022,
+      "text": "2026-11-25 08:42:59.747705+0100 HanlinMiniApps[94039:4474083] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=widgets.publish"
+    },
+    {
+      "line": 1032470,
+      "text": "2026-11-25 08:43:05.461598+0100 HanlinMiniApps[94039:4473065] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 1035124,
+      "text": "2026-11-25 08:43:05.662045+0100 HanlinMiniApps[94039:4474082] [Default] Replying to query ↪︎ Descendants matching predicate identifier == \"NotificationShortLookView\" OR elementType == 7 with results: <XCTElementQueryResults: 0x112d7cc60> (error: (null))"
+    },
+    {
+      "line": 1035207,
+      "text": "2026-11-25 08:43:06.760944+0100 HanlinMiniApps[94039:4472906] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 1046629,
+      "text": "2026-11-25 08:43:08.392063+0100 HanlinMiniApps[94039:4474085] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 1052685,
+      "text": "2026-11-25 08:43:08.713919+0100 HanlinMiniApps[94039:4474085] [Default] Replying to query ↪︎ Descendants matching predicate identifier == \"NotificationShortLookView\" OR elementType == 7 with results: <XCTElementQueryResults: 0x112d7c120> (error: (null))"
+    },
+    {
+      "line": 1052764,
+      "text": "2026-11-25 08:43:09.040294+0100 HanlinMiniApps[94039:4474083] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 1056628,
+      "text": "2026-11-25 08:43:10.273522+0100 HanlinMiniApps[94039:4474083] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 1058749,
+      "text": "2026-11-25 08:43:10.426757+0100 HanlinMiniApps[94039:4474083] [Default] Replying to query ↪︎ Descendants matching predicate identifier == \"NotificationShortLookView\" OR elementType == 7 with results: <XCTElementQueryResults: 0x112d7cb10> (error: (null))"
+    },
+    {
+      "line": 1058816,
+      "text": "2026-11-25 08:43:10.752295+0100 HanlinMiniApps[94039:4474083] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 1058817,
+      "text": "2026-11-25 08:43:10.898668+0100 HanlinMiniApps[94039:4472906] *** Terminating app due to uncaught exception 'NSInvalidArgumentException', reason: '-[SwiftUI.UIKitTextField setSelectionAffinity:]: unrecognized selector sent to instance 0x125788000'"
+    }
+  ],
+  "nonDefaultMessages": [
+    {
+      "line": 925168,
+      "text": "2026-11-25 08:42:39.293620+0100 HanlinMiniApps[94039:4472906] [UIKit App Config] Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "line": 925169,
+      "text": "2026-11-25 08:42:39.453571+0100 HanlinMiniApps[94039:4472906] HANLIN_EXPO_APP_DEFINES_LOADED"
+    },
+    {
+      "line": 925173,
+      "text": "2026-11-25 08:42:40.334967+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 925174,
+      "text": "2026-11-25 08:42:40.335073+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 925175,
+      "text": "2026-11-25 08:42:40.339476+0100 HanlinMiniApps[94039:4472906] [XPCErrors] non-launching port is incompatible with service identifier \"com.apple.PointerUI.pointeruid.default-service\""
+    },
+    {
+      "line": 925176,
+      "text": "2026-11-25 08:42:41.913371+0100 HanlinMiniApps[94039:4473056] [general] NSPredicate: -[NSPredicate copy] called on a predicate that has _evaluationBlocked set. The resulting copy will drop _evaluationBlocked."
+    },
+    {
+      "line": 926165,
+      "text": "2026-11-25 08:42:43.570773+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 926166,
+      "text": "2026-11-25 08:42:43.570908+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 926167,
+      "text": "2026-11-25 08:42:43.570955+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 926171,
+      "text": "2026-11-25 08:42:44.102729+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 926172,
+      "text": "2026-11-25 08:42:44.102798+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 932848,
+      "text": "2026-11-25 08:42:45.626267+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 932849,
+      "text": "2026-11-25 08:42:45.626355+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 932850,
+      "text": "2026-11-25 08:42:45.683273+0100 HanlinMiniApps[94039:4472906] [Snapshotting] Snapshotting a view (0x1137e8c80, _UINavigationBarLargeTitleView) that has not been rendered at least once requires afterScreenUpdates:YES."
+    },
+    {
+      "line": 932851,
+      "text": "2026-11-25 08:42:45.712178+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 932852,
+      "text": "2026-11-25 08:42:45.712267+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 932861,
+      "text": "2026-11-25 08:42:46.192108+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 932862,
+      "text": "2026-11-25 08:42:46.192214+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 932863,
+      "text": "2026-11-25 08:42:46.192274+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 946778,
+      "text": "2026-11-25 08:42:49.105397+0100 HanlinMiniApps[94039:4473064] [ScriptPackageImport] phase=manifest-resolution root=extracted manifest=script.json format=scripting version=1.0.0"
+    },
+    {
+      "line": 991560,
+      "text": "2026-11-25 08:42:53.315120+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 991561,
+      "text": "2026-11-25 08:42:53.315204+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 991567,
+      "text": "2026-11-25 08:42:53.806883+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 991568,
+      "text": "2026-11-25 08:42:53.806978+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 991569,
+      "text": "2026-11-25 08:42:53.807033+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 999930,
+      "text": "2026-11-25 08:42:58.927595+0100 HanlinMiniApps[94039:4472906] [expo] 🟡 ViewModifierRegistry: Overwriting existing modifier 'navigationBarTitleDisplayMode'. This may cause unexpected behavior."
+    },
+    {
+      "line": 999931,
+      "text": "2026-11-25 08:42:58.927650+0100 HanlinMiniApps[94039:4472906] [expo] 🟡 ViewModifierRegistry: Overwriting existing modifier 'presentationCornerRadius'. This may cause unexpected behavior."
+    },
+    {
+      "line": 999932,
+      "text": "2026-11-25 08:42:58.927694+0100 HanlinMiniApps[94039:4472906] [expo] 🟡 ViewModifierRegistry: Overwriting existing modifier 'sectionIndexLabel'. This may cause unexpected behavior."
+    },
+    {
+      "line": 999933,
+      "text": "2026-11-25 08:42:58.927752+0100 HanlinMiniApps[94039:4472906] [expo] 🟡 ViewModifierRegistry: Overwriting existing modifier 'preferredColorScheme'. This may cause unexpected behavior."
+    },
+    {
+      "line": 999934,
+      "text": "2026-11-25 08:42:58.928657+0100 HanlinMiniApps[94039:4472906] [HANLIN_EXPO_NATIVEAPI_GATE] Registered session context session=6fc25d34-eb8c-4955-af9d-608a27e29e73 package=script-ec17057f5a2c82aaed6ab6ca gen=0 granted=1"
+    },
+    {
+      "line": 999935,
+      "text": "2026-11-25 08:42:58.931029+0100 HanlinMiniApps[94039:4472906] [expo] 🟢 Registering module 'ExpoModulesCoreJSLogger'"
+    },
+    {
+      "line": 999936,
+      "text": "2026-11-25 08:42:58.931098+0100 HanlinMiniApps[94039:4472906] HANLIN_EXPO_APPCONTEXT_CREATED"
+    },
+    {
+      "line": 999937,
+      "text": "2026-11-25 08:42:58.931147+0100 HanlinMiniApps[94039:4472906] HANLIN_EXPO_HOSTSERVICES_BOUND"
+    },
+    {
+      "line": 999938,
+      "text": "2026-11-25 08:42:58.932554+0100 HanlinMiniApps[94039:4472906] [expo] 🟢 Registering module 'ExpoAsset'"
+    },
+    {
+      "line": 999939,
+      "text": "2026-11-25 08:42:59.015457+0100 HanlinMiniApps[94039:4472906] [expo] 🟢 Registering module 'ExpoUI'"
+    },
+    {
+      "line": 999940,
+      "text": "2026-11-25 08:42:59.028919+0100 HanlinMiniApps[94039:4472906] [expo] 🟢 Registering module 'ExpoWidgets'"
+    },
+    {
+      "line": 999941,
+      "text": "2026-11-25 08:42:59.040456+0100 HanlinMiniApps[94039:4472906] [expo] 🟢 Registering module 'HanlinExpoUI'"
+    },
+    {
+      "line": 999942,
+      "text": "2026-11-25 08:42:59.044791+0100 HanlinMiniApps[94039:4472906] [expo] 🟢 Registering module 'HanlinGeneratedExpoUI'"
+    },
+    {
+      "line": 999943,
+      "text": "2026-11-25 08:42:59.044868+0100 HanlinMiniApps[94039:4472906] [expo] 🟢 Registering module 'ExpoBrownfieldModule'"
+    },
+    {
+      "line": 999944,
+      "text": "2026-11-25 08:42:59.044908+0100 HanlinMiniApps[94039:4472906] [expo] 🟢 Registering module 'ExpoBrownfieldStateModule'"
+    },
+    {
+      "line": 999945,
+      "text": "2026-11-25 08:42:59.045010+0100 HanlinMiniApps[94039:4472906] [expo] 🟢 Registering module 'HanlinHostServices'"
+    },
+    {
+      "line": 999946,
+      "text": "2026-11-25 08:42:59.046709+0100 HanlinMiniApps[94039:4472906] HANLIN_EXPO_MODULES_REGISTERED"
+    },
+    {
+      "line": 999947,
+      "text": "2026-11-25 08:42:59.046785+0100 HanlinMiniApps[94039:4472906] _setUpFeatureFlags called with release level 2"
+    },
+    {
+      "line": 999948,
+      "text": "2026-11-25 08:42:59.046847+0100 HanlinMiniApps[94039:4472906] HANLIN_EXPO_REACT_FACTORY_CREATED"
+    },
+    {
+      "line": 999949,
+      "text": "2026-11-25 08:42:59.056497+0100 HanlinMiniApps[94039:4474072] HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=0x00000001260f9600"
+    },
+    {
+      "line": 999950,
+      "text": "2026-11-25 08:42:59.056551+0100 HanlinMiniApps[94039:4474072] HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=0x00000001260f9600"
+    },
+    {
+      "line": 999951,
+      "text": "2026-11-25 08:42:59.056572+0100 HanlinMiniApps[94039:4472906] HANLIN_EXPO_ROOTVIEW_CREATED"
+    },
+    {
+      "line": 999952,
+      "text": "2026-11-25 08:42:59.056794+0100 HanlinMiniApps[94039:4472906] HANLIN_EXPO_INITIALIZED_EXTERNAL_ROOT path=/Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Data/Application/1C3CFB48-C56D-4680-8919-3955B566B098/Library/Application Support/Hanlin/ScriptingPlatform/Installed/packages/install-script-ec17057f5a2c82aaed6ab6ca/generations/5/source/ bundle=bundle.js"
+    },
+    {
+      "line": 999953,
+      "text": "2026-11-25 08:42:59.059718+0100 HanlinMiniApps[94039:4474072] HANLIN_EXPO_SET_RUNTIME_DONE"
+    },
+    {
+      "line": 999954,
+      "text": "2026-11-25 08:42:59.059804+0100 HanlinMiniApps[94039:4474072] HANLIN_EXPO_REGISTERED_MODULES=ExpoAsset, ExpoWidgets, ExpoModulesCoreJSLogger, HanlinExpoUI, ExpoBrownfieldModule, ExpoBrownfieldStateModule, HanlinHostServices, HanlinGeneratedExpoUI, ExpoUI"
+    },
+    {
+      "line": 999957,
+      "text": "2026-11-25 08:42:59.102857+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 999958,
+      "text": "2026-11-25 08:42:59.102960+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 999959,
+      "text": "2026-11-25 08:42:59.103021+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 999969,
+      "text": "2026-11-25 08:42:59.116261+0100 HanlinMiniApps[94039:4474072] [javascript] No native ExponentConstants module found, are you sure the expo-constants's module is linked properly?"
+    },
+    {
+      "line": 999974,
+      "text": "2026-11-25 08:42:59.116870+0100 HanlinMiniApps[94039:4474072] [expo] 🟢 Creating JS object for module 'ExpoAsset'"
+    },
+    {
+      "line": 999979,
+      "text": "2026-11-25 08:42:59.135714+0100 HanlinMiniApps[94039:4474072] [expo] 🟢 Creating JS object for module 'ExpoUI'"
+    },
+    {
+      "line": 999981,
+      "text": "2026-11-25 08:42:59.178954+0100 HanlinMiniApps[94039:4474072] [expo] 🟢 Creating JS object for module 'HanlinExpoUI'"
+    },
+    {
+      "line": 999982,
+      "text": "2026-11-25 08:42:59.181344+0100 HanlinMiniApps[94039:4474072] [expo] 🟢 Creating JS object for module 'HanlinGeneratedExpoUI'"
+    },
+    {
+      "line": 999983,
+      "text": "2026-11-25 08:42:59.182624+0100 HanlinMiniApps[94039:4474072] [expo] 🟢 Creating JS object for module 'HanlinHostServices'"
+    },
+    {
+      "line": 999984,
+      "text": "2026-11-25 08:42:59.186704+0100 HanlinMiniApps[94039:4474072] [javascript] [Worklets] Mismatch between C++ code version and JavaScript code version (\"0.13.1\" vs. 0.13.0 respectively)."
+    },
+    {
+      "line": 999986,
+      "text": "2026-11-25 08:42:59.186812+0100 HanlinMiniApps[94039:4473064] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.register"
+    },
+    {
+      "line": 999987,
+      "text": "2026-11-25 08:42:59.187123+0100 HanlinMiniApps[94039:4474072] [javascript] Running \"main\""
+    },
+    {
+      "line": 999988,
+      "text": "2026-11-25 08:42:59.286815+0100 HanlinMiniApps[94039:4473064] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.next"
+    },
+    {
+      "line": 999989,
+      "text": "2026-11-25 08:42:59.286825+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.write"
+    },
+    {
+      "line": 999990,
+      "text": "2026-11-25 08:42:59.286836+0100 HanlinMiniApps[94039:4473056] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=widgets.publish"
+    },
+    {
+      "line": 999991,
+      "text": "2026-11-25 08:42:59.290748+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read"
+    },
+    {
+      "line": 999992,
+      "text": "2026-11-25 08:42:59.294095+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.delete"
+    },
+    {
+      "line": 999993,
+      "text": "2026-11-25 08:42:59.294743+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read"
+    },
+    {
+      "line": 999994,
+      "text": "2026-11-25 08:42:59.295400+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.write"
+    },
+    {
+      "line": 999995,
+      "text": "2026-11-25 08:42:59.296153+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read"
+    },
+    {
+      "line": 999996,
+      "text": "2026-11-25 08:42:59.296682+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.delete"
+    },
+    {
+      "line": 999997,
+      "text": "2026-11-25 08:42:59.297119+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read"
+    },
+    {
+      "line": 999998,
+      "text": "2026-11-25 08:42:59.310200+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.write"
+    },
+    {
+      "line": 999999,
+      "text": "2026-11-25 08:42:59.311438+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read"
+    },
+    {
+      "line": 1000000,
+      "text": "2026-11-25 08:42:59.331649+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.delete"
+    },
+    {
+      "line": 1000001,
+      "text": "2026-11-25 08:42:59.332289+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read"
+    },
+    {
+      "line": 1000002,
+      "text": "2026-11-25 08:42:59.332945+0100 HanlinMiniApps[94039:4473065] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.delete"
+    },
+    {
+      "line": 1000003,
+      "text": "2026-11-25 08:42:59.596982+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1000004,
+      "text": "2026-11-25 08:42:59.597086+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1000005,
+      "text": "2026-11-25 08:42:59.597146+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1000006,
+      "text": "2026-11-25 08:42:59.597196+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1000007,
+      "text": "2026-11-25 08:42:59.679454+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1000008,
+      "text": "2026-11-25 08:42:59.679550+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1000009,
+      "text": "2026-11-25 08:42:59.679604+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1000010,
+      "text": "2026-11-25 08:42:59.679651+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1000011,
+      "text": "2026-11-25 08:42:59.679702+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1000013,
+      "text": "2026-11-25 08:42:59.688064+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1000014,
+      "text": "2026-11-25 08:42:59.688121+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1000015,
+      "text": "2026-11-25 08:42:59.688164+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1000016,
+      "text": "2026-11-25 08:42:59.688232+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1000017,
+      "text": "2026-11-25 08:42:59.688281+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1000018,
+      "text": "2026-11-25 08:42:59.688326+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1000019,
+      "text": "2026-11-25 08:42:59.688361+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1000020,
+      "text": "2026-11-25 08:42:59.720025+0100 HanlinMiniApps[94039:4474083] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=widgets.publish"
+    },
+    {
+      "line": 1000021,
+      "text": "2026-11-25 08:42:59.734512+0100 HanlinMiniApps[94039:4474083] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=widgets.publish"
+    },
+    {
+      "line": 1000022,
+      "text": "2026-11-25 08:42:59.747705+0100 HanlinMiniApps[94039:4474083] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=widgets.publish"
+    },
+    {
+      "line": 1035188,
+      "text": "2026-11-25 08:43:05.849894+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1035189,
+      "text": "2026-11-25 08:43:05.849970+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1035190,
+      "text": "2026-11-25 08:43:05.850011+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1035191,
+      "text": "2026-11-25 08:43:05.850047+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1035192,
+      "text": "2026-11-25 08:43:05.850081+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1035193,
+      "text": "2026-11-25 08:43:05.850114+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1035194,
+      "text": "2026-11-25 08:43:05.856054+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1035195,
+      "text": "2026-11-25 08:43:05.856114+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1035196,
+      "text": "2026-11-25 08:43:05.856153+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1035197,
+      "text": "2026-11-25 08:43:05.856207+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1035198,
+      "text": "2026-11-25 08:43:05.856256+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1035199,
+      "text": "2026-11-25 08:43:05.856307+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1035200,
+      "text": "2026-11-25 08:43:05.856348+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1035201,
+      "text": "2026-11-25 08:43:05.856377+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1052749,
+      "text": "2026-11-25 08:43:08.905682+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1052750,
+      "text": "2026-11-25 08:43:08.905771+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1052751,
+      "text": "2026-11-25 08:43:08.905813+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1052752,
+      "text": "2026-11-25 08:43:08.905849+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1052753,
+      "text": "2026-11-25 08:43:08.923788+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1052754,
+      "text": "2026-11-25 08:43:08.923848+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1052755,
+      "text": "2026-11-25 08:43:08.923881+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1052756,
+      "text": "2026-11-25 08:43:08.923912+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1052757,
+      "text": "2026-11-25 08:43:08.923977+0100 HanlinMiniApps[94039:4472906] [API] cannot add handler to 0 from 0 - dropping"
+    },
+    {
+      "line": 1058817,
+      "text": "2026-11-25 08:43:10.898668+0100 HanlinMiniApps[94039:4472906] *** Terminating app due to uncaught exception 'NSInvalidArgumentException', reason: '-[SwiftUI.UIKitTextField setSelectionAffinity:]: unrecognized selector sent to instance 0x125788000'"
+    }
+  ]
+}

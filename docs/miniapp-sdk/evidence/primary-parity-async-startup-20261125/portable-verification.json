@@ -1,0 +1,88 @@
+{
+  "observedAt": "2026-11-25T02:43:27.985815+00:00",
+  "runtime": "Oracle Node v24.22.0",
+  "baseline": "Original fixture synchronous-first; actual baseline exit1, raw failure log retained.",
+  "candidateResults": [
+    {
+      "name": "candidate-contract-tests",
+      "argv": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs"
+      ],
+      "startedAt": "2026-11-25T02:43:27.681749+00:00",
+      "exitCode": 0,
+      "summary": [
+        "# tests 15",
+        "# pass 15",
+        "# fail 0",
+        "# skipped 0",
+        "# duration_ms 126.549333"
+      ]
+    },
+    {
+      "name": "existing-fixture-tests",
+      "argv": [
+        "python3",
+        "Scripts/CI/Tests/test_nativescript_parity_fixture.py"
+      ],
+      "startedAt": "2026-11-25T02:43:27.860128+00:00",
+      "exitCode": 0,
+      "summary": [
+        "Ran 4 tests in 0.003s",
+        "OK"
+      ]
+    },
+    {
+      "name": "syntax-check",
+      "argv": [
+        "node",
+        "--check",
+        "/mnt/development/projects/worktrees/hanlin-ns-original-core-metadata-20261125/DemoMiniApps/hanlin-script-parity/nativescript/app/bundle.mjs"
+      ],
+      "startedAt": "2026-11-25T02:43:27.931249+00:00",
+      "exitCode": 0,
+      "summary": []
+    },
+    {
+      "name": "diff-check",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "startedAt": "2026-11-25T02:43:27.967643+00:00",
+      "exitCode": 0,
+      "summary": []
+    }
+  ],
+  "scope": "Actual shipped JavaScript helper behavior in a VM with controlled native callbacks, archive-source identity, syntax; not native UI acceptance.",
+  "bundleBeforeSHA256": "7d0fb4935d1727e04d656bb4ba026509fb0720178d27d442d480b6dfcb102204",
+  "bundleAfterSHA256": "5f21796994e3880ba5d5c9f0e6d23b3fa12a667ff6082183f604d214a61284b1",
+  "archiveBeforeSHA256": "2c31e104d2b8e7a8c7356e3d2a15c2537e79266a1df1a8de7846deeddc923cc3",
+  "archiveAfterSHA256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199",
+  "baselineSummary": [
+    "\u2139 tests 15",
+    "\u2139 pass 5",
+    "\u2139 fail 10",
+    "\u2139 skipped 0",
+    "\u2139 duration_ms 193.802509"
+  ],
+  "uiChange": {
+    "beforeSHA256": "6c87c9751bf4b5910cc72716bfa1a6cb384c3ef53908a6ca074f713656f5730e",
+    "afterSHA256": "995e98e35d5f4f464c3b83062b136b14f74c7445c040d2118baffd3bcaea9052",
+    "title": "Exact shipped runtime identifier for initial presentation and relaunch, preventing a catalog-card match.",
+    "nodeReadiness": "Same independent verified Node/version/nonce/no-error assertion; wait25s ->180s inside unchanged420s case. Actual prior cold preparation remained incomplete through the parity assertion window; no complete cold duration is inferred from the3s sample.",
+    "nativeValidation": "PENDING next actual focused UI run"
+  },
+  "existingCIIntegration": {
+    "command": [
+      "python3",
+      "Scripts/CI/Tests/test_nativescript_parity_fixture.py"
+    ],
+    "exitCode": 0,
+    "suiteTests": 5,
+    "scope": "The four existing fixture checks plus the new actual15-case JavaScript behavior gate, invoked by the discoverable Python fixture suite."
+  }
+}

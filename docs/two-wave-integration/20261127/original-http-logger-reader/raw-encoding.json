@@ -1,0 +1,18 @@
+[
+  {
+    "path": "original-6bee-swift-test.log.gz",
+    "encoding": "lossless gzip; all original raw bytes retained",
+    "rawBytes": 31975,
+    "rawSHA256": "68f865166934a7f9385f5e83e7b50a474fe07014909640e4b0937d7d2bc8efa3",
+    "gzipBytes": 5044,
+    "gzipSHA256": "23c634f214b6012f8065ed82d0ff260350b46e460947175e4acbba17bc6ef597"
+  },
+  {
+    "path": "source.patch.gz",
+    "encoding": "lossless gzip; all original raw bytes retained",
+    "rawBytes": 2134,
+    "rawSHA256": "2edd429e91d51483739bb06cfeb02022dbde03ce93bc89ff5fa509d9d866918a",
+    "gzipBytes": 811,
+    "gzipSHA256": "07930836b082f2fbe4215b7d7eb63e869721a5d8f8fe477dab85cb7e6f322121"
+  }
+]

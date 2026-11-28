@@ -1,0 +1,30 @@
+{
+  "sourceCommit": "180c24939f25ed429d11f172072b259b5e333580",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2780,
+      "sha256": "aba78464f52e344aeeeb34d8ae7993b5865099f77dd82fbcc7d1497a93716579"
+    },
+    {
+      "path": "api-contracts.json",
+      "bytes": 3040,
+      "sha256": "4d241c3d486c0425c66613abd185c12bdeab0cfcfdeb9c9831e8a796d655c50d"
+    },
+    {
+      "path": "prior-native-failure.json",
+      "bytes": 2406,
+      "sha256": "0035df13fc19d0ace746664dc70cb2f03c192d6dd09c29de9903e8b0fa5e3411"
+    },
+    {
+      "path": "qualification.json",
+      "bytes": 3418,
+      "sha256": "13416b98beba3143dadf70681e46063931178beafbbeba031cd08c79a128234c"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 2038,
+      "sha256": "547dce5e470dd563bbb7557e3b76033254037b7b95fc086664ec81f4f7a1da92"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "exit": 0,
+  "seconds": 7.388025999069214,
+  "branch": "codex/hanlin-two-wave-integration-20261126",
+  "source": "4927392f1a2b2567fed9ac383fcb32df0c26b8c4",
+  "logSHA256": "d8e9b02b57a9114d8ddde91e71dec44eb08202a6212ebb37293f98aacf280490",
+  "authentication": "Existing ubuntu gh authenticated session used through scoped standard Git credential helper; no credential values exported."
+}

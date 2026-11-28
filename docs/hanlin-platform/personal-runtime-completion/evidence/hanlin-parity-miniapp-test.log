@@ -1,0 +1,41 @@
+warning: failed to retrieve search paths with pkg-config; maybe pkg-config is not installed
+warning: couldn't find pc file for zlib
+warning: couldn't find pc file for zlib
+[0/1] Planning build
+[1/1] Compiling plugin GenerateManual
+[2/2] Compiling plugin GenerateDoccReference
+Building for debugging...
+[2/16] Write sources
+[3/16] Write swift-version-2807070033DA82CF.txt
+[4/18] Wrapping AST for HanlinParityMiniApp for debugging
+[5/18] Wrapping AST for HanlinPlatformContracts for debugging
+[6/18] Wrapping AST for HanlinMiniAppCore for debugging
+[8/18] Emitting module HanlinParityMiniAppTests
+[9/18] Compiling HanlinParityMiniAppTests SwiftParityMiniAppTests.swift
+[10/19] C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinParityMiniApp\.build\x86_64-unknown-windows-msvc\debug\HanlinParityMiniAppPackageDiscoveredTests.derived\all-discovered-tests.swift
+[11/19] Write sources
+[12/19] Wrapping AST for HanlinParityMiniAppTests for debugging
+[14/22] Emitting module HanlinParityMiniAppPackageDiscoveredTests
+[15/22] Compiling HanlinParityMiniAppPackageDiscoveredTests all-discovered-tests.swift
+[16/22] Compiling HanlinParityMiniAppPackageDiscoveredTests HanlinParityMiniAppTests.swift
+[17/23] C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinParityMiniApp\.build\x86_64-unknown-windows-msvc\debug\HanlinParityMiniAppPackageTests.derived\runner.swift
+[18/23] Write sources
+[19/25] Wrapping AST for HanlinParityMiniAppPackageDiscoveredTests for debugging
+[21/25] Compiling HanlinParityMiniAppPackageTests runner.swift
+[22/25] Emitting module HanlinParityMiniAppPackageTests
+[23/26] Wrapping AST for HanlinParityMiniAppPackageTests for debugging
+[24/26] Write Objects.LinkFileList
+[25/26] Linking HanlinParityMiniAppPackageTests.xctest
+Build complete! (100.30s)
+Test Suite 'All tests' started at 2026-10-05 08:19:09.798
+Test Suite 'debug.xctest' started at 2026-10-05 08:19:09.810
+Test Suite 'debug.xctest' passed at 2026-10-05 08:19:09.810
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'All tests' passed at 2026-10-05 08:19:09.810
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+◊ Test run started.
+→ Testing Library Version: 6.3.3 (48d727cc1cf4eda)
+→ Target Platform: x86_64-unknown-windows-msvc
+◊ Test "SwiftPM Mini App exposes a valid canonical descriptor" started.
+√ Test "SwiftPM Mini App exposes a valid canonical descriptor" passed after 0.008 seconds.
+√ Test run with 1 test in 0 suites passed after 0.010 seconds.

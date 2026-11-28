@@ -1,0 +1,176 @@
+{
+  "scope": "READ_ONLY_ENVIRONMENT_PROBE",
+  "run_id": 45161058885,
+  "source_commit": "624f36e07209f4639252c48ec06397fb7a4f79a4",
+  "run_conclusion": "success",
+  "job_id": 137646342126,
+  "started_at": "2026-11-23T11:04:59Z",
+  "completed_at": "2026-11-23T11:05:33Z",
+  "runner_id": 1000024605,
+  "labels": [
+    "xcode-27"
+  ],
+  "xcode": "Xcode 27.2\nBuild version 27B52",
+  "simulator_sdk": "27.2",
+  "runtime_admission": [
+    {
+      "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+      "version": "27.0",
+      "build": "24A434",
+      "isAvailable": true,
+      "root_exists": true,
+      "bundle_exists": true,
+      "info_exists": true
+    },
+    {
+      "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-1",
+      "version": "27.1",
+      "build": "24A94425",
+      "isAvailable": true,
+      "root_exists": true,
+      "bundle_exists": true,
+      "info_exists": true
+    },
+    {
+      "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-2-iPhone19-4",
+      "version": "27.2",
+      "build": "24B91016s",
+      "isAvailable": true,
+      "root_exists": true,
+      "bundle_exists": true,
+      "info_exists": true
+    },
+    {
+      "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+      "version": "27.2",
+      "build": "24B8117",
+      "isAvailable": true,
+      "root_exists": true,
+      "bundle_exists": true,
+      "info_exists": true
+    }
+  ],
+  "original_commands": [
+    {
+      "name": "xcode",
+      "command": [
+        "xcodebuild",
+        "-version"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "simulator-sdk",
+      "command": [
+        "xcrun",
+        "--sdk",
+        "iphonesimulator",
+        "--show-sdk-version"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "runtime-help",
+      "command": [
+        "xcrun",
+        "simctl",
+        "help",
+        "runtime"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "runtime-images",
+      "command": [
+        "xcrun",
+        "simctl",
+        "runtime",
+        "list",
+        "-j"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "runtimes",
+      "command": [
+        "xcrun",
+        "simctl",
+        "list",
+        "runtimes",
+        "-j"
+      ],
+      "exit": 0
+    }
+  ],
+  "free_bytes": 39104987136,
+  "artifact": {
+    "id": 14812490420,
+    "bytes": 9496,
+    "sha256": "8ee248816d71591a8f020bfe0c7bd18ed9c36a5bcf520746d29b771301342ab0",
+    "downloaded_zip_sha256_matched": true,
+    "zip_crc": "PASS",
+    "members": 11
+  },
+  "files": [
+    {
+      "path": "original/runtime-help.stderr",
+      "bytes": 5134,
+      "sha256": "d3dcfc88705889eccb6f74800f129b2e20278e4794d41242a524b6b64794f343"
+    },
+    {
+      "path": "original/runtime-help.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/runtime-images.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/runtime-images.stdout",
+      "bytes": 12776,
+      "sha256": "bd68935a8e2cd7ee3e9e14dfa632af955e98160468e0c5d401c746de744512f0"
+    },
+    {
+      "path": "original/runtimes.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/runtimes.stdout",
+      "bytes": 60604,
+      "sha256": "42b9eeddfb8ddf214c8cf10727c2443be78da5f1cdf22965c9b692c5a6c1a5da"
+    },
+    {
+      "path": "original/simulator-sdk.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/simulator-sdk.stdout",
+      "bytes": 5,
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b"
+    },
+    {
+      "path": "original/summary.json",
+      "bytes": 45092,
+      "sha256": "07420733db615c59853b9c98825c377f96358a295e072e66b18878d812dd5c6b"
+    },
+    {
+      "path": "original/xcode.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/xcode.stdout",
+      "bytes": 31,
+      "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7"
+    }
+  ],
+  "limits": [
+    "No simulator boot, install, application build, launch or test was executed.",
+    "A successfully allocated compatible runner establishes a concrete reason for one continuation; it does not promise future capacity or acceptance.",
+    "Historical runner-acquisition failures remain NOT_RUN."
+  ]
+}

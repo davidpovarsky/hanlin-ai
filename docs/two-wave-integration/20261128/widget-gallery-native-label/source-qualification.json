@@ -1,0 +1,54 @@
+{
+  "at": "2026-11-28T12:25:00.812732+00:00",
+  "status": "FROZEN_SOURCE_ONLY_TESTS_AND_NATIVE_NOT_RUN",
+  "base": "0d73e9c4a87dda339abfdae19f6661b99677760d",
+  "actualFailure": {
+    "run": 46137570379,
+    "attempt": 1,
+    "source": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+    "ax": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-layout-terminal-r1/attachments-r1/layout/artifact-selected-members/paired-product/paired-attachments/7FD99C4C-D5A6-4191-B6DB-13032BE586E2.txt",
+    "axSHA256": "c6b40a6c77d3e92103e95c54e9ba61ad48c28eba1c3f66c784d0e4a0c6e02afc",
+    "caseSeconds": 405.385,
+    "workflow": "failure",
+    "mediumPreviewObserved": true,
+    "placementAccepted": false
+  },
+  "semantics": "Preserve original standalone family labels and Hanlin Script title. Also recognize exactly one same-row Hanlin MiniApps, Hanlin Script / Widget, requested family pair. Duplicate matching native previews fail closed, including alongside a legacy label.",
+  "paths": [
+    {
+      "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "beforeSHA256": "0242e3cd6074290011b8239626b1406009973ebe0a267b1082a12df7bfd2a2ed",
+      "afterSHA256": "94287f72d62edf8e15a77a01cc6b7869d46b591575f811886e0c5fe3661eeb93",
+      "beforeBytes": 294243,
+      "afterBytes": 294721
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_widget_families.py",
+      "beforeSHA256": "a4f86b96afff19a1f1b6158cf91d9069c590520c396986b44e05b8bc89b9de40",
+      "afterSHA256": "fb495451007a99545155d6f45ea365d46edbd221c99165d8135e5bc5c09f84e4",
+      "beforeBytes": 25760,
+      "afterBytes": 26054
+    },
+    {
+      "path": "Scripts/CI/Tests/test_widget_families_observer.py",
+      "beforeSHA256": "d62d502d457dc8b4d5423aed79a925623dd2de8f1716b822ae231bb59625993a",
+      "afterSHA256": "03b3c4acfd375b2f6cdb4708d041ce82f41fe14df1e3cedf31529b48c22b03ac",
+      "beforeBytes": 22397,
+      "afterBytes": 25010
+    }
+  ],
+  "wholeOriginalFileInverses": true,
+  "wholeForwardReverseProjection": true,
+  "originalUITestNamesUnchanged": true,
+  "originalUIHelperChangeOnly": true,
+  "originalPythonDefinitions": 17,
+  "newPythonDefinitions": 2,
+  "newControlCases": 12,
+  "originalBudgetsAndSelectorsUnchanged": true,
+  "workflowChanged": false,
+  "sdkInputsChanged": false,
+  "hostRuntimeChanged": false,
+  "testsExecuted": 0,
+  "nativeExecuted": 0,
+  "sourcePatchSHA256": "8bbac8334e6638ee0ea5286c91af63e3275eb1c435474852728119a983b8292a"
+}

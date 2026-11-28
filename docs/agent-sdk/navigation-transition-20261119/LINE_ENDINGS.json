@@ -1,0 +1,8 @@
+[
+  {
+    "path": "Packages/HanlinAgentSDK/Sources/HanlinHostContracts/HanlinHostNavigationTransition.swift",
+    "before_sha256": "37572d33be24e09b713db384f5739868f1c5de1e33dc345555621dd0403e77e2",
+    "after_sha256": "4800f100ff21fd3ea3a4b8f6dde016f5e17eb7a07b328cf689d39ca9a86e2ea3",
+    "change": "CRLF to LF only"
+  }
+]

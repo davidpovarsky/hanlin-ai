@@ -1,0 +1,191 @@
+{
+  "observedAt": "2026-11-24T23:31:46.934099+00:00",
+  "executedSource": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "rawTargetOutput": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/OriginalRuntimes.xcresult/Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-31337823-F212-4CA8-A8FD-9012B4EBF8EE-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-27FB731C-2339-4EF5-964F-0B4600D7CE25/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+    "bytes": 280150173,
+    "sha256": "debaedd9710f7a0c1d706b9bcaefa95587080503552e4ecb3f7455142c483edc"
+  },
+  "exactRawLines": [
+    {
+      "line": 1303763,
+      "text": "2026-11-24 23:40:55.013220+0100 HanlinMiniApps[21362:2170022] [javascript] [runtime not ready]: Error: Cannot find native module 'ExpoAsset'"
+    },
+    {
+      "line": 1303764,
+      "text": "2026-11-24 23:40:55.013495+0100 HanlinMiniApps[21362:2170022] [native] Unhandled JS Exception: [runtime not ready]: Error: Cannot find native module 'ExpoAsset'"
+    },
+    {
+      "line": 1303766,
+      "text": "2026-11-24 23:40:55.016622+0100 HanlinMiniApps[21362:2170022] [javascript] [runtime not ready]: Error: Cannot find native module 'ExpoAsset'"
+    },
+    {
+      "line": 1544720,
+      "text": "2026-11-24 23:42:50.725160+0100 HanlinMiniApps[21662:2172420] [javascript] [runtime not ready]: Error: Cannot find native module 'ExpoAsset'"
+    },
+    {
+      "line": 1544721,
+      "text": "2026-11-24 23:42:50.725441+0100 HanlinMiniApps[21662:2172420] [native] Unhandled JS Exception: [runtime not ready]: Error: Cannot find native module 'ExpoAsset'"
+    },
+    {
+      "line": 1544723,
+      "text": "2026-11-24 23:42:50.727988+0100 HanlinMiniApps[21662:2172420] [javascript] [runtime not ready]: Error: Cannot find native module 'ExpoAsset'"
+    },
+    {
+      "line": 1681555,
+      "text": "HANLIN_IMPORT_PACKAGE_TAPPED url=ModularTextSearch.hanlinExpo"
+    },
+    {
+      "line": 2082093,
+      "text": "2026-11-24 23:45:36.979675+0100 HanlinMiniApps[22632:2178109] [javascript] [runtime not ready]: Error: Cannot find native module 'ExpoAsset'"
+    },
+    {
+      "line": 2082094,
+      "text": "2026-11-24 23:45:36.979947+0100 HanlinMiniApps[22632:2178109] [native] Unhandled JS Exception: [runtime not ready]: Error: Cannot find native module 'ExpoAsset'"
+    },
+    {
+      "line": 2082096,
+      "text": "2026-11-24 23:45:36.982293+0100 HanlinMiniApps[22632:2178109] [javascript] [runtime not ready]: Error: Cannot find native module 'ExpoAsset'"
+    },
+    {
+      "line": 2328974,
+      "text": "SyntaxError: Unexpected token '{'"
+    },
+    {
+      "line": 2328979,
+      "text": "2026-11-24 23:46:51.649106+0100 HanlinMiniApps[23052:2179430] [HanlinScriptingPlatform] NativeScript launch failed for install-script-f742f5767a7a47f8f8d51efd: bootstrapFailed(\"NativeScript script execution failed: Cannot instantiate module /Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/Hanlin/ScriptingPlatform/Installed/packages/install-script-f742f5767a7a47f8f8d51efd/generations/1/source/nativescript/app/bundle.mjs\\nSyntaxError: Unexpected token \\'{\\'\\nStack:\\nSyntaxError: Unexpected token \\'{\\'\")"
+    }
+  ],
+  "pendingModularJob": {
+    "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/jobs/node/37b0a615-3df6-42d2-ae4c-caf0d092bf54/job.json",
+    "bytes": 297,
+    "sha256": "a7dde5ee36b79bfb9f69f23a2aa5048361a8219613c07e0993905e443bdccb3f",
+    "headerKeys": [
+      "executionID",
+      "state",
+      "startedAt",
+      "cancellationRequested",
+      "stdoutBytes",
+      "stderrBytes",
+      "result",
+      "error"
+    ],
+    "metadata": {
+      "executionID": "37b0a615-3df6-42d2-ae4c-caf0d092bf54",
+      "state": "interrupted",
+      "startedAt": 1795560219085,
+      "stdoutBytes": 0,
+      "stderrBytes": 0,
+      "error": "The app process ended before this job completed. Existing output is retained; side effects are not replayed."
+    },
+    "artifactNames": [
+      "stderr.log",
+      "stdout.log",
+      "job.json",
+      "main.mjs"
+    ]
+  },
+  "nodeLog": {
+    "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/logs/node-runtime.log",
+    "bytes": 5720,
+    "sha256": "fe24fe87ec550b3dba31d78e3b8c34e77480cdcce6f3981587d296cf314c3047",
+    "events": [
+      {
+        "timestamp": "2026-11-24T22:30:43.768Z",
+        "event": "runtime_paths_configured",
+        "fields": {
+          "home": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/runtime/home",
+          "npmCache": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/cache/npm",
+          "npmPrefix": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/runtime/npm-prefix",
+          "npmTemp": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/staging/tmp"
+        }
+      },
+      {
+        "timestamp": "2026-11-24T22:30:44.036Z",
+        "event": "host_ready",
+        "fields": {
+          "port": "55665",
+          "nodeVersion": "24.5.0",
+          "modulePolicyHooksAvailable": "true"
+        }
+      },
+      {
+        "timestamp": "2026-11-24T22:43:38.557Z",
+        "event": "runtime_paths_configured",
+        "fields": {
+          "home": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/runtime/home",
+          "npmCache": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/cache/npm",
+          "npmPrefix": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/runtime/npm-prefix",
+          "npmTemp": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/staging/tmp"
+        }
+      },
+      {
+        "timestamp": "2026-11-24T22:43:38.877Z",
+        "event": "host_ready",
+        "fields": {
+          "port": "56278",
+          "nodeVersion": "24.5.0",
+          "modulePolicyHooksAvailable": "true"
+        }
+      },
+      {
+        "timestamp": "2026-11-24T22:44:55.699Z",
+        "event": "runtime_paths_configured",
+        "fields": {
+          "home": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/runtime/home",
+          "npmCache": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/cache/npm",
+          "npmPrefix": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/runtime/npm-prefix",
+          "npmTemp": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/staging/tmp"
+        }
+      },
+      {
+        "timestamp": "2026-11-24T22:44:55.933Z",
+        "event": "host_ready",
+        "fields": {
+          "port": "56282",
+          "nodeVersion": "24.5.0",
+          "modulePolicyHooksAvailable": "true"
+        }
+      },
+      {
+        "timestamp": "2026-11-24T22:45:18.825Z",
+        "event": "runtime_paths_configured",
+        "fields": {
+          "home": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/runtime/home",
+          "npmCache": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/cache/npm",
+          "npmPrefix": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/runtime/npm-prefix",
+          "npmTemp": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/staging/tmp"
+        }
+      },
+      {
+        "timestamp": "2026-11-24T22:45:19.065Z",
+        "event": "host_ready",
+        "fields": {
+          "port": "56286",
+          "nodeVersion": "24.5.0",
+          "modulePolicyHooksAvailable": "true"
+        }
+      },
+      {
+        "timestamp": "2026-11-24T22:46:24.386Z",
+        "event": "runtime_paths_configured",
+        "fields": {
+          "home": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/runtime/home",
+          "npmCache": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/cache/npm",
+          "npmPrefix": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/runtime/npm-prefix",
+          "npmTemp": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/HanlinRuntime/v1/staging/tmp"
+        }
+      },
+      {
+        "timestamp": "2026-11-24T22:46:24.628Z",
+        "event": "host_ready",
+        "fields": {
+          "port": "56293",
+          "nodeVersion": "24.5.0",
+          "modulePolicyHooksAvailable": "true"
+        }
+      }
+    ]
+  },
+  "scope": "Read-only extraction from failed attempt7, not a rerun or completion proof."
+}

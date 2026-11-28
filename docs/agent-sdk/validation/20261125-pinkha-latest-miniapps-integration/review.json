@@ -1,0 +1,17 @@
+{
+  "parents": [
+    "b5536fc80a203ef943d6334b591991a77baad635",
+    "08ef8741ff58241a081c908536a3b4d3917cc0e8"
+  ],
+  "canonicalConsumerPackagesUnchanged": true,
+  "changes": "Original catalog localization; exact OS URL delivery and process-continuity assertions; scoped failed-window cleanup; canonical project-graph target audit and copied audit dependency.",
+  "nativeAcceptance": "NOT_RUN on this SDK merge; independent producer affected UI run is still executing, not claimed as pass.",
+  "command": [
+    "python3",
+    "Scripts/SDK/generate_manifest.py"
+  ],
+  "exit": 1,
+  "duration": 1.6537716388702393,
+  "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSHA256": "49e4c844900998f80f8e8b7def0a5916447ba44ffaa3c236eb2a06cf6d254d44"
+}

@@ -1,0 +1,37 @@
+{
+  "status": "SOURCE_STAGE_FAILED",
+  "source": "bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb",
+  "before": "d2902ba9a4b18d5dba92662430e7eda355744b0c",
+  "startedAt": "2026-11-27T07:24:33.290699+00:00",
+  "nativeCommandsStarted": 0,
+  "rootReview": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/import-bd4c83ba/root-package-and-miniapps-compile-integration.json",
+    "sha256": "31cdb37657e355eae15f90a6df75ea06925e290ce7719b5daebbc4e4ffad7165",
+    "contents": {
+      "schema": 1,
+      "atUTC": "2026-11-27T07:20:45.311824+00:00",
+      "base": "0c5df7c68b4a2abdf520232b0efb5bb6f0ba05cd",
+      "compileCommit": "58cbc24e1",
+      "httpSourceCommit": "42e1aa4ff9adf7ab2c7c899efcf7fd4ce319a7c6",
+      "integratedHead": "bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb",
+      "sparseCheckoutMaterialization": "Existing materialized file exactly equaled owned pre-cherry-pick0c source; restored exact merged HEAD blob",
+      "httpMethodByteEqualToReviewedCandidate": true,
+      "rootLoaderMethodByteEqualToAcceptedRootCorrection": true,
+      "httpNativeAPIsReviewSHA256": "4e354bee856c5e3aff0ccaf0349a27b1e76e913733d9e4562916947299ec8c66",
+      "native": "NOT_RUN",
+      "productionChanged": false,
+      "gitClean": true
+    }
+  },
+  "bundle": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/import-bd4c83ba/root-package-and-miniapps-tests-from-f768.bundle",
+    "bytes": 160650,
+    "sha256": "91047d36e5190ee9e102688a7739887b964fe6219005063ced4381536c3fa881",
+    "prerequisite": "f768d634bfa8a102cf63b32c7ab9d129cafc671d"
+  },
+  "bundleVerification": "The bundle contains this ref:\nbd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb HEAD\nThe bundle requires this ref:\nf768d634bfa8a102cf63b32c7ab9d129cafc671d \nThe bundle uses this hash algorithm: sha1",
+  "error": "RuntimeError({'git': ('merge-base', '--is-ancestor', 'd2902ba9a4b18d5dba92662430e7eda355744b0c', 'bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb'), 'exit': 1, 'stdout': '', 'stderr': ''})",
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/m1/sentinelx/uploads/.sentinelx_uploads/script_job_6a597c50e42547548f8ae479a3b1af10/script.py\", line 34, in <module>\n    git(\"merge-base\",\"--is-ancestor\",before,expected)\n  File \"/Users/m1/sentinelx/uploads/.sentinelx_uploads/script_job_6a597c50e42547548f8ae479a3b1af10/script.py\", line 15, in git\n    if p.returncode:raise RuntimeError({\"git\":a,\"exit\":p.returncode,\"stdout\":p.stdout[-2000:],\"stderr\":p.stderr[-3000:]})\nRuntimeError: {'git': ('merge-base', '--is-ancestor', 'd2902ba9a4b18d5dba92662430e7eda355744b0c', 'bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb'), 'exit': 1, 'stdout': '', 'stderr': ''}\n",
+  "finishedAt": "2026-11-27T07:24:34.001654+00:00",
+  "freeBytes": 2848690176
+}

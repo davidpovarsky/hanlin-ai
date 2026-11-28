@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "2f1cfa6e4a702475acfe80ad68bf82c5320902f5",
+  "createdAt": "2026-11-24T11:48:12.522065+00:00",
+  "changes": {
+    "firstMiniAppsBuildSeconds": {
+      "before": 2400,
+      "after": 3600
+    },
+    "pairedJobMinutes": {
+      "before": 150,
+      "after": 210
+    }
+  },
+  "budgetRationale": {
+    "observedPreparationMinutes": 22.863,
+    "firstBuildMinutes": 60,
+    "unchangedAIBuildMinutes": 30,
+    "unchangedOriginalRuntimeTestMinutes": 20,
+    "unchangedPairedTestMinutes": 35,
+    "unchangedOriginalA2UIGeneratorMinutes": 6,
+    "remainderFromRoundedPreparationMinutes": 36,
+    "remainderPurpose": "Simulator setup, installation, AppIntents/identity validation, attachment capture and evidence/cache uploads; not a predicted runtime or a pass."
+  },
+  "preserved": [
+    "Exact 52 cases (25 MiniApps + 27 AI), all selectors/count checks and no-skip requirements",
+    "All native command argv/order and all timeouts except the first MiniApps build",
+    "Streaming logs, durable command journal, signal/timeout behavior and final failure classification",
+    "Current original-library resolution/native preparation/SDK checks and artifact verification",
+    "Exact-input compiler/SPM cache restore/save and digest-checked timestamp reuse",
+    "Other workflow modes, signing, permissions, concurrency and all 10 dispatch inputs",
+    "Externally dirty ROOT AGENTS.md, dedicated Mac routing assessment and all CI ownership"
+  ],
+  "verification": [
+    {
+      "status": "EXECUTED_PASS",
+      "kind": "One affected existing portable main/finally regression",
+      "path": "portable.command.json",
+      "tests": 1,
+      "scope": "Real subprocess exits 65; verifies actual failed-build receipt and no AI/UI execution. No native test."
+    },
+    {
+      "status": "EXECUTED_PASS",
+      "kind": "Exact normalized AST/YAML comparison",
+      "path": "structural-comparison.json"
+    }
+  ],
+  "diagnosis": "native-diagnosis.json",
+  "reuse": {
+    "status": "Existing supported compiler/SPM cache path retained unchanged",
+    "boundaries": "Entry agent's read-only assessment is reused: main12 saved compatible-key partial DerivedData and SourcePackages. Reuse still depends on matching Xcode/SDK/workspace/current original inputs. Prepared native catalog has no established published/readback-verified install route; this patch does not import it or skip fresh native preparation."
+  },
+  "appleValidation": "NOT_RUN; root owns next dispatch/watcher and exact-toolchain fallback decision.",
+  "sourceHashes": "source-hashes.json",
+  "authenticatedSourceArtifact": {
+    "runID": 45375410965,
+    "artifactID": 14916730253,
+    "bytes": 333607332,
+    "sha256": "555799b3fa3512c41f757eca7fdf0da998274c311530019a0dff61334a53b05f",
+    "provenance": "Retrieved and authenticated by the root agent; this lane reads the retained extracted log and journal only."
+  }
+}

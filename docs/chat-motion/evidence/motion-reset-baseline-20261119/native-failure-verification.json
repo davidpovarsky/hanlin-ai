@@ -1,0 +1,63 @@
+{
+  "run": 44437763739,
+  "head": "ca49d1381d186dcc481eeb7c7eb753dd19bd0085",
+  "artifact": 14495183550,
+  "sha256": "c245988613d846c99fb46528099520108290adb0bdf48e1b9ce15fd4cddcd5a9",
+  "all_crc": "PASS",
+  "native_case": "MotionUITests/testDRapidInputDiagnosticOnly()",
+  "result": "FAILED",
+  "duration_seconds": 55.59066700935364,
+  "failure_line": 234,
+  "actual": "static=collapsed;animated=transitioning",
+  "expected": "static=collapsed;animated=collapsed",
+  "phase": "reset before first immediate-touch-down control; six native-default observations were attached",
+  "diagnosis": "Immediate reset geometry assertion has no settling allowance. The failure alone does not establish a production animation defect or a successful rapid reversal.",
+  "source_checks": [
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift",
+      "native_sha256": "3481cd9d74a08f949a239b05f343ef644070dd5929bab236f72da6c994337061",
+      "matches_exact_git_blob": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionPreferences.swift",
+      "native_sha256": "e63652e5b1184f06ce33f921672890b70d5949a0cb04803bf08a30207027fa52",
+      "matches_exact_git_blob": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+      "native_sha256": "b4c30df7ecdab7b7ef1c35cc6108279f0d34bf7b928e0291f4b95572f9a44081",
+      "matches_exact_git_blob": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatShimmerEffect.swift",
+      "native_sha256": "b5b3163eb67a803a88857fc4d845d5fd7379d7377afa2f839c7c50aed3c08440",
+      "matches_exact_git_blob": true
+    },
+    {
+      "path": "AI_HLY/Views/Components/ChatViewComponents.swift",
+      "native_sha256": "132e8a34f732f3182fef9e6ba44db3ce386490474ef4eef8fd33904c5a17e9f2",
+      "matches_exact_git_blob": true
+    },
+    {
+      "path": "docs/chat-motion/MotionUI/App.swift",
+      "native_sha256": "ee6be1339f02f0cf83d658660fcf947df6bcdf005497301df096e089f63fe63f",
+      "matches_exact_git_blob": true
+    },
+    {
+      "path": "docs/chat-motion/MotionUI/MotionUITests.swift",
+      "native_sha256": "a0c550806ddba1df3044a50eb49a1ad576bfb54bf61dc8d0cbe8dcc69270c189",
+      "matches_exact_git_blob": true
+    },
+    {
+      "path": "AI_HLY/Assets.xcassets/HLBluefont.colorset/Contents.json",
+      "native_sha256": "26b4ae7db29ab464477bb180ee79ee8ed773d293ed33c70978885500b8300b08",
+      "matches_exact_git_blob": true
+    },
+    {
+      "path": "AI_HLY/Resource/Localizable.xcstrings",
+      "native_sha256": "8c2f85e53f3b4cc6a063a4a9a840885dbf6ed6ba2b1c833f768e4d381d8e6955",
+      "matches_exact_git_blob": true
+    }
+  ],
+  "archive_sha256": "06897b4359488e94608729872d6227b8b0c0d7ed4162d7bf80000c645e29ad9a"
+}

@@ -1,0 +1,114 @@
+[
+  {
+    "name": "project-graph",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/CI/IntegrationValidation",
+      "-p",
+      "test_project_graph.py",
+      "-v"
+    ],
+    "exit": 1,
+    "stderr_tail": "project_graph.py\", line 24, in test_registered_graph\n    result = validate_graph(self.project, self.manifest)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/CI/IntegrationValidation/project_graph.py\", line 230, in validate_graph\n    validate_shipping_extension_inventory(project)\n  File \"/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/CI/IntegrationValidation/project_graph.py\", line 206, in validate_shipping_extension_inventory\n    assert settings[\"GENERATE_INFOPLIST_FILE\"] == \"YES\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n\n======================================================================\nFAIL: test_reject_declared_but_unlinked_product (test_project_graph.ProjectGraphTests.test_reject_declared_but_unlinked_product)\n----------------------------------------------------------------------\nAssertionError\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/CI/IntegrationValidation/test_project_graph.py\", line 169, in test_reject_declared_but_unlinked_product\n    with self.assertRaisesRegex(AssertionError, \"Every declared MiniApps product must actually be linked\"):\nAssertionError: \"Every declared MiniApps product must actually be linked\" does not match \"\"\n\n----------------------------------------------------------------------\nRan 19 tests in 0.723s\n\nFAILED (failures=2)\n"
+  },
+  {
+    "name": "system-extensions",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/SDK/tests",
+      "-p",
+      "test_system_extension_targets.py",
+      "-v"
+    ],
+    "exit": 1,
+    "stderr_tail": "-------------------------------------\nTraceback (most recent call last):\n  File \"/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/SDK/tests/test_system_extension_targets.py\", line 102, in test_generation_is_idempotent_and_preserves_native_shell_phases\n    validate_shipping_extension_inventory(parse_project(first))\n  File \"/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/CI/IntegrationValidation/project_graph.py\", line 206, in validate_shipping_extension_inventory\n    assert settings[\"GENERATE_INFOPLIST_FILE\"] == \"YES\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n\n======================================================================\nFAIL: test_new_system_surfaces_do_not_acquire_hanlin_shipping_or_registration (test_system_extension_targets.SystemExtensionTargetsTests.test_new_system_surfaces_do_not_acquire_hanlin_shipping_or_registration)\n----------------------------------------------------------------------\nAssertionError\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/SDK/tests/test_system_extension_targets.py\", line 83, in test_new_system_surfaces_do_not_acquire_hanlin_shipping_or_registration\n    with self.assertRaisesRegex(AssertionError, \"remain in MiniApps\"):\nAssertionError: \"remain in MiniApps\" does not match \"\"\n\n----------------------------------------------------------------------\nRan 9 tests in 5.374s\n\nFAILED (failures=3)\n"
+  },
+  {
+    "name": "host-link-ownership",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/SDK/tests",
+      "-p",
+      "test_host_link_ownership.py",
+      "-v"
+    ],
+    "exit": 0,
+    "stderr_tail": "test_canonical_seed_rejects_missing_ambiguous_recursive_and_duplicate_dependencies (test_host_link_ownership.HostLinkOwnershipTests.test_canonical_seed_rejects_missing_ambiguous_recursive_and_duplicate_dependencies) ... ok\ntest_checked_in_hosts_link_only_the_shared_application_image (test_host_link_ownership.HostLinkOwnershipTests.test_checked_in_hosts_link_only_the_shared_application_image) ... ok\ntest_every_declared_host_product_remains_reachable_and_unknown_products_are_kept (test_host_link_ownership.HostLinkOwnershipTests.test_every_declared_host_product_remains_reachable_and_unknown_products_are_kept) ... ok\ntest_generator_preserves_declared_source_closure_and_all_unrelated_objects (test_host_link_ownership.HostLinkOwnershipTests.test_generator_preserves_declared_source_closure_and_all_unrelated_objects) ... ok\ntest_host_target_name_disambiguates_the_sdk_and_preserves_the_app_product (test_host_link_ownership.HostLinkOwnershipTests.test_host_target_name_disambiguates_the_sdk_and_preserves_the_app_product) ... ok\ntest_unknown_independent_host_product_is_preserved_in_both_link_surfaces (test_host_link_ownership.HostLinkOwnershipTests.test_unknown_independent_host_product_is_preserved_in_both_link_surfaces) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 8.725s\n\nOK\n"
+  },
+  {
+    "name": "profile-resolution",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/ProductSplit",
+      "-p",
+      "test_signing_profiles.py",
+      "-v"
+    ],
+    "exit": 1,
+    "stderr_tail": "jects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/ProductSplit/test_signing_profiles.py\", line 124, in test_invalid_native_operation_cannot_create_a_profile\n    self.create.assert_not_called()\n  File \"/usr/lib/python3.12/unittest/mock.py\", line 905, in assert_not_called\n    raise AssertionError(msg)\nAssertionError: Expected 'mock' to not have been called. Called 3 times.\nCalls: [call('original-bundle', 'existing-cert', 'Hanlin ai App Store 12345'),\n call('original-bundle', 'existing-cert', 'Hanlin ai App Store 12345'),\n call('original-bundle', 'existing-cert', 'Hanlin ai App Store 12345')].\n\n======================================================================\nFAIL: test_missing_operation_cannot_create_a_profile (test_signing_profiles.ProfileResolutionTests.test_missing_operation_cannot_create_a_profile)\n----------------------------------------------------------------------\nValueError: A concrete original GitHub run is required to create a profile\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/ProductSplit/test_signing_profiles.py\", line 129, in test_missing_operation_cannot_create_a_profile\n    with self.assertRaisesRegex(ValueError, \"explicit signing operation\"):\nAssertionError: \"explicit signing operation\" does not match \"A concrete original GitHub run is required to create a profile\"\n\n----------------------------------------------------------------------\nRan 33 tests in 0.132s\n\nFAILED (failures=5, errors=1)\n"
+  },
+  {
+    "name": "signed-bundles",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/ProductSplit",
+      "-p",
+      "test_signed_product_bundles.py",
+      "-v"
+    ],
+    "exit": 1,
+    "stderr_tail": "s_rejected) ... ok\n\n======================================================================\nFAIL: test_miniapps_app_only_cannot_satisfy_source_extension_coverage (test_signed_product_bundles.ExportedBundleTargetsTests.test_miniapps_app_only_cannot_satisfy_source_extension_coverage)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/ProductSplit/test_signed_product_bundles.py\", line 72, in test_miniapps_app_only_cannot_satisfy_source_extension_coverage\n    self.assertEqual(required, expected)\nAssertionError: Items in the first set but not the second:\n'com.itorah.hanlinminiapps.notification-content'\n'com.itorah.hanlinminiapps.camera-capture'\n'com.itorah.hanlinminiapps.keyboard'\n\n======================================================================\nFAIL: test_profile_selection_retains_both_disjoint_original_app_families (test_signed_product_bundles.ExportedBundleTargetsTests.test_profile_selection_retains_both_disjoint_original_app_families)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/ProductSplit/test_signed_product_bundles.py\", line 88, in test_profile_selection_retains_both_disjoint_original_app_families\n    self.assertEqual(len(miniapps), 5)\nAssertionError: 8 != 5\n\n----------------------------------------------------------------------\nRan 7 tests in 0.012s\n\nFAILED (failures=2)\n"
+  },
+  {
+    "name": "local-miniapps-profiles",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/ProductSplit",
+      "-p",
+      "test_local_miniapps_profiles.py",
+      "-v"
+    ],
+    "exit": 1,
+    "stderr_tail": "===============================================\nFAIL: test_all_five_original_roles_reuse_profiles_with_exact_prefix_matching (test_local_miniapps_profiles.MiniAppsLocalProfilesTests.test_all_five_original_roles_reuse_profiles_with_exact_prefix_matching)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/ProductSplit/test_local_miniapps_profiles.py\", line 89, in test_all_five_original_roles_reuse_profiles_with_exact_prefix_matching\n    self.assertEqual(len(result), 5)\nAssertionError: 8 != 5\n\n======================================================================\nFAIL: test_missing_extension_is_created_once_and_get_cms_is_authoritative (test_local_miniapps_profiles.MiniAppsLocalProfilesTests.test_missing_extension_is_created_once_and_get_cms_is_authoritative)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/ProductSplit/test_local_miniapps_profiles.py\", line 109, in test_missing_extension_is_created_once_and_get_cms_is_authoritative\n    self.assertEqual(facts[-1][\"source\"], \"CREATED_AND_READ_BACK_APPLE_PROFILE\")\nAssertionError: 'REUSED_COMPATIBLE_APPLE_PROFILE' != 'CREATED_AND_READ_BACK_APPLE_PROFILE'\n- REUSED_COMPATIBLE_APPLE_PROFILE\n+ CREATED_AND_READ_BACK_APPLE_PROFILE\n\n\n----------------------------------------------------------------------\nRan 6 tests in 0.015s\n\nFAILED (failures=2)\n"
+  },
+  {
+    "name": "local-distribution-profiles",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/ProductSplit",
+      "-p",
+      "test_local_distribution_profiles.py",
+      "-v"
+    ],
+    "exit": 0,
+    "stderr_tail": "naming_does_not_require_or_change_github_environment) ... ok\ntest_invalid_local_naming_fails_before_any_account_read_or_write (test_local_distribution_profiles.LocalResolutionTests.test_invalid_local_naming_fails_before_any_account_read_or_write) ... ok\ntest_later_compatible_candidate_is_reused_before_any_creation (test_local_distribution_profiles.LocalResolutionTests.test_later_compatible_candidate_is_reused_before_any_creation) ... ok\ntest_missing_pair_has_one_creation_each_and_full_get_readback (test_local_distribution_profiles.LocalResolutionTests.test_missing_pair_has_one_creation_each_and_full_get_readback) ... ok\ntest_original_numeric_github_creation_default_is_unchanged (test_local_distribution_profiles.LocalResolutionTests.test_original_numeric_github_creation_default_is_unchanged) ... ok\ntest_pair_reuses_existing_profiles_and_returns_private_metadata_separately (test_local_distribution_profiles.LocalResolutionTests.test_pair_reuses_existing_profiles_and_returns_private_metadata_separately) ... ok\ntest_partial_local_context_cannot_fall_back_to_gha (test_local_distribution_profiles.LocalResolutionTests.test_partial_local_context_cannot_fall_back_to_gha) ... ok\ntest_uncertain_creation_is_not_retried (test_local_distribution_profiles.LocalResolutionTests.test_uncertain_creation_is_not_retried) ... ok\ntest_wrong_certificate_prevents_all_profile_resolution (test_local_distribution_profiles.LocalResolutionTests.test_wrong_certificate_prevents_all_profile_resolution) ... ok\n\n----------------------------------------------------------------------\nRan 16 tests in 0.025s\n\nOK\n"
+  }
+]

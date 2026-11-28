@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "sourceBase": "a729bc6380fe08807d67d83f916b9bfda9cc1051",
+  "startedAt": "2026-11-27T08:26:38.687275+00:00",
+  "nativeStatus": "NOT_RUN",
+  "steps": [
+    {
+      "name": "swift-version",
+      "command": [
+        "swift",
+        "--version"
+      ],
+      "cwd": "/mnt/development/projects/worktrees/hanlin-sdk-resource-test-20261127",
+      "exit": 0,
+      "seconds": 0.165,
+      "stdout": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-expo-extension-boundary-a729bc63/canonical-generation-r1/swift-version.stdout",
+        "sha256": "59360730c588801a672c1118d5d1debc93581f6b74e6a82d5d8cbda1b4a729ce",
+        "bytes": 76
+      },
+      "stderr": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-expo-extension-boundary-a729bc63/canonical-generation-r1/swift-version.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "name": "generate-manifest",
+      "command": [
+        "python3",
+        "Scripts/SDK/generate_manifest.py"
+      ],
+      "cwd": "/mnt/development/projects/worktrees/hanlin-sdk-resource-test-20261127",
+      "exit": 0,
+      "seconds": 7.267,
+      "stdout": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-expo-extension-boundary-a729bc63/canonical-generation-r1/generate-manifest.stdout",
+        "sha256": "cbbb1ca729ebd466640bfe1c40bbad57fdb2ad127a936a076d6a1ba8500f27ed",
+        "bytes": 3737
+      },
+      "stderr": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-expo-extension-boundary-a729bc63/canonical-generation-r1/generate-manifest.stderr",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    },
+    {
+      "name": "update-project",
+      "command": [
+        "python3",
+        "Scripts/SDK/update_project.py"
+      ],
+      "cwd": "/mnt/development/projects/worktrees/hanlin-sdk-resource-test-20261127",
+      "exit": 1,
+      "seconds": 2.577,
+      "stdout": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-expo-extension-boundary-a729bc63/canonical-generation-r1/update-project.stdout",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "stderr": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-expo-extension-boundary-a729bc63/canonical-generation-r1/update-project.stderr",
+        "sha256": "fd9b8a192409131cf86ef5415f4ad354f71797b06b08d4f123f158b1969b9398",
+        "bytes": 1303
+      }
+    }
+  ],
+  "status": "FAIL",
+  "completedAt": "2026-11-27T08:26:48.698853+00:00"
+}

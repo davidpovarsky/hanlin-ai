@@ -1,0 +1,66 @@
+Exported 3 attachments for: HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure():
+File: 82DB4296-B918-4BB0-A61B-15F1C253A260.json, suggested name: "notification-installed-expo-action-error_0_04317910-8852-4748-8FB7-D2089717DE9C.json"
+File: 82924EE8-F469-43B1-BC0D-4642D32A81A7.json, suggested name: "notification-installed-expo-result_0_3DA7E5BD-21D1-491B-B6EE-E3E49815C7FC.json"
+File: 598CD74F-2A61-4AEB-8B2F-136BB592E5BA.json, suggested name: "expo-installed-action-reply_0_D13E4AE8-B6C3-4938-97ED-D299E97D5731.json"
+
+Exported 2 attachments for: HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer():
+File: FBA69ED6-C941-4829-9DAD-89D40822277E.json, suggested name: "expo-prepared-widget-actual-consumer_0_B1D9D666-9253-4C38-A48E-57766B5AA72F.json"
+File: 6BC7E618-0D9D-409E-9B9B-BD8536B26640.json, suggested name: "expo-prepared-widget-state-receipt_0_28A121B3-5B8F-44D8-BDF7-58F51CC74D5B.json"
+
+Skipped export for HanlinNativePresentationTests/testExpoLayoutEntryUsesItsDeclaredFormatRegardlessOfFileExtension(): no matching attachments
+
+Skipped export for HanlinNativePresentationTests/testNativePresentationRejectsRemovedGenerationAndDifferentProductStore(): no matching attachments
+
+Skipped export for HanlinNativePresentationTests/testNativeSnippetHasIndependentDurableSessionsWithoutWidgetInstances(): no matching attachments
+
+Skipped export for HanlinNativePresentationTests/testOriginalDynamicIslandCapturesAllSevenNativeRegionsAndFunctionComponents(): no matching attachments
+
+Skipped export for HanlinNativePresentationTests/testTranslationUsesOriginalAsyncAPIAndReturnsNativeFinishEffect(): no matching attachments
+
+Skipped export for HanlinMiniAppStorageCapacityTests/largeArtifactsResourcesAndSnapshotsRetainIntegrity(): no matching attachments
+
+Skipped export for HanlinOriginalExpoWidgetTests/testOriginalWidgetRegistrationTimelineAndPickerKeepProductAndInstallationIdentity(): no matching attachments
+
+Skipped export for PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings(): no matching attachments
+
+Skipped export for PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft(): no matching attachments
+
+Skipped export for HanlinOriginalScriptWidgetAPITests/originalNativeProvidersAreRegisteredAndExposeRealDeviceValues(): no matching attachments
+
+Skipped export for HanlinOriginalScriptWidgetAPITests/originalAsyncDocumentsProviderSettlesBeforeRenderingAndStateCommit(): no matching attachments
+
+Skipped export for HanlinOriginalScriptWidgetAPITests/upstreamPromiseRejectionIsCatchableWithoutUnsupportedAsyncFailure(): no matching attachments
+
+Skipped export for HanlinOriginalScriptWidgetAPITests/originalStorageAndHanlinCompatibilityValuesShareOneTransaction(): no matching attachments
+
+Skipped export for HanlinOriginalScriptWidgetControlTests/originalControlsCompileAndRunNativeActionsWithoutRendering(): no matching attachments
+
+Skipped export for HanlinOriginalScriptWidgetControlTests/controlSelectionPreservesProductInstallationAndGenerationOwnership(): no matching attachments
+
+Skipped export for HanlinOriginalScriptWidgetControlTests/originalControlEntitiesProvidersAndNativeIntentsUseThePublishedHostStore(): no matching attachments
+
+Skipped export for HanlinOriginalScriptWidgetLiveActivityTests/originalRegionsPersistOutsideActivityContentAndActionsProduceFreshSnapshots(): no matching attachments
+
+Skipped export for HanlinOriginalScriptWidgetLiveActivityTests/inactiveWidgetCannotProduceOrLoadALiveActivitySnapshot(): no matching attachments
+
+Skipped export for HanlinOriginalScriptWidgetLiveActivityTests/actualActivityKitStartsUpdatesAndEndsTheOriginalProgram(): no matching attachments
+
+Skipped export for HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic(): no matching attachments
+
+Skipped export for MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair(): no matching attachments
+
+Skipped export for MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource(): no matching attachments
+
+Skipped export for MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode(): no matching attachments
+
+Exported 2 attachments for: MiniAppAuthoringUITests/testMalformedArchiveShowsOriginalImportDiagnostic():
+File: D3653C03-C45F-4AA8-A072-197235C668F5.txt, suggested name: "MiniApps authoring accessibility_0_9A9CF541-45E8-4F51-90BE-FAB14A23EA02.txt"
+File: F8C931EF-2157-436B-8A3C-D526C2A63CE3.png, suggested name: "MiniApps authoring_0_01C327BA-698A-443A-952E-BBB5526E1503.png"
+
+Exported 4 attachments for: MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport():
+File: 7AB37F25-35FB-4B19-A6B8-7A5E75338714.txt, suggested name: "Hanlin AI authoring accessibility_0_B91373D0-0874-45AE-BDD9-520AE79157BE.txt"
+File: 01C70670-F4BB-4B4D-9C2B-5750A14A9018.png, suggested name: "Hanlin AI authoring_0_D0CBB7F4-8B96-4CB4-A764-5FF81086D0AD.png"
+File: 630F42A1-7F1D-4D05-B802-56FCCBBCC8BA.png, suggested name: "MiniApp repaired native result_0_E54414A2-55E1-44FB-A2F7-3D5CEFECF259.png"
+File: 44AE029D-E51F-4377-A1DD-D392335EA6D8.png, suggested name: "MiniApp original TypeScript diagnostics_0_4DDE6FF7-294C-456E-A405-54C007705836.png"
+
+Generated manifest file with attachment details: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/Paired-attachments/manifest.json

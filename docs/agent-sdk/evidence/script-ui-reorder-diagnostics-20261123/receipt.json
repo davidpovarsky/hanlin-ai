@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-23T11:07:27.525223+00:00",
+  "parent_commit": "dcc017c0ccbac18841644711ad0fe5a1282ea8b3",
+  "change": "Report the actual first repeated key with one private uniqueness validator shared by original diff and reorder admission",
+  "public_error_signature_unchanged": true,
+  "valid_output_implementation_preserved": true,
+  "prior_six_case_receipt_unchanged": true,
+  "result": {
+    "at": "2026-11-23T11:06:23.707527+00:00",
+    "command": [
+      "swift",
+      "test",
+      "--package-path",
+      "/mnt/development/projects/worktrees/hanlin-sdk-ui-20261123/build/script-ui-reorder-diagnostics-20261123/package",
+      "--scratch-path",
+      "/mnt/development/projects/worktrees/hanlin-sdk-ui-20261123/build/script-ui-reorder-diagnostics-20261123/compiled",
+      "-j",
+      "1",
+      "-Xswiftc",
+      "-strict-concurrency=complete",
+      "--filter",
+      "HanlinScriptUIReorderAdmissionTests.*(nonFirstDuplicate|validReorderPreservesNodesAndPropertyPatches)",
+      "--xunit-output",
+      "/mnt/development/projects/worktrees/hanlin-sdk-ui-20261123/build/script-ui-reorder-diagnostics-20261123/tests.xml"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 33.75197298172861,
+    "status": "EXECUTED_PASS_PORTABLE_RECONCILER_DIAGNOSTICS",
+    "selected_cases": [
+      "nonFirstDuplicateCurrentReorderKeyIsReported",
+      "nonFirstDuplicateNewDiffKeyIsReported",
+      "nonFirstDuplicateOldDiffKeyIsReported",
+      "nonFirstDuplicateRequestedReorderKeyIsReported",
+      "validReorderPreservesNodesAndPropertyPatches"
+    ],
+    "cases": [
+      {
+        "name": "nonFirstDuplicateCurrentReorderKeyIsReported()",
+        "classname": "HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests",
+        "seconds": "0.003972103",
+        "status": "EXECUTED_PASS"
+      },
+      {
+        "name": "nonFirstDuplicateNewDiffKeyIsReported()",
+        "classname": "HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests",
+        "seconds": "0.003931863",
+        "status": "EXECUTED_PASS"
+      },
+      {
+        "name": "nonFirstDuplicateOldDiffKeyIsReported()",
+        "classname": "HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests",
+        "seconds": "0.004017663",
+        "status": "EXECUTED_PASS"
+      },
+      {
+        "name": "validReorderPreservesNodesAndPropertyPatches()",
+        "classname": "HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests",
+        "seconds": "0.003934063",
+        "status": "EXECUTED_PASS"
+      },
+      {
+        "name": "nonFirstDuplicateRequestedReorderKeyIsReported()",
+        "classname": "HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests",
+        "seconds": "0.003955863",
+        "status": "EXECUTED_PASS"
+      }
+    ],
+    "warning_count": 0,
+    "toolchain": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+    "prior_six_case_evidence": "UNCHANGED; not rerun as a suite",
+    "not_run": [
+      "Full Apple HanlinScriptUI module",
+      "SwiftUI model execution",
+      "Other prior test methods",
+      "Broad suites"
+    ],
+    "native_or_CI_runs": 0
+  },
+  "source_sha256": {
+    "Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIReconciler.swift": "e4def17533c90877b481dba6da9ab09dbf55a54f4a6979376637cc39cda1fbc6",
+    "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReorderAdmissionTests.swift": "dfbe577980027d639d47db513c299c8e1db05c5aca0911eff59b4f4206554157"
+  },
+  "evidence_sha256": {
+    "RESULT.json": "9c99c79c2bd42dcae32067e9f6a27af2eb838157e23f88f3efbaeb15ba270361",
+    "plan.json": "903c1839fe25f08635c9aa9d00bd7473be54b67134195bf1ef9ed63cf7bbcabb",
+    "proof-Package.swift": "5179e9c0c3da151e74b9438759aad861977a26232f72fbdcd9be93b96015aabe",
+    "source-and-tests.patch": "27c1e7d7992725d14ddcfbd466e127c5773c9e5d929e4b0c387d0b048696eb96",
+    "source-preservation.json": "c2553b40c33f48d695a448254f42122d7814de05bc522923bbfe291af7b601e9",
+    "swift-test.log": "e224e4d1597c9fae333b69461f6b847c7fab4f2c85871b7e97c30b2aa56b5d67",
+    "tests-swift-testing.xml": "3082313f8fbeca1fd58d525f024c46bc02eafd09f7e4b15ebd26e689c3047c76"
+  },
+  "limitations": [
+    "Only portable complete PlatformContracts and whole Foundation-only ScriptUI contract/reconciler sources compiled",
+    "Four new cases and one affected existing control executed; other prior test methods were not rerun",
+    "No native Apple/SwiftUI model test and no CI dispatch"
+  ]
+}

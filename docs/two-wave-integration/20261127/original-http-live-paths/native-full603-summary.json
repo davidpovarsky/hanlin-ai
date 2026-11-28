@@ -1,0 +1,24 @@
+{
+  "status": "ORIGINAL_FULL_603_EXECUTED_602_PASS_1_FAIL",
+  "source": "466c6187309f86da9d20b389de3c424cd93c9bdd",
+  "nativeExitCode": 1,
+  "originalCommand": [
+    "/usr/bin/swift",
+    "test",
+    "--package-path",
+    "Packages/HanlinPlatform",
+    "--parallel"
+  ],
+  "originalDeadlineSeconds": 3600,
+  "nativeMethodStarts": 603,
+  "nativeMethodTerminals": 603,
+  "passed": 602,
+  "failed": 1,
+  "skipped": 0,
+  "classificationNote": "Strict method start/terminal records exclude Test run summaries and Test case passing records. All 601 original method identities plus exactly 2 additive methods are reconciled.",
+  "boundary": "Original unfiltered macOS Swift gate genuinely failed; no app, iOS79, paired54, extra26, OS or release acceptance inferred.",
+  "completeOriginalReceipt": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/full-platform-466c6187-r1/exact-603-reconciliation.json",
+    "sha256": "b9cab4cc3cca5511c770c3150e70067c70f67343fd6419c0248120ef9f691e80"
+  }
+}

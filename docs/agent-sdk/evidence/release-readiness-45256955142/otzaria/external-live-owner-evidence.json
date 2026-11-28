@@ -1,0 +1,265 @@
+{
+  "sourceCommit": "0123b569d489984ade291b5c065eb5fe6500dec6",
+  "recordedAt": "2026-11-23T20:33:16.128892+00:00",
+  "files": [
+    {
+      "path": "docs/hq-integration/hanlin-stream-continuation-20261123/CORE_APPLE_VALIDATION.json",
+      "gitBlob": "5c621d1c711ef47fa79a25cdc4d37d71d35e40a7",
+      "bytes": 3603,
+      "sha256": "eb66eacd21e1fe694281d9856073dc7adfce5c5c8af53dc08adab92cfed08ff7",
+      "content": {
+        "status": "APPLE_CONTINUATION_REGRESSION_PASS",
+        "run_id": 45246940299,
+        "implementation_source_sha": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+        "run_attempt": 1,
+        "ci_source_sha": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+        "runner_label": "macos-26-intel",
+        "prior_arm_execution": "NOT_RUN_BOTH_ATTEMPTS",
+        "actual_regression_test_sha256": "fb335df4fd60b0bbf409449ac22957fa1139873b7c4862fe93815721621621a0",
+        "prior_intel_execution": {
+          "run_id": 45233084957,
+          "conclusion": "failure",
+          "test_counts": "UNOBSERVED_NO_XML",
+          "artifact_count": 0,
+          "repair": "Retain hidden evidence, tee baseline log, compare normalized V3/V4 finish reason values"
+        },
+        "retained_red": {
+          "status": "AUTHENTIC_EXPECTED_TWO_REGRESSIONS",
+          "run_id": 45236601864,
+          "source_sha": "77608e3156175165439eed6dad90581863db43c2",
+          "artifact_id": 14849898071,
+          "artifact_sha256": "a1d32946fd7e65554319e1e705dbd761af0eacef41970d67362a03929ee55232",
+          "actual_xml_name": "red-swift-testing.xml",
+          "logical_test_methods": 5,
+          "failed_test_methods": 2,
+          "expectation_failures": 7,
+          "scenario_invocations": 6,
+          "baseline_reexecuted": false
+        },
+        "final_dependency_revision": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+        "implementation_origin_sha": "29c966696795fe1431bca7afd8cb91011c665a41",
+        "artifact_id": 14854169874,
+        "artifact_sha256": "da9e526111151bdf15fd910a4e57a3679a1a2df23b235f4009dfbdb2cb81125d",
+        "artifact_bytes": 941711,
+        "crc_members": 54,
+        "actual_full_xml_sha256": "44056144bf8017a8d41b08eb7ae338acb57c1c123a5475e915d83f45b664c93e",
+        "regression_count_unit": "scenario_invocations",
+        "regression_counts": {
+          "baseline_executed": 6,
+          "baseline_failed": 2,
+          "candidate_executed": 6,
+          "candidate_failed": 0
+        },
+        "logical_test_counts": {
+          "baseline_methods": 5,
+          "baseline_failed_methods": 2,
+          "baseline_expectation_failures": 7,
+          "candidate_methods": 5,
+          "candidate_failed_methods": 0
+        },
+        "full_suite_executed": 4185,
+        "full_suite_failed": 0,
+        "full_suite_skipped": 0,
+        "exact_original_method_inventory": true,
+        "swift_version": "Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)\nTarget: x86_64-apple-macosx26.0",
+        "xcode_version": "Xcode 26.6\nBuild version 17F113",
+        "architecture": "x86_64",
+        "focused_green": {
+          "logical_test_methods": 5,
+          "failed_test_methods": 0,
+          "expectation_failures": 0,
+          "errors": 0,
+          "skipped_test_methods": 0,
+          "focused_logical_test_methods": 5,
+          "focused_scenario_invocations": 6,
+          "two_tool_argument_invocations": 2,
+          "status": "ACTUAL_CANDIDATE_FOCUSED_PASS",
+          "run": 45240893434,
+          "source": "06388864fd8fce188c4c8caf64c149ee6561185b",
+          "artifact": 14852982054,
+          "archive_sha256": "b74951e270d76c6facf0fb4b3fe275d439365597898629374f9c58c9dc9801c8",
+          "actual_xml_name": "green-swift-testing.xml",
+          "focused_reexecuted": false,
+          "original_full_suite_methods": 4185,
+          "original_full_suite_failed_methods": 1
+        },
+        "full_suite": {
+          "logical_test_methods": 4185,
+          "failed_test_methods": 0,
+          "expectation_failures": 0,
+          "errors": 0,
+          "skipped_test_methods": 0,
+          "focused_logical_test_methods": 5,
+          "focused_scenario_invocations": 6,
+          "two_tool_argument_invocations": 2,
+          "exact_original_method_inventory": true,
+          "abort_fixture_event_order_repaired": true,
+          "status": "ACTUAL_ORIGINAL_PACKAGE_SUITE_PASS",
+          "source": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8"
+        },
+        "qualification_reviewed_at": "2026-11-23T19:32:34.714581+00:00",
+        "native_hanlin_live_acceptance": false
+      }
+    },
+    {
+      "path": "docs/hq-integration/hanlin-stream-continuation-20261123/DEPENDENCY_ADOPTION.json",
+      "gitBlob": "f29f5ac76ffecac033532e1c4677a858b4ba026f",
+      "bytes": 3408,
+      "sha256": "84717bec8dfbb7e306483954ba889d9221082543e21826dc4ef6cb1b429d4bdb",
+      "content": {
+        "base": "e00498e33f106cc43be0476ffa2e09329c8ca300",
+        "candidate": "ca3c91f2233bf5c77990643b29a874aac8704639",
+        "tree": "0c8a63f6b0afdf91bb570261127fee66345c51d9",
+        "previous_candidate": "4138ad87d9dab0a8970acf3968a2af89c1c67047",
+        "swift_ai_sdk_source": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+        "paths": [
+          {
+            "path": "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+            "before_sha256": "aabb429fa9f62273e681917748c5d4528fbac58596245216dec36f4bc27d224a",
+            "after_sha256": "e6b0a1132811da113152d523a62bec4066e59877935b4eaf35c8c1c1dfb8b141",
+            "whole_inverse_exact": true
+          },
+          {
+            "path": "Packages/HanlinAgentSDK/Package.resolved",
+            "before_sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+            "after_sha256": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83",
+            "whole_inverse_exact": true
+          },
+          {
+            "path": "Packages/HanlinAgentSDK/Package.swift",
+            "before_sha256": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b",
+            "after_sha256": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8",
+            "whole_inverse_exact": true
+          },
+          {
+            "path": "Packages/HanlinParityMiniApp/Package.resolved",
+            "before_sha256": "64abcc6af574107b111a5facbc00f70259aa0a809ab2fc6a5c0a571b5b10ea04",
+            "after_sha256": "c0024cb387495e6cf71d8531e3c4ab31a1a267c02c23ab0e5623fa12ff054033",
+            "whole_inverse_exact": true
+          },
+          {
+            "path": "Packages/HanlinPlatform/Package.resolved",
+            "before_sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+            "after_sha256": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
+            "whole_inverse_exact": true
+          },
+          {
+            "path": "Packages/HanlinPlatform/Package.swift",
+            "before_sha256": "e9ea19d4bc3fe3873137e0c2e32cda50892ecd39103f3a63250acaa8f373e458",
+            "after_sha256": "838bf6f92975b2c5ba65003d1dbf95a1d05c0bbd5bc76fa26bf78c77eb0de086",
+            "whole_inverse_exact": true
+          },
+          {
+            "path": "Packages/HanlinSefariaMiniApp/Package.resolved",
+            "before_sha256": "6c7a3f29ad73f35a20ed25f838c673cf2970398c18c4b0429f55b56a98a9f3ac",
+            "after_sha256": "8f3040315aeb3f9bb2ec5fcfa157b8a7690edad9c5a467ad045cd7decd1b1817",
+            "whole_inverse_exact": true
+          },
+          {
+            "path": "Packages/HanlinTextStudioMiniApp/Package.resolved",
+            "before_sha256": "402e58427b5cffccf4e2ca1cfc82785266433a62b8fbb96ba6711cff75dc2a28",
+            "after_sha256": "a0ffa2ef3f7017786cb546187af1e47d0feeda8d58d47bc97d1fc10f78a71e13",
+            "whole_inverse_exact": true
+          },
+          {
+            "path": "Packages/HanlinWikipediaMiniApp/Package.resolved",
+            "before_sha256": "3591fbb4df85047710671391b83116e4725b44cceebb315aadd6d08dc48c555c",
+            "after_sha256": "fdbd916f9477bec043a492da7572ad9e4ad858dadf1b42428a877ebe283c4cdb",
+            "whole_inverse_exact": true
+          }
+        ],
+        "apple_verification": "ROOT_AUTHENTICATED_FULL_PACKAGE_PASS_45246940299",
+        "core_artifact": 14854169874,
+        "core_artifact_sha256": "da9e526111151bdf15fd910a4e57a3679a1a2df23b235f4009dfbdb2cb81125d",
+        "core_full_suite_methods": 4185,
+        "core_full_suite_failed": 0,
+        "core_full_suite_skipped": 0,
+        "live_result": "NOT_RUN",
+        "final_dependency_adoption": "FULL_QUALIFIED_CORE_REVISION_EXACT_IN_ALL9_OPERATIVE_PINS",
+        "remote_exact_and_clean": true
+      }
+    },
+    {
+      "path": "docs/hq-integration/hanlin-stream-continuation-20261123/HOST_LOCK_ADOPTION.json",
+      "gitBlob": "02d97699c610d0a317b2f0d99ac8253ecbee9899",
+      "bytes": 1261,
+      "sha256": "4fad1c4cfaf0ca5919c3ded60195555e392658d250d680a8384c18241e4e8da5",
+      "content": {
+        "application_source_sha": "07845de8c335a975027fd375f287a85754da51ab",
+        "tree": "2c11e299cc0df79a1d804d4217c28f4d1e4cfeab",
+        "parent": "41f4242e83a17773e39a4b17ba2450f1e9b2ddfb",
+        "sdk_application_ancestor": "fb5abff01b1ae7958ab6c6733ff715ff615ae7b8",
+        "baseline": "96c5b1b60c15a9a0cf1c4356f9822c64d9864c86",
+        "hanlin_source": "ca3c91f2233bf5c77990643b29a874aac8704639",
+        "swift_ai_sdk_source": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+        "path": "Maktabah.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+        "before_sha256": "722609bb6b71362aee5e7f401246edcd037a2d1815c2fc4704bf93830d9f5530",
+        "immediate_parent_before_sha256": "2854803c8c1aeb39f49a964e7adac51cf77eee822c88694e6f5c704c0b0cd450",
+        "after_sha256": "a41b340f77574fd74013ba5df160cffabab473f1941a50031d0f9025007c8c9c",
+        "only_revision_literal_changed": true,
+        "host_manifests_build_definitions_and_ui_unchanged": true,
+        "native_result": "NOT_RUN",
+        "published_exact": true,
+        "application_trees": {
+          "Source": "4b2abd687328725fb7a7f0ca635b2cab9e0f0c0b",
+          "Vendor": "ee5b415a5ccb9db9fda2b0e8d6ce3748cdeaea6e",
+          "Maktabah.xcodeproj": "f61421e8677027ffa18364226b4ee68a0937dfc5",
+          "Maktabah-iOSUITests": "442ea1cf71c846eaa131a15f2b85fa4e30e205bd"
+        }
+      }
+    },
+    {
+      "path": "docs/hq-integration/hanlin-stream-continuation-20261123/LIVE_STREAM_SOURCE_ADMISSION.json",
+      "gitBlob": "0a494ddc5afde026764ac0a2ad8076c6c13325fe",
+      "bytes": 2592,
+      "sha256": "0894017ad748ac4f74611864d428ab16348920b359d52ea7d1cca50fa6b1b318",
+      "content": {
+        "application_source_sha": "07845de8c335a975027fd375f287a85754da51ab",
+        "application_trees": {
+          "Maktabah-iOSUITests": "442ea1cf71c846eaa131a15f2b85fa4e30e205bd",
+          "Maktabah.xcodeproj": "f61421e8677027ffa18364226b4ee68a0937dfc5",
+          "Source": "4b2abd687328725fb7a7f0ca635b2cab9e0f0c0b",
+          "Vendor": "ee5b415a5ccb9db9fda2b0e8d6ce3748cdeaea6e"
+        },
+        "baseline_live_consent_source": "96c5b1b60c15a9a0cf1c4356f9822c64d9864c86",
+        "branch": "codex/otzaria-hanlin-stream-continuation-20261123",
+        "credential_accessed_by_preparation": false,
+        "driver_sha256": "bb6c785e92aa46b669140701074b22dd67f9eb968777f207822aec6d248a4881",
+        "evidence_sha256": {
+          "docs/hq-integration/hanlin-stream-continuation-20261123/CI_PREPARATION.md": "f1d65a10dfc918a85f6785ae8339a1147837ad09d50a7ed611bf98d4f85da0da",
+          "docs/hq-integration/hanlin-stream-continuation-20261123/CORE_APPLE_VALIDATION.json": "eb66eacd21e1fe694281d9856073dc7adfce5c5c8af53dc08adab92cfed08ff7",
+          "docs/hq-integration/hanlin-stream-continuation-20261123/DEPENDENCY_ADOPTION.json": "84717bec8dfbb7e306483954ba889d9221082543e21826dc4ef6cb1b429d4bdb",
+          "docs/hq-integration/hanlin-stream-continuation-20261123/HOST_LOCK_ADOPTION.json": "4fad1c4cfaf0ca5919c3ded60195555e392658d250d680a8384c18241e4e8da5",
+          "docs/hq-integration/hanlin-stream-continuation-20261123/previous-live/CLEANUP_BINDING.json": "95315f10acee207ece317bb2b8a9bcd83377842f4f8ae4b23fcb588c30446657",
+          "docs/hq-integration/hanlin-stream-continuation-20261123/previous-live/DIAGNOSIS.json": "e737261ee3d4f3d6f10e4fb3eaf2bb00b95e33d878910eb7cb54fdbdc6307d86"
+        },
+        "execution_input_count": 286,
+        "execution_inputs_sha256": "72433e25b9ea1257d712c48fca7bb7b6420493ca09ed7e023ac5b32c68abab00",
+        "hanlin_gitlink": "ca3c91f2233bf5c77990643b29a874aac8704639",
+        "historical_passes_reused_as_current_acceptance": false,
+        "inputs_sha256": "2ce2990301c879097990bd38333ece10141b288851446189917648aa50a14a41",
+        "native_result": "NOT_RUN",
+        "original_native_case_timeout_seconds": 600,
+        "original_source_wait_seconds": 180,
+        "provider_called_by_preparation": false,
+        "qualified_core_full_suite_failed": 0,
+        "qualified_core_full_suite_methods": 4185,
+        "qualified_core_full_suite_skipped": 0,
+        "qualified_core_run": 45246940299,
+        "repository": "davidpovarsky/Maktabah",
+        "schema_version": 1,
+        "source_guard_sha256": "b81d9a69be317a2ece0200e6e6e1f36a5864377bf5a0b229e09ef08d32156752",
+        "swift_ai_sdk_source_sha": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+        "workflow_sha256": "0f53fc10f08b437b48d2bbddb8aad351f14c486b53b73b73e6d17c61687d1085"
+      }
+    },
+    {
+      "path": "docs/hq-integration/hanlin-stream-continuation-20261123/CI_PREPARATION.md",
+      "gitBlob": "44e7fbc7cea9ab5763814d759879eff4ffd634ce",
+      "bytes": 1856,
+      "sha256": "f1d65a10dfc918a85f6785ae8339a1147837ad09d50a7ed611bf98d4f85da0da",
+      "content": "# Exact shared continuation adoption and original Live continuation\n\nThe complete shared SwiftAI revision 07431abccbfb151ca2dab67bca6cf86fcb2bd3b8 passed its actual Apple full package suite: all 4,185 original methods, zero failures and zero skips. The original six focused scenario invocations passed, and the authentic original red regression is retained without replay. The qualified revision includes the real source repair and the separately reviewed deterministic abort test fixture correction.\n\nHanlin ca3c91f2233bf5c77990643b29a874aac8704639 adopts exactly that complete revision in all nine operative package pins. Its original application and SDK code, UI and resources are byte-preserved outside those revision literals. The Host application source is 07845de8c335a975027fd375f287a85754da51ab; its entire difference from the previous Live source is the Hanlin gitlink and the one matching Host resolved dependency revision.\n\nThe source chain retains previous application 41f4242, SDK adoption fb5abff, and original Live source 96c5b1b. This CI child preserves the original provider/model/endpoint, original live case, 180-second source-button wait, 600-second case timeout, consent operations, diagnostic behavior, and manual workflow. The sole workflow edit selects this exact source-admission guard. The frozen source packet binds all 286 actual execution inputs.\n\nThe prior actual Live failure and owned temporary-secret cleanup remain immutable evidence. Preparation has called no provider, accessed no credential, configured no secret and dispatched no new Live attempt. This source admission does not claim current native Live success. The owned Windows controller must pass its exact final preflight before its one authorized manual dispatch, then preserve terminal evidence and verify cleanup of only its own unchanged temporary secret.\n"
+    }
+  ],
+  "interpretation": "Committed owner evidence read-only; no original CI artifacts acquired or revalidated by this lane."
+}

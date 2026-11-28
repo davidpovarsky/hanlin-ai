@@ -1,0 +1,69 @@
+{
+  "base": "c1bb16c7d049cccdc7044e11e9e05f15ec860869",
+  "sourcePath": "HanlinMiniAppsTests/NativeScriptShortcutConcurrencyTests.swift",
+  "originalSHA256": "1f8816dc2d89ec068725166774f8c3bcd236b02b1f81aa502eac0f2561dc7953",
+  "candidateSHA256": "ea849be5aa05038199c69c18d5d18af6bad599dedb325ab60464bffd26fa11d0",
+  "patchSHA256": "6c5941c22eca964df9af31de12cafd6f1561475e416e51eee9165a147a4bf774",
+  "unchangedTaskGroupBodySHA256": "80579fdedd65d64340ec88737ccb79b988b6a558359cf13602b1763a650b0de0",
+  "exactWholeFileInverse": true,
+  "selectors": [
+    "testOriginalWindowSurvivesReverseShortcutsCancellationDeadlineAndStaleGeneration",
+    "testLegacyOwnerRejectsBothFactoryAndLegacyShortcutsWithoutQueuedReplay",
+    "testForegroundShortcutUsesItsOwnedProviderAndReceiptWithoutReplacingTheOwnerHandler",
+    "testClosingRunningForegroundDrainsBeforeReleasingItsOwnedSession",
+    "testOccupiedForegroundRejectsOnlyTheNewShortcutAndPreservesLegacyIntentDrain"
+  ],
+  "allAssertionSourceLinesIdentical": true,
+  "assertionSourceLines": 131,
+  "allRemainingSourceBytesIdenticalAfterInverse": true,
+  "nativeStatus": "NOT_RUN",
+  "typecheckStatus": "NOT_RUN",
+  "priorTypedRewriteStatus": "FAILED in three actual original build-for-testing jobs; no acceptance ran",
+  "change": "Move exact structured group body to explicitly MainActor local function; same one structured group with same generic types invokes it once with the same inout group. No task, suspension or lifetime extension at function declaration.",
+  "actualDiagnosticAssessmentSHA256": "324125c8de2e1be13638de43e0879cd69cbacebfaa389b3740fdc8b0346ac3f7",
+  "actualCompilerFailures": [
+    {
+      "scope": "production",
+      "run": 46000370807,
+      "job": 140510182701,
+      "source": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+      "rawBuildLogBytes": 10417926,
+      "rawBuildLogSHA256": "9144362260aab2658aa26c54c115b594f045dc52819ee6be835090714af59c26",
+      "status": "BUILD_FAILED",
+      "ui": "NOT_RUN",
+      "uiSourceTypecheck": "EXECUTED_PASS",
+      "executedAcceptanceTests": 0
+    },
+    {
+      "scope": "notification",
+      "run": 46004710852,
+      "job": 140524870396,
+      "source": "f43c3bb60f98e65b8061b08285612f7ceacc46bf",
+      "rawBuildLogBytes": 10430571,
+      "rawBuildLogSHA256": "81ca9f51976a25cbc7e48ca9be71b9e52940e42a768bf7e67c6c4abae19f003d",
+      "status": "BUILD_FAILED",
+      "ui": "NOT_RUN",
+      "uiSourceTypecheck": "EXECUTED_PASS",
+      "executedAcceptanceTests": 0
+    },
+    {
+      "scope": "origin",
+      "run": 46013300749,
+      "job": 140553999659,
+      "source": "9019ddf57fc7fd712e2e8587a53cdfef1fcb4612",
+      "rawBuildLogBytes": 10444060,
+      "rawBuildLogSHA256": "74fd405bfd08ef8c60848bb3d070b268615ae30bd87fed3efa71d4c8278c57cd",
+      "status": "BUILD_FAILED",
+      "ui": "NOT_RUN",
+      "uiSourceTypecheck": "EXECUTED_PASS",
+      "executedAcceptanceTests": 0
+    }
+  ],
+  "rootReview": {
+    "reviewer": "/root",
+    "decision": "APPROVED_FOR_ORIGINAL_COMPILE_RETRY_SOURCE_ONLY",
+    "sourceSHA256": "ea849be5aa05038199c69c18d5d18af6bad599dedb325ab60464bffd26fa11d0",
+    "patchSHA256": "6c5941c22eca964df9af31de12cafd6f1561475e416e51eee9165a147a4bf774",
+    "conditions": "Actual native compiler and all original acceptance gates remain required. No native PASS is inferred."
+  }
+}

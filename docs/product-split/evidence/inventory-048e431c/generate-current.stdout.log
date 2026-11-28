@@ -1,0 +1,1 @@
+{"status": "EXECUTED_PASS", "coverage_count": 278, "acceptance_counts": {"NOT_RUN": 269, "BLOCKED": 9}, "meaning": "Coverage/provenance validation only; no 278-feature behavior acceptance", "errors": []}

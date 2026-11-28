@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-23T16:30:00.968302+00:00",
+  "sha": "5d0ea90d98b405d38b66bb735198b945225877ba",
+  "inputs": {
+    "target_validation_group": "chat_motion_product",
+    "exact_test_selector": "MotionUITests/testDRapidInputDiagnosticOnly",
+    "testflight_upload": "false",
+    "runtime_bundle_only": "false",
+    "runtime_publish_release": "false",
+    "full_validation": "false"
+  },
+  "owner": "motion_acceptance",
+  "prior_ambiguous_tool_call": "readback confirmed no write and no dispatch",
+  "A_B_C": "NOT_SELECTED"
+}

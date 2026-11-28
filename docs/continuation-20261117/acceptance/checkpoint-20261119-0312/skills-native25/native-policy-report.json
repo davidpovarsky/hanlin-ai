@@ -1,0 +1,105 @@
+{
+  "arch": "arm64",
+  "artifactIdentity": {
+    "artifactSHA256": "d6cc833943108245a2a68fc85ff4d67bf50719ade36e52fc63c784afedf9d565",
+    "declarationClosureSHA256": "fb9956a6cd0210127db8e5060bceb5a69a02139955e09be2b3444410b432ed09",
+    "nativeContractSHA256": "b9da6ef964550eeb68b432eda195448707b9bc945558aadcd986246a0bafdb19",
+    "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f"
+  },
+  "cases": [
+    {
+      "milliseconds": 3.3979160000017146,
+      "name": "exact original policy artifact and dependency closure are pinned",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "milliseconds": 12.088834000001953,
+      "name": "28 unchanged upstream policy tests run against the production artifact",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "milliseconds": 0.125,
+      "name": "original selection, source allowlist and disabled policy retain separate authority",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "milliseconds": 0.05620899999848916,
+      "name": "original invocation policy and install preferences are data, not installation",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "milliseconds": 0.5838330000005953,
+      "name": "missing observations remain unknown but original any-bin and always short circuits stay decisive",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "milliseconds": 0.1166670000020531,
+      "name": "unknown OpenClaw config cannot inherit a browser default as a verified Hanlin capability",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "milliseconds": 0.09074999999938882,
+      "name": "original disabled and degraded owner controls are isolated between inspections",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "milliseconds": 0.09245799999916926,
+      "name": "native snapshots cannot borrow iSH platform or observations",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "milliseconds": 0.10375000000203727,
+      "name": "absent, invalid and future requirement shapes never become execution proof",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "milliseconds": 0.3727500000022701,
+      "name": "original JSON5, CSV normalization and install-hint rejection survive the typed boundary",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "milliseconds": 0.06875000000218279,
+      "name": "rechecking actual snapshots observes both installation and removal without a stale eligibility cache",
+      "status": "EXECUTED_PASS"
+    }
+  ],
+  "challenge": "b8584f96fd724f3194049a7349d4d811",
+  "execArgv": [
+    "--jitless",
+    "--wasm-jitless"
+  ],
+  "importedSkillExecution": "NOT_RUN_BY_THIS_PROBE",
+  "measuredMilliseconds": 48.62358299999687,
+  "memoryAfter": {
+    "arrayBuffers": 224345,
+    "external": 3692734,
+    "heapTotal": 8585216,
+    "heapUsed": 5019100,
+    "rss": 627474432
+  },
+  "memoryBefore": {
+    "arrayBuffers": 32884,
+    "external": 2125929,
+    "heapTotal": 6995968,
+    "heapUsed": 3255888,
+    "rss": 624640000
+  },
+  "node": "24.5.0",
+  "offlinePolicyBoundary": {
+    "installedBeforePolicyImport": true,
+    "installerAttempts": 0,
+    "networkAttempts": 0,
+    "policyAttempts": [],
+    "processLaunchAttempts": 0,
+    "restored": true,
+    "scope": "Offline original-policy boundary only; not whole-app or physical-device offline acceptance",
+    "selfChecksPassed": 6,
+    "status": "EXECUTED_PASS"
+  },
+  "ok": true,
+  "physicalDeviceAcceptance": "NOT_RUN",
+  "platform": "ios",
+  "scope": "Original policy and thin adapter in the existing Node engine, using owned synthetic fixtures",
+  "upstreamAssertions": 64,
+  "upstreamCases": 28
+}

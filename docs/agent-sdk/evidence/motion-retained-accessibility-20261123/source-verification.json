@@ -1,0 +1,122 @@
+{
+  "prepared_at": "2026-11-23T22:14:16.068764+00:00",
+  "base_commit": "de6b2da941c44bf0ca14de2a866e195023dbae7a",
+  "executed_native_source": "35bfa9509ed4660d2c189b1935ed7725d0bae9f2",
+  "component": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+  "before_sha256": "ce949b1acce2bf4339f3a2c0a93b3028c50ef918ab9db7dc1d7b0e063c166eef",
+  "after_sha256": "bb621c8312e153ac65a963da25ee845a35f46c40ccd13fe66540404f0ad626f2",
+  "reverting_only_two_added_modifiers_restores_executed_source": true,
+  "changed_production_paths": [
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift"
+  ],
+  "protected_inputs": [
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinActivityHierarchy.swift",
+      "sha256": "7d4e19a8520e352ae53031da54b5c4f5a75795084402f6c3f4e4c57731e7a7bb",
+      "equal_to_executed35bfa": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinInlineToolApproval.swift",
+      "sha256": "5fe7e40ae61e4dfeb6e36f0d519bf90f4a7ef5c1b865c3dd030bd3561d35e364",
+      "equal_to_executed35bfa": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift",
+      "sha256": "d8ff25aa0ba06895108f09edf00709db04efe4f7467d1b8302adf1bae1785577",
+      "equal_to_executed35bfa": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionPreferences.swift",
+      "sha256": "709f948ac85ac042d15fb8c258383f1bbb06f5336c0904dc170e04b46f143791",
+      "equal_to_executed35bfa": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatShimmerEffect.swift",
+      "sha256": "40af700d48af8c3229db379cbc9add813484f7d465889523c0acc0a70b552f6a",
+      "equal_to_executed35bfa": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinOriginalActivityControls.swift",
+      "sha256": "1a88b02132e48ba6fece0e9227943951e1c0b6a379abda5591e4537241833e71",
+      "equal_to_executed35bfa": true
+    },
+    {
+      "path": "docs/chat-motion/MotionUI/App.swift",
+      "sha256": "7323a83f5ed539b25d12f944a7bd256faba63c2d5806168d0def42e829454b25",
+      "equal_to_executed35bfa": true
+    },
+    {
+      "path": "docs/chat-motion/MotionUI/MotionUITests.swift",
+      "sha256": "ed053de2cf5013ef001fc198f4d730f7d8d7bf9d55991e784dbc454b90c46724",
+      "equal_to_executed35bfa": true
+    },
+    {
+      "path": "docs/chat-motion/collect_motion_result.py",
+      "sha256": "861478e73cae505bae1981f9b0e063fbd7a46d77a3b6be1a41f002754ac7156b",
+      "equal_to_executed35bfa": true
+    },
+    {
+      "path": "docs/chat-motion/evidence/motion-d-observer-20261119/proposal-receipt.json",
+      "sha256": "8a30b8e1967bf45a1be6daa5923f455c80f987544c901cbe2dd7489ebc70df64",
+      "equal_to_executed35bfa": true
+    },
+    {
+      "path": "docs/chat-motion/evidence/motion-d-observer-20261119/root-verification.json",
+      "sha256": "539a6c6aad852aa1127a7d6871f6fff1573b1bc3f2cdf5e55ad9045c0ea2b64c",
+      "equal_to_executed35bfa": true
+    },
+    {
+      "path": "docs/chat-motion/evidence/motion-reset-baseline-20261119/current-proof-inputs.json",
+      "sha256": "076a9ed897e587d5d197c2842f9d6848a18e0f0d9ed447ff27c9c18fd470b28a",
+      "equal_to_executed35bfa": true
+    },
+    {
+      "path": "docs/chat-motion/evidence/motion-reset-baseline-20261119/native-failure-verification.json",
+      "sha256": "01e1ac2ea9ea2ea8002aca68fe63038e44eaa8841bbc8bfc33e38548c84c915b",
+      "equal_to_executed35bfa": true
+    },
+    {
+      "path": "docs/chat-motion/evidence/motion-reset-baseline-20261119/original-tests.json",
+      "sha256": "100c6299d1f432d799e62f16c0e65fa3e99476539a9651c93395e183cfe111b1",
+      "equal_to_executed35bfa": true
+    },
+    {
+      "path": "docs/chat-motion/evidence/motion-reset-baseline-20261119/root-review.json",
+      "sha256": "54d1eb6c1ceb7c2bc2a011abbd2d85de15c493a959c0149f41a4bdb60823054f",
+      "equal_to_executed35bfa": true
+    },
+    {
+      "path": "docs/chat-motion/prepare_motion_ui.py",
+      "sha256": "32af6c5a01fcf7130f5b54a664d20dbff186e8117cba81d5c4a9a2b52b21b77a",
+      "equal_to_executed35bfa": true
+    },
+    {
+      "path": "docs/chat-motion/record_sdk_inputs.py",
+      "sha256": "71451c3f6b891c3443924f1ab134f4b2098b56cee1f1217113a7ddb143df8c54",
+      "equal_to_executed35bfa": true
+    },
+    {
+      "path": "docs/chat-motion/record_ui_run.py",
+      "sha256": "955b0dd748008e86244548f648e38d6c5e6edd005093f0a99c3afb9eece740fa",
+      "equal_to_executed35bfa": true
+    },
+    {
+      "path": "docs/chat-motion/run_motion_ui.sh",
+      "sha256": "0c1b71a5db380c1e14e3210be62a004ff4a993ea913702a03407b6b482b643c7",
+      "equal_to_executed35bfa": true
+    }
+  ],
+  "parser": {
+    "command": [
+      "/usr/local/bin/swiftc",
+      "-frontend",
+      "-parse",
+      "/mnt/development/projects/worktrees/hanlin-sdk-motion-resume-20261123/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift"
+    ],
+    "returncode": 0,
+    "scope": "Linux Swift syntax parse only; no SwiftUI typecheck or Apple runtime proof"
+  },
+  "native_acceptance": "NOT_RUN",
+  "next_scope": "Original B-only after root review; no new POST in this commit",
+  "later_scopes": "A and affected C held until qualified B outcome; original tests unchanged"
+}

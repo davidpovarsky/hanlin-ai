@@ -11,9 +11,15 @@
 
 ---
 
+## Current Hanlin execution — 2026-11-26
+
+Read the standing authorization and current two-wave execution in root `AGENTS.md`. The owner explicitly requested parallel work using ChatGPT's built-in agents and Asana milestone updates. The earlier November 18 single-developer continuation and historical requirements to start a particular external named team do not describe this run.
+
+The NORMAL/TEAM distinction below remains useful for truthful attribution. For this ChatGPT task, `invoke_subagent` denotes the available built-in `collaboration.spawn_agent` capability, not an external AI CLI; record its real agent/task identifier instead of inventing a conversation ID. The coordinating agent publishes Asana milestone updates from the agents' exact evidence. Existing owner authorization is applied without repeated confirmation; actual access controls, secret protection and all unfulfilled acceptance requirements remain in force.
+
 ## 1. Core Operating Principle: Autonomous Verified Writes
 
-When carrying out owner-assigned development, research, QA, review, or integration work, Antigravity agents may autonomously create and update relevant Asana tasks and subtasks, label the logical owner and reviewer, add meaningful coordination comments, update progress and blockers, adjust dependencies, and set `completed=true` when — and **ONLY** when — that exact task's defined acceptance conditions have verifiably passed.
+When carrying out owner-assigned development, research, QA, review, or integration work, Authorized development agents may autonomously create and update relevant Asana tasks and subtasks, label the logical owner and reviewer, add meaningful coordination comments, update progress and blockers, adjust dependencies, and set `completed=true` when — and **ONLY** when — that exact task's defined acceptance conditions have verifiably passed.
 
 Per-task owner confirmation is not required for these routine project-management actions. Record exact evidence (repository, branch, commit SHA, named tests/run IDs, real-device proof when required, remaining scope, and execution mode).
 

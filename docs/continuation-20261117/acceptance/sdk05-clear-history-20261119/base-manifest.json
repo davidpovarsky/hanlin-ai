@@ -1,0 +1,21 @@
+{
+  "base_commit": "1480b347f519073b384cd86f7efc506e9c2d1aab",
+  "files": [
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppConversationStore.swift",
+      "base_sha256": "b6bcce0a80f381a372cfb5213092110b1b83f2bc589d849725616d2ff371de0b"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "base_sha256": "02547a1a784cf9902054ba713f20cb5147d975e92c554d4974422c105f158e53"
+    },
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "base_sha256": "e328ce86d07d9a17e4f3d5e3d30895912604b65a452b1f3adc6bdd886fc684bd"
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "base_sha256": "bf426a03afae01cc903c94714cdca4c9f276a07800f6f2852418b2b87db7af30"
+    }
+  ]
+}

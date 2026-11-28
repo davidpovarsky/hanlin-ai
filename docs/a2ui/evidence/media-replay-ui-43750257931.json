@@ -1,0 +1,40 @@
+{
+  "run": 43750257931,
+  "job": 132922427527,
+  "source_sha": "ab748d9a1a2352656e837bb241cfd811109f54f4",
+  "status": "INFRA_ERROR",
+  "executed_cases": 0,
+  "selected_case": "testHistoryYouTubeAllowsOnlyExplicitLocalMedia",
+  "compiler": "NOT_RUN",
+  "ui_behavior": "NOT_RUN",
+  "harness_preparation": "NOT_RUN",
+  "resolved_pin": "NOT_RUN",
+  "xcresult_exists": false,
+  "failure": "Added explicit simctl boot command exceeded its5s bound before source/harness preparation; removed added startup path and retained original Xcode-managed startup",
+  "runner_source_sha256": "26ef747c9f9c0e6dcdd6d63830c6481140f38c407ee88ab7c50884383dea2dfa",
+  "artifact": 14176048016,
+  "artifact_sha256": "d362c1c80d46beb0f300290a81bfa34e156cefab99d0772fa48eec807060a670",
+  "artifact_bytes": 7897,
+  "toolchain": "Xcode 27.2\nBuild version 27B52\nApple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0\nDriverKit SDKs:\n\tDriverKit 27.2                \t-sdk driverkit27.2\n\niOS SDKs:\n\tiOS 27.2                      \t-sdk iphoneos27.2\n\niOS Simulator SDKs:\n\tSimulator - iOS 27.2          \t-sdk iphonesimulator27.2\n\nmacOS SDKs:\n\tmacOS 27.2                    \t-sdk macosx27.2\n\tmacOS 27.2                    \t-sdk macosx27.2\n\ntvOS SDKs:\n\ttvOS 27.2                     \t-sdk appletvos27.2\n\ntvOS Simulator SDKs:\n\tSimulator - tvOS 27.2         \t-sdk appletvsimulator27.2\n\nvisionOS SDKs:\n\tvisionOS 27.2                 \t-sdk xros27.2\n\nvisionOS Simulator SDKs:\n\tSimulator - visionOS 27.2     \t-sdk xrsimulator27.2\n\nwatchOS SDKs:\n\twatchOS 27.2                  \t-sdk watchos27.2\n\nwatchOS Simulator SDKs:\n\tSimulator - watchOS 27.2      \t-sdk watchsimulator27.2\n\nProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\narm64\n",
+  "phase_seconds": {
+    "diagnostics": 36,
+    "preflight": 26,
+    "simulator-boot": 11
+  },
+  "raw_files_sha256": {
+    "ci-performance-report.json": "ba88da793e20382e0571c1da649c405a9d19f641ed9ce555f12e2a7c80f4f208",
+    "devices.json": "98d36717798ad15b8cfe7d3facd4f815d3326cfd90b7a24ff03266b84e364b32",
+    "diagnostics-duration-seconds.txt": "a4b2c5db15348c29451e18b8307e5ef81625ea638e807935f39ceaa8d9ac7758",
+    "disk.txt": "1db14d8bc56082f6d4336decd3d47b178ca9fc027f12cbc359cdad56d841ba35",
+    "preflight-duration-seconds.txt": "20d2add851bf39edcc6b5e830930f962db7e19dffa2cab8610eed551eda6c302",
+    "preflight.txt": "8e3257de49575e781696980941d13a1cc87ea42ada84d26382187c797f64efb4",
+    "process-status.json": "02a3e96f11c3824dfae7351f0f253e1f9144ea9d8edb171905f0f95ade8f40df",
+    "runtimes.json": "d3f0f3c6c944eae51656da9de7c8f98dc0f2bd212c89c6f5129e4aeecd57aebc",
+    "selected-device.txt": "a964b846a4a5d36046ae57070d5b9e94fcd04abd5e4dfe867702670b51fb1dfb",
+    "simulator-boot-duration-seconds.txt": "25d4f2a86deb5e2574bb3210b67bb24fcc4afb19f93a7b65a057daa874a9d18e",
+    "source-sha.txt": "cb916e3b492b637e23df97143193d52f5ee93a110f0c978289cd90b34eb258f2",
+    "xcodegen-install.log": "5543c39402b2867d94bc6d9c2f8f3108dd11a86c87515448a3a3d4932506347d",
+    "xcodegen-version.txt": "bf8aa757345fcd22d1fd26e760aa058f02991e2d930686b8eaf750cd6e5f8532"
+  },
+  "full_ci_pass": false
+}

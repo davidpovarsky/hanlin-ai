@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  ChatViewBottom.swift
 //  AI_HLY
@@ -9,13 +10,16 @@ import SwiftUI
 import SwiftData
 import UniformTypeIdentifiers
 import UIKit
+import HanlinPresentationKit
+import HanlinChatUI
+import HanlinPlatformContracts
 
 
 struct InputTextField: UIViewRepresentable {
 
     // MARK: – Public API
     @Binding var text: String
-    var placeholder: String = String(localized: "Message")
+    var placeholder: String = String(localized: "Message", bundle: HanlinLocalization.bundle)
     var onPasteImage: ((UIImage) -> Void)?
     var onPasteText: ((String) -> Void)?
     var onPasteFile: ((URL) -> Void)?
@@ -202,6 +206,21 @@ struct InputTextField: UIViewRepresentable {
 }
 
 
+/// Retain the actual Canvas origin while native sheet presentation can temporarily
+/// unmount the conversation endpoint or change the model-list indices.
+struct HanlinCanvasPresentation: Identifiable {
+    let id = UUID()
+    let record: ChatRecords
+    let model: AllModels
+
+    init?(record: ChatRecords, models: [AllModels], selectedModelIndex: Int) {
+        guard record.canvas?.content.isEmpty == false,
+              models.indices.contains(selectedModelIndex) else { return nil }
+        self.record = record
+        self.model = models[selectedModelIndex]
+    }
+}
+
 struct ChatViewBottom: View {
     var chatRecord: ChatRecords
     let modelTemp: [AllModels]
@@ -257,24 +276,88 @@ struct ChatViewBottom: View {
     @Binding var imageReversePrompt: String
 
     var isInputActive: FocusState<Bool>.Binding
+    var dockContextKey: String? = nil
+    /// Both workspace hosts supply their current, keyboard-adjusted viewport.
+    var availableWorkspaceSize: CGSize = .zero
+    /// A retained compact workspace yields accessibility to its visible history.
+    var isWorkspaceObscured: Bool = false
+    var onNativeEditorLifecycle: ((UITextView, NativeMultilineTextEditor.LifecycleEvent) -> Void)? = nil
+    var onModelPopoverPresentationChange: (@MainActor (UUID, Bool) -> Void)? = nil
+    /// Synchronous read from the same owner written by the message Binding.
+    var readCurrentMessageState: (() -> NativeMultilineTextEditor.TextState?)? = nil
+    /// The same draft consumed by send; choosing a capability never changes catalog settings.
+    var capabilityDraft: HanlinComposerDraft? = nil
+    var composerCapabilities: [HanlinComposerCapabilityDescriptor] = []
 
     @Environment(\.modelContext) private var context
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.hanlinCapabilityCustomPanelProvider) private var capabilityCustomPanels
     @Query(sort: [SortDescriptor(\PromptRepo.position, order: .forward)]) private var promptTemps: [PromptRepo]
     @Query private var userInfos: [UserInfo]
 
     @State private var isViewLoaded = false
-    @State private var showCanvas = false
+    @State private var canvasPresentation: HanlinCanvasPresentation?
     @State private var inputExpanded = false
     @State private var showModelMenuSheet = false
     @State private var voiceExpanded = false
     @State private var showImagePicker = false
     @State private var showCameraPicker = false
     @State private var showDocumentPicker = false
+    @State private var showShareInbox = false
+    @State private var miniAppsLaunchSession = NativeAppsLaunchSession()
+    @State private var editingCapabilityID: UUID?
+    @State private var capabilityQuery: HanlinComposerCapabilityQuery?
+    @State private var capabilitySelectionRequest: NativeMultilineTextEditor.SelectionRequest?
+    @State private var shareDraftContext: String?
     @State private var isSourceOptionsVisible = false
     @State private var debounceWorkItem: DispatchWorkItem?
     @State private var selectedViewImage: UIImage?
     @State private var isImageViewerPresented: Bool = false
     @State private var isSelect = false
+    @State private var textEditorHeight: CGFloat = HanlinMorphStyle.editorMinimumHeight
+    @State private var compactEditorHeight: CGFloat = HanlinMorphStyle.editorMinimumHeight
+    @State private var measuredAttachmentPreviewHeight: CGFloat = 0
+    @State private var measuredCapabilitiesHeight: CGFloat = 42
+    @State private var measuredMorphToolbarHeight: CGFloat = 44
+    @State private var popupCoordinator = HanlinComposerPopupCoordinator()
+    @State private var selectedMCPCountForChat: Int = 0
+    @State private var capabilityMCPProvider = MCPRuntimeProvider.shared
+    @State private var activeMCPCountContext: MCPCountContext?
+    @State private var toolCatalogReady = false
+    @State private var capabilityUpdateError: String?
+    @State private var showEmbeddingSettingSheet: Bool = false
+    @State private var isEmbeddingModelError: Bool = false
+    @State private var sessionFallbackChatID = UUID()
+
+    private var effectiveDockContextKey: String {
+        dockContextKey ?? chatRecord.id?.uuidString ?? sessionFallbackChatID.uuidString
+    }
+
+    private var effectiveMCPChatID: UUID {
+        chatRecord.id ?? sessionFallbackChatID
+    }
+
+    private typealias MCPCountContext = HanlinComposerRefreshContext
+
+    private var mcpCountContext: MCPCountContext {
+        MCPCountContext(chatID: effectiveMCPChatID, temporary: TemporaryRecord,
+            selectionRevision: capabilityMCPProvider.selectionRevision(chatID: effectiveMCPChatID, temporary: TemporaryRecord),
+            globallyEnabled: capabilityMCPProvider.configuration.isEnabled,
+            serverStates: capabilityMCPProvider.servers.map { "\($0.id.uuidString):\($0.isGloballyEnabled):\($0.isEnabledForNewChats)" })
+    }
+
+    static func shouldEnableSend(
+        message: String,
+        selectedImagesCount: Int,
+        selectedDocumentsCount: Int,
+        selectedPromptsCount: Int,
+        selectedCapabilitiesCount: Int = 0,
+        isResponding: Bool = false
+    ) -> Bool {
+        guard !isResponding else { return false }
+        let hasText = !message.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        return hasText || selectedImagesCount > 0 || selectedDocumentsCount > 0 || selectedPromptsCount > 0 || selectedCapabilitiesCount > 0
+    }
 
     @ScaledMetric(relativeTo: .body) var size_16: CGFloat = 16
     @ScaledMetric(relativeTo: .body) var size_20: CGFloat = 20
@@ -287,32 +370,39 @@ struct ChatViewBottom: View {
     let buttonHeight: CGFloat = 36
 
     var body: some View {
+        composerSurface
+    }
+
+    private var composerSurface: some View {
         VStack {
-            // 只有在需要时才显示“画布”和“滚动到底部”按钮
-            if (showScrollToBottomButton
-                || (chatRecord.canvas?.content.isEmpty == false))  && isMultiSelectMode == false
+            // Canvas is persistent content. A transient follow-latest button
+            // must not change the measured composer height or transcript range.
+            if chatRecord.canvas?.content.isEmpty == false && !isMultiSelectMode
             {
                 HStack(spacing: 12) {
                     Spacer()
 
-                    if chatRecord.canvas?.content.isEmpty == false && selectedModelIndex >= 0 {
-                        Button(action: { showCanvas.toggle() }) {
+                    if chatRecord.canvas?.content.isEmpty == false {
+                        Button(action: {
+                            canvasPresentation = HanlinCanvasPresentation(record: chatRecord,
+                                models: modelTemp, selectedModelIndex: selectedModelIndex)
+                        }) {
                             HStack(spacing: 6) {
                                 Image(systemName: "pencil.and.outline")
-                                    .font(.system(size: size_16, weight: .medium))
-                                Text("画布 \(chatRecord.canvas?.title ?? "")")
-                                    .font(.system(size: size_16, weight: .medium))
+                                    .font(HanlinTypography.fixed(size: size_16, weight: .medium))
+                                Text("画布 \(chatRecord.canvas?.title ?? "")", bundle: HanlinLocalization.bundle)
+                                    .font(HanlinTypography.fixed(size: size_16, weight: .medium))
                                     .lineLimit(1)
                                     .truncationMode(.tail)
                             }
-                            .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
+                            .foregroundColor(TemporaryRecord ? .primary : .hanlinHLBluefont)
                             .frame(height: buttonHeight)
                             .padding(.horizontal, 10)
                             .clipShape(Capsule())
                             .background(
                                 GlassView(style: .systemUltraThinMaterial)
                                     .clipShape(Capsule())
-                                    .shadow(color: TemporaryRecord ? .primary : .hlBlue, radius: 1)
+                                    .shadow(color: TemporaryRecord ? .primary : .hanlinHLBlue, radius: 1)
                             )
                         }
                         .transition(.move(edge: .bottom).combined(with: .opacity))
@@ -320,37 +410,11 @@ struct ChatViewBottom: View {
                             .spring(response: 0.5, dampingFraction: 0.7),
                             value: chatRecord.canvas?.content.isEmpty == false
                         )
-                        .sheet(isPresented: $showCanvas) {
-                            AICanvasView(
-                                canvas: Binding(
-                                    get: { chatRecord.canvas ?? CanvasData() },
-                                    set: {
-                                        chatRecord.canvas = $0
-                                        try? context.save()
-                                    }
-                                ),
-                                model: modelTemp[selectedModelIndex]
-                            )
-                        }
+                        .accessibilityIdentifier("hanlin-canvas-open")
+                        .disabled(!modelTemp.indices.contains(selectedModelIndex))
                     }
 
-                    if showScrollToBottomButton {
-                        Button(action: { needScrollToBottomButton.toggle() }) {
-                            Image(systemName: "arrow.down")
-                                .font(.system(size: size_16, weight: .medium))
-                                .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
-                                .frame(width: buttonHeight, height: buttonHeight)
-                                .clipShape(Circle())
-                                .background(
-                                    GlassView(style: .systemUltraThinMaterial)
-                                        .clipShape(Circle())
-                                        .shadow(color: TemporaryRecord ? .primary : .hlBlue, radius: 1)
-                                )
-                        }
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                        .animation(.spring(response: 0.5, dampingFraction: 0.7),
-                                   value: showScrollToBottomButton)
-                    }
+                    if showScrollToBottomButton { followLatestButton }
                 }
                 .offset(y: isViewLoaded ? 0 : 60) // 初次进入时滑入
                 .opacity(isViewLoaded ? 1 : 0)    // 初次进入时淡入
@@ -361,16 +425,218 @@ struct ChatViewBottom: View {
             // 多选模式工具栏 + 底部输入面板
             buildMultiSelectAndInputControls()
         }
+        .overlay(alignment: .topTrailing) {
+            if showScrollToBottomButton && chatRecord.canvas?.content.isEmpty != false && !isMultiSelectMode {
+                followLatestButton
+                    .padding(.trailing, 15)
+                    .offset(y: -(buttonHeight + 8))
+            }
+        }
+        .sheet(item: $canvasPresentation) { presentation in
+            AICanvasView(
+                canvas: Binding(
+                    get: { presentation.record.canvas ?? CanvasData() },
+                    set: {
+                        presentation.record.canvas = $0
+                        try? context.save()
+                    }
+                ),
+                model: presentation.model
+            )
+        }
+        .sheet(isPresented: $voiceExpanded) {
+            VoiceInputView(message: $message, voiceExpanded: $voiceExpanded)
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+        }
+        .sheet(isPresented: $showCameraPicker) {
+            ImagePicker(selectedImages: $selectedImages, sourceType: .camera, maxImageNumber: 5)
+                .background(.black)
+        }
+        .sheet(isPresented: $showImagePicker) {
+            ImagePicker(selectedImages: $selectedImages, sourceType: .photoLibrary, maxImageNumber: 5)
+                .ignoresSafeArea()
+        }
+        .sheet(isPresented: $showDocumentPicker) {
+            DocumentPicker(selectedDocumentURLs: $selectedDocumentURLs)
+                .ignoresSafeArea()
+        }
+        .sheet(isPresented: $showShareInbox) {
+            NavigationStack {
+                ChavrusaShareInboxView(platform: .shared, useInChat: { batchID in
+                    guard let originalContext = shareDraftContext,
+                          originalContext == effectiveDockContextKey, showShareInbox, !isResponding else {
+                        throw CancellationError()
+                    }
+                    let prepared = try await ChavrusaShareInbox.shared.prepareDraft(
+                        batchID: batchID, availableFileSlots: 5 - selectedDocumentURLs.count)
+                    do {
+                        try Task.checkCancellation()
+                        guard showShareInbox, originalContext == effectiveDockContextKey, !isResponding else {
+                            throw CancellationError()
+                        }
+                        guard selectedDocumentURLs.count + prepared.files.count <= 5 else {
+                            throw ChavrusaShareDraftError.fileLimit
+                        }
+                        if !prepared.text.isEmpty {
+                            message = message.isEmpty ? prepared.text : message + "\n\n" + prepared.text
+                        }
+                        selectedDocumentURLs.append(contentsOf: prepared.files)
+                        showShareInbox = false
+                        shareDraftContext = nil
+                    } catch {
+                        await ChavrusaShareInbox.shared.discardPreparedDraft(prepared)
+                        throw error
+                    }
+                })
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button(hanlin: "Cancel") { showShareInbox = false; shareDraftContext = nil }
+                            .accessibilityIdentifier("hanlin-share-inbox-cancel")
+                    }
+                }
+            }
+        }
+        .sheet(isPresented: $showEmbeddingSettingSheet) {
+            NavigationStack {
+                SelectEmbeddingModelView()
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(hanlin: "完成") {
+                                showEmbeddingSettingSheet = false
+                            }
+                        }
+                    }
+            }
+        }
+        .alert(Text("知识背包错误", bundle: HanlinLocalization.bundle), isPresented: $showKnowledgeAlert) {
+            if isEmbeddingModelError {
+                Button(hanlin: "前往设置") {
+                    showEmbeddingSettingSheet = true
+                }
+            }
+            Button(hanlin: "取消", role: .cancel) { }
+        } message: {
+            Text(knowledgeAlertMessage)
+        }
+        .alert(Text("未启用搜索引擎", bundle: HanlinLocalization.bundle), isPresented: $showSearchAlert) {
+            Button(hanlin: "确定", role: .cancel) { }
+        } message: {
+            Text("当前未启用任何搜索引擎，请前往 设置-工具-搜索设置 中开启。", bundle: HanlinLocalization.bundle)
+        }
         .onAppear {
+            syncDockGeometryAndContext()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { // **延迟 0.3 秒触发动画**
                 withAnimation {
                     isViewLoaded = true
                 }
             }
         }
+        .onChange(of: effectiveDockContextKey) { _, newKey in
+            showShareInbox = false
+            shareDraftContext = nil
+            editingCapabilityID = nil
+            capabilityQuery = nil
+            capabilitySelectionRequest = nil
+            showModelSuggestions = false
+            filteredModels = []
+            voiceExpanded = false
+            inputExpanded = false
+            popupCoordinator.dockState.handleContextKeyChange(newKey)
+            popupCoordinator.closeAll()
+        }
+        .onChange(of: capabilityDraft?.snapshot.ownerID) { _, _ in
+            editingCapabilityID = nil
+            capabilityQuery = nil
+            capabilitySelectionRequest = nil
+            showModelSuggestions = false
+            filteredModels = []
+        }
+        .onChange(of: availableWorkspaceSize) { _, newSize in
+            if newSize.height > 160 {
+                popupCoordinator.dockState.availableHeight = newSize.height
+            }
+            if newSize.width > 120 && newSize.height > 120 {
+                popupCoordinator.measuredContainerSize = newSize
+            }
+        }
+        .onChange(of: textEditorHeight) { _, newHeight in
+            guard newHeight.isFinite, newHeight > 1 else { return }
+            popupCoordinator.dockState.measuredInputHeight = newHeight
+            if !inputExpanded, abs(compactEditorHeight - newHeight) > 1 { compactEditorHeight = newHeight }
+        }
+        .onChange(of: attachmentOverheadHeightEstimate) { _, newOverhead in
+            if newOverhead == 0 { measuredAttachmentPreviewHeight = 0 }
+            popupCoordinator.dockState.attachmentOverheadHeight = max(measuredAttachmentPreviewHeight, newOverhead)
+        }
+        .onDisappear { debounceWorkItem?.cancel() }
+        .onChange(of: isInputActive.wrappedValue) { previousFocus, focused in
+            #if DEBUG || HANLIN_TESTING
+            if ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1" {
+                print("HANLIN_COMPOSER_HOST_FOCUS event=binding-change before=\(previousFocus) after=\(focused)")
+            }
+            #endif
+            popupCoordinator.dockState.handleInputFocusChange(focused, preserveExpandedDrawer: true)
+        }
         .onChange(of: isMultiSelectMode) {
             isViewLoaded = !isMultiSelectMode
         }
+        .onChange(of: showPhotoSourceOptions) { _, newValue in
+            if newValue && popupCoordinator.activePopup != .general {
+                popupCoordinator.open(.general, isInputCurrentlyFocused: isInputActive.wrappedValue)
+            } else if !newValue && popupCoordinator.activePopup == .general {
+                popupCoordinator.close(.general)
+            }
+            isSourceOptionsVisible = newValue
+        }
+        .onChange(of: popupCoordinator.activePopup) { _, newPopup in
+            let isGeneral = (newPopup == .general)
+            if showPhotoSourceOptions != isGeneral {
+                showPhotoSourceOptions = isGeneral
+            }
+            isSourceOptionsVisible = isGeneral
+            // Keep the model button anchored while its popover zooms. Resigning
+            // the editor here also animates the keyboard and moves that source.
+            if newPopup == .general || newPopup == .tools {
+                isInputActive.wrappedValue = false
+            }
+        }
+        .task(id: mcpCountContext) {
+            let request = mcpCountContext
+            if activeMCPCountContext?.chatID != request.chatID || activeMCPCountContext?.temporary != request.temporary {
+                selectedMCPCountForChat = 0
+                capabilityUpdateError = nil
+            }
+            activeMCPCountContext = request
+            NativeToolCatalog.shared.ensureBuiltinsRegistered()
+            toolCatalogReady = true
+            await refreshSelectedMCPCount(request)
+        }
+        .background(
+            GeometryReader { proxy in
+                Color.clear.preference(key: ComposerHeightPreferenceKey.self, value: proxy.size.height)
+            }
+        )
+    }
+
+    private var followLatestButton: some View {
+        Button(action: { needScrollToBottomButton.toggle() }) {
+            Image(systemName: "arrow.down")
+                .font(HanlinTypography.fixed(size: size_16, weight: .medium))
+                .foregroundColor(TemporaryRecord ? .primary : .hanlinHLBluefont)
+                .frame(width: buttonHeight, height: buttonHeight)
+                .clipShape(Circle())
+                .background(
+                    GlassView(style: .systemUltraThinMaterial)
+                        .clipShape(Circle())
+                        .shadow(color: TemporaryRecord ? .primary : .hanlinHLBlue, radius: 1)
+                )
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Text("Scroll to latest message", bundle: HanlinLocalization.bundle))
+        .accessibilityIdentifier("hanlin-chat-follow-latest")
+        .transition(.move(edge: .bottom).combined(with: .opacity))
+        .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showScrollToBottomButton)
     }
 
     /// 底部动画触发状态集合
@@ -434,7 +700,7 @@ struct ChatViewBottom: View {
                     Image(systemName: "trash.circle.fill")
                         .resizable()
                         .frame(width: size_40, height: size_40)
-                        .foregroundColor(selectedMessageIDs.isEmpty ? .gray : .hlRed)
+                        .foregroundColor(selectedMessageIDs.isEmpty ? .gray : .hanlinHLRed)
                         .cornerRadius(20)
                 }
                 .disabled(selectedMessageIDs.isEmpty)
@@ -448,7 +714,7 @@ struct ChatViewBottom: View {
                     Image(systemName: "checkmark.circle.fill")
                         .resizable()
                         .frame(width: size_40, height: size_40)
-                        .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
+                        .foregroundColor(TemporaryRecord ? .primary : .hanlinHLBluefont)
                         .cornerRadius(20)
                 }
             }
@@ -456,18 +722,21 @@ struct ChatViewBottom: View {
             .background(
                 GlassView(style: .systemUltraThinMaterial) // 毛玻璃背景
                     .clipShape(RoundedRectangle(cornerRadius: 26))
-                    .shadow(color: TemporaryRecord ? .primary : .hlBlue, radius: 1)
+                    .shadow(color: TemporaryRecord ? .primary : .hanlinHLBlue, radius: 1)
             )
             .offset(y: isMultiSelectMode ? 0 : 60) // **初次进入时滑入**
             .opacity(isMultiSelectMode ? 1 : 0)    // **初次进入时淡入**
+            .accessibilityHidden(!isMultiSelectMode)
+            .allowsHitTesting(isMultiSelectMode)
             .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: isMultiSelectMode)
             .padding(.vertical, 3)
             .padding(.horizontal, 15)
 
-            VStack {
+            VStack(spacing: 0) {
                 VStack {
                     if showTemperatureSlider {
                         TemperaturePicker(value: $temperature)
+                            .accessibilityIdentifier("hanlin-temperature-overlay")
                             .onChange(of: temperature) {
                                 chatRecord.temperature = temperature
                                 do {
@@ -511,47 +780,418 @@ struct ChatViewBottom: View {
                             }
                     }
                 }
+                .padding(.horizontal, 15)
                 .transition(.move(edge: .top))
 
-                VStack {
-                    messageInput
-                    modelSelector
-                    if showPhotoSourceOptions {
-                        sourceSelector
+                morphComposer
+                    .opacity(isMultiSelectMode ? 0 : 1)
+                    .allowsHitTesting(!isMultiSelectMode)
+                    .accessibilityHidden(isMultiSelectMode)
+            }
+        }
+    }
+
+    // MARK: 输入区域与抽屉视图
+    private var morphExpanded: Binding<Bool> {
+        Binding(
+            get: { popupCoordinator.activePopup == .general || popupCoordinator.activePopup == .tools },
+            set: { expanded in
+                if expanded {
+                    if popupCoordinator.activePopup != .general && popupCoordinator.activePopup != .tools {
+                        popupCoordinator.open(.general, isInputCurrentlyFocused: isInputActive.wrappedValue)
                     }
+                } else if popupCoordinator.activePopup == .general || popupCoordinator.activePopup == .tools {
+                    if let popup = popupCoordinator.activePopup { popupCoordinator.close(popup) }
                 }
-                .padding(.bottom, 12)
-                .onTapGesture {
+            }
+        )
+    }
+
+    private var morphPage: Binding<ComposerMorphRoute?> {
+        Binding(
+            get: { popupCoordinator.morphRoute },
+            set: { page in
+                guard page == nil else { return }
+                popupCoordinator.returnFromMorphPage()
+            }
+        )
+    }
+
+    private var morphAvailableHeight: CGFloat {
+        availableWorkspaceSize.height.isFinite ? max(0, availableWorkspaceSize.height) : 0
+    }
+
+    private var showsDetachedCapabilities: Bool {
+        !morphExpanded.wrappedValue && !detachedCapabilities.isEmpty
+    }
+
+    private var hasComposerAccessories: Bool {
+        !selectedImages.isEmpty || !selectedDocumentURLs.isEmpty || !selectedURLs.isEmpty
+            || !selectedPrompts.isEmpty || !attachedCapabilities.isEmpty
+            || !capabilityConfigurationsAreValid || !filteredCapabilitySuggestions.isEmpty
+            || (showModelSuggestions && !filteredModels.isEmpty)
+    }
+
+    private var morphLayout: HanlinMorphGeometry.Layout {
+        HanlinMorphGeometry.layout(
+            availableHeight: morphAvailableHeight,
+            accessoryNaturalHeight: hasComposerAccessories
+                ? max(measuredAttachmentPreviewHeight, attachmentOverheadHeightEstimate) : 0,
+            capabilitiesHeight: showsDetachedCapabilities ? measuredCapabilitiesHeight : 0,
+            naturalEditorHeight: compactEditorHeight,
+            toolbarHeight: measuredMorphToolbarHeight,
+            isPanelExpanded: morphExpanded.wrappedValue,
+            isEditorExpanded: inputExpanded
+        )
+    }
+
+    private var morphComposer: some View {
+        let availableHeight = morphAvailableHeight
+        let layout = morphLayout
+        let visibleCapabilities = detachedCapabilities
+        let showCapabilities = showsDetachedCapabilities
+        let visibleAccessoryHeight = layout.accessoryHeight
+        return VStack(spacing: HanlinMorphStyle.hostSpacing) {
+            if hasComposerAccessories, visibleAccessoryHeight > 1 {
+                ScrollView(.vertical, showsIndicators: measuredAttachmentPreviewHeight > visibleAccessoryHeight) {
+                    composerInputAccessories
+                }
+                .frame(height: visibleAccessoryHeight)
+            }
+            if showCapabilities {
+                HanlinDetachedCapabilityChips(
+                    capabilities: visibleCapabilities,
+                    availableWidth: availableWorkspaceSize.width > 0 ? availableWorkspaceSize.width : popupCoordinator.measuredContainerSize.width,
+                    canDisable: canDisableCapability,
+                    actionTitle: capabilityActionTitle,
+                    open: openCapability,
+                    disable: disableCapability
+                )
+                .padding(.horizontal, 22)
+                .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height in
+                    guard height.isFinite, height > 1, abs(height - measuredCapabilitiesHeight) > 1 else { return }
+                    measuredCapabilitiesHeight = height
+                }
+                .disabled(isResponding)
+                .transition(.identity)
+            }
+            HanlinMorphComposer(
+                isExpanded: morphExpanded,
+                activePage: morphPage,
+                availableHeight: availableHeight,
+                accessoryHeight: layout.hostOverhead,
+                inputHeight: layout.inputHeight,
+                title: { page in
+                    switch page {
+                    case nil: return String(localized: "Action Center", bundle: HanlinLocalization.bundle)
+                    case .general(.search): return String(localized: "Search & Knowledge", bundle: HanlinLocalization.bundle)
+                    case .general(.thinking): return String(localized: "Thinking & Planning", bundle: HanlinLocalization.bundle)
+                    case .general(.creative): return String(localized: "Creative & Audio", bundle: HanlinLocalization.bundle)
+                    case .general(.prompts): return String(localized: "Prompt Templates", bundle: HanlinLocalization.bundle)
+                    case .general(.parameters): return String(localized: "Model Parameters", bundle: HanlinLocalization.bundle)
+                    case .general(.imageSize): return String(localized: "Image Settings", bundle: HanlinLocalization.bundle)
+                    case .general(.miniApps): return String(localized: "hanlin.morph.miniAppsTitle", bundle: HanlinLocalization.bundle)
+                    case .general(.capabilities): return String(localized: "hanlin.composer.capabilities.title", bundle: HanlinLocalization.bundle)
+                    case .tools(.none): return String(localized: "Tools, Skills & MCP", bundle: HanlinLocalization.bundle)
+                    case .tools(.some(.toolsCatalog)): return String(localized: "Tools", bundle: HanlinLocalization.bundle)
+                    case .tools(.some(.skillsCenter)): return String(localized: "Skills", bundle: HanlinLocalization.bundle)
+                    case .tools(.some(.mcpServers)): return String(localized: "MCP Servers", bundle: HanlinLocalization.bundle)
+                    }
+                },
+                subtitle: { _ in String(localized: "Choose a capability and continue this conversation", bundle: HanlinLocalization.bundle) },
+                backIdentifier: { page in
+                    switch page {
+                    case .general: return "hanlin-general-subpage-back"
+                    case .tools: return "hanlin-tools-subpage-back"
+                    }
+                },
+                onOpen: { isInputActive.wrappedValue = false },
+                onBackgroundTap: {
                     showTemperatureSlider = false
                     showTopPSlider = false
                     showMaxTokensSlider = false
                     showMaxMessagesNumSlider = false
-                }
-                .background(
-                    GlassView(style: .systemUltraThinMaterial) // 毛玻璃背景
-                        .clipShape(RoundedRectangle(cornerRadius: 26))
-                        .shadow(color: TemporaryRecord ? .primary : .hlBlue, radius: 1)
-                )
-                .offset(y: isViewLoaded ? 0 : 60) // 初次进入时滑入
-                .opacity(isViewLoaded ? 1 : 0)    // 初次进入时淡入
-                .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: isViewLoaded)
-                .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.4), value: bottomAnimationState)
-            }
-            .padding(.vertical, 6)
-            .padding(.horizontal, 15)
+                },
+                onToolbarHeightChange: { height in
+                    if height.isFinite, height > 1, abs(measuredMorphToolbarHeight - height) > 1 { measuredMorphToolbarHeight = height }
+                },
+                isEnabled: true,
+                home: { generalDrawerView(morphHomeOnly: true) },
+                detail: { route in
+                    switch route {
+                    case .general: generalDrawerView()
+                    case .tools: toolsDrawerView
+                    }
+                },
+                input: { inputFieldSection }
+            )
+            .animation(reduceMotion ? nil : .spring(response: 0.42, dampingFraction: 0.86), value: inputExpanded)
+        }
+        .onChange(of: popupCoordinator.dockState.mode) { _, mode in
+            popupCoordinator.syncFromDockModeChange(mode)
+        }
+        .alert(String(localized: "Could not update capability", bundle: HanlinLocalization.bundle), isPresented: Binding(
+            get: { capabilityUpdateError != nil },
+            set: { if !$0 { capabilityUpdateError = nil } }
+        )) {
+            Button(String(localized: "OK", bundle: HanlinLocalization.bundle), role: .cancel) { capabilityUpdateError = nil }
+        } message: {
+            Text(capabilityUpdateError ?? "")
         }
     }
 
-    // MARK: 输入区域
-    private var messageInput: some View {
+    private func syncDockGeometryAndContext() {
+        popupCoordinator.dockState.handleContextKeyChange(effectiveDockContextKey)
+        popupCoordinator.dockState.measuredInputHeight = textEditorHeight
+        popupCoordinator.dockState.updateKeyboardOverlap(0)
+        popupCoordinator.dockState.attachmentOverheadHeight = max(measuredAttachmentPreviewHeight, attachmentOverheadHeightEstimate)
+        if availableWorkspaceSize.height > 160 {
+            popupCoordinator.dockState.availableHeight = availableWorkspaceSize.height
+        }
+        if availableWorkspaceSize.width > 120 && availableWorkspaceSize.height > 120 {
+            popupCoordinator.measuredContainerSize = availableWorkspaceSize
+        }
+    }
+
+    private var attachmentOverheadHeightEstimate: CGFloat {
+        var overhead: CGFloat = 0
+        if !selectedImages.isEmpty { overhead += 108 }
+        if !selectedDocumentURLs.isEmpty { overhead += 58 }
+        if !selectedURLs.isEmpty { overhead += 48 }
+        if !selectedPrompts.isEmpty { overhead += 52 }
+        if !attachedCapabilities.isEmpty { overhead += 60 }
+        if !capabilityConfigurationsAreValid { overhead += 32 }
+        if !filteredCapabilitySuggestions.isEmpty || (showModelSuggestions && !filteredModels.isEmpty) { overhead += 48 }
+        return overhead
+    }
+
+    private func generalDrawerView(morphHomeOnly: Bool = false) -> some View {
+        HanlinComposerGeneralActionsView(
+            coordinator: popupCoordinator,
+            capability: currentModelSnapshot,
+            temporaryRecord: TemporaryRecord,
+            isResponding: isResponding,
+            canObserve: canObserveCurrentChat,
+            selectedImages: $selectedImages,
+            selectedDocumentURLs: $selectedDocumentURLs,
+            selectedPrompts: $selectedPrompts,
+            availablePrompts: filteredPromptTemps,
+            onOpenCamera: { showCameraPicker = true },
+            onOpenPhotoLibrary: { showImagePicker = true },
+            onOpenDocumentPicker: { showDocumentPicker = true },
+            onOpenShareInbox: {
+                shareDraftContext = effectiveDockContextKey
+                showShareInbox = true
+            },
+            miniAppsSession: miniAppsLaunchSession,
+            capabilityDraft: capabilityDraft,
+            composerCapabilities: composerCapabilities,
+            editingCapabilityID: $editingCapabilityID,
+            onAttachCapability: { attachCapability($0, actionID: $1) },
+            ifSearch: $ifSearch,
+            ifKnowledge: $ifKnowledge,
+            ifThink: $ifThink,
+            thinkingLength: $thinkingLength,
+            ifPlanning: $ifPlanning,
+            ifAudio: $ifAudio,
+            selectedImageSize: $selectedImageSize,
+            imageReversePrompt: $imageReversePrompt,
+            checkSearchAvailability: { checkSearchAvailability() },
+            checkEmbeddingAvailability: { checkEmbeddingAvailability() },
+            showSearchAlert: $showSearchAlert,
+            showKnowledgeAlert: $showKnowledgeAlert,
+            onOpenEmbeddingSettings: { showEmbeddingSettingSheet = true },
+            temperature: $temperature,
+            topP: $topP,
+            maxTokens: $maxTokens,
+            maxMessagesNum: $maxMessagesNum,
+            onSaveParameters: {
+                if chatRecord.modelContext != nil {
+                    chatRecord.temperature = temperature
+                    chatRecord.topP = topP
+                    chatRecord.maxTokens = maxTokens
+                    chatRecord.maxMessagesNum = maxMessagesNum
+                    try? context.save()
+                }
+            },
+            onExpandEditor: { if !message.isEmpty { inputExpanded = true } },
+            onSendObserve: { onSendObserve() },
+            embeddedInDrawer: true,
+            embeddedInMorph: true,
+            morphHomeOnly: morphHomeOnly,
+            enabledCapabilities: detachedCapabilities
+        )
+        .environment(\.hanlinCapabilityCustomPanelProvider, capabilityCustomPanels)
+    }
+
+    private var toolsDrawerView: some View {
+        HanlinComposerToolsRootView(
+            coordinator: popupCoordinator,
+            chatID: effectiveMCPChatID,
+            temporaryRecord: TemporaryRecord,
+            capability: currentModelSnapshot,
+            ifToolUse: $ifToolUse,
+            embeddedInDrawer: true,
+            embeddedInMorph: true,
+            enabledCapabilities: detachedCapabilities,
+            capabilityDraft: capabilityDraft,
+            composerCapabilities: composerCapabilities,
+            onAttachCapability: { attachCapability($0, actionID: $1) }
+        )
+        .environment(\.hanlinCapabilityCustomPanelProvider, capabilityCustomPanels)
+    }
+
+    // Keep live attachment, prompt, suggestion and mode views together so a
+    // downstream composer host can position them without copying their state.
+    private var composerInputAccessories: some View {
         VStack(spacing: 6) {
             imagePreviewSection
             documentPreviewSection
             linkPreviewSection
             promptSection
-            imageSizeControlSection
+            HanlinCapabilityAttachmentChips(
+                attachments: attachedCapabilities, capabilities: composerCapabilities,
+                onEdit: openCapabilityConfiguration,
+                onRemove: { capabilityDraft?.removeCapability(id: $0) })
+            if !capabilityConfigurationsAreValid {
+                Label(String(localized: "hanlin.composer.capabilities.reviewSettings", bundle: HanlinLocalization.bundle),
+                      systemImage: "exclamationmark.circle")
+                    .font(.caption).foregroundStyle(.red)
+                    .accessibilityIdentifier("hanlin-capability-validation-error")
+            }
             modelSuggestionSection
-            inputFieldSection
+        }
+        .onGeometryChange(for: CGFloat.self) { proxy in
+            proxy.size.height
+        } action: { newHeight in
+            guard newHeight.isFinite, newHeight > 1, abs(measuredAttachmentPreviewHeight - newHeight) > 1 else { return }
+            measuredAttachmentPreviewHeight = newHeight
+            popupCoordinator.dockState.attachmentOverheadHeight = max(newHeight, attachmentOverheadHeightEstimate)
+        }
+    }
+
+    private var currentModelSnapshot: HanlinComposerActionBridge.ModelCapabilitySnapshot {
+        let model = modelTemp.indices.contains(selectedModelIndex) ? modelTemp[selectedModelIndex] : nil
+        return HanlinComposerActionBridge.capabilitySnapshot(for: model)
+    }
+
+    private var activeChips: [HanlinComposerActiveChip] {
+        HanlinComposerActionBridge.activeModeChips(
+            capability: currentModelSnapshot,
+            ifSearch: ifSearch,
+            ifKnowledge: ifKnowledge,
+            ifThink: ifThink,
+            thinkingLength: thinkingLength,
+            ifPlanning: ifPlanning,
+            ifAudio: ifAudio,
+            ifToolUse: ifToolUse,
+            activeMCPServerCount: selectedMCPCountForChat,
+            selectedImageSize: selectedImageSize
+        )
+    }
+
+    private var detachedCapabilities: [HanlinDetachedCapability] {
+        let catalog = NativeToolCatalog.shared
+        let enabledEntries = toolCatalogReady ? catalog.allEntries().filter { catalog.isEffectivelyEnabled($0) } : []
+        let eligibleSkills = HanlinSkillCatalog.shared.allSkills().contains { SkillStore.shared.isSkillEnabled(id: $0.id) }
+        let eligibleRuntimes = enabledEntries.contains { $0.categories.contains("runtime") && $0.categories.contains("code") }
+        return HanlinDetachedCapability.enabled(
+            from: activeChips, mcpEnabled: capabilityMCPProvider.configuration.isEnabled,
+            hasModel: currentModelSnapshot.hasModel,
+            toolUseEnabled: ifToolUse && currentModelSnapshot.supportsToolUse,
+            toolsEligible: !enabledEntries.isEmpty, skillsEligible: eligibleSkills, runtimesEligible: eligibleRuntimes
+        )
+    }
+
+    private func refreshSelectedMCPCount(_ request: MCPCountContext) async {
+        await capabilityMCPProvider.loadIfNeeded(startHost: false)
+        await HanlinComposerSelectionRefresh.perform(
+            request: request,
+            current: { activeMCPCountContext },
+            revision: { capabilityMCPProvider.selectionRevision(chatID: request.chatID, temporary: request.temporary) },
+            read: { try await capabilityMCPProvider.readSelection(chatID: request.chatID, temporary: request.temporary) },
+            publish: { result in
+                switch result {
+                case .success(let selection):
+                    selectedMCPCountForChat = capabilityMCPProvider.servers.filter { selection.contains($0.id) && $0.isGloballyEnabled }.count
+                case .failure(let error):
+                    capabilityUpdateError = error.localizedDescription
+                }
+            }
+        )
+    }
+
+    private func canDisableCapability(_ capability: HanlinDetachedCapability) -> Bool {
+        capability.canDisable(from: activeChips)
+    }
+
+    private func capabilityActionTitle(_ capability: HanlinDetachedCapability) -> String {
+        switch capability.contextAction(imageGenerationActive: currentModelSnapshot.supportsImageGen) {
+        case .disableChatToolUse:
+            return String(localized: "Turn off tool use in this chat", bundle: HanlinLocalization.bundle)
+        case .chooseModel:
+            return String(localized: "Change model to disable image generation", bundle: HanlinLocalization.bundle)
+        default:
+            return String(format: String(localized: "Turn off %@", bundle: HanlinLocalization.bundle), capability.title)
+        }
+    }
+
+    private func openCapability(_ capability: HanlinDetachedCapability) {
+        guard !isResponding else { return }
+        let focus = isInputActive.wrappedValue
+        withAnimation(reduceMotion ? nil : .spring(response: 0.48, dampingFraction: 0.79)) {
+            switch capability {
+            case .tools, .skills, .mcp, .runtimes:
+                popupCoordinator.open(.tools, isInputCurrentlyFocused: focus)
+            case .search, .thinking, .creative:
+                popupCoordinator.open(.general, isInputCurrentlyFocused: focus)
+            }
+        }
+        switch capability {
+        case .search: popupCoordinator.pushGeneralSubroute(.search, reduceMotion: true)
+        case .thinking: popupCoordinator.pushGeneralSubroute(.thinking, reduceMotion: true)
+        case .creative: popupCoordinator.pushGeneralSubroute(.creative, reduceMotion: true)
+        case .skills: popupCoordinator.pushToolsSubroute(.skillsCenter, reduceMotion: true)
+        case .mcp: popupCoordinator.pushToolsSubroute(.mcpServers, reduceMotion: true)
+        case .runtimes: popupCoordinator.pushToolsSubroute(.toolsCatalog, reduceMotion: true)
+        case .tools: break
+        }
+        isInputActive.wrappedValue = false
+    }
+
+    private func disableCapability(_ capability: HanlinDetachedCapability) {
+        guard !isResponding, canDisableCapability(capability) else { return }
+        switch capability {
+        case .search: ifSearch = false; ifKnowledge = false
+        case .thinking: ifThink = false; ifPlanning = false
+        case .creative:
+            if capability.contextAction(imageGenerationActive: currentModelSnapshot.supportsImageGen) == .chooseModel {
+                if !popupCoordinator.isModelPresented {
+                    popupCoordinator.open(.model, isInputCurrentlyFocused: isInputActive.wrappedValue)
+                }
+            } else {
+                ifAudio = false
+            }
+        case .tools, .skills, .runtimes: ifToolUse = false
+        case .mcp:
+            let chatID = effectiveMCPChatID
+            let temporary = TemporaryRecord
+            Task { @MainActor in
+                await capabilityMCPProvider.setSelection([], chatID: chatID, temporary: temporary)
+                let revision = capabilityMCPProvider.selectionRevision(chatID: chatID, temporary: temporary)
+                do {
+                    let actual = try await capabilityMCPProvider.readSelection(chatID: chatID, temporary: temporary)
+                    guard !Task.isCancelled, activeMCPCountContext?.chatID == chatID,
+                          activeMCPCountContext?.temporary == temporary,
+                          capabilityMCPProvider.selectionRevision(chatID: chatID, temporary: temporary) == revision else { return }
+                    if !actual.isEmpty { capabilityUpdateError = String(localized: "MCP selection could not be updated.", bundle: HanlinLocalization.bundle) }
+                } catch {
+                    guard !Task.isCancelled, activeMCPCountContext?.chatID == chatID,
+                          activeMCPCountContext?.temporary == temporary,
+                          capabilityMCPProvider.selectionRevision(chatID: chatID, temporary: temporary) == revision else { return }
+                    capabilityUpdateError = error.localizedDescription
+                }
+            }
         }
     }
 
@@ -577,12 +1217,15 @@ struct ChatViewBottom: View {
                                     selectedImages.remove(at: index)
                                 }) {
                                     Image(systemName: "xmark.circle.fill")
-                                        .foregroundColor(Color(.hlRed))
+                                        .foregroundColor(Color(.hanlinHLRed))
                                         .background(.background)
                                         .clipShape(Circle())
                                 }
-                                .sensoryFeedback(.impact, trigger: isFeedBack)
+                                .accessibilityIdentifier("hanlin-remove-image-attachment")
+                                .hanlinFeedback(.impact, trigger: isFeedBack)
                             }
+                            .accessibilityElement(children: .contain)
+                            .accessibilityIdentifier("hanlin-composer-image-attachment")
                             .transition(.opacity.combined(with: .move(edge: .bottom)))
                         }
                         ZStack(alignment: .center) {
@@ -592,14 +1235,14 @@ struct ChatViewBottom: View {
                                     showPhotoSourceOptions = true
                                     showCameraPicker = true
                                 }) {
-                                    Label("拍摄照片", systemImage: "camera")
+                                    Label(hanlin: "拍摄照片", systemImage: "camera")
                                 }
                                 Button(action: {
                                     isFeedBack.toggle()
                                     showPhotoSourceOptions = true
                                     showImagePicker = true
                                 }) {
-                                    Label("相册选择", systemImage: "photo")
+                                    Label(hanlin: "相册选择", systemImage: "photo")
                                 }
                             } label: {
                                 VStack {
@@ -607,15 +1250,15 @@ struct ChatViewBottom: View {
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 30, height: 30)
-                                        .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
+                                        .foregroundColor(TemporaryRecord ? .primary : .hanlinHLBluefont)
                                         .symbolEffect(.bounce, value: showImagePicker)
                                 }
                                 .padding(12)
                                 .frame(width: size_80, height: size_80)
-                                .background(TemporaryRecord ? Color.primary.opacity(0.1) : Color.hlBlue.opacity(0.1))
+                                .background(TemporaryRecord ? Color.primary.opacity(0.1) : Color.hanlinHLBlue.opacity(0.1))
                                 .cornerRadius(size_20)
                             }
-                            .sensoryFeedback(.impact, trigger: isFeedBack)
+                            .hanlinFeedback(.impact, trigger: isFeedBack)
                         }
                     }
                     .padding(6)
@@ -643,10 +1286,10 @@ struct ChatViewBottom: View {
                         ForEach(selectedDocumentURLs, id: \.self) { document in
                             HStack {
                                 Image(systemName: "doc.text")
-                                    .foregroundColor(TemporaryRecord ? .primary : Color(.hlBluefont))
-                                    .font(.footnote)
+                                    .foregroundColor(TemporaryRecord ? .primary : Color(.hanlinHLBluefont))
+                                    .font(HanlinTypography.footnote)
                                 Text(document.lastPathComponent)
-                                    .font(.footnote)
+                                    .font(HanlinTypography.footnote)
                                     .foregroundColor(.secondary)
                                     .lineLimit(1)
                                     .truncationMode(.middle)
@@ -657,13 +1300,16 @@ struct ChatViewBottom: View {
                                     }
                                 }) {
                                     Image(systemName: "xmark.circle.fill")
-                                        .foregroundColor(Color(.hlRed))
+                                        .foregroundColor(Color(.hanlinHLRed))
                                 }
-                                .sensoryFeedback(.impact, trigger: isFeedBack)
+                                .accessibilityIdentifier("hanlin-remove-document-attachment")
+                                .hanlinFeedback(.impact, trigger: isFeedBack)
                             }
                             .padding(6)
                             .background(.background.opacity(0.6))
                             .cornerRadius(20)
+                            .accessibilityElement(children: .contain)
+                            .accessibilityIdentifier("hanlin-composer-document-attachment")
                         }
                     }
                 }
@@ -685,10 +1331,10 @@ struct ChatViewBottom: View {
                             ForEach(selectedURLs, id: \.self) { url in
                                 HStack {
                                     Image(systemName: "link")
-                                        .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
-                                        .font(.footnote)
+                                        .foregroundColor(TemporaryRecord ? .primary : .hanlinHLBluefont)
+                                        .font(HanlinTypography.footnote)
                                     Text(url)
-                                        .font(.footnote)
+                                        .font(HanlinTypography.footnote)
                                         .foregroundColor(.primary)
                                         .lineLimit(1)
                                         .truncationMode(.middle)
@@ -700,9 +1346,9 @@ struct ChatViewBottom: View {
                                         selectedURLs.removeAll { $0 == url } // 从解析出的链接中删除
                                     }) {
                                         Image(systemName: "xmark.circle.fill")
-                                            .foregroundColor(Color(.hlRed))
+                                            .foregroundColor(Color(.hanlinHLRed))
                                     }
-                                    .sensoryFeedback(.impact, trigger: isFeedBack)
+                                    .hanlinFeedback(.impact, trigger: isFeedBack)
                                 }
                                 .padding(6)
                                 .background(.background.opacity(0.6))
@@ -730,15 +1376,15 @@ struct ChatViewBottom: View {
                             ForEach(selectedPrompts, id: \.id) { item in
                                 HStack(spacing: 6) {
                                     // 使用自定义图片作为提示词图标
-                                    Image("prompt")
+                                    Image(hanlinAsset: "prompt")
                                         .renderingMode(.template)
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 20, height: 20)
-                                        .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
+                                        .foregroundColor(TemporaryRecord ? .primary : .hanlinHLBluefont)
                                     Text(item.name ?? "未命名提示词")
-                                        .font(.body)
-                                        .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
+                                        .font(HanlinTypography.body)
+                                        .foregroundColor(TemporaryRecord ? .primary : .hanlinHLBluefont)
                                         .lineLimit(1)
                                         .truncationMode(.tail)
                                     Button(action: {
@@ -747,20 +1393,20 @@ struct ChatViewBottom: View {
                                         removePrompt(item)
                                     }) {
                                         Image(systemName: "pencil.circle.fill")
-                                            .foregroundColor(Color(.hlGreen))
+                                            .foregroundColor(Color(.hanlinHLGreen))
                                     }
-                                    .sensoryFeedback(.impact, trigger: isFeedBack)
+                                    .hanlinFeedback(.impact, trigger: isFeedBack)
                                     Button(action: {
                                         isFeedBack.toggle()
                                         removePrompt(item)
                                     }) {
                                         Image(systemName: "xmark.circle.fill")
-                                            .foregroundColor(Color(.hlRed))
+                                            .foregroundColor(Color(.hanlinHLRed))
                                     }
-                                    .sensoryFeedback(.impact, trigger: isFeedBack)
+                                    .hanlinFeedback(.impact, trigger: isFeedBack)
                                 }
                                 .padding(12)
-                                .background(TemporaryRecord ? Color.primary.opacity(0.1) : Color.hlBlue.opacity(0.1))
+                                .background(TemporaryRecord ? Color.primary.opacity(0.1) : Color.hanlinHLBlue.opacity(0.1))
                                 .cornerRadius(20)
                             }
                         }
@@ -774,500 +1420,456 @@ struct ChatViewBottom: View {
         }
     }
 
-    // MARK: - 画幅控制区域
-    private var imageSizeControlSection: some View {
-        Group {
-            if selectedModelIndex >= 0,
-               modelTemp[selectedModelIndex].supportsImageGen,
-               ["QWEN", "MODELSCOPE", "ZHIPUAI", "HANLIN", "HANLIN_OPEN", "SILICONCLOUD", "OPENAI"].contains(modelTemp[selectedModelIndex].company) {
-
-                VStack {
-                    // 针对部分公司显示反向提示词输入框
-                    if ["QWEN", "MODELSCOPE", "ZHIPUAI", "HANLIN", "HANLIN_OPEN", "SILICONCLOUD"].contains(modelTemp[selectedModelIndex].company) {
-                        TextField("反向提示词", text: $imageReversePrompt)
-                            .font(.footnote)
-                            .padding(8)
-                            .background(.background.opacity(0.6))
-                            .cornerRadius(20)
-                    }
-                    // 画幅选择按钮区域
-                    if ["QWEN", "ZHIPUAI", "OPENAI", "HANLIN", "HANLIN_OPEN", "SILICONCLOUD"].contains(modelTemp[selectedModelIndex].company) {
-                        HStack(spacing: 6) {
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack {
-                                    Button(action: {
-                                        isFeedBack.toggle()
-                                        selectedImageSize = "square"
-                                    }) {
-                                        HStack {
-                                            Image(systemName: "square")
-                                                .foregroundColor(selectedImageSize == "square" ? .white : (TemporaryRecord ? .primary : .hlBluefont))
-                                                .font(.footnote)
-                                            Text("方形画幅")
-                                                .font(.footnote)
-                                                .foregroundColor(selectedImageSize == "square" ? .white : .primary)
-                                                .lineLimit(1)
-                                                .truncationMode(.middle)
-                                        }
-                                        .padding(6)
-                                        .background(selectedImageSize == "square" ? Color(.hlBluefont) : Color(.systemBackground).opacity(0.6))
-                                        .cornerRadius(20)
-                                    }
-                                    .transition(.opacity.combined(with: .move(edge: .bottom)))
-
-                                    Button(action: {
-                                        isFeedBack.toggle()
-                                        selectedImageSize = "landscape"
-                                    }) {
-                                        HStack {
-                                            Image(systemName: "rectangle")
-                                                .foregroundColor(selectedImageSize == "landscape" ? .white : (TemporaryRecord ? .primary : .hlBluefont))
-                                                .font(.footnote)
-                                            Text("横向画幅")
-                                                .font(.footnote)
-                                                .foregroundColor(selectedImageSize == "landscape" ? .white : .primary)
-                                                .lineLimit(1)
-                                                .truncationMode(.middle)
-                                        }
-                                        .padding(6)
-                                        .background(selectedImageSize == "landscape" ? Color(.hlBluefont) : Color(.systemBackground).opacity(0.6))
-                                        .cornerRadius(20)
-                                    }
-                                    .transition(.opacity.combined(with: .move(edge: .bottom)))
-
-                                    Button(action: {
-                                        isFeedBack.toggle()
-                                        selectedImageSize = "portrait"
-                                    }) {
-                                        HStack {
-                                            Image(systemName: "rectangle.portrait")
-                                                .foregroundColor(selectedImageSize == "portrait" ? .white : (TemporaryRecord ? .primary : .hlBluefont))
-                                                .font(.footnote)
-                                            Text("纵向画幅")
-                                                .font(.footnote)
-                                                .foregroundColor(selectedImageSize == "portrait" ? .white : .primary)
-                                                .lineLimit(1)
-                                                .truncationMode(.middle)
-                                        }
-                                        .padding(6)
-                                        .background(selectedImageSize == "portrait" ? Color(.hlBluefont) : Color(.systemBackground).opacity(0.6))
-                                        .cornerRadius(20)
-                                    }
-                                    .transition(.opacity.combined(with: .move(edge: .bottom)))
-                                }
-                            }
-                            .cornerRadius(20)
-                        }
-                    }
-                }
-                .sensoryFeedback(.impact, trigger: isFeedBack)
-                .padding(.top, 12)
-                .padding(.horizontal, 12)
-                .transition(.opacity.combined(with: .move(edge: .bottom)))
-            }
-        }
-    }
-
-    // MARK: - 模型建议区域
+    // MARK: - Caret-aware capability and model suggestions
     private var modelSuggestionSection: some View {
         Group {
-            if showModelSuggestions && !filteredModels.isEmpty {
-                HStack {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
+            if !filteredCapabilitySuggestions.isEmpty || (showModelSuggestions && !filteredModels.isEmpty) {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        ForEach(filteredCapabilitySuggestions) { capability in
+                            Button {
+                                attachCapability(capability, actionID: nil, replacing: capabilityQuery)
+                            } label: {
+                                Label(capability.title, systemImage: capability.systemImage)
+                                    .font(.footnote)
+                            }
+                            .buttonStyle(.bordered)
+                            .accessibilityIdentifier("hanlin-capability-suggestion-\(capability.id)")
+                        }
+                        if showModelSuggestions {
                             ForEach(filteredModels, id: \.id) { model in
-                                Button(action: {
-                                    // 用正则表达式匹配最后一次出现的"@…"
-                                    if let range = message.range(of: "@[^\\s]*$", options: .regularExpression) {
-                                        message.replaceSubrange(range, with: "@\(model.displayName ?? model.name ?? "未知") ")
-                                    }
+                                Button {
+                                    replaceComposerQuery(with: "@\(model.presentationName) ")
                                     showModelSuggestions = false
                                     isFeedBack.toggle()
-                                }) {
-                                    Image(systemName: "at")
-                                        .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
+                                } label: {
+                                    Label(model.presentationName, systemImage: "brain")
                                         .font(.footnote)
-                                    highlightedModelText(for: model.displayName ?? model.name ?? "未知")
-                                        .font(.footnote)
-                                        .foregroundColor(.primary)
-                                        .lineLimit(1)
-                                        .truncationMode(.middle)
                                 }
-                                .sensoryFeedback(.impact, trigger: isFeedBack)
-                                .padding(6)
-                                .background(.background.opacity(0.6))
-                                .cornerRadius(20)
+                                .buttonStyle(.bordered)
+                                .accessibilityIdentifier("hanlin-model-mention-\(model.presentationName)")
                             }
                         }
                     }
-                    .cornerRadius(20)
+                    .padding(.horizontal, 12)
                 }
-                .padding(.top, 12)
-                .padding(.horizontal, 12)
-                .transition(.opacity.combined(with: .move(edge: .bottom)))
+                .accessibilityIdentifier("hanlin-composer-capability-suggestions")
             }
         }
     }
 
     // MARK: - 输入栏及底部按钮区域
     private var inputFieldSection: some View {
-        HStack {
-            VStack {
-                HStack {
-                    InputTextField(
-                        text: $message,
-                        onPasteImage: { pastedImage in
-                            selectedImages.append(pastedImage)
-                        },
-                        onPasteFile: { pastedFile in
-                            selectedDocumentURLs.append(pastedFile)
-                        },
-                        onSendMessage: {
-                            onSendUser()
-                        }
-                    )
-                    .padding(.leading, 12)
-                    .frame(height: size_44)
-                    .focused(isInputActive)
-                    .submitLabel(.send)
-                    .onSubmit {
-                        onSendUser()
+        let layout = morphLayout
+        let editorMinimum = inputExpanded ? layout.editorHeight : HanlinMorphStyle.editorMinimumHeight
+        let editorMaximum = inputExpanded ? layout.editorHeight : layout.editorMaximumHeight
+        let showsExpansionControl = !message.isEmpty
+        return VStack(spacing: HanlinMorphStyle.inputControlsSpacing) {
+            NativeMultilineTextEditor(
+                text: $message,
+                textHeight: $textEditorHeight,
+                placeholderText: String(localized: "Message", bundle: HanlinLocalization.bundle),
+                minHeight: editorMinimum,
+                maxHeight: editorMaximum,
+                usesAutomaticLineLimits: !inputExpanded,
+                onPasteImage: { selectedImages.append($0) },
+                onPasteFile: { selectedDocumentURLs.append($0) },
+                onSendMessage: {
+                    if Self.shouldEnableSend(
+                        message: message,
+                        selectedImagesCount: selectedImages.count,
+                        selectedDocumentsCount: selectedDocumentURLs.count,
+                        selectedPromptsCount: selectedPrompts.count,
+                        selectedCapabilitiesCount: attachedCapabilities.count,
+                        isResponding: isResponding
+                    ) && capabilityConfigurationsAreValid { onSendUser() }
+                },
+                onMentionTriggered: { updateModelSuggestions() },
+                onFocusChange: { focused in
+                    #if DEBUG || HANLIN_TESTING
+                    if ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1" {
+                        print("HANLIN_COMPOSER_HOST_FOCUS event=native-callback nativeFocused=\(focused) boundFocused=\(isInputActive.wrappedValue)")
                     }
-                    .onChange(of: message) {
-                        debounceWorkItem?.cancel()
-                        debounceWorkItem = DispatchWorkItem {
-                            updateModelSuggestions()
-                            chatRecord.input = message
-                            extractURLs(from: message)
-                            do {
-                                try context.save()
-                            } catch {
-                                print("Failed to save chat record updates: \(error)")
-                            }
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: debounceWorkItem!)
+                    #endif
+                    popupCoordinator.dockState.handleInputFocusChange(focused, preserveExpandedDrawer: true)
+                },
+                onLifecycleEvent: onNativeEditorLifecycle,
+                readCurrentTextState: readCurrentMessageState,
+                onCapabilityQueryChange: { query in
+                    if capabilityQuery != query {
+                        capabilityQuery = query
+                        updateModelSuggestions()
                     }
-                    .disabled(isResponding)
-
-                    // 麦克风
-                    Button(action: {
-                        isFeedBack.toggle()
-                        voiceExpanded.toggle()
-                    }) {
-                        Image(systemName: "microphone")
-                            .foregroundColor(Color(.systemGray))
-                            .padding(.trailing, 3)
-                    }
-                    .sensoryFeedback(.impact, trigger: isFeedBack)
-                    .disabled(isResponding)
-
-                    // 多行输入
-                    Button(action: {
-                        isFeedBack.toggle()
-                        inputExpanded.toggle()
-                    }) {
-                        Image(systemName: inputExpanded ? "chevron.down" : "chevron.up")
-                            .foregroundColor(Color(.systemGray))
-                            .padding(.trailing, 12)
-                            .symbolEffect(.bounce, value: inputExpanded)
-                    }
-                    .sensoryFeedback(.impact, trigger: isFeedBack)
-                    .disabled(isResponding)
+                },
+                selectionRequest: capabilitySelectionRequest
+            )
+            .frame(height: layout.editorHeight)
+            .focused(isInputActive)
+            .accessibilityIdentifier("hanlin-chat-input")
+            // Hide the SwiftUI accessibility leaf as well as the native editor.
+            // The workspace keeps the same editor, draft and keyboard owner mounted.
+            .accessibilityHidden(isWorkspaceObscured)
+            // The corner button never intercepts the native selection/caret area.
+            .padding(.trailing, showsExpansionControl ? HanlinMorphStyle.inputControlHitSize : 0)
+            .padding(.horizontal, 11)
+            .padding(.top, HanlinMorphStyle.inputTopInset)
+            .overlay(alignment: .topTrailing) {
+                if showsExpansionControl {
+                    composerExpandEditorControl
+                        .padding(.trailing, 3)
+                        .padding(.top, 2)
                 }
-                ActionButtonsView(
-                    selectedModelIndex: $selectedModelIndex,
-                    modelTemp: modelTemp,
-                    isResponding: $isResponding,
-                    message: $message,
-                    selectedImages: $selectedImages,
-                    selectedDocumentURLs: $selectedDocumentURLs,
-                    selectedPrompts: $selectedPrompts,
-                    isFeedBack: $isFeedBack,
-                    showPhotoSourceOptions: $showPhotoSourceOptions,
-                    isSourceOptionsVisible: $isSourceOptionsVisible,
-                    ifKnowledge: $ifKnowledge,
-                    ifSearch: $ifSearch,
-                    ifToolUse: $ifToolUse,
-                    ifThink: $ifThink,
-                    ifAudio: $ifAudio,
-                    ifPlanning: $ifPlanning,
-                    thinkingLength: $thinkingLength,
-                    showKnowledgeAlert: $showKnowledgeAlert,
-                    knowledgeAlertMessage: $knowledgeAlertMessage,
-                    showSearchAlert: $showSearchAlert,
-                    chatTemps: $chatTemps,
-                    respondIndex: respondIndex,
-                    TemporaryRecord: TemporaryRecord,
-                    isMenuMode: isMenuMode,
-                    showModelMenuSheet: $showModelMenuSheet,
-                    onSelectModel: onSelectModel,
-                    size32: size_32,
-                    size30: size_30,
-                    onSendUser: onSendUser,
-                    onSendObserve: onSendObserve,
-                    onCancel: onCancel
-                )
             }
-            .background(.background.opacity(0.6))
-            .cornerRadius(20)
-            .animation(.spring(response: 0.5), value: isSourceOptionsVisible)
+            .onChange(of: message) {
+                if message.isEmpty {
+                    inputExpanded = false
+                    compactEditorHeight = HanlinMorphStyle.editorMinimumHeight
+                    capabilityQuery = nil
+                    showModelSuggestions = false
+                    filteredModels = []
+                }
+                popupCoordinator.dockState.handleDraftTextChange(message)
+                debounceWorkItem?.cancel()
+                // Persistence still has one owner; this is only local lookup.
+                let draft = message
+                let work = DispatchWorkItem {
+                    guard message == draft else { return }
+                    updateModelSuggestions()
+                    extractURLs(from: draft)
+                }
+                debounceWorkItem = work
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: work)
+            }
+            composerInputControls
         }
-        .padding(.horizontal, 12)
-        .padding(.top, 12)
-        .sheet(isPresented: $inputExpanded) {
-            BottomSheetView(message: $message, isExpanded: $inputExpanded)
-                .presentationDetents([.medium, .large])
-                .presentationDragIndicator(.visible)
-        }
-        .sheet(isPresented: $voiceExpanded) {
-            VoiceInputView(message: $message, voiceExpanded: $voiceExpanded)
-                .presentationDetents([.medium, .large])
-                .presentationDragIndicator(.visible)
-        }
+        .frame(minHeight: HanlinMorphStyle.launcherSize)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("hanlin-composer-surface")
+        .accessibilityHidden(isWorkspaceObscured)
     }
 
-    // MARK: - 判断是否使用菜单模式
-    private var isMenuMode: Bool {
-        userInfos.first?.modelSelectorStyle == "menu"
+    // Keep one fixed-height row in the editor's material. The model's title
+    // compresses first; no width, font or keyboard change creates another row.
+    private var composerActionSize: CGFloat { HanlinMorphStyle.sendButtonSize }
+
+    private var composerInputControls: some View {
+        HStack(spacing: HanlinMorphStyle.inputControlsSpacing) {
+            composerModelControl
+                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                .frame(height: HanlinMorphStyle.inputControlHitSize)
+            composerToolsControl
+                .layoutPriority(1)
+            composerMicrophoneControl
+                .layoutPriority(1)
+            composerPrimaryControl
+                .frame(width: HanlinMorphStyle.inputControlHitSize, height: HanlinMorphStyle.inputControlHitSize)
+                .layoutPriority(1)
+        }
+        .frame(minWidth: 0, maxWidth: .infinity)
+        .frame(height: HanlinMorphStyle.inputControlHitSize)
+        .padding(.horizontal, HanlinMorphStyle.inputControlsInset)
+        .padding(.bottom, HanlinMorphStyle.inputControlsInset)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("hanlin-composer-quick-bar")
+        .accessibilityHidden(isWorkspaceObscured)
     }
 
-    // MARK: 模型选择区域
-    private var modelSelector: some View {
-        Group {
-            if isMenuMode {
-                menuStyleSelector
-            } else {
-                scrollStyleSelector
-            }
+    private var composerExpandEditorControl: some View {
+        Button {
+            isFeedBack.toggle()
+            inputExpanded.toggle()
+        } label: {
+            Image(systemName: inputExpanded ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
+                .font(HanlinTypography.subheadline)
+                .foregroundStyle(.secondary)
+                .frame(width: HanlinMorphStyle.inputControlHitSize, height: HanlinMorphStyle.inputControlHitSize)
+                .contentShape(Rectangle())
         }
+        .buttonStyle(.plain)
+        .accessibilityLabel(inputExpanded ? String(localized: "Collapse", bundle: HanlinLocalization.bundle) : String(localized: "Expand Long Text Editor", bundle: HanlinLocalization.bundle))
+        .accessibilityIdentifier("hanlin-composer-expand-editor")
+        .hanlinFeedback(.impact, trigger: isFeedBack)
     }
 
-    // MARK: - 横向滑动模式选择器
-    private var scrollStyleSelector: some View {
-        HStack {
-            let visibleIndices = modelTemp.indices.filter { !modelTemp[$0].isHidden }
-
-            if modelTemp.isEmpty {
-                // 数据未加载，显示占位符
-                HStack {
-                    ProgressView()
-                        .scaleEffect(0.8)
-                    Text("加载模型中...")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-                .frame(height: 36)
-            } else if visibleIndices.isEmpty {
-                // 没有可用模型
-                Text("暂无可用模型，请前往模型界面开启模型。")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .frame(height: 36)
-            } else {
-                // 正常显示模型列表
-                ScrollViewReader { scrollViewProxy in
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 6) {
-                            ForEach(visibleIndices, id: \.self) { index in
-                                if let model = modelTemp[safe: index] {
-                                    Button(action: {
-                                        isSelect.toggle()
-                                        onSelectModel(index)
-                                    }) {
-                                        modelButton(for: model, isSelected: index == selectedModelIndex)
-                                    }
-                                    .sensoryFeedback(.selection, trigger: isSelect)
-                                }
-                            }
-                        }
-                    }
-                    .cornerRadius(size_20)
-                    .onReceive(NotificationCenter.default.publisher(for: .scrollToModelIndex)) { notification in
-                        if let index = notification.object as? Int {
-                            withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
-                                scrollViewProxy.scrollTo(index, anchor: .center)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        .padding(.horizontal, 12)
-    }
-
-    // MARK: - 菜单选择模式选择器（模型按钮已移至 ActionButtonsView，此处仅处理无模型时的提示）
-    private var menuStyleSelector: some View {
-        let visibleIndices = modelTemp.indices.filter { !modelTemp[$0].isHidden }
-
-        return Group {
-            if modelTemp.isEmpty {
-                // 数据未加载，显示占位符
-                HStack {
-                    ProgressView()
-                        .scaleEffect(0.8)
-                    Text("加载模型中...")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-                .frame(height: 36)
-                .padding(.horizontal, 12)
-            } else if visibleIndices.isEmpty {
-                // 没有可用模型
-                Text("暂无可用模型，请前往模型界面开启模型。")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                    .frame(height: 36)
-                    .padding(.horizontal, 12)
-            }
-            // 有模型时不渲染任何内容（隐式 EmptyView）
-        }
-    }
-
-    private func modelButton(for model: AllModels, isSelected: Bool) -> some View {
-        HStack(spacing: 6) {
-            if isSelected {
-                // 激活状态，使用原图颜色
-                if model.identity == "model" {
-                    Image(getCompanyIcon(for: model.company ?? "Unknown"))
-                        .renderingMode(.original)
-                        .resizable()
-                        .frame(width: size_20, height: size_20)
-                        .scaleEffect(1.2)
-                        .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.5), value: isSelected)
-                } else {
-                    Image(systemName: model.icon ?? "circle.dotted.circle")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: size_20, height: size_20)
-                        .clipShape(Circle())
-                        .overlay(
-                            Group {
-                                gradient(for: 0)
-                                    .mask(
-                                        Image(systemName: model.icon ?? "circle.dotted.circle")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: size_20, height: size_20)
-                                    )
-                            }
-                        )
-                        .scaleEffect(1.2)
-                        .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.5), value: isSelected)
-                }
-            } else {
-                if model.identity == "model" {
-                    // 非激活状态，使用模板模式配合 foregroundColor 上色
-                    Image(getCompanyIcon(for: model.company ?? "Unknown"))
-                        .renderingMode(.template)
-                        .resizable()
-                        .frame(width: size_20, height: size_20)
-                        .scaleEffect(1.0)
-                        .foregroundColor(Color(.systemGray))
-                        .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.5), value: isSelected)
-                } else {
-                    Image(systemName: model.icon ?? "circle.dotted.circle")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: size_20, height: size_20)
-                        .scaleEffect(1.0)
-                        .foregroundColor(Color(.systemGray))
-                        .clipShape(Circle())
-                        .animation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.5), value: isSelected)
-                }
-            }
-            // 选中时展开显示全部信息
-            if isSelected {
-                Text(model.displayName ?? "Unknown")
-                    .font(.caption)
-                    .foregroundColor(TemporaryRecord ? .primary : Color(.hlBluefont))
-                    .transition(.opacity.combined(with: .move(edge: .leading)))
-                if model.supportsToolUse {
-                    Text("工具")
-                        .font(.caption)
-                        .foregroundColor(ifToolUse ? .hlBrown : .gray)
-                        .transition(.opacity)
-                }
-                if model.company?.uppercased() == "LOCAL" {
-                    Text("本地")
-                        .font(.caption)
-                        .foregroundColor(.hlOrange)
-                        .transition(.opacity)
-                }
-                if model.supportsMultimodal {
-                    Text("视觉")
-                        .font(.caption)
-                        .foregroundColor(.hlTeal)
-                        .transition(.opacity)
-                }
-                if model.supportsReasoning {
-                    Text("思考")
-                        .font(.caption)
-                        .foregroundColor(ifThink ? .hlPurple : .gray)
-                        .transition(.opacity)
-                }
-                if model.supportsVoiceGen {
-                    Text("语音")
-                        .font(.caption)
-                        .foregroundColor(ifAudio ? .hlPink : .gray)
-                        .transition(.opacity)
-                }
-                if model.supportsImageGen {
-                    Text("生图")
-                        .font(.caption)
-                        .foregroundColor(.hlGreen)
-                        .transition(.opacity)
-                }
-                if model.price == 0 {
-                    Text("免费")
-                        .font(.caption)
-                        .foregroundColor(.green)
-                        .transition(.opacity)
-                }
-            }
-        }
-        .padding(10)
-        .background(background(for: model, isSelected: isSelected))
-        .cornerRadius(size_20)
-        .animation(
-            .spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.5),
-            value: [isSelected, ifThink, ifToolUse, ifAudio]
+    private var composerToolsControl: some View {
+        let accent: Color = TemporaryRecord ? .primary : .hanlinHLBluefont
+        let isToolsOpen = popupCoordinator.dockState.mode == .tools
+        let isToolsActive = ifToolUse && currentModelSnapshot.supportsToolUse
+        let toolsActiveBadgeCount = HanlinComposerActionBridge.activeToolsShortcutCount(
+            capability: currentModelSnapshot,
+            ifToolUse: ifToolUse,
+            activeMCPServerCount: selectedMCPCountForChat
         )
+        return Button {
+            isFeedBack.toggle()
+            popupCoordinator.open(.tools, isInputCurrentlyFocused: isInputActive.wrappedValue)
+        } label: {
+            ZStack(alignment: .topTrailing) {
+                Image(systemName: (isToolsOpen || isToolsActive) ? "hammer.circle.fill" : "hammer.circle")
+                    .font(HanlinTypography.fixed(size: min(size_20 + 5, 36), weight: .regular))
+                    .foregroundStyle(
+                        isToolsOpen ? accent : (isToolsActive ? (TemporaryRecord ? Color.primary : Color.hanlinHLBrown) : Color.secondary)
+                    )
+                    .frame(width: composerActionSize, height: composerActionSize)
+                    .background(
+                        (isToolsOpen || isToolsActive)
+                        ? (isToolsActive ? Color.hanlinHLBrown : (TemporaryRecord ? Color.primary : Color.hanlinHLBlue)).opacity(0.14)
+                        : Color.secondary.opacity(0.08),
+                        in: Circle()
+                    )
+                    .overlay(
+                        Circle()
+                            .stroke(
+                                (isToolsOpen || isToolsActive)
+                                ? (isToolsActive ? Color.hanlinHLBrown : accent).opacity(0.32)
+                                : Color.clear,
+                                lineWidth: 0.8
+                            )
+                    )
+
+                if toolsActiveBadgeCount > 0 {
+                    Circle()
+                        .fill(isToolsActive ? Color.hanlinHLBrown : accent)
+                        .frame(width: 7, height: 7)
+                        .offset(x: -1, y: 1)
+                }
+            }
+            .frame(width: HanlinMorphStyle.inputControlHitSize, height: HanlinMorphStyle.inputControlHitSize)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(String(localized: "Tools, Skills & MCP", bundle: HanlinLocalization.bundle))
+        .accessibilityIdentifier("hanlin-composer-tools-direct")
+        .hanlinFeedback(.impact, trigger: isFeedBack)
+    }
+
+    private var composerModelControl: some View {
+        let accent: Color = TemporaryRecord ? .primary : .hanlinHLBluefont
+        let isModelOpen = popupCoordinator.isModelPresented
+        return HanlinModelZoomPopover(
+            isPresented: popupCoordinator.binding(for: .model),
+            presentationID: popupCoordinator.modelPresentationGeneration,
+            contentSize: popupCoordinator.modelPopoverSize,
+            onResizeCompleted: { generation, size in
+                popupCoordinator.modelFrameResizeDidComplete(presentationID: generation, size: size)
+            },
+            onPresentationChange: onModelPopoverPresentationChange
+        ) {
+            Button {
+                isFeedBack.toggle()
+                popupCoordinator.toggle(.model, isInputCurrentlyFocused: isInputActive.wrappedValue)
+            } label: {
+                composerModelCapsuleLabel(isOpen: isModelOpen, accent: accent)
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("hanlin-composer-model-picker")
+            .hanlinFeedback(.selection, trigger: isSelect)
+        } content: {
+            HanlinModelPickerPopover(
+                coordinator: popupCoordinator,
+                models: modelTemp,
+                selectedModelIndex: $selectedModelIndex,
+                onSelectModel: { index in
+                    isSelect.toggle()
+                    onSelectModel(index)
+                },
+                temporaryRecord: TemporaryRecord,
+                ifToolUse: ifToolUse,
+                ifThink: ifThink,
+                ifAudio: ifAudio
+            )
+        }
+    }
+
+    private var composerMicrophoneControl: some View {
+        Button(action: {
+            isFeedBack.toggle()
+            voiceExpanded = true
+        }) {
+            Image(systemName: "microphone")
+                .font(HanlinTypography.fixed(size: 16, weight: .medium))
+                .foregroundStyle(.secondary)
+                .frame(width: HanlinMorphStyle.inputControlHitSize, height: HanlinMorphStyle.inputControlHitSize)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(String(localized: "开始录音", bundle: HanlinLocalization.bundle))
+        .accessibilityIdentifier("hanlin-chat-mic")
+        .hanlinFeedback(.impact, trigger: isFeedBack)
+    }
+
+    private var composerPrimaryControl: some View {
+        Group {
+            if isResponding {
+                Button(action: onCancel) {
+                    Image(systemName: "stop.fill")
+                        .font(HanlinTypography.fixed(size: 15, weight: .bold))
+                        .foregroundStyle(.white)
+                        .frame(width: composerActionSize, height: composerActionSize)
+                        .background(Color.hanlinHLRed, in: Circle())
+                }
+                .accessibilityIdentifier("hanlin-chat-stop")
+                .animation(.spring(response: 0.4, dampingFraction: 0.78), value: isResponding)
+            } else if !selectedImages.isEmpty
+                        || !selectedDocumentURLs.isEmpty
+                        || !selectedPrompts.isEmpty
+                        || !attachedCapabilities.isEmpty
+                        || !message.isEmpty {
+                let sendEnabled = Self.shouldEnableSend(
+                    message: message,
+                    selectedImagesCount: selectedImages.count,
+                    selectedDocumentsCount: selectedDocumentURLs.count,
+                    selectedPromptsCount: selectedPrompts.count,
+                    selectedCapabilitiesCount: attachedCapabilities.count,
+                    isResponding: isResponding
+                ) && capabilityConfigurationsAreValid
+                Button(action: onSendUser) {
+                    Image(systemName: "arrow.up")
+                        .font(HanlinTypography.fixed(size: 15, weight: .bold))
+                        .foregroundStyle(.white)
+                        .frame(width: composerActionSize, height: composerActionSize)
+                        .background(sendButtonColor, in: Circle())
+                }
+                .accessibilityIdentifier("hanlin-chat-send")
+                .animation(.spring(response: 0.4, dampingFraction: 0.78), value: sendEnabled)
+                .disabled(!sendEnabled)
+                .opacity(sendEnabled ? 1 : 0.42)
+            } else {
+                Button(action: onSendObserve) {
+                    Image(systemName: "eye.fill")
+                        .font(HanlinTypography.fixed(size: 15, weight: .bold))
+                        .foregroundStyle(.white)
+                        .frame(width: composerActionSize, height: composerActionSize)
+                        .background(observeButtonColor, in: Circle())
+                }
+                .accessibilityIdentifier("hanlin-chat-observe")
+                .animation(.spring(response: 0.4, dampingFraction: 0.78), value: canObserveCurrentChat)
+                .disabled(!canObserveCurrentChat)
+                .opacity(canObserveCurrentChat ? 1 : 0.42)
+            }
+        }
+        .buttonStyle(.plain)
+        .hanlinFeedback(.impact, trigger: isFeedBack)
     }
 
     @ViewBuilder
-    private func background(for model: AllModels, isSelected: Bool) -> some View {
-        let special = specialColor(for: model)
+    private func composerModelCapsuleLabel(isOpen: Bool, accent: Color) -> some View {
+        let model = modelTemp.indices.contains(selectedModelIndex) ? modelTemp[selectedModelIndex] : nil
+        HStack(spacing: 5) {
+            if let model {
+                if model.identity == "model" {
+                    Image(hanlinAsset: getCompanyIcon(for: model.company ?? "Unknown"))
+                        .renderingMode(.original)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 16, height: 16)
+                } else {
+                    Image(systemName: model.icon ?? "circle.dotted.circle")
+                        .font(HanlinTypography.fixed(size: 13, weight: .semibold))
+                        .foregroundStyle(accent)
+                        .frame(width: 16, height: 16)
+                }
+                Text(model.presentationName)
+                    .font(HanlinTypography.caption.weight(.medium))
+                    .foregroundStyle(accent)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                    .minimumScaleFactor(0.8)
+                    .frame(maxWidth: 132, alignment: .leading)
+            } else {
+                Image(systemName: "cpu")
+                    .font(HanlinTypography.fixed(size: 12, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                Text(modelTemp.isEmpty ? "加载模型..." : "选择模型")
+                    .font(HanlinTypography.caption.weight(.medium))
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                    .minimumScaleFactor(0.8)
+            }
+            Image(systemName: "chevron.up.chevron.down")
+                .font(HanlinTypography.fixed(size: 9, weight: .bold))
+                .foregroundStyle(accent.opacity(0.75))
+        }
+        .padding(.horizontal, 7)
+        .padding(.vertical, 5)
+        .frame(minHeight: 28)
+        .background(
+            (TemporaryRecord ? Color.primary : Color.hanlinHLBlue).opacity(isOpen ? 0.2 : 0.11),
+            in: Capsule()
+        )
+        .overlay(
+            Capsule()
+                .stroke(accent.opacity(isOpen ? 0.45 : 0.22), lineWidth: 0.7)
+        )
+    }
 
-        if let special {
-            LinearGradient(
-                colors: [
-                    (isSelected ? Color(.hlBluefont) : Color(.systemGray)).opacity(0.1),
-                    special.opacity(0.1)
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-        } else {
-            (isSelected ? Color(.hlBluefont) : Color(.systemGray)).opacity(0.1)
+    private var canObserveCurrentChat: Bool {
+        chatTemps.filter { $0.role == "assistant" }.count >= 2
+            || !selectedImages.isEmpty
+            || !selectedDocumentURLs.isEmpty
+            || !selectedPrompts.isEmpty
+    }
+
+    private var sendButtonColor: Color {
+        TemporaryRecord ? .primary : HanlinMorphStyle.azure
+    }
+
+    private var observeButtonColor: Color {
+        if respondIndex == 2 { return .hanlinHLRed }
+        return canObserveCurrentChat ? (TemporaryRecord ? .primary : .hanlinHLBluefont) : .gray
+    }
+
+    private func checkSearchAvailability() -> Bool {
+        do {
+            let keys = try context.fetch(FetchDescriptor<SearchKeys>())
+            return keys.contains(where: { $0.isUsing })
+        } catch {
+            return false
         }
     }
 
-    private func specialColor(for model: AllModels) -> Color? {
-        if model.company?.uppercased() == "LOCAL" {
-            return .hlOrange
-        } else if model.supportsReasoning {
-            return .hlPurple
-        } else if model.supportsVoiceGen {
-            return .hlPink
-        } else if model.supportsImageGen {
-            return .hlGreen
-        } else if model.supportsMultimodal {
-            return .hlTeal
-        } else if model.price == 0 {
-            return .green
-        } else {
-            return nil
+    private func checkEmbeddingAvailability() -> Bool {
+        do {
+            let userF = FetchDescriptor<UserInfo>()
+            guard let u = try context.fetch(userF).first,
+                  let m = u.chooseEmbeddingModel, !m.isEmpty else {
+                knowledgeAlertMessage = "当前没有启用向量模型，请前往“设置-模型-向量模型”中启用向量模型。"
+                isEmbeddingModelError = true
+                return false
+            }
+            let kf = FetchDescriptor<KnowledgeChunk>()
+            if try context.fetch(kf).isEmpty {
+                knowledgeAlertMessage = "当前没有知识内容或知识内容没有进行向量化，请前往知识背包中添加知识内容并选择模型对其向量化。"
+                isEmbeddingModelError = false
+                return false
+            }
+            return true
+        } catch {
+            return false
         }
+    }
+
+    private func attachSampleImageForAcceptance() {
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 64, height: 64))
+        let sampleImage = renderer.image { ctx in
+            UIColor.systemBlue.setFill()
+            ctx.fill(CGRect(x: 0, y: 0, width: 64, height: 64))
+        }
+        selectedImages.append(sampleImage)
+        showPhotoSourceOptions = false
+    }
+
+    private func attachSampleDocumentForAcceptance() {
+        let tmpURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent("sample-attachment.txt")
+        try? "Sample attachment document content for UI acceptance.".write(
+            to: tmpURL,
+            atomically: true,
+            encoding: .utf8
+        )
+        selectedDocumentURLs.append(tmpURL)
+        showPhotoSourceOptions = false
     }
 
     // 过滤掉已经选中的 Prompt
@@ -1289,212 +1891,79 @@ struct ChatViewBottom: View {
         selectedPrompts.removeAll(where: { $0.id == prompt.id })
     }
 
-    // MARK: 资源选择区域
-    private var sourceSelector: some View {
-        VStack(spacing: 6) {
-            HStack(spacing: 6) {
-                if !filteredPromptTemps.isEmpty {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(filteredPromptTemps, id: \.id) { item in
-                                Button(action: {
-                                    isFeedBack.toggle()
-                                    addPrompt(item)
-                                }) {
-                                    HStack {
-                                        // 提示词库
-                                        Image("prompt") // 使用自定义图片
-                                            .renderingMode(.template)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 20, height: 20) // 调整大小
-                                            .foregroundColor(TemporaryRecord ? .primary : .hlBluefont) // 颜色变为 .hlBlue
-
-                                        Text(item.name ?? "提示词")
-                                            .font(.body)
-                                            .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
-                                            .lineLimit(1) // 限制为 1 行
-                                            .truncationMode(.tail) // 文字过长时显示省略号
-                                    }
-                                    .padding(12)
-                                    .background(TemporaryRecord ? Color.primary.opacity(0.1) : Color.hlBlue.opacity(0.1))
-                                    .cornerRadius(20)
-                                }
-                                .sensoryFeedback(.impact, trigger: isFeedBack)
-                                .transition(.opacity.combined(with: .move(edge: .leading)))
-                            }
-                        }
-                    }
-                    .cornerRadius(20)
-                }
-            }
-            .transition(.opacity.combined(with: .move(edge: .bottom)))
-
-            if !modelTemp[selectedModelIndex].supportsMultimodal && modelTemp[selectedModelIndex].company != "LOCAL" {
-                Text("⚠️ 当前不是视觉模型，分析图片建议使用视觉模型")
-                    .font(.caption.bold())
-                    .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .transition(.opacity.combined(with: .move(edge: .bottom)))
-            }
-
-            HStack(spacing: 6) {
-
-                if modelTemp[selectedModelIndex].company != "LOCAL" {
-
-                    Button(action: {
-                        isFeedBack.toggle()
-                        showCameraPicker = true
-                    }) {
-                        VStack {
-                            Image(systemName: "camera.circle")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
-                                .symbolEffect(.bounce, value: showCameraPicker)
-                            Text("拍摄照片")
-                                .font(.caption.bold())
-                                .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
-                                .padding(.top, 3)
-                        }
-                        .padding(12)
-                        .frame(maxWidth: .infinity)
-                        .background(TemporaryRecord ? Color.primary.opacity(0.1) : Color.hlBlue.opacity(0.1))
-                        .cornerRadius(size_20)
-                    }
-                    .sensoryFeedback(.impact, trigger: isFeedBack)
-                    .transition(.opacity.combined(with: .move(edge: .top)))
-                    .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showPhotoSourceOptions)
-                    // 打开相机
-                    .sheet(isPresented: $showCameraPicker, onDismiss: {
-                        showPhotoSourceOptions = false
-                    }) {
-                        ImagePicker(selectedImages: $selectedImages, sourceType: .camera, maxImageNumber: 5)
-                            .background(.black)
-                    }
-
-                    Button(action: {
-                        isFeedBack.toggle()
-                        showImagePicker = true
-                    }) {
-                        VStack {
-                            Image(systemName: "photo.circle")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
-                                .symbolEffect(.bounce, value: showImagePicker)
-                            Text("相册选择")
-                                .font(.caption.bold())
-                                .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
-                                .padding(.top, 3)
-                        }
-                        .padding(12)
-                        .frame(maxWidth: .infinity)
-                        .background(TemporaryRecord ? Color.primary.opacity(0.1) : Color.hlBlue.opacity(0.1))
-                        .cornerRadius(size_20)
-                    }
-                    .sensoryFeedback(.impact, trigger: isFeedBack)
-                    .transition(.opacity.combined(with: .move(edge: .top)))
-                    .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showPhotoSourceOptions)
-                    // 打开相册
-                    .sheet(isPresented: $showImagePicker, onDismiss: {
-                        showPhotoSourceOptions = false
-                    }) {
-                        ImagePicker(selectedImages: $selectedImages, sourceType: .photoLibrary, maxImageNumber: 5)
-                            .ignoresSafeArea()
-                    }
-                }
-
-                Button(action: {
-                    isFeedBack.toggle()
-                    showDocumentPicker = true
-                }) {
-                    VStack {
-                        Image(systemName: "document.circle")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(selectedDocumentURLs.count >= 5 ? .gray : (TemporaryRecord ? .primary : .hlBluefont))
-                            .symbolEffect(.bounce, value: showDocumentPicker)
-                        Text("文件文本")
-                            .font(.caption.bold())
-                            .foregroundColor(selectedDocumentURLs.count >= 5 ? .gray : (TemporaryRecord ? .primary : .hlBluefont))
-                            .padding(.top, 3)
-                    }
-                    .padding(12)
-                    .frame(maxWidth: .infinity)
-                    .background(selectedDocumentURLs.count >= 5 ? Color.gray.opacity(0.2) : (TemporaryRecord ? Color.primary.opacity(0.1) : Color.hlBlue.opacity(0.1)))
-                    .cornerRadius(size_20)
-                }
-                .sensoryFeedback(.impact, trigger: isFeedBack)
-                .transition(.opacity.combined(with: .move(edge: .top)))
-                .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showPhotoSourceOptions)
-                .disabled(selectedDocumentURLs.count >= 5)
-                // 打开文档
-                .sheet(isPresented: $showDocumentPicker, onDismiss: {
-                    showPhotoSourceOptions = false
-                }) {
-                    DocumentPicker(selectedDocumentURLs: $selectedDocumentURLs)
-                        .ignoresSafeArea()
-                }
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .center)
-        .padding(.horizontal, 12)
-        .padding(.top, 6)
-        .transition(.opacity.combined(with: .move(edge: .top)))
-        .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showPhotoSourceOptions)
+    private var attachedCapabilities: [HanlinCapabilityAttachment] {
+        capabilityDraft?.capabilityAttachments ?? []
     }
 
-    // 辅助函数，用于检测输入中最后一个"@"后面的内容并进行过滤：
+    private var capabilityConfigurationsAreValid: Bool {
+        attachedCapabilities.allSatisfy { attachment in
+            guard let descriptor = composerCapabilities.first(where: { $0.id == attachment.reference.id }),
+                  descriptor.reference.revision == attachment.reference.revision else { return false }
+            if let actionID = attachment.actionID,
+               !descriptor.actions.contains(where: { $0.id == actionID }) { return false }
+            guard descriptor.validationIssues(for: attachment).isEmpty else { return false }
+            return descriptor.configuration?.panels.allSatisfy { panel in
+                guard let panelID = panel.customViewID else { return true }
+                return capabilityCustomPanels?.supports(panelID, for: descriptor.reference) == true
+            } ?? true
+        }
+    }
+
+    private var filteredCapabilitySuggestions: [HanlinComposerCapabilityDescriptor] {
+        guard capabilityDraft != nil, let query = capabilityQuery,
+              query.replacingToken(in: message) != nil else { return [] }
+        return Array(composerCapabilities.filter {
+            query.query.isEmpty || $0.title.localizedStandardContains(query.query)
+                || $0.reference.capabilityID.localizedStandardContains(query.query)
+        }.prefix(10))
+    }
+
+    private func attachCapability(_ capability: HanlinComposerCapabilityDescriptor,
+                                  actionID: String?,
+                                  replacing query: HanlinComposerCapabilityQuery? = nil) {
+        guard let capabilityDraft else { return }
+        if let query {
+            guard let text = query.replacingToken(in: message) else { return }
+            message = text
+            capabilitySelectionRequest = .init(text: text, range: query.selectionAfterReplacing(),
+                                               ownerID: readCurrentMessageState?()?.ownerID)
+        }
+        let id = capabilityDraft.attach(capability.makeAttachment(actionID: actionID))
+        capabilityQuery = nil
+        showModelSuggestions = false
+        filteredModels = []
+        if capability.configuration != nil || !capability.actions.isEmpty,
+           let attachment = capabilityDraft.capabilityAttachments.first(where: { $0.id == id }) {
+            openCapabilityConfiguration(attachment)
+        }
+    }
+
+    private func openCapabilityConfiguration(_ attachment: HanlinCapabilityAttachment) {
+        editingCapabilityID = attachment.id
+        popupCoordinator.open(.general, isInputCurrentlyFocused: isInputActive.wrappedValue)
+        popupCoordinator.navigateToGeneralSubpage(.capabilities)
+    }
+
+    private func replaceComposerQuery(with replacement: String) {
+        guard let query = capabilityQuery,
+              let text = query.replacingToken(in: message, with: replacement) else { return }
+        message = text
+        capabilitySelectionRequest = .init(text: text, range: query.selectionAfterReplacing(with: replacement),
+                                           ownerID: readCurrentMessageState?()?.ownerID)
+        capabilityQuery = nil
+    }
+
     private func updateModelSuggestions() {
-        // 使用正则匹配最后一个"@"后面的非空白字符
-        if let range = message.range(of: "@[^\\s]*$", options: .regularExpression) {
-            let query = String(message[range]).dropFirst() // 去掉"@"
-            if query.isEmpty {
-                // 如果没有输入字符，则默认显示前8个模型
-                filteredModels = Array(modelTemp.prefix(8))
-            } else {
-                // 根据 query 进行不区分大小写的过滤
-                filteredModels = modelTemp.filter { model in
-                    let modelName = model.displayName ?? model.name ?? ""
-                    return modelName.localizedCaseInsensitiveContains(query)
-                }
-                filteredModels = Array(filteredModels.prefix(8))
-            }
-            showModelSuggestions = true
-        } else {
+        guard let query = capabilityQuery, query.trigger == .mention,
+              query.replacingToken(in: message) != nil else {
             showModelSuggestions = false
             filteredModels = []
+            return
         }
-    }
-
-    // 高亮辅助函数
-    private func highlightedModelText(for fullText: String) -> Text {
-        var query = ""
-        if let range = message.range(of: "@[^\\s]*$", options: .regularExpression) {
-            // 使用 dropFirst() 后转换为 String
-            query = String(message[range].dropFirst())
-        }
-
-        // 如果查询为空，则直接返回全称
-        if query.isEmpty {
-            return Text(fullText)
-        }
-
-        // 尝试在 fullText 中查找 query（不区分大小写）
-        if let matchRange = fullText.range(of: query, options: .caseInsensitive) {
-            let prefix = String(fullText[..<matchRange.lowerBound])
-            let match = String(fullText[matchRange])
-            let suffix = String(fullText[matchRange.upperBound...])
-            // 根据 TemporaryRecord 状态选择颜色
-            let matchColor: Color = TemporaryRecord ? .primary : .hlBluefont
-            return Text(prefix) + Text(match).bold().foregroundColor(matchColor) + Text(suffix)
-        } else {
-            return Text(fullText)
-        }
+        filteredModels = Array(modelTemp.filter {
+            query.query.isEmpty || $0.presentationName.localizedStandardContains(query.query)
+        }.prefix(8))
+        showModelSuggestions = !filteredModels.isEmpty
     }
 
     // 实时检测并更新 URL 数组
@@ -1521,859 +1990,3 @@ struct ChatViewBottom: View {
     }
 }
 
-
-/// 底部操作按钮横条
-struct ActionButtonsView: View {
-
-    // MARK: - 绑定 / 值参数（全部来自 ChatView）
-    @Binding var selectedModelIndex: Int
-    let modelTemp: [AllModels]
-
-    @Binding var isResponding: Bool
-    @Binding var message: String
-
-    @Binding var selectedImages: [UIImage]
-    @Binding var selectedDocumentURLs: [URL]
-    @Binding var selectedPrompts: [PromptRepo]
-
-    @Binding var isFeedBack: Bool
-    @Binding var showPhotoSourceOptions: Bool
-    @Binding var isSourceOptionsVisible: Bool
-
-    @Binding var ifKnowledge: Bool
-    @Binding var ifSearch: Bool
-    @Binding var ifToolUse: Bool
-    @Binding var ifThink: Bool
-    @Binding var ifAudio: Bool
-    @Binding var ifPlanning: Bool
-    @Binding var thinkingLength: Int
-
-    @Binding var showKnowledgeAlert: Bool
-    @Binding var knowledgeAlertMessage: String
-    @Binding var showSearchAlert: Bool
-
-    @Binding var chatTemps: [ChatMessages]
-    let respondIndex: Int
-    let TemporaryRecord: Bool
-
-    // 菜单模式相关
-    let isMenuMode: Bool
-    @Binding var showModelMenuSheet: Bool
-    let onSelectModel: (Int) -> Void
-
-    // 尺寸
-    let size32: CGFloat
-    let size30: CGFloat
-
-    // 回调动作
-    let onSendUser: () -> Void
-    let onSendObserve: () -> Void
-    let onCancel: () -> Void
-
-    // 环境
-    @Environment(\.modelContext) private var context
-
-    @State private var bounceTrigger = false
-    @State private var audioTrigger = false
-    @State private var showToolReminder = false
-    @State private var showEmbeddingSettingSheet = false
-    @State private var isEmbeddingModelError = false
-
-    private let lengthDescriptions: [String: [Int: String]] = [
-        "zh": [
-            0: "默认",
-            1: "短暂",
-            2: "中等",
-            3: "深度"
-        ],
-        "en": [
-            0: "Default",
-            1: "Short",
-            2: "Medium",
-            3: "Long"
-        ]
-    ]
-
-    private var currentLang: String {
-        let lang = Bundle.main.preferredLocalizations.first ?? "en"
-        if lang.hasPrefix("zh") {
-            return "zh"
-        } else {
-            return "en"
-        }
-    }
-
-    // MARK: - 视图
-    var body: some View {
-        let valid = modelTemp.indices.contains(selectedModelIndex)
-
-        let model = valid ? modelTemp[selectedModelIndex] : nil
-
-        let bgColorKnowledge = ifKnowledge
-        ? (TemporaryRecord ? Color.primary.opacity(0.1) : Color(.hlBluefont).opacity(0.1))
-        : Color.clear
-
-        let bgColorSearch = ifSearch
-        ? (TemporaryRecord ? Color.primary.opacity(0.1) : Color(.hlAzure).opacity(0.1))
-        : Color.clear
-
-        let bgColorImage = TemporaryRecord ? Color.primary.opacity(0.1) : Color(.hlGreen).opacity(0.1)
-
-        let bgColorReasoning = ifThink
-        ? (TemporaryRecord ? Color.primary.opacity(0.1) : Color(.hlPurple).opacity(0.1))
-        : Color.clear
-
-        let bgColorPlanning = ifPlanning
-        ? (TemporaryRecord ? Color.primary.opacity(0.1) : Color(.hlIndigo).opacity(0.1))
-        : Color.clear
-
-        let bgColorLocal = TemporaryRecord ? Color.primary.opacity(0.1) : Color(.hlOrange).opacity(0.1)
-
-        let bgColorTool = (ifToolUse || showToolReminder)
-        ? (TemporaryRecord ? Color.primary.opacity(0.1) : Color(.hlBrown).opacity(0.1))
-        : Color.clear
-
-        let bgColorAudio = ifAudio
-        ? (TemporaryRecord ? Color.primary.opacity(0.1) : Color(.hlPink).opacity(0.1))
-        : Color.clear
-
-        HStack(spacing: 6) {
-            // 菜单模式下的模型选择按钮
-            if isMenuMode && valid {
-                Button {
-                    isFeedBack.toggle()
-                    showModelMenuSheet = true
-                } label: {
-                    if model?.identity == "model" {
-                        Image(getCompanyIcon(for: model?.company ?? "Unknown"))
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: size32 * 0.5, height: size32 * 0.5)
-                            .frame(width: size32, height: size32)
-                            .background(
-                                Circle()
-                                    .fill(TemporaryRecord ? Color.primary.opacity(0.1) : Color.hlBlue.opacity(0.1))
-                            )
-                            .overlay(
-                                Circle()
-                                    .stroke(TemporaryRecord ? Color.primary : Color.hlBluefont, lineWidth: 2)
-                            )
-                    } else {
-                        Image(systemName: model?.icon ?? "circle.dotted.circle")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: size32 * 0.45, height: size32 * 0.45)
-                            .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
-                            .frame(width: size32, height: size32)
-                            .background(
-                                Circle()
-                                    .fill(TemporaryRecord ? Color.primary.opacity(0.1) : Color.hlBlue.opacity(0.1))
-                            )
-                            .overlay(
-                                Circle()
-                                    .stroke(TemporaryRecord ? Color.primary : Color.hlBluefont, lineWidth: 2)
-                            )
-                    }
-                }
-                .sensoryFeedback(.selection, trigger: isFeedBack)
-                .sheet(isPresented: $showModelMenuSheet) {
-                    ModelMenuSheetView(
-                        models: modelTemp,
-                        selectedModelIndex: $selectedModelIndex,
-                        onSelectModel: { index in
-                            onSelectModel(index)
-                            showModelMenuSheet = false
-                        },
-                        TemporaryRecord: TemporaryRecord,
-                        ifToolUse: ifToolUse,
-                        ifThink: ifThink,
-                        ifAudio: ifAudio
-                    )
-                    .presentationDetents([.medium, .large])
-                    .presentationDragIndicator(.visible)
-                }
-            }
-
-            // 附件
-            if model?.supportsTextGen == true {
-                Button {
-                    isFeedBack.toggle()
-                    showPhotoSourceOptions.toggle()
-                } label: {
-                    Image(systemName: "plus.circle")
-                        .resizable()
-                        .frame(width: size32, height: size32)
-                        .foregroundColor(
-                            (isResponding || selectedImages.count > 4)
-                            ? .gray
-                            : (isSourceOptionsVisible ? .hlRed
-                               : (TemporaryRecord ? .primary : .hlBluefont))
-                        )
-                        .rotationEffect(.degrees(isSourceOptionsVisible ? 45 : 0))
-                        .animation(.spring(response: 0.5), value: isSourceOptionsVisible)
-                }
-                .disabled(isResponding || selectedImages.count > 4)
-                .sensoryFeedback(.impact, trigger: isFeedBack)
-                .onChange(of: showPhotoSourceOptions) {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        isSourceOptionsVisible = showPhotoSourceOptions
-                    }
-                }
-            }
-
-            // —— 左侧滚动按钮 —— //
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    // 工具调用
-                    if model?.supportsToolUse == true {
-                        Button {
-                            isFeedBack.toggle()
-                            ifToolUse.toggle()
-                            showToolReminder = true
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                showToolReminder = false
-                            }
-                        } label: {
-                            HStack {
-                                Image(systemName: "hammer.circle")
-                                    .resizable()
-                                    .scaleEffect(showToolReminder ? 0.8 : 1.0)
-                                    .frame(width: size32, height: size32)
-                                    .foregroundColor(
-                                        ifToolUse
-                                        ? (TemporaryRecord ? .primary : .hlBrown)
-                                        : .gray
-                                    )
-
-                                if showToolReminder {
-                                    Text(ifToolUse ? "使用工具" : "禁用工具")
-                                        .font(.caption)
-                                        .foregroundColor(
-                                            ifToolUse
-                                            ? (TemporaryRecord ? .primary : .hlBrown)
-                                            : .gray
-                                        )
-                                        .padding(.trailing, 12)
-                                        .transition(.opacity.combined(with: .move(edge: .leading)))
-                                }
-                            }
-                        }
-                        .sensoryFeedback(.impact, trigger: isFeedBack)
-                        .background(bgColorTool)
-                        .cornerRadius(20)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(bgColorTool, lineWidth: 1)
-                        )
-                        .animation(
-                            .spring(response: 0.5, dampingFraction: 0.7),
-                            value: [ifToolUse, showToolReminder]
-                        )
-                        .transition(.opacity.combined(with: .move(edge: .leading)))
-                        .disabled(isResponding)
-                    }
-
-                    if model?.supportsSearch == true {
-                        // 知识背包
-                        Button {
-                            isFeedBack.toggle()
-                            if !checkEmbeddingAvailability() {
-                                showKnowledgeAlert = true
-                            } else {
-                                ifKnowledge.toggle()
-                            }
-                        } label: {
-                            HStack {
-                                Image(systemName: "backpack.circle")
-                                    .resizable()
-                                    .scaleEffect(ifKnowledge ? 0.8 : 1.0)
-                                    .frame(width: size32, height: size32)
-                                    .foregroundColor(
-                                        ifKnowledge
-                                        ? (TemporaryRecord ? .primary : .hlBluefont)
-                                        : .gray
-                                    )
-                                if ifKnowledge {
-                                    Text("知识背包")
-                                        .font(.caption)
-                                        .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
-                                        .padding(.trailing, 12)
-                                        .transition(.opacity.combined(with: .move(edge: .leading)))
-                                }
-                            }
-                        }
-                        .disabled(isResponding)
-                        .sensoryFeedback(.impact, trigger: isFeedBack)
-                        .alert("知识背包错误", isPresented: $showKnowledgeAlert) {
-                            if isEmbeddingModelError {
-                                Button("前往设置") {
-                                    showEmbeddingSettingSheet = true
-                                }
-                            }
-                            Button("取消", role: .cancel) { }
-                        } message: {
-                            Text(knowledgeAlertMessage)
-                        }
-                        .sheet(isPresented: $showEmbeddingSettingSheet) {
-                            NavigationStack {
-                                SelectEmbeddingModelView()
-                                    .toolbar {
-                                        ToolbarItem(placement: .navigationBarTrailing) {
-                                            Button("完成") {
-                                                showEmbeddingSettingSheet = false
-                                            }
-                                        }
-                                    }
-                            }
-                        }
-                        .background(bgColorKnowledge)
-                        .cornerRadius(20)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(bgColorKnowledge, lineWidth: 1)
-                        )
-                        .transition(.opacity.combined(with: .move(edge: .leading)))
-
-                        // 联网搜索
-                        Button {
-                            isFeedBack.toggle()
-                            if ifSearch {
-                                ifSearch = false
-                            } else if checkSearchAvailability() {
-                                ifSearch = true
-                            } else {
-                                showSearchAlert = true
-                            }
-                        } label: {
-                            HStack {
-                                Image(systemName: "network")
-                                    .resizable()
-                                    .scaleEffect(ifSearch ? 0.8 : 1.0)
-                                    .frame(width: size30, height: size30)
-                                    .foregroundColor(
-                                        ifSearch
-                                        ? (TemporaryRecord ? .primary : .hlAzure)
-                                        : .gray
-                                    )
-                                if ifSearch {
-                                    Text("联网搜索")
-                                        .font(.caption)
-                                        .foregroundColor(TemporaryRecord ? .primary : .hlAzure)
-                                        .padding(.trailing, 12)
-                                        .transition(.opacity.combined(with: .move(edge: .leading)))
-                                }
-                            }
-                        }
-                        .disabled(isResponding)
-                        .sensoryFeedback(.impact, trigger: isFeedBack)
-                        .alert("未启用搜索引擎", isPresented: $showSearchAlert) {
-                            Button("确定", role: .cancel) { }
-                        } message: {
-                            Text("当前未启用任何搜索引擎，请前往 设置-工具-搜索设置 中开启。")
-                        }
-                        .background(bgColorSearch)
-                        .cornerRadius(20)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(bgColorSearch, lineWidth: 1)
-                        )
-                        .transition(.opacity.combined(with: .move(edge: .leading)))
-                    }
-
-                    // 规划执行
-                    if model?.supportsReasoning == false && model?.company != "LOCAL" {
-                        Button {
-                            isFeedBack.toggle()
-                            ifPlanning.toggle()
-                        } label: {
-                            HStack {
-                                Image(systemName: "location.circle")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .scaleEffect(ifPlanning ? 0.8 : 1.0)
-                                    .frame(width: size32, height: size32)
-                                    .foregroundColor(
-                                        ifPlanning
-                                        ? (TemporaryRecord ? .primary : .hlIndigo)
-                                        : .gray
-                                    )
-
-                                if ifPlanning {
-                                    Text("规划执行")
-                                        .font(.caption)
-                                        .foregroundColor(TemporaryRecord ? .primary : .hlIndigo)
-                                        .padding(.trailing, 12)
-                                        .transition(.opacity.combined(with: .move(edge: .leading)))
-                                }
-                            }
-                        }
-                        .sensoryFeedback(.impact, trigger: isFeedBack)
-                        .background(
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(bgColorPlanning)
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(bgColorPlanning, lineWidth: 1)
-                        )
-                        .transition(.opacity.combined(with: .move(edge: .leading)))
-                        .animation(
-                            .spring(response: 0.5, dampingFraction: 0.7),
-                            value: ifPlanning
-                        )
-                    }
-
-                    // 深度思考
-                    if model?.supportsReasoning == true {
-                        Button {
-                            isFeedBack.toggle()
-                            if model?.supportReasoningChange == true {
-                                ifThink.toggle()
-                            } else {
-                                bounceTrigger.toggle()
-                            }
-                        } label: {
-                            HStack {
-                                Image(systemName: "lightbulb.circle")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .scaleEffect(ifThink ? 0.8 : 1.0)
-                                    .frame(width: size32, height: size32)
-                                    .foregroundColor(
-                                        ifThink
-                                        ? (TemporaryRecord ? .primary : .hlPurple)
-                                        : .gray
-                                    )
-                                    .symbolEffect(.pulse, value: bounceTrigger)
-                                    .onAppear {
-                                        if model?.supportReasoningChange == true {
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                                bounceTrigger.toggle()
-                                            }
-                                        }
-                                    }
-
-                                if ifThink {
-                                    Text("深度思考")
-                                        .font(.caption)
-                                        .foregroundColor(TemporaryRecord ? .primary : .hlPurple)
-                                        .transition(.opacity.combined(with: .move(edge: .leading)))
-                                        .padding(.trailing, ["OPENAI", "GOOGLE", "XAI", "QWEN", "MODELSCOPE", "SILICONCLOUD"].contains(model?.company) ? 0 : 12)
-
-                                    if ["OPENAI", "GOOGLE", "XAI", "QWEN", "MODELSCOPE", "SILICONCLOUD"].contains(model?.company) {
-
-                                        Divider()
-
-                                        Menu {
-                                            ForEach(0...3, id: \.self) { value in
-                                                Button(action: {
-                                                    thinkingLength = value
-                                                }) {
-                                                    Label(lengthDescriptions[currentLang]?[value] ?? "Unknown",
-                                                          systemImage: thinkingLength == value ? "checkmark.circle" : "circle")
-                                                }
-                                            }
-                                        } label: {
-                                            HStack {
-                                                Image(systemName: "chevron.up.chevron.down")
-                                                    .foregroundColor(.hlPurple)
-                                                    .imageScale(.small)
-
-                                                Text(lengthDescriptions[currentLang]?[thinkingLength] ?? "")
-                                                    .font(.caption)
-                                                    .foregroundColor(TemporaryRecord ? .primary : .hlPurple)
-                                                    .padding(.trailing, 12)
-                                            }
-                                            .transition(.opacity.combined(with: .move(edge: .leading)))
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        .sensoryFeedback(.impact, trigger: isFeedBack)
-                        .background(
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(bgColorReasoning)
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(bgColorReasoning, lineWidth: 1)
-                        )
-                        .transition(.opacity.combined(with: .move(edge: .leading)))
-                        .animation(
-                            .spring(response: 0.5, dampingFraction: 0.7),
-                            value: [ifThink, model?.supportReasoningChange == true]
-                        )
-                    }
-
-                    // 语音生成
-                    if model?.supportsVoiceGen == true {
-                        Button {
-                            isFeedBack.toggle()
-                            audioTrigger.toggle()
-                        } label: {
-                            HStack {
-                                Image(systemName: "waveform.circle")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .scaleEffect(ifAudio ? 0.8 : 1.0)
-                                    .frame(width: size32, height: size32)
-                                    .foregroundColor(
-                                        ifAudio
-                                        ? (TemporaryRecord ? .primary : .hlPink)
-                                        : .gray
-                                    )
-                                    .symbolEffect(.variableColor, value: audioTrigger)
-
-                                if ifAudio {
-                                    Text("语音生成")
-                                        .font(.caption)
-                                        .foregroundColor(TemporaryRecord ? .primary : .hlPink)
-                                        .padding(.trailing, 12)
-                                        .transition(.opacity.combined(with: .move(edge: .leading)))
-                                }
-                            }
-                        }
-                        .sensoryFeedback(.impact, trigger: isFeedBack)
-                        .background(
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(bgColorAudio)
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(bgColorAudio, lineWidth: 1)
-                        )
-                        .transition(.opacity.combined(with: .move(edge: .leading)))
-                        .animation(
-                            .spring(response: 0.5, dampingFraction: 0.7),
-                            value: ifAudio
-                        )
-                    }
-
-                    // 图片生成
-                    if model?.supportsImageGen == true {
-                        Button { isFeedBack.toggle() } label: {
-                            HStack {
-                                Image(systemName: "camera.aperture")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .scaleEffect(0.8)
-                                    .frame(width: size32, height: size32)
-                                    .foregroundColor(TemporaryRecord ? .primary : .hlGreen)
-                                    .symbolEffect(.rotate, value: isFeedBack)
-                                Text("图像生成")
-                                    .font(.caption)
-                                    .foregroundColor(TemporaryRecord ? .primary : .hlGreen)
-                                    .padding(.trailing, 12)
-                            }
-                        }
-                        .sensoryFeedback(.impact, trigger: isFeedBack)
-                        .background(bgColorImage)
-                        .cornerRadius(20)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(bgColorImage, lineWidth: 1)
-                        )
-                        .transition(.opacity.combined(with: .move(edge: .leading)))
-                    }
-
-                    // 本地运行
-                    if model?.company == "LOCAL" {
-                        Button { isFeedBack.toggle() } label: {
-                            HStack {
-                                Image(systemName: "lock.circle")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .scaleEffect(0.8)
-                                    .frame(width: size32, height: size32)
-                                    .foregroundColor(TemporaryRecord ? .primary : .hlOrange)
-                                    .symbolEffect(.wiggle, value: isFeedBack)
-                                Text("本地运行")
-                                    .font(.caption)
-                                    .foregroundColor(TemporaryRecord ? .primary : .hlOrange)
-                                    .padding(.trailing, 12)
-                            }
-                        }
-                        .sensoryFeedback(.impact, trigger: isFeedBack)
-                        .background(
-                            RoundedRectangle(cornerRadius: 20)
-                                .fill(bgColorLocal)
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(bgColorLocal, lineWidth: 1)
-                        )
-                        .transition(.opacity.combined(with: .move(edge: .leading)))
-                    }
-                }
-                .animation(.spring(response: 0.5, dampingFraction: 0.7), value: model?.name)
-                .animation(
-                    .spring(response: 0.5, dampingFraction: 0.7),
-                    value: [ifToolUse, ifThink, ifPlanning, ifSearch, ifKnowledge, showToolReminder, model?.company == "LOCAL", model?.supportsImageGen == true]
-                )
-            }
-            .cornerRadius(20)
-            .frame(height: size32)
-
-            // —— 右侧状态按钮 —— //
-            Group {
-                if isResponding {            // 取消
-                    Button(action: onCancel) {
-                        Image(systemName: "stop.circle.fill")
-                            .resizable()
-                            .frame(width: size32, height: size32)
-                            .foregroundColor(.hlRed)
-                            .symbolEffect(.breathe, isActive: true)
-                    }
-                    .animation(.spring(response: 0.5, dampingFraction: 0.7), value: isResponding)
-                } else if !selectedImages.isEmpty
-                            || !selectedDocumentURLs.isEmpty
-                            || !selectedPrompts.isEmpty
-                            || !message.isEmpty {
-                    Button(action: onSendUser) {
-                        Image(systemName: "arrowtriangle.up.circle.fill")
-                            .resizable()
-                            .frame(width: size32, height: size32)
-                            .foregroundColor(sendButtonColor)
-                    }
-                    .animation(.spring(response: 0.5, dampingFraction: 0.7), value: message)
-                    .disabled(message.isEmpty)
-                } else {                     // 观察
-                    Button(action: onSendObserve) {
-                        Image(systemName: "eye.circle.fill")
-                            .resizable()
-                            .frame(width: size32, height: size32)
-                            .foregroundColor(observeButtonColor)
-                    }
-                    .animation(.spring(response: 0.5, dampingFraction: 0.7), value: message)
-                    .sensoryFeedback(.impact, trigger: isFeedBack)
-                    .disabled(
-                        chatTemps.filter { $0.role == "assistant" }.count < 2 &&
-                        selectedImages.isEmpty &&
-                        selectedDocumentURLs.isEmpty &&
-                        selectedPrompts.isEmpty
-                    )
-                }
-            }
-            .sensoryFeedback(.impact, trigger: isFeedBack)
-        }
-        .frame(height: size32)
-        .padding(.horizontal, 6)
-        .padding(.bottom, 6)
-    }
-
-    // MARK: - 颜色逻辑
-    private var sendButtonColor: Color {
-        TemporaryRecord ? .primary : .hlBluefont
-    }
-    private var observeButtonColor: Color {
-        if respondIndex == 2 { return .hlRed }
-        let assistantCount = chatTemps.filter { $0.role == "assistant" }.count
-        let hasAttach = !selectedImages.isEmpty
-                     || !selectedDocumentURLs.isEmpty
-                     || !selectedPrompts.isEmpty
-                     || !message.isEmpty
-        return (assistantCount < 2 && !hasAttach)
-            ? .gray
-            : (TemporaryRecord ? .primary : .hlBluefont)
-    }
-
-    // MARK: - 内部检查函数（直接访问数据库）
-    private func checkSearchAvailability() -> Bool {
-        do {
-            let keys = try context.fetch(FetchDescriptor<SearchKeys>())
-            return keys.contains(where: { $0.isUsing })
-        } catch { return false }
-    }
-
-    private func checkEmbeddingAvailability() -> Bool {
-        do {
-            let userF = FetchDescriptor<UserInfo>()
-            guard let u = try context.fetch(userF).first,
-                  let m = u.chooseEmbeddingModel, !m.isEmpty else {
-                knowledgeAlertMessage = "当前没有启用向量模型，请前往“设置-模型-向量模型”中启用向量模型。"
-                isEmbeddingModelError = true
-                return false
-            }
-            let kf = FetchDescriptor<KnowledgeChunk>()
-            if try context.fetch(kf).isEmpty {
-                knowledgeAlertMessage = "当前没有知识内容或知识内容没有进行向量化，请前往知识背包中添加知识内容并选择模型对其向量化。"
-                isEmbeddingModelError = false
-                return false
-            }
-            return true
-        } catch { return false }
-    }
-}
-
-
-// MARK: - 模型菜单选择底部抽屉
-struct ModelMenuSheetView: View {
-    let models: [AllModels]
-    @Binding var selectedModelIndex: Int
-    let onSelectModel: (Int) -> Void
-    let TemporaryRecord: Bool
-    let ifToolUse: Bool
-    let ifThink: Bool
-    let ifAudio: Bool
-
-    @State private var searchText: String = ""
-    @ScaledMetric(relativeTo: .body) var size_30: CGFloat = 30
-
-    // 过滤后的可见模型索引
-    private var visibleIndices: [Int] {
-        let indices = models.indices.filter { !models[$0].isHidden }
-
-        if searchText.isEmpty {
-            return indices.sorted { (models[$0].position ?? 0) < (models[$1].position ?? 0) }
-        } else {
-            let lowercasedSearch = searchText.lowercased()
-            return indices.filter { index in
-                let model = models[index]
-                guard let displayName = model.displayName, !displayName.isEmpty else { return false }
-                let pinyinName = displayName.toPinyin()
-                return displayName.lowercased().contains(lowercasedSearch) ||
-                       pinyinName.lowercased().contains(lowercasedSearch)
-            }.sorted { (models[$0].position ?? 0) < (models[$1].position ?? 0) }
-        }
-    }
-
-    var body: some View {
-        NavigationStack {
-            List {
-                ForEach(visibleIndices, id: \.self) { index in
-                    let model = models[index]
-                    let isSelected = index == selectedModelIndex
-
-                    Button(action: {
-                        onSelectModel(index)
-                    }) {
-                        HStack {
-                            // 模型图标
-                            if model.identity == "model" {
-                                Image(getCompanyIcon(for: model.company ?? "Unknown"))
-                                    .resizable()
-                                    .frame(width: size_30, height: size_30)
-                            } else {
-                                Image(systemName: model.icon ?? "circle.dotted.circle")
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: size_30, height: size_30)
-                                    .clipShape(Circle())
-                                    .overlay(
-                                        gradient(for: 0)
-                                            .mask(
-                                                Image(systemName: model.icon ?? "circle.dotted.circle")
-                                                    .resizable()
-                                                    .scaledToFit()
-                                                    .frame(width: size_30, height: size_30)
-                                            )
-                                    )
-                            }
-
-                            // 模型信息
-                            VStack(alignment: .leading, spacing: 4) {
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    Text(model.displayName ?? "Unknown")
-                                        .font(.subheadline)
-                                        .foregroundColor(isSelected ? (TemporaryRecord ? .primary : .hlBluefont) : .primary)
-                                }
-
-                                // 能力标签
-                                HStack(spacing: 6) {
-                                    if model.supportsToolUse {
-                                        Text("工具")
-                                            .font(.caption)
-                                            .foregroundColor(ifToolUse ? .hlBrown : .gray)
-                                    }
-
-                                    if model.supportsMultimodal {
-                                        Text("视觉")
-                                            .font(.caption)
-                                            .foregroundColor(.hlTeal)
-                                    } else if model.supportsTextGen {
-                                        Text("文本")
-                                            .font(.caption)
-                                            .foregroundColor(.gray)
-                                    }
-
-                                    if model.supportsImageGen {
-                                        Text("生图")
-                                            .font(.caption)
-                                            .foregroundColor(.hlGreen)
-                                    }
-
-                                    if model.supportsVoiceGen {
-                                        Text("语音")
-                                            .font(.caption)
-                                            .foregroundColor(ifAudio ? .hlPink : .gray)
-                                    }
-
-                                    if model.supportsReasoning {
-                                        Text("思考")
-                                            .font(.caption)
-                                            .foregroundColor(ifThink ? .hlPurple : .gray)
-                                    }
-
-                                    if model.company?.uppercased() == "LOCAL" {
-                                        Text("本地")
-                                            .font(.caption)
-                                            .foregroundColor(.hlOrange)
-                                    }
-
-                                    Text(priceText(for: model.price))
-                                        .font(.caption)
-                                        .foregroundColor(priceColor(for: model.price))
-                                }
-                            }
-
-                            Spacer()
-
-                            // 选中标记
-                            if isSelected {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
-                            }
-                        }
-                        .padding(.vertical, 4)
-                    }
-                    .listRowBackground(
-                        isSelected
-                            ? (TemporaryRecord ? Color.primary.opacity(0.1) : Color.hlBlue.opacity(0.1))
-                            : Color.clear
-                    )
-                }
-            }
-            .navigationTitle("选择模型")
-        }
-    }
-
-    // MARK: - 辅助函数
-    private func priceText(for price: Int16) -> String {
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        if currentLanguage.hasPrefix("zh") {
-            switch price {
-            case 0: return "免费"
-            case 1: return "廉价"
-            case 2: return "适中"
-            default: return "昂贵"
-            }
-        } else {
-            switch price {
-            case 0: return "Free"
-            case 1: return "Cheap"
-            case 2: return "Moderate"
-            default: return "Expensive"
-            }
-        }
-    }
-
-    private func priceColor(for price: Int16) -> Color {
-        switch price {
-        case 0: return .green
-        case 1: return .yellow
-        case 2: return .orange
-        default: return .red
-        }
-    }
-}

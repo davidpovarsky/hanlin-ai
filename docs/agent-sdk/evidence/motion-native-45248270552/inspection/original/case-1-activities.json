@@ -1,0 +1,669 @@
+{
+  "testIdentifier" : "MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion()",
+  "testIdentifierURL" : "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests/MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion",
+  "testName" : "testCReadableLongContentRTLTypeOrientationAndCompletion()",
+  "testRuns" : [
+    {
+      "activities" : [
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463265.594,
+          "title" : "Start Test at 2026-11-23 19:47:45.594"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "childActivities" : [
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "childActivities" : [
+                {
+                  "activityType" : "com.apple.dt.xctest.activity-type.internal",
+                  "childActivities" : [
+                    {
+                      "activityType" : "com.apple.dt.xctest.activity-type.internal",
+                      "isAssociatedWithFailure" : false,
+                      "startTime" : 1795463271.819,
+                      "title" : "Setting up automation session"
+                    },
+                    {
+                      "activityType" : "com.apple.dt.xctest.activity-type.internal",
+                      "isAssociatedWithFailure" : false,
+                      "startTime" : 1795463280.627,
+                      "title" : "Wait for ai.hanlin.motion-proof to idle"
+                    }
+                  ],
+                  "isAssociatedWithFailure" : false,
+                  "startTime" : 1795463265.703,
+                  "title" : "Launch ai.hanlin.motion-proof"
+                }
+              ],
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463265.701,
+              "title" : "Open ai.hanlin.motion-proof"
+            },
+            {
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463280.951,
+              "title" : "Update the Info.plist: Support for all orientations will soon be required."
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "childActivities" : [
+                {
+                  "activityType" : "com.apple.dt.xctest.activity-type.internal",
+                  "childActivities" : [
+                    {
+                      "activityType" : "com.apple.dt.xctest.activity-type.internal",
+                      "isAssociatedWithFailure" : false,
+                      "startTime" : 1795463285.238,
+                      "title" : "Checking existence of `\"proof-thinking\" Button`"
+                    }
+                  ],
+                  "isAssociatedWithFailure" : false,
+                  "startTime" : 1795463285.235,
+                  "title" : "Checking `Expect predicate `existsNoRetry == 1` for object \"proof-thinking\" Button`"
+                }
+              ],
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463284.18,
+              "title" : "Waiting 10.0s for \"proof-thinking\" Button to exist"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463265.684,
+          "title" : "Set Up"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "childActivities" : [
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463286.22,
+              "title" : "Wait for ai.hanlin.motion-proof to idle"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463286.398,
+              "title" : "Find the \"proof-long\" Button"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "childActivities" : [
+                {
+                  "activityType" : "com.apple.dt.xctest.activity-type.internal",
+                  "isAssociatedWithFailure" : false,
+                  "startTime" : 1795463287.747,
+                  "title" : "Wait for com.apple.springboard to idle"
+                }
+              ],
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463287.572,
+              "title" : "Check for interrupting elements affecting \"proof-long\" Button"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463287.848,
+              "title" : "Synthesize event"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463288.285,
+              "title" : "Wait for ai.hanlin.motion-proof to idle"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463286.22,
+          "title" : "Tap \"proof-long\" Button"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "childActivities" : [
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463288.303,
+              "title" : "Wait for ai.hanlin.motion-proof to idle"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463288.335,
+              "title" : "Find the \"proof-rtl\" Button"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "childActivities" : [
+                {
+                  "activityType" : "com.apple.dt.xctest.activity-type.internal",
+                  "isAssociatedWithFailure" : false,
+                  "startTime" : 1795463288.782,
+                  "title" : "Wait for com.apple.springboard to idle"
+                }
+              ],
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463288.631,
+              "title" : "Check for interrupting elements affecting \"proof-rtl\" Button"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463288.824,
+              "title" : "Synthesize event"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463289.215,
+              "title" : "Wait for ai.hanlin.motion-proof to idle"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463288.303,
+          "title" : "Tap \"proof-rtl\" Button"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "childActivities" : [
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463289.221,
+              "title" : "Wait for ai.hanlin.motion-proof to idle"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463289.234,
+              "title" : "Find the \"proof-type\" Button"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "childActivities" : [
+                {
+                  "activityType" : "com.apple.dt.xctest.activity-type.internal",
+                  "isAssociatedWithFailure" : false,
+                  "startTime" : 1795463289.519,
+                  "title" : "Wait for com.apple.springboard to idle"
+                }
+              ],
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463289.366,
+              "title" : "Check for interrupting elements affecting \"proof-type\" Button"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463289.577,
+              "title" : "Synthesize event"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463289.97,
+              "title" : "Wait for ai.hanlin.motion-proof to idle"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463289.22,
+          "title" : "Tap \"proof-type\" Button"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "childActivities" : [
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463289.979,
+              "title" : "Wait for ai.hanlin.motion-proof to idle"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463289.984,
+              "title" : "Find the \"proof-thinking\" Button"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "childActivities" : [
+                {
+                  "activityType" : "com.apple.dt.xctest.activity-type.internal",
+                  "isAssociatedWithFailure" : false,
+                  "startTime" : 1795463290.554,
+                  "title" : "Wait for com.apple.springboard to idle"
+                }
+              ],
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463290.318,
+              "title" : "Check for interrupting elements affecting \"proof-thinking\" Button"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463290.599,
+              "title" : "Synthesize event"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463291.071,
+              "title" : "Wait for ai.hanlin.motion-proof to idle"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463289.979,
+          "title" : "Tap \"proof-thinking\" Button"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "childActivities" : [
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463292.187,
+              "title" : "Find the \"proof-geometry-state\" StaticText"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463292.186,
+          "title" : "Checking `Expect predicate `label == \"expanded\"` for object \"proof-geometry-state\" StaticText`"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463292.287,
+          "title" : "Find the Target Application 'ai.hanlin.motion-proof'"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.attachmentContainer",
+          "attachments" : [
+            {
+              "lifetime" : "keepAlways",
+              "name" : "long-rtl-accessibility-type-portrait_0_87110E99-96F4-4404-91ED-CB38E74DC893.png",
+              "payloadId" : "0~A4ETM4qaHE3jJebXpAY3gmadKTyZggP8m7gRHHbvnmAoxxC0kJdU8rfjsi6BnLNcl7w3THWj0dl6WB_EZXkJbA==",
+              "timestamp" : 1795463292.885,
+              "uuid" : "CFEA7A96-2182-421F-8213-59AD02572787"
+            }
+          ],
+          "childActivities" : [
+            {
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463292.885,
+              "title" : "long-rtl-accessibility-type-portrait"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463292.885,
+          "title" : "Added attachment named 'long-rtl-accessibility-type-portrait'"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "childActivities" : [
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.orientation.landscapeRight",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463292.895,
+              "title" : "Device orientation changed to Landscape Left"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.orientation.landscapeRight",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463293.338,
+              "title" : "Interface orientation changed to Landscape Right"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463293.378,
+              "title" : "Wait for ai.hanlin.motion-proof to idle"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463293.528,
+              "title" : "Wait for com.apple.springboard to idle"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463292.886,
+          "title" : "Setting device orientation to Landscape Left"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "childActivities" : [
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463294.587,
+              "title" : "Find the \"proof-geometry-state\" StaticText"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463294.586,
+          "title" : "Checking `Expect predicate `value CONTAINS \"orientation=landscape\"` for object \"proof-geometry-state\" StaticText`"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "childActivities" : [
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463296.047,
+              "title" : "Find the \"proof-geometry-state\" StaticText"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463295.989,
+          "title" : "Checking `Expect predicate `label == \"expanded\"` for object \"proof-geometry-state\" StaticText`"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463297.228,
+          "title" : "Find the Target Application 'ai.hanlin.motion-proof'"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.attachmentContainer",
+          "attachments" : [
+            {
+              "lifetime" : "keepAlways",
+              "name" : "long-rtl-accessibility-type-landscape_0_A452A262-3FE3-4790-B596-699D75188D3E.png",
+              "payloadId" : "0~lIhA8lh-gZqsVsjTX0vfBBGRUPCjUQIE1amK-iehhOFMHypFoIHmltgfUreIB3HYjht1qpLjhJHSMtlq6SLacw==",
+              "timestamp" : 1795463297.901,
+              "uuid" : "6D65CE60-9522-4163-BEDB-EC546F19BC63"
+            }
+          ],
+          "childActivities" : [
+            {
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463297.901,
+              "title" : "long-rtl-accessibility-type-landscape"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463297.901,
+          "title" : "Added attachment named 'long-rtl-accessibility-type-landscape'"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.attachmentContainer",
+          "attachments" : [
+            {
+              "lifetime" : "keepAlways",
+              "name" : "long-rtl-accessibility-type-landscape-full-screen_0_AF38A421-F4B2-4188-A25B-7E7D829CAA78.png",
+              "payloadId" : "0~eh-cf1VbE6P2NPggqsTVrhJ1QvkLFvrknBSHQm4mN28L50GodUSrktIAULQVJRQOAnrLC0M2-yDAkO6vrmZw1w==",
+              "timestamp" : 1795463298.251,
+              "uuid" : "D8A914AE-4367-44B0-856F-0D27A27DA28B"
+            }
+          ],
+          "childActivities" : [
+            {
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463298.251,
+              "title" : "long-rtl-accessibility-type-landscape-full-screen"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463298.251,
+          "title" : "Added attachment named 'long-rtl-accessibility-type-landscape-full-screen'"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "childActivities" : [
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463298.254,
+              "title" : "Wait for ai.hanlin.motion-proof to idle"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463298.259,
+              "title" : "Find the \"proof-finish\" Button"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "childActivities" : [
+                {
+                  "activityType" : "com.apple.dt.xctest.activity-type.internal",
+                  "isAssociatedWithFailure" : false,
+                  "startTime" : 1795463298.716,
+                  "title" : "Wait for com.apple.springboard to idle"
+                }
+              ],
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463298.619,
+              "title" : "Check for interrupting elements affecting \"proof-finish\" Button"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463298.757,
+              "title" : "Synthesize event"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463299.096,
+              "title" : "Wait for ai.hanlin.motion-proof to idle"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463298.254,
+          "title" : "Tap \"proof-finish\" Button"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463299.101,
+          "title" : "Find the \"proof-effective-motion\" StaticText"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "childActivities" : [
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.orientation.portrait",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463299.214,
+              "title" : "Device orientation changed to Portrait"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.orientation.portrait",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463299.638,
+              "title" : "Interface orientation changed to Portrait"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463299.64,
+              "title" : "Wait for ai.hanlin.motion-proof to idle"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463300.137,
+              "title" : "Wait for com.apple.springboard to idle"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463299.21,
+          "title" : "Setting device orientation to Portrait"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "childActivities" : [
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463301.306,
+              "title" : "Find the \"proof-geometry-state\" StaticText"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463301.304,
+          "title" : "Checking `Expect predicate `value CONTAINS \"orientation=portrait\"` for object \"proof-geometry-state\" StaticText`"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "childActivities" : [
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463302.549,
+              "title" : "Find the \"proof-geometry-state\" StaticText"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463302.546,
+          "title" : "Checking `Expect predicate `label == \"expanded\"` for object \"proof-geometry-state\" StaticText`"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463302.696,
+          "title" : "Find the \"proof-thinking\" Button"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "childActivities" : [
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463302.801,
+              "title" : "Wait for ai.hanlin.motion-proof to idle"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463302.804,
+              "title" : "Find the \"proof-thinking\" Button"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "childActivities" : [
+                {
+                  "activityType" : "com.apple.dt.xctest.activity-type.internal",
+                  "isAssociatedWithFailure" : false,
+                  "startTime" : 1795463302.937,
+                  "title" : "Wait for com.apple.springboard to idle"
+                }
+              ],
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463302.873,
+              "title" : "Check for interrupting elements affecting \"proof-thinking\" Button"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463302.972,
+              "title" : "Synthesize event"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463303.291,
+              "title" : "Wait for ai.hanlin.motion-proof to idle"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463302.801,
+          "title" : "Tap \"proof-thinking\" Button"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "childActivities" : [
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463304.346,
+              "title" : "Find the \"proof-geometry-state\" StaticText"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463304.346,
+          "title" : "Checking `Expect predicate `label == \"collapsed\"` for object \"proof-geometry-state\" StaticText`"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463304.439,
+          "title" : "Find the Target Application 'ai.hanlin.motion-proof'"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.attachmentContainer",
+          "attachments" : [
+            {
+              "lifetime" : "keepAlways",
+              "name" : "completed-closed-portrait_0_FD800758-FF26-4C86-9C47-16F83C811EE6.png",
+              "payloadId" : "0~I3BzcpEDuhyamMGG0lZoPnGK-cSEfbbOcseDqqii5zaiZx1Nlk0PyMKmfwGmZNlZYd-ajgRRE3HByfENw7c0Ig==",
+              "timestamp" : 1795463304.873,
+              "uuid" : "6AD458A1-A5B1-4048-BDF8-0E171DBEF10B"
+            }
+          ],
+          "childActivities" : [
+            {
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463304.873,
+              "title" : "completed-closed-portrait"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463304.873,
+          "title" : "Added attachment named 'completed-closed-portrait'"
+        },
+        {
+          "activityType" : "com.apple.dt.xctest.activity-type.internal",
+          "childActivities" : [
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "childActivities" : [
+                {
+                  "activityType" : "com.apple.dt.xctest.activity-type.internal",
+                  "isAssociatedWithFailure" : false,
+                  "startTime" : 1795463304.884,
+                  "title" : "Wait for ai.hanlin.motion-proof to idle"
+                },
+                {
+                  "activityType" : "com.apple.dt.xctest.activity-type.internal",
+                  "isAssociatedWithFailure" : false,
+                  "startTime" : 1795463304.888,
+                  "title" : "Wait for com.apple.springboard to idle"
+                }
+              ],
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463304.876,
+              "title" : "Setting device orientation to Portrait"
+            },
+            {
+              "activityType" : "com.apple.dt.xctest.activity-type.internal",
+              "isAssociatedWithFailure" : false,
+              "startTime" : 1795463304.892,
+              "title" : "Terminate ai.hanlin.motion-proof:25674"
+            }
+          ],
+          "isAssociatedWithFailure" : false,
+          "startTime" : 1795463304.875,
+          "title" : "Tear Down"
+        }
+      ],
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "1754D994-C2A6-46F6-BAF4-4F67B8455518",
+        "deviceName" : "Hanlin-Phase2-Motion-45248270552",
+        "modelName" : "iPad Pro 13-inch (M5)",
+        "osBuildNumber" : "24B8117",
+        "osVersion" : "27.2",
+        "platform" : "iOS Simulator"
+      },
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ]
+}

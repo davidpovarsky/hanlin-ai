@@ -1,72 +1,132 @@
+import HanlinChatUI
+import HanlinLocalization
 //
-//  MainTabView.swift
-//  AI_HLY
+//  MainTabView.swift
+//  AI_HLY
 //
-//  Created by 哆啦好多梦 on 10/2/25.
+//  Created by 哆啦好多梦 on 10/2/25.
 //
 
 import SwiftUI
 import SwiftData
+import HanlinProductSplit
 
 struct MainTabView: View {
-    
     @Binding var deepLinkTarget: String?
-    @State private var selectedTab: Int = 0
-    @State private var hideTabBar: Bool = false
-    
+    @Environment(\.hanlinAIReceivingWindowID) private var receivingWindowID
+    @Environment(\.openURL) private var openURL
+    private let splitCoordinator = HanlinAppSplitOriginCoordinator.shared
+    @ObservedObject private var torahRouter = TorahStudyNavigationRouter.shared
+    @State private var selectedTab = 0
+    @State private var requestedConversation: HanlinConversationSelection?
+    @State private var showsVision = false
+    @State private var companionUnavailable = false
+    @State private var modal: WorkspaceModal? = {
+        #if DEBUG || (HANLIN_TESTING && targetEnvironment(simulator))
+        let env = ProcessInfo.processInfo.environment
+        if env["HANLIN_RUNTIME_INSTALL_ACCEPTANCE"] != nil { return .profile }
+        // Existing engine-specific component probes still exercise the original
+        // host. Product navigation uses the separate companion in every build.
+        if ["HANLIN_SCRIPT_RESTART_REPRO_PHASE", "HANLIN_NATIVESCRIPT_E2E",
+            "HANLIN_EXPO_E2E", "HANLIN_SCRIPTUI_E2E"].contains(where: { env[$0] != nil }) {
+            return .runtimeComponent
+        }
+        #endif
+        return nil
+    }()
+
+    private enum WorkspaceModal: String, Identifiable {
+        case profile
+        #if DEBUG || (HANLIN_TESTING && targetEnvironment(simulator))
+        case runtimeComponent
+        #endif
+        var id: String { rawValue }
+    }
+
     var body: some View {
-        // 使用系统原生的TabView
         TabView(selection: $selectedTab) {
-            // 第一个Tab: ListView
-            ListView()
+            ListView(requestedSelection: $requestedConversation,
+                onOpenProfile: { modal = .profile }, onOpenMiniApps: openCompanion,
+                onOpenVision: { showsVision = true })
                 .tabItem {
-                    Label("列表", systemImage: "list.bullet")
+                    Label(String(localized: "Chat", bundle: HanlinLocalization.bundle), systemImage: "bubble.left.and.bubble.right")
+                        .accessibilityIdentifier("hanlin-home-tab")
                 }
                 .tag(0)
-            
-            // 第二个Tab: VisionView
-            VisionView(selectedTab: $selectedTab)
-                .toolbar(.hidden, for: .tabBar)
+            HanlinPersonalLibraryView(onOpenProfile: { modal = .profile },
+                onOpenMiniApps: openCompanion, onOpenVision: { showsVision = true },
+                onOpenConversation: { request in
+                    requestedConversation = request
+                    selectedTab = 0
+                })
                 .tabItem {
-                    Label("视觉", systemImage: "eye")
-                }
-                .tag(1)
-            
-            // 第三个Tab: KnowledgeListView
-            KnowledgeListView()
-                .tabItem {
-                    Label("知识库", systemImage: "books.vertical")
+                    Label(hanlin: "Library", systemImage: "books.vertical")
+                        .accessibilityIdentifier("hanlin-library-tab")
                 }
                 .tag(2)
-            
-            // 第四个Tab: ModelsView
-            ModelsView()
-                .tabItem {
-                    Label("模型", systemImage: "square.stack.3d.up")
-                }
-                .tag(3)
-            
-            // 第五个Tab: SettingsView
-            SettingsView()
-                .tabItem {
-                    Label("设置", systemImage: "gearshape")
-                }
-                .tag(4)
         }
-        .animation(.easeInOut(duration: 0.4), value: selectedTab)
-        .onReceive(NotificationCenter.default.publisher(for: .hideTabBar)) { notification in
-            if let isHidden = notification.object as? Bool {
-                hideTabBar = isHidden
+        .sheet(item: $modal) { destination in
+            switch destination {
+            case .profile:
+                SettingsView(onDone: { modal = nil })
+            #if DEBUG || (HANLIN_TESTING && targetEnvironment(simulator))
+            case .runtimeComponent:
+                NativeAppsHubView()
+            #endif
             }
+        }
+        .fullScreenCover(isPresented: $showsVision) {
+            VisionView(selectedTab: Binding(get: { 1 }, set: { if $0 != 1 { showsVision = false } }))
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .openVisionView)) { _ in
+            showsVision = true
+        }
+        .onChange(of: splitCoordinator.acceptedOrigin(forReceivingWindowID: receivingWindowID)?.id, initial: true) {
+            if splitCoordinator.acceptedOrigin(forReceivingWindowID: receivingWindowID) != nil { selectedTab = 0 }
+        }
+        .onChange(of: MiniAppRepairCoordinator.shared.destination(for: receivingWindowID), initial: true) {
+            if MiniAppRepairCoordinator.shared.destination(for: receivingWindowID) != nil { selectedTab = 0 }
+        }
+        .alert(Text("MiniApp repair unavailable", bundle: HanlinLocalization.bundle), isPresented: Binding(
+            get: { MiniAppRepairCoordinator.shared.failure(for: receivingWindowID) != nil },
+            set: { if !$0 { MiniAppRepairCoordinator.shared.dismissFailure(for: receivingWindowID) } }
+        )) {
+            Button(hanlin: "OK") { MiniAppRepairCoordinator.shared.dismissFailure(for: receivingWindowID) }
+        } message: {
+            Text(MiniAppRepairCoordinator.shared.failure(for: receivingWindowID) ?? "")
         }
         .onChange(of: deepLinkTarget) {
             if deepLinkTarget == "vision" {
-                selectedTab = 1
-                deepLinkTarget = nil // 清除状态，避免重复跳转
+                showsVision = true
+                deepLinkTarget = nil
             }
         }
-        // background修饰符对于TabView不是必需的，但保留以防有特定需要
-        .background(Color(.systemBackground))
+        .alert(Text("MiniApps unavailable", bundle: HanlinLocalization.bundle), isPresented: $companionUnavailable) {
+            Button(hanlin: "OK", role: .cancel) {}
+        } message: {
+            Text("Install Hanlin MiniApps to open its catalog. Your conversation stays here.", bundle: HanlinLocalization.bundle)
+        }
+        .alert(Text("Mini App result unavailable", bundle: HanlinLocalization.bundle), isPresented: Binding(
+            get: { splitCoordinator.failure(forReceivingWindowID: receivingWindowID) != nil },
+            set: { if !$0 { splitCoordinator.dismissFailure(forReceivingWindowID: receivingWindowID) } }
+        )) { Button(hanlin: "OK") { splitCoordinator.dismissFailure(forReceivingWindowID: receivingWindowID) } }
+        message: { Text("Open the original conversation to check this request. Its result could not be returned to this window.", bundle: HanlinLocalization.bundle) }
+        .background {
+            // Fill the available scene, including its container safe area,
+            // without moving controls under the iPad window controls or keyboard.
+            Color(uiColor: .systemBackground).ignoresSafeArea(.container)
+        }
+        .sheet(isPresented: $torahRouter.isPresentingReader) {
+            if let link = torahRouter.activeDeepLink {
+                TorahSourceReaderView(deepLink: link)
+            }
+        }
+    }
+
+    private func openCompanion() {
+        openURL(SplitCompanionCatalogRoute.url) { accepted in
+            if !accepted { companionUnavailable = true }
+        }
     }
 }
 
@@ -75,33 +135,15 @@ extension Notification.Name {
     static let hideTabBar = Notification.Name("hideTabBar")
 }
 
-// 毛玻璃背景封装组件
-struct BlurView: UIViewRepresentable {
-    let style: UIBlurEffect.Style
-    
-    func makeUIView(context: Context) -> UIVisualEffectView {
-        let view = UIVisualEffectView(effect: UIBlurEffect(style: style))
-        return view
-    }
-    
-    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {}
-}
+// Shared native material used by existing screens.
+typealias BlurView = HanlinChatUI.HanlinVisualEffectBlur
 
-// Custom glass effect view that works on earlier iOS versions
 struct GlassView: View {
     let style: UIBlurEffect.Style
-    
     var body: some View {
-        Group {
-            if #available(iOS 26.0, *) {
-                Rectangle()
-                    .fill(Color.clear)
-                    .glassEffect(in: .rect(cornerRadius: 26))
-            } else {
-                // Fallback implementation for earlier iOS versions
-                BlurView(style: style)
-            }
-        }
-        .allowsHitTesting(false)
+        Rectangle()
+            .fill(Color.clear)
+            .glassEffect(in: .rect(cornerRadius: 26))
+            .allowsHitTesting(false)
     }
 }

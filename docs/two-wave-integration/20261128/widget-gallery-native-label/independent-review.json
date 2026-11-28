@@ -1,0 +1,66 @@
+{
+  "recordedAt": "2026-11-28T12:29:13.067392+00:00",
+  "status": "APPROVED_SOURCE_ONLY_NATIVE_AND_CONTROLS_NOT_EXECUTED_BY_REVIEWER",
+  "reviewer": "W1 independent of root author",
+  "candidate": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-widget-gallery-native-label-0d73e9c4-candidate-r1",
+  "candidateManifestSHA256": "c47768164925c7e445ed8db5c4a9a77be5a614240322ed260a0000109aedbc23",
+  "candidatePatchSHA256": "8bbac8334e6638ee0ea5286c91af63e3275eb1c435474852728119a983b8292a",
+  "qualifiedBase": "0d73e9c4a87dda339abfdae19f6661b99677760d",
+  "payloadCountVerified": 9,
+  "wholeOriginalGitPreimagesVerified": true,
+  "wholeFileForwardReverseAndRecipeInverses": true,
+  "projection": [
+    {
+      "direction": "forward",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "direction": "reverse",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "original47SwiftMethodNamesAndBytesOutsideOnlyHelperEditPreserved": true,
+  "original17PortableMethodASTsPreserved": true,
+  "otherReaderFunctionASTsPreserved": 16,
+  "newPortableDefinitions": 2,
+  "sourceDescribedNewControlCases": 12,
+  "actualEvidence": {
+    "runID": 46137570379,
+    "source": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+    "uiSHA256": "6b6ae68459977419cfe8539d14bfd96c09100ccb5d488dbd5790608ba5f7a738",
+    "originalHelperByteEqualAtCurrentBase": true,
+    "ax": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-layout-terminal-r1/attachments-r1/layout/artifact-selected-members/paired-product/paired-attachments/7FD99C4C-D5A6-4191-B6DB-13032BE586E2.txt",
+    "axSHA256": "c6b40a6c77d3e92103e95c54e9ba61ad48c28eba1c3f66c784d0e4a0c6e02afc",
+    "selectedRawReadback": {
+      "member": "app-split-evidence/paired-product/paired-attachments/7FD99C4C-D5A6-4191-B6DB-13032BE586E2.txt",
+      "bytes": 27203,
+      "sha256": "c6b40a6c77d3e92103e95c54e9ba61ad48c28eba1c3f66c784d0e4a0c6e02afc",
+      "crc32": "11022b82",
+      "retainedPath": "attachments-r1/layout/artifact-selected-members/paired-product/paired-attachments/7FD99C4C-D5A6-4191-B6DB-13032BE586E2.txt",
+      "encoding": "original unmodified member bytes"
+    },
+    "springboardPID": 80379,
+    "exactObservedTitle": "Hanlin Script",
+    "exactObservedPreviewLabel": "Hanlin MiniApps, Hanlin Script",
+    "exactObservedPreviewValue": "Widget, Medium",
+    "actualPageIndicator": "page 2 of 8"
+  },
+  "findings": [
+    "The earlier failure was reached after both original builds and READY identity. The actual Medium preview was present; the original classifier admitted only a standalone size/size Widget value.",
+    "Swift and Python now retain the separate exact Hanlin Script title and admit exactly one same-row exact provider/kind label plus Widget, requested size value. Trimming and case normalization match the existing treatment. There is no substring or ordinal admission.",
+    "Duplicate matching native preview rows prevent selection and are rejected by the reader even when an original standalone size label also exists. Wrong provider, Expo kind, wrong family, split label/value rows, suffixes, empty values and missing title have explicit new negative controls.",
+    "The original standalone-label branch remains; all remaining empty-page ownership, visibility/hittability/frame, page order/signature, source/identity/render, unique Add Widget, configuration, cleanup, orientation, selector and timing contracts remain byte-exact.",
+    "Only original openWidgetFamilyGallery selection and require_gallery selected-page classification change. The actual old helper matches native fc5 bytes exactly. No production widget/runtime/fixture/workflow code changes."
+  ],
+  "limits": [
+    "This is source review only. No parser controls, compilation, simulator action or native retry was executed by W1.",
+    "The observed Medium page supports this exact label/value admission; no unobserved Extra Large spelling, placement success, Matrix render, real control action or rotation acceptance is claimed.",
+    "Approximately240 seconds of prior SpringBoard idleness is separate from this demonstrated classifier rejection; this candidate does not claim to repair that OS wait."
+  ],
+  "testsExecuted": 0,
+  "nativeExecuted": 0
+}

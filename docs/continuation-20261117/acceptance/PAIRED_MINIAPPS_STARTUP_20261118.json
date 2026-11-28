@@ -1,0 +1,43 @@
+{
+  "document": "PAIRED_MINIAPPS_STARTUP_20261118",
+  "recorded_at": "2026-11-18T09:13:43.502249+00:00",
+  "run": 44259936836,
+  "sha": "0b06c98e45c6757676f956aea49cba0d80ab2127",
+  "conclusion": "failure",
+  "original_harness_status": "INFRA_ERROR",
+  "builds": {
+    "Hanlin AI": "PASS",
+    "Hanlin MiniApps": "PASS"
+  },
+  "ui": "NOT_RUN",
+  "requested_original_cases": 8,
+  "executed_original_cases": 0,
+  "actual_platform": {
+    "device": "iPhone 18 Pro",
+    "os": "iOS 27.2"
+  },
+  "observed": [
+    "Both actual app targets built and installed. AI launched with a PID and terminated normally.",
+    "The OS resolved group.com.itorah.chavrusachat for both actual apps to the same container (identical raw output SHA256). This proves that original group on this signed simulator only, not distribution provisioning.",
+    "MiniApps launch returned PID18710. After the group lookup, terminate returned NSPOSIXErrorDomain3, found nothing to terminate. Original UI was never started; do not interpret this as eight failed assertions.",
+    "Required relative Frameworks loader paths were missing at this source revision and were independently repaired in f6eafaac. Its standalone startup/NS/Expo validation is already running as44270714044. Causal repair confirmation remains pending."
+  ],
+  "artifact": {
+    "id": 14412668003,
+    "size": 17602125,
+    "api_zip_sha256": "6a15dc9da3164f957046e0ccf39f7193a3c403ea4ff0e34623408da2a98fb683",
+    "full_zip_digest_recomputed": false,
+    "selected_files": {
+      "acceptance.json": "36fc929ebfcf5631103c5e1ec0c8026a932eeff3744ae2c4a500159391ce2a0e",
+      "com.itorah.chavrusachat-first-launch.log": "63c87188e9a927a03ff99f6705004eacd8f561e6945b0bd0a9293d7498ae55bc",
+      "com.itorah.hanlinminiapps-first-launch-terminate.log": "94b6581d953d57a06cfb8c56e1fc9d0b89eb766d5c82561b8b30163eecd7be08",
+      "com.itorah.hanlinminiapps-first-launch.log": "522d3679edf04756d340aad06e28688911cc22be6bba85367b912370eded5ccd",
+      "commands.jsonl": "e9836886fef848a470d0f75a9d5468ecb9342bf688fd95284fba3296aaa130b9"
+    },
+    "shared_group_output_sha256": "7befeafdbea084f5478404187e4255e985191a893e6c1d6ce4e6c0c930b2ce86"
+  },
+  "next_gate": "Validate standalone MiniApps startup repair before repeating original paired eight. Preserve mandatory startup, original groups, actual two-app transitions and original assertions.",
+  "phase2_complete": false,
+  "phase3_complete": false,
+  "release_decision": "NO_GO"
+}

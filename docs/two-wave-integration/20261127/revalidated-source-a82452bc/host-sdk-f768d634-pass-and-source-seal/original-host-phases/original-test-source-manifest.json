@@ -1,0 +1,600 @@
+{
+  "sha256": "3a48396dfcf27155074296d19b56ebd03eaebe5387e56f4eb76e1c34865bf96c",
+  "fileCount": 99,
+  "files": [
+    {
+      "path": "DownstreamFixtures/child-process-bypass/package.json",
+      "kind": "file",
+      "bytes": 101,
+      "sha256": "00e01b16d1e612ae0dd4a4d92a2fafc1f7e52cfc952cb2b5f7e7d30356c12803"
+    },
+    {
+      "path": "DownstreamFixtures/child-process-bypass/server.mjs",
+      "kind": "file",
+      "bytes": 125,
+      "sha256": "7e1521b53b692c7d8a98b58b993c839b4ad4d0ff88671833d85bb4e2111c6d26"
+    },
+    {
+      "path": "DownstreamFixtures/commonjs-spawn-call/package.json",
+      "kind": "file",
+      "bytes": 84,
+      "sha256": "8622d224936d7b9f0cd9e0ca3871f274ee47d196e3f3322968800195ebbac52a"
+    },
+    {
+      "path": "DownstreamFixtures/commonjs-spawn-call/server.cjs",
+      "kind": "file",
+      "bytes": 89,
+      "sha256": "f1c60042da7ad7b09e38656e645554a683ee4ada24758f4460678c1e7d79dd44"
+    },
+    {
+      "path": "DownstreamFixtures/esm-import-only/package.json",
+      "kind": "file",
+      "bytes": 96,
+      "sha256": "38acff3bdeae5c7501d06d7a4689e4b375df1f1db014e3c6d6aa8e9ecc2fe6ab"
+    },
+    {
+      "path": "DownstreamFixtures/esm-import-only/server.mjs",
+      "kind": "file",
+      "bytes": 590,
+      "sha256": "af757b65e58926dae8f3589bb7dc0c59b02830f745ea6731676aa6ef8db42cd8"
+    },
+    {
+      "path": "DownstreamFixtures/exec-call/package.json",
+      "kind": "file",
+      "bytes": 90,
+      "sha256": "a80e372624f66eb2b4bd96b0fdc369dc77d582c303db8d7b9e0e5b1364b97b97"
+    },
+    {
+      "path": "DownstreamFixtures/exec-call/server.mjs",
+      "kind": "file",
+      "bytes": 87,
+      "sha256": "bf25ec65bbcc4ad87197761ef3480767a83db0e8acc4f833c7ccca4fa59b1aaf"
+    },
+    {
+      "path": "DownstreamFixtures/exec-file-call/package.json",
+      "kind": "file",
+      "bytes": 95,
+      "sha256": "4d962a17360a513f662edb370115bee50c6aa0e67df4b66493b2ee0f4ecb0c44"
+    },
+    {
+      "path": "DownstreamFixtures/exec-file-call/server.mjs",
+      "kind": "file",
+      "bytes": 95,
+      "sha256": "1666731ee4e9de5e6dc5fb001b0a70e74e72b023f03fb4295daf0a7651806932"
+    },
+    {
+      "path": "DownstreamFixtures/exec-file-sync-call/package.json",
+      "kind": "file",
+      "bytes": 100,
+      "sha256": "d781369bc650080b31ac795cd65b0c1d3ccc4ef372fe0e2ed9f1f0ba64b904a5"
+    },
+    {
+      "path": "DownstreamFixtures/exec-file-sync-call/server.mjs",
+      "kind": "file",
+      "bytes": 103,
+      "sha256": "be8004c181241556663195ccb4ec16be1945e92cadb321e7bad1e710a1fd628c"
+    },
+    {
+      "path": "DownstreamFixtures/exec-sync-call/package.json",
+      "kind": "file",
+      "bytes": 95,
+      "sha256": "74df0885beac53df29c26fa8a82b2dd405a68b721425be1588e6b78d7afb6ea3"
+    },
+    {
+      "path": "DownstreamFixtures/exec-sync-call/server.mjs",
+      "kind": "file",
+      "bytes": 95,
+      "sha256": "d60241ae2bf053b0def9fb275a50df155e24e3018f4914fdb7c3ade25fe8f6d4"
+    },
+    {
+      "path": "DownstreamFixtures/fork-call/package.json",
+      "kind": "file",
+      "bytes": 90,
+      "sha256": "1b3e7faeb79ae38dc7331ce3f4ca8986e192d1007b1fa0cf4b569dabde29b19c"
+    },
+    {
+      "path": "DownstreamFixtures/fork-call/server.mjs",
+      "kind": "file",
+      "bytes": 87,
+      "sha256": "f48c749f711648c7a2e66a13f9b57ddf02bdf27c79c86bbe010bedaa14469786"
+    },
+    {
+      "path": "DownstreamFixtures/fork-child-call/package.json",
+      "kind": "file",
+      "bytes": 96,
+      "sha256": "6899eb61afe0b952925b0d6ffad7cea93b833901650ba3236c221f01bc3eb972"
+    },
+    {
+      "path": "DownstreamFixtures/fork-child-call/server.mjs",
+      "kind": "file",
+      "bytes": 99,
+      "sha256": "469e6811ee4107c85e9c677ce9671cb97e27d0a09e75cde21b80c2c37cac0e2b"
+    },
+    {
+      "path": "DownstreamFixtures/get-builtin-call/package.json",
+      "kind": "file",
+      "bytes": 97,
+      "sha256": "b27d0c617678bcefe25116729f5d0159165ce46ff7d05033e77f4ca8cd76a5fe"
+    },
+    {
+      "path": "DownstreamFixtures/get-builtin-call/server.mjs",
+      "kind": "file",
+      "bytes": 92,
+      "sha256": "97d410354e56192ad76696be8fc87a2667f31e94427b79ea69ee85e625c735ec"
+    },
+    {
+      "path": "DownstreamFixtures/process-wrap-blocked/package.json",
+      "kind": "file",
+      "bytes": 122,
+      "sha256": "288bd243a5bf5ccb282441295f9b2d969185dd3196699860d90fd73147b7be29"
+    },
+    {
+      "path": "DownstreamFixtures/process-wrap-blocked/server.mjs",
+      "kind": "file",
+      "bytes": 60,
+      "sha256": "f8fa6c96fde4f2ecbf2dde0501c302fe92d126cd7e932244e9d2886e53ba658f"
+    },
+    {
+      "path": "DownstreamFixtures/spawn-call/package.json",
+      "kind": "file",
+      "bytes": 91,
+      "sha256": "6b721ece791b04f850a6e41bf441ea9829b27c1c9a81b551bef4d9adf8f87b2e"
+    },
+    {
+      "path": "DownstreamFixtures/spawn-call/server.mjs",
+      "kind": "file",
+      "bytes": 89,
+      "sha256": "3ad8fcd57978a902487b9cca7f9a7fed05e10e3201cf77308810e934e410a6b6"
+    },
+    {
+      "path": "DownstreamFixtures/spawn-sync-call/package.json",
+      "kind": "file",
+      "bytes": 96,
+      "sha256": "3ed20ec5e1ba9bbe45afcc79dd3637cd105e0bd50265443921ff611782410e9c"
+    },
+    {
+      "path": "DownstreamFixtures/spawn-sync-call/server.mjs",
+      "kind": "file",
+      "bytes": 97,
+      "sha256": "77e660683b86d631a4ec91a19933d87e88ab23a1b1af33677c95ffa0d350ac67"
+    },
+    {
+      "path": "DownstreamFixtures/transitive-call/module-a.mjs",
+      "kind": "file",
+      "bytes": 89,
+      "sha256": "3ad8fcd57978a902487b9cca7f9a7fed05e10e3201cf77308810e934e410a6b6"
+    },
+    {
+      "path": "DownstreamFixtures/transitive-call/package.json",
+      "kind": "file",
+      "bytes": 96,
+      "sha256": "073e7cfb564a0dffc4e971f41d1fa5a6c4d4dd4c2bbb4270d9d576f792df530d"
+    },
+    {
+      "path": "DownstreamFixtures/transitive-call/server.mjs",
+      "kind": "file",
+      "bytes": 52,
+      "sha256": "b475e1821d9ffa16c29e7ee7f84b42c43b97071a013c36450f32274af8ed72f1"
+    },
+    {
+      "path": "Fixtures/binding-blocked/package.json",
+      "kind": "file",
+      "bytes": 81,
+      "sha256": "d9558e8ef6ca0b8cf830e098e56036de5588e892031d9b82880bba8a5fee39d0"
+    },
+    {
+      "path": "Fixtures/binding-blocked/server.mjs",
+      "kind": "file",
+      "bytes": 31,
+      "sha256": "107ad2aec7efd4e2cda5882c8d885fe5fa47e872279b79a1f868c5e7478330fa"
+    },
+    {
+      "path": "Fixtures/cluster-blocked/package.json",
+      "kind": "file",
+      "bytes": 81,
+      "sha256": "520f86a8f824a1a36db10e16751e33e78873e47b71f14569ccc80f17aa9a23df"
+    },
+    {
+      "path": "Fixtures/cluster-blocked/server.mjs",
+      "kind": "file",
+      "bytes": 18,
+      "sha256": "734230e94ef0bdf1ea36dd6fb2cf747ee6793da6253c54156819fd4d070fd50d"
+    },
+    {
+      "path": "Fixtures/commonjs-blocked/package.json",
+      "kind": "file",
+      "bytes": 84,
+      "sha256": "5ee27b2f7a1afca8eabba3bc5ff0c2bc06e184e6b84c0fd48492fd9b26b36bd1"
+    },
+    {
+      "path": "Fixtures/commonjs-blocked/server.cjs",
+      "kind": "file",
+      "bytes": 602,
+      "sha256": "1c58d346a4326d5167252008021aaddc2f262d313cc8efda04e3d5f1b1f1a94f"
+    },
+    {
+      "path": "Fixtures/direct-blocked/package.json",
+      "kind": "file",
+      "bytes": 80,
+      "sha256": "ddd0b4c123f16ab60eb0f5baf91b2abed3b2acf12e22718fdc6a3621e4396f90"
+    },
+    {
+      "path": "Fixtures/direct-blocked/server.mjs",
+      "kind": "file",
+      "bytes": 586,
+      "sha256": "35ef18067a5ebf605ecce7716a83867e86af0d3e4e962c4e4b6140f9c82e1573"
+    },
+    {
+      "path": "Fixtures/dynamic-blocked/package.json",
+      "kind": "file",
+      "bytes": 81,
+      "sha256": "06ac762d77ae6b9d7b193d86101b83654f5c8e00d30b0af96050d48e0b52238c"
+    },
+    {
+      "path": "Fixtures/dynamic-blocked/server.mjs",
+      "kind": "file",
+      "bytes": 574,
+      "sha256": "89f6cf99c2588c96b646a27509251e65d3dbcc83162b0f0d16b5d12ef05f9002"
+    },
+    {
+      "path": "Fixtures/false-positive-sdk/node_modules/cross-spawn/index.js",
+      "kind": "file",
+      "bytes": 66,
+      "sha256": "19a9007ac313dbe6f7dd8aee89b30f278716000e812acdd8f7b29ae5b320d089"
+    },
+    {
+      "path": "Fixtures/false-positive-sdk/node_modules/cross-spawn/package.json",
+      "kind": "file",
+      "bytes": 75,
+      "sha256": "649338383b3b9be7aee4058f9a5b4aa71253ab2fbed6ceb73bd695f620f4ef7c"
+    },
+    {
+      "path": "Fixtures/false-positive-sdk/node_modules/fake-sdk/client/stdio.js",
+      "kind": "file",
+      "bytes": 112,
+      "sha256": "3e106c01408b46e7e73871171446e6c08520cb913c0308c408d08518becb9c63"
+    },
+    {
+      "path": "Fixtures/false-positive-sdk/node_modules/fake-sdk/package.json",
+      "kind": "file",
+      "bytes": 146,
+      "sha256": "8eb3dc9742270c91937517cecc77d55873130733c0bea30ddb89f5ef5ca27e0c"
+    },
+    {
+      "path": "Fixtures/false-positive-sdk/node_modules/fake-sdk/server/stdio.js",
+      "kind": "file",
+      "bytes": 614,
+      "sha256": "0084cf7753dd64d55db54fa6f6fae0d9315e06e9dd2f3e2ab3b2085c3418140d"
+    },
+    {
+      "path": "Fixtures/false-positive-sdk/package.json",
+      "kind": "file",
+      "bytes": 84,
+      "sha256": "cfc386f20c8abf2edb64079f87d35c65b03e8b8227103a9e842904d97944763a"
+    },
+    {
+      "path": "Fixtures/false-positive-sdk/server.mjs",
+      "kind": "file",
+      "bytes": 35,
+      "sha256": "e32b05eac2c5aff8741a3789ea663508ba158e32daa351edfc646792095d3ddf"
+    },
+    {
+      "path": "Fixtures/fetch-compatibility-probe.mjs",
+      "kind": "file",
+      "bytes": 4278,
+      "sha256": "35074bed12cc9b999a442d2df93b52823d2b367e2ce71fad029ae16be2c108c3"
+    },
+    {
+      "path": "Fixtures/get-builtin-blocked/package.json",
+      "kind": "file",
+      "bytes": 85,
+      "sha256": "5b865d55da12ec8172084346336a14a7c78c9b149c03ca844c0b32b281de1cfa"
+    },
+    {
+      "path": "Fixtures/get-builtin-blocked/server.mjs",
+      "kind": "file",
+      "bytes": 583,
+      "sha256": "f4aaafa9ee2a7d17a9be772e7248445e0bda288ce76f66859f23f2a89444fde0"
+    },
+    {
+      "path": "Fixtures/mcp-reference-lifecycle.mjs",
+      "kind": "file",
+      "bytes": 2463,
+      "sha256": "b9731a89cf08147c9ab88b25e517e0935b757ff970f7c808085baf8dfe9fc2f6"
+    },
+    {
+      "path": "Fixtures/reachable-native/addon.node",
+      "kind": "file",
+      "bytes": 24,
+      "sha256": "41b2bfdf8d25d33ec58a2a677b0a78c79c29b5030a7fbd5262a706190aa9a73d"
+    },
+    {
+      "path": "Fixtures/reachable-native/package.json",
+      "kind": "file",
+      "bytes": 84,
+      "sha256": "4bfd432e8f8aa167c2e4847c7841eb7ea70f0aea2940221abbc28b01d7b9c778"
+    },
+    {
+      "path": "Fixtures/reachable-native/server.cjs",
+      "kind": "file",
+      "bytes": 25,
+      "sha256": "c9f5901a33f9455a608a8cef81378caf5d4fdd155f63d9cd7e6c2ea2349f76c1"
+    },
+    {
+      "path": "Fixtures/transitive-blocked/module-a.mjs",
+      "kind": "file",
+      "bytes": 29,
+      "sha256": "518dbab9b57fdde73a9d8d7a450ec07dee293c0b2293026ff901a0974cbf0cec"
+    },
+    {
+      "path": "Fixtures/transitive-blocked/package.json",
+      "kind": "file",
+      "bytes": 84,
+      "sha256": "97d7d397153d509c7ddb7e48b000add70b0fecf7d3f62838b6656487b76dc924"
+    },
+    {
+      "path": "Fixtures/transitive-blocked/server.mjs",
+      "kind": "file",
+      "bytes": 566,
+      "sha256": "777da3779c5b19b5f52aa0d3e0377350771f11d034b0b2ee9b93da71edc88a1d"
+    },
+    {
+      "path": "Fixtures/typescript-selected/package.json",
+      "kind": "file",
+      "bytes": 84,
+      "sha256": "165f5204a88ecf18e31ac4531e57b18d49187f7b83c0d06310070a330ffc1c84"
+    },
+    {
+      "path": "Fixtures/typescript-selected/server.ts",
+      "kind": "file",
+      "bytes": 685,
+      "sha256": "6d6a7e2810b2448e84187b0937e7b5090c497255405811598dace1911a97d4f0"
+    },
+    {
+      "path": "Fixtures/unreachable-native/package.json",
+      "kind": "file",
+      "bytes": 84,
+      "sha256": "056a752de536a4149bcc9f13f83c3e44452a2e7ddc5ccd8d397fbf3b46234f92"
+    },
+    {
+      "path": "Fixtures/unreachable-native/server.mjs",
+      "kind": "file",
+      "bytes": 537,
+      "sha256": "7e655246f02417a2d116db324363e9aee036ebf7de04d829a2e68bcb8a0670f8"
+    },
+    {
+      "path": "Fixtures/unreachable-native/unused/addon.node",
+      "kind": "file",
+      "bytes": 24,
+      "sha256": "41b2bfdf8d25d33ec58a2a677b0a78c79c29b5030a7fbd5262a706190aa9a73d"
+    },
+    {
+      "path": "Fixtures/unreachable-native/unused/binding.gyp",
+      "kind": "file",
+      "bytes": 15,
+      "sha256": "a758f0791313b284d4e230a4d5f162fb002bbb9c0e814277ddc24b07ace36cb2"
+    },
+    {
+      "path": "archive-resources.test.mjs",
+      "kind": "file",
+      "bytes": 1757,
+      "sha256": "ef0caf9c8e714e3d943f0f14845c731f3a183c782bae055d9886a2b2a62b8712"
+    },
+    {
+      "path": "cablate-google-map.integration.mjs",
+      "kind": "file",
+      "bytes": 2328,
+      "sha256": "d9adab3a75c797ba3225b1c35f95b9bbc0f21da242f0db37fba94e16afa5bdc9"
+    },
+    {
+      "path": "cli-entry-resolution.test.mjs",
+      "kind": "file",
+      "bytes": 1726,
+      "sha256": "c425716dad74710ae6d914ac54f2269ed8df11229beaf30272fc5a9088cc2ebc"
+    },
+    {
+      "path": "compatibility.test.mjs",
+      "kind": "file",
+      "bytes": 16080,
+      "sha256": "f2abaa0927107ca4ed1761637077381967127c48ca4ae4613b83d21ab91e6cce"
+    },
+    {
+      "path": "execution-input.test.mjs",
+      "kind": "file",
+      "bytes": 14443,
+      "sha256": "36da4dac42aefe9c0d08e46d8146e848ed642c12618c0fb9aad4ebad4054affb"
+    },
+    {
+      "path": "execution-jobs.test.mjs",
+      "kind": "file",
+      "bytes": 23830,
+      "sha256": "6278094d448ab43c5f8bfdbd80dcc8f98ebd7d803892778878b54ae227bcc9fa"
+    },
+    {
+      "path": "fetch-compatibility.test.mjs",
+      "kind": "file",
+      "bytes": 1048,
+      "sha256": "72b68cd74580c9bac8f48f01eb38dec4c8e1ca1541f57191dad29eae9041b7f5"
+    },
+    {
+      "path": "fetch-conformance.test.mjs",
+      "kind": "file",
+      "bytes": 1549,
+      "sha256": "4057560be54e16a5c1a3193852ff15534c352bdf02ba80ad1258a3c0a5ff8dfe"
+    },
+    {
+      "path": "host-dependency-patches.test.mjs",
+      "kind": "file",
+      "bytes": 4424,
+      "sha256": "404fb0ad2f3fca8597e03aaa48b6d4ffc98938ec71774806baaf2bbe3118718a"
+    },
+    {
+      "path": "host-operations.test.mjs",
+      "kind": "file",
+      "bytes": 5921,
+      "sha256": "8340059bf2c5d2c3e92a99e4e625787ac6119aa1d44d8dde144fb23a1fa9142b"
+    },
+    {
+      "path": "host.test.mjs",
+      "kind": "file",
+      "bytes": 23559,
+      "sha256": "9a235851048a63be088a5835251072d36a6d73b5f1fb0d54c2bfeadaff5a1df5"
+    },
+    {
+      "path": "job-terminal-publication.test.mjs",
+      "kind": "file",
+      "bytes": 2407,
+      "sha256": "0b01e02fa3c3792e78ed0c8e79817176c62256e732c925438ec2340ffaa25acf"
+    },
+    {
+      "path": "lifecycle.integration.mjs",
+      "kind": "file",
+      "bytes": 15541,
+      "sha256": "250459bbe1026aaea1ff91610c409a783525072ff8ef5c56afb67ee8fd184e77"
+    },
+    {
+      "path": "mcp-install-lifecycle.test.mjs",
+      "kind": "file",
+      "bytes": 4248,
+      "sha256": "2b9b60e58bb374daaa4650c9e3907545f13dea699139b0ec0fb117200cffe2e8"
+    },
+    {
+      "path": "mcp-large-probe.test.mjs",
+      "kind": "file",
+      "bytes": 4881,
+      "sha256": "a3ebc3f8f39167dc48825a6c6c41bf41dcea071ffbe788d3c775828c90f50df2"
+    },
+    {
+      "path": "mcp-large-transport.test.mjs",
+      "kind": "file",
+      "bytes": 7580,
+      "sha256": "f3ea855dabb03883ae87db7a06acae4936a6be01a13e344bd1f974e762cf5b7b"
+    },
+    {
+      "path": "mcp-package-generations.test.mjs",
+      "kind": "file",
+      "bytes": 3499,
+      "sha256": "96ea36d1338f056e0bff77adef5c0bbd60cca586af5d37c3c87436eecdc341dc"
+    },
+    {
+      "path": "mcp-server-regression.integration.mjs",
+      "kind": "file",
+      "bytes": 2354,
+      "sha256": "9d206b38579703a08800ecdb62b42a4f53666224ccd5611716ab7917ffcadf0b"
+    },
+    {
+      "path": "miniapp-assistant-tools.test.mjs",
+      "kind": "file",
+      "bytes": 13623,
+      "sha256": "22a5087a3e9694b02f0b4573e0071f368fc95d20361ee736008d931d7c2dab93"
+    },
+    {
+      "path": "miniapp-authoring.test.mjs",
+      "kind": "file",
+      "bytes": 31866,
+      "sha256": "755c3c2f372d9382bc18254dfdebcba1582d0e2490424069a1eb34d8a09c4d0e"
+    },
+    {
+      "path": "miniapp-editor.test.mjs",
+      "kind": "file",
+      "bytes": 3879,
+      "sha256": "f5afab4fa0a01cab791668adf247add2d97eafb7084a14aea10823bbdbe0500e"
+    },
+    {
+      "path": "miniapp-native-presentation.integration.mjs",
+      "kind": "file",
+      "bytes": 10354,
+      "sha256": "12000ca578a0aab96685faa544a2f70647f7b9462f18df2ea52f5b1e9d0c54b1"
+    },
+    {
+      "path": "miniapp-sdk-resolution.test.mjs",
+      "kind": "file",
+      "bytes": 9062,
+      "sha256": "5feff98ed62727330f2a64abedff0d4a3af9f71d5a8b1f7c8e39396c90e7d65f"
+    },
+    {
+      "path": "native-commands.test.mjs",
+      "kind": "file",
+      "bytes": 7271,
+      "sha256": "add7f47c2b9de3881646a7ef1e7890e920fa39653f7a71ba10d4c1ea70864e0d"
+    },
+    {
+      "path": "network-diagnostics.test.mjs",
+      "kind": "file",
+      "bytes": 2160,
+      "sha256": "8d0c8edfc99e5ca37f75b7bcceb68f04fb0b637c2be7f1d4749ad48a3f5faba5"
+    },
+    {
+      "path": "optional-lifecycle.test.mjs",
+      "kind": "file",
+      "bytes": 11245,
+      "sha256": "54d1ed12d8f044fda90e1ab5a81af5f7b33d306aa6c97a29479835912353f0b7"
+    },
+    {
+      "path": "package-lifecycle.test.mjs",
+      "kind": "file",
+      "bytes": 16334,
+      "sha256": "c7d0fb58af6b07e61bfd235e01bdb9d11483254ed0601d4f9363b375c2e0f2f9"
+    },
+    {
+      "path": "package-validation.test.mjs",
+      "kind": "file",
+      "bytes": 5143,
+      "sha256": "6cfec074c956d98500c6c840f83970d2ec6ee076e1abb9024701af2dc34dc2df"
+    },
+    {
+      "path": "portable-shell.test.mjs",
+      "kind": "file",
+      "bytes": 6081,
+      "sha256": "709ad1b564b1f7a0daa87a35059d25dd8f4bd89db28bdcf4f4436a0706801b8a"
+    },
+    {
+      "path": "runtime-capabilities.test.mjs",
+      "kind": "file",
+      "bytes": 750,
+      "sha256": "2c8fd6849c15517c1af5eb347533a174ab76f4c2d7cd50bc6881f7a7aa51d0ae"
+    },
+    {
+      "path": "runtime-command-broker.test.mjs",
+      "kind": "file",
+      "bytes": 9794,
+      "sha256": "31d9ba300648b0c13c558d49e99956aa6f6dbde8b833327cad7501ef5778b383"
+    },
+    {
+      "path": "runtime-package-target.test.mjs",
+      "kind": "file",
+      "bytes": 6577,
+      "sha256": "318c7c035661d3ee4461a42931c97416c0eb92d6e6b51891f77dc6425a8ea7fa"
+    },
+    {
+      "path": "runtime.test.mjs",
+      "kind": "file",
+      "bytes": 9258,
+      "sha256": "cbd84f7ef1d192ec3ba171982f6597aafea72e7efa4be14f69e207b9dbfee320"
+    },
+    {
+      "path": "server-everything.integration.mjs",
+      "kind": "file",
+      "bytes": 3172,
+      "sha256": "9789308a914581e96608eb80b192cfc39d4af945aac8b7939dcea79d307bc022"
+    },
+    {
+      "path": "typescript-jobs.test.mjs",
+      "kind": "file",
+      "bytes": 7594,
+      "sha256": "a96406171b1ec35e06be5abe6b9772b5eb9501b883b9295d48d068686228203c"
+    },
+    {
+      "path": "warning-diagnostics.test.mjs",
+      "kind": "file",
+      "bytes": 2148,
+      "sha256": "40a6a53c243c06a01bf64b341ac535c6131b143c76fb1d598030fd0708ef28c1"
+    },
+    {
+      "path": "workspace-io.test.mjs",
+      "kind": "file",
+      "bytes": 3020,
+      "sha256": "d817d3b2d244013c900dfa2b72287bee4d577a07b4a1cb3aaddd4b681ab9f2a2"
+    }
+  ]
+}

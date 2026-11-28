@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "producerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "observedAt": "2026-11-25T17:38:35.240569+00:00",
+  "pid": 4139,
+  "argv": [
+    "/opt/homebrew/opt/python@3.12/bin/python3.12",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-v5h.py",
+    "--decision",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5-decision.json"
+  ],
+  "decision": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5-decision.json",
+  "decisionSHA256": "b38292358c011d2db0a1a96c167494ca84f87bd806c27e399d7ec294f7e4b42b",
+  "controllerSHA256": "04d3f71d81436f95043e8bd84029c17aa4b7b06b7d91f3a5f73fa68d1967cd68",
+  "childSHA256": "04ff68e1ebc6ccd7069363c0aa32894af4b28a815d73a9c8fc6e6d5c3bc5128a",
+  "activeBaselineSeconds": 21098.44556183604,
+  "allowanceSeconds": 3720.3727040829835,
+  "freshFreeBytes": 10298617856,
+  "original52": "NOT_RUN_AT_DISPATCH"
+}

@@ -1,0 +1,195 @@
+{
+  "status": "BUILD_FAILED",
+  "ui": "NOT_RUN",
+  "build": "EXECUTED_FAIL",
+  "mini_build": "EXECUTED_PASS",
+  "ai_build": "EXECUTED_FAIL",
+  "physical_device": "NOT_RUN",
+  "provisioned_distribution": "NOT_RUN",
+  "scope": "Standalone MiniApps real WidgetKit medium-family last-good failure and authored recovery",
+  "model_boundary": "Original Matrix producer archive, shipping importer, real SpringBoard actions, actual read-only state/cache and filtered system-log observations",
+  "started_at": 1795857429.2937589,
+  "test_scope": "miniapp_widget_recovery_os",
+  "selected_tests": [
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers"
+  ],
+  "acceptance_boundary": "One medium-family Simulator case; the other seven OS families, appearance/orientation, physical devices and network/corrupt-resource cases remain separate",
+  "sha": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+  "simulator_runtime_selection": {
+    "build_sdk_version": "27.2",
+    "requested_runtime": null,
+    "selected_runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+    "runtime_version": "27.2"
+  },
+  "simulator": "94687EBE-F90F-455D-80BF-73DCABF32967",
+  "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+  "device": "iPad mini (A20 Pro)",
+  "app_intents_metadata": {
+    "com.itorah.hanlinminiapps": {
+      "source_app": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app",
+      "status": "CAPTURED",
+      "directories": [
+        {
+          "path": "Extensions/HanlinMiniAppsCameraCapture.appex/Metadata.appintents",
+          "evidence_path": "app-intents-metadata/HanlinMiniApps.app/Extensions/HanlinMiniAppsCameraCapture.appex/Metadata.appintents",
+          "files": [
+            {
+              "path": "Extensions/HanlinMiniAppsCameraCapture.appex/Metadata.appintents/extract.actionsdata",
+              "bytes": 1518,
+              "sha256": "23cb58f54e3c15ab945b3f57f149e1b0026161cc901893ff57b3d66b177ad545"
+            },
+            {
+              "path": "Extensions/HanlinMiniAppsCameraCapture.appex/Metadata.appintents/extract.packagedata",
+              "bytes": 73,
+              "sha256": "eae1b8dc6f199a545e049eee732172b2e96389c21ec6d518155c546eeea4ca67"
+            },
+            {
+              "path": "Extensions/HanlinMiniAppsCameraCapture.appex/Metadata.appintents/version.json",
+              "bytes": 51,
+              "sha256": "b63d0f4e634b566140765350e2f4f27c80d481175e3e395f0f7bcd5b9c04f45c"
+            }
+          ]
+        },
+        {
+          "path": "Extensions/HanlinMiniAppsTranslationProvider.appex/Metadata.appintents",
+          "evidence_path": "app-intents-metadata/HanlinMiniApps.app/Extensions/HanlinMiniAppsTranslationProvider.appex/Metadata.appintents",
+          "files": [
+            {
+              "path": "Extensions/HanlinMiniAppsTranslationProvider.appex/Metadata.appintents/extract.actionsdata",
+              "bytes": 27695,
+              "sha256": "019386aa7531272daa9d0668cc4c8af8b79fbd834099ea935df90f69f932bb9f"
+            },
+            {
+              "path": "Extensions/HanlinMiniAppsTranslationProvider.appex/Metadata.appintents/extract.packagedata",
+              "bytes": 82,
+              "sha256": "3caaeef1eadde6faf21bc3ef37b2b2080b4c67f13112d9120b71c62b6fedd2a7"
+            },
+            {
+              "path": "Extensions/HanlinMiniAppsTranslationProvider.appex/Metadata.appintents/version.json",
+              "bytes": 51,
+              "sha256": "b63d0f4e634b566140765350e2f4f27c80d481175e3e395f0f7bcd5b9c04f45c"
+            }
+          ]
+        },
+        {
+          "path": "Metadata.appintents",
+          "evidence_path": "app-intents-metadata/HanlinMiniApps.app/Metadata.appintents",
+          "files": [
+            {
+              "path": "Metadata.appintents/extract.actionsdata",
+              "bytes": 76059,
+              "sha256": "abb013e95f363e01e2552ffbc74975dc796530627c8afa86563e2d838c3973c6"
+            },
+            {
+              "path": "Metadata.appintents/extract.packagedata",
+              "bytes": 229,
+              "sha256": "4300377e471d9441cbb228ffdefa1658762970bc582d0b368296a8b71abadfc6"
+            },
+            {
+              "path": "Metadata.appintents/version.json",
+              "bytes": 51,
+              "sha256": "b63d0f4e634b566140765350e2f4f27c80d481175e3e395f0f7bcd5b9c04f45c"
+            }
+          ]
+        },
+        {
+          "path": "PlugIns/HanlinMiniAppsKeyboard.appex/Metadata.appintents",
+          "evidence_path": "app-intents-metadata/HanlinMiniApps.app/PlugIns/HanlinMiniAppsKeyboard.appex/Metadata.appintents",
+          "files": [
+            {
+              "path": "PlugIns/HanlinMiniAppsKeyboard.appex/Metadata.appintents/extract.actionsdata",
+              "bytes": 27695,
+              "sha256": "019386aa7531272daa9d0668cc4c8af8b79fbd834099ea935df90f69f932bb9f"
+            },
+            {
+              "path": "PlugIns/HanlinMiniAppsKeyboard.appex/Metadata.appintents/version.json",
+              "bytes": 51,
+              "sha256": "b63d0f4e634b566140765350e2f4f27c80d481175e3e395f0f7bcd5b9c04f45c"
+            }
+          ]
+        },
+        {
+          "path": "PlugIns/HanlinMiniAppsNotificationContent.appex/Metadata.appintents",
+          "evidence_path": "app-intents-metadata/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationContent.appex/Metadata.appintents",
+          "files": [
+            {
+              "path": "PlugIns/HanlinMiniAppsNotificationContent.appex/Metadata.appintents/extract.actionsdata",
+              "bytes": 27695,
+              "sha256": "019386aa7531272daa9d0668cc4c8af8b79fbd834099ea935df90f69f932bb9f"
+            },
+            {
+              "path": "PlugIns/HanlinMiniAppsNotificationContent.appex/Metadata.appintents/version.json",
+              "bytes": 51,
+              "sha256": "b63d0f4e634b566140765350e2f4f27c80d481175e3e395f0f7bcd5b9c04f45c"
+            }
+          ]
+        },
+        {
+          "path": "PlugIns/HanlinMiniAppsNotificationService.appex/Metadata.appintents",
+          "evidence_path": "app-intents-metadata/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex/Metadata.appintents",
+          "files": [
+            {
+              "path": "PlugIns/HanlinMiniAppsNotificationService.appex/Metadata.appintents/extract.actionsdata",
+              "bytes": 17922,
+              "sha256": "0b42c87035871d3eba4ba1c83bb2fc02fb0c5de0aff841720ddc44ca21fa5465"
+            },
+            {
+              "path": "PlugIns/HanlinMiniAppsNotificationService.appex/Metadata.appintents/version.json",
+              "bytes": 51,
+              "sha256": "b63d0f4e634b566140765350e2f4f27c80d481175e3e395f0f7bcd5b9c04f45c"
+            }
+          ]
+        },
+        {
+          "path": "PlugIns/HanlinMiniAppsWidgets.appex/Metadata.appintents",
+          "evidence_path": "app-intents-metadata/HanlinMiniApps.app/PlugIns/HanlinMiniAppsWidgets.appex/Metadata.appintents",
+          "files": [
+            {
+              "path": "PlugIns/HanlinMiniAppsWidgets.appex/Metadata.appintents/extract.actionsdata",
+              "bytes": 52975,
+              "sha256": "ac42d2aa6d848e1f0c073f43e19f0ad9dfda7bd7b3d47474dfc1c4db9be433d0"
+            },
+            {
+              "path": "PlugIns/HanlinMiniAppsWidgets.appex/Metadata.appintents/extract.packagedata",
+              "bytes": 168,
+              "sha256": "cc972c9a747228190361d8d327e8c26a5df4bab9a7db1ded226c042eedd5c1b4"
+            },
+            {
+              "path": "PlugIns/HanlinMiniAppsWidgets.appex/Metadata.appintents/version.json",
+              "bytes": 51,
+              "sha256": "b63d0f4e634b566140765350e2f4f27c80d481175e3e395f0f7bcd5b9c04f45c"
+            }
+          ]
+        }
+      ],
+      "intent_execution": "NOT_RUN",
+      "receipt": "app-intents-metadata/HanlinMiniApps.app.json"
+    }
+  },
+  "error": "xcodebuild exit 65; inspect ai-build.log",
+  "diagnostic_errors": [],
+  "attachment_exports": [],
+  "build_commands": {
+    "mini_build": {
+      "log": "mini-build.log",
+      "command_id": "2fd8120391334e6b91f808787d07ec7f",
+      "status": "completed",
+      "completion_recorded": true,
+      "exit": 0,
+      "observed_returncode": 0
+    },
+    "ai_build": {
+      "log": "ai-build.log",
+      "command_id": "34a18868f5ae4a47ad9c6fdf12a32bfc",
+      "status": "completed",
+      "completion_recorded": true,
+      "exit": 65,
+      "observed_returncode": 65
+    }
+  },
+  "result_bundles": [
+    "AIBuild.xcresult",
+    "MiniBuild.xcresult"
+  ],
+  "duration_seconds": 1170.2510242462158
+}

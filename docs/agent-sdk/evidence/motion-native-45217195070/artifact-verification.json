@@ -1,0 +1,12 @@
+{
+  "run_id": 45217195070,
+  "head_sha": "5d0ea90d98b405d38b66bb735198b945225877ba",
+  "workflow_conclusion": "success",
+  "artifact_id": 14840585994,
+  "artifact_bytes": 57298126,
+  "sha256": "5d550fbb8ba97a7972f7f4feeba8db655bccb175cfd01a2aa6da2e93e0f8efe9",
+  "api_digest_size_match": true,
+  "zip_crc": "PASS",
+  "member_count": 83,
+  "download_crc_seconds": 15.283
+}

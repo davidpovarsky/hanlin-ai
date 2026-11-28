@@ -1,0 +1,14 @@
+{
+  "resources": {
+    "hanlin_openclaw_policy.mjs": "d6cc833943108245a2a68fc85ff4d67bf50719ade36e52fc63c784afedf9d565",
+    "hanlin_openclaw_policy_probe.mjs": "b1f021007db883226b65d3d5b70f83e009f00a259fc715e464ca2c7c8dfc73ec",
+    "hanlin_openclaw_policy_native_probe.mjs": "8097f6302ed346434d5404d929c6fec4a10e50cc8e32bb8616f07d2594048f59",
+    "hanlin_openclaw_policy_native_contract.mjs": "b9da6ef964550eeb68b432eda195448707b9bc945558aadcd986246a0bafdb19",
+    "hanlin_openclaw_policy_provenance.json": "f4c6176d00e4e0a6a2c86cd66039e56e135f60d09a14e5a31344fbc872c6c2cb",
+    "hanlin_openclaw_policy_upstream_tests.mjs": "a38f3b14d6d759606404ac480aeb32e2a10bc5de23eb6e3fffb2633b8c708814",
+    "hanlin_openclaw_policy_test_selection.json": "9db023cdfc6236621f80aaf5db559a52833c38500516cfdac424dca3c07add79",
+    "hanlin_openclaw_policy_upstream_shim.mjs": "f3b9a74f2f4ff61e6e64235d3b089b74d986718d5c9d0a4dce7fee89f202339d",
+    "LICENSE.OpenClaw.JSON5.txt": "53e59feb13058722d977c699eb0407c7bce2f93c949b681bbd2ff31698535927",
+    "LICENSE.OpenClaw.Semver.txt": "4ec3d4c66cd87f5c8d8ad911b10f99bf27cb00cdfcff82621956e379186b016b"
+  }
+}

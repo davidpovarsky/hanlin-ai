@@ -1,0 +1,30 @@
+{
+  "base": "95c12227097f73d5755a6ff20ced43c9e2691c45",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-window-factory-sdk-20261127",
+  "atUTC": "2026-11-27T15:02:33.131647+00:00",
+  "files": {
+    "Scripts/MiniApps/stage-sdk.mjs": {
+      "beforeSHA256": "a375457668c88aac01634b94b8529c63d4edc072a6f7af37af75ad7fb8bcdee2",
+      "afterSHA256": "60b6b9496330d4605f60f56587170b06c7eced31a6b3d79ef04aa8faa548022c"
+    },
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs": {
+      "beforeSHA256": "cea114769522eaaaceee804b89b26549c2335b3ebca16037a64f97724f2e92fc",
+      "afterSHA256": "06fbe72f889da3befe00c2dfe9b286f062decd59a50c1df9c961df3bcb46b745"
+    }
+  },
+  "patchSHA256": "81265339b47cdd7237c6787d0f09f7879110cde725148442a93333e3a8f39162",
+  "inverseSourcePreservation": true,
+  "runtimeAndDeclarationBytesChanged": false,
+  "originalTestsChanged": false,
+  "upstreamPinsChanged": false,
+  "nativeStatus": "NOT_RUN",
+  "packagingStatus": "NOT_RUN",
+  "basis": {
+    "failedRuns": [
+      46000299446,
+      46000312643
+    ],
+    "identicalValidationSHA256": "b96a7079000d51cbb9a455b87515c1a21ecc196db0b0a33d4d963e50b0ab9135",
+    "firstDiagnostic": "TS2307: Cannot find module @hanlin/window-factory"
+  }
+}

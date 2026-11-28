@@ -1,0 +1,202 @@
+{
+  "recorded_at": "2026-11-18T03:00:04.677306+00:00",
+  "target_sha": "33168b5a332335cb104a451857b801e9dc0045ae",
+  "phase_status": "IN_PROGRESS",
+  "media": {
+    "status": "EXECUTED_PASS",
+    "run_id": 44222521036,
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44222521036",
+    "source_sha": "e1e7a3e181a464c5d3046f9e163c59fcf833c5a3",
+    "artifact_id": 14392662426,
+    "artifact_sha256": "f6a554bd9759768fb9850e08c2608e7b21c21322e17c2f0a2f210b176cc076a0",
+    "tests": [
+      {
+        "identity": "MediaReplayUITests/testBackgroundDisappearanceAndDisposalUnloadEveryPlayer()",
+        "result": "Passed",
+        "seconds": 152.08532297611237
+      },
+      {
+        "identity": "MediaReplayUITests/testBoundURLReplacementUnloadsEveryRequestedPlayer()",
+        "result": "Passed",
+        "seconds": 58.40544605255127
+      },
+      {
+        "identity": "MediaReplayUITests/testHistoryAudioAllowsExplicitLoadAndApprovedSource()",
+        "result": "Passed",
+        "seconds": 15.54893696308136
+      },
+      {
+        "identity": "MediaReplayUITests/testHistoryVideoAllowsExplicitLoadAndApprovedSource()",
+        "result": "Passed",
+        "seconds": 17.38885796070099
+      },
+      {
+        "identity": "MediaReplayUITests/testHistoryYouTubeAllowsOnlyExplicitLocalMedia()",
+        "result": "Passed",
+        "seconds": 27.555729031562805
+      },
+      {
+        "identity": "MediaReplayUITests/testParentDisabledBlocksAndUnloadsEveryMediaBuilder()",
+        "result": "Passed",
+        "seconds": 47.784963965415955
+      },
+      {
+        "identity": "MediaReplayUITests/testSealingALiveOwnerDoesNotGrantHistoryMediaPermission()",
+        "result": "Passed",
+        "seconds": 20.1115700006485
+      }
+    ],
+    "devices": [
+      {
+        "architecture": "arm64",
+        "deviceId": "BD45E322-E7EB-4656-B163-2E020002594B",
+        "deviceName": "HanlinMedia-44222521036",
+        "modelName": "iPhone 18 Pro",
+        "osBuildNumber": "24B8117",
+        "osVersion": "27.2",
+        "platform": "iOS Simulator"
+      }
+    ],
+    "source_inputs": {
+      "scope": "actual SwiftUI component UI; original ChatView/SDK/provider/physical NOT_RUN",
+      "upstream": "https://github.com/a2ui-project/a2ui",
+      "revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079",
+      "cases": [
+        "testHistoryYouTubeAllowsOnlyExplicitLocalMedia",
+        "testHistoryVideoAllowsExplicitLoadAndApprovedSource",
+        "testHistoryAudioAllowsExplicitLoadAndApprovedSource",
+        "testSealingALiveOwnerDoesNotGrantHistoryMediaPermission",
+        "testParentDisabledBlocksAndUnloadsEveryMediaBuilder",
+        "testBoundURLReplacementUnloadsEveryRequestedPlayer",
+        "testBackgroundDisappearanceAndDisposalUnloadEveryPlayer"
+      ],
+      "files": [
+        {
+          "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIContentLimits.swift",
+          "sha256": "6a78f5bf5c3c829c608854bce16eac714397a248c94a67bedc21efcc260848e0"
+        },
+        {
+          "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIFrameLifetime.swift",
+          "sha256": "bc0b200e4db97cd200ac571253e878277a7df4d5132018dfb627d0cabb87bca8"
+        },
+        {
+          "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIIngress.swift",
+          "sha256": "0033c2f4522ac2fcee212becdaff3a2285d6a47349a2101457511116bda2cb1c"
+        },
+        {
+          "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UILocalMedia.swift",
+          "sha256": "ae58cf03a5da2f3a019a697279e40bb0911d0cc8254a7c7c65e725d6984dd107"
+        },
+        {
+          "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultOwner.swift",
+          "sha256": "7067198f91a7fa2216e7e5dd244b4575d184823884b8eaf3ea1d6bdc7016d5ab"
+        },
+        {
+          "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultProjectionSource.swift",
+          "sha256": "4420dd5bcd3d8cd3c65018a4a994f2cd65eb5e4f8162b7e318514f5004607f4a"
+        },
+        {
+          "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultView.swift",
+          "sha256": "afb27c3c95235bfac4d6ff6f0ea0c22ed47f89b03e501d4f4c0de198d0628df1"
+        },
+        {
+          "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UISession.swift",
+          "sha256": "60b64b4f2720df1d4e99e5222a1e606e425e2e71d4dfe1fd21da24fdcf40e5b3"
+        },
+        {
+          "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinChatContentProjection.swift",
+          "sha256": "6523fe65987113da98d161379aad075a550d98fd86aa3cafef3ccfa136d3615f"
+        },
+        {
+          "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinMediaCatalog.swift",
+          "sha256": "d39331996522721bfa1d482914ea2ef886d40f329aacecd77b63b093fdb5c99f"
+        },
+        {
+          "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinA2UIMediaURLGate.swift",
+          "sha256": "715e1cd64005dcee282201eda284c884f9a04dff94b2b82d99d32b6eba557a48"
+        },
+        {
+          "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinMediaCatalogImplementation.swift",
+          "sha256": "f99d7b0f47b17bad512126ec3e17d5be44f84c03fe544615f9f9bdccbde382be"
+        },
+        {
+          "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinRemoteMediaURL.swift",
+          "sha256": "691a095aca71d0ffcdd7fa3af56480bc470d35e4d8f049042948f1bb949d9caa"
+        },
+        {
+          "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubeDocument.swift",
+          "sha256": "c7dbf50affd9ff18288b425617e583ca92fee44149a9d305f386ff42e8f44e90"
+        },
+        {
+          "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubePlayerView.swift",
+          "sha256": "0197b08ff2d8510f7a7b44d437dc450df883faa6d9e52a0bce60f15060bb5a5e"
+        },
+        {
+          "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubeVideo.swift",
+          "sha256": "5791cfa1ca552332628ce4b4c9fc1145e3cbcaf1bdec05188bd74e4e340020c8"
+        },
+        {
+          "path": "docs/a2ui/MediaReplayUI/App.swift",
+          "sha256": "417e4d595234ad57c52fc5df186183e6eb5f611b19b4dfb1550b6220755fe077"
+        },
+        {
+          "path": "docs/a2ui/MediaReplayUI/MediaReplayUITests.swift",
+          "sha256": "4eea33bbf1bc52749c4a5b38c662dd6ca369f5c4229700d5d082a463a563ee41"
+        },
+        {
+          "path": "AI_HLYUITests/Fixtures/A2UIReplayMedia.jsonl",
+          "sha256": "1f0fbb0926011673b95bfae719babede6bc138119559156543b81a97acc5cb1e"
+        }
+      ],
+      "project_spec_sha256": "533010cef5c74392d6b8b52c1f247142009dffb520eb4a9933097aa48610b006"
+    },
+    "target_source_files_identical": true,
+    "limits": "Original SwiftUI catalog/owner component behavior. Does not establish full original chat, real remote playback, image search, gallery/link-card features, physical device or phase acceptance."
+  },
+  "transfer": {
+    "status": "EXECUTED_PASS",
+    "run_id": 44223454456,
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44223454456",
+    "source_sha": "f1cc6c0ba0c50e7d7d3a60419c0e864815dff6ec",
+    "log_sha256": "bd2af1a15978aa3bf1251d7d6e3e5743378319300411ee7d6dd80c1163efa49a",
+    "method_count": 17,
+    "invocations_including_parameter_cases": 25,
+    "methods": [
+      "✔ Test largeRecordsSurviveReinstallationAndClearPreservesMigrationIntent() passed after 3.249 seconds.",
+      "✔ Test storagePayloadPolicyIsExplicit() passed after 0.541 seconds.",
+      "✔ Test \"Tampered checkpoint bytes are rejected before destination writes\" passed after 2.635 seconds.",
+      "✔ Test \"Rollback resumes after every journaled restore boundary\" with 3 test cases passed after 2.635 seconds.",
+      "✔ Test \"Durable snapshots retain nonempty SQLite WAL and ordinary similarly named files\" passed after 2.635 seconds.",
+      "✔ Test \"Live canonical KV and SQLite owners checkpoint, reopen, and follow rollback roots\" passed after 2.636 seconds.",
+      "✔ Test \"Conflicting package identities or data are rejected before live changes\" with 2 test cases passed after 2.635 seconds.",
+      "✔ Test \"A read-only destination cannot change either source store\" passed after 2.635 seconds.",
+      "✔ Test \"A symlink in private data cannot pull other files into the transfer\" passed after 2.635 seconds.",
+      "✔ Test \"A fresh process recovers each durable two-store promotion boundary\" with 6 test cases passed after 2.636 seconds.",
+      "✔ Test \"Real identities, all generations, grants, disabled state and private bytes survive import and rollback\" passed after 2.636 seconds.",
+      "✔ Test \"Unopened legacy ScriptUI defaults migrate before export without replacing newer canonical data\" passed after 2.636 seconds.",
+      "✔ Test \"A later committed SQLite KV edit prevents rollback and survives a repeated import\" passed after 2.668 seconds.",
+      "✔ Test \"Retry preserves later user edits, and rollback refuses to discard them\" passed after 2.835 seconds.",
+      "✔ Test legacyMigrationPagesAllKeysAndDoesNotResurrectClearedValues() passed after 0.344 seconds.",
+      "✔ Test independentConnectionsPreserveConcurrentCommittedKeys() passed after 0.350 seconds.",
+      "✔ Test largeValuesReopenAndExplicitSharing() passed after 0.768 seconds."
+    ],
+    "suite_summaries": [
+      "✔ Test run with 2 tests in 1 suite passed after 3.791 seconds.",
+      "✔ Test run with 12 tests in 1 suite passed after 2.836 seconds.",
+      "✔ Test run with 3 tests in 1 suite passed after 0.769 seconds."
+    ],
+    "xcode": "27.2 / 27B52",
+    "swift": "6.4.2",
+    "platform": "macOS",
+    "changed_files_to_target": [
+      ".github/workflows/validate-app-split.yml",
+      "HanlinMiniAppsTests/SplitAppStorageLayoutTests.swift",
+      "HanlinMiniAppsTests/SplitMailboxTests.swift",
+      "Packages/HanlinProductSplit/Sources/HanlinProductSplit/SplitAppStorageLayout.swift",
+      "docs/continuation-20261117/EXECUTION_PLAN.md",
+      "docs/continuation-20261117/MINIAPPS_NAMESPACE_FIX_20261118.json"
+    ],
+    "relevant_platform_and_agent_package_files_unchanged": true,
+    "limits": "Real disposable original storage owners/JS runtime on macOS; installed two-app iOS transfer and physical user-data migration remain separate acceptance gates."
+  }
+}

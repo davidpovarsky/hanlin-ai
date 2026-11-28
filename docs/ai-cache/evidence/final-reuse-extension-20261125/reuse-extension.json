@@ -1,0 +1,1542 @@
+{
+  "actual_standalone_resolution": {
+    "all_four_core_proof_pins_match_each_actual_standalone_graph": true,
+    "builds": 0,
+    "canonical_app_lock_drift": false,
+    "command": [
+      "bash",
+      "Scripts/CI/IntegrationValidation/resolve_agent_sdk_locks.sh"
+    ],
+    "developer_directory": "/Applications/Xcode.app/Contents/Developer",
+    "exit_code": 0,
+    "finished_at_utc": "2026-11-25T04:58:36.299718+00:00",
+    "generated_commit": "0e782f60bb28c704cae6200d5ff161826b771154",
+    "generated_commit_is_ancestor_of_target": true,
+    "graphs": 6,
+    "locks": [
+      {
+        "added_since_previous_review": [
+          "opentelemetry-swift-core",
+          "swift-atomics"
+        ],
+        "all_four_core_proof_pins_match": true,
+        "all_previous_pins_unchanged": true,
+        "equals_original_generated_bytes": true,
+        "manifest_matches_actual_resolution_input": true,
+        "path": "Packages/HanlinPlatform/Package.resolved",
+        "removed_since_previous_review": [],
+        "retained_original_path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/Packages/HanlinPlatform/Package.resolved",
+        "sha256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d"
+      },
+      {
+        "added_since_previous_review": [
+          "opentelemetry-swift-core",
+          "swift-atomics"
+        ],
+        "all_four_core_proof_pins_match": true,
+        "all_previous_pins_unchanged": true,
+        "equals_original_generated_bytes": true,
+        "manifest_matches_actual_resolution_input": true,
+        "path": "Packages/HanlinAgentSDK/Package.resolved",
+        "removed_since_previous_review": [],
+        "retained_original_path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/Packages/HanlinAgentSDK/Package.resolved",
+        "sha256": "543da4b8e9fe589c8d071fa3599d30034cb39bd57e839ba6130f754cdad701ca"
+      },
+      {
+        "added_since_previous_review": [
+          "opentelemetry-swift-core",
+          "swift-atomics"
+        ],
+        "all_four_core_proof_pins_match": true,
+        "all_previous_pins_unchanged": true,
+        "equals_original_generated_bytes": true,
+        "manifest_matches_actual_resolution_input": true,
+        "path": "Packages/HanlinParityMiniApp/Package.resolved",
+        "removed_since_previous_review": [],
+        "retained_original_path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/Packages/HanlinParityMiniApp/Package.resolved",
+        "sha256": "12bab0ef874ee4bc8a1ca62b982a912be3c6b70077ff4eb13cc9e8e9c294f711"
+      },
+      {
+        "added_since_previous_review": [
+          "opentelemetry-swift-core",
+          "swift-atomics"
+        ],
+        "all_four_core_proof_pins_match": true,
+        "all_previous_pins_unchanged": true,
+        "equals_original_generated_bytes": true,
+        "manifest_matches_actual_resolution_input": true,
+        "path": "Packages/HanlinTextStudioMiniApp/Package.resolved",
+        "removed_since_previous_review": [],
+        "retained_original_path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/Packages/HanlinTextStudioMiniApp/Package.resolved",
+        "sha256": "4f501a5aee7c6bc060b8e0edc92735f713c2633d5dc4f6b71718b0c73636b097"
+      },
+      {
+        "added_since_previous_review": [
+          "opentelemetry-swift-core",
+          "swift-atomics"
+        ],
+        "all_four_core_proof_pins_match": true,
+        "all_previous_pins_unchanged": true,
+        "equals_original_generated_bytes": true,
+        "manifest_matches_actual_resolution_input": true,
+        "path": "Packages/HanlinSefariaMiniApp/Package.resolved",
+        "removed_since_previous_review": [],
+        "retained_original_path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/Packages/HanlinSefariaMiniApp/Package.resolved",
+        "sha256": "826482079b436a8eb7fd2cbabe1f47976f1fb049e7461fe2da2a6dfbb0f0c643"
+      },
+      {
+        "added_since_previous_review": [
+          "opentelemetry-swift-core",
+          "swift-atomics"
+        ],
+        "all_four_core_proof_pins_match": true,
+        "all_previous_pins_unchanged": true,
+        "equals_original_generated_bytes": true,
+        "manifest_matches_actual_resolution_input": true,
+        "path": "Packages/HanlinWikipediaMiniApp/Package.resolved",
+        "removed_since_previous_review": [],
+        "retained_original_path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/Packages/HanlinWikipediaMiniApp/Package.resolved",
+        "sha256": "6c0486d70cbf33a29a3b62bb9bda998fde0163b90295098a694a0d0ac5b8f23f"
+      }
+    ],
+    "old_pin_drift": false,
+    "raw_log_sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+    "receipt": {
+      "bytes": 1890,
+      "git_blob": "9bf9fac53cda89235d08468ce25ff5a0ac3207ea",
+      "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/receipt.json",
+      "sha256": "2345b03849087834b24fdd08d6ae91f62797eb1d631f0d7bfe8753b8b57d1a12",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    },
+    "source": "37367b3d6bbd7e8321d6828a9052d502dd9d7522",
+    "started_at_utc": "2026-11-25T04:58:06.443225+00:00",
+    "status": "EXECUTED_RESOLUTION_PASS_BY_ROOT",
+    "storage_index": {
+      "bytes": 7282,
+      "git_blob": "a14addf2b460a913aad8db42cfe08a9803e1acbe",
+      "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/storage-index.json",
+      "sha256": "c86bddb5e61233676ae8a74af2c51bf5ceae1f21ec4c694df0ad991c73a79c43",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    },
+    "storage_verification": [
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/HanlinAgentSDK-resolve.log.gz",
+        "raw_sha256": "3ca0729327b584a1f3ef717527e3d071dcc363e4d0524368ba05d2b63e5fc72a",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "d074eb557b4fb817f897d8fcb3001f25ee45606615294d9f85aca4f7e2d3b505"
+      },
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/HanlinParityMiniApp-resolve.log.gz",
+        "raw_sha256": "675374a7da8e7e616cac728fe52d082ed75575b74baacd0d7ce0768ae87b9a8c",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "f95401bc916d9f7a5c3a1466614b0abd89516d7a8893aaf1435908c1e97bbcbd"
+      },
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/HanlinPlatform-resolve.log.gz",
+        "raw_sha256": "23c65b9942166e7b8014e1cac3f72d3ef5081338a537486913badfd0a4df0c9a",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "223aebb9931ae3ebe7f4607758deb3ce8681687e17811d90e855527b6da04218"
+      },
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/HanlinSefariaMiniApp-resolve.log.gz",
+        "raw_sha256": "a5ba67207ef627f7842f9f8bdca3b5405ce12837b83411ab682248718246de30",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "35ea18cfe7e862d7bf4d234bf2f73dc9364cad3951c91843a4fec3c5dea1a95a"
+      },
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/HanlinTextStudioMiniApp-resolve.log.gz",
+        "raw_sha256": "a980c0c39c11abde97836030e5462fe66d660a4d0a8221d8c2847a4a247718c7",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "5c683fbff0c0e6c9d22c34100c8616d0a1ac4bb8096a193272fc821bb4d173bb"
+      },
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/HanlinWikipediaMiniApp-resolve.log.gz",
+        "raw_sha256": "1df90ab02742658eaa6fbe5a2f0e76fe3155bc50617d54ce6b2e5550cfc85c4e",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "69f8d480c5a77ec887987ea3cb518f82e6eae49babc4813f4c04f03acc504e46"
+      },
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/Packages/HanlinAgentSDK/Package.resolved",
+        "raw_sha256": "543da4b8e9fe589c8d071fa3599d30034cb39bd57e839ba6130f754cdad701ca",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "543da4b8e9fe589c8d071fa3599d30034cb39bd57e839ba6130f754cdad701ca"
+      },
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/Packages/HanlinParityMiniApp/Package.resolved",
+        "raw_sha256": "12bab0ef874ee4bc8a1ca62b982a912be3c6b70077ff4eb13cc9e8e9c294f711",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "12bab0ef874ee4bc8a1ca62b982a912be3c6b70077ff4eb13cc9e8e9c294f711"
+      },
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/Packages/HanlinPlatform/Package.resolved",
+        "raw_sha256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d"
+      },
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/Packages/HanlinSefariaMiniApp/Package.resolved",
+        "raw_sha256": "826482079b436a8eb7fd2cbabe1f47976f1fb049e7461fe2da2a6dfbb0f0c643",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "826482079b436a8eb7fd2cbabe1f47976f1fb049e7461fe2da2a6dfbb0f0c643"
+      },
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/Packages/HanlinTextStudioMiniApp/Package.resolved",
+        "raw_sha256": "4f501a5aee7c6bc060b8e0edc92735f713c2633d5dc4f6b71718b0c73636b097",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "4f501a5aee7c6bc060b8e0edc92735f713c2633d5dc4f6b71718b0c73636b097"
+      },
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/Packages/HanlinWikipediaMiniApp/Package.resolved",
+        "raw_sha256": "6c0486d70cbf33a29a3b62bb9bda998fde0163b90295098a694a0d0ac5b8f23f",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "6c0486d70cbf33a29a3b62bb9bda998fde0163b90295098a694a0d0ac5b8f23f"
+      },
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/canonical-app-Package.resolved",
+        "raw_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037"
+      },
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/input-sha256.json",
+        "raw_sha256": "3104b4b81642200daf9d7a047db0395b72d33ad65b107500477ba7cb34d4676b",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "3104b4b81642200daf9d7a047db0395b72d33ad65b107500477ba7cb34d4676b"
+      },
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/resolution.json",
+        "raw_sha256": "741dd6376f5b5c23a3397f9d2531e50fae01e8469a1f6ab1b78c3ab7e61f5a32",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "741dd6376f5b5c23a3397f9d2531e50fae01e8469a1f6ab1b78c3ab7e61f5a32"
+      },
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/source-commit.txt",
+        "raw_sha256": "1979c26d49a32efef8f2085f893053c62471c4a718d7c72d6d5c1ae5b47646ba",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "1979c26d49a32efef8f2085f893053c62471c4a718d7c72d6d5c1ae5b47646ba"
+      },
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/summary.json",
+        "raw_sha256": "71056a975c778608971b6cf43dc43eb6ba4e32c4d9eb659926d5bce1ef1bbdf8",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "71056a975c778608971b6cf43dc43eb6ba4e32c4d9eb659926d5bce1ef1bbdf8"
+      },
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/swift.txt",
+        "raw_sha256": "04630ab8fa201f57c63c59730e638135e32584a97e16e004a417eb8ed283dc83",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "04630ab8fa201f57c63c59730e638135e32584a97e16e004a417eb8ed283dc83"
+      },
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original/xcode.txt",
+        "raw_sha256": "694b44731d0b415c5b11d844151e466d7f5e200a95627efda377f232f1a6ab77",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "694b44731d0b415c5b11d844151e466d7f5e200a95627efda377f232f1a6ab77"
+      },
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/original-resolution.log.gz",
+        "raw_sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "12919eb3b241936fe8b140e777c7e67f606c0c293f0d89edb13a52cd5e1e85be"
+      },
+      {
+        "path": "docs/ai-cache/evidence/standalone-lock-resolution-20261125/receipt.json",
+        "raw_sha256": "2345b03849087834b24fdd08d6ae91f62797eb1d631f0d7bfe8753b8b57d1a12",
+        "stored_and_decompressed_hashes_match": true,
+        "stored_sha256": "2345b03849087834b24fdd08d6ae91f62797eb1d631f0d7bfe8753b8b57d1a12"
+      }
+    ],
+    "tests": 0
+  },
+  "assessment": "UNCHANGED_CORE_AND_LOCAL_JS_INPUTS_WITH_ORIGINAL_STANDALONE_LOCK_GAP_RESOLVED",
+  "base_source": {
+    "commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa",
+    "tree": "d0dc201253ea9a57a4837c9a47cf4049004185fb"
+  },
+  "consumed_dependencies": {
+    "canonical_app_lock": {
+      "bytes": 10750,
+      "git_blob": "1338c859a6b9e41c22f8615b5f4a8949a7ccf031",
+      "path": "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    },
+    "consumed_npm_entries": [
+      {
+        "base_sha256": "fccc5039c760759c5a5751b2056300cd23204f897e5d1ce26408c4a108e4de78",
+        "consumed_entries": [
+          {
+            "actual_entry": {
+              "bin": {
+                "tsc": "bin/tsc",
+                "tsserver": "bin/tsserver"
+              },
+              "dev": true,
+              "engines": {
+                "node": ">=14.17"
+              },
+              "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==",
+              "license": "Apache-2.0",
+              "resolved": "https://registry.npmjs.org/typescript/-/typescript-5.9.3.tgz",
+              "version": "5.9.3"
+            },
+            "matches_original_and_previous": true,
+            "package": "node_modules/typescript"
+          }
+        ],
+        "path": "Scripts/NativeScript/package-lock.json",
+        "target_sha256": "fccc5039c760759c5a5751b2056300cd23204f897e5d1ce26408c4a108e4de78",
+        "whole_file_unchanged_since_previous_review": true
+      },
+      {
+        "base_sha256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+        "consumed_entries": [
+          {
+            "actual_entry": {
+              "bin": {
+                "tsc6": "bin/tsc6"
+              },
+              "dependencies": {
+                "@typescript/old": "npm:typescript@^6"
+              },
+              "devOptional": true,
+              "integrity": "sha512-mbCddXd+jm7hfx7w2YU64/Av4/NqqeG3GoRZgxPcgoTxYjhrcfJRw9ULch71SS4G+Q3bOXFhRvPqjguN0Hyp5w==",
+              "license": "Apache-2.0",
+              "name": "@typescript/typescript6",
+              "resolved": "https://registry.npmjs.org/@typescript/typescript6/-/typescript6-6.0.2.tgz",
+              "version": "6.0.2"
+            },
+            "matches_original_and_previous": true,
+            "package": "node_modules/typescript"
+          },
+          {
+            "actual_entry": {
+              "bin": {
+                "tsc": "bin/tsc",
+                "tsserver": "bin/tsserver"
+              },
+              "devOptional": true,
+              "engines": {
+                "node": ">=14.17"
+              },
+              "integrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+              "license": "Apache-2.0",
+              "name": "typescript",
+              "resolved": "https://registry.npmjs.org/typescript/-/typescript-6.0.3.tgz",
+              "version": "6.0.3"
+            },
+            "matches_original_and_previous": true,
+            "package": "node_modules/@typescript/old"
+          },
+          {
+            "actual_entry": {
+              "funding": [
+                {
+                  "type": "github",
+                  "url": "https://github.com/sponsors/feross"
+                },
+                {
+                  "type": "patreon",
+                  "url": "https://www.patreon.com/feross"
+                },
+                {
+                  "type": "consulting",
+                  "url": "https://feross.org/support"
+                }
+              ],
+              "integrity": "sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==",
+              "license": "MIT",
+              "resolved": "https://registry.npmjs.org/base64-js/-/base64-js-1.5.1.tgz",
+              "version": "1.5.1"
+            },
+            "matches_original_and_previous": true,
+            "package": "node_modules/base64-js"
+          }
+        ],
+        "path": "Scripts/Expo/package-lock.json",
+        "target_sha256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+        "whole_file_unchanged_since_previous_review": true
+      }
+    ],
+    "core_pins_all_match_current_canonical_app_lock": true,
+    "core_proof_pins": [
+      {
+        "identity": "opentelemetry-swift-core",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/open-telemetry/opentelemetry-swift-core.git",
+        "state": {
+          "revision": "c6fcee77cfc21ba400366f12475217c7b6e1d605",
+          "version": "2.6.0"
+        }
+      },
+      {
+        "identity": "swift-ai-sdk",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/davidpovarsky/swift-ai-sdk.git",
+        "state": {
+          "revision": "abf0921c6e89e6521cc2b510ff11016b45a0ef08"
+        }
+      },
+      {
+        "identity": "swift-argument-parser",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/apple/swift-argument-parser",
+        "state": {
+          "revision": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+          "version": "1.8.2"
+        }
+      },
+      {
+        "identity": "swift-atomics",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/apple/swift-atomics.git",
+        "state": {
+          "revision": "0442cb5a3f98ab802acb777929fdb446bda11a34",
+          "version": "1.3.1"
+        }
+      }
+    ],
+    "local_lru_matches_current_canonical_app_lock": true,
+    "local_lru_pin": {
+      "identity": "lrucache",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/nicklockwood/LRUCache.git",
+      "state": {
+        "revision": "f0570e943ea4445d258113ba73f50cb2b7e564ac",
+        "version": "1.3.0"
+      }
+    },
+    "whole_canonical_app_lock_unchanged_since_base": true
+  },
+  "core_closure": {
+    "canonical_count": 80,
+    "canonical_files": [
+      {
+        "base_sha256": "ac0e2b793a9df8329f12fbb27cd02ee91cb8cb29257f185e0969ebffa2510ebc",
+        "identical": true,
+        "original_recorded_sha256": "ac0e2b793a9df8329f12fbb27cd02ee91cb8cb29257f185e0969ebffa2510ebc",
+        "path": "Packages/HanlinPlatform/Package.swift",
+        "target_sha256": "ac0e2b793a9df8329f12fbb27cd02ee91cb8cb29257f185e0969ebffa2510ebc"
+      },
+      {
+        "base_sha256": "454a3cb784d8c0e64541bf3204ee77ebd4852d79e8e4bd98d1768f41ff93cf29",
+        "identical": true,
+        "original_recorded_sha256": "454a3cb784d8c0e64541bf3204ee77ebd4852d79e8e4bd98d1768f41ff93cf29",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+        "target_sha256": "454a3cb784d8c0e64541bf3204ee77ebd4852d79e8e4bd98d1768f41ff93cf29"
+      },
+      {
+        "base_sha256": "33625097663a99aacb96db8b1905231fe758609c407d6c730176d0ff4309e275",
+        "identical": true,
+        "original_recorded_sha256": "33625097663a99aacb96db8b1905231fe758609c407d6c730176d0ff4309e275",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKJSONOutput.swift",
+        "target_sha256": "33625097663a99aacb96db8b1905231fe758609c407d6c730176d0ff4309e275"
+      },
+      {
+        "base_sha256": "c5c14c6feb0643b286cb23373887c5ec1c8b291f318fc900536718b601105474",
+        "identical": true,
+        "original_recorded_sha256": "c5c14c6feb0643b286cb23373887c5ec1c8b291f318fc900536718b601105474",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift",
+        "target_sha256": "c5c14c6feb0643b286cb23373887c5ec1c8b291f318fc900536718b601105474"
+      },
+      {
+        "base_sha256": "a0c54a15c95dfd4b5e58d64f9bbc7534464ed86ad7a8638519bd5cfba42c4bbf",
+        "identical": true,
+        "original_recorded_sha256": "a0c54a15c95dfd4b5e58d64f9bbc7534464ed86ad7a8638519bd5cfba42c4bbf",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift",
+        "target_sha256": "a0c54a15c95dfd4b5e58d64f9bbc7534464ed86ad7a8638519bd5cfba42c4bbf"
+      },
+      {
+        "base_sha256": "ad4f7d48c49e918db2f826d02556b63a95e29f0b34637d1f853a9bc6c20169ce",
+        "identical": true,
+        "original_recorded_sha256": "ad4f7d48c49e918db2f826d02556b63a95e29f0b34637d1f853a9bc6c20169ce",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinCapturedStreamReplay.swift",
+        "target_sha256": "ad4f7d48c49e918db2f826d02556b63a95e29f0b34637d1f853a9bc6c20169ce"
+      },
+      {
+        "base_sha256": "04fb53a01da89b2af0f3b9e4f0773891a7d52daec9e2e3bbb7596c81ac829a93",
+        "identical": true,
+        "original_recorded_sha256": "04fb53a01da89b2af0f3b9e4f0773891a7d52daec9e2e3bbb7596c81ac829a93",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatEngine.swift",
+        "target_sha256": "04fb53a01da89b2af0f3b9e4f0773891a7d52daec9e2e3bbb7596c81ac829a93"
+      },
+      {
+        "base_sha256": "14f8bc46a2590eb483b94d292e05a37d732cb34af207872faf897abe50bc3aab",
+        "identical": true,
+        "original_recorded_sha256": "14f8bc46a2590eb483b94d292e05a37d732cb34af207872faf897abe50bc3aab",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatGPTPlanClient.swift",
+        "target_sha256": "14f8bc46a2590eb483b94d292e05a37d732cb34af207872faf897abe50bc3aab"
+      },
+      {
+        "base_sha256": "2000443780bf8038ca7a02c156bf49087e84937bbe77e1cee1bca766374440e2",
+        "identical": true,
+        "original_recorded_sha256": "2000443780bf8038ca7a02c156bf49087e84937bbe77e1cee1bca766374440e2",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatGPTPlanTransport.swift",
+        "target_sha256": "2000443780bf8038ca7a02c156bf49087e84937bbe77e1cee1bca766374440e2"
+      },
+      {
+        "base_sha256": "18fed34ca6de1742f18b5b59bd3b4774103acfce57e44803ff537818e8327900",
+        "identical": true,
+        "original_recorded_sha256": "18fed34ca6de1742f18b5b59bd3b4774103acfce57e44803ff537818e8327900",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatGPTPlanWire.swift",
+        "target_sha256": "18fed34ca6de1742f18b5b59bd3b4774103acfce57e44803ff537818e8327900"
+      },
+      {
+        "base_sha256": "b6ebae1ff8788ca405cb9e5b54379894d9c5f29a58e81101d07b8df53f805704",
+        "identical": true,
+        "original_recorded_sha256": "b6ebae1ff8788ca405cb9e5b54379894d9c5f29a58e81101d07b8df53f805704",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatMessage.swift",
+        "target_sha256": "b6ebae1ff8788ca405cb9e5b54379894d9c5f29a58e81101d07b8df53f805704"
+      },
+      {
+        "base_sha256": "41eabd65699bd1a457e10d541295a8fd26964b9480eeefbc6f0083f82be9a824",
+        "identical": true,
+        "original_recorded_sha256": "41eabd65699bd1a457e10d541295a8fd26964b9480eeefbc6f0083f82be9a824",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatModelConfiguration.swift",
+        "target_sha256": "41eabd65699bd1a457e10d541295a8fd26964b9480eeefbc6f0083f82be9a824"
+      },
+      {
+        "base_sha256": "999dd302efc17f718a22593f8568d57e2d47b0c3da01f682e2899973e2c2746f",
+        "identical": true,
+        "original_recorded_sha256": "999dd302efc17f718a22593f8568d57e2d47b0c3da01f682e2899973e2c2746f",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatProviderSession.swift",
+        "target_sha256": "999dd302efc17f718a22593f8568d57e2d47b0c3da01f682e2899973e2c2746f"
+      },
+      {
+        "base_sha256": "3d4dca321ec21c8e374ff2a74305405fbb8b97a044187684c1a1825f7416881a",
+        "identical": true,
+        "original_recorded_sha256": "3d4dca321ec21c8e374ff2a74305405fbb8b97a044187684c1a1825f7416881a",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatRequestBuilder.swift",
+        "target_sha256": "3d4dca321ec21c8e374ff2a74305405fbb8b97a044187684c1a1825f7416881a"
+      },
+      {
+        "base_sha256": "d5760c05a0c9154b8716e3f9c95be4df7dc1c42974dd21612ab43bdb235094ef",
+        "identical": true,
+        "original_recorded_sha256": "d5760c05a0c9154b8716e3f9c95be4df7dc1c42974dd21612ab43bdb235094ef",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatStreamEvent.swift",
+        "target_sha256": "d5760c05a0c9154b8716e3f9c95be4df7dc1c42974dd21612ab43bdb235094ef"
+      },
+      {
+        "base_sha256": "c80ca72c21163f34daa2e3a35a8343f2fd6bdac63cf76897bd003eecfe68fec8",
+        "identical": true,
+        "original_recorded_sha256": "c80ca72c21163f34daa2e3a35a8343f2fd6bdac63cf76897bd003eecfe68fec8",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatStreamParser.swift",
+        "target_sha256": "c80ca72c21163f34daa2e3a35a8343f2fd6bdac63cf76897bd003eecfe68fec8"
+      },
+      {
+        "base_sha256": "3cd3fbb880ee98450dc022920380b4c38baa84bca421b4739b6b525ac17ae262",
+        "identical": true,
+        "original_recorded_sha256": "3cd3fbb880ee98450dc022920380b4c38baa84bca421b4739b6b525ac17ae262",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatStructuredPart.swift",
+        "target_sha256": "3cd3fbb880ee98450dc022920380b4c38baa84bca421b4739b6b525ac17ae262"
+      },
+      {
+        "base_sha256": "6acef2c38d98f14c34221a1995913d03c6ec1b34f3ad6df31b0d889cddbb8395",
+        "identical": true,
+        "original_recorded_sha256": "6acef2c38d98f14c34221a1995913d03c6ec1b34f3ad6df31b0d889cddbb8395",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatTransportTrace.swift",
+        "target_sha256": "6acef2c38d98f14c34221a1995913d03c6ec1b34f3ad6df31b0d889cddbb8395"
+      },
+      {
+        "base_sha256": "5954892745f45e4498089775eeba1ae4a32718912c23eae2bbb4f1166e9f092c",
+        "identical": true,
+        "original_recorded_sha256": "5954892745f45e4498089775eeba1ae4a32718912c23eae2bbb4f1166e9f092c",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinGoogleCachedContent.swift",
+        "target_sha256": "5954892745f45e4498089775eeba1ae4a32718912c23eae2bbb4f1166e9f092c"
+      },
+      {
+        "base_sha256": "aa102dfa161fdc72b939bbf103fad18d8c5e20ac307ab4c0ae92425cd2987eb6",
+        "identical": true,
+        "original_recorded_sha256": "aa102dfa161fdc72b939bbf103fad18d8c5e20ac307ab4c0ae92425cd2987eb6",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinNativeStructuredResponse.swift",
+        "target_sha256": "aa102dfa161fdc72b939bbf103fad18d8c5e20ac307ab4c0ae92425cd2987eb6"
+      },
+      {
+        "base_sha256": "d62ad35a0e618bbfedb56dd79a9301585725589184aaaf3a26ab870d8a17716e",
+        "identical": true,
+        "original_recorded_sha256": "d62ad35a0e618bbfedb56dd79a9301585725589184aaaf3a26ab870d8a17716e",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinNonEmptyLanguageModel.swift",
+        "target_sha256": "d62ad35a0e618bbfedb56dd79a9301585725589184aaaf3a26ab870d8a17716e"
+      },
+      {
+        "base_sha256": "3278fd5539dfb554b645180886aa31421b3d02096a67b45aa6ba26b21e442292",
+        "identical": true,
+        "original_recorded_sha256": "3278fd5539dfb554b645180886aa31421b3d02096a67b45aa6ba26b21e442292",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinOpenTelemetryTracer.swift",
+        "target_sha256": "3278fd5539dfb554b645180886aa31421b3d02096a67b45aa6ba26b21e442292"
+      },
+      {
+        "base_sha256": "7cce9937a6ca748c24ca8fd21ddfc8b5ef5f9a5d0453dcb706ecbbc71af1e752",
+        "identical": true,
+        "original_recorded_sha256": "7cce9937a6ca748c24ca8fd21ddfc8b5ef5f9a5d0453dcb706ecbbc71af1e752",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinPromptCachePolicy.swift",
+        "target_sha256": "7cce9937a6ca748c24ca8fd21ddfc8b5ef5f9a5d0453dcb706ecbbc71af1e752"
+      },
+      {
+        "base_sha256": "137c820ca8849be5568d8b4c741afa36a38951a0a8b99c8fc4ee80f49457be6d",
+        "identical": true,
+        "original_recorded_sha256": "137c820ca8849be5568d8b4c741afa36a38951a0a8b99c8fc4ee80f49457be6d",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinPromptCachePolicyMutation.swift",
+        "target_sha256": "137c820ca8849be5568d8b4c741afa36a38951a0a8b99c8fc4ee80f49457be6d"
+      },
+      {
+        "base_sha256": "a50e123107a8e59791c32a4228ba12bf690c1038a6324238ffbfa0e68ebc7cf4",
+        "identical": true,
+        "original_recorded_sha256": "a50e123107a8e59791c32a4228ba12bf690c1038a6324238ffbfa0e68ebc7cf4",
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinPromptCachePreset.swift",
+        "target_sha256": "a50e123107a8e59791c32a4228ba12bf690c1038a6324238ffbfa0e68ebc7cf4"
+      },
+      {
+        "base_sha256": "eced270fa6b134eb082125550af2518f59d43b72ff99fe75ec05b7150aa8b6ab",
+        "identical": true,
+        "original_recorded_sha256": "eced270fa6b134eb082125550af2518f59d43b72ff99fe75ec05b7150aa8b6ab",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinAssistantToolDeclaration.swift",
+        "target_sha256": "eced270fa6b134eb082125550af2518f59d43b72ff99fe75ec05b7150aa8b6ab"
+      },
+      {
+        "base_sha256": "eb8ec5975b912c87f973064fef9ce000051894b27e9c58fdeec7f4aee23a531b",
+        "identical": true,
+        "original_recorded_sha256": "eb8ec5975b912c87f973064fef9ce000051894b27e9c58fdeec7f4aee23a531b",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinCapabilityAttachment.swift",
+        "target_sha256": "eb8ec5975b912c87f973064fef9ce000051894b27e9c58fdeec7f4aee23a531b"
+      },
+      {
+        "base_sha256": "757478b238a1fc3144ef51c70275539502f959dd2aca9e67dbbf2449b24f7473",
+        "identical": true,
+        "original_recorded_sha256": "757478b238a1fc3144ef51c70275539502f959dd2aca9e67dbbf2449b24f7473",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinCatalogContracts.swift",
+        "target_sha256": "757478b238a1fc3144ef51c70275539502f959dd2aca9e67dbbf2449b24f7473"
+      },
+      {
+        "base_sha256": "07479b91a7ce77a8fdf5d53f3cb16939d9d46b0287efbd50b8b20b446c8ea2fa",
+        "identical": true,
+        "original_recorded_sha256": "07479b91a7ce77a8fdf5d53f3cb16939d9d46b0287efbd50b8b20b446c8ea2fa",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinChatStructuredPart.swift",
+        "target_sha256": "07479b91a7ce77a8fdf5d53f3cb16939d9d46b0287efbd50b8b20b446c8ea2fa"
+      },
+      {
+        "base_sha256": "5ce136bc896c30dd8b4a6f0cdbd5a51308d083d90cbdc4549e97418cf3ac2baa",
+        "identical": true,
+        "original_recorded_sha256": "5ce136bc896c30dd8b4a6f0cdbd5a51308d083d90cbdc4549e97418cf3ac2baa",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+        "target_sha256": "5ce136bc896c30dd8b4a6f0cdbd5a51308d083d90cbdc4549e97418cf3ac2baa"
+      },
+      {
+        "base_sha256": "ad59a698345d7c218b3787c721b93fc6104ae462f7f11000d9204b1dd03e8518",
+        "identical": true,
+        "original_recorded_sha256": "ad59a698345d7c218b3787c721b93fc6104ae462f7f11000d9204b1dd03e8518",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinContractError.swift",
+        "target_sha256": "ad59a698345d7c218b3787c721b93fc6104ae462f7f11000d9204b1dd03e8518"
+      },
+      {
+        "base_sha256": "52cef01505c00514be2df9a1f59bf6acb14b800b88687ac6a292510106d0536b",
+        "identical": true,
+        "original_recorded_sha256": "52cef01505c00514be2df9a1f59bf6acb14b800b88687ac6a292510106d0536b",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift",
+        "target_sha256": "52cef01505c00514be2df9a1f59bf6acb14b800b88687ac6a292510106d0536b"
+      },
+      {
+        "base_sha256": "a975c82c8584d3f46e06150efc1222c4688283c62b5cb767b777fbafaf08ed64",
+        "identical": true,
+        "original_recorded_sha256": "a975c82c8584d3f46e06150efc1222c4688283c62b5cb767b777fbafaf08ed64",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinExposureContracts.swift",
+        "target_sha256": "a975c82c8584d3f46e06150efc1222c4688283c62b5cb767b777fbafaf08ed64"
+      },
+      {
+        "base_sha256": "2287b3e02197a940f01ee4470fe7bd50206865480f9eadb0f4e975098c47163a",
+        "identical": true,
+        "original_recorded_sha256": "2287b3e02197a940f01ee4470fe7bd50206865480f9eadb0f4e975098c47163a",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift",
+        "target_sha256": "2287b3e02197a940f01ee4470fe7bd50206865480f9eadb0f4e975098c47163a"
+      },
+      {
+        "base_sha256": "d763b95edd959241d4c6931892802eb20f1bf90bd21037ed6371c4d68a5e661a",
+        "identical": true,
+        "original_recorded_sha256": "d763b95edd959241d4c6931892802eb20f1bf90bd21037ed6371c4d68a5e661a",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinJSONSchemaDocument.swift",
+        "target_sha256": "d763b95edd959241d4c6931892802eb20f1bf90bd21037ed6371c4d68a5e661a"
+      },
+      {
+        "base_sha256": "ebf50ac1114b9f7c3d2264ab2ef86dadb7b3b720c5e4201901a7cbcc30a64e72",
+        "identical": true,
+        "original_recorded_sha256": "ebf50ac1114b9f7c3d2264ab2ef86dadb7b3b720c5e4201901a7cbcc30a64e72",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinManifestJSONValue.swift",
+        "target_sha256": "ebf50ac1114b9f7c3d2264ab2ef86dadb7b3b720c5e4201901a7cbcc30a64e72"
+      },
+      {
+        "base_sha256": "c1dd837d01913bc58b72d62cf47a9a21ef4bf1f23a1b3ccdaf93858e987c4d23",
+        "identical": true,
+        "original_recorded_sha256": "c1dd837d01913bc58b72d62cf47a9a21ef4bf1f23a1b3ccdaf93858e987c4d23",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinManifestSchema.swift",
+        "target_sha256": "c1dd837d01913bc58b72d62cf47a9a21ef4bf1f23a1b3ccdaf93858e987c4d23"
+      },
+      {
+        "base_sha256": "ef40e7b0ee39954a7d704a121adb03a13b1cd02db0cba8c28e47fb0af49a7a33",
+        "identical": true,
+        "original_recorded_sha256": "ef40e7b0ee39954a7d704a121adb03a13b1cd02db0cba8c28e47fb0af49a7a33",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinMiniAppAuthoring.swift",
+        "target_sha256": "ef40e7b0ee39954a7d704a121adb03a13b1cd02db0cba8c28e47fb0af49a7a33"
+      },
+      {
+        "base_sha256": "eb880c3c00a789bcd21d8e0cbc353018e32b4e7d7f781415809781751515ae63",
+        "identical": true,
+        "original_recorded_sha256": "eb880c3c00a789bcd21d8e0cbc353018e32b4e7d7f781415809781751515ae63",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinMiniAppContracts.swift",
+        "target_sha256": "eb880c3c00a789bcd21d8e0cbc353018e32b4e7d7f781415809781751515ae63"
+      },
+      {
+        "base_sha256": "ab230354fd913397dfb2cb776bdde629fe0cf603b17729a7b9dc7cd9aab98c76",
+        "identical": true,
+        "original_recorded_sha256": "ab230354fd913397dfb2cb776bdde629fe0cf603b17729a7b9dc7cd9aab98c76",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPackagePath.swift",
+        "target_sha256": "ab230354fd913397dfb2cb776bdde629fe0cf603b17729a7b9dc7cd9aab98c76"
+      },
+      {
+        "base_sha256": "f0911d44d578d35f2714b30e4aa925a953475d54fb4f9ee2da39cf0f8590fed3",
+        "identical": true,
+        "original_recorded_sha256": "f0911d44d578d35f2714b30e4aa925a953475d54fb4f9ee2da39cf0f8590fed3",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPermissionContracts.swift",
+        "target_sha256": "f0911d44d578d35f2714b30e4aa925a953475d54fb4f9ee2da39cf0f8590fed3"
+      },
+      {
+        "base_sha256": "e7e6dcb882b853a086c8ea33023de3a3f6889eefd6ed7c7075ba26d1ba511134",
+        "identical": true,
+        "original_recorded_sha256": "e7e6dcb882b853a086c8ea33023de3a3f6889eefd6ed7c7075ba26d1ba511134",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
+        "target_sha256": "e7e6dcb882b853a086c8ea33023de3a3f6889eefd6ed7c7075ba26d1ba511134"
+      },
+      {
+        "base_sha256": "96cde68f978ef19a5de552835be8c6dc2c62741f4aeab38c40f27586272e99b4",
+        "identical": true,
+        "original_recorded_sha256": "96cde68f978ef19a5de552835be8c6dc2c62741f4aeab38c40f27586272e99b4",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPresentationContracts.swift",
+        "target_sha256": "96cde68f978ef19a5de552835be8c6dc2c62741f4aeab38c40f27586272e99b4"
+      },
+      {
+        "base_sha256": "43bffad1d4245d9a00924aab08ffd498a622d32321b5165ff036f0e425140262",
+        "identical": true,
+        "original_recorded_sha256": "43bffad1d4245d9a00924aab08ffd498a622d32321b5165ff036f0e425140262",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinRuntimeProfiles.swift",
+        "target_sha256": "43bffad1d4245d9a00924aab08ffd498a622d32321b5165ff036f0e425140262"
+      },
+      {
+        "base_sha256": "e92224cd4a0a1b5ed8e49bd85881c647595337b95ccbb20e6a6684110977679c",
+        "identical": true,
+        "original_recorded_sha256": "e92224cd4a0a1b5ed8e49bd85881c647595337b95ccbb20e6a6684110977679c",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinScriptContracts.swift",
+        "target_sha256": "e92224cd4a0a1b5ed8e49bd85881c647595337b95ccbb20e6a6684110977679c"
+      },
+      {
+        "base_sha256": "03493cb4f2f414088282d97b2b4c0a01a918c0df1db78451974400bbfcba7386",
+        "identical": true,
+        "original_recorded_sha256": "03493cb4f2f414088282d97b2b4c0a01a918c0df1db78451974400bbfcba7386",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinSessionContracts.swift",
+        "target_sha256": "03493cb4f2f414088282d97b2b4c0a01a918c0df1db78451974400bbfcba7386"
+      },
+      {
+        "base_sha256": "cb8910c6d12ac4cc0f8546e89a0a514151fc9d3cd53d30aacd8abc479f2af99f",
+        "identical": true,
+        "original_recorded_sha256": "cb8910c6d12ac4cc0f8546e89a0a514151fc9d3cd53d30aacd8abc479f2af99f",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinSkillContracts.swift",
+        "target_sha256": "cb8910c6d12ac4cc0f8546e89a0a514151fc9d3cd53d30aacd8abc479f2af99f"
+      },
+      {
+        "base_sha256": "ee87c52bc778c1a3848c37e125a709378f69e032ca91f80cc58f250a3c81a3f5",
+        "identical": true,
+        "original_recorded_sha256": "ee87c52bc778c1a3848c37e125a709378f69e032ca91f80cc58f250a3c81a3f5",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinStoreFileAccess.swift",
+        "target_sha256": "ee87c52bc778c1a3848c37e125a709378f69e032ca91f80cc58f250a3c81a3f5"
+      },
+      {
+        "base_sha256": "f091f9d83f629f5ba94b4fd30c6775255226f13a671eb047a1dc40f3c3a30ca7",
+        "identical": true,
+        "original_recorded_sha256": "f091f9d83f629f5ba94b4fd30c6775255226f13a671eb047a1dc40f3c3a30ca7",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolApprovalDescriptor.swift",
+        "target_sha256": "f091f9d83f629f5ba94b4fd30c6775255226f13a671eb047a1dc40f3c3a30ca7"
+      },
+      {
+        "base_sha256": "8ce9c0771689e43f24b42fb16b0f1bf2a545628e99f972b625af57314257156d",
+        "identical": true,
+        "original_recorded_sha256": "8ce9c0771689e43f24b42fb16b0f1bf2a545628e99f972b625af57314257156d",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolContracts.swift",
+        "target_sha256": "8ce9c0771689e43f24b42fb16b0f1bf2a545628e99f972b625af57314257156d"
+      },
+      {
+        "base_sha256": "cd266a8b820ae8673fd576697bc30d77ba5dd563feaa670f7e5b2f18319ff3d8",
+        "identical": true,
+        "original_recorded_sha256": "cd266a8b820ae8673fd576697bc30d77ba5dd563feaa670f7e5b2f18319ff3d8",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinValue.swift",
+        "target_sha256": "cd266a8b820ae8673fd576697bc30d77ba5dd563feaa670f7e5b2f18319ff3d8"
+      },
+      {
+        "base_sha256": "014a9f0d5d078b84cda43d805e8b95b89203cabd834254f4e30030805e8dad0f",
+        "identical": true,
+        "original_recorded_sha256": "014a9f0d5d078b84cda43d805e8b95b89203cabd834254f4e30030805e8dad0f",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift",
+        "target_sha256": "014a9f0d5d078b84cda43d805e8b95b89203cabd834254f4e30030805e8dad0f"
+      },
+      {
+        "base_sha256": "13fc4ffbffef08ac7d439f6e9f961b4b94b05d6d0e45ba3cec6522709b7870d7",
+        "identical": true,
+        "original_recorded_sha256": "13fc4ffbffef08ac7d439f6e9f961b4b94b05d6d0e45ba3cec6522709b7870d7",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinWireProtocol.swift",
+        "target_sha256": "13fc4ffbffef08ac7d439f6e9f961b4b94b05d6d0e45ba3cec6522709b7870d7"
+      },
+      {
+        "base_sha256": "2d0f3ced366774bac16af0bfaa29047f7a1cb2d413b9940515668c59bfc44d12",
+        "identical": true,
+        "original_recorded_sha256": "2d0f3ced366774bac16af0bfaa29047f7a1cb2d413b9940515668c59bfc44d12",
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+        "target_sha256": "2d0f3ced366774bac16af0bfaa29047f7a1cb2d413b9940515668c59bfc44d12"
+      },
+      {
+        "base_sha256": "d6e5a40a1d7e04985a6cc5ca65c59ecf017d9973ae0a44f36dae7999fdae870f",
+        "identical": true,
+        "original_recorded_sha256": "d6e5a40a1d7e04985a6cc5ca65c59ecf017d9973ae0a44f36dae7999fdae870f",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAISDKJSONOutputTests.swift",
+        "target_sha256": "d6e5a40a1d7e04985a6cc5ca65c59ecf017d9973ae0a44f36dae7999fdae870f"
+      },
+      {
+        "base_sha256": "aa16486f9288494c0abfdc24ea15d16116cb0228be76d84c8c486e17f7c77264",
+        "identical": true,
+        "original_recorded_sha256": "aa16486f9288494c0abfdc24ea15d16116cb0228be76d84c8c486e17f7c77264",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAISDKTests.swift",
+        "target_sha256": "aa16486f9288494c0abfdc24ea15d16116cb0228be76d84c8c486e17f7c77264"
+      },
+      {
+        "base_sha256": "0c24a0b2cb54e5ed7589d20f18325e5b93a5946aa68dee1ffcef05ee9fab8815",
+        "identical": true,
+        "original_recorded_sha256": "0c24a0b2cb54e5ed7589d20f18325e5b93a5946aa68dee1ffcef05ee9fab8815",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift",
+        "target_sha256": "0c24a0b2cb54e5ed7589d20f18325e5b93a5946aa68dee1ffcef05ee9fab8815"
+      },
+      {
+        "base_sha256": "4b7774f583d6bda645ce74b4175cbff326cb8210a697b9dd6e86eb334ef29c56",
+        "identical": true,
+        "original_recorded_sha256": "4b7774f583d6bda645ce74b4175cbff326cb8210a697b9dd6e86eb334ef29c56",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinCapturedStreamReplayTests.swift",
+        "target_sha256": "4b7774f583d6bda645ce74b4175cbff326cb8210a697b9dd6e86eb334ef29c56"
+      },
+      {
+        "base_sha256": "187084c5b97cd02c0e490f92b5238289d04deff0ffe1a16c81843ff7a7dc0ccc",
+        "identical": true,
+        "original_recorded_sha256": "187084c5b97cd02c0e490f92b5238289d04deff0ffe1a16c81843ff7a7dc0ccc",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinCatalogReloadCancellationTests.swift",
+        "target_sha256": "187084c5b97cd02c0e490f92b5238289d04deff0ffe1a16c81843ff7a7dc0ccc"
+      },
+      {
+        "base_sha256": "078ada7b03364b27dcf24e319960a331e1fd9fc1929a8a3f49c1cba2764e4b98",
+        "identical": true,
+        "original_recorded_sha256": "078ada7b03364b27dcf24e319960a331e1fd9fc1929a8a3f49c1cba2764e4b98",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinChatCoreTests.swift",
+        "target_sha256": "078ada7b03364b27dcf24e319960a331e1fd9fc1929a8a3f49c1cba2764e4b98"
+      },
+      {
+        "base_sha256": "d2f061d50a2deabf73847afecd1c78d1577ce6bca1ce4390e5a4161d140bde55",
+        "identical": true,
+        "original_recorded_sha256": "d2f061d50a2deabf73847afecd1c78d1577ce6bca1ce4390e5a4161d140bde55",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinChatGPTPlanTests.swift",
+        "target_sha256": "d2f061d50a2deabf73847afecd1c78d1577ce6bca1ce4390e5a4161d140bde55"
+      },
+      {
+        "base_sha256": "69192930fa4773bf35b459e84af72cd12b535e1de8c7b583a5bb8a6d888257e8",
+        "identical": true,
+        "original_recorded_sha256": "69192930fa4773bf35b459e84af72cd12b535e1de8c7b583a5bb8a6d888257e8",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinCompactResponsesTests.swift",
+        "target_sha256": "69192930fa4773bf35b459e84af72cd12b535e1de8c7b583a5bb8a6d888257e8"
+      },
+      {
+        "base_sha256": "b8e637abfb78e500166b76dff3ee417c936b8806d46e086c0cdb398b6a82e0da",
+        "identical": true,
+        "original_recorded_sha256": "b8e637abfb78e500166b76dff3ee417c936b8806d46e086c0cdb398b6a82e0da",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinGoogleCachedContentTests.swift",
+        "target_sha256": "b8e637abfb78e500166b76dff3ee417c936b8806d46e086c0cdb398b6a82e0da"
+      },
+      {
+        "base_sha256": "8083778b8ab95d912879fde570ea497710c010f4eeae2d5578dc0e3fd673152c",
+        "identical": true,
+        "original_recorded_sha256": "8083778b8ab95d912879fde570ea497710c010f4eeae2d5578dc0e3fd673152c",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinInjectedProviderTests.swift",
+        "target_sha256": "8083778b8ab95d912879fde570ea497710c010f4eeae2d5578dc0e3fd673152c"
+      },
+      {
+        "base_sha256": "0edf376b95c4b90bed6c985896bb4dc9a572e4a00a2b7354a28f12641fbbea09",
+        "identical": true,
+        "original_recorded_sha256": "0edf376b95c4b90bed6c985896bb4dc9a572e4a00a2b7354a28f12641fbbea09",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinNativeStructuredResponseTests.swift",
+        "target_sha256": "0edf376b95c4b90bed6c985896bb4dc9a572e4a00a2b7354a28f12641fbbea09"
+      },
+      {
+        "base_sha256": "be9b6fe280dfe43c4791644a333e90bdfc142936c51c909f12d84173bb22d4b5",
+        "identical": true,
+        "original_recorded_sha256": "be9b6fe280dfe43c4791644a333e90bdfc142936c51c909f12d84173bb22d4b5",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinOpenTelemetryTracerTests.swift",
+        "target_sha256": "be9b6fe280dfe43c4791644a333e90bdfc142936c51c909f12d84173bb22d4b5"
+      },
+      {
+        "base_sha256": "4f04b3744bca9b5b5554ef001786c3fec53a4d6288474891ae42e39740aecdb4",
+        "identical": true,
+        "original_recorded_sha256": "4f04b3744bca9b5b5554ef001786c3fec53a4d6288474891ae42e39740aecdb4",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinPromptCachePolicyMutationTests.swift",
+        "target_sha256": "4f04b3744bca9b5b5554ef001786c3fec53a4d6288474891ae42e39740aecdb4"
+      },
+      {
+        "base_sha256": "00c7a0a3ea365b5893d37c83cd076b89bc856453300a446a071cb76fa438da35",
+        "identical": true,
+        "original_recorded_sha256": "00c7a0a3ea365b5893d37c83cd076b89bc856453300a446a071cb76fa438da35",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinPromptCachePresetTests.swift",
+        "target_sha256": "00c7a0a3ea365b5893d37c83cd076b89bc856453300a446a071cb76fa438da35"
+      },
+      {
+        "base_sha256": "1b123ce1ad4e1206f8b259bc6ed97d5bc1151066796bee936d9aafb16295eda5",
+        "identical": true,
+        "original_recorded_sha256": "1b123ce1ad4e1206f8b259bc6ed97d5bc1151066796bee936d9aafb16295eda5",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinPromptCacheTests.swift",
+        "target_sha256": "1b123ce1ad4e1206f8b259bc6ed97d5bc1151066796bee936d9aafb16295eda5"
+      },
+      {
+        "base_sha256": "1f5f18df56420a7b9b41acfb67f9995d8c4596cc42609c75337f542fcf1de65a",
+        "identical": true,
+        "original_recorded_sha256": "1f5f18df56420a7b9b41acfb67f9995d8c4596cc42609c75337f542fcf1de65a",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinTransientToolCatalogTests.swift",
+        "target_sha256": "1f5f18df56420a7b9b41acfb67f9995d8c4596cc42609c75337f542fcf1de65a"
+      },
+      {
+        "base_sha256": "7ef3785c16aad89b922d9207e53b5ab1c8fa765f1b1b3b4dea5194bd923583c0",
+        "identical": true,
+        "original_recorded_sha256": "7ef3785c16aad89b922d9207e53b5ab1c8fa765f1b1b3b4dea5194bd923583c0",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinTransportTraceTests.swift",
+        "target_sha256": "7ef3785c16aad89b922d9207e53b5ab1c8fa765f1b1b3b4dea5194bd923583c0"
+      },
+      {
+        "base_sha256": "94f3ec0a2c2625c53e931df02265bf69944b77850449d79dcb014b3380973cb5",
+        "identical": true,
+        "original_recorded_sha256": "94f3ec0a2c2625c53e931df02265bf69944b77850449d79dcb014b3380973cb5",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/DirectChatPathConformanceTests.swift",
+        "target_sha256": "94f3ec0a2c2625c53e931df02265bf69944b77850449d79dcb014b3380973cb5"
+      },
+      {
+        "base_sha256": "e7824ccde340596203b5f28370988d493e2b3dba5db68449d026c842a0e7d955",
+        "identical": true,
+        "original_recorded_sha256": "e7824ccde340596203b5f28370988d493e2b3dba5db68449d026c842a0e7d955",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderConformanceScenarioTests.swift",
+        "target_sha256": "e7824ccde340596203b5f28370988d493e2b3dba5db68449d026c842a0e7d955"
+      },
+      {
+        "base_sha256": "604ef8d64402e4fe7c6e3df9199497d5250d7616656e0570fe8f6cfee2d778dc",
+        "identical": true,
+        "original_recorded_sha256": "604ef8d64402e4fe7c6e3df9199497d5250d7616656e0570fe8f6cfee2d778dc",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderConformanceTypes.swift",
+        "target_sha256": "604ef8d64402e4fe7c6e3df9199497d5250d7616656e0570fe8f6cfee2d778dc"
+      },
+      {
+        "base_sha256": "877fb8044aaf91b38596f4bf7d09789620ee39b393a3e9fa8e8a338d13557732",
+        "identical": true,
+        "original_recorded_sha256": "877fb8044aaf91b38596f4bf7d09789620ee39b393a3e9fa8e8a338d13557732",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderFaultInjectionTests.swift",
+        "target_sha256": "877fb8044aaf91b38596f4bf7d09789620ee39b393a3e9fa8e8a338d13557732"
+      },
+      {
+        "base_sha256": "08f03bc11bdf43bfed054646de0d0f5b4bc0dcaf3a8813214f2feaa6eee76f5a",
+        "identical": true,
+        "original_recorded_sha256": "08f03bc11bdf43bfed054646de0d0f5b4bc0dcaf3a8813214f2feaa6eee76f5a",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderLongHorizonTests.swift",
+        "target_sha256": "08f03bc11bdf43bfed054646de0d0f5b4bc0dcaf3a8813214f2feaa6eee76f5a"
+      },
+      {
+        "base_sha256": "63afa58919ec493c4ac1ffe11b912d7b6f0a9d7ce586118ab94f38a7bf21d20f",
+        "identical": true,
+        "original_recorded_sha256": "63afa58919ec493c4ac1ffe11b912d7b6f0a9d7ce586118ab94f38a7bf21d20f",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderRequestValidators.swift",
+        "target_sha256": "63afa58919ec493c4ac1ffe11b912d7b6f0a9d7ce586118ab94f38a7bf21d20f"
+      },
+      {
+        "base_sha256": "de14c4620dfe2f8b49eb104eb22ca1467efa85ab31ff2968547d0cfb00e9f17a",
+        "identical": true,
+        "original_recorded_sha256": "de14c4620dfe2f8b49eb104eb22ca1467efa85ab31ff2968547d0cfb00e9f17a",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderResponseFixtures.swift",
+        "target_sha256": "de14c4620dfe2f8b49eb104eb22ca1467efa85ab31ff2968547d0cfb00e9f17a"
+      },
+      {
+        "base_sha256": "ce2a0ec794953ff18b3363cdd4e7d1abf34e19ff4a05613c49949fc16ad66fa9",
+        "identical": true,
+        "original_recorded_sha256": "ce2a0ec794953ff18b3363cdd4e7d1abf34e19ff4a05613c49949fc16ad66fa9",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderRoutingTests.swift",
+        "target_sha256": "ce2a0ec794953ff18b3363cdd4e7d1abf34e19ff4a05613c49949fc16ad66fa9"
+      },
+      {
+        "base_sha256": "998e56953980a75281046d58ef45feabd583b76e13f4c5c6bdbac916e67c1172",
+        "identical": true,
+        "original_recorded_sha256": "998e56953980a75281046d58ef45feabd583b76e13f4c5c6bdbac916e67c1172",
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/StatefulProviderEmulator.swift",
+        "target_sha256": "998e56953980a75281046d58ef45feabd583b76e13f4c5c6bdbac916e67c1172"
+      }
+    ],
+    "complete_directory_membership": [
+      {
+        "added": [],
+        "base_count": 29,
+        "original_recorded_count": 29,
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/",
+        "removed": [],
+        "target": "PlatformContracts",
+        "target_count": 29
+      },
+      {
+        "added": [],
+        "base_count": 24,
+        "original_recorded_count": 24,
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/",
+        "removed": [],
+        "target": "ChatCore",
+        "target_count": 24
+      },
+      {
+        "added": [],
+        "base_count": 26,
+        "original_recorded_count": 26,
+        "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/",
+        "removed": [],
+        "target": "ChatCoreTests",
+        "target_count": 26
+      }
+    ],
+    "original_producer_fixtures": [
+      {
+        "matches_historical_fixture": true,
+        "path": "Tests/SwiftAISDKTests/OpenAI/OpenAIPromptCacheControlTests.swift",
+        "sha256": "623b47a3a43dbf4a57948b5eef7d7df436c4e7f65c222ca3fcf7774f9b08cd7c"
+      },
+      {
+        "matches_historical_fixture": true,
+        "path": "Tests/SwiftAISDKTests/TestSupport/MockTracer.swift",
+        "sha256": "a6a51dde8ad9779723a7482d5789e25dd498ee41df449bd8cdd7e33c2fffe864"
+      }
+    ],
+    "published_producer": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+    "published_producer_tree": "f094f58f7956903e740a5188cf1e9d43c126248e",
+    "runner_and_generator": [
+      {
+        "byte_identical": true,
+        "path": "Scripts/CI/IntegrationValidation/run_cache_native.py",
+        "sha256": "01add0c269fd56fd502e9daf801db417feee8445865c05100a5835d588cbbc00"
+      },
+      {
+        "byte_identical": true,
+        "path": "Scripts/SDK/generate_manifest.py",
+        "sha256": "6f63564559c7bffd0fab033110b7cf4d760643f6bc544d5ff0de0bbde2b24089"
+      }
+    ]
+  },
+  "generated_at_utc": "2026-11-25T05:08:01.914529+00:00",
+  "historical_reuse_files_modified": false,
+  "kind": "READ_ONLY_EXTENSION_OF_BOUNDED_EVIDENCE_REUSE",
+  "local_js_closure": {
+    "javascript_source_fixture_count": 25,
+    "local_source_test_count": 11,
+    "unique_count": 36,
+    "unique_files": [
+      {
+        "base_sha256": "2e0e25875906f15876b8035d0863482510163ae4a82865eb376b788ff95e3c2c",
+        "byte_identical": true,
+        "path": "Packages/HanlinExpoUI/src/miniapp-assistant.ts",
+        "previous_verified_sha256": "2e0e25875906f15876b8035d0863482510163ae4a82865eb376b788ff95e3c2c",
+        "target_sha256": "2e0e25875906f15876b8035d0863482510163ae4a82865eb376b788ff95e3c2c"
+      },
+      {
+        "base_sha256": "7055a22e3aa4a685b970c1eaaf66f538eeb34f560bb2c345446c55305a045d21",
+        "byte_identical": true,
+        "path": "Packages/HanlinExpoUI/src/host-services.ts",
+        "previous_verified_sha256": "7055a22e3aa4a685b970c1eaaf66f538eeb34f560bb2c345446c55305a045d21",
+        "target_sha256": "7055a22e3aa4a685b970c1eaaf66f538eeb34f560bb2c345446c55305a045d21"
+      },
+      {
+        "base_sha256": "fc1465119ea944d674b91e00ec6127092dbc3ef6e191a80eb3d6cfffaac969ba",
+        "byte_identical": true,
+        "path": "Packages/HanlinExpoUI/tests/miniapp-assistant.test.mjs",
+        "previous_verified_sha256": "fc1465119ea944d674b91e00ec6127092dbc3ef6e191a80eb3d6cfffaac969ba",
+        "target_sha256": "fc1465119ea944d674b91e00ec6127092dbc3ef6e191a80eb3d6cfffaac969ba"
+      },
+      {
+        "base_sha256": "6a3afe9ee3704d052d7337828763c80eea5c765d50bd217574836df5124b4a57",
+        "byte_identical": true,
+        "path": "Packages/HanlinExpoUI/tests/host-services-publication.test.mjs",
+        "previous_verified_sha256": "6a3afe9ee3704d052d7337828763c80eea5c765d50bd217574836df5124b4a57",
+        "target_sha256": "6a3afe9ee3704d052d7337828763c80eea5c765d50bd217574836df5124b4a57"
+      },
+      {
+        "base_sha256": "0f39ba3362fcde8c9975c98a2eba5aebc510190f6c8e1fdb3cab4f55a1dcdcd5",
+        "byte_identical": true,
+        "path": "Scripts/NativeScript/Tests/assistant.test.mjs",
+        "previous_verified_sha256": "0f39ba3362fcde8c9975c98a2eba5aebc510190f6c8e1fdb3cab4f55a1dcdcd5",
+        "target_sha256": "0f39ba3362fcde8c9975c98a2eba5aebc510190f6c8e1fdb3cab4f55a1dcdcd5"
+      },
+      {
+        "base_sha256": "f968bca7095d2b80e64a4ecde69316929e062e3754fc62d4362743dff7887ed3",
+        "byte_identical": true,
+        "path": "Scripts/NativeScript/Tests/miniapps-sharing.test.mjs",
+        "previous_verified_sha256": "f968bca7095d2b80e64a4ecde69316929e062e3754fc62d4362743dff7887ed3",
+        "target_sha256": "f968bca7095d2b80e64a4ecde69316929e062e3754fc62d4362743dff7887ed3"
+      },
+      {
+        "base_sha256": "c0e65560079b04441d94f8023a403d41a076e14d1b31437db9ee28410ad862f5",
+        "byte_identical": true,
+        "path": "Scripts/NativeScript/Tests/live-activities.test.mjs",
+        "previous_verified_sha256": "c0e65560079b04441d94f8023a403d41a076e14d1b31437db9ee28410ad862f5",
+        "target_sha256": "c0e65560079b04441d94f8023a403d41a076e14d1b31437db9ee28410ad862f5"
+      },
+      {
+        "base_sha256": "625d69af766f88690bdb528d17b8aea46ffbed5edfd46fa9c1c471ca9b8339f1",
+        "byte_identical": true,
+        "path": "Scripts/Expo/Tests/host-services.test.mjs",
+        "previous_verified_sha256": "625d69af766f88690bdb528d17b8aea46ffbed5edfd46fa9c1c471ca9b8339f1",
+        "target_sha256": "625d69af766f88690bdb528d17b8aea46ffbed5edfd46fa9c1c471ca9b8339f1"
+      },
+      {
+        "base_sha256": "4200223f5be97ee12ddd5ffc05479fa7be99748998a716b3e2eb6197c14bc8cc",
+        "byte_identical": true,
+        "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
+        "previous_verified_sha256": "4200223f5be97ee12ddd5ffc05479fa7be99748998a716b3e2eb6197c14bc8cc",
+        "target_sha256": "4200223f5be97ee12ddd5ffc05479fa7be99748998a716b3e2eb6197c14bc8cc"
+      },
+      {
+        "base_sha256": "3e15fb2fada80ea4dd158b146cc36d66c6aa71e46e073f02eca23b98b55e73f2",
+        "byte_identical": true,
+        "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/miniapp-assistant.d.ts",
+        "previous_verified_sha256": "3e15fb2fada80ea4dd158b146cc36d66c6aa71e46e073f02eca23b98b55e73f2",
+        "target_sha256": "3e15fb2fada80ea4dd158b146cc36d66c6aa71e46e073f02eca23b98b55e73f2"
+      },
+      {
+        "base_sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e",
+        "byte_identical": true,
+        "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json",
+        "previous_verified_sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e",
+        "target_sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e"
+      },
+      {
+        "base_sha256": "8d429190e524ba8612462503e20f88eab8e1d029ca794c5821ad01b69623edfc",
+        "byte_identical": true,
+        "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/miniapp-assistant.mjs",
+        "previous_verified_sha256": "8d429190e524ba8612462503e20f88eab8e1d029ca794c5821ad01b69623edfc",
+        "target_sha256": "8d429190e524ba8612462503e20f88eab8e1d029ca794c5821ad01b69623edfc"
+      },
+      {
+        "base_sha256": "e9e225da56c0fad5a6a827d457fbbcb988468d2232e1f876cbe60fcbb05f0686",
+        "byte_identical": true,
+        "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.d.ts",
+        "previous_verified_sha256": "e9e225da56c0fad5a6a827d457fbbcb988468d2232e1f876cbe60fcbb05f0686",
+        "target_sha256": "e9e225da56c0fad5a6a827d457fbbcb988468d2232e1f876cbe60fcbb05f0686"
+      },
+      {
+        "base_sha256": "832169736b6d84a6caa983192ceb3d9e9947a8cbda029093eba269c065e8f033",
+        "byte_identical": true,
+        "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs",
+        "previous_verified_sha256": "832169736b6d84a6caa983192ceb3d9e9947a8cbda029093eba269c065e8f033",
+        "target_sha256": "832169736b6d84a6caa983192ceb3d9e9947a8cbda029093eba269c065e8f033"
+      },
+      {
+        "base_sha256": "72051d0da201b6e8f6cd7c5939267e083b8199ed62e56f631a198cdccf121669",
+        "byte_identical": true,
+        "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.mjs",
+        "previous_verified_sha256": "72051d0da201b6e8f6cd7c5939267e083b8199ed62e56f631a198cdccf121669",
+        "target_sha256": "72051d0da201b6e8f6cd7c5939267e083b8199ed62e56f631a198cdccf121669"
+      },
+      {
+        "base_sha256": "435a550ab05ef7785113fb8849a0e8019e32427338591a8fd53428a8c19a854b",
+        "byte_identical": true,
+        "path": "AI_HLY/Services/ChatServices/WebSearchTool.swift",
+        "previous_verified_sha256": "435a550ab05ef7785113fb8849a0e8019e32427338591a8fd53428a8c19a854b",
+        "target_sha256": "435a550ab05ef7785113fb8849a0e8019e32427338591a8fd53428a8c19a854b"
+      },
+      {
+        "base_sha256": "ea9473749962a6c078d36a6972abe2ce30ecf38cd23dffa92231a02b53b7c665",
+        "byte_identical": true,
+        "path": "AI_HLY/Downstream/AgentDiagnostics/AgentTokenUsage.swift",
+        "previous_verified_sha256": "ea9473749962a6c078d36a6972abe2ce30ecf38cd23dffa92231a02b53b7c665",
+        "target_sha256": "ea9473749962a6c078d36a6972abe2ce30ecf38cd23dffa92231a02b53b7c665"
+      },
+      {
+        "base_sha256": "51196278174564c14b1568c21fcaf0b95adcb31bbcea07a57fe3c045075240fb",
+        "byte_identical": true,
+        "path": "AI_HLY/Services/ChatServices/AutomaticSearch/AutomaticWebSearchCoordinator.swift",
+        "previous_verified_sha256": "51196278174564c14b1568c21fcaf0b95adcb31bbcea07a57fe3c045075240fb",
+        "target_sha256": "51196278174564c14b1568c21fcaf0b95adcb31bbcea07a57fe3c045075240fb"
+      },
+      {
+        "base_sha256": "96c88b7fcc0de48e6b30570850fbd80f82a679499eb339fcf53cd363d4de9c54",
+        "byte_identical": true,
+        "path": "AI_HLY/Services/ChatServices/AutomaticSearch/KeenablePublicSearchAdapter.swift",
+        "previous_verified_sha256": "96c88b7fcc0de48e6b30570850fbd80f82a679499eb339fcf53cd363d4de9c54",
+        "target_sha256": "96c88b7fcc0de48e6b30570850fbd80f82a679499eb339fcf53cd363d4de9c54"
+      },
+      {
+        "base_sha256": "8143549a517e6717c85fb64e903a27958fd61cba875899ec38d7fb10a1154a68",
+        "byte_identical": true,
+        "path": "AI_HLY/Services/ChatServices/AutomaticSearch/TavilyKeylessSearchAdapter.swift",
+        "previous_verified_sha256": "8143549a517e6717c85fb64e903a27958fd61cba875899ec38d7fb10a1154a68",
+        "target_sha256": "8143549a517e6717c85fb64e903a27958fd61cba875899ec38d7fb10a1154a68"
+      },
+      {
+        "base_sha256": "2cb061ddfdd1536a417d630c6f776cf3bb9ec95328452afbbf20dc08337ef537",
+        "byte_identical": true,
+        "path": "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchProviderProtocol.swift",
+        "previous_verified_sha256": "2cb061ddfdd1536a417d630c6f776cf3bb9ec95328452afbbf20dc08337ef537",
+        "target_sha256": "2cb061ddfdd1536a417d630c6f776cf3bb9ec95328452afbbf20dc08337ef537"
+      },
+      {
+        "base_sha256": "2ec1352dcce9a19ede76148c540caf98a36dc076f7c2740015395656192a4158",
+        "byte_identical": true,
+        "path": "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchRelevanceEvaluator.swift",
+        "previous_verified_sha256": "2ec1352dcce9a19ede76148c540caf98a36dc076f7c2740015395656192a4158",
+        "target_sha256": "2ec1352dcce9a19ede76148c540caf98a36dc076f7c2740015395656192a4158"
+      },
+      {
+        "base_sha256": "d3b69274d06eb3403c44a2ec1d2a78399baef65bc875b8888bd8af1e3887e751",
+        "byte_identical": true,
+        "path": "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchResult.swift",
+        "previous_verified_sha256": "d3b69274d06eb3403c44a2ec1d2a78399baef65bc875b8888bd8af1e3887e751",
+        "target_sha256": "d3b69274d06eb3403c44a2ec1d2a78399baef65bc875b8888bd8af1e3887e751"
+      },
+      {
+        "base_sha256": "d07f829a5896928f43bbbf4b49fa16e10f98f4d76cd6a6862525cf4d02305520",
+        "byte_identical": true,
+        "path": "AI_HLY/Services/ChatServices/AutomaticSearch/YouKeylessSearchAdapter.swift",
+        "previous_verified_sha256": "d07f829a5896928f43bbbf4b49fa16e10f98f4d76cd6a6862525cf4d02305520",
+        "target_sha256": "d07f829a5896928f43bbbf4b49fa16e10f98f4d76cd6a6862525cf4d02305520"
+      },
+      {
+        "base_sha256": "faa0342db6fe61bac1eb65da32622e47284b00e669ca1ff1d3ebd276f105438c",
+        "byte_identical": true,
+        "path": "AI_HLYTests/AutomaticWebSearchCacheTests.swift",
+        "previous_verified_sha256": "faa0342db6fe61bac1eb65da32622e47284b00e669ca1ff1d3ebd276f105438c",
+        "target_sha256": "faa0342db6fe61bac1eb65da32622e47284b00e669ca1ff1d3ebd276f105438c"
+      },
+      {
+        "base_sha256": "622fa32878079e11c3f3dcd502b216f270d22ad3a0c277e021b0aa77a3afa33f",
+        "byte_identical": true,
+        "path": "AI_HLYTests/AgentTokenUsageCacheTests.swift",
+        "previous_verified_sha256": "622fa32878079e11c3f3dcd502b216f270d22ad3a0c277e021b0aa77a3afa33f",
+        "target_sha256": "622fa32878079e11c3f3dcd502b216f270d22ad3a0c277e021b0aa77a3afa33f"
+      },
+      {
+        "base_sha256": "e405a962b090e5786466ef0be2509cd629b16ba2d6d70f40f83dd92fb1e5f442",
+        "byte_identical": true,
+        "path": "Scripts/NativeScript/host-services.ts",
+        "previous_verified_sha256": "e405a962b090e5786466ef0be2509cd629b16ba2d6d70f40f83dd92fb1e5f442",
+        "target_sha256": "e405a962b090e5786466ef0be2509cd629b16ba2d6d70f40f83dd92fb1e5f442"
+      },
+      {
+        "base_sha256": "1ca742df46a70d3ee838de98d4ac128eebeeea99d93c9cfa6475e388fee28cc3",
+        "byte_identical": true,
+        "path": "Scripts/NativeScript/build-host-services.mjs",
+        "previous_verified_sha256": "1ca742df46a70d3ee838de98d4ac128eebeeea99d93c9cfa6475e388fee28cc3",
+        "target_sha256": "1ca742df46a70d3ee838de98d4ac128eebeeea99d93c9cfa6475e388fee28cc3"
+      },
+      {
+        "base_sha256": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f",
+        "byte_identical": true,
+        "path": "Packages/HanlinExpoUI/src/system-surfaces.ts",
+        "previous_verified_sha256": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f",
+        "target_sha256": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f"
+      },
+      {
+        "base_sha256": "0c0d2964715e4da0f8418c5925fad3171c6776c64ba310a7be4b54c662965198",
+        "byte_identical": true,
+        "path": "Scripts/NativeScript/Fixtures/HostServices/assistant.ts",
+        "previous_verified_sha256": "0c0d2964715e4da0f8418c5925fad3171c6776c64ba310a7be4b54c662965198",
+        "target_sha256": "0c0d2964715e4da0f8418c5925fad3171c6776c64ba310a7be4b54c662965198"
+      },
+      {
+        "base_sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607",
+        "byte_identical": true,
+        "path": "Packages/HanlinExpoUI/src/miniapp-actions.ts",
+        "previous_verified_sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607",
+        "target_sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607"
+      },
+      {
+        "base_sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568",
+        "byte_identical": true,
+        "path": "Packages/HanlinExpoUI/package.json",
+        "previous_verified_sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568",
+        "target_sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568"
+      },
+      {
+        "base_sha256": "c99e376b70dc4e0b1ce5442cb86bf3115b11f72cf6154f1e808240392c724466",
+        "byte_identical": true,
+        "path": "Scripts/NativeScript/Fixtures/HostServices/valid.ts",
+        "previous_verified_sha256": "c99e376b70dc4e0b1ce5442cb86bf3115b11f72cf6154f1e808240392c724466",
+        "target_sha256": "c99e376b70dc4e0b1ce5442cb86bf3115b11f72cf6154f1e808240392c724466"
+      },
+      {
+        "base_sha256": "47f20182b5dfe1051d380453ad6b467adf3b439fd07e433500f4a87d5b7cfd8d",
+        "byte_identical": true,
+        "path": "Scripts/NativeScript/Fixtures/HostServices/invalid.ts",
+        "previous_verified_sha256": "47f20182b5dfe1051d380453ad6b467adf3b439fd07e433500f4a87d5b7cfd8d",
+        "target_sha256": "47f20182b5dfe1051d380453ad6b467adf3b439fd07e433500f4a87d5b7cfd8d"
+      },
+      {
+        "base_sha256": "5d9427bad52584fa0f022658376f2496434e826b144c56e500ce4720bac42efb",
+        "byte_identical": true,
+        "path": "Scripts/NativeScript/Fixtures/HostServices/live-activities.ts",
+        "previous_verified_sha256": "5d9427bad52584fa0f022658376f2496434e826b144c56e500ce4720bac42efb",
+        "target_sha256": "5d9427bad52584fa0f022658376f2496434e826b144c56e500ce4720bac42efb"
+      },
+      {
+        "base_sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+        "byte_identical": true,
+        "path": "Scripts/NativeScript/package.json",
+        "previous_verified_sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+        "target_sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b"
+      }
+    ]
+  },
+  "native_operations": false,
+  "new_build_execution": false,
+  "new_package_resolution": false,
+  "new_test_execution": false,
+  "previous_evidence": {
+    "all_nine_indexed_files_still_exact": [
+      {
+        "bytes": 4117,
+        "matches_previous_index": true,
+        "path": "README.md",
+        "sha256": "9c0da52936bcbde38f4e6600c945f96dcf9cd2bd88dee1f97202e5aa5524b798"
+      },
+      {
+        "bytes": 4949,
+        "matches_previous_index": true,
+        "path": "core/README.md",
+        "sha256": "bb449f5f2db25a9b58230be062c0a94c4caddc3b58e69adadacfe6eef0b1a919"
+      },
+      {
+        "bytes": 64602,
+        "matches_previous_index": true,
+        "path": "core/core48-reuse.json",
+        "sha256": "af7019c665a9321cb4735b4f14f5f62d3b0a53313b269ddd8b4c44bda4b829e0"
+      },
+      {
+        "bytes": 1908,
+        "matches_previous_index": true,
+        "path": "local-js/README.md",
+        "sha256": "aafaf42ba090ffd77fb65fb262c5e16ae44aab57440480351a1a933a8ccf1e5e"
+      },
+      {
+        "bytes": 84574,
+        "matches_previous_index": true,
+        "path": "local-js/receipt.json",
+        "sha256": "2974f7b08f06cceca828564f9d2a337cd19da1374a06ef353bf8366e95228da4"
+      },
+      {
+        "bytes": 439,
+        "matches_previous_index": true,
+        "path": "local-js/verification-execution.json",
+        "sha256": "a27e5c239d8d09af41d5e2a1a8f713f5d5867a879439d89d226f53e00713bdda"
+      },
+      {
+        "bytes": 2793,
+        "matches_previous_index": true,
+        "path": "local-js/verification.log",
+        "sha256": "ce0a76b9554672e43f38336260977cc5a63bb85716395e32cf1096bb0afdb0c6"
+      },
+      {
+        "bytes": 16311,
+        "matches_previous_index": true,
+        "path": "local-js/verify-reuse.py",
+        "sha256": "f4153ddf75b571f501136481dc02fffa2b021cc534f3c468bc838330eb883ed7"
+      },
+      {
+        "bytes": 5828,
+        "matches_previous_index": true,
+        "path": "reuse-receipt.json",
+        "sha256": "1885c617ffc01134ec354604d68a8a4092f45968e999bc3a7be01e8ea3005d7e"
+      }
+    ],
+    "core": {
+      "bytes": 64602,
+      "path": "/mnt/development/projects/artifacts/hanlin-ai-cache-final-reuse-20261125/core/core48-reuse.json",
+      "sha256": "af7019c665a9321cb4735b4f14f5f62d3b0a53313b269ddd8b4c44bda4b829e0"
+    },
+    "index": {
+      "bytes": 1606,
+      "path": "/mnt/development/projects/artifacts/hanlin-ai-cache-final-reuse-20261125/index.json",
+      "sha256": "cd81ac8a25f0ba74a1390d56f96a371917e25f96cf8b81cd9cdf398efc7027f2"
+    },
+    "local_js": {
+      "bytes": 84574,
+      "path": "/mnt/development/projects/artifacts/hanlin-ai-cache-final-reuse-20261125/local-js/receipt.json",
+      "sha256": "2974f7b08f06cceca828564f9d2a337cd19da1374a06ef353bf8366e95228da4"
+    },
+    "receipt": {
+      "bytes": 5828,
+      "path": "/mnt/development/projects/artifacts/hanlin-ai-cache-final-reuse-20261125/reuse-receipt.json",
+      "sha256": "1885c617ffc01134ec354604d68a8a4092f45968e999bc3a7be01e8ea3005d7e"
+    }
+  },
+  "prior_qualification_update": {
+    "current_statement": "Resolved at948 by the original Apple six-graph producer: all six checked-in locks equal its retained generated bytes and contain the exact canonical OTel2.6.0 and Atomics1.3.1 pins. All four consumed core proof pins now match both the current app lock and every one of these six standalone locks.",
+    "historical_files_preserved": true,
+    "historical_statement": "At6fbc the standalone HanlinPlatform lock omitted OTel/Atomics; it was not the consumed core proof lock.",
+    "scope": "This closes the specific standalone lock completeness gap. It does not claim every repository lock has an identical dependency graph or that resolution is a compile/test."
+  },
+  "remaining_limits": [
+    "No tests executed at948 during this review; original48core/producer,18local/accounting and15JS results are reused only for their unchanged bounded inputs.",
+    "All original complete core target membership and recorded source hashes are verified, but a per-file attestation of every historical transitive checkout, compiler/SDK binary, intermediate and OS environment was not retained and is not invented here.",
+    "The original Expo VM proof recorded TypeScript API6.0.3, not historical compiler/codec file hashes. Equal locked entries/integrities preserve the previously documented provenance boundary.",
+    "Original standalone resolution executed no builds or tests. The separate App07 and current Host acceptance remain root-owned independent gates.",
+    "Live provider cache hits, billing savings, paid explicit cache lifecycle and release acceptance are not established by these source or lock comparisons."
+  ],
+  "repository_files_or_refs_modified": false,
+  "retained_results": {
+    "active_js": {
+      "generated_source": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "implementation_source": "e0a98a2d7c495644f643c44e7cc417e4522185ab",
+      "passed": 15,
+      "status": "REUSED_VERIFIED_PASS"
+    },
+    "core": {
+      "passed": 44,
+      "producer_passed": 4,
+      "raw_log_sha256": "6bf42713f4fbc1fce3d9ac6dac10d094532c8c91f869558b5cd9504a734f40a9",
+      "source": "04c1942bc88cd4de7deafda7dd342b9b6c401dcf",
+      "status": "REUSED_VERIFIED_PASS"
+    },
+    "local_accounting": {
+      "passed": 18,
+      "source": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "status": "REUSED_VERIFIED_PASS"
+    }
+  },
+  "schema_version": 1,
+  "target_source": {
+    "commit": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276",
+    "tree": "eaa59a1e5876b73e7e0f8a55cba5c0fd914a1ae0"
+  },
+  "unchanged_historical_evidence_files": [
+    {
+      "bytes": 1226,
+      "git_blob": "a8da5f76b5b6e8f901e6e40c5da3a4ba37fa6d79",
+      "path": "docs/ai-cache/evidence/native-core-20261125/final-pin/proof-Package.resolved",
+      "sha256": "94502e6fb2a6c9a406befa7a7c5d3cc9309cfddeaf6bd324857a5bd7e4081d6f",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    },
+    {
+      "bytes": 2697,
+      "git_blob": "f95c784974246ef426ce0d3d7b1adee3d5c0dd5a",
+      "path": "docs/ai-cache/evidence/native-core-20261125/final-pin/proof-Package.swift",
+      "sha256": "558d4a894abbd3b07b6fa040d8332f54f0ab7f7cc051a415dbdd782da0ae4e3b",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    },
+    {
+      "bytes": 3760,
+      "git_blob": "e52ddedc09741f957935d290a5197a36dcd0c458",
+      "path": "docs/ai-cache/evidence/native-core-20261125/final-pin/raw.log.gz",
+      "sha256": "3fec268149fbe372a6cb2f3f31a348197f699206ff14adf4ce54c33bbb83b702",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    },
+    {
+      "bytes": 15388,
+      "git_blob": "3f86474fd3f2de5b8eaf6a2928203b8c527db9f6",
+      "path": "docs/ai-cache/evidence/native-core-20261125/final-pin/receipt.json",
+      "sha256": "cce3af5cc6bd4c090722b66b3d48658f88a2391c162b18081b68cdcbaf34f362",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    },
+    {
+      "bytes": 49873,
+      "git_blob": "43975ebd1d7997c34b0edb804ac8d183b3baa522",
+      "path": "docs/ai-cache/evidence/reuse-receipt-20261125.json",
+      "sha256": "414c63699706af507fc21cdce4a4c8815ec9ec56c0402f1c2fa8515c0dba2574",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    },
+    {
+      "bytes": 9069,
+      "git_blob": "869cbafdc813bbf39d1684cdd9ab1c6436c7876a",
+      "path": "docs/ai-cache/evidence/latest-sync-before-app04-20261125.json",
+      "sha256": "e9e81b27a832b28789a3119a4344b9412710b1c20dcea114ac70a6183060bdff",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    },
+    {
+      "bytes": 3808,
+      "git_blob": "286e1c91e1288c34a43e06455eb344150ac2ae92",
+      "path": "docs/ai-cache/evidence/local-cache-20261125/receipt.json",
+      "sha256": "ea28ebb171d797c3a555f4b00a6b7b90f1e4b7455db3962b414ccb9e8738291b",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    },
+    {
+      "bytes": 449,
+      "git_blob": "583e950b704b746fc2d42c9b9629713d8cc89221",
+      "path": "docs/ai-cache/evidence/local-cache-20261125/proof-Package.swift",
+      "sha256": "90f371dcdaf89a9786ad35d5b9802332bf6bd014106354b21553bbacc6e063d4",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    },
+    {
+      "bytes": 390,
+      "git_blob": "12190cd48f58713a95216cf81ee8cb82dc86d205",
+      "path": "docs/ai-cache/evidence/local-cache-20261125/proof-Package.resolved",
+      "sha256": "cad224f799d21b36089c0bfe38c9808757b8f1752a8b6f7ed746adc8f0b7fc3f",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    },
+    {
+      "bytes": 4902,
+      "git_blob": "0e75527110244225992c9830e7a7f86c4d8beb8c",
+      "path": "docs/ai-cache/evidence/local-cache-20261125/raw.log",
+      "sha256": "90d1ce95dde3db51280b07e098e95f373bbb9ef16d3d173c925cc86231a85ccb",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    },
+    {
+      "bytes": 2013,
+      "git_blob": "1b2358d00b7383078c9397881696314f10f8d64a",
+      "path": "docs/ai-cache/evidence/active-assistant-js-20261125/summary.json",
+      "sha256": "11a2f5e6f331593a97a49e7257fac39ce396347d74f114f14ef070b682b0eb0d",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    },
+    {
+      "bytes": 805,
+      "git_blob": "34385eddc98bbc84736a8e37593153eebc8720fe",
+      "path": "docs/ai-cache/evidence/active-assistant-js-20261125/expo-assistant-tests.json",
+      "sha256": "54312ffa6bb0723c8e1af63d67c1483d84e4d759f8bb3b294bcced0e99af70dc",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    },
+    {
+      "bytes": 1881,
+      "git_blob": "d4f70b26adefc4af1566ab2f55b45338cb1b8586",
+      "path": "docs/ai-cache/evidence/active-assistant-js-20261125/expo-assistant-tests.log",
+      "sha256": "fe4cd4375fee97b34f191caca690b8d6a4dc6ff4c17a2b06a0e975384187b373",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    },
+    {
+      "bytes": 2352,
+      "git_blob": "874a6eae2046786cd567dc13804e6494936adaff",
+      "path": "docs/ai-cache/evidence/active-assistant-js-20261125/host-facade-tests-after.json",
+      "sha256": "31bb9ec2899a37f07b1c28f732337cf7120022a459534b03886814e7a873e040",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    },
+    {
+      "bytes": 899,
+      "git_blob": "1caed578b5e77873e4cc802009074f01c86f4ca5",
+      "path": "docs/ai-cache/evidence/active-assistant-js-20261125/host-facade-tests-after.log",
+      "sha256": "d733f6b0cfac51717207adca9a2a805d36249cfbfa3e4b8ca9a04018c25dcbf2",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    },
+    {
+      "bytes": 1097,
+      "git_blob": "96e53b64a32200915760753c83ed3d4bc12fc810",
+      "path": "docs/ai-cache/evidence/active-assistant-js-20261125/nativescript-generation.json",
+      "sha256": "9542962c21e81e689f42fe6796ddebbac085856d177f4252c7a750048f70b2a0",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    },
+    {
+      "bytes": 112,
+      "git_blob": "d520d7a09a3927d107ff8ca5d9a048ad1cd4065d",
+      "path": "docs/ai-cache/evidence/active-assistant-js-20261125/nativescript-generation.log",
+      "sha256": "7f655f532fc99ed42bc980f3062eea39147697d1bf6d6a3cfd8aeaeabf55e6d3",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    },
+    {
+      "bytes": 112,
+      "git_blob": "112cfd786bbf31e7aad1e61a72eafd45b0b3c804",
+      "path": "docs/ai-cache/evidence/active-assistant-js-20261125/nativescript-generated-check.log",
+      "sha256": "480742f18b8ef01a023f07eff2064a34b4a8f65a59deef55e49b505788f8b263",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276"
+    }
+  ]
+}

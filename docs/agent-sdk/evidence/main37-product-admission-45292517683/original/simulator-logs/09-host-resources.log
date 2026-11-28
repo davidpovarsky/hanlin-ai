@@ -1,0 +1,701 @@
+Filesystem      Size    Used   Avail Capacity iused ifree %iused  Mounted on
+/dev/disk2s5   180Gi   135Gi    18Gi    89%    1.6M  188M    1%   /System/Volumes/Data
+Mach Virtual Memory Statistics: (page size of 16384 bytes)
+Pages free:                                     6813.
+Pages active:                                  59382.
+Pages inactive:                                55057.
+Pages speculative:                              5727.
+Pages throttled:                                   0.
+Pages wired down:                             267230.
+Pages purgeable:                                  27.
+"Translation faults":                       59174969.
+Pages copy-on-write:                         6662356.
+Pages zero filled:                          17729144.
+Pages reactivated:                           2982547.
+Pages purged:                                  60571.
+File-backed pages:                             84620.
+Anonymous pages:                               35546.
+Pages stored in compressor:                   128620.
+Pages occupied by compressor:                  63838.
+Decompressions:                              2203178.
+Compressions:                                3544108.
+Pageins:                                     3815135.
+Pageouts:                                      92227.
+Swapins:                                       77680.
+Swapouts:                                     288431.
+  PID  PPID  %CPU %MEM ELAPSED COMM
+    1     0   3.6  0.2   40:57 /sbin/launchd
+   94     1   0.6  0.1   40:53 /usr/libexec/logd
+   96     1   0.0  0.0   40:53 /usr/libexec/smd
+   97     1   0.2  0.0   40:53 /usr/libexec/UserEventAgent
+   99     1   0.4  0.0   40:53 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/FSEvents.framework/Versions/A/Support/fseventsd
+  100     1   0.0  0.0   40:53 /System/Library/PrivateFrameworks/MediaRemote.framework/Support/mediaremoted
+  103     1   0.0  0.0   40:53 /usr/sbin/systemstats
+  105     1   0.0  0.0   40:53 /System/Library/PrivateFrameworks/MobileAccessoryUpdater.framework/Support/accessoryupdaterd
+  107     1   0.0  0.0   40:53 /usr/libexec/configd
+  108     1   0.0  0.0   40:53 endpointsecurityd
+  109     1   0.0  0.0   40:53 /System/Library/CoreServices/powerd.bundle/powerd
+  110     1   0.0  0.0   40:53 /usr/libexec/IOMFB_bics_daemon
+  112     1   0.0  0.0   40:53 /usr/libexec/amfid
+  114     1   0.1  0.0   40:53 /usr/libexec/remoted
+  116     1   0.0  0.0   40:53 /usr/libexec/keybagd
+  117     1   0.0  0.0   40:53 /System/Library/PrivateFrameworks/MobileSoftwareUpdate.framework/Support/softwareupdated
+  118     1   0.0  0.0   40:53 /System/Library/PrivateFrameworks/CoreSpeech.framework/corespeechd_system
+  123     1   1.0  0.1   40:53 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mds
+  125     1   0.0  0.0   40:53 /usr/libexec/kernelmanagerd
+  126     1   4.5  0.0   40:53 /usr/libexec/diskarbitrationd
+  129     1   0.1  0.0   40:53 /usr/libexec/coreduetd
+  130     1   1.3  0.0   40:53 /usr/sbin/syslogd
+  132     1   0.0  0.0   40:53 /usr/libexec/thermalmonitord
+  133     1   0.1  0.0   40:53 /System/Library/PrivateFrameworks/CoreDuetContext.framework/Resources/contextstored
+  134     1   0.0  0.0   40:53 /usr/libexec/xprotectd
+  135     1   0.3  0.1   40:53 /usr/libexec/opendirectoryd
+  136     1   0.1  0.0   40:53 /System/Library/CoreServices/launchservicesd
+  137     1   0.0  0.0   40:53 /usr/libexec/timed
+  138     1   0.0  0.0   40:53 /System/Library/PrivateFrameworks/MobileDevice.framework/Versions/A/Resources/usbmuxd
+  139     1   1.0  0.0   40:53 /usr/sbin/securityd
+  141     1   0.0  0.0   40:53 /usr/libexec/locationd
+  143     1   0.0  0.0   40:53 autofsd
+  144     1   0.1  0.0   40:53 /usr/libexec/dasd
+  147     1   0.1  0.0   40:53 /usr/sbin/distnoted
+  149     1   0.0  0.0   40:53 /System/Library/CoreServices/logind
+  150     1   0.0  0.0   40:53 /System/Library/PrivateFrameworks/GenerationalStorage.framework/Versions/A/Support/revisiond
+  151     1   0.0  0.0   40:53 /usr/sbin/KernelEventAgent
+  153     1   0.0  0.0   40:53 /usr/libexec/usermanagerd
+  155     1   0.1  0.1   40:53 /usr/sbin/bluetoothd
+  156     1   0.5  0.0   40:53 /usr/sbin/notifyd
+  158     1   0.0  0.0   40:53 /usr/libexec/corebrightnessd
+  159     1   0.0  0.0   40:53 /System/Library/Frameworks/CoreMediaIO.framework/Versions/A/Resources/com.apple.cmio.registerassistantservice
+  160     1   0.0  0.0   40:52 aslmanager
+  161     1   0.0  0.2   40:52 /System/Library/PrivateFrameworks/TCC.framework/Support/tccd
+  163     1   0.4  0.1   40:52 /usr/sbin/cfprefsd
+  165     1   0.0  0.0   40:52 /System/Library/CoreServices/loginwindow.app/Contents/MacOS/loginwindow
+  166     1   0.0  0.1   40:52 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
+  169     1   0.0  0.0   40:52 /System/Library/CoreServices/coreservicesd
+  173     1   6.3  0.1   40:52 /usr/libexec/runningboardd
+  174     1   1.5  0.2   40:52 /usr/libexec/lsd
+  175     1   1.2  0.1   40:52 /usr/libexec/trustd
+  179     1   0.0  0.0   40:51 /usr/libexec/securityd_system
+  181     1   1.5  0.1   40:51 /System/Library/PrivateFrameworks/CoreAnalytics.framework/Support/analyticsd
+  182     1   0.3  0.1   40:51 /usr/libexec/airportd
+  184     1   0.0  0.0   40:51 /usr/libexec/containermanagerd_system
+  185     1   0.0  0.0   40:51 /usr/libexec/clocksyncd
+  186     1   0.0  0.0   40:51 /usr/libexec/mobileassetd
+  193     1   1.0  0.1   40:51 /System/Library/Frameworks/Security.framework/Versions/A/XPCServices/authd.xpc/Contents/MacOS/authd
+  195     1   0.0  0.0   40:50 /usr/sbin/distnoted
+  196     1   0.0  0.0   40:50 /usr/libexec/eligibilityd
+  197     1   0.3  0.1   40:50 /usr/sbin/mDNSResponder
+  201     1   0.0  0.0   40:50 /usr/sbin/distnoted
+  211     1   0.0  0.0   40:50 /usr/libexec/nehelper
+  213     1   0.0  0.0   40:50 /usr/libexec/symptomsd
+  223     1   0.1  0.0   40:50 /usr/libexec/syspolicyd
+  225     1   0.0  0.0   40:49 /usr/sbin/mDNSResponderHelper
+  231     1   0.0  0.0   40:49 /System/Library/Frameworks/Security.framework/Versions/A/XPCServices/com.apple.CodeSigningHelper.xpc/Contents/MacOS/com.apple.CodeSigningHelper
+  234     1   0.0  0.0   40:49 /usr/libexec/gamepolicyd
+  235     1   0.0  0.0   40:49 /System/Library/CoreServices/appleeventsd
+  236     1   0.0  0.0   40:49 /System/Library/PrivateFrameworks/CloudKitDaemon.framework/Support/cloudd
+  238     1   0.0  0.0   40:48 /System/Library/DriverExtensions/com.apple.DriverKit-IOUserDockChannelSerial.dext/com.apple.DriverKit-IOUserDockChannelSerial
+  239     1   0.0  0.0   40:48 /System/Library/DriverExtensions/com.apple.AppleUserHIDDrivers.dext/com.apple.AppleUserHIDDrivers
+  244     1   0.3  0.1   40:48 /usr/libexec/storagekitd
+  245     1   0.0  0.0   40:48 /usr/libexec/mobileactivationd
+  246     1   0.0  0.0   40:48 /usr/sbin/distnoted
+  248     1   8.1  0.1   40:47 /System/Library/PrivateFrameworks/BiomeStreams.framework/Support/biomed
+  250     1   0.0  0.0   40:47 /System/Library/PrivateFrameworks/BackgroundTaskManagement.framework/Resources/backgroundtaskmanagementd
+  251     1   0.0  0.0   40:47 /System/Library/CoreServices/Software Update.app/Contents/Resources/suhelperd
+  253     1   0.0  0.0   40:47 /usr/libexec/nsurlsessiond
+  255     1   0.0  0.0   40:47 /System/Library/CoreServices/Software Update.app/Contents/Resources/softwareupdated
+  282     1   0.0  0.0   40:45 /usr/sbin/distnoted
+  283     1   0.0  0.0   40:45 /usr/libexec/searchpartyd
+  284     1   0.0  0.0   40:45 /usr/libexec/apfsd
+  286     1   0.0  0.0   40:45 /usr/libexec/countryd
+  290     1   0.0  0.0   40:45 /usr/sbin/distnoted
+  291     1   0.0  0.0   40:45 /System/Library/PrivateFrameworks/GeoServices.framework/Versions/A/XPCServices/com.apple.geod.xpc/Contents/MacOS/com.apple.geod
+  294     1   0.0  0.0   40:44 /System/Library/Frameworks/LocalAuthentication.framework/Support/coreauthd
+  297     1   0.0  0.0   40:44 /usr/libexec/fskitd
+  298     1   0.0  0.0   40:44 /usr/sbin/distnoted
+  299     1   0.0  0.0   40:44 /usr/sbin/cfprefsd
+  304     1   0.0  0.0   40:44 /System/Library/CoreServices/TimeMachine/backupd-helper
+  305     1   0.0  0.0   40:44 /usr/libexec/secd
+  306     1   0.0  0.0   40:44 /System/Library/PrivateFrameworks/MobileSoftwareUpdate.framework/Versions/A/XPCServices/com.apple.MobileSoftwareUpdate.CleanupPreparePathService.xpc/Contents/MacOS/com.apple.MobileSoftwareUpdate.CleanupPreparePathService
+  307     1   0.0  0.0   40:44 /usr/sbin/distnoted
+  309     1   0.0  0.0   40:44 /usr/sbin/cfprefsd
+  313     1   0.0  0.0   40:43 /Library/Application Support/Veertu/Anka/addons/addonsd
+  316     1   0.0  0.0   40:43 /usr/libexec/trustd
+  320     1   0.0  0.0   40:43 /usr/libexec/UserEventAgent
+  321     1   0.0  0.0   40:43 /usr/libexec/gamecontrollerd
+  326     1   0.0  0.0   40:43 /System/Library/CoreServices/CoreServicesUIAgent.app/Contents/MacOS/CoreServicesUIAgent
+  327     1   0.0  0.0   40:43 /usr/sbin/universalaccessd
+  329     1   0.0  0.0   40:43 /System/Library/CoreServices/WindowManager.app/Contents/MacOS/WindowManager
+  330     1   0.0  0.0   40:43 /usr/libexec/pboard
+  331     1   0.0  0.0   40:43 /usr/libexec/triald_system
+  332     1   0.0  0.0   40:43 /System/Library/PrivateFrameworks/UserNotificationsCore.framework/Support/usernotificationsd
+  333     1   0.0  0.0   40:43 /System/Library/PrivateFrameworks/BiomeStreams.framework/Support/BiomeAgent
+  334     1   0.0  0.0   40:43 /usr/libexec/lsd
+  335     1   0.0  0.0   40:43 /System/Library/PrivateFrameworks/TCC.framework/Support/tccd
+  336     1   0.0  0.0   40:43 /System/Library/PrivateFrameworks/CloudKitDaemon.framework/Support/cloudd
+  337     1   0.0  0.0   40:43 /System/Library/CoreServices/WallpaperAgent.app/Contents/MacOS/WallpaperAgent
+  338     1   0.0  0.0   40:43 /usr/libexec/secinitd
+  339     1   0.0  0.0   40:43 /System/Library/CoreServices/MenuBarAgent.app/Contents/MacOS/MenuBarAgent
+  340     1   0.0  0.1   40:43 /usr/libexec/trustd
+  341     1   0.0  0.0   40:42 /usr/libexec/containermanagerd
+  342     1   0.0  0.0   40:42 /usr/sbin/netbiosd
+  343     1   0.0  0.0   40:42 /System/Library/Frameworks/Accounts.framework/Versions/A/Support/accountsd
+  344     1   0.0  0.0   40:42 /System/Library/CoreServices/talagentd
+  345     1   0.0  0.0   40:42 /System/Library/CoreServices/Dock.app/Contents/MacOS/Dock
+  346     1   0.0  0.0   40:42 /System/Library/CoreServices/ControlCenter.app/Contents/MacOS/ControlCenter
+  347     1   0.0  0.0   40:42 /System/Library/CoreServices/SystemUIServer.app/Contents/MacOS/SystemUIServer
+  348     1   0.0  0.0   40:42 /System/Library/Frameworks/ApplicationServices.framework/Frameworks/ATS.framework/Support/fontd
+  349     1   0.0  0.1   40:42 /System/Library/CoreServices/Finder.app/Contents/MacOS/Finder
+  353     1   0.0  0.0   40:42 /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/ATS.framework/Versions/A/Support/fontworker
+  355     1   0.0  0.0   40:42 /usr/sbin/usernoted
+  357     1   0.0  0.0   40:41 /System/Library/PrivateFrameworks/SessionCore.framework/Support/liveactivitiesd
+  358     1   0.0  0.0   40:41 /System/Library/Frameworks/QuickLookUI.framework/Versions/A/XPCServices/QuickLookUIService.xpc/Contents/MacOS/QuickLookUIService
+  359     1   0.0  0.0   40:41 /System/Library/Frameworks/QuickLookThumbnailing.framework/Support/com.apple.quicklook.ThumbnailsAgent
+  360     1   0.0  0.0   40:41 /System/Library/CoreServices/sharedfilelistd
+  362     1   0.0  0.0   40:41 /System/Library/PrivateFrameworks/FileProvider.framework/Support/fileproviderd
+  363     1   0.0  0.0   40:41 /usr/libexec/pkd
+  365     1   0.0  0.0   40:41 /System/Library/PrivateFrameworks/TelephonyUtilities.framework/callservicesd
+  366     1   0.0  0.0   40:41 /System/Library/PrivateFrameworks/UserActivity.framework/Agents/useractivityd
+  367     1   0.0  0.0   40:41 /System/Library/PrivateFrameworks/CoreSuggestions.framework/Versions/A/Support/suggestd
+  369     1   0.0  0.0   40:41 /usr/libexec/replayd
+  370     1   0.0  0.0   40:41 /usr/libexec/linkd
+  372     1   0.0  0.0   40:41 /System/Library/PrivateFrameworks/AMPDevices.framework/Versions/A/Support/AMPDeviceDiscoveryAgent
+  373     1   0.0  0.0   40:41 /System/Library/CoreServices/Dock.app/Contents/XPCServices/com.apple.dock.extra.xpc/Contents/MacOS/com.apple.dock.extra
+  374     1   0.0  0.0   40:41 /usr/sbin/filecoordinationd
+  376     1   0.0  0.0   40:41 /usr/sbin/coreaudiod
+  377     1   0.0  0.0   40:41 /System/Library/PrivateFrameworks/ViewBridge.framework/Versions/A/XPCServices/ViewBridgeAuxiliary.xpc/Contents/MacOS/ViewBridgeAuxiliary
+  378     1   0.0  0.0   40:41 /System/Library/ExtensionKit/Extensions/WallpaperAerialsExtension.appex/Contents/MacOS/WallpaperAerialsExtension
+  380     1   0.0  0.0   40:40 /System/Library/PrivateFrameworks/AmbientDisplay.framework/Versions/A/XPCServices/com.apple.AmbientDisplayAgent.xpc/Contents/MacOS/com.apple.AmbientDisplayAgent
+  381     1   0.0  0.0   40:40 /System/Library/PrivateFrameworks/IDS.framework/identityservicesd.app/Contents/MacOS/identityservicesd
+  384     1   0.0  0.0   40:39 /usr/sbin/distnoted
+  386     1   0.0  0.3   40:39 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mds_stores
+  387     1   0.0  0.0   40:39 /System/Library/PrivateFrameworks/CalendarDaemon.framework/Support/calaccessd
+  388     1   0.0  0.1   40:39 /System/Applications/Siri AI.app/Contents/MacOS/Siri AI
+  389     1   0.0  0.0   40:39 /usr/libexec/rapportd
+  390     1   0.0  0.0   40:39 /System/Library/ExtensionKit/Extensions/WallpaperImageExtension.appex/Contents/MacOS/WallpaperImageExtension
+  392     1   0.0  0.0   40:39 /usr/libexec/nsurlsessiond
+  394     1   0.0  0.0   40:39 /System/Library/Frameworks/CryptoTokenKit.framework/ctkahp.bundle/Contents/MacOS/ctkahp
+  395     1   0.0  0.0   40:39 /System/Library/PrivateFrameworks/SoftwareUpdate.framework/Resources/SoftwareUpdateNotificationManager.app/Contents/MacOS/SoftwareUpdateNotificationManager
+  397     1   0.0  0.0   40:39 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/corespotlightd
+  400     1   0.0  0.0   40:38 /System/Library/PrivateFrameworks/SyncedDefaults.framework/Support/syncdefaultsd
+  401     1   0.0  0.0   40:38 /System/Library/PrivateFrameworks/HearingCore.framework/heard
+  402     1   0.0  0.0   40:38 /System/Library/PrivateFrameworks/CoreSpeech.framework/corespeechd
+  404     1   0.0  0.0   40:38 /System/Library/PrivateFrameworks/AXAssetLoader.framework/Support/axassetsd
+  405     1   0.0  0.0   40:38 /System/Library/PrivateFrameworks/CoreDuetContext.framework/Resources/ContextStoreAgent
+  408     1   0.0  0.0   40:38 /System/Library/Frameworks/InputMethodKit.framework/Resources/imklaunchagent
+  409     1   0.0  0.0   40:38 /Library/Application Support/Veertu/Anka/addons/ankarund
+  412     1   0.0  0.0   40:38 /Library/Application Support/Veertu/Anka/addons/ankacpd
+  413     1   0.0  0.0   40:38 /System/Library/Image Capture/Support/icdd
+  415     1   0.0  0.0   40:38 /Library/Application Support/Veertu/Anka/addons/copypaste
+  419     1   0.0  0.0   40:38 /usr/libexec/sharingd
+  422     1   0.0  0.0   40:38 /System/Library/CoreServices/AirPlayUIAgent.app/Contents/MacOS/AirPlayUIAgent
+  423     1   0.0  0.0   40:38 /usr/libexec/knowledge-agent
+  424     1   0.0  0.0   40:38 /System/Library/PrivateFrameworks/IMCore.framework/imagent.app/Contents/MacOS/imagent
+  425     1   0.0  0.0   40:38 /System/Library/CoreServices/audioaccessoryd
+  426     1   0.0  0.0   40:38 /System/Library/CoreServices/diagnostics_agent
+  428     1   0.0  0.0   40:38 /System/Library/CoreServices/TextInputMenuAgent.app/Contents/MacOS/TextInputMenuAgent
+  429     1   0.0  0.0   40:38 /usr/libexec/remindd
+  430     1   0.0  0.0   40:38 /System/Library/PrivateFrameworks/AppleMediaServices.framework/Resources/amsaccountsd
+  434     1   0.0  0.0   40:37 /System/Library/CoreServices/AccessibilityUIServer.app/Contents/MacOS/AccessibilityUIServer
+  435     1   0.0  0.0   40:37 /System/Library/CoreServices/CoreLocationAgent.app/Contents/MacOS/CoreLocationAgent
+  437     1   0.0  0.0   40:37 Core Audio Driver (NullAudio.driver)
+  439     1   0.0  0.0   40:37 /usr/libexec/ContinuityCaptureAgent
+  440     1   0.0  0.0   40:37 /usr/libexec/com.apple.cmio.videodriverkithostextension.systemextension/Contents/MacOS/com.apple.cmio.videodriverkithostextension
+  442     1   0.0  0.0   40:37 /usr/libexec/neagent
+  443     1   0.0  0.0   40:37 /System/Library/Frameworks/CoreMediaIO.framework/Versions/A/Resources/UVCAssistant.systemextension/Contents/MacOS/UVCAssistant
+  447     1   0.0  0.0   40:37 /System/Library/PrivateFrameworks/ChronoCore.framework/Support/chronod
+  449     1   0.0  0.0   40:36 /usr/libexec/audiomxd
+  451     1   0.0  0.0   40:36 /usr/libexec/rosetta/oahd
+  454     1   0.0  0.0   40:36 /System/Library/PrivateFrameworks/DoNotDisturbServer.framework/Support/donotdisturbd
+  456     1   0.0  0.0   40:36 /System/Library/Frameworks/CryptoTokenKit.framework/ctkd
+  457     1   0.0  0.0   40:36 /System/Library/Frameworks/LocalAuthentication.framework/Support/coreauthd
+  460     1   0.0  0.0   40:35 /usr/libexec/ApplicationFirewall/socketfilterfw
+  461     1   0.0  0.0   40:35 /System/Library/CoreServices/TextInputSwitcher.app/Contents/MacOS/TextInputSwitcher
+  462     1   0.0  0.0   40:35 /System/Library/PrivateFrameworks/iCloudDriveCore.framework/Versions/A/Support/bird
+  464     1   0.0  0.0   40:35 /System/Library/PrivateFrameworks/TextInputUIMacHelper.framework/Versions/A/XPCServices/CursorUIViewService.xpc/Contents/MacOS/CursorUIViewService
+  465     1   0.0  0.0   40:35 /usr/libexec/transparencyd
+  466     1   0.0  0.0   40:35 /System/Library/PrivateFrameworks/CoreParsec.framework/parsecd
+  467     1   0.0  0.0   40:34 /System/Library/PrivateFrameworks/CampoUIServices.framework/Versions/A/XPCServices/CampoRemoteService.xpc/Contents/MacOS/CampoRemoteService
+  469     1   0.0  0.0   40:34 /usr/sbin/distnoted
+  470     1   0.0  0.0   40:34 /System/Library/PrivateFrameworks/AgentSessionKitRuntime.framework/Versions/A/agentstored
+  471     1   0.0  0.0   40:34 /System/Library/PrivateFrameworks/IntlPreferences.framework/Support/localizationswitcherd
+  474     1   0.0  0.0   40:33 /System/Library/PrivateFrameworks/StatusKit.framework/StatusKitAgent
+  480     1   0.0  0.0   40:32 /System/Library/PrivateFrameworks/GeoServices.framework/Versions/A/XPCServices/com.apple.geod.xpc/Contents/MacOS/com.apple.geod
+  482     1   0.0  0.0   40:32 /System/Library/Frameworks/Contacts.framework/Support/contactsd
+  484     1   0.0  0.0   40:31 /usr/libexec/spotlightknowledged.updater
+  486     1   0.0  0.0   40:30 /usr/libexec/logd_helper
+  487     1   0.0  0.1   40:30 /usr/libexec/findmylocateagent
+  488     1   0.0  0.0   40:30 /usr/sbin/systemsoundserverd
+  489     1   0.0  0.0   40:30 /System/Library/PrivateFrameworks/PhotoLibraryServices.framework/Versions/A/Support/photolibraryd
+  490     1   0.0  0.0   40:29 /System/Applications/FindMy.app/Contents/PlugIns/FindMyWidgetItems.appex/Contents/MacOS/FindMyWidgetItems
+  494     1   0.0  0.0   40:29 /System/Library/PrivateFrameworks/CommunicationsFilter.framework/CMFSyncAgent
+  495     1   0.0  0.0   40:29 /System/Library/PrivateFrameworks/FamilyCircle.framework/Versions/A/Resources/familycircled
+  497     1   0.0  0.0   40:28 /System/Library/PrivateFrameworks/AppSSO.framework/Support/AppSSOAgent.app/Contents/MacOS/AppSSOAgent
+  498     1   0.0  0.0   40:28 /usr/libexec/triald
+  499     1   0.0  0.0   40:28 /System/Library/PrivateFrameworks/FamilyControls.framework/Resources/parentalcontrolsd
+  501     1   0.0  0.0   40:28 /usr/libexec/networkserviceproxy
+  503     1   0.0  0.0   40:27 /System/Library/PrivateFrameworks/CoreFollowUp.framework/Versions/A/Support/followupd
+  509     1   0.0  0.0   40:26 /System/Library/PrivateFrameworks/AppleMediaServicesUI.framework/amsengagementd
+  510     1   0.0  0.0   40:26 /System/Library/PrivateFrameworks/HomeKitDaemon.framework/Support/homed
+  511     1   0.0  0.0   40:26 /System/Library/PrivateFrameworks/ScreenTimeCore.framework/Versions/A/ScreenTimeAgent
+  512     1   0.0  0.0   40:26 /System/Library/CoreServices/ReportCrash
+  514     1   0.0  0.0   40:26 /System/Library/CoreServices/APFSUserAgent
+  517     1   0.0  0.0   40:25 /usr/libexec/appleaccountd
+  519     1   0.0  0.0   40:25 /System/Library/PrivateFrameworks/AuthKit.framework/Versions/A/Support/akd
+  520     1   0.0  0.0   40:24 /System/Library/PrivateFrameworks/CoreCDP.framework/Versions/A/Resources/cdpd
+  521     1   0.0  0.0   40:24 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdbulkimport
+  523     1   0.0  0.0   40:24 /System/Library/CoreServices/UIKitSystem.app/Contents/MacOS/UIKitSystem
+  525     1   0.0  0.0   40:24 /usr/libexec/nearbyd
+  526     1   0.0  0.0   40:24 /System/Library/PrivateFrameworks/SiriTTSService.framework/sirittsd
+  528     1   0.0  0.0   40:23 /usr/libexec/avconferenced
+  529     1   0.0  0.0   40:23 /System/Library/PrivateFrameworks/MediaRemote.framework/Support/mediaremoteagent
+  532     1   0.0  0.0   40:23 /System/Library/PrivateFrameworks/CoreADI.framework/adid
+  536     1   0.0  0.0   40:22 /System/Library/PrivateFrameworks/CacheDelete.framework/deleted
+  542     1   0.0  0.0   40:21 /System/Library/PrivateFrameworks/ScreenTimeSettingsFoundation.framework/Versions/A/ScreenTimeSettingsAgent
+  544     1   0.0  0.0   40:20 /System/Library/PrivateFrameworks/CacheDelete.framework/deleted_helper
+  547     1   0.0  0.0   40:20 /usr/libexec/swcd
+  550     1   0.0  0.0   40:19 /System/Library/PrivateFrameworks/ContextKit.framework/Versions/A/XPCServices/ContextService.xpc/Contents/MacOS/ContextService
+  553     1   0.0  0.0   40:19 /System/Applications/Calendar.app/Contents/PlugIns/CalendarWidgetExtension.appex/Contents/MacOS/CalendarWidgetExtension
+  554     1   0.0  0.0   40:18 /System/Applications/Photos.app/Contents/PlugIns/PhotosReliveWidget.appex/Contents/MacOS/PhotosReliveWidget
+  555     1   0.0  0.0   40:18 /System/Applications/Weather.app/Contents/PlugIns/WeatherWidget.appex/Contents/MacOS/WeatherWidget
+  557     1   0.0  0.0   40:18 /System/Library/PrivateFrameworks/AssistantServices.framework/Versions/A/Support/assistantd
+  558     1   0.0  0.0   40:18 /System/Library/CoreServices/IOUIAgent.app/Contents/MacOS/IOUIAgent
+  559     1   0.0  0.0   40:18 /System/Library/CoreServices/WindowManager.app/Contents/PlugIns/WindowManagerControlsExtension.appex/Contents/MacOS/WindowManagerControlsExtension
+  561     1   0.0  0.0   40:17 /System/Library/PrivateFrameworks/IntelligenceFlowRuntime.framework/Versions/A/intelligenceflowd
+  564     1   0.0  0.0   40:17 /System/Library/PrivateFrameworks/IntelligenceFlowContextRuntime.framework/Versions/A/intelligencecontextd
+  565     1   0.0  0.0   40:17 /usr/libexec/modelmanagerd
+  568     1   0.0  0.1   40:17 /usr/libexec/searchpartyuseragent
+  569     1   0.0  0.0   40:16 /usr/sbin/distnoted
+  570     1   0.0  0.0   40:16 /usr/libexec/siriknowledged
+  572     1   0.0  0.0   40:16 /System/Applications/Utilities/Screenshot.app/Contents/PlugIns/ScreenshotControls.appex/Contents/MacOS/ScreenshotControls
+  573     1   0.0  0.0   40:16 /System/Library/ExtensionKit/Extensions/HostInferenceProviderService.appex/Contents/MacOS/HostInferenceProviderService
+  574     1   0.0  0.0   40:15 /usr/libexec/findmydevice-user-agent
+  576     1   0.0  0.0   40:15 /System/Library/CoreServices/ControlCenter.app/Contents/PlugIns/DisplayControls.appex/Contents/MacOS/DisplayControls
+  577     1   0.0  0.0   40:15 /System/Library/PrivateFrameworks/VoiceShortcuts.framework/Versions/A/Support/siriactionsd
+  579     1   0.0  0.0   40:14 /System/Library/PrivateFrameworks/CloudSubscriptionFeatures.framework/FeatureAccessAgent
+  584     1   0.0  0.0   40:13 /usr/libexec/rtcreportingd
+  585     1   0.0  0.0   40:13 /System/Applications/Home.app/Contents/PlugIns/HomeWidget.appex/Contents/MacOS/HomeWidget
+  586     1   0.0  0.0   40:13 /System/Applications/VoiceMemos.app/Contents/PlugIns/VoiceMemosSettingsWidgetExtension.appex/Contents/MacOS/VoiceMemosSettingsWidgetExtension
+  587     1   0.0  0.0   40:12 /usr/sbin/distnoted
+  588     1   0.0  0.0   40:12 /System/Applications/FindMy.app/Contents/PlugIns/FindMyWidgetPeople.appex/Contents/MacOS/FindMyWidgetPeople
+  589     1   0.0  0.0   40:11 /System/Library/CoreServices/Batteries.app/Contents/PlugIns/BatteriesAvocadoWidgetExtension.appex/Contents/MacOS/BatteriesAvocadoWidgetExtension
+  590     1   0.0  0.0   40:11 /System/Applications/Clock.app/Contents/PlugIns/WorldClockWidget.appex/Contents/MacOS/WorldClockWidget
+  591     1   0.0  0.0   40:11 /System/iOSSupport/System/Library/ExtensionKit/Extensions/HomeWidgetIntentsExtension.appex/Contents/MacOS/HomeWidgetIntentsExtension
+  592     1   0.0  0.0   40:11 /System/Applications/Home.app/Contents/PlugIns/HomeEnergyWidgetsExtension.appex/Contents/MacOS/HomeEnergyWidgetsExtension
+  593     1   0.0  0.0   40:11 /System/Applications/Weather.app/Contents/PlugIns/WeatherIntents.appex/Contents/MacOS/WeatherIntents
+  594     1   0.0  0.0   40:10 /System/Library/PrivateFrameworks/MediaAnalysis.framework/Versions/A/mediaanalysisd
+  596     1   0.0  0.0   40:10 /System/Applications/Podcasts.app/Contents/PlugIns/PodcastsWidget.appex/Contents/MacOS/PodcastsWidget
+  597     1   0.0  0.0   40:10 /System/Library/PrivateFrameworks/MobileTimer.framework/PlugIns/MobileTimerIntents.appex/Contents/MacOS/MobileTimerIntents
+  599     1   0.0  0.0   40:10 /System/Applications/News.app/Contents/PlugIns/NewsToday2.appex/Contents/MacOS/NewsToday2
+  600     1   0.0  0.0   40:09 automountd
+  604     1   0.0  0.0   40:09 /System/Applications/News.app/Contents/PlugIns/NewsTag.appex/Contents/MacOS/NewsTag
+  606     1   0.0  0.0   40:09 /System/Library/PrivateFrameworks/TrialServer.framework/Versions/A/XPCServices/TrialArchivingService.xpc/Contents/MacOS/TrialArchivingService
+  609     1   0.0  0.0   40:08 /System/Applications/Journal.app/Contents/PlugIns/JournalWidgetsSecure.appex/Contents/MacOS/JournalWidgetsSecure
+  610     1   0.0  0.0   40:08 /System/Applications/Stocks.app/Contents/PlugIns/StocksWidget.appex/Contents/MacOS/StocksWidget
+  611     1   0.0  0.0   40:08 /System/Applications/News.app/Contents/PlugIns/NewsTodayIntents.appex/Contents/MacOS/NewsTodayIntents
+  612     1   0.0  0.0   40:08 /System/Applications/Journal.app/Contents/PlugIns/JournalWidgets.appex/Contents/MacOS/JournalWidgets
+  613     1   0.0  0.0   40:08 /System/Library/PrivateFrameworks/AppStoreDaemon.framework/Support/appstoreagent
+  614     1   0.0  0.0   40:08 /System/Library/PrivateFrameworks/PackageKit.framework/Resources/system_installd
+  615     1   0.0  0.0   40:08 /usr/libexec/AssetCache/AssetCache
+  616     1   0.0  0.0   40:08 /System/Library/PrivateFrameworks/PackageKit.framework/Resources/installd
+  617     1   0.0  0.0   40:08 /System/Library/PrivateFrameworks/GeoServices.framework/geodMachServiceBridge
+  619     1   0.0  0.0   40:07 /System/Library/CoreServices/Screen Time.app/Contents/PlugIns/ScreenTimeWidgetExtension.appex/Contents/MacOS/ScreenTimeWidgetExtension
+  620     1   0.0  0.0   40:07 /System/Applications/VoiceMemos.app/Contents/PlugIns/RecordWidgetExtension.appex/Contents/MacOS/RecordWidgetExtension
+  622     1   0.0  0.0   40:07 /System/Library/CoreServices/Screen Time.app/Contents/PlugIns/ScreenTimeWidgetIntentsExtension.appex/Contents/MacOS/ScreenTimeWidgetIntentsExtension
+  628     1   0.0  0.0   40:06 /System/Library/PrivateFrameworks/TrialServer.framework/Versions/A/XPCServices/TrialArchivingService.xpc/Contents/MacOS/TrialArchivingService
+  635     1   0.0  0.0   40:06 /usr/sbin/distnoted
+  636     1   0.0  0.0   40:06 /usr/libexec/cryptexd
+  637     1   0.0  0.0   40:06 /usr/libexec/AppleQEMUGuestAgent
+  640     1   0.0  0.0   40:05 /System/Library/PrivateFrameworks/IntelligencePlatformCore.framework/Versions/A/intelligenceplatformd
+  641     1   0.0  0.0   40:05 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdbulkimport
+  653     1   0.0  0.0   40:03 /System/Library/PrivateFrameworks/CoreSymbolication.framework/coresymbolicationd
+  654     1   0.0  0.0   40:02 /System/Library/CoreServices/ReportCrash
+  697     1   0.0  0.0   39:59 /System/Library/CoreServices/ScopedBookmarkAgent
+  698     1   0.0  0.0   39:59 /System/Library/PrivateFrameworks/CloudTelemetry.framework/Support/cloudtelemetryd
+  699     1   0.0  0.0   39:59 /System/iOSSupport/System/Library/ExtensionKit/Extensions/MacinTalkAUSP.appex/Contents/MacOS/MacinTalkAUSP
+  706     1   0.0  0.0   39:57 /System/Library/PrivateFrameworks/MobileAccessoryUpdater.framework/XPCServices/UARPUpdaterServiceDisplay.xpc/Contents/MacOS/UARPUpdaterServiceDisplay
+  707     1   0.0  0.0   39:57 /System/Library/PrivateFrameworks/MobileAccessoryUpdater.framework/XPCServices/UARPUpdaterServiceLegacyAudio.xpc/Contents/MacOS/UARPUpdaterServiceLegacyAudio
+  712     1   0.0  0.0   39:57 /System/Library/PrivateFrameworks/AppleVirtualPlatform.framework/Versions/A/XPCServices/AppleVirtualPlatformIdentityService.xpc/Contents/MacOS/com.apple.Virtualization.AppleVirtualPlatformIdentity
+  714     1   0.0  0.0   39:57 /System/Library/PrivateFrameworks/CoreAnalytics.framework/Support/analyticsagent
+  715     1   0.0  0.0   39:57 /System/iOSSupport/System/Library/ExtensionKit/Extensions/SiriAUSP.appex/Contents/MacOS/SiriAUSP
+  716     1   0.0  0.0   39:57 /System/iOSSupport/System/Library/ExtensionKit/Extensions/MauiAUSP.appex/Contents/MacOS/MauiAUSP
+  717     1   0.0  0.0   39:56 /System/iOSSupport/System/Library/ExtensionKit/Extensions/KonaSynthesizer.appex/Contents/MacOS/KonaSynthesizer
+  720     1   0.0  0.0   39:56 /usr/sbin/distnoted
+  721     1   0.0  0.0   39:56 /System/Library/PrivateFrameworks/MacinTalk.framework/PlugIns/WardaSynthesizer.appex/Contents/MacOS/WardaSynthesizer
+  730     1   0.0  0.0   39:54 /System/Library/PrivateFrameworks/CloudServices.framework/Helpers/com.apple.sbd
+  731     1   0.0  0.0   39:54 /System/Library/PrivateFrameworks/AssetCacheServices.framework/Versions/A/XPCServices/AssetCacheLocatorService.xpc/Contents/MacOS/AssetCacheLocatorService
+  735     1   0.0  0.0   39:54 /System/Library/PrivateFrameworks/UsageTracking.framework/Versions/A/UsageTrackingAgent
+  741     1   0.0  0.0   39:53 /usr/sbin/distnoted
+  774     1   0.0  0.0   39:45 /System/Library/CoreServices/WiFiAgent.app/Contents/MacOS/WiFiAgent
+  779     1   0.0  0.0   39:44 /usr/libexec/trustd
+  832     1   0.0  0.0   39:39 /System/Library/CoreServices/CrashReporterSupportHelper
+  847     1   0.0  0.0   39:36 /usr/sbin/distnoted
+  852     1   0.0  0.0   39:36 /System/Library/PrivateFrameworks/CascadeSets.framework/Versions/A/XPCServices/SetStoreUpdateService.xpc/Contents/MacOS/SetStoreUpdateService
+  853     1   0.0  0.0   39:36 /System/Library/ExtensionKit/Extensions/BatterySettingsIntentsExtension.appex/Contents/MacOS/BatterySettingsIntentsExtension
+  940     1   0.0  0.0   39:30 /usr/libexec/spotlightknowledged.importer
+  976     1   0.0  0.0   39:26 /System/Library/PrivateFrameworks/SiriInference.framework/Versions/A/siriinferenced
+ 1007     1   0.0  0.0   39:21 /System/Library/ExtensionKit/Extensions/StorageSettingsIntentsExtension.appex/Contents/MacOS/StorageSettingsIntentsExtension
+ 1008     1   0.0  0.0   39:20 /System/Applications/Calendar.app/Contents/Extensions/CalendarIntentsExtension.appex/Contents/MacOS/CalendarIntentsExtension
+ 1009     1   0.0  0.0   39:20 /System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app/Contents/Extensions/SafariLinkExtension.appex/Contents/MacOS/SafariLinkExtension
+ 1010     1   0.0  0.0   39:20 /System/Applications/Messages.app/Contents/Extensions/MessagesActionExtension.appex/Contents/MacOS/MessagesActionExtension
+ 1011     1   0.0  0.0   39:19 /usr/libexec/fpassetmanagerd
+ 1017     1   0.0  0.0   39:19 /usr/libexec/GamePolicyAgent
+ 1018     1   0.0  0.0   39:18 /usr/libexec/nfcd
+ 1019     1   0.0  0.0   39:18 /usr/libexec/assetsubscriptiond
+ 1055     1   0.0  0.0   39:17 /bin/bash
+ 1057     1   0.0  0.0   39:17 /System/Library/PrivateFrameworks/BackgroundTaskManagement.framework/Support/BackgroundTaskManagementAgent.app/Contents/MacOS/BackgroundTaskManagementAgent
+ 1068  1055   0.0  0.1   39:17 /opt/hca/hosted-compute-agent
+ 1070  1068   0.0  0.0   39:17 sudo
+ 1072  1070   0.8  0.2   39:17 /var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/provjobd4131583014
+ 1075     1   0.0  0.0   39:17 /usr/libexec/sysmond
+ 1077   103   0.0  0.0   39:16 /usr/sbin/systemstats
+ 1078     1   0.0  0.0   39:16 /System/Library/PrivateFrameworks/PassKitCore.framework/passd
+ 1080     1   0.0  0.0   39:15 /System/Library/ExtensionKit/Extensions/BiometricsAndPasswordSettingsAppIntentsExtension.appex/Contents/MacOS/BiometricsAndPasswordSettingsAppIntentsExtension
+ 1084     1   0.0  0.0   39:13 /System/Library/ExtensionKit/Extensions/WiFiMacSettingsIntents.appex/Contents/MacOS/WiFiMacSettingsIntents
+ 1085     1   0.0  0.0   39:13 /System/Library/ExtensionKit/Extensions/DesktopSettingsIntents.appex/Contents/MacOS/DesktopSettingsIntents
+ 1086     1   0.0  0.0   39:13 /System/Library/ExtensionKit/Extensions/ControlCenterSettingsIntents.appex/Contents/MacOS/ControlCenterSettingsIntents
+ 1088     1   0.0  0.0   39:12 /System/Library/PrivateFrameworks/CascadeSets.framework/Versions/A/XPCServices/SetStoreUpdateService.xpc/Contents/MacOS/SetStoreUpdateService
+ 1117     1   0.0  0.0   39:04 /System/Library/ExtensionKit/Extensions/GameControllerSettingsIntents.appex/Contents/MacOS/GameControllerSettingsIntents
+ 1118     1   0.0  0.0   39:04 /System/Library/ExtensionKit/Extensions/DateTimeIntentsExtension.appex/Contents/MacOS/DateTimeIntentsExtension
+ 1119     1   0.0  0.0   39:04 /System/Library/ExtensionKit/Extensions/PlaceholderSettingsSearchTermsIntents.appex/Contents/MacOS/PlaceholderSettingsSearchTermsIntents
+ 1120     1   0.0  0.0   39:03 /System/Library/ExtensionKit/Extensions/ProfilesSettingsIntents.appex/Contents/MacOS/ProfilesSettingsIntents
+ 1122     1   0.0  0.0   39:03 /System/Library/ExtensionKit/Extensions/BluetoothSettingsAppIntentsWidgetExtension.appex/Contents/MacOS/BluetoothSettingsAppIntentsWidgetExtension
+ 1123     1   0.0  0.0   39:03 /System/Library/ExtensionKit/Extensions/KeyboardSettingsIntents.appex/Contents/MacOS/KeyboardSettingsIntents
+ 1124     1   0.0  0.0   39:03 /System/Library/ExtensionKit/Extensions/AccountsUISettingsAppIntents.appex/Contents/MacOS/AccountsUISettingsAppIntents
+ 1126     1   0.0  0.0   39:01 /System/Library/PrivateFrameworks/WorkflowKit.framework/XPCServices/ShortcutsViewService.xpc/Contents/MacOS/ShortcutsViewService
+ 1136     1   0.0  0.0   38:59 /System/Library/ExtensionKit/Extensions/NotificationsSettingsIntents.appex/Contents/MacOS/NotificationsSettingsIntents
+ 1138     1   0.0  0.0   38:59 /System/Library/ExtensionKit/Extensions/FamilyIntents.appex/Contents/MacOS/FamilyIntents
+ 1139     1   0.0  0.0   38:58 /System/Library/ExtensionKit/Extensions/TimeMachineSettingsIntents.appex/Contents/MacOS/TimeMachineSettingsIntents
+ 1140     1   0.0  0.0   38:58 /System/Library/ExtensionKit/Extensions/SpotlightSettingsIntentsExtension.appex/Contents/MacOS/SpotlightSettingsIntentsExtension
+ 1142     1   0.0  0.0   38:58 /System/Library/ExtensionKit/Extensions/DoNotDisturbAppIntents.appex/Contents/MacOS/DoNotDisturbAppIntents
+ 1143     1   0.0  0.0   38:58 /System/Library/ExtensionKit/Extensions/TrackpadIntentsExtension.appex/Contents/MacOS/TrackpadIntentsExtension
+ 1146     1   0.0  0.0   38:57 /System/Library/ExtensionKit/Extensions/AccessibilitySettingsSearchExtension.appex/Contents/MacOS/AccessibilitySettingsSearchExtension
+ 1212     1   0.0  0.0   38:55 /System/Library/ExtensionKit/Extensions/VpnSettingsIntents.appex/Contents/MacOS/VpnSettingsIntents
+ 1214     1   0.0  0.0   38:54 /System/Library/ExtensionKit/Extensions/CDsAndDvDsSettingsIntents.appex/Contents/MacOS/CDsAndDvDsSettingsIntents
+ 1215     1   0.0  0.0   38:54 /System/Library/ExtensionKit/Extensions/StartupDiskWidgetExtension.appex/Contents/MacOS/StartupDiskWidgetExtension
+ 1216     1   0.0  0.0   38:54 /System/Library/ExtensionKit/Extensions/AppleAccountIntents_macOS.appex/Contents/MacOS/AppleAccountIntents_macOS
+ 1219     1   0.0  0.0   38:54 /System/Library/ExtensionKit/Extensions/GameCenterSettingsSearchExtension.appex/Contents/MacOS/GameCenterSettingsSearchExtension
+ 1220     1   0.0  0.0   38:54 /System/Library/ExtensionKit/Extensions/ClassroomDeviceExpert.appex/Contents/MacOS/ClassroomDeviceExpert
+ 1221     1   0.0  0.0   38:53 /System/Library/ExtensionKit/Extensions/PrefPaneSearchIntent.appex/Contents/MacOS/PrefPaneSearchIntent
+ 1222     1   0.0  0.0   38:53 /System/Library/ExtensionKit/Extensions/PasswordSettingsAppIntentsExtension.appex/Contents/MacOS/PasswordSettingsAppIntentsExtension
+ 1224     1   0.0  0.0   38:53 /System/iOSSupport/System/Library/PrivateFrameworks/HomeEnergyDaemon.framework/Support/homeenergyd
+ 1227     1   0.0  0.0   38:53 /System/Library/ExtensionKit/Extensions/InternationalSettingsExtension.appex/Contents/MacOS/InternationalSettingsExtension
+ 1228     1   0.0  0.0   38:53 /System/Library/ExtensionKit/Extensions/MouseIntentsExtension.appex/Contents/MacOS/MouseIntentsExtension
+ 1229     1   0.0  0.0   38:52 /System/Library/ExtensionKit/Extensions/WallpaperSettingsIntents.appex/Contents/MacOS/WallpaperSettingsIntents
+ 1230     1   0.0  0.0   38:52 /System/Library/ExtensionKit/Extensions/SiriSetupSettingsIntents.appex/Contents/MacOS/SiriSetupSettingsIntents
+ 1233     1   0.0  0.0   38:52 /System/Library/ExtensionKit/Extensions/SoftwareUpdateSettingsExtensionIntents.appex/Contents/MacOS/SoftwareUpdateSettingsExtensionIntents
+ 1234     1   0.0  0.0   38:52 /System/Library/ExtensionKit/Extensions/ClassKitAppIntents.appex/Contents/MacOS/ClassKitAppIntents
+ 1235     1   0.0  0.0   38:52 /System/Library/ExtensionKit/Extensions/ScreenTimeAppIntentsExtension.appex/Contents/MacOS/ScreenTimeAppIntentsExtension
+ 1238     1   0.0  0.0   38:51 /System/Library/ExtensionKit/Extensions/PCCAgentClientExtension.appex/Contents/MacOS/PCCAgentClientExtension
+ 1949     1   0.0  0.0   38:05 /System/Cryptexes/App/usr/libexec/SafariBookmarksSyncAgent
+ 1950     1   0.0  0.0   38:05 /System/Library/PrivateFrameworks/DataAccess.framework/Support/dataaccessd
+ 2119     1   0.0  0.0   37:56 /usr/libexec/online-auth-agent
+ 2124     1   0.0  0.0   37:56 /System/Library/PrivateFrameworks/UIFoundation.framework/Versions/A/XPCServices/nsattributedstringagent.xpc/Contents/MacOS/nsattributedstringagent
+ 2135     1   0.0  0.0   37:54 /System/Library/PrivateFrameworks/UIFoundation.framework/Versions/A/XPCServices/nsattributedstringagent.xpc/Contents/MacOS/nsattributedstringagent
+ 2313     1   9.4  0.1   37:51 /System/Library/CoreServices/osanalyticshelper
+ 2315     1   0.0  0.0   37:50 /System/Cryptexes/App/usr/libexec/PasswordBreachAgent
+ 2318     1   0.0  0.0   37:50 /usr/sbin/distnoted
+ 2654     1   0.0  0.0   37:34 /System/Library/PrivateFrameworks/AssetCacheServices.framework/Versions/A/XPCServices/AssetCacheLocatorService.xpc/Contents/MacOS/AssetCacheLocatorService
+ 3167     1   0.0  0.0   37:18 /usr/libexec/swtransparencyd
+ 3203  1068   0.0  0.2   37:10 /Users/runner/actions-runner/cached/bin/Runner.Listener
+ 3210  3203   7.3  0.8   37:08 /Users/runner/actions-runner/cached/bin/Runner.Worker
+ 3595     1   0.0  0.0   37:01 /System/Library/PrivateFrameworks/SafariSafeBrowsing.framework/com.apple.Safari.SafeBrowsing.Service
+ 3605     1   0.0  0.0   37:00 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker
+ 4280     1   0.1  0.1   36:34 /Library/Developer/PrivateFrameworks/CoreSimulator.framework/Versions/A/XPCServices/com.apple.CoreSimulator.CoreSimulatorService.xpc/Contents/MacOS/com.apple.CoreSimulator.CoreSimulatorService
+ 4281     1   0.0  0.0   36:33 /Library/Developer/PrivateFrameworks/CoreSimulator.framework/Resources/bin/simdiskimaged
+ 4284     1   0.0  0.0   36:33 /System/Library/PrivateFrameworks/DiskImages2.framework/Versions/A/XPCServices/diskimagescontroller.xpc/Contents/MacOS/diskimagescontroller
+ 4421     1   0.0  0.0   36:31 /Library/Developer/PrivateFrameworks/CoreSimulator.framework/Versions/A/XPCServices/SimulatorTrampoline.xpc/Contents/MacOS/SimulatorTrampoline
+ 4426     1   0.0  0.0   36:31 /Library/Developer/PrivateFrameworks/CoreSimulator.framework/Versions/A/XPCServices/SimLaunchHost.arm64.xpc/Contents/MacOS/SimLaunchHost.arm64
+ 5568     1   0.0  0.0   36:01 /System/Library/PrivateFrameworks/KerberosHelper/Helpers/DiskUnmountWatcher
+ 5916     1   0.0  0.0   35:40 /usr/sbin/spindump
+ 6269     1   0.0  0.0   35:21 /usr/libexec/duetexpertd
+ 6270     1   0.0  0.0   35:21 /usr/libexec/mlhostd
+ 7802     1   0.0  0.0   34:36 /System/Cryptexes/App/usr/libexec/AuthenticationServicesAgent
+ 8242     1   0.0  0.0   34:21 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/managedcorespotlightd
+ 8553     1   0.0  0.0   34:15 /Library/Developer/PrivateFrameworks/CoreDevice.framework/Versions/A/XPCServices/CoreDeviceService.xpc/Contents/MacOS/CoreDeviceService
+ 8555     1   0.0  0.0   34:14 /Library/Apple/System/Library/PrivateFrameworks/RemotePairing.framework/Versions/A/XPCServices/remotepairingd.xpc/Contents/MacOS/remotepairingd
+ 8558     1   0.0  0.0   34:14 /usr/libexec/MTLAssetUpgraderD
+ 8563     1   0.0  0.0   34:13 /usr/libexec/fskit_agent
+ 8565     1   0.0  0.0   34:13 /Library/Developer/PrivateFrameworks/CoreDevice.framework/Versions/A/PrivateApplications/CoreDeviceExtensions.app/Contents/Extensions/DeviceFS.appex/Contents/MacOS/DeviceFS
+ 8566     1   0.0  0.0   34:13 /Library/Developer/PrivateFrameworks/CoreDevice.framework/Versions/A/PrivateApplications/CoreDeviceExtensions.app/Contents/Extensions/DeviceFS.appex/Contents/MacOS/DeviceFS
+ 9025     1   0.0  0.0   34:03 /System/Library/PrivateFrameworks/Categories.framework/Versions/A/XPCServices/CategoriesService.xpc/Contents/MacOS/CategoriesService
+ 9247     1   0.0  0.0   33:58 /System/Library/PrivateFrameworks/CascadeSets.framework/Versions/A/XPCServices/SetStoreUpdateService.xpc/Contents/MacOS/SetStoreUpdateService
+ 9327     1   0.0  0.0   33:56 /System/Library/PrivateFrameworks/SiriAppIntentsRuntime.framework/siriappintentsd
+14639     1   0.0  0.0   31:30 /System/Library/PrivateFrameworks/SuggestedImage.framework/Support/imageplaygroundd
+15348     1   0.0  0.0   31:13 /System/Library/PrivateFrameworks/CallHistory.framework/Support/CallHistorySyncHelper
+16339     1   0.0  0.0   30:36 /usr/libexec/ASPCarryLog
+16351     1   0.0  0.0   30:36 /usr/libexec/symptomsd-diag
+17231     1   0.0  0.0   30:18 /usr/libexec/ospredictiond
+17617     1   0.0  0.0   30:02 /usr/libexec/betaenrollmentagent
+17618     1   0.0  0.0   30:02 /usr/libexec/betaenrollmentd
+18577     1   0.0  0.0   29:30 /System/Library/CoreServices/EscrowSecurityAlert.app/Contents/MacOS/EscrowSecurityAlert
+18578     1   0.0  0.0   29:30 /System/Library/PrivateFrameworks/CoreLSKD.framework/Versions/A/lskdd
+19457     1   0.0  0.0   29:11 /System/Library/PrivateFrameworks/ProtectedCloudStorage.framework/Helpers/ProtectedCloudKeySyncing
+19458     1   0.0  0.0   29:11 /System/Library/CoreServices/Keychain Circle Notification.app/Contents/MacOS/Keychain Circle Notification
+25090     1   0.0  0.0   26:31 /usr/libexec/proactiveeventtrackerd
+25092     1   0.0  0.0   26:31 /usr/libexec/microstackshot
+25520     1   0.0  0.0   26:14 /usr/libexec/sysdiagnosed
+28372     1   0.0  0.0   24:56 /System/Library/PrivateFrameworks/AssistantServices.framework/Versions/A/XPCServices/media-indexer.xpc/Contents/MacOS/media-indexer
+28381     1   0.0  0.0   24:51 /System/Library/PrivateFrameworks/AMPLibrary.framework/Versions/A/Support/AMPLibraryAgent
+28394     1   0.0  0.0   24:49 /System/Library/PrivateFrameworks/CoreFP.framework/Versions/A/fairplayd
+28751     1   0.0  0.0   24:41 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdsync
+28754     1   0.0  0.0   24:41 /System/Library/PrivateFrameworks/XprotectFramework.framework/Versions/A/XPCServices/XProtectUpdateService.xpc/Contents/MacOS/XProtectUpdateService
+29148     1   0.0  0.0   24:29 /System/Library/PrivateFrameworks/PodcastServices.framework/XPCServices/PodcastContentService.xpc/Contents/MacOS/PodcastContentService
+29215     1   0.0  0.0   24:27 /usr/libexec/tzd
+30175     1   0.0  0.0   24:05 /System/Library/PrivateFrameworks/BookKit.framework/Versions/A/XPCServices/com.apple.BKAgentService.xpc/Contents/MacOS/com.apple.BKAgentService
+30252     1   0.0  0.0   23:55 /System/Library/PrivateFrameworks/AMPLibrary.framework/Versions/A/Support/AMPArtworkAgent
+30633     1   0.0  0.0   23:46 /usr/libexec/DataDetectorsSourceAccess
+30706     1   0.0  0.0   23:41 /System/Library/CoreServices/Setup Assistant.app/Contents/Resources/mbuseragent
+31040     1   0.0  0.0   23:35 /System/Library/PrivateFrameworks/MobileAccessoryUpdater.framework/XPCServices/EAUpdaterService.xpc/Contents/MacOS/EAUpdaterService
+36538     1   0.0  0.0   21:12 /System/Library/PrivateFrameworks/AutomationMode.framework/automationmode-writer
+38016     1   0.0  0.0   20:38 /System/Library/PrivateFrameworks/GameControllerFoundation.framework/Versions/A/XPCServices/GameControllerConfigService.xpc/Contents/MacOS/GameControllerConfigService
+62322     1   0.0  0.0   10:45 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+62336     1   0.0  0.0   10:43 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+62349     1   0.0  0.0   10:42 /usr/libexec/diskimagesiod
+62356     1   0.0  0.0   10:42 /usr/libexec/diskimagesiod
+62407     1   0.0  0.0   10:40 /Library/Developer/PrivateFrameworks/CoreSimulator.framework/Versions/A/Resources/SimStreamProcessorServices.simdeviceio/Contents/XPCServices/SimStreamProcessorService.xpc/Contents/MacOS/SimStreamProcessorService
+62410     1   0.0  0.0   10:39 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+62411     1   0.0  0.0   10:39 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+62420     1   0.1  0.1   10:39 /Library/Developer/PrivateFrameworks/CoreSimulator.framework/Versions/A/Resources/SimRenderingServices.simdeviceio/Contents/XPCServices/SimRenderServer.xpc/Contents/MacOS/SimRenderServer
+62440     1   0.0  0.0   10:39 /Library/Developer/PrivateFrameworks/CoreSimulator.framework/Versions/A/Resources/SimAudioProcessorServices.simdeviceio/Contents/XPCServices/SimAudioProcessorService.xpc/Contents/MacOS/SimAudioProcessorService
+62507     1   0.0  0.0   10:38 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+62509     1   0.0  0.0   10:38 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+62515     1   0.0  0.0   10:37 /System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/CVMServer
+62528     1   4.0  0.1   10:37 /Library/Developer/PrivateFrameworks/CoreSimulator.framework/Versions/A/Resources/SimRenderingServices.simdeviceio/Contents/XPCServices/SimMetalHost.xpc/Contents/MacOS/SimMetalHost
+62530     1   0.0  0.0   10:37 /Library/Developer/PrivateFrameworks/CoreSimulator.framework/Versions/A/Resources/SimRenderingServices.simdeviceio/Contents/XPCServices/SimMetalHost.xpc/Contents/MacOS/SimMetalHost
+62531     1   0.0  0.0   10:37 /Library/Developer/PrivateFrameworks/CoreSimulator.framework/Versions/A/Resources/SimRenderingServices.simdeviceio/Contents/XPCServices/SimMetalHost.xpc/Contents/MacOS/SimMetalHost
+62562     1   0.1  0.1   10:37 launchd_sim
+62712 62562   0.0  0.1   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/UserEventAgent
+62714 62562  56.2  2.7   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/SpringBoard.app/SpringBoard
+62717 62562   0.4  0.1   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/logd
+62720 62562   4.7  0.8   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/AssistantServices.framework/assistantd
+62721 62562   0.0  0.4   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/runningboardd
+62722 62562   0.0  0.0   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/People.framework/peopled
+62723 62562   0.0  0.0   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/ReplicatorCore.framework/Support/replicatord
+62725 62562   0.0  0.2   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/Accounts.framework/accountsd
+62726 62562   0.0  0.3   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/MediaRemote.framework/Support/mediaremoted
+62727 62562   0.0  0.0   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/routined
+62728 62562   0.0  0.1   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/AXAssetLoader.framework/Support/axassetsd
+62730 62562   0.0  0.0   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/HealthKit.framework/healthd
+62731 62562   0.0  0.1   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/IDSSimulatorSupport.framework/Support/ids_simd
+62732 62562   0.0  0.1   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/TCC.framework/Support/tccd
+62734 62562   0.0  0.0   10:35 xpcproxy_sim
+62735 62562   0.7  0.4   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/BiomeStreams.framework/Support/biomed
+62736 62562   0.0  0.0   10:35 xpcproxy_sim
+62737 62562   0.1  0.0   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/MobileTimer.framework/Executables/mobiletimerd
+62738 62562   0.2  0.1   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/IDS.framework/identityservicesd.app/identityservicesd
+62739 62562   0.0  0.0   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/sbin/syslogd
+62741 62562   0.0  0.1   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/appprotectiond
+62742 62562   0.0  0.0   10:35 xpcproxy_sim
+62743 62562   0.0  0.2   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/backboardd
+62744 62562   2.8  0.5   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/sharingd
+62745 62562   0.0  0.7   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/ManagedSettings.framework/ManagedSettingsAgent
+62746 62562   0.0  0.2   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/locationd
+62748 62562   0.0  0.0   10:35 xpcproxy_sim
+62749 62562   0.0  0.0   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/dasd
+62750 62562   0.0  0.0   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/SleepDaemon.framework/sleepd
+62751 62562   0.0  0.1   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/sbin/distnoted
+62752 62562   0.0  0.0   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/PassKitCore.framework/passd
+62753 62562   0.0  0.0   10:35 /usr/libexec/CoreSimulatorBridge
+62754 62562   0.0  0.0   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/MapsSupport.framework/navd
+62755 62562   0.0  0.2   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/remindd
+62756 62562   0.0  0.0   10:35 xpcproxy_sim
+62757 62562   0.0  0.1   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/rapportd
+62759 62562   0.0  0.0   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/AppleMediaServices.framework/amsaccountsd
+62760 62562   0.1  0.0   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/configd_sim
+62761 62562   0.0  1.0   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/DeviceConfiguration.framework/deviceconfigurationd
+62762 62562   0.2  0.1   10:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/sbin/notifyd
+62763 62562   0.0  0.0   10:35 /usr/libexec/dtdeviceinfod
+62769     1   0.0  0.0   10:35 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+62775 62562   0.0  0.0   10:35 aslmanager
+62796 62562  22.0  0.1   10:31 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/diagnosticd
+62797 62562   0.6  0.1   10:31 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/logd_helper
+62807     1   0.0  0.0   10:28 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+62809     1  12.7  0.0   10:28 /usr/libexec/diagnosticd
+62810 62562   1.2  0.1   10:28 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/sbin/cfprefsd
+62811 62562  11.5  0.4   10:28 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/ApplePushService.framework/apsd
+62812 62562   0.0  0.1   10:27 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/containermanagerd_system
+62813 62562   0.0  0.1   10:27 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/lsd
+62815 62562   0.0  0.1   10:27 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/gamecontrollerd
+62816 62562   0.0  0.2   10:26 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/containermanagerd
+62820 62562   0.0  0.2   10:25 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/UserNotificationsCore.framework/Support/usernotificationsd
+62821 62562   0.0  0.1   10:24 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/SessionCore.framework/Support/liveactivitiesd
+62822 62562   0.0  0.0   10:24 /usr/libexec/triald
+62825     1   0.0  0.0   10:23 /System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService
+62827 62562   0.0  0.1   10:23 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/nsurlsessiond
+62832 62562   2.8  0.4   10:19 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/iconservicesagent
+62833 62562   0.0  0.0   10:18 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/DataMigration.framework/XPCServices/com.apple.datamigrator.xpc/com.apple.datamigrator
+62834 62562   0.3  0.2   10:18 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/Contacts.framework/Support/contactsd
+62837 62562   0.0  0.0   10:17 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/installd
+62840 62562   0.0  0.1   10:16 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/Metal.framework/XPCServices/MTLCompilerService.xpc/MTLCompilerService
+62843 62562   0.0  0.0   10:16 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/MobileInstallation.framework/XPCServices/com.apple.MobileInstallationHelperService.xpc/com.apple.MobileInstallationHelperService
+62844 62562   0.0  0.0   10:15 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/Pasteboard.framework/Support/pasted
+62847 62562   0.3  0.3   10:15 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/VoiceShortcuts.framework/Support/siriactionsd
+62851     1   0.0  0.0   10:14 /System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService
+62852 62562   0.0  0.1   10:13 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/AccessibilityUIServer.app/AccessibilityUIServer
+62853     1   0.0  0.1   10:13 /usr/libexec/taskgated
+62854 62562   0.9  0.2   10:13 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/securityd
+62855 62562   0.0  1.2   10:11 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/ChronoCore.framework/Support/chronod
+62856 62562   0.0  0.0   10:09 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/CloudKitDaemon.framework/Support/cloudd
+62858 62562   0.0  0.4   10:05 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/PosterBoard.app/PosterBoard
+62859 62562   0.0  0.0   10:04 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/IntlPreferences.framework/Support/localizationswitcherd
+62865 62562   0.0  0.3   10:01 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/SyncedDefaults.framework/Support/syncdefaultsd
+62868 62562   0.0  0.0   09:59 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/eligibilityd
+62869 62562   0.0  0.2   09:59 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/TelephonyUtilities.framework/callservicesd
+62878 62562   0.0  0.7   09:55 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/FamilyCircle.framework/familycircled
+62881 62562   0.0  0.0   09:55 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/CoreCDP.framework/cdpd
+62882 62562   4.7  1.1   09:54 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/HomeKitDaemon.framework/Support/homed
+62889 62562   0.0  0.1   09:53 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/findmylocated
+62899     1   0.0  0.0   09:50 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+62901 62562   0.0  0.1   09:49 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/mobileassetd
+62904     1   0.0  0.0   09:48 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+62905 62562   0.0  0.7   09:48 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/appleaccountd
+62906     1   0.0  0.0   09:47 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+62914 62562   0.0  0.1   09:43 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/GeoServices.framework/geod
+62915 62562   0.0  0.0   09:43 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/ClipServices.framework/clipserviced
+62916 62562   0.0  0.9   09:43 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/GenerativeExperiencesRuntime.framework/generativeexperiencesd
+62917 62562   0.0  1.2   09:43 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/ScreenTimeSettingsFoundation.framework/ScreenTimeSettingsAgent
+62918 62562   0.0  0.0   09:43 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/SetupAssistant.framework/budd
+62919 62562   0.0  0.1   09:42 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Cryptexes/App/usr/libexec/webbookmarksd
+62921 62562   0.0  0.1   09:41 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/SystemStatusServer.framework/Support/systemstatusd
+62930 62562   0.0  0.1   09:36 /usr/libexec/pkd
+62931 62562   0.0  0.0   09:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/IntelligencePlatformCore.framework/intelligenceplatformd
+62932 62562   0.0  0.0   09:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/DataAccess.framework/Support/dataaccessd
+62933 62562   0.0  0.0   09:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/CommunicationsFilter.framework/CMFSyncAgent
+62934 62562   0.0  0.9   09:35 /usr/libexec/siriknowledged
+62946 62562   0.0  0.0   09:33 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/AppIntentsLiveEntitySupport.framework/XPCServices/AppIntentsLiveEntityService.xpc/AppIntentsLiveEntityService
+62952 62562   0.0  0.0   09:32 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/CoreParsec.framework/parsec-fbf
+62953 62562   0.0  0.0   09:32 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/NanoTimeKit.framework/nanotimekitcompaniond
+62954 62562   0.0  0.0   09:32 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/deviceaccessd
+62958 62562  10.0  0.5   09:31 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/dmd
+62959 62562   0.0  0.2   09:30 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/CoreFollowUp.framework/followupd
+62965 62562   0.0  0.1   09:29 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/DoNotDisturbServer.framework/Support/donotdisturbd
+62967 62562   0.0  0.3   09:29 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/gamed
+62970 62562   0.0  0.2   09:29 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/Search.framework/searchd
+62973 62562   0.0  0.0   09:28 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/countryd
+62975 62562   0.0  0.1   09:28 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/TelephonyUtilities.framework/XPCServices/com.apple.FaceTime.FTConversationService.xpc/com.apple.FaceTime.FTConversationService
+62978 62562   0.0  0.1   09:27 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/iTunesCloud.framework/Support/itunescloudd
+62979 62562   0.0  0.1   09:27 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/EmailDaemon.framework/maild
+62980 62562   0.0  0.1   09:27 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/SeymourServices.framework/fitcored
+62981 62562   0.0  0.0   09:27 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/tvremoted
+62982 62562   0.0  0.5   09:27 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/adprivacyd
+62989 62562   0.0  0.1   09:26 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/AppleMediaServicesUI.framework/amsengagementd
+62999 62562   0.0  0.2   09:23 assetsd
+63007 62562   0.0  0.0   09:21 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/CallKit.framework/XPCServices/com.apple.CallKit.CallDirectoryMaintenance.xpc/com.apple.CallKit.CallDirectoryMaintenance
+63020 62562   0.0  0.0   09:14 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/BusinessChatService.framework/businessservicesd
+63022 62562   0.0  0.0   09:13 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/IntelligenceFlowRuntime.framework/intelligenceflowd
+63023 62562   0.0  0.6   09:13 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/DeviceConfiguration.framework/DeviceConfigurationAgent
+63027 62562   0.0  0.0   09:11 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/SeymourServicesCore.framework/XPCServices/SeymourAssetService.xpc/SeymourAssetService
+63067 62562   0.0  0.0   09:03 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/iTunesStore.framework/Support/itunesstored
+63071 62562   0.0  0.0   09:02 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/AppStoreDaemon.framework/Support/appstored
+63076 62562   0.0  0.3   09:02 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/InputUI.app/InputUI
+63087 62562   0.0  0.1   09:00 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/FontServices.framework/Support/fontservicesd
+63088 62562   0.0  0.8   09:00 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/linkd
+63096 62562   0.0  0.0   08:58 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/SeymourServicesCore.framework/XPCServices/SeymourAppStoreService.xpc/SeymourAppStoreService
+63100 62562   0.0  0.0   08:58 /System/Library/Frameworks/StoreKit.framework/Support/storekitd
+63111 62562   0.0  0.0   08:55 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/Metal.framework/XPCServices/MTLCompilerService.xpc/MTLCompilerService
+63113     1   0.0  0.0   08:55 /System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService
+63115 62562   5.2  0.5   08:54 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/MusicLibrary.framework/Support/medialibraryd
+63116 62562   0.1  0.0   08:54 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/carkitd
+63119 62562   0.1  0.1   08:52 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/FinanceKit.framework/financed
+63126 62562   0.0  0.0   08:50 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/SiriTTSService.framework/sirittsd
+63127 62562   0.0  0.3   08:50 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/iCloudNotification.framework/ind
+63128 62562   0.0  0.1   08:50 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/SiriInference.framework/Support/siriinferenced
+63129 62562   0.0  0.3   08:50 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/CoreSpeech.framework/corespeechd
+63130 62562   0.0  0.0   08:49 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/FileProvider.framework/Support/fileproviderd
+63132 62562   0.6  1.0   08:48 /var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/DockFolderViewService.app/DockFolderViewService
+63133 62562   9.4  0.9   08:47 /var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/WidgetRenderer_Default.app/WidgetRenderer_Default
+63134 62562   0.0  0.0   08:47 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/CalendarDaemon.framework/Support/calaccessd
+63135 62562   0.0  0.0   08:46 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/sbin/filecoordinationd
+63136 62562   0.0  0.2   08:45 /var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/Family.app/Family
+63137 62562   0.0  0.0   08:43 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/iCloudDriveCore.framework/bird
+63144 62562   0.0  0.0   08:39 /var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/Spotlight.app/Spotlight
+63145 62562   0.0  0.0   08:39 /usr/libexec/assetsubscriptiond
+63146 62562   0.0  0.0   08:39 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/ContextKit.framework/XPCServices/ContextService.xpc/ContextService
+63147 62562   0.0  0.0   08:39 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/Metal.framework/XPCServices/MTLCompilerService.xpc/MTLCompilerService
+63149     1   0.0  0.0   08:38 /System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService
+63157 62562   0.0  0.0   08:36 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/ExtensionKit/Extensions/MercuryPosterExtension.appex/MercuryPosterExtension
+63158 62562   0.0  0.0   08:36 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/CloudDocs.framework/PlugIns/com.apple.CloudDocs.iCloudDriveFileProvider.appex/com.apple.CloudDocs.iCloudDriveFileProvider
+63165 62562   0.0  0.0   08:35 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/CoreServices/AegirProxyApp.app/Extensions/AegirPoster.appex/AegirPoster
+63166 62562   0.0  0.0   08:34 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/UnityPosterApp.app/Extensions/Unity2025Poster.appex/Unity2025Poster
+63167 62562   0.0  0.0   08:34 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/WeatherPosterApp.app/Extensions/WeatherPoster.appex/WeatherPoster
+63171 62562   0.0  0.0   08:33 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/PridePosterApp.app/Extensions/PridePosterExtension.appex/PridePosterExtension
+63175 62562   0.0  0.0   08:31 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/ImagePlaygroundPosterApp.app/Extensions/ImagePlaygroundPosterExtension.appex/ImagePlaygroundPosterExtension
+63182 62562   0.0  0.0   08:29 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/UnityPosterApp.app/Extensions/UnityPoster.appex/UnityPoster
+63191 62562   0.0  0.0   08:26 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/UnityPosterApp.app/Extensions/ExtragalacticPoster.appex/ExtragalacticPoster
+63192 62562   0.0  0.6   08:25 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/AuthKit.framework/akd
+63197 62562   0.0  0.0   08:24 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/ExtensionKit/Extensions/CollectionsPoster.appex/CollectionsPoster
+63207 62562   0.0  0.0   08:21 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/ExtensionKit/Extensions/PhotosPosterProvider.appex/PhotosPosterProvider
+63220 62562   0.0  0.0   08:18 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/GradientPoster.app/Extensions/GradientPosterExtension.appex/GradientPosterExtension
+63221 62562   0.0  0.0   08:18 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/EmojiPoster.app/Extensions/EmojiPosterExtension.appex/EmojiPosterExtension
+63231 62562   0.0  0.0   08:13 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/ExtensionKit/Extensions/MercuryPosterExtension.appex/MercuryPosterExtension
+63238 62562   0.0  0.0   08:10 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/Metal.framework/XPCServices/MTLCompilerService.xpc/MTLCompilerService
+63242 62562   0.0  0.0   08:08 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/Metal.framework/XPCServices/MTLCompilerService.xpc/MTLCompilerService
+63243 62562   0.0  0.0   08:08 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/MobileAssetDaemon.framework/XPCServices/com.apple.MobileAsset.DownloadService.Builtin.xpc/com.apple.MobileAsset.DownloadService.Builtin
+63251 62562   0.0  0.0   08:05 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/PhotoAnalysis.framework/Support/photoanalysisd
+63255 62562   0.0  0.0   08:04 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/CascadeSets.framework/XPCServices/SetStoreUpdateService.xpc/SetStoreUpdateService
+63273 62562   0.0  0.8   07:58 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/ModelCatalogRuntime.framework/modelcatalogd
+63292 62562   0.0  0.0   07:54 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/AssetCacheServices.framework/XPCServices/AssetCacheLocatorService.xpc/AssetCacheLocatorService
+63304 62562   0.0  0.0   07:51 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/Speech.framework/XPCServices/localspeechrecognition.xpc/localspeechrecognition
+63305 62562   0.0  0.0   07:51 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/swcd
+63312 62562   0.0  0.0   07:50 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/DeviceCheckInternal.framework/devicecheckd
+63315 62562   0.0  0.0   07:48 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/CascadeSets.framework/XPCServices/SetStoreUpdateService.xpc/SetStoreUpdateService
+63328 62562   0.0  0.0   07:47 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/StreamingExtractor.framework/XPCServices/STExtractionService.xpc/STExtractionService
+63409 62562   0.0  0.7   07:33 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/CoreSuggestions.framework/suggestd
+63459 62562   0.0  0.0   07:24 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/icloudmailagent
+63482 62562   1.0  0.5   07:15 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/trustd
+63498     1   0.0  0.0   07:12 xpcproxy
+63528 62562   0.0  0.0   06:52 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/InstallCoordination.framework/Support/installcoordinationd
+63529 62562   0.0  0.0   06:51 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/CascadeSets.framework/XPCServices/SetStoreUpdateService.xpc/SetStoreUpdateService
+63534 62562   0.0  0.2   06:49 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/spotlightknowledged.updater
+63535 62562   0.0  0.0   06:48 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/textunderstandingd
+63554     1   0.0  0.0   06:31 /usr/sbin/WirelessRadioManagerd
+63567     1   0.0  0.0   06:13 /usr/libexec/AirPlayXPCHelper
+63570     1   0.0  0.0   05:57 /usr/libexec/findmybeaconingd
+63572     1   0.0  0.0   05:48 /usr/libexec/assessmentagent
+63573     1   0.0  0.0   05:28 /System/Library/PrivateFrameworks/EmailDaemon.framework/Versions/A/maild
+63574 62562   0.0  0.0   05:15 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/Batteries.app/PlugIns/BatteriesAvocadoWidgetExtension.appex/BatteriesAvocadoWidgetExtension
+63575     1   0.0  0.0   05:15 /System/Library/PrivateFrameworks/CommerceKit.framework/Versions/A/Resources/commerce
+63579 62562   0.0  0.0   05:09 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/News.app/PlugIns/NewsToday2.appex/NewsToday2
+63584 62562   0.0  0.0   04:56 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/Metal.framework/XPCServices/MTLCompilerService.xpc/MTLCompilerService
+63608 62562   0.0  0.2   04:29 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/biomesyncd
+63609 62562   0.0  0.0   04:29 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/MapKit.framework/XPCServices/com.apple.MapKit.SnapshotService.xpc/com.apple.MapKit.SnapshotService
+63610 62562   0.0  0.0   04:29 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/GeoAnalytics.framework/geoanalyticsd
+63644 62562   0.0  0.1   04:26 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/ContinuousDialogManagerService.framework/assistant_cdmd
+63788 62562   0.0  0.0   04:15 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/Reminders.app/PlugIns/RemindersWidgetExtension.appex/RemindersWidgetExtension
+63857 62562   0.0  2.3   03:38 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/Screen Time.app/PlugIns/ScreenTimeWidgetExtension.appex/ScreenTimeWidgetExtension
+63886 62562   0.0  0.0   03:03 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/MobileCal.app/PlugIns/CalendarWidgetExtension.appex/CalendarWidgetExtension
+63890 62562   0.0  0.0   03:00 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/Photos.app/PlugIns/PhotosReliveWidget.appex/PhotosReliveWidget
+63892 62562   0.0  0.0   02:57 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/Applications/Maps.app/PlugIns/GeneralMapsWidget.appex/GeneralMapsWidget
+63893     1   0.1  0.0   02:57 /bin/bash
+63905     1   0.0  0.0   02:22 /usr/libexec/feedbackd
+63907     1   0.0  0.0   02:21 /System/Library/Frameworks/CoreTelephony.framework/Support/CommCenter
+63919 62562   0.0  0.2   01:42 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/FontServices.framework/XPCServices/UserFontManager.xpc/UserFontManager
+63926     1  56.8  2.1   01:35 (ReportCrashServi)
+63947     1   0.0  0.1   01:11 /usr/libexec/ReportMemoryException
+64008 62562   0.0  0.9   00:36 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/CascadeSets.framework/XPCServices/SetStoreUpdateService.xpc/SetStoreUpdateService
+64087 62562   0.0  1.2   00:33 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/hybridsearchd
+64198 62562   0.0  1.5   00:30 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/WeatherDaemon.framework/weatherd
+64199 62562   0.0  1.1   00:30 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/UsageTracking.framework/UsageTrackingAgent
+64209 62562   0.0  1.9   00:29 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Cryptexes/App/usr/libexec/SafariBookmarksSyncAgent
+64214 62562   0.0  1.1   00:28 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/diagnosticextensionsd
+64217 62562   0.0  1.3   00:27 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/FitnessIntelligenceDaemonCore.framework/fitnessintelligenced
+64218 62562   0.0  0.0   00:27 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/modelmanagerd
+64228 62562   0.0  1.3   00:24 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/FitnessIntelligenceDaemonCore.framework/XPCServices/FitnessIntelligenceInferenceService.xpc/FitnessIntelligenceInferenceService
+64237 62562   0.0  2.0   00:22 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/FitnessCoachingServices.framework/fitnesscoachingd
+64250 62562   0.0  1.7   00:18 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/SocialLayer.framework/sociallayerd.app/sociallayerd
+64252 62562   0.1  3.6   00:17 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/ScreenTimeCore.framework/ScreenTimeAgent
+64264 62562   0.0  2.0   00:15 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/Frameworks/FamilyControls.framework/FamilyControlsAgent
+64267 62562   0.0  2.3   00:14 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/usr/libexec/profiled
+64288     1   0.0  0.1   00:09 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+64328 62562   0.0  1.2   00:07 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/AvatarPersistence.framework/Support/avatarsd
+64329 62562   0.0  0.6   00:07 /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.DoozMJ/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/CloudSubscriptionFeatures.framework/featureaccessd
+64373     1   0.1  0.1   00:03 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+64393  3210   1.6  0.0   00:03 /bin/bash
+64401 63893   0.2  0.0   00:03 (bash)
+64402 64401  13.8  0.2   00:03 (diskutil)
+64403 64401   0.2  0.0   00:03 (grep)
+64404 64401   0.1  0.0   00:03 (sed)
+64405 64401   0.4  0.0   00:03 (sed)
+64410  1072   0.0  0.0   00:03 <defunct>
+64411 64393   0.0  0.0   00:03 ps

@@ -1,0 +1,30 @@
+module HanlinNativeScriptCoreSupport {
+    umbrella header "HanlinNativeScriptCoreSupport.h"
+    export *
+}
+
+module NativeScriptEmbedder {
+    header "NativeScriptEmbedder.h"
+    export *
+}
+
+module NativeScriptUtils {
+    header "NativeScriptUtils.h"
+    export *
+}
+
+module UIViewNativeScript {
+    header "UIView+NativeScript.h"
+    export *
+}
+
+module HanlinNativeServicesBridge {
+    header "HanlinNativeServicesBridge.h"
+    export *
+}
+
+module HanlinNativeScriptCompatibility {
+    header "HanlinNativeScriptCompatibility.h"
+    export *
+}
+

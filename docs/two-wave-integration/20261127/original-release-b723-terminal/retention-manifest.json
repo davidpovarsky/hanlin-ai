@@ -1,0 +1,376 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-27T14:17:20.479163+00:00",
+  "integrationSource": "9019ddf57fc7fd712e2e8587a53cdfef1fcb4612",
+  "outcome": "Original Release on b723338e: RuntimeCore preflight, real arm64 Simulator build, resource/localization/system/dyld scans and owned Simulator boot PASS. Actual Shell launch wrote its original report, but the original validator FAILS its required policy-set check. Overall attempt FAILED; MCP NOT_RUN. 69 declared native evidence members were independently verified by root. The original 14400-second total budget, failure logs, actual app inventory and build xcresult are retained. This packet does not relabel the failed attempt or supply a new successful Shell/MCP result.",
+  "archive": {
+    "path": "original-evidence.tar.gz",
+    "bytes": 3119653,
+    "sha256": "3e9fc33a7791a7d4226d1850ab38ea19054c4945e5290de9ab26609ece602862",
+    "memberCount": 71,
+    "rawBytes": 38840328,
+    "encoding": "lossless tar.gz of complete retained technical original files; round-trip verified"
+  },
+  "excludedTransportWrappers": [
+    "original-packet.tar.gz",
+    "transfer-receipt.json"
+  ],
+  "publicCredentialPatternPreflight": "PASS",
+  "members": [
+    {
+      "path": "original/controller/original-release-b723338e-r1-launch.json",
+      "bytes": 628,
+      "sha256": "37f192dd12e0cf0d56bf4355d1bf1c1673f50f385374900b3861b002d68a22e7"
+    },
+    {
+      "path": "original/controller/original-release-b723338e-r1-supervisor.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/controller/original-release-b723338e-r1.json",
+      "bytes": 409370,
+      "sha256": "5affe4f9a9acc198b55ce31672e363ea8f1b06bff7a882d5a34f4add329499e7"
+    },
+    {
+      "path": "original/controller/run-original-release-b723338e-r1.py",
+      "bytes": 11572,
+      "sha256": "190cef28cb593a8fb10a796053913be31b056cae5a16d07a1636e8f081ef7afb"
+    },
+    {
+      "path": "original/inputs/binding.json",
+      "bytes": 8489,
+      "sha256": "f64b5012209421555e05dc9eb6301897d813085732cf553fb17d7c477ac30276"
+    },
+    {
+      "path": "original/inputs/boot-ipad-simulator-and-stage-fixtures.sh",
+      "bytes": 4770,
+      "sha256": "99907dbcb1483c35cff367acf2b4add3c2490b867b303061d531adcdf9ca46bc"
+    },
+    {
+      "path": "original/inputs/boot-ipad-simulator-and-stage-fixtures.sh.executed",
+      "bytes": 4774,
+      "sha256": "552d4417b3e3576ea8c649deea642233e295b9e2bcdf283b9fc8f3012eb0b750"
+    },
+    {
+      "path": "original/inputs/boot-ipad-simulator-and-stage-fixtures.sh.rendered.diff",
+      "bytes": 1012,
+      "sha256": "de26e70d4af67a0ed9c5db1fcd32c0fcf84764edecc1485a36d69e7d4eb5e40a"
+    },
+    {
+      "path": "original/inputs/build-full-arm64-simulator-app.sh",
+      "bytes": 7132,
+      "sha256": "acc1cded884f7e8cd7f46a2c8742914f3454ec7dfbba616c99748fefd36a3824"
+    },
+    {
+      "path": "original/inputs/build-full-arm64-simulator-app.sh.executed",
+      "bytes": 7016,
+      "sha256": "d2b08d85c1f3bb9255f7a0d90c639aba6a27e8b64b4db79cefeea2373c45f266"
+    },
+    {
+      "path": "original/inputs/build-full-arm64-simulator-app.sh.rendered.diff",
+      "bytes": 1300,
+      "sha256": "ac3dd3207d6b4cb4943197a367f9dd5d2cc8b0a8175f56130da6bc63f2a7fd95"
+    },
+    {
+      "path": "original/inputs/initial-survey.json",
+      "bytes": 19049,
+      "sha256": "4c76460a62b80cc969ddd954052affbfb576a91b7ac7e7deb92f572c38037ca5"
+    },
+    {
+      "path": "original/inputs/launch-full-app-and-verify-runtime-acceptance.sh",
+      "bytes": 15643,
+      "sha256": "a9c5bb380680ef5178797a5c1e9bef11d3cf0a0027f8d1e3c50f8673b5c92b0a"
+    },
+    {
+      "path": "original/inputs/launch-full-app-and-verify-runtime-acceptance.sh.executed",
+      "bytes": 15643,
+      "sha256": "a9c5bb380680ef5178797a5c1e9bef11d3cf0a0027f8d1e3c50f8673b5c92b0a"
+    },
+    {
+      "path": "original/inputs/launch-full-app-and-verify-runtime-acceptance.sh.rendered.diff",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/inputs/locate-and-scan-simulator-app.sh",
+      "bytes": 2341,
+      "sha256": "c44b49f7a0a2dc3182cc6dbacca1ffd1e81763302ae2dc6395fd5f2b20eef3d4"
+    },
+    {
+      "path": "original/inputs/locate-and-scan-simulator-app.sh.executed",
+      "bytes": 2282,
+      "sha256": "8accf598ba7cd263cd01038a6ba9b3bfde2e4033924fd4727e76d319edf5b6d2"
+    },
+    {
+      "path": "original/inputs/locate-and-scan-simulator-app.sh.rendered.diff",
+      "bytes": 709,
+      "sha256": "7da13849553247fdeda31dd1c15d99091d351c52367b951e2f1892a6407e4adf"
+    },
+    {
+      "path": "original/inputs/original-gate-map.json",
+      "bytes": 13008,
+      "sha256": "68cde48979ff7ef3a388c03ca0b4f7dafc6d3d6f22a4e94fab9e055ff7a1c07d"
+    },
+    {
+      "path": "original/manifest.json",
+      "bytes": 13512,
+      "sha256": "7af4669d25c7b3744a152f7a202333ab60df76dcf70329c4f56ce6a3d3d6c2af"
+    },
+    {
+      "path": "original/original-native-proof/06-app-compilation-duration-seconds.txt",
+      "bytes": 4,
+      "sha256": "f914a3811284ffbf907a3ecc99897e430c8f401b200c67643561f3cff73e50ea"
+    },
+    {
+      "path": "original/original-native-proof/06-xcodebuild-simulator.log",
+      "bytes": 17503214,
+      "sha256": "820bab62182ec45d21e6461123214970de266e9f870a5ffd270e87f83a76e9d4"
+    },
+    {
+      "path": "original/original-native-proof/07-built-app-resources.txt",
+      "bytes": 142054,
+      "sha256": "d8c5651f382d95ba986806c5541b096c31b422ac894bd0bb747d1526f9a2da54"
+    },
+    {
+      "path": "original/original-native-proof/07-nativescript-preflight-skipped.txt",
+      "bytes": 76,
+      "sha256": "08cfa95fc4855d7c4dc30d0d1bf2ec430d85ca3029a17fcb7aed77f4d7f8818e"
+    },
+    {
+      "path": "original/original-native-proof/07-simulator-dyld-closure.json",
+      "bytes": 339055,
+      "sha256": "543fce7ede09a3ce373c21a2924b084a2e95ed340114aca015f00dd3078cfd03"
+    },
+    {
+      "path": "original/original-native-proof/07-simulator-dyld-closure.txt",
+      "bytes": 118397,
+      "sha256": "99fc9a072ad289b852fb162a6af9fbb5d3b34c3d75106c0fb037b0729c530a44"
+    },
+    {
+      "path": "original/original-native-proof/07-simulator-ios-system-resources.json",
+      "bytes": 658,
+      "sha256": "56525b03ae5a83c6e95159c3729bb3bfd845eb6ee870649fc271d9788896fccc"
+    },
+    {
+      "path": "original/original-native-proof/07-simulator-runtime-signature.log",
+      "bytes": 203,
+      "sha256": "a2bb1fc2e22d6b52e1cb3e4fcd48e7c0031d1d300cfc2ea505da7281016bff55"
+    },
+    {
+      "path": "original/original-native-proof/07-simulator-sdk-bundle-resources.json",
+      "bytes": 10257,
+      "sha256": "8844a9205975b664ff4e42585c01232657b5dee590c45538d167378b7b304d1d"
+    },
+    {
+      "path": "original/original-native-proof/07-simulator-sdk-localization.json",
+      "bytes": 1025,
+      "sha256": "84dffd343771f7d83bcbe2eac79007c89a75d4426f967f9aabd40c6a3f780225"
+    },
+    {
+      "path": "original/original-native-proof/08-bootstatus.log",
+      "bytes": 5693,
+      "sha256": "15f3da639ac9fd81b830a095ceff75c2f68bf7700cafd3610a218afd48525d3e"
+    },
+    {
+      "path": "original/original-native-proof/08-launch-output.txt",
+      "bytes": 31,
+      "sha256": "226cec92cbe671015079c28784ef2ee1425ae4674a43bc4ba95cfb93cc4d682a"
+    },
+    {
+      "path": "original/original-native-proof/08-nativescript-files-staging-skipped.txt",
+      "bytes": 66,
+      "sha256": "43d4c4e4577fad4c00a5b13c1707f59587669744fe63ba87ca542efee4dd9d08"
+    },
+    {
+      "path": "original/original-native-proof/08-owned-simulator-boot.json",
+      "bytes": 519,
+      "sha256": "f7eac5af1e7747f864b5ef5bf27372388b6b28fc8ecf357988381cc251eec523"
+    },
+    {
+      "path": "original/original-native-proof/08-post-tests-bootstatus.log",
+      "bytes": 163,
+      "sha256": "2148f593592fd9e54ef80b44521176aff78f4e10f1209f6274c2f715aed5690b"
+    },
+    {
+      "path": "original/original-native-proof/08-scriptui-files-staging-skipped.txt",
+      "bytes": 58,
+      "sha256": "b8524eb1d6823878662fcf2680222b4ea8b80a17b90b8c134a4ecf93d4a2b194"
+    },
+    {
+      "path": "original/original-native-proof/08-shell-acceptance.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/original-native-proof/08-simulator-staging-duration-seconds.txt",
+      "bytes": 3,
+      "sha256": "9961d158a7e0e2f990765971a9e490af826c0743b7d603020f34cc8944319fcb"
+    },
+    {
+      "path": "original/original-native-proof/SimulatorBuildResult.xcresult/Data/data.0~FObD65BSRK-Fw1MaDOlkEscrh26UJ83_cZK8B-tmCZXLxCeV56Wo9Xm7WArhiaRblDsBV383Jvqy4EhakcE6oQ==",
+      "bytes": 34342,
+      "sha256": "ddcd1a78f9ce3a27541c6a313a88c1a44eb9102dca3f26fe5a62a8b06f67794a"
+    },
+    {
+      "path": "original/original-native-proof/SimulatorBuildResult.xcresult/Data/data.0~UuQ8F6mvwxw5lHRciMpGpn3JNm8ud1Tpmv2kFLxPM8Y6DgXqOr19IeNsJfyH9nNBnEjMy1rdMLXCTd1ZG_93Zg==",
+      "bytes": 1164879,
+      "sha256": "654ed4d97626f433f97dbf6b536869d7d52d37e4758573c2de8236e217b81002"
+    },
+    {
+      "path": "original/original-native-proof/SimulatorBuildResult.xcresult/Data/data.0~i7goAvpam76Kdb1wAEGv2uRY_N3nIXmN0xj6Y_M9jUTtrTcmCc2CsfEu3IpAWPT0_y28fNuf7WMq_mxPVr-vqg==",
+      "bytes": 309,
+      "sha256": "d64ea306884f70c7b684577e8cb8a494da0b175485b0469c547174c50df580b8"
+    },
+    {
+      "path": "original/original-native-proof/SimulatorBuildResult.xcresult/Data/refs.0~FObD65BSRK-Fw1MaDOlkEscrh26UJ83_cZK8B-tmCZXLxCeV56Wo9Xm7WArhiaRblDsBV383Jvqy4EhakcE6oQ==",
+      "bytes": 133,
+      "sha256": "5718d2e8e7aa0b4eda0415d99ba66eff950c98cbaa59e634a3a8908366af34e9"
+    },
+    {
+      "path": "original/original-native-proof/SimulatorBuildResult.xcresult/Data/refs.0~UuQ8F6mvwxw5lHRciMpGpn3JNm8ud1Tpmv2kFLxPM8Y6DgXqOr19IeNsJfyH9nNBnEjMy1rdMLXCTd1ZG_93Zg==",
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    {
+      "path": "original/original-native-proof/SimulatorBuildResult.xcresult/Data/refs.0~i7goAvpam76Kdb1wAEGv2uRY_N3nIXmN0xj6Y_M9jUTtrTcmCc2CsfEu3IpAWPT0_y28fNuf7WMq_mxPVr-vqg==",
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    {
+      "path": "original/original-native-proof/SimulatorBuildResult.xcresult/Info.plist",
+      "bytes": 776,
+      "sha256": "8f2230e1f6f66299ce9627f533da587b2d7e3ca036b0b728bb66a9ea503347d1"
+    },
+    {
+      "path": "original/original-native-proof/app-executable.txt",
+      "bytes": 10,
+      "sha256": "0aadda1cb8a292e1e5e08d32e3d79694a777b60244661e1f8f9a7eac00646952"
+    },
+    {
+      "path": "original/original-native-proof/app-path.txt",
+      "bytes": 40,
+      "sha256": "a3b4a5197338b3663fa72b98194a1ea3f5bd5fe8266af768aa9a4cd871b71cab"
+    },
+    {
+      "path": "original/original-native-proof/bundle-id.txt",
+      "bytes": 24,
+      "sha256": "2b647e2df6c537e477d32eca4a643686109691751c74438b3a1a80a0cce32b15"
+    },
+    {
+      "path": "original/original-native-proof/commandDictionary.plist",
+      "bytes": 3560,
+      "sha256": "bc70ee9fce71b624c9f80c55be93d8a7c7d67bd06d48902ebe9fef32a906173b"
+    },
+    {
+      "path": "original/original-native-proof/extraCommandsDictionary.plist",
+      "bytes": 181,
+      "sha256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c"
+    },
+    {
+      "path": "original/original-native-proof/github-env",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/original-native-proof/launch-marker",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/original-native-proof/launch-pid.txt",
+      "bytes": 6,
+      "sha256": "668b345169ab5567e6710a47be19ff3b000bb7300d810dd06fae808570f74ffb"
+    },
+    {
+      "path": "original/original-native-proof/original-boot-ipad-simulator-and-stage-fixtures-controller.log",
+      "bytes": 7837,
+      "sha256": "124bba70ae92ce28d7ea894f9e78975ff156ceaaf980c2a02c51b1821032159a"
+    },
+    {
+      "path": "original/original-native-proof/original-build-full-arm64-simulator-app-controller.log",
+      "bytes": 17508769,
+      "sha256": "d7b5160d1e3743fd1beafab7dd892031424a3f7013fc2c3e56d4ae0a72a46bf7"
+    },
+    {
+      "path": "original/original-native-proof/original-launch-full-app-and-verify-runtime-acceptance-controller.log",
+      "bytes": 15793,
+      "sha256": "aa5b03bacd9d552310e06edc9906770230f62221fde1ddbf2b7abf57f3acbee5"
+    },
+    {
+      "path": "original/original-native-proof/original-locate-and-scan-simulator-app-controller.log",
+      "bytes": 133040,
+      "sha256": "1ed3b3479103e4b97dcf99b17c6d1f3f83fbebedec5b7de4733fb719e5e18b86"
+    },
+    {
+      "path": "original/original-native-proof/original-runtimecore-preflight-controller.log",
+      "bytes": 1781,
+      "sha256": "73a5513071ddcd53214eed5178e1488263057b6756d518a8b1294485563f2b57"
+    },
+    {
+      "path": "original/original-native-proof/shell-acceptance.json",
+      "bytes": 10618,
+      "sha256": "46a5eba972c7b00022cd399f837bcfd42f764f8925a628feaf992897ac3ce26e"
+    },
+    {
+      "path": "original/original-native-proof/shell-policy-coverage-diagnostic.json",
+      "bytes": 17263,
+      "sha256": "e52c436957d22c2cc4d8aef56257aa0afde9a6c1ed29d7b65bc1caf41b8bbdaf"
+    },
+    {
+      "path": "original/original-native-proof/shell-policy-producer-provenance.json",
+      "bytes": 35590,
+      "sha256": "026bb2da424b92c1f4fb67dc9a2dc40ec7ab866756936ee7cacc2b043e3b73ee"
+    },
+    {
+      "path": "original/original-native-proof/shell-runtime.log",
+      "bytes": 1272,
+      "sha256": "012d0cf29afb90ead7fcc20dc82dd77ac7ef7051f0ed9e26e7f11783d7dcaab7"
+    },
+    {
+      "path": "original/original-native-proof/simulator-model.txt",
+      "bytes": 22,
+      "sha256": "5b5963979dab2480b8d5eacdea46edd918c341cf4c8596e9788a01d8f7a99223"
+    },
+    {
+      "path": "original/original-native-proof/simulator-runtime.txt",
+      "bytes": 44,
+      "sha256": "e98fd124491fd14687cf6840ff047d98a01f4873d19cffefffe430d54942f893"
+    },
+    {
+      "path": "original/original-native-proof/simulator-udid.txt",
+      "bytes": 37,
+      "sha256": "f27c4de73ee1e0ea146b67a07c16e6c258bf5c952a345ebed00f1e99e54456a3"
+    },
+    {
+      "path": "original/original-native-proof/terminal-source-and-runtime-app-inventory.json",
+      "bytes": 1174900,
+      "sha256": "9d9d381120358c3f3c4f6da2b0afa22a7fd44692ebb7993aab6b31ff3e0e3c12"
+    },
+    {
+      "path": "original/original-native-proof/ui-viewport-plan.json",
+      "bytes": 305,
+      "sha256": "b9ac583416c4fc490c34cf90175dc096e52213e45e0c3f65e467cdf699becd44"
+    },
+    {
+      "path": "original/original-native-proof/verified-simulator-environment.json",
+      "bytes": 65744,
+      "sha256": "742bf239777d3e61ce7a03f2d058ab616b39b5448c802a6ae5a3db6fee4458a0"
+    },
+    {
+      "path": "original/qualification.json",
+      "bytes": 2625,
+      "sha256": "0fd49d618a48449156d68d39f2145cc16ce94178ccca04c691e21dbe7ed56a19"
+    },
+    {
+      "path": "original/source-state.json",
+      "bytes": 117,
+      "sha256": "e1498735eac78b6da4db6b7070ad31a484e5c2abb15b8b9104a65cf6c812fd6b"
+    },
+    {
+      "path": "root-independent-review.json",
+      "bytes": 583,
+      "sha256": "c9a85b066ca6d350409246a17a64659e0d559d8c5ba6e703b325e67dbebd72d7"
+    }
+  ]
+}

@@ -1,0 +1,240 @@
+{
+  "acceptance_scope": "Exactly the corrected eight requested Swift Testing identities in two suites, with 34 unique executable leaves. The XCTest compatibility preamble reporting zero tests is not the Swift Testing result.",
+  "artifact_digest_matches_github": true,
+  "artifact_id": 14465637934,
+  "artifact_sha256": "525f34eeb23f003b4f9eeb1e6154724c699acbed3a484c3e53f8b0e4adc856ef",
+  "counts": {
+    "failed_invocations": 0,
+    "failed_methods": 0,
+    "nonparameterized_invocations": 6,
+    "parameterized_invocations": 28,
+    "parameterized_methods": 2,
+    "passed_invocations": 34,
+    "passed_methods": 8,
+    "selected_methods": 8,
+    "skipped_invocations": 0,
+    "skipped_methods": 0,
+    "total_invocations": 34
+  },
+  "devices": [
+    {
+      "architecture": "arm64",
+      "deviceId": "B51D70AC-D107-40BC-9BB6-F17A9AE6BFC8",
+      "deviceName": "Hanlin-Phase2-44380551059-1",
+      "modelName": "iPad Pro 13-inch (M5)",
+      "osBuildNumber": "24B8117",
+      "osVersion": "27.2",
+      "platform": "iOS Simulator"
+    }
+  ],
+  "limits": [
+    "This run contains no new UI acceptance, physical iPad memory/startup measurement, or live provider acceptance.",
+    "Expected denied/failed/cancelled product fixture outputs are negative-path successes; they are not failed test results.",
+    "Retain the trackedWorkspaceModified caveat from source-reuse-audit.json."
+  ],
+  "macos": "27.0.1 (26A434)",
+  "methods": [
+    {
+      "arguments": [],
+      "invocations": 1,
+      "result": "Passed",
+      "selector": "AI_HLYTests/AgentSkillsExposureTests/skillCatalogRegistration()"
+    },
+    {
+      "arguments": [],
+      "invocations": 1,
+      "result": "Passed",
+      "selector": "AI_HLYTests/AgentSkillsExposureTests/capabilitySessionIsolation()"
+    },
+    {
+      "arguments": [],
+      "invocations": 1,
+      "result": "Passed",
+      "selector": "AI_HLYTests/AgentSkillsExposureTests/loadSkillToolExecution()"
+    },
+    {
+      "arguments": [],
+      "invocations": 1,
+      "result": "Passed",
+      "selector": "AI_HLYTests/AgentSkillsExposureTests/productionSkillCatalogSynchronization()"
+    },
+    {
+      "arguments": [],
+      "invocations": 1,
+      "result": "Passed",
+      "selector": "AI_HLYTests/AgentSkillsExposureTests/loadSkillInstructionContextPropagation()"
+    },
+    {
+      "arguments": [],
+      "invocations": 1,
+      "result": "Passed",
+      "selector": "AI_HLYTests/AgentSkillsExposureTests/fullSDKSkillToToolFlow()"
+    },
+    {
+      "arguments": [
+        {
+          "name": "\"always-string\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/openClawInputBoundaryRejectsUnsupportedShapes(_:)?args=d6f1bae67a46d34bb1c93254d9b353a24570ad9935fd9bda5eb121fe1e3137ee",
+          "result": "Passed"
+        },
+        {
+          "name": "\"array\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/openClawInputBoundaryRejectsUnsupportedShapes(_:)?args=9b2a344820da3e82bfe8dba723e10565e30024d9cd391b853fbadc55f585c909",
+          "result": "Passed"
+        },
+        {
+          "name": "\"bins-scalar\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/openClawInputBoundaryRejectsUnsupportedShapes(_:)?args=3ddeed0d36cb8db7dfc70892f34a24fb6d95769dc4cf97fee6ee41c95344fafa",
+          "result": "Passed"
+        },
+        {
+          "name": "\"scalar\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/openClawInputBoundaryRejectsUnsupportedShapes(_:)?args=1cf2462dbf783967e4408e886e4569a77da29314f99d4e6f78fed80de817b185",
+          "result": "Passed"
+        },
+        {
+          "name": "\"unknown-requirement\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/openClawInputBoundaryRejectsUnsupportedShapes(_:)?args=87f09eed4a1851eeedaf2332912e90230855aadfd4ed18ca25a63494324300ca",
+          "result": "Passed"
+        },
+        {
+          "name": "\"valid\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/openClawInputBoundaryRejectsUnsupportedShapes(_:)?args=ddd710f0507f6af7b1a265b7196fccfc83cad7b5e98adb465f8005a55cb43d9a",
+          "result": "Passed"
+        }
+      ],
+      "invocations": 6,
+      "result": "Passed",
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/openClawInputBoundaryRejectsUnsupportedShapes(_:)"
+    },
+    {
+      "arguments": [
+        {
+          "name": "\"argv\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=e364c0ac603886ff481fe9a94f80a43de1d0baf48390038ca093250c1b3dfd13",
+          "result": "Passed"
+        },
+        {
+          "name": "\"cancel\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=5a83111e44703c9dd7431bae2754317bb495994fbf736cf7739842ded4dcbc20",
+          "result": "Passed"
+        },
+        {
+          "name": "\"denied\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=e5532718eccbf3b707efcf5696a3347b6ac2fad00fe3417fbcf4fe6786394821",
+          "result": "Passed"
+        },
+        {
+          "name": "\"disabled\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=f693b9deb860600fb93d749df324c55991afe7eba6300113ab381339b23d12d5",
+          "result": "Passed"
+        },
+        {
+          "name": "\"failure\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=3045b5c998d76c75f480b2e91388b6adef07205004129c0b8dffee745b4aa77e",
+          "result": "Passed"
+        },
+        {
+          "name": "\"hidden-resource\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=f9799959a5c8db26866d0192055e5e8df959533c7c7e1460868117bfce01517d",
+          "result": "Passed"
+        },
+        {
+          "name": "\"instructions\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=007e01e5e287a15e8b2d7da7913e682b12115a2ef797e10aa535cd03f60cc0c3",
+          "result": "Passed"
+        },
+        {
+          "name": "\"jsc\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=8702a309562c0f991ca06d1348adb2a1f72eea077e16cb7e178571c598d288e9",
+          "result": "Passed"
+        },
+        {
+          "name": "\"missing-module\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=03271d0bf2905c3ae11ae06c78c535da5d6d60993ccf35e4236105b630210d9c",
+          "result": "Passed"
+        },
+        {
+          "name": "\"node\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=0f61677887e8c665271ec70d4b9e18812f4528206ad3161dc70021a0b1bda2e3",
+          "result": "Passed"
+        },
+        {
+          "name": "\"openclaw\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=092b8e1f25e9a872266482025195b4876ffc84c3f426b2b2d6e1050b5633d0b9",
+          "result": "Passed"
+        },
+        {
+          "name": "\"package-manifest\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=c7074709d2ce7a8d8332d484affa74910bfb4ef288c8e963f78792b2caaf49ce",
+          "result": "Passed"
+        },
+        {
+          "name": "\"python\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=2d0edc2f0650c5218a2cbe6022e4bad2f146e015c465a29754ad6407b054d6b3",
+          "result": "Passed"
+        },
+        {
+          "name": "\"reinstall\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=158bdd973d2538287b98e7550c971311bb23616a6f8c0734be873884d0252dcb",
+          "result": "Passed"
+        },
+        {
+          "name": "\"requirements\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=6e8bd27ed1a7bccac222bd584556038ee84b048ad488428b5dadc56af0187f35",
+          "result": "Passed"
+        },
+        {
+          "name": "\"restart\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=84841d3a0e2418b75dec3d5df55954803d61a26a4cd821d8df25908486b04a55",
+          "result": "Passed"
+        },
+        {
+          "name": "\"shell\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=1e7eb4d678200e9f070940ac2bb7526360dbfd451eeaad704973c2e008a8f464",
+          "result": "Passed"
+        },
+        {
+          "name": "\"toml\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=4fd33e7642bf33b6a297d8de8b8baa11ae0273c45fb03f16e4728e226072566c",
+          "result": "Passed"
+        },
+        {
+          "name": "\"typescript\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=b3f2ab0877794c011850a12d889a8ba682d2b287992ad9dff44529bfb1067538",
+          "result": "Passed"
+        },
+        {
+          "name": "\"unicode\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=d6daa03cf047710cd3fbfd0a30e7948f856c0416d94abefa8c81613d07103a49",
+          "result": "Passed"
+        },
+        {
+          "name": "\"unknown-engine\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=2e90d7ade02f0414bea35fbc9c93e34b8174de5f7fe826aefe88c7c392b07631",
+          "result": "Passed"
+        },
+        {
+          "name": "\"wrong-engine\"",
+          "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)?args=98aa55248710ab60cf195e37f71ba5acc7646dd3d288ce69b364f231acfcdeba",
+          "result": "Passed"
+        }
+      ],
+      "invocations": 22,
+      "result": "Passed",
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    }
+  ],
+  "run_id": 44380551059,
+  "schema_version": 1,
+  "source_sha": "3fcdedbdf980c000fabf484ee4568b7c253d766e",
+  "test_plan_configurations": [
+    {
+      "configurationId": "1",
+      "configurationName": "Test Scheme Action"
+    }
+  ],
+  "verified_at_utc": "2026-11-18T20:11:17.684410+00:00",
+  "workflow_conclusion": "success",
+  "xcode": "27.2 (27B52)"
+}

@@ -1,0 +1,26 @@
+✔ actual direct execution is attributed to the Host stage and current run (9.4748ms)
+✔ verified same-run reuse identifies the native-origin execution separately (1.5093ms)
+✔ reuse and passed metadata booleans without a verified execution origin remain UNKNOWN (3.9406ms)
+✔ origin missing capture cannot authorize consumer acceptance (3.8146ms)
+✔ origin other run cannot authorize consumer acceptance (4.6039ms)
+✔ origin other attempt cannot authorize consumer acceptance (0.9689ms)
+✔ origin other source head cannot authorize consumer acceptance (1.0756ms)
+✔ origin changed source inputs cannot authorize consumer acceptance (1.4007ms)
+✔ origin changed Node fingerprint cannot authorize consumer acceptance (0.7974ms)
+✔ origin wrong archive cannot authorize consumer acceptance (0.8598ms)
+✔ origin missing environment cannot authorize consumer acceptance (5.5087ms)
+✔ origin missing source hash cannot authorize consumer acceptance (0.8595ms)
+✔ origin missing direct capture cannot authorize consumer acceptance (0.837ms)
+✔ origin wrong counts cannot authorize consumer acceptance (2.5377ms)
+✔ origin missing packed probe cannot authorize consumer acceptance (2.5129ms)
+✔ ambiguous duplicate fresh origins cannot authorize the archive (1.5168ms)
+✔ receipt consumer recomputes accounting from raw proof rather than trusting its accepted boolean (3.3185ms)
+✔ original authenticated green log really executed150/149/0/1 in native-origin (54.9852ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 521.1942

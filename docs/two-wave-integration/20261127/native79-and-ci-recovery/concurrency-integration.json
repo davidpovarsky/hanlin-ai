@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "base": "6ed918c9ffe94fddb1992b4b338564db4c109f4e",
+  "head": "b41233a61a3dca0632b78c7ab7f92e5e620492c4",
+  "sourceCandidates": [
+    "41ace7e685d6d4fe50e5974e941433de50490ff4",
+    "5ce4d1263c48e24e3d8858a10b3cb9125f2c99b1"
+  ],
+  "rootReviewSHA256": "9a16c80e1b0ce072539e8f0fa795bfb84c605e4871e45b4fd9755fed4907b7cc",
+  "diffCheck": 0,
+  "status": "",
+  "native": "NOT_RUN",
+  "OS": "NOT_RUN"
+}

@@ -1,0 +1,155 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {mkdtemp, mkdir, writeFile, readFile, rm, access, rename, copyFile, symlink} from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import {runMiniAppOperation} from '../miniapp-authoring.mjs';
+
+const sdkRoot = process.env.HANLIN_AUTHORING_INTEGRATION_SDK;
+assert.ok(sdkRoot, 'Supply the actual staged original SDK in HANLIN_AUTHORING_INTEGRATION_SDK.');
+const json = (file, value) => writeFile(file, JSON.stringify(value, null, 2));
+async function project(engine) {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'native-presentation-authoring-'));
+  await mkdir(path.join(root, 'native/assets'), {recursive: true});
+  await writeFile(path.join(root, 'native/assets/original.txt'), 'Exact native resource bytes');
+  await json(path.join(root, 'script.json'), {name: 'Native type environments', version: '1.0.0',
+    hanlinRuntime: engine === 'expo' ? 'hanlin-expo' : 'hanlin-nativescript', entry: 'bundle.js', runInApp: true,
+    nativePresentations: {appIntents: {engine: 'scriptwidget', sourcePath: 'native/view.tsx', sourceFormat: 'tsx'}}});
+  await json(path.join(root, 'package.json'), {name: 'native-type-environments', version: '1.0.0', type: 'module'});
+  await json(path.join(root, 'hanlin.authoring.json'), {schemaVersion: 1, engine, entry: 'index.tsx', resources: ['native/assets']});
+  await json(path.join(root, 'tsconfig.json'), {compilerOptions: {strict: true,
+    ...(engine === 'expo' ? {skipLibCheck: false, lib: ['ES2023'], types: ['react', 'react-native']} : {})},
+    include: ['index.tsx'], exclude: ['native']});
+  await writeFile(path.join(root, 'index.tsx'), engine === 'expo'
+    ? 'import type {ReactNode} from "react"; export const node: ReactNode = null;\n'
+    : 'export const answer: number = 42;\n');
+  await writeFile(path.join(root, 'native/helper.ts'), 'export const message: string = "Original native SDK";\n');
+  await writeFile(path.join(root, 'native/view.tsx'),
+    'import {message} from "./helper";\nexport default function render() { $render(<text font="headline">{message}</text>); }\n');
+  return root;
+}
+
+test('Expo React types and original ScriptWidget JSX validate in isolated actual SDK environments', async () => {
+  const root = await project('expo');
+  try {
+    const report = await runMiniAppOperation({operation: 'validate', engine: 'expo', projectRoot: root}, {sdkRoot});
+    assert.equal(report.succeeded, true, JSON.stringify(report.diagnostics));
+    assert.deepEqual(report.diagnostics, []);
+  } finally { await rm(root, {recursive: true, force: true}); }
+});
+
+test('a native entry beside the primary project config keeps its own renderer environment', async () => {
+  const root = await project('expo');
+  try {
+    for (const file of ['view.tsx', 'helper.ts'])
+      await rename(path.join(root, 'native', file), path.join(root, file));
+    const script = JSON.parse(await readFile(path.join(root, 'script.json'), 'utf8'));
+    script.nativePresentations.appIntents.sourcePath = 'view.tsx';
+    await json(path.join(root, 'script.json'), script);
+    const report = await runMiniAppOperation({operation: 'validate', engine: 'expo', projectRoot: root}, {sdkRoot});
+    assert.equal(report.succeeded, true, JSON.stringify(report.diagnostics));
+    assert.deepEqual(report.diagnostics, []);
+  } finally { await rm(root, {recursive: true, force: true}); }
+});
+
+test('an invalid native JSX property blocks packaging and reports the original native source location', async () => {
+  const root = await project('expo');
+  try {
+    await writeFile(path.join(root, 'native/view.tsx'),
+      'export default function render() { $render(<text font="not-a-native-font">Invalid</text>); }\n');
+    const report = await runMiniAppOperation({operation: 'build', engine: 'expo', projectRoot: root}, {sdkRoot});
+    assert.equal(report.succeeded, false);
+    assert.ok(report.diagnostics.some(item => item.code === 'TS2322' && item.file === 'native/view.tsx' && item.line === 1 && item.column > 0), JSON.stringify(report.diagnostics));
+    assert.equal(report.preparedPackagePath, undefined);
+    await assert.rejects(access(path.join(root, '.hanlin-build')));
+  } finally { await rm(root, {recursive: true, force: true}); }
+});
+
+test('actual compiler-discovered native presentation modules survive prepared output and source retention', async () => {
+  const root = await project('nativescript');
+  try {
+    const report = await runMiniAppOperation({operation: 'build', engine: 'nativescript', projectRoot: root}, {sdkRoot});
+    assert.equal(report.succeeded, true, JSON.stringify(report.diagnostics));
+    for (const file of ['native/view.tsx', 'native/helper.ts', 'native/assets/original.txt']) {
+      const original = await readFile(path.join(root, file), 'utf8');
+      assert.equal(await readFile(path.join(report.preparedPackagePath, file), 'utf8'), original);
+      assert.equal(await readFile(path.join(report.preparedPackagePath, 'source', file), 'utf8'), original);
+    }
+    const again = await runMiniAppOperation({operation: 'validate', engine: 'nativescript', projectRoot: report.preparedPackagePath}, {sdkRoot});
+    assert.equal(again.succeeded, true, JSON.stringify(again.diagnostics));
+  } finally { await rm(root, {recursive: true, force: true}); }
+});
+
+
+test('declared original Expo layout expressions survive packaging without a redundant resource declaration', async () => {
+  const root = await project('nativescript');
+  try {
+    const definitions = {
+      'native/layout.json': JSON.stringify({type: 'TextView', props: {text: 'Original native layout'}}),
+      'native/layout.js': "(props) => ({type: 'TextView', props: {text: props.label}})"
+    };
+    for (const [file, content] of Object.entries(definitions)) await writeFile(path.join(root, file), content);
+    const script = JSON.parse(await readFile(path.join(root, 'script.json'), 'utf8'));
+    script.nativePresentations = {
+      appIntents: {engine: 'expo', sourcePath: 'native/layout.json', sourceFormat: 'expo-layout'},
+      translation: {engine: 'expo', sourcePath: 'native/layout.js', sourceFormat: 'expo-layout'}
+    };
+    await json(path.join(root, 'script.json'), script);
+    const author = JSON.parse(await readFile(path.join(root, 'hanlin.authoring.json'), 'utf8'));
+    author.resources = [];
+    await json(path.join(root, 'hanlin.authoring.json'), author);
+    const report = await runMiniAppOperation({operation: 'build', engine: 'nativescript', projectRoot: root}, {sdkRoot});
+    assert.equal(report.succeeded, true, JSON.stringify(report.diagnostics));
+    for (const [file, content] of Object.entries(definitions)) {
+      assert.equal(await readFile(path.join(report.preparedPackagePath, file), 'utf8'), content);
+      assert.equal(await readFile(path.join(report.preparedPackagePath, 'source', file), 'utf8'), content);
+    }
+  } finally { await rm(root, {recursive: true, force: true}); }
+});
+
+test('native layout syntax, missing source and unsupported renderer fail with actionable original paths', async () => {
+  const root = await project('expo');
+  try {
+    await writeFile(path.join(root, 'native/broken.json'), '{"type":');
+    const script = JSON.parse(await readFile(path.join(root, 'script.json'), 'utf8'));
+    script.nativePresentations = {
+      missing: {engine: 'expo', sourcePath: 'native/missing.json', sourceFormat: 'expo-layout'},
+      invalid: {engine: 'expo', sourcePath: 'native/broken.json', sourceFormat: 'expo-layout'},
+      wrongRenderer: {engine: 'nativescript', sourcePath: 'native/view.tsx', sourceFormat: 'tsx'},
+      wrongFormat: {engine: 'scriptwidget', sourcePath: 'native/broken.json', sourceFormat: 'expo-layout'}
+    };
+    await json(path.join(root, 'script.json'), script);
+    const report = await runMiniAppOperation({operation: 'validate', engine: 'expo', projectRoot: root}, {sdkRoot});
+    assert.equal(report.succeeded, false);
+    assert.ok(report.diagnostics.some(d => d.code === 'MINIAPP_PRESENTATION_SOURCE_MISSING' && d.file === 'native/missing.json'));
+    assert.ok(report.diagnostics.some(d => d.code === 'MINIAPP_PRESENTATION_LAYOUT_INVALID' && d.file === 'native/broken.json' && d.line === 1 && d.column > 0));
+    assert.ok(report.diagnostics.some(d => d.code === 'MINIAPP_NATIVE_PRESENTATION_INVALID' && d.file === 'script.json' && d.message.includes('wrongRenderer')));
+    assert.ok(report.diagnostics.some(d => d.code === 'MINIAPP_NATIVE_PRESENTATION_INVALID' && d.message.includes('wrongFormat')));
+  } finally { await rm(root, {recursive: true, force: true}); }
+});
+
+
+test('an original Metro configuration error is reported without silently substituting another transformer', async () => {
+  const root = await project('expo');
+  const clonedSDK = await mkdtemp(path.join(os.tmpdir(), 'miniapp-original-metro-'));
+  try {
+    const manifest = JSON.parse(await readFile(path.join(sdkRoot, 'miniapp-sdk.json'), 'utf8'));
+    await json(path.join(clonedSDK, 'miniapp-sdk.json'), manifest);
+    const expoRoot = manifest.engines.expo.toolingRoot;
+    await mkdir(path.join(clonedSDK, expoRoot), {recursive: true});
+    for (const file of ['package.json', 'tsconfig.json', 'babel.config.cjs'])
+      await copyFile(path.join(sdkRoot, expoRoot, file), path.join(clonedSDK, expoRoot, file));
+    await symlink(path.join(sdkRoot, expoRoot, 'node_modules'), path.join(clonedSDK, expoRoot, 'node_modules'), 'dir');
+    for (const [engine, descriptor] of Object.entries(manifest.engines)) if (engine !== 'expo')
+      await symlink(path.join(sdkRoot, descriptor.toolingRoot), path.join(clonedSDK, descriptor.toolingRoot), 'dir');
+    const missing = 'hanlin-intentionally-missing-metro-configuration-dependency';
+    await writeFile(path.join(clonedSDK, expoRoot, 'metro.config.cjs'), 'require(' + JSON.stringify(missing) + ');');
+    const report = await runMiniAppOperation({operation: 'build', engine: 'expo', projectRoot: root}, {sdkRoot: clonedSDK});
+    assert.equal(report.succeeded, false);
+    assert.ok(report.diagnostics.some(d => d.message.includes("Cannot find module '" + missing + "'")), JSON.stringify(report.diagnostics));
+    assert.equal(report.preparedPackagePath, undefined);
+  } finally {
+    await rm(root, {recursive: true, force: true});
+    await rm(clonedSDK, {recursive: true, force: true});
+  }
+});

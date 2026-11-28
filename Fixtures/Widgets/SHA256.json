@@ -1,0 +1,98 @@
+[
+  {
+    "archive": "Hanlin-Expo-Widget-Counter.hanlinExpo",
+    "sha256": "a52c828cdb87f115c668b7cba544781ce89c023b14a65551844ee7985faa3d9d",
+    "bytes": 1149,
+    "engine": "expo",
+    "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
+    "sources": {
+      "script.json": "80c22aeab814f67b488edf0f48fb6c5f552b2cf6f30c00e6a92457a086c5ac0b",
+      "package.json": "f9e58f8ca6ca9ec463dd9a4a15915a4dc4bef52ecca7da4d8b51556a93faf037",
+      "widget.tsx": "1ab32165c7ae1d0c2d0a3d45a673e323c22a27bc09fe8bb4c0dccf237b4ff824"
+    }
+  },
+  {
+    "archive": "Hanlin-Expo-Widget-Visuals.hanlinExpo",
+    "sha256": "4532c361e91e32580a7dca5c120e1131bb2d9f07138b2b4103bdab138f588368",
+    "bytes": 1283,
+    "engine": "expo",
+    "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
+    "sources": {
+      "script.json": "a931e3e24e79587ac5030d0931ce9d8b82cc316427374b0190fc27637cd355c1",
+      "package.json": "04ec5106e01a1a0f5c4e586676237b76fd9e554ad6155875fdc9c22eded57cd9",
+      "widget.jsx": "e94a3349aff5092029f02e17572bb84f9cf803d2b83578c51893beaed9a924d8"
+    }
+  },
+  {
+    "archive": "Hanlin-ScriptWidget-Dashboard.scripting",
+    "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace",
+    "bytes": 968,
+    "engine": "scriptwidget",
+    "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
+    "sources": {
+      "script.json": "ac72a19ad65ee94a8b0dd8b5fe124a328453a71a8be651cb97edc6988ac1d911",
+      "assets/pixel.png": "56bd3a7251ed205191d3bdfe70576ef51adf978c47276caf4e22707d45d54a9d",
+      "widget.jsx": "d88d0504ce658d1a22d77cf9e86e642cb11d51c38d41301405b16f55de748cff"
+    }
+  },
+  {
+    "archive": "Hanlin-ScriptWidget-Actions.scripting",
+    "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+    "bytes": 825,
+    "engine": "scriptwidget",
+    "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
+    "sources": {
+      "script.json": "409945c1945dcd574b6596b64161243d7a98c8902dc2f5bd0a1e4ee8e24e4c69",
+      "widget.jsx": "ef54486085896a09a05274594ac57064bbfb9873717604e87cb8e016af1756fa"
+    }
+  },
+  {
+    "archive": "Hanlin-Mixed-Native-Widget.hanlinExpo",
+    "sha256": "2121ea971faa158e891b8222372e2250062286b813ad8a889971cc351a8c75d7",
+    "bytes": 1000,
+    "engine": "expo",
+    "expected": "DEFERRED_OPTIONAL",
+    "sources": {
+      "script.json": "1d8e2d59fd7bd37aa2e5ef63448a9bb068673cbde9aa725a2fd4b4847f1c14d9",
+      "package.json": "d02b0b4ce05a01620dadf11ee26da55f7b9649cd579c0e194bd519a085aa1c9c",
+      "widget.jsx": "b57ec0ea5ae1bfc97b374b6b0ec1f880cf4483428007c84d7db6075c1f446a12",
+      "README.txt": "6e25fe76db504eed99b59fe7d058d3e84abb5117bc646668040ffc389f8689ff"
+    }
+  },
+  {
+    "archive": "Hanlin-Widget-Legacy-Regression.scripting",
+    "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f",
+    "bytes": 444,
+    "engine": "legacy",
+    "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
+    "sources": {
+      "script.json": "b966a83666cd2acfb5d9498ce6d4b99cfbd638805f876d518581972a50b2d22b",
+      "widget.json": "701f8e641f0e756d986e0d14471cb0178761a18bb6965b1f95223981850a5b9a"
+    }
+  },
+  {
+    "archive": "Hanlin-Widget-Invalid-Cases.hanlinExpo",
+    "sha256": "a86f47a41f684ecbb1dcce23552798b88cc7ab6622a8c316f2b721b44daf52c5",
+    "bytes": 949,
+    "engine": "foowidget",
+    "expected": "REJECT_IMPORT",
+    "sources": {
+      "script.json": "5c227caedcc50532bca25796b6cf1d576c304109ccbd3ef446889f7c397bc248",
+      "package.json": "6d6f329f7e68b40c90fe03632598e7f89804b312a4597b4bee3727785c9a2382",
+      "widget.jsx": "29bbbe6a63f5381d5575b3a8a29272db8d21579b24130bdf7f43d800f4bc992c",
+      "negative-cases.json": "1823cdae5c48142036aece46a0af7c9e6a88540aaeea9c9c5125f8bf48def6b0"
+    }
+  },
+  {
+    "archive": "Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo",
+    "sha256": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995",
+    "bytes": 1953,
+    "engine": "expo",
+    "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
+    "sources": {
+      "script.json": "8dfe6b33691c6eb3a789dedd6b6065f0cbd46a6550d2355e5482ac63a21b05e5",
+      "package.json": "07c423b8164a1c1b1f8f8c9e3a22375c5aeb1520ca907545fbcb8132859bd083",
+      "widget.jsx": "f75e255bdedbc613a4ebdfed4aa649acd50001c48d56d4ff67c7e6ccd67cec77"
+    }
+  }
+]

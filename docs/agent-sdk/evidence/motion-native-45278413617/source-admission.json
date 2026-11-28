@@ -1,0 +1,34 @@
+{
+  "time": "2026-11-23T22:16:57.975616+00:00",
+  "source": "d8e4327f6d4097ac5a206f2acf2bf654a7ee9c13",
+  "base": "35bfa9509ed4660d2c189b1935ed7725d0bae9f2",
+  "approved_fix": "137370de890125c1b1231e096684ea8da6b12350",
+  "tree": "0176b233862131ec975706032931a7a4ffde8445",
+  "branch": "codex/hanlin-sdk-motion-b-accessibility-20261123",
+  "remote_equal": true,
+  "changed_paths": [
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+    "docs/agent-sdk/evidence/motion-retained-accessibility-20261123/README.md",
+    "docs/agent-sdk/evidence/motion-retained-accessibility-20261123/production.diff",
+    "docs/agent-sdk/evidence/motion-retained-accessibility-20261123/source-verification.json",
+    "docs/agent-sdk/evidence/motion-retained-accessibility-20261123/swift-parse.stderr",
+    "docs/agent-sdk/evidence/motion-retained-accessibility-20261123/swift-parse.stdout"
+  ],
+  "selected_scope": "Original B only",
+  "job_minutes": 35,
+  "native_allowances_seconds": [
+    600,
+    720
+  ],
+  "no_dispatch_yet": true,
+  "portable_profile": "/tmp/hanlin-motion-b-ax-profile-20261123-d0rmjh91/proof",
+  "selected_source_resources": 364,
+  "only_selected_source_change": [
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift"
+  ],
+  "fixture_bytes_identical_to_executed35bfa": true,
+  "graph_inputs_identical_to_executed35bfa": true,
+  "generated_manifests_identical_to_executed35bfa": true,
+  "selected_component_equals_reviewed137370": true,
+  "profile_native_binary_targets": false
+}

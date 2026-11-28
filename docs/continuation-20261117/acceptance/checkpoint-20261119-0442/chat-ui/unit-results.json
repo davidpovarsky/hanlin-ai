@@ -1,0 +1,89 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "B0DE2E1E-6F07-420D-9453-6FA8A46AD09C",
+      "deviceName" : "Hanlin-Phase2-44431811538-1",
+      "modelName" : "iPad Pro 13-inch (M5)",
+      "osBuildNumber" : "24B8117",
+      "osVersion" : "27.2",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "5s",
+                  "durationInSeconds" : 5.377031087875366,
+                  "name" : "actualWebKitRendersRequiredMermaidFamiliesAndCachesExactInputs()",
+                  "nodeIdentifier" : "ChatCodeFenceTests/actualWebKitRendersRequiredMermaidFamiliesAndCachesExactInputs()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatCodeFenceTests/actualWebKitRendersRequiredMermaidFamiliesAndCachesExactInputs()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "2s",
+                  "durationInSeconds" : 2.678131103515625,
+                  "name" : "actualWebKitParsesFullUnifiedAndSplitDiffWithoutExecutingSource()",
+                  "nodeIdentifier" : "ChatCodeFenceTests/actualWebKitParsesFullUnifiedAndSplitDiffWithoutExecutingSource()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatCodeFenceTests/actualWebKitParsesFullUnifiedAndSplitDiffWithoutExecutingSource()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "2s",
+                  "durationInSeconds" : 2.461252212524414,
+                  "name" : "actualWebKitQueuesDiagramAndDiffAgainstOneColdStartup()",
+                  "nodeIdentifier" : "ChatCodeFenceTests/actualWebKitQueuesDiagramAndDiffAgainstOneColdStartup()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatCodeFenceTests/actualWebKitQueuesDiagramAndDiffAgainstOneColdStartup()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.17s",
+                  "durationInSeconds" : 0.16982221603393555,
+                  "name" : "assetsFailClosedOnTamperingAndVisibleDocumentDisablesScripts()",
+                  "nodeIdentifier" : "ChatCodeFenceTests/assetsFailClosedOnTamperingAndVisibleDocumentDisablesScripts()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatCodeFenceTests/assetsFailClosedOnTamperingAndVisibleDocumentDisablesScripts()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.055s",
+                  "durationInSeconds" : 0.05501103401184082,
+                  "name" : "cancellationRejectsAnOfflinePreviewWithoutReturningStaleContent()",
+                  "nodeIdentifier" : "ChatCodeFenceTests/cancellationRejectsAnOfflinePreviewWithoutReturningStaleContent()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatCodeFenceTests/cancellationRejectsAnOfflinePreviewWithoutReturningStaleContent()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "Pinned local code-fence rendering",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatCodeFenceTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "AI_HLYTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "AI_HLY",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

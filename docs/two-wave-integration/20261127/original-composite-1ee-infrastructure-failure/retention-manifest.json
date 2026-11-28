@@ -1,0 +1,168 @@
+{
+  "atUTC": "2026-11-27T13:45:02.754330+00:00",
+  "encoding": "Lossless original member bytes; normalized tar headers",
+  "members": [
+    {
+      "path": "artifact-inventory.json",
+      "bytes": 13240,
+      "sha256": "23bb148fa091c672e848b7c85eb81dd869353b08ae4f0631024b42e8f8880b14"
+    },
+    {
+      "path": "artifact-receipt.json",
+      "bytes": 1264,
+      "sha256": "8370691a95309c6974c9ac9ca4755e67eee8097135ae5adaa9a0905f394296f5"
+    },
+    {
+      "path": "artifact/app-split-evidence/acceptance.json",
+      "bytes": 2894,
+      "sha256": "636c33ba26f7848274c2ef04fc362a7e2856c55254b3e0e43b22b0fcbb4c90dd"
+    },
+    {
+      "path": "artifact/app-split-evidence/ci-performance-report.json",
+      "bytes": 2236,
+      "sha256": "495d41e0dddd039c5d9ce6cbdea663b1f82662fbf0b1fe70861d31a82d98604e"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/acceptance.json",
+      "bytes": 2894,
+      "sha256": "636c33ba26f7848274c2ef04fc362a7e2856c55254b3e0e43b22b0fcbb4c90dd"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/active-command.json",
+      "bytes": 514,
+      "sha256": "a63883aa31e2d43c7986d732dea787aa818e83defc917a6625b514737b0a4c4b"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/before-boot-host-resources.txt",
+      "bytes": 34,
+      "sha256": "8f1c8925647f04af1a1be4971bf5da70ce32f357a192f0373e4d2580881772fb"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/before-boot-memory.txt",
+      "bytes": 1247,
+      "sha256": "d4cdd13cdfce552c2d5861793906f144158766b8da1a2ada888f72bd96bc49c5"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/before-boot-processes.txt",
+      "bytes": 80492,
+      "sha256": "70f517088c1cc86cd2550eb029c83945d5e14c38f313a9c0b0c205e265a60456"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/boot.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/bootstatus.log",
+      "bytes": 829,
+      "sha256": "f564a96988cd93861f4cc708e5cbb3e866aa26b16a83d95eee6aaa9aa154ac30"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/command-events.jsonl",
+      "bytes": 20018,
+      "sha256": "9cf932a9eaad3e8f5df6b3a8537da5b95a61fe0cebf4a3666b6dc36119343364"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/commands.jsonl",
+      "bytes": 3559,
+      "sha256": "18bf6e9a77068bb1a97d75be8ac6d50a00dde1f435d37642a5d8aac1f7fc44e2"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/container-command-help.txt",
+      "bytes": 386,
+      "sha256": "62b5b30225c28644c70945a598f2385b4414e2f11c75c4ec2d134d6822f0053b"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/created-simulator.txt",
+      "bytes": 37,
+      "sha256": "000498f3ba571a3522590ea51080a23a0101c8c480b0d68ead1d1d728ad47026"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/device-types.json",
+      "bytes": 66366,
+      "sha256": "f663b275b7760a98ef28ff760c8efc49703530dd1b45c3d70fa755047bb799a0"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/failure-device-state.json",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/failure-installed-apps.plist",
+      "bytes": 55101,
+      "sha256": "0289317cc7df31b578f28006ee779cd0147848fd4b177bf95dac96082ea69de1"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/failure-memory.txt",
+      "bytes": 1247,
+      "sha256": "19830257e150deeea1844d52702cb451c645e32393133e987ad617dd62ece8d1"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/failure-processes.txt",
+      "bytes": 109644,
+      "sha256": "c642f7e0292dad76ca3d2367f8fb8b88ff9c1ddae43103ab6d8441e26ba767c4"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/failure.png",
+      "bytes": 3386179,
+      "sha256": "151c339dee5beff29d904dfe08c2e05311942e5a9091be9726a9f7e41362d6a9"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/original54-deadline-caps.jsonl",
+      "bytes": 1810,
+      "sha256": "a4f09839db009cec25d0814ce8feaf29070d1a16af623664d0fc701a73a567d3"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/original54-job-clock.json",
+      "bytes": 7539,
+      "sha256": "1f378b6de5bb4b0bbb49d7d7d2dd245188365965aabfd4999c5617e0cedf7640"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/runtimes.json",
+      "bytes": 60640,
+      "sha256": "dfc5f5e2ff8fd25dce27d3f3c95db7f3e90eff601aebb124e9092046f96fd046"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/screenshot.log",
+      "bytes": 264,
+      "sha256": "112663408e45c1d2698f43cac1ae40fb7c2b4034704b0137e473d1917c372c16"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/sdk.txt",
+      "bytes": 5,
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b"
+    },
+    {
+      "path": "artifact/app-split-evidence/paired-product/source-sha.txt",
+      "bytes": 41,
+      "sha256": "bd413280947e4e9e73f6cba2dd51bef46eeb7e0500ddf844369f5d25d0fcea41"
+    },
+    {
+      "path": "artifact/app-split-evidence/prepared-native/upstream-inputs.patch",
+      "bytes": 191005,
+      "sha256": "eb3965826486c76cb33f8fe1cb71af621eaf0890d88436750f7a469bdc30e9dd"
+    },
+    {
+      "path": "artifact/app-split-evidence/upstream-inputs.patch",
+      "bytes": 191005,
+      "sha256": "eb3965826486c76cb33f8fe1cb71af621eaf0890d88436750f7a469bdc30e9dd"
+    },
+    {
+      "path": "complete-original-artifact-member-hashes.json",
+      "bytes": 19122,
+      "sha256": "aff1eca460b99a50f99a9a15ca89af10fd06a67d1a169c00100a9e52868215e7"
+    },
+    {
+      "path": "original-job.log.gz",
+      "bytes": 630652,
+      "sha256": "a53872d6d61d673edb249fd676c45b653500e660dcfaaa30ae94e568d637de73"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 399,
+      "sha256": "7081162c6f8fb4332fc5ca98a02a06fa1bc75d0e390319344219695290e6668b"
+    }
+  ],
+  "archiveBytes": 4088222,
+  "archiveSHA256": "34500604d2753d016761fce16eea6da43a543d855054ed6922fafd97d0a6a446"
+}

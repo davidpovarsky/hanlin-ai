@@ -1,0 +1,10 @@
+{
+  "producerRunID": 42926628418,
+  "producerSourceCommit": "4784dd99c3e5892ef726e7a3cce6587eb7847997",
+  "artifactID": 13813704965,
+  "bundleSHA256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+  "nodeXCFrameworkSHA256": "21c404e94c38e7d91ec446ce0ca07d7fed9120ec3e42b80cc8352052dd1db207",
+  "nativeInputSHA256": "d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5",
+  "nodeVersion": "24.5.0",
+  "scope": "Existing verified original Hanlin runtime candidate; no native engine rebuild"
+}

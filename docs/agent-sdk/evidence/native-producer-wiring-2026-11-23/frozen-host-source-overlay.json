@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "frozenRun": "42926628418",
+  "frozenBundleSHA256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+  "frozenHostArchiveSHA256": "739df441861f3c979ce92885aad4fa3670471e0bbd6fc6f4ec85e1cd6a8883fd",
+  "dependencyValidationErrors": [],
+  "originalSourceDifferences": [
+    "Host module differs from current source: execution-jobs.mjs",
+    "Host module differs from current source: host.mjs",
+    "Host module differs from current source: portable-shell.mjs",
+    "Host module differs from current source: global-package-state.mjs",
+    "Host module differs from current source: runtime-capabilities.mjs",
+    "Host module differs from current source: execution-input.mjs"
+  ],
+  "synchronization": "updated source modules with unchanged locked dependencies",
+  "afterSourceValidationErrors": [],
+  "unchangedDependencyAndOtherEntries": 3070,
+  "changedOriginalHostModules": [
+    "execution-input.mjs",
+    "execution-jobs.mjs",
+    "global-package-state.mjs",
+    "host.mjs",
+    "portable-shell.mjs",
+    "runtime-capabilities.mjs"
+  ],
+  "builderInvocations": 0,
+  "nativeCompilation": "NOT_RUN",
+  "appleAcceptance": "NOT_RUN"
+}

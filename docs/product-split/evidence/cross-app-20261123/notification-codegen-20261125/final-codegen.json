@@ -1,0 +1,15 @@
+{
+  "utc": "2026-11-25T06:48:22.837209+00:00",
+  "source_sha256": "aedd0c569f75fe16e737df93d4a6dcf832a30ec02d5c632875a0c746ede39d27",
+  "exit": 0,
+  "seconds": 1.2424731249921024,
+  "compiler": "Apple Swift6.4 swiftlang6.4.0.34.1 /clang2100.3.34.1",
+  "source_semantics": "Await Host event delivery, then optional original Objective-C completion-handler delegate; await actual completion, return exact importedInt option bits; existing0/nil-method fallback retained; dismiss filtering/openSettings unchanged",
+  "object_exists": true,
+  "command_sha256": "28d500478c3c3f376b965f1cc5f932d4c8ba52a585f9940461e3cfb36f725e88",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "scope": "Actual native compiler object generation in original failed app source/import/C++ context, not app acceptance",
+  "object_sha256": "9b53be29b3984622faddbe680e542264f2e02fe887f3a8fa770c387d9e2eba82",
+  "object_bytes": 187616,
+  "file": "/Users/m1/builds/hanlin-miniapps-final-native-20261125/build/native-final-evidence/notification-codegen-20261125/final.o: Mach-O 64-bit object arm64"
+}

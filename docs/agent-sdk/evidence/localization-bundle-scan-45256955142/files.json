@@ -1,0 +1,92 @@
+[
+  {
+    "path": "README.md",
+    "bytes": 4155,
+    "sha256": "26685a3efdcab9bfc26c0214acb9f70fdff2c8f0f6d300abbea687eafcda5a0f"
+  },
+  {
+    "path": "artifact-acquisition.json",
+    "bytes": 17133,
+    "sha256": "9da2118839f051231a4fdd8ae8f9efd1d482e3357d9009dfe5f7fb74ba101d71"
+  },
+  {
+    "path": "copied-resource-source-binding.json",
+    "bytes": 13473,
+    "sha256": "4eb6beb343abad094fe39b676c7444dcbaa28f8527f73d89871edc796313236f"
+  },
+  {
+    "path": "native-job-excerpts.txt",
+    "bytes": 3113,
+    "sha256": "294e3b7d87d246dcb64f2e5bb6e053668ee7566f04864f8c32bac3d72a2c2ea6"
+  },
+  {
+    "path": "original/04-runtime-preflight.log",
+    "bytes": 1736,
+    "sha256": "ffe0af0206650208afb46e4f34c525e7a604df7a0f7c0dc09d211de5a918290a"
+  },
+  {
+    "path": "original/06-current-unit-xctestrun.json",
+    "bytes": 4698,
+    "sha256": "ced3ab68c13b5940c56df0d6f1a4b709a6611459f39428c6c630799770a249a0"
+  },
+  {
+    "path": "original/06-diagnostics-build-provenance.json",
+    "bytes": 6712,
+    "sha256": "5c1fac99a19304fab4a16c2200e2826207f677274eaf8b5ead2d3a3fb6427c42"
+  },
+  {
+    "path": "original/06-generated-unit-manifests.json",
+    "bytes": 171,
+    "sha256": "87674549ea460a387754934aad21a5c9a9bf641128c124bf4cc65066823a60b3"
+  },
+  {
+    "path": "original/06-generated-unit.xctestrun",
+    "bytes": 10396,
+    "sha256": "991676610443473c1f6d71bf7727d8626082c257f77a970d1951403e46871a2c"
+  },
+  {
+    "path": "original/06-unit-xctestrun-prepare.log",
+    "bytes": 122,
+    "sha256": "d4d719ad8de6a9e90319526a80dc4793e87cb3f819190d6b1c123747d0ffc677"
+  },
+  {
+    "path": "original/06-unit-xctestrun-seal.log",
+    "bytes": 120,
+    "sha256": "4839a62ee6ffafd486432694f6ca5f1eae9d8f745e4b2924b14ab1af2332daaa"
+  },
+  {
+    "path": "original/07-simulator-runtime-signature.log",
+    "bytes": 203,
+    "sha256": "a2bb1fc2e22d6b52e1cb3e4fcd48e7c0031d1d300cfc2ea505da7281016bff55"
+  },
+  {
+    "path": "original/07-simulator-sdk-bundle-resources.json",
+    "bytes": 10518,
+    "sha256": "4a9253958e92ac16b6ffd7a8d22453ec453116701784a67b17e25e91ed5d1b1c"
+  },
+  {
+    "path": "original/07-simulator-sdk-localization.json",
+    "bytes": 23366,
+    "sha256": "392845bda7ff79bef0c567aa3f1048f5a64cd39e333c11101723cd46bc0266eb"
+  },
+  {
+    "path": "original/Resolved-Package.resolved",
+    "bytes": 10180,
+    "sha256": "6634fc599022b6cee5d3c1a5b6f6395f2aba9ab5cd565cde4b0f0712bdaf4b0e"
+  },
+  {
+    "path": "original/native-job.json",
+    "bytes": 13592,
+    "sha256": "8b1a2251c5adfa6df1332d0f44e0ac38b1fc0a62237787365d1bc0b8cc0cff25"
+  },
+  {
+    "path": "original/performance-summary.json",
+    "bytes": 107,
+    "sha256": "c9dbceeea60dc1d2ebb3fe380f7501e2bca63527717f50bfc6f70a34f3108162"
+  },
+  {
+    "path": "review.json",
+    "bytes": 5891,
+    "sha256": "842a211362ad33048cfc7384f8df5ffaaa5307a12010df32596bb0cf8a5287ad"
+  }
+]

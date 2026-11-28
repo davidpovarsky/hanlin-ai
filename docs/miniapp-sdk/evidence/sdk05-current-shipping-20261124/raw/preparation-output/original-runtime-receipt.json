@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": "f284c49f3cd523b2578778a1041e289c23bf46ebec9254f1975a933aa6014e8b",
+  "packageVersion": "58.0.29",
+  "packageLockSHA256": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf",
+  "babelSHA256": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba",
+  "producerSHA256": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549",
+  "nativeSources": [
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/LiveActivity.swift",
+      "sha256": "5cd3246b91d1814fa2a8ee204e5791cdb3e2210822246dec7f642817fda6daa2"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/LiveActivityFactory.swift",
+      "sha256": "34aa1afdce0c88e3a81c4013f518d492df561539548ba7c5d5c5244fe479affb"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetObject.swift",
+      "sha256": "025a1cd04deb5333523aa50c0e17c59917f9966f584a82072c2b015d03cde5ea"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/AccessoryWidgetBackgroundView.swift",
+      "sha256": "16436a1b8fc3a66996555de8fe5a9995924f68a70dcdf33d7e63f8f1e8be683e"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/AppIntent.swift",
+      "sha256": "b8316b264e367ba538f09444a74e4a9721d829f10ea69f03f68f9fc9cfa6812a"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Buttons.swift",
+      "sha256": "5a8b9b6b740e11686c173d67cd4fcf75c3d0b6bd3dc64b668e867e770e59ce29"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/ChildView.swift",
+      "sha256": "1e8f9d57fa6ac106b09df262e6319b44a8995166235381de4c1ad5df94a44b9d"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/DynamicView.swift",
+      "sha256": "f5b5563210ee58f53460dad9de97abd54499b6a8ad024038699a0af9462f5a27"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/EntryView.swift",
+      "sha256": "65ae5ef22a6b4777f7d90e82365108991b8e8b369e28a1607f93b7ae70a76422"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Fragment.swift",
+      "sha256": "072b40dc5b3e9908cf3a351d707c9e69d6744c5412fbef8cab6dd98f53945dc1"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/LiveActivityBanner.swift",
+      "sha256": "ca7f65ceb0cfbc43c829350521afe11be8d1891a8b322c0a4846210dc7674bbc"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/RedBoxView.swift",
+      "sha256": "652b887b0cda62d993440e0ab41f1507e1592dac45899e4fe03e124c0dff8b50"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/TimelineEntry.swift",
+      "sha256": "f3028ccce31246641f2d537bff4dd50b0686c87d8d208e05c96bd91a23c65b4f"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/TimelineProvider.swift",
+      "sha256": "3431d9cfe5af815b42964dd7dc9b3de8e6e6d20b276739b6eecf5f0a9d5bc689"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Type.swift",
+      "sha256": "bea95a0d86ec6048f4488111e8bacf5aa7582b55579415620bcfc2e31b6e5ca0"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Utils.swift",
+      "sha256": "08c1a02e1eaae8ee190a9c908cae0c2e672cddbfb450ed97f978b43b018268ed"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/ViewRenderer.swift",
+      "sha256": "c38e906a25fad080c09fc60789fb336a9c7de3aa31149f4d72500b0947227b60"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetLiveActivity.swift",
+      "sha256": "0f6d6b8e994d06e4acb69b8e793ded04143b3db96c2e89ba384890bbad176c11"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetModifiers.swift",
+      "sha256": "be592a19078bf4a06d95fdcc675863f4b13b212cbd46ece1b812196b037aea14"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetsJSRuntime.swift",
+      "sha256": "ba0e7d6351e1e6dd5f95d4f891203cbdd6954f90e8019e298639b1be2e49c70b"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetsLayoutRegistry.swift",
+      "sha256": "19a7f6ebf859a2d2695f839c8ccf1968b29fa9426b0325bb1e59f256539fc997"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsContext.swift",
+      "sha256": "14feb7544bff21a7223d59600a1f00b603ebd2ca364459bd5f3fcb964740b246"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsEvents.swift",
+      "sha256": "2afe29cd894b7722645ff0b410d564068e3e6e5d7b8f503c2885f4a8e89103b6"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsExceptions.swift",
+      "sha256": "31b695f7237481a38673ab7e52bd2091b53a1d1e80841a5933292842fe84a4db"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsModule.swift",
+      "sha256": "153e723f0e7a75cb325dc74333efe3788010a1f74319a09ddb386853232634a5"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsRecords.swift",
+      "sha256": "65079174172668f7d9a2595d3e18e3c90351c68903aef8db42760ac605fa3e2f"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsStorage.swift",
+      "sha256": "4a3c58daafb36fc77be701a34431446d96cfc4172f4de60bcaa7f96046f61e5b"
+    }
+  ],
+  "originalProducerSHA256": "2bc5c823a85da25c892563345adbbe36a33fa59d1146554382c5c2f5530dea73",
+  "bundleSHA256": "6ec4f91b442f8c387f2ea339f503b5a39082878811806cb58179236d06323aed",
+  "registrySHA256": "71c9d33ca106b100af05bbb627934736fc082bfcf2bb33c412ead9eb0c5840b5",
+  "producer": "original expo-widgets/scripts/build-bundle.mjs and build-layout-registry.mjs; original Metro config/stubs/runtime"
+}

@@ -1,0 +1,46 @@
+{
+  "run_id": 44389672441,
+  "source_sha": "8c10ebd066826511e4d20d0c763491764eb44a95",
+  "artifact": {
+    "id": 14478211965,
+    "name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+    "bytes": 2531819,
+    "sha256": "0952d89683356615ec40ac133f797198a75ad8787f66d23584f081aa6b54d9cb",
+    "github_digest": "sha256:0952d89683356615ec40ac133f797198a75ad8787f66d23584f081aa6b54d9cb",
+    "file": "build/continuation-evidence/44389672441/artifact-14478211965.zip",
+    "file_path_base": "repository root",
+    "digest_verified": true
+  },
+  "raw": [
+    {
+      "file": "raw/08-downstream-unit-test-results.json",
+      "archive_member": "simulator-logs/08-downstream-unit-test-results.json",
+      "bytes": 2755,
+      "sha256": "13f65d3cf298875eb37b001da3e5fc0b42864e7f8876bb6c947c0e9286bf18db"
+    },
+    {
+      "file": "raw/08-downstream-unit-tests.log",
+      "archive_member": "simulator-logs/08-downstream-unit-tests.log",
+      "bytes": 24131,
+      "sha256": "87532067ebdbfe22c82708fc182c9f7adddfa381d7a26b44f30239debf50ad2a"
+    },
+    {
+      "file": "raw/01-environment.log",
+      "archive_member": "simulator-logs/01-environment.log",
+      "bytes": 963,
+      "sha256": "3b668dcda21f7e87d5347b8dc8e7c8df185996680caf8451bf4ded423cab9b26"
+    },
+    {
+      "file": "raw/06-diagnostics-build-provenance.json",
+      "archive_member": "simulator-logs/06-diagnostics-build-provenance.json",
+      "bytes": 6966,
+      "sha256": "e90cc047ab16040874c978420e56e052eee40bc39a346538db3913b34a52c29c"
+    },
+    {
+      "file": "raw/Resolved-Package.resolved",
+      "archive_member": "simulator-logs/Resolved-Package.resolved",
+      "bytes": 10451,
+      "sha256": "aabb429fa9f62273e681917748c5d4528fbac58596245216dec36f4bc27d224a"
+    }
+  ]
+}

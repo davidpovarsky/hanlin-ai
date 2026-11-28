@@ -1,0 +1,20 @@
+{
+  "source": "__TEXT,__entitlements",
+  "executable": "HanlinMiniApps",
+  "executable_sha256": "b5a1d443644db3025ff8d2eb17d7d204e40a3cba13ac2f3f69be92ba2db898f1",
+  "offset": 13318,
+  "bytes": 692,
+  "section_sha256": "c7c365ea008d9e9f63bb249a0f074851666fddc3bd4e6fc099d81237fe0901f2",
+  "entitlements": {
+    "application-identifier": "NA6HPWARQ2.com.itorah.hanlinminiapps",
+    "com.apple.developer.healthkit": true,
+    "com.apple.developer.kernel.extended-virtual-addressing": true,
+    "com.apple.developer.usernotifications.time-sensitive": true,
+    "com.apple.developer.weatherkit": true,
+    "com.apple.security.application-groups": [
+      "group.com.itorah.chavrusachat",
+      "group.com.itorah.shared"
+    ]
+  },
+  "source_entitlements_sha256": "8eeb1557fc21f6a664ed1b717f3e259362b3cb85d6c99c60a708c03df2b7e793"
+}

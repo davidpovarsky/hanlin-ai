@@ -1,0 +1,46 @@
+{
+  "actualFailures": 2,
+  "actualIssues": 3,
+  "actualMethods": 2,
+  "expoError": "HanlinScriptCompiler.HanlinScriptingBundlerError.invalidCompilerOutput(\"invalid_widget_program\")",
+  "expoProgramBytes": 8997211,
+  "expoProgramSHA256": "cefbf917f8c1ee78cdbcf4e9049a1d54d7445fd4a9a1d2317fb096345484b38c",
+  "limits": "Original complete raw evidence remains retained unchanged; this compact reference is not a new native result.",
+  "methods": [
+    {
+      "method": "retainedNativeScriptSurfaceArchivePassesOriginalImportAnalysis",
+      "outcome": "FAILED",
+      "sourcePath": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinRetainedSurfaceImportTests.swift",
+      "sourceSHA256": "fd74bce046b8801ebc0d1c0ebefd533d9050375c895e80ba49ebe0889631bec4"
+    },
+    {
+      "method": "retainedExpoWidgetMaterializesWithOriginalArtifactWriter",
+      "outcome": "FAILED",
+      "sourcePath": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinRetainedExpoWidgetArtifactTests.swift",
+      "sourceSHA256": "52907705daa74d07c31e9c71a59e697ff6dd97666f96825da6ad703479b5aefa"
+    }
+  ],
+  "nativeCommand": [
+    "swift",
+    "test",
+    "--package-path",
+    "Packages/HanlinPlatform",
+    "--filter",
+    "(retainedNativeScriptSurfaceArchivePassesOriginalImportAnalysis|retainedExpoWidgetMaterializesWithOriginalArtifactWriter)"
+  ],
+  "nativeExitCode": 1,
+  "nativeScriptFinding": {
+    "message": "Widget preparation failed: compilationFailed(\"SyntaxError: unknown: Unexpected token, expected \\\",\\\" (3:45)\\n\\n  1 | import {Button, File, Label, Page, ScrollView, StackLayout, TextView} from \\'@nativescript/core\\';\\n  2 | import {registerWindowFactory} from \\'@hanlin/window-factory\\';\\n> 3 | import {createSurfaceProof, statusLine, type JSONValue, type SurfaceState} from \\'./proof\\';\\n    |                                              ^\\n  4 |\\n  5 | const appID = \\'hanlin.surface.nativescript\\';\\n  6 |\")",
+    "severity": "error",
+    "sourcePath": "widget.jsx",
+    "state": "unsupported"
+  },
+  "nativeStop": null,
+  "packetManifestSHA256": "fa55594b20cd341b6a22253c95796e863b67c3b9e9e6a322cdf467135069e4b7",
+  "rawControllerSHA256": "38a388952a76c34279e63e81cc1ad7168db3620bc77d1bf74f1d4fd3b157748d",
+  "rawLogSHA256": "aa269ad8fb90852490100d717a75012ecb8573f282a5838231bbd69204c1f926",
+  "reconciliationSHA256": "120ebdf9fbf310bfa25223675413c94edf923238c6dadc0c35cb9fc157c4b402",
+  "schemaVersion": 1,
+  "source": "34dc92c16b37c7e14453e86f25f14d8e5063556a",
+  "status": "EXECUTED_FAIL_TWO_ORIGINAL_RETAINED_DISCRIMINATORS"
+}

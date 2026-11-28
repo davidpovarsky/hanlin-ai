@@ -66,7 +66,7 @@ playground.xcworkspace
 
 Carthage/Build/
 # Accio dependency management
-Dependencies/
+/Dependencies/
 .accio/
 
 # fastlane
@@ -113,7 +113,26 @@ Thumbs.db
 *.plist.bak
 *secrets*
 *config.json
+# Authorized immutable Scripting compatibility inputs are hash-verified data.
+!Reference/ScriptingCompatibility/Original/Compiler/tsconfig.json
+!Reference/ScriptingCompatibility/Original/Examples/**/tsconfig.json
+!Scripts/NativeScript/tsconfig.json
 Config.xcconfig
+Vendor/NodeMobile/NodeMobile.xcframework/
+Vendor/NodeMobile/NODE_LICENSE.generated.txt
+Vendor/Python/
+AI_HLY/Downstream/RuntimeCore/Node/Host/node_modules/
+Scripts/ScriptingCompiler/node_modules/
+Scripts/NativeScript/node_modules/
+Scripts/NativeScript/.ns-vite-build/
+Scripts/NativeScript/Prepared/core-fixture/
+Scripts/NativeScript/Prepared/swiftui-fixture/
+Packages/HanlinNativeScriptRuntime/Artifacts/
+Packages/HanlinExpoRuntime/Artifacts/
+Scripts/Expo/node_modules/
+Scripts/Expo/.build-probe/
+Scripts/Expo/.inspect-expo-ui/
+AI_HLY/RuntimeHostResources.zip
 
 # Logs
 *.log
@@ -128,8 +147,28 @@ Config.xcconfig
 
 # Archives
 *.zip
+!AI_HLYTests/Fixtures/ScriptingFixtures.bundle/PhysicalIPad/smart-eating-normalized.zip
 *.tar
 *.gz
 
+# Python
+__pycache__/
+*.py[cod]
+
 # Local development
 local.properties
+scratch/
+.scratch/
+Scripts/ExpoNativeAPI/.scratch/
+
+# CI diagnostic scratch files (never committed)
+Packages/HanlinExpoRuntime/Packages/
+smoke_logs/
+build_errors.txt
+compile_errors.txt
+end_of_build.txt
+markers.txt
+simulator_build_step.txt
+timestamps.txt
+xcodebuild_tail.txt
+sim_job.log

@@ -1,0 +1,37 @@
+{
+  "status": "SOURCE_BOUND_ORIGINAL_FILEMANAGER_SELECTOR_EXECUTED_PASS",
+  "source": "33d949fa8d91d238ba93a9ef09373c5eafe58b84",
+  "selector": "documentPickerAndQuickLookRuntime",
+  "displayName": "Imports FileManager selections and previews the package copy through system UI",
+  "sourceTestSHA256": "fafee829073998c78fc466ed767df87b3717342d170fdf7f334fc331b35a8076",
+  "sourceAnnotation": "@Test(\"Imports FileManager selections and previews the package copy through system UI\")\n    ",
+  "nativeExitCode": 0,
+  "testCount": 1,
+  "suiteCount": 1,
+  "nativeTestSeconds": 0.038,
+  "nativeRunSeconds": 0.039,
+  "starts": [
+    "\"Imports FileManager selections and previews the package copy through system UI\""
+  ],
+  "terminals": [
+    [
+      "\"Imports FileManager selections and previews the package copy through system UI\"",
+      "passed",
+      "0.038"
+    ]
+  ],
+  "excludedRunHeader": 1,
+  "excludedRunSummaries": [
+    [
+      "run with 1 test in 1 suite",
+      "passed",
+      "0.039"
+    ]
+  ],
+  "rawControllerSHA256": "c971af76d22103f6fa312a5b7a1da77987e543158f11573c032a13d1ef6a3fe4",
+  "rawLogSHA256": "22bebfa775d035cca2248dfb57fa37d6f72420893c8c88d99499410e617d56c9",
+  "rawControllerReconciliationWasIncorrect": true,
+  "explanation": "The original @Test uses an explicit display name. The original native run passed1/1 with exit0. The controller accepted only function-form log labels and therefore incorrectly classified reconciliation. This separate source-bound annotation preserves the raw receipt and does not rerun any native test.",
+  "sourceUnchanged": true,
+  "at": "2026-11-27T08:48:18.373171+00:00"
+}

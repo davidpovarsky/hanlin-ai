@@ -1,0 +1,7 @@
+{
+  "originalPath": "source.patch",
+  "retainedPath": "source.patch.gz",
+  "originalBytes": 1515,
+  "originalSHA256": "9e2311a5a39539565295b532d7b30646b879e3b3ed3ed2763fc89486025527db",
+  "compression": "lossless gzip; original diff context spaces preserved without altering the patch"
+}

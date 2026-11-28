@@ -1,0 +1,6 @@
+{
+  "name": "Production Storage and Modules",
+  "version": "1.0.0",
+  "entry": "index.ts",
+  "runInApp": true
+}

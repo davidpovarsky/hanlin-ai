@@ -1,0 +1,23 @@
+{
+  "status": "ONE_ORIGINAL_HTTP_SELECTOR_EXECUTED_PASS",
+  "source": "97ca89552b8e39fab4d0a26e51e3f77010e1811e",
+  "testCount": 1,
+  "method": "originalScriptWidgetHTTPUsesBoundedRealTransport()",
+  "nativeMethodWallSeconds": 2.355,
+  "originalExecutionTimeout": 5,
+  "wireRequestCount": 39,
+  "wireRequestsByPrefix": {
+    "verbs": 32,
+    "response": 3,
+    "limits": 4
+  },
+  "wireResponseCompletedRecords": 37,
+  "wireSHA256": "642ad50840a90c45f44a0edaef05342b07cb950e30ed128c90e26c318d74f895",
+  "nativeStageSHA256": "efc72b075ff9095949f208442e1ec611626037d75e139383256dfc05716dd749",
+  "allNineControllerFunctionASTsUnchanged": true,
+  "originalControllerSHA256": "3bad2a2f013a9e312b9b0cf21311581e4cb29f47afcc0cb3b3fbbcb81edad68c",
+  "currentControllerSHA256": "f5b6b5931da6ce44adead6acbf2032d9a441b4f80d6f187c762c84786eabe062",
+  "previousFailurePreservedAt": "original-http-b84d5ffb-diagnostic",
+  "sdk392Unchanged": true,
+  "boundary": "Fresh original focused macOS HTTP pass only. No full601, iOS79, Host188, app54/26 or OS gate credit is inferred."
+}

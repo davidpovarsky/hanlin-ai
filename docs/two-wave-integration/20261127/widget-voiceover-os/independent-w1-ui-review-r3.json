@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "status": "APPROVED_SOURCE_ONLY",
+  "reviewer": "/root/w1_review_resume",
+  "scope": "VoiceOver R3 additive UI, public API call forms, physical observation and prior-state restoration",
+  "sourceBase": "24fd1e20eb1af2ebab0f4d7dd7f617145217eded",
+  "uiSHA256": "0ae41eadc0e30eb81ac25c5f1a82505eaa07cdf3ff57e1f176951753ead54f01",
+  "sourceValidationSHA256": "72ceff514a2722f4052d3ea50b5f40bb850f5e435b5dd945ced5b4940959ca42",
+  "fullPatchSHA256": "a3e74f83888430dafe6ab62c9a0ba81290bb663d43a81e260d4e47a0814597cb",
+  "publicImportDeltaSHA256": "2d86635ae8945eb6f4790909f92afa1607fcb98278f1764b507f11a07dbcd6f8",
+  "originalUI": "7ba73f651fb9fa326f6a4787e5ac8f4739ca00922ce79f57967c4b309b8c27fd",
+  "independentMechanicalChecks": {
+    "wholeFileRecoveredByRemovingOnlyInsertionAndExplicitImport": true,
+    "originalSelectors": 32,
+    "newSelectors": 1,
+    "insertionSHA256": "676cfa83e1b3ad9e85efccd12ace1e03855e99d92e6b360c057199fea17a6c64"
+  },
+  "actualPriorAPIReceipt": {
+    "path": "voiceover-public-importer-b5475156-r1/receipt.json",
+    "sha256": "2dc7877134d49a9b751e07cdf5f60daba18b21508abcc29218002c81d85b9435",
+    "probeSHA256": "b901be60b99fdd8f2b216fee13a98bba302236249fee6e3edce10fceeb824013",
+    "imports": [
+      "XCTest",
+      "XCUIAutomation"
+    ],
+    "actualExit": 0,
+    "scope": "Strict Swift 6 / iPhoneSimulator 27 public-call-form typecheck only; zero simulator or service actions"
+  },
+  "findings": [
+    "The explicit XCUIAutomation import now matches the actually admitted probe; no assumption about XCTest-only re-export remains.",
+    "Current public speech, bounded moveForward and one visible uniquely named switch are correlated to the actual reread physical A configuration. Focus association remains explicitly an inference, not a private focus identity claim.",
+    "Two real XCUIElement.doubleTap gestures require current speech/value, the same physical container, host termination, and actual native nonce/revision responses. B is an untouched native-state control, not a second physically placed widget claim.",
+    "The actual previous service state is observed before mutation. Success restores it and verifies it again before acceptance; the catch attempts the same restoration, and preserves original and restoration failures separately. A restoration failure cannot produce PASS.",
+    "Original 420-second case/phase deadlines, 128-entry speech bound and exact source/run/attempt/action correlation remain. No coordinates, direct AppIntent invocation, synthetic receipt or private accessibility API was introduced.",
+    "Removing the exact additive block and one explicit import recovers the complete original UI file and its 32 selectors byte-for-byte."
+  ],
+  "limitations": [
+    "Complete new Swift UI source compilation, simulator runtime availability, actual widget placement, spoken values, gestures and restoration remain NOT_RUN.",
+    "The existing Widget source_identity producer mismatch is a separate admitted repair dependency. This review does not waive its archive/source guard or claim the prepared archive is currently accepted.",
+    "Root independently reviews the observer/runner. This review introduces no new native or portable execution."
+  ],
+  "newTestsExecuted": 0,
+  "nativeStatus": "NOT_RUN",
+  "blockingSourceFindings": [],
+  "recordedAtUTC": "2026-11-27T20:06:35.694243+00:00"
+}

@@ -1,0 +1,15 @@
+================================================================================
+ROUTING ERROR: Affected-test routing is incomplete.
+
+Unmapped changed paths:
+  - AI_HLYTests/HanlinNativeWidgetRendererTests.swift
+  - AI_HLYTests/HanlinOriginalExpoWidgetTests.swift
+  - AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift
+  - Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo
+  - Fixtures/Widgets/SHA256.json
+  - Scripts/MiniApps/native-presentations.d.ts
+  - Scripts/Widgets/Tests/widget-types-consumer.ts
+
+Add an explicit routing rule in Scripts/CI/affected-validation-map.json before validation can continue.
+DO NOT RUN FULL VALIDATION AS A FALLBACK.
+================================================================================

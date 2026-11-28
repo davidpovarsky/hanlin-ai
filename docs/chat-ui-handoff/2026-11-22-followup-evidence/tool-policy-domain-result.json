@@ -1,0 +1,648 @@
+{
+  "schema_version": 1,
+  "suite": "exact tool-input preservation, manifest policy/presentation, durable scoped consent",
+  "status": "passed",
+  "started_at": "2026-11-22T04:56:37.053286+00:00",
+  "finished_at": "2026-11-22T04:57:05.068468+00:00",
+  "exit_code": 0,
+  "command": [
+    "swift",
+    "test",
+    "--package-path",
+    "C:\\Users\\DAVID\\Code\\hanlin-tool-policy-check-20261122",
+    "-j",
+    "2"
+  ],
+  "toolchain": "Swift version 6.3.3 (swift-6.3.3-RELEASE)\nTarget: x86_64-unknown-windows-msvc\nBuild config: +assertions",
+  "environment_overrides": {
+    "PACKAGE_RESOURCE_BUNDLE_PATH": "C:\\Users\\DAVID\\Code\\hanlin-tool-policy-check-20261122\\ProductionResources"
+  },
+  "resource_note": "Fixed production bundle identity; unmodified loader enforces all nine pinned sizes and SHA-256s.",
+  "source_closure": [
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Codec/JSONLexer.swift",
+      "sha256": "0bfe86c1044068dfa5481b219ca85e9713e307494dd5818b056219b8f7157edf"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Codec/JSONParser.swift",
+      "sha256": "9cf5f49d6902d4b837249415a8981f1d9da16f9c6f1dc56e8f68821e1788fee9"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Codec/JSONParsingOptions.swift",
+      "sha256": "bc524c7443e1503235fed3344e67c74d74c9eeb804d4a45052944223c6313278"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Codec/JSONTokenMachine.swift",
+      "sha256": "200a84cd2f4173ec42fb27a8b71d16f2e21c6f268c8ba851cdc78a5ca633ac71"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Codec/JSONWriter.swift",
+      "sha256": "aab11e0c955428baaa171550d8623d7fe431375c140821faea88d3c45548344d"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Codec/JSONWritingOptions.swift",
+      "sha256": "d343c1ae906502f0ac148f1ed97d9a0e4c81e159dee9607a4fa35db891e05462"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Coding/JSONBase64.swift",
+      "sha256": "947073c8a5654111ef500adc5f8b18231850bbbfe788830efed07232270e497e"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Coding/JSONCodableBridge.swift",
+      "sha256": "d58ee2824d23c3089405f84eb368ee018b929d5bbde3a8d6ced5e501a5aec41e"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Coding/JSONCodablePayload.swift",
+      "sha256": "945f9e5d385f8b1900738b82b552fd14ef6045df37ecc7aad5576900a15a1719"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Coding/JSONCodingStrategies.swift",
+      "sha256": "8012bebfdde427cfe15e5a97e9ce1b5521201fe237e2aec1ecfb16a21b9921b8"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Coding/JSONDecodingContainers.swift",
+      "sha256": "ee87c54be912f015724221c76507b5427f49dfefce68e2bc11bd9596d42826d1"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Coding/JSONEncodingContainers.swift",
+      "sha256": "592aa275bc5b05aff66156f9aa69287c9c5d4c47ea9207923edfa78af5af976a"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Coding/JSONValueConveniences.swift",
+      "sha256": "fb1b019e94cb42f0945e3b4fb8302e591f93276155c7d7a87706dbe993629d84"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Coding/JSONValueDecoder.swift",
+      "sha256": "7412f92ae9e7fb1a9915fe6fa9fa707ebaa9943f02c2aac142d8b7fc08434a63"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Coding/JSONValueEncoder.swift",
+      "sha256": "6d055afca916c0fa1873213227dd54c03c949c07e0463bfe6abc47efd6a83923"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Construction/JSONArrayAccumulator.swift",
+      "sha256": "c7e004cfaaba7c1a0809b47ff972999b6842cb6e8dee23d55ae997e78220a34e"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Construction/JSONConstruction.swift",
+      "sha256": "372f1fdff9bd352395e2a5bec414b6d362e0cc44247ebdfb6220c44317832c54"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Construction/JSONObjectAccumulator.swift",
+      "sha256": "363f223a352faad908d67f36927fb0dd412d2ac87674a929c2a63ee8a578e7ea"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Diagnostics/JSONDiagnostic.swift",
+      "sha256": "f43e86ebd59a9c049b18e6e28fd83c2d6df18cf2c48b7a9a9bb5bd881f36c255"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Diagnostics/JSONOperationReport.swift",
+      "sha256": "61a7d70e1b1671c5bfac654914a313facf11d0ad53e23009442ac88c0c3d4085"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Diagnostics/JSONOperationStatistics.swift",
+      "sha256": "46f40f622274ca68759542b55c77d4ff241906471948412f6eccd0ac62b4b73c"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Diagnostics/JSONPreview.swift",
+      "sha256": "b531db0a64dc3410c56fac09ca35ff8b26a25c5247a0197526e57578c181a013"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Diagnostics/JSONRedaction.swift",
+      "sha256": "9b391a0ac214560ab908e869ff5e1b1262927ebc26fb6fadace0d10944c2c004"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Diagnostics/JSONSourceLocation.swift",
+      "sha256": "000e4c79f7c84fd1a487ed326b727d8e12e5e945a56f340fe48b65a89a9cd22b"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Document/JSONDocument.swift",
+      "sha256": "a6d76885249dce45cc9a005b3c5ac0ae962e29593a806804c832a8f7df8542f3"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Document/JSONSourceMap.swift",
+      "sha256": "7cd79a933b77edc92856f95c769611fded22ec2ae1ed83a14253acbd309da020"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Documentation.docc/CommandLine.md",
+      "sha256": "2f98ed79c784327c487e4129ac8b4d6628ad69bab6e92e636da55f7c40bef74a"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Documentation.docc/Composition.md",
+      "sha256": "d9e9b33223170f241307ba75065951c4b014e822160dc44d429c95b913cba360"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Documentation.docc/ExactPersistence.md",
+      "sha256": "1f100fa19e7b1b951c7eacf0bdbb6db7fb53d3589aae84f343d23992c010d837"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Documentation.docc/ExactValuesAndCoding.md",
+      "sha256": "d8f99b89d0e9562c1b4536e0a1e25945c6bfd012e87a0b3ef7630f21757388fb"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Documentation.docc/JSON.md",
+      "sha256": "e5b8666baa5b97bb1922d75857bc7867e0a392396352b00d1ee1e24d3c17d894"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Documentation.docc/QuickEntryPoints.md",
+      "sha256": "a1134f57009a57ff742607a9fc6fcb6647bbffda76be0e29f555a47796ab27aa"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Documentation.docc/ScopedReads.md",
+      "sha256": "d88772ab57e40970d117affbd521521841cc6b731ec8c2d5d2fb6ffdb960e35d"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Errors/JSONAccessFailure.swift",
+      "sha256": "8967165e53b28e012d474dc05649623127ab63db051effcd2256003f8b06263c"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Errors/JSONFailure.swift",
+      "sha256": "5937e7c9053734c3efe6e837df7b939a7b8840024370c8d85b9b2aca74ebdce3"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Errors/JSONResourceViolation.swift",
+      "sha256": "21fda7d2a6739aecdc75ddc4890fdeab5d3a275d204e97c74caae0f56a44bfa6"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Integrity/JSONHashMeter.swift",
+      "sha256": "09be0dccc3baa72aab941f70b89a5b636296fe94cbc195907e86fd0f5844020d"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Integrity/JSONSHA256Core.swift",
+      "sha256": "836dbefe041866769d2075a253965221833fd8b8dc86280e3b588a9c6fd43ddd"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Limits/JSONCompositionScope.swift",
+      "sha256": "8b037499876b06cceca68a580e58a836f1ae02da180adc4e27a24c04db1aa15f"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Limits/JSONLimits.swift",
+      "sha256": "4d1fbd123f0e36867ca5d61c2d9c56a7475e022ea2ca692353fbf127d8d90935"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Limits/JSONOperationContext.swift",
+      "sha256": "2ebff5b890211a4e733b0355c42175cd48d16e0df693fb6d6b7eba93da1313b7"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Limits/JSONWorkMeter.swift",
+      "sha256": "01eafd1d592f7d0de4770075366c6c49145c5617052ba86a368ba6503b974905"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Number/DecimalComponents.swift",
+      "sha256": "218b42a151efc078af9bf19236b057ac1954ba945f96af789269cb66706935fb"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Number/JSONNumber.swift",
+      "sha256": "d981ecaaa6ca0e9db513020eb44521c53dc28662c51a173565c31fb6eca3d8f7"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Number/JSONNumberConversions.swift",
+      "sha256": "da3f8a64315704a9fd565a0b4de57c742a527dd9069fb03597e4aa2b29f53f33"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Pointer/JSONEditing.swift",
+      "sha256": "011fbef903aec7ca124f4aec4932c3ba7f800b3d7a541cded1e7ce953051259f"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Pointer/JSONLocationComponent.swift",
+      "sha256": "84ca17f092fd3cdc982f3914d2f932273f8201b9a4d1700921a44e47172efdf8"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Pointer/JSONPointer.swift",
+      "sha256": "b3280f6389cad8e603e43d84f8fabae08695f146f857b96e6f475071b8d7e604"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Reading/JSONReadCursor.swift",
+      "sha256": "3fbb2d769b334f372059d185797b042d8cb331455d7491c1b6f27cb7c0242877"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Reading/JSONReadPreparation.swift",
+      "sha256": "c765d839d93160c043bcc24d3f6dd4f7bc520bf3e1a5e9aa2379e5e7bafcd39a"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Reading/JSONReadScope.swift",
+      "sha256": "350f8abc8256bb3a2a7bde336219bb8b949c75b4992903eb9707e59922f13d88"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSON.swift",
+      "sha256": "25ffc8de088d856c4024000c0f15a26ab83166d0fbd2c76eae6ff3ae7cddf85d"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONAccessors.swift",
+      "sha256": "0adb18990c6a33e99d5b079733a3a6f563662e19e0af61e57eab2b41f000d5aa"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONComparison.swift",
+      "sha256": "b7e2766ee075385b6d18e7bfeb4f0d9b5a9d7b8fc4b54e3f0cb1086064bdfa18"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONEntryPoints.swift",
+      "sha256": "90821dd5f292d7ee95bbdc78913eb342566e2eaf481d428392d3d6031ddf6c11"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONExactKeyIndex.swift",
+      "sha256": "0c1d712ebdec398192cdd2200f4996aed132563b23eee8ba2a307796852dcfb2"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONFingerprint.swift",
+      "sha256": "afc4df472eaae6f6979a7b6caa113bc327e4f2213da359ff8cd9d8300ba03b3d"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONKey.swift",
+      "sha256": "2b3760d60ba265a975dcf4eb8277269a3fa069e25d4ef2105a7b94e64620b3ce"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONMember.swift",
+      "sha256": "f599ce06e6c73543e2485ce25d1774e6a0b7bb1666e4ab38986392f51415afa6"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONObject.swift",
+      "sha256": "a418915f32a4c17cc1ebec6f21ae2e53c955e294e209cdfa130704dd4c14a9db"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONPresence.swift",
+      "sha256": "28ec8114c4be35f803031e6da081a948bf43b8d3606bcbe8035cbb663ffac3e3"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONRegexRuntime/RegexBudget.swift",
+      "sha256": "0383a74c7c34aea18ef1b930f51c80036191a96df0587182593ba653fcdb5276"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONRegexRuntime/RegexCompiler.swift",
+      "sha256": "21029f841ca3116fdf1ccdcf9fb5d0bce6021ac480b3bd4f64d4a3597a024b11"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONRegexRuntime/RegexParser.swift",
+      "sha256": "222f05e55d16b4239bc73152150d14c5985151f2fab0971a59c4fa740f0a6e58"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONRegexRuntime/RegexProgram.swift",
+      "sha256": "fbf639092c0dc2e1a2ff7fce3b65232cb7e2db5dde1294329fbc92561799c8de"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONRegexRuntime/RegexUnicodeTables.swift",
+      "sha256": "7b3c4ebb5cdbc1823f8c3f33e3a9d47321282053b76f84460480ab75503d40d5"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONRegexRuntime/RegexVM.swift",
+      "sha256": "f1115f97548180e6021a7e86cecdf234700b1290e9a0cbbf1961532679e4b7ca"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Compilation/CompiledJSONSchema.swift",
+      "sha256": "2639c72c7b42cd4a0816dab710d0d7c6921cf009e91846eac933af8c83669fcd"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Compilation/JSONSchemaCompilationFailure.swift",
+      "sha256": "4b38701876847b4f9af0df4e497c02b860dda140bdb48b7562378ea614718ccf"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Compilation/JSONSchemaCompiler.swift",
+      "sha256": "35e778b77a0d19605720aaade9ebcbba50d19820bc71f5d24f977cfd7f4a6271"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Compilation/JSONSchemaPlan.swift",
+      "sha256": "8750d589a612cedd08fe3e012992913a2b8bfc4a3c7c41f1ec134540e6dad38a"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Compilation/JSONSchemaQualifiedNode.swift",
+      "sha256": "5fd72da9bbf6bab51d2e236a4ac9e2f69ae0265ad297d6c914ec18cc3484886f"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Compilation/JSONSchemaShape.swift",
+      "sha256": "f2995734eff28d4432ec56c5aa482ffeb99333e44fb25eb8bc7eb163ef9aca32"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Compilation/JSONSchemaVocabulary.swift",
+      "sha256": "de5c816b8bbcc0d75a13a04af738cda46292fa0aad57a0ffe75e393290d57cdb"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Construction/JSONSchemaBuilder.swift",
+      "sha256": "e8d335c494a4e6212b4ad3e9cf59c6693b74d327eaef1729b9a100be2c3fdce8"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Document/JSONCompositionScope+URI.swift",
+      "sha256": "8285ec82055ec0ad70a50d87d75026d96f50d7f5b02b7c45e0eadc490ed22628"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Document/JSONSchemaBuiltins.swift",
+      "sha256": "29cc427ec957a43ed0a768e7f0fa5daac4edc94fe707f7f9cf322daddc4c8492"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Document/JSONSchemaDocument.swift",
+      "sha256": "0561cec5d6265ef3d6225f0d76944a40ddcfccfa1f8074e693c101653c2a072e"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Document/JSONSchemaRegistry.swift",
+      "sha256": "2e2fff0b67e6762c48a64a58ebc880562afbc1c6147ef65521e3a5fea226e8cc"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Document/JSONSchemaURI.swift",
+      "sha256": "bdddd1b45df09f7f9fe2e0841fabfdc848771b0170b8d1f9473207e9ab3555d2"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Document/JSONSchemaURINormalization.swift",
+      "sha256": "257c6d2627b416b63868493f96b965caf14bc2997eb7d0d4f5c49899deb068a1"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Documentation.docc/CompiledPlanConvenience.md",
+      "sha256": "2b133d5716cdde41fd6b19bdca2b1a4ef34a13bab215c178ac3e685dadca38a7"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Documentation.docc/JSONSchema.md",
+      "sha256": "7c9943ff2bcaf7a62245aa33fa7caaf001abb5612b2346e14c40975621e154d7"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Documentation.docc/OfflineValidation.md",
+      "sha256": "302c23ee718f68e5815e3831b55efac7e2b00e7cf26dc76f64ed4b07906c58e7"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Documentation.docc/ProviderSchemas.md",
+      "sha256": "cf937e7c5b3960a50ee05218f51fa3d108899a3bd6a9883177097116ee76d868"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Evaluation/JSONAnnotationState.swift",
+      "sha256": "9ca85ad7f4b1152ca7d9934d7a49dd3d07efe97216923b505f727338bddca396"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Evaluation/JSONEvaluationFrame.swift",
+      "sha256": "4dbee2a99f2aebc8ba222cd2a2c7a4a13faa23c8d1f514604d3d4b3bf3eb824f"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Evaluation/JSONSchemaAssertions.swift",
+      "sha256": "de96f177dae54eb59e8dd5e9f374d2b8914257e392d8a5e9a8980421f4b38225"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Evaluation/JSONSchemaEvaluation.swift",
+      "sha256": "ba8c31aad7cad07e71211fa783e20eae52647dd486ddc8dd24a736c2335e1215"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Evaluation/JSONSchemaEvaluationFailure.swift",
+      "sha256": "a8d2749d4ab009df1d9d711f40df45ecb1c00a65887a0ef29137980c897c8e14"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Evaluation/JSONSchemaValidator.swift",
+      "sha256": "4501f8a82579e2e83ed47fb4cfbb4c1f71a1cf4404611c6b71b84877eead9868"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Formats/JSONIDNA.swift",
+      "sha256": "ed5ca34e71aef53de3bcea2b35398070290dd7b73e10e9cf3a496a61dceb840e"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Formats/JSONIDNAData.swift",
+      "sha256": "d913095e3077f7d26e822e651605a65c25b4f4caf2c461b2cf75ce634447380e"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Formats/JSONIDNAMapping.swift",
+      "sha256": "fe5411ba21feb7cea86a919648f35a88f356c7498e9025b32985242108a97d0d"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Formats/JSONIDNAUnicode.swift",
+      "sha256": "e6c039eea8433b62eb80c9aabdff3731eebc357be7e5ce7b15dd8c9971ef1d06"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Formats/JSONPunycode.swift",
+      "sha256": "cf1da2684b0fc7cad05fb2944b681ef51b5be24ec5f28a04bc61b7e9f5ccaa70"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Formats/JSONSchemaFormats.swift",
+      "sha256": "0f7441c6862545d9506cbdb181a1a47e64301770919c5d87b9e58d6a9d451d23"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Formats/JSONSchemaIdentifierFormats.swift",
+      "sha256": "0e39bc94078579feb9c95279fe802ad310b87ea8f716027be240f323a31749d0"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Formats/JSONSchemaMailboxFormats.swift",
+      "sha256": "ec097e5519df67a5cb3020fef8d4a46b4c95ad4867a0f95b1a4ccd32ee61c10f"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Inspection/JSONDeclaredAnnotations.swift",
+      "sha256": "c3799efa714da046b52957d1bd980492f7c690193f4f20b538e5d8fe2fc227df"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Inspection/JSONSchemaNodeView.swift",
+      "sha256": "f632cb9989512673ba059819322b7826469e9e8795863dcafa3f8229fee2d7a4"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Inspection/JSONSchemaReferenceTarget.swift",
+      "sha256": "5bd2503a8b4782e750efe59e12794176e1523569b52b19a2fe2b1fc09aca0b9d"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Limits/JSONSchemaOptions.swift",
+      "sha256": "6e85ae15308b9d547b6a876a7a931b17a3775083491453501ffd3c5a6bfe4ec1"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Output/JSONValidationIssue.swift",
+      "sha256": "9fa5be20bc66211c6bc9a7010821568940264528089010e12146b74460fd3a93"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Output/JSONValidationOutput.swift",
+      "sha256": "d84dc4fd914e471d6f3cbfcd0c960147f0d06dae850add4735c8725919306073"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Output/JSONValidationOutputAdapter.swift",
+      "sha256": "d8bd6105b267ef4164ca7113f277c4c01c7f216a7810907310214f89db336547"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Output/JSONValidationResult.swift",
+      "sha256": "f0660738bc64492243d9b59b92d8dc31a9305c618ee59db66db8da17ae055a3d"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Providers/JSONSchemaProviderInspection.swift",
+      "sha256": "934d7bed2755e93ebf5b8b58cba9d6a61f2c586d1ab77b92820c9008630311f6"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Providers/JSONSchemaProviderProfile.swift",
+      "sha256": "528ef47a89242d68220d99e408e5e5b5d473252cd84ecfc0c85d3fe488421ab5"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Providers/OpenAIJSONSchemaBridge.swift",
+      "sha256": "8f98402084880e8527f70ea1d70a595b7a87596c8f3de8f9c4b01ea945acceb5"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Resources/Draft2020-12/meta/applicator.json",
+      "sha256": "c4a6e4147b91fef7fea6dc058cb1bf93402f7414b76578a8b16aaf1dad6aacef"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Resources/Draft2020-12/meta/content.json",
+      "sha256": "08343747764e4a5814262793cf4d652057a7913863c5950d43297e8e1fdac5b6"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Resources/Draft2020-12/meta/core.json",
+      "sha256": "c2d12a8e4dd11d336dfc83a3f663aa4c69f0b49b3beb094ffeb25b5316f4803d"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Resources/Draft2020-12/meta/format-annotation.json",
+      "sha256": "abc775adfefd89d22358170d9bf93f4ebd2349563bbbedd60f02bef7c812bcc0"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Resources/Draft2020-12/meta/format-assertion.json",
+      "sha256": "c52242b9a1bb786b26c3e82c7add428c31f9c96e575dce99e56ea5feaa6da20c"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Resources/Draft2020-12/meta/meta-data.json",
+      "sha256": "8f76d6e14f41b9b92ef933b708cdc5144c8b5268651ad11918485fb1754f1c76"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Resources/Draft2020-12/meta/unevaluated.json",
+      "sha256": "2dbfbcb73994b670b0976492adee1fffb46c21682784d2f5a4ca561f9e2d0cb4"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Resources/Draft2020-12/meta/validation.json",
+      "sha256": "7010a31e541f32d2be721e2de348df75c9b36876a3ed304877fc0abda1d37a58"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Resources/Draft2020-12/Provenance.json",
+      "sha256": "6ce1ca706dd99ebea2cf129fcb836ab08965a4caac970cb7d5fc427ea3e3ce7b"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema/Resources/Draft2020-12/schema.json",
+      "sha256": "41da76f5afb7ce062d248f762463a92f7ca47e4e0f905b224ba6afeef91ded0f"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinCatalogContracts.swift",
+      "sha256": "757478b238a1fc3144ef51c70275539502f959dd2aca9e67dbbf2449b24f7473"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinChatStructuredPart.swift",
+      "sha256": "07479b91a7ce77a8fdf5d53f3cb16939d9d46b0287efbd50b8b20b446c8ea2fa"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinContractError.swift",
+      "sha256": "ad59a698345d7c218b3787c721b93fc6104ae462f7f11000d9204b1dd03e8518"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift",
+      "sha256": "48fe15520f4758ad6d856c2deb40b2e5437392131c16717088f32edc3d163b64"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinExposureContracts.swift",
+      "sha256": "e7a39ee73d27678fd8a5405a6a176b31c68eab76c1828fbe02fa02f63c7decea"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift",
+      "sha256": "3b3651705d4ee066324e623f284718d985ce7e44d1b01d4a9c3a437ed3d7410a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinJSONSchemaDocument.swift",
+      "sha256": "d763b95edd959241d4c6931892802eb20f1bf90bd21037ed6371c4d68a5e661a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinManifestSchema.swift",
+      "sha256": "c1dd837d01913bc58b72d62cf47a9a21ef4bf1f23a1b3ccdaf93858e987c4d23"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinMiniAppContracts.swift",
+      "sha256": "eb880c3c00a789bcd21d8e0cbc353018e32b4e7d7f781415809781751515ae63"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPermissionContracts.swift",
+      "sha256": "f0911d44d578d35f2714b30e4aa925a953475d54fb4f9ee2da39cf0f8590fed3"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
+      "sha256": "122b1d09c68e28907fdbce19986824d9bd6596d36bd6f08074c670a386f2f19c"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPresentationContracts.swift",
+      "sha256": "96cde68f978ef19a5de552835be8c6dc2c62741f4aeab38c40f27586272e99b4"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinRuntimeProfiles.swift",
+      "sha256": "43bffad1d4245d9a00924aab08ffd498a622d32321b5165ff036f0e425140262"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinScriptContracts.swift",
+      "sha256": "e92224cd4a0a1b5ed8e49bd85881c647595337b95ccbb20e6a6684110977679c"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinSessionContracts.swift",
+      "sha256": "03493cb4f2f414088282d97b2b4c0a01a918c0df1db78451974400bbfcba7386"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinSkillContracts.swift",
+      "sha256": "cb8910c6d12ac4cc0f8546e89a0a514151fc9d3cd53d30aacd8abc479f2af99f"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinStoreFileAccess.swift",
+      "sha256": "ee87c52bc778c1a3848c37e125a709378f69e032ca91f80cc58f250a3c81a3f5"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolApprovalDescriptor.swift",
+      "sha256": "f091f9d83f629f5ba94b4fd30c6775255226f13a671eb047a1dc40f3c3a30ca7"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolContracts.swift",
+      "sha256": "8ce9c0771689e43f24b42fb16b0f1bf2a545628e99f972b625af57314257156d"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinValue.swift",
+      "sha256": "8284d64b8d9f0fc9212d6178860db6ce75dd15b212fb9214fea33fe1e51b9750"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift",
+      "sha256": "014a9f0d5d078b84cda43d805e8b95b89203cabd834254f4e30030805e8dad0f"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinWireProtocol.swift",
+      "sha256": "13fc4ffbffef08ac7d439f6e9f961b4b94b05d6d0e45ba3cec6522709b7870d7"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+      "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostSchemaValidation.swift",
+      "sha256": "0b8d1e3ff747b156d73a7bb67e80f95fc348ae9269f8dd3ae40a702d9da57432"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinToolApprovalStore.swift",
+      "sha256": "2ed4cf08bf4c3c62e9156b3693c136e68274a5e4f6ed8511f6cc97e249f2627f"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HostInputIntegrityRegressionTests.swift",
+      "sha256": "63ed42ffbdfb6b09c5aedb136d0232434e0774d5e6bc789a2b80c1c787b982ea"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/ToolApprovalAndPresentationTests.swift",
+      "sha256": "7d4e3f233ac41e271b086569aa746f0780b8e8e0a2d6b81857f49d2f7844fcad"
+    },
+    {
+      "path": "AI_HLYTests/HanlinToolApprovalStoreTests.swift",
+      "sha256": "559cb492cbccb54d416fa69652c45ecb1b318e137dc8774c3d0cfd0a6f49b8ee"
+    },
+    {
+      "repository": "davidpovarsky/swift-ai-sdk",
+      "revision": "e7bf34111e603ca977becd007dd4e5bb109af857",
+      "path": "Sources/AISDKProvider/JSONValue/JSONValue.swift",
+      "sha256": "2787a30c76de3adb20aeba1d150f19711a949e637df705e91681147d0427696d"
+    }
+  ],
+  "limitations": [
+    "Windows Swift portable source closure only; UIKit/SwiftUI, whole app host wiring and Apple compilation are not executed.",
+    "No simulator or physical device; no native runtime rebuild.",
+    "MCP provider execution, Apple Maps networking, account credentials, and OS permission dialogs are not invoked."
+  ],
+  "sentinel_job_id": "job_3c5caf9c7fd0",
+  "tests": {
+    "total": 17,
+    "passed": 17,
+    "failed": 0,
+    "suites": 3,
+    "seconds": 3.363
+  },
+  "build_status": "passed",
+  "build_seconds": 12.76,
+  "first_attempt": "tool-policy-domain-first-attempt.json",
+  "log": "tool-policy-domain-result.log",
+  "log_sha256": "089d0cc8cb683fb2f91627b34013993aeaf00c08dea9320bdb85fac7a2dbe313",
+  "wrapper_result": {
+    "exit_code": 1,
+    "reason": "After writing the passing Swift receipt/log, Python cp1252 console output could not encode Swift Testing's U+25CA glyph.",
+    "scope": "Output-only wrapper failure; actual swift test exit_code was 0 and all 17 tests passed.",
+    "repair": "Harness now uses stdout errors=backslashreplace. Python source compile verified; production Swift and tests unchanged, so tests were not rerun."
+  },
+  "reproducible_harness_sha256": "3a0bcb992dbceae222f356c2a5003c057f75f3c51bd573dc83565c84ffb71ba2",
+  "current_source_hashes_match": true,
+  "current_source_files_compared": 148
+}

@@ -1,0 +1,7 @@
+{
+  "include": [
+    "index.ts",
+    "proof.ts",
+    "App.tsx"
+  ]
+}

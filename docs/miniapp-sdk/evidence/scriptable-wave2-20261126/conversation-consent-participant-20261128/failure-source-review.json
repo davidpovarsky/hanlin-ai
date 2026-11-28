@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "kind": "independent-source-review",
+  "reviewer": "mac_build_resume",
+  "sourceCommit": "3ab83672440fa6f588611fe91db5d746099b038c",
+  "status": "SOURCE_SUPPORTS_REAL_TEST_PARTICIPANT_WITH_REQUIRED_GUARDS",
+  "scope": "Read-only assessment of the proposed AgentRuntime runConversation consent participant; no candidate implementation approval or native execution.",
+  "findings": [
+    {
+      "claim": "The original shared runConversation fixture creates a real APIManager and original conversation/row request but never installs a consent responder.",
+      "authority": "AgentRuntimeConversationAcceptanceTests.swift:843-956; APIManager.swift:78,129-134"
+    },
+    {
+      "claim": "The actual Host validates source arguments, current session, route, schema and deadline before asking its real owner.consent; cancellation, current context, deadline, route, scope equality and remembered grant are checked again before execution.",
+      "authority": "HanlinAppHostIntegration.swift:152-232; HanlinAppAgentSessionOwner.swift:367-395"
+    },
+    {
+      "claim": "An existing original app test already composes the owner consent callback and answers pending requests asynchronously on MainActor.",
+      "authority": "HanlinAppSplitOriginTests.swift:115-122"
+    },
+    {
+      "claim": "The unchanged default is 30,000 ms. Session uses the default limits, dispatcher derives the deadline, and consent answers false at the remaining original deadline.",
+      "authority": "HanlinToolContracts.swift:92-108; HanlinAgentSession.swift:448-468; HanlinHostDispatcher.swift:70-77; HanlinAppToolConsent.swift:46-65"
+    },
+    {
+      "claim": "Retained actual local-Python and failure-recovery provider request bodies contain the original permission-denial/no-dispatch message for call-exec-python and call-valid-2.",
+      "authority": "native-evidence-bindings.json"
+    },
+    {
+      "claim": "A/B/C/malformed durations and missing responder support the same explanation, but their exact cause is not independently established from the retained excerpts examined here.",
+      "authority": "native-evidence-bindings.json"
+    },
+    {
+      "claim": "Host permission denial is permissionDenied; the higher-level invalidArguments diagnostic label must not be treated alone as evidence of malformed original arguments.",
+      "authority": "HanlinAppHostIntegration.swift:308-321; HanlinAgentSession.swift:492-498"
+    },
+    {
+      "claim": "Remembering a new scope may remove older grants that share app/account/workspace/provider/tool/permissionFingerprint, even if their manifestFingerprint differs. Revoking newly created IDs alone would not restore such prior grants.",
+      "authority": "HanlinToolApprovalStore.swift:60-79"
+    },
+    {
+      "claim": "A unique conversation UUID is not a separate remembered-permission namespace: configuration stores it as namespace.space, while the approval scope uses app/account/workspace and tool fingerprints.",
+      "authority": "HanlinApplicationConfiguration.swift:129-135; HanlinToolApprovalScopeFactory.swift"
+    }
+  ],
+  "requirements": [
+    "Keep every original scripted business argument, actual provider response, assertion, execution path, tool schema, negative case and deadline unchanged.",
+    "Use only the existing actual owner.consent.onChange/answer route. Do not replace Host.confirmInvocation, preseed grants, change policy, change production code, or substitute an executor.",
+    "Compose the prior owner callback for both pending and answered events, restore it on every exit, and keep original operation/approval event bookkeeping intact.",
+    "Build the allowlist from the exact scripted SSE function.arguments string bytes and original call ID plus alias; do not reserialize projected request.arguments. Reject duplicate/ambiguous scripted identity.",
+    "Before answering, recheck the real pending request ID and exact bytes, provider call ID, alias, actual session/conversation/scene, original row/UI run and canonical run association. A missing association must fail closed; never synthesize owner.bindings.",
+    "Answer asynchronously on MainActor, consistent with the existing participant pattern, and recheck pending/identity after suspension. This also avoids reentrant answer before the original deadline task is installed.",
+    "Do not approve unmatched, stale, cancelled or provider-only requests through this scoped Host participant. Do not count an already remembered grant as a newly answered request.",
+    "Before any allowed answer, ensure it cannot supersede an unrelated pre-existing grant under the store's exact removal predicate, or use an independently reviewed already-supported isolated test namespace. Unique conversation ID alone is insufficient.",
+    "Track exact newly created grant IDs and scopes from the synchronous before/after store state. Revoke only owned still-matching grants; preserve unrelated/pre-existing grants and verify cleanup. Never revokeAll or restore a broad stale snapshot.",
+    "Keep unmatched/cancellation cleanup and restoration explicit on normal and throwing exits, without extending original timers or leaving a responder task able to answer a later request."
+  ],
+  "limits": [
+    "No fixture code, production code, tests, consent state or credentials changed by this review.",
+    "No native command, replay, test, API write, dispatch or extra GitHub poller ran for this review.",
+    "The two observed denial messages do not prove that the proposed participant will satisfy every other assertion in those six cases.",
+    "The separate supersession .unresolvedWrite at 0.549 seconds is not attributed to missing consent and requires its own causal analysis.",
+    "Actual candidate diff/API/concurrency correctness and original native acceptance remain unreviewed until source is supplied."
+  ],
+  "preparationFailures": [
+    {
+      "operation": "Immutable Git grep across three source directories",
+      "limitSeconds": 20,
+      "outcome": "Timed out; raw traceback retained. Subsequent narrow exact-file reads found and bound the original default limit; no timeout was widened."
+    }
+  ],
+  "reviewedAt": "2026-11-28T03:27:58.882060+00:00"
+}

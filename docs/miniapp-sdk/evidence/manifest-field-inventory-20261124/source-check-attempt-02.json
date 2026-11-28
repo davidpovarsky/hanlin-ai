@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "node",
+    "--test",
+    "Scripts/Audit/Tests/manifest-contracts.test.mjs"
+  ],
+  "exitCode": 1,
+  "elapsedSeconds": 0.2195835430175066,
+  "node": "v24.22.0",
+  "logSHA256": "0b36857ce493270c56083bce05b0bda0f958c636396eddad4032581f5f4f7338",
+  "reason": "Same one focused check after independent review identified explicit installed-dependency metadata fields missing from initial mapping.",
+  "scope": "Source mapping/drift only; no runtime/native execution or combined output regeneration."
+}

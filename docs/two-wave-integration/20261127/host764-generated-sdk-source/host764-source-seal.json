@@ -1,0 +1,57 @@
+{
+  "status": "ORIGINAL_HOST188_PASS_AND_EXACT_GENERATED_SOURCE_SEALED",
+  "hostActualExecutionSource": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+  "sourceSeal": "78ec8f97a607f5e1f8c01de5109ae850791b9e04",
+  "hostReceiptSHA256": "6046e68027dbb0acf87a42fd6b310c21405f9a58f721c4b17e90a5b775404942",
+  "docs": [
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "beforeSHA256": "5a38dc10a5e97b5b2fe3af72c0a601a9f450b650ce260d6dd5df8354edf8e37c",
+      "afterSHA256": "b04e9c4735d0076aded4eb68724049d37ea0a12fcd28d34cc3f3bd90fdd3d754",
+      "onlyOriginalBaseAndCurrentHostSourceHashAnnotationsChanged": true
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "beforeSHA256": "0d12fae9ad3e9ec8694ad283a10e1dc500189a6c0cf64d5f74cf65288be54bed",
+      "afterSHA256": "05754bff0663fbca6ffd19b8d305f0109aedf7df86c641b3d3b2bdfa74167e5c",
+      "onlyOriginalBaseAndCurrentHostSourceHashAnnotationsChanged": true
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "beforeSHA256": "f37b7cbfb5b8b1e68f61bc857de0abd21b84340e4f8022091e30d06967b507c0",
+      "afterSHA256": "5222595233ecf5e945a704e8fe0d771709ce860fb2490a6ec694704e0ed0f7af",
+      "onlyOriginalBaseAndCurrentHostSourceHashAnnotationsChanged": true
+    }
+  ],
+  "inputFingerprintBeforeOriginalInventoryRefresh": "c8ba03a71f5f0d4f2330589a87ccb3522daafcab418ae4db01b959c37f98ce83",
+  "actualPackagedFingerprint": "7e2d370d0753b37bb1c589e4c2b28e3e8383c6fb948b09b0556e651efcfa4a9e",
+  "actual396SourceInputsMatchSealedGit": true,
+  "sdkManifestSHA256": "fde01eda875902fd4b399921902ad8589f03f6c7926d3298fcb4f4c929339838",
+  "archive": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host-764ed325-original-phases-r1/RuntimeHostResources.zip",
+    "canonicalPath": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81905738,
+    "sha256": "7e37a818f7502a44dc44c6369d3ca19164d8fae072504166aa18bf9e86cba241"
+  },
+  "unmodifiedProductTestFixtureScriptTrees": {
+    "AI_HLY": "781c2534872bd68a44734d3a6d64ebe1c06cf03a",
+    "AI_HLY.xcodeproj": "27c179149d292c052942bd5c1c175b1cd5b9cd4b",
+    "Packages": "2f4833721e11601351754a7776534b5a442bc3ea",
+    "HanlinMiniAppsApp": "e52f2286eedee8ed447e6f160aba3afb4a480406",
+    "HanlinMiniAppsTests": "bdf10f155298d926033523baf613b448c4216ba0",
+    "HanlinMiniAppsUITests": "2ebda996295771d705a0874c5a6b55af9bfac613",
+    "Fixtures": "edfaab766c3879ba5c1f76120749226484c96a47",
+    "Scripts": "24c27beec81c399de7ecc3b848d811f94bfe8391"
+  },
+  "generatedDeltaReceiptSHA256": "ebcdd58c8cfeb632853f0d318e62e5ce06474e82a66454275dde39c2363f35de",
+  "bundle": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/handoff/host764-generated-docs.bundle",
+    "bytes": 1427,
+    "sha256": "de2160db79aa49e14337263443b974e6fc540e9961b6d77e33b6ed6c3d419981",
+    "prerequisite": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+    "ref": "refs/heads/codex/mac-host764-generated-docs"
+  },
+  "at": "2026-11-27T15:41:09.985568+00:00",
+  "sourceClean": true,
+  "nativeGateRepeated": false
+}

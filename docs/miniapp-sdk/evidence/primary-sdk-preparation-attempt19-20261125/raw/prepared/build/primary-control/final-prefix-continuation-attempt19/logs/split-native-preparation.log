@@ -1,0 +1,447 @@
+[MiniApps] Preparing original npm inputs: Installed SDK original file is missing or changed: node_modules/.package-lock.json
+npm warn deprecated source-map-resolve@0.6.0: See https://github.com/lydell/source-map-resolve#deprecated
+
+added 202 packages in 2s
+{"status":"installed","toolingRoot":"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/NativeScript","files":5966,"packages":140}
+
+> hanlin-nativescript-tooling@1.0.0 prepare:ios-dependencies
+> node prepare-ios-dependencies.mjs
+
+PASS: TypeScript5.9.3 strict native facade, declarations and JS unchanged; native execution is a separate gate.
+Preflight build defines verification passed across all 430 ESM shadow modules.
+Preflight ESM graph verification passed (264 modules verified; 0 misclassifications, 0 missing).
+Staged NativeScriptSharedRuntime JavaScript modules at /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime
+Prepared NativeScript 9.1.4 iOS dependency closure: NSCWinterTC.xcframework, TNSWidgets.xcframework; installed Swift metadata wrapper for metadata-generator-arm64, metadata-generator-x86_64
+[MiniApps] Preparing original npm inputs: Installed SDK original file is missing or changed: node_modules/.package-lock.json
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @babel/plugin-transform-arrow-functions@7.29.7
+npm warn Found: @babel/core@7.29.7
+npm warn node_modules/@babel/core
+npm warn   dev @babel/core@"^7.26.0" from the root project
+npm warn   59 more (@babel/helper-create-class-features-plugin, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @babel/core@"^7.0.0-0" from @babel/plugin-transform-arrow-functions@7.29.7
+npm warn node_modules/@babel/plugin-transform-arrow-functions
+npm warn   @babel/plugin-transform-arrow-functions@"^7.27.1" from react-native-worklets@0.13.0
+npm warn   node_modules/react-native-worklets
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @babel/plugin-transform-shorthand-properties@7.29.7
+npm warn Found: @babel/core@7.29.7
+npm warn node_modules/@babel/core
+npm warn   dev @babel/core@"^7.26.0" from the root project
+npm warn   59 more (@babel/helper-create-class-features-plugin, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @babel/core@"^7.0.0-0" from @babel/plugin-transform-shorthand-properties@7.29.7
+npm warn node_modules/@babel/plugin-transform-shorthand-properties
+npm warn   @babel/plugin-transform-shorthand-properties@"^7.27.1" from react-native-worklets@0.13.0
+npm warn   node_modules/react-native-worklets
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @babel/plugin-transform-template-literals@7.29.7
+npm warn Found: @babel/core@7.29.7
+npm warn node_modules/@babel/core
+npm warn   dev @babel/core@"^7.26.0" from the root project
+npm warn   59 more (@babel/helper-create-class-features-plugin, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @babel/core@"^7.0.0-0" from @babel/plugin-transform-template-literals@7.29.7
+npm warn node_modules/@babel/plugin-transform-template-literals
+npm warn   @babel/plugin-transform-template-literals@"^7.27.1" from react-native-worklets@0.13.0
+npm warn   node_modules/react-native-worklets
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @babel/preset-typescript@7.29.7
+npm warn Found: @babel/core@7.29.7
+npm warn node_modules/@babel/core
+npm warn   dev @babel/core@"^7.26.0" from the root project
+npm warn   59 more (@babel/helper-create-class-features-plugin, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @babel/core@"^7.0.0-0" from @babel/preset-typescript@7.29.7
+npm warn node_modules/@babel/preset-typescript
+npm warn   @babel/preset-typescript@"^7.23.0" from babel-preset-expo@58.0.26
+npm warn   node_modules/babel-preset-expo
+npm warn   1 more (react-native-worklets)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: react-native-worklets@0.13.0
+npm warn Found: @babel/core@7.29.7
+npm warn node_modules/@babel/core
+npm warn   dev @babel/core@"^7.26.0" from the root project
+npm warn   59 more (@babel/helper-create-class-features-plugin, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @babel/core@"*" from react-native-worklets@0.13.0
+npm warn node_modules/react-native-worklets
+npm warn   react-native-worklets@"0.13.0" from the root project
+npm warn   3 more (@expo/ui, @nativescript/react-native, expo-modules-core)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: react-native-worklets@0.13.0
+npm warn Found: @react-native/metro-config@0.88.1
+npm warn node_modules/@react-native/metro-config
+npm warn   dev @react-native/metro-config@"0.88.1" from the root project
+npm warn   1 more (@react-native/community-cli-plugin)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @react-native/metro-config@"*" from react-native-worklets@0.13.0
+npm warn node_modules/react-native-worklets
+npm warn   react-native-worklets@"0.13.0" from the root project
+npm warn   3 more (@expo/ui, @nativescript/react-native, expo-modules-core)
+
+added 688 packages in 6s
+{"status":"installed","toolingRoot":"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo","files":19594,"packages":642}
+[HanlinExpo] Preparing iOS Expo and React Native dependencies...
+[HanlinExpo] ExpoUI already staged and verified at Packages/HanlinExpoRuntime/Artifacts/ExpoUI.xcframework
+[HanlinExpo] ExpoAsset already staged and verified at Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework
+[HanlinExpo] ExpoModulesJSI already staged and verified at Packages/HanlinExpoRuntime/Artifacts/ExpoModulesJSI.xcframework
+[HanlinExpo] ExpoModulesCore already staged and verified at Packages/HanlinExpoRuntime/Artifacts/ExpoModulesCore.xcframework
+[HanlinExpo] ExpoModulesWorklets already staged and verified at Packages/HanlinExpoRuntime/Artifacts/ExpoModulesWorklets.xcframework
+[HanlinExpo] ExpoBrownfield already staged and verified at Packages/HanlinExpoRuntime/Artifacts/ExpoBrownfield.xcframework
+[HanlinExpo] React already staged and verified at Packages/HanlinExpoRuntime/Artifacts/React.xcframework
+[HanlinExpo] ReactNativeDependencies already staged and verified at Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework
+[HanlinExpo] hermesvm already staged and verified at Packages/HanlinExpoRuntime/Artifacts/hermesvm.xcframework
+[HanlinExpo] ReactNativeHeaders already staged and verified at Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework
+[HanlinExpo] Exact original ExpoUI source build reused: 4939d8a43c4a36e9373396d26fbf46f12c30eff34ee57f486dc1a07acb0c4d83
+[HanlinExpo] Exact original ExpoAsset source build reused: 4939d8a43c4a36e9373396d26fbf46f12c30eff34ee57f486dc1a07acb0c4d83
+[HanlinExpo] All dependencies staged successfully.
+[HanlinExpo] Staging modular React and Cxx headers in ReactModularHeaders...
+[HanlinExpo] Modular headers and nested fallback staged successfully.
+[HanlinExpo] Aligning Clang modulemaps across xcframeworks...
+[HanlinExpo] Staging modular header frameworks in ModularFrameworks...
+[HanlinExpo] Created modular jsi.framework in ModularFrameworks.
+[HanlinExpo] Sanitized React-umbrella.h: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/React-umbrella.h
+[HanlinExpo] Sanitized React-umbrella.h: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/React.xcframework/ios-arm64/React.framework/Headers/React-umbrella.h
+[HanlinExpo] Sanitized React-umbrella.h: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/React.xcframework/ios-arm64_x86_64-simulator/React.framework/Headers/React-umbrella.h
+[HanlinExpo] Created unified non-modular react.framework in ModularFrameworks and enriched React.xcframework.
+[HanlinExpo] Created 15 modular frameworks from ReactNativeHeaders modulemap.
+[HanlinExpo] ModularFrameworks nested fallback staged successfully.
+[HanlinExpo] Building ExpoModulesJSI.xcframework for iOS device and simulator on macOS...
+[ExpoModulesJSI] Detected: source-built RN (RN_ROOT=/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/node_modules/react-native)
+[ExpoModulesJSI] Clearing stale build state (DerivedData, SwiftPM) before rebuild
+[ExpoModulesJSI] Building framework slice for iphoneos...
+2026-11-25 11:40:37.836 xcodebuild[74904:5012200] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/node_modules/expo-modules-jsi/apple/Package.swift: ExpoModulesJSI-product: ld: warning: -undefined dynamic_lookup is deprecated on iOS
+note: Using codesigning identity override: 
+[ExpoModulesJSI] Building framework slice for iphonesimulator...
+2026-11-25 11:40:50.248 xcodebuild[74976:5012655] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/node_modules/expo-modules-jsi/apple/Package.swift: ExpoModulesJSI-product: ld: warning: -undefined dynamic_lookup is deprecated on iOS-simulator
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/node_modules/expo-modules-jsi/apple/Package.swift: ExpoModulesJSI-product: ld: warning: -undefined dynamic_lookup is deprecated on iOS-simulator
+note: Using codesigning identity override: 
+[ExpoModulesJSI] Built xcframework successfully in 25s (ios-arm64, ios-arm64_x86_64-simulator)
+[HanlinExpo] ExpoModulesJSI.xcframework built and staged successfully.
+[HanlinExpo] Normalized, signed, and verified ExpoUI.xcframework
+[HanlinExpo] Normalized, signed, and verified ExpoAsset.xcframework
+[HanlinExpo] Normalized, signed, and verified ExpoModulesJSI.xcframework
+[HanlinExpo] Normalized, signed, and verified ExpoModulesCore.xcframework
+[HanlinExpo] Normalized, signed, and verified ExpoModulesWorklets.xcframework
+[HanlinExpo] Normalized, signed, and verified ExpoBrownfield.xcframework
+[HanlinExpo] Normalized, signed, and verified React.xcframework
+[HanlinExpo] Normalized, signed, and verified ReactNativeDependencies.xcframework
+[HanlinExpo] Normalized, signed, and verified hermesvm.xcframework
+[HanlinExpo] Normalized, signed, and verified ReactNativeHeaders.xcframework
+[HanlinExpo] Enriched Config.xcconfig with ModularFrameworks search paths and interop flags.
+[HanlinExpoNativeAPI] Preparing NativeScript RN and Worklets iOS dependencies...
+[HanlinExpoNativeAPI] Verified NativeScript RN tarball SHA256: 906f2106215426e6211c27f37fe2e874b9d91d174efbabb1d8b512fcdb2d4798
+[HanlinExpoNativeAPI] Verified Worklets tarball SHA256: 5894c90a9bf3abaf81b5a92587884d757e0328dd3450a9cffe0e56e35b0a43a4
+[HanlinExpoNativeAPI] Staged metadata .nsmd files into Artifacts/metadata and Sources/HanlinExpoNativeAPI/Resources/metadata
+[HanlinExpoNativeAPI] Verified Libffi.xcframework static libraries (arm64 + sim).
+[HanlinExpoNativeAPI] Applied session/runtime/view-scoped native integration
+[HanlinExpoNativeAPI] Generating NativeScriptNativeApiSpec into: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/generated
+[HanlinExpoNativeAPI] Generating rnworklets into: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/generated
+[HanlinExpoNativeAPI] NativeScript codegen schema SHA256: 3da4813f9bc64360b35b12fdb1720b1e47b3cdb9563a43ebd56ba3cfd22e16d1
+[HanlinExpoNativeAPI] Codegen artifacts generated successfully (iOS-only targets).
+[HanlinExpoNativeAPI] Verifying NativeScript metadata files in: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Artifacts/metadata
+[HanlinExpoNativeAPI] Verified metadata.ios.arm64.nsmd (4561622 bytes, SHA256: 50aabcb10723560a74500001cc2d64a034c05a5c755de35127fcc7601a7909f3)
+[HanlinExpoNativeAPI] Verified metadata.ios-sim.arm64.nsmd (4493790 bytes, SHA256: 33296faebf7f32db36d70304aef5fe27dfc1a283df6487c53d8a0a5931e4e73c)
+[HanlinExpoNativeAPI] Verified metadata.ios-sim.x86_64.nsmd (4500328 bytes, SHA256: c811940bcb2202189473f52a2ccc368b34f3124a7d7f677e6702af61b0112d66)
+[HanlinExpoNativeAPI] All NativeScript metadata files verified successfully.
+=== Hanlin Expo Native API Artifacts Audit ===
+[PASS] Libffi.xcframework exists with valid Info.plist and static lib slices (arm64 + sim)
+[PASS] No duplicate React or Hermes binaries in HanlinExpoNativeAPI/Artifacts
+[PASS] All metadata .nsmd files present and non-empty in Artifacts and target Resources
+[HanlinExpoNativeAPI] Artifacts verification PASSED.
+[HanlinExpoNativeAPI] All Native API dependencies prepared and verified successfully.
+PASS: five exact pinned declaration-file corrections; no skipLibCheck or runtime changes.
+[HanlinExpo] Running semantic TypeScript project check before Metro...
+PASS: five exact pinned declaration-file corrections; no skipLibCheck or runtime changes.
+PASS: TypeScript6.0.3 strict UI declarations, zero valid diagnostics and 5 exact negative diagnostics.
+PASS: five exact pinned declaration-file corrections; no skipLibCheck or runtime changes.
+PASS: TypeScript6.0.3 strict original Widgets declarations, zero valid diagnostics and 3 exact negative diagnostics.
+Warning: Assets destination folder is not set, skipping...
+[HanlinExpo] Original public Widgets API probe staged: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeA.hanlinExpo
+Warning: Assets destination folder is not set, skipping...
+[HanlinExpo] Original public Widgets API probe staged: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeB.hanlinExpo
+[HanlinExpo] Building Expo SwiftUI Probe Variant A with Metro...
+Warning: Assets destination folder is not set, skipping...
+[HanlinExpo] Created probe package: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo
+[HanlinExpo] Building Expo SwiftUI Probe Variant B with Metro...
+Warning: Assets destination folder is not set, skipping...
+[HanlinExpo] Created probe package: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo
+[HanlinExpo] Building Malformed Expo Probe...
+[HanlinExpo] Staged malformed probe package: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIMalformed.hanlinExpo
+[HanlinExpo] Default probe package staged at: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo
+[HanlinExpo] Test fixtures staged into: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLYUITests/Fixtures
+[HanlinExpoNativeAPI] Building deterministic Native API probe packages...
+[HanlinExpoNativeAPI] Bundling Variant A...
+Warning: Assets destination folder is not set, skipping...
+[HanlinExpoNativeAPI] Staged: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeA.hanlinExpo (SHA256: c050720db91ffb2c32a9723d8b42a960f126cfed3192e14ccd67a1a8472d93c6)
+[HanlinExpoNativeAPI] Bundling Variant B...
+Warning: Assets destination folder is not set, skipping...
+[HanlinExpoNativeAPI] Staged: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeB.hanlinExpo (SHA256: 794c7a2237c32166a4cd36a4d1088b585f4057073454b17684bee938f5c665ad)
+[HanlinExpoNativeAPI] Building Missing Grant negative probe...
+[HanlinExpoNativeAPI] Staged: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeMissingGrant.hanlinExpo (SHA256: 9bf9cd16e84d7c1c097fab3b2da04aaf0441f814f30852f1e9a0e40ebf506ba7)
+[HanlinExpoNativeAPI] Building Incompatible Version negative probe...
+[HanlinExpoNativeAPI] Staged: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeIncompatible.hanlinExpo (SHA256: c83750124f42597209a9bbadd1b85f9cfe51128b6b6d7781f16a0cb274cc4e27)
+[HanlinExpoNativeAPI] Building Malformed negative probe...
+[HanlinExpoNativeAPI] Staged: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIMalformed.hanlinExpo (SHA256: 6061e8c26fdbcbbfe20fa7d8abc2a6a8ee63d0f665046583b96fcefd5d6ad301)
+[HanlinExpoNativeAPI] All test probe packages created and staged successfully.
+Validated /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/RuntimeDependencies.lock.json.
+d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5
+/var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/tmp.FSaa9jRWcc/payload/NodeMobile.xcframework/Info.plist: OK
+/var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/tmp.FSaa9jRWcc/payload/Python.xcframework/Info.plist: OK
+{"status":"reused","toolingRoot":"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo","files":19594,"packages":642}
+{"status":"reused","toolingRoot":"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/NativeScript","files":5966,"packages":140}
+PASS: five exact pinned declaration-file corrections; no skipLibCheck or runtime changes.
+ScriptWidget catalog: 29 component declarations generated from original source.
+Wrote source inventory: 94 sources, 176 local public exports; E2E not inferred.
+PASS: SDK source inventory matches 94 sources and 176 local public exports.
+Wrote 80 canonical Host-runtime reachability cells plus separate original-library surface records; no physical/E2E pass inferred.
+PASS: 80 unique source-backed reachability cells; no E2E pass inferred.
+
+added 1 package in 145ms
+{"output":"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-temp/hanlin-runtime-host/MiniAppSDK","inputSHA256":"ba8f3f1f09054887eed62532fa1d5ca2ac3bd60e6aa99a98ab1035c7653882a2","files":25669,"engines":["expo","nativescript","scriptwidget"]}
+npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+
+added 166 packages in 607ms
+{"package":"@yarnpkg/shell","version":"4.1.3","files":5}
+{"unicode":"16.0","patterns":3,"comparedPerPattern":1114112,"ranges":736,"upstreamSHA256":"1847afd90236234c0797bd072647aca486a027c6ff696029e294b742985b57fb","patchedSHA256":"35d8582e121e974a0bd611fd2e628f5ea7c992ada05fc584b8eb1be57c575e85"}
+{"compiler":"0.10.0","originalParserReproduced":true,"grammarSHA256":"7471bb6efa3ffc8cafeeb73ae5443121d8f98fd55c12e04e3d2595f3ff25024f","parserSHA256":"cc894ae3938649fc62037e0a574ad3cded99c9771e4e042a2d893185789a47ef"}
+
+> hanlin-runtime-host@2.0.0 test
+> node --test Tests/*.test.mjs
+
+✔ real archive inventory exceeds former file/size caps with bounded I/O and preserves caller budgets (5030.172208ms)
+✔ actual CLI Worker resolves extensionless scripts and directory mains using Node resolution (125.592167ms)
+✔ runtime probe retries opaque Worker exits and loader diagnostics from stderr (1.742917ms)
+✔ unused client stdio and cross-spawn code do not reject the selected server path (180.030375ms)
+✔ direct-blocked may import child_process without executing it (32.408833ms)
+✔ esm-import-only may import child_process without executing it (40.284709ms)
+✔ transitive-blocked may import child_process without executing it (37.781125ms)
+✔ commonjs-blocked may import child_process without executing it (36.424625ms)
+✔ dynamic-blocked may import child_process without executing it (43.43175ms)
+✔ get-builtin-blocked may import child_process without executing it (49.36775ms)
+✔ spawn-call is rejected when subprocess execution is attempted (36.773958ms)
+✔ exec-call is rejected when subprocess execution is attempted (57.056125ms)
+✔ exec-file-call is rejected when subprocess execution is attempted (38.146625ms)
+✔ fork-call is rejected when subprocess execution is attempted (53.067959ms)
+✔ spawn-sync-call is rejected when subprocess execution is attempted (31.046375ms)
+✔ exec-sync-call is rejected when subprocess execution is attempted (26.295625ms)
+✔ exec-file-sync-call is rejected when subprocess execution is attempted (29.959ms)
+✔ child-process-bypass is rejected when subprocess execution is attempted (32.876125ms)
+✔ fork-child-call is rejected when subprocess execution is attempted (26.348958ms)
+✔ commonjs-spawn-call is rejected when subprocess execution is attempted (34.782ms)
+✔ get-builtin-call is rejected when subprocess execution is attempted (27.318333ms)
+✔ transitive-call is rejected when subprocess execution is attempted (27.214584ms)
+✔ cluster-blocked is rejected by the Worker runtime policy (75.712167ms)
+✔ binding-blocked is rejected by the Worker runtime policy (41.538334ms)
+✔ process-wrap-blocked is rejected by the Worker runtime policy (25.40525ms)
+✔ unreachable native build material is inventory, not an execution-path rejection (32.076875ms)
+✔ bounded concurrent archive scanning preserves serial safety results (4.534333ms)
+✔ only the selected reachable TypeScript entry is compiled by the Worker loader (478.66975ms)
+✔ a native addon actually resolved by the selected entry is rejected (24.335583ms)
+✔ archive safety rejects a symlink that escapes packageRoot (6.447417ms)
+✔ canonical parent aliases do not make a contained entry point appear to escape (49.041542ms)
+✔ execution-path analysis requires an explicit selected entry point (0.969167ms)
+✔ runtime probe bounds forced shutdown after MCP protocol success (1035.385791ms)
+✔ the production installer rejects executed child_process and preserves the prior package (378.89325ms)
+✔ MCP probe forwards explicitly supplied paths and credentials after bootstrap without argv caps (63.44825ms)
+✔ owned UTF-8 input remains strict without ICU TextDecoder, including scalar splits and BOM (147.480291ms)
+✔ actual authenticated HTTP control executes >32MiB Unicode input with exact durable hashes and no replay (2810.598458ms)
+✔ wrong digest, size, identity and invalid UTF8 preserve failed input without executing its source (19.889334ms)
+✔ interruption during claimed input preparation settles the original ID without a Worker or later replay (49.033208ms)
+✔ never-started receipts and nonregular inbox paths cannot be claimed as fresh execution (22.625959ms)
+✔ actual process termination during preflight recovers the claimed input as interrupted without source replay (91.431458ms)
+✔ ordinary cancellation before POST persists the first cause and prevents delayed file or Host operation side effects (6.780125ms)
+✔ cancelling an unregistered pre-existing journal never overwrites or classifies its history as never-started (7.131ms)
+✔ Host-generated child job identity reaches input validation and its durable receipt (105.114667ms)
+✔ actual Worker interruption retains its cause and full output through reopen (41.295667ms)
+✔ late Host operation completion cannot erase an already requested system interruption (87.85325ms)
+✔ interruption before POST or during journal creation cannot start or replay side effects (27.6225ms)
+✔ esm resolves workspace modules and local exports before pinned global packages (79.86525ms)
+✔ commonjs resolves workspace modules and local exports before pinned global packages (110.236916ms)
+✔ managed CLI preload does not configure or leak its private bootstrap into nested Workers (53.9655ms)
+✔ Host command wait wakes for actual requests and aborts without cancelling the execution (334.13175ms)
+✔ full stdout and stderr survive preview limits and store reopen with verified hashes (3379.835458ms)
+✔ ordinary event-loop work finishes after module evaluation without being terminated early (177.743041ms)
+✔ explicit timeout retains partial output and is distinct from user cancellation (1507.112834ms)
+✔ explicit cancellation terminates the actual worker and retains partial output (36.466ms)
+﹣ actual Node job crosses 300 seconds with no hidden deadline (0.077084ms) # SKIP
+✔ a later nonzero exit cannot be hidden by an earlier successful module export (32.867125ms)
+✔ user worker messages cannot hide the final module result (29.428042ms)
+✔ a restored job with no opened streams has an empty lossless output page (2.804042ms)
+✔ actual CommonJS CLI main preserves argv, cwd, environment, binary stdin and late stdout (360.031ms)
+✔ actual ESM CLI errors and exit status are retained without interpreting user messages as results (70.00875ms)
+✔ CLI cancellation stops the actual main and retains partial output; launch environment is frozen (138.083958ms)
+✔ user PATH HOME and NODE_OPTIONS apply to the job without reconfiguring Worker bootstrap (97.694167ms)
+✔ approved Skill job does not inherit host secrets and keeps its explicit environment (43.490416ms)
+✔ Fetch transport follows actual WebAssembly availability (0.368125ms)
+✔ real JITless Node supports Fetch request, streaming, clone, redirects, gzip, multipart and abort (328.200084ms)
+✔ native Fetch reference proves TLS, SRI and actual controlled Proxy routing (443.59375ms)
+✔ actual published Yarn patch is idempotent and refuses changed bytes or versions (293.21375ms)
+✔ Host operation survives observer loss and retains complete progress, UTF8 previews, digests and reopen (62.732542ms)
+✔ Host cancellation stays requested until the real asynchronous operation drains (23.480875ms)
+✔ a real Host journal failure aborts extraction and exposes failed in-memory status with partial output (64.142542ms)
+✔ Host operation claims real oversized owned inputs before invoking the existing callback and never replays (538.52ms)
+✔ Host operation ingress rejects changed input identity without executing its callback and retains the real bytes (25.848042ms)
+✔ worker stdin and stdout remain isolated for multiple servers (65.886875ms)
+✔ lifecycle scripts retain native execution metadata while incompatible engines remain rejected (5.066166ms)
+✔ integrity mismatch fails closed (0.626459ms)
+✔ install cancellation aborts work (0.1545ms)
+✔ multiple package bins are listed and an explicit path preserves its bin name (0.424083ms)
+✔ unknown legacy transactions preserve both the installed package and its backup (45.082667ms)
+✔ host redirects npm state before preview and install modules initialize (11293.773208ms)
+✔ worker terminal status is observable only after its actual atomic journal rename (90.916166ms)
+✔ operation terminal status is observable only after its actual atomic journal rename (26.029333ms)
+✔ actual MCP installation executes lifecycle before initialize/tools-list and preserves the prior server after failure (2950.868209ms)
+✔ actual MCP tools/list above the former one-MiB probe cap passes by default (228.76175ms)
+✔ ordinary installation probes a real >one-MiB schema after the former thirty-second deadline and journals exact output (31551.452083ms)
+✔ a stopped probe cancels its actual Worker without waiting for a protocol timeout (1161.350917ms)
+✔ exit zero without a protocol response fails promptly instead of waiting forever (34.354208ms)
+✔ complete protocol reply immediately followed by exit zero remains a valid probe (21.835584ms)
+✔ a caller-selected probe byte budget is honored without a hidden minimum (21.62425ms)
+✔ real MCP HTTP transport retains >eight-MiB disconnected frames, accepts owned >ten-MiB input, and binds generation (3355.300916ms)
+✔ cancelling an actual pending MCP startup settles the managed job and permits a clean later generation (4309.281916ms)
+✔ MCP generations retain actual late Worker imports across commit, rollback and process-style reopen (79.474541ms)
+✔ real TypeScript reports semantic errors with original source locations (1676.30175ms)
+✔ validation uses actual original package declarations from the supplied SDK (2292.255459ms)
+✔ NativeScript package emits a runnable ESM graph and retains exact editable sources (2290.6575ms)
+✔ NativeScript preserves authored CommonJS JavaScript and its source-map mode (2217.754667ms)
+✔ import rechecks retained source and ignores a stale successful report (1677.505333ms)
+✔ ScriptWidget keeps original source and its explicit ABI declaration (533.573917ms)
+✔ failed typecheck emits no package (406.113458ms)
+✔ a requested existing output directory is preserved (435.931083ms)
+✔ SDK discovery reads its real manifest and requested documentation (9.498417ms)
+✔ bundle-only imports do not receive a fabricated source typecheck pass (4.835083ms)
+✔ modified compiled output is rejected even when retained TypeScript is still valid (1111.85575ms)
+✔ the real CLI archives and revalidates retained source, diagnostics and output identity (2505.676458ms)
+✔ compiler-used sources named build or dist survive source retention and archive revalidation (1149.396917ms)
+✔ NativeScript preserves the original npm runtime package rather than leaving an unresolved bare import (1307.787708ms)
+✔ canonical module and type references use the supplied SDK while retaining its nested dependency (2148.220334ms)
+✔ NativeScript emission and copied bodies agree with canonical types and preserve project aliases and extra dependencies (2708.171625ms)
+✔ missing canonical exports, configs and SDK dependencies never resolve from ancestor packages (2241.549667ms)
+✔ explicit esm native command module executes a real CLI and retains complete binary streams (770.271333ms)
+✔ explicit commonjs native command module executes a real CLI and retains complete binary streams (697.376042ms)
+✔ an unattached context never fabricates an execution, PID or successful empty output (0.60125ms)
+✔ actual persistent MCP Worker can inspect the module but cannot inherit a chat command owner (56.605417ms)
+✔ network diagnostics preserve bounded cyclic AggregateError cause codes (0.491375ms)
+✔ the HTTPS diagnostic never disables TLS or accepts credential-bearing echo URLs (0.362208ms)
+✔ real TLS handshake failures remain failures for both fetch and node:https GET/POST (163.726125ms)
+✔ actual optional failure prunes its required ancestor and cyclic private deps, preserving required/shared builds and journals (1504.558042ms)
+✔ required failures and forged optional flags cannot erase required packages (750.612833ms)
+✔ aborted optional work never becomes an optional success or omission (31.383458ms)
+✔ malformed optional shell syntax is a real journaled build failure, while required syntax remains rejected (942.14725ms)
+✔ actual registry reify retries previously omitted hooks after an unrelated root version update (786.501792ms)
+✔ actual Arborist tree plans dependency phases, root project phases and skips unchanged build products (359.9115ms)
+✔ immutable package generations preserve old files, reject conflicting commits and retain published generations (141.918041ms)
+✔ root aliases expose the same physical legacy and published generation without mutating reads (39.492833ms)
+✔ competing commits through host root aliases preserve conflict rejection (20.496666ms)
+✔ reading a missing legacy host does not create directories or introduce a missing-path error (2.259167ms)
+✔ npm lifecycle environment retains user values and flattens RFC183 package metadata (10.560833ms)
+✔ actual registry extraction and Arborist dependency hooks publish atomically and preserve unchanged builds (1888.344667ms)
+✔ command-only package validation hashes actual entries without executing invented CLI arguments (107.933334ms)
+✔ actual Worker loads import and require-only public roots from the staged package generation (205.050209ms)
+✔ an actual root dependency failure is not hidden by CLI or require fallback (66.270625ms)
+✔ subpath metadata does not pretend a nonexistent root was imported; invalid bin targets still fail (55.560625ms)
+✔ source execution preserves explicit positional arguments through the original parser (5.356292ms)
+✔ actual Yarn language preserves quoting, Unicode argv, environment and cwd across command adapters (5.457375ms)
+✔ original multiline shell source retains file redirection and stdout-to-stderr duplication (18.869959ms)
+✔ grammar newline boundaries preserve quoted text, comments, CRLF and continued commands (36.688083ms)
+✔ real interpreter pipes stdin and redirects output while retaining exact failing exit status (65.63075ms)
+✔ dynamic command names and command substitutions always reach adapters, never OS spawn (1.762417ms)
+✔ globs, groups and logical short-circuiting use the actual parser/interpreter (8.146916ms)
+✔ missing adapters fail truthfully and can be handled with shell control flow (3.015917ms)
+✔ capability facts identify the actual Node process and its actual built-in namespace (0.567ms)
+✔ real parent Worker spools a >10MiB Unicode pipeline through actual CLI jobs without output loss (1155.6435ms)
+✔ npm run uses actual pre/main/post CLI jobs, lifecycle environment and stops at real exit23 (965.081791ms)
+✔ durable completion receipt is idempotent across lost/reordered acknowledgements and rejects conflicts (10.486875ms)
+✔ parent cancellation remains pending until the actual linked-command receipt arrives (279.724125ms)
+✔ actual journal write failure returns a failed in-memory status and retains partial output (54.493917ms)
+✔ manifest compatibility uses the actual Node version, OS and architecture (1.460333ms)
+✔ an iOS target is not substituted with Darwin and CPU constraints remain effective (0.112708ms)
+✔ actual registry preview and global install use the running interpreter target (426.223583ms)
+✔ MCP candidate selection uses the actual interpreter against supplied registry metadata (2.647917ms)
+✔ actual global installation retains and executes a package beyond fifty thousand files (14872.38425ms)
+✔ commonjs waits for an exported asynchronous network operation before worker teardown (151.382666ms)
+✔ esm waits for an exported asynchronous network operation before worker teardown (76.068458ms)
+✔ generic ESM execution captures Hebrew output and a structured value (46.362542ms)
+✔ generic CommonJS execution returns module.exports (55.67475ms)
+✔ TypeScript 6 compiler emits JavaScript and source maps (20.021042ms)
+✔ execution output is capped without splitting the worker protocol (47.005875ms)
+✔ UTF-8 output budgets never split Hebrew or emoji (442.686708ms)
+✔ lifecycle planner preserves original portable shell source and rejects malformed syntax (7.553625ms)
+✔ failed executions preserve aggregate HTTPS cause codes (60.836417ms)
+✔ console errors preserve cyclic causes within the output budget (95.202459ms)
+✔ actual compiler Worker accepts >10MiB durable source and retains full typed output/hash/reopen (3109.881125ms)
+✔ actual project compiler preserves >128 argv values, emits files and reports locked compiler identity (561.123542ms)
+✔ compiler diagnostics are preserved with actual failing exit and no emitted JavaScript (450.299583ms)
+✔ virtual source does not replace an installed dependency with the same basename (436.058083ms)
+✔ actual compiler job cancellation retains entered Worker output and does not block another job (146.248542ms)
+✔ warning tracing is scoped, reference counted and idempotent (0.435792ms)
+✔ diagnostic execution retains the actual warning stack and worker identity (39.031208ms)
+✔ named fs and fs/promises imports use the execution workspace (36.281875ms)
+✔ relative copy and rename destinations plus native realpath stay in the execution workspace (43.360375ms)
+ℹ tests 170
+ℹ suites 0
+ℹ pass 169
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 33991.724291
+{"passed":true,"fetchImplementation":"node-fetch@3.3.2+native-web-api","webAssemblyAvailable":false,"nonce":"1175cd09-e5f1-4453-905a-cafc82528c79","contracts":["GET","Request POST Unicode","redirect","HTTP error","ReadableStream","clone","gzip","multipart File","abort","HEAD","204"]}
+Prepared RuntimeHostResources.zip (7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc).
+Runtime Host: rebuilt locked dependencies and modules
+Generated /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json.
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Vendor/Python/Python.xcframework/build/iOS-dylib-Info-template.plist: OK
+Verified native artifact 2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194; current Host dependency closure 2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.
+Prepared verified RuntimeCore 2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194: Node 24.5.0, Python 3.14.6.
+{"status":"reused","toolingRoot":"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo","files":19594,"packages":642}
+{"status":"reused","toolingRoot":"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/NativeScript","files":5966,"packages":140}
+PASS: five exact pinned declaration-file corrections; no skipLibCheck or runtime changes.
+ScriptWidget catalog: 29 component declarations generated from original source.
+Wrote source inventory: 94 sources, 176 local public exports; E2E not inferred.
+PASS: SDK source inventory matches 94 sources and 176 local public exports.
+Wrote 80 canonical Host-runtime reachability cells plus separate original-library surface records; no physical/E2E pass inferred.
+PASS: 80 unique source-backed reachability cells; no E2E pass inferred.
+Reusing verified current RuntimeHostResources.zip and its completed Host/JITless checks.
+{
+  "status": "EXECUTED_PASS",
+  "sourceBlocks": 14,
+  "jsonBlocks": 7,
+  "sdk": {
+    "manifestSHA256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+    "inputSHA256": "ba8f3f1f09054887eed62532fa1d5ca2ac3bd60e6aa99a98ab1035c7653882a2"
+  },
+  "projects": [
+    {
+      "name": "expo-guide",
+      "succeeded": true,
+      "diagnostics": []
+    },
+    {
+      "name": "nativescript-guide",
+      "succeeded": true,
+      "diagnostics": []
+    },
+    {
+      "name": "scriptwidget-guide",
+      "succeeded": true,
+      "diagnostics": []
+    },
+    {
+      "name": "scriptwidget-controls",
+      "succeeded": true,
+      "diagnostics": []
+    }
+  ],
+  "nativeLaunch": "NOT_RUN"
+}

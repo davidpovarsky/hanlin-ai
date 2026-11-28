@@ -1,0 +1,35 @@
+{
+  "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+  "atUTC": "2026-11-25T03:43:36.389381+00:00",
+  "status": "PASS_FRESH_BUILD_AND_UNIT_HOST_ENVIRONMENT",
+  "buildReceipt": "ai-hly-build-attempt6.json",
+  "buildReceiptSHA256": "aeb414df2dc399bb14b792f4482b6ffc2b8545c9dec745a7b6e3ef176aeff958",
+  "manifestPath": "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+  "manifestSHA256": "7a298177b07b04a7554677049a6f557865f0aa9387e352107bec3ea2c60253e5",
+  "manifestMtimeUTC": "2026-11-25T03:40:15.538609+00:00",
+  "targets": [
+    {
+      "blueprint": "AI_HLYTests",
+      "testBundlePath": "__TESTHOST__/PlugIns/AI_HLYTests.xctest",
+      "testHostPath": "__TESTROOT__/Debug-iphonesimulator/AI_Hanlin.app",
+      "unitHostEnvironment": "1",
+      "unitHostTestingEnvironment": null
+    },
+    {
+      "blueprint": "AI_HLYUITests",
+      "testBundlePath": "__TESTHOST__/PlugIns/AI_HLYUITests.xctest",
+      "testHostPath": "__TESTROOT__/Debug-iphonesimulator/AI_HLYUITests-Runner.app",
+      "unitHostEnvironment": "1",
+      "unitHostTestingEnvironment": null
+    }
+  ],
+  "appBinarySHA256": {
+    "AI_Hanlin": "2cb23f37bc5a707fb0bfc1c6deedbbc12e3f27b011d02937414f6f2c62507fb8",
+    "AI_Hanlin.debug.dylib": "e498a5fafbf5058b1c0ee3a885eac138232c39dd7711e2aa153e47e685904c09"
+  },
+  "actualPriorAppPreflightReceipt": "native-script-built-app-preflight-attempt2.json",
+  "priorPreflightWasPass": true,
+  "appBinaryHashesIdenticalToActualPriorPreflight": true,
+  "checkerFilesUnchangedSinceActualPreflight": true,
+  "boundary": "Fresh manifest environment is verified; no functional/native/editor/UI cases have run yet"
+}

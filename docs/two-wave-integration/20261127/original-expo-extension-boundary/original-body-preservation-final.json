@@ -1,0 +1,138 @@
+{
+  "schema": 1,
+  "sourceBase": "a729bc6380fe08807d67d83f916b9bfda9cc1051",
+  "sourceManifestSHA256": "ca187a54560f2cb8a22651a5956703593c07f4ce08a99cefa69537f423ac18cf",
+  "compared": 16,
+  "equal": 16,
+  "files": [
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/LiveActivity.swift",
+      "beforeSHA256": "5cd3246b91d1814fa2a8ee204e5791cdb3e2210822246dec7f642817fda6daa2",
+      "afterSHA256": "c479fcf531445a8eba3dec10245397091b71c26ec29940361f6c582b1b6c87ff",
+      "comparedBodySHA256": "8aadda250a92c96d1276a53e18a13f93f523175a63aac11e18509ea9670cb5e0",
+      "rule": "Strip import lines; strip only anchored package access modifiers.",
+      "identical": true
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/LiveActivityFactory.swift",
+      "beforeSHA256": "34aa1afdce0c88e3a81c4013f518d492df561539548ba7c5d5c5244fe479affb",
+      "afterSHA256": "85051dd3c20a95b984a5d10d48ef64c46ea932040be21394fe0b676d0afeb4d8",
+      "comparedBodySHA256": "3892d38ad20c6ae2f0ce6381c3655bb90fa1af97602f9eb3f6f7b97fc1720156",
+      "rule": "Strip import lines; strip only anchored package access modifiers.",
+      "identical": true
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetObject.swift",
+      "beforeSHA256": "e38d05ab6a64b0c1a8572807c32cb3ea2a5e71f8f95fb273da1d20d95490b935",
+      "afterSHA256": "64b752d83991caa3c14865708fe0cdcff42bbe90ee6848e758cfb8a740455ea2",
+      "comparedBodySHA256": "77d50eaf44d2b2b5985aaa4099a07946947b47949b89f6ebca6bf294ba773088",
+      "rule": "Strip import lines; strip only anchored package access modifiers.",
+      "identical": true
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsExceptions.swift",
+      "beforeSHA256": "31b695f7237481a38673ab7e52bd2091b53a1d1e80841a5933292842fe84a4db",
+      "afterSHA256": "31b695f7237481a38673ab7e52bd2091b53a1d1e80841a5933292842fe84a4db",
+      "comparedBodySHA256": "f54f3c03b96e20c26edf70cf7293d7b8ecef7f5a3654d3dc99d9bbe45321445b",
+      "rule": "Strip import lines; strip only anchored package access modifiers.",
+      "identical": true
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsModule.swift",
+      "beforeSHA256": "153e723f0e7a75cb325dc74333efe3788010a1f74319a09ddb386853232634a5",
+      "afterSHA256": "8ab0a5dc30ab82e8f4f5f28cebe203586febaf22dd28ab9486476be78509cf17",
+      "comparedBodySHA256": "dab6dcdf04b52fb7907b945eb9d963e781f2c7e37d977955da3980ebf8266184",
+      "rule": "Exact class body from original declaration through EOF; two shared event constants moved unchanged once into WidgetsEvents.",
+      "identical": true
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsRecords.swift",
+      "beforeSHA256": "65079174172668f7d9a2595d3e18e3c90351c68903aef8db42760ac605fa3e2f",
+      "afterSHA256": "65079174172668f7d9a2595d3e18e3c90351c68903aef8db42760ac605fa3e2f",
+      "comparedBodySHA256": "a9ded059c9e764ec861afc4b91e221486ceb386c55c0e6ba2a73b9a96b173b71",
+      "rule": "Strip import lines; strip only anchored package access modifiers.",
+      "identical": true
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetState.swift",
+      "beforeSHA256": "9c32f6b659dd953d501409166e8d570a4d0f98f8e0122fe06b80e42610efe791",
+      "afterSHA256": "084a2268cbe499728a40075e6f546ace08ab0ec3ec98ed93a5ea5e6c5b73c614",
+      "comparedBodySHA256": "8d3b598674fb90ae7db77f638ffb3bd099656dd4b39728d4f920976f87c0d9c5",
+      "rule": "Strip import lines; strip only anchored package access modifiers.",
+      "identical": true
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetsIntegration.swift",
+      "beforeSHA256": "ea189d45e4c15aedb9a8e7a9cb593b1bd03d8aac1d9b9db4844778664f48a475",
+      "afterSHA256": "31eb63c6009caea2bf403a1b85ea3c059e86f65494d6150c9a8bb6e6597ac31d",
+      "comparedBodySHA256": "5efab02f3bad38ea433259e344aacb87d1ee5a4954a730ea3367df83d785d8a0",
+      "rule": "Strip import lines; strip only anchored package access modifiers.",
+      "identical": true
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinWidgetToggle.swift",
+      "beforeSHA256": "e263dac82965baa2914d0dd025e7cbbceabb20324263f71a4f5c1af7264e2b4a",
+      "afterSHA256": "078818a52513afef71e5b4390ade5dcb0d7d476277ea779b9c0ca00925614017",
+      "comparedBodySHA256": "6b4510d7a76b66c73e57faa4a90bdd0b8147f9ea8e00d585f3d4980e31e35953",
+      "rule": "Strip import lines; strip only anchored package access modifiers.",
+      "identical": true
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetsJSRuntime.swift",
+      "beforeSHA256": "0c24483ac4856576058996de042acdac1122957d9bf2bb27455351c50d7e578b",
+      "afterSHA256": "0c24483ac4856576058996de042acdac1122957d9bf2bb27455351c50d7e578b",
+      "comparedBodySHA256": "26cc408f659007e729f6791c3c30adc865161ded951a1d6b741ee0ee9fe25f40",
+      "rule": "Strip import lines; strip only anchored package access modifiers.",
+      "identical": true
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/AppIntent.swift",
+      "beforeSHA256": "c1209662d26d6b45e8a1e39194ddf068a18ba7d29bb2507ddd754cf195054025",
+      "afterSHA256": "c1209662d26d6b45e8a1e39194ddf068a18ba7d29bb2507ddd754cf195054025",
+      "comparedBodySHA256": "dfc86d105f1c4fb562510c91297101ebfc506917acde33c0d00b88d6f7e3f9e7",
+      "rule": "Strip import lines; strip only anchored package access modifiers.",
+      "identical": true
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/TimelineProvider.swift",
+      "beforeSHA256": "2328d82bd311ce502b687a42b9a87cbc28797d7663a36217684f7d72cddaf8a9",
+      "afterSHA256": "2328d82bd311ce502b687a42b9a87cbc28797d7663a36217684f7d72cddaf8a9",
+      "comparedBodySHA256": "f65749cc3f820e16e4e7eb9abcba645f9958c1b5bd9aea9e6e7c087bfa8b79db",
+      "rule": "Strip import lines; strip only anchored package access modifiers.",
+      "identical": true
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/TimelineEntry.swift",
+      "beforeSHA256": "c8fbdb1aa6639a88f5687086f359ab19bfc2e426f866a38e5b00465ce4a50f94",
+      "afterSHA256": "c8fbdb1aa6639a88f5687086f359ab19bfc2e426f866a38e5b00465ce4a50f94",
+      "comparedBodySHA256": "4365337c62beb93fbd8d6b964101fd463488eb5efe4d2a63ac13208d29f35478",
+      "rule": "Strip import lines; strip only anchored package access modifiers.",
+      "identical": true
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Utils.swift",
+      "beforeSHA256": "8bc5cdb65bec73713e38e445ee0219b5ecb8f5d58da283fc163442092e82f12d",
+      "afterSHA256": "8bc5cdb65bec73713e38e445ee0219b5ecb8f5d58da283fc163442092e82f12d",
+      "comparedBodySHA256": "1cc91db8d332021b6fb053d6f21b718e3ab37e254e3638f8764c7d9265de3006",
+      "rule": "Strip import lines; strip only anchored package access modifiers.",
+      "identical": true
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/ChildView.swift",
+      "beforeSHA256": "1e8f9d57fa6ac106b09df262e6319b44a8995166235381de4c1ad5df94a44b9d",
+      "afterSHA256": "44fa73c52f6d8eaa0163d2dc8b9b1219321b44e4fa67f701815dce29c8e198d0",
+      "comparedBodySHA256": "946fc0abe43d0f80fb6b594f193057cf4f4fa6a4d928070038ddfe419446f598",
+      "rule": "Strip import lines; strip only anchored package access modifiers.",
+      "identical": true
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/DynamicView.swift",
+      "beforeSHA256": "f5b5563210ee58f53460dad9de97abd54499b6a8ad024038699a0af9462f5a27",
+      "afterSHA256": "c92d7615df8b84f07a01104bffc9faa979ca5e2dc208d7c42e380dfbfc50efeb",
+      "comparedBodySHA256": "8497a6cfaf4f545a76c5bd9a57a05d8653d7f6ebfadc7e908aa730c415645335",
+      "rule": "Strip import lines; strip only anchored package access modifiers.",
+      "identical": true
+    }
+  ],
+  "nativeStatus": "NOT_RUN"
+}

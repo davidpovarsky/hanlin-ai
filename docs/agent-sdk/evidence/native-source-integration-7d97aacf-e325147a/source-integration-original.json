@@ -1,0 +1,62 @@
+{
+  "current_source": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+  "producer": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "qualification": "PENDING_NATIVE15_ORIGINAL_RESULTS",
+  "run_id": 45292176348,
+  "watcher": "job_900363c824e3",
+  "original_native_source_commits": [
+    "8675f230f3f840cf99f7b38bcb1fbaf6c3c132ba",
+    "8d9988e9cf23e336a1851d6a5ba6013e723557a6",
+    "ec66c34324b5afdfb9cf496ea4f4abc29eb53d3d",
+    "2c1978b50ad2fc56c88fb6e60222e91d27bd4385",
+    "f0616cac8889e9873d8898a0d8e164739c0fce90",
+    "ab06b4129e23c8f9ce9c1a4229e72a3d99bbf5d4",
+    "1b3c4cf0e27683b0af106a8e97b1c7c453062d08"
+  ],
+  "additional_original_engine_delta_fixture_commit": "1f8c9b7b6ab52d46907788af19c59ecb96e32ffa",
+  "source_files": {
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleOnDeviceProvider.swift": {
+      "sha256": "65b14d1853f09c600643cbbc9016723916f56baf95c7a223d8808ed765cadde1",
+      "git_entry": "100644 blob 1d420c6ccd19c07ebedf0ce881b8ab0ae1449dce\tPackages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleOnDeviceProvider.swift"
+    },
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolHistory.swift": {
+      "sha256": "623c15f05db11d4830685a665f765aa53a11c143a51436a73fd1942fdf2b72e1",
+      "git_entry": "100644 blob 7f493137649cca6442c1bf5905ced6801a95fd0a\tPackages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolHistory.swift"
+    },
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSchema.swift": {
+      "sha256": "8cffe156a8f8346f6b2fa25b8d5b237382d3185b2e24ff7e72bcb98684edafaf",
+      "git_entry": "100644 blob c16522e5e4273146c10346062641e2a8c38b0f8a\tPackages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSchema.swift"
+    },
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": {
+      "sha256": "2f3441ea603b186f71bbb13b5faf37f4e1b01c475dd0a0e7df7faeb97dbff418",
+      "git_entry": "100644 blob 6594e319623d993c60e0f12fcfe56e84b3965e3d\tPackages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift"
+    },
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSchemaTests.swift": {
+      "sha256": "7cf017f5f196455239011846ee529057eb17e5bc45821450ea4ed4aedadbe423",
+      "git_entry": "100644 blob f1a1443bb061c36687be2072e1ce5d5d4650ddea\tPackages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSchemaTests.swift"
+    },
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": {
+      "sha256": "1296391072e837f04d05423ecc7c611f59556b414fd5ab085b0096c140e54f57",
+      "git_entry": "100644 blob 2327b6f3b423e54ec7f9de789a45ba888547d5ee\tPackages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": {
+      "sha256": "8abb757a9a9e7da9f90d474b1b036158b01e1f594ca2fb33d28d803cc2be91e8",
+      "git_entry": "100644 blob bb03b564e9aaaf964a33a69df8a8df5f5243c2f9\tPackages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift": {
+      "sha256": "39e14e004a2b1d894ded12b666160dadc2900a00aafafa33974caa56c5a31a06",
+      "git_entry": "100644 blob b30506bc6f3569aa72cbd53d621ae1cf14e27b61\tPackages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift"
+    },
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": {
+      "sha256": "0c24a0b2cb54e5ed7589d20f18325e5b93a5946aa68dee1ffcef05ee9fab8815",
+      "git_entry": "100644 blob a59d9f086f174c79683cea13bc5a2946170d04ba\tPackages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift"
+    }
+  },
+  "limits": [
+    "All four public capability gates remain closed",
+    "No SystemLanguageModel execution",
+    "Do not replace central generic07431/exact-fetch CI body with old isolated generic e7 preamble",
+    "New route deliberately binds this exact404-package-file snapshot, not arbitrary later central graph edits",
+    "Current15/fresh iOS are not yet claimed passed; original e7 results retain their own sources"
+  ]
+}

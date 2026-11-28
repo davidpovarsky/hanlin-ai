@@ -1,0 +1,305 @@
+{
+  "schemaVersion": 1,
+  "owner": "ChatGPT /root/sdk_completion",
+  "timeUTC": "2026-11-24T19:44:24.938121+00:00",
+  "wave": 3,
+  "branch": "codex/hanlin-three-waves-wave3-20261124",
+  "baseWave2SHA": "aaeb055ee89d93692165d9f8290af1753323fcfe",
+  "functionalDonorSHA": "b464f4fb8d710b1daee84508b010dcb1163c66d3",
+  "functionalSourceSHA": "6530775ef8d274d6ec154ac65647f497fdcd05c7",
+  "integration": {
+    "changedPathCount": 17,
+    "changedPaths": [
+      "AI_HLY/ChatView.swift",
+      "AI_HLY/Downstream/ChatCore/HanlinNativeA2UIAcceptanceProvider.swift",
+      "AI_HLY/Downstream/SDK/HanlinApplicationData.swift",
+      "AI_HLYTests/HanlinOpenUIBridgeTests.swift",
+      "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/bridge.js",
+      "Scripts/OpenUI/bridge.jsx",
+      "Scripts/OpenUI/package.json",
+      "Scripts/OpenUI/tool-wire.mjs",
+      "Scripts/OpenUI/tool-wire.test.mjs",
+      "docs/agent-sdk/OPENUI_COMPLETION_20261124.md",
+      "docs/agent-sdk/evidence/openui-host-wire-20261124/build-assets.log",
+      "docs/agent-sdk/evidence/openui-host-wire-20261124/capacity.txt",
+      "docs/agent-sdk/evidence/openui-host-wire-20261124/host-wire-tests.log",
+      "docs/agent-sdk/evidence/openui-host-wire-20261124/npm-ci.log",
+      "docs/agent-sdk/evidence/openui-host-wire-20261124/receipt.json",
+      "docs/agent-sdk/evidence/openui-host-wire-20261124/source-review.json"
+    ],
+    "donorBlobs": "All 16 non-ChatView changed files exactly match the original functional donor",
+    "chatView": {
+      "wave2SHA256": "eb9cb92ca0a73afc16c56551ecc81097e0874f5911bd3579b5547edd3450477f",
+      "wave3SHA256": "1508492c95038a1fc7ac6de8a45f1bbb5d6a63364ca3ced09bc0a8d72f5711be",
+      "qualification": "Exactly the original appIdentifier guard replacement applied once to wave2; every other byte, including auto-follow and sidebar changes, is preserved"
+    },
+    "canonicalApplicationSwiftSources": 514,
+    "applicationSourceAndResourceInventory": "Exact wave2 inventory",
+    "unitTestMembership": "HanlinOpenUIBridgeTests.swift is included by the unchanged AI_HLYTests file-system-synchronized root group with no exceptions",
+    "sourceDiffCheck": "PASS"
+  },
+  "reusedMacEvidence": {
+    "receiptPath": "docs/agent-sdk/evidence/openui-host-wire-20261124/receipt.json",
+    "receiptSHA256": "754e799bfd4994b7737d80944c64620a4c7078bf96ab42b940819308cadb72e6",
+    "sourceReviewPath": "docs/agent-sdk/evidence/openui-host-wire-20261124/source-review.json",
+    "sourceReviewSHA256": "238008c0315f476d0a0a1ace9cca39f2360c99329c783a038093f48824760526",
+    "runner": "scaleway-mac",
+    "originalExecutionUTC": "2026-11-24T18:17:35.384904+00:00",
+    "node": "v24.5.0",
+    "npm": "11.5.1",
+    "commands": [
+      {
+        "name": "npm-ci",
+        "argv": [
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/npm",
+          "ci",
+          "--ignore-scripts",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit": 0,
+        "seconds": 3.889,
+        "logSHA256": "913157c65e78d8ea0ef16a98805fee320795225eec5a9ff70b37611e378b160b"
+      },
+      {
+        "name": "host-wire-tests",
+        "argv": [
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+          "--test",
+          "tool-wire.test.mjs"
+        ],
+        "exit": 0,
+        "seconds": 0.099,
+        "logSHA256": "9116200016f63fa563675de65166155a3e3088b22390a9a43bb139ca1d406170"
+      },
+      {
+        "name": "build-assets",
+        "argv": [
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+          "build.mjs"
+        ],
+        "exit": 0,
+        "seconds": 2.265,
+        "logSHA256": "7ee9c1003f5192ee40ca6d1d2d8484c85122228d0ab50b255ca116cfae1d1678"
+      }
+    ],
+    "scope": "Original four tool-wire contract tests and bundle build only; bridge.test.mjs was an unchanged recorded input, not a newly executed test suite",
+    "inputsVerified": {
+      "Scripts/OpenUI/.gitignore": "ad819a44e934dc3b2ae077907fb21635117d9c08c5192a71454837ffd43451e1",
+      "Scripts/OpenUI/bridge.css": "bfe8da03bd7cd28ad1135128a4647d528182afaaecf3db69b66c78af2ef8fee3",
+      "Scripts/OpenUI/bridge.jsx": "972d1b00fa1c9a2f6a374a5b1a1b86fabe45e087c917b7549cd44088e7cbc1f0",
+      "Scripts/OpenUI/bridge.test.mjs": "2d2ab20154b7d582c7e9f625c070659dcdb5f4e61cbd5c8558e98a68d59d330a",
+      "Scripts/OpenUI/build.mjs": "3e3a7e421f290cb4174814bf586dad7ef7ac1637a27a5d84a42c876b98c33e73",
+      "Scripts/OpenUI/catalogs.jsx": "2170d2da41897ffc95f73c0e7c6c0f7182ce9a9051e11a37159911af35b57c05",
+      "Scripts/OpenUI/native-runtime.mjs": "546b05bdbca62843f0b23866ec129a50e8b3e2d90eeec072490421058403ec28",
+      "Scripts/OpenUI/package-lock.json": "be4f037a6b2030605906d348606b18687d65034c0bae43c51e2022800397e3d9",
+      "Scripts/OpenUI/package.json": "104f7f18fc61cfd58c59bf380e7df0c800dccb48f1a4317bea59bff9fedf7572",
+      "Scripts/OpenUI/state-wire.mjs": "9c36e2c2a85980a423fa2bf8ae7648c87dc86fe3be60f4717871e2a5b58adb98",
+      "Scripts/OpenUI/tool-wire.mjs": "779a678549f13984b6230e7f22b1d3ec3819e764d8910a85bd540f2f14b10d55",
+      "Scripts/OpenUI/tool-wire.test.mjs": "20eb4664d5b610a64c19aa2beeca3799ba37915f9ab27556e71584ae40d58112"
+    },
+    "outputsVerified": {
+      "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/THIRD_PARTY_NOTICES.md": "84f847d0d98c2956481dafbfa2f42f47e3d2a3e15c1c376fd6a4ab802cca9b56",
+      "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/bridge.css": "cab51495b9923c124d303b80f64aee322eaad5133f07cf34fcb02ac7cc1b9a1d",
+      "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/bridge.js": "a1e800746e8281f6e487a0dc279e502bda9d2ae35c5a910a19a28375f9b1c9de",
+      "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/bridge.js.LEGAL.txt": "cc72edf544f42b902a91e479860f87404d8408e74e7908b33ff2b78173bc81df",
+      "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/catalog-manifest.json": "f0c755d157dd18c5503ddf84710b58f6f7b38c6ba2b65a7cf3810d4d43fcc3df",
+      "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/index.html": "460c6bdfd6dd964f251954900bbbb34481e3c0f0b25ca3165031fafd643d1b54",
+      "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/original-prompt.txt": "aad61ab2488e864b43169df4be7710bea6524efed01df5bf86c7d2172f41e03c",
+      "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/torah-prompt.txt": "abc486ddfe23182bbe6f967296645a448a3b2f45e5e7b65a0c30ca8480f59fd9"
+    },
+    "rawLogsVerified": {
+      "docs/agent-sdk/evidence/openui-host-wire-20261124/npm-ci.log": "913157c65e78d8ea0ef16a98805fee320795225eec5a9ff70b37611e378b160b",
+      "docs/agent-sdk/evidence/openui-host-wire-20261124/host-wire-tests.log": "9116200016f63fa563675de65166155a3e3088b22390a9a43bb139ca1d406170",
+      "docs/agent-sdk/evidence/openui-host-wire-20261124/build-assets.log": "7ee9c1003f5192ee40ca6d1d2d8484c85122228d0ab50b255ca116cfae1d1678"
+    },
+    "unchangedSwiftDonorSources": {
+      "AI_HLY/Downstream/ChatCore/HanlinNativeA2UIAcceptanceProvider.swift": "7b4b99829c3aa07ea3d1afe6f26713c97ea9be5eb99f1f93a59d4da966421119",
+      "AI_HLY/Downstream/SDK/HanlinApplicationData.swift": "61c03ce7ce4e2b845801ef745802c6107aaa5e3d857d2d3db3c069941c9ae627",
+      "AI_HLYTests/HanlinOpenUIBridgeTests.swift": "cb4993e71aa9e3135401a42f0d4e46bcbe1687b0b9e6bdac5558f0cb5ff70328",
+      "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift": "de13a72409ca5d83db85fba2eb45fd660769c74774bd28e3ef38be1ecb177bc6"
+    },
+    "executionThisQualification": "NOT_RUN; reused only after exact input/output/log hash comparison"
+  },
+  "reusedCanonicalGeneration": {
+    "sourceSHA": "aaeb055ee89d93692165d9f8290af1753323fcfe",
+    "originalReceiptDirectory": "/mnt/development/projects/worktrees/hanlin-three-waves-20261124-chat/build/three-waves-wave2-integration/root-0d894-merge",
+    "originalAuditSHA256": "6424a37ba5c17e691fd2eb9f6a58fd985003ac05315a7cdb091de4c0b65244d0",
+    "originalAudit": {
+      "rootSHA": "0d894ce07ac0527682685bf08532032f501b8eb7",
+      "generation": "Canonical manifest/project generation and both --check invocations exited0; original command stdout/stderr retained beside audit",
+      "graph": {
+        "ai_products": [
+          "HanlinApplication"
+        ],
+        "unit_test_products": [
+          "HanlinApplication"
+        ],
+        "miniapps_agent_products": [],
+        "sdk_application_sources": 514,
+        "host_sources": [
+          "AI_HLY.swift"
+        ],
+        "native_adapter": "Model/HanlinAppleModelCatalogAdapter.swift",
+        "linked_application_products": {
+          "HanlinApp": [
+            "HanlinApplication"
+          ],
+          "AI_HLYTests": [
+            "HanlinApplication"
+          ]
+        },
+        "apple_compilation": "NOT_RUN"
+      },
+      "registeredGraph": {
+        "miniapps_products": [
+          "HanlinA2UI",
+          "HanlinAgentActivityCore",
+          "HanlinExpoNativeAPI",
+          "HanlinExpoRuntime",
+          "HanlinExpoWidgetsOriginal",
+          "HanlinExtensionContracts",
+          "HanlinLocalization",
+          "HanlinMiniAppCore",
+          "HanlinMiniAppsBridge",
+          "HanlinMiniAppsPicker",
+          "HanlinMiniAppsUI",
+          "HanlinNativeScriptRuntime",
+          "HanlinParityMiniApp",
+          "HanlinPlatformContracts",
+          "HanlinPresentationKit",
+          "HanlinProductSplit",
+          "HanlinScriptCompiler",
+          "HanlinScriptContracts",
+          "HanlinScriptDeviceServices",
+          "HanlinScriptExtensions",
+          "HanlinScriptStore",
+          "HanlinScriptUI",
+          "HanlinScriptingApplicationRuntime",
+          "HanlinScriptingSDK",
+          "HanlinSefariaMiniApp",
+          "HanlinTextStudioMiniApp",
+          "HanlinTranslationUI",
+          "HanlinWidgetUI",
+          "HanlinWikipediaMiniApp",
+          "IOSSystemLite",
+          "SWCompression",
+          "TorahLibraryKit",
+          "ZIPFoundation"
+        ],
+        "miniapps_source_groups": [
+          "HanlinMiniAppsApp"
+        ],
+        "deployment_target": "27.0",
+        "signed_or_install_proof": false
+      },
+      "rootProjectParity": "ONLY_NEW_SIDEBAR_SOURCE_EXCLUSION",
+      "textNormalization": "Canonical quoted spelling of two equivalent existing widget explicit-module settings",
+      "workflowBytes": "EXACT_ROOT",
+      "nativeExecution": "NOT_RUN",
+      "mergeSHA": "aaeb055ee89d93692165d9f8290af1753323fcfe",
+      "workingTree": "CLEAN"
+    },
+    "rawLogSHA256": {
+      "manifest-generate.stdout": "7e4a18398697d06b07786757a8bd99312303d5e8f627aea64961d1367b5a7f4c",
+      "manifest-generate.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "project-generate.stdout": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+      "project-generate.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "manifest-check.stdout": "7e4a18398697d06b07786757a8bd99312303d5e8f627aea64961d1367b5a7f4c",
+      "manifest-check.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "project-check.stdout": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+      "project-check.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "unchangedGeneratorClosurePaths": [
+      "AI_HLY.xcodeproj/project.pbxproj",
+      "AI_HLY.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
+      "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings",
+      "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme",
+      "AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinMiniApps.xcscheme",
+      "AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinSimulatorAcceptance.xcscheme",
+      "Package.swift",
+      "Packages/HanlinAgentSDK/Package.swift",
+      "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Package.swift",
+      "Packages/HanlinAppExtensionsSDK/Package.swift",
+      "Packages/HanlinExpoNativeAPI/Package.swift",
+      "Packages/HanlinExpoRuntime/Package.swift",
+      "Packages/HanlinExpoWidgetSubset/Package.swift",
+      "Packages/HanlinMiniAppsBridge/Package.swift",
+      "Packages/HanlinNativeScriptRuntime/Package.swift",
+      "Packages/HanlinParityMiniApp/Package.swift",
+      "Packages/HanlinPlatform/Package.swift",
+      "Packages/HanlinPresentationSDK/Package.swift",
+      "Packages/HanlinProductSplit/Package.swift",
+      "Packages/HanlinQuickJS/Package.swift",
+      "Packages/HanlinSefariaMiniApp/Package.swift",
+      "Packages/HanlinSkillFormat/Package.swift",
+      "Packages/HanlinSwiftUIBridgeGenerator/Package.swift",
+      "Packages/HanlinTextStudioMiniApp/Package.swift",
+      "Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings",
+      "Packages/HanlinWidgetSDK/Package.swift",
+      "Packages/HanlinWikipediaMiniApp/Package.swift",
+      "Packages/IOSSystemLite/Package.swift",
+      "Packages/TorahLibraryKit/Package.swift",
+      "Scripts/CI/IntegrationValidation/project_graph.py",
+      "Scripts/ProductSplit/miniapps_extensions.py",
+      "Scripts/SDK/Fixtures/BridgeInputAdmission/EnumA.swiftinterface",
+      "Scripts/SDK/Fixtures/BridgeInputAdmission/EnumB.swiftinterface",
+      "Scripts/SDK/Fixtures/BridgeInputAdmission/OptionSetA.swiftinterface",
+      "Scripts/SDK/Fixtures/BridgeInputAdmission/OptionSetB.swiftinterface",
+      "Scripts/SDK/Fixtures/BridgeInputAdmission/PublicClient.swift",
+      "Scripts/SDK/application_products.json",
+      "Scripts/SDK/check_bridge_input_boundary.py",
+      "Scripts/SDK/check_registry_identity_boundary.py",
+      "Scripts/SDK/generate_app_intents_resources.py",
+      "Scripts/SDK/generate_manifest.py",
+      "Scripts/SDK/install.py",
+      "Scripts/SDK/native_artifacts.py",
+      "Scripts/SDK/tests/test_app_intents_install.py",
+      "Scripts/SDK/tests/test_bundle_resources.py",
+      "Scripts/SDK/tests/test_host_link_ownership.py",
+      "Scripts/SDK/tests/test_install.py",
+      "Scripts/SDK/tests/test_native_artifacts.py",
+      "Scripts/SDK/tests/test_native_provenance.py",
+      "Scripts/SDK/tests/test_widget_cxx_imports.py",
+      "Scripts/SDK/update_project.py",
+      "Scripts/SDK/verify_bundle_resources.py",
+      "Scripts/SDK/verify_miniapps_source_preservation.py",
+      "docs/agent-sdk/unified-package-manifest.json"
+    ],
+    "manifestInputsVerified": {
+      "Packages/HanlinAgentSDK/Package.swift": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8",
+      "Packages/HanlinAppExtensionsSDK/Package.swift": "64d5594128c50035fd2dc37665d92927b45badefcc52b1ec521a5bfc8c8e3cde",
+      "Packages/HanlinExpoNativeAPI/Package.swift": "1bf2b967d85c4759f94f39330b1b435148a9d3956ec6b8e645cec7dd65bec83d",
+      "Packages/HanlinExpoRuntime/Package.swift": "116a910cffe061ff3eea0e289402bc51769d3268daedc94ea5b1e043e6d109a4",
+      "Packages/HanlinExpoWidgetSubset/Package.swift": "ed50b8b4f6ee4532ff3ed2af82d7994c7718e958387495280f9a939218323a41",
+      "Packages/HanlinMiniAppsBridge/Package.swift": "579cdb6febf974d7f463aee0cd6592cdf0cfd5a4c8e53840009ff170e52b6e2e",
+      "Packages/HanlinNativeScriptRuntime/Package.swift": "88a4926e884e6804246a7d077efed3837271886a9825585b1e561b4ce1576120",
+      "Packages/HanlinParityMiniApp/Package.swift": "66025f0b1fb7db7db9b8a24426319b651858f3454295780ee807edd335cec90b",
+      "Packages/HanlinPlatform/Package.swift": "864210a4e3d3a77c375c3211095467e876f41352e5f25bcf72730353d77d6981",
+      "Packages/HanlinPresentationSDK/Package.swift": "462479a3660edd652181ad339238c29f270ec9bfd8203d2f1310681d8029ecc4",
+      "Packages/HanlinProductSplit/Package.swift": "31234398119e82e9895391040f281e9c9895c2cc73f962c12f1b37489e7f5e3a",
+      "Packages/HanlinQuickJS/Package.swift": "3b3e64732c71724b027fd28236f635073d02a3c208cbd9060fafaf802a47480e",
+      "Packages/HanlinSefariaMiniApp/Package.swift": "7ac94c46688313d32e03c2ffa3bb74c1f1dc00fc8b0b8b7322ae1286b918d50c",
+      "Packages/HanlinSkillFormat/Package.swift": "3878f654329884843943a463a901537c45f894b198a4bc9b9b9169410dc66741",
+      "Packages/HanlinTextStudioMiniApp/Package.swift": "d2049eb9401b85c9ab1734a369b818f930db964aee7ce7bb7bf865ec21af291d",
+      "Packages/HanlinWidgetSDK/Package.swift": "970610b13278a21fad358fa9c6f19b15789c6c7cb219fc2984f2aa92298502e6",
+      "Packages/HanlinWikipediaMiniApp/Package.swift": "01b8cc014f8a5e853b644947fd6684df56b65b37feb08ef23f410fb56c902d8e",
+      "Packages/IOSSystemLite/Package.swift": "06c6721c4b59328ba4f78997c9a8b23330357db12d3a619207dc1bac8cb76bab",
+      "Packages/TorahLibraryKit/Package.swift": "4423074f870fe146b8914dc275db77aedef4cc1b6c0b856dfad844b65c3a21d6",
+      "Scripts/SDK/application_products.json": "8be55195f1bbceb2867f9f12f48994f382d1b6ec3df43e3597d1ee7d3f562d55"
+    },
+    "qualification": "Canonical generated package, Xcode project, generators, parsed manifest inputs, lockfiles, application source/resource inventory, and related wiring remain byte-identical to successfully generated and checked wave2",
+    "executionThisQualification": "NOT_RUN; source-qualified reuse of wave2 generation and --check receipts"
+  },
+  "remainingNativeSelectors": [
+    "AI_HLYTests/HanlinOpenUIBridgeTests",
+    "AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft"
+  ],
+  "nativeCompile": "NOT_RUN",
+  "WKWebViewCases": "NOT_RUN",
+  "originalAppUI": "NOT_RUN",
+  "liveHost": "NOT_RUN",
+  "physicalIPad": "NOT_RUN"
+}

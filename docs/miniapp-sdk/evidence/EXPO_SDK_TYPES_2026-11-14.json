@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "sourceBaseCommit": "292e03bfeb3f7031af74eb80b6ead38a5ac7b961",
+  "date": "2026-11-14",
+  "sourceIdentity": "Base commit plus exact input hashes; implementation commit recorded in Asana after commit.",
+  "inputs": {
+    "Fixtures/ExpoSwiftUIProbe/App.tsx": "ae38823c0d441e6615ee045e0600dd36d77fb322e698131b3d6249148cc25bd2",
+    "Fixtures/ExpoSwiftUIProbe/tsconfig.json": "bd2f831e1d7ba3ff24a4d2fec27c04e1bedee4b509669b5ec02b47e575640762",
+    "Fixtures/ExpoNativeAPIProbe/tsconfig.json": "2ef0da47a48f9f41136b957deeadb8337f3e663502e430a38dadbb16ab933ed0",
+    "Packages/HanlinExpoUI/src/host-services.ts": "03576a9ce5a7c33739e28df5fd9a1306528c5959b011707ccc329fd6cf6daae4",
+    "Packages/HanlinExpoUI/package.json": "140b70efbc40406a004d8e8fb2e6cdca3818e83eb4aebc5fe2cab0d1d8323b41",
+    "Scripts/Expo/package.json": "c1c2f07561773e443ebe3b30237774461b506229a48297e19df2af19e9ffe23e",
+    "Scripts/Expo/package-lock.json": "01fd60dd46526bb4a874ee1b8a29bb31be180a0151463bb9a5cf922a66f2c6a4",
+    "Scripts/Expo/prepare-types.mjs": "b5612d9396c15aba2595de7e0adb4b22941c74e0bdf3934c562152a424655138",
+    "Scripts/Expo/check-ui-type-contract.mjs": "59570183dfab1e69c4f95ee56438c48c0835b63883a4d13e1af15f43c8a1b32b",
+    "Scripts/Expo/build-probe.mjs": "820e9b14a6f62630dfc61589a17d8b4b0925163eaa1d5a7c6bedb42069782ab8",
+    "Scripts/Expo/Tests/host-services.test.mjs": "d44d46d73a88c78eb57f192b6a39bd31fff72c445a1a94e08cff89bb1f6749a3",
+    "Scripts/Expo/Tests/native-api-globals.test.mjs": "4a927ff903ae4eb5b8ba18d8d4f2942bce929bb1fe705e772cbdee6fd0eb14c2",
+    "AI_HLYUITests/HanlinExpoProductionE2ETests.swift": "25b73aa6979e69cc21ea6ce71c7527f8b4f5b5f6a9389ae0ad8a65c16ced5414"
+  },
+  "uiTypes": {
+    "schemaVersion": 1,
+    "compilerVersion": "6.0.3",
+    "compilerSHA256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+    "configSHA256": "bd2f831e1d7ba3ff24a4d2fec27c04e1bedee4b509669b5ec02b47e575640762",
+    "negativeSourceSHA256": "aad5bfb9e93670eba8087f548314432c356b19ac024316965cc3bc536db569b4",
+    "valid": {
+      "status": "EXECUTED_PASS",
+      "diagnostics": 0,
+      "strict": true,
+      "skipLibCheck": false
+    },
+    "negative": {
+      "status": "EXECUTED_PASS",
+      "expectedDiagnostics": [
+        2322,
+        2322,
+        2339,
+        2353,
+        7006
+      ]
+    },
+    "boundary": "TypeScript checks only; Metro/native adapter/physical acceptance are separate."
+  },
+  "nativeAPITypes": {
+    "schemaVersion": 1,
+    "compilerVersion": "6.0.3",
+    "compilerSHA256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+    "configSHA256": "2ef0da47a48f9f41136b957deeadb8337f3e663502e430a38dadbb16ab933ed0",
+    "negativeSourceSHA256": "397dbfe3559157992c36e9d616adb77480a7bfd0aa02ac436180539e234a7ce0",
+    "valid": {
+      "status": "EXECUTED_PASS",
+      "diagnostics": 0,
+      "strict": true,
+      "skipLibCheck": false
+    },
+    "negative": {
+      "status": "EXECUTED_PASS",
+      "expectedDiagnostics": [
+        2322,
+        2322,
+        2339,
+        2349,
+        2351,
+        2353,
+        7006
+      ]
+    },
+    "boundary": "TypeScript checks only; Metro/native adapter/physical acceptance are separate."
+  },
+  "declarationCorrections": {
+    "schemaVersion": 1,
+    "reactNative": "0.88.0",
+    "nativeAPI": "9.1.2",
+    "boundary": "Declaration-only corrections; strict checking and native/Metro execution are separate mandatory gates.",
+    "patches": [
+      {
+        "package": "react-native",
+        "file": "Libraries/Animated/nodes/AnimatedProps.d.ts",
+        "originalSHA256": "0dde4c5442c332f01cb8f830ead7965b64996dca6b9bcc3a280806f48b8d3f21",
+        "correctedSHA256": "aed96d9f0b4b196eb342fdc5c0e952025cdcbb894179360d00319bc9c2b37b4c",
+        "source": "Libraries/Animated/nodes/AnimatedProps.js",
+        "sourceSHA256": "d860011a3cde601ef237ffb40eef05c68cb3b15bc3c25e2fead8db751f1167de",
+        "reason": "Flow explicitly permits an optional nullable style. The TS index signature must admit that named property."
+      },
+      {
+        "package": "react-native",
+        "file": "Libraries/Lists/VirtualizedList.d.ts",
+        "originalSHA256": "90335722e3f37fbca6dc2dc699efac7ebf2f8866a9cfddce21a3dd6bb9e9a92a",
+        "correctedSHA256": "51500c381dc135aba8268f7af110fb2cc657a0db9c823ec8555f0b9231de0272",
+        "source": "Libraries/Lists/VirtualizedList.js",
+        "sourceSHA256": "94d0e1f682f3422648451be3070a68a6e69eeddce7bed4c43cc3124e89565b5e",
+        "reason": "The exported value is the actual class constructor. Infer its instance without the unrelated React static lifecycle generic constraint."
+      },
+      {
+        "package": "react-native",
+        "file": "src/private/webapis/dom/nodes/ReadOnlyNode.d.ts",
+        "originalSHA256": "b0599260380ad18e7b783d712990bdf0cfba1346719bb8273fbaf06ed5a61bae",
+        "correctedSHA256": "9f09899132976f3110b403314e07e1a0157459e9f2194259df42094e4114dbaf",
+        "source": "src/private/webapis/dom/nodes/ReactNativeDocument.js",
+        "sourceSHA256": "dcafb922a27f7dac28f3d6079af34c90dfb047ea42f519d6a45fc16a671a4394",
+        "reason": "The abstract base throws; the concrete Document getter really returns null. Preserve that actual subclass behavior in the base return type."
+      },
+      {
+        "package": "@nativescript/react-native",
+        "file": "Runtime.d.ts",
+        "originalSHA256": "f28f211c956653fe859b9fc30a3765afb8902aa3d505248e28e3991fe32d1ca1",
+        "correctedSHA256": "0ec1d58c4bc38f66f8ff77bf03240c304f5e74b5ac17b923de8976f45a68f0cc",
+        "source": "native-api/ffi/objc/shared/bridge/Install.mm",
+        "sourceSHA256": "f8c156b7ea87e6eed0e7aa9a5af1816bacb40332a68038ac521e191e15510e83",
+        "reason": "Actual Install.mm installs constants first and does not overwrite conflicting globals with struct constructors. Keep struct field types and actual constants; do not advertise new timezone()/new dyld_shared_cache_ranges()."
+      },
+      {
+        "package": "@nativescript/react-native",
+        "file": "UIKit.d.ts",
+        "originalSHA256": "6ad19868e345469b507442f2666ca55ba69a5a98915e09459739e43246469638",
+        "correctedSHA256": "fde14e711cf6a496d48ba026cc022808df3bce202eec8a0d5521efc72f23d837",
+        "source": "native-api/ffi/objc/shared/bridge/host_objects/Object.mm",
+        "sourceSHA256": "fbc95bc22a5115453f944a408183ca2a64e3338954ba8ca4b2b045146afe7348",
+        "reason": "Apple exposes the ObjC description selector, but the actual JS host object explicitly resolves description to a string before method lookup. Match that JS boundary and inherited NSObject property."
+      }
+    ]
+  },
+  "facadeTests": {
+    "status": "EXECUTED_PASS",
+    "cases": 3,
+    "durationMilliseconds": 665.7576,
+    "nativeModuleAndMetadata": "Explicit fixtures; not iOS/Hermes acceptance"
+  },
+  "metro": {
+    "status": "EXECUTED_PASS",
+    "version": "0.87.1",
+    "platform": "Windows x64 / Node22.17.0",
+    "outputs": {
+      "build/expo-sdk-ui-metro/bundle.js": {
+        "sha256": "c2a9d0762b418dc93c1ab48ebdddf119a24ba51327c4db33f94de98f58a0f1b7",
+        "bytes": 1326638
+      },
+      "build/expo-sdk-ui-metro/bundle.js.map": {
+        "sha256": "b1f205c1d84ac9d4a1aede9b3b69605cfaacad3b21840f832b817425ac2e4c4d",
+        "bytes": 5489270
+      },
+      "build/expo-sdk-ui-metro-b/bundle.js": {
+        "sha256": "262796c24b551148e3989f9ed417d4e1e645c42e336ad5433f2097a178baaaf7",
+        "bytes": 1326638
+      },
+      "build/expo-sdk-ui-metro-b/bundle.js.map": {
+        "sha256": "71c6ffea2b1776cda7a6fdb00afa648dba2f3825771f8867c5eb39740012b4e7",
+        "bytes": 5489270
+      },
+      "build/expo-sdk-nativeapi-metro-a/bundle.js": {
+        "sha256": "9c31cc63ae7095ea058bd459cf90b742e0490ac1a90409c130fde8511d046c60",
+        "bytes": 1410295
+      },
+      "build/expo-sdk-nativeapi-metro-a/bundle.js.map": {
+        "sha256": "75f128a246a243c468d1e83eade104343ea9b3b1862739423e88b20341e1d61b",
+        "bytes": 5652959
+      },
+      "build/expo-sdk-nativeapi-metro-b/bundle.js": {
+        "sha256": "0a956f9a73989c9926fc4827f9bc2b2eb5af40ebb491d37d2da3d09954f79c07",
+        "bytes": 1410295
+      },
+      "build/expo-sdk-nativeapi-metro-b/bundle.js.map": {
+        "sha256": "a923a819b1c801e257023cb0189d94106102aea49401d2d76011d18a2a12bff4",
+        "bytes": 5652959
+      }
+    },
+    "rebuildUIProbes": "Actual strict check + real Metro A/B + existing deterministic ZIP writer; exit0"
+  },
+  "archives": {
+    "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo": {
+      "sha256": "f0b314cfb4d150b0451241e5d21a40d2ae4fcdbb10b2ae52976092dca05820ae",
+      "bytes": 319850,
+      "stagedCopyIdentical": true,
+      "crcAndFixedDates": "EXECUTED_PASS"
+    },
+    "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo": {
+      "sha256": "5dfc9a504008ab100fc1159f86f791da3c3643711357073106a168de944b0d90",
+      "bytes": 319851,
+      "stagedCopyIdentical": true,
+      "crcAndFixedDates": "EXECUTED_PASS"
+    },
+    "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo": {
+      "sha256": "f0b314cfb4d150b0451241e5d21a40d2ae4fcdbb10b2ae52976092dca05820ae",
+      "bytes": 319850,
+      "stagedCopyIdentical": true,
+      "crcAndFixedDates": "EXECUTED_PASS"
+    },
+    "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIMalformed.hanlinExpo": {
+      "sha256": "a2115ad2fc9395154e793c15fc0c42fffb056e7b259b6c63852b7b61531313e4",
+      "bytes": 274,
+      "stagedCopyIdentical": true,
+      "crcAndFixedDates": "EXECUTED_PASS"
+    }
+  },
+  "actualExpoFileUITest": "NOT_RUN",
+  "physicalDevice": "NOT_RUN",
+  "allPublicNativeAdapters": "NOT_RUN",
+  "sourceNormalization": [
+    {
+      "file": "Scripts/Expo/build-probe.mjs",
+      "executionBytesSHA256": "820e9b14a6f62630dfc61589a17d8b4b0925163eaa1d5a7c6bedb42069782ab8",
+      "normalizedSHA256": "25773890b5cb4c7f04f592b6f30a040b698e1165ede845b2144e58b7960abcc8",
+      "proof": "Exact identical TypeScript-emitted JavaScript before/after CRLF normalization"
+    }
+  ],
+  "finalInputHashes": {
+    "Fixtures/ExpoSwiftUIProbe/App.tsx": "ae38823c0d441e6615ee045e0600dd36d77fb322e698131b3d6249148cc25bd2",
+    "Fixtures/ExpoSwiftUIProbe/tsconfig.json": "bd2f831e1d7ba3ff24a4d2fec27c04e1bedee4b509669b5ec02b47e575640762",
+    "Fixtures/ExpoNativeAPIProbe/tsconfig.json": "2ef0da47a48f9f41136b957deeadb8337f3e663502e430a38dadbb16ab933ed0",
+    "Packages/HanlinExpoUI/src/host-services.ts": "03576a9ce5a7c33739e28df5fd9a1306528c5959b011707ccc329fd6cf6daae4",
+    "Packages/HanlinExpoUI/package.json": "140b70efbc40406a004d8e8fb2e6cdca3818e83eb4aebc5fe2cab0d1d8323b41",
+    "Scripts/Expo/package.json": "c1c2f07561773e443ebe3b30237774461b506229a48297e19df2af19e9ffe23e",
+    "Scripts/Expo/package-lock.json": "01fd60dd46526bb4a874ee1b8a29bb31be180a0151463bb9a5cf922a66f2c6a4",
+    "Scripts/Expo/prepare-types.mjs": "b5612d9396c15aba2595de7e0adb4b22941c74e0bdf3934c562152a424655138",
+    "Scripts/Expo/check-ui-type-contract.mjs": "59570183dfab1e69c4f95ee56438c48c0835b63883a4d13e1af15f43c8a1b32b",
+    "Scripts/Expo/build-probe.mjs": "25773890b5cb4c7f04f592b6f30a040b698e1165ede845b2144e58b7960abcc8",
+    "Scripts/Expo/Tests/host-services.test.mjs": "d44d46d73a88c78eb57f192b6a39bd31fff72c445a1a94e08cff89bb1f6749a3",
+    "Scripts/Expo/Tests/native-api-globals.test.mjs": "4a927ff903ae4eb5b8ba18d8d4f2942bce929bb1fe705e772cbdee6fd0eb14c2",
+    "AI_HLYUITests/HanlinExpoProductionE2ETests.swift": "25b73aa6979e69cc21ea6ce71c7527f8b4f5b5f6a9389ae0ad8a65c16ced5414"
+  }
+}

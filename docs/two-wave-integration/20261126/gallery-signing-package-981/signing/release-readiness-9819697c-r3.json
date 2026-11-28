@@ -1,0 +1,897 @@
+{
+  "source": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "at": "2026-11-26T18:08:38.641461+00:00",
+  "status": "READ_ONLY_RESOURCE_QUALIFICATION_COMPLETE",
+  "readOnly": true,
+  "certificateMutation": false,
+  "profileMutation": false,
+  "archive": false,
+  "upload": false,
+  "physicalAcceptance": "NOT_RUN",
+  "products": [
+    {
+      "role": "ai",
+      "bundleID": "com.itorah.chavrusachat",
+      "entitlementsPath": "AI_HLY/AI_HLY.entitlements",
+      "entitlementsSHA256": "e720f17906a84c20a40e48714726ca17a307be5d27ac80c24f40bb017c537481",
+      "requiredEntitlements": {
+        "aps-environment": "$(APS_ENVIRONMENT)",
+        "com.apple.developer.icloud-container-identifiers": [
+          "iCloud.com.itorah.chavrusachat"
+        ],
+        "com.apple.developer.icloud-services": [
+          "CloudKit",
+          "CloudDocuments"
+        ],
+        "com.apple.developer.ubiquity-kvstore-identifier": "$(TeamIdentifierPrefix)com.itorah.chavrusachat",
+        "com.apple.developer.healthkit": true,
+        "com.apple.developer.kernel.extended-virtual-addressing": true,
+        "com.apple.developer.siri": true,
+        "com.apple.developer.translation-app": true,
+        "com.apple.developer.usernotifications.time-sensitive": true,
+        "com.apple.developer.weatherkit": true,
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ],
+        "com.apple.developer.homekit": true,
+        "keychain-access-groups": [
+          "$(AppIdentifierPrefix)com.itorah.chavrusachat.scriptwidget.services"
+        ]
+      },
+      "status": "READY_RESOURCE",
+      "selected": {
+        "path": "/Users/m1/Library/MobileDevice/Provisioning Profiles/8AFD1C42-4F10-4B50-895E-9CFB7A110E2F.mobileprovision",
+        "sha256": "e31610d2d2478822ad71c5fdd52d4ef5c3f852b1414f310cb1a01dc657aea8fb",
+        "uuid": "8afd1c42-4f10-4b50-895e-9cfb7a110e2f",
+        "name": "Hanlin ai App Store Mac 148901 85e374570dba",
+        "status": "READY_RESOURCE",
+        "checks": {
+          "team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "distribution_profile": true,
+          "certificate_matches": true,
+          "required_entitlements_covered": true
+        },
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "missing_or_mismatched_entitlement_keys": []
+      },
+      "candidates": [
+        {
+          "path": "/Users/m1/Library/MobileDevice/Provisioning Profiles/8AFD1C42-4F10-4B50-895E-9CFB7A110E2F.mobileprovision",
+          "sha256": "e31610d2d2478822ad71c5fdd52d4ef5c3f852b1414f310cb1a01dc657aea8fb",
+          "uuid": "8afd1c42-4f10-4b50-895e-9cfb7a110e2f",
+          "name": "Hanlin ai App Store Mac 148901 85e374570dba",
+          "status": "READY_RESOURCE",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": true
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": []
+        },
+        {
+          "path": "/Users/m1/Library/MobileDevice/Provisioning Profiles/9c12a648-0dc0-4e4b-b3f5-c31806824bfe.mobileprovision",
+          "sha256": "849e9971aa8514006f4f1fe9bbe1007ad9cfa309f41497be7eb411873554771c",
+          "uuid": "9c12a648-0dc0-4e4b-b3f5-c31806824bfe",
+          "name": "Hanlin TestFlight VA 45089987557",
+          "status": "BLOCKED",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": false
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": [
+            "com.apple.developer.homekit"
+          ]
+        },
+        {
+          "path": "/Users/m1/Library/MobileDevice/Provisioning Profiles/ChavrusaChat_App_Store.mobileprovision",
+          "sha256": "a9286ad3b08ac32b08315a2ef4ce287e6fbf9173c02078b1ee6e108eead08d45",
+          "uuid": "69fdad74-31b1-4377-9347-7ee2353b9a2f",
+          "name": "ChavrusaChat App Store",
+          "status": "BLOCKED",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": false
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": [
+            "com.apple.developer.homekit",
+            "com.apple.developer.kernel.extended-virtual-addressing"
+          ]
+        },
+        {
+          "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/69fdad74-31b1-4377-9347-7ee2353b9a2f.mobileprovision",
+          "sha256": "a9286ad3b08ac32b08315a2ef4ce287e6fbf9173c02078b1ee6e108eead08d45",
+          "uuid": "69fdad74-31b1-4377-9347-7ee2353b9a2f",
+          "name": "ChavrusaChat App Store",
+          "status": "BLOCKED",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": false
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": [
+            "com.apple.developer.homekit",
+            "com.apple.developer.kernel.extended-virtual-addressing"
+          ]
+        },
+        {
+          "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/8AFD1C42-4F10-4B50-895E-9CFB7A110E2F.mobileprovision",
+          "sha256": "e31610d2d2478822ad71c5fdd52d4ef5c3f852b1414f310cb1a01dc657aea8fb",
+          "uuid": "8afd1c42-4f10-4b50-895e-9cfb7a110e2f",
+          "name": "Hanlin ai App Store Mac 148901 85e374570dba",
+          "status": "READY_RESOURCE",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": true
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": []
+        },
+        {
+          "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/9c12a648-0dc0-4e4b-b3f5-c31806824bfe.mobileprovision",
+          "sha256": "849e9971aa8514006f4f1fe9bbe1007ad9cfa309f41497be7eb411873554771c",
+          "uuid": "9c12a648-0dc0-4e4b-b3f5-c31806824bfe",
+          "name": "Hanlin TestFlight VA 45089987557",
+          "status": "BLOCKED",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": false
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": [
+            "com.apple.developer.homekit"
+          ]
+        }
+      ]
+    },
+    {
+      "role": "miniapps",
+      "bundleID": "com.itorah.hanlinminiapps",
+      "entitlementsPath": "HanlinMiniAppsApp/HanlinMiniApps.entitlements",
+      "entitlementsSHA256": "6458e58ace4b853a4e291986962c305e54b948173752e98a2932d5d553c8d4ba",
+      "requiredEntitlements": {
+        "aps-environment": "$(APS_ENVIRONMENT)",
+        "com.apple.developer.healthkit": true,
+        "com.apple.developer.kernel.extended-virtual-addressing": true,
+        "com.apple.developer.usernotifications.time-sensitive": true,
+        "com.apple.developer.weatherkit": true,
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ],
+        "com.apple.developer.homekit": true,
+        "com.apple.developer.icloud-container-identifiers": [
+          "iCloud.com.itorah.chavrusachat"
+        ],
+        "com.apple.developer.icloud-services": [
+          "CloudKit",
+          "CloudDocuments"
+        ],
+        "keychain-access-groups": [
+          "$(AppIdentifierPrefix)com.itorah.hanlinminiapps.scriptwidget.services"
+        ]
+      },
+      "status": "READY_RESOURCE",
+      "selected": {
+        "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/CF891208-A85E-4C35-AC83-48CDB7753F03.mobileprovision",
+        "sha256": "aeb924df782c8b91958ae627f3d0d467cd5b0f438443dd668493514d031ff5c9",
+        "uuid": "cf891208-a85e-4c35-ac83-48cdb7753f03",
+        "name": "iTorah Integration App Store MiniApps Main 20261126 86a6dde3",
+        "status": "READY_RESOURCE",
+        "checks": {
+          "team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "distribution_profile": true,
+          "certificate_matches": true,
+          "required_entitlements_covered": true
+        },
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "missing_or_mismatched_entitlement_keys": []
+      },
+      "candidates": [
+        {
+          "path": "/Users/m1/Library/MobileDevice/Provisioning Profiles/340e5061-5117-4840-b518-677d08ce5fcf.mobileprovision",
+          "sha256": "916485700ffc735d7f10ef60790d18334e4a98ca0f3185fe28550cee4ff89282",
+          "uuid": "340e5061-5117-4840-b518-677d08ce5fcf",
+          "name": "Hanlin miniapps App Store 44383723446",
+          "status": "BLOCKED",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": false
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": [
+            "aps-environment",
+            "com.apple.developer.homekit",
+            "com.apple.developer.icloud-container-identifiers",
+            "com.apple.developer.icloud-services"
+          ]
+        },
+        {
+          "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/340e5061-5117-4840-b518-677d08ce5fcf.mobileprovision",
+          "sha256": "916485700ffc735d7f10ef60790d18334e4a98ca0f3185fe28550cee4ff89282",
+          "uuid": "340e5061-5117-4840-b518-677d08ce5fcf",
+          "name": "Hanlin miniapps App Store 44383723446",
+          "status": "BLOCKED",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": false
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": [
+            "aps-environment",
+            "com.apple.developer.homekit",
+            "com.apple.developer.icloud-container-identifiers",
+            "com.apple.developer.icloud-services"
+          ]
+        },
+        {
+          "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/CF891208-A85E-4C35-AC83-48CDB7753F03.mobileprovision",
+          "sha256": "aeb924df782c8b91958ae627f3d0d467cd5b0f438443dd668493514d031ff5c9",
+          "uuid": "cf891208-a85e-4c35-ac83-48cdb7753f03",
+          "name": "iTorah Integration App Store MiniApps Main 20261126 86a6dde3",
+          "status": "READY_RESOURCE",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": true
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": []
+        }
+      ]
+    },
+    {
+      "role": "share",
+      "bundleID": "com.itorah.chavrusachat.share",
+      "entitlementsPath": "ChavrusaChatShare/ChavrusaChatShare.entitlements",
+      "entitlementsSHA256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "requiredEntitlements": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ]
+      },
+      "status": "READY_RESOURCE",
+      "selected": {
+        "path": "/Users/m1/Library/MobileDevice/Provisioning Profiles/d49c8cd7-3546-462e-89e8-0988c425ae61.mobileprovision",
+        "sha256": "cf0e74d7380a9a153ee5c889d6ac1779b88ab46cf21378a95a9784e3de2b01ed",
+        "uuid": "d49c8cd7-3546-462e-89e8-0988c425ae61",
+        "name": "ChavrusaChat Share App Store",
+        "status": "READY_RESOURCE",
+        "checks": {
+          "team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "distribution_profile": true,
+          "certificate_matches": true,
+          "required_entitlements_covered": true
+        },
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "missing_or_mismatched_entitlement_keys": []
+      },
+      "candidates": [
+        {
+          "path": "/Users/m1/Library/MobileDevice/Provisioning Profiles/d49c8cd7-3546-462e-89e8-0988c425ae61.mobileprovision",
+          "sha256": "cf0e74d7380a9a153ee5c889d6ac1779b88ab46cf21378a95a9784e3de2b01ed",
+          "uuid": "d49c8cd7-3546-462e-89e8-0988c425ae61",
+          "name": "ChavrusaChat Share App Store",
+          "status": "READY_RESOURCE",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": true
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": []
+        },
+        {
+          "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/d49c8cd7-3546-462e-89e8-0988c425ae61.mobileprovision",
+          "sha256": "cf0e74d7380a9a153ee5c889d6ac1779b88ab46cf21378a95a9784e3de2b01ed",
+          "uuid": "d49c8cd7-3546-462e-89e8-0988c425ae61",
+          "name": "ChavrusaChat Share App Store",
+          "status": "READY_RESOURCE",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": true
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": []
+        }
+      ]
+    },
+    {
+      "role": "widgets",
+      "bundleID": "com.itorah.chavrusachat.widgets",
+      "entitlementsPath": "HanlinScriptingWidgets/HanlinScriptingWidgets.entitlements",
+      "entitlementsSHA256": "5807753b697d0374d2f57178032398287039878ce24c03409ed87b044dfdb57c",
+      "requiredEntitlements": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ],
+        "com.apple.developer.homekit": true,
+        "com.apple.developer.healthkit": true,
+        "com.apple.developer.icloud-container-identifiers": [
+          "iCloud.com.itorah.chavrusachat"
+        ],
+        "com.apple.developer.icloud-services": [
+          "CloudKit",
+          "CloudDocuments"
+        ],
+        "keychain-access-groups": [
+          "$(AppIdentifierPrefix)com.itorah.chavrusachat.scriptwidget.services"
+        ]
+      },
+      "status": "READY_RESOURCE",
+      "selected": {
+        "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/ba8bde74-3243-4844-ae33-015f04787592.mobileprovision",
+        "sha256": "d553c38ed3ae2b0e989f2f1ec2eaf4f8d2aecc71aab212b3cae914dc16d965de",
+        "uuid": "ba8bde74-3243-4844-ae33-015f04787592",
+        "name": "Hanlin Widget App Store Wave 2 ca631021 20261125",
+        "status": "READY_RESOURCE",
+        "checks": {
+          "team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "distribution_profile": true,
+          "certificate_matches": true,
+          "required_entitlements_covered": true
+        },
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "missing_or_mismatched_entitlement_keys": []
+      },
+      "candidates": [
+        {
+          "path": "/Users/m1/Library/MobileDevice/Provisioning Profiles/947e45ab-96de-47d6-be51-d1defbdef847.mobileprovision",
+          "sha256": "ba10ea5ccaab3b737a3106b9e1bef2ccfd866481252b03d2a3ad6ab74f439928",
+          "uuid": "947e45ab-96de-47d6-be51-d1defbdef847",
+          "name": "ChavrusaChat Widgets App Store",
+          "status": "BLOCKED",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": false
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": [
+            "com.apple.developer.healthkit",
+            "com.apple.developer.homekit",
+            "com.apple.developer.icloud-container-identifiers",
+            "com.apple.developer.icloud-services"
+          ]
+        },
+        {
+          "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/ChavrusaChat_Widgets_App_Store.mobileprovision",
+          "sha256": "ba10ea5ccaab3b737a3106b9e1bef2ccfd866481252b03d2a3ad6ab74f439928",
+          "uuid": "947e45ab-96de-47d6-be51-d1defbdef847",
+          "name": "ChavrusaChat Widgets App Store",
+          "status": "BLOCKED",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": false
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": [
+            "com.apple.developer.healthkit",
+            "com.apple.developer.homekit",
+            "com.apple.developer.icloud-container-identifiers",
+            "com.apple.developer.icloud-services"
+          ]
+        },
+        {
+          "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/ba8bde74-3243-4844-ae33-015f04787592.mobileprovision",
+          "sha256": "d553c38ed3ae2b0e989f2f1ec2eaf4f8d2aecc71aab212b3cae914dc16d965de",
+          "uuid": "ba8bde74-3243-4844-ae33-015f04787592",
+          "name": "Hanlin Widget App Store Wave 2 ca631021 20261125",
+          "status": "READY_RESOURCE",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": true
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": []
+        }
+      ]
+    },
+    {
+      "role": "translation",
+      "bundleID": "com.itorah.chavrusachat.translation-provider",
+      "entitlementsPath": "ChavrusaChatTranslationProvider/ChavrusaChatTranslationProvider.entitlements",
+      "entitlementsSHA256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "requiredEntitlements": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ]
+      },
+      "status": "READY_RESOURCE",
+      "selected": {
+        "path": "/Users/m1/Library/MobileDevice/Provisioning Profiles/ChavrusaChat_Translation_Provider_App_Store.mobileprovision",
+        "sha256": "20555b860ebd0f9dc5c7af77abfa2116195a3a85f36a25ca422f9960ba742d93",
+        "uuid": "5001131f-b657-425e-b8cf-3774aabd33e2",
+        "name": "ChavrusaChat Translation Provider App Store",
+        "status": "READY_RESOURCE",
+        "checks": {
+          "team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "distribution_profile": true,
+          "certificate_matches": true,
+          "required_entitlements_covered": true
+        },
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "missing_or_mismatched_entitlement_keys": []
+      },
+      "candidates": [
+        {
+          "path": "/Users/m1/Library/MobileDevice/Provisioning Profiles/ChavrusaChat_Translation_Provider_App_Store.mobileprovision",
+          "sha256": "20555b860ebd0f9dc5c7af77abfa2116195a3a85f36a25ca422f9960ba742d93",
+          "uuid": "5001131f-b657-425e-b8cf-3774aabd33e2",
+          "name": "ChavrusaChat Translation Provider App Store",
+          "status": "READY_RESOURCE",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": true
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": []
+        },
+        {
+          "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/5001131f-b657-425e-b8cf-3774aabd33e2.mobileprovision",
+          "sha256": "20555b860ebd0f9dc5c7af77abfa2116195a3a85f36a25ca422f9960ba742d93",
+          "uuid": "5001131f-b657-425e-b8cf-3774aabd33e2",
+          "name": "ChavrusaChat Translation Provider App Store",
+          "status": "READY_RESOURCE",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": true
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": []
+        }
+      ]
+    },
+    {
+      "role": "notification",
+      "bundleID": "com.itorah.chavrusachat.notification-service",
+      "entitlementsPath": "ChavrusaChatNotificationService/ChavrusaChatNotificationService.entitlements",
+      "entitlementsSHA256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "requiredEntitlements": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ]
+      },
+      "status": "READY_RESOURCE",
+      "selected": {
+        "path": "/Users/m1/Library/MobileDevice/Provisioning Profiles/1a1255b6-f3bb-40e7-bc76-5fbb42a8a7e9.mobileprovision",
+        "sha256": "e57246b4f7cc8a968257e532a50c2019f6764fe7a6b1c6be00fae3f1ced1e4a3",
+        "uuid": "1a1255b6-f3bb-40e7-bc76-5fbb42a8a7e9",
+        "name": "ChavrusaChat Notification Service App Store",
+        "status": "READY_RESOURCE",
+        "checks": {
+          "team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "distribution_profile": true,
+          "certificate_matches": true,
+          "required_entitlements_covered": true
+        },
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "missing_or_mismatched_entitlement_keys": []
+      },
+      "candidates": [
+        {
+          "path": "/Users/m1/Library/MobileDevice/Provisioning Profiles/1a1255b6-f3bb-40e7-bc76-5fbb42a8a7e9.mobileprovision",
+          "sha256": "e57246b4f7cc8a968257e532a50c2019f6764fe7a6b1c6be00fae3f1ced1e4a3",
+          "uuid": "1a1255b6-f3bb-40e7-bc76-5fbb42a8a7e9",
+          "name": "ChavrusaChat Notification Service App Store",
+          "status": "READY_RESOURCE",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": true
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": []
+        },
+        {
+          "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/ChavrusaChat_Notification_Service_App_Store.mobileprovision",
+          "sha256": "e57246b4f7cc8a968257e532a50c2019f6764fe7a6b1c6be00fae3f1ced1e4a3",
+          "uuid": "1a1255b6-f3bb-40e7-bc76-5fbb42a8a7e9",
+          "name": "ChavrusaChat Notification Service App Store",
+          "status": "READY_RESOURCE",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": true
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": []
+        }
+      ]
+    },
+    {
+      "role": "miniapps_widgets",
+      "bundleID": "com.itorah.hanlinminiapps.widgets",
+      "entitlementsPath": "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.entitlements",
+      "entitlementsSHA256": "0da89872d45b5e9b990de71c4f9c0855f1117f81cb1867a07aa3bfb8b6106254",
+      "requiredEntitlements": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ],
+        "com.apple.developer.homekit": true,
+        "com.apple.developer.healthkit": true,
+        "com.apple.developer.icloud-container-identifiers": [
+          "iCloud.com.itorah.chavrusachat"
+        ],
+        "com.apple.developer.icloud-services": [
+          "CloudKit",
+          "CloudDocuments"
+        ],
+        "keychain-access-groups": [
+          "$(AppIdentifierPrefix)com.itorah.hanlinminiapps.scriptwidget.services"
+        ]
+      },
+      "status": "READY_RESOURCE",
+      "selected": {
+        "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/7D57A716-BA2B-45DE-A18B-B32A7F01627D.mobileprovision",
+        "sha256": "a26c90d20ee1d559e5731caa682715b08582fae1cfaeab52ae70d9306d7abc16",
+        "uuid": "7d57a716-ba2b-45de-a18b-b32a7f01627d",
+        "name": "iTorah Integration App Store MiniApps Widgets 20261126 86a6dde3",
+        "status": "READY_RESOURCE",
+        "checks": {
+          "team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "distribution_profile": true,
+          "certificate_matches": true,
+          "required_entitlements_covered": true
+        },
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "missing_or_mismatched_entitlement_keys": []
+      },
+      "candidates": [
+        {
+          "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/7D57A716-BA2B-45DE-A18B-B32A7F01627D.mobileprovision",
+          "sha256": "a26c90d20ee1d559e5731caa682715b08582fae1cfaeab52ae70d9306d7abc16",
+          "uuid": "7d57a716-ba2b-45de-a18b-b32a7f01627d",
+          "name": "iTorah Integration App Store MiniApps Widgets 20261126 86a6dde3",
+          "status": "READY_RESOURCE",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": true
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": []
+        }
+      ]
+    },
+    {
+      "role": "miniapps_share",
+      "bundleID": "com.itorah.hanlinminiapps.share",
+      "entitlementsPath": "HanlinMiniAppsExtensions/Share/HanlinMiniAppsShare.entitlements",
+      "entitlementsSHA256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "requiredEntitlements": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ]
+      },
+      "status": "READY_RESOURCE",
+      "selected": {
+        "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/47E96F5D-5EA5-4AAA-9242-EB68ADBFE6C0.mobileprovision",
+        "sha256": "d80e09a9ba3d82c4d3c70d5916500c48d70d54cf5edf106468652fc8eba195c7",
+        "uuid": "47e96f5d-5ea5-4aaa-9242-eb68adbfe6c0",
+        "name": "iTorah Integration App Store MiniApps Share 20261126 86a6dde3",
+        "status": "READY_RESOURCE",
+        "checks": {
+          "team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "distribution_profile": true,
+          "certificate_matches": true,
+          "required_entitlements_covered": true
+        },
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "missing_or_mismatched_entitlement_keys": []
+      },
+      "candidates": [
+        {
+          "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/47E96F5D-5EA5-4AAA-9242-EB68ADBFE6C0.mobileprovision",
+          "sha256": "d80e09a9ba3d82c4d3c70d5916500c48d70d54cf5edf106468652fc8eba195c7",
+          "uuid": "47e96f5d-5ea5-4aaa-9242-eb68adbfe6c0",
+          "name": "iTorah Integration App Store MiniApps Share 20261126 86a6dde3",
+          "status": "READY_RESOURCE",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": true
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": []
+        }
+      ]
+    },
+    {
+      "role": "miniapps_translation_provider",
+      "bundleID": "com.itorah.hanlinminiapps.translation-provider",
+      "entitlementsPath": "HanlinMiniAppsExtensions/Translation/HanlinMiniAppsTranslationProvider.entitlements",
+      "entitlementsSHA256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "requiredEntitlements": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ]
+      },
+      "status": "READY_RESOURCE",
+      "selected": {
+        "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/1DE54C0C-CD5C-41EC-A44B-83A9F265E47B.mobileprovision",
+        "sha256": "097d015e8e4295453ace0fb3f45f28f02367799dc91a8e3564b67f70eb277298",
+        "uuid": "1de54c0c-cd5c-41ec-a44b-83a9f265e47b",
+        "name": "iTorah Integration App Store MiniApps Translation 20261126 86a6dde3",
+        "status": "READY_RESOURCE",
+        "checks": {
+          "team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "distribution_profile": true,
+          "certificate_matches": true,
+          "required_entitlements_covered": true
+        },
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "missing_or_mismatched_entitlement_keys": []
+      },
+      "candidates": [
+        {
+          "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/1DE54C0C-CD5C-41EC-A44B-83A9F265E47B.mobileprovision",
+          "sha256": "097d015e8e4295453ace0fb3f45f28f02367799dc91a8e3564b67f70eb277298",
+          "uuid": "1de54c0c-cd5c-41ec-a44b-83a9f265e47b",
+          "name": "iTorah Integration App Store MiniApps Translation 20261126 86a6dde3",
+          "status": "READY_RESOURCE",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": true
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": []
+        }
+      ]
+    },
+    {
+      "role": "miniapps_notification_service",
+      "bundleID": "com.itorah.hanlinminiapps.notification-service",
+      "entitlementsPath": "HanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements",
+      "entitlementsSHA256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "requiredEntitlements": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ]
+      },
+      "status": "READY_RESOURCE",
+      "selected": {
+        "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/0C80E458-27BC-4714-B6A2-3A9B53F43236.mobileprovision",
+        "sha256": "628ecaf8ad2c8d37deace49e6a90ea15d6883995d152bfb015a3b893729aa710",
+        "uuid": "0c80e458-27bc-4714-b6a2-3a9b53f43236",
+        "name": "iTorah Integration App Store MiniApps Notification 20261126 86a6dde3",
+        "status": "READY_RESOURCE",
+        "checks": {
+          "team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "distribution_profile": true,
+          "certificate_matches": true,
+          "required_entitlements_covered": true
+        },
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "missing_or_mismatched_entitlement_keys": []
+      },
+      "candidates": [
+        {
+          "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/0C80E458-27BC-4714-B6A2-3A9B53F43236.mobileprovision",
+          "sha256": "628ecaf8ad2c8d37deace49e6a90ea15d6883995d152bfb015a3b893729aa710",
+          "uuid": "0c80e458-27bc-4714-b6a2-3a9b53f43236",
+          "name": "iTorah Integration App Store MiniApps Notification 20261126 86a6dde3",
+          "status": "READY_RESOURCE",
+          "checks": {
+            "team_matches": true,
+            "bundle_matches": true,
+            "not_expired": true,
+            "distribution_profile": true,
+            "certificate_matches": true,
+            "required_entitlements_covered": true
+          },
+          "expiration": "2027-09-07T07:25:00+00:00",
+          "missing_or_mismatched_entitlement_keys": []
+        }
+      ]
+    },
+    {
+      "role": "miniapps_keyboard",
+      "bundleID": "com.itorah.hanlinminiapps.keyboard",
+      "entitlementsPath": "HanlinMiniAppsExtensions/Keyboard/HanlinMiniAppsKeyboard.entitlements",
+      "entitlementsSHA256": "6d7c2663c6e543380d18eccc7fc96cd1b0bfd3e1dae524aa59f9688abb49f8dd",
+      "requiredEntitlements": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat"
+        ]
+      },
+      "status": "MISSING_COMPATIBLE_LOCAL_PROFILE",
+      "selected": null,
+      "candidates": []
+    },
+    {
+      "role": "miniapps_notification_content",
+      "bundleID": "com.itorah.hanlinminiapps.notification-content",
+      "entitlementsPath": "HanlinMiniAppsExtensions/NotificationContent/HanlinMiniAppsNotificationContent.entitlements",
+      "entitlementsSHA256": "6d7c2663c6e543380d18eccc7fc96cd1b0bfd3e1dae524aa59f9688abb49f8dd",
+      "requiredEntitlements": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat"
+        ]
+      },
+      "status": "MISSING_COMPATIBLE_LOCAL_PROFILE",
+      "selected": null,
+      "candidates": []
+    },
+    {
+      "role": "miniapps_camera_capture",
+      "bundleID": "com.itorah.hanlinminiapps.camera-capture",
+      "entitlementsPath": "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.entitlements",
+      "entitlementsSHA256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c",
+      "requiredEntitlements": {},
+      "status": "MISSING_COMPATIBLE_LOCAL_PROFILE",
+      "selected": null,
+      "candidates": []
+    }
+  ],
+  "ascBuildNumbers": [
+    {
+      "bundleID": "com.itorah.chavrusachat",
+      "appID": "6811910017",
+      "proposedBuildNumber": "149301",
+      "queriedAt": "2026-11-26T18:08:58.530037+00:00",
+      "status": "ABSENT_AT_ASC_READBACK",
+      "matchingBuilds": []
+    },
+    {
+      "bundleID": "com.itorah.hanlinminiapps",
+      "appID": "6836449016",
+      "proposedBuildNumber": "8401",
+      "queriedAt": "2026-11-26T18:08:59.947562+00:00",
+      "status": "ABSENT_AT_ASC_READBACK",
+      "matchingBuilds": []
+    }
+  ],
+  "newBundleResources": [
+    {
+      "role": "miniapps_keyboard",
+      "bundleID": "com.itorah.hanlinminiapps.keyboard",
+      "exactRegisteredIDs": [],
+      "status": "MISSING_OR_AMBIGUOUS"
+    },
+    {
+      "role": "miniapps_notification_content",
+      "bundleID": "com.itorah.hanlinminiapps.notification-content",
+      "exactRegisteredIDs": [],
+      "status": "MISSING_OR_AMBIGUOUS"
+    },
+    {
+      "role": "miniapps_camera_capture",
+      "bundleID": "com.itorah.hanlinminiapps.camera-capture",
+      "exactRegisteredIDs": [],
+      "status": "MISSING_OR_AMBIGUOUS"
+    }
+  ],
+  "team": "NA6HPWARQ2",
+  "identity": {
+    "sha1": "644940FCF25D1730DBD1BF7596AEBA7229E2B8FD",
+    "presentInValidIdentityList": true,
+    "privateKeyExported": false,
+    "keychainScope": "configured-existing-keychain",
+    "keychain": "/Users/m1/Library/Keychains/apple-signing.keychain-db",
+    "publicCertificate": {
+      "publicSHA256": "5aefaf80b344410af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b",
+      "datesAndSubject": [
+        "notBefore=Sep  7 07:25:01 2026 GMT",
+        "notAfter=Sep  7 07:25:00 2027 GMT",
+        "subject= /UID=NA6HPWARQ2/CN=Apple Distribution: David Povarsky (NA6HPWARQ2)/OU=NA6HPWARQ2/O=David Povarsky/C=IL"
+      ]
+    }
+  },
+  "decodedUniqueProfileCount": 47,
+  "profileReadFailures": [],
+  "signingToolVersions": {
+    "PyJWT": "2.15.1",
+    "cryptography": "50.0.2"
+  },
+  "decoderScope": "Original security cms -D with documented -k selecting the configured existing keychain; no default search-list mutation.",
+  "localReadyCount": 10,
+  "finishedAt": "2026-11-26T18:09:02.700316+00:00"
+}

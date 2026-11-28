@@ -1,0 +1,19 @@
+{
+  "baseCommit": "56539e07ba9a5ccf5853063c063948f95a8f946a",
+  "unchangedBodiesAndFacades": {
+    "func done()": "30cc0ac6299fc4aad77316f4fb7ee5e596417637602207958154b0e242b3d58f",
+    "func close()": "a452506fd8f41e6e2493a9319c68c672dfe0b6fafc380a90e9361f6d966fd2bc",
+    "private func releaseEngine()": "f881704b579831d64ed219c33e765b3b55dfbdb58b595b344e1338aa15e6eea8",
+    "func cancel()": "f6326c16eb1805183dfce775d0c9236386d1e6965e0c9aee51f8207960765a5f",
+    "func complete(": "5449ee538a49f4c8c2b50e9792e4031f0028d535689238cc40e9cfd89ddc3f50",
+    "private func completeJSON(": "671d19a1ebf299ede9799c406b5a1b9340dcec8e6e46808c56adff54d01debdb",
+    "private func finish(": "4364392a603529ffbb80db57edfedf97bb926aca9192f4090f1355e6bcde63ef",
+    "Scripts/NativeScript/host-services.ts": "efe0a28483fa36dbb3745f380b2ddd1bc6348af3b12c41ef10f19c2dd9a486a6",
+    "Packages/HanlinExpoUI/src/host-services.ts": "010488e8c6aae2635f67d45cefebb9fdb2d4f97af71161af011a83d626ad60e7",
+    "perform complete/cancel dispatch": "338d7d5c0fb3679633835c8f440d58e2abdd2baa841ef42d30b44e9aba3f1a6a"
+  },
+  "redGreenExistingTestBytesIdentical": true,
+  "existingTestSHA256": "0018817dc30b612dca2248464761f53dba01dae7fc24960192e1f7f105a46dc2",
+  "fullNativeReturnMethodHasDiscardableResult": true,
+  "statusFields": "ok/opened derive only from actual openSource callback true; requested only when this call invokes openSource; otherwise status differentiates not-available and in-progress."
+}

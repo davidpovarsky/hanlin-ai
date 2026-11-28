@@ -1,0 +1,31 @@
+{
+  "at": "2026-11-28T09:51:51.581881+00:00",
+  "source": "04e33c45acedd3f372f836b06f17b805bc91293d",
+  "failedNativeSource": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+  "candidateManifestSHA256": "96cc8d3e52c4b116c33133ebc0ce1967b7e27f54b20cdab674d0a9344b0e816b",
+  "candidatePayloadsVerified": 8,
+  "terminalManifestSHA256": "0aa839248a03f0075ad64d9d2fd21e4b92224244f5f1979a4131e98548b18aa0",
+  "terminalPayloadsVerified": 167,
+  "selectedRawMembersSHAAndCRCVerified": 33,
+  "candidateSHA256": "503a8d58e2b59fd83a4296954f63222c6668a913c46b8dce2f36a05cbf9556b8",
+  "patchSHA256": "dbb0ca40def52c6354d36e0225ba9dc5c74da5fc90fc5a79101f981390fe0182",
+  "actualCompilerLogSHA256": "53ccf58e0365ef3195e51de40ff1c6f8f09cbd33969eb986e03a3de32c0acfd0",
+  "actualCompilerErrorLines": [
+    85340,
+    85348
+  ],
+  "sourceAttributionLimit": "No independent retained compiled UI-file hash. Actual compiler names and prints both original5fac expressions; current04 has the same two expressions.",
+  "all42MethodBodiesExact": true,
+  "wholeFileExactlyTwoSubstitutionsAndInverse": true,
+  "actualPatchApplyAndInverse": true,
+  "allOtherAssertionsBudgetsHelpersPreserved": true,
+  "nativeBuildRepair": "SOURCE_ONLY_PENDING_ACTUAL_COMPILE",
+  "existingFailure": "MiniApps buildPASS;AI_HLY build65;UI NOT_RUN",
+  "portableTestsRun": 0,
+  "nativeRuns": 0,
+  "APIReads": 0,
+  "limits": [
+    "Full remote ZIP not downloaded;33 selected original members independently verified from retained lossless bytes and recorded SHA/CRC.",
+    "No independent compiled-UI file hash was retained; actual raw compiler displays the exact two expressions and tracked overlay excludes this file."
+  ]
+}

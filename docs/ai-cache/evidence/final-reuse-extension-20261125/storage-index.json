@@ -1,0 +1,46 @@
+{
+  "files": [
+    {
+      "originalPath": "README.md",
+      "originalSHA256": "ee44e8d428d44d4d143efbcdfe43afbb2421572148c66d58c4d8d566a2c9c6a9",
+      "storedPath": "README.md.gz",
+      "storedSHA256": "db8e289bfa6a7bacfd95c6896dbb4c1d6f1c776737af648ef1e0e12a2913e27f",
+      "bytes": 1962
+    },
+    {
+      "originalPath": "reuse-extension.json",
+      "originalSHA256": "7315294b3b31ff2dadcefd0b329fb72bf2189b84cf591938ad57a356522a19fb",
+      "storedPath": "reuse-extension.json",
+      "storedSHA256": "7315294b3b31ff2dadcefd0b329fb72bf2189b84cf591938ad57a356522a19fb",
+      "bytes": 83365
+    },
+    {
+      "originalPath": "verification-execution.json",
+      "originalSHA256": "cc5d10eb1c8ba8ea3340c1465a073c4fa0ec82bb2626fea7791888396a80fc47",
+      "storedPath": "verification-execution.json",
+      "storedSHA256": "cc5d10eb1c8ba8ea3340c1465a073c4fa0ec82bb2626fea7791888396a80fc47",
+      "bytes": 349
+    },
+    {
+      "originalPath": "verification.log",
+      "originalSHA256": "b656dc08b578788627d7ce13560684609e5513e600f4097d50ac5d75483ad491",
+      "storedPath": "verification.log.gz",
+      "storedSHA256": "6823399cc4b1eca7ce4c70d1ccb844efc76b44749406ee6447e598cdcef14d09",
+      "bytes": 509
+    },
+    {
+      "originalPath": "verify-extension.py",
+      "originalSHA256": "38ee9286df4a04d3f54428a9a2a4b0f23ed392b2ddc53f17480d9c43d2ed5648",
+      "storedPath": "verify-extension.py",
+      "storedSHA256": "38ee9286df4a04d3f54428a9a2a4b0f23ed392b2ddc53f17480d9c43d2ed5648",
+      "bytes": 14732
+    },
+    {
+      "originalPath": "index.json",
+      "originalSHA256": "559e918f6f7030eeae924669fff731e83bee3f09e94ac43ddac9bc02fb154122",
+      "storedPath": "index.json",
+      "storedSHA256": "559e918f6f7030eeae924669fff731e83bee3f09e94ac43ddac9bc02fb154122",
+      "bytes": 880
+    }
+  ]
+}

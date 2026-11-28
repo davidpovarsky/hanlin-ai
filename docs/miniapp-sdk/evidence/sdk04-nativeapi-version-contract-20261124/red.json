@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "df436d7650bc5918d29707868565fc114e65c445",
+  "cwd": "/mnt/development/projects/worktrees/hanlin-sdk04-nativeapi-versions-20261124",
+  "startedFrom": "production bytes unchanged; only new focused regression added",
+  "utc": "2026-11-24T07:45:16.144994+00:00",
+  "argv": [
+    "/usr/local/bin/node",
+    "--test",
+    "--test-name-pattern=Native API facade versions follow the resolved graph",
+    "Scripts/Audit/Tests/runtime-version-contract.test.mjs"
+  ],
+  "exitCode": 1,
+  "node": "v24.22.0",
+  "platform": "Linux-6.17.0-1020-oracle-aarch64-with-glibc2.39",
+  "stdoutSHA256": "8e718d17d1506cf93faacaed2fabe201091a3a4df4e104a5450004f0de9444f1",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "testSourceSHA256": "95f49391aecc82567c7fea4cdadc171c344547660bb36b4a82c8d7721d8c287d"
+}

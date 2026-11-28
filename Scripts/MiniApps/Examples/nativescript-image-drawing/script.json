@@ -1,0 +1,10 @@
+{
+  "name": "Native Image Drawing",
+  "version": "1.0.0",
+  "description": "Original UIKit drawing through NativeScript, with center rotation and explicit invalid-size rejection.",
+  "entry": "nativescript/app/bundle.mjs",
+  "runInApp": true,
+  "hanlinRuntime": "hanlin-nativescript",
+  "icon": "paintbrush.pointed",
+  "color": "#2563EB"
+}

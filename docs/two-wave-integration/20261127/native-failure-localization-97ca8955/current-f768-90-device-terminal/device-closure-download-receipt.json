@@ -1,0 +1,280 @@
+{
+  "artifact": {
+    "id": 15178308804,
+    "node_id": "MDg6QXJ0aWZhY3QxNTE3ODMwODgwNA==",
+    "name": "AI_Hanlin-iOS26-build-logs",
+    "size_in_bytes": 2833000,
+    "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15178308804",
+    "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15178308804/zip",
+    "expired": false,
+    "digest": "sha256:fe0f1cd96a01f7b29442ea0adf0a293db4e61d40f54d46063800cdd483f37129",
+    "created_at": "2026-11-27T07:03:55Z",
+    "updated_at": "2026-11-27T07:03:55Z",
+    "expires_at": "2026-12-11T07:03:53Z",
+    "workflow_run": {
+      "id": 45949460695,
+      "repository_id": 1295277723,
+      "head_repository_id": 1295277723,
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "head_sha": "f768d634bfa8a102cf63b32c7ab9d129cafc671d"
+    }
+  },
+  "zip": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/current-f768-90-device-terminal/AI_Hanlin-iOS26-build-logs.zip",
+    "bytes": 2833000,
+    "sha256": "fe0f1cd96a01f7b29442ea0adf0a293db4e61d40f54d46063800cdd483f37129"
+  },
+  "report": {
+    "originalMember": "widget-native-mach-o.json",
+    "bytes": 70086,
+    "sha256": "b14da853e9d117ab9f0dd6457feae522f3d3b2ee16c0738e88316474440b5247"
+  },
+  "downloadExit": 0,
+  "recordedAtUTC": "2026-11-27T07:27:09.817273+00:00",
+  "entries": [
+    {
+      "name": "00-prepare.log",
+      "bytes": 35
+    },
+    {
+      "name": "00-summary.txt",
+      "bytes": 10388
+    },
+    {
+      "name": "01-environment.log",
+      "bytes": 23870
+    },
+    {
+      "name": "02-cache-mode.log",
+      "bytes": 165
+    },
+    {
+      "name": "02-select-xcode26.log",
+      "bytes": 1523
+    },
+    {
+      "name": "03-create-config-xcconfig.log",
+      "bytes": 2927
+    },
+    {
+      "name": "04-dyld-scanner-tests.log",
+      "bytes": 3439
+    },
+    {
+      "name": "04-mcp-host-prepare.log",
+      "bytes": 877
+    },
+    {
+      "name": "04-mcp-install-dedup.log",
+      "bytes": 63
+    },
+    {
+      "name": "04-mcp-server-everything-integration.log",
+      "bytes": 1926
+    },
+    {
+      "name": "04-package-runtime-host.log",
+      "bytes": 877
+    },
+    {
+      "name": "04-prepare-runtime-core.log",
+      "bytes": 21897
+    },
+    {
+      "name": "04-production-compiler-acceptance.log",
+      "bytes": 6256
+    },
+    {
+      "name": "04-runtime-link-tests.log",
+      "bytes": 741
+    },
+    {
+      "name": "04-runtime-preflight.log",
+      "bytes": 1736
+    },
+    {
+      "name": "04-validate-project.log",
+      "bytes": 13408
+    },
+    {
+      "name": "05-build-settings-full.log",
+      "bytes": 53973
+    },
+    {
+      "name": "05-inspect-project.log",
+      "bytes": 75665
+    },
+    {
+      "name": "05-stage-modular-headers-duration-seconds.txt",
+      "bytes": 3
+    },
+    {
+      "name": "06-cache-input-capture.log",
+      "bytes": 103
+    },
+    {
+      "name": "06-cache-input-restore.log",
+      "bytes": 46
+    },
+    {
+      "name": "06-diagnostics-build-provenance.json",
+      "bytes": 7046
+    },
+    {
+      "name": "06-resolve-packages.log",
+      "bytes": 20978
+    },
+    {
+      "name": "07-build-step-wrapper.log",
+      "bytes": 15828909
+    },
+    {
+      "name": "07-xcodebuild.raw.log",
+      "bytes": 15825135
+    },
+    {
+      "name": "07-app-compilation-duration-seconds.txt",
+      "bytes": 5
+    },
+    {
+      "name": "08-curl-ios-dependencies.txt",
+      "bytes": 820
+    },
+    {
+      "name": "08-dyld-closure.json",
+      "bytes": 332899
+    },
+    {
+      "name": "08-dyld-closure.txt",
+      "bytes": 118616
+    },
+    {
+      "name": "08-found-apps.txt",
+      "bytes": 64
+    },
+    {
+      "name": "08-ios-system-resources.json",
+      "bytes": 667
+    },
+    {
+      "name": "08-libssh2-build-version.txt",
+      "bytes": 529
+    },
+    {
+      "name": "08-locate-app.log",
+      "bytes": 187696
+    },
+    {
+      "name": "08-openssl-build-version.txt",
+      "bytes": 244
+    },
+    {
+      "name": "08-runtime-symbols.txt",
+      "bytes": 107
+    },
+    {
+      "name": "08-sdk-bundle-resources.json",
+      "bytes": 10258
+    },
+    {
+      "name": "08-sdk-localization.json",
+      "bytes": 1025
+    },
+    {
+      "name": "09-package-ipa.log",
+      "bytes": 46817
+    },
+    {
+      "name": "09-packaged-ios-system-resources.json",
+      "bytes": 631
+    },
+    {
+      "name": "09-packaged-ipa-dyld-closure.json",
+      "bytes": 322819
+    },
+    {
+      "name": "09-packaged-ipa-dyld-closure.txt",
+      "bytes": 114296
+    },
+    {
+      "name": "09-packaged-sdk-bundle-resources.json",
+      "bytes": 10258
+    },
+    {
+      "name": "09-packaged-sdk-localization.json",
+      "bytes": 1025
+    },
+    {
+      "name": "BuildResult.xcresult/Data/data.0~Aq5Y4zgWm7YFKS1seKePHCCXmxo4KOlgGvenS4rfS4SY05AI2ZaM5qmQJ1FywuIiR4IE8GiPYEOSXvMZLeFujw==",
+      "bytes": 293
+    },
+    {
+      "name": "BuildResult.xcresult/Data/data.0~d6B6UzuCk4lh_CtoffVMzOI1AfYYsIs8xtTIQxp7R0PBOWC7sGLDpeDhjwwIeIDmwnnr4CW5RkCtyzd3sljBjg==",
+      "bytes": 1118985
+    },
+    {
+      "name": "BuildResult.xcresult/Data/refs.0~Aq5Y4zgWm7YFKS1seKePHCCXmxo4KOlgGvenS4rfS4SY05AI2ZaM5qmQJ1FywuIiR4IE8GiPYEOSXvMZLeFujw==",
+      "bytes": 1
+    },
+    {
+      "name": "BuildResult.xcresult/Data/data.0~iQBytw1ak8efL5iUksfdby_hZ64DGU8LL54LgtqAz5iekJDMVdQ-w_fuu9KGq9HfTV-6I1bR0UT05L7GAsjfLg==",
+      "bytes": 33598
+    },
+    {
+      "name": "BuildResult.xcresult/Data/refs.0~d6B6UzuCk4lh_CtoffVMzOI1AfYYsIs8xtTIQxp7R0PBOWC7sGLDpeDhjwwIeIDmwnnr4CW5RkCtyzd3sljBjg==",
+      "bytes": 1
+    },
+    {
+      "name": "BuildResult.xcresult/Data/refs.0~iQBytw1ak8efL5iUksfdby_hZ64DGU8LL54LgtqAz5iekJDMVdQ-w_fuu9KGq9HfTV-6I1bR0UT05L7GAsjfLg==",
+      "bytes": 133
+    },
+    {
+      "name": "BuildResult.xcresult/Info.plist",
+      "bytes": 776
+    },
+    {
+      "name": "a2ui-generation/compiler.log",
+      "bytes": 0
+    },
+    {
+      "name": "a2ui-generation/result.json",
+      "bytes": 2613
+    },
+    {
+      "name": "app-path.txt",
+      "bytes": 64
+    },
+    {
+      "name": "commandDictionary.plist",
+      "bytes": 3560
+    },
+    {
+      "name": "extraCommandsDictionary.plist",
+      "bytes": 181
+    },
+    {
+      "name": "miniapp-upstream-inputs.patch",
+      "bytes": 162919
+    },
+    {
+      "name": "miniapp-upstream-resolution.json",
+      "bytes": 20829
+    },
+    {
+      "name": "miniapp-upstream-resolution.log",
+      "bytes": 7973
+    },
+    {
+      "name": "sdk-native-export.log",
+      "bytes": 1539
+    },
+    {
+      "name": "sdk-native-verify.log",
+      "bytes": 65
+    },
+    {
+      "name": "widget-native-mach-o.json",
+      "bytes": 70086
+    }
+  ]
+}

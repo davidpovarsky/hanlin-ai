@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "subject": "ChatMarkdownView Apple compiler diagnostic follow-up",
+  "source_scope": [
+    "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift"
+  ],
+  "archive_failure": {
+    "run_id": 44969425818,
+    "job_id": 137045705013,
+    "app_source": "20e6bd518c15b8b9746f298506e4d5d13e96955a",
+    "renderer_source": "6e884c73352a272c4e7bf8a5917e8b2157bc952e",
+    "diagnostic": "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift:27:25: error: failed to produce diagnostic for expression; please submit a bug report",
+    "related_failure_evidence": "first-archive-failure-44969425818.json",
+    "finding": "The Apple compiler reported a diagnostic failure for the single compound SwiftUI body expression. The SDK initializer labels and exported renderer modifier signatures match the call site. The exact internal compiler failure mechanism is not established."
+  },
+  "change": {
+    "classification": "App-only explicit type boundaries for the SwiftUI expression",
+    "details": [
+      "Build HanlinMarkdownView as a concrete local value with explicitly typed text and citation groups.",
+      "Separate linkedRenderer, highlightedRenderer, and final selection/preview modifiers into short opaque view boundaries.",
+      "Give rendered, selection-action, selection-activity, selection-change, and optional preview callbacks explicit function types matching their SDK declarations.",
+      "Use the exported @MainActor @Sendable MarkdownCodeBlockRenderer typealias for the static code-fence callback.",
+      "Move the existing cancellable four-second highlight lifetime into a named async method."
+    ],
+    "behavior_preserved": [
+      "Native continuous selection and Select All bindings",
+      "Source-ID and exact-range save callbacks",
+      "Citation grouping and link presentation",
+      "Document-mode preview suppression",
+      "Deliberate long-hold preview callback",
+      "Mermaid/diff rendering of closed fences",
+      "Highlight request cancellation and state ownership"
+    ],
+    "sdk_wrapper_changed": false,
+    "renderer_changed": false,
+    "dependency_pins_changed": false
+  },
+  "source_hashes": {
+    "captured_at_utc": "2026-11-22T01:41:21.604901+00:00",
+    "baseline_commit": "20e6bd518c15b8b9746f298506e4d5d13e96955a",
+    "path": "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift",
+    "before_git_blob": {
+      "size_bytes": 8146,
+      "sha256": "ee90316ec04be11d7799ad225223a94fa12db88e13a2d94204a0bb4afa57324d"
+    },
+    "after_worktree": {
+      "size_bytes": 9357,
+      "sha256": "bca9926d0099a8c78c47fd01a4c37d2bb3e319fd3db4be7e529fd97d11b51744",
+      "sha256_lf_normalized": "bca9926d0099a8c78c47fd01a4c37d2bb3e319fd3db4be7e529fd97d11b51744"
+    }
+  },
+  "validation": {
+    "scoped_parse": {
+      "status": "passed",
+      "command": [
+        "swiftc",
+        "-frontend",
+        "-parse",
+        "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift"
+      ],
+      "qualification": "Windows source syntax only; no Apple SDK type checking or UIKit runtime validation."
+    },
+    "scoped_whitespace": {
+      "status": "passed",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift"
+      ]
+    },
+    "unchanged_domain_fixtures_rerun": false,
+    "original_domain_evidence": "selection-domain-result.json",
+    "original_evidence_modified": false,
+    "subsequent_native_archive": "passed in run 44972815423: corrected app source c4b80bd60e291c5f0198efb7b9384ec9ff5a39f2 completed the signed Apple archive; physical runtime correctness is not established",
+    "simulator_run": false,
+    "physical_ipad_validation": false,
+    "subsequent_native_archive_evidence": {
+      "status": "EXECUTED_PASS",
+      "workflow_run_id": 44972815423,
+      "job_id": 137056085991,
+      "app_source_sha": "c4b80bd60e291c5f0198efb7b9384ec9ff5a39f2",
+      "renderer_revision": "6e884c73352a272c4e7bf8a5917e8b2157bc952e",
+      "build_number": "145401",
+      "archive_started_at": "2026-11-22T01:54:38Z",
+      "archive_completed_at": "2026-11-22T02:24:53Z",
+      "evidence_file": "workflow-release-145401.json",
+      "scope": "Signed device archive and Apple-framework compilation of the corrected composition. No simulator or physical-iPad runtime validation."
+    }
+  },
+  "peer_review": {
+    "agent": "composer_interactions",
+    "mode": "Read-only source review",
+    "result": "No concrete type/API or behavior issue found. Initializer order, callback actor/sendability, optional callback promotion, code renderer alias, modifier order, state ownership, citation grouping, source IDs and cancellation behavior reviewed.",
+    "tests_or_ci_run_by_reviewer": false
+  },
+  "reproduction_python": "import pathlib,subprocess,hashlib,json,datetime,sys\nroot=pathlib.Path(r\"C:\\Users\\DAVID\\Code\\hanlin-ipad-interactions-20261122\")\npath=\"AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift\"\nhead=subprocess.check_output([\"git\",\"rev-parse\",\"HEAD\"],cwd=root,text=True).strip()\nbefore=subprocess.check_output([\"git\",\"show\",head+\":\"+path],cwd=root)\nafter=(root/path).read_bytes()\nprint(json.dumps({\"captured_at_utc\":datetime.datetime.now(datetime.timezone.utc).isoformat(),\"baseline_commit\":head,\"path\":path,\"before_git_blob\":{\"size_bytes\":len(before),\"sha256\":hashlib.sha256(before).hexdigest()},\"after_worktree\":{\"size_bytes\":len(after),\"sha256\":hashlib.sha256(after).hexdigest(),\"sha256_lf_normalized\":hashlib.sha256(after.replace(b\"\\r\\n\",b\"\\n\")).hexdigest()}}),flush=True)\nfor label,args in [(\"ChatMarkdownView syntax\",[\"swiftc\",\"-frontend\",\"-parse\",path]),(\"ChatMarkdownView whitespace\",[\"git\",\"diff\",\"--check\",\"--\",path])]:\n    result=subprocess.run(args,cwd=root,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,encoding=\"utf-8\",errors=\"replace\",timeout=90)\n    print(label+\" exit=\"+str(result.returncode),flush=True)\n    if result.stdout: print(result.stdout,flush=True)\n    if result.returncode: sys.exit(result.returncode)\n",
+  "validation_job_receipt": {
+    "id": "job_23de13982e0e",
+    "source": "exec@host_7ec8382e82747448",
+    "host": "host_7ec8382e82747448",
+    "tool": "exec",
+    "status": "succeeded",
+    "exit_code": 0,
+    "timeout_s": 120,
+    "started_at": "2026-11-22T01:41:12.504218+00:00",
+    "finished_at": "2026-11-22T01:41:23.871878+00:00",
+    "duration_s": 11.37,
+    "output_truncated": false,
+    "output": "{\"captured_at_utc\": \"2026-11-22T01:41:21.604901+00:00\", \"baseline_commit\": \"20e6bd518c15b8b9746f298506e4d5d13e96955a\", \"path\": \"AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift\", \"before_git_blob\": {\"size_bytes\": 8146, \"sha256\": \"ee90316ec04be11d7799ad225223a94fa12db88e13a2d94204a0bb4afa57324d\"}, \"after_worktree\": {\"size_bytes\": 9357, \"sha256\": \"bca9926d0099a8c78c47fd01a4c37d2bb3e319fd3db4be7e529fd97d11b51744\", \"sha256_lf_normalized\": \"bca9926d0099a8c78c47fd01a4c37d2bb3e319fd3db4be7e529fd97d11b51744\"}}\r\nChatMarkdownView syntax exit=0\r\nChatMarkdownView whitespace exit=0"
+  },
+  "release_followup": {
+    "status": "COMPLETED_SUCCESS_VERIFIED",
+    "workflow_run_id": 44972815423,
+    "artifact": {
+      "id": 14735454350,
+      "name": "ChavrusaChat-signed-ipa-145401",
+      "sizeInBytes": 304675520,
+      "digest": "sha256:56eed61ade11c87e00bd378b13071786b6fb2d5be0ff64bdf6436c4a39a425c8"
+    },
+    "raw_apple_receipt_and_ipa_verification": "EXECUTED_PASS",
+    "simulator_and_native_ui_jobs": "SKIPPED_BY_OWNER_REQUEST",
+    "physical_ipad_acceptance": "NOT_RUN",
+    "verified_release_receipt_file": "testflight-release-145401.json",
+    "verified_at_utc": "2026-11-22T02:58:16.712591+00:00",
+    "verification_job_ids": [
+      "job_79bd7b8ff8e1",
+      "job_0c651ebb9f2b"
+    ],
+    "version": "0.7.3",
+    "build_number": "145401",
+    "apple_app_id": "6811910017",
+    "apple_build_id": "ea8b309c-a0a3-4afb-b8f8-3234c0a536c1",
+    "apple_processing_state": "VALID",
+    "internal_build_state": "IN_BETA_TESTING",
+    "ipa_sha256": "751cf593dca2905344186db778b04fa7ceddfd5e60ca7aba6343b5a7c91dcf55",
+    "runtime_bundle_artifact_run_id": "42926628418",
+    "packaged_manifest_matches": true,
+    "source_and_packaged_node_uuid_match": true,
+    "independent_verification_scope": [
+      "Recomputed the complete downloaded IPA SHA-256.",
+      "Read the actual IPA Info.plist and RuntimeManifest.json.",
+      "Compared the retained source and packaged Node UUID receipt files.",
+      "Read Apple readiness, runtime-distribution and signed-memory-entitlement receipts; did not independently rehash the packaged Host ZIP or parse the downloaded Node Mach-O UUID."
+    ],
+    "ci_packaged_runtime_verification_scope": [
+      "Verified the selected native runtime bundle archive checksum and provenance.",
+      "Compared the actual packaged RuntimeHostResources.zip checksum against the verified build input.",
+      "Extracted and compared source and packaged Node Mach-O image UUIDs during archive verification."
+    ],
+    "final_watcher_job_id": "job_c8b82d9e7339"
+  }
+}

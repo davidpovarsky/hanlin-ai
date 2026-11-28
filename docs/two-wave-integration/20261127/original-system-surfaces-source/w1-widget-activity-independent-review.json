@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w1_review_resume",
+  "author": "/root/w2_source_resume",
+  "reviewedSource": {
+    "leafSHA256": "535d08e24e918779bb4ff90d2a2ec4c95710486ef99a4913d62191c35a9f3f4a",
+    "testSHA256": "e740b14315777d527665223e8619b2061c545a7e600e3a6ca7789f870d3024b7",
+    "receiptSHA256": "48a1cbc264399b843fd4b1ddc1ff87f962caff3c506e80b68d4d641fbc781c3a",
+    "stderrSHA256": "d37b4dd7725726f9f3f6493a103ec4950784e5b4079afdf4e471100b736dfa70",
+    "receiptStderrSHA256": "d37b4dd7725726f9f3f6493a103ec4950784e5b4079afdf4e471100b736dfa70",
+    "exitCode": 0,
+    "sourceHashes": {
+      "Scripts/ProductSplit/observe_widget_action_surfaces.py": "535d08e24e918779bb4ff90d2a2ec4c95710486ef99a4913d62191c35a9f3f4a",
+      "Scripts/ProductSplit/observe_shortcut_surfaces.py": "c857061c584eca56a97ede1b750347096213887bfa0c72c38b91ba5ca6c4dcb3",
+      "Scripts/ProductSplit/Tests/test_widget_action_surface_observer.py": "e740b14315777d527665223e8619b2061c545a7e600e3a6ca7789f870d3024b7"
+    }
+  },
+  "assessment": "APPROVED_ADDITIVE_OBSERVER_SOURCE",
+  "findingsResolved": [
+    "Prepared run/challenge/exchange identity is frozen and checked before subsequent observations.",
+    "The actual terminal private proof stays in the prepared owner path; Activity retains the actual start result activityID.",
+    "Current app/data/group/extensions/configuration/Info and actual WidgetKit extension are rechecked immediately before completion.",
+    "Exact produced foreground archive, current generation metadata and retained source bytes are bound through the shared Share/Translation leaf at preparation and terminal boundaries."
+  ],
+  "scope": "Independent read-only source/receipt review. No test rerun by reviewer. Actual original4 OS Widget/Activity cases remain NOT_RUN. Integrate the exact verify_installed_fixture_archive dependency; no synthetic product state or receipt.",
+  "recordedAtUTC": "2026-11-27T06:28:56.775173+00:00"
+}

@@ -1,0 +1,31 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check",
+    "--",
+    "Scripts/MiniApps/stage-sdk.mjs",
+    "Scripts/MiniApps/Tests/stage-sdk.test.mjs",
+    "Scripts/MiniApps/Examples/index.json",
+    "docs/miniapp-sdk/EXAMPLES.md",
+    "docs/miniapp-sdk/README.md",
+    "docs/miniapp-sdk/AUTHORING_WORKFLOW.md",
+    "docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md",
+    "Scripts/MiniApps/Examples/expo-hello-world/App.tsx",
+    "Scripts/MiniApps/Examples/expo-hello-world/README.md",
+    "Scripts/MiniApps/Examples/expo-hello-world/hanlin.authoring.json",
+    "Scripts/MiniApps/Examples/expo-hello-world/index.ts",
+    "Scripts/MiniApps/Examples/expo-hello-world/package.json",
+    "Scripts/MiniApps/Examples/expo-hello-world/script.json",
+    "Scripts/MiniApps/Examples/expo-hello-world/tsconfig.json",
+    "Scripts/MiniApps/Examples/nativescript-hello-world/README.md",
+    "Scripts/MiniApps/Examples/nativescript-hello-world/hanlin.authoring.json",
+    "Scripts/MiniApps/Examples/nativescript-hello-world/index.ts",
+    "Scripts/MiniApps/Examples/nativescript-hello-world/package.json",
+    "Scripts/MiniApps/Examples/nativescript-hello-world/script.json",
+    "Scripts/MiniApps/Examples/nativescript-hello-world/tsconfig.json"
+  ],
+  "exitCode": 0,
+  "scope": "Authored source/config/docs only; raw output evidence is retained byte-for-byte"
+}

@@ -1,0 +1,10 @@
+{
+  "source": "Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIReconciler.swift",
+  "baseline_commit": "dcc017c0ccbac18841644711ad0fe5a1282ea8b3",
+  "before_sha256": "5fc4857c1fdc2fa5ec8e64e6773c6dbb92bac4cc3aa0b917d982de8868397b4b",
+  "after_sha256": "e4def17533c90877b481dba6da9ab09dbf55a54f4a6979376637cc39cda1fbc6",
+  "restoring_four_guard_calls_and_removing_private_helper_restores_entire_original_source": true,
+  "public_error_signature_changed": false,
+  "reorder_or_diff_output_implementation_changed": false,
+  "new_identity_rule": "same Swift Set<String> equality; insertion reports actual first repeated key"
+}

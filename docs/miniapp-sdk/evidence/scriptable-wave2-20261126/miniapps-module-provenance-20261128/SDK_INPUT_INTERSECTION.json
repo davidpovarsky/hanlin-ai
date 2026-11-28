@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "sourceBase": "3ab83672440fa6f588611fe91db5d746099b038c",
+  "candidatePatchSHA256": "da163ca1e8da3594bd630d58fec7014a3a528df5916cf219ace15201737b8995",
+  "acceptedSDK396PathAuthority": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/final-sdk-700664fd-pass/admission/current-sdk-fingerprint.json",
+    "sha256": "d576ef3b78fa276dd87579bca9b05dca2fae221bbfc9d63644630883e39768ff",
+    "count": 396,
+    "fingerprint": "c4463f0f702e5b070f1e0236c452f90e5e31e8a2fa6a1978e72b9ad55caaf307"
+  },
+  "changedPaths": [
+    "Scripts/CI/Tests/test_swift_module_provenance.py",
+    "Scripts/ProductSplit/capture_swift_module_provenance.py",
+    "Scripts/ProductSplit/run_native_acceptance.py",
+    "Scripts/ProductSplit/run_paired_acceptance.py"
+  ],
+  "changedInputIntersection": [],
+  "qualification": "Direct source-input path intersection only; does not promote a hosted effective SDK or claim any compiler/native result.",
+  "workflowChanged": false,
+  "native": "NOT_RUN"
+}

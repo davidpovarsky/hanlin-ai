@@ -1,0 +1,10 @@
+fc5ce1bacffbf8b3cd206b83debfac406c0044ed:AI_HLY/ChatView.swift:1854:        autoFollowController.beginRun()
+fc5ce1bacffbf8b3cd206b83debfac406c0044ed:AI_HLY/Downstream/AgentActivity/AgentRunLifecycleCoordinator.swift:21:    func beginRun(runID: UUID, recorder: AgentDiagnosticsRecorder?) async {
+fc5ce1bacffbf8b3cd206b83debfac406c0044ed:AI_HLY/Downstream/AgentActivity/AgentRunLifecycleCoordinator.swift:35:    func beginRun(runID: UUID, recorder: AgentDiagnosticsRecorder?) {
+fc5ce1bacffbf8b3cd206b83debfac406c0044ed:AI_HLY/Services/ChatServices/APIManager.swift:3733:        await AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: nil)
+fc5ce1bacffbf8b3cd206b83debfac406c0044ed:AI_HLYTests/AgentRoundPresentationTests.swift:477:        let supersession = Task { await coordinator.beginRun(runID: second, recorder: nil) }
+fc5ce1bacffbf8b3cd206b83debfac406c0044ed:AI_HLYTests/AgentRoundPresentationTests.swift:490:        coordinator.beginRun(runID: id, recorder: recorder)
+fc5ce1bacffbf8b3cd206b83debfac406c0044ed:AI_HLYTests/ChatAutoFollowTests.swift:76:        controller.beginRun()
+fc5ce1bacffbf8b3cd206b83debfac406c0044ed:AI_HLYTests/ClassicChatRestorationTests.swift:1175:        await coordinator.beginRun(runID: runAID, recorder: recorderA)
+fc5ce1bacffbf8b3cd206b83debfac406c0044ed:AI_HLYTests/ClassicChatRestorationTests.swift:1193:        await coordinator.beginRun(runID: runBID, recorder: recorderB)
+fc5ce1bacffbf8b3cd206b83debfac406c0044ed:AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift:382:        autoFollow.beginRun()

@@ -1,0 +1,25 @@
+{
+  "started_at": "2026-11-23T11:33:01.243572+00:00",
+  "owner": "sdk_presentation",
+  "run_id": 45166004801,
+  "head_sha": "3a9e1681f03080412d0ee934a00b307f3d7ae59c",
+  "finite_timeout_seconds": 3300,
+  "command": [
+    "sudo",
+    "-n",
+    "-u",
+    "ubuntu",
+    "gh",
+    "run",
+    "watch",
+    "45166004801",
+    "--repo",
+    "davidpovarsky/hanlin-ai",
+    "--exit-status",
+    "--compact",
+    "--interval",
+    "60"
+  ],
+  "watcher_script_pid": 2724500,
+  "watcher_process_pid": 2724502
+}

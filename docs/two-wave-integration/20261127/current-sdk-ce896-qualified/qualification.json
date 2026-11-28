@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "sourceVerified": "eb3bf673435d9aa43de7a821a6e7399369b8d1f0",
+  "nativePackagingSource": "ce8965429942901b54e43f9e1efd2c9ae1f73b3e",
+  "verifiedAt": "2026-11-27T19:02:08.812623+00:00",
+  "packets": [
+    {
+      "name": "sdk-metadata-ce896542-pass-proof",
+      "manifestSHA256": "e5adee020c6f6ec38f6c07a18a01c926a92d238b91dfda6ce2921d7614c70e25",
+      "verifiedMembers": 36,
+      "verifiedBytes": 19201176
+    },
+    {
+      "name": "ns-surface-ce896542-actual-sdk396-pass-proof",
+      "manifestSHA256": "e78d14e28a6f2a3275d5d953812c4496fdb669a6520a7f91ddcfd48beac63ee0",
+      "verifiedMembers": 36,
+      "verifiedBytes": 202198
+    }
+  ],
+  "SDK396AllMatchGit": true,
+  "SDKInputSHA256": "9e397ad525cf254598f8b35256816d1519ae2adfb02f3e5692fc91c21a1a3ab1",
+  "SDKManifestSHA256": "7f2702e52587fe1d126cef37f068ab3a9e3a26adb275ffafb687cb38a2db9b87",
+  "HostArchiveSHA256": "a088d98b8f85ae1e1ad767fca92132c03f0155d5ddd379d57b8cc98c38f19383",
+  "HostArchiveRootRehash": false,
+  "HostArchiveVerification": "Exact original Mac pack/packed validation and readback; archive retained on Mac. Root rehashed transferred evidence and actual SDK, not the 81MB Host archive.",
+  "payloadRowsCompared": 28810,
+  "payloadDelta": [
+    {
+      "path": "MiniAppSDK/docs/miniapp-sdk/extension-reachability.json",
+      "before": {
+        "path": "MiniAppSDK/docs/miniapp-sdk/extension-reachability.json",
+        "kind": "file",
+        "bytes": 213458,
+        "sha256": "819d483348e2cf5295667d323f53fd6325fac9db9d0409cc2ed02e460e3312d6"
+      },
+      "after": {
+        "path": "MiniAppSDK/docs/miniapp-sdk/extension-reachability.json",
+        "kind": "file",
+        "bytes": 213458,
+        "sha256": "c1d0f94b241c3a865c4458914d36779810d871e4f30bc38cb409283260552626"
+      }
+    },
+    {
+      "path": "MiniAppSDK/docs/miniapp-sdk/extension-reachability.md",
+      "before": {
+        "path": "MiniAppSDK/docs/miniapp-sdk/extension-reachability.md",
+        "kind": "file",
+        "bytes": 37881,
+        "sha256": "67ab1c6648e9e4b543d1fd9e035fb45ddf7336aef4b27715605c3187d72141be"
+      },
+      "after": {
+        "path": "MiniAppSDK/docs/miniapp-sdk/extension-reachability.md",
+        "kind": "file",
+        "bytes": 37881,
+        "sha256": "ac061c9dd14633e12c8a0d7e1009c840b3813e228c612d7cbfad18ea3837070c"
+      }
+    },
+    {
+      "path": "MiniAppSDK/miniapp-sdk.json",
+      "before": {
+        "path": "MiniAppSDK/miniapp-sdk.json",
+        "kind": "file",
+        "bytes": 5267911,
+        "sha256": "e343105966824d478319096d673c9801b39dca4d753624252903c970ad6ba61d"
+      },
+      "after": {
+        "path": "MiniAppSDK/miniapp-sdk.json",
+        "kind": "file",
+        "bytes": 5267911,
+        "sha256": "7f2702e52587fe1d126cef37f068ab3a9e3a26adb275ffafb687cb38a2db9b87"
+      }
+    }
+  ],
+  "freshHostPhases": 13,
+  "freshHostTestInvocations": 0,
+  "Host188": "REUSED_VERIFIED",
+  "Host188ExecutionSource": "b5475156e7b0253b24c0a4385236b60da21f6f7e",
+  "Host188OriginalReceiptSHA256": "ae96e1b3f5cbeafed5645fd26bbd3edfd1a74fd264c5a5dda4837fb1990d43a9",
+  "NSAuthoredInputsMatched": 7,
+  "NSCLIAndRunnerMatched": 2,
+  "NSArchiveSHA256": "34bcb521459067cafe7e8a91492229c1e29cede772793154d8b8b3131f75584a",
+  "NSArchiveMembersAndCRCPassed": 18,
+  "NSRawReceiptSHA256": "d219dfb0ff8dae51013b6fbf699dee701217139e049af6cc769cfbde5bfa1025",
+  "HostRawReceiptSHA256": "a8008a114ad9ece345244c850740036a1a1ae4e314727d7c4ca4f86ca83509dc",
+  "W1ReviewSHA256": "bf04cfaa22d1a144e6585458fe1a59afa0cb6233506472045f20d3615975424d",
+  "nativeTestsRepeatedByRoot": 0
+}

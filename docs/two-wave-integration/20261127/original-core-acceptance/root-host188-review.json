@@ -1,0 +1,37 @@
+{
+  "at": "2026-11-27T12:57:18.857865+00:00",
+  "reviewer": "/root",
+  "actualExecutionSource": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+  "sealedSource": "b723338e995b14dc31f96a90ad4c865e8a4b345a",
+  "verifiedRawMembers": 41,
+  "rawMemberBytes": 19979999,
+  "fullRawPacketManifestSHA256": "f3549d16891faccc45e4576780efe9aa4d059782284a90cdff76d2809bdc2b4a",
+  "all392SDKInputsMatchSealedGitBlobs": true,
+  "sdkInputHash": "0a9d3ca8f320af72485cab3d998be4861c1d858fe758c5f79e7b15d555937c50",
+  "sdkManifestSHA256": "e7aa424015d509dc7d99b3158b85f6dbcbcc72fc17b3671d247382331e87e649",
+  "originalHostPhases": 12,
+  "allPhasesExitZero": true,
+  "actualOriginalTestSummary": {
+    "tests": 188,
+    "pass": 188,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "actualLongJob": {
+    "proof": "actual-node-job-over-300-seconds",
+    "elapsedMilliseconds": 305030.465584,
+    "executionID": "f32209e6-6586-46e0-9d2f-5b1b1e7126d7"
+  },
+  "stagedClosureDocumentsExactlyEqual": true,
+  "stagedBeforeSHA256": "46cf99304777e41e91e2cb1cdedad4d38b6014d911b0f6b26ad82f5af4116ad4",
+  "stagedAfterSHA256": "46cf99304777e41e91e2cb1cdedad4d38b6014d911b0f6b26ad82f5af4116ad4",
+  "archiveMetadataVerified": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host-1ee9c457-original-phases-r1/RuntimeHostResources.zip",
+    "canonicalPath": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81901035,
+    "sha256": "d83702acbcc7ce22f672a2c1952a6f3623606cda227fdc27172a03dc1caf5f42"
+  },
+  "archiveBytesFetchedByRoot": false,
+  "nativeScope": "Original Host/SDK phases only; separate iOS app and OS acceptance remains."
+}

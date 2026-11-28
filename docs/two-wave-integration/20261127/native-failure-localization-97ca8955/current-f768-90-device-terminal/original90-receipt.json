@@ -1,0 +1,46 @@
+{
+  "label": "original90",
+  "runID": 45950016033,
+  "jobID": 140343718588,
+  "source": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "jobName": "Launch full app on iPad Simulator",
+  "status": "completed",
+  "conclusion": "failure",
+  "completedAt": "2026-11-27T07:15:19Z",
+  "failedSteps": [
+    {
+      "name": "Build full arm64 simulator app",
+      "status": "completed",
+      "conclusion": "failure",
+      "number": 32,
+      "started_at": "2026-11-27T06:33:25Z",
+      "completed_at": "2026-11-27T07:15:06Z"
+    }
+  ],
+  "command": [
+    "runuser",
+    "-u",
+    "ubuntu",
+    "--",
+    "gh",
+    "api",
+    "repos/davidpovarsky/hanlin-ai/actions/jobs/140343718588/logs"
+  ],
+  "downloadExitCode": 0,
+  "startedAtUTC": "2026-11-27T07:19:36.109711+00:00",
+  "finishedAtUTC": "2026-11-27T07:19:53.290715+00:00",
+  "files": {
+    "original90-job.json": {
+      "sha256": "3277dab6f271a473faf2c21462e670f2de98b1acbd4fa43fd047e0439d69606f",
+      "bytes": 11055
+    },
+    "original90-job.log": {
+      "sha256": "df95035f60b91b1433c62e0e17001e5dea2af8b66e735b6d787e026e68b02d2d",
+      "bytes": 32010592
+    },
+    "original90-download.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  }
+}

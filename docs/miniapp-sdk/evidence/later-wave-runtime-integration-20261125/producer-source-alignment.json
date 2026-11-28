@@ -1,0 +1,296 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-25T01:07:26.434500+00:00",
+  "candidateBeforeAlignment": "1776ba419b9666b8fdc62fe13b3d4b68a02c9c35",
+  "producerSourceCommit": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "producerPreparedState": "PAUSED_AFTER_PHASE split-inputs; original prepare/export/verify completed",
+  "reason": "Retain the exact original resolver-selected peer-compatible React declaration version and the already-integrated ExpoAsset publication; no unrelated dependency or engine version changes.",
+  "resolution": {
+    "reactTypes": {
+      "mode": "original-compatible-range",
+      "requested": "^19.1.1 ~19.3.0",
+      "constraints": [
+        {
+          "source": "react-native@0.88.1 peerDependencies",
+          "range": "^19.1.1"
+        },
+        {
+          "source": "expo@58.0.26 devDependencies",
+          "range": "~19.3.0"
+        }
+      ]
+    },
+    "before": "19.3.0",
+    "after": "19.3.1",
+    "resolverSourceSHA256": "7973977cf986cbee14fd147fd8b10c1d54a6f1a1c790511d2df5cf054063e7a2",
+    "originalLogPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt8/split-upstreams.log",
+    "originalLogSHA256": "f92b47b1bfbdbec4b902995030435bb03a4bd248e7775ea8815bf0db7c09234d",
+    "exitCode": 0,
+    "finishedAt": "2026-11-25T00:15:22.972904+00:00",
+    "additionalProvenance": "upstream-resolution now records ExpoAsset58.0.21 version, original tarball integrity/SHA256 and original CocoaPods producer already selected by the accepted ExpoAsset donors."
+  },
+  "changes": [
+    {
+      "path": "Scripts/Expo/package.json",
+      "beforeSHA256": "da083105462f40368adb89acba0dbc1b623d2249b26b2ac1cbe1d326edc2bd3d",
+      "afterSHA256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206"
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "beforeSHA256": "9ee1d2babe6266148d8f969b25f542c00897c569969e5aae6dd6f744e2a0c53c",
+      "afterSHA256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8"
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "beforeSHA256": "2bf8f371f06949fbe56858c38addeb417a07f9b598fc38ff72aedb39d5f364eb",
+      "afterSHA256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb"
+    }
+  ],
+  "nativePreparationInputs": {
+    "RuntimeDependencies.lock.json": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+    "Scripts/Expo/dependency-lock.json": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+    "Scripts/Expo/prepare-ios-dependencies.mjs": "97069b0e1ec619d906f4b6d196e38e6527790c3661f798abcca6258dacf18163",
+    "Scripts/Expo/build-original-expo-source.mjs": "855a9a79f1c27a2ba2f3796cf784ebb66a4a48df928b2ea8f6ca1ffd9e886c03",
+    "Scripts/Expo/build-original-widget-runtime.mjs": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549",
+    "Scripts/Expo/package-lock.json": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+    "Scripts/Expo/babel.config.cjs": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba",
+    "Scripts/ExpoNativeAPI/dependency-lock.json": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768",
+    "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs": "950a2eb6e8713bdd1a395eee6df1779d91f63864af95c33658efa6d090676f66",
+    "Scripts/ExpoNativeAPI/multiscene-patch.mjs": "cafa8348a764155789169c411eb59555c6c7a2d3ef363b870e36f8d6b52c7cbd",
+    "Scripts/NativeScript/dependency-lock.json": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5",
+    "Scripts/NativeScript/package-lock.json": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+    "Scripts/NativeScript/prepare-ios-dependencies.mjs": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9",
+    "Scripts/NativeScript/build-metadata-tool.py": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+    "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": "0c053414f573ff2f88498099d7f1ae591d289ca3029390cd421dd938bf089ba3",
+    "Scripts/Runtime/prepare-runtime-core.sh": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540"
+  },
+  "all16EqualLiveProducerAndPreparedCatalog": true,
+  "originalExpoSourceBuildIdentity": {
+    "derivedInputSHA256": "a85fc86c413d87679e62878cc4b7b512e925c36806a9b383daf095dab9c55159",
+    "input": {
+      "schemaVersion": 1,
+      "artifacts": [
+        {
+          "name": "ExpoUI",
+          "source": "npm-source",
+          "package": "@expo/ui",
+          "version": "58.0.29",
+          "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+          "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+          "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoUI.xcframework",
+          "sourceBuild": {
+            "producer": "original-cocoapods",
+            "packageIntegrity": "sha512-+zeaoDU1zS1rKe1afVsH8sh7+b+HNZyq93ZL0BRJ03RtrxZyYxKljqOcl78Q9NkX1oOO8CdQxzhFa8Dl6o52ug=="
+          }
+        },
+        {
+          "name": "ExpoAsset",
+          "source": "npm-source",
+          "package": "expo-asset",
+          "version": "58.0.21",
+          "tarball": "https://registry.npmjs.org/expo-asset/-/expo-asset-58.0.21.tgz",
+          "sha256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126",
+          "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework",
+          "sourceBuild": {
+            "producer": "original-cocoapods",
+            "packageIntegrity": "sha512-qaJmuTtswggXdBQfiUdpxrVGM7l+tH8iEDHwVDMuxyCF/kAau8sUGVuWrDKYNW4yAx7Z8ncgsT8s27pXjRH5GA=="
+          }
+        },
+        {
+          "name": "ExpoModulesJSI",
+          "source": "npm-source",
+          "package": "expo-modules-jsi",
+          "version": "58.0.23",
+          "tarball": "https://registry.npmjs.org/expo-modules-jsi/-/expo-modules-jsi-58.0.23.tgz",
+          "sha256": "b432f8a25637f556f89ac780e8981b941cd8598d5ae7593fbcbf40e15df5df93",
+          "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesJSI.xcframework",
+          "sourceBuild": {
+            "producer": "original-swiftpm",
+            "packageIntegrity": "sha512-ex3CnT8KLubsPjUG0RpEL5VgmpnWxf7Ouc+WXEr8jEbIwqcULEWtA2tfhGZwjg6jS3zeNwjygF1w8QSstP7JfQ=="
+          }
+        }
+      ],
+      "expo": {
+        "sdkVersion": "58.0.26",
+        "uiVersion": "58.0.29",
+        "assetVersion": "58.0.21",
+        "widgetsVersion": "58.0.29",
+        "brownfieldVersion": "58.0.20",
+        "modulesCoreVersion": "58.1.0",
+        "reactNativeVersion": "0.88.1",
+        "reactVersion": "19.3.0",
+        "hermesVersion": "260318099.0.5"
+      },
+      "packageLockSHA256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+      "xcode": "Xcode 27.0\nBuild version 27A266a",
+      "producerSHA256": "855a9a79f1c27a2ba2f3796cf784ebb66a4a48df928b2ea8f6ca1ffd9e886c03"
+    }
+  },
+  "sourceBuildReceipts": [
+    {
+      "name": "ExpoModulesJSI",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ExpoModulesJSI.xcframework/.source-build-receipt.json",
+      "receiptSHA256": "562582d9966476d524c9b38b71c7485556c4738d58a2504c0e46a4ec1ce6c75a",
+      "receipt": {
+        "schemaVersion": 1,
+        "name": "ExpoModulesJSI",
+        "version": "58.0.23",
+        "sha256": "b432f8a25637f556f89ac780e8981b941cd8598d5ae7593fbcbf40e15df5df93",
+        "sourceBuildInputSHA256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+        "producerSHA256": "864d02bbcb0bbed4e45cb1236b023791521f20869b6f1ec6a128b7d2918e5e7c",
+        "xcode": "Xcode 27.0\nBuild version 27A266a",
+        "nativeBuild": "original expo-modules-jsi SwiftPM build-xcframework.sh"
+      }
+    },
+    {
+      "name": "ExpoUI",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ExpoUI.xcframework/.source-build-receipt.json",
+      "receiptSHA256": "cc20151233e06bde358080b3716873731e9d6b9131faaa300f23bc182340ef0e",
+      "receipt": {
+        "schemaVersion": 1,
+        "inputSHA256": "a85fc86c413d87679e62878cc4b7b512e925c36806a9b383daf095dab9c55159",
+        "xcode": "Xcode 27.0\nBuild version 27A266a",
+        "cocoaPods": "1.17.0",
+        "podLockSHA256": "c012c6f8ee2ca782aea7788349d75a3a57e6e4be8d324037a8b9dce573e4d8e6",
+        "originalPackage": {
+          "name": "@expo/ui",
+          "version": "58.0.29",
+          "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+          "integrity": "sha512-+zeaoDU1zS1rKe1afVsH8sh7+b+HNZyq93ZL0BRJ03RtrxZyYxKljqOcl78Q9NkX1oOO8CdQxzhFa8Dl6o52ug=="
+        },
+        "nativeBuild": "original Expo CLI prebuild + original CocoaPods podspec + Xcode device/simulator frameworks",
+        "swiftModuleDistribution": "same-Xcode internal build input; exact compiler identity is part of inputSHA256",
+        "slices": [
+          {
+            "LibraryPath": "ExpoUI.framework",
+            "SupportedPlatformVariant": "simulator",
+            "SupportedPlatform": "ios",
+            "BinaryPath": "ExpoUI.framework/ExpoUI",
+            "LibraryIdentifier": "ios-arm64_x86_64-simulator",
+            "SupportedArchitectures": [
+              "arm64",
+              "x86_64"
+            ]
+          },
+          {
+            "LibraryPath": "ExpoUI.framework",
+            "SupportedPlatform": "ios",
+            "BinaryPath": "ExpoUI.framework/ExpoUI",
+            "LibraryIdentifier": "ios-arm64",
+            "SupportedArchitectures": [
+              "arm64"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "ExpoAsset",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.source-build-receipt.json",
+      "receiptSHA256": "78a6b4b85330189dd162c09ae250cb280bf7dbe62608ca6438e6f3fabde6ee3b",
+      "receipt": {
+        "schemaVersion": 1,
+        "inputSHA256": "a85fc86c413d87679e62878cc4b7b512e925c36806a9b383daf095dab9c55159",
+        "xcode": "Xcode 27.0\nBuild version 27A266a",
+        "cocoaPods": "1.17.0",
+        "podLockSHA256": "c012c6f8ee2ca782aea7788349d75a3a57e6e4be8d324037a8b9dce573e4d8e6",
+        "originalPackage": {
+          "name": "expo-asset",
+          "version": "58.0.21",
+          "sha256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126",
+          "integrity": "sha512-qaJmuTtswggXdBQfiUdpxrVGM7l+tH8iEDHwVDMuxyCF/kAau8sUGVuWrDKYNW4yAx7Z8ncgsT8s27pXjRH5GA=="
+        },
+        "nativeBuild": "original Expo CLI prebuild + original CocoaPods podspec + Xcode device/simulator frameworks",
+        "swiftModuleDistribution": "same-Xcode internal build input; exact compiler identity is part of inputSHA256",
+        "slices": [
+          {
+            "LibraryPath": "ExpoAsset.framework",
+            "SupportedPlatform": "ios",
+            "BinaryPath": "ExpoAsset.framework/ExpoAsset",
+            "LibraryIdentifier": "ios-arm64",
+            "SupportedArchitectures": [
+              "arm64"
+            ]
+          },
+          {
+            "LibraryPath": "ExpoAsset.framework",
+            "SupportedPlatformVariant": "simulator",
+            "SupportedPlatform": "ios",
+            "BinaryPath": "ExpoAsset.framework/ExpoAsset",
+            "LibraryIdentifier": "ios-arm64_x86_64-simulator",
+            "SupportedArchitectures": [
+              "arm64",
+              "x86_64"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "nativeCatalog": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/native-artifacts.json",
+    "sha256": "c2c8a3624236d252ad82fd42db967cbf76902c54c89f8cfb39a0f7be77fb710b"
+  },
+  "nativeCatalogSummary": {
+    "state": "prepared",
+    "sourceCommit": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+    "scope": "full",
+    "contentSHA256": "9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b",
+    "requiredTargets": [
+      "ReactNativeHeaders",
+      "React",
+      "ReactNativeDependencies",
+      "hermesvm",
+      "ExpoModulesJSI",
+      "ExpoModulesCore",
+      "ExpoModulesWorklets",
+      "ExpoUI",
+      "ExpoAsset",
+      "ExpoBrownfield",
+      "Libffi",
+      "TNSWidgets",
+      "NSCWinterTC",
+      "NodeMobile",
+      "Python"
+    ]
+  },
+  "qualificationLimit": "Prepared producer catalog is not a published immutable SDK. Fresh combined-source Host/SDK support, exact artifact clone/hash validation and original native consumer acceptance remain required. Wave1 remains unchanged.",
+  "validation": "Exact JSON semantic delta, all16 input hashes, original ExpoUI/ExpoAsset sourceBuildIdentity recomputation, JSI lock binding. Previously retained ESM5/5 and bridge3/3 have unchanged relevant source closure and were not rerun.",
+  "canonicalChecks": [
+    {
+      "name": "manifest-check",
+      "argv": [
+        "python3",
+        "Scripts/SDK/generate_manifest.py",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdoutSHA256": "573f787f1f9335941caf571ef3a01d811b5bca445333a188691e8e76eb92e7a4",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "project-check",
+      "argv": [
+        "python3",
+        "Scripts/SDK/update_project.py",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdoutSHA256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "diff-check",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "applicationSourceCount": 514,
+  "projectUnchangedFromWave2": true
+}

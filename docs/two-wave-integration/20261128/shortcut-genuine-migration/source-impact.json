@@ -1,0 +1,157 @@
+{
+  "schema": 1,
+  "scope": "Incremental seven-path migration candidate versus its base, not equality of all current SDK/runtime outputs to historical d4",
+  "baseSHA": "064b7b58c923af0beff84a1852af84071f4409d8",
+  "currentCompositionSHA": "f350a0f12c54121d0b3afb4217472ae8143fc83a",
+  "changedPaths": [
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+    "Scripts/CI/Tests/test_shortcut_migration.py",
+    "Scripts/ProductSplit/observe_shortcut_migration.py",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+    "Scripts/ProductSplit/run_paired_acceptance.py",
+    "Scripts/ProductSplit/shortcut_migration_contract.py",
+    "Scripts/ProductSplit/upgrade_shortcut_migration.py"
+  ],
+  "sdk": {
+    "authority": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/full-icu-original-hosted-live-d4d1b5e1-r2/completed-host-sdk-qualification-r1/MiniAppSDK-miniapp-sdk.json",
+      "bytes": 5270330,
+      "sha256": "6ac6a79cf1242eff21a3e8a558590f780135b7e28e47ff1180c9b6d8ba250683"
+    },
+    "actualInputCount": 396,
+    "intersection": []
+  },
+  "host": {
+    "authority": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/post-icu-bundle-closure-main04e33c45-readonly-r1/git-input-and-tree-qualification.json",
+      "bytes": 282274,
+      "sha256": "6500ffeb0d0368072ab2d060b4cde26cf3531c5882857a344839ea0514024879"
+    },
+    "actualInputCount": 99,
+    "intersection": []
+  },
+  "collector": {
+    "path": "Scripts/MiniApps/stage-sdk.mjs",
+    "bytes": 27535,
+    "sha256": "60b6b9496330d4605f60f56587170b06c7eced31a6b3d79ef04aa8faa548022c",
+    "equalBaseAndCurrent": true,
+    "roots": [
+      "Scripts/MiniApps",
+      "Packages/HanlinExpoUI",
+      "Packages/HanlinExpoNativeAPIJS",
+      "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services",
+      "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory",
+      "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions",
+      "Packages/HanlinAppExtensionsSDK/Sources",
+      "AI_HLY/Downstream/ScriptingPlatform",
+      "Packages/HanlinExpoRuntime/Sources/ExpoWidgets",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
+      "docs/miniapp-sdk",
+      "docs/hanlin-nativescript-guide.md",
+      "docs/hanlin-expo-runtime.md"
+    ],
+    "explicitInputs": [
+      "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+      "Packages/HanlinAppExtensionsSDK/Package.swift",
+      "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationExtension/HanlinNotificationService.swift",
+      "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIHostVersions.swift",
+      "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIManager.swift",
+      "Packages/HanlinPlatform/Package.swift",
+      "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift",
+      "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift",
+      "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinRuntimeProfiles.swift",
+      "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+      "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinNativePresentationMetadata.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinWidgetProgram.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExtensionNodeView.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinLiveActivityHostActionIntent.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationInvocation.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptAppIntentBridge.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionContracts.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetHostAction.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetHostActionIntent.swift",
+      "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
+      "Scripts/CI/IntegrationValidation/project_graph.py",
+      "Scripts/Expo/babel.config.cjs",
+      "Scripts/Expo/build-original-widget-runtime.mjs",
+      "Scripts/Expo/dependency-lock.json",
+      "Scripts/Expo/metro.config.cjs",
+      "Scripts/Expo/package-lock.json",
+      "Scripts/Expo/package.json",
+      "Scripts/Expo/prepare-types.mjs",
+      "Scripts/Expo/sync-original-ui-exports.mjs",
+      "Scripts/ExpoNativeAPI/dependency-lock.json",
+      "Scripts/NativeScript/dependency-lock.json",
+      "Scripts/NativeScript/package-lock.json",
+      "Scripts/NativeScript/package.json",
+      "Scripts/ProductSplit/extension_inventory.py",
+      "Tools/SwiftUIBridge/configuration.json",
+      "docs/miniapp-sdk/extension-reachability.json",
+      "docs/miniapp-sdk/source-inventory.json",
+      "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json"
+    ],
+    "newSourceCollected": []
+  },
+  "unchangedNativeListsAuthoredFiles": {
+    "Fixtures/ShortcutNativeLists/expo/App.tsx": {
+      "bytes": 2014,
+      "sha256": "1dc14ca1b0594eac76b6ab621f63d51af3db618aa3b408d03ae95aec8b855f2f"
+    },
+    "Fixtures/ShortcutNativeLists/expo/hanlin.authoring.json": {
+      "bytes": 118,
+      "sha256": "57239928efb0bd0e6760bf64443e70bf021eb963f074908332de3f5b7959a5a3"
+    },
+    "Fixtures/ShortcutNativeLists/expo/index.ts": {
+      "bytes": 117,
+      "sha256": "e6ff990a5f73c39cebfecc539611b23872e530f1287c6b0d0d8447fbc9a832ee"
+    },
+    "Fixtures/ShortcutNativeLists/expo/package.json": {
+      "bytes": 298,
+      "sha256": "f77503c19530960bd9d5d40d4c42e91f2da6395f1cf8be2279d7974e904ea36d"
+    },
+    "Fixtures/ShortcutNativeLists/expo/proof.ts": {
+      "bytes": 737,
+      "sha256": "1c3cf09fe914c496d10cd01f6eabe989bc683f7a6194a80ae1b699c554515210"
+    },
+    "Fixtures/ShortcutNativeLists/expo/script.json": {
+      "bytes": 814,
+      "sha256": "49c8ac12904493e4657d27d14b18b8bbfcdf355e18660e822b78a2b94728b194"
+    },
+    "Fixtures/ShortcutNativeLists/expo/tsconfig.json": {
+      "bytes": 69,
+      "sha256": "40d7c93d27898a4c2f676e917017a532edd471abbe9e76b620104ef272d7d466"
+    },
+    "Fixtures/ShortcutNativeLists/nativescript/hanlin.authoring.json": {
+      "bytes": 126,
+      "sha256": "5c45d2ab2cfce588d3758665eff52a9511613b2070a9946be001e32f87d517d9"
+    },
+    "Fixtures/ShortcutNativeLists/nativescript/index.ts": {
+      "bytes": 1616,
+      "sha256": "eac6a0cf6be0d3a956438a3d856784537b98df4ec5f4a89006bc313a5d743e85"
+    },
+    "Fixtures/ShortcutNativeLists/nativescript/package.json": {
+      "bytes": 288,
+      "sha256": "daade868d8345954dd06b629b6ab9912e7241adce7f46669e6ecbf1f8d676041"
+    },
+    "Fixtures/ShortcutNativeLists/nativescript/proof.ts": {
+      "bytes": 737,
+      "sha256": "1c3cf09fe914c496d10cd01f6eabe989bc683f7a6194a80ae1b699c554515210"
+    },
+    "Fixtures/ShortcutNativeLists/nativescript/script.json": {
+      "bytes": 877,
+      "sha256": "9b61a8b3503d72f2536c579cdea9625c1c9180f66e4cb88d66207c15343f7f08"
+    },
+    "Fixtures/ShortcutNativeLists/nativescript/tsconfig.json": {
+      "bytes": 54,
+      "sha256": "32212ba114edcbc3f0f923db351e65c228b1c0bc4f2a2339a1bd2eaa90e24e75"
+    }
+  },
+  "nativeInputImpact": "Two new OS methods in the existing AI_HLYUITests source; original 47 methods and existing fixtures untouched. Current UI runner product needs actual compilation; no SDK/Host/package-source mutation in this candidate."
+}

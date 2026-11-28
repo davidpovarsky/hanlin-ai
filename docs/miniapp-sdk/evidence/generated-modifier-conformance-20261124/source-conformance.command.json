@@ -1,0 +1,22 @@
+{
+  "cwd": "/mnt/development/projects/worktrees/hanlin-generated-modifier-probe-20261124",
+  "argv": [
+    "/usr/local/bin/node",
+    "/mnt/development/projects/worktrees/hanlin-generated-modifier-probe-20261124/docs/miniapp-sdk/evidence/generated-modifier-conformance-20261124/capture-source-conformance.cjs",
+    "/mnt/development/projects/worktrees/hanlin-generated-modifier-probe-20261124",
+    "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK/expo/node_modules/typescript/lib/typescript.js"
+  ],
+  "exitCode": 0,
+  "seconds": 0.344685067422688,
+  "reason": "Refresh exact source identity after adding visible mode-label synchronization; native/forwarding code unchanged.",
+  "stdout": {
+    "file": "source-conformance.json",
+    "bytes": 95561,
+    "sha256": "49740e56f1d7d86283fce3a572a67c28b3d92c380f9cad0528c1c9b5531e3b17"
+  },
+  "stderr": {
+    "file": "source-conformance.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "at": "2026-11-28T14:41:33.204795+00:00",
+  "status": "SOURCE_COMPOSITION_REVIEWED_APPLE_TYPECHECK_AND_ORIGINAL_CI_PENDING",
+  "base": "55c2eb343399543eac327720f25e8eacf86bba15",
+  "donorBase": "f350a0f12c54121d0b3afb4217472ae8143fc83a",
+  "donorManifestSHA256": "0b3e809f472e69f97404ac6509d2771580a731a944ad8e7aabbc9fc7c87c7e5c",
+  "independentR2Review": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-liveactivity-r2-review-and-compose-55c-r1/initial-review.json",
+    "sha256": "15e58de039fe9c77ccfe3188d1b120bb8489b428f7a867bc949a735c8a3ca474"
+  },
+  "sourceFiles": [
+    {
+      "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "bytes": 338858,
+      "sha256": "8a7ee5200bd83c5d2a6d2355be46ee5d460aa7c57aa58f7567135b1e08dffac7",
+      "currentSHA256": "c70c629f41cdea005e556f3a46a703be2dc53fa38d0b73ad6c227c68676db264"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 122024,
+      "sha256": "87017761aa2d1837ee3fb2c947405a0b708348ca37fae87b1b45b0c25e94f6fb",
+      "currentSHA256": "bbaaf97bb38c1e473770b21608848309d183e21ff87340032e5481555b709f5a"
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "bytes": 68998,
+      "sha256": "2a558e74b21fc9c70d53e4fa54ebd09bc9563563f0691c944d0981328861c66d",
+      "currentSHA256": "a503e1e9dea29bfe151164b5f4fb2ffb4565d919344853a308415a6156b2be46"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_liveactivity_lifecycle.py",
+      "bytes": 20867,
+      "sha256": "e1f3bf4e6a9be9b1f4e1a35cc1eca601c9bb79191f0a95f0ebb95ced81d6cbaf",
+      "currentSHA256": null
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_liveactivity_lifecycle.py",
+      "bytes": 48746,
+      "sha256": "d68b34b421d210894c9d3fbab26b043d36bab12741f7aaf3613f5c5b9e071410",
+      "currentSHA256": null
+    }
+  ],
+  "original49MethodsByteExact": true,
+  "current51Methods": true,
+  "wholeUIInverse": true,
+  "wholeRunnerInverse": true,
+  "wholeDispatcherInverse": true,
+  "wholeWorkflowInverse": true,
+  "newOriginalControls": 10,
+  "controlsExecuted": 0,
+  "uiTypecheck": "NOT_RUN",
+  "native": "NOT_RUN",
+  "sourcePatchSHA256": "75335a7402d0189d825ac23a768ad74fc1ae3d7136707f50040925f8c0af03be",
+  "workflowSHA256": "242c6cc5f873510ef5aa7d32eebae8df8952ea5109c09ae09eca168a12ef6af3",
+  "newMethods": [
+    "testExpoLiveActivityLifecycleKeepsTwoActualIDsAndSystemViewsIndependent",
+    "testNativeScriptLiveActivityLifecycleKeepsTwoActualIDsAndSystemViewsIndependent"
+  ],
+  "compositionResolution": "The first private automatic merge had additive conflicts. This second private packet uses the exact reviewed insertion blocks and three added-set members, with whole-file inverses to current55c; no public source or original source edited.",
+  "sourceMutation": false,
+  "currentWholeUIAndMigrationsPreserved": true,
+  "minimalPhysicalAPNsAndBroaderTask07": "NOT_CLAIMED"
+}

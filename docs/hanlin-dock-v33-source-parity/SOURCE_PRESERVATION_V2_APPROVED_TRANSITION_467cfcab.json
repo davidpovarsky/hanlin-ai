@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Explicitly accept the reviewed APIManager source transition after the unchanged V2 contract. This does not retroactively pass the original failing source guard or establish native behavior acceptance.",
+  "baseContractPath": "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2.json",
+  "baseContractSHA256": "169e270d596fa000ce9cb043fa55f765cda62fd6043df49eb3bad8e2e160e6e3",
+  "acceptedSourceCommit": "467cfcab9764334a44584f04dd9f0376cab8e6ed",
+  "approvedSourcePatchSHA256": "6ce4f9667959c86a8f4bcde2d2556aa3e9713163295650feb53e03e41c0d8b68",
+  "approvalEvidence": {
+    "independentSourceReviewSHA256": "d2bb29f102f25f193f592472f8a8cb3fd4db083a070ef32b3d95f08acc84b381",
+    "rootSourceIntegrationSHA256": "1acdfe1ad2996e6e68899c592ea5efdef8fb21b0e4d24535ecb5cbb12f45325d",
+    "reason": "The three existing host-generated system instruction sources retain their text and are inserted in the leading system/developer segment. Existing conversational order, first system block, conversion and cache-breakpoint logic are preserved."
+  },
+  "transitions": [
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "from": {
+        "normalizedBytes": 225611,
+        "normalizedSHA256": "1e65885f3fa5aa398cf6a315cd365705986f092de9838692eb305ce87dc78b12"
+      },
+      "to": {
+        "normalizedBytes": 226115,
+        "normalizedSHA256": "fa423e890c1447a77dd8c978bc3124e9385d12098b04aec472303562d312be25"
+      }
+    }
+  ]
+}

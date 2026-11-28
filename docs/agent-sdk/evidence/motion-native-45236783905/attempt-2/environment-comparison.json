@@ -1,0 +1,528 @@
+{
+  "schemaVersion": 1,
+  "runs": [
+    {
+      "label": "D45217195070",
+      "run": 45217195070,
+      "attempt": 1,
+      "source": "5d0ea90d98b405d38b66bb735198b945225877ba",
+      "runner": {
+        "id": 137841460104,
+        "runner_id": 1000024772,
+        "runner_name": "GitHub Actions 1000024772",
+        "runner_group_name": "GitHub Actions",
+        "labels": [
+          "xcode-27"
+        ]
+      },
+      "preflight_sha256": "f284b4ef718929a36b93576892c9e6c599ed58ea7aa7e9d4a2693b1bd433d032",
+      "preflight_text": "Xcode 27.2\nBuild version 27B52\nApple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0\nDriverKit SDKs:\n\tDriverKit 27.2                \t-sdk driverkit27.2\n\niOS SDKs:\n\tiOS 27.2                      \t-sdk iphoneos27.2\n\niOS Simulator SDKs:\n\tSimulator - iOS 27.2          \t-sdk iphonesimulator27.2\n\nmacOS SDKs:\n\tmacOS 27.2                    \t-sdk macosx27.2\n\tmacOS 27.2                    \t-sdk macosx27.2\n\ntvOS SDKs:\n\ttvOS 27.2                     \t-sdk appletvos27.2\n\ntvOS Simulator SDKs:\n\tSimulator - tvOS 27.2         \t-sdk appletvsimulator27.2\n\nvisionOS SDKs:\n\tvisionOS 27.2                 \t-sdk xros27.2\n\nvisionOS Simulator SDKs:\n\tSimulator - visionOS 27.2     \t-sdk xrsimulator27.2\n\nwatchOS SDKs:\n\twatchOS 27.2                  \t-sdk watchos27.2\n\nwatchOS Simulator SDKs:\n\tSimulator - watchOS 27.2      \t-sdk watchsimulator27.2\n\nProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\narm64\nVersion: 2.46.0\n",
+      "runtime": {
+        "version": "27.2",
+        "buildversion": "24B8117",
+        "isAvailable": true,
+        "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+        "bundlePath": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.33cja4/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime",
+        "runtimeRoot": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.33cja4/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot",
+        "supportedArchitectures": [
+          "arm64"
+        ]
+      },
+      "strategy": "fresh",
+      "device": {
+        "state": "Shutdown",
+        "isAvailable": true,
+        "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-12GB"
+      },
+      "source_device": {
+        "name": "iPad Pro 13-inch (M5)",
+        "state": "Shutdown",
+        "isAvailable": true,
+        "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-12GB"
+      },
+      "operation": "simctl_create",
+      "absent_before_create": true,
+      "non_shutdown_devices_before_create": [],
+      "readiness": {
+        "schema_version": 1,
+        "status": "READY_FROM_NATIVE_BOOTSTATUS",
+        "device": "702B99C3-7821-4D16-A8A2-CA9A22CBBF23",
+        "strategy": "fresh",
+        "run_id": "45217195070",
+        "run_attempt": "1",
+        "attempts": [
+          {
+            "name": "boot-initial",
+            "command": [
+              "xcrun",
+              "simctl",
+              "boot",
+              "702B99C3-7821-4D16-A8A2-CA9A22CBBF23"
+            ],
+            "timeout_seconds": 15.0,
+            "return_code": 0,
+            "timed_out": false,
+            "elapsed_seconds": 3.494,
+            "output_file": "boot-initial.log",
+            "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "name": "bootstatus-attempt-1",
+            "command": [
+              "xcrun",
+              "simctl",
+              "bootstatus",
+              "702B99C3-7821-4D16-A8A2-CA9A22CBBF23",
+              "-b"
+            ],
+            "timeout_seconds": 180.0,
+            "return_code": 0,
+            "timed_out": false,
+            "elapsed_seconds": 160.355,
+            "output_file": "bootstatus-attempt-1.log",
+            "output_sha256": "8b950ae4c9f01ceada88b417d12f0e656237f636043aaf8384e2e4587024c7f9"
+          }
+        ],
+        "recovery_count": 0,
+        "scope": "Simulator readiness only; Motion product tests NOT_RUN",
+        "ownership": {
+          "simulator": "702B99C3-7821-4D16-A8A2-CA9A22CBBF23",
+          "run_id": "45217195070",
+          "run_attempt": "1",
+          "name": "Hanlin-Phase2-Motion-45217195070",
+          "selection_sha256": "95a862c0689159f9b122e6d8b665f0b9a70cc034958f00d6fba1402ad96afb0c"
+        }
+      },
+      "bootstatus_original_text": "Monitoring boot status for Hanlin-Phase2-Motion-45217195070 (702B99C3-7821-4D16-A8A2-CA9A22CBBF23).\nDevice already booted, nothing to do.\n\n",
+      "original_files": [
+        {
+          "file": "preflight.txt",
+          "sha256": "f284b4ef718929a36b93576892c9e6c599ed58ea7aa7e9d4a2693b1bd433d032"
+        },
+        {
+          "file": "verified-environment.json",
+          "sha256": "95a862c0689159f9b122e6d8b665f0b9a70cc034958f00d6fba1402ad96afb0c"
+        },
+        {
+          "file": "devices.json",
+          "sha256": "98d36717798ad15b8cfe7d3facd4f815d3326cfd90b7a24ff03266b84e364b32"
+        },
+        {
+          "file": "motion-boot-readiness.json",
+          "sha256": "9cce02c24159ec169f79073ca7f69725c86b80db95ff1e5b2b8d44931ed6f2a4"
+        },
+        {
+          "file": "bootstatus-attempt-1.log",
+          "sha256": "8b950ae4c9f01ceada88b417d12f0e656237f636043aaf8384e2e4587024c7f9"
+        }
+      ],
+      "retained_process_files": [
+        "process-status.txt"
+      ]
+    },
+    {
+      "label": "B45223225171",
+      "run": 45223225171,
+      "attempt": 2,
+      "source": "c1c9fde5299124953d7ced72748dc09b50b72f7f",
+      "runner": {
+        "id": 137877646849,
+        "runner_id": 1000024812,
+        "runner_name": "GitHub Actions 1000024812",
+        "runner_group_name": "GitHub Actions",
+        "labels": [
+          "xcode-27"
+        ]
+      },
+      "preflight_sha256": "f284b4ef718929a36b93576892c9e6c599ed58ea7aa7e9d4a2693b1bd433d032",
+      "preflight_text": "Xcode 27.2\nBuild version 27B52\nApple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0\nDriverKit SDKs:\n\tDriverKit 27.2                \t-sdk driverkit27.2\n\niOS SDKs:\n\tiOS 27.2                      \t-sdk iphoneos27.2\n\niOS Simulator SDKs:\n\tSimulator - iOS 27.2          \t-sdk iphonesimulator27.2\n\nmacOS SDKs:\n\tmacOS 27.2                    \t-sdk macosx27.2\n\tmacOS 27.2                    \t-sdk macosx27.2\n\ntvOS SDKs:\n\ttvOS 27.2                     \t-sdk appletvos27.2\n\ntvOS Simulator SDKs:\n\tSimulator - tvOS 27.2         \t-sdk appletvsimulator27.2\n\nvisionOS SDKs:\n\tvisionOS 27.2                 \t-sdk xros27.2\n\nvisionOS Simulator SDKs:\n\tSimulator - visionOS 27.2     \t-sdk xrsimulator27.2\n\nwatchOS SDKs:\n\twatchOS 27.2                  \t-sdk watchos27.2\n\nwatchOS Simulator SDKs:\n\tSimulator - watchOS 27.2      \t-sdk watchsimulator27.2\n\nProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\narm64\nVersion: 2.46.0\n",
+      "runtime": {
+        "version": "27.2",
+        "buildversion": "24B8117",
+        "isAvailable": true,
+        "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+        "bundlePath": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.LnwcvT/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime",
+        "runtimeRoot": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.LnwcvT/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot",
+        "supportedArchitectures": [
+          "arm64"
+        ]
+      },
+      "strategy": "fresh",
+      "device": {
+        "state": "Shutdown",
+        "isAvailable": true,
+        "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-12GB"
+      },
+      "source_device": {
+        "name": "iPad Pro 13-inch (M5)",
+        "state": "Shutdown",
+        "isAvailable": true,
+        "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-12GB"
+      },
+      "operation": "simctl_create",
+      "absent_before_create": true,
+      "non_shutdown_devices_before_create": [],
+      "readiness": {
+        "schema_version": 1,
+        "status": "READY_FROM_NATIVE_BOOTSTATUS",
+        "device": "D4BD0F75-3049-424D-91C1-1CD812147467",
+        "strategy": "fresh",
+        "run_id": "45223225171",
+        "run_attempt": "2",
+        "attempts": [
+          {
+            "name": "boot-initial",
+            "command": [
+              "xcrun",
+              "simctl",
+              "boot",
+              "D4BD0F75-3049-424D-91C1-1CD812147467"
+            ],
+            "timeout_seconds": 15.0,
+            "return_code": 0,
+            "timed_out": false,
+            "elapsed_seconds": 5.213,
+            "output_file": "boot-initial.log",
+            "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "name": "bootstatus-attempt-1",
+            "command": [
+              "xcrun",
+              "simctl",
+              "bootstatus",
+              "D4BD0F75-3049-424D-91C1-1CD812147467",
+              "-b"
+            ],
+            "timeout_seconds": 180.0,
+            "return_code": 0,
+            "timed_out": false,
+            "elapsed_seconds": 169.871,
+            "output_file": "bootstatus-attempt-1.log",
+            "output_sha256": "cb4435c24107dac7a8857e1c7986124b095c26812a5508830dd82abaf08b87b1"
+          }
+        ],
+        "recovery_count": 0,
+        "scope": "Simulator readiness only; Motion product tests NOT_RUN",
+        "ownership": {
+          "simulator": "D4BD0F75-3049-424D-91C1-1CD812147467",
+          "run_id": "45223225171",
+          "run_attempt": "2",
+          "name": "Hanlin-Phase2-Motion-45223225171",
+          "selection_sha256": "0aa9a6c13d141a6203665170a54545cf939c246232a2d14622d513b0d29ab1f4"
+        }
+      },
+      "bootstatus_original_text": "Monitoring boot status for Hanlin-Phase2-Motion-45223225171 (D4BD0F75-3049-424D-91C1-1CD812147467).\nDevice already booted, nothing to do.\n\n",
+      "original_files": [
+        {
+          "file": "preflight.txt",
+          "sha256": "f284b4ef718929a36b93576892c9e6c599ed58ea7aa7e9d4a2693b1bd433d032"
+        },
+        {
+          "file": "verified-environment.json",
+          "sha256": "0aa9a6c13d141a6203665170a54545cf939c246232a2d14622d513b0d29ab1f4"
+        },
+        {
+          "file": "devices.json",
+          "sha256": "98d36717798ad15b8cfe7d3facd4f815d3326cfd90b7a24ff03266b84e364b32"
+        },
+        {
+          "file": "motion-boot-readiness.json",
+          "sha256": "9ef29c30dc5944081db30b5a5ee6dad2ba3f2c9cc20cfb65f8d068d7e4e957c5"
+        },
+        {
+          "file": "bootstatus-attempt-1.log",
+          "sha256": "cb4435c24107dac7a8857e1c7986124b095c26812a5508830dd82abaf08b87b1"
+        }
+      ],
+      "retained_process_files": [
+        "process-status.txt",
+        "test-runner-diagnostics/owned-processes.json"
+      ]
+    },
+    {
+      "label": "row45236783905_attempt1",
+      "run": 45236783905,
+      "attempt": 1,
+      "source": "0b74c6c1df60926c09a00560598af478bafb3e75",
+      "runner": {
+        "id": 137910499834,
+        "runner_id": 1000024850,
+        "runner_name": "GitHub Actions 1000024850",
+        "runner_group_name": "GitHub Actions",
+        "labels": [
+          "xcode-27"
+        ]
+      },
+      "preflight_sha256": "f284b4ef718929a36b93576892c9e6c599ed58ea7aa7e9d4a2693b1bd433d032",
+      "preflight_text": "Xcode 27.2\nBuild version 27B52\nApple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0\nDriverKit SDKs:\n\tDriverKit 27.2                \t-sdk driverkit27.2\n\niOS SDKs:\n\tiOS 27.2                      \t-sdk iphoneos27.2\n\niOS Simulator SDKs:\n\tSimulator - iOS 27.2          \t-sdk iphonesimulator27.2\n\nmacOS SDKs:\n\tmacOS 27.2                    \t-sdk macosx27.2\n\tmacOS 27.2                    \t-sdk macosx27.2\n\ntvOS SDKs:\n\ttvOS 27.2                     \t-sdk appletvos27.2\n\ntvOS Simulator SDKs:\n\tSimulator - tvOS 27.2         \t-sdk appletvsimulator27.2\n\nvisionOS SDKs:\n\tvisionOS 27.2                 \t-sdk xros27.2\n\nvisionOS Simulator SDKs:\n\tSimulator - visionOS 27.2     \t-sdk xrsimulator27.2\n\nwatchOS SDKs:\n\twatchOS 27.2                  \t-sdk watchos27.2\n\nwatchOS Simulator SDKs:\n\tSimulator - watchOS 27.2      \t-sdk watchsimulator27.2\n\nProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\narm64\nVersion: 2.46.0\n",
+      "runtime": {
+        "version": "27.2",
+        "buildversion": "24B8117",
+        "isAvailable": true,
+        "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+        "bundlePath": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.jKgcMT/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime",
+        "runtimeRoot": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.jKgcMT/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot",
+        "supportedArchitectures": [
+          "arm64"
+        ]
+      },
+      "strategy": "fresh",
+      "device": {
+        "state": "Shutdown",
+        "isAvailable": true,
+        "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-12GB"
+      },
+      "source_device": {
+        "name": "iPad Pro 13-inch (M5)",
+        "state": "Shutdown",
+        "isAvailable": true,
+        "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-12GB"
+      },
+      "operation": "simctl_create",
+      "absent_before_create": true,
+      "non_shutdown_devices_before_create": [],
+      "readiness": {
+        "schema_version": 1,
+        "status": "NOT_READY",
+        "device": "B24EEC92-46D9-48A2-B640-79C4674B9F53",
+        "strategy": "fresh",
+        "run_id": "45236783905",
+        "run_attempt": "1",
+        "attempts": [
+          {
+            "name": "boot-initial",
+            "command": [
+              "xcrun",
+              "simctl",
+              "boot",
+              "B24EEC92-46D9-48A2-B640-79C4674B9F53"
+            ],
+            "timeout_seconds": 15.0,
+            "return_code": 0,
+            "timed_out": false,
+            "elapsed_seconds": 3.329,
+            "output_file": "boot-initial.log",
+            "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "name": "bootstatus-attempt-1",
+            "command": [
+              "xcrun",
+              "simctl",
+              "bootstatus",
+              "B24EEC92-46D9-48A2-B640-79C4674B9F53",
+              "-b"
+            ],
+            "timeout_seconds": 180.0,
+            "return_code": 124,
+            "timed_out": true,
+            "elapsed_seconds": 181.406,
+            "output_file": "bootstatus-attempt-1.log",
+            "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "name": "shutdown-recovery",
+            "command": [
+              "xcrun",
+              "simctl",
+              "shutdown",
+              "B24EEC92-46D9-48A2-B640-79C4674B9F53"
+            ],
+            "timeout_seconds": 20.0,
+            "return_code": 124,
+            "timed_out": true,
+            "elapsed_seconds": 24.31,
+            "output_file": "shutdown-recovery.log",
+            "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "recovery_count": 1,
+        "scope": "Simulator readiness only; Motion product tests NOT_RUN",
+        "ownership": {
+          "simulator": "B24EEC92-46D9-48A2-B640-79C4674B9F53",
+          "run_id": "45236783905",
+          "run_attempt": "1",
+          "name": "Hanlin-Phase2-Motion-45236783905",
+          "selection_sha256": "bbb1ad88b798a2423c36542b104af2a1ff818930d44cfb5218b4cc43eabe965b"
+        },
+        "recovery_reason": "FIRST_NATIVE_BOOTSTATUS_TIMEOUT",
+        "error": "Owned Motion recovery shutdown failed"
+      },
+      "bootstatus_original_text": "",
+      "original_files": [
+        {
+          "file": "preflight.txt",
+          "sha256": "f284b4ef718929a36b93576892c9e6c599ed58ea7aa7e9d4a2693b1bd433d032"
+        },
+        {
+          "file": "verified-environment.json",
+          "sha256": "bbb1ad88b798a2423c36542b104af2a1ff818930d44cfb5218b4cc43eabe965b"
+        },
+        {
+          "file": "devices.json",
+          "sha256": "98d36717798ad15b8cfe7d3facd4f815d3326cfd90b7a24ff03266b84e364b32"
+        },
+        {
+          "file": "motion-boot-readiness.json",
+          "sha256": "ac8041a0c65ced059a1ce7a9806160c1f60f5e41353a523064019366ddc10f3f"
+        },
+        {
+          "file": "bootstatus-attempt-1.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "retained_process_files": [
+        "process-status.txt"
+      ]
+    },
+    {
+      "label": "row45236783905_attempt2",
+      "run": 45236783905,
+      "attempt": 2,
+      "source": "0b74c6c1df60926c09a00560598af478bafb3e75",
+      "runner": {
+        "id": 137919914818,
+        "runner_id": 1000024859,
+        "runner_name": "GitHub Actions 1000024859",
+        "runner_group_name": "GitHub Actions",
+        "labels": [
+          "xcode-27"
+        ]
+      },
+      "preflight_sha256": "f284b4ef718929a36b93576892c9e6c599ed58ea7aa7e9d4a2693b1bd433d032",
+      "preflight_text": "Xcode 27.2\nBuild version 27B52\nApple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0\nDriverKit SDKs:\n\tDriverKit 27.2                \t-sdk driverkit27.2\n\niOS SDKs:\n\tiOS 27.2                      \t-sdk iphoneos27.2\n\niOS Simulator SDKs:\n\tSimulator - iOS 27.2          \t-sdk iphonesimulator27.2\n\nmacOS SDKs:\n\tmacOS 27.2                    \t-sdk macosx27.2\n\tmacOS 27.2                    \t-sdk macosx27.2\n\ntvOS SDKs:\n\ttvOS 27.2                     \t-sdk appletvos27.2\n\ntvOS Simulator SDKs:\n\tSimulator - tvOS 27.2         \t-sdk appletvsimulator27.2\n\nvisionOS SDKs:\n\tvisionOS 27.2                 \t-sdk xros27.2\n\nvisionOS Simulator SDKs:\n\tSimulator - visionOS 27.2     \t-sdk xrsimulator27.2\n\nwatchOS SDKs:\n\twatchOS 27.2                  \t-sdk watchos27.2\n\nwatchOS Simulator SDKs:\n\tSimulator - watchOS 27.2      \t-sdk watchsimulator27.2\n\nProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\narm64\nVersion: 2.46.0\n",
+      "runtime": {
+        "version": "27.2",
+        "buildversion": "24B8117",
+        "isAvailable": true,
+        "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+        "bundlePath": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.LTpnYI/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime",
+        "runtimeRoot": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.LTpnYI/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot",
+        "supportedArchitectures": [
+          "arm64"
+        ]
+      },
+      "strategy": "fresh",
+      "device": {
+        "state": "Shutdown",
+        "isAvailable": true,
+        "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-12GB"
+      },
+      "source_device": {
+        "name": "iPad Pro 13-inch (M5)",
+        "state": "Shutdown",
+        "isAvailable": true,
+        "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-12GB"
+      },
+      "operation": "simctl_create",
+      "absent_before_create": true,
+      "non_shutdown_devices_before_create": [],
+      "readiness": {
+        "schema_version": 1,
+        "status": "NOT_READY",
+        "device": "23F8B166-D370-4128-AD85-0386DD9C1242",
+        "strategy": "fresh",
+        "run_id": "45236783905",
+        "run_attempt": "2",
+        "attempts": [
+          {
+            "name": "boot-initial",
+            "command": [
+              "xcrun",
+              "simctl",
+              "boot",
+              "23F8B166-D370-4128-AD85-0386DD9C1242"
+            ],
+            "timeout_seconds": 15.0,
+            "return_code": 0,
+            "timed_out": false,
+            "elapsed_seconds": 3.874,
+            "output_file": "boot-initial.log",
+            "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "name": "bootstatus-attempt-1",
+            "command": [
+              "xcrun",
+              "simctl",
+              "bootstatus",
+              "23F8B166-D370-4128-AD85-0386DD9C1242",
+              "-b"
+            ],
+            "timeout_seconds": 180.0,
+            "return_code": 124,
+            "timed_out": true,
+            "elapsed_seconds": 181.964,
+            "output_file": "bootstatus-attempt-1.log",
+            "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "name": "shutdown-recovery",
+            "command": [
+              "xcrun",
+              "simctl",
+              "shutdown",
+              "23F8B166-D370-4128-AD85-0386DD9C1242"
+            ],
+            "timeout_seconds": 20.0,
+            "return_code": 124,
+            "timed_out": true,
+            "elapsed_seconds": 25.674,
+            "output_file": "shutdown-recovery.log",
+            "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "recovery_count": 1,
+        "scope": "Simulator readiness only; Motion product tests NOT_RUN",
+        "ownership": {
+          "simulator": "23F8B166-D370-4128-AD85-0386DD9C1242",
+          "run_id": "45236783905",
+          "run_attempt": "2",
+          "name": "Hanlin-Phase2-Motion-45236783905",
+          "selection_sha256": "bcc4c0cf879814b1cab0da330d220967186c3682fcb8b93282c1cdc324ffc6c0"
+        },
+        "recovery_reason": "FIRST_NATIVE_BOOTSTATUS_TIMEOUT",
+        "error": "Owned Motion recovery shutdown failed"
+      },
+      "bootstatus_original_text": "",
+      "original_files": [
+        {
+          "file": "preflight.txt",
+          "sha256": "f284b4ef718929a36b93576892c9e6c599ed58ea7aa7e9d4a2693b1bd433d032"
+        },
+        {
+          "file": "verified-environment.json",
+          "sha256": "bcc4c0cf879814b1cab0da330d220967186c3682fcb8b93282c1cdc324ffc6c0"
+        },
+        {
+          "file": "devices.json",
+          "sha256": "98d36717798ad15b8cfe7d3facd4f815d3326cfd90b7a24ff03266b84e364b32"
+        },
+        {
+          "file": "motion-boot-readiness.json",
+          "sha256": "0a127fb697b0374f9209109063fcc85d9285170f03ca3bcd16333109ea822f93"
+        },
+        {
+          "file": "bootstatus-attempt-1.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "retained_process_files": [
+        "process-status.txt"
+      ]
+    }
+  ],
+  "finding": "No changed recorded toolchain, runtime build, device model, fresh-device operation, prior booted state or helper/preflight input explains the two failures.",
+  "identical_preflight_sha256": "f284b4ef718929a36b93576892c9e6c599ed58ea7aa7e9d4a2693b1bd433d032",
+  "all_four_preflight_identical": true,
+  "all_four_fresh_from_shutdown_no_prebooted_device": true,
+  "source_dependency": "The unchanged wrapper completes simulator readiness before preparing or compiling App.swift, so the reviewed row change cannot cause preflight failure.",
+  "missing_evidence": [
+    "Actual DEVELOPER_DIR and resolved simctl path are not independently retained by failed runs; versions and selection code are recorded.",
+    "No CoreSimulatorService process snapshot or sample is retained at preflight failure.",
+    "TimeoutExpired observation branch retains only deadline marker and discards possible partial stdout/stderr.",
+    "Successful bootstatus logs contain only the final already-booted message after160.355/169.871s, not intermediate timing."
+  ],
+  "next_native_action": "NOT_DISPATCHED; no blind third attempt and no timeout/assertion change."
+}

@@ -1,0 +1,393 @@
+{
+  "run": 43747509478,
+  "job": 132913962195,
+  "source_sha": "516ca9e1794c7fe8f6ad214a9b0ab3fcc18db58a",
+  "status": "EXECUTED_PASS",
+  "executed_cases": 36,
+  "cases": [
+    {
+      "name": "customMediaCatalogResolvesYouTubeThroughOfficialGraphAndBinding()",
+      "identity": "A2UISDKTests/customMediaCatalogResolvesYouTubeThroughOfficialGraphAndBinding()",
+      "result": "Passed"
+    },
+    {
+      "name": "customMediaCannotAlterOfficialCatalogOrAdmitScriptFields()",
+      "identity": "A2UISDKTests/customMediaCannotAlterOfficialCatalogOrAdmitScriptFields()",
+      "result": "Passed"
+    },
+    {
+      "name": "successfulProducerEOFKeepsOriginalModelActionAndClosesInput()",
+      "identity": "A2UISDKTests/successfulProducerEOFKeepsOriginalModelActionAndClosesInput()",
+      "result": "Passed"
+    },
+    {
+      "name": "producerEOFDoesNotSurviveRevocationOrFollowAnotherGeneration()",
+      "identity": "A2UISDKTests/producerEOFDoesNotSurviveRevocationOrFollowAnotherGeneration()",
+      "result": "Passed"
+    },
+    {
+      "name": "producerEOFCancelsOnlyItsReceiverAndCannotReplaceFinishedTool()",
+      "identity": "A2UISDKTests/producerEOFCancelsOnlyItsReceiverAndCannotReplaceFinishedTool()",
+      "result": "Passed"
+    },
+    {
+      "name": "modelPartUsesMessageIdentityWithoutToolCall()",
+      "identity": "A2UISDKTests/modelPartUsesMessageIdentityWithoutToolCall()",
+      "result": "Passed"
+    },
+    {
+      "name": "orderedModelProjectionPreservesTextAndRegisteredSurface()",
+      "identity": "A2UISDKTests/orderedModelProjectionPreservesTextAndRegisteredSurface()",
+      "result": "Passed"
+    },
+    {
+      "name": "modelProjectionRejectsForeignIdentityAndAmbiguousParts()",
+      "identity": "A2UISDKTests/modelProjectionRejectsForeignIdentityAndAmbiguousParts()",
+      "result": "Passed"
+    },
+    {
+      "name": "modelProjectionNeverFollowsReplacedGeneration()",
+      "identity": "A2UISDKTests/modelProjectionNeverFollowsReplacedGeneration()",
+      "result": "Passed"
+    },
+    {
+      "name": "transientOwnerLookupKeepsWireIDsIndependent()",
+      "identity": "A2UISDKTests/transientOwnerLookupKeepsWireIDsIndependent()",
+      "result": "Passed"
+    },
+    {
+      "name": "transientReceiveRejectsWrongIdentityAndSequence()",
+      "identity": "A2UISDKTests/transientReceiveRejectsWrongIdentityAndSequence()",
+      "result": "Passed"
+    },
+    {
+      "name": "sealedResultRetainsModelsAndRevokesActions()",
+      "identity": "A2UISDKTests/sealedResultRetainsModelsAndRevokesActions()",
+      "result": "Passed"
+    },
+    {
+      "name": "sealingRunDoesNotRevokeOtherRun()",
+      "identity": "A2UISDKTests/sealingRunDoesNotRevokeOtherRun()",
+      "result": "Passed"
+    },
+    {
+      "name": "replacementRevokesOldGenerationBeforeNewDelivery()",
+      "identity": "A2UISDKTests/replacementRevokesOldGenerationBeforeNewDelivery()",
+      "result": "Passed"
+    },
+    {
+      "name": "endingResultCancelsOwnedReceiveTask()",
+      "identity": "A2UISDKTests/endingResultCancelsOwnedReceiveTask()",
+      "result": "Passed"
+    },
+    {
+      "name": "presentationCopiesDoNotOwnDiscard()",
+      "identity": "A2UISDKTests/presentationCopiesDoNotOwnDiscard()",
+      "result": "Passed"
+    },
+    {
+      "name": "eventSinkIsWeakAndCannotKeepAuthorityAlive()",
+      "identity": "A2UISDKTests/eventSinkIsWeakAndCannotKeepAuthorityAlive()",
+      "result": "Passed"
+    },
+    {
+      "name": "deletedSurfaceDropsQueuedOwnedEvents()",
+      "identity": "A2UISDKTests/deletedSurfaceDropsQueuedOwnedEvents()",
+      "result": "Passed"
+    },
+    {
+      "name": "retiredSurfaceCannotReanimateQueuedEventsInSameResult()",
+      "identity": "A2UISDKTests/retiredSurfaceCannotReanimateQueuedEventsInSameResult()",
+      "result": "Passed"
+    },
+    {
+      "name": "parsesAndRendersTextCardInputButton()",
+      "identity": "A2UISDKTests/parsesAndRendersTextCardInputButton()",
+      "result": "Passed"
+    },
+    {
+      "name": "nativeInputBindingWritesAndReadsOfficialModel()",
+      "identity": "A2UISDKTests/nativeInputBindingWritesAndReadsOfficialModel()",
+      "result": "Passed"
+    },
+    {
+      "name": "stableIDsAndNodeIdentityAcrossUpdates()",
+      "identity": "A2UISDKTests/stableIDsAndNodeIdentityAcrossUpdates()",
+      "result": "Passed"
+    },
+    {
+      "name": "malformedAndUnknownContentFallsBackAndRecovers()",
+      "identity": "A2UISDKTests/malformedAndUnknownContentFallsBackAndRecovers()",
+      "result": "Passed"
+    },
+    {
+      "name": "officialSchemasRejectInvalidTextInputButton()",
+      "identity": "A2UISDKTests/officialSchemasRejectInvalidTextInputButton()",
+      "result": "Passed"
+    },
+    {
+      "name": "independentSurfacesKeepModelsSeparate()",
+      "identity": "A2UISDKTests/independentSurfacesKeepModelsSeparate()",
+      "result": "Passed"
+    },
+    {
+      "name": "independentOwnersCanReuseWireSurfaceID()",
+      "identity": "A2UISDKTests/independentOwnersCanReuseWireSurfaceID()",
+      "result": "Passed"
+    },
+    {
+      "name": "deleteDisposesAndRecreateStartsWithNewIdentity()",
+      "identity": "A2UISDKTests/deleteDisposesAndRecreateStartsWithNewIdentity()",
+      "result": "Passed"
+    },
+    {
+      "name": "closeRejectsLateFramesAndDisposesSurfaces()",
+      "identity": "A2UISDKTests/closeRejectsLateFramesAndDisposesSurfaces()",
+      "result": "Passed"
+    },
+    {
+      "name": "buttonEventUsesCurrentBoundValue()",
+      "identity": "A2UISDKTests/buttonEventUsesCurrentBoundValue()",
+      "result": "Passed"
+    },
+    {
+      "name": "hebrewFixtureRetainsBindingsInRTLComposition()",
+      "identity": "A2UISDKTests/hebrewFixtureRetainsBindingsInRTLComposition()",
+      "result": "Passed"
+    },
+    {
+      "name": "surfaceLimitDoesNotRemoveExistingContent()",
+      "identity": "A2UISDKTests/surfaceLimitDoesNotRemoveExistingContent()",
+      "result": "Passed"
+    },
+    {
+      "name": "rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound()",
+      "identity": "A2UISDKTests/rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound()",
+      "result": "Passed"
+    },
+    {
+      "name": "unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks()",
+      "identity": "A2UISDKTests/unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks()",
+      "result": "Passed"
+    },
+    {
+      "name": "unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC()",
+      "identity": "A2UISDKTests/unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC()",
+      "result": "Passed"
+    },
+    {
+      "name": "closeRevokesQueuedAndRetainedActionCallbacks()",
+      "identity": "A2UISDKTests/closeRevokesQueuedAndRetainedActionCallbacks()",
+      "result": "Passed"
+    },
+    {
+      "name": "closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce()",
+      "identity": "A2UISDKTests/closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce()",
+      "result": "Passed"
+    }
+  ],
+  "artifact": 14175250950,
+  "artifact_sha256": "479d1b38d24c9ee4f124064919514094eca8dc56db8b617989c75f4801a0248a",
+  "artifact_bytes": 303959,
+  "inputs": {
+    "status": "PREPARED_NOT_EXECUTED",
+    "upstream": "https://github.com/a2ui-project/a2ui",
+    "revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079",
+    "consumer_module": "AI_Hanlin",
+    "test_module": "AI_HLYTests",
+    "portable_cases": [
+      "acceptsOfficialV1FixtureFrames",
+      "rejectsMalformedAndAmbiguousFrames",
+      "rejectsOtherProtocolVersions",
+      "preservesUnicodeSurfaceIdentity",
+      "boundsUTF8MessageAndComponentBatch",
+      "rejectsRPCAndUnnegotiatedCatalogs",
+      "rejectedEnvelopesNeverExportSurfaceCorrelation",
+      "componentValidationRemainsWithSDK"
+    ],
+    "sdk_cases": [
+      "customMediaCatalogResolvesYouTubeThroughOfficialGraphAndBinding",
+      "customMediaCannotAlterOfficialCatalogOrAdmitScriptFields",
+      "successfulProducerEOFKeepsOriginalModelActionAndClosesInput",
+      "producerEOFDoesNotSurviveRevocationOrFollowAnotherGeneration",
+      "producerEOFCancelsOnlyItsReceiverAndCannotReplaceFinishedTool",
+      "modelPartUsesMessageIdentityWithoutToolCall",
+      "orderedModelProjectionPreservesTextAndRegisteredSurface",
+      "modelProjectionRejectsForeignIdentityAndAmbiguousParts",
+      "modelProjectionNeverFollowsReplacedGeneration",
+      "transientOwnerLookupKeepsWireIDsIndependent",
+      "transientReceiveRejectsWrongIdentityAndSequence",
+      "sealedResultRetainsModelsAndRevokesActions",
+      "sealingRunDoesNotRevokeOtherRun",
+      "replacementRevokesOldGenerationBeforeNewDelivery",
+      "endingResultCancelsOwnedReceiveTask",
+      "presentationCopiesDoNotOwnDiscard",
+      "eventSinkIsWeakAndCannotKeepAuthorityAlive",
+      "deletedSurfaceDropsQueuedOwnedEvents",
+      "retiredSurfaceCannotReanimateQueuedEventsInSameResult",
+      "parsesAndRendersTextCardInputButton",
+      "nativeInputBindingWritesAndReadsOfficialModel",
+      "stableIDsAndNodeIdentityAcrossUpdates",
+      "malformedAndUnknownContentFallsBackAndRecovers",
+      "officialSchemasRejectInvalidTextInputButton",
+      "independentSurfacesKeepModelsSeparate",
+      "independentOwnersCanReuseWireSurfaceID",
+      "deleteDisposesAndRecreateStartsWithNewIdentity",
+      "closeRejectsLateFramesAndDisposesSurfaces",
+      "buttonEventUsesCurrentBoundValue",
+      "hebrewFixtureRetainsBindingsInRTLComposition",
+      "surfaceLimitDoesNotRemoveExistingContent",
+      "rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound",
+      "unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks",
+      "unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC",
+      "closeRevokesQueuedAndRetainedActionCallbacks",
+      "closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce"
+    ],
+    "ownership_cases": [
+      "successfulProducerEOFKeepsOriginalModelActionAndClosesInput",
+      "producerEOFDoesNotSurviveRevocationOrFollowAnotherGeneration",
+      "producerEOFCancelsOnlyItsReceiverAndCannotReplaceFinishedTool",
+      "modelPartUsesMessageIdentityWithoutToolCall",
+      "orderedModelProjectionPreservesTextAndRegisteredSurface",
+      "modelProjectionRejectsForeignIdentityAndAmbiguousParts",
+      "modelProjectionNeverFollowsReplacedGeneration",
+      "transientOwnerLookupKeepsWireIDsIndependent",
+      "transientReceiveRejectsWrongIdentityAndSequence",
+      "sealedResultRetainsModelsAndRevokesActions",
+      "sealingRunDoesNotRevokeOtherRun",
+      "replacementRevokesOldGenerationBeforeNewDelivery",
+      "endingResultCancelsOwnedReceiveTask",
+      "presentationCopiesDoNotOwnDiscard",
+      "eventSinkIsWeakAndCannotKeepAuthorityAlive",
+      "deletedSurfaceDropsQueuedOwnedEvents",
+      "retiredSurfaceCannotReanimateQueuedEventsInSameResult"
+    ],
+    "media_cases": [
+      "customMediaCatalogResolvesYouTubeThroughOfficialGraphAndBinding",
+      "customMediaCannotAlterOfficialCatalogOrAdmitScriptFields"
+    ],
+    "files": [
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIContentLimits.swift",
+        "sha256": "6a78f5bf5c3c829c608854bce16eac714397a248c94a67bedc21efcc260848e0"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIFrameLifetime.swift",
+        "sha256": "bc0b200e4db97cd200ac571253e878277a7df4d5132018dfb627d0cabb87bca8"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIIngress.swift",
+        "sha256": "0033c2f4522ac2fcee212becdaff3a2285d6a47349a2101457511116bda2cb1c"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UILocalMedia.swift",
+        "sha256": "ae58cf03a5da2f3a019a697279e40bb0911d0cc8254a7c7c65e725d6984dd107"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultOwner.swift",
+        "sha256": "546388db45d7bebe14c7a335e670e23e7cd87760ada4897373b025428a759ee4"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultProjectionSource.swift",
+        "sha256": "4420dd5bcd3d8cd3c65018a4a994f2cd65eb5e4f8162b7e318514f5004607f4a"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultView.swift",
+        "sha256": "afb27c3c95235bfac4d6ff6f0ea0c22ed47f89b03e501d4f4c0de198d0628df1"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UISession.swift",
+        "sha256": "60b64b4f2720df1d4e99e5222a1e606e425e2e71d4dfe1fd21da24fdcf40e5b3"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinChatContentProjection.swift",
+        "sha256": "6523fe65987113da98d161379aad075a550d98fd86aa3cafef3ccfa136d3615f"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinMediaCatalog.swift",
+        "sha256": "d39331996522721bfa1d482914ea2ef886d40f329aacecd77b63b093fdb5c99f"
+      },
+      {
+        "path": "AI_HLYTests/A2UITests.swift",
+        "sha256": "7cb156c8d6d9ddf7aa2d8503e2c269604d931caf7261ae508afc343d02907378"
+      },
+      {
+        "path": "AI_HLYTests/A2UIFixtures/form.jsonl",
+        "sha256": "c3f9f393341162f541321eb3c8462e111724d0f62d0cebc2f418f0967de5891d"
+      },
+      {
+        "path": "AI_HLYTests/A2UIFixtures/invalid-components.jsonl",
+        "sha256": "e761c8070080e37bea0e22c5ed7a19d6424ff4237a214d9c4b0ace0cce51eba3"
+      },
+      {
+        "path": "AI_HLYTests/A2UIFixtures/malformed.txt",
+        "sha256": "5471e5d32b13c8a0bcee95f767fb9580fda7fa47ee0e7a4c124bcb3498fe77da"
+      },
+      {
+        "path": "AI_HLYTests/A2UIFixtures/rtl.jsonl",
+        "sha256": "2e0ce205c2351e8a6baa0ecb184667ecab82e8d73a4c5172dfefa938c4664705"
+      },
+      {
+        "path": "AI_HLYTests/A2UIFixtures/unknown-function.jsonl",
+        "sha256": "058f52de611a570b1a4db5116ea31a3f6fa01ab061d971249e6f51bb2041e63f"
+      },
+      {
+        "path": "AI_HLYTests/A2UIFixtures/unknown.jsonl",
+        "sha256": "14218c93f9e8b4a9b2b05f27f57de89a4a53617f115fe303c9c06f6ef37eb4da"
+      },
+      {
+        "path": "AI_HLYTests/A2UIFixtures/update.jsonl",
+        "sha256": "4ac7c02500a3d797f72b9184a181534949767b75547dd62ca354c1a20b0233a5"
+      }
+    ],
+    "target_platform": "macos",
+    "harness_manifest_sha256": "0cc415a4bf878f586252e68eafb951938979ddcb0f124a612be563668bc1f522",
+    "native_execution": "NOT_RUN",
+    "platform": "macos27 / current stable Xcode"
+  },
+  "toolchain": "Xcode 27.2\nBuild version 27B52\nApple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0\nDriverKit SDKs:\n\tDriverKit 27.2                \t-sdk driverkit27.2\n\niOS SDKs:\n\tiOS 27.2                      \t-sdk iphoneos27.2\n\niOS Simulator SDKs:\n\tSimulator - iOS 27.2          \t-sdk iphonesimulator27.2\n\nmacOS SDKs:\n\tmacOS 27.2                    \t-sdk macosx27.2\n\tmacOS 27.2                    \t-sdk macosx27.2\n\ntvOS SDKs:\n\ttvOS 27.2                     \t-sdk appletvos27.2\n\ntvOS Simulator SDKs:\n\tSimulator - tvOS 27.2         \t-sdk appletvsimulator27.2\n\nvisionOS SDKs:\n\tvisionOS 27.2                 \t-sdk xros27.2\n\nvisionOS Simulator SDKs:\n\tSimulator - visionOS 27.2     \t-sdk xrsimulator27.2\n\nwatchOS SDKs:\n\twatchOS 27.2                  \t-sdk watchos27.2\n\nwatchOS Simulator SDKs:\n\tSimulator - watchOS 27.2      \t-sdk watchsimulator27.2\n\nProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\narm64\n/opt/homebrew/bin/python3\n",
+  "phase_seconds": {
+    "build-and-test": 104,
+    "diagnostics": 1,
+    "preflight": 20,
+    "resolution": 59,
+    "result-verification": 4,
+    "scheme-preflight": 30
+  },
+  "raw_files_sha256": {
+    "build-and-test-duration-seconds.txt": "77a60c200656e08ac5403f38b58657ecec155293323bd5313290399b75cf1c3d",
+    "ci-performance-report.json": "278dfd9d900be4aa8498a3e8a09a6e4b21338e64515271e9fb47f4edc8b71dbd",
+    "diagnostics-duration-seconds.txt": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "disk.txt": "df1c96bf30a0e120cd9635e5fea9b06a2f74d9c3f8da9157160f0367b8f06ffb",
+    "Package.resolved": "af74be77f91276268a10e0b32f13e04d538f4a01110ad93d8c9e484177dd9fae",
+    "Package.swift": "0cc415a4bf878f586252e68eafb951938979ddcb0f124a612be563668bc1f522",
+    "pin-validation.json": "39ed2e6a8bb8e490f63dc4100dcfa3406e44695326ed3e8861da7e4b17b5c993",
+    "preflight-duration-seconds.txt": "5378796307535df3ec8d8b15a2e2dc5641419c3d3060cfe32238c0fa973f7aa3",
+    "preflight.txt": "7153ee9afec99bd21885564100557c5899b41d10d4029316efbb0937882bbcc2",
+    "preparation.json": "302d64b78b90bac0738a45290c99c36d3830ce46c116e69a2772e87b1b9f4a93",
+    "process-status.json": "0b98ab6969df0e5c8478872108eb97a77d1261029c3d3809fe88c79988252093",
+    "proof-inputs.json": "e85ab246ad11d52550cedd2c9c1febdd89c5f07c8c94c51a50cb58c6e2eac3f4",
+    "resolution-duration-seconds.txt": "be4ba010e48e7d5c7c60457e7f40538407a26f4ead94b392beff67a3a5546b8a",
+    "resolve.log": "1d3748e2adc1a03f7ad7b1b7ceeac0590ade5652b9f6ee074aa7ed40c5a6c1dc",
+    "resolved-before.json": "af74be77f91276268a10e0b32f13e04d538f4a01110ad93d8c9e484177dd9fae",
+    "result-validation.json": "69a128f089cca4c22fbf51818e08c37f9d49abdcc173d3672ea2a5ccb4eab4fe",
+    "result-verification-duration-seconds.txt": "7de1555df0c2700329e815b93b32c571c3ea54dc967b89e81ab73b9972b72d1d",
+    "runtimes.json": "aadd8604f281f21636fcdfc000c734e093ea5c6691c2ab1e566c62b346f5cfa9",
+    "scheme-preflight-duration-seconds.txt": "f4ccd05b3271c386ee55d9876c7450012a3b361e5065c09dc22075e38b3cc35c",
+    "schemes.json": "0a4632d5b2623e3440fba5addd1118b627a3475ef625ed39a46a627bbec02c8a",
+    "selected-cases.txt": "feb708dea0823cfeae7002fcf053a9b3565cad1d04ecd506f159aea530cf1954",
+    "selected-scheme.txt": "e5518ac578be32d0671a42bd5e85a37db2ce564910ff02a7456a3e33435662cd",
+    "skill-health.txt": "cd05dcc4e7d479bdf3c2f2741ad8b8115ed2fc4c386646eba9f959fccf94c749",
+    "source-sha.txt": "bb66371ff25f866ff39efed9e7fe8a99c90d232d9c5935d12a0c216de98c39c0",
+    "tests.json": "94de3c0b62fa933a105a366568533d403f31534051bb6c23591ec41e359482b9",
+    "xcodebuild.log": "85eb78bacf2fce2a4ddcabbb36c024ad6c73a28e4e4a60692ae58cedbc8feea0"
+  },
+  "scope": "36 affected official A2UI/native owner controls after history presentation role; native macOS",
+  "not_run": [
+    "unchanged 8 portable ingress controls in this run",
+    "iOS media UI/playback in this run",
+    "canonical Hanlin SDK consumer/validator on new stable SDK",
+    "original app/ChatView/SwiftData/navigation/bootstrap/physical"
+  ],
+  "full_ci_pass": false
+}

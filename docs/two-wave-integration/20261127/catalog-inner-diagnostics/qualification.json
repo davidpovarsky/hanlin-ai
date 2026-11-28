@@ -1,0 +1,204 @@
+{
+  "schema": 1,
+  "qualifiedAtUTC": "2026-11-27T21:42:35.978158+00:00",
+  "baseCommit": "e86e779d5d4bf85db3c9802e569c032283515ad6",
+  "classification": "STRUCTURAL_SOURCE_QUALIFICATION_ONLY",
+  "files": [
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+      "originalSHA256": "10f0ae12345b996c282a9b5e7027e07081f86b438a8424c0133a5ecd055c6300",
+      "candidateSHA256": "30c9f16a73a7a485ec6dffbb5fc4eaebb62182ba0c84ac09eee8473d64d47028",
+      "originalReleaseProjectionSHA256": "10f0ae12345b996c282a9b5e7027e07081f86b438a8424c0133a5ecd055c6300",
+      "candidateReleaseProjectionSHA256": "10f0ae12345b996c282a9b5e7027e07081f86b438a8424c0133a5ecd055c6300",
+      "releaseProjectionAfterExplicitFormattingInverseSHA256": "10f0ae12345b996c282a9b5e7027e07081f86b438a8424c0133a5ecd055c6300",
+      "wholeReleaseProjectionAfterFormattingInverseExact": true,
+      "formattingInverseCount": 0,
+      "originalDebugExcludedLines": 0,
+      "candidateDebugExcludedLines": 86,
+      "releaseTokenCounts": {
+        "await": {
+          "original": 10,
+          "candidate": 10
+        },
+        "Task": {
+          "original": 0,
+          "candidate": 0
+        },
+        "guard": {
+          "original": 0,
+          "candidate": 0
+        },
+        "try": {
+          "original": 5,
+          "candidate": 5
+        },
+        "throw": {
+          "original": 0,
+          "candidate": 0
+        },
+        "catch": {
+          "original": 0,
+          "candidate": 0
+        }
+      }
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift",
+      "originalSHA256": "8a4772d47f4e62a654d32b39b1671e8c4d6826620a5d7b0fda9f05dcfa6eac88",
+      "candidateSHA256": "b5c85cdbef728883979b16785fac3b1acce0c839966046f352ef0d6cb22cc5c7",
+      "originalReleaseProjectionSHA256": "8a4772d47f4e62a654d32b39b1671e8c4d6826620a5d7b0fda9f05dcfa6eac88",
+      "candidateReleaseProjectionSHA256": "3cfa6204de5f76029cf16020ae1914933741e3b17d66c4bc0d6eb4f2b37e6415",
+      "releaseProjectionAfterExplicitFormattingInverseSHA256": "8a4772d47f4e62a654d32b39b1671e8c4d6826620a5d7b0fda9f05dcfa6eac88",
+      "wholeReleaseProjectionAfterFormattingInverseExact": true,
+      "formattingInverseCount": 2,
+      "originalDebugExcludedLines": 0,
+      "candidateDebugExcludedLines": 32,
+      "releaseTokenCounts": {
+        "await": {
+          "original": 30,
+          "candidate": 30
+        },
+        "Task": {
+          "original": 3,
+          "candidate": 3
+        },
+        "guard": {
+          "original": 17,
+          "candidate": 17
+        },
+        "try": {
+          "original": 30,
+          "candidate": 30
+        },
+        "throw": {
+          "original": 5,
+          "candidate": 5
+        },
+        "catch": {
+          "original": 9,
+          "candidate": 9
+        }
+      }
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
+      "originalSHA256": "d3fd4f9fad95573332cc436d8704ae4f3651ba6c83f7d4d3cb8093bde15874ac",
+      "candidateSHA256": "411e14d15044a86e6313b2c75bce1a1b29a24b0601db4938d05b57fa2a2a3bc4",
+      "originalReleaseProjectionSHA256": "d3fd4f9fad95573332cc436d8704ae4f3651ba6c83f7d4d3cb8093bde15874ac",
+      "candidateReleaseProjectionSHA256": "fe6ab2595fe212be0595646331f3ef75520199be85f0bdd60d914870cc15be75",
+      "releaseProjectionAfterExplicitFormattingInverseSHA256": "d3fd4f9fad95573332cc436d8704ae4f3651ba6c83f7d4d3cb8093bde15874ac",
+      "wholeReleaseProjectionAfterFormattingInverseExact": true,
+      "formattingInverseCount": 6,
+      "originalDebugExcludedLines": 0,
+      "candidateDebugExcludedLines": 118,
+      "releaseTokenCounts": {
+        "await": {
+          "original": 9,
+          "candidate": 9
+        },
+        "Task": {
+          "original": 2,
+          "candidate": 2
+        },
+        "guard": {
+          "original": 4,
+          "candidate": 4
+        },
+        "try": {
+          "original": 7,
+          "candidate": 7
+        },
+        "throw": {
+          "original": 3,
+          "candidate": 3
+        },
+        "catch": {
+          "original": 1,
+          "candidate": 1
+        }
+      }
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "originalSHA256": "16bfb5943ff77a21ab3a06a1cd61a82d1c473d7b6bd5024946286c32ba8e4ca9",
+      "candidateSHA256": "bfdd4be6c3e5bb28a15c43be589cb87c9ee58ce80daa794ef8fd4adf478c7b50",
+      "originalReleaseProjectionSHA256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65",
+      "candidateReleaseProjectionSHA256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65",
+      "releaseProjectionAfterExplicitFormattingInverseSHA256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65",
+      "wholeReleaseProjectionAfterFormattingInverseExact": true,
+      "formattingInverseCount": 0,
+      "originalDebugExcludedLines": 43,
+      "candidateDebugExcludedLines": 108,
+      "releaseTokenCounts": {
+        "await": {
+          "original": 141,
+          "candidate": 141
+        },
+        "Task": {
+          "original": 22,
+          "candidate": 22
+        },
+        "guard": {
+          "original": 201,
+          "candidate": 201
+        },
+        "try": {
+          "original": 338,
+          "candidate": 338
+        },
+        "throw": {
+          "original": 173,
+          "candidate": 173
+        },
+        "catch": {
+          "original": 33,
+          "candidate": 33
+        }
+      }
+    }
+  ],
+  "eightExplicitFormattingInverses": {
+    "HanlinMiniAppSpotlightIndex.swift": [
+      {
+        "candidateRelease": "        if reconciling {\n            reconciliationRequested = true\n            return\n        }\n",
+        "originalRelease": "        if reconciling { reconciliationRequested = true; return }\n"
+      },
+      {
+        "candidateRelease": "        defer {\n            reconciling = false\n        }\n",
+        "originalRelease": "        defer { reconciling = false }\n"
+      },
+      {
+        "candidateRelease": "                if indexedRecords != desired {\n                    try await replaceIndex(with: desired)\n                }\n",
+        "originalRelease": "                if indexedRecords != desired { try await replaceIndex(with: desired) }\n"
+      },
+      {
+        "candidateRelease": "            } catch {\n                spotlightError = error.localizedDescription\n            }\n",
+        "originalRelease": "            } catch { spotlightError = error.localizedDescription }\n"
+      },
+      {
+        "candidateRelease": "            if let previous {\n                _ = try? await previous.value\n            }\n",
+        "originalRelease": "            if let previous { _ = try? await previous.value }\n"
+      },
+      {
+        "candidateRelease": "            if !desired.isEmpty {\n                try await index.indexAppEntities(desired.map(HanlinInstalledMiniAppEntity.init))\n            }\n",
+        "originalRelease": "            if !desired.isEmpty { try await index.indexAppEntities(desired.map(HanlinInstalledMiniAppEntity.init)) }\n"
+      }
+    ],
+    "HanlinMiniAppCaptureCoordinator.swift": [
+      {
+        "candidateRelease": "            if previous != current {\n                try await HanlinCameraCaptureIntent.updateAppContext(current)\n            }\n",
+        "originalRelease": "            if previous != current { try await HanlinCameraCaptureIntent.updateAppContext(current) }\n"
+      },
+      {
+        "candidateRelease": "        } catch {\n            self.error = error.localizedDescription\n        }\n",
+        "originalRelease": "        } catch { self.error = error.localizedDescription }\n"
+      }
+    ]
+  },
+  "nativeCompile": "NOT_RUN",
+  "nativeOriginalPreferencesCase": "NOT_RUN",
+  "producerQualification": "NOT_RUN; all four source inputs affect current SDK396",
+  "existingSourceBodyInverse": "The retained exact-edit inverse recovers all four complete original files; the eight explicit Release formatting inverses below are independently reproduced in the W1 review.",
+  "retainedOriginalQualificationSHA256": "32037e5760c90bc447ebf9fdea24fd40b00eaa2849000c17e01f8915da8063dc",
+  "publicProjection": "Only the local candidate-directory field and local inverse-file locator were omitted; all actual qualification results are retained."
+}

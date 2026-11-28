@@ -1,0 +1,90 @@
+{
+  "Scripts/ProductSplit/observe_shortcut_surfaces.py": {
+    "additiveDispatchFunctionNames": [
+      "main",
+      "observe"
+    ],
+    "byteEquivalentASTFunctionNames": [
+      "require",
+      "_members",
+      "parse_json",
+      "digest",
+      "read_document",
+      "decode_value",
+      "equal_typed_json",
+      "validate_request",
+      "snapshot_document",
+      "action_identity",
+      "installed_catalog",
+      "queue_documents",
+      "proof_documents",
+      "prepared_proof",
+      "_epoch_milliseconds",
+      "_validate_five_receipts",
+      "completion",
+      "command",
+      "os_container",
+      "product_roots",
+      "system_app_observation",
+      "load_widget_fixture",
+      "validate_widget_request",
+      "widget_identity_digest",
+      "widget_artifact",
+      "widget_facts",
+      "widget_node_contains",
+      "require_widget_cache",
+      "require_widget_transition",
+      "widget_extension_executable",
+      "matching_widget_fallback",
+      "widget_log_events",
+      "observe_widget_case",
+      "close_widget_logs",
+      "write_response",
+      "original_system_fixture",
+      "load_system_inputs"
+    ],
+    "originalFunctionCount": 39,
+    "wholeOriginalBytesRecovered": true
+  },
+  "Scripts/ProductSplit/run_paired_acceptance.py": {
+    "additiveDispatchFunctionNames": [
+      "main",
+      "start_shortcut_observer"
+    ],
+    "byteEquivalentASTFunctionNames": [
+      "select_paired_runtime",
+      "command",
+      "command_phase_status",
+      "record_build_phases",
+      "capture_app_intents_metadata",
+      "fixture_archive",
+      "authoring_fixtures",
+      "verify_native_result",
+      "start_native_adapter_assets",
+      "widget_recovery_fixture",
+      "shortcut_surface_fixtures",
+      "system_surface_inputs",
+      "stage_system_surface_share_input",
+      "start_system_surface_input_producer",
+      "finish_system_surface_input_producer",
+      "finish_shortcut_observer"
+    ],
+    "originalFunctionCount": 18,
+    "wholeOriginalBytesRecovered": true
+  },
+  "base": "110e25bf5006469fadb6e2cf22c1ff9c7d24dd05",
+  "noNativeExecution": true,
+  "plans": {
+    "allOriginalAssignmentsASTEqual": true,
+    "newAssignmentCount": 9,
+    "newScope": "miniapp_widget_state_os",
+    "newSelectors": 1,
+    "originalAssignmentCount": 8
+  },
+  "ui": {
+    "addedBlockSHA256": "97ca4ff70c3c1c17af479e1872d64e82d665774416893d43048f695211c1bafa",
+    "newTestMethodCount": 1,
+    "originalTestMethodCount": 27,
+    "wholeOriginalBytesRecovered": true
+  }
+}

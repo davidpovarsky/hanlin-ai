@@ -1,0 +1,54 @@
+Test Suite 'All tests' started at 2026-11-22 04:57:01.408
+Test Suite 'debug.xctest' started at 2026-11-22 04:57:01.417
+Test Suite 'debug.xctest' passed at 2026-11-22 04:57:01.417
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'All tests' passed at 2026-11-22 04:57:01.417
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+◊ Test run started.
+→ Testing Library Version: 6.3.3 (48d727cc1cf4eda)
+→ Target Platform: x86_64-unknown-windows-msvc
+◊ Suite HanlinToolApprovalStoreTests started.
+◊ Suite HostInputIntegrityRegressionTests started.
+◊ Suite ToolApprovalAndPresentationTests started.
+◊ Test metadataTypesAndNestedFieldsCannotEraseBusinessArguments() started.
+◊ Test unknownAnimationCannotInjectCustomExecutableContent() started.
+◊ Test strippingTopLevelMetadataPreservesAllNestedValuesAndScalarKeys() started.
+◊ Test firstGrantIsAvailableToAnotherConversationOwnerAndReload() started.
+◊ Test routeWithoutMetadataKeepsOriginalBytesIncludingNestedHighPrecisionCoordinates() started.
+◊ Test optionalPolicyFieldsDecodeSafely() started.
+◊ Test accountProviderToolManifestAndPermissionChangesDoNotBorrowGrants() started.
+◊ Test nonSensitiveReadDoesNotRequireBlanketConsent() started.
+◊ Test schemaStillChecksExactNumbersBeforeDispatch() started.
+◊ Test corruptOrUnknownStorageVersionDoesNotGrant() started.
+◊ Test missingPresentationMetadataUsesGenericToolsAndCommonAnimation() started.
+◊ Test historicalAllowOnceNeverBecomesPersistentConsent() started.
+◊ Test mixedManifestExemptsOnlyExactDeclaredReadActions() started.
+◊ Test forgedPortableDTOAndChangedActualDispatchBothFail() started.
+◊ Test explicitMetadataRoundTripsAndOverridesFamilyAnimation() started.
+◊ Test scopeFieldsAreExactStringsAndDoNotIncludeOtherPayload() started.
+◊ Test revocationImmediatelyAffectsExistingOwners() started.
+√ Test mixedManifestExemptsOnlyExactDeclaredReadActions() passed after 0.005 seconds.
+√ Test nonSensitiveReadDoesNotRequireBlanketConsent() passed after 0.005 seconds.
+√ Test optionalPolicyFieldsDecodeSafely() passed after 0.005 seconds.
+√ Test missingPresentationMetadataUsesGenericToolsAndCommonAnimation() passed after 0.006 seconds.
+√ Test explicitMetadataRoundTripsAndOverridesFamilyAnimation() passed after 0.006 seconds.
+√ Test scopeFieldsAreExactStringsAndDoNotIncludeOtherPayload() passed after 0.010 seconds.
+√ Test unknownAnimationCannotInjectCustomExecutableContent() passed after 0.022 seconds.
+√ Suite ToolApprovalAndPresentationTests passed after 0.024 seconds.
+√ Test metadataTypesAndNestedFieldsCannotEraseBusinessArguments() passed after 0.028 seconds.
+√ Test forgedPortableDTOAndChangedActualDispatchBothFail() passed after 0.030 seconds.
+√ Test routeWithoutMetadataKeepsOriginalBytesIncludingNestedHighPrecisionCoordinates() passed after 0.035 seconds.
+√ Test strippingTopLevelMetadataPreservesAllNestedValuesAndScalarKeys() passed after 0.048 seconds.
+√ Test firstGrantIsAvailableToAnotherConversationOwnerAndReload() passed after 0.071 seconds.
+√ Test accountProviderToolManifestAndPermissionChangesDoNotBorrowGrants() passed after 0.071 seconds.
+√ Test historicalAllowOnceNeverBecomesPersistentConsent() passed after 0.069 seconds.
+√ Test corruptOrUnknownStorageVersionDoesNotGrant() passed after 0.070 seconds.
+√ Test revocationImmediatelyAffectsExistingOwners() passed after 0.081 seconds.
+√ Suite HanlinToolApprovalStoreTests passed after 0.088 seconds.
+√ Test schemaStillChecksExactNumbersBeforeDispatch() passed after 3.356 seconds.
+√ Suite HostInputIntegrityRegressionTests passed after 3.360 seconds.
+√ Test run with 17 tests in 3 suites passed after 3.363 seconds.
+[0/1] Planning build
+Building for debugging...
+[0/3] Write swift-version-2807070033DA82CF.txt
+Build complete! (12.76s)

@@ -1,0 +1,41 @@
+{
+  "status": "SOURCE_APPROVED_NATIVE_ACCEPTANCE_PENDING",
+  "at": "2026-11-28T06:48:15.727009+00:00",
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "packetManifestSHA256": "2c018c02b14208a74027c3646ad6715cc71ed28f9653bdb4ef50cbba04202df0",
+  "verifiedPayloadCount": 11,
+  "verifiedBytes": 273332,
+  "sharedBoundaryVerifiedPayloadCount": 4,
+  "paths": [
+    {
+      "path": "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift",
+      "originalSHA256": "3de65cab37c1bcc98f2f922e26428b7af393038fdcbbd6e34ef55d18d133950b",
+      "candidateSHA256": "d26270284346c31b011b45aac482ac190fd43a54ec4ffa3ec6a437c7c9404c06",
+      "wholeFileInverse": true,
+      "originalAnnotations": 12,
+      "originalAssertions": 147,
+      "candidateAssertions": 147
+    },
+    {
+      "path": "AI_HLYTests/ProviderConformance/ProductionProviderConformanceTests.swift",
+      "originalSHA256": "057111d0d205cb4f3500d156d5fbc7dd13a7c8d7f2050b619c6be6a5396b6ffa",
+      "candidateSHA256": "aa9eece4942d0c9401275c7dc8bae3938bed42a743f421d036b144c6a13c57a1",
+      "wholeFileInverse": true,
+      "originalAnnotations": 18,
+      "originalAssertions": 65,
+      "candidateAssertions": 66
+    }
+  ],
+  "review": "Existing test-only participant preserves its full implementation and shipping consent.answer path; only the real P01 fixture opts into its scripted request-bound consent. Original real Python42/tool round and terminal diagnostics validators remain. No production/SDK change or mirrored test.",
+  "qualification": [
+    "An answer is bound to the current pending call and actual owner/row/session/conversation/scene/canonical run; remembered approval scope intentionally remains app/account/workspace/tool/manifest/permission.",
+    "Existing grants are preserved; only fixture-created IDs are revoked. Cross-suite borrowing/revocation is not proven isolated.",
+    "The original command retains -parallel-testing-enabled NO and the observed old suite lifetimes do not overlap. This is not a proved mapping to global Swift Testing cross-suite serialization in installed Xcode27.2. The earlier qualification wording globally nonparallel is not adopted as an established guarantee.",
+    "No new serialization/refactoring or test-budget changes are introduced for an unobserved concurrent failure. Original native acceptance must retain all actual suite starts/outcomes and expose overlap if it occurs; no native PASS is inferred."
+  ],
+  "native": "NOT_RUN",
+  "newPortableTests": "NOT_RUN",
+  "allOriginalAssertions": 212,
+  "newUTF8Assertion": 1,
+  "allOriginalTestAnnotations": 30
+}

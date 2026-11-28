@@ -1,0 +1,125 @@
+{
+  "schema": 1,
+  "sourceCommit": "77356ec2e300f688e36d3bf4badfb0432f08ab53",
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "payloadCount": 23,
+  "totalPayloadBytes": 68310,
+  "native": "NOT_RUN",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2817,
+      "sha256": "c79d1a096b7eb53f9bc30d6f7954eaa1ec43ceac42612ebe8ee41db725a15acf"
+    },
+    {
+      "path": "identity-domain-qualification.json",
+      "bytes": 1981,
+      "sha256": "3d12dfd2c76b0a22d7644dad9f92e4b0f67c56a17d43ec98aa42c0d7c1c2e5f8"
+    },
+    {
+      "path": "identity-domain-source-excerpts.json",
+      "bytes": 16290,
+      "sha256": "4b826aeacdc475f770cdc55f4cba38a425633d2f4e0404eb40ea2a5f3283c7d7"
+    },
+    {
+      "path": "independent-root-hold-resolution.json",
+      "bytes": 2450,
+      "sha256": "ea77fd1f787128733c33f04f3d38d190356b6fc6f1797b5e306aaa40ad077677"
+    },
+    {
+      "path": "independent-root-source-review-r2.json",
+      "bytes": 2936,
+      "sha256": "31f02f28b20dad48f5b6ff786683d41dc502b54aa197044d99c361ecdcc9fdeb"
+    },
+    {
+      "path": "lossless-payloads.json",
+      "bytes": 1863,
+      "sha256": "a6469ca5a725b1b6336376d91edac8085e87a160a8767ad0524e041144d44688"
+    },
+    {
+      "path": "portable-green-r1-receipt.json",
+      "bytes": 4181,
+      "sha256": "4ad2344755b94a279fb27225de4f570a4909e27b566c052e8b25628be07f6cbd"
+    },
+    {
+      "path": "portable-green-r1-stderr.log.gz",
+      "bytes": 3354,
+      "sha256": "8dbdd3b509b1ddc61f55ebd0976b92657807b6e3f36a7d03831ead4400dc3f88"
+    },
+    {
+      "path": "portable-green-r1-stdout.log.gz",
+      "bytes": 20,
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "portable-import-r2-driver.py",
+      "bytes": 961,
+      "sha256": "c69376444071602ab0a0b491f6770d7e47a9affb771daca4b3ecb00c8241bc68"
+    },
+    {
+      "path": "portable-import-r2-receipt.json",
+      "bytes": 1282,
+      "sha256": "e9915a92677111c6d193f2fe112fab563cade5cccf6d61392e987b1d138e6823"
+    },
+    {
+      "path": "portable-import-r2-stderr.log.gz",
+      "bytes": 394,
+      "sha256": "467dde4a5944f47a3b1d50b46896ec363f1ffcc3bf6470d6c80eae61e8922fef"
+    },
+    {
+      "path": "portable-import-r2-stdout.log.gz",
+      "bytes": 94,
+      "sha256": "10c6c7d449ce05f60060be116aefe1250038583d1dc2c286b77a846aa9e4fa10"
+    },
+    {
+      "path": "portable-red-receipt.json",
+      "bytes": 1177,
+      "sha256": "c7b7564e798d89d1302acb7797e45b32a9ea4a71385073502525c0e3dcdf419c"
+    },
+    {
+      "path": "portable-red-stderr.log.gz",
+      "bytes": 479,
+      "sha256": "856ea3797e5d5468b35003303b4b1bb5c49749c3cfe7e01b968bc96f773a1f5d"
+    },
+    {
+      "path": "portable-red-stdout.log.gz",
+      "bytes": 20,
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "preparation-reconciliation.json",
+      "bytes": 1436,
+      "sha256": "05170f2bba9e298da923f643162414e7ffe39dc5bae32c0eb7efcb24a106cd3f"
+    },
+    {
+      "path": "r1-candidate-manifest.json",
+      "bytes": 2328,
+      "sha256": "e25109cea8efcf7dcd41e356ab34e9c5b0b79db5cda8fa83c140525710a54ebb"
+    },
+    {
+      "path": "r2-candidate-manifest.json",
+      "bytes": 2477,
+      "sha256": "4583cac5cbb96bbeab188f37c9537e16225c9d810e8bd2432c0195c7d3505667"
+    },
+    {
+      "path": "source-input-impact.json",
+      "bytes": 1203,
+      "sha256": "71a23c6fdd9bbb9065581230e7111642fa07db46035be42199751aad04a324b2"
+    },
+    {
+      "path": "source-qualification.json",
+      "bytes": 11083,
+      "sha256": "cd06c8ec7eefdc0701e6af7e1ac1e4f47351350630e76f1406a7c9d58ddd6cef"
+    },
+    {
+      "path": "source-seal.json",
+      "bytes": 2283,
+      "sha256": "f10365563d1d59fe8cd42a1883f264ed51d1588af4e0cb96c3dcd9994ceffa44"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 7201,
+      "sha256": "481d74343e9adf64eac630258a476c41fe9d596e92e061e214fec126bd0ddbd0"
+    }
+  ]
+}

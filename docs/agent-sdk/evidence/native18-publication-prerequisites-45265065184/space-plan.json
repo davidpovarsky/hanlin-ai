@@ -1,0 +1,50 @@
+{
+  "recordedUTC": "2026-11-23T21:29:32.022740+00:00",
+  "workspace": {
+    "path": "/mnt/development/projects/worktrees/hanlin-sdk-release-readiness-20261123",
+    "device": 2064,
+    "freeBytes": 1957629952,
+    "filesystemBlockBytes": 4096
+  },
+  "publisherAndNodeTemporary": {
+    "path": "/tmp",
+    "device": 2049,
+    "freeBytes": 655417344,
+    "differentFilesystem": true
+  },
+  "sourceCheckoutEnvelope": {
+    "gitRecords": 2984,
+    "gitPayloadBytes": 91078170,
+    "includesOneOriginalSymlinkBytes": 112,
+    "qualification": "Conservative entire AI_HLY/Packages plus installer bootstrap and two native helpers; excludes generated native assets, Git/index/compiler overhead and future unknown source changes; no symlink target followed"
+  },
+  "nodeValidationTemporarySource": {
+    "gitRecords": 132,
+    "payloadBytes": 607496
+  },
+  "selectedHostSourceBytesAtFrozenSource": {
+    "anytype": 26899092,
+    "lorvex": 26796067,
+    "maktabah": 26891697
+  },
+  "unknownUntilAssignedArchive": {
+    "Z": "Authenticated outer GitHub ZIP bytes",
+    "C": "Sum of18 compressed native payload files plus catalog extracted from outer ZIP",
+    "N": "Sum of all18 installed expanded payloads, with filesystem block/directory/symlink overhead",
+    "M": "Largest compressed payload size; publisher readback temporary upper payload",
+    "G": "Small actual Git/index/profile/compiler bookkeeping allocation"
+  },
+  "extractionStrategy": "Inspect nested central directories directly through ZipFile.open before full payload extraction; outer is uploaded with compression-level0. Keep original outer ZIP and original prepared catalog. Extract inner archives only; never pre-expand all frameworks separately.",
+  "nativeInstallStrategy": "Original installer extracts one archive into a temporary directory under the destination SDK, validates it, then renames into final path. For a fresh destination, final installed files plus current temporary files fit within N, apart from directory/bookkeeping overhead; no second N tree.",
+  "cacheStrategy": "Hardlink authenticated prepared compressed archives into the exact owned checksum-archive cache names on the same/mnt filesystem. Cache contributes directory entries, not a second C allocation. Published URL readback remains mandatory and independent.",
+  "workspacePhaseBudgets": {
+    "afterAcquisition": "Z",
+    "afterPreparedExtraction": "Z+C+thin producer-source checkout/receipts",
+    "publication": "Z+C+thin producer-source checkout/receipts on/mnt; maxM on/tmp",
+    "full44Installation": "Z+C+S+N+G on/mnt, plus original Node source validation temporary607496 payload bytes on/tmp; S is measured final source checkout",
+    "selectedHostAdoption": "Existing source-only Host descendants are updated in place after final freeze; do not multiply N by three"
+  },
+  "mandatoryAll18Together": "YES in final installed full44 closure; NO second complete pre-expanded18 staging tree",
+  "sizeAdmission": "NOT_RUN until exact eligible prepared ZIP is assigned; prior failed-run184MB outer ZIP is only historical reference, never the size of this producer",
+  "additionalCleanup": "Inventory only; explicit root disposition required; no files removed in this prerequisite task"
+}

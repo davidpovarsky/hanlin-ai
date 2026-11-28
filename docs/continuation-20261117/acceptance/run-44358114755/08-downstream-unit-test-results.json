@@ -1,0 +1,89 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "416CB89D-A58E-4056-8B7E-FA66D92B7D8B",
+      "deviceName" : "Hanlin-Phase2-44358114755-1",
+      "modelName" : "iPad Pro 13-inch (M5)",
+      "osBuildNumber" : "24B8117",
+      "osVersion" : "27.2",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "7s",
+                  "durationInSeconds" : 7.64086389541626,
+                  "name" : "originalPolicyRunsInTheActualEmbeddedNode()",
+                  "nodeIdentifier" : "SkillOpenClawPolicyTests/originalPolicyRunsInTheActualEmbeddedNode()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillOpenClawPolicyTests/originalPolicyRunsInTheActualEmbeddedNode()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.23s",
+                  "durationInSeconds" : 0.2297043800354004,
+                  "name" : "actualYamsMetadataKeepsOriginalInstallAndDynamicEnablementPolicy()",
+                  "nodeIdentifier" : "SkillOpenClawPolicyTests/actualYamsMetadataKeepsOriginalInstallAndDynamicEnablementPolicy()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillOpenClawPolicyTests/actualYamsMetadataKeepsOriginalInstallAndDynamicEnablementPolicy()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.1s",
+                  "durationInSeconds" : 0.10159182548522949,
+                  "name" : "originalInvocationFlagsAndDefaultAreResolvedInOneNativeBatch()",
+                  "nodeIdentifier" : "SkillOpenClawPolicyTests/originalInvocationFlagsAndDefaultAreResolvedInOneNativeBatch()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillOpenClawPolicyTests/originalInvocationFlagsAndDefaultAreResolvedInOneNativeBatch()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.43s",
+                  "durationInSeconds" : 0.4344189167022705,
+                  "name" : "currentOriginalPolicyControlsLoadReadAndActualSDKContinuation()",
+                  "nodeIdentifier" : "SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.00055s",
+                  "durationInSeconds" : 0.0005507469177246094,
+                  "name" : "pruningOneSkillRetainsSharedInstructionsOwnedByAnotherSkill()",
+                  "nodeIdentifier" : "SkillOpenClawPolicyTests/pruningOneSkillRetainsSharedInstructionsOwnedByAnotherSkill()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillOpenClawPolicyTests/pruningOneSkillRetainsSharedInstructionsOwnedByAnotherSkill()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "Original OpenClaw policy through the existing app runtime",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillOpenClawPolicyTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "AI_HLYTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "AI_HLY",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

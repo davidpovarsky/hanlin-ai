@@ -1,0 +1,1544 @@
+import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
+import AISDKProvider
+import AISDKProviderUtils
+import SwiftAISDK
+@testable import HanlinChatCore
+import Testing
+
+// MARK: - Mock Language Model for HanlinNonEmptyLanguageModel Testing
+
+private final class MockLanguageModelV3: LanguageModelV3, @unchecked Sendable {
+    let provider: String = "mock-provider"
+    let modelId: String = "mock-model"
+    var supportedUrls: [String: [NSRegularExpression]] {
+        get async throws {
+            ["*": [try NSRegularExpression(pattern: ".*")]]
+        }
+    }
+
+    var streamGenerator: @Sendable (Int) -> AsyncThrowingStream<LanguageModelV3StreamPart, Error>
+    private var _callCount: Int = 0
+    private var _capturedOptions: [LanguageModelV3CallOptions] = []
+    private let lock = NSLock()
+
+    init(streamGenerator: @escaping @Sendable (Int) -> AsyncThrowingStream<LanguageModelV3StreamPart, Error>) {
+        self.streamGenerator = streamGenerator
+    }
+
+    private func recordCall(options: LanguageModelV3CallOptions) -> Int {
+        lock.lock()
+        defer { lock.unlock() }
+        _callCount += 1
+        _capturedOptions.append(options)
+        return _callCount
+    }
+
+    var callCount: Int {
+        lock.lock()
+        defer { lock.unlock() }
+        return _callCount
+    }
+
+    var capturedOptions: [LanguageModelV3CallOptions] {
+        lock.lock()
+        defer { lock.unlock() }
+        return _capturedOptions
+    }
+
+    func doGenerate(options: LanguageModelV3CallOptions) async throws -> LanguageModelV3GenerateResult {
+        fatalError("Not needed for stream tests")
+    }
+
+    func doStream(options: LanguageModelV3CallOptions) async throws -> LanguageModelV3StreamResult {
+        let count = recordCall(options: options)
+
+        return LanguageModelV3StreamResult(
+            stream: streamGenerator(count),
+            request: nil,
+            response: nil
+        )
+    }
+}
+
+// MARK: - HanlinAISDKProviderFactory Tests
+
+@Suite("HanlinAISDK Provider Factory Tests")
+struct HanlinAISDKProviderFactoryTests {
+
+    @Test("OpenAI direct descriptor and options")
+    func testOpenAIDescriptorAndOptions() {
+        let config = HanlinChatModelConfiguration(
+            modelID: "gpt-4o",
+            displayName: "GPT-4o",
+            company: "OpenAI",
+            apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions",
+            credential: "sk-proj-test123",
+            supportsReasoning: true,
+            reasoningEffort: "high"
+        )
+
+        let desc = HanlinAISDKProviderFactory.descriptor(for: config)
+        #expect(desc.kind == .openAI)
+        #expect(desc.modelID == "gpt-4o")
+        #expect(desc.baseURL.absoluteString == "https://api.openai.com/v1")
+        #expect(desc.headers.isEmpty)
+    }
+
+    @Test("Anthropic direct descriptor and options")
+    func testAnthropicDescriptorAndOptions() {
+        let config = HanlinChatModelConfiguration(
+            modelID: "claude-3-7-sonnet-20250219",
+            displayName: "Claude 3.7 Sonnet",
+            company: "Anthropic",
+            apiType: "anthropic",
+            endpoint: "https://api.anthropic.com/v1/messages",
+            credential: "sk-ant-test123",
+            supportsReasoning: true,
+            thinkingLength: 4096
+        )
+
+        let desc = HanlinAISDKProviderFactory.descriptor(for: config)
+        #expect(desc.kind == .anthropic)
+        #expect(desc.modelID == "claude-3-7-sonnet-20250219")
+        #expect(desc.baseURL.absoluteString == "https://api.anthropic.com/v1")
+    }
+
+    @Test("Google Gemini descriptor and options")
+    func testGeminiDescriptorAndOptions() {
+        let config = HanlinChatModelConfiguration(
+            modelID: "gemini-2.5-pro",
+            displayName: "Gemini 2.5 Pro",
+            company: "Google",
+            apiType: "gemini",
+            endpoint: "https://generativelanguage.googleapis.com/v1beta/chat/completions",
+            credential: "AIza-test123",
+            supportsReasoning: true,
+            thinkingLength: 2048
+        )
+
+        let desc = HanlinAISDKProviderFactory.descriptor(for: config)
+        #expect(desc.kind == .google)
+        #expect(desc.modelID == "gemini-2.5-pro")
+        #expect(desc.baseURL.absoluteString == "https://generativelanguage.googleapis.com/v1beta")
+    }
+
+    @Test("OpenRouter descriptor includes HTTP-Referer and X-Title headers")
+    func testOpenRouterDescriptor() {
+        let config = HanlinChatModelConfiguration(
+            modelID: "anthropic/claude-3.5-sonnet",
+            displayName: "Claude 3.5 Sonnet",
+            company: "OpenRouter",
+            apiType: "openai",
+            endpoint: "https://openrouter.ai/api/v1/chat/completions",
+            credential: "sk-or-test123"
+        )
+
+        let desc = HanlinAISDKProviderFactory.descriptor(for: config)
+        #expect(desc.kind == .openAICompatible)
+        #expect(desc.modelID == "anthropic/claude-3.5-sonnet")
+        #expect(desc.baseURL.absoluteString == "https://openrouter.ai/api/v1")
+        #expect(desc.headers["HTTP-Referer"] == "https://hanlin.ai")
+        #expect(desc.headers["X-Title"] == "Hanlin")
+    }
+
+    @Test("Custom OpenAI compatible endpoint normalization")
+    func testCustomOpenAICompatibleDescriptor() {
+        let config = HanlinChatModelConfiguration(
+            modelID: "local-llama-3",
+            displayName: "Local Llama",
+            company: "Ollama",
+            apiType: "openai",
+            endpoint: "http://localhost:11434/v1/chat/completions",
+            credential: "test"
+        )
+
+        let desc = HanlinAISDKProviderFactory.descriptor(for: config)
+        #expect(desc.kind == .openAICompatible)
+        #expect(desc.modelID == "local-llama-3")
+        #expect(desc.baseURL.absoluteString == "http://localhost:11434/v1")
+    }
+}
+
+// MARK: - HanlinNonEmptyLanguageModel Tests
+
+@Suite("HanlinNonEmptyLanguageModel Retry Tests")
+struct HanlinNonEmptyLanguageModelTests {
+
+    private static func mockFinish(reason: LanguageModelV3FinishReason.Unified = .other) -> LanguageModelV3StreamPart {
+        .finish(
+            finishReason: LanguageModelV3FinishReason(unified: reason, raw: reason.rawValue),
+            usage: LanguageModelV3Usage(
+                inputTokens: .init(total: 10),
+                outputTokens: .init(total: 5)
+            ),
+            providerMetadata: nil
+        )
+    }
+
+    @Test("E01: truly empty stream -> retry -> empty -> emptyProviderResponse(2)")
+    func testE01TrulyEmptyStream() async throws {
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.finish()
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        var didThrowExpectedError = false
+        do {
+            for try await _ in streamResult.stream {}
+        } catch let error as HanlinAISDKError {
+            if case .emptyProviderResponse(let attempts) = error {
+                #expect(attempts == 2)
+                didThrowExpectedError = true
+            }
+        }
+        #expect(didThrowExpectedError)
+        #expect(mock.callCount == 2)
+    }
+
+    @Test("E02: finish(other)-only -> retry -> empty -> error")
+    func testE02FinishOtherOnly() async throws {
+        let mock = MockLanguageModelV3 { attempt in
+            AsyncThrowingStream { continuation in
+                if attempt == 1 {
+                    continuation.yield(Self.mockFinish(reason: .other))
+                    continuation.finish()
+                } else {
+                    continuation.finish()
+                }
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        var didThrow = false
+        do {
+            for try await _ in streamResult.stream {}
+        } catch let error as HanlinAISDKError {
+            if case .emptyProviderResponse(let attempts) = error {
+                #expect(attempts == 2)
+                didThrow = true
+            }
+        }
+        #expect(didThrow)
+        #expect(mock.callCount == 2)
+    }
+
+    @Test("E03: metadata + finish(other) only -> retry")
+    func testE03MetadataPlusFinishOtherOnly() async throws {
+        let mock = MockLanguageModelV3 { attempt in
+            AsyncThrowingStream { continuation in
+                if attempt == 1 {
+                    continuation.yield(.responseMetadata(id: "r1", modelId: "m1", timestamp: Date()))
+                    continuation.yield(Self.mockFinish(reason: .other))
+                    continuation.finish()
+                } else {
+                    continuation.yield(.textDelta(id: "t1", delta: "Success after retry", providerMetadata: nil))
+                    continuation.yield(Self.mockFinish(reason: .stop))
+                    continuation.finish()
+                }
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        var texts: [String] = []
+        for try await part in streamResult.stream {
+            if case .textDelta(_, let text, _) = part {
+                texts.append(text)
+            }
+        }
+        #expect(texts == ["Success after retry"])
+        #expect(mock.callCount == 2)
+    }
+
+    @Test("E04: usage-only + finish only -> retry")
+    func testE04UsageOnlyPlusFinishOnly() async throws {
+        let mock = MockLanguageModelV3 { attempt in
+            AsyncThrowingStream { continuation in
+                if attempt == 1 {
+                    continuation.yield(Self.mockFinish(reason: .other))
+                    continuation.finish()
+                } else {
+                    continuation.yield(.textDelta(id: "t1", delta: "Text 2", providerMetadata: nil))
+                    continuation.finish()
+                }
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        var texts: [String] = []
+        for try await part in streamResult.stream {
+            if case .textDelta(_, let text, _) = part {
+                texts.append(text)
+            }
+        }
+        #expect(texts == ["Text 2"])
+        #expect(mock.callCount == 2)
+    }
+
+    @Test("E05: empty deltas + finish only -> retry")
+    func testE05EmptyDeltasPlusFinishOnly() async throws {
+        let mock = MockLanguageModelV3 { attempt in
+            AsyncThrowingStream { continuation in
+                if attempt == 1 {
+                    continuation.yield(.textDelta(id: "t0", delta: "", providerMetadata: nil))
+                    continuation.yield(.reasoningDelta(id: "r0", delta: "", providerMetadata: nil))
+                    continuation.yield(Self.mockFinish(reason: .other))
+                    continuation.finish()
+                } else {
+                    continuation.yield(.textDelta(id: "t1", delta: "Recovered", providerMetadata: nil))
+                    continuation.finish()
+                }
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        var texts: [String] = []
+        for try await part in streamResult.stream {
+            if case .textDelta(_, let text, _) = part {
+                texts.append(text)
+            }
+        }
+        #expect(texts == ["Recovered"])
+        #expect(mock.callCount == 2)
+    }
+
+    @Test("E06: first attempt empty, second attempt valid text -> exactly one visible completion")
+    func testE06FirstAttemptEmptySecondAttemptValidText() async throws {
+        let mock = MockLanguageModelV3 { attempt in
+            AsyncThrowingStream { continuation in
+                if attempt == 1 {
+                    continuation.finish()
+                } else {
+                    continuation.yield(.textStart(id: "t1", providerMetadata: nil))
+                    continuation.yield(.textDelta(id: "t1", delta: "Single text completion", providerMetadata: nil))
+                    continuation.yield(.textEnd(id: "t1", providerMetadata: nil))
+                    continuation.yield(Self.mockFinish(reason: .stop))
+                    continuation.finish()
+                }
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        var texts: [String] = []
+        for try await part in streamResult.stream {
+            if case .textDelta(_, let text, _) = part {
+                texts.append(text)
+            }
+        }
+        #expect(texts == ["Single text completion"])
+        #expect(mock.callCount == 2)
+    }
+
+    @Test("E07: first attempt finish-only, second attempt valid tool call -> tool executes exactly once")
+    func testE07FirstAttemptFinishOnlySecondAttemptValidToolCall() async throws {
+        let mock = MockLanguageModelV3 { attempt in
+            AsyncThrowingStream { continuation in
+                if attempt == 1 {
+                    continuation.yield(Self.mockFinish(reason: .other))
+                    continuation.finish()
+                } else {
+                    continuation.yield(.toolCall(LanguageModelV3ToolCall(
+                        toolCallId: "call_e07",
+                        toolName: "fetch_data",
+                        input: "{\"id\":1}"
+                    )))
+                    continuation.yield(Self.mockFinish(reason: .toolCalls))
+                    continuation.finish()
+                }
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        var toolCallIds: [String] = []
+        for try await part in streamResult.stream {
+            if case .toolCall(let call) = part {
+                toolCallIds.append(call.toolCallId)
+            }
+        }
+        #expect(toolCallIds == ["call_e07"])
+        #expect(mock.callCount == 2)
+    }
+
+    @Test("E08: normal text -> no retry")
+    func testE08NormalTextNoRetry() async throws {
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.textDelta(id: "t1", delta: "Immediate response", providerMetadata: nil))
+                continuation.yield(Self.mockFinish(reason: .stop))
+                continuation.finish()
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        var texts: [String] = []
+        for try await part in streamResult.stream {
+            if case .textDelta(_, let text, _) = part {
+                texts.append(text)
+            }
+        }
+        #expect(texts == ["Immediate response"])
+        #expect(mock.callCount == 1)
+    }
+
+    @Test("E09: reasoning-only stop retries once, preserves reasoning and never emits a successful finish")
+    func testE09ReasoningOnlyStopFailsAfterBoundedRetry() async throws {
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.reasoningStart(id: "r1", providerMetadata: nil))
+                continuation.yield(.reasoningDelta(id: "r1", delta: "Deep reasoning step", providerMetadata: nil))
+                continuation.yield(.reasoningEnd(id: "r1", providerMetadata: nil))
+                continuation.yield(Self.mockFinish(reason: .stop))
+                continuation.finish()
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        var reasonings: [String] = []
+        var finishCount = 0
+        var failed = false
+        do {
+            for try await part in streamResult.stream {
+                if case .reasoningDelta(_, let text, _) = part { reasonings.append(text) }
+                if case .finish = part { finishCount += 1 }
+            }
+        } catch HanlinAISDKError.emptyProviderResponse(let attempts) {
+            #expect(attempts == 2)
+            failed = true
+        }
+        #expect(failed && finishCount == 0)
+        #expect(reasonings == ["Deep reasoning step", "Deep reasoning step"])
+        #expect(mock.callCount == 2)
+    }
+
+    @Test("Reasoning-only length is incomplete and never automatically repeats a token-limited request")
+    func reasoningOnlyLengthDoesNotRetry() async throws {
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.reasoningDelta(id: "r", delta: "Only reasoning", providerMetadata: nil))
+                continuation.yield(Self.mockFinish(reason: .length))
+                continuation.finish()
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        var failed = false
+        do {
+            let result = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+            for try await part in result.stream { if case .finish = part { Issue.record("False successful finish") } }
+        } catch HanlinAISDKError.incompleteProviderResponse(let reason) {
+            #expect(reason == "length")
+            failed = true
+        }
+        #expect(failed && mock.callCount == 1)
+    }
+
+    @Test("E10: valid tool call -> no retry")
+    func testE10ValidToolCallNoRetry() async throws {
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.toolCall(LanguageModelV3ToolCall(
+                    toolCallId: "call_immediate",
+                    toolName: "calculator",
+                    input: "{}"
+                )))
+                continuation.finish()
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        var toolCalls: [String] = []
+        for try await part in streamResult.stream {
+            if case .toolCall(let call) = part {
+                toolCalls.append(call.toolCallId)
+            }
+        }
+        #expect(toolCalls == ["call_immediate"])
+        #expect(mock.callCount == 1)
+    }
+
+    @Test("E11: abrupt transport error -> no retry")
+    func testE11AbruptTransportErrorNoRetry() async throws {
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.textDelta(id: "t1", delta: "Partial text", providerMetadata: nil))
+                continuation.finish(throwing: URLError(.networkConnectionLost))
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        var didThrow = false
+        do {
+            for try await _ in streamResult.stream {}
+        } catch {
+            didThrow = true
+        }
+        #expect(didThrow)
+        #expect(mock.callCount == 1)
+    }
+
+    @Test("E12: cancellation during first attempt -> cancelled, no retry")
+    func testE12CancellationDuringFirstAttemptNoRetry() async throws {
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.responseMetadata(id: "r1", modelId: "m1", timestamp: Date()))
+                continuation.finish(throwing: CancellationError())
+            }
+        }
+        let model = HanlinNonEmptyLanguageModel(base: mock)
+        let streamResult = try await model.doStream(options: LanguageModelV3CallOptions(prompt: []))
+
+        var caughtCancelled = false
+        do {
+            for try await _ in streamResult.stream {}
+        } catch is CancellationError {
+            caughtCancelled = true
+        } catch HanlinChatError.cancelled {
+            caughtCancelled = true
+        } catch {
+            // Other error
+        }
+        #expect(caughtCancelled)
+        #expect(mock.callCount == 1)
+    }
+}
+
+// MARK: - HanlinAISDKAgentEngine Integration Tests
+
+@Suite("HanlinAISDKAgentEngine Integration Tests")
+struct HanlinAISDKAgentEngineTests {
+    @Test("Original SDK approval pauses effects and resumes the same exact call once", arguments: [true, false])
+    @MainActor
+    func providerApprovalWaitsAndResumesOriginalCall(_ approved: Bool) async throws {
+        let originalInput = #"{ "amount": 1.2500e+2, "note": "שלום" }"#
+        let executions = ManagedAtomicArray<String>()
+        let gate = HanlinApprovalReviewGate()
+        let mock = Self.approvalModel(input: originalInput)
+        let config = HanlinChatModelConfiguration(modelID: "fixture", company: "OpenAI", apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions", credential: "fixture-unused")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(mock))
+        let tool = HanlinAISDKToolDefinition(name: "reviewed_write", description: "A reviewed fixture effect",
+            inputSchemaData: Data(#"{"type":"object","properties":{"amount":{"type":"number"},"note":{"type":"string"}},"required":["amount","note"]}"#.utf8),
+            execute: { _, _ in throw HanlinAISDKError.invalidToolSchema(name: "missing-original-provenance") },
+            executeWithInputProvenance: { input, callID, provenance in
+                #expect(callID == "approval_call_1")
+                #expect(provenance == .acceptedOriginal)
+                executions.append(input)
+                return .init(modelText: "REVIEWED_EFFECT_COMPLETED")
+            }, requiresApproval: true)
+        let stream = try await engine.stream(messages: [.init(role: .user, text: "Review the write")],
+            baseSystemPrompt: nil, tools: [tool], requestApproval: { await gate.review($0) },
+            prepareStep: { .init(activeToolAliases: ["reviewed_write"]) })
+        let consumer = Task { () throws -> [HanlinAISDKStreamEvent] in
+            var events: [HanlinAISDKStreamEvent] = []
+            for try await event in stream { events.append(event) }
+            return events
+        }
+        defer { gate.answer(false); consumer.cancel() }
+        let deadline = ContinuousClock.now.advanced(by: .seconds(5))
+        while gate.request == nil && ContinuousClock.now < deadline { try await Task.sleep(for: .milliseconds(10)) }
+        let review = try #require(gate.request)
+        #expect(review.toolCallID == "approval_call_1")
+        #expect(review.toolName == "reviewed_write")
+        #expect(review.argumentsJSON == originalInput)
+        #expect(!review.approvalID.isEmpty)
+        #expect(executions.count == 0, "No side effect is allowed while the original review is pending")
+        #expect(mock.callCount == 1)
+        gate.answer(approved)
+        let events = try await consumer.value
+        #expect(executions.all == (approved ? [originalInput] : []))
+        #expect(mock.callCount == 2, "Continue through the original SDK, including its original tool result")
+        #expect(events.filter { if case .toolApprovalRequest = $0 { true } else { false } }.count == 1)
+        #expect(events.filter {
+            if case .toolApprovalResolved(let value, let allowed) = $0 { value == review && allowed == approved }
+            else { false }
+        }.count == 1)
+        #expect(events.filter { if case .toolOutputDenied = $0 { true } else { false } }.count == (approved ? 0 : 1))
+        #expect(events.filter { if case .toolResult = $0 { true } else { false } }.count == (approved ? 1 : 0))
+        #expect(events.contains { if case .textDelta("REVIEW_FINISHED") = $0 { true } else { false } })
+    }
+
+    @Test("Cancelling an original SDK approval never executes or continues the provider")
+    @MainActor
+    func cancellationWhileProviderApprovalIsPendingHasNoEffect() async throws {
+        let reviews = ManagedAtomicInt(), cancellations = ManagedAtomicInt(), effects = ManagedAtomicInt()
+        let mock = Self.approvalModel(input: "{}")
+        let config = HanlinChatModelConfiguration(modelID: "fixture", company: "OpenAI", apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions", credential: "fixture-unused")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(mock))
+        let tool = HanlinAISDKToolDefinition(name: "reviewed_write", description: "Cancelled fixture effect",
+            inputSchemaData: Data(#"{"type":"object","properties":{}}"#.utf8), execute: { _, _ in
+                effects.increment(); return .init(modelText: "MUST_NOT_EXECUTE")
+            }, requiresApproval: true)
+        let stream = try await engine.stream(messages: [.init(role: .user, text: "Wait for approval")],
+            baseSystemPrompt: nil, tools: [tool], requestApproval: { _ in
+                reviews.increment()
+                do { try await Task.sleep(for: .seconds(60)) }
+                catch { cancellations.increment(); throw error }
+                return true
+            }, prepareStep: { .init(activeToolAliases: ["reviewed_write"]) })
+        let consumer = Task { do { for try await _ in stream {} } catch {} }
+        defer { consumer.cancel() }
+        let deadline = ContinuousClock.now.advanced(by: .seconds(5))
+        while reviews.count == 0 && ContinuousClock.now < deadline { try await Task.sleep(for: .milliseconds(10)) }
+        try #require(reviews.count == 1)
+        consumer.cancel()
+        await consumer.value
+        let cancellationDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+        while cancellations.count == 0 && ContinuousClock.now < cancellationDeadline { try await Task.sleep(for: .milliseconds(10)) }
+        #expect(cancellations.count == 1)
+        #expect(effects.count == 0)
+        #expect(mock.callCount == 1)
+    }
+
+    private static func approvalModel(input: String) -> MockLanguageModelV3 {
+        MockLanguageModelV3 { call in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.streamStart(warnings: []))
+                if call == 1 {
+                    continuation.yield(.toolCall(LanguageModelV3ToolCall(toolCallId: "approval_call_1",
+                        toolName: "reviewed_write", input: input)))
+                } else {
+                    continuation.yield(.textStart(id: "approval_answer", providerMetadata: nil))
+                    continuation.yield(.textDelta(id: "approval_answer", delta: "REVIEW_FINISHED", providerMetadata: nil))
+                    continuation.yield(.textEnd(id: "approval_answer", providerMetadata: nil))
+                }
+                continuation.yield(.finish(finishReason: .init(unified: call == 1 ? .toolCalls : .stop, raw: call == 1 ? "tool_calls" : "stop"),
+                    usage: .init(inputTokens: .init(total: 1), outputTokens: .init(total: 1)), providerMetadata: nil))
+                continuation.finish()
+            }
+        }
+    }
+
+    @Test("Provider text-end citations retain exact part and Unicode scalar ranges")
+    func testProviderTextCitationsKeepExactPartAndUnicodeRange() async throws {
+        let answer = "😀 מקור מדויק."
+        let annotation: JSONValue = .object([
+            "type": .string("url_citation"), "start_index": .number(0),
+            "end_index": .number(Double(answer.unicodeScalars.count)),
+            "url": .string("https://example.com/source"), "title": .string("Original source"),
+        ])
+        let invalid: JSONValue = .object([
+            "type": .string("url_citation"), "start_index": .number(-1), "end_index": .number(9000),
+            "url": .string("file:///private"), "title": .string("Invalid"),
+        ])
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.streamStart(warnings: []))
+                continuation.yield(.textStart(id: "provider-part-1", providerMetadata: nil))
+                continuation.yield(.textDelta(id: "provider-part-1", delta: "😀 מקור ", providerMetadata: nil))
+                continuation.yield(.textDelta(id: "provider-part-1", delta: "מדויק.", providerMetadata: nil))
+                continuation.yield(.textEnd(id: "provider-part-1", providerMetadata: ["openai": ["annotations": .array([annotation, invalid])]]))
+                continuation.yield(.finish(finishReason: .init(unified: .stop, raw: "stop"),
+                    usage: .init(inputTokens: .init(total: 10), outputTokens: .init(total: 5)), providerMetadata: nil))
+                continuation.finish()
+            }
+        }
+        let config = HanlinChatModelConfiguration(modelID: "fixture-model", company: "OpenAI", apiType: "openai",
+            endpoint: "https://api.openai.com/v1/responses", credential: "fixture-unused")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(mock),
+            descriptor: .init(kind: .openAIResponses, modelID: "fixture-model", baseURL: URL(string: "https://api.openai.com/v1")!))
+        let stream = try await engine.stream(messages: [.init(role: .user, text: "Cite")], baseSystemPrompt: nil,
+            tools: [], prepareStep: { .init(activeToolAliases: []) })
+        var citations: [HanlinAISDKTextCitation] = [], visible = ""
+        for try await event in stream {
+            if case .textCitations(let values) = event { citations += values }
+            if case .textDelta(let delta) = event { visible += delta }
+        }
+        #expect(visible == answer)
+        #expect(citations.count == 1)
+        #expect(citations.first?.textPartID == "provider-part-1")
+        #expect(citations.first?.text == answer)
+        #expect(citations.first?.utf16Range == 0..<answer.utf16.count)
+    }
+
+
+    @Test("Default agent continues beyond 40 actual tool steps, including dynamic discovery")
+    func defaultRunContinuesPastFortyWithDiscovery() async throws {
+        let requests = ManagedAtomicInt()
+        let executions = ManagedAtomicInt()
+        let discovered = ManagedAtomicInt()
+        let fetch: FetchFunction = { request in
+            let step = requests.increment()
+            let delta: [String: Any]
+            let finish: String
+            if step <= 46 {
+                let name = step == 1 ? "tool_search" : "execute_work"
+                delta = ["tool_calls": [["index": 0, "id": "call_\(step)", "type": "function", "function": ["name": name, "arguments": "{}"]]]]
+                finish = "tool_calls"
+            } else {
+                delta = ["content": "COMPLETED_AFTER_46_TOOLS"]
+                finish = "stop"
+            }
+            let data = try JSONSerialization.data(withJSONObject: ["id": "step_\(step)", "choices": [["index": 0, "delta": delta, "finish_reason": finish]]])
+            return Self.makeSSEResponse(chunks: ["data: \(String(decoding: data, as: UTF8.self))\n\n", "data: [DONE]\n\n"], url: request.url!)
+        }
+        let config = HanlinChatModelConfiguration(modelID: "gpt-4o", company: "OpenAI", apiType: "openai", endpoint: "https://api.openai.com/v1/chat/completions", credential: "test-only")
+        let engine = try HanlinAISDKAgentEngine(configuration: config, fetch: fetch)
+        let schema = Data(#"{"type":"object","properties":{}}"#.utf8)
+        let discovery = HanlinAISDKToolDefinition(name: "tool_search", description: "Discover the work tool", inputSchemaData: schema) { _, _ in
+            _ = discovered.increment()
+            return HanlinAISDKToolExecutionOutput(modelText: "execute_work is available")
+        }
+        let work = HanlinAISDKToolDefinition(name: "execute_work", description: "Do one operation", inputSchemaData: schema) { _, _ in
+            HanlinAISDKToolExecutionOutput(modelText: "operation_\(executions.increment())")
+        }
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Discover and execute 45 operations")],
+            baseSystemPrompt: "Complete the requested work", tools: [discovery],
+            dynamicTools: { discovered.count > 0 ? [discovery, work] : [discovery] },
+            prepareStep: { (_: Int) async in HanlinAISDKStepPreparation(activeToolAliases: discovered.count > 0 ? ["tool_search", "execute_work"] : ["tool_search"]) }
+        )
+        var steps: [Int] = []
+        var results = 0
+        var answer = ""
+        for try await event in stream {
+            if case .stepFinished(let index, _, _, _) = event { steps.append(index) }
+            if case .toolResult = event { results += 1 }
+            if case .textDelta(let text) = event { answer += text }
+        }
+        #expect(requests.count == 47)
+        #expect(executions.count == 45)
+        #expect(results == 46)
+        #expect(steps == Array(0..<47))
+        #expect(answer == "COMPLETED_AFTER_46_TOOLS")
+    }
+
+    @Test("Explicit cancellation after 45 actual steps cancels the executing tool")
+    func cancellationAfterFortyStopsTheActualTool() async throws {
+        let requests = ManagedAtomicInt()
+        let executions = ManagedAtomicInt()
+        let cancellations = ManagedAtomicInt()
+        let fetch: FetchFunction = { request in
+            let step = requests.increment()
+            let payload: [String: Any] = ["id": "cancel_\(step)", "choices": [["index": 0,
+                "delta": ["tool_calls": [["index": 0, "id": "call_\(step)", "type": "function",
+                    "function": ["name": "work", "arguments": "{}"]]]], "finish_reason": "tool_calls"]]]
+            let data = try JSONSerialization.data(withJSONObject: payload)
+            return Self.makeSSEResponse(chunks: ["data: \(String(decoding: data, as: UTF8.self))\n\n", "data: [DONE]\n\n"], url: request.url!)
+        }
+        let config = HanlinChatModelConfiguration(modelID: "gpt-4o", company: "OpenAI", apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions", credential: "test-only")
+        let engine = try HanlinAISDKAgentEngine(configuration: config, fetch: fetch)
+        let tool = HanlinAISDKToolDefinition(name: "work", description: "Work until the owner cancels",
+            inputSchemaData: Data(#"{"type":"object","properties":{}}"#.utf8)) { _, _ in
+            let count = executions.increment()
+            if count == 45 {
+                do { try await Task.sleep(for: .seconds(60)) }
+                catch is CancellationError { _ = cancellations.increment(); throw CancellationError() }
+            }
+            return HanlinAISDKToolExecutionOutput(modelText: "operation_\(count)")
+        }
+        let stream = try await engine.stream(messages: [.init(role: .user, text: "Continue until cancelled")],
+            baseSystemPrompt: "Execute work", tools: [tool],
+            prepareStep: { (_: Int) async in HanlinAISDKStepPreparation(activeToolAliases: ["work"]) })
+        let consumer = Task { do { for try await _ in stream {} } catch {} }
+        defer { consumer.cancel() }
+        let readyDeadline = ContinuousClock.now.advanced(by: .seconds(10))
+        while executions.count < 45 && ContinuousClock.now < readyDeadline {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        try #require(executions.count == 45, "The run must actually cross 40 steps before cancellation")
+        consumer.cancel()
+        await consumer.value
+        let cancellationDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+        while cancellations.count == 0 && ContinuousClock.now < cancellationDeadline {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        #expect(cancellations.count == 1, "Cancellation must reach the actual executing tool")
+        #expect(executions.count == 45)
+        #expect(requests.count == 45)
+    }
+
+    private static func makeSSEResponse(chunks: [String], url: URL) -> FetchResponse {
+        let stream = AsyncThrowingStream<Data, Error> { continuation in
+            for chunk in chunks {
+                continuation.yield(Data(chunk.utf8))
+            }
+            continuation.finish()
+        }
+        let response = HTTPURLResponse(
+            url: url,
+            statusCode: 200,
+            httpVersion: "HTTP/1.1",
+            headerFields: ["Content-Type": "text/event-stream"]
+        )!
+        return FetchResponse(body: .stream(stream), urlResponse: response)
+    }
+
+    @Test("Tool continuation regression test: provider-native tool call and response pairing")
+    func testToolContinuationRegression() async throws {
+        let interceptedRequests = ManagedAtomicArray<URLRequest>()
+
+        let fetch: FetchFunction = { request in
+            interceptedRequests.append(request)
+            let step = interceptedRequests.count
+
+            if step == 1 {
+                // Step 1: Model issues a tool call
+                let sse = [
+                    "data: {\"id\":\"c1\",\"choices\":[{\"index\":0,\"delta\":{\"tool_calls\":[{\"index\":0,\"id\":\"call_abc123\",\"type\":\"function\",\"function\":{\"name\":\"lookup\",\"arguments\":\"{\\\"word\\\":\\\"shalom\\\"}\"}}]},\"finish_reason\":null}]}\n\n",
+                    "data: {\"id\":\"c1\",\"choices\":[{\"index\":0,\"delta\":{},\"finish_reason\":\"tool_calls\"}]}\n\n",
+                    "data: [DONE]\n\n"
+                ]
+                return Self.makeSSEResponse(chunks: sse, url: request.url!)
+            } else {
+                // Step 2: Model receives tool result and completes answer
+                let sse = [
+                    "data: {\"id\":\"c2\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"Shalom means Peace.\"},\"finish_reason\":null}]}\n\n",
+                    "data: {\"id\":\"c2\",\"choices\":[{\"index\":0,\"delta\":{},\"finish_reason\":\"stop\"}]}\n\n",
+                    "data: [DONE]\n\n"
+                ]
+                return Self.makeSSEResponse(chunks: sse, url: request.url!)
+            }
+        }
+
+        let config = HanlinChatModelConfiguration(
+            modelID: "gpt-4o",
+            company: "OpenAI",
+            apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions",
+            credential: "sk-test"
+        )
+
+        let engine = try HanlinAISDKAgentEngine(configuration: config, fetch: fetch)
+
+        let toolDefinition = HanlinAISDKToolDefinition(
+            name: "lookup",
+            description: "Look up a word definition",
+            inputSchemaData: try JSONSerialization.data(withJSONObject: [
+                "type": "object",
+                "properties": [
+                    "word": ["type": "string"]
+                ],
+                "required": ["word"]
+            ]),
+            execute: { args, callID in
+                #expect(callID == "call_abc123")
+                return HanlinAISDKToolExecutionOutput(
+                    modelText: "Definition: peace, completeness",
+                    resultReference: "ref_1"
+                )
+            }
+        )
+
+        let messages: [HanlinAISDKMessage] = [
+            .init(role: .user, text: "What does shalom mean?")
+        ]
+
+        let stream = try await engine.stream(
+            messages: messages,
+            baseSystemPrompt: "You are a translator.",
+            tools: [toolDefinition],
+            prepareStep: {
+                HanlinAISDKStepPreparation(activeToolAliases: ["lookup"])
+            }
+        )
+
+        var events: [HanlinAISDKStreamEvent] = []
+        for try await event in stream {
+            events.append(event)
+        }
+
+        // Verify captured requests:
+        // Request 1: initial user message
+        // Request 2: must contain assistant message with tool_calls AND tool message with tool_call_id
+        try #require(interceptedRequests.count == 2)
+        let step2BodyData = try #require(interceptedRequests.all[1].httpBody)
+        let step2JSON = try #require(JSONSerialization.jsonObject(with: step2BodyData) as? [String: Any])
+        let step2Messages = try #require(step2JSON["messages"] as? [[String: Any]])
+
+        // Verify there is an assistant message with tool_calls
+        let assistantMsg = try #require(step2Messages.first { ($0["role"] as? String) == "assistant" })
+        let toolCalls = try #require(assistantMsg["tool_calls"] as? [[String: Any]])
+        #expect(toolCalls.first?["id"] as? String == "call_abc123")
+
+        // Verify there is a tool message with matching tool_call_id (NOT synthetic role=user!)
+        let toolMsg = try #require(step2Messages.first { ($0["role"] as? String) == "tool" })
+        #expect(toolMsg["tool_call_id"] as? String == "call_abc123")
+        #expect((toolMsg["content"] as? String)?.contains("peace") == true)
+
+        // Verify no synthetic role=user was inserted for the tool result
+        let userMsgs = step2Messages.filter { ($0["role"] as? String) == "user" }
+        #expect(userMsgs.count == 1) // only the original user prompt
+
+        // Verify stream events
+        let hasToolCall = events.contains {
+            if case .toolCall(let call) = $0 { return call.id == "call_abc123" }
+            return false
+        }
+        let hasToolResult = events.contains {
+            if case .toolResult(let callID, _, let text, _, _) = $0 {
+                return callID == "call_abc123" && text.contains("peace")
+            }
+            return false
+        }
+        let hasText = events.contains {
+            if case .textDelta(let text) = $0 { return text.contains("Peace") }
+            return false
+        }
+
+        #expect(hasToolCall)
+        #expect(hasToolResult)
+        #expect(hasText)
+    }
+
+    @Test("Parallel tool execution in a single model step")
+    func testParallelToolExecution() async throws {
+        let interceptedRequests = ManagedAtomicArray<URLRequest>()
+
+        let fetch: FetchFunction = { request in
+            interceptedRequests.append(request)
+            let step = interceptedRequests.count
+
+            if step == 1 {
+                // Model issues 2 parallel tool calls
+                let sse = [
+                    "data: {\"id\":\"p1\",\"choices\":[{\"index\":0,\"delta\":{\"tool_calls\":[{\"index\":0,\"id\":\"call_1\",\"type\":\"function\",\"function\":{\"name\":\"calc\",\"arguments\":\"{\\\"op\\\":\\\"add\\\"}\"}},{\"index\":1,\"id\":\"call_2\",\"type\":\"function\",\"function\":{\"name\":\"calc\",\"arguments\":\"{\\\"op\\\":\\\"sub\\\"}\"}}]},\"finish_reason\":null}]}\n\n",
+                    "data: {\"id\":\"p1\",\"choices\":[{\"index\":0,\"delta\":{},\"finish_reason\":\"tool_calls\"}]}\n\n",
+                    "data: [DONE]\n\n"
+                ]
+                return Self.makeSSEResponse(chunks: sse, url: request.url!)
+            } else {
+                let sse = [
+                    "data: {\"id\":\"p2\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"Results calculated.\"},\"finish_reason\":\"stop\"}]}\n\n",
+                    "data: [DONE]\n\n"
+                ]
+                return Self.makeSSEResponse(chunks: sse, url: request.url!)
+            }
+        }
+
+        let config = HanlinChatModelConfiguration(
+            modelID: "gpt-4o",
+            company: "OpenAI",
+            apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions",
+            credential: "sk-test"
+        )
+
+        let engine = try HanlinAISDKAgentEngine(configuration: config, fetch: fetch)
+
+        let tool = HanlinAISDKToolDefinition(
+            name: "calc",
+            description: "Calculator",
+            inputSchemaData: try JSONSerialization.data(withJSONObject: [
+                "type": "object",
+                "properties": ["op": ["type": "string"]]
+            ]),
+            execute: { args, callID in
+                HanlinAISDKToolExecutionOutput(modelText: "Result for \(callID)")
+            }
+        )
+
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Calculate both")],
+            baseSystemPrompt: "Helper",
+            tools: [tool],
+            prepareStep: { HanlinAISDKStepPreparation(activeToolAliases: ["calc"]) }
+        )
+
+        var toolResults: [String: String] = [:]
+        for try await event in stream {
+            if case .toolResult(let callID, _, let text, _, _) = event {
+                toolResults[callID] = text
+            }
+        }
+
+        #expect(toolResults["call_1"] == "Result for call_1")
+        #expect(toolResults["call_2"] == "Result for call_2")
+
+        // Inspect second request messages
+        try #require(interceptedRequests.count == 2)
+        let step2Body = try #require(interceptedRequests.all[1].httpBody)
+        let step2JSON = try #require(JSONSerialization.jsonObject(with: step2Body) as? [String: Any])
+        let messages = try #require(step2JSON["messages"] as? [[String: Any]])
+
+        let toolMsgs = messages.filter { ($0["role"] as? String) == "tool" }
+        #expect(toolMsgs.count == 2)
+        let callIDs = Set(toolMsgs.compactMap { $0["tool_call_id"] as? String })
+        #expect(callIDs == ["call_1", "call_2"])
+    }
+
+    @Test("Dynamic tool exposure via prepareStep filters active tools")
+    func testDynamicToolExposure() async throws {
+        let stepCount = ManagedAtomicInt()
+
+        let fetch: FetchFunction = { request in
+            let count = stepCount.increment()
+            if count == 1 {
+                // Step 1: Model calls load_skill
+                let sse = [
+                    "data: {\"id\":\"s1\",\"choices\":[{\"index\":0,\"delta\":{\"tool_calls\":[{\"index\":0,\"id\":\"call_load\",\"type\":\"function\",\"function\":{\"name\":\"load_skill\",\"arguments\":\"{\\\"skill\\\":\\\"code\\\"}\"}}]},\"finish_reason\":\"tool_calls\"}]}\n\n",
+                    "data: [DONE]\n\n"
+                ]
+                return Self.makeSSEResponse(chunks: sse, url: request.url!)
+            } else {
+                // Step 2: Model finishes with explanation
+                let sse = [
+                    "data: {\"id\":\"s2\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"Python tool is now ready.\"},\"finish_reason\":\"stop\"}]}\n\n",
+                    "data: [DONE]\n\n"
+                ]
+                return Self.makeSSEResponse(chunks: sse, url: request.url!)
+            }
+        }
+
+        let config = HanlinChatModelConfiguration(
+            modelID: "gpt-4o",
+            company: "OpenAI",
+            apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions",
+            credential: "sk-test"
+        )
+
+        let engine = try HanlinAISDKAgentEngine(configuration: config, fetch: fetch)
+
+        let loadSkillTool = HanlinAISDKToolDefinition(
+            name: "load_skill",
+            description: "Load a skill",
+            inputSchemaData: try JSONSerialization.data(withJSONObject: [
+                "type": "object",
+                "properties": ["skill": ["type": "string"]]
+            ]),
+            execute: { _, _ in
+                HanlinAISDKToolExecutionOutput(modelText: "Skill 'code' loaded.")
+            }
+        )
+
+        let pythonTool = HanlinAISDKToolDefinition(
+            name: "execute_python",
+            description: "Run python code",
+            inputSchemaData: try JSONSerialization.data(withJSONObject: [
+                "type": "object",
+                "properties": ["code": ["type": "string"]]
+            ]),
+            execute: { _, _ in
+                HanlinAISDKToolExecutionOutput(modelText: "python output")
+            }
+        )
+
+        let preparedSteps = ManagedAtomicArray<HanlinAISDKStepPreparation>()
+
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Load python skill")],
+            baseSystemPrompt: "System",
+            tools: [loadSkillTool, pythonTool],
+            prepareStep: {
+                let current = preparedSteps.count
+                if current == 0 {
+                    let prep = HanlinAISDKStepPreparation(
+                        activeToolAliases: ["load_skill"],
+                        loadedSkillIDs: []
+                    )
+                    preparedSteps.append(prep)
+                    return prep
+                } else {
+                    let prep = HanlinAISDKStepPreparation(
+                        activeToolAliases: ["load_skill", "execute_python"],
+                        loadedSkillIDs: ["code"],
+                        loadedSkillInstructions: ["Use execute_python for code execution"]
+                    )
+                    preparedSteps.append(prep)
+                    return prep
+                }
+            }
+        )
+
+        var stepStartedPreparations: [HanlinAISDKStepPreparation] = []
+        for try await event in stream {
+            if case .stepStarted(_, let prep) = event {
+                stepStartedPreparations.append(prep)
+            }
+        }
+
+        try #require(stepStartedPreparations.count == 2)
+        #expect(stepStartedPreparations[0].activeToolAliases == ["load_skill"])
+        #expect(stepStartedPreparations[1].activeToolAliases == ["load_skill", "execute_python"])
+        #expect(stepStartedPreparations[1].loadedSkillIDs == ["code"])
+    }
+
+    @Test("Advertised tool schema preserves original required, properties, and constraints")
+    func testAdvertisedSchemaPreservesOriginalConstraints() async throws {
+        let capturedRequests = ManagedAtomicArray<URLRequest>()
+        let fetch: FetchFunction = { request in
+            capturedRequests.append(request)
+            let sse = [
+                "data: {\"id\":\"s1\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"Hello\"},\"finish_reason\":\"stop\"}]}\n\n",
+                "data: [DONE]\n\n"
+            ]
+            return Self.makeSSEResponse(chunks: sse, url: request.url!)
+        }
+
+        let config = HanlinChatModelConfiguration(
+            modelID: "gpt-4o",
+            company: "OpenAI",
+            apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions",
+            credential: "sk-test"
+        )
+        let engine = try HanlinAISDKAgentEngine(configuration: config, fetch: fetch)
+
+        let pythonTool = HanlinAISDKToolDefinition(
+            name: "execute_local_python_code",
+            description: "Run normal Python source with embedded CPython",
+            inputSchemaData: try JSONSerialization.data(withJSONObject: [
+                "type": "object",
+                "properties": [
+                    "source": [
+                        "type": "string",
+                        "description": "Python source code to run locally."
+                    ],
+                    "arguments": [
+                        "type": "array",
+                        "items": ["type": "string"],
+                        "description": "Optional script arguments"
+                    ],
+                    "timeout_seconds": [
+                        "type": "integer",
+                        "description": "Bounded execution timeout"
+                    ]
+                ],
+                "required": ["source"]
+            ]),
+            execute: { _, _ in HanlinAISDKToolExecutionOutput(modelText: "ok") }
+        )
+
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Run python")],
+            baseSystemPrompt: "System",
+            tools: [pythonTool],
+            prepareStep: {
+                HanlinAISDKStepPreparation(activeToolAliases: ["execute_local_python_code"])
+            }
+        )
+
+        for try await _ in stream {}
+
+        #expect(capturedRequests.count == 1)
+        let bodyData = try #require(capturedRequests.all[0].httpBody)
+        let bodyJSON = try #require(JSONSerialization.jsonObject(with: bodyData) as? [String: Any])
+        let tools = try #require(bodyJSON["tools"] as? [[String: Any]])
+        let function = try #require(tools.first?["function"] as? [String: Any])
+        let parameters = try #require(function["parameters"] as? [String: Any])
+
+        #expect(function["name"] as? String == "execute_local_python_code")
+        #expect(parameters["type"] as? String == "object")
+        let properties = try #require(parameters["properties"] as? [String: Any])
+        #expect(properties["source"] != nil)
+        #expect(properties["timeout_seconds"] != nil)
+        let required = try #require(parameters["required"] as? [String])
+        #expect(required.contains("source"))
+    }
+
+    @Test("Invalid and extra arguments reach Hanlin executor and return non-fatal error")
+    func testInvalidArgumentsReachExecutorWithoutAborting() async throws {
+        let stepCount = ManagedAtomicInt()
+        let fetch: FetchFunction = { request in
+            let count = stepCount.increment()
+            if count == 1 {
+                let sse = [
+                    "data: {\"id\":\"c1\",\"choices\":[{\"index\":0,\"delta\":{\"tool_calls\":[{\"index\":0,\"id\":\"call_inv_1\",\"type\":\"function\",\"function\":{\"name\":\"strict_tool\",\"arguments\":\"{\\\"unexpected\\\":true}\"}}]},\"finish_reason\":\"tool_calls\"}]}\n\n",
+                    "data: [DONE]\n\n"
+                ]
+                return Self.makeSSEResponse(chunks: sse, url: request.url!)
+            } else {
+                let sse = [
+                    "data: {\"id\":\"c2\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"RECOVERED_AFTER_INVALID_ARGS\"},\"finish_reason\":\"stop\"}]}\n\n",
+                    "data: [DONE]\n\n"
+                ]
+                return Self.makeSSEResponse(chunks: sse, url: request.url!)
+            }
+        }
+
+        let config = HanlinChatModelConfiguration(
+            modelID: "gpt-4o",
+            company: "OpenAI",
+            apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions",
+            credential: "sk-test"
+        )
+        let engine = try HanlinAISDKAgentEngine(configuration: config, fetch: fetch)
+
+        let receivedArguments = ManagedAtomicArray<String>()
+        let strictTool = HanlinAISDKToolDefinition(
+            name: "strict_tool",
+            description: "Strict validator tool",
+            inputSchemaData: try JSONSerialization.data(withJSONObject: [
+                "type": "object",
+                "properties": ["source": ["type": "string"]],
+                "required": ["source"]
+            ]),
+            execute: { args, callID in
+                receivedArguments.append(args)
+                return HanlinAISDKToolExecutionOutput(
+                    modelText: "Missing required argument 'source'",
+                    isError: true
+                )
+            }
+        )
+
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Run strict tool")],
+            baseSystemPrompt: "System",
+            tools: [strictTool],
+            prepareStep: {
+                HanlinAISDKStepPreparation(activeToolAliases: ["strict_tool"])
+            }
+        )
+
+        var events: [HanlinAISDKStreamEvent] = []
+        var finalContent = ""
+        for try await event in stream {
+            events.append(event)
+            if case .textDelta(let text) = event {
+                finalContent += text
+            }
+        }
+
+        #expect(receivedArguments.count == 1)
+        #expect(receivedArguments.all[0].contains("unexpected"))
+
+        let toolResults = events.compactMap { event -> (id: String, text: String, isError: Bool)? in
+            if case .toolResult(let id, _, let text, _, let isError) = event {
+                return (id, text, isError)
+            }
+            return nil
+        }
+        #expect(toolResults.count == 1)
+        #expect(toolResults[0].id == "call_inv_1")
+        #expect(toolResults[0].isError == true)
+        #expect(toolResults[0].text.contains("Missing required argument"))
+        #expect(finalContent.contains("RECOVERED_AFTER_INVALID_ARGS"))
+    }
+
+    @Test("Unknown tool call produces non-fatal tool error and allows multi-step recovery")
+    func testUnknownToolProducesNonFatalErrorAndAllowsRecovery() async throws {
+        let stepCount = ManagedAtomicInt()
+        let fetch: FetchFunction = { request in
+            let count = stepCount.increment()
+            if count == 1 {
+                let sse = [
+                    "data: {\"id\":\"u1\",\"choices\":[{\"index\":0,\"delta\":{\"tool_calls\":[{\"index\":0,\"id\":\"call_unknown_42\",\"type\":\"function\",\"function\":{\"name\":\"ghost_tool_not_registered\",\"arguments\":\"{}\"}}]},\"finish_reason\":\"tool_calls\"}]}\n\n",
+                    "data: [DONE]\n\n"
+                ]
+                return Self.makeSSEResponse(chunks: sse, url: request.url!)
+            } else {
+                let sse = [
+                    "data: {\"id\":\"u2\",\"choices\":[{\"index\":0,\"delta\":{\"content\":\"RECOVERED_FROM_UNKNOWN_TOOL\"},\"finish_reason\":\"stop\"}]}\n\n",
+                    "data: [DONE]\n\n"
+                ]
+                return Self.makeSSEResponse(chunks: sse, url: request.url!)
+            }
+        }
+
+        let config = HanlinChatModelConfiguration(
+            modelID: "gpt-4o",
+            company: "OpenAI",
+            apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions",
+            credential: "sk-test"
+        )
+        let engine = try HanlinAISDKAgentEngine(configuration: config, fetch: fetch)
+
+        let knownTool = HanlinAISDKToolDefinition(
+            name: "known_tool",
+            description: "Known tool",
+            inputSchemaData: try JSONSerialization.data(withJSONObject: [
+                "type": "object",
+                "properties": ["arg": ["type": "string"]]
+            ]),
+            execute: { _, _ in HanlinAISDKToolExecutionOutput(modelText: "ok") }
+        )
+
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Try tools")],
+            baseSystemPrompt: "System",
+            tools: [knownTool],
+            prepareStep: {
+                HanlinAISDKStepPreparation(activeToolAliases: ["known_tool"])
+            }
+        )
+
+        var events: [HanlinAISDKStreamEvent] = []
+        var finalContent = ""
+        for try await event in stream {
+            events.append(event)
+            if case .textDelta(let text) = event {
+                finalContent += text
+            }
+        }
+
+        let toolResults = events.compactMap { event -> (id: String, name: String, isError: Bool)? in
+            if case .toolResult(let id, let name, _, _, let isError) = event {
+                return (id, name, isError)
+            }
+            return nil
+        }
+        #expect(toolResults.count == 1)
+        #expect(toolResults[0].id == "call_unknown_42")
+        #expect(toolResults[0].name == "ghost_tool_not_registered")
+        #expect(toolResults[0].isError == true)
+        #expect(finalContent.contains("RECOVERED_FROM_UNKNOWN_TOOL"))
+    }
+
+    @Test("Real provider or transport error terminates stream")
+    func testRealProviderTransportErrorAbortsStream() async throws {
+        let fetch: FetchFunction = { request in
+            throw URLError(.cannotConnectToHost)
+        }
+
+        let config = HanlinChatModelConfiguration(
+            modelID: "gpt-4o",
+            company: "OpenAI",
+            apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions",
+            credential: "sk-test"
+        )
+        let engine = try HanlinAISDKAgentEngine(configuration: config, fetch: fetch)
+
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Hello")],
+            baseSystemPrompt: nil,
+            tools: [],
+            prepareStep: { HanlinAISDKStepPreparation(activeToolAliases: []) }
+        )
+
+        var didCatchError = false
+        do {
+            for try await _ in stream {}
+        } catch {
+            didCatchError = true
+        }
+
+        #expect(didCatchError)
+    }
+
+    // MARK: - 14. Non-Positive maxSteps Clamped to >= 1
+
+    @Test("maxSteps <= 0 is clamped to >= 1 so streamText still executes at least one step")
+    func testNonPositiveMaxStepsClampedToAtLeastOne() async throws {
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.streamStart(warnings: []))
+                continuation.yield(.textStart(id: "t1", providerMetadata: nil))
+                continuation.yield(.textDelta(id: "t1", delta: "Clamped step output", providerMetadata: nil))
+                continuation.yield(.textEnd(id: "t1", providerMetadata: nil))
+                continuation.yield(.finish(
+                    finishReason: LanguageModelV3FinishReason(unified: .stop, raw: "stop"),
+                    usage: LanguageModelV3Usage(inputTokens: .init(total: 10), outputTokens: .init(total: 5)),
+                    providerMetadata: nil
+                ))
+                continuation.finish()
+            }
+        }
+        let config = HanlinChatModelConfiguration(
+            modelID: "gpt-4o",
+            company: "OpenAI",
+            apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions",
+            credential: "sk-test"
+        )
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(mock))
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Test zero maxSteps")],
+            baseSystemPrompt: nil,
+            tools: [],
+            maxSteps: 0,
+            prepareStep: { HanlinAISDKStepPreparation(activeToolAliases: []) }
+        )
+
+        var collectedText = ""
+        for try await event in stream {
+            if case .textDelta(let delta) = event {
+                collectedText += delta
+            }
+        }
+        #expect(collectedText == "Clamped step output")
+        #expect(mock.callCount == 1)
+    }
+
+    // MARK: - 15. Provider-Native Source and File Stream Events
+
+    @Test("Engine maps provider-native source and file stream parts to HanlinAISDKStreamEvent")
+    func testSourceAndFileStreamEventMapping() async throws {
+        let sampleSource = LanguageModelV3Source.url(
+            id: "src-1",
+            url: "https://developer.apple.com/documentation/swiftui",
+            title: "SwiftUI Documentation",
+            providerMetadata: nil
+        )
+        let sampleFile = LanguageModelV3File(
+            mediaType: "image/png",
+            data: .base64("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=")
+        )
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.streamStart(warnings: []))
+                continuation.yield(.source(sampleSource))
+                continuation.yield(.file(sampleFile))
+                continuation.yield(.textStart(id: "t1", providerMetadata: nil))
+                continuation.yield(.textDelta(id: "t1", delta: "Done", providerMetadata: nil))
+                continuation.yield(.textEnd(id: "t1", providerMetadata: nil))
+                continuation.yield(.finish(
+                    finishReason: LanguageModelV3FinishReason(unified: .stop, raw: "stop"),
+                    usage: LanguageModelV3Usage(inputTokens: .init(total: 10), outputTokens: .init(total: 5)),
+                    providerMetadata: nil
+                ))
+                continuation.finish()
+            }
+        }
+        let config = HanlinChatModelConfiguration(
+            modelID: "gpt-4o",
+            company: "OpenAI",
+            apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions",
+            credential: "sk-test"
+        )
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(mock))
+        let stream = try await engine.stream(
+            messages: [.init(role: .user, text: "Generate with source and file")],
+            baseSystemPrompt: nil,
+            tools: [],
+            prepareStep: { HanlinAISDKStepPreparation(activeToolAliases: []) }
+        )
+
+        var capturedSources: [(id: String, url: String, title: String?)] = []
+        var capturedFiles: [(mediaType: String, dataCount: Int)] = []
+        for try await event in stream {
+            switch event {
+            case .source(let id, let url, let title):
+                capturedSources.append((id: id, url: url, title: title))
+            case .file(let mediaType, let data):
+                capturedFiles.append((mediaType: mediaType, dataCount: data.count))
+            default:
+                break
+            }
+        }
+
+        #expect(capturedSources.count == 1)
+        #expect(capturedSources.first?.url == "https://developer.apple.com/documentation/swiftui")
+        #expect(capturedSources.first?.title == "SwiftUI Documentation")
+        #expect(capturedFiles.count == 1)
+        #expect(capturedFiles.first?.mediaType == "image/png")
+        #expect((capturedFiles.first?.dataCount ?? 0) > 0)
+    }
+
+    // MARK: - 16. Multimodal User Parts Preserved in SDK Prompt
+
+    @Test("Multimodal user message with text, imageData, and imageURL preserves all parts in V3 prompt")
+    func testMultimodalUserMessagePartsPreserved() async throws {
+        let mock = MockLanguageModelV3 { _ in
+            AsyncThrowingStream { continuation in
+                continuation.yield(.streamStart(warnings: []))
+                continuation.yield(.textStart(id: "t1", providerMetadata: nil))
+                continuation.yield(.textDelta(id: "t1", delta: "Inspected attachments", providerMetadata: nil))
+                continuation.yield(.textEnd(id: "t1", providerMetadata: nil))
+                continuation.yield(.finish(
+                    finishReason: LanguageModelV3FinishReason(unified: .stop, raw: "stop"),
+                    usage: LanguageModelV3Usage(inputTokens: .init(total: 10), outputTokens: .init(total: 5)),
+                    providerMetadata: nil
+                ))
+                continuation.finish()
+            }
+        }
+
+        let imageBytes = Data([0x89, 0x50, 0x4E, 0x47])
+        let multimodalMessage = HanlinAISDKMessage(
+            role: .user,
+            parts: [
+                .text("Describe the image and diagram"),
+                .imageData(imageBytes, mediaType: "image/png"),
+                .imageURL(URL(string: "https://example.com/diagram.jpg")!, mediaType: "image/jpeg")
+            ]
+        )
+
+        let config = HanlinChatModelConfiguration(
+            modelID: "gpt-4o",
+            company: "OpenAI",
+            apiType: "openai",
+            endpoint: "https://api.openai.com/v1/chat/completions",
+            credential: "sk-test"
+        )
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(mock))
+        let stream = try await engine.stream(
+            messages: [multimodalMessage],
+            baseSystemPrompt: "System prompt",
+            tools: [],
+            prepareStep: { HanlinAISDKStepPreparation(activeToolAliases: []) }
+        )
+
+        for try await _ in stream {}
+
+        #expect(mock.capturedOptions.count == 1)
+        let prompt = mock.capturedOptions[0].prompt
+        let userContent = prompt.compactMap { msg -> [LanguageModelV3UserMessagePart]? in
+            if case .user(let content, _) = msg { return content }
+            return nil
+        }.first
+        #expect(userContent?.count == 3)
+    }
+}
+
+// MARK: - Thread-safe Helpers for Testing
+
+@MainActor
+private final class HanlinApprovalReviewGate {
+    private(set) var request: HanlinAISDKToolApprovalRequest?
+    private var reply: CheckedContinuation<Bool, Never>?
+    func review(_ request: HanlinAISDKToolApprovalRequest) async -> Bool {
+        self.request = request
+        return await withCheckedContinuation { reply = $0 }
+    }
+    func answer(_ approved: Bool) { let pending = reply; reply = nil; pending?.resume(returning: approved) }
+}
+
+private final class ManagedAtomicArray<T>: @unchecked Sendable {
+    private var elements: [T] = []
+    private let lock = NSLock()
+
+    func append(_ element: T) {
+        lock.lock()
+        elements.append(element)
+        lock.unlock()
+    }
+
+    var all: [T] {
+        lock.lock()
+        defer { lock.unlock() }
+        return elements
+    }
+
+    var count: Int {
+        lock.lock()
+        defer { lock.unlock() }
+        return elements.count
+    }
+}
+
+private final class ManagedAtomicInt: @unchecked Sendable {
+    var count: Int { lock.lock(); defer { lock.unlock() }; return value }
+    private var value: Int = 0
+    private let lock = NSLock()
+
+    @discardableResult
+    func increment() -> Int {
+        lock.lock()
+        value += 1
+        let val = value
+        lock.unlock()
+        return val
+    }
+}

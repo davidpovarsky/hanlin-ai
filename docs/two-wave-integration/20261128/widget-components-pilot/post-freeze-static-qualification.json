@@ -1,0 +1,57 @@
+{
+  "base": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "candidateManifestSHA256": "5f3d7a829d5767dbd7b40bf8aa7e052b9a3ecbdeb7ca9c7a08f74133c23b7e6c",
+  "collector": {
+    "gitBlob": "98882a8ce4fe6e5eb2208897e0c1f962826da2be",
+    "path": "Scripts/MiniApps/stage-sdk.mjs",
+    "sha256": "60b6b9496330d4605f60f56587170b06c7eced31a6b3d79ef04aa8faa548022c"
+  },
+  "executionRouteUpdate": {
+    "focusedExecuted": false,
+    "from": "Unexecuted focused9-method command proposed in frozen R1",
+    "fullDiscoveryExecuted": false,
+    "sourcePacketUnchanged": true,
+    "to": "Root prefers all8 new observer controls and1 new planner control once within next required full original discovery on composed source."
+  },
+  "macSourceReview": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/widget-components-independent-api-ui-review-fc5ce1ba-r1/independent-review.json",
+    "sha256": "9248e62fc093493438b1b246aa32494166199018959e8c592149a5303dfaa944"
+  },
+  "newOrChangedInputAdmission": {
+    "paths": [
+      "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "Scripts/ProductSplit/observe_widget_components.py",
+      "Scripts/ProductSplit/run_paired_acceptance.py",
+      "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "Scripts/CI/Tests/test_widget_components_observer.py",
+      "Fixtures/WidgetComponents/script.json",
+      "Fixtures/WidgetComponents/widget.jsx",
+      "Scripts/CI/affected-validation-map.json",
+      "Scripts/CI/Tests/test_affected_validation.py",
+      ".github/workflows/validate-app-split.yml"
+    ],
+    "qualification": "Read-only source/collector relationship; collector was not executed.",
+    "underOriginalCollectorRootOrExplicitEntry": []
+  },
+  "recordedCollectorAuthority": {
+    "explicitInputCount": 44,
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/post-icu-bundle-closure-main04e33c45-readonly-r1/git-input-and-tree-qualification.json",
+    "roots": [
+      "Scripts/MiniApps",
+      "Packages/HanlinExpoUI",
+      "Packages/HanlinExpoNativeAPIJS",
+      "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services",
+      "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory",
+      "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions",
+      "Packages/HanlinAppExtensionsSDK/Sources",
+      "AI_HLY/Downstream/ScriptingPlatform",
+      "Packages/HanlinExpoRuntime/Sources/ExpoWidgets",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
+      "docs/miniapp-sdk",
+      "docs/hanlin-nativescript-guide.md",
+      "docs/hanlin-expo-runtime.md"
+    ],
+    "sha256": "6500ffeb0d0368072ab2d060b4cde26cf3531c5882857a344839ea0514024879"
+  }
+}

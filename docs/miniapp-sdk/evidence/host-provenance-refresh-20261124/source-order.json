@@ -1,0 +1,72 @@
+{
+  "before": {
+    "install-tooling.mjs": [
+      39
+    ],
+    "prepare-types.mjs": [
+      41
+    ],
+    "generate-scriptwidget-types.mjs": [
+      42
+    ],
+    "audit-miniapp-sdk.mjs": [],
+    "audit_miniapp_reachability.py": [],
+    "runtime_host_archive.py\" reuse": [
+      12
+    ],
+    "stage-sdk.mjs": [
+      43
+    ],
+    "runtime_host_archive.py\" fingerprint": [
+      46
+    ],
+    "npm test": [
+      54
+    ],
+    "runtime_host_archive.py\" validate": [
+      60
+    ],
+    "node --jitless": [
+      67
+    ]
+  },
+  "after": {
+    "install-tooling.mjs": [
+      17
+    ],
+    "prepare-types.mjs": [
+      19
+    ],
+    "generate-scriptwidget-types.mjs": [
+      20
+    ],
+    "audit-miniapp-sdk.mjs": [
+      21,
+      22
+    ],
+    "audit_miniapp_reachability.py": [
+      23,
+      24
+    ],
+    "runtime_host_archive.py\" reuse": [
+      28
+    ],
+    "stage-sdk.mjs": [
+      52
+    ],
+    "runtime_host_archive.py\" fingerprint": [
+      55
+    ],
+    "npm test": [
+      63
+    ],
+    "runtime_host_archive.py\" validate": [
+      69
+    ],
+    "node --jitless": [
+      76
+    ]
+  },
+  "scope": "Source command order and retained call counts, not execution evidence.",
+  "archiveTailByteIdentical": true
+}

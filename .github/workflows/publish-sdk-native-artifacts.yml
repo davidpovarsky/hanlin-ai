@@ -1,0 +1,98 @@
+name: Publish prepared Hanlin SDK native assets
+
+on:
+  workflow_dispatch:
+    inputs:
+      prepared_run_id:
+        description: Successful original Apple preparation/acceptance run; no runtime rebuild
+        required: true
+        type: string
+      artifact_name:
+        description: Artifact containing native-artifacts.json and exporter ZIPs
+        required: true
+        default: hanlin-sdk-native-prepared
+        type: string
+  workflow_call:
+    inputs:
+      prepared_run_id:
+        required: true
+        type: string
+      artifact_name:
+        required: false
+        default: hanlin-sdk-native-prepared
+        type: string
+
+permissions:
+  actions: read
+  contents: write
+
+concurrency:
+  group: hanlin-sdk-native-publish-${{ inputs.prepared_run_id }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SOURCE_RUN: ${{ inputs.prepared_run_id }}
+      ARTIFACT_NAME: ${{ inputs.artifact_name }}
+    steps:
+      - name: Verify completed original producer
+        id: producer
+        run: |
+          python3 - <<'PY'
+          import json, os, re, subprocess
+          run_id = os.environ["SOURCE_RUN"]
+          repository = os.environ["GITHUB_REPOSITORY"]
+          if not re.fullmatch(r"[1-9][0-9]*", run_id):
+              raise SystemExit("An exact producer run ID is required")
+          run = json.loads(subprocess.check_output([
+              "gh", "api", f"repos/{repository}/actions/runs/{run_id}"
+          ], text=True))
+          if run["status"] != "completed" or run["conclusion"] != "success":
+              raise SystemExit("Native publication requires the completed successful original gate")
+          if run["head_repository"]["full_name"] != repository:
+              raise SystemExit("The prepared artifact must come from this repository")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as output:
+              output.write(f"source_sha={run['head_sha']}\n")
+          PY
+
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ steps.producer.outputs.source_sha }}
+
+      - name: Download already prepared original assets
+        run: |
+          mkdir -p build/sdk-native-publish
+          gh run download "$SOURCE_RUN" --repo "$GITHUB_REPOSITORY" \
+            --name "$ARTIFACT_NAME" --dir build/sdk-native-publish
+
+      - name: Verify source closure and publish immutable assets
+        env:
+          SOURCE_SHA: ${{ steps.producer.outputs.source_sha }}
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          catalog = json.loads(Path("build/sdk-native-publish/native-artifacts.json").read_text())
+          if catalog["sourceCommit"] != os.environ["SOURCE_SHA"]:
+              raise SystemExit("Prepared SDK assets do not match the original producer commit")
+          if catalog["scope"] != "full" or catalog["missingTargets"]:
+              raise SystemExit("The full SDK publication requires every original native target")
+          for name, expected in catalog["inputSHA256"].items():
+              if hashlib.sha256(Path(name).read_bytes()).hexdigest() != expected:
+                  raise SystemExit(f"Prepared SDK source input changed: {name}")
+          PY
+          python3 Scripts/SDK/native_artifacts.py publish \
+            --catalog build/sdk-native-publish/native-artifacts.json \
+            --assets build/sdk-native-publish
+
+      - name: Retain verified catalog for root manifest integration
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: hanlin-sdk-native-published-catalog
+          path: build/sdk-native-publish/native-artifacts.json
+          if-no-files-found: error
+          retention-days: 30

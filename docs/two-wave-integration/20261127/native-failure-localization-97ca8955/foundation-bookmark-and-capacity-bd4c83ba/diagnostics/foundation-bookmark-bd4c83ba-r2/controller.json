@@ -1,0 +1,136 @@
+{
+  "status": "FOUNDATION_DIAGNOSTIC_COMPLETED",
+  "sourceContext": "bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb",
+  "sourceSHA256": "8b9314e6a27a9e48caba4a67bc754ced8bb5a6588b30fa11c5ef0f144e9bbc98",
+  "startedAt": "2026-11-27T07:59:57.517271+00:00",
+  "nativeCommandsStarted": 1,
+  "originalTestsReexecuted": false,
+  "productionModified": false,
+  "previousAttempt": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/diagnostics/foundation-bookmark-bd4c83ba-r1/controller.json",
+    "sha256": "47be83fbb7ac83e2c21a5a9b1d8543aef1f9647c1103b88340c0fff954fb1a86",
+    "nativeCommands": 0
+  },
+  "resourceEstimate": {
+    "nativeCompileAndTemporaryAllowanceBytes": 268435456,
+    "foreignAllowanceBytes": 268435456,
+    "osReserveBytes": 1073741824,
+    "admissionBytes": 1610612736
+  },
+  "deadlineSeconds": 45,
+  "freeAtAdmission": 2473422848,
+  "command": [
+    "/usr/bin/swift",
+    "/Users/m1/builds/hanlin-two-wave-root-20261126/diagnostics/foundation-bookmark-bd4c83ba-r2/foundation-bookmark-bd4c83ba.swift",
+    "/Users/m1/builds/hanlin-two-wave-root-20261126/diagnostics/foundation-bookmark-bd4c83ba-r2"
+  ],
+  "pid": 23109,
+  "pgid": 23109,
+  "lastObservation": {
+    "elapsedSeconds": 1.195083917,
+    "freeBytes": 2473115648,
+    "logBytes": 0
+  },
+  "exitCode": 0,
+  "nativeResult": {
+    "attempts": [
+      {
+        "creationError": {
+          "code": 256,
+          "domain": "NSCocoaErrorDomain",
+          "localizedDescription": "The file \u201csource note.txt\u201d couldn\u2019t be opened.",
+          "NSURL": "file:///var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/hanlin-system-ui-bookmark-probe-9611034C-A9BB-4110-9D10-4AD99086CFFF/Selected/source%20note.txt"
+        },
+        "creationOptionsRawValue": 2048,
+        "creationSucceeded": false,
+        "fileExistsBefore": true,
+        "inputReadBytes": 16,
+        "inputSecurityScopeAcquired": true,
+        "mode": "originalSecurityScoped",
+        "path": "/var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/hanlin-system-ui-bookmark-probe-9611034C-A9BB-4110-9D10-4AD99086CFFF/Selected/source note.txt",
+        "resolutionOptionsRawValue": 1280,
+        "url": "file:///var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/hanlin-system-ui-bookmark-probe-9611034C-A9BB-4110-9D10-4AD99086CFFF/Selected/source%20note.txt",
+        "urlKind": "raw"
+      },
+      {
+        "bookmarkByteCount": 1248,
+        "creationOptionsRawValue": 0,
+        "creationSucceeded": true,
+        "fileExistsBefore": true,
+        "inputReadBytes": 16,
+        "inputSecurityScopeAcquired": true,
+        "mode": "plainDiagnosticOnly",
+        "path": "/var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/hanlin-system-ui-bookmark-probe-9611034C-A9BB-4110-9D10-4AD99086CFFF/Selected/source note.txt",
+        "resolutionOptionsRawValue": 256,
+        "resolutionSucceeded": true,
+        "resolvedContentEqualsOriginal": true,
+        "resolvedFileExists": true,
+        "resolvedPath": "/private/var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/hanlin-system-ui-bookmark-probe-9611034C-A9BB-4110-9D10-4AD99086CFFF/Selected/source note.txt",
+        "resolvedReadBytes": 16,
+        "resolvedSecurityScopeAcquired": true,
+        "resolvedURL": "file:///private/var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/hanlin-system-ui-bookmark-probe-9611034C-A9BB-4110-9D10-4AD99086CFFF/Selected/source%20note.txt",
+        "retainedBookmarkPath": "/Users/m1/builds/hanlin-two-wave-root-20261126/diagnostics/foundation-bookmark-bd4c83ba-r2/raw-plainDiagnosticOnly.bookmark",
+        "stale": false,
+        "url": "file:///var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/hanlin-system-ui-bookmark-probe-9611034C-A9BB-4110-9D10-4AD99086CFFF/Selected/source%20note.txt",
+        "urlKind": "raw"
+      },
+      {
+        "creationError": {
+          "code": 256,
+          "domain": "NSCocoaErrorDomain",
+          "localizedDescription": "The file \u201csource note.txt\u201d couldn\u2019t be opened.",
+          "NSURL": "file:///var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/hanlin-system-ui-bookmark-probe-9611034C-A9BB-4110-9D10-4AD99086CFFF/Selected/source%20note.txt"
+        },
+        "creationOptionsRawValue": 2048,
+        "creationSucceeded": false,
+        "fileExistsBefore": true,
+        "inputReadBytes": 16,
+        "inputSecurityScopeAcquired": true,
+        "mode": "originalSecurityScoped",
+        "path": "/var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/hanlin-system-ui-bookmark-probe-9611034C-A9BB-4110-9D10-4AD99086CFFF/Selected/source note.txt",
+        "resolutionOptionsRawValue": 1280,
+        "url": "file:///var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/hanlin-system-ui-bookmark-probe-9611034C-A9BB-4110-9D10-4AD99086CFFF/Selected/source%20note.txt",
+        "urlKind": "resolvedSymlinks"
+      },
+      {
+        "bookmarkByteCount": 1248,
+        "creationOptionsRawValue": 0,
+        "creationSucceeded": true,
+        "fileExistsBefore": true,
+        "inputReadBytes": 16,
+        "inputSecurityScopeAcquired": true,
+        "mode": "plainDiagnosticOnly",
+        "path": "/var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/hanlin-system-ui-bookmark-probe-9611034C-A9BB-4110-9D10-4AD99086CFFF/Selected/source note.txt",
+        "resolutionOptionsRawValue": 256,
+        "resolutionSucceeded": true,
+        "resolvedContentEqualsOriginal": true,
+        "resolvedFileExists": true,
+        "resolvedPath": "/private/var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/hanlin-system-ui-bookmark-probe-9611034C-A9BB-4110-9D10-4AD99086CFFF/Selected/source note.txt",
+        "resolvedReadBytes": 16,
+        "resolvedSecurityScopeAcquired": true,
+        "resolvedURL": "file:///private/var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/hanlin-system-ui-bookmark-probe-9611034C-A9BB-4110-9D10-4AD99086CFFF/Selected/source%20note.txt",
+        "retainedBookmarkPath": "/Users/m1/builds/hanlin-two-wave-root-20261126/diagnostics/foundation-bookmark-bd4c83ba-r2/resolvedSymlinks-plainDiagnosticOnly.bookmark",
+        "stale": false,
+        "url": "file:///var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/hanlin-system-ui-bookmark-probe-9611034C-A9BB-4110-9D10-4AD99086CFFF/Selected/source%20note.txt",
+        "urlKind": "resolvedSymlinks"
+      }
+    ],
+    "boundary": "Foundation-only native diagnostic on an owned temporary fixture. Plain bookmarks are a diagnostic comparison only; no production change, entitlement change or test gate credit.",
+    "fixtureBytes": 16,
+    "osVersion": "Version 27.0 (Build 26A428)",
+    "processID": 23109,
+    "selectedFile": "/var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/hanlin-system-ui-bookmark-probe-9611034C-A9BB-4110-9D10-4AD99086CFFF/Selected/source note.txt",
+    "sourceContext": "bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb",
+    "status": "FOUNDATION_BOOKMARK_DIAGNOSTIC_COMPLETED",
+    "temporaryRoot": "/var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/hanlin-system-ui-bookmark-probe-9611034C-A9BB-4110-9D10-4AD99086CFFF/"
+  },
+  "cleanup": {
+    "removed": true,
+    "resultsRetainedBeforeCleanup": true,
+    "temporaryRoot": "/var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/hanlin-system-ui-bookmark-probe-9611034C-A9BB-4110-9D10-4AD99086CFFF/"
+  },
+  "sourceUnchanged": true,
+  "finishedAt": "2026-11-27T07:59:59.947683+00:00",
+  "freeEnd": 2472357888,
+  "nativeLogSHA256": "717c5e98273783ba322f0feace0f8b7fbafc07bd9e97fdf95284ef56960c0066"
+}

@@ -1,0 +1,281 @@
+{
+  "schema": 1,
+  "status": "RETAINED_CONTROLLER_FAILURE_BEFORE_ORIGINAL_XCTEST_COMMAND",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "capturedReceiptSHA256": "74f03ea511c48d42c7cdab4759ce2f93be5c0856134ad23151382413c9d76a3f",
+  "stateSHA256": "5cd2fc85c3fb0c58e399f9aa5bbc33ab61e88bd48a4a5fd8b8fbc102b7023c17",
+  "ledgerSHA256": "daf72502217aab831e6cf60a662c444990cd14634db8840d254671ed7b83ae44",
+  "caseResult": "NOT_EXECUTED",
+  "controllerStatus": "FAILED",
+  "controllerError": "KeyError: 'SPLIT_EVIDENCE'",
+  "actualChargeSeconds": 12.940106750000268,
+  "cumulativeOSSeconds": 366.5287689999968,
+  "originalOSAllowanceSeconds": 900,
+  "newExecution": false,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2878,
+      "sha256": "e61d5034b9b3fd1ad7910bb0276138ad2c29de91465f942e5cdf9faeae0a7644",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v1-current-container-inputs.json",
+      "bytes": 7807,
+      "sha256": "9964effd96c281c26f8487c0f0ac0c5978cd8fbb6d1165858a127b6891f70f82",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v2-decision-receipt.json",
+      "bytes": 1521,
+      "sha256": "5c04d891e18a353a83e964094f96ec5bf0b305d7fb301aa9bae8b2d9134c232b",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v2-decision.json.gz",
+      "bytes": 43671,
+      "sha256": "d89295945ffd59d5a31ddf22998c0c37029f0dd655828bdd6ef6dade596abeda",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v2-launch.json",
+      "bytes": 1149,
+      "sha256": "2e5e473933560878b69e8b47bd9306eeede8da3053b893e0b30701de9765286b",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v2-launch.log",
+      "bytes": 1608,
+      "sha256": "431a5b6dc3c22744da430ee0d526fa317ebb07e640d900dbae17d84e29f277ce",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v2-preflight-failure.json",
+      "bytes": 2974,
+      "sha256": "abb9904cbe5fa4c1437ade1a14f14e69fae677dd11064e28856d1efc2b180940",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v2-seal-command.json",
+      "bytes": 1889,
+      "sha256": "5d87d798070da874aca47bce2f59f4b2d0b5a6c38fb9ac2009015b6e5b703cd9",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v2-seal-inputs.json",
+      "bytes": 11982,
+      "sha256": "0d542ba624fc2024024f261678aa8ac77bfd192a40d80e7926b1f695337f781f",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3-decision-receipt.json",
+      "bytes": 1521,
+      "sha256": "29645caab6ba1b2233e5fc8f287b41510b6e4fc75804810f8aea4e1dbfc8e388",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3-decision.json.gz",
+      "bytes": 43856,
+      "sha256": "d2377670e11d4a041c47fb1a482df5807e2b408c32fc914a4d142c9e1dd2fd7a",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3-launch.json",
+      "bytes": 1149,
+      "sha256": "a91c7ef6fc237963711724fad2938a9465b79c3e4a87083e9740e3e5b0f3f871",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3-launch.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3-seal-command.json",
+      "bytes": 1890,
+      "sha256": "bbee797a552351bc5ac0ac18492e207ab5fba6767a433c3eb5f0408bab4d16f1",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3-seal-inputs.json",
+      "bytes": 12564,
+      "sha256": "01e8537fb6dffbdfe2870b9eda3f928f637cf9f2f795af935ef77605594ad594",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/companion-ledger-before.json",
+      "bytes": 2144,
+      "sha256": "8b24d810f4a9e3f6d7a5e8440391cdb45c6a6cb0ed2e212d4e59aead0d699301",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/decision.json.gz",
+      "bytes": 43856,
+      "sha256": "d2377670e11d4a041c47fb1a482df5807e2b408c32fc914a4d142c9e1dd2fd7a",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/events.jsonl",
+      "bytes": 1083,
+      "sha256": "805e91ee19d35c8908dab4326b696d1fb913d5772f2779186e914f1d30ae3118",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/execution-containers.json",
+      "bytes": 2360,
+      "sha256": "3e1d47f48333f0aa89fca330d9b2e7c9f1c2189583d458cd024d414aafd00bea",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/ledger.json",
+      "bytes": 1618,
+      "sha256": "daf72502217aab831e6cf60a662c444990cd14634db8840d254671ed7b83ae44",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/ns5Terminal-before.json",
+      "bytes": 3030,
+      "sha256": "8e20572d909c4d0908a0573685f4e87f80155988ed95c677f6ff3215533f15ab",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/os-ledger-before.json",
+      "bytes": 839,
+      "sha256": "1eb53a953ac2e06396dbe0766ed2c68c03fc5ec493c649c9a9a98d6171098bf5",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/pairedTerminal-before.json",
+      "bytes": 28524,
+      "sha256": "796a24bcc641e31409c7d9e68de2f95206264e0211952885aba61d8ca7ee8820",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/primary-state-before.json.gz",
+      "bytes": 20472,
+      "sha256": "1e43430083d12a3bf01c62799e7a7bbdf2ee46bcb8181b1c4a93b2c33b306b79",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/setup.log",
+      "bytes": 1842,
+      "sha256": "d64ff78be24983c856387461b5b5cf5c1061568f381dbf3fa3ddbe3c518b4dc2",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/setup/active-command.json",
+      "bytes": 492,
+      "sha256": "7afc61ec4e8486c43280114448bc1d96620022ca808080a101e6ca4461056d58",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/setup/appData-container.txt",
+      "bytes": 157,
+      "sha256": "9e86525a2a6abc1e4a8e2e0269b68477cbe8e77d4a4d29404bedc7b727c8c456",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/setup/appGroup-container.txt",
+      "bytes": 156,
+      "sha256": "299a40a53c5c2d262b361f5c7ac1b4d244ddfdd95d863790e62f65b31e7b1b87",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/setup/boot-owned.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/setup/bootstatus.log",
+      "bytes": 596,
+      "sha256": "e8eda4b56d458a0cf2807d951e058e4cd752213394b90482ac702249be81502a",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/setup/command-events.jsonl",
+      "bytes": 7748,
+      "sha256": "d813bb30a845c4096216a00c0c1536a2687ded89c4c099f412d4a7077d6d5e3e",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/setup/commands.jsonl",
+      "bytes": 1561,
+      "sha256": "d6f68396ad243442c587b442d3b2f1fc46afe749f88d40bbd21e6366ec81ea08",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/setup/devices-before.json.gz",
+      "bytes": 5343,
+      "sha256": "8d70031c2481de74ea8d8bb527a55259ba0c6db20abf6fcbcd76b1ad57e894ec",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/setup/runnerData-container.txt",
+      "bytes": 157,
+      "sha256": "9930bdfec14e3b4e0713503cbfa809b996439e25f968a8e9dcf20ca30a206838",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/state.json",
+      "bytes": 5166,
+      "sha256": "5cd2fc85c3fb0c58e399f9aa5bbc33ab61e88bd48a4a5fd8b8fbc102b7023c17",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v3/test.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v7.py",
+      "bytes": 44094,
+      "sha256": "a18a542aa525ead25d50f870f63a252aeef5328678e895e7f3d2f6d1c0961d5f",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/notification-os-v8.py",
+      "bytes": 44441,
+      "sha256": "0b808d66d088893e2b2686de65c76ee665538932b42f3157e135a2930eb6d4f4",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/seal-and-launch-notification-os-v2.py",
+      "bytes": 4346,
+      "sha256": "096c91b5ac2ba9b83dcb0db62c8c5db2ba12b2c19dc444ce0d554e69c5f5f3f4",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/seal-and-launch-notification-os-v3.py",
+      "bytes": 4346,
+      "sha256": "cd1c241a38a2c01fd0e4f2fee333ed766fd4e4c15b819e69585c4fa0df467e80",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/seal-notification-os-decision-v5.py",
+      "bytes": 34698,
+      "sha256": "5420df7554987731262440fa7fef022a03ce42b3fb4081b1010c8609c8f534f7",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/seal-notification-os-decision-v6.py",
+      "bytes": 35763,
+      "sha256": "3c3c579c0b791bf36578c8477988e9c9244b38ecbd7a5c6de3ce8d632921892b",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/raw/state.json.gz",
+      "bytes": 20546,
+      "sha256": "f8d1d12f1f675978a947920dfbd32245aa1481e7e100bdd6546ac454cdab841d",
+      "gitMode": "100644"
+    },
+    {
+      "path": "packet/receipt.json",
+      "bytes": 27922,
+      "sha256": "74f03ea511c48d42c7cdab4759ce2f93be5c0856134ad23151382413c9d76a3f",
+      "gitMode": "100644"
+    }
+  ]
+}

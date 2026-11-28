@@ -1,0 +1,84 @@
+{
+  "cases": [
+    {
+      "case": "testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts",
+      "ownShortcutsPID": 24392,
+      "PNG": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-concurrency-terminal-r1/attachments-r1/concurrency/artifact-selected-members/paired-product/paired-attachments/41297562-6F4D-4DE0-9394-3E73D23F27A9.png",
+        "bytes": 498960,
+        "sha256": "ba64c1a9ae72754c603769ac1fe318d3c2b44204087482f825e205f32103dd2f"
+      },
+      "AX": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-concurrency-terminal-r1/attachments-r1/concurrency/artifact-selected-members/paired-product/paired-attachments/10B35C4D-3B3C-4097-B451-23065A1EE4D1.txt",
+        "bytes": 32202,
+        "sha256": "ba445a7ca22a9c0ff98480c12a26e3faa620092b2668919616e12f21378ffd22"
+      },
+      "AXRows": [
+        {
+          "line": 1,
+          "text": "Attributes: Application, 0x112861cc0, pid: 24392, label: 'Shortcuts'"
+        },
+        {
+          "line": 21,
+          "text": "                                      NavigationBar, 0x10521fd40, {{0.0, 32.0}, {756.0, 54.0}}, identifier: '‌        ‌New Shortcut'"
+        },
+        {
+          "line": 33,
+          "text": "                                                StaticText, 0x109fded00, {{34.0, 124.0}, {368.0, 20.5}}, label: 'Add actions from the right to create a shortcut.'"
+        },
+        {
+          "line": 52,
+          "text": "                                      NavigationBar, 0x109fdfd40, {{436.0, 32.0}, {320.0, 54.0}}, identifier: 'UIView'"
+        },
+        {
+          "line": 65,
+          "text": "                                                    SearchField, 0x109f0be80, {{456.0, 104.0}, {280.0, 44.0}}, label: 'Search', placeholderValue: 'Search'"
+        }
+      ],
+      "visualReviewMethod": "Actual retained PNG viewed through sentinel_read_media by W1",
+      "visualObservation": "Manual editor with visible New Shortcut title, Add actions from the right prompt, action Search and Hanlin MiniApps list row. No action has been added."
+    },
+    {
+      "case": "testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+      "ownShortcutsPID": 28076,
+      "PNG": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-concurrency-terminal-r1/attachments-r1/concurrency/artifact-selected-members/paired-product/paired-attachments/FC73FD7E-3392-4879-A9AF-99A3FF1B620D.png",
+        "bytes": 559082,
+        "sha256": "36b878893d6e2bcb351350a7891e5385034e1399befcfbd483588629cbd9429d"
+      },
+      "AX": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-concurrency-terminal-r1/attachments-r1/concurrency/artifact-selected-members/paired-product/paired-attachments/C24D1F50-5F92-42C6-A855-CEDF28D93F7F.txt",
+        "bytes": 11016,
+        "sha256": "873c7e434d7f9f083fa1d184265750b9af1e7b5279a02003e99d1b6af36eb8bd"
+      },
+      "AXRows": [
+        {
+          "line": 1,
+          "text": "Attributes: Application, 0x112839cc0, pid: 28076, label: 'Shortcuts'"
+        },
+        {
+          "line": 13,
+          "text": "                      NavigationBar, 0x112839a40, {{0.0, 32.0}, {280.0, 108.0}}, identifier: 'All Shortcuts'"
+        },
+        {
+          "line": 17,
+          "text": "                        SearchField, 0x11283a080, {{16.0, 86.0}, {248.0, 44.0}}, label: 'Search', placeholderValue: 'Search'"
+        },
+        {
+          "line": 68,
+          "text": "                                      NavigationBar, 0x1124c12c0, {{281.0, 32.0}, {475.0, 54.0}}, identifier: 'New Shortcut 2'"
+        },
+        {
+          "line": 72,
+          "text": "                                        Button, 0x1124c08c0, {{687.5, 36.0}, {54.5, 36.0}}, label: 'Editor'"
+        },
+        {
+          "line": 86,
+          "text": "                                                    StaticText, 0x109f09900, {{342.5, 210.8}, {352.0, 54.5}}, label: 'Preparing support for describe a shortcut'"
+        }
+      ],
+      "visualReviewMethod": "Actual retained PNG viewed through sentinel_read_media by W1",
+      "visualObservation": "Creation pane New Shortcut2 with actual Editor button; only Search is under the All Shortcuts library. No manual action editor yet."
+    }
+  ]
+}

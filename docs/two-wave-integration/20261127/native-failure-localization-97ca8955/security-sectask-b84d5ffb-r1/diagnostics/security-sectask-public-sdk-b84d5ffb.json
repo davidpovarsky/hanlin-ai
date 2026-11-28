@@ -1,0 +1,342 @@
+{
+  "httpStatus": {
+    "status": "ORIGINAL_HTTP_SELECTOR_DIAGNOSTIC_FAILED",
+    "pid": 28505,
+    "exitCode": 1,
+    "stopReason": null,
+    "nativeSummaryLines": [
+      "\u25c7 Test originalScriptWidgetHTTPUsesBoundedRealTransport() started.",
+      "\u2718 Test originalScriptWidgetHTTPUsesBoundedRealTransport() recorded an issue at HanlinDualWidgetEnginesTests.swift:131:6: Caught error: HanlinScriptWidgetError(message: \"The network connection was lost.\")",
+      "\u2718 Test originalScriptWidgetHTTPUsesBoundedRealTransport() failed after 1.180 seconds with 1 issue.",
+      "\u2718 Test run with 1 test in 1 suite failed after 1.180 seconds with 1 issue."
+    ],
+    "finishedAt": "2026-11-27T08:19:35.232550+00:00",
+    "error": null
+  },
+  "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk",
+  "headerPath": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk/System/Library/Frameworks/Security.framework/Headers/SecTask.h",
+  "headerExists": true,
+  "headerSHA256": "f10e7bc0490568fef3e542d10fd0a8b4d0d657f090d5841782e325faecb4bd68",
+  "declarations": [
+    {
+      "line": 52,
+      "text": "    @result A CFTypeID for SecTask"
+    },
+    {
+      "line": 53,
+      "text": "*/"
+    },
+    {
+      "line": 54,
+      "text": "CFTypeID SecTaskGetTypeID(void);"
+    },
+    {
+      "line": 55,
+      "text": ""
+    },
+    {
+      "line": 56,
+      "text": "/*!"
+    },
+    {
+      "line": 57,
+      "text": "    @function SecTaskCreateWithAuditToken"
+    },
+    {
+      "line": 58,
+      "text": "    @abstract Create a SecTask object for the task that sent the mach message"
+    },
+    {
+      "line": 59,
+      "text": "    represented by the audit token."
+    },
+    {
+      "line": 60,
+      "text": "    @param token The audit token of a mach message"
+    },
+    {
+      "line": 61,
+      "text": "    @result The newly created SecTask object or NULL on error.  The caller must"
+    },
+    {
+      "line": 62,
+      "text": "    CFRelease the returned object."
+    },
+    {
+      "line": 63,
+      "text": "*/"
+    },
+    {
+      "line": 64,
+      "text": "__nullable"
+    },
+    {
+      "line": 65,
+      "text": "SecTaskRef SecTaskCreateWithAuditToken(CFAllocatorRef __nullable allocator, audit_token_t token);"
+    },
+    {
+      "line": 66,
+      "text": ""
+    },
+    {
+      "line": 67,
+      "text": "/*!"
+    },
+    {
+      "line": 68,
+      "text": "    @function SecTaskCreateFromSelf"
+    },
+    {
+      "line": 69,
+      "text": "    @abstract Create a SecTask object for the current task."
+    },
+    {
+      "line": 70,
+      "text": "    @result The newly created SecTask object or NULL on error.  The caller must"
+    },
+    {
+      "line": 71,
+      "text": "    CFRelease the returned object."
+    },
+    {
+      "line": 72,
+      "text": "*/"
+    },
+    {
+      "line": 73,
+      "text": "__nullable"
+    },
+    {
+      "line": 74,
+      "text": "SecTaskRef SecTaskCreateFromSelf(CFAllocatorRef __nullable allocator);"
+    },
+    {
+      "line": 75,
+      "text": ""
+    },
+    {
+      "line": 76,
+      "text": "/*!"
+    },
+    {
+      "line": 77,
+      "text": "    @function SecTaskCopyValueForEntitlement"
+    },
+    {
+      "line": 78,
+      "text": "    @abstract Returns the value of a single entitlement for the represented "
+    },
+    {
+      "line": 79,
+      "text": "    task."
+    },
+    {
+      "line": 80,
+      "text": "    @param task A previously created SecTask object"
+    },
+    {
+      "line": 81,
+      "text": "    @param entitlement The name of the entitlement to be fetched"
+    },
+    {
+      "line": 82,
+      "text": "    @param error On a NULL return, this may be contain a CFError describing"
+    },
+    {
+      "line": 83,
+      "text": "    the problem.  This argument may be NULL if the caller is not interested in"
+    },
+    {
+      "line": 84,
+      "text": "    detailed errors."
+    },
+    {
+      "line": 85,
+      "text": "    @result The value of the specified entitlement for the process or NULL if"
+    },
+    {
+      "line": 86,
+      "text": "    the entitlement value could not be retrieved.  The type of the returned"
+    },
+    {
+      "line": 87,
+      "text": "    value will depend on the entitlement specified.  The caller must release"
+    },
+    {
+      "line": 88,
+      "text": "    the returned object."
+    },
+    {
+      "line": 89,
+      "text": "    @discussion A NULL return may indicate an error, or it may indicate that"
+    },
+    {
+      "line": 90,
+      "text": "    the entitlement is simply not present.  In the latter case, no CFError is"
+    },
+    {
+      "line": 91,
+      "text": "    returned."
+    },
+    {
+      "line": 92,
+      "text": "*/"
+    },
+    {
+      "line": 93,
+      "text": "__nullable"
+    },
+    {
+      "line": 94,
+      "text": "CFTypeRef SecTaskCopyValueForEntitlement(SecTaskRef task, CFStringRef entitlement, CFErrorRef *error);"
+    },
+    {
+      "line": 95,
+      "text": ""
+    },
+    {
+      "line": 96,
+      "text": "/*!"
+    },
+    {
+      "line": 97,
+      "text": "    @function SecTaskCopyValuesForEntitlements"
+    },
+    {
+      "line": 98,
+      "text": "    @abstract Returns the values of multiple entitlements for the represented "
+    },
+    {
+      "line": 99,
+      "text": "    task."
+    },
+    {
+      "line": 100,
+      "text": "    @param task A previously created SecTask object"
+    },
+    {
+      "line": 101,
+      "text": "    @param entitlements An array of entitlement names to be fetched"
+    },
+    {
+      "line": 102,
+      "text": "    @param error On a NULL return, this will contain a CFError describing"
+    },
+    {
+      "line": 103,
+      "text": "    the problem.  This argument may be NULL if the caller is not interested in"
+    },
+    {
+      "line": 104,
+      "text": "    detailed errors.  If a requested entitlement is not present for the "
+    },
+    {
+      "line": 105,
+      "text": "    returned dictionary, the entitlement is not set on the task.  The caller"
+    },
+    {
+      "line": 106,
+      "text": "    must CFRelease the returned value"
+    },
+    {
+      "line": 107,
+      "text": "*/"
+    },
+    {
+      "line": 108,
+      "text": "__nullable"
+    },
+    {
+      "line": 109,
+      "text": "CFDictionaryRef SecTaskCopyValuesForEntitlements(SecTaskRef task, CFArrayRef entitlements, CFErrorRef *error);"
+    },
+    {
+      "line": 110,
+      "text": ""
+    },
+    {
+      "line": 111,
+      "text": "/*!"
+    },
+    {
+      "line": 112,
+      "text": "    @function SecTaskCopySigningIdentifier"
+    },
+    {
+      "line": 113,
+      "text": "    @abstract Return the value of the codesigning identifier."
+    },
+    {
+      "line": 114,
+      "text": "    @param task A previously created SecTask object"
+    },
+    {
+      "line": 115,
+      "text": "    @param error On a NULL return, this will contain a CFError describing"
+    },
+    {
+      "line": 116,
+      "text": "    the problem.  This argument may be NULL if the caller is not interested in"
+    },
+    {
+      "line": 117,
+      "text": "    detailed errors. The caller must CFRelease the returned value"
+    },
+    {
+      "line": 118,
+      "text": "*/"
+    },
+    {
+      "line": 119,
+      "text": "__nullable"
+    },
+    {
+      "line": 120,
+      "text": "CFStringRef SecTaskCopySigningIdentifier(SecTaskRef task, CFErrorRef *error);"
+    },
+    {
+      "line": 121,
+      "text": ""
+    },
+    {
+      "line": 122,
+      "text": "/*!"
+    },
+    {
+      "line": 123,
+      "text": "    @function SecTaskGetCodeSignStatus"
+    },
+    {
+      "line": 124,
+      "text": "    @abstract Return the code sign status flags"
+    },
+    {
+      "line": 125,
+      "text": "    @param task A previously created SecTask object"
+    },
+    {
+      "line": 126,
+      "text": "*/"
+    },
+    {
+      "line": 127,
+      "text": ""
+    },
+    {
+      "line": 128,
+      "text": "uint32_t SecTaskGetCodeSignStatus(SecTaskRef task)"
+    },
+    {
+      "line": 129,
+      "text": "    API_AVAILABLE(ios(10.0), watchos(3.0), tvos(10.0), macCatalyst(11.0)) API_UNAVAILABLE(macos);"
+    },
+    {
+      "line": 130,
+      "text": ""
+    },
+    {
+      "line": 131,
+      "text": ""
+    }
+  ]
+}

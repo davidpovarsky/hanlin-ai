@@ -1,0 +1,26 @@
+{
+  "argv": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.CI.Tests.test_original_source_fixtures",
+    "Scripts.CI.Tests.test_affected_validation.AffectedValidationPlannerTests.test_original_source_amendment_routes_to_the_native_preservation_guard",
+    "-v"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-organizer-source-amendment-20261128",
+  "deadlineSeconds": 60,
+  "startedEpoch": 1795837519.9940672,
+  "endedEpoch": 1795837520.4747374,
+  "elapsedSeconds": 0.4806702136993408,
+  "exitCode": 0,
+  "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSHA256": "8f73e21adf1bfe70ea3416a149a29f73a85c382ffd732387ba8b513006200d4c",
+  "scope": "Only original10 fixture-delivery controls and one added actual-router control; no whole CI or native tests.",
+  "nativeAmendmentValidator": "NOT_RUN"
+}

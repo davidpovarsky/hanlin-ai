@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "observedAt": "2026-11-25T18:37:37.770732+00:00",
+  "pid": 48804,
+  "argv": [
+    "/opt/homebrew/opt/python@3.12/bin/python3.12",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-ns5-v6.py",
+    "--decision",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5-decision.json"
+  ],
+  "decision": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5-decision.json",
+  "decisionSHA256": "331f71fbbdb88ff1de29ef41ce9c001d196a68f5ce72af6816be2314f3ebc4a9",
+  "controllerSHA256": "e1e8855b85be3fe99c9fe34c040b4ec73937d3a818994b6f4c56385aae7c6b69",
+  "activeBaselineSeconds": 24205.119291294035,
+  "allowanceSeconds": 1173.8627963749896,
+  "freshFreeBytes": 44507578368,
+  "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine()",
+  "expectedTests": 1,
+  "phaseStatus": "NOT_RUN_AT_DISPATCH"
+}

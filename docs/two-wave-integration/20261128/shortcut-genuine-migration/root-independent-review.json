@@ -1,0 +1,86 @@
+{
+  "createdAt": "2026-11-28T13:18:19.551251+00:00",
+  "status": "ROOT_SOURCE_REVIEW_APPROVED_COMPOSITION_CI_TYPECHECK_AND_NATIVE_ADMISSIONS_PENDING",
+  "candidateManifestSHA256": "fb812a05f94d9707fdde6a89c4d34a79914a0e0ded4e56084fa7456e77211942",
+  "candidatePatchSHA256": "5d547dbd3cdebca170c0829dc9e9d1dfad5ae04706f83fac52e435ec9287ca16",
+  "sourceBase": "064b7b58c923af0beff84a1852af84071f4409d8",
+  "currentIntegrationSource": "1ea6ab198151169236f473ab906993ff18d0c74c",
+  "verifiedPayloads": 32,
+  "verifiedPayloadBytes": 1036585,
+  "wholeOriginalUIInverse": true,
+  "wholeRunnerDispatcherInverses": true,
+  "wholeCurrentProjectionInverse": true,
+  "currentProjection": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": {
+      "bytes": 309946,
+      "sha256": "1df5f72e0fc7913ad2f4e7643557ca326a4edf843401251c5c8a95403d8df03a"
+    },
+    "Scripts/CI/Tests/test_shortcut_migration.py": {
+      "bytes": 17280,
+      "sha256": "a2918b865e9bdc2210de8b15610dfb9e8af3ad9f9a386bd616ba1d32f588db77"
+    },
+    "Scripts/ProductSplit/observe_shortcut_migration.py": {
+      "bytes": 21091,
+      "sha256": "a4530ff78bea59e0794e0184b7f13fa6cf35465f0c0e13390e5cad51fcd66685"
+    },
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": {
+      "bytes": 68492,
+      "sha256": "a503e1e9dea29bfe151164b5f4fb2ffb4565d919344853a308415a6156b2be46"
+    },
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "bytes": 114033,
+      "sha256": "f1fe4b512f88dc083ad0ff483f7497c385cc8af450766a7cb35be94bd28222e0"
+    },
+    "Scripts/ProductSplit/shortcut_migration_contract.py": {
+      "bytes": 23282,
+      "sha256": "20c83ee0cb50bf4ecf628e1d346083dea13b7628c7c51c7c451251d7bdcf53d7"
+    },
+    "Scripts/ProductSplit/upgrade_shortcut_migration.py": {
+      "bytes": 18993,
+      "sha256": "4e4078b1478ca20176e9e1869053656f8d96a6196ee070436cf6b3ec40de639f"
+    }
+  },
+  "original47UITestBodiesAndAllExistingHelpersPreserved": true,
+  "newUISelectors": [
+    "testNativeScriptSavedJSONListSurvivesFiveToNineParameterAppUpgrade",
+    "testExpoSavedJSONListSurvivesFiveToNineParameterAppUpgrade"
+  ],
+  "newPortableControlCount": 17,
+  "original15R1ControlASTsExact": true,
+  "bounds": {
+    "currentOriginalAIBuild": 1800,
+    "currentOriginalMiniBuild": 3600,
+    "newOneUpgrade": 300,
+    "newUIEach": 420,
+    "observer": 2100,
+    "oldSeparateBuild": 2400,
+    "originalInitialInstallEach": 300,
+    "originalPairedXcodeInvocation": 2100,
+    "originalWorkflowMinutes": 210
+  },
+  "controlsExecutedByRoot": 0,
+  "nativeInvocations": 0,
+  "typechecks": 0,
+  "reviewedSemantics": [
+    "Genuine historical five-parameter f45 source/product admission distinct from currentnine; exact original code baseline445 exceptfour recorded documents.",
+    "Only original input type alternative order is normalized as full JSON objects with multiplicities; allother original parameterfields andarrays remain exact.",
+    "Initial oldapp install with actualcurrent AI-only descriptor, all8 actualproductpaths andIDs, originalenvironment andTESTROOT; no implicitcurrent MiniApps installation.",
+    "One unchanged enginearchive import andone saved Shortcut creation beforebaseline; both runsreopen sameuniquename andread actualmixed JSON/background/action/chain.",
+    "Reader requires actualcanonicalnative tags, source/package/generation/entity, command, nativehandlernonce, terminal andprivatefile, visible ShowResult.",
+    "Separate setup revalidatesactualbaseline and.notRunningobservations then exclusivelyrecords intent beforeoneoriginalinstall300; no uncertaininstallretry.",
+    "Postupgrade samecontainers/package/generation/action/baselineproof anddistinct actualcommand/nonce/results; no reimport/recreate.",
+    "Actual source/descriptor/product closures are re-read before terminalcompletion; old/currentSDKversions remain distinct."
+  ],
+  "remainingOperationalGates": [
+    "Concrete localroute must preserve actualoriginal f45 cwd/source/products and use distinctcurrentcheckout/DerivedData.",
+    "Perengine controller must retain then remove only exactowned scopeddescriptor afterterminal before nextengine; originaldescriptorproducts unchanged.",
+    "Actualold metadata retainedproducts continuation and immutable enginefixture admissions.",
+    "Fulloriginalcontrol discovery andonewholecomposedUI Applecompiler qualification.",
+    "Freshcurrentproducts/descriptor/devices and actualtwo saved-action nativeexecutions withoneupgrade for eachengine."
+  ],
+  "workflow": {
+    "integrated": false,
+    "reason": "Two workflowchoices alone do not supply actualoldartifact/source admission; routeowner completing concrete localcontroller."
+  },
+  "scopeLimit": "Source review only; no successfulsaved-action migration, fullShortcuts compatibility, hostedruntime orphysicaldevice result is claimed."
+}

@@ -1,0 +1,262 @@
+name: Validate Scripting Runtime
+
+on:
+  workflow_call:
+    inputs:
+      runtime_job_foundation_only:
+        required: false
+        default: false
+        type: boolean
+      force_clean_build:
+        required: false
+        default: false
+        type: boolean
+      test_filter:
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      runtime_job_foundation_only:
+        description: Type-check original job/background/Python bridge sources on iOS SDK and execute isolated Foundation tests, without native engine builds
+        required: false
+        default: false
+        type: boolean
+      force_clean_build:
+        description: Ignore the cached SwiftPM build and compile the runtime from scratch
+        required: true
+        default: false
+        type: boolean
+      test_filter:
+        description: Exact Swift Testing suite/module regex for focused package verification
+        required: true
+        default: HanlinScriptingApplicationRuntimeTests
+        type: string
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  validate-runtime-job-foundation:
+    if: ${{ inputs.runtime_job_foundation_only }}
+    name: Verify Runtime jobs, background and Python SDK contracts
+    runs-on: xcode-27
+    timeout-minutes: 10
+    steps:
+      - name: Check out exact validation commit
+        uses: actions/checkout@v7.0.1
+        with:
+          clean: true
+          fetch-depth: 1
+      - name: Select newest stable Xcode 27
+        shell: bash
+        run: |
+          set -euo pipefail
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -print | grep -E '/Xcode_27([._][0-9]+)*\.app$' | sort -V | tail -1)"
+          test -n "$selected_xcode"
+          echo "DEVELOPER_DIR=$selected_xcode/Contents/Developer" >> "$GITHUB_ENV"
+      - name: Type-check actual iOS sources and execute Foundation ownership tests
+        shell: bash
+        run: bash Scripts/Runtime/verify-runtime-job-foundation.sh
+      - name: Preserve compiler and executed-test evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: runtime-job-foundation-${{ github.sha }}
+          path: ${{ runner.temp }}/runtime-job-foundation-evidence
+          if-no-files-found: ignore
+
+  validate-scripting-runtime:
+    if: ${{ !inputs.runtime_job_foundation_only }}
+    name: Compile and test isolated Scripting runtime
+    runs-on: xcode-27
+    timeout-minutes: 20
+
+    env:
+      PACKAGE_PATH: Packages/HanlinPlatform
+
+    steps:
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Select newest stable Xcode 27
+        id: toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -print \
+            | grep -E '/Xcode_27([._][0-9]+)*\.app$' \
+            | sort -V \
+            | tail -1)"
+          test -n "$selected_xcode"
+          export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
+          echo "DEVELOPER_DIR=$DEVELOPER_DIR" >> "$GITHUB_ENV"
+          xcode_build="$(xcodebuild -version | sed -n '2s/^Build version //p')"
+          echo "build=$xcode_build" >> "$GITHUB_OUTPUT"
+          xcodebuild -version
+          swift --version
+
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Check out exact validation commit
+        uses: actions/checkout@v7.0.1
+        with:
+          clean: true
+          fetch-depth: 1
+
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Set up pinned Node
+        uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 22.17.0
+
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Hash isolated runtime inputs
+        id: runtime-inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          source_hash="$({
+            find \
+              Packages/HanlinPlatform/Sources/HanlinScriptingApplicationRuntime \
+              Packages/HanlinPlatform/Sources/HanlinMiniAppCore \
+              Packages/HanlinPlatform/Sources/HanlinScriptUI \
+              Packages/HanlinPlatform/Sources/HanlinScriptExtensions \
+              Packages/HanlinPlatform/Sources/HanlinPlatformContracts \
+              -type f -print0
+            printf '%s\0' Packages/HanlinPlatform/Package.swift
+            if [ -f Packages/HanlinPlatform/Package.resolved ]; then
+              printf '%s\0' Packages/HanlinPlatform/Package.resolved
+            fi
+          } | sort -z | xargs -0 shasum -a 256 | shasum -a 256 | awk '{print $1}')"
+          echo "source-hash=$source_hash" >> "$GITHUB_OUTPUT"
+
+      - name: Live Activity · refresh
+        if: ${{ !inputs.force_clean_build }}
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Restore isolated SwiftPM compiler cache
+        if: ${{ !inputs.force_clean_build }}
+        uses: actions/cache@v6.1.0
+        with:
+          path: Packages/HanlinPlatform/.build
+          key: ${{ runner.os }}-xcode-${{ steps.toolchain.outputs.build }}-scripting-v1-${{ steps.runtime-inputs.outputs.source-hash }}
+          restore-keys: |
+            ${{ runner.os }}-xcode-${{ steps.toolchain.outputs.build }}-scripting-v1-
+
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Verify generated runtime metadata
+        if: ${{ inputs.test_filter == 'HanlinScriptingApplicationRuntimeTests' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          node Scripts/ScriptingReference/build-scripting-inventory.mjs --check
+          node Scripts/ScriptingReference/build-scripting-sdk.mjs --check
+          node Scripts/ScriptingReference/validate-json-and-schema.mjs
+          node Scripts/ScriptingReference/verify-compatibility-classification.mjs
+          node Scripts/ScriptingReference/verify-user-provided-projects.mjs
+
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Test JavaScriptCore bootstrap semantics
+        if: ${{ inputs.test_filter == 'HanlinScriptingApplicationRuntimeTests' }}
+        shell: bash
+        run: node --test Scripts/ScriptingReference/Tests/*.test.mjs
+
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Resolve isolated package dependencies
+        shell: bash
+        run: swift package --package-path "$PACKAGE_PATH" resolve
+
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Compile runtime and extension renderers only
+        if: ${{ inputs.test_filter == 'HanlinScriptingApplicationRuntimeTests' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          swift build --package-path "$PACKAGE_PATH" --target HanlinScriptingApplicationRuntime
+          swift build --package-path "$PACKAGE_PATH" --target HanlinScriptExtensions
+
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Execute isolated runtime tests
+        shell: bash
+        env:
+          TEST_FILTER: ${{ inputs.test_filter }}
+        run: |
+          set -euo pipefail
+          test -n "$TEST_FILTER"
+          swift test --package-path "$PACKAGE_PATH" --filter "$TEST_FILTER"

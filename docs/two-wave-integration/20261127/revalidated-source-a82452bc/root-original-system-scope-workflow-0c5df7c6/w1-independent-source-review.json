@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w1_review_resume",
+  "status": "APPROVED_SOURCE_ONLY",
+  "source": "0c5df7c68b4a2abdf520232b0efb5bb6f0ba05cd",
+  "candidateManifestSHA256": "eede57010919811d7c2c17cd2fc5424076e7764a45d310fa82a811785eba6a74",
+  "workflowSHA256": "e888ff8ba3a13cdf7e7e1ac0fcee7969c291d4fd41e8233187cd35ede258e652",
+  "patchSHA256": "607d51c0ce45625b34fd805d5ea246317793750918dfcce3e2111b0c46e48432",
+  "parsedYAMLCompleteEqualityAfterExactlyTwoAuthorizedChanges": true,
+  "originalOptionsOrderAndDefaultPreserved": true,
+  "originalTimeoutsGatesPermissionsSelectorsAndArtifactPathUnchanged": true,
+  "existingIntegratedRunnerSHA256": "c26854c9737a085f907a352a724bad42dcf364fe1514d9a731d8768c45df686f",
+  "actualIntegratedScopeAssignments": {
+    "miniapp_shortcuts_os": "TEST_PLANS['miniapp_shortcuts_os'] = (['AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult', 'AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult', 'AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoRunMiniAppActionSavedForegroundReturnsTypedResult', 'AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult'], 4)",
+    "miniapp_widget_recovery_os": "TEST_PLANS['miniapp_widget_recovery_os'] = (['AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers'], 1)",
+    "miniapp_shortcut_concurrency_os": "TEST_PLANS['miniapp_shortcut_concurrency_os'] = (['AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder', 'AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts'], 2)",
+    "miniapp_system_surfaces_os": "TEST_PLANS['miniapp_system_surfaces_os'] = (['AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoPlacedWidgetInvokesAllFiveRuntimes', 'AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptPlacedWidgetInvokesAllFiveRuntimes', 'AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoLiveActivityInvokesAllFiveRuntimes', 'AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptLiveActivityInvokesAllFiveRuntimes', 'AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoShortcutInvokesAllFiveRuntimes', 'AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptShortcutInvokesAllFiveRuntimes', 'AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoSystemShareInvokesAllFiveRuntimes', 'AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptSystemShareInvokesAllFiveRuntimes', 'AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoSystemTranslationInvokesAllFiveRuntimes', 'AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptSystemTranslationInvokesAllFiveRuntimes'], 10)"
+  },
+  "nativeOrOSExecution": "NOT_RUN; exposing existing original scopes and their attachments does not establish acceptance",
+  "recordedAtUTC": "2026-11-27T07:08:46.925392+00:00"
+}

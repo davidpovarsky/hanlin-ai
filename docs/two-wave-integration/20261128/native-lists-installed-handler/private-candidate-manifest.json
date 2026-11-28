@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1679,
+      "sha256": "d4d9a5b13242ce32a60e00b9aecd45ca6e59ed78863158faeb9c04949ba86e68"
+    },
+    {
+      "path": "added-identity-controls.py",
+      "bytes": 10570,
+      "sha256": "a4ed78361ab6ac971d7a2aa8e1e5cc6cb9afcdbb2f2a65820cb6310401b393af"
+    },
+    {
+      "path": "added-identity-diagnostic.py",
+      "bytes": 1817,
+      "sha256": "a30e04f808c7a68ebc9ada3680ecf9fbc863f2adc00da89f9f39aefd832ff962"
+    },
+    {
+      "path": "before/Scripts/CI/Tests/test_shortcut_native_lists.py",
+      "bytes": 31248,
+      "sha256": "492b158fd693e06d452b8579a03b96acb9f62f1d351b83696db45a76716e606e"
+    },
+    {
+      "path": "before/Scripts/ProductSplit/observe_shortcut_native_lists.py",
+      "bytes": 31668,
+      "sha256": "d81d55f260df28bde7946e9d46862a69818d61cb653b2a8893ca7c26a0a2248c"
+    },
+    {
+      "path": "consumer-call-sites.txt",
+      "bytes": 2411,
+      "sha256": "4becae4b86262c2452e1df09e774a642a06f030e90973966db827898fa02869d"
+    },
+    {
+      "path": "external-evidence.json",
+      "bytes": 1832,
+      "sha256": "ea5cbdaab4617ac2abd8b8d350337389b3c501e7062300899fa3efdfa4200cc0"
+    },
+    {
+      "path": "preparation-observation.json",
+      "bytes": 416,
+      "sha256": "63ea705d988aec56687674e993a5c1c798a48aa5a9cfd37194867d759b1f1a42"
+    },
+    {
+      "path": "producer-chain-authorities.json",
+      "bytes": 10580,
+      "sha256": "7ac674d82120db4f943dcfa7fca44a8d2a514b09e1d6e58eaf76329359004536"
+    },
+    {
+      "path": "proposal-correction.json",
+      "bytes": 654,
+      "sha256": "c39b094767d7ab56df8957c5d531e1277a9834aebb426e67f922ad7229cee10e"
+    },
+    {
+      "path": "qualification-plan.json",
+      "bytes": 1093,
+      "sha256": "da8d85d2c4e695f1c4ea98fda89e939d74842e7c58a17e1a5e3b8b80e9d1a8ce"
+    },
+    {
+      "path": "rendered-original-controls.py",
+      "bytes": 31248,
+      "sha256": "492b158fd693e06d452b8579a03b96acb9f62f1d351b83696db45a76716e606e"
+    },
+    {
+      "path": "rendered-original-observer.py",
+      "bytes": 31668,
+      "sha256": "d81d55f260df28bde7946e9d46862a69818d61cb653b2a8893ca7c26a0a2248c"
+    },
+    {
+      "path": "retained-source-diagnosis.json",
+      "bytes": 11126,
+      "sha256": "06d501d361422f41820c8679e444406dd224e4dce56d398d5e48e35ef1f8b855"
+    },
+    {
+      "path": "retained-superseded-proposal.json",
+      "bytes": 1567,
+      "sha256": "97c09454a6ce0b28e0ccea0f3283e8ae7f7fee0342bcc7e15570b1420507b079"
+    },
+    {
+      "path": "source/Scripts/CI/Tests/test_shortcut_native_lists.py",
+      "bytes": 41818,
+      "sha256": "556abb909e7292429eb4b22f5dace4cca264bcdc0f974ae15154d038d51ec940"
+    },
+    {
+      "path": "source/Scripts/ProductSplit/observe_shortcut_native_lists.py",
+      "bytes": 33694,
+      "sha256": "97e261005e8f31caa1e555ebcb5235093e872d135f4ce6694d453ee639ee89fe"
+    },
+    {
+      "path": "source-impact.json",
+      "bytes": 1713,
+      "sha256": "90fec33c6185de839b9a341d25cd9ddce466d4f861f2880e2a1b4bc01fbf3cc6"
+    },
+    {
+      "path": "source-validation.json",
+      "bytes": 6357,
+      "sha256": "c3111ac023de94a3d3d3f21196a013a27375dc7858a4611f52964175130b28c0"
+    },
+    {
+      "path": "source.patch",
+      "bytes": 15356,
+      "sha256": "89ebb9ef8f5f29c4f84bd3dc5de30bb49a2806daa6c947606783e4505c281977"
+    }
+  ]
+}

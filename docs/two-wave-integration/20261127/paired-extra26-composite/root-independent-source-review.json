@@ -1,0 +1,31 @@
+{
+  "reviewer": "/root",
+  "decision": "APPROVED_SOURCE_AND_ADMISSION_CONTROLS_PENDING_NATIVE",
+  "unchangedWholeHelperBodies": [
+    "select_paired_runtime",
+    "command_phase_status",
+    "record_build_phases",
+    "capture_app_intents_metadata",
+    "fixture_archive",
+    "authoring_fixtures",
+    "verify_native_result",
+    "start_native_adapter_assets",
+    "widget_recovery_fixture",
+    "shortcut_surface_fixtures",
+    "system_surface_inputs",
+    "stage_system_surface_share_input",
+    "start_system_surface_input_producer",
+    "finish_system_surface_input_producer",
+    "start_shortcut_observer",
+    "finish_shortcut_observer"
+  ],
+  "commandAndMainOriginalASTRecovered": true,
+  "unchangedOriginalPlanAssignments": 9,
+  "candidateFiles": {
+    "Scripts/ProductSplit/run_paired_acceptance.py": "8f626ecbac93eee4da4785d59b6c24718010bd243c4b7c8ace93d1f493dc9244",
+    "Scripts/ProductSplit/paired_extra26.py": "b3ec17758b36e12fe329ce47cb08e483d906134c4185f7a64ae4a910a393835a",
+    "Scripts/ProductSplit/Tests/test_paired_extra26.py": "147b38495d685e35ccc6e0f0cac721169d5df9b77aa9b95651cd3eeeabadb485"
+  },
+  "scope": "Original54 plus original26, same products/descriptor/source/device, actual job-origin210min plus original2400s. No native evidence granted.",
+  "readControls": "12 focused admission/reconciliation controls and6 workflow clock controls, independent clockreader using actual GitHub job metadata. No duplicated native run."
+}

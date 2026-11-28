@@ -1,0 +1,126 @@
+{
+  "schema": 1,
+  "id": "paired52-sdk20-v2",
+  "status": "EXECUTED_PASS",
+  "allowanceSeconds": 11848.942462707986,
+  "chargedSeconds": 2367.7255637079943,
+  "remainingSeconds": 9481.216898999992,
+  "overrunSeconds": 0.0,
+  "componentHistory": [
+    {
+      "id": "historical-native-aggregate",
+      "host": "primary-mac",
+      "seconds": 25438.734638920043,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/historical-os-recovery-ledger.json",
+        "bytes": 3201,
+        "sha256": "cfa1ab524fe4c871268b2b364d3bf73dc0d5fd30bb1e584fa002a934771ac62f"
+      },
+      "accountingRelation": "Historical cumulativeActiveSeconds already includes original OS 897.3027506670041 and independent OS recovery 233.90022650000174. Preserve as one historical aggregate; do not add those children again. Not charged to this new 14400-second ledger."
+    },
+    {
+      "id": "focused-notification-wire-unit",
+      "host": "primary-mac",
+      "seconds": 86.5407380000106,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/focused-wire-unit-state.json",
+        "bytes": 2488,
+        "sha256": "95d72c8829b026d2e61b08c037e0cc6a332c2ccd0cdb5ea13d391b174c7aef80"
+      },
+      "accountingRelation": "Separate measured focused unit execution after the historical aggregate. This timing authority is not a substitute for original whole-run acceptance and is not charged to this new ledger."
+    },
+    {
+      "id": "oracle-sdk20-original-preparation",
+      "host": "oracle-linux-arm64",
+      "seconds": 360.1092938221991,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/oracle-sdk20-verification.json",
+        "bytes": 6485,
+        "sha256": "8c33bf22355ab2749f81c8abc5fa0b08ef8fe87fca78077512f35060d789f21d"
+      },
+      "accountingRelation": "Separate Oracle preparation on a different host; not included in historical Mac aggregate or this new Mac run. No combined cross-host total is asserted."
+    },
+    {
+      "id": "native-input-restoration",
+      "host": "primary-mac",
+      "seconds": 54.375687207997544,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-wire-input-restoration-v1/state.json",
+        "bytes": 7747,
+        "sha256": "12322840e33a7d48464b484932f7546fb265b6defae1dbb2396039a25493cba9"
+      },
+      "accountingRelation": "Separate measured input restoration, recorded before native preparation and excluded from that preparation ledger and this new ledger."
+    },
+    {
+      "id": "native-dependency-preparation",
+      "host": "primary-mac",
+      "seconds": 303.8050289590028,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/ledger.json",
+        "bytes": 1884,
+        "sha256": "26a4bc05363573082404f43e604678e8126c37afb9493096e2c8764993c92fdd"
+      },
+      "accountingRelation": "Includes exact failed v1 and v2 charges, measured CMake installation, and successful v3 phase. Do not add their child charges again; not charged to this new 14400-second whole-run ledger."
+    },
+    {
+      "id": "original-config-materialization",
+      "host": "primary-mac",
+      "seconds": 0.0022692089987685904,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/config-materialization.json",
+        "bytes": 658,
+        "sha256": "d9647613e2110f4bba9afee6b552bf43dff84964e5bb08d16eb3225191a767c0"
+      },
+      "accountingRelation": "Separate exact original-workflow config materialization after native preparation; not included in that ledger or this new run."
+    }
+  ],
+  "nativePreparation": {
+    "status": "PREPARED",
+    "authority": {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/state.json",
+      "bytes": 15567,
+      "sha256": "0eb409b8ea1853620b8fbc462f67ae3c5a19973e085ba61bfa7149622f2e4d45"
+    },
+    "producerSource": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f"
+  },
+  "scopeHistory": [
+    {
+      "id": "paired52-sdk20-v1",
+      "seconds": 2501.629630375013,
+      "status": "FAILED",
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v1/ledger.json",
+        "bytes": 4713,
+        "sha256": "f62166616dc312aa689cc2543bbe1f0ca1c9e75d619c0061bccda4f1c488e75f"
+      }
+    },
+    {
+      "id": "probe-fixture-sdk20-preparation-v1",
+      "seconds": 49.427906917000655,
+      "status": "SOURCE_CHANGED",
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/ledger.json",
+        "bytes": 1331,
+        "sha256": "fd4e5beca04d71756853be1b9f0badb74f0d0d58bee6213782c22fac2782b4b1"
+      },
+      "originalProducerExitCode": 0,
+      "reconciliation": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/hosted-git-predicate-reconciliation.json",
+        "bytes": 6858,
+        "sha256": "449cc069f7e23873b6da57e3af283ae0f135ac25d0d8677157e2d9978b1a0651"
+      }
+    }
+  ],
+  "combinedAllowanceSeconds": 14400.0,
+  "priorChargedSeconds": 2551.057537292014,
+  "totalChargedSeconds": 4918.783101000008,
+  "remainingCombinedSeconds": 9481.216898999992,
+  "accounting": "The original14400 scope retains the actual first failed full52 and one-time original probe preparation charges. This current whole-run charge includes cleanup; no prior ledger or test result is reset, relabeled or aggregated into PASS.",
+  "startedAt": "2026-11-25T23:39:06.820207+00:00",
+  "finishedAt": "2026-11-26T00:18:34.537336+00:00",
+  "decision": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/decision.json",
+    "bytes": 47750,
+    "sha256": "10e76a4916899f9345cb30421cc4b84566b1cf2b0f054005c70e80c52dce5928"
+  }
+}

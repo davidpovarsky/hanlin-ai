@@ -1,0 +1,168 @@
+{
+  "observed_at": "2026-11-19T01:01:50.932035+00:00",
+  "checkout": "C:\\Users\\DAVID\\Code\\Maktabah-continuation-20261117",
+  "branch": "codex/otzaria-complete-phases-20261117",
+  "head": "987bc0cecda8de70757e200e76346f5f0a18e8ba",
+  "origin": "https://github.com/davidpovarsky/Maktabah.git",
+  "evidence": {
+    "platform": [],
+    "linked": [],
+    "submodules": [
+      "-080d1a2b264ead9e3f9df690f2dd0d3e81ebd07e Vendor/HanlinSDK",
+      "-2fd173a5a3bd32d94a9ba1222e4e32a37f6bd23c Vendor/SefariaMobile/Upstream"
+    ]
+  },
+  "scope": "source snapshot only",
+  "platform_and_package_matches": [
+    "Maktabah.xcodeproj\\project.pbxproj:1359:\t\t9DDFF1C69B69898A4BE82BCA /* HanlinHostContracts in Frameworks */ = {isa = PBXBuildFile; productRef = F4F6F6D782A07742DDB6DFC4; };",
+    "Maktabah.xcodeproj\\project.pbxproj:1360:\t\tFBB04E8421920F230B29069D /* HanlinPlatformContracts in Frameworks */ = {isa = PBXBuildFile; productRef = AB1C35328B7CAAA7507D9019; };",
+    "Maktabah.xcodeproj\\project.pbxproj:2192:\t\t\t\t9DDFF1C69B69898A4BE82BCA /* HanlinHostContracts in Frameworks */,",
+    "Maktabah.xcodeproj\\project.pbxproj:2193:\t\t\t\tFBB04E8421920F230B29069D /* HanlinPlatformContracts in Frameworks */,",
+    "Maktabah.xcodeproj\\project.pbxproj:3947:\t\t\t\tF4F6F6D782A07742DDB6DFC4 /* HanlinHostContracts */,",
+    "Maktabah.xcodeproj\\project.pbxproj:3948:\t\t\t\tAB1C35328B7CAAA7507D9019 /* HanlinPlatformContracts */,",
+    "Maktabah.xcodeproj\\project.pbxproj:4011:\t\t\t\t029CD78E719D2D8F539F1C85 /* Original HanlinAgentSDK */,",
+    "Maktabah.xcodeproj\\project.pbxproj:4012:\t\t\t\t8B664D33DF7899B0EDCAB128 /* Original HanlinPlatform */,",
+    "Maktabah.xcodeproj\\project.pbxproj:5624:\t\t\t\tIPHONEOS_DEPLOYMENT_TARGET = 27.0;",
+    "Maktabah.xcodeproj\\project.pbxproj:5655:\t\t\t\tIPHONEOS_DEPLOYMENT_TARGET = 27.0;",
+    "Maktabah.xcodeproj\\project.pbxproj:5729:\t\t\t\tMACOSX_DEPLOYMENT_TARGET = 15.0;",
+    "Maktabah.xcodeproj\\project.pbxproj:5794:\t\t\t\tMACOSX_DEPLOYMENT_TARGET = 15.0;",
+    "Maktabah.xcodeproj\\project.pbxproj:5847:\t\t\t\tMACOSX_DEPLOYMENT_TARGET = 15.0;",
+    "Maktabah.xcodeproj\\project.pbxproj:5905:\t\t\t\tMACOSX_DEPLOYMENT_TARGET = 15.0;",
+    "Maktabah.xcodeproj\\project.pbxproj:5961:\t\t\t\tMACOSX_DEPLOYMENT_TARGET = 15.0;",
+    "Maktabah.xcodeproj\\project.pbxproj:6018:\t\t\t\tMACOSX_DEPLOYMENT_TARGET = 15.0;",
+    "Maktabah.xcodeproj\\project.pbxproj:6042:\t\t\t\tIPHONEOS_DEPLOYMENT_TARGET = 27.0;",
+    "Maktabah.xcodeproj\\project.pbxproj:6043:\t\t\t\tMACOSX_DEPLOYMENT_TARGET = 15.8;",
+    "Maktabah.xcodeproj\\project.pbxproj:6068:\t\t\t\tIPHONEOS_DEPLOYMENT_TARGET = 27.0;",
+    "Maktabah.xcodeproj\\project.pbxproj:6069:\t\t\t\tMACOSX_DEPLOYMENT_TARGET = 15.8;",
+    "Maktabah.xcodeproj\\project.pbxproj:6108:\t\t\t\tIPHONEOS_DEPLOYMENT_TARGET = 27.0;",
+    "Maktabah.xcodeproj\\project.pbxproj:6109:\t\t\t\tMACOSX_DEPLOYMENT_TARGET = 15.0;",
+    "Maktabah.xcodeproj\\project.pbxproj:6148:\t\t\t\tIPHONEOS_DEPLOYMENT_TARGET = 27.0;",
+    "Maktabah.xcodeproj\\project.pbxproj:6149:\t\t\t\tMACOSX_DEPLOYMENT_TARGET = 15.0;",
+    "Maktabah.xcodeproj\\project.pbxproj:6189:\t\t\t\tIPHONEOS_DEPLOYMENT_TARGET = 27.0;",
+    "Maktabah.xcodeproj\\project.pbxproj:6195:\t\t\t\tMACOSX_DEPLOYMENT_TARGET = 15.0;",
+    "Maktabah.xcodeproj\\project.pbxproj:6248:\t\t\t\tIPHONEOS_DEPLOYMENT_TARGET = 27.0;",
+    "Maktabah.xcodeproj\\project.pbxproj:6254:\t\t\t\tMACOSX_DEPLOYMENT_TARGET = 15.0;",
+    "Maktabah.xcodeproj\\project.pbxproj:6353:\t\t029CD78E719D2D8F539F1C85 /* Original HanlinAgentSDK */ = {isa = XCLocalSwiftPackageReference; relativePath = Vendor/HanlinSDK/Packages/HanlinAgentSDK; };",
+    "Maktabah.xcodeproj\\project.pbxproj:6354:\t\t8B664D33DF7899B0EDCAB128 /* Original HanlinPlatform */ = {isa = XCLocalSwiftPackageReference; relativePath = Vendor/HanlinSDK/Packages/HanlinPlatform; };",
+    "Maktabah.xcodeproj\\project.pbxproj:6482:\t\tF4F6F6D782A07742DDB6DFC4 /* HanlinHostContracts */ = {isa = XCSwiftPackageProductDependency; package = 029CD78E719D2D8F539F1C85; productName = HanlinHostContracts; };",
+    "Maktabah.xcodeproj\\project.pbxproj:6483:\t\tAB1C35328B7CAAA7507D9019 /* HanlinPlatformContracts */ = {isa = XCSwiftPackageProductDependency; package = 8B664D33DF7899B0EDCAB128; productName = HanlinPlatformContracts; };"
+  ],
+  "deployment_configurations": [
+    {
+      "config_id": "F30578092FA46222005732C6",
+      "config": "Debug configuration for PBXNativeTarget \"Maktabah-iOSUITests\"",
+      "ios": "27.0",
+      "macos": null,
+      "product": "\"$(TARGET_NAME)\"",
+      "bundle": "\"com.davidpovarsky.chavrusatext.Maktabah-iOSUITests\""
+    },
+    {
+      "config_id": "F305780A2FA46222005732C6",
+      "config": "Release configuration for PBXNativeTarget \"Maktabah-iOSUITests\"",
+      "ios": "27.0",
+      "macos": null,
+      "product": "\"$(TARGET_NAME)\"",
+      "bundle": "\"com.davidpovarsky.chavrusatext.Maktabah-iOSUITests\""
+    },
+    {
+      "config_id": "4B3202332EDAFE88003B95D1",
+      "config": "Debug configuration for PBXProject \"Maktabah\"",
+      "ios": null,
+      "macos": "15.0",
+      "product": null,
+      "bundle": null
+    },
+    {
+      "config_id": "4B3202342EDAFE88003B95D1",
+      "config": "Release configuration for PBXProject \"Maktabah\"",
+      "ios": null,
+      "macos": "15.0",
+      "product": null,
+      "bundle": null
+    },
+    {
+      "config_id": "4B3202362EDAFE88003B95D1",
+      "config": "Debug configuration for PBXNativeTarget \"Maktabah\"",
+      "ios": null,
+      "macos": "15.0",
+      "product": "\"Maktabah Debug\"",
+      "bundle": "com.Drn.maktabah.debug"
+    },
+    {
+      "config_id": "4B3202372EDAFE88003B95D1",
+      "config": "Release configuration for PBXNativeTarget \"Maktabah\"",
+      "ios": null,
+      "macos": "15.0",
+      "product": "\"$(TARGET_NAME)\"",
+      "bundle": "com.Drn.maktabah"
+    },
+    {
+      "config_id": "4B7C912C2F83494200454BE1",
+      "config": "Debug configuration for PBXNativeTarget \"Maktabah-Direct\"",
+      "ios": null,
+      "macos": "15.0",
+      "product": "\"Maktabah Debug\"",
+      "bundle": "com.Drn.maktabah.debug"
+    },
+    {
+      "config_id": "4B7C912D2F83494200454BE1",
+      "config": "Release configuration for PBXNativeTarget \"Maktabah-Direct\"",
+      "ios": null,
+      "macos": "15.0",
+      "product": "Maktabah",
+      "bundle": "com.Drn.maktabah"
+    },
+    {
+      "config_id": "4BD8A4ED307E521A00E04BCB",
+      "config": "Debug configuration for PBXNativeTarget \"MaktabahTests\"",
+      "ios": "27.0",
+      "macos": "15.8",
+      "product": "\"$(TARGET_NAME)\"",
+      "bundle": "com.Drn.MaktabahTests"
+    },
+    {
+      "config_id": "4BD8A4EE307E521A00E04BCB",
+      "config": "Release configuration for PBXNativeTarget \"MaktabahTests\"",
+      "ios": "27.0",
+      "macos": "15.8",
+      "product": "\"$(TARGET_NAME)\"",
+      "bundle": "com.Drn.MaktabahTests"
+    },
+    {
+      "config_id": "533AE2002D123E9F40C01788",
+      "config": "Release configuration for PBXNativeTarget \"MaktabahWidgetExtension\"",
+      "ios": "27.0",
+      "macos": "15.0",
+      "product": "\"$(TARGET_NAME)\"",
+      "bundle": "com.Drn.maktabah.MaktabahWidget"
+    },
+    {
+      "config_id": "64552BE60598ECDE8D04ACB3",
+      "config": "Debug configuration for PBXNativeTarget \"MaktabahWidgetExtension\"",
+      "ios": "27.0",
+      "macos": "15.0",
+      "product": "\"$(TARGET_NAME)\"",
+      "bundle": "com.Drn.maktabah.debug.MaktabahWidget"
+    },
+    {
+      "config_id": "F305776D2FA46222005732C6",
+      "config": "Debug configuration for PBXNativeTarget \"Maktabah-iOS\"",
+      "ios": "27.0",
+      "macos": "15.0",
+      "product": "Maktabah",
+      "bundle": "com.davidpovarsky.chavrusatext"
+    },
+    {
+      "config_id": "F305776E2FA46222005732C6",
+      "config": "Release configuration for PBXNativeTarget \"Maktabah-iOS\"",
+      "ios": "27.0",
+      "macos": "15.0",
+      "product": "Maktabah",
+      "bundle": "com.davidpovarsky.chavrusatext"
+    }
+  ],
+  "composition_files": [
+    "Source\\ChavrusaText\\UIRoutingHost\\Integration\\MaktabahNativeRoutingComposition.swift",
+    "Source\\ChavrusaText\\HanlinHostAdapter\\OtzariaHanlinHostAdapter.swift"
+  ]
+}

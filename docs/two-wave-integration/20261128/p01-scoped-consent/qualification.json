@@ -1,0 +1,47 @@
+{
+  "status": "SOURCE_APPROVED_NATIVE_NOT_RUN",
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "sourceCommit": "497e25fafd27cc5801dcf1f65c326450065bd5e4",
+  "sourceTree": "f96c94651215e686e4f96bad147585607c57e5e7",
+  "sourcePaths": [
+    {
+      "path": "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift",
+      "sha256": "d26270284346c31b011b45aac482ac190fd43a54ec4ffa3ec6a437c7c9404c06"
+    },
+    {
+      "path": "AI_HLYTests/ProviderConformance/ProductionProviderConformanceTests.swift",
+      "sha256": "aa9eece4942d0c9401275c7dc8bae3938bed42a743f421d036b144c6a13c57a1"
+    }
+  ],
+  "sourcePacketManifestSHA256": "2c018c02b14208a74027c3646ad6715cc71ed28f9653bdb4ef50cbba04202df0",
+  "sourcePatch": {
+    "sha256": "44bd75a83b5bfe914465facb80c75fa3a10244a6e1e20c4f08d55722547b10d2",
+    "bytes": 2928,
+    "gzipSHA256": "84f494b8f88b0772717721a1fc50078fb2d2b7ac92b911935f5c73e6a02075cd"
+  },
+  "preservation": {
+    "wholeOriginalFilesRecoveredByFourSubstitutionInverse": 2,
+    "originalTestAnnotations": 30,
+    "originalAssertions": 212,
+    "addedUTF8Requirement": 1,
+    "existingParticipantBodyUnchanged": true,
+    "optedInProviderCases": 1,
+    "SDKInputIntersection": 0
+  },
+  "oldFailure": {
+    "source": "9a76309c29d716d3f5676e392457937ec8846e56",
+    "method": "ProductionProviderConformanceTests/testP01SkillsExposureAndExecution()",
+    "durationSeconds": 31.003,
+    "issues": 1,
+    "observed": "The original round2 validator did not find Python42.",
+    "qualification": "That case did not print an actual tool-denial payload. Missing scripted consent is source-supported; the exact repaired native outcome remains required."
+  },
+  "newExecution": {
+    "portableTests": "NOT_RUN",
+    "native": "NOT_RUN",
+    "SDK": "NOT_RUN",
+    "CI": "NOT_RUN",
+    "sourceDiffCheck": "PASS"
+  },
+  "otherTypeScriptFailure": "The separate31.100s RuntimeAutonomy TypeScript failure uses direct TypeScriptRuntimeService/NodeRuntimeService and has no tool-consent path; it is not fixed or opted in by this change."
+}

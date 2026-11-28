@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "candidateBase": "d165b9fc6a1c4e810a21957c063bfeae52eecb59",
+  "sourceChanges": [
+    "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift",
+    "AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift",
+    "AI_HLYTests/ProviderConformance/ProductionProviderConformanceTests.swift"
+  ],
+  "manifestSHA256": "e7aa424015d509dc7d99b3158b85f6dbcbcc72fc17b3671d247382331e87e649",
+  "sdkInputSHA256": "0a9d3ca8f320af72485cab3d998be4861c1d858fe758c5f79e7b15d555937c50",
+  "sdkInputCount": 392,
+  "sdkChangedPathIntersection": [],
+  "actualEvidenceSource": "1ee9c457; Mac owner reports all392 reverified against clean b723 before original Release launch",
+  "platformPackageTreeUnchanged": "b1e54c6d1aa3c4ef2dd761e15b7b6df9d946a29a",
+  "productionChanges": [],
+  "nativeGateRequired": "Original AI_HLYTests selected cases on corrected source; current source-only checks are not native execution",
+  "reuseLimit": "No fresh Host/SDK execution performed or claimed by this lane. This only qualifies the three candidate test paths against the actual retained SDK input path set.",
+  "retainedManifestName": "accepted-sdk-manifest.json"
+}

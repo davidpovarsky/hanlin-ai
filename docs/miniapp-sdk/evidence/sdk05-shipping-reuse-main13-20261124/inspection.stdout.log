@@ -1,0 +1,73 @@
+{
+  "status": "PASS",
+  "outerArtifact": {
+    "path": "/tmp/hanlin-native-gate-evidence-45389020875/app-split-45389020875.zip",
+    "bytes": 334177257,
+    "sha256": "7e228d0676a5addfcdd1e00767769d746b566824b3c201293d370cb9630b7dce",
+    "artifactID": 14921026306
+  },
+  "nested": {
+    "member": "runtime-host/RuntimeHostResources.zip",
+    "bytes": 81812125,
+    "sha256": "1f8f8543bead231063a73fe21c10f866aabdbd3fccad5f42c48f052fa28761c2",
+    "previousSHA256": "3f8369a26f492aa0cb4c7ca63a03d33104993adad81223ba9b3ee7f0e46ada4c"
+  },
+  "sdk": {
+    "manifestSHA256": "1b66e9111586a764617a47fafe8f71ac677c14743fc1d0df79290e3ac994cebc",
+    "previousManifestSHA256": "1b66e9111586a764617a47fafe8f71ac677c14743fc1d0df79290e3ac994cebc",
+    "manifestBytes": 5219260,
+    "manifestByteIdentical": true,
+    "inputSHA256": "ace5ee5e40a1c4c8c17c2a3744b24ac2793b237e5a2cc9d5dfd3c31959c82d6b",
+    "previousInputSHA256": "ace5ee5e40a1c4c8c17c2a3744b24ac2793b237e5a2cc9d5dfd3c31959c82d6b",
+    "sourceInputs": 222,
+    "sourceInputsOrderedIdentical": true,
+    "fileRows": 25661,
+    "fileRowsOrderedIdentical": true,
+    "engineMetadataIdentical": true,
+    "upstreamMetadataIdentical": true
+  },
+  "manifestRowCoverage": {
+    "docs": 25,
+    "examplesIncludingIndex": 29,
+    "declarations": 5210,
+    "docsRowsIdentical": true,
+    "exampleRowsIdentical": true,
+    "declarationRowsIdentical": true
+  },
+  "snippet": {
+    "sha256": "cb8c6c97cbae270b65d0dc4aacf364a628da07982ccc6f75ca3f56b9f7e245be",
+    "previousSHA256": "d4af6b636f23f004618da047803a7f73a4897f433d2bd9dfe8e5b72311ebe912",
+    "status": "EXECUTED_PASS",
+    "sourceBlocks": 14,
+    "jsonBlocks": 7,
+    "excluded": 8,
+    "projects": 4,
+    "documentationIdentityRowsIdentical": true,
+    "checkerInputsIdentical": true,
+    "registrationIdentical": true
+  },
+  "otherManifestDifferences": [],
+  "snippetDifferences": [
+    {
+      "path": "/projects/0/validation/sourceRoot",
+      "before": "/private/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/hanlin-guide-check-RVunRS/expo-guide",
+      "after": "/private/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/hanlin-guide-check-57S7jx/expo-guide"
+    },
+    {
+      "path": "/projects/1/validation/sourceRoot",
+      "before": "/private/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/hanlin-guide-check-RVunRS/nativescript-guide",
+      "after": "/private/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/hanlin-guide-check-57S7jx/nativescript-guide"
+    },
+    {
+      "path": "/projects/2/validation/sourceRoot",
+      "before": "/private/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/hanlin-guide-check-RVunRS/scriptwidget-guide",
+      "after": "/private/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/hanlin-guide-check-57S7jx/scriptwidget-guide"
+    },
+    {
+      "path": "/projects/3/validation/sourceRoot",
+      "before": "/private/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/hanlin-guide-check-RVunRS/scriptwidget-controls",
+      "after": "/private/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/hanlin-guide-check-57S7jx/scriptwidget-controls"
+    }
+  ],
+  "proofBoundary": "Read the nested manifest only. Reused prior 112-member byte verification by manifest identities; no repeated per-member inspection, compiler, test, build, download or native claim."
+}

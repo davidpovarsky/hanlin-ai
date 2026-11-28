@@ -1,0 +1,46 @@
+{
+  "status": "HOLD_RESOLVED_UNCHANGED_R2_APPROVED_FOR_SOURCE_AND_PROOF_SEALS",
+  "at": "2026-11-28T07:24:05.566116+00:00",
+  "existingReviewSHA256": "31f02f28b20dad48f5b6ff786683d41dc502b54aa197044d99c361ecdcc9fdeb",
+  "qualifiedSource": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "candidatePatchSHA256": "e743b474517fb840501548b2c98fc31ea40be19312fbf4c4a0e16fb35b4da693",
+  "identityQualificationSHA256": "3d12dfd2c76b0a22d7644dad9f92e4b0f67c56a17d43ec98aa42c0d7c1c2e5f8",
+  "sourceAuthoritySHA256": "4b826aeacdc475f770cdc55f4cba38a425633d2f4e0404eb40ea2a5f3283c7d7",
+  "actualGitAuthoritiesVerified": [
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "sha256": "fef6a058c6b06838e64089933424803e66deeb30bbe9ecac1e7e24aca839fa95",
+      "bytes": 187644
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift",
+      "sha256": "7402b0237d625ad1c0f920b2a2b1824d488ab99896eb3393a25b73ded11fe78d",
+      "bytes": 40516
+    },
+    {
+      "path": "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift",
+      "sha256": "c833f3e47f2aa2b2079ffdd312d1237447fc5373788d9ca2ecdec10e16ebbf8a",
+      "bytes": 2614
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionContracts.swift",
+      "sha256": "1298b4e420292a4e331cad7903f119861ae6df675a4fc90456fbde2bae24efd9",
+      "bytes": 31677
+    },
+    {
+      "path": "Fixtures/HostActionSurfaces/expo/script.json",
+      "sha256": "68a345460b4af4cec4e2fecaa5a602b665ef5561f28d1edbb5ab9176f31a8fe7",
+      "bytes": 1726
+    },
+    {
+      "path": "Fixtures/HostActionSurfaces/nativescript/script.json",
+      "sha256": "1169067328625b7475d527b0e2e8f454e0b31bc474157b182377d9aad15de07f",
+      "bytes": 1856
+    }
+  ],
+  "packageContract": "Only the two original HostActionSurfaces fixture imports explicitly set hanlinAppID, stablePackageID uses it, the installation plan and store preserve it. No universal appID/packageID equality claim.",
+  "variantContract": "Original Share target constructor omits variantID; original initializer defaults default. Existing surface_facts already demands this bounded identity.",
+  "importIsolation": "Three actual retained driver/log files rehashed; 8 actual ok outcomes, successful exact sys.path/modules restoration. No duplicated execution.",
+  "oldNativeRowRetained": false,
+  "native": "NOT_RUN"
+}

@@ -1,0 +1,30 @@
+{
+  "status": "BUILD_FAILED_TESTS_NOT_RUN",
+  "source": "1ae93941a34cf555f8a7293106efeff80978ebfa",
+  "sourceAfter": "1ae93941a34cf555f8a7293106efeff80978ebfa",
+  "sourceUnchanged": true,
+  "locksUnchanged": true,
+  "prepareStatus": "PREPARED",
+  "buildExitCode": 65,
+  "expectedMethods": 46,
+  "expectedInvocations": 48,
+  "executedInvocations": 0,
+  "startedAtUTC": "2026-11-25T05:33:58.587557+00:00",
+  "finishedAtUTC": "2026-11-25T05:35:27.055607+00:00",
+  "testReceiptSHA256": "3abbb69932c11d76914805bf202ecbb743cd1ddc82f24beea0882483ac038c2b",
+  "prepareReceiptSHA256": "78b77f924e18ce3187c9d8fc1b4ccd73f1ab99e6d64fd3f10476e6053520ea6c",
+  "rawBuildLogSHA256": "93ab30a42855a01db0f2dcaf674d5deccdc2c64969437fb53393bdeec1b86b95",
+  "rawBuildStderrSHA256": "8d434418694b8bb19991976347a11f126b27afa734f643da9963abd8a303cbd6",
+  "compilerErrors": [
+    "/Users/m1/builds/hanlin-ai-cache-native-20261125/AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift:42:54: error: cannot convert value of type 'Int?' to expected argument type 'UNNotificationPresentationOptions?'",
+    "/Users/m1/builds/hanlin-ai-cache-native-20261125/AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift:50:15: error: non-Sendable type 'any UNUserNotificationCenterDelegate' cannot exit caller isolation inheriting-isolated context in call to nonisolated instance method 'userNotificationCenter(_:didReceive:)' [#NonSendableExitingActor]"
+  ],
+  "buildResult": {
+    "path": "test/AppBuild.xcresult",
+    "files": 7,
+    "bytes": 59102,
+    "infoPlistPresent": true,
+    "manifestSHA256": "f0eaf14ad0b7c813272d153311da8f4428dda5326e2faadf64efb88284bc1fa1"
+  },
+  "scope": "Incoming notification delegate optional Objective-C async import failed. No tests ran and no assertions were altered. Host producer PASS is separately retained. App07 remains accepted on its own earlier source."
+}

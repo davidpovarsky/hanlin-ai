@@ -1,0 +1,70 @@
+{
+  "at": "2026-11-28T08:16:27.461224+00:00",
+  "reviewer": "/root",
+  "status": "APPROVED_FOR_EXACT_SOURCE_AND_PROOF_SEALS_NATIVE_PENDING",
+  "sourcePath": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "base": "fcedca4d091a3e11d26ef7526764b8d7eae0f3e0",
+  "root": "430954cd1cab706a7abbbc7b58dfb1cdbf159cfb",
+  "packets": {
+    "R2": {
+      "manifestSHA256": "4b585cbb7f254c2313040ce0ef584fe14a49432d5e3dd7029acb0cd694ca4c29",
+      "members": 15,
+      "bytes": 427129
+    },
+    "rejectedR1": {
+      "manifestSHA256": "c9debc793e46e9467059db818da968d7c87f3d65a2932c70743c71d0f78d3977",
+      "members": 19,
+      "bytes": 432310
+    }
+  },
+  "sourceSHA256": "373c60d406b7368879fe1855edffb514dcdc128e7024a61e90ee79a072133c64",
+  "sourcePatchSHA256": "ac4b72afa043facf6e5e6567300f87dd75c10c46053a8ae977561fa50b28ebe8",
+  "allSourceChangesExactlyTwoHelpers": [
+    "studioReplaceText",
+    "studioVisibleFilesControl"
+  ],
+  "wholeBaseAndCurrentRootReversePatchExact": true,
+  "actualRootComposedSourceSHA256": "674b35cd3cbf43215406b1a6c60110af7b1f82042ebb8e719bc25d8a5ad18839",
+  "projectedTree": "4777e7d1dc2af2c18c7a61be43335e91d5a67ee2",
+  "baseFunctions": 170,
+  "currentFunctions": 171,
+  "baseUnchangedOtherFunctions": 168,
+  "currentUnchangedOtherFunctions": 169,
+  "all42OriginalTestBodiesExact": true,
+  "newPathClearingIsOnlySevenAdditiveLines": true,
+  "oldObservedBackwardDeleteAndEmptyAndFinalAssertionsExact": true,
+  "deToBaseChangedHelpersAndSevenCallersTimingHelpersExact": true,
+  "sixActualOwnCaseAttachmentSHAAndCRCVerified": true,
+  "actualOwnRenameRemainder": ".ts in both own AX trees",
+  "actualOwnFilesState": "File View / Hanlin MiniApps, Container / On My iPad",
+  "historicalFailedCommandA": {
+    "run": 46065857903,
+    "rawLogSHA256": "d7bfb2ae3de401517f39aefede453ca20779f7d59a41f1c003a2938f69030ebc",
+    "actualPriorAXVerified": 2,
+    "r1RejectedNotReused": true
+  },
+  "publicAPI": {
+    "installedKeyboardHeaderSHA256": "7d8deb7bda6e705fe9a2e3afd7e8e03e36cbfe725fccad97b26c9188195a9a17",
+    "installedXcode": "27.0",
+    "hostedFailedXcode": "27.2",
+    "officialURLs": [
+      "https://developer.apple.com/documentation/xcuiautomation/xcuikeyboardkey/forwarddelete.md",
+      "https://developer.apple.com/documentation/xcuiautomation/xcuielement/typekey(_:modifierflags:)-9ubn.md"
+    ],
+    "rootReadRefs": [
+      "turn482399346view0",
+      "turn802715727view1"
+    ],
+    "declarationsOnly": true
+  },
+  "nativeCompile": "NOT_RUN",
+  "nativeUI": "NOT_RUN",
+  "newTests": "NONE",
+  "liveObligations": [
+    "ForwardDelete actual alert delivery and complete clearing under original deadline",
+    "Files owning-cell action opens actual fresh folders",
+    "Original Editor cases after separate real ICU repair"
+  ],
+  "rootClean": true,
+  "rootRefChanged": false
+}

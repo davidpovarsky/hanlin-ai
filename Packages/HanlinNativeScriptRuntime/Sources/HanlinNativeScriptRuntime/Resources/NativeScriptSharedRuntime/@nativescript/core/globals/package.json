@@ -1,0 +1,5 @@
+{
+  "type": "module",
+  "name": "global-polyfills",
+  "sideEffects": true
+}

@@ -1,0 +1,71 @@
+{
+  "observed_at": "2026-11-18 17:39:02 UTC",
+  "miniapps": {
+    "bundle_id": "com.itorah.hanlinminiapps",
+    "group_assignments": [
+      "group.com.itorah.chavrusachat",
+      "group.com.itorah.shared"
+    ],
+    "added_capabilities": [
+      "Extended Virtual Addressing",
+      "Time Sensitive Notifications",
+      "WeatherKit"
+    ],
+    "retained_capabilities": [
+      "App Groups",
+      "HealthKit"
+    ],
+    "saved_and_reopened": true
+  },
+  "ai": {
+    "bundle_id": "com.itorah.chavrusachat",
+    "group_assignments": [
+      "group.com.itorah.chavrusachat",
+      "group.com.itorah.shared"
+    ],
+    "added_capabilities": [
+      "Extended Virtual Addressing"
+    ],
+    "existing_required_capabilities_retained": true,
+    "saved_and_reopened": true
+  },
+  "share": {
+    "bundle_id": "com.itorah.chavrusachat.share",
+    "group_assignments": [
+      "group.com.itorah.chavrusachat",
+      "group.com.itorah.shared"
+    ],
+    "changed": false
+  },
+  "profiles": "REGENERATION_AND_SIGNED_EXPORT_PENDING",
+  "publication": "NOT_RUN",
+  "widgets": {
+    "bundle_id": "com.itorah.chavrusachat.widgets",
+    "group_assignments": [
+      "group.com.itorah.chavrusachat",
+      "group.com.itorah.shared"
+    ],
+    "changed": false
+  },
+  "translation": {
+    "bundle_id": "com.itorah.chavrusachat.translation-provider",
+    "group_assignments": [
+      "group.com.itorah.chavrusachat",
+      "group.com.itorah.shared"
+    ],
+    "changed": false
+  },
+  "notification": {
+    "bundle_id": "com.itorah.chavrusachat.notification-service",
+    "group_assignments": [
+      "group.com.itorah.chavrusachat",
+      "group.com.itorah.shared"
+    ],
+    "changed": false
+  },
+  "schema_version": 1,
+  "status": "ORIGINAL_PORTAL_CONFIGURATION_SAVED_AND_READ_BACK",
+  "scope": "Original two products and four original extensions only; no substitute identity, certificate, credential export or release upload.",
+  "evidence_method": "Connected Apple Developer browser: saved changes, reopened each modified App ID, read back the actual selected original App Groups. Four extension groups verified without mutation.",
+  "next_gate": "Xcode automatic profile regeneration and original-certificate export of both products; separate MiniApps App Store record and native/device acceptance."
+}

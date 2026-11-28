@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "a8104f8154e024e7eb876bb1878065aa9117177c",
+  "scope": [
+    "Fail closed for unsupported Markdown quote/list/indented/info-string fence forms outside recognized blocks",
+    "Restore Objective-C spellings while preserving NativeScript dotted enum references"
+  ],
+  "proof": {
+    "red": {
+      "status": "FAILED_AS_EXPECTED",
+      "command": "node --test --test-name-pattern=new or removed guide blocks Scripts/MiniApps/Tests/authoring-examples.test.mjs",
+      "casesExecuted": 1,
+      "observed": "Missing expected rejection for > fenced code; previously unnoticed by inventory count",
+      "log": "coverage-red.stdout.log"
+    },
+    "green": {
+      "status": "EXECUTED_PASS",
+      "command": "node --test --test-name-pattern=the corrected actual NativeScript guide|new or removed guide blocks Scripts/MiniApps/Tests/authoring-examples.test.mjs",
+      "casesExecuted": 2,
+      "log": "affected-green.stdout.log",
+      "unchangedCasesNotRerun": 4
+    },
+    "reconciliation": {
+      "report": "final-input-reconciliation.json",
+      "sourceBlocks": 14,
+      "jsonBlocks": 7,
+      "excludedContextBlocks": 8,
+      "changedEffectiveCompilerInputs": [
+        {
+          "project": "nativescript-guide",
+          "file": "src/initializers.js",
+          "beforeSHA256": "f9a43c2576f3f137ca8c9bec6c66228c051102121ab1b54684da39cd22a49645",
+          "afterSHA256": "9cc3dcc8d5159e4a6266b2c3746b9986570f264545c2e42ebbb0e28d024528b9"
+        }
+      ],
+      "explanation": "Only the NS initializers source comment changed; the affected NS project was executed again. Other three project inputs are byte-identical to the original actual passes recorded under ../authoring-guide-snippets-20261124. The old raw failure and proof files are preserved unchanged."
+    },
+    "shippingDocumentation": {
+      "negative": {
+        "status": "REJECTED",
+        "observedError": "docs/hanlin-expo-runtime.md: staged SDK guide differs from the checked repository guide",
+        "isolatedChangedDocument": false,
+        "wholeSDKDocumentationPositive": "NOT_RUN"
+      },
+      "positiveFullShippingSDKCheck": "PENDING_NEXT_CI",
+      "explanation": "The retained run-8 SDK differs before the deliberate README mutation, so this is a real mismatch rejection but not isolated README-only proof. The next actual CI compares the complete newly staged SDK guides."
+    }
+  },
+  "boundary": {
+    "nativeLaunch": "NOT_RUN",
+    "device": "NOT_RUN",
+    "CI": "NOT_DISPATCHED",
+    "runtimeChanges": false
+  },
+  "sources": [
+    {
+      "path": "Scripts/MiniApps/check-authoring-examples.mjs",
+      "sha256": "419f295ee6f0e7dcbf9cee42560ef1e8760010ae07b1d6767a0f6017fc7b317a"
+    },
+    {
+      "path": "Scripts/MiniApps/Tests/authoring-examples.test.mjs",
+      "sha256": "e40ace95a429ba0ee013f2832a00e1d0d004106a18e2f7709ecd6275726c682e"
+    },
+    {
+      "path": "docs/hanlin-nativescript-guide.md",
+      "sha256": "5545b69b00e47508121c2d80a7b44241b854a7abad4019cc70696d6c0da8d1c6"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "coverage-red.stdout.log",
+      "sha256": "294ea8c96e174bbef5b5b00217dd3fa4ffa83df99cf7c7c3a99983199a7501d2",
+      "bytes": 1011
+    },
+    {
+      "path": "coverage-red.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "affected-green.stdout.log",
+      "sha256": "a6a3a091d02b5493253defce48d83dd92d151fe626b3252a6ef2a9cdadff4c79",
+      "bytes": 332
+    },
+    {
+      "path": "affected-green.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "nativescript-guide-green.json",
+      "sha256": "cd1c369742ef320e9371fb0e1f977820fcb74da465dddcac58cf828b8f7c8c48",
+      "bytes": 4689
+    },
+    {
+      "path": "coverage-and-shipping-guards.json",
+      "sha256": "95c674b635a3262e28f1313c40324f7b2d420a51fb1476badfb3fe70c4233e74",
+      "bytes": 596
+    },
+    {
+      "path": "final-input-reconciliation.json",
+      "sha256": "06d0e611a74dc629ad16e839b1c4f12d10ff1c1dee754c7c02dc72da1a7bb062",
+      "bytes": 15568
+    },
+    {
+      "path": "final-input-reconciliation.mjs",
+      "sha256": "d326d1012cf710f5518b656acc24935c03d825d032fd79980ef3272d9f885e7e",
+      "bytes": 4005
+    },
+    {
+      "path": "final-input-reconciliation.stdout.log",
+      "sha256": "7a8bbe95dfc6a9aaea7306cfcf74007bf03a98f5825068af7332750f202215cb",
+      "bytes": 292
+    },
+    {
+      "path": "final-input-reconciliation.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ]
+}

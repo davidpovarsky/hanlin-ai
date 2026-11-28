@@ -1,0 +1,32 @@
+{
+  "historicalDiagnosis": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/mac-nativescript-lists-installed-identity-diagnosis-fc5-r1/receipt.json",
+    "bytes": 11126,
+    "sha256": "06d501d361422f41820c8679e444406dd224e4dce56d398d5e48e35ef1f8b855"
+  },
+  "historicalDiagnosisManifest": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/mac-nativescript-lists-installed-identity-diagnosis-fc5-r1/manifest.json",
+    "bytes": 3104,
+    "sha256": "725bfc4b97ad20d8464a4d8631fcdffdebe78d9159f5396e45588b2e4822f85e"
+  },
+  "actualFailureHandoff": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-lists-lr-system-terminal-r1/nativescript-lists-handoff-r1/receipt.json",
+    "bytes": 11496,
+    "sha256": "eaa8132863d502e8375032b1b420bdeaccd0bb9866c68595ca121118a728b170"
+  },
+  "actualFailureManifest": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-lists-lr-system-terminal-r1/nativescript-lists-handoff-r1/MANIFEST.json",
+    "bytes": 20769,
+    "sha256": "557a98a79f72b683bd1a8af5a4e5ff459de55b1aa6eb18ea47bb52d929a5ced0"
+  },
+  "exactSourceAndFixtureBinding": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-lists-lr-system-terminal-r1/nativescript-lists-handoff-r1/source-and-fixture-binding.json",
+    "bytes": 39286,
+    "sha256": "0451d56810ef53c60fb599df2ea1a4c3f31af3c2245ce1baa71a218b8b152bf5"
+  },
+  "isolatedCheckoutPreparation": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-lists-installed-handler-da07904e/checkout-preparation.json",
+    "bytes": 2575,
+    "sha256": "44b9349cff131fe1dfacd8aa18da19cde89975353137f257764d62f215c89830"
+  }
+}

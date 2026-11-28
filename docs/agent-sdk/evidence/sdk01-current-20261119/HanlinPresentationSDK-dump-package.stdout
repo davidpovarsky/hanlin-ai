@@ -1,0 +1,219 @@
+{
+  "cLanguageStandard" : null,
+  "cxxLanguageStandard" : null,
+  "defaultLocalization" : null,
+  "dependencies" : [
+    {
+      "sourceControl" : [
+        {
+          "identity" : "hanlin-streaming-markdown",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/davidpovarsky/hanlin-streaming-markdown"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "revision" : [
+              "6bde022876ef4af738c154b3d5c871984ef76195"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "name" : "HanlinPresentationSDK",
+  "packageKind" : {
+    "root" : [
+      "C:\\Users\\DAVID\\Code\\hanlin-product-completion-20261117\\Packages\\HanlinPresentationSDK"
+    ]
+  },
+  "pkgConfig" : null,
+  "platforms" : [
+    {
+      "options" : [
+
+      ],
+      "platformName" : "ios",
+      "version" : "27.0"
+    },
+    {
+      "options" : [
+
+      ],
+      "platformName" : "macos",
+      "version" : "26.0"
+    }
+  ],
+  "products" : [
+    {
+      "name" : "HanlinPresentationKit",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinPresentationKit"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinRichUI",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinRichUI"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinChatUI",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinChatUI"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    }
+  ],
+  "providers" : null,
+  "swiftLanguageVersions" : [
+    "6"
+  ],
+  "targets" : [
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinPresentationKit",
+      "packageAccess" : true,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "HanlinPresentationKit",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinRichUI",
+      "packageAccess" : true,
+      "resources" : [
+        {
+          "path" : "Resources\\OpenUI",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "HanlinPresentationKit",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinRichUI",
+            null
+          ]
+        },
+        {
+          "product" : [
+            "SwiftStreamingMarkdown",
+            "hanlin-streaming-markdown",
+            null,
+            {
+              "platformNames" : [
+                "ios"
+              ]
+            }
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinChatUI",
+      "packageAccess" : true,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "HanlinPresentationKit",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinPresentationKitTests",
+      "packageAccess" : true,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    }
+  ],
+  "toolsVersion" : {
+    "_version" : "6.2.0"
+  },
+  "traits" : [
+
+  ]
+}

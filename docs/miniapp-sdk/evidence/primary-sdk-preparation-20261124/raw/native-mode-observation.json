@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-11-24T20:42:39.431756+00:00",
+  "finishedAt": "2026-11-24T20:42:40.393155+00:00",
+  "argv": [
+    "sudo",
+    "-u",
+    "ubuntu",
+    "ssh",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "scaleway-mac",
+    "/opt/homebrew/bin/python3.12 -"
+  ],
+  "readOnly": true,
+  "exitCode": 0,
+  "stderr": "",
+  "observation": {
+    "observedAt": "2026-11-24T20:42:40.292902+00:00",
+    "sourceHEAD": {
+      "exitCode": 0,
+      "stdout": "340018ddc9ea2395ffabedbf179369b5bdb791af\n",
+      "stderr": ""
+    },
+    "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/css-tree/lib/data.js",
+    "isSymlink": false,
+    "bytes": 3531,
+    "sha256": "a6490e312753740b82517580f7fbb0b1c62b30ff8b72518f25b7e74e9ae31975",
+    "permissionsOctal": "0755",
+    "gitIndex": {
+      "exitCode": 0,
+      "stdout": "100644 162fa2068f45413e415e22ad1fe56f4c372623ad 0\tPackages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/css-tree/lib/data.js\n",
+      "stderr": ""
+    },
+    "gitModeDiff": {
+      "exitCode": 0,
+      "stdout": " mode change 100644 => 100755 Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/css-tree/lib/data.js\n",
+      "stderr": ""
+    },
+    "gitContentNumstat": {
+      "exitCode": 0,
+      "stdout": "0\t0\tPackages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/css-tree/lib/data.js\n",
+      "stderr": ""
+    },
+    "coreFilemode": {
+      "exitCode": 0,
+      "stdout": "true\n",
+      "stderr": ""
+    }
+  },
+  "boundary": "Current owned-source stat and Git metadata, not an invented snapshot-time mode ledger or chmod cause."
+}

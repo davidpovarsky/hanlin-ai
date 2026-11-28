@@ -1,0 +1,28 @@
+{
+  "recordedAt": "2026-11-24T04:04:20.526338+00:00",
+  "originFix": "2c5f776fb9ebcda468a9899b7752060f248bf4be",
+  "actualNativeFailureRun": 45318878050,
+  "originalPackage": "@expo/ui@58.0.29",
+  "originalRawSourceSHA256": "cdaa678a318b3a57c40305235feaa5c1a50e052179f2900a335cafced9772747",
+  "before": "Actual original SlotView regression failed against pre-fix refresher",
+  "after": {
+    "suite": "Scripts/MiniApps/Tests/upstream-resolution.test.mjs",
+    "passed": 13,
+    "failed": 0,
+    "skipped": 0
+  },
+  "change": "Apply the existing React-vs-WidgetKit view adaptation to SlotView, and normalize all merge sides before equality shortcuts. Full foreground source remains original.",
+  "nativeAcceptance": "PENDING next actual Apple run",
+  "logs": [
+    {
+      "file": "before.log",
+      "bytes": 4141,
+      "sha256": "b964c7a7186d5725a51db7832dc00282c0f7272dee0e517b97ba6fa588916ee2"
+    },
+    {
+      "file": "after.log",
+      "bytes": 1446,
+      "sha256": "62837128bae40fa761625783bdbc730a83c8252a2c53677ee555a2edc3652dce"
+    }
+  ]
+}

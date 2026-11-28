@@ -1,0 +1,102 @@
+{
+  "actualSDKManifest": {
+    "fiveFactorySourceRowsMatched": true,
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/full-icu-original-hosted-live-d4d1b5e1-r2/completed-host-sdk-qualification-r1/MiniAppSDK-miniapp-sdk.json",
+    "sha256": "6ac6a79cf1242eff21a3e8a558590f780135b7e28e47ff1180c9b6d8ba250683"
+  },
+  "apiMapping": [
+    {
+      "component": "ProgressView",
+      "contract": "Numeric value0…1 and React children; Math.min(1,count/10) on count0→1 binds0→0.1.",
+      "sourceSHA256": "28cef6653ac45c55a31eec065a7657a2c9f0592da46e3c6702c06252bef6408c"
+    },
+    {
+      "component": "Gauge",
+      "contract": "value/min/max and React currentValueLabel are public. Factory emits label/currentValue slots consumed by native GaugeView; range0…10 retained.",
+      "sourceSHA256": "56897b25d7169cdb40450665b64ead71c737d301ecd4625cc6a8682931535e5e"
+    },
+    {
+      "component": "Chart",
+      "contract": "Public type bar and array x:String|number/y:number; actual Swift Charts BarMark path consumes both values. Height60 is an ordinary public frame modifier.",
+      "sourceSHA256": "f9db0f1083c183d201226cdc698221c4622b18877600f1c8bc51f66b1113291f"
+    },
+    {
+      "component": "Image",
+      "contract": "Public systemName book/book.fill with actual SwiftUI symbol implementation; no asset/network image substituted.",
+      "sourceSHA256": "52bbdbd2ff3b7213c80294b2867d0893a570247f20957d60f885b2e867280b97"
+    },
+    {
+      "component": "Link",
+      "contract": "Public destination String and nested Text children; actual LinkView consumes URL and Children. No navigation acceptance claimed.",
+      "sourceSHA256": "20a571a275f8197d31f8ad159b9c0d68140cb1937d3a01e7ce2040d0a44fbf6b"
+    }
+  ],
+  "candidateManifest": {
+    "bytes": 947087,
+    "count": 25,
+    "sha256": "5f3d7a829d5767dbd7b40bf8aa7e052b9a3ecbdeb7ca9c7a08f74133c23b7e6c"
+  },
+  "candidateUI": {
+    "additionBytes": 22452,
+    "candidateBytes": 294243,
+    "candidateSHA256": "0242e3cd6074290011b8239626b1406009973ebe0a267b1082a12df7bfd2a2ed",
+    "newTestDefinitions": 47,
+    "oldTestDefinitions": 46,
+    "originalBytes": 271791,
+    "originalSHA256": "6b6ae68459977419cfe8539d14bfd96c09100ccb5d488dbd5790608ba5f7a738",
+    "wholeOriginalInverse": true
+  },
+  "createdAt": "2026-11-28T11:26:29.787991+00:00",
+  "eightRetainedModifierFilesRehashed": true,
+  "identityAndCapture": {
+    "binding": "Exact saved instance name read back before observation/action/owned removal; same actual container/window frame required after configuration inspection.",
+    "cleanup": "Removal requires this named physical widget. Unbound placement is recorded without attempting an unsafe unidentified removal. Final pass requires cleanup and effective orientation restoration.",
+    "observation": "Actual elementType/raw enum, identifier,label,String value or explicit null,exists,hittable,enabled and frame retained. No Gauge/Chart XCUI category hardcoded. Seven distinct nodes must be observed inside the owned container.",
+    "placement": "Fresh UUID named variant, no pre-existing visible marker, actual offered Large gallery page, one matching marker and enabled Add, bounded<=32 actual ancestor candidates, smallest observed container, one actual SpringBoard window and terminated MiniApps host.",
+    "query": "Seven exact identifier format predicates; query enumeration uses XCUIElementQuery rather than a single element.",
+    "transition": "The single real Add tap and observer responses remain mandatory; authored nodes alone cannot prove native layout, nonce or committed revision."
+  },
+  "limits": [
+    "No actual compiler/typecheck, packaging recipe, portable controls, CLI, app build, native UI or positive AX execution by reviewer.",
+    "Actual native String values, individual exposure, geometry and Large gallery behavior remain unobserved and must fail closed if absent/ambiguous.",
+    "Raw non-String XCUI values are recorded as null by this pilot; they cannot satisfy the expected String contract and are not evidence of missing renderer semantics generally.",
+    "Source58.0.29 factory qualification is distinct from future resolved58.0.30 bytes; the previous d839 receipt independently binds identifier/label/value factories for both versions.",
+    "No pixel/bar-fill/symbol appearance inference from labels; PNG requires visual review. No other family, RTL, appearance, VoiceOver speech, asset image, Link navigation, ActivityKit or physical-device claim.",
+    "Exact complete frozen UI typecheck remains required before a native request. Root-owned observer/portable/recipe admission remains separate."
+  ],
+  "preparationNotes": [
+    "An initial decoder assumed Sentinel output contained only stdout JSON; actual git-show warnings followed JSON. The raw result remains retained in the session; parsing the first complete JSON line recovered successful reads. No source or command was rerun for that formatting error.",
+    "Known Git info/grafts permission warnings did not change successful Git blob stdout; every declared source SHA256 matched immutable fc5."
+  ],
+  "primarySources": [
+    {
+      "claim": "Public format-predicate containing query returns ancestors with matching descendants.",
+      "ref": "turn435865264view0",
+      "url": "https://developer.apple.com/documentation/xcuiautomation/xcuielementquery/containing(_:).md"
+    },
+    {
+      "claim": "Public format-predicate matching query filters XCUIElementAttributes.",
+      "ref": "turn435865264view1",
+      "url": "https://developer.apple.com/documentation/xcuiautomation/xcuielementquery/matching(_:).md"
+    },
+    {
+      "claim": "Actual value is Any? and its concrete type depends on the element; the pilot requires observed String values rather than assigning expected native types.",
+      "ref": "turn435865264view2",
+      "url": "https://developer.apple.com/documentation/xcuiautomation/xcuielementattributes/value.md"
+    }
+  ],
+  "reviewer": "mac_build_resume",
+  "schema": 1,
+  "scope": "Independent full Swift insertion, exact whole-file inverse, public component factories/native modifier ownership, fixture contract and clocks. Root separately reviews observer/control implementation.",
+  "sourceBase": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "status": "APPROVED_SOURCE_ONLY_PENDING_COMPILE_RECIPE_NATIVE",
+  "verified": {
+    "clocks": "One new case sets executionTimeAllowance420 and one shared deadline420 before preparation; existing wait/response/tap helpers clamp against it. The selected existing runner keeps original2100-second observer and test-command bounds. No existing test deadline changed.",
+    "modifiers": "Each count/add/progress/gauge/chart/symbol/link element gets its own identifier/label/value modifiers. UIBaseView applies these through the unchanged native registry; Image-specific modifier application does not replace the shared view modifier wrapper.",
+    "originalUI": "Removing the unique305-line/22452-byte addition recovers all271791 original bytes, SHA6b6ae684, including all46 original methods and existing helpers.",
+    "packet": "All25 declared members rehashed and byte counts matched.",
+    "publicFactoryRead": "Five actual pinned58.0.29 SDK component source files were read from the already-retained d4 Host archive. No download, full payload rescan or compiler execution.",
+    "selection": "Exactly one new selector testMiniAppsLargeWidgetComponentsTrackActualNativeState, with actual iPad route and original current products.",
+    "sourceAuthorities": "All17 declared fc5 Git authorities independently rehashed; additional Image/Link/UIBaseView/View+ModifierArray read from actual fc5 Git."
+  }
+}

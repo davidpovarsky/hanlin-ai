@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "kind": "author-retained actual collaboration approval",
+  "reviewer": "/root",
+  "recordedAtUTC": "2026-11-27T13:57:51.750046+00:00",
+  "patchSHA256": "c1c1876d4d8bb66255251ce0362801afba3649018f4f209ed1a45ce775e18bf7",
+  "sourceCommit": "f641161d868a9367de0579786a2746df1d702055",
+  "decision": "APPROVED_FOR_ORIGINAL_NATIVE_RETRY_SOURCE_ONLY",
+  "reviewedContracts": [
+    "All three original SwiftData schemas already include ChatRecords and ChatMessages.",
+    "Original internal-test application-context policy remains sufficient; no synthetic registration.",
+    "Stable conversation/scene and saved assistant identity align with production Request/DataAccess guards.",
+    "Native-only scope only adds its actual conversation ID.",
+    "Original assertions, actions, selectors and deadlines remain required."
+  ],
+  "retainedVerbatimApprovalSHA256": "cc69fe599813dd9a08d7bb027c6224b5d3cebd312b135e210b6e5ebec945dfdf"
+}

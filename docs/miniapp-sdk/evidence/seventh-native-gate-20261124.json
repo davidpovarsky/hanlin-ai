@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-24T04:54:21.188065+00:00",
+  "runID": 45324257778,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45324257778",
+  "checkoutSHA": "c31c9c5f3bb7172598bc579c33de95ee06ca79b9",
+  "jobID": 138209921864,
+  "result": "CANCELLED",
+  "nativeApplicationAcceptance": "NOT_VERIFIED",
+  "nativeCasesSelected": 36,
+  "physicalDeviceAcceptance": "BLOCKED_EXTERNAL",
+  "physicalDeviceReason": "Both available SentinelX inventories expose only Linux and Windows, no accessible Mac; no device-control tool is exposed.",
+  "cancellation": {
+    "pairedStep": {
+      "completedAt": "2026-11-24T04:41:58Z",
+      "conclusion": "cancelled",
+      "name": "Exercise actual request, return, cancellation and transfer across both products",
+      "number": 18,
+      "startedAt": "2026-11-24T04:30:57Z",
+      "status": "completed"
+    },
+    "jobBudgetMinutes": 150,
+    "stepTimeoutOverride": null,
+    "cause": "UNKNOWN",
+    "recordedAnnotation": "The operation was canceled.",
+    "coordinatorIssuedCancellation": false,
+    "newerSameBranchRunObserved": false,
+    "notes": "Evidence-only push does not trigger this workflow; concurrency contains branch and acceptance scope. No supported cause is exposed by job/check metadata."
+  },
+  "artifact": {
+    "id": 14890517656,
+    "bytes": 329743229,
+    "sha256": "2f6bef7ec156d9f35353715af7f976e11d6148732ae0ac5413a4210e8d9d21a0",
+    "expectedSHA256": "2f6bef7ec156d9f35353715af7f976e11d6148732ae0ac5413a4210e8d9d21a0",
+    "verified": true
+  },
+  "actualHost": {
+    "tests": 166,
+    "pass": 165,
+    "fail": 0,
+    "skipped": 1,
+    "skippedCase": "actual Node job crosses 300 seconds with no hidden deadline",
+    "metadata": {
+      "nodeVersion": "v24.5.0",
+      "archiveSha256": "d2a4e6737957fd278d749e420e3dbdb3fb2895cad08c34d5ebdc929db2e9fbe9",
+      "sourceInputsHash": "de6e7c04f6611c538756c6125df9d05bb2906e06faddcf0d831a47965d568046",
+      "jitlessArchiveSmoke": "passed",
+      "npmInstall": "npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund",
+      "tests": "passed"
+    },
+    "logBytes": 2810882,
+    "logSHA256": "c6b184e7b004158b1fac6ee663abeeaf35643064bd3a43d0ebf88c68fb246d13"
+  },
+  "completedPreparationCommands": 11,
+  "lastCompletedCommand": {
+    "argv": [
+      "xcrun",
+      "simctl",
+      "bootstatus",
+      "360B462F-5F01-4362-8629-0841154640C3",
+      "-b"
+    ],
+    "exit": 0,
+    "seconds": 182.691407584,
+    "log": "bootstatus.log",
+    "sha256": "eea60ba6260d26beb19b432d86db2f12d39f09293f13f1c74b74598c46cecefa"
+  },
+  "miniBuildLogBytes": 0,
+  "retainedXcresults": [],
+  "retainedAppIntentsMetadata": false,
+  "retainedUIAttachments": false,
+  "evidenceBoundary": "Zero-byte mini-build.log and no completion receipt do not establish a compile pass or a compile failure. Existing command() streams directly to disk but only records command identity after completion.",
+  "resolvedVersions": {
+    "expo": {
+      "expo": "58.0.26",
+      "@expo/ui": "58.0.29",
+      "expo-brownfield": "58.0.20",
+      "react": "19.3.0",
+      "react-native": "0.88.1",
+      "react-native-worklets": "0.13.0",
+      "expo-modules-core": "58.1.0",
+      "expo-modules-jsi": "58.0.23",
+      "expo-widgets": "58.0.29",
+      "@nativescript/react-native": "9.1.2",
+      "@types/react": "19.3.0",
+      "@react-native/codegen": "0.88.1",
+      "@react-native/metro-config": "0.88.1",
+      "babel-preset-expo": "58.0.26"
+    },
+    "nativescript": {
+      "@nativescript/core": "9.1.4",
+      "@nativescript/ios": "9.1.1",
+      "@nativescript/swift-ui": "4.0.2",
+      "@nativescript/types": "9.1.4",
+      "@nativescript/vite": "8.0.24"
+    },
+    "scriptwidget": {
+      "revision": "4da256d58247bbafb9a5cd443a285250b97b3c4b"
+    }
+  },
+  "upstreamStatus": "applied-awaiting-native-build",
+  "nativePreparationStep": {
+    "completedAt": "2026-11-24T04:29:48Z",
+    "conclusion": "success",
+    "name": "Prepare existing native dependencies and Runtime host",
+    "number": 13,
+    "startedAt": "2026-11-24T04:10:59Z",
+    "status": "completed"
+  },
+  "rawEvidence": [
+    {
+      "path": "docs/miniapp-sdk/evidence/seventh-native-gate-20261124/acceptance.json",
+      "sha256": "2abf6e2d22e1b07182bd5a153063a455d714016ea3c9ad505ed6de480ef11687",
+      "bytes": 717
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/seventh-native-gate-20261124/commands.jsonl",
+      "sha256": "fa4982ffe8d38292f46d15610f8a85314d0f885f7e7fd704a1a8afdae3265e41",
+      "bytes": 2392
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/seventh-native-gate-20261124/host-metadata.json",
+      "sha256": "8274db6a04fab0683ee3497f14779c2e828f5e6a1a162ab76f3bfb4579a69a5d",
+      "bytes": 358
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/seventh-native-gate-20261124/upstream-resolution.json",
+      "sha256": "8b0f885e520377035e0b4bbb802ff0994100244b632d4f8c8d3a9044bf04beb0",
+      "bytes": 14914
+    }
+  ],
+  "nextWork": "Preserve active-command checkpoints; integrate published callback-lifetime fixes and their existing tests; keep cancellation cause and physical environment as unresolved external evidence boundaries."
+}

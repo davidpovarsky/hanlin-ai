@@ -1,0 +1,95 @@
+{
+  "count": 30,
+  "status": "EXECUTED_PASS",
+  "tests": [
+    "receiver.unconfiguredAndUnavailableTransportNeverReserve",
+    "receiver.rejectReferenceOriginAndCurrentGenerationMismatch",
+    "receiver.reservationSurvivesStoreAndReceiverRestart",
+    "receiver.lostReservationAcknowledgementReloadsSameReservation",
+    "receiver.lostStartAcknowledgementNeverGrantsAnotherAttempt",
+    "receiver.lostResultAcknowledgementReplaysPersistedOutcome",
+    "receiver.sameIDChangedTrustedRecordRejectedWithoutOverwrite",
+    "receiver.concurrentInstancesGrantOneAttempt",
+    "receiver.crashExecuting.effectPerformed=false.unknownWithoutReplay",
+    "receiver.crashExecuting.effectPerformed=true.unknownWithoutReplay",
+    "receiver.persistedResultReplayedAfterRestartNoSecondExecution",
+    "receiver.reconcileUnknownRequiresSameAttemptAndCurrentAuthority",
+    "receiver.preExecution.denied.retainsOriginAndIsTerminal",
+    "receiver.preExecution.offline.retainsOriginAndIsTerminal",
+    "receiver.preExecution.timedOut.retainsOriginAndIsTerminal",
+    "receiver.preExecution.cancelled.retainsOriginAndIsTerminal",
+    "receiver.outOfOrderCompletionRejected",
+    "receiver.corruptPersistencePreservedAndNeverReset",
+    "fixture.exclusiveLockBusyDoesNotStealOrOverwrite",
+    "migration.recover.apply.afterIntent",
+    "migration.recover.rollback.afterIntent",
+    "migration.recover.apply.afterDestination",
+    "migration.recover.rollback.afterDestination",
+    "migration.recover.apply.afterJournal",
+    "migration.recover.rollback.afterJournal",
+    "migration.restoreBeforeIntentRemainsStableAcrossRestart",
+    "migration.externalDestinationEditBlocksRecoveryWithoutOverwrite",
+    "migration.changedSourceAndCorruptIntentFailClosed",
+    "migration.existingFixtureNeverReinitialized",
+    "receiver.concurrentProcesses.uniqueAttemptAndRestartReplay"
+  ],
+  "cross_process_outcomes": [
+    {
+      "status": "BUSY"
+    },
+    {
+      "attempt": "DCE177A9-E532-4440-A274-328BDB4C2D00",
+      "status": "CLAIMED"
+    },
+    {
+      "status": "OUT_OF_ORDER"
+    }
+  ],
+  "toolchain": "Swift version 6.3.3 (swift-6.3.3-RELEASE)\nTarget: x86_64-unknown-windows-msvc\nBuild config: +assertions",
+  "canonical_compilation": {
+    "contracts": "UNCHANGED_SOURCE_CACHE",
+    "catalog_request": "UNCHANGED_SOURCE_CACHE"
+  },
+  "source_sha256": {
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinCatalogContracts.swift": "757478b238a1fc3144ef51c70275539502f959dd2aca9e67dbbf2449b24f7473",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinContractError.swift": "ad59a698345d7c218b3787c721b93fc6104ae462f7f11000d9204b1dd03e8518",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift": "6b4076de7b2416d108431276b147796352aa232d39507dca2f7f0b5cd5efa0d1",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinExposureContracts.swift": "e7a39ee73d27678fd8a5405a6a176b31c68eab76c1828fbe02fa02f63c7decea",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift": "3b3651705d4ee066324e623f284718d985ce7e44d1b01d4a9c3a437ed3d7410a",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinJSONSchemaDocument.swift": "d763b95edd959241d4c6931892802eb20f1bf90bd21037ed6371c4d68a5e661a",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinMiniAppContracts.swift": "eb880c3c00a789bcd21d8e0cbc353018e32b4e7d7f781415809781751515ae63",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPermissionContracts.swift": "f0911d44d578d35f2714b30e4aa925a953475d54fb4f9ee2da39cf0f8590fed3",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift": "122b1d09c68e28907fdbce19986824d9bd6596d36bd6f08074c670a386f2f19c",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPresentationContracts.swift": "e05fb0509136f303f621f292147d98db140f3e0f028e7431cc7064fb935e7a9b",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinRuntimeProfiles.swift": "43bffad1d4245d9a00924aab08ffd498a622d32321b5165ff036f0e425140262",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinScriptContracts.swift": "d3af6a89f8e19dccdc17ff9f59f223875260a0b0d4d2b440e49170b599626180",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinSessionContracts.swift": "03493cb4f2f414088282d97b2b4c0a01a918c0df1db78451974400bbfcba7386",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinSkillContracts.swift": "cb8910c6d12ac4cc0f8546e89a0a514151fc9d3cd53d30aacd8abc479f2af99f",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolContracts.swift": "8ce9c0771689e43f24b42fb16b0f1bf2a545628e99f972b625af57314257156d",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinValue.swift": "8284d64b8d9f0fc9212d6178860db6ce75dd15b212fb9214fea33fe1e51b9750",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift": "014a9f0d5d078b84cda43d805e8b95b89203cabd834254f4e30030805e8dad0f",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinWireProtocol.swift": "13fc4ffbffef08ac7d439f6e9f961b4b94b05d6d0e45ba3cec6522709b7870d7",
+    "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift": "7a344d2f428cf8bdef9cdb74b4754f5da16890538799309e84d733c9abc73e06",
+    "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinCanonicalMiniAppCatalog.swift": "aa2d1564d04617579e2e757ff31d1d491a9b0226008e8ad2beb14c697a548c16",
+    "Packages/HanlinProductSplit/Sources/HanlinProductSplit/CanonicalRequestAdapter.swift": "c83de1cc18e027210f2ea44f5c632fee2598cc9db39e888c07d1848e86f6b3d7",
+    "Packages/HanlinProductSplit/Sources/HanlinProductSplit/DurableMigration.swift": "b4ac30973de13da6fe691c63a4c6508b6a160511d6d12c3b790f452032ad565e",
+    "Packages/HanlinProductSplit/Sources/HanlinProductSplit/DurableReceiver.swift": "4b22669be750239eff87af511cab03914535792e9fda6a1a861d74f8d7405dbb",
+    "Packages/HanlinProductSplit/Sources/HanlinProductSplit/ForegroundBridge.swift": "b153bdfc8d9c3747ed1b3e7a48596cac510d8d020a04382ef1c95eb80f4085a0",
+    "Packages/HanlinProductSplit/Sources/HanlinProductSplit/SplitFixtureStore.swift": "6ab1168d4a3ca34f09d0fc9a792c9a2b14babddac6c63f933b6fdc77ac8be885",
+    "Packages/HanlinProductSplit/Sources/HanlinProductSplit/SplitMigration.swift": "0a289a90c2fd601385549b3e8b4f4582f54a9fafeac7cad7ad706f0e2a710fd2",
+    "Packages/HanlinProductSplit/Sources/HanlinProductSplit/SplitMigrationFixturePersistence.swift": "078721098b6ae48b33f94ccca610bda54ca2c569cdb58c50a635211bb8a260a0",
+    "Packages/HanlinProductSplit/Sources/HanlinProductSplit/SplitReceiverFixturePersistence.swift": "b6e9ddba8b5159e9c2d9e1565f7caa70e739590ee7e9f6af446324adf4a965ba",
+    "Packages/HanlinProductSplit/Tests/DurableSplitTests.swift": "78feb5da61e4bd36451464f5334f35f5233391594d0ebbed71997047993729d4"
+  },
+  "baseline": "fb90d670e05f282405327466d07b1ff81a95addb",
+  "scope": "Portable Swift and owned disk/process fixtures; no Apple app/SDK/device execution",
+  "excluded_contract_source": "HanlinManifestSchema.swift (SwiftPM resource helper, not exercised)",
+  "post_execution_formatting": [
+    {
+      "path": "Packages/HanlinProductSplit/Sources/HanlinProductSplit/DurableMigration.swift",
+      "compiled_sha256": "d56009e5de90dcf70ec99d02884a530e16d05d4de430400d30c894253306feef",
+      "delivered_sha256": "b4ac30973de13da6fe691c63a4c6508b6a160511d6d12c3b790f452032ad565e",
+      "change": "Removed one blank EOF line only; compiled bytes reconstruct as delivered bytes plus one LF. Tests were not repeated for formatting."
+    }
+  ]
+}

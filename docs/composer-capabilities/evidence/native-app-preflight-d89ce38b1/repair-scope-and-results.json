@@ -1,0 +1,255 @@
+{
+  "schemaVersion": 1,
+  "assessedAtUTC": "2026-11-25T03:29:47.949370+00:00",
+  "sourceChanges": [
+    {
+      "commit": "eefe96321c9d83cdb300fbf84fd1da3977f5362e",
+      "parent": "b739ada91aca115093e3511f9df58c15edcb5923",
+      "patch": "scheme-test-environment-eefe96321.patch.gz",
+      "rawPatchSHA256": "16ccdcad1649dd60445b2dc1cdab0d507b6fb0808a26e614bc414667ceb289ae",
+      "numstat": [
+        {
+          "added": 1,
+          "deleted": 1,
+          "path": "AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme"
+        }
+      ]
+    },
+    {
+      "commit": "59838a47979f8d875618687708e0334fb63454a5",
+      "parent": "eefe96321c9d83cdb300fbf84fd1da3977f5362e",
+      "patch": "strict-app-preflight-59838a479.patch.gz",
+      "rawPatchSHA256": "2e592bbf6978d93e43689b9e7bc7123e88e9480df6f5007d710098994441852f",
+      "numstat": [
+        {
+          "added": 132,
+          "deleted": 0,
+          "path": "Scripts/NativeScript/Tests/app-binary-preflight.test.mjs"
+        },
+        {
+          "added": 139,
+          "deleted": 0,
+          "path": "Scripts/NativeScript/app-binary-preflight.mjs"
+        },
+        {
+          "added": 4,
+          "deleted": 8,
+          "path": "Scripts/NativeScript/preflight-ios-dependencies.mjs"
+        }
+      ]
+    },
+    {
+      "commit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+      "parent": "59838a47979f8d875618687708e0334fb63454a5",
+      "patch": "fixture-realpath-d89ce38b1.patch.gz",
+      "rawPatchSHA256": "4619332c5d145c00e61947b532332c835d9b588fdff07b4c6c890c35c8ef2fd3",
+      "numstat": [
+        {
+          "added": 2,
+          "deleted": 2,
+          "path": "Scripts/NativeScript/Tests/app-binary-preflight.test.mjs"
+        }
+      ]
+    }
+  ],
+  "productionCheckerUnchangedByFixtureFix": [
+    {
+      "path": "Scripts/NativeScript/app-binary-preflight.mjs",
+      "checkerSourceSHA256": "f7aa0390c863534688b71df86437b0f5583489d6c5e54b2cc097730603216f87",
+      "fixtureFixSourceSHA256": "f7aa0390c863534688b71df86437b0f5583489d6c5e54b2cc097730603216f87",
+      "byteIdentical": true
+    },
+    {
+      "path": "Scripts/NativeScript/preflight-ios-dependencies.mjs",
+      "checkerSourceSHA256": "80b6abe07b87aa3a44dbf16d73c79a5ff1c001cd29ff09cd13af038ab6b54c60",
+      "fixtureFixSourceSHA256": "80b6abe07b87aa3a44dbf16d73c79a5ff1c001cd29ff09cd13af038ab6b54c60",
+      "byteIdentical": true
+    }
+  ],
+  "nativeFingerprintInputsUnchanged": [
+    {
+      "path": "RuntimeDependencies.lock.json",
+      "sha256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+      "byteIdenticalBetweenAppAndFixtureFixSource": true
+    },
+    {
+      "path": "Scripts/Expo/babel.config.cjs",
+      "sha256": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba",
+      "byteIdenticalBetweenAppAndFixtureFixSource": true
+    },
+    {
+      "path": "Scripts/Expo/build-original-expo-source.mjs",
+      "sha256": "855a9a79f1c27a2ba2f3796cf784ebb66a4a48df928b2ea8f6ca1ffd9e886c03",
+      "byteIdenticalBetweenAppAndFixtureFixSource": true
+    },
+    {
+      "path": "Scripts/Expo/build-original-widget-runtime.mjs",
+      "sha256": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549",
+      "byteIdenticalBetweenAppAndFixtureFixSource": true
+    },
+    {
+      "path": "Scripts/Expo/dependency-lock.json",
+      "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+      "byteIdenticalBetweenAppAndFixtureFixSource": true
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "sha256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+      "byteIdenticalBetweenAppAndFixtureFixSource": true
+    },
+    {
+      "path": "Scripts/Expo/prepare-ios-dependencies.mjs",
+      "sha256": "97069b0e1ec619d906f4b6d196e38e6527790c3661f798abcca6258dacf18163",
+      "byteIdenticalBetweenAppAndFixtureFixSource": true
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/dependency-lock.json",
+      "sha256": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768",
+      "byteIdenticalBetweenAppAndFixtureFixSource": true
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/multiscene-patch.mjs",
+      "sha256": "cafa8348a764155789169c411eb59555c6c7a2d3ef363b870e36f8d6b52c7cbd",
+      "byteIdenticalBetweenAppAndFixtureFixSource": true
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs",
+      "sha256": "950a2eb6e8713bdd1a395eee6df1779d91f63864af95c33658efa6d090676f66",
+      "byteIdenticalBetweenAppAndFixtureFixSource": true
+    },
+    {
+      "path": "Scripts/NativeScript/build-metadata-tool.py",
+      "sha256": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+      "byteIdenticalBetweenAppAndFixtureFixSource": true
+    },
+    {
+      "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+      "sha256": "71bf1d521abff7cc29c1e8d397a9ef2a55b09f758afb36f0a148be12350b664f",
+      "byteIdenticalBetweenAppAndFixtureFixSource": true
+    },
+    {
+      "path": "Scripts/NativeScript/dependency-lock.json",
+      "sha256": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5",
+      "byteIdenticalBetweenAppAndFixtureFixSource": true
+    },
+    {
+      "path": "Scripts/NativeScript/package-lock.json",
+      "sha256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+      "byteIdenticalBetweenAppAndFixtureFixSource": true
+    },
+    {
+      "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+      "sha256": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9",
+      "byteIdenticalBetweenAppAndFixtureFixSource": true
+    },
+    {
+      "path": "Scripts/Runtime/prepare-runtime-core.sh",
+      "sha256": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540",
+      "byteIdenticalBetweenAppAndFixtureFixSource": true
+    }
+  ],
+  "changedPathsSinceBuiltApp": [
+    "AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme",
+    "Scripts/NativeScript/Tests/app-binary-preflight.test.mjs",
+    "Scripts/NativeScript/app-binary-preflight.mjs",
+    "Scripts/NativeScript/preflight-ios-dependencies.mjs"
+  ],
+  "schemeCorrection": {
+    "status": "SOURCE_INTEGRATED_FRESH_GENERATED_MANIFEST_STILL_PENDING",
+    "sourceCommit": "eefe96321c9d83cdb300fbf84fd1da3977f5362e",
+    "changedProperty": "TestAction.shouldUseLaunchSchemeArgsEnv",
+    "before": "YES",
+    "after": "NO",
+    "priorGuard": "../app-build-attempt5-b739ada91/built-products-preflight-attempt1.json"
+  },
+  "builtAppPreflight": {
+    "initialAttempt": {
+      "status": "FAILED",
+      "sourceCommit": "b739ada91aca115093e3511f9df58c15edcb5923",
+      "exitCode": 1,
+      "durationSeconds": 97.371,
+      "receipt": "native-script-built-app-preflight-attempt1.json",
+      "rawLogSHA256": "1d9b8db4ff21e0d699b1526e41f35b45dd1c174305953146b7c6bb03ab715187",
+      "diagnostic": "The built app does not contain the NativeScript metadata section",
+      "oldCheckerScope": "Only the main executable was searched for the section."
+    },
+    "correctedAttempt": {
+      "status": "EXECUTED_PASS",
+      "checkerSourceCommit": "59838a47979f8d875618687708e0334fb63454a5",
+      "builtAppSourceCommit": "b739ada91aca115093e3511f9df58c15edcb5923",
+      "exitCode": 0,
+      "durationSeconds": 30.62,
+      "receipt": "native-script-built-app-preflight-attempt2.json",
+      "rawLogSHA256": "94806496b987d0d71f28e783c9c123ac1bd9f9ce9138a58bd41ad6b3afadca1c",
+      "appBinarySHA256": {
+        "AI_Hanlin": "2cb23f37bc5a707fb0bfc1c6deedbbc12e3f27b011d02937414f6f2c62507fb8",
+        "AI_Hanlin.debug.dylib": "e498a5fafbf5058b1c0ee3a885eac138232c39dd7711e2aa153e47e685904c09"
+      },
+      "matchesOriginalUnitAttempt1BinaryBinding": true,
+      "laterBuildProductsNotSubstituted": true
+    },
+    "applicationVMOrUIAcceptance": "NOT_INFERRED"
+  },
+  "unitRegressions": {
+    "initial": {
+      "status": "FAILED",
+      "sourceCommit": "59838a47979f8d875618687708e0334fb63454a5",
+      "passed": 0,
+      "failed": 9,
+      "skipped": 0,
+      "classification": "Mac /var versus /private/var fixture map mismatch before metadata assertions",
+      "rawLogSHA256": "b60f6f1a006222ab3b0af37e362c4dff0090b86aae00b8a90949d26dc8000f68"
+    },
+    "retry": {
+      "status": "EXECUTED_PASS",
+      "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 0.483,
+      "rawLogSHA256": "4b4e4f11506cd15e028dc33218b981a58155895befe8a8c52adaed313c518413"
+    },
+    "caseResults": "unit-regression-case-results.json",
+    "fixtureCorrectionOnly": "Import realpath and canonicalize mkdtemp result; production checker and test assertions unchanged.",
+    "notCountedAsApplicationAcceptance": true
+  },
+  "paritySourceReview": {
+    "originalReceipt": "parity-fixture-intake-scope-eefe96321.json",
+    "actualOriginalReviewSource": "eefe96321c9d83cdb300fbf84fd1da3977f5362e",
+    "actualCompiledBaseline": "b739ada91aca115093e3511f9df58c15edcb5923",
+    "reviewedCommitContentPaths": 14,
+    "all14PathsByteIdenticalAcrossReviewedCommits": true,
+    "selectedSourceEqualityAtD89": [
+      {
+        "path": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests.swift",
+        "compiledB739SHA256": "85efedee4ec94c5ecc4e727847401fda1ab72a66e7cf9ab2403f909f23a18210",
+        "currentD89SHA256": "85efedee4ec94c5ecc4e727847401fda1ab72a66e7cf9ab2403f909f23a18210",
+        "byteIdentical": true
+      },
+      {
+        "path": "AI_HLYTests/HanlinMiniAppAssistantToolAcceptanceTests.swift",
+        "compiledB739SHA256": "28d210f043f2cda7e09951a7c2c8977f3ca5e1ae98a0c5c0e285de6611805fbc",
+        "currentD89SHA256": "28d210f043f2cda7e09951a7c2c8977f3ca5e1ae98a0c5c0e285de6611805fbc",
+        "byteIdentical": true
+      },
+      {
+        "path": "AI_HLYTests/HanlinMiniAppAssistantToolTests.swift",
+        "compiledB739SHA256": "7cdd51b1ae123240c6e9cda58c837221ad8daec3385e79a8edf53dd010b74b25",
+        "currentD89SHA256": "7cdd51b1ae123240c6e9cda58c837221ad8daec3385e79a8edf53dd010b74b25",
+        "byteIdentical": true
+      }
+    ],
+    "laterOwnerBoundedComparison": {
+      "base": "318b251b11a4816eb9cc3c1337c7bfe287f4a890",
+      "head": "15647db0c5143836a4b31c51a8217b16228863d0",
+      "nonEvidencePaths": [
+        "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "Scripts/Expo/miniapps/modular-text-search/App.tsx"
+      ],
+      "evidencePathCount": 57,
+      "scope": "No shared runtime/bridge or selected assistant-case source changes in this bounded delta; no new native execution result inferred."
+    }
+  },
+  "acceptanceBoundary": "Built-app preflight and checker fixtures do not establish actual native VM, application functional, editor or UI test results. Fresh manifest verification, companion build and acceptance remain pending.",
+  "noCompilersTestsPreparersDevicesOrMacWritesDuringPackaging": true
+}

@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T11:47:14.820860+00:00",
+  "runID": 45375410965,
+  "jobID": 138380242016,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45375410965",
+  "sourceCommit": "999599c242c064564c40866a1979c463f1d0e95f",
+  "artifact": {
+    "id": 14916730253,
+    "bytes": 333607332,
+    "sha256": "555799b3fa3512c41f757eca7fdf0da998274c311530019a0dff61334a53b05f",
+    "verifiedGitHubDigest": true
+  },
+  "status": "COMPLETED_FAILURE",
+  "failureStage": "First MiniApps build-for-testing externally stopped by existing2400second command deadline",
+  "buildCommand": {
+    "argv": [
+      "xcodebuild",
+      "-project",
+      "AI_HLY.xcodeproj",
+      "-destination",
+      "platform=iOS Simulator,id=9375039A-3B96-4392-A4EF-10466C69578D",
+      "-parallel-testing-enabled",
+      "NO",
+      "-derivedDataPath",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+      "-clonedSourcePackagesDirPath",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+      "-skipPackagePluginValidation",
+      "-skipMacroValidation",
+      "CODE_SIGNING_ALLOWED=YES",
+      "CODE_SIGNING_REQUIRED=YES",
+      "CODE_SIGN_IDENTITY=-",
+      "-scheme",
+      "HanlinMiniApps",
+      "build-for-testing",
+      "-resultBundlePath",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult"
+    ],
+    "exit": -1,
+    "seconds": 2402.810748959,
+    "log": "mini-build.log",
+    "sha256": "bc7c8d4b4e3f034ef264880f1e26e12cff98ada367c3e4025cda33b6bb5d13c0"
+  },
+  "observedReturncode": -9,
+  "aiBuild": "NOT_RUN",
+  "plannedAppCases": {
+    "total": 52,
+    "MiniApps": 25,
+    "AI": 27
+  },
+  "executedAppCases": 0,
+  "passedAppCases": 0,
+  "failedAppCases": 0,
+  "appCaseStatus": "NOT_RUN",
+  "sourceCompilerDiagnosticHeaders": [],
+  "priorCxxDiagnosticRecurred": false,
+  "diagnosticMatcherControl": "Same matcher detects the authenticated main11 Cxx compiler error",
+  "boundedInterpretation": "The log still grew near the deadline. No actual source/tool compiler diagnostic header was found, but this is not a completed Apple build or proof that the widget consumers compiled. They had not reached SwiftEmitModule/SwiftCompile in independent review.",
+  "preparedResult": "Current original native dependencies,RuntimeHost,shippingSDK/snippet check and export succeeded; detailed shipping identity has separate evidence",
+  "attachments": "Only failure.png exists; no test result bundles or application UI attachments, and no image is treated as product proof",
+  "compressedRawLogs": [
+    {
+      "path": "docs/miniapp-sdk/evidence/native-gate-12-build-timeout-20261124/mini-build.log.gz",
+      "rawBytes": 8391113,
+      "rawSHA256": "bc7c8d4b4e3f034ef264880f1e26e12cff98ada367c3e4025cda33b6bb5d13c0",
+      "gzipBytes": 302611,
+      "gzipSHA256": "50371a4d32e0798defb72f127f525567d396d6feb7207181c209585ebb3ca6a3"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/native-gate-12-build-timeout-20261124/job.log.gz",
+      "rawBytes": 5335422,
+      "rawSHA256": "3429754b557a50489ee7bb5bf362870ae53e02e3aa567cbeb8a2aee2cf6b1403",
+      "gzipBytes": 481919,
+      "gzipSHA256": "3d61478d1be059763466afe684988f1b9ce0d2e5bb8bedbeee1f497782d6d8a7"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/native-gate-12-build-timeout-20261124/failure-processes.txt.gz",
+      "rawBytes": 131953,
+      "rawSHA256": "a756334f9393f7bc9a3e05b892ad063e634a9a2034c2dc32d6be094dc098f2a6",
+      "gzipBytes": 14785,
+      "gzipSHA256": "e40f175752698bab6812dfabf48ff6030e84ae71da4fc34492ac90c740ceeedb"
+    }
+  ],
+  "existingCompilerCache": "Main12 saved partial compatible compiler/SPM caches; cache presence is not an application result. Next reuse requires current exact input/toolchain checks.",
+  "nextAction": "Narrow first-build budget correction preservingall52 cases plus current routing/toolchain check; no test skip or native-source workaround"
+}

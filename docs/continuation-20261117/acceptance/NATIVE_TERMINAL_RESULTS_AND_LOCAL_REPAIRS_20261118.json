@@ -1,0 +1,920 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-18T14:56:50.972562+00:00",
+  "source_sha": "4b765b447d7d47426498d1632581af59facd3f2f",
+  "status": "NATIVE_FAILURES_RETAINED_LOCAL_CANDIDATES_PENDING",
+  "phase_2": "IN_PROGRESS",
+  "phase_3": "IN_PROGRESS",
+  "release": "NO_GO",
+  "runs": [
+    {
+      "run": 44264360254,
+      "conclusion": "failure",
+      "headSha": "3542cc20e2ad842edc38af13d92805943febb6dd",
+      "startedAt": "2026-11-18T08:07:54Z",
+      "status": "completed",
+      "updatedAt": "2026-11-18T10:33:30Z",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44264360254",
+      "artifact_id": 14417524771,
+      "api_artifact_zip_sha256": "195cadfe891c65b539d440409d72bc69ae7c73241928cca5f6912e1a358eb868",
+      "full_zip_sha256_recomputed": false,
+      "selected_zip_entries_crc_verified": true,
+      "native_build": "PASS",
+      "results": {
+        "components": {
+          "file": "build/continuation-evidence/44264360254/extracted/simulator-logs/08-downstream-unit-test-results.json",
+          "sha256": "5ca76a91b792993509960c7440017b2353af66c033a667561c200c905a0f8d02",
+          "methods": 12,
+          "method_results": {
+            "Passed": 12
+          },
+          "invocations": 41,
+          "invocation_results": {
+            "Passed": 41
+          },
+          "cases": [
+            {
+              "id": "HanlinUnifiedHostServicesE2ETests/expoStructuredInvokeUsesTheSharedReceiptBoundaryAndRejectsUnknownKinds()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinUnifiedHostServicesE2ETests/actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinUnifiedHostServicesE2ETests/actualNativeSDKGlobalAndPropertyShapesAreObservedWithoutInvokingUI()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinUnifiedHostServicesE2ETests/boundObjectiveCBridgeReturnsActualReceiptsFromAllFiveEngines()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinUnifiedHostServicesE2ETests/fullReceiptsPreserveArgumentsEnvironmentAndOutputArtifacts()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinUnifiedHostServicesE2ETests/invalidKindsAndInvalidatedSessionsFailBeforeExecution()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinUnifiedHostServicesE2ETests/cancellationHandlesCannotCrossSessionBoundaries()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "SkillRuntimeProductTests/openClawInputBoundaryRejectsUnsupportedShapes(_:)",
+              "result": "Passed",
+              "parameter_invocations": [
+                {
+                  "name": "\"always-string\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"array\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"bins-scalar\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"scalar\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"unknown-requirement\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"valid\"",
+                  "result": "Passed"
+                }
+              ]
+            },
+            {
+              "id": "SkillRuntimeProductTests/nativeManifestAnalysisProducesTheExpectedPassiveFacts(_:)",
+              "result": "Passed",
+              "parameter_invocations": [
+                {
+                  "name": "\"pyproject.toml\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"requirements.txt\"",
+                  "result": "Passed"
+                }
+              ]
+            },
+            {
+              "id": "SkillRuntimeProductTests/originalOpenClawSixCasesExecuteInTheActualEmbeddedAppEngine()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)",
+              "result": "Passed",
+              "parameter_invocations": [
+                {
+                  "name": "\"argv\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"cancel\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"denied\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"disabled\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"failure\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"hidden-resource\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"instructions\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"jsc\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"missing-module\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"node\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"openclaw\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"package-manifest\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"python\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"reinstall\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"requirements\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"restart\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"shell\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"toml\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"typescript\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"unicode\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"unknown-engine\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"wrong-engine\"",
+                  "result": "Passed"
+                }
+              ]
+            },
+            {
+              "id": "SkillRuntimeProductTests/hostileImportedArchivesAreRejectedBeforeInstallation(_:)",
+              "result": "Passed",
+              "parameter_invocations": [
+                {
+                  "name": "\"external-reference\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"malformed-yaml\"",
+                  "result": "Passed"
+                },
+                {
+                  "name": "\"traversal\"",
+                  "result": "Passed"
+                }
+              ]
+            }
+          ]
+        },
+        "ui": {
+          "file": "build/continuation-evidence/44264360254/extracted/simulator-logs/08-nativescript-production-ui-test-results.json",
+          "sha256": "faa06341def7d8982f445aef8a10ac3f3e6d193b511e44c01dfbdc98a634d272",
+          "methods": 45,
+          "method_results": {
+            "Passed": 21,
+            "Failed": 24
+          },
+          "invocations": 45,
+          "invocation_results": {
+            "Passed": 21,
+            "Failed": 24
+          },
+          "cases": [
+            {
+              "id": "AgentRuntimeConversationUITests/testAccessibilityKeyboardRTLReduceMotion()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testClassicHanlinIconAndVisualParity()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testCompactToolsManagementDestinationsPreserveDraft()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testDiagnosticsReviewsTheAutomaticallyCapturedRunWithoutSharingItsKey()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testDirectToolsOneTapAndRealState()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testDockCompactHomeShowsThreeRecentWithOnePersistentComposer()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testDraftAndAttachmentPersistenceAtoBAndFirstSend()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testDrawerGrowsFromComposerNotPopover()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testDrawerHandleDragCloseOpenAndComposerResize()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testIpadNarrowShowsRecentAndWidePreservesSplitSidebar()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testMarkdownLinkOpensAndClosesTheInternalSafariBrowser()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testModelPopoverZoomExpandThenNavigate()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testModelPopoverZoomNarrowAndRepeatedPresentation()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testModelPopoverZoomWithKeyboardAndDraft()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testNativePartialSelectionSaveAndOriginalLongPressPreview()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testOriginalBubbleRendersLocalCodeFencesAndPreservesSourceActions()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testProductionCodeSkillLocalPythonNeedsNoUserNudge()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testRealChatUISendsPromptShowsToolActivityAndFinalAnswer()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testStopThenNewMessageHasNoGhostOldRun()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testStreamingStopObserveTemporaryAndStateTransitions()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testUI01UnifiedHistoryPinSearchSwitchDraftPreservation()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testUI02ClassicUserAndAssistantBubbleWithDirectActionButtons()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testUI03SearchMessageAndDeduplicatedCitations()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testUI04CollapsedProgressAndInspectorWithoutRawCoT()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testUI05RichCodeBlockHTMLCardAndAttachments()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testUI06ComposerMultilineAttachmentsModelSelectorNoOverlap()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testUI07StopAndRetryRecoveryWithoutDuplicateBubbles()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testUI08ConversationalMCPLifecycleAndSecondTurnReuse()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testUI09DirectToolsCatalogAndSkillsNavigation()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testUI10ModelPickerSearchSelectionAndPersistence()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testViewAllZoomSourceToLibraryAndCancelledInteractiveBack()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testWideToolsManagementDestinationsPreserveDraft()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinMorphComposerUITests/testEnabledToolsChipOpensSettingsAndContextMenuDisables()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinMorphComposerUITests/testLargeTextLongDraftFitsWithKeyboardAndAfterPalette()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinMorphComposerUITests/testParameterOverlayDismissesOnComposerBackground()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinMorphComposerUITests/testRTLToolChipKeepsLongDraftAndAccessibleLabel()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinSkillCenterUITests/testCancelPreviewThenRetryDoesNotInstallOrLoseUnknownState()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinSkillCenterUITests/testCreateEditDisableDeleteCustomSkill()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinSkillCenterUITests/testImportInstructionOnlyMarkdownShowsParseOnlyWithoutExecution()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinSkillCenterUITests/testInstalledSkillAppearsInNextChatRun()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinSkillCenterUITests/testInstallSkillFromURL()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinSkillCenterUITests/testOverrideAndResetBuiltInSkill()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinSkillCenterUITests/testSettingsContainsSkillCenter()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinSkillCenterUITests/testSkillCenterNavigationAndInteraction()",
+              "result": "Passed",
+              "parameter_invocations": []
+            }
+          ]
+        },
+        "motion": {
+          "file": "build/continuation-evidence/44264360254/extracted/build/chat-motion-ui-evidence/tests.json",
+          "sha256": "05cffafd7006da2dc359855f20c6f1c72ed991f2c9d9cadb388fd7120cf3ba57",
+          "methods": 2,
+          "method_results": {
+            "Failed": 2
+          },
+          "invocations": 2,
+          "invocation_results": {
+            "Failed": 2
+          },
+          "cases": [
+            {
+              "id": "MotionUITests/testBRapidReversalPresetSwitchAndPersistence()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion()",
+              "result": "Failed",
+              "parameter_invocations": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 44271250054,
+      "conclusion": "failure",
+      "headSha": "d7002ab1765f508ecb1263cfee6f21edf7e567fe",
+      "startedAt": "2026-11-18T08:56:00Z",
+      "status": "completed",
+      "updatedAt": "2026-11-18T10:29:38Z",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44271250054",
+      "artifact_id": 14418368316,
+      "api_artifact_zip_sha256": "3c6f9391b4fdad50b997a401db6c4bb712c1292cba26ed111ae6a6f2cd6ad116",
+      "full_zip_sha256_recomputed": false,
+      "selected_zip_entries_crc_verified": true,
+      "native_build": "PASS",
+      "results": {
+        "components": {
+          "file": "build/continuation-evidence/44271250054/extracted/simulator-logs/08-downstream-unit-test-results.json",
+          "sha256": "fb86ee028d052f96a3c3d055f945399676e985a2cd2c08b78a6088d9fcd3c5de",
+          "methods": 24,
+          "method_results": {
+            "Passed": 23,
+            "Failed": 1
+          },
+          "invocations": 24,
+          "invocation_results": {
+            "Passed": 23,
+            "Failed": 1
+          },
+          "cases": [
+            {
+              "id": "HanlinAppAgentSessionOwnerTests/originalConsentExpiresRevokesAndRejectsStaleSheetAnswers()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppAgentSessionOwnerTests/existingSwiftDataRowPreservesLegacyFieldsAndRejectsConflictForeignScopeAndDeletion()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppAgentSessionOwnerTests/originalStoreKeepsItsContainerAliveAcrossDeferredPersistenceAfterCreatorReturns()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppAgentSessionOwnerTests/identicalContentAndPartIDsKeepExactRowRunBindingAndOriginalReplaySession()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppAgentSessionOwnerTests/temporaryCanonicalMetadataSurvivesCancellationWithoutDatabaseWrite()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppAgentSessionOwnerTests/historyOpenRejectsDeletedForeignAndCancelledOriginsWithoutCreatingSession()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppAgentSessionOwnerTests/historicalReceiptDedupRejectsChangedLargeIntegerOutcomeAndPreservesBytes()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppAgentSessionOwnerTests/liveSettledAndProvisionalReceiptsHaveDistinctReconciliationRules()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppAgentSessionOwnerTests/acceptedOriginAcknowledgementCannotClearAnotherWindowOrNewerDelivery()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppAgentSessionOwnerTests/actualNativeBoundaryRejectsLossyOrInvalidInputAndChangedContextBeforeEffects()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppAgentSessionOwnerTests/officialToolPayloadUsesOriginalRendererAndPersistsExactBytesWithoutInferringArbitraryJSON()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppAgentSessionOwnerTests/appHostInvokesOriginalExecutorOnceAndUsesExplicitNativeOutcome()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppSplitOriginTests/canonicalSharingSurvivesViewRegistrationAndReadsActualPrivateState()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppSplitOriginTests/canonicalSharingStillRejectsUnrelatedCallerAndWrongCapability()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppSplitOriginTests/canonicalSharingDoesNotBypassTheHostAuthorizer()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppSplitOriginTests/canonicalSharingNeverRecastsCorruptPersistedStateAsAnEmptySuccess()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppSplitOriginTests/actualSessionDispatchSavesBeforeOpenAndReceiptBeforeOneTimeAccept()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppSplitOriginTests/cancellationWhileOSOpenAwaitsCannotLeaveAnUnresumableHostWaiter()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppSplitOriginTests/cancellationAfterReceiverStartKeepsOutcomeUnknownAndNeverNavigates()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppSplitOriginTests/deletedOriginalCannotSaveAcceptNavigateOrRecreateAConversation()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppSplitOriginTests/deletedOriginalAssistantRowCannotRetargetAnExistingConversation()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppSplitOriginTests/anotherIdleOrFailedOwnerCannotHideTheOriginalActiveCanonicalWriter()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppSplitOriginTests/receptionClaimRequiresAnExplicitWindowAndRejectsDuplicatesBeforeAwait()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinAppSplitOriginTests/expiredOriginalFailsBeforeAnyTargetAuthorityOrStoreLookup()",
+              "result": "Passed",
+              "parameter_invocations": []
+            }
+          ]
+        },
+        "ui": {
+          "file": "build/continuation-evidence/44271250054/extracted/simulator-logs/08-nativescript-production-ui-test-results.json",
+          "sha256": "e0ade582322f7bf7289168208057e578b6c4bdb9140d8c4a9b777ee6e849849e",
+          "methods": 19,
+          "method_results": {
+            "Passed": 9,
+            "Failed": 10
+          },
+          "invocations": 19,
+          "invocation_results": {
+            "Passed": 9,
+            "Failed": 10
+          },
+          "cases": [
+            {
+              "id": "AgentRuntimeConversationUITests/testPhase2ActualPythonToolApprovalAndColdConversationRestoration()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "AgentRuntimeConversationUITests/testPhase2OfficialToolSurfaceContinuesThroughTheSameOriginalChat()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinCanvasRuntimeUITests/testOriginalCanvasRunsEmbeddedPythonAndRetainsSourceAfterRelaunch()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinContextualTextToolsUITests/testOriginalTextToolsReceiveTheMessageWithoutReplacingTheConversation()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinExpoProductionE2ETests/testProductionExpoSwiftUIProbeEndToEnd()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinHelpUITests/testOfflineGuideCostsAndSupportReturnToTheOriginalProfile()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinMorphComposerUITests/testWideNavigationKeepsDraft()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinNativeA2UIChatUITests/testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinNativeA2UIChatUITests/testNewConversationWorksWithoutOptimizationModel()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinNativeA2UIChatUITests/testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinNativeA2UIChatUITests/testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinNativeA2UIChatUITests/testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinNativeA2UIChatUITests/testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinNativeA2UIChatUITests/testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinPrimaryNavigationSmokeUITests/testWholeAppPrimaryNavigationSmoke()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinSkillCenterUITests/testCancelActuallyRunningImportedNodeSkillRetainsPartialOutput()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinSkillCenterUITests/testImportedSkillExecutionRequiresApprovalAndPersistsAfterColdLaunch()",
+              "result": "Passed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinSkillCenterUITests/testSkillResourceAddImportEditDelete()",
+              "result": "Passed",
+              "parameter_invocations": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 44273341845,
+      "conclusion": "failure",
+      "headSha": "7f5a846561d8d642e94436e56415b9cb0655f712",
+      "startedAt": "2026-11-18T09:09:53Z",
+      "status": "completed",
+      "updatedAt": "2026-11-18T11:11:02Z",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44273341845",
+      "artifact_id": 14421916501,
+      "api_artifact_zip_sha256": "aec1c85b519dbc070ae07258bc4f509ab5fc3fe0e803f123fb0a8e13d568ddb6",
+      "full_zip_sha256_recomputed": false,
+      "selected_zip_entries_crc_verified": true,
+      "native_build": "PASS",
+      "results": {
+        "ui": {
+          "file": "build/continuation-evidence/44273341845/extracted/simulator-logs/08-nativescript-production-ui-test-results.json",
+          "sha256": "be5333f78b9e2dc6aca6b85007c391e75cae759c2b64a5b737fed8839d0a80a5",
+          "methods": 2,
+          "method_results": {
+            "Failed": 2
+          },
+          "invocations": 2,
+          "invocation_results": {
+            "Failed": 2
+          },
+          "cases": [
+            {
+              "id": "HanlinMorphComposerUITests/testCompactLargeTextWithAttachment()",
+              "result": "Failed",
+              "parameter_invocations": []
+            },
+            {
+              "id": "HanlinMorphComposerUITests/testCompactNavigationKeepsDraft()",
+              "result": "Failed",
+              "parameter_invocations": []
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "counting_rule": "Parameterized Test Case nodes are method summaries. Count Arguments leaves plus nonparameterized Test Case nodes: 33+8=41, not45. No aggregation of unrelated runs into one acceptance pass.",
+  "upstream": {
+    "repo": "https://github.com/davidpovarsky/hanlin-streaming-markdown",
+    "branch": "codex/hanlin-markdown-link-continuation-20261118",
+    "base": "4072507bf5c5a1c9786d4c9a607873e65be59cc8",
+    "sha": "6bde022876ef4af738c154b3d5c871984ef76195",
+    "status": "LOCAL_ONLY_NATIVE_PENDING",
+    "publish_before_main_candidate": true
+  },
+  "candidate_fixes": [
+    {
+      "sha": "fec75a681bf845a6be121780362cf97d7ac4cec9",
+      "scope": "Original Host writer/interaction",
+      "description": "Reject a second owner before engine creation, recheck after asynchronous preparation, and bind the original HostInteractionSource explicitly. Added original owner/engine/store action-continuation regression.",
+      "native_status": "NOT_RUN_AT_CANDIDATE"
+    },
+    {
+      "sha": "dddec57ab18dcc3b2422dfaafe7bfaf8920b9f79",
+      "scope": "Compact keyboard viewport",
+      "description": "Keep the one persistent original composer in the same flexible VStack as the navigation content; observe its actual available size.",
+      "native_status": "NOT_RUN_AT_CANDIDATE"
+    },
+    {
+      "sha": "1e752571aed680f79c7ac9f9c126193aa10f3f87",
+      "scope": "Native editor synchronization",
+      "description": "Distinguish new model text from an unrelated render, preserving UIKit edits and cursor before delegate synchronization. Regression covers ASCII, Hebrew/emoji and long drafts.",
+      "native_status": "NOT_RUN_AT_CANDIDATE"
+    },
+    {
+      "sha": "684121f6a3fcb946713875389c5e1a028dff7e8e",
+      "scope": "Canvas presentation ownership",
+      "description": "Capture the original record/model, validate the model index, and attach sheet presentation to the stable body owner. Candidate for observed Canvas event-loop failure; native causality unconfirmed.",
+      "native_status": "NOT_RUN_AT_CANDIDATE"
+    },
+    {
+      "sha": "eebbb19cfeed9e7261cb43ed087db4279f006079",
+      "scope": "Native UI paths",
+      "description": "Verify exact prompt text before sending; use sidebar-specific native overflow; count Retry canonical rows containing native text; scroll original Skill detail list to persisted instructions.",
+      "native_status": "NOT_RUN_AT_CANDIDATE"
+    },
+    {
+      "sha": "0bbe4628d73d3b381ac9132e39df8d4cf3446db8",
+      "scope": "Original tool fixture contracts",
+      "description": "Use required progress schema, real Skill/discovery and exact one-use consent. Require returned Python/HTML results before fixture completion; no injected execution receipts.",
+      "native_status": "NOT_RUN_AT_CANDIDATE"
+    },
+    {
+      "sha": "f7516cce23e595be4963690eaf37266808aa6dae",
+      "scope": "Approved Morph acceptance",
+      "description": "Exercise the existing Morph panel/back/close and real input resize. Historical test selectors retained (35 before/after); retired Organizer drag-to-open/shared-ZStack assertions explicitly superseded by approved source, not relabeled as passed.",
+      "native_status": "NOT_RUN_AT_CANDIDATE"
+    },
+    {
+      "sha": "4b765b447d7d47426498d1632581af59facd3f2f",
+      "scope": "Markdown host dependency",
+      "description": "All three original pins reference local upstream6bde022. The retained native paragraph refreshes its current OpenURLAction; regression test added in the original dependency. Publication and iOS verification pending.",
+      "native_status": "NOT_RUN_AT_CANDIDATE"
+    }
+  ],
+  "diagnosis_evidence": {
+    "wide_decoded_manifest_sha256": "2766eb6a249952ef6c61abc685d08e9cc4b196280acbd02431e14b1a21c684d8",
+    "wide_selected_attachment_count": 57,
+    "typing_corruption": {
+      "run": 44264360254,
+      "attachments": [
+        47,
+        396,
+        668,
+        719
+      ],
+      "observation": "Native user bubbles contain reordered/truncated prompt text before any expected model response; two Morph long-draft assertions independently fail."
+    },
+    "retry": {
+      "run": 44264360254,
+      "attachment": 778,
+      "observation": "One canonical assistant row has two nested UITextView accessibility nodes with the correct recovery marker; old StaticText query finds none."
+    },
+    "skill_details": {
+      "run": 44264360254,
+      "attachments": [
+        923,
+        1027
+      ],
+      "observation": "Visible list ends in compatibility content before Instructions; real native List needs scrolling to materialize offscreen rows."
+    },
+    "compact": {
+      "run": 44273341845,
+      "observation": "Keyboard begins at y609 on420x912; launcher remains at y757. Original iPad NativeA2UI run44271250054 also leaves launcher/send below keyboard."
+    },
+    "tool_action": {
+      "run": 44271250054,
+      "attachment": 67,
+      "observation": "Original tool/form/consent reach edited Submit, then unsupported-provider-capability error; HTTP counter remains3 before action continuation."
+    },
+    "motion": {
+      "run": 44264360254,
+      "db_sha256": "2303fd271427d35c6662ebfad600b1f6c5a4a4fcc24aebb626779de29b7ae03e",
+      "archive_sha256": "b8bfc75e6c91d7956e45e38fe341a82b20e019ccfea46757f297131a858227a6",
+      "geometry_attachment_sha256": "4cb7e1114bd2f7965eeda4d616f6f66954c13d0905e2dfc6bb743ac1f59c5099",
+      "observation": "B first triple-tap remains collapsed; C app launch has no process ID and hits10-minute allowance. Neither accepted; A historical100 cycles not rerun."
+    }
+  },
+  "approved_morph_reference": {
+    "mapping": "docs/composer/MAPPING_WAVE1_2026-11-15.md",
+    "owner_reference_sha256": "51bb10cdf71ee1c10cac8108f602eee4b34e78967de23dc437985aa89db9bbbb",
+    "implemented_source": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinMorphComposer.swift"
+  },
+  "unresolved": [
+    "All candidate repairs still require actual iOS27 verification; Windows frontend parse is not Apple compilation.",
+    "Motion B/C and contextual-text-tools runner teardown remain failed; no speculative production motion repair or pass recorded.",
+    "Canvas and Markdown Safari failure causality must be confirmed by original UI reruns.",
+    "Standalone MiniApps startup/NS/Expo then paired/share8 remain required; AI-app runtime UI passes are not companion proof.",
+    "Public source publication was rejected by automatic review; exact payload/destination approval required.",
+    "Live provider credential transfer, actual Apple profile/group/export, physical device and full visual-reference gates remain separate."
+  ]
+}

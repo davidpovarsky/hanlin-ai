@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "id": "companion-native-v1",
+  "source": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+  "maximumActiveSeconds": 1200,
+  "activeElapsedSeconds": 128.54957408401242,
+  "charges": [
+    {
+      "id": "companion-native-v1-notification-package",
+      "source": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+      "status": "PROCESS_PASS_REQUIRES_EXACT_TEST_REVIEW",
+      "argv": [
+        "swift",
+        "test",
+        "--package-path",
+        "Packages/HanlinPlatform",
+        "--filter",
+        "HanlinNotificationInvocationTests"
+      ],
+      "elapsedSeconds": 26.137203625010443,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1/notification-package/state.json",
+      "logSHA256": "3e8a1217f04fe6f439d0adf25f691f1af33123b6a9b5a045ffc5ee4b58b941fe",
+      "exitCode": 0
+    },
+    {
+      "id": "companion-native-v1-ns5",
+      "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+      "status": "EXECUTED_PASS",
+      "elapsedSeconds": 102.41237045900198,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/state.json",
+      "decisionSHA256": "331f71fbbdb88ff1de29ef41ce9c001d196a68f5ce72af6816be2314f3ebc4a9",
+      "logSHA256": "75ee5fa71649889fdf88da25b20e44abbc9050a7b2589b462c0b7ed56b2a5330",
+      "exitCode": 0,
+      "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine()"
+    }
+  ],
+  "remainingSelectors": [],
+  "verifiedResults": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1/notification-package/result-review.json",
+      "sha256": "4396672e8dd3fe2546d89d108c2e57eeb98a48f386171a93bee5e0322ee98999",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/native-result/result-review.json",
+      "sha256": "ab16b1d1a080c9434c2fefe123ff198f5f5c15f756d5a0096fe207b20014b4b9",
+      "status": "EXECUTED_PASS"
+    }
+  ]
+}

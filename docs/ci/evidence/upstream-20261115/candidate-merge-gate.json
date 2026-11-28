@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "validationPassed": true,
+  "mergeEligible": false,
+  "reasons": [
+    "BRANCH_NOT_PROTECTED",
+    "AUTO_MERGE_DISABLED"
+  ],
+  "repository": "davidpovarsky/hanlin-ai",
+  "pullRequest": 6,
+  "head": "77a225a5af05de82335f387680c3e5d0b355aaeb",
+  "baseSHA": "8b25e148c1d789c56e7d91a9211d72f7b3748cee",
+  "requiredChecks": null,
+  "actualChecks": [
+    {
+      "name": "Pin, build, test, and propose RuntimeCore updates",
+      "head": "77a225a5af05de82335f387680c3e5d0b355aaeb",
+      "app": "github-actions",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "miniapps",
+      "head": "77a225a5af05de82335f387680c3e5d0b355aaeb",
+      "app": "github-actions",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "name": "Hanlin upstream acceptance",
+      "head": "77a225a5af05de82335f387680c3e5d0b355aaeb",
+      "app": "github-actions",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "mergePerformed": false,
+  "evidence": "Authenticated GitHub API snapshot; no merge endpoint is called."
+}

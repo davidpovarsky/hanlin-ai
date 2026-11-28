@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "base_commit": "44037dd81ccbb09ba79d67009228dd1bf69621fd",
+  "source_files": {
+    "AI_HLY/Views/Components/ChatViewComponents.swift": "1d9150ad7f1f081c5d9970dc00839753afca318ecc713c8e1276ce08cce43282",
+    "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinToolPermissionsView.swift": "8894cfc798968e37764dd3ab07bd521a82df82d1a797cb44faa4d266ba653733",
+    "AI_HLYUITests/AgentRuntimeConversationUITests.swift": "36bf3ed8dec51246b509a7fff8b364a591b71d2b00a956729c669a074754fdde"
+  },
+  "exact_test_selector": "AI_HLYTests/ProductionSystemSkillsTests/weatherSkillResolvesCoordinatesBeforeQuerying(),AI_HLYTests/ProductionSystemSkillsTests/weatherSkillRespectsDisabledMaps(),AI_HLYUITests/AgentRuntimeConversationUITests/testOriginalChatActivitySurvivesKeyboardRotationAndConversationReattachment,AI_HLYUITests/AgentRuntimeConversationUITests/testNativePartialSelectionSaveAndOriginalLongPressPreview,AI_HLYUITests/AgentRuntimeConversationUITests/testUI03SearchMessageAndDeduplicatedCitations,AI_HLYUITests/AgentRuntimeConversationUITests/testUI03HebrewRTLSearchMessageAndDeduplicatedCitations",
+  "retained_native_result": {
+    "run": "45067928645",
+    "source_sha": "139c6bf93f80ef7301182110dcaf086612d9bbbd",
+    "passed_functions": 55,
+    "passed_concrete_invocations": 59,
+    "reused_scope": "Unchanged logic and unit function bodies; pending-row accessibility metadata has no layout, execution, permission or projection logic change."
+  },
+  "changes": [
+    "Expose the immutable request UUID on the actual pending approval accessibility container, leaving ordinary activity IDs unchanged.",
+    "Verify the original remembered Host permission explicitly, review exact arguments once, revoke only through genuine Settings before each independent consent journey.",
+    "Capture Hebrew labels from one native snapshot within the unchanged request deadline.",
+    "Use the existing model-header long-hold gesture for whole-message preview; retain native selected-text save/exact-alpha/source-return requirements.",
+    "Execute only the two missing weather methods using their complete Swift Testing () signatures and the four failed or unknown UI methods."
+  ],
+  "native_status": "pending"
+}

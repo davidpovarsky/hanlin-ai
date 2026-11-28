@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "scope": "Portable actual-wire qualification of the unchanged Python fixture extracted from the candidate original Swift test only",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "startedAtUnix": 1795762616.8055742,
+  "finishedAtUnix": 1795762619.4752579,
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/scratch/d49eec8920ef/w1-http/check_fixture_wire.py"
+  ],
+  "checks": [
+    "Real CONNECT tunnel supports all four original methods and 32 sequential wire requests",
+    "Actual DELETE body, 503 metadata, and binary bytes match original fixture contract",
+    "Real exact-2MiB response, 2MiB+1 declared response, and forbidden redirect fixture are preserved",
+    "Actual socket request stays pending beyond one second; this validates fixture timing only",
+    "Actual wire log records all 39 expected requests through the admitted tunnel",
+    "Owned proxy refuses a different CONNECT authority"
+  ],
+  "originalSwiftTest": "NOT_RUN",
+  "URLSessionWireSemantics": "NOT_RUN",
+  "nativePolicyAndBudgetAssertions": "NOT_RUN",
+  "sourceSHA256": "6880b7f128bb80151ddfef2161da8a614a0b77360ce93bc11c6107b5ec54cfae",
+  "fixtureSHA256": "7ed69a0d8d7599503672e787d980af8a8d7c7f0ee0647e42846092d778945ac2",
+  "wireSHA256": "7b6bbb30d66db86ac8b17610ca057f769081d9a862058aea2fb7e3df75312629",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

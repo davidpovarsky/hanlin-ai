@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w1_review_resume",
+  "recordedAtUTC": "2026-11-27T16:17:15.837717+00:00",
+  "sourcePath": "HanlinMiniAppsTests/NativeScriptShortcutConcurrencyTests.swift",
+  "beforeSHA256": "1f8816dc2d89ec068725166774f8c3bcd236b02b1f81aa502eac0f2561dc7953",
+  "afterSHA256": "ea849be5aa05038199c69c18d5d18af6bad599dedb325ab60464bffd26fa11d0",
+  "patchSHA256": "6c5941c22eca964df9af31de12cafd6f1561475e416e51eee9165a147a4bf774",
+  "decision": "APPROVED_FOR_ORIGINAL_NATIVE_COMPILE_RETRY",
+  "independentChecks": {
+    "wholeFileInverse": true,
+    "allFiveSelectorsUnchanged": true,
+    "allAssertionSourceLinesUnchanged": true,
+    "originalGroupBodyPreserved": true
+  },
+  "lifetimeAndIsolation": [
+    "The explicitly MainActor local function runs once inside the same withThrowingTaskGroup body; declaring it schedules no work.",
+    "The inout task group remains scoped to the nonescaping structured-group body and is neither stored nor captured by a child task.",
+    "The same three MainActor Sendable child operations are submitted before the original wait. Per-task captures, reverse release/next ordering, receipt checks and original owner assertions are unchanged.",
+    "The local result dictionary remains in the moved body and is returned through the same structured group. Duplicate delivery, cancellation, deadline and stale-generation sections remain byte-identical."
+  ],
+  "limitations": [
+    "The previous explicit-type candidate failed to produce a compiler diagnostic on three original native builds. This decomposition is a source-level compiler repair candidate, not a demonstrated compile fix.",
+    "Actual Swift6 compiler acceptance and all five native tests remain required. No compiler or native test was executed by this reviewer."
+  ]
+}

@@ -1,0 +1,487 @@
+import Foundation
+import HanlinPlatformContracts
+import HanlinScriptContracts
+
+public enum HanlinArchiveEntryKind: String, Codable, Hashable, Sendable {
+    case file
+    case directory
+    case symbolicLink
+    case hardLink
+}
+
+public struct HanlinArchiveEntryMetadata: Codable, Hashable, Sendable {
+    public let path: String
+    public let kind: HanlinArchiveEntryKind
+    public let compressedBytes: Int64
+    public let uncompressedBytes: Int64
+
+    public init(
+        path: String,
+        kind: HanlinArchiveEntryKind,
+        compressedBytes: Int64,
+        uncompressedBytes: Int64
+    ) {
+        self.path = path
+        self.kind = kind
+        self.compressedBytes = compressedBytes
+        self.uncompressedBytes = uncompressedBytes
+    }
+}
+
+public struct HanlinArchiveLimits: Codable, Hashable, Sendable {
+    public let maximumArchiveBytes: Int64
+    public let maximumFiles: Int
+    public let maximumDirectories: Int
+    public let maximumDepth: Int
+    public let maximumUncompressedBytes: Int64
+    public let maximumCompressionRatio: Int64
+
+    public init(
+        maximumArchiveBytes: Int64 = .max,
+        maximumFiles: Int = .max,
+        maximumDirectories: Int = .max,
+        maximumDepth: Int = .max,
+        maximumUncompressedBytes: Int64 = .max,
+        maximumCompressionRatio: Int64 = .max
+    ) {
+        self.maximumArchiveBytes = maximumArchiveBytes
+        self.maximumFiles = maximumFiles
+        self.maximumDirectories = maximumDirectories
+        self.maximumDepth = maximumDepth
+        self.maximumUncompressedBytes = maximumUncompressedBytes
+        self.maximumCompressionRatio = maximumCompressionRatio
+    }
+
+    /// Ordinary packages retain original engine contracts and actual I/O failures,
+    /// without a second host byte/count/depth/ratio quota. Explicit custom limits
+    /// remain available to callers that deliberately request them.
+    public static let packageImport = HanlinArchiveLimits()
+
+    /// Personal-runtime Skill imports use streamed storage and actual I/O
+    /// failures rather than fixed package-size/count/depth budgets. Path,
+    /// identity, link, collision and malformed-archive checks remain active.
+    public static let autonomousSkillImport = HanlinArchiveLimits(
+        maximumArchiveBytes: .max, maximumFiles: .max, maximumDirectories: .max,
+        maximumDepth: .max, maximumUncompressedBytes: .max, maximumCompressionRatio: .max
+    )
+}
+
+public struct HanlinArchivePolicy: Sendable {
+    public let limits: HanlinArchiveLimits
+
+    public init(limits: HanlinArchiveLimits = .packageImport) {
+        self.limits = limits
+    }
+
+    public func inspect(
+        entries: [HanlinArchiveEntryMetadata],
+        centralDirectoryEntryCount: Int,
+        archiveBytes: Int64
+    ) -> HanlinArchiveInspection {
+        var findings: [HanlinArchiveFinding] = []
+        var ignored: [String] = []
+        var normalizedPaths: [String] = []
+        var fileCount = 0
+        var directoryCount = 0
+        var uncompressedBytes: Int64 = 0
+        var compressedBytes: Int64 = 0
+        var maximumDepth = 0
+        var canonicalPaths: [String: String] = [:]
+        var caseFoldedPaths: [String: String] = [:]
+
+        if archiveBytes < 0 || centralDirectoryEntryCount < 0 {
+            findings.append(.init(code: .malformedArchive, severity: .error,
+                message: "Archive byte and entry counts must not be negative."))
+        }
+        if archiveBytes > limits.maximumArchiveBytes {
+            findings.append(.init(
+                code: .compressedSizeLimit,
+                severity: .error,
+                message: "Archive byte count exceeds the configured limit."
+            ))
+        }
+        if entries.count != centralDirectoryEntryCount {
+            findings.append(.init(
+                code: .encryptedEntry,
+                severity: .error,
+                message: "The central directory contains unreadable or encrypted entries."
+            ))
+        }
+
+        for entry in entries {
+            let path = entry.path.replacingOccurrences(of: "\\", with: "/")
+            if Self.isIgnored(path) {
+                ignored.append(path)
+                continue
+            }
+            if path.contains("\0") {
+                findings.append(finding(.nulByte, path, "Archive path contains a NUL byte."))
+                continue
+            }
+            if path.hasPrefix("/") || path.hasPrefix("\\") {
+                findings.append(finding(.absolutePath, path, "Absolute archive paths are forbidden."))
+            }
+            if Self.hasDrivePrefix(path) {
+                findings.append(finding(.drivePrefix, path, "Windows drive-prefixed paths are forbidden."))
+            }
+            let components = path.split(separator: "/", omittingEmptySubsequences: false)
+            if components.contains("..") {
+                findings.append(finding(.parentTraversal, path, "Parent traversal is forbidden."))
+            }
+            let canonicalComponents = path.hasSuffix("/") ? components.dropLast() : components[...]
+            if canonicalComponents.contains(where: { $0.isEmpty || $0 == "." }) {
+                findings.append(finding(
+                    .parentTraversal,
+                    path,
+                    "Empty and current-directory path components are forbidden."
+                ))
+            }
+            let effectiveComponents = components.filter { !$0.isEmpty && $0 != "." }
+            maximumDepth = max(maximumDepth, effectiveComponents.count)
+            if effectiveComponents.count > limits.maximumDepth {
+                findings.append(finding(.depthLimit, path, "Archive nesting depth exceeds policy."))
+            }
+            switch entry.kind {
+            case .file:
+                fileCount += 1
+            case .directory:
+                directoryCount += 1
+            case .symbolicLink:
+                findings.append(finding(.symbolicLink, path, "Symbolic links are forbidden."))
+            case .hardLink:
+                findings.append(finding(.hardLink, path, "Hard links are forbidden."))
+            }
+            if let compressed = Self.adding(entry.compressedBytes, to: compressedBytes),
+               let uncompressed = Self.adding(entry.uncompressedBytes, to: uncompressedBytes) {
+                compressedBytes = compressed
+                uncompressedBytes = uncompressed
+            } else {
+                findings.append(finding(.malformedArchive, path,
+                    "Archive entry sizes are negative or their sum cannot be represented."))
+            }
+            if entry.uncompressedBytes > 0 {
+                if entry.compressedBytes == 0
+                    || entry.uncompressedBytes / max(1, entry.compressedBytes) > limits.maximumCompressionRatio
+                {
+                    findings.append(finding(
+                        .compressionRatioLimit,
+                        path,
+                        "Entry compression ratio exceeds policy."
+                    ))
+                }
+            }
+
+            let unicodeKey = path.precomposedStringWithCanonicalMapping
+            if let existing = canonicalPaths[unicodeKey] {
+                findings.append(finding(
+                    .unicodeCollision,
+                    path,
+                    existing == path
+                        ? "Archive contains a duplicate path."
+                        : "Path collides with '\(existing)' after Unicode normalization."
+                ))
+            } else {
+                canonicalPaths[unicodeKey] = path
+            }
+            let caseKey = unicodeKey.lowercased(with: Locale(identifier: "en_US_POSIX"))
+            if let existing = caseFoldedPaths[caseKey], existing != path {
+                findings.append(finding(
+                    .caseCollision,
+                    path,
+                    "Path collides with '\(existing)' on a case-insensitive file system."
+                ))
+            } else {
+                caseFoldedPaths[caseKey] = path
+            }
+            normalizedPaths.append(path)
+        }
+
+        if fileCount > limits.maximumFiles {
+            findings.append(.init(
+                code: .fileCountLimit,
+                severity: .error,
+                message: "Archive file count exceeds policy."
+            ))
+        }
+        if directoryCount > limits.maximumDirectories {
+            findings.append(.init(
+                code: .fileCountLimit,
+                severity: .error,
+                message: "Archive directory count exceeds policy."
+            ))
+        }
+        if uncompressedBytes > limits.maximumUncompressedBytes {
+            findings.append(.init(
+                code: .uncompressedSizeLimit,
+                severity: .error,
+                message: "Expanded archive size exceeds policy."
+            ))
+        }
+
+        // A retained source tree and ordinary dependencies may contain their own
+        // script.json. Only the package root, or one actual wrapper root, selects
+        // the executable manifest; nested resource metadata stays intact.
+        let manifests = normalizedPaths.contains("script.json") ? ["script.json"] : normalizedPaths.filter {
+            $0.hasSuffix("/script.json") && $0.split(separator: "/").count == 2
+        }
+        let manifestPath = manifests.count == 1 ? manifests[0] : nil
+        if manifests.count != 1 {
+            findings.append(.init(
+                code: .ambiguousManifest,
+                severity: .error,
+                message: manifests.isEmpty
+                    ? "Archive does not contain script.json."
+                    : "Archive contains more than one script.json."
+            ))
+        }
+        let wrapper = manifestPath.flatMap(Self.wrapperDirectory(for:))
+        if let wrapper,
+           normalizedPaths.contains(where: {
+               $0 != wrapper && !$0.hasPrefix("\(wrapper)/")
+           })
+        {
+            findings.append(.init(
+                code: .ambiguousManifest,
+                severity: .error,
+                message: "Entries exist outside the package wrapper directory."
+            ))
+        }
+
+        return HanlinArchiveInspection(
+            fileCount: fileCount,
+            directoryCount: directoryCount,
+            compressedBytes: compressedBytes,
+            uncompressedBytes: uncompressedBytes,
+            maximumDepth: maximumDepth,
+            wrapperDirectory: wrapper,
+            manifestPath: manifestPath,
+            ignoredEntries: ignored.sorted(),
+            findings: findings
+        )
+    }
+
+    public func inspectSkillArchive(
+        entries: [HanlinArchiveEntryMetadata],
+        centralDirectoryEntryCount: Int,
+        archiveBytes: Int64
+    ) -> HanlinArchiveInspection {
+        var findings: [HanlinArchiveFinding] = []
+        var ignored: [String] = []
+        var normalizedPaths: [String] = []
+        var fileCount = 0
+        var directoryCount = 0
+        var uncompressedBytes: Int64 = 0
+        var compressedBytes: Int64 = 0
+        var maximumDepth = 0
+        var canonicalPaths: [String: String] = [:]
+        var caseFoldedPaths: [String: String] = [:]
+
+        if archiveBytes < 0 || centralDirectoryEntryCount < 0 {
+            findings.append(.init(code: .malformedArchive, severity: .error,
+                message: "Archive byte and entry counts must not be negative."))
+        }
+        if archiveBytes > limits.maximumArchiveBytes {
+            findings.append(.init(
+                code: .compressedSizeLimit,
+                severity: .error,
+                message: "Archive byte count exceeds the configured limit."
+            ))
+        }
+        if entries.count != centralDirectoryEntryCount {
+            findings.append(.init(
+                code: .encryptedEntry,
+                severity: .error,
+                message: "The central directory contains unreadable or encrypted entries."
+            ))
+        }
+
+        for entry in entries {
+            let path = entry.path.replacingOccurrences(of: "\\", with: "/")
+            if Self.isIgnored(path) {
+                ignored.append(path)
+                continue
+            }
+            if path.contains("\0") {
+                findings.append(finding(.nulByte, path, "Archive path contains a NUL byte."))
+                continue
+            }
+            if path.hasPrefix("/") || path.hasPrefix("\\") {
+                findings.append(finding(.absolutePath, path, "Absolute archive paths are forbidden."))
+            }
+            if Self.hasDrivePrefix(path) {
+                findings.append(finding(.drivePrefix, path, "Windows drive-prefixed paths are forbidden."))
+            }
+            let canonicalPath = Self.normalizedRelativePath(path)
+            if canonicalPath == nil {
+                findings.append(finding(
+                    .parentTraversal,
+                    path,
+                    "Parent traversal or malformed relative path is forbidden."
+                ))
+            }
+            let resolvedPath = canonicalPath ?? path
+            let effectiveComponents = resolvedPath.split(separator: "/").map(String.init)
+            maximumDepth = max(maximumDepth, effectiveComponents.count)
+            if effectiveComponents.count > limits.maximumDepth {
+                findings.append(finding(.depthLimit, path, "Archive nesting depth exceeds policy."))
+            }
+            switch entry.kind {
+            case .file:
+                fileCount += 1
+            case .directory:
+                directoryCount += 1
+            case .symbolicLink:
+                // Valid internal symlinks are permitted without blanket failure
+                break
+            case .hardLink:
+                findings.append(finding(.hardLink, path, "Hard links are forbidden."))
+            }
+            if let compressed = Self.adding(entry.compressedBytes, to: compressedBytes),
+               let uncompressed = Self.adding(entry.uncompressedBytes, to: uncompressedBytes) {
+                compressedBytes = compressed
+                uncompressedBytes = uncompressed
+            } else {
+                findings.append(finding(.malformedArchive, path,
+                    "Archive entry sizes are negative or their sum cannot be represented."))
+            }
+            if entry.uncompressedBytes > 0 {
+                if entry.compressedBytes == 0
+                    || entry.uncompressedBytes / max(1, entry.compressedBytes) > limits.maximumCompressionRatio
+                {
+                    findings.append(finding(
+                        .compressionRatioLimit,
+                        path,
+                        "Entry compression ratio exceeds policy."
+                    ))
+                }
+            }
+
+            let unicodeKey = resolvedPath.precomposedStringWithCanonicalMapping
+            if let existing = canonicalPaths[unicodeKey] {
+                findings.append(finding(
+                    .unicodeCollision,
+                    path,
+                    existing == resolvedPath
+                        ? "Archive contains a duplicate path."
+                        : "Path collides with '\(existing)' after Unicode normalization."
+                ))
+            } else {
+                canonicalPaths[unicodeKey] = resolvedPath
+            }
+            let caseKey = unicodeKey.lowercased(with: Locale(identifier: "en_US_POSIX"))
+            if let existing = caseFoldedPaths[caseKey], existing != resolvedPath {
+                findings.append(finding(
+                    .caseCollision,
+                    path,
+                    "Path collides with '\(existing)' on a case-insensitive file system."
+                ))
+            } else {
+                caseFoldedPaths[caseKey] = resolvedPath
+            }
+            normalizedPaths.append(resolvedPath)
+        }
+
+        if fileCount > limits.maximumFiles {
+            findings.append(.init(
+                code: .fileCountLimit,
+                severity: .error,
+                message: "Archive file count exceeds policy."
+            ))
+        }
+        if directoryCount > limits.maximumDirectories {
+            findings.append(.init(
+                code: .fileCountLimit,
+                severity: .error,
+                message: "Archive directory count exceeds policy."
+            ))
+        }
+        if uncompressedBytes > limits.maximumUncompressedBytes {
+            findings.append(.init(
+                code: .uncompressedSizeLimit,
+                severity: .error,
+                message: "Expanded archive size exceeds policy."
+            ))
+        }
+
+        let manifests = normalizedPaths.filter {
+            $0 == "SKILL.md" || $0.hasSuffix("/SKILL.md")
+        }
+        let manifestPath = manifests.count == 1 ? manifests[0] : nil
+        if manifests.count != 1 {
+            findings.append(.init(
+                code: .ambiguousManifest,
+                severity: .error,
+                message: manifests.isEmpty
+                    ? "Archive does not contain SKILL.md."
+                    : "Archive contains more than one SKILL.md."
+            ))
+        }
+        let wrapper = manifestPath.flatMap(Self.wrapperDirectory(for:))
+        if let wrapper,
+           normalizedPaths.contains(where: {
+               $0 != wrapper && !$0.hasPrefix("\(wrapper)/")
+           })
+        {
+            findings.append(.init(
+                code: .ambiguousManifest,
+                severity: .error,
+                message: "Entries exist outside the skill wrapper directory."
+            ))
+        }
+
+        return HanlinArchiveInspection(
+            fileCount: fileCount,
+            directoryCount: directoryCount,
+            compressedBytes: compressedBytes,
+            uncompressedBytes: uncompressedBytes,
+            maximumDepth: maximumDepth,
+            wrapperDirectory: wrapper,
+            manifestPath: manifestPath,
+            ignoredEntries: ignored.sorted(),
+            findings: findings
+        )
+    }
+
+    public static func normalizedRelativePath(_ value: String) -> String? {
+        HanlinPackagePath.normalizedRelativePath(value)
+    }
+
+    private static func wrapperDirectory(for manifestPath: String) -> String? {
+        let components = manifestPath.split(separator: "/")
+        return components.count == 2 ? String(components[0]) : nil
+    }
+
+    private static func hasDrivePrefix(_ path: String) -> Bool {
+        HanlinPackagePath.hasDrivePrefix(path)
+    }
+
+    private static func isIgnored(_ path: String) -> Bool {
+        path == "__MACOSX" || path.hasPrefix("__MACOSX/")
+            || path.split(separator: "/").last?.hasPrefix("._") == true
+    }
+
+    private static func isAllowedSkillFile(_ path: String) -> Bool {
+        let allowed: Set<String> = [
+            "ts", "tsx", "js", "jsx", "mjs", "cjs", "json", "md", "txt", "strings",
+            "css", "html", "svg", "png", "jpg", "jpeg", "gif", "webp",
+            "heic", "pdf", "plist", "m4a", "mp3", "wav", "mp4", "mov",
+            "py", "sh", "yaml", "yml", "csv", "xml", "swift"
+        ]
+        let name = path.split(separator: "/").last.map(String.init) ?? path
+        guard let dot = name.lastIndex(of: ".") else { return false }
+        return allowed.contains(name[name.index(after: dot)...].lowercased())
+    }
+
+    private static func adding(_ value: Int64, to total: Int64) -> Int64? {
+        guard value >= 0, total <= Int64.max - value else { return nil }
+        return total + value
+    }
+
+    private func finding(
+        _ code: HanlinArchiveFindingCode,
+        _ entry: String,
+        _ message: String
+    ) -> HanlinArchiveFinding {
+        .init(code: code, severity: .error, entry: entry, message: message)
+    }
+}

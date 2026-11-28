@@ -2,14 +2,14 @@ import Foundation
 import HealthKit
 
 /// 健康数据工具类，封装步数和距离的读取操作
-class HealthTool {
+@MainActor
+final class HealthTool {
     
     static let shared = HealthTool()
     private let healthStore = HKHealthStore()
     private init() {}
     
     // MARK: - 请求权限（异步）
-    @MainActor
     private func requestAuthorizationAsync() async throws {
         let readTypes: Set<HKObjectType> = [
             HKObjectType.quantityType(forIdentifier: .stepCount)!,

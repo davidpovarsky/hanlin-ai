@@ -1,0 +1,97 @@
+#!/usr/bin/env python3
+"""Grant native calendar acceptance access to this run's owned simulator only."""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import plistlib
+import time
+
+from current_unit_xctestrun import HOST_ID, original_unit_target, product_path
+from owned_simulator_receipts import simulator_run_from_environment, verify_owned_simulator
+from stage_simulator_fixtures import INSTALL_TIMEOUT_SECONDS, run_bounded
+
+SUITE = "AI_HLYTests/HanlinAppAgentSessionOwnerTests"
+METHOD = SUITE + "/actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow"
+MUTATION_SUITE = "AI_HLYTests/CalendarNativeMutationTests"
+
+# The owned, booted simulator exceeded 20s while granting native calendar access.
+# Keep cold privacy-service setup bounded separately from product test deadlines.
+PRIVACY_TIMEOUT_SECONDS = 120.0
+
+
+def selected_identifiers(selectors: str) -> list[str]:
+    values = [value.strip().removesuffix("()") for value in selectors.split(",")]
+    return [value for value in values
+            if value in ("AI_HLYTests", SUITE, METHOD, MUTATION_SUITE)
+            or value.startswith(MUTATION_SUITE + "/")]
+
+
+def selected(selectors: str) -> bool:
+    return bool(selected_identifiers(selectors))
+
+
+def prepare(selectors, manifest, products, log, run_id, run_attempt,
+            runner=run_bounded, verify_owner=verify_owned_simulator, *, run_provider="github"):
+    if not selected(selectors):
+        return None
+    log = Path(log)
+    owned = verify_owner(log, run_id, run_attempt, run_provider=run_provider)
+    simulator = owned["simulator"]
+    manifest = Path(manifest).resolve(strict=True)
+    products = Path(products).resolve(strict=True)
+    document = plistlib.loads(manifest.read_bytes())
+    _, target = original_unit_target(document)
+    host = product_path(target.get("TestHostPath"), products)
+    info = plistlib.loads((host / "Info.plist").read_bytes())
+    if info.get("CFBundleIdentifier") != HOST_ID:
+        raise RuntimeError("Calendar acceptance requires the admitted original test host")
+    commands = []
+    for command, timeout in [
+        (["xcrun", "simctl", "install", simulator, str(host)], INSTALL_TIMEOUT_SECONDS),
+        (["xcrun", "simctl", "privacy", simulator, "grant", "calendar", HOST_ID], PRIVACY_TIMEOUT_SECONDS),
+        (["xcrun", "simctl", "privacy", simulator, "grant", "reminders", HOST_ID], PRIVACY_TIMEOUT_SECONDS),
+    ]:
+        started = time.monotonic()
+        result = runner(command, timeout_seconds=timeout)
+        commands.append({"command": command, "exit_code": result.returncode,
+                         "stdout": result.stdout, "stderr": result.stderr,
+                         "timeout_seconds": timeout,
+                         "elapsed_seconds": time.monotonic() - started})
+        if result.returncode:
+            (log / "08-calendar-native-staging.json").write_text(json.dumps(
+                {"status": "FAIL", "owned_simulator": owned, "commands": commands}, indent=2) + "\n")
+            raise RuntimeError("Native calendar acceptance staging failed")
+    receipt = {"status": "PASS", "owned_simulator": owned, "bundle_id": HOST_ID,
+               "xctestrun_sha256": hashlib.sha256(manifest.read_bytes()).hexdigest(),
+               "original_host": str(host), "selected_selectors": selected_identifiers(selectors),
+               "commands": commands}
+    if any(value in ("AI_HLYTests", SUITE, METHOD) for value in receipt["selected_selectors"]):
+        receipt["selected_method"] = METHOD
+    (log / "08-calendar-native-staging.json").write_text(json.dumps(receipt, indent=2) + "\n")
+    return receipt
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--selectors", required=True)
+    parser.add_argument("--xctestrun", required=True)
+    parser.add_argument("--derived-data", required=True)
+    parser.add_argument("--log-dir", required=True)
+    args = parser.parse_args()
+    if not selected(args.selectors):
+        print("Native calendar acceptance not selected")
+        return
+    identity = simulator_run_from_environment()
+    result = prepare(args.selectors, args.xctestrun,
+                     Path(args.derived_data) / "Build/Products", args.log_dir,
+                     identity["run_id"], identity["run_attempt"],
+                     run_provider=identity["run_provider"])
+    print("Native calendar fixture grants staged" if result else "Native calendar acceptance not selected")
+
+
+if __name__ == "__main__":
+    main()

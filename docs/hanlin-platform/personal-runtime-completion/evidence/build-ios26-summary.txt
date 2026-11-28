@@ -1,0 +1,306 @@
+===== Build diagnostic summary =====
+Date: Wed Oct  7 08:02:20 UTC 2026
+Repository: davidpovarsky/hanlin-ai
+Commit: a6076a2431f9037206fb298a613d9cad5c19d493
+Runner OS: macOS
+Runner name: GitHub Actions 1000006562
+
+===== Selected Xcode =====
+/Applications/Xcode_27.app/Contents/Developer
+Xcode 27.0
+Build version 27A266a
+
+===== SDKs =====
+DriverKit SDKs:
+	DriverKit 27.0                	-sdk driverkit27.0
+
+iOS SDKs:
+	iOS 27.0                      	-sdk iphoneos27.0
+
+iOS Simulator SDKs:
+	Simulator - iOS 27.0          	-sdk iphonesimulator27.0
+
+macOS SDKs:
+	macOS 27.0                    	-sdk macosx27.0
+	macOS 27.0                    	-sdk macosx27.0
+
+tvOS SDKs:
+	tvOS 27.0                     	-sdk appletvos27.0
+
+tvOS Simulator SDKs:
+	Simulator - tvOS 27.0         	-sdk appletvsimulator27.0
+
+visionOS SDKs:
+	visionOS 27.0                 	-sdk xros27.0
+
+visionOS Simulator SDKs:
+	Simulator - visionOS 27.0     	-sdk xrsimulator27.0
+
+watchOS SDKs:
+	watchOS 27.0                  	-sdk watchos27.0
+
+watchOS Simulator SDKs:
+	Simulator - watchOS 27.0      	-sdk watchsimulator27.0
+
+
+===== Project =====
+PROJECT_PATH=AI_HLY.xcodeproj
+SCHEME_NAME=AI_HLY
+APP_NAME=AI_Hanlin
+CONFIGURATION=Release
+IOS_DEPLOYMENT_TARGET=26.0
+
+===== Incremental build evidence =====
+force_clean_build=false
+SourcePackages=exact-hit
+DerivedData=fallback-hit
+build_mode=restored-incremental
+selected_xcode=27.0
+selected_xcode_build=27A266a
+runner_arch=arm64
+iphoneos_sdk=27.0
+Compilation duration (seconds): 912
+Build Timing Summary
+
+SwiftCompile (5 tasks) | 705.643 seconds
+
+GenerateDSYMFile (1 task) | 13.154 seconds
+
+Ld (1 task) | 9.337 seconds
+
+PhaseScriptExecution (1 task) | 8.244 seconds
+
+ValidateEmbeddedBinary (2 tasks) | 6.091 seconds
+
+CopySwiftLibs (1 task) | 1.295 seconds
+
+ExtractAppIntentsMetadata (5 tasks) | 1.220 seconds
+
+ProcessInfoPlistFile (17 tasks) | 0.567 seconds
+
+SwiftDriver (5 tasks) | 0.467 seconds
+
+Copy (12 tasks) | 0.409 seconds
+
+CpResource (1 task) | 0.016 seconds
+
+SwiftDriver Compilation Requirements (5 tasks) | 0.000 seconds
+
+SwiftDriver Compilation (5 tasks) | 0.000 seconds
+
+
+Result bundle written to path:
+	/Users/runner/work/hanlin-ai/hanlin-ai/build-logs/BuildResult.xcresult
+
+** BUILD SUCCEEDED **
+
+
+===== IPA =====
+-rw-r--r--  1 runner  staff   114M Oct  7 08:01 AI_Hanlin-iOS26-unsigned.ipa
+Size (bytes): 119206738
+SHA-256: f6fe11fbaae74702b3c8e63907d58fea6d851481a6f97a9a08e1a489755b3347  AI_Hanlin-iOS26-unsigned.ipa
+
+===== Found apps =====
+build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app
+
+===== Last 200 lines of raw xcodebuild log =====
+Installing binary for Frameworks/_testlimitedcapi.framework/_testlimitedcapi
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_testclinic.framework/_testclinic
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_testclinic_limited.framework/_testclinic_limited
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_random.framework/_random
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_xxtestfuzz.framework/_xxtestfuzz
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_testimportmultiple.framework/_testimportmultiple
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_sha2.framework/_sha2
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_uuid.framework/_uuid
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_codecs_cn.framework/_codecs_cn
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_json.framework/_json
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/zlib.framework/zlib
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_ctypes.framework/_ctypes
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_elementtree.framework/_elementtree
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_lzma.framework/_lzma
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_sha1.framework/_sha1
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_blake2.framework/_blake2
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_interpreters.framework/_interpreters
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/pyexpat.framework/pyexpat
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_struct.framework/_struct
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_lsprof.framework/_lsprof
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_codecs_jp.framework/_codecs_jp
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_sqlite3.framework/_sqlite3
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_bz2.framework/_bz2
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/binascii.framework/binascii
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_codecs_iso2022.framework/_codecs_iso2022
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_statistics.framework/_statistics
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_socket.framework/_socket
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/fcntl.framework/fcntl
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_ssl.framework/_ssl
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_sha3.framework/_sha3
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_multibytecodec.framework/_multibytecodec
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/unicodedata.framework/unicodedata
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/termios.framework/termios
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_bisect.framework/_bisect
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_hmac.framework/_hmac
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_ctypes_test.framework/_ctypes_test
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_testcapi.framework/_testcapi
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_remote_debugging.framework/_remote_debugging
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_interpqueues.framework/_interpqueues
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/cmath.framework/cmath
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/resource.framework/resource
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_testmultiphase.framework/_testmultiphase
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/xxsubtype.framework/xxsubtype
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_pickle.framework/_pickle
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_zoneinfo.framework/_zoneinfo
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/mmap.framework/mmap
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_queue.framework/_queue
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/select.framework/select
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/array.framework/array
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_decimal.framework/_decimal
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_heapq.framework/_heapq
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_codecs_tw.framework/_codecs_tw
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_asyncio.framework/_asyncio
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/math.framework/math
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_dbm.framework/_dbm
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_md5.framework/_md5
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/xxlimited_35.framework/xxlimited_35
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/xxlimited.framework/xxlimited
+Signing framework as Ad Hoc (-)...
+Installing binary for Frameworks/_codecs_kr.framework/_codecs_kr
+Signing framework as Ad Hoc (-)...
+
+Copy /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/PlugIns/HanlinScriptingWidgets.appex /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/HanlinScriptingWidgets.appex (in target 'AI_Hanlin' from project 'AI_HLY')
+    cd /Users/runner/work/hanlin-ai/hanlin-ai
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks -remove-static-executable /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/HanlinScriptingWidgets.appex /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/PlugIns
+
+Copy /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Extensions/ChavrusaChatTranslationProvider.appex /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/ChavrusaChatTranslationProvider.appex (in target 'AI_Hanlin' from project 'AI_HLY')
+    cd /Users/runner/work/hanlin-ai/hanlin-ai
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -resolve-src-symlinks -remove-static-executable /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/ChavrusaChatTranslationProvider.appex /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Extensions
+
+ExtractAppIntentsMetadata (in target 'AI_Hanlin' from project 'AI_HLY')
+    cd /Users/runner/work/hanlin-ai/hanlin-ai
+    /Applications/Xcode_27.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode_27.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name AI_Hanlin --sdk-root /Applications/Xcode_27.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk --xcode-version 27A266a --platform-family iOS --deployment-target 26.0 --bundle-identifier com.itorah.chavrusachat --output /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app --target-triple arm64-apple-ios26.0 --binary-file /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/AI_Hanlin --dependency-file /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Intermediates.noindex/AI_HLY.build/Release-iphoneos/AI_Hanlin.build/Objects-normal/arm64/AI_Hanlin_dependency_info.dat --stringsdata-file /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Intermediates.noindex/AI_HLY.build/Release-iphoneos/AI_Hanlin.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Intermediates.noindex/AI_HLY.build/Release-iphoneos/AI_Hanlin.build/Objects-normal/arm64/AI_Hanlin.SwiftFileList --metadata-file-list /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Intermediates.noindex/AI_HLY.build/Release-iphoneos/AI_Hanlin.build/AI_Hanlin.DependencyMetadataFileList --static-metadata-file-list /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Intermediates.noindex/AI_HLY.build/Release-iphoneos/AI_Hanlin.build/AI_Hanlin.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Intermediates.noindex/AI_HLY.build/Release-iphoneos/AI_Hanlin.build/Objects-normal/arm64/AI_Hanlin.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-10-07 08:00:29.217 appintentsmetadataprocessor[75192:187731] Starting appintentsmetadataprocessor export
+2026-10-07 08:00:29.533 appintentsmetadataprocessor[75192:187731] Writing Metadata.appintents
+2026-10-07 08:00:29.533 appintentsmetadataprocessor[75192:187731] Metadata root: /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Metadata.appintents
+
+CreateBuildDirectory /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/SDKExplicitPrecompiledModules
+    cd /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY.xcodeproj
+    builtin-create-build-directory /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/SDKExplicitPrecompiledModules
+
+ProcessInfoPlistFile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Info.plist /Users/runner/work/hanlin-ai/hanlin-ai/AI-HLY-Info.plist (in target 'AI_Hanlin' from project 'AI_HLY')
+    cd /Users/runner/work/hanlin-ai/hanlin-ai
+    builtin-infoPlistUtility /Users/runner/work/hanlin-ai/hanlin-ai/AI-HLY-Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/PkgInfo -expandbuildsettings -format binary -platform iphoneos -additionalcontentfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Intermediates.noindex/AI_HLY.build/Release-iphoneos/AI_Hanlin.build/Base.lproj/Launch\ Screen-SBPartialInfo.plist -additionalcontentfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Intermediates.noindex/AI_HLY.build/Release-iphoneos/AI_Hanlin.build/assetcatalog_generated_info.plist -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/BitByteData_BitByteData.bundle -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Extensions/ChavrusaChatTranslationProvider.appex -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/ExpoBrownfield.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/ExpoModulesCore.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/ExpoModulesJSI.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/ExpoModulesWorklets.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/ExpoUI.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/NSCWinterTC.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/NativeScript.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/NodeMobile.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/Python.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/React.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/ReactNativeDependencies.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/TKLiveSync.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/TNSWidgets.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/awk.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/curl_ios.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/files.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/hermesvm.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/ios_system.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/libssh2.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/llama.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/openssl.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/tar.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks/text.framework -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/HanlinNativeScriptRuntime_HanlinNativeScriptRuntime.bundle -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/HanlinPlatform_HanlinPlatformContracts.bundle -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/HanlinPlatform_HanlinScriptCompiler.bundle -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/HanlinPlatform_HanlinScriptContracts.bundle -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/HanlinPlatform_HanlinScriptUI.bundle -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/HanlinPlatform_HanlinScriptingSDK.bundle -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/IOSSystemLite_IOSSystemLite.bundle -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/MathJaxSwift_MathJaxSwift.bundle -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/PlugIns/ChavrusaChatShare.appex -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/PlugIns/HanlinScriptingWidgets.appex -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/RichTextKit_RichTextKit.bundle -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/SWCompression_SWCompression.bundle -scanforprivacyfile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/ZIPFoundation_ZIPFoundation.bundle -requiredArchitecture arm64 -o /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Info.plist
+
+CopySwiftLibs /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app (in target 'AI_Hanlin' from project 'AI_HLY')
+    cd /Users/runner/work/hanlin-ai/hanlin-ai
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/AI_Hanlin --scan-folder /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks --scan-folder /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/PlugIns --scan-folder /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/SystemExtensions --scan-folder /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Extensions --scan-folder /Applications/Xcode_27.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk/System/Library/Frameworks/JavaScriptCore.framework --platform iphoneos --toolchain /Applications/Xcode_27.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode_27.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Intermediates.noindex/AI_HLY.build/Release-iphoneos/AI_Hanlin.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+ValidateEmbeddedBinary /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/PlugIns/HanlinScriptingWidgets.appex (in target 'AI_Hanlin' from project 'AI_HLY')
+    cd /Users/runner/work/hanlin-ai/hanlin-ai
+    /Applications/Xcode_27.app/Contents/Developer/usr/bin/embeddedBinaryValidationUtility /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/PlugIns/HanlinScriptingWidgets.appex -info-plist-path /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Info.plist
+
+ValidateEmbeddedBinary /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Extensions/ChavrusaChatTranslationProvider.appex (in target 'AI_Hanlin' from project 'AI_HLY')
+    cd /Users/runner/work/hanlin-ai/hanlin-ai
+    /Applications/Xcode_27.app/Contents/Developer/usr/bin/embeddedBinaryValidationUtility /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Extensions/ChavrusaChatTranslationProvider.appex -info-plist-path /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/Info.plist
+
+GenerateDSYMFile /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app.dSYM /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/AI_Hanlin (in target 'AI_Hanlin' from project 'AI_HLY')
+    cd /Users/runner/work/hanlin-ai/hanlin-ai
+    export PATH\=/Applications/Xcode_27.app/Contents/SharedFrameworks/SwiftBuild.framework/Versions/A/PlugIns/SWBBuildService.bundle/Contents/PlugIns/SWBUniversalPlatformPlugin.bundle/Contents/Frameworks/SWBUniversalPlatform.framework/Resources:/Applications/Xcode_27.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:/Applications/Xcode_27.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/local/bin:/Applications/Xcode_27.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/libexec:/Applications/Xcode_27.app/Contents/Developer/Platforms/iPhoneOS.platform/usr/bin:/Applications/Xcode_27.app/Contents/Developer/Platforms/iPhoneOS.platform/usr/local/bin:/Applications/Xcode_27.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Applications/Xcode_27.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/local/bin:/Applications/Xcode_27.app/Contents/Developer/usr/bin:/Applications/Xcode_27.app/Contents/Developer/usr/local/bin:/Users/runner/hostedtoolcache/node/24.5.0/arm64/bin:/opt/homebrew/lib/ruby/gems/3.4.0/bin:/opt/homebrew/opt/ruby@3.4/bin:/Users/runner/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/runner/.cargo/bin:/usr/local/opt/curl/bin:/usr/local/bin:/usr/local/sbin:/Users/runner/bin:/Users/runner/.yarn/bin:/Users/runner/Library/Android/sdk/tools:/Users/runner/Library/Android/sdk/platform-tools:/Library/Frameworks/Python.framework/Versions/Current/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/usr/bin:/bin:/usr/sbin:/sbin:/Users/runner/.dotnet/tools
+    /Applications/Xcode_27.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app/AI_Hanlin -o /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Products/Release-iphoneos/AI_Hanlin.app.dSYM
+
+PruneExplicitPrecompiledModules /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/runner/work/hanlin-ai/hanlin-ai/build/DerivedData/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+Build Timing Summary
+
+SwiftCompile (5 tasks) | 705.643 seconds
+
+GenerateDSYMFile (1 task) | 13.154 seconds
+
+Ld (1 task) | 9.337 seconds
+
+PhaseScriptExecution (1 task) | 8.244 seconds
+
+ValidateEmbeddedBinary (2 tasks) | 6.091 seconds
+
+CopySwiftLibs (1 task) | 1.295 seconds
+
+ExtractAppIntentsMetadata (5 tasks) | 1.220 seconds
+
+ProcessInfoPlistFile (17 tasks) | 0.567 seconds
+
+SwiftDriver (5 tasks) | 0.467 seconds
+
+Copy (12 tasks) | 0.409 seconds
+
+CpResource (1 task) | 0.016 seconds
+
+SwiftDriver Compilation Requirements (5 tasks) | 0.000 seconds
+
+SwiftDriver Compilation (5 tasks) | 0.000 seconds
+
+
+Result bundle written to path:
+	/Users/runner/work/hanlin-ai/hanlin-ai/build-logs/BuildResult.xcresult
+
+** BUILD SUCCEEDED **
+

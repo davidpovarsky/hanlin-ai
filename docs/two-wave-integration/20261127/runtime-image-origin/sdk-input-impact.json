@@ -1,0 +1,19 @@
+{
+  "manifestPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/host-sdk-1ee9c457-complete-pass-proof/miniapp-sdk.json",
+  "manifestSHA256": "e7aa424015d509dc7d99b3158b85f6dbcbcc72fc17b3671d247382331e87e649",
+  "inputFingerprint": "0a9d3ca8f320af72485cab3d998be4861c1d858fe758c5f79e7b15d555937c50",
+  "inputCount": 392,
+  "changedPaths": [
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+    "Scripts/ProductSplit/run_native_acceptance.py",
+    "Scripts/ProductSplit/observe_runtime_image_origin.py",
+    "Scripts/CI/Tests/test_runtime_image_origin.py"
+  ],
+  "intersection": [],
+  "base": "d165b9fc6a1c4e810a21957c063bfeae52eecb59",
+  "baseFileHashes": {
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "87be423d2e5bbe9e8fbd4ab97182f2dc1415ca7538f6a705a5bec46d85cf9cc0",
+    "Scripts/ProductSplit/run_native_acceptance.py": "b10f64e508e512b4099dba2fab430dca915287d46c8afa5b6d472994965d316b"
+  },
+  "branchExists": ""
+}

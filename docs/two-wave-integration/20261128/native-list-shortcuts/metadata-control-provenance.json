@@ -1,0 +1,8 @@
+{
+  "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/typed-list-a195a6ed-built-metadata/Metadata.appintents/extract.actionsdata",
+  "sourceSHA256": "af021fda98731b8485f7f2f4468a0b18585e7253af0ee40a8337a19782b78660",
+  "projection": "actions.HanlinRunMiniAppShortcutIntent: identifier, parameters, actionConfiguration",
+  "testFixturePath": "Scripts/CI/Tests/fixtures/native_lists_actionsdata.json",
+  "testFixtureSHA256": "0de9d507de2f706ae25d2d899e0db0ffcbabaed73d5f008a3702a97926af613f",
+  "scope": "Copied actual emitted metadata schema for portable reader controls, not a current product"
+}

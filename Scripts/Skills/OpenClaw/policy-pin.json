@@ -1,0 +1,109 @@
+{
+  "repository": "openclaw/openclaw",
+  "tag": "v2026.11.3",
+  "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+  "sourceLedger": "dependency-audit.json",
+  "entryExports": {
+    "src/skills/loading/config.ts": [
+      "shouldIncludeSkill",
+      "isSkillEntrySelected",
+      "resolveSkillsInstallPreferences",
+      "resolveBundledAllowlist"
+    ],
+    "src/skills/loading/frontmatter.ts": [
+      "resolveSkillManifestMetadata",
+      "resolveSkillInvocationPolicy",
+      "resolveSkillKey"
+    ],
+    "src/secrets/runtime-degraded-state.ts": [
+      "setActiveDegradedSecretOwners"
+    ],
+    "src/shared/frontmatter.ts": [
+      "applyOpenClawManifestInstallCommonFields",
+      "parseFrontmatterBool",
+      "parseOpenClawManifestInstallBase",
+      "resolveOpenClawManifestBlock",
+      "resolveOpenClawManifestInstall",
+      "resolveOpenClawManifestOs",
+      "resolveOpenClawManifestRequires"
+    ],
+    "src/shared/config-eval.ts": [
+      "evaluateRuntimeEligibility",
+      "isConfigPathTruthyWithDefaults"
+    ]
+  },
+  "testSources": [
+    {
+      "path": "src/shared/frontmatter.test.ts",
+      "bytes": 4265,
+      "gitBlob": "379cf930abe11d1a90c44a5a8008ead56a76b364",
+      "sha256": "241ca06de97eac80d5943801fffd626be2eb8923716d64f94460cb9c891a60b4"
+    },
+    {
+      "path": "src/skills/loading/frontmatter.test.ts",
+      "bytes": 4657,
+      "gitBlob": "6a5e4fcc6d72fd086f068ab045d215110fd73caa",
+      "sha256": "eb9222905af7c7bcf8c43af92b105d1ebcd3582ff86a12f03f84adca70e3e6e5"
+    },
+    {
+      "path": "src/skills/loading/config-binary.test.ts",
+      "bytes": 1387,
+      "gitBlob": "23601c0b17bb62c02dd7ea57ef9dc807d0c81f65",
+      "sha256": "f3e214bee29bced25f2e22d9d8bcd2bc69dcb87e09c3352446354f412e84c4df"
+    },
+    {
+      "path": "src/skills/loading/skills.test.ts",
+      "bytes": 22615,
+      "gitBlob": "c4a555436311f750381e8e59ed6141ad073599ef",
+      "sha256": "a62a8ccd8b1096ba1688e1603722fed1b3a0c4d56e428dfe12ad3f1d5deccdc0"
+    },
+    {
+      "path": "src/skills/loading/workspace-bundled-allowlist.test.ts",
+      "bytes": 2308,
+      "gitBlob": "9f668ebf4675abd39599dbf81bf9a9c96572b125",
+      "sha256": "885375169f26d8e021222a3962a86f09cc3b3ac5c77a8f22571f90ef2bfd82f0"
+    },
+    {
+      "path": "src/skills/discovery/filter.test.ts",
+      "bytes": 3191,
+      "gitBlob": "4309a6f7f57f46228d0fd019f2db5b53f9c3996b",
+      "sha256": "e06af2dc615a86ac648be8897e3ae8424d6effddcde789c290125a44f5efac88"
+    },
+    {
+      "path": "src/secrets/runtime-degraded-state.test.ts",
+      "gitBlob": "eafab95699e7de57c99cbff6e213f40a0e8c4117",
+      "sha256": "0f4bf09d60ab987b888fdd712a36b9c80e081636322843a8a02c5b095d0cc8e4"
+    },
+    {
+      "path": "src/shared/config-eval.test.ts",
+      "gitBlob": "202498b729b73716607a20d2aea7055312f576b2",
+      "sha256": "c36f73af9639d77ea62dc30be2f135f00827ccb6fe8415e56ad9717644722fe7"
+    }
+  ],
+  "buildTools": {
+    "typescript": "6.0.3",
+    "esbuild": "0.28.2"
+  },
+  "bundledDependencies": {
+    "json5": "2.2.3",
+    "semver": "7.8.5"
+  },
+  "permittedRuntimeImports": [
+    "node:fs",
+    "node:module",
+    "node:path"
+  ],
+  "permittedGlobalIdentifiers": [
+    "Array",
+    "Boolean",
+    "Error",
+    "JSON",
+    "Map",
+    "Object",
+    "Set",
+    "String",
+    "URL",
+    "process"
+  ],
+  "scope": "Unchanged declaration closure of original skill selection, enablement, requirements, install-hint normalization and invocation policy; no OpenClaw application, YAML parser, installer, secret provider or new execution engine."
+}

@@ -1,95 +1,37 @@
-//
-//  App.swift
-//  AI_HLY
-//
-//  Created by zhiyuan20002 on 3/2/25.
-//
-
-import SwiftUI
-import SwiftData
+import AI_Hanlin
 import AppIntents
+import ExpoWidgets
+import HanlinTranslationUI
+import SwiftUI
 
-// MARK: - 安全数组访问扩展
-extension Collection {
-    /// 安全下标访问，越界时返回 nil 而非崩溃
-    subscript(safe index: Index) -> Element? {
-        return indices.contains(index) ? self[index] : nil
-    }
-}
-
-extension MutableCollection {
-    /// 安全下标访问（可变集合），越界时返回 nil
-    subscript(safe index: Index) -> Element? {
-        get {
-            return indices.contains(index) ? self[index] : nil
-        }
-        set {
-            if indices.contains(index), let newValue = newValue {
-                self[index] = newValue
-            }
-        }
-    }
-}
-
-class AppDataManager: ObservableObject {
-    let modelContainer: ModelContainer
-    
-    init() {
-        do {
-            // 配置 CloudKit 数据库（.automatic 自动选择）
-            let config = ModelConfiguration(isStoredInMemoryOnly: false, cloudKitDatabase: .automatic)
-            modelContainer = try ModelContainer(
-                for: ChatMessages.self,
-                APIKeys.self,
-                SearchKeys.self,
-                AllModels.self,
-                ChatRecords.self,
-                UserInfo.self,
-                PromptRepo.self,
-                KnowledgeRecords.self,
-                KnowledgeChunk.self,
-                MemoryArchive.self,
-                TranslationDic.self,
-                ToolKeys.self,
-                configurations: config
-            )
-        } catch {
-            fatalError("无法初始化 ModelContainer: \(error)")
-        }
-    }
-    
-    // 异步预加载所有数据
-    @MainActor func preloadDataIfNeeded() {
-        let context = modelContainer.mainContext
-        // 确保模型数据优先加载完成
-        preloadModelDataIfNeeded(context: context)
-        preloadAPIKeysIfNeeded(context: context)
-        preloadSearchKeysIfNeeded(context: context)
-        preloadToolKeysIfNeeded(context: context)
-        preloadUserInfoIfNeeded(context: context)
-        preloadPromptIfNeeded(context: context)
-        clearOrphanData(context: context)
-    }
-}
-
+#if HANLIN_NATIVESCRIPT_POC
 @main
-struct MyApp: App {
-    @MainActor @StateObject private var appDataManager = AppDataManager()
-    @State private var deepLinkTarget: String? = nil
-    
+struct HanlinNativeScriptPOCApp: App {
     var body: some Scene {
-        WindowGroup {
-            MainTabView(deepLinkTarget: $deepLinkTarget)
-                .modelContainer(appDataManager.modelContainer)
-                .task {
-                    appDataManager.preloadDataIfNeeded()
-                }
-                .onOpenURL { url in
-                    if url.host == "openVisionView" {
-                        deepLinkTarget = "vision"
-                    }
-                }
-        }
+        WindowGroup { HanlinNativeScriptAcceptanceView() }
     }
 }
+#else
+@main
+@MainActor
+struct MyApp: App {
+    @UIApplicationDelegateAdaptor(HanlinNotificationApplicationDelegate.self) private var notificationDelegate
+    private let context: HanlinApplicationContext
 
+    init() {
+        do { context = try HanlinApplicationContext(configuration: .hanlin) }
+        catch { fatalError("Unable to initialize Hanlin: \(error)") }
+    }
+
+    var body: some Scene {
+        HanlinApplicationScene(context: context)
+    }
+}
+#endif
+
+/// Register the original SDK's system actions with this application's metadata.
+struct HanlinAppIntents: AppIntentsPackage {
+    static var includedPackages: [any AppIntentsPackage.Type] {
+        [HanlinApplicationIntentsPackage.self, HanlinNativePresentationIntentsPackage.self, HanlinExpoWidgetsIntentsPackage.self]
+    }
+}

@@ -1,0 +1,162 @@
+{
+  "files": [
+    {
+      "path": "native/admission.json",
+      "bytes": 6538,
+      "sha256": "56c0b33cda7a8dca4542179c9f3a83eb582588f505fdb75e824ac666b5d07ab1",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/controller-binding-inverse.json",
+      "bytes": 589,
+      "sha256": "f72503718864ba6e51e0f95ffd83998adbbba49a87635469cb82b0b9e7e2b66e",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/controller-launch.json",
+      "bytes": 299,
+      "sha256": "8211308bafaa745cf5547b85791e73b3f8f9f92bde41751bc0949143682c5b8c",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/controller.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/controller.stdout.log",
+      "bytes": 2157,
+      "sha256": "1a8e8bde2113e18cbb46cba6f8b4fe5924c0863ea35949c15b3ae3aa2b007002",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/launch.json",
+      "bytes": 2904,
+      "sha256": "ede5fbabd3e05d72e83637d046b325f56a08f8e7a8e1d9c26ab9b0d5a2e18a58",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/payload-manifest.json",
+      "bytes": 1928,
+      "sha256": "3aa6b63107c39f32adb6a6a27aa7cdd0541b214eaf3ab9ade855ed7d5e93d5f1",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/receipt.json",
+      "bytes": 2347,
+      "sha256": "7ac20f2772a5cd62f1d15e0f2aacaf77562987bf5d42770f8a60baae5a63c1fb",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/remaining-owned-source-processes.json",
+      "bytes": 327,
+      "sha256": "b6358f45c2e4377297877adf7816cea6035ab7b5b031462efd325693fc0a4580",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/source/HanlinEntrypointSystemSurfaceUITests.swift",
+      "bytes": 338858,
+      "sha256": "8a7ee5200bd83c5d2a6d2355be46ee5d460aa7c57aa58f7567135b1e08dffac7",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/source-after.json",
+      "bytes": 1327,
+      "sha256": "9df6e11508d2f889491d101cb5507fdddcb51c9cbae2a63ae901e9df0aa19988",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/source-authorities/AI_HLY.xcodeproj/project.pbxproj",
+      "bytes": 272874,
+      "sha256": "16d57d2ba64e9b39b3a7fdf2536a823d6f59055d2222517a8dab49f73560fcc9",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/source-authorities/AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme",
+      "bytes": 5513,
+      "sha256": "1a37dc5e015ee2e29e873f3e6d6035d6e933ec4eb27848c1263e51c9958af480",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/source-authorities/AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinMiniApps.xcscheme",
+      "bytes": 3843,
+      "sha256": "45badd3c80274ccba347b3a511b3a1f889b6a0e9e2adfa53198870cc79eaaad7",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/source-authorities/Scripts/CI/IntegrationValidation/project_graph.py",
+      "bytes": 25273,
+      "sha256": "b55b15a969fb438d32f78db491e65ea51d755019d3f2d563e61e1cffe9f9afbd",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/source-authorities/Scripts/ProductSplit/extension_inventory.py",
+      "bytes": 4263,
+      "sha256": "969011d17099fada7c7010528579ec8b3a256b8c7bb25fcfd609789e800068a8",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/source-authorities/Scripts/ProductSplit/verify_targets.py",
+      "bytes": 15644,
+      "sha256": "7d98c480a0a9866115527277abd093e897671705a6164e86b5952e00093c1602",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/source-before.json",
+      "bytes": 1327,
+      "sha256": "9df6e11508d2f889491d101cb5507fdddcb51c9cbae2a63ae901e9df0aa19988",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/source-intake.json",
+      "bytes": 2483,
+      "sha256": "857f164505f16247b1eef74d64898228e8e45057a8a35b93ce1f16d8e304f062",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/toolchain-before.json",
+      "bytes": 679,
+      "sha256": "93b89016d1d078a043b7832273cdcfcff359047a5c61c8507005a3b30a237ab0",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/typecheck-controller.py",
+      "bytes": 5469,
+      "sha256": "be5e54e7d9be704bcc109cbdda8f69f83d1c0a429445c786757efaf6e90ba204",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/typecheck.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0o644"
+    },
+    {
+      "path": "native/typecheck.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0o644"
+    },
+    {
+      "path": "native.tar.gz",
+      "bytes": 121476,
+      "sha256": "14bee0d6440ae13c4a01ee2470071bd8c839c08e0482e549b456977e948ac7c7",
+      "mode": "0o644"
+    },
+    {
+      "path": "reconciliation.json",
+      "bytes": 1053,
+      "sha256": "c8564fa0accbb726688dd1a5ccb523aa5422b859316bbc9a649d1da47351222d",
+      "mode": "0o644"
+    },
+    {
+      "path": "transfer.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0o644"
+    }
+  ],
+  "payloadCount": 26,
+  "payloadBytes": 817171
+}

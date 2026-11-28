@@ -1,0 +1,11 @@
+49172: SwiftDriverJobDiscovery normal arm64 Compiling resource_bundle_accessor.swift (in target 'HanlinWidgetCompiler' from project 'HanlinSDK')
+49173: 
+49174: SwiftCompile normal arm64 Compiling\ HanlinWidgetCompiler.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift (in target 'HanlinWidgetCompiler' from project 'HanlinSDK')
+49175: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift:40:15: error: cannot find 'HanlinArchivePolicy' in scope
+49176:  38 |                                            files: [String: Data]) throws -> HanlinWidgetProgram {
+49177:  39 |         guard declaration.engine != .legacy,
+49178:  40 |               HanlinArchivePolicy.normalizedRelativePath(declaration.sourcePath) == declaration.sourcePath,
+49179:     |               `- error: cannot find 'HanlinArchivePolicy' in scope
+49180:  41 |               let format = HanlinWidgetPackageMetadata.SourceFormat(rawValue: declaration.sourceFormat) else {
+49181:  42 |             throw HanlinWidgetProgramError.invalidSource
+49182: Failed frontend command:

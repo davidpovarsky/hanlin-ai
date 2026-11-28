@@ -1,0 +1,511 @@
+﻿2026-11-26T16:08:09.4434400Z Current runner version: '2.338.2'
+2026-11-26T16:08:09.4447660Z ##[group]Runner Image Provisioner
+2026-11-26T16:08:09.4448220Z Hosted Compute Agent
+2026-11-26T16:08:09.4448600Z Version: 20261103.629
+2026-11-26T16:08:09.4449030Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-26T16:08:09.4449510Z Build Date: 2026-11-03T17:26:59Z
+2026-11-26T16:08:09.4449960Z Worker ID: {485bc6e9-aa17-4166-90fa-483831dfa3d4}
+2026-11-26T16:08:09.4450420Z Region: westus
+2026-11-26T16:08:09.4450790Z Cloud: MacCloud
+2026-11-26T16:08:09.4451160Z ##[endgroup]
+2026-11-26T16:08:09.4451970Z ##[group]Operating System
+2026-11-26T16:08:09.4452370Z macOS
+2026-11-26T16:08:09.4452720Z 27.0.1
+2026-11-26T16:08:09.4453070Z 26A434
+2026-11-26T16:08:09.4453410Z ##[endgroup]
+2026-11-26T16:08:09.4453780Z ##[group]Runner Image
+2026-11-26T16:08:09.4454170Z Image: xcode-27-arm64
+2026-11-26T16:08:09.4454560Z Version: 20261104.0337.1
+2026-11-26T16:08:09.4455380Z Included Software: https://github.com/actions/runner-images/blob/xcode-27-arm64/20261104.0337/images/macos/xcode-27-arm64-Readme.md
+2026-11-26T16:08:09.4456420Z Image Release: https://github.com/actions/runner-images/releases/tag/xcode-27-arm64%2F20261104.0337
+2026-11-26T16:08:09.4457070Z ##[endgroup]
+2026-11-26T16:08:09.4457850Z ##[group]GITHUB_TOKEN Permissions
+2026-11-26T16:08:09.4458780Z Actions: read
+2026-11-26T16:08:09.4459150Z Contents: read
+2026-11-26T16:08:09.4459500Z Metadata: read
+2026-11-26T16:08:09.4459870Z ##[endgroup]
+2026-11-26T16:08:09.4461080Z Secret source: Actions
+2026-11-26T16:08:09.4461660Z Cache mode: write
+2026-11-26T16:08:09.4462230Z Prepare workflow directory
+2026-11-26T16:08:09.4705010Z Prepare all required actions
+2026-11-26T16:08:09.4737670Z Getting action download info
+2026-11-26T16:08:09.8614290Z Download action repository 'davidpovarsky/github-automation@main' (SHA:61b34ae6d31e94afb6ceb8a836742275c495b0e2)
+2026-11-26T16:08:10.5371330Z Download action repository 'actions/checkout@v7.0.1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-11-26T16:08:10.6132410Z Download action repository 'actions/setup-node@v7.1.0' (SHA:949feb2413d6458794dcd2491c4babbbce0c15c1)
+2026-11-26T16:08:10.7055340Z Download action repository 'actions/cache@v6.1.0' (SHA:55cc8345863c7cc4c66a329aec7e433d2d1c52a9)
+2026-11-26T16:08:10.7931570Z Download action repository 'actions/upload-artifact@v7.0.2' (SHA:cf430e030ddbb5b0abf93d22962f4752f3646cd9)
+2026-11-26T16:08:10.9549430Z Complete job name: Validate baseline, contracts, tests, and iOS compilation
+2026-11-26T16:08:11.0020940Z ##[group]Run set -euxo pipefail
+2026-11-26T16:08:11.0021400Z [36;1mset -euxo pipefail[0m
+2026-11-26T16:08:11.0021760Z [36;1mmkdir -p "$RUNNER_TEMP/$LOG_DIR"[0m
+2026-11-26T16:08:11.0022140Z [36;1m{[0m
+2026-11-26T16:08:11.0022780Z [36;1m  selected_xcode="$(find /Applications -maxdepth 1 -type d \( -name 'Xcode_2*.app' -o -name 'Xcode*.app' \) ! -name '*_beta*' -print \[0m
+2026-11-26T16:08:11.0023480Z [36;1m    | sort -V \[0m
+2026-11-26T16:08:11.0023810Z [36;1m    | tail -1)"[0m
+2026-11-26T16:08:11.0024170Z [36;1m  if [ -z "$selected_xcode" ]; then[0m
+2026-11-26T16:08:11.0024980Z [36;1m    selected_xcode="$(find /Applications -maxdepth 1 -type d \( -name 'Xcode_2*.app' -o -name 'Xcode*.app' \) -print \[0m
+2026-11-26T16:08:11.0025930Z [36;1m      | sort -V \[0m
+2026-11-26T16:08:11.0026320Z [36;1m      | tail -1)"[0m
+2026-11-26T16:08:11.0026660Z [36;1m  fi[0m
+2026-11-26T16:08:11.0026980Z [36;1m  if [ -z "$selected_xcode" ]; then[0m
+2026-11-26T16:08:11.0027630Z [36;1m    dev_dir="$(xcode-select -p 2>/dev/null || echo '/Applications/Xcode.app/Contents/Developer')"[0m
+2026-11-26T16:08:11.0028300Z [36;1m    selected_xcode="$(dirname "$(dirname "$dev_dir")")"[0m
+2026-11-26T16:08:11.0028730Z [36;1m  fi[0m
+2026-11-26T16:08:11.0029110Z [36;1m  if [ -d "$selected_xcode/Contents/Developer" ]; then[0m
+2026-11-26T16:08:11.0029660Z [36;1m    sudo xcode-select -s "$selected_xcode/Contents/Developer"[0m
+2026-11-26T16:08:11.0030130Z [36;1m  fi[0m
+2026-11-26T16:08:11.0030430Z [36;1m  sw_vers[0m
+2026-11-26T16:08:11.0031050Z [36;1m  xcodebuild -version[0m
+2026-11-26T16:08:11.0031430Z [36;1m  xcode-select -p[0m
+2026-11-26T16:08:11.0031790Z [36;1m  swift --version[0m
+2026-11-26T16:08:11.0032140Z [36;1m  xcodebuild -showsdks[0m
+2026-11-26T16:08:11.0032600Z [36;1m  xcodebuild -showsdks | grep -E 'iphoneos|iOS' || true[0m
+2026-11-26T16:08:11.0033210Z [36;1m  xcodebuild -showsdks | grep -E 'iphonesimulator|iOS Simulator' || true[0m
+2026-11-26T16:08:11.0033810Z [36;1m} 2>&1 | tee "$RUNNER_TEMP/$LOG_DIR/00-environment.log"[0m
+2026-11-26T16:08:11.0034370Z [36;1mxcode_version="$(xcodebuild -version | sed -n '1s/^Xcode //p')"[0m
+2026-11-26T16:08:11.0035000Z [36;1mxcode_build="$(xcodebuild -version | sed -n '2s/^Build version //p')"[0m
+2026-11-26T16:08:11.0035520Z [36;1mrunner_arch="$(uname -m)"[0m
+2026-11-26T16:08:11.0035990Z [36;1miphoneos_sdk="$(xcrun --sdk iphoneos --show-sdk-version)"[0m
+2026-11-26T16:08:11.0036600Z [36;1msimulator_sdk="$(xcrun --sdk iphonesimulator --show-sdk-version)"[0m
+2026-11-26T16:08:11.0037240Z [36;1mecho "xcode-version=$xcode_version" >> "$GITHUB_OUTPUT"[0m
+2026-11-26T16:08:11.0037780Z [36;1mecho "xcode-build=$xcode_build" >> "$GITHUB_OUTPUT"[0m
+2026-11-26T16:08:11.0038300Z [36;1mecho "runner-arch=$runner_arch" >> "$GITHUB_OUTPUT"[0m
+2026-11-26T16:08:11.0038840Z [36;1mecho "iphoneos-sdk=$iphoneos_sdk" >> "$GITHUB_OUTPUT"[0m
+2026-11-26T16:08:11.0039400Z [36;1mecho "simulator-sdk=$simulator_sdk" >> "$GITHUB_OUTPUT"[0m
+2026-11-26T16:08:11.0039930Z [36;1mecho "RUNNER_NAME=${RUNNER_NAME:-unknown}"[0m
+2026-11-26T16:08:11.0040390Z [36;1mecho "RUNNER_OS=${RUNNER_OS:-unknown}"[0m
+2026-11-26T16:08:11.0040840Z [36;1mecho "DEVELOPER_DIR=$(xcode-select -p)"[0m
+2026-11-26T16:08:11.0041310Z [36;1mxcrun simctl list devices available || true[0m
+2026-11-26T16:08:11.0041820Z [36;1mxcode_major="$(echo "$xcode_version" | cut -d. -f1)"[0m
+2026-11-26T16:08:11.0042340Z [36;1msdk_major="$(echo "$iphoneos_sdk" | cut -d. -f1)"[0m
+2026-11-26T16:08:11.0042860Z [36;1mif [ -n "$xcode_major" ] && [ "$xcode_major" -lt 27 ]; then[0m
+2026-11-26T16:08:11.0043580Z [36;1m  echo "ERROR: Xcode major version ($xcode_major) is less than 27. iOS 27 builds require Xcode 27+." >&2[0m
+2026-11-26T16:08:11.0044210Z [36;1m  exit 1[0m
+2026-11-26T16:08:11.0044520Z [36;1mfi[0m
+2026-11-26T16:08:11.0044890Z [36;1mif [ -n "$sdk_major" ] && [ "$sdk_major" -lt 27 ]; then[0m
+2026-11-26T16:08:11.0045810Z [36;1m  echo "ERROR: iPhoneOS SDK major version ($sdk_major) is less than 27. iOS 27 builds require iOS SDK 27+." >&2[0m
+2026-11-26T16:08:11.0046480Z [36;1m  exit 1[0m
+2026-11-26T16:08:11.0046790Z [36;1mfi[0m
+2026-11-26T16:08:11.0086060Z shell: /bin/bash -e {0}
+2026-11-26T16:08:11.0086520Z env:
+2026-11-26T16:08:11.0086880Z   BASELINE_ID: scripting-compat-2026-08-26-a91e6672cb47
+2026-11-26T16:08:11.0087450Z   BASELINE_SHA256: a91e6672cb470fcd5c3185a29ed25832a187008de55e7acd40e4008331efc125
+2026-11-26T16:08:11.0087990Z   BASELINE_FILES: 1005
+2026-11-26T16:08:11.0088300Z   BASELINE_BYTES: 6019985
+2026-11-26T16:08:11.0088630Z   EXPECTED_FIXTURES: 177
+2026-11-26T16:08:11.0088980Z   PACKAGE_PATH: Packages/HanlinPlatform
+2026-11-26T16:08:11.0089370Z   LOG_DIR: phase1-validation-logs
+2026-11-26T16:08:11.0089710Z ##[endgroup]
+2026-11-26T16:08:11.0378180Z + mkdir -p /Users/runner/work/_temp/phase1-validation-logs
+2026-11-26T16:08:11.0396810Z + tee /Users/runner/work/_temp/phase1-validation-logs/00-environment.log
+2026-11-26T16:08:11.0421730Z ++ find /Applications -maxdepth 1 -type d '(' -name 'Xcode_2*.app' -o -name 'Xcode*.app' ')' '!' -name '*_beta*' -print
+2026-11-26T16:08:11.0424060Z ++ sort -V
+2026-11-26T16:08:11.0424520Z ++ tail -1
+2026-11-26T16:08:11.0449710Z + selected_xcode=/Applications/Xcode_27.2.app
+2026-11-26T16:08:11.0450230Z + '[' -z /Applications/Xcode_27.2.app ']'
+2026-11-26T16:08:11.0451360Z + '[' -z /Applications/Xcode_27.2.app ']'
+2026-11-26T16:08:11.0452050Z + '[' -d /Applications/Xcode_27.2.app/Contents/Developer ']'
+2026-11-26T16:08:11.0462860Z + sudo xcode-select -s /Applications/Xcode_27.2.app/Contents/Developer
+2026-11-26T16:08:11.0721980Z + sw_vers
+2026-11-26T16:08:11.0915720Z ProductName:		macOS
+2026-11-26T16:08:11.0916720Z ProductVersion:		27.0.1
+2026-11-26T16:08:11.0917150Z BuildVersion:		26A434
+2026-11-26T16:08:11.0917660Z + xcodebuild -version
+2026-11-26T16:08:13.4036950Z Xcode 27.2
+2026-11-26T16:08:13.4037660Z Build version 27B52
+2026-11-26T16:08:13.4054290Z + xcode-select -p
+2026-11-26T16:08:13.4079220Z /Applications/Xcode_27.2.app/Contents/Developer
+2026-11-26T16:08:13.4080410Z + swift --version
+2026-11-26T16:08:16.1121970Z swift-driver version: 1.168.6 Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)
+2026-11-26T16:08:16.1122530Z Target: arm64-apple-macosx27.0.0
+2026-11-26T16:08:16.1169770Z + xcodebuild -showsdks
+2026-11-26T16:08:16.7488300Z DriverKit SDKs:
+2026-11-26T16:08:16.7489050Z 	DriverKit 27.2                	-sdk driverkit27.2
+2026-11-26T16:08:16.7489920Z 
+2026-11-26T16:08:16.7490170Z iOS SDKs:
+2026-11-26T16:08:16.7490540Z 	iOS 27.2                      	-sdk iphoneos27.2
+2026-11-26T16:08:16.7491020Z 
+2026-11-26T16:08:16.7491200Z iOS Simulator SDKs:
+2026-11-26T16:08:16.7491600Z 	Simulator - iOS 27.2          	-sdk iphonesimulator27.2
+2026-11-26T16:08:16.7491950Z 
+2026-11-26T16:08:16.7492290Z macOS SDKs:
+2026-11-26T16:08:16.7492640Z 	macOS 27.2                    	-sdk macosx27.2
+2026-11-26T16:08:16.7493050Z 	macOS 27.2                    	-sdk macosx27.2
+2026-11-26T16:08:16.7496820Z 
+2026-11-26T16:08:16.7497150Z tvOS SDKs:
+2026-11-26T16:08:16.7497580Z 	tvOS 27.2                     	-sdk appletvos27.2
+2026-11-26T16:08:16.7497960Z 
+2026-11-26T16:08:16.7498170Z tvOS Simulator SDKs:
+2026-11-26T16:08:16.7498590Z 	Simulator - tvOS 27.2         	-sdk appletvsimulator27.2
+2026-11-26T16:08:16.7498910Z 
+2026-11-26T16:08:16.7499110Z visionOS SDKs:
+2026-11-26T16:08:16.7499500Z 	visionOS 27.2                 	-sdk xros27.2
+2026-11-26T16:08:16.7499860Z 
+2026-11-26T16:08:16.7500080Z visionOS Simulator SDKs:
+2026-11-26T16:08:16.7500470Z 	Simulator - visionOS 27.2     	-sdk xrsimulator27.2
+2026-11-26T16:08:16.7500780Z 
+2026-11-26T16:08:16.7500950Z watchOS SDKs:
+2026-11-26T16:08:16.7501290Z 	watchOS 27.2                  	-sdk watchos27.2
+2026-11-26T16:08:16.7501570Z 
+2026-11-26T16:08:16.7501750Z watchOS Simulator SDKs:
+2026-11-26T16:08:16.7502130Z 	Simulator - watchOS 27.2      	-sdk watchsimulator27.2
+2026-11-26T16:08:16.7502430Z 
+2026-11-26T16:08:16.7518550Z + xcodebuild -showsdks
+2026-11-26T16:08:16.7520110Z + grep -E 'iphoneos|iOS'
+2026-11-26T16:08:17.3836890Z iOS SDKs:
+2026-11-26T16:08:17.3837320Z 	iOS 27.2                      	-sdk iphoneos27.2
+2026-11-26T16:08:17.3837650Z iOS Simulator SDKs:
+2026-11-26T16:08:17.3837990Z 	Simulator - iOS 27.2          	-sdk iphonesimulator27.2
+2026-11-26T16:08:17.3841740Z + xcodebuild -showsdks
+2026-11-26T16:08:17.3843970Z + grep -E 'iphonesimulator|iOS Simulator'
+2026-11-26T16:08:18.0172230Z iOS Simulator SDKs:
+2026-11-26T16:08:18.0172640Z 	Simulator - iOS 27.2          	-sdk iphonesimulator27.2
+2026-11-26T16:08:18.0184080Z ++ xcodebuild -version
+2026-11-26T16:08:18.0184680Z ++ sed -n '1s/^Xcode //p'
+2026-11-26T16:08:18.1044150Z + xcode_version=27.2
+2026-11-26T16:08:18.1050520Z ++ xcodebuild -version
+2026-11-26T16:08:18.1052120Z ++ sed -n '2s/^Build version //p'
+2026-11-26T16:08:18.1916380Z + xcode_build=27B52
+2026-11-26T16:08:18.1920010Z ++ uname -m
+2026-11-26T16:08:18.1941580Z + runner_arch=arm64
+2026-11-26T16:08:18.1944790Z ++ xcrun --sdk iphoneos --show-sdk-version
+2026-11-26T16:08:19.9630580Z + iphoneos_sdk=27.2
+2026-11-26T16:08:19.9633940Z ++ xcrun --sdk iphonesimulator --show-sdk-version
+2026-11-26T16:08:21.7683480Z + simulator_sdk=27.2
+2026-11-26T16:08:21.7683790Z + echo xcode-version=27.2
+2026-11-26T16:08:21.7684440Z + echo xcode-build=27B52
+2026-11-26T16:08:21.7685190Z + echo runner-arch=arm64
+2026-11-26T16:08:21.7685720Z + echo iphoneos-sdk=27.2
+2026-11-26T16:08:21.7686380Z + echo simulator-sdk=27.2
+2026-11-26T16:08:21.7687100Z + echo 'RUNNER_NAME=GitHub Actions 1000026654'
+2026-11-26T16:08:21.7687380Z RUNNER_NAME=GitHub Actions 1000026654
+2026-11-26T16:08:21.7688300Z + echo RUNNER_OS=macOS
+2026-11-26T16:08:21.7688510Z RUNNER_OS=macOS
+2026-11-26T16:08:21.7691340Z ++ xcode-select -p
+2026-11-26T16:08:21.7723180Z + echo DEVELOPER_DIR=/Applications/Xcode_27.2.app/Contents/Developer
+2026-11-26T16:08:21.7723590Z DEVELOPER_DIR=/Applications/Xcode_27.2.app/Contents/Developer
+2026-11-26T16:08:21.7723910Z + xcrun simctl list devices available
+2026-11-26T16:08:24.9893610Z == Devices ==
+2026-11-26T16:08:24.9895110Z -- iOS 27.0 --
+2026-11-26T16:08:24.9896220Z     iPhone 18 Pro (0A1B5EC5-2485-4F8E-B06B-1185D8E186C0) (Shutdown) 
+2026-11-26T16:08:24.9897520Z     iPhone 18 Pro Max (0893739A-31DF-4ADD-AAD3-12D877638876) (Shutdown) 
+2026-11-26T16:08:24.9899910Z     iPhone 17e (0AC25E88-57C5-486B-A20F-84D7A683A99D) (Shutdown) 
+2026-11-26T16:08:24.9900370Z     iPhone Air (560C2889-F06A-4CE6-B330-A73499F3C513) (Shutdown) 
+2026-11-26T16:08:24.9905650Z     iPhone 17 (24E299B4-C77B-4426-AC2B-71243825F07C) (Shutdown) 
+2026-11-26T16:08:24.9910220Z ++ echo 27.2
+2026-11-26T16:08:24.9910560Z     iPad Pro 13-inch (M5) (E247944A-EF3A-4ACA-99BF-97F59D694F71) (Shutdown) 
+2026-11-26T16:08:24.9912650Z     iPad Pro 11-inch (M5) (FFC11C89-1A17-4EBB-B986-ADE2E09FA1AF) (Shutdown) 
+2026-11-26T16:08:24.9913160Z     iPad mini (A17 Pro) (8721CBAE-E1E6-4BFA-A804-29B2DB933F58) (Shutdown) 
+2026-11-26T16:08:24.9913680Z     iPad Air 13-inch (M4) (0F13E1BE-0D17-4557-B1DB-47542A309DB6) (Shutdown) 
+2026-11-26T16:08:24.9915300Z ++ cut -d. -f1
+2026-11-26T16:08:24.9915840Z     iPad Air 11-inch (M4) (ABFA6AF8-EFEF-4CD6-8453-AEAB10014F8F) (Shutdown) 
+2026-11-26T16:08:24.9916460Z     iPad (A16) (5D837EC4-DFCA-462C-9CBD-997BFF1A2E68) (Shutdown) 
+2026-11-26T16:08:24.9916790Z -- iOS 27.1 --
+2026-11-26T16:08:24.9917340Z     iPhone Duo (09693AE6-5842-4CF5-B801-D905E896271E) (Shutdown) 
+2026-11-26T16:08:24.9917660Z -- iOS 27.2 --
+2026-11-26T16:08:24.9917960Z     iPhone Duo (C898E3E4-5033-4085-B886-963EE2D0C478) (Shutdown) 
+2026-11-26T16:08:24.9918300Z -- iOS 27.2 --
+2026-11-26T16:08:24.9918640Z     iPhone 18 Pro (A8CE73D2-F54C-4FB2-B688-BC6BD7612FA8) (Shutdown) 
+2026-11-26T16:08:24.9919070Z     iPhone 18 Pro Max (CAD4F983-CE4C-41E7-84A5-DFFD6F0CF3CA) (Shutdown) 
+2026-11-26T16:08:24.9919430Z     iPhone 17e (CD90C719-F4A8-40D6-9AC3-51BE522C2705) (Shutdown) 
+2026-11-26T16:08:24.9919780Z     iPhone Air (92FA1CA9-EA61-434B-AACA-0A76FE5ECBD4) (Shutdown) 
+2026-11-26T16:08:24.9920130Z     iPhone 17 (4AD2086B-7B8F-4608-A742-AA422A0B8D74) (Shutdown) 
+2026-11-26T16:08:24.9921510Z     iPad mini (A20 Pro) (4DF1AA75-A2F8-4E1A-AF15-154F8671CBBC) (Shutdown) 
+2026-11-26T16:08:24.9922040Z     iPad Pro 13-inch (M5) (D03256B1-4569-435F-8D92-E2BDD4ED7058) (Shutdown) 
+2026-11-26T16:08:24.9922440Z     iPad Pro 11-inch (M5) (6582E97C-8AA0-4F7B-8337-A78B20700767) (Shutdown) 
+2026-11-26T16:08:24.9922930Z     iPad Air 13-inch (M4) (9BD82FC8-9E98-42CA-B1F2-620B52BA9646) (Shutdown) 
+2026-11-26T16:08:24.9923310Z     iPad Air 11-inch (M4) (E3CC0D75-9911-40E7-8F16-FD5D98ADF2CA) (Shutdown) 
+2026-11-26T16:08:24.9923670Z     iPad (A16) (1606AE1D-D9DA-4E44-A5D2-FD7DDE1C8DE0) (Shutdown) 
+2026-11-26T16:08:24.9924010Z -- tvOS 27.0 --
+2026-11-26T16:08:24.9924290Z     Apple TV 4K (3rd generation) (AA1A4436-9426-4301-8D39-5E909CAF9C42) (Shutdown) 
+2026-11-26T16:08:24.9924730Z     Apple TV 4K (3rd generation) (at 1080p) (B9E4D366-604B-4F2F-8C77-5D95AD648816) (Shutdown) 
+2026-11-26T16:08:24.9925080Z -- tvOS 27.2 --
+2026-11-26T16:08:24.9925360Z     Apple TV 4K (4th generation) (1BB7D6F3-8BE1-4FC9-A260-78467B0D5424) (Shutdown) 
+2026-11-26T16:08:24.9925810Z     Apple TV 4K (4th generation) (at 1080p) (29506C56-3058-4DCF-9859-3AC5460DFA1B) (Shutdown) 
+2026-11-26T16:08:24.9926160Z -- watchOS 27.0 --
+2026-11-26T16:08:24.9926430Z     Apple Watch Series 12 (46mm) (CD8A490F-5B2C-485E-8F11-CD8596FA4AAE) (Shutdown) 
+2026-11-26T16:08:24.9926850Z     Apple Watch Series 12 (42mm) (0F2F315B-5869-49D4-A5C9-42A5585869D7) (Shutdown) 
+2026-11-26T16:08:24.9927280Z     Apple Watch Ultra 4 (49mm) (BCB3C139-0F79-47D8-BCF2-5D39AA0D1C00) (Shutdown) 
+2026-11-26T16:08:24.9927660Z     Apple Watch SE 3 (44mm) (9DC4C83D-BC52-420A-AAA0-35DBBCE62ECA) (Shutdown) 
+2026-11-26T16:08:24.9928310Z     Apple Watch SE 3 (40mm) (59D98431-6DC6-4BA6-90DE-5EA5F59715D1) (Shutdown) 
+2026-11-26T16:08:24.9928670Z -- watchOS 27.2 --
+2026-11-26T16:08:24.9928950Z     Apple Watch Series 12 (46mm) (BB504ECE-7BB3-43DB-A862-11699B1BC8B5) (Shutdown) 
+2026-11-26T16:08:24.9929390Z     Apple Watch Series 12 (42mm) (8836D111-0F55-471F-BF96-949729D6E6D4) (Shutdown) 
+2026-11-26T16:08:24.9929830Z     Apple Watch Ultra 4 (49mm) (6BC93D36-0F39-4B2D-991D-DE2ECF09D68B) (Shutdown) 
+2026-11-26T16:08:24.9930270Z     Apple Watch SE 3 (44mm) (4C0B5A3D-6D96-41B3-A8CB-5DB4A281C3A0) (Shutdown) 
+2026-11-26T16:08:24.9930650Z     Apple Watch SE 3 (40mm) (BFA70E89-86B8-4230-BC4A-C77A3375A583) (Shutdown) 
+2026-11-26T16:08:24.9930970Z -- visionOS 27.0 --
+2026-11-26T16:08:24.9931280Z     Apple Vision Pro (D5A34E37-AA68-44E2-89EA-0F9AEA7732E8) (Shutdown) 
+2026-11-26T16:08:24.9931710Z -- visionOS 27.2 --
+2026-11-26T16:08:24.9932060Z     Apple Vision Pro (46E7C796-CFD9-4011-B284-E67F4C519820) (Shutdown) 
+2026-11-26T16:08:24.9958430Z + xcode_major=27
+2026-11-26T16:08:24.9968930Z ++ echo 27.2
+2026-11-26T16:08:24.9969150Z ++ cut -d. -f1
+2026-11-26T16:08:24.9992820Z + sdk_major=27
+2026-11-26T16:08:24.9993440Z + '[' -n 27 ']'
+2026-11-26T16:08:24.9993660Z + '[' 27 -lt 27 ']'
+2026-11-26T16:08:24.9993880Z + '[' -n 27 ']'
+2026-11-26T16:08:24.9994070Z + '[' 27 -lt 27 ']'
+2026-11-26T16:08:25.0168130Z ##[group]Run actions/checkout@v7.0.1
+2026-11-26T16:08:25.0168340Z with:
+2026-11-26T16:08:25.0168460Z   clean: true
+2026-11-26T16:08:25.0168600Z   fetch-depth: 1
+2026-11-26T16:08:25.0168790Z   ref: 7d5c4bae7693bebafcc7890fd74f777b05311666
+2026-11-26T16:08:25.0169030Z   repository: davidpovarsky/hanlin-ai
+2026-11-26T16:08:25.0170970Z   token: ***
+2026-11-26T16:08:25.0171100Z   ssh-strict: true
+2026-11-26T16:08:25.0171230Z   ssh-user: git
+2026-11-26T16:08:25.0171370Z   persist-credentials: true
+2026-11-26T16:08:25.0171560Z   sparse-checkout-cone-mode: true
+2026-11-26T16:08:25.0171750Z   fetch-tags: false
+2026-11-26T16:08:25.0171890Z   show-progress: true
+2026-11-26T16:08:25.0172030Z   lfs: false
+2026-11-26T16:08:25.0172150Z   submodules: false
+2026-11-26T16:08:25.0172360Z   set-safe-directory: true
+2026-11-26T16:08:25.0172530Z   allow-unsafe-pr-checkout: false
+2026-11-26T16:08:25.0172700Z env:
+2026-11-26T16:08:25.0172880Z   BASELINE_ID: scripting-compat-2026-08-26-a91e6672cb47
+2026-11-26T16:08:25.0173260Z   BASELINE_SHA256: a91e6672cb470fcd5c3185a29ed25832a187008de55e7acd40e4008331efc125
+2026-11-26T16:08:25.0173560Z   BASELINE_FILES: 1005
+2026-11-26T16:08:25.0173710Z   BASELINE_BYTES: 6019985
+2026-11-26T16:08:25.0173870Z   EXPECTED_FIXTURES: 177
+2026-11-26T16:08:25.0174040Z   PACKAGE_PATH: Packages/HanlinPlatform
+2026-11-26T16:08:25.0174250Z   LOG_DIR: phase1-validation-logs
+2026-11-26T16:08:25.0174410Z ##[endgroup]
+2026-11-26T16:08:25.3870190Z Syncing repository: davidpovarsky/hanlin-ai
+2026-11-26T16:08:25.3871160Z ##[group]Getting Git version info
+2026-11-26T16:08:25.3871500Z Working directory is '/Users/runner/work/hanlin-ai/hanlin-ai'
+2026-11-26T16:08:25.3872110Z [command]/opt/homebrew/bin/git version
+2026-11-26T16:08:25.4388550Z git version 2.56.0
+2026-11-26T16:08:25.4399180Z ##[endgroup]
+2026-11-26T16:08:25.4404070Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/da0f6304-67fd-453c-9b18-a105c72b32d6/.gitconfig'
+2026-11-26T16:08:25.4409170Z Temporarily overriding HOME='/Users/runner/work/_temp/da0f6304-67fd-453c-9b18-a105c72b32d6' before making global git config changes
+2026-11-26T16:08:25.4409930Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-26T16:08:25.4413080Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/hanlin-ai/hanlin-ai
+2026-11-26T16:08:25.4524610Z Deleting the contents of '/Users/runner/work/hanlin-ai/hanlin-ai'
+2026-11-26T16:08:25.4529490Z ##[group]Determining repository object format
+2026-11-26T16:08:25.4530970Z ##[endgroup]
+2026-11-26T16:08:25.4531360Z ##[group]Initializing the repository
+2026-11-26T16:08:25.4534720Z [command]/opt/homebrew/bin/git init /Users/runner/work/hanlin-ai/hanlin-ai
+2026-11-26T16:08:25.4759310Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-26T16:08:25.4760110Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-26T16:08:25.4760700Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-26T16:08:25.4761090Z hint: call:
+2026-11-26T16:08:25.4761230Z hint:
+2026-11-26T16:08:25.4761450Z hint: 	git config --global init.defaultBranch <name>
+2026-11-26T16:08:25.4761730Z hint:
+2026-11-26T16:08:25.4762000Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-26T16:08:25.4762490Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-26T16:08:25.4762910Z hint:
+2026-11-26T16:08:25.4763090Z hint: 	git branch -m <name>
+2026-11-26T16:08:25.4763290Z hint:
+2026-11-26T16:08:25.4763540Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-26T16:08:25.4769060Z Initialized empty Git repository in /Users/runner/work/hanlin-ai/hanlin-ai/.git/
+2026-11-26T16:08:25.4777170Z [command]/opt/homebrew/bin/git remote add origin https://github.com/davidpovarsky/hanlin-ai
+2026-11-26T16:08:25.4849980Z ##[endgroup]
+2026-11-26T16:08:25.4850630Z ##[group]Disabling automatic garbage collection
+2026-11-26T16:08:25.4853080Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-11-26T16:08:25.4907800Z ##[endgroup]
+2026-11-26T16:08:25.4908110Z ##[group]Setting up auth
+2026-11-26T16:08:25.4908340Z Removing SSH command configuration
+2026-11-26T16:08:25.4912050Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-26T16:08:25.4967450Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-26T16:08:25.5745080Z Removing HTTP extra header
+2026-11-26T16:08:25.5748870Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-26T16:08:25.5804100Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-26T16:08:25.6463150Z Removing includeIf entries pointing to credentials config files
+2026-11-26T16:08:25.6466580Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-26T16:08:25.6523120Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-26T16:08:25.7217070Z [command]/opt/homebrew/bin/git config --file /Users/runner/work/_temp/git-credentials-e754eae3-04a6-4b37-a339-e8a656ea0586.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-26T16:08:25.7281370Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path /Users/runner/work/_temp/git-credentials-e754eae3-04a6-4b37-a339-e8a656ea0586.config
+2026-11-26T16:08:25.7341610Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path /Users/runner/work/_temp/git-credentials-e754eae3-04a6-4b37-a339-e8a656ea0586.config
+2026-11-26T16:08:25.7408430Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-e754eae3-04a6-4b37-a339-e8a656ea0586.config
+2026-11-26T16:08:25.7469610Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-e754eae3-04a6-4b37-a339-e8a656ea0586.config
+2026-11-26T16:08:25.7531880Z ##[endgroup]
+2026-11-26T16:08:25.7532290Z ##[group]Fetching the repository
+2026-11-26T16:08:25.7533350Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 7d5c4bae7693bebafcc7890fd74f777b05311666
+2026-11-26T16:08:47.8965090Z From https://github.com/davidpovarsky/hanlin-ai
+2026-11-26T16:08:47.8965760Z  * branch            7d5c4bae7693bebafcc7890fd74f777b05311666 -> FETCH_HEAD
+2026-11-26T16:08:47.8993770Z [command]/opt/homebrew/bin/git rev-parse --verify --quiet 7d5c4bae7693bebafcc7890fd74f777b05311666^{object}
+2026-11-26T16:08:47.9072010Z 7d5c4bae7693bebafcc7890fd74f777b05311666
+2026-11-26T16:08:47.9075590Z ##[endgroup]
+2026-11-26T16:08:47.9075940Z ##[group]Determining the checkout info
+2026-11-26T16:08:47.9076690Z ##[endgroup]
+2026-11-26T16:08:47.9080820Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-11-26T16:08:47.9166070Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-26T16:08:47.9227410Z ##[group]Checking out the ref
+2026-11-26T16:08:47.9230840Z [command]/opt/homebrew/bin/git checkout --progress --force 7d5c4bae7693bebafcc7890fd74f777b05311666
+2026-11-26T16:08:49.0480520Z Updating files:  37% (6448/17248)
+2026-11-26T16:08:49.0714600Z Updating files:  38% (6555/17248)
+2026-11-26T16:08:49.0959600Z Updating files:  39% (6727/17248)
+2026-11-26T16:08:49.1197020Z Updating files:  40% (6900/17248)
+2026-11-26T16:08:49.1435760Z Updating files:  41% (7072/17248)
+2026-11-26T16:08:49.1627000Z Updating files:  42% (7245/17248)
+2026-11-26T16:08:49.1965570Z Updating files:  43% (7417/17248)
+2026-11-26T16:08:49.2175510Z Updating files:  44% (7590/17248)
+2026-11-26T16:08:49.2411770Z Updating files:  45% (7762/17248)
+2026-11-26T16:08:49.2752390Z Updating files:  46% (7935/17248)
+2026-11-26T16:08:49.3102290Z Updating files:  47% (8107/17248)
+2026-11-26T16:08:49.3463480Z Updating files:  48% (8280/17248)
+2026-11-26T16:08:49.3829470Z Updating files:  49% (8452/17248)
+2026-11-26T16:08:49.4203990Z Updating files:  50% (8624/17248)
+2026-11-26T16:08:49.4591000Z Updating files:  51% (8797/17248)
+2026-11-26T16:08:49.4966000Z Updating files:  52% (8969/17248)
+2026-11-26T16:08:49.5306640Z Updating files:  53% (9142/17248)
+2026-11-26T16:08:49.5667710Z Updating files:  54% (9314/17248)
+2026-11-26T16:08:49.6030840Z Updating files:  55% (9487/17248)
+2026-11-26T16:08:49.6373030Z Updating files:  56% (9659/17248)
+2026-11-26T16:08:49.6695830Z Updating files:  57% (9832/17248)
+2026-11-26T16:08:49.6949680Z Updating files:  58% (10004/17248)
+2026-11-26T16:08:49.7149920Z Updating files:  59% (10177/17248)
+2026-11-26T16:08:49.7346630Z Updating files:  60% (10349/17248)
+2026-11-26T16:08:49.7583950Z Updating files:  61% (10522/17248)
+2026-11-26T16:08:49.7893710Z Updating files:  62% (10694/17248)
+2026-11-26T16:08:49.8108730Z Updating files:  63% (10867/17248)
+2026-11-26T16:08:49.8363740Z Updating files:  64% (11039/17248)
+2026-11-26T16:08:49.8568460Z Updating files:  65% (11212/17248)
+2026-11-26T16:08:49.8777060Z Updating files:  66% (11384/17248)
+2026-11-26T16:08:49.9182730Z Updating files:  67% (11557/17248)
+2026-11-26T16:08:49.9391290Z Updating files:  68% (11729/17248)
+2026-11-26T16:08:49.9520320Z Updating files:  69% (11902/17248)
+2026-11-26T16:08:49.9633860Z Updating files:  69% (11999/17248)
+2026-11-26T16:08:50.0251470Z Updating files:  70% (12074/17248)
+2026-11-26T16:08:50.0532730Z Updating files:  71% (12247/17248)
+2026-11-26T16:08:50.0924310Z Updating files:  72% (12419/17248)
+2026-11-26T16:08:50.1106440Z Updating files:  73% (12592/17248)
+2026-11-26T16:08:50.1265110Z Updating files:  74% (12764/17248)
+2026-11-26T16:08:50.1417040Z Updating files:  75% (12936/17248)
+2026-11-26T16:08:50.1580390Z Updating files:  76% (13109/17248)
+2026-11-26T16:08:50.1936940Z Updating files:  77% (13281/17248)
+2026-11-26T16:08:50.2166130Z Updating files:  78% (13454/17248)
+2026-11-26T16:08:50.2450730Z Updating files:  79% (13626/17248)
+2026-11-26T16:08:50.2880620Z Updating files:  80% (13799/17248)
+2026-11-26T16:08:50.3231910Z Updating files:  81% (13971/17248)
+2026-11-26T16:08:50.3593880Z Updating files:  82% (14144/17248)
+2026-11-26T16:08:50.3918090Z Updating files:  83% (14316/17248)
+2026-11-26T16:08:50.4264840Z Updating files:  84% (14489/17248)
+2026-11-26T16:08:50.4804880Z Updating files:  85% (14661/17248)
+2026-11-26T16:08:50.5310510Z Updating files:  86% (14834/17248)
+2026-11-26T16:08:50.5809930Z Updating files:  87% (15006/17248)
+2026-11-26T16:08:50.6164260Z Updating files:  88% (15179/17248)
+2026-11-26T16:08:50.6538460Z Updating files:  89% (15351/17248)
+2026-11-26T16:08:50.6860440Z Updating files:  90% (15524/17248)
+2026-11-26T16:08:50.7223100Z Updating files:  91% (15696/17248)
+2026-11-26T16:08:50.7443980Z Updating files:  92% (15869/17248)
+2026-11-26T16:08:50.7755320Z Updating files:  93% (16041/17248)
+2026-11-26T16:08:50.8035100Z Updating files:  94% (16214/17248)
+2026-11-26T16:08:50.8284690Z Updating files:  95% (16386/17248)
+2026-11-26T16:08:50.8620140Z Updating files:  96% (16559/17248)
+2026-11-26T16:08:50.8875580Z Updating files:  97% (16731/17248)
+2026-11-26T16:08:50.9090130Z Updating files:  98% (16904/17248)
+2026-11-26T16:08:50.9344060Z Updating files:  99% (17076/17248)
+2026-11-26T16:08:50.9345270Z Updating files: 100% (17248/17248)
+2026-11-26T16:08:50.9345610Z Updating files: 100% (17248/17248), done.
+2026-11-26T16:08:50.9604670Z HEAD is now at 7d5c4ba docs(validation): retain canonical audits and verified native CI readiness
+2026-11-26T16:08:50.9645630Z ##[endgroup]
+2026-11-26T16:08:50.9766610Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-11-26T16:08:50.9842000Z 7d5c4bae7693bebafcc7890fd74f777b05311666
+2026-11-26T16:08:51.0014770Z ##[group]Run set -euxo pipefail
+2026-11-26T16:08:51.0015000Z [36;1mset -euxo pipefail[0m
+2026-11-26T16:08:51.0015200Z [36;1mtest "$(git rev-parse HEAD)" = "$GITHUB_SHA"[0m
+2026-11-26T16:08:51.0015470Z [36;1mtest -z "$(git status --porcelain)"[0m
+2026-11-26T16:08:51.0015770Z [36;1mgit rev-parse HEAD[0m
+2026-11-26T16:08:51.0197930Z shell: /bin/bash -e {0}
+2026-11-26T16:08:51.0198110Z env:
+2026-11-26T16:08:51.0198380Z   BASELINE_ID: scripting-compat-2026-08-26-a91e6672cb47
+2026-11-26T16:08:51.0198770Z   BASELINE_SHA256: a91e6672cb470fcd5c3185a29ed25832a187008de55e7acd40e4008331efc125
+2026-11-26T16:08:51.0199170Z   BASELINE_FILES: 1005
+2026-11-26T16:08:51.0199410Z   BASELINE_BYTES: 6019985
+2026-11-26T16:08:51.0199580Z   EXPECTED_FIXTURES: 177
+2026-11-26T16:08:51.0199760Z   PACKAGE_PATH: Packages/HanlinPlatform
+2026-11-26T16:08:51.0199970Z   LOG_DIR: phase1-validation-logs
+2026-11-26T16:08:51.0200140Z ##[endgroup]
+2026-11-26T16:08:51.0525240Z ++ git rev-parse HEAD
+2026-11-26T16:08:51.0597820Z + test 7d5c4bae7693bebafcc7890fd74f777b05311666 = 7d5c4bae7693bebafcc7890fd74f777b05311666
+2026-11-26T16:08:51.0601000Z ++ git status --porcelain
+2026-11-26T16:08:51.8444730Z + test -z ' M Tools/ai-team/ensure-team.ps1'
+2026-11-26T16:08:51.8454750Z ##[error]Process completed with exit code 1.
+2026-11-26T16:08:51.8597630Z ##[group]Run set -uo pipefail
+2026-11-26T16:08:51.8597840Z [36;1mset -uo pipefail[0m
+2026-11-26T16:08:51.8597990Z [36;1m{[0m
+2026-11-26T16:08:51.8598160Z [36;1m  echo "Compiler warnings retained for review:"[0m
+2026-11-26T16:08:51.8598540Z [36;1m  grep -RIn --include='*.log' 'warning:' "$LOG_DIR" || true[0m
+2026-11-26T16:08:51.8598800Z [36;1m} | tee "$LOG_DIR/09-warnings.log"[0m
+2026-11-26T16:08:51.8630150Z shell: /bin/bash -e {0}
+2026-11-26T16:08:51.8630300Z env:
+2026-11-26T16:08:51.8630480Z   BASELINE_ID: scripting-compat-2026-08-26-a91e6672cb47
+2026-11-26T16:08:51.8630820Z   BASELINE_SHA256: a91e6672cb470fcd5c3185a29ed25832a187008de55e7acd40e4008331efc125
+2026-11-26T16:08:51.8631120Z   BASELINE_FILES: 1005
+2026-11-26T16:08:51.8631280Z   BASELINE_BYTES: 6019985
+2026-11-26T16:08:51.8631430Z   EXPECTED_FIXTURES: 177
+2026-11-26T16:08:51.8631600Z   PACKAGE_PATH: Packages/HanlinPlatform
+2026-11-26T16:08:51.8631810Z   LOG_DIR: phase1-validation-logs
+2026-11-26T16:08:51.8632000Z ##[endgroup]
+2026-11-26T16:08:51.8914310Z tee: phase1-validation-logs/09-warnings.log: No such file or directory
+2026-11-26T16:08:51.8914740Z Compiler warnings retained for review:
+2026-11-26T16:08:51.8921030Z ##[error]Process completed with exit code 1.
+2026-11-26T16:08:51.9001570Z ##[group]Run actions/upload-artifact@v7.0.2
+2026-11-26T16:08:51.9001800Z with:
+2026-11-26T16:08:51.9002030Z   name: phase1-validation-7d5c4bae7693bebafcc7890fd74f777b05311666
+2026-11-26T16:08:51.9002350Z   path: /Users/runner/work/_temp/phase1-validation-logs
+2026-11-26T16:08:51.9002610Z   if-no-files-found: error
+2026-11-26T16:08:51.9002770Z   retention-days: 30
+2026-11-26T16:08:51.9002930Z   compression-level: 6
+2026-11-26T16:08:51.9003090Z   overwrite: false
+2026-11-26T16:08:51.9003240Z   include-hidden-files: false
+2026-11-26T16:08:51.9003480Z   archive: true
+2026-11-26T16:08:51.9003630Z env:
+2026-11-26T16:08:51.9003810Z   BASELINE_ID: scripting-compat-2026-08-26-a91e6672cb47
+2026-11-26T16:08:51.9004180Z   BASELINE_SHA256: a91e6672cb470fcd5c3185a29ed25832a187008de55e7acd40e4008331efc125
+2026-11-26T16:08:51.9004540Z   BASELINE_FILES: 1005
+2026-11-26T16:08:51.9004710Z   BASELINE_BYTES: 6019985
+2026-11-26T16:08:51.9004880Z   EXPECTED_FIXTURES: 177
+2026-11-26T16:08:51.9005090Z   PACKAGE_PATH: Packages/HanlinPlatform
+2026-11-26T16:08:51.9005310Z   LOG_DIR: phase1-validation-logs
+2026-11-26T16:08:51.9005490Z ##[endgroup]
+2026-11-26T16:08:52.0254340Z With the provided path, there will be 1 file uploaded
+2026-11-26T16:08:52.0256710Z Artifact name is valid!
+2026-11-26T16:08:52.0257060Z Root directory input is valid!
+2026-11-26T16:08:52.3321450Z Uploading artifact: phase1-validation-7d5c4bae7693bebafcc7890fd74f777b05311666.zip
+2026-11-26T16:08:52.3347640Z Beginning upload of artifact content to blob storage
+2026-11-26T16:08:52.5266460Z Uploaded bytes 699
+2026-11-26T16:08:52.5701190Z Finished uploading artifact content to blob storage!
+2026-11-26T16:08:52.5702370Z SHA256 digest of uploaded artifact is 7375bf52c41bd3c7def322eefdbcf498149e84dc4e30a7dacfd2c0f7c2ad922f
+2026-11-26T16:08:52.5703120Z Finalizing artifact upload
+2026-11-26T16:08:53.0297650Z Artifact phase1-validation-7d5c4bae7693bebafcc7890fd74f777b05311666 successfully finalized. Artifact ID 15136231698
+2026-11-26T16:08:53.0299590Z Artifact phase1-validation-7d5c4bae7693bebafcc7890fd74f777b05311666 has been successfully uploaded! Final size is 699 bytes. Artifact ID is 15136231698
+2026-11-26T16:08:53.0306330Z Artifact download URL: https://github.com/davidpovarsky/hanlin-ai/actions/runs/45855765676/artifacts/15136231698
+2026-11-26T16:08:53.0521330Z Post job cleanup.
+2026-11-26T16:08:53.1389610Z [command]/opt/homebrew/bin/git version
+2026-11-26T16:08:53.1448540Z git version 2.56.0
+2026-11-26T16:08:53.1463950Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/4696d546-d383-42a5-b1df-517030f75f00/.gitconfig'
+2026-11-26T16:08:53.1470140Z Temporarily overriding HOME='/Users/runner/work/_temp/4696d546-d383-42a5-b1df-517030f75f00' before making global git config changes
+2026-11-26T16:08:53.1470940Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-26T16:08:53.1473770Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/hanlin-ai/hanlin-ai
+2026-11-26T16:08:53.1530100Z Removing SSH command configuration
+2026-11-26T16:08:53.1534720Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-26T16:08:53.1593530Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-26T16:08:53.2334320Z Removing HTTP extra header
+2026-11-26T16:08:53.2338420Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-26T16:08:53.2400640Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-26T16:08:53.3073640Z Removing includeIf entries pointing to credentials config files
+2026-11-26T16:08:53.3077910Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-26T16:08:53.3129950Z includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path
+2026-11-26T16:08:53.3130440Z includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path
+2026-11-26T16:08:53.3130920Z includeif.gitdir:/github/workspace/.git.path
+2026-11-26T16:08:53.3131270Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-11-26T16:08:53.3135800Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path
+2026-11-26T16:08:53.3185070Z /Users/runner/work/_temp/git-credentials-e754eae3-04a6-4b37-a339-e8a656ea0586.config
+2026-11-26T16:08:53.3192100Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path \/Users\/runner\/work\/_temp\/git\-credentials\-e754eae3\-04a6\-4b37\-a339\-e8a656ea0586\.config
+2026-11-26T16:08:53.3253320Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path
+2026-11-26T16:08:53.3308310Z /Users/runner/work/_temp/git-credentials-e754eae3-04a6-4b37-a339-e8a656ea0586.config
+2026-11-26T16:08:53.3313920Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path \/Users\/runner\/work\/_temp\/git\-credentials\-e754eae3\-04a6\-4b37\-a339\-e8a656ea0586\.config
+2026-11-26T16:08:53.3375970Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-11-26T16:08:53.3431200Z /github/runner_temp/git-credentials-e754eae3-04a6-4b37-a339-e8a656ea0586.config
+2026-11-26T16:08:53.3435780Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-e754eae3\-04a6\-4b37\-a339\-e8a656ea0586\.config
+2026-11-26T16:08:53.3495080Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-11-26T16:08:53.3547920Z /github/runner_temp/git-credentials-e754eae3-04a6-4b37-a339-e8a656ea0586.config
+2026-11-26T16:08:53.3553730Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-e754eae3\-04a6\-4b37\-a339\-e8a656ea0586\.config
+2026-11-26T16:08:53.3614350Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-26T16:08:53.4328620Z Removing credentials config '/Users/runner/work/_temp/git-credentials-e754eae3-04a6-4b37-a339-e8a656ea0586.config'
+2026-11-26T16:08:53.4404860Z Cleaning up orphan processes

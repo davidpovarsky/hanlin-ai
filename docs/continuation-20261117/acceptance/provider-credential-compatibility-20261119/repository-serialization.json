@@ -1,0 +1,20 @@
+[
+  {
+    "file": "base-manifest.json",
+    "external_original_sha256": "6597bcb0236e3f4b1e32d605a5dbb943864f93240db0f47380b90f54e07404c4",
+    "repository_lf_sha256": "ece45630de9a4f845039ca7d06c649bffc75129569fbfc6bf77dcdcdd85c756b",
+    "change": "CRLF normalized to LF only; original external evidence preserved"
+  },
+  {
+    "file": "changed-source-manifest.json",
+    "external_original_sha256": "5134c165fc7b9dc6a7fb4484a806d630518391def4fd4e34b724c3b972bc2d58",
+    "repository_lf_sha256": "7a54bfb1e8e3dd667e07f0598ef1981b9f77238e04f7020cf84a146021582e58",
+    "change": "CRLF normalized to LF only; original external evidence preserved"
+  },
+  {
+    "file": "native-selectors.txt",
+    "external_original_sha256": "892dac512f259b6ff8f71854f4f66ffbcaa04968c57c3af14a437793383e3fc8",
+    "repository_lf_sha256": "3e30abe4a3638e049640f8ec65849a3cc8c6b8db4bc5de78f90533db28d80fe8",
+    "change": "CRLF normalized to LF only; original external evidence preserved"
+  }
+]

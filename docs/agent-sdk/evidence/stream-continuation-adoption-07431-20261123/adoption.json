@@ -1,0 +1,82 @@
+{
+  "sourceBefore": "476a14c5533f1816078a64b9553fab3ac40f6a63",
+  "oldProducer": "e7bf34111e603ca977becd007dd4e5bb109af857",
+  "newProducer": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "command": [
+    "python3",
+    "Scripts/SDK/generate_manifest.py"
+  ],
+  "seconds": 5.396,
+  "products": 44,
+  "targets": 108,
+  "originalApplicationSwiftSources": 507,
+  "childManifests": 18,
+  "changedManifestInputs": [
+    "Packages/HanlinAgentSDK/Package.swift",
+    "Packages/HanlinPlatform/Package.swift"
+  ],
+  "files": [
+    {
+      "path": "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "beforeSHA256": "28fb383e35bd875dd91b124ad02ca4210da7771c53daf4c6c6d28c1e2a55e529",
+      "afterSHA256": "cfcfdaeeb0c4fc59143bcf84b71aa4b3f0999e90680967817874eb8bcc42721c",
+      "exactPinOnlyInverse": true
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Package.swift",
+      "beforeSHA256": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b",
+      "afterSHA256": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8",
+      "exactPinOnlyInverse": true
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Package.resolved",
+      "beforeSHA256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+      "afterSHA256": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83",
+      "exactPinOnlyInverse": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Package.swift",
+      "beforeSHA256": "e27c872f7b9972be7667ea0f8e126131d42379d2a8b66527887ee97a32616e41",
+      "afterSHA256": "a22b7948988b776de98f51d6a9c493b9b2f9db62deae097f31ced5971b842665",
+      "exactPinOnlyInverse": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Package.resolved",
+      "beforeSHA256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+      "afterSHA256": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
+      "exactPinOnlyInverse": true
+    },
+    {
+      "path": "Packages/HanlinParityMiniApp/Package.resolved",
+      "beforeSHA256": "64abcc6af574107b111a5facbc00f70259aa0a809ab2fc6a5c0a571b5b10ea04",
+      "afterSHA256": "c0024cb387495e6cf71d8531e3c4ab31a1a267c02c23ab0e5623fa12ff054033",
+      "exactPinOnlyInverse": true
+    },
+    {
+      "path": "Packages/HanlinSefariaMiniApp/Package.resolved",
+      "beforeSHA256": "6c7a3f29ad73f35a20ed25f838c673cf2970398c18c4b0429f55b56a98a9f3ac",
+      "afterSHA256": "8f3040315aeb3f9bb2ec5fcfa157b8a7690edad9c5a467ad045cd7decd1b1817",
+      "exactPinOnlyInverse": true
+    },
+    {
+      "path": "Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "beforeSHA256": "402e58427b5cffccf4e2ca1cfc82785266433a62b8fbb96ba6711cff75dc2a28",
+      "afterSHA256": "a0ffa2ef3f7017786cb546187af1e47d0feeda8d58d47bc97d1fc10f78a71e13",
+      "exactPinOnlyInverse": true
+    },
+    {
+      "path": "Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "beforeSHA256": "3591fbb4df85047710671391b83116e4725b44cceebb315aadd6d08dc48c555c",
+      "afterSHA256": "fdbd916f9477bec043a492da7572ad9e4ad858dadf1b42428a877ebe283c4cdb",
+      "exactPinOnlyInverse": true
+    },
+    {
+      "path": "Package.swift",
+      "beforeSHA256": "662888ccc63bb8b3a78e5107229edf900527d096dfb8eeeef1534897a75634d4",
+      "afterSHA256": "9d479c23f1e3609f4da4252abf120f9ce0349948bd0367955099168e5a3f9ed1",
+      "exactPinOnlyInverse": true
+    }
+  ],
+  "nativeAcceptance": "NOT_RUN on new producer; frozen0b run remains e7 scoped",
+  "upstreamEvidence": "docs/agent-sdk/evidence/release-readiness-45256955142/swiftai-07431"
+}

@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "sourceCommit": "0c6ad155905f30273d3dfac2b5071ce14970b6d0",
+  "parent": "9ee23af8c3556502ba6da8ba7fccd05a8c35adb1",
+  "files": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": {
+      "sha256": "12d0f93c0f4a6d5e7ee2d0311ba7a5cf9120e8cfc33838d562cd60d6e76447cd",
+      "gitBlob": "0f28e2b22816931636231ff171ed825eb70e63be",
+      "bytes": 239403
+    },
+    "Scripts/ProductSplit/observe_widget_layout.py": {
+      "sha256": "f33202df502e6d0b67be2d15cfdc293da5f704300f871823d14ad42b37659eee",
+      "gitBlob": "60f6bcf7ba2fe8ca4cc46b306923a25b05a7d7ac",
+      "bytes": 27303
+    },
+    "Scripts/CI/Tests/test_widget_layout_observer.py": {
+      "sha256": "00b0ac00cf4fe2caee4044b2975d1b94e6c96cb12167124646464a5239d74e04",
+      "gitBlob": "04441fddd82131ba2b4a030f3bc65597b860a471",
+      "bytes": 24545
+    },
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "sha256": "b7908f40c21edf1f82489b700254b16cd25991469918518bbdfe53b83035a335",
+      "gitBlob": "29caa32e1ce6d51d6d1313492e9800016bd772e2",
+      "bytes": 98768
+    },
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": {
+      "sha256": "f3ef025d4f8de4012b409ff343f2c28d319bb7607585d7e534ec61c1d66f36cd",
+      "gitBlob": "f3b1f54265620138d6a67a718cd51e19825f4757",
+      "bytes": 65901
+    }
+  },
+  "sourcePatchSHA256": "946e9f43b59586f9cc0eace43e9e42dd48dbb90999c7c9cd8a954d89db736a76",
+  "manifestSHA256": "64a5e56dace2c478f7b087694e7a63f8642c3703254b00b26bfaac8692189db0",
+  "commitCommand": [
+    "git",
+    "-c",
+    "gc.auto=0",
+    "-c",
+    "user.name=ChatGPT",
+    "-c",
+    "user.email=noreply@openai.com",
+    "-C",
+    "/mnt/development/projects/worktrees/hanlin-widget-layout-os-20261128",
+    "commit",
+    "-m",
+    "test(miniapps): observe medium widget control bounds on system UI"
+  ],
+  "commitExit": 0,
+  "status": "",
+  "diffCheckExit": 0,
+  "workflowSourceChanged": false,
+  "native": "NOT_RUN",
+  "sealedAt": "2026-11-28T05:50:14.859549+00:00"
+}

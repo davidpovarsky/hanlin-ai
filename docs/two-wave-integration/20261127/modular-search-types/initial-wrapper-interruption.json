@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "status": "INFRASTRUCTURE_WRAPPER_TIMEOUT_BEFORE_TERMINAL_CLI_RESULT",
+  "toolJob": "job_7f2575a5db0d",
+  "wrapperSeconds": 30,
+  "originalPerCommandBudgetSeconds": 300,
+  "terminalCLIResults": 0,
+  "rawFiles": {
+    "sdk-before.json": {
+      "bytes": 5049062,
+      "sha256": "95dbd1cc3dff5ed89f737daf43475a0caf167c480b35cfcb4f6954c1cdcdcdb8"
+    },
+    "original-validate.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "original-validate.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "ownedWorktreeProcessReadback": [],
+  "checkedAtUTC": "2026-11-27T20:50:19.801357+00:00",
+  "sourceChangedByFailure": false,
+  "nativeCommands": 0
+}

@@ -1,0 +1,29 @@
+{
+  "scope": "Swift frontend syntax only, not module type-check, Apple build, JavaScriptCore execution or OS WidgetKit test",
+  "at": "2026-11-26T12:11:54.462215+00:00",
+  "sourceBase": "7f2cddd3f961702c2b355aa67589490f8a95c9f8",
+  "command": [
+    "/usr/local/bin/swiftc",
+    "-frontend",
+    "-parse",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetLastSuccessfulRender.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionContracts.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetInstance.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests.swift"
+  ],
+  "returncode": 0,
+  "files": {
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift": "2d6151c0b5fbda807db99b874c1d8601aa86d7fcc1df2a9bf24c0c403cb3404a",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetLastSuccessfulRender.swift": "d9d80674db83882891ba0ec918b8a91abce7ba5da9f7c54da28e7c380bfa7941",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionContracts.swift": "dc36539ad41d86f722902adb72702e807397f210b40939854fb5c432ced9dafe",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetInstance.swift": "bbe61f9733c47d6d65383e1d6b742df73415bd781a608d35edfd9c23fbb0ede0",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift": "9b1c7588bf35891d5bae116c68d07e96aec5ff10db1e7df2e9d3fe28d18c7f2e",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests.swift": "7b4298ae25d22f5aa400090dec9b06fc332472fc9bb9a3c0492b701125e6422e"
+  },
+  "nativeTestFilter": "HanlinWidgetLastSuccessfulRenderTests",
+  "nativeCases": 11,
+  "nativeStatus": "NOT_RUN",
+  "deviceStatus": "NOT_RUN"
+}

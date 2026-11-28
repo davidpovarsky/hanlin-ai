@@ -1,0 +1,11 @@
+{
+  "head": "8a505675eca035fbca3877afd1f8776f00f629d0",
+  "dispatch_at": "2026-11-19T02:41:47.120818+00:00",
+  "workflow": "validate-app-split.yml",
+  "status": "queued",
+  "scope": "Original signed tiny preflight with CMS wire correction and owned settings on native failure",
+  "run_id": 44446182012,
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44446182012",
+  "conclusion": null,
+  "verified_at": "2026-11-19T02:46:10.485456+00:00"
+}

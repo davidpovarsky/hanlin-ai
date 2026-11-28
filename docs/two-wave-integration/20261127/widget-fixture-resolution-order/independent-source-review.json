@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "reviewer": "/root",
+  "basis": "Actual independent source review communicated in collaboration",
+  "approvedPatchSHA256": "172ffd9d9a7684d829437b4fc2434a24b4916c7d2d0933f2afd78199603f70ad",
+  "reviewed": [
+    "Both workflow insertions",
+    "Both control methods and eight defect subcases",
+    "Source preservation and 25-output provenance capture map"
+  ],
+  "decision": "APPROVED_FOR_ORIGINAL_NATIVE_RETRY",
+  "nativeStatus": "NOT_RUN",
+  "publication": "Root owns workflow publication through the existing GitHub Contents API."
+}

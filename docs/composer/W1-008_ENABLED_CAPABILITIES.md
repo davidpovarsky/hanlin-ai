@@ -1,0 +1,35 @@
+# W1-008 enabled-capability chips
+
+Reference supplied by the owner: `Hanlin_Detached_Active_Chips_Original_Composer.swift`, 57,535 bytes, SHA-256 `e3cf93feac90ff1ead2e6bd2acbb3cace1a2b89e07dd97d242e4b89751bbb5c7`. Source task `1220541898122292`, parent `1220539644804804`.
+
+The downstream row uses the reference's 36-point scroll area, 32-point capsules, 6-point spacing, original blue palette, icon-only presentation below 510 points, and identity transition. It appears only with at least one projected enabled capability while the Morph bubble is closed. Tapping opens an existing settings route in the same bubble using the reference opening spring; context-menu actions mutate the existing chat bindings. The in-bubble capability tiles use the reference's blue glass and enabled checkmark. The input, separate launcher and Morph shell remain in their existing owners.
+
+Search/knowledge and thinking/planning are grouped from the existing action bridge's model-gated live bindings. Built-in tools, Skills, runtimes and selected MCP servers require the current chat's actual tool-use binding and model support plus the relevant catalog/provider eligibility; a ready or executing runtime alone does not enable a chip. The tools, Skills and runtimes context action explicitly turns off tool use in this chat through that binding, without stopping runtimes or changing global skill preferences. MCP dismissal clears the current chat's selected server IDs through the existing selection API, reads them back, and surfaces load or persistence errors; it does not disable MCP globally. Mandatory model reasoning is not presented as removable. Image generation derives from the selected model; its context action opens the existing model picker and does not claim it is off until model selection actually changes. Model identity and image size are not represented as independent toggles. Existing availability checks remain the authority when enabling search or knowledge.
+
+## Explicitly incomplete
+
+- Eligibility is read directly from `NativeToolCatalog`, `HanlinSkillCatalog` and `SkillStore`, without a parallel authority. Those sources do not yet provide the observation contract needed for immediate updates made outside this view; the service owner is implementing the narrow notification/revision APIs. Until that contract is integrated, external changes while the view remains open can be stale.
+- MCP readback uses existing void/error APIs. It conservatively retains the chip and displays an error when the provider reports one; a structured per-operation result and selection revision from the service owner remain necessary for conclusive concurrent/failure handling.
+- The new reference is **not accepted** until the observation contract and actual SDK/UI/device checks are completed. MiniApps remains owned by the separate split contract and is not simulated here.
+
+## Evidence and pending gates
+
+Local `swiftc -frontend -parse` and tracked `git diff --check` are syntax/whitespace checks only. Focused additions cover projection of zero, one and multiple groups, disabled MCP and unsupported/mandatory model capabilities, the 510-point boundary, coordinator route retention, and a real UI flow for tool-chip tap/context-menu disable. These cases are **NOT RUN** until an app/SDK harness with the actual dependencies is available. Request the verification owner to include the real new source, action bridge/model dependencies, and actual test selectors; do not use a stand-in model or call the prior five-case Morph-only result a W1-008 pass.
+
+Outstanding acceptance includes live Skills/runtime/image contracts, compact/wide and RTL behavior, keyboard, six-line editor, accessibility/Reduce Motion, source-matched visuals and animation, and real iPad comparison. No UI, Apple SDK or device result is claimed for this tranche.
+
+## Active single-owner continuation — 2026-11-15
+
+The current source contains observable catalog/skill state, selection revisions, atomic per-server selection intent and scoped UI feedback. Historical separate-owner/lease waits above no longer govern this active wave. Actual UI/device acceptance remains open.
+
+The existing expanded Tools root now receives the same `detachedCapabilities` projection as the external row and home grid. Its Tools/Skills/MCP/Runtime cards show the blue enabled background, border, checkmark and accessible Enabled value while their real chat capability is enabled. No extra chip row is inserted. The existing XCUITest `testEnabledToolsChipOpensSettingsAndContextMenuDisables` now also waits for the enabled catalog value and asserts the external row is absent while expanded. This changed XCUITest is NOT_RUN pending a full-app target; local Swift frontend parsing is syntax-only.
+
+## Source accessibility/localization audit
+
+The authentic local reference was reverified at the same SHA256 above. Its compact chip labels include חיפוש/חשיבה/יצירה/כלים/הרצה, retain Skills/MCP names, and describe the active/settings action to assistive technology. The production chip instead composed an English `enabled, open settings` suffix, and several title keys were missing from the app string catalog. This was a source finding, not a device-observed VoiceOver failure.
+
+The chip now provides a localized name, native accessibility value `Enabled`, and localized `Open settings` hint separately. The existing app catalog's925 entries are untouched; five new keys supply en/he/zh-Hans. Dedicated Composer keys preserve the reference's חשיבה/הרצה wording without changing the generic Thinking translation. Existing palette/13-point symbol/32-point capsule/36-point row/6-point spacing/510 breakpoint, context actions, state projection, animations and inherited RTL layout are unchanged. No force-RTL or new control geometry was introduced.
+
+The existing enabled-tools XCUITest now requires label Tools/value Enabled. The existing `AI_HLYUITests/HanlinMorphComposerUITests/testRTLToolChipKeepsLongDraftAndAccessibleLabel` already launches the real app in Hebrew with fixtures, enables the real chat tool-use binding, and verifies RTL position, draft preservation and opening settings. It now requires label כלים/value מופעל instead of only a nonempty label. Both affected cases are NOT_RUN; no duplicate UI launch test was added. Windows Swift frontend parsing passed; JSON validation rejects duplicate keys, confirms all925 previous entries/metadata unchanged, checks all five new keys have the three translations and the intended Hebrew words. Those checks are not SDK, VoiceOver, UI, RTL visual or physical parity evidence.
+
+This tranche changes the chips view, app string catalog and UI tests. It leaves both editor-fix source/test blobs unchanged and does not rerun their original five cases. The changed chips view was part of the earlier diagnostic module's compiled packet, so that packet is not presented as a fresh compilation of this new view. Actual app compilation plus English/Hebrew XCUITest and physical/reference acceptance remain required when the SDK app graph and Expo header gate are resolved.

@@ -1,0 +1,101 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project AI_HLY.xcodeproj -destination "platform=iOS Simulator,id=E742FBCD-8FF0-4130-B143-7F8328637138" -parallel-testing-enabled NO -derivedDataPath /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete -clonedSourcePackagesDirPath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=YES CODE_SIGNING_REQUIRED=YES CODE_SIGN_IDENTITY=- -collect-test-diagnostics never -scheme AI_HLY test-without-building -resultBundlePath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/native-result/NS5.xcresult -test-timeouts-enabled YES -maximum-test-execution-time-allowance 600 "-only-testing:AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine()"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGNING_ALLOWED = YES
+    CODE_SIGNING_REQUIRED = YES
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.3.0
+  SwiftStreamingMarkdown: https://github.com/davidpovarsky/hanlin-streaming-markdown @ 5cbb4b6
+  SwiftTreeSitter: https://github.com/tree-sitter/swift-tree-sitter @ 08ef81e
+  swift-markdown: https://github.com/swiftlang/swift-markdown.git @ 0.7.3
+  LLM: https://github.com/eastriverlee/LLM.swift/ @ 4b25178
+  MathJaxSwift: https://github.com/colinc86/MathJaxSwift @ 3.4.0
+  RichTextKit: https://github.com/danielsaidi/RichTextKit.git @ 8aa44cf
+  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.0
+  swift-syntax: https://github.com/swiftlang/swift-syntax.git @ 603.0.2
+  Equatable: https://github.com/ordo-one/equatable @ 1.4.1
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation @ 0.9.19
+  HTMLEntities: https://github.com/Kitura/swift-html-entities @ 4.0.1
+  SWCompression: https://github.com/tsolomko/SWCompression.git @ c729f0b
+  A2UISwiftCore: https://github.com/a2ui-project/a2ui @ 3ed9601
+  HighlightSwift: https://github.com/appstefan/highlightswift @ 99c431b
+  XMLCoder: https://github.com/maxdesiatov/XMLCoder.git @ 0.14.0
+  mcp-swift-sdk: https://github.com/modelcontextprotocol/swift-sdk.git @ a0ae212
+  SwiftDraw: https://github.com/swhitty/SwiftDraw @ 0.21.0
+  swift-nio: https://github.com/apple/swift-nio.git @ 2.94.0
+  Yams: https://github.com/jpsim/Yams.git @ 6.2.2
+  swift-system: https://github.com/apple/swift-system.git @ 1.4.0
+  swift-argument-parser: https://github.com/apple/swift-argument-parser @ 1.8.2
+  TreeSitterBash: https://github.com/tree-sitter/tree-sitter-bash @ a06c2e4
+  LaTeXSwiftUI: https://github.com/colinc86/LaTeXSwiftUI @ c45e0fd
+  CoreXLSX: https://github.com/CoreOffice/CoreXLSX @ 1391f38
+  BitByteData: https://github.com/tsolomko/BitByteData @ 2.1.0
+  SwiftSoup: https://github.com/scinfu/SwiftSoup @ bba848d
+  SwiftUI-Shimmer: https://github.com/markiv/SwiftUI-Shimmer @ 1.5.1
+  SwiftAISDK: https://github.com/davidpovarsky/swift-ai-sdk.git @ 07431ab
+  HanlinSDK: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete @ local
+  swift-json-schema: https://github.com/ajevans99/swift-json-schema @ 0.13.2
+  SwiftyJSON: https://github.com/SwiftyJSON/SwiftyJSON.git @ 5.0.1
+  swift-markdown-ui: https://github.com/gonzalezreal/MarkdownUI.git @ 5f61335
+  swift-log: https://github.com/apple/swift-log.git @ 96a2f8a
+  TreeSitter: https://github.com/tree-sitter/tree-sitter @ da6fe9b
+  EventSource: https://github.com/mattt/eventsource.git @ 1.1.0
+  NativeScriptSDK: https://github.com/NativeScript/ios-spm.git @ 9.1.1
+  cmark-gfm: https://github.com/swiftlang/swift-cmark @ 0.9.0
+  iosMath: https://github.com/junyan72/iosMath @ ba9ab77
+  NetworkImage: https://github.com/gonzalezreal/NetworkImage @ 6.0.1
+
+Writing result bundle at path:
+	/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/native-result/NS5.xcresult
+
+Resolve Package Graph
+
+2026-11-25 19:38:51.591927+0100 AI_Hanlin[50233:7732225] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+2026-11-25 19:38:53.351793+0100 AI_Hanlin[50233:7731920] [API] cannot add handler to 0 from 0 - dropping
+2026-11-25 19:38:53.351994+0100 AI_Hanlin[50233:7731920] [API] cannot add handler to 0 from 0 - dropping
+2026-11-25 19:38:53.384035+0100 AI_Hanlin[50233:7731920] [XPCErrors] non-launching port is incompatible with service identifier "com.apple.PointerUI.pointeruid.default-service"
+2026-11-25 19:38:53.384661+0100 AI_Hanlin[50233:7731920] HANLIN_EXPO_APP_DEFINES_LOADED
+2026-11-25 19:38:53.482437+0100 AI_Hanlin[50233:7731920] [API] cannot add handler to 0 from 0 - dropping
+2026-11-25 19:38:53.482594+0100 AI_Hanlin[50233:7731920] [API] cannot add handler to 0 from 0 - dropping
+2026-11-25 19:38:53.482643+0100 AI_Hanlin[50233:7731920] [API] cannot add handler to 0 from 0 - dropping
+2026-11-25 19:38:53.482702+0100 AI_Hanlin[50233:7731920] [API] cannot add handler to 0 from 0 - dropping
+2026-11-25 19:38:53.482744+0100 AI_Hanlin[50233:7731920] [API] cannot add handler to 0 from 0 - dropping
+Test Suite 'Selected tests' started at 2026-11-25 19:38:55.446.
+Test Suite 'AI_HLYTests.xctest' started at 2026-11-25 19:38:55.446.
+Test Suite 'AI_HLYTests.xctest' passed at 2026-11-25 19:38:55.446.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-11-25 19:38:55.447.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64-apple-ios17.0-simulator
+◇ Suite "Unified Host Services E2E" started.
+◇ Test actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine() started.
+Runtime initialization took 55ms (version 9.1.1, V8 version 14.9.207.39)
+2026-11-25 19:38:55.650738+0100 AI_Hanlin[50233:7731920] HANLIN_NS_RUNTIME_CREATED
+2026-11-25 19:38:55.650825+0100 AI_Hanlin[50233:7731920] HANLIN_NS_CONTEXT_READY
+2026-11-25 19:38:55.650862+0100 AI_Hanlin[50233:7731920] HANLIN_NS_HOST_SERVICES_BIND_BEGIN
+2026-11-25 19:38:55.650928+0100 AI_Hanlin[50233:7731920] HANLIN_NS_HOST_SERVICES_BIND_OK
+2026-11-25 19:38:55.650975+0100 AI_Hanlin[50233:7731920] HANLIN_NS_RUN_MAIN_BEGIN
+2026-11-25 19:38:55.677768+0100 AI_Hanlin[50233:7731920] HANLIN_NS_RUN_MAIN_OK
+2026-11-25 19:38:55.677860+0100 AI_Hanlin[50233:7731920] HANLIN_NS_INITIALIZED_EXTERNAL_ROOT path=/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/BD51193F-21BC-497C-A6B7-BEEE476D36F6/tmp/ns-wire-vm-f2a3989c-db62-4aa4-b47c-e1958c5c05f5/app/
+✔ Test actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine() passed after 20.167 seconds.
+✔ Suite "Unified Host Services E2E" passed after 20.168 seconds.
+✔ Test run with 1 test in 1 suite passed after 20.169 seconds.
+2026-11-25 19:39:15.947 xcodebuild[48978:7723608] [MT] IDETestOperationsObserverDebug: 47.359 elapsed -- Testing started completed.
+2026-11-25 19:39:15.947 xcodebuild[48978:7723608] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-25 19:39:15.948 xcodebuild[48978:7723608] [MT] IDETestOperationsObserverDebug: 47.359 sec, +47.359 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/native-result/NS5.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

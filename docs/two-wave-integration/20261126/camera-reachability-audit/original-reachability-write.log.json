@@ -1,0 +1,7 @@
+{
+  "originalPath": "/tmp/hanlin-camera-reachability-audit-20261126-zpkn4sj0/original-reachability-write.log",
+  "sha256": "350a2abae49d9ad37ae1d680257ddfdf271665e8a370fdc5372b5f189ad80b79",
+  "bytes": 146,
+  "encoding": "utf-8",
+  "text": "Wrote 100 canonical Host-runtime reachability cells plus separate original-library and local-presentation records; no physical/E2E pass inferred.\n"
+}

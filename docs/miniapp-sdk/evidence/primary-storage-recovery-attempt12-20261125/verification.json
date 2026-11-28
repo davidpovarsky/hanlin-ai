@@ -1,0 +1,232 @@
+{
+  "verifiedAtUTC": "2026-11-25T04:35:10.983201+00:00",
+  "status": "PRODUCER_MEMBER_INTEGRITY_VERIFIED",
+  "scope": "Operational storage evidence only; no application acceptance or new cleanup performed",
+  "producerReceiptSHA256": "56f0da9a8d9723adaeaeb60176ab64f5ee0a482b53523969c00c0e3fcb530b4a",
+  "verifiedMemberCount": 17,
+  "verifiedMemberBytes": 70646,
+  "retirements": [
+    {
+      "attempt": 9,
+      "receipt": "storage-recovery-attempt12/attempt9-retirement.json",
+      "finishedAt": "2026-11-25T03:29:23.388911+00:00",
+      "udid": "80E29B83-02CF-4481-B1AF-80A85CDE0247",
+      "status": "DELETED",
+      "exitCode": 0,
+      "candidateReceipt": "storage-recovery-attempt12/attempt9-candidate.json",
+      "candidateSHA256": "f15da146c89397a417f9b292423fbb52d40fa075e69e9e097ce1df8c93bb3b99",
+      "logicalCandidateBytes": 6459826176,
+      "freeBytesBefore": 12325744640,
+      "freeBytesAfter": 12317794304,
+      "observedGlobalFreeByteChange": -7950336,
+      "afterDFMatchesReportedBytes": true,
+      "registeredAfter": false,
+      "deviceDirectoryExistsAfter": false,
+      "retentionEvidence": "Full raw xcresults/control logs, source/Git, SDK9/10, active/latest passed simulators and other owners untouched.",
+      "physicalReclamationAttribution": "Not inferred from global df change or logical directory size"
+    },
+    {
+      "attempt": 7,
+      "receipt": "storage-recovery-attempt12/attempt7-retirement.json",
+      "finishedAt": "2026-11-25T03:53:24.274819+00:00",
+      "udid": "D45E88A7-3C07-4227-86C4-D3B2E61C251A",
+      "status": "RETIRED",
+      "exitCode": 0,
+      "candidateReceipt": "storage-recovery-attempt12/attempt7-candidate.json",
+      "candidateSHA256": "a03edca23208b1dd59de468d84985a9df7246c65c5aa32735bc1f65749d2e423",
+      "logicalCandidateBytes": 5669134336,
+      "freeBytesBefore": 7268999168,
+      "freeBytesAfter": 7263887360,
+      "observedGlobalFreeByteChange": -5111808,
+      "afterDFMatchesReportedBytes": true,
+      "registeredAfter": false,
+      "deviceDirectoryExistsAfter": false,
+      "retentionEvidence": [
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt7/OriginalRuntimes.xcresult",
+          "duKiB": 1127656,
+          "InfoPlistExists": false,
+          "topLevel": [
+            "Staging",
+            "Data"
+          ]
+        },
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt7/MiniBuild.xcresult",
+          "duKiB": 112,
+          "InfoPlistExists": true,
+          "topLevel": [
+            "Data",
+            "Info.plist"
+          ]
+        },
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt7/AIBuild.xcresult",
+          "duKiB": 112,
+          "InfoPlistExists": true,
+          "topLevel": [
+            "Data",
+            "Info.plist"
+          ]
+        }
+      ],
+      "physicalReclamationAttribution": "Not inferred from global df change or logical directory size"
+    },
+    {
+      "attempt": 10,
+      "receipt": "storage-recovery-attempt12/attempt10-retirement.json",
+      "finishedAt": "2026-11-25T03:56:22.447577+00:00",
+      "udid": "9DB610ED-23EB-451F-B74C-4C46438D25E8",
+      "status": "RETIRED",
+      "exitCode": 0,
+      "candidateReceipt": "storage-recovery-attempt12/attempt10-candidate.json",
+      "candidateSHA256": "88a7ccb192bddf39e2f4f84e9d31bee069d182244525f336485991e9d9272d2d",
+      "logicalCandidateBytes": 6244032512,
+      "freeBytesBefore": 9446154240,
+      "freeBytesAfter": 9560039424,
+      "observedGlobalFreeByteChange": 113885184,
+      "afterDFMatchesReportedBytes": true,
+      "registeredAfter": false,
+      "deviceDirectoryExistsAfter": false,
+      "retentionEvidence": [
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/AIBuild.xcresult",
+          "duKiB": 120,
+          "InfoPlistExists": true
+        },
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/MiniBuild.xcresult",
+          "duKiB": 72,
+          "InfoPlistExists": true
+        },
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/ParityStartupDiagnostic.xcresult",
+          "duKiB": 33320,
+          "InfoPlistExists": true
+        },
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/RemainingFocused.xcresult",
+          "duKiB": 116808,
+          "InfoPlistExists": true
+        }
+      ],
+      "physicalReclamationAttribution": "Not inferred from global df change or logical directory size"
+    },
+    {
+      "attempt": 6,
+      "receipt": "storage-recovery-attempt12/attempt6-retirement.json",
+      "finishedAt": "2026-11-25T04:03:27.143719+00:00",
+      "udid": "3797CDB6-6A26-41AF-8E80-11A011B62F80",
+      "status": "RETIRED",
+      "exitCode": 0,
+      "candidateReceipt": "storage-recovery-attempt12/attempt5-6-candidates.json",
+      "candidateSHA256": "f790f3e6f2559ff52d611fe8dbcb6751a7815848af2263db8c124e4657af09ba",
+      "logicalCandidateBytes": 4905066496,
+      "freeBytesBefore": 6245015552,
+      "freeBytesAfter": 6309974016,
+      "observedGlobalFreeByteChange": 64958464,
+      "afterDFMatchesReportedBytes": true,
+      "registeredAfter": false,
+      "deviceDirectoryExistsAfter": false,
+      "retentionEvidence": [
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt6/AIBuild.xcresult",
+          "duKiB": 852,
+          "InfoPlistExists": true,
+          "topLevel": [
+            "Data",
+            "Info.plist"
+          ]
+        },
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt6/MiniBuild.xcresult",
+          "duKiB": 588,
+          "InfoPlistExists": true,
+          "topLevel": [
+            "Data",
+            "Info.plist"
+          ]
+        }
+      ],
+      "physicalReclamationAttribution": "Not inferred from global df change or logical directory size"
+    },
+    {
+      "attempt": 5,
+      "receipt": "storage-recovery-attempt12/attempt5-retirement.json",
+      "finishedAt": "2026-11-25T04:03:27.811366+00:00",
+      "udid": "4D9924A2-66E1-429D-A61C-82836C6FA3AF",
+      "status": "RETIRED",
+      "exitCode": 0,
+      "candidateReceipt": "storage-recovery-attempt12/attempt5-6-candidates.json",
+      "candidateSHA256": "f790f3e6f2559ff52d611fe8dbcb6751a7815848af2263db8c124e4657af09ba",
+      "logicalCandidateBytes": 2416099328,
+      "freeBytesBefore": 6310166528,
+      "freeBytesAfter": 6470602752,
+      "observedGlobalFreeByteChange": 160436224,
+      "afterDFMatchesReportedBytes": true,
+      "registeredAfter": false,
+      "deviceDirectoryExistsAfter": false,
+      "retentionEvidence": [
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt5/MiniBuild.xcresult",
+          "duKiB": 504,
+          "InfoPlistExists": true,
+          "topLevel": [
+            "Data",
+            "Info.plist"
+          ]
+        }
+      ],
+      "physicalReclamationAttribution": "Not inferred from global df change or logical directory size"
+    }
+  ],
+  "resourceEstimate": {
+    "observedAt": "2026-11-25T04:07:19.980787+00:00",
+    "source": "42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+    "priorEstimate": {
+      "deviceDirectoryBytes": 6244032512,
+      "incrementalProducts": 1073741824,
+      "evidence": 536870912,
+      "concurrentGrowthAndOSAllowance": 4294967296,
+      "total": 12149612544
+    },
+    "revisedEstimate": {
+      "currentSameModularDirectoryUpperBound": 5731033088,
+      "incrementalProducts": 536870912,
+      "evidence": 536870912,
+      "concurrentGrowthAndOSAllowance": 4294967296,
+      "total": 11099742208
+    },
+    "basis": [
+      "Original du was full directory allocation, not measured physical increment. APFS sharing may reduce allocation but is not assumed.",
+      "Current same-Modular device and shared already-built native products bound this narrow update more directly than larger prior parity device.",
+      "MiniApps UI runner current allocated size692KiB; two changed source files require no engine/SDK regeneration. A0.5GiB changed-product allowance is retained.",
+      "Existing global before/afterdf is confounded by concurrent activity; do not claim observed net delta equals job cost.",
+      "Before/after-command and30-second physicaldf observations added to this external diagnostic wrapper; no selector/assertion/deadline/source mutation."
+    ],
+    "files": [
+      {
+        "path": "focused-diagnostics-attempt13.py",
+        "bytes": 13086,
+        "sha256": "7438ab010cedebd87a3ac16b10617113b7d4c71a5b4e9d041d071f7897a68797"
+      },
+      {
+        "path": "run-focused-diagnostics-attempt13.py",
+        "bytes": 6576,
+        "sha256": "7988a2e41e4d3fdf4cdae47942cae0f0e4268acdbdab07f41b88663ae8b16a09"
+      }
+    ]
+  },
+  "crossPacketSourceAdvance": {
+    "path": "source-advance-42e34eff/receipt.json",
+    "bytes": 33605,
+    "sha256": "ec640dc02e01871b8954a48e0cae7f6ba6fc74a4bb60057005b88a9d1a8db724"
+  },
+  "boundaries": [
+    "Only named obsolete owned attempts9,7,10,6,5 are covered",
+    "Original before/after df bytes and negative deltas are retained",
+    "Logical candidate sizes are not physical reclaim promises; global df changes may include concurrent activity",
+    "Latest11 and12 retention is a producer claim preserved in its exact receipt; no new Mac query was made",
+    "No source, SDK, full raw results, shared caches, other owners or unknown data were removed by this inspector"
+  ]
+}

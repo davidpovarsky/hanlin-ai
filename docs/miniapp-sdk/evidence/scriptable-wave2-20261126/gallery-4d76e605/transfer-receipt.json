@@ -1,0 +1,98 @@
+{
+  "at": "2026-11-26T14:54:21.317007+00:00",
+  "source": "/Users/m1/builds/hanlin-wave2-gallery-4d76e605-20261126",
+  "destination": "/mnt/development/projects/evidence/hanlin-miniapps-concurrency-wave2-20261126/gallery-4d76e605",
+  "sourceCommit": "4d76e605",
+  "SDKInputSHA256": "48f09da9dc0ec43b5591db3a701d9572204b31785bf5049bae0044a78b191289",
+  "jobs": {
+    "additionalReceiptConditionAttempt": "job_100cd7c3f68e",
+    "originalNativeScriptBuildCompletion": "job_9f5a30a9fcee"
+  },
+  "files": [
+    {
+      "name": "preflight.json",
+      "bytes": 556,
+      "sha256": "72d4d2da3872c8eb9d5b37b2848400b22351237d44f95ea76cab89dd003e96b4"
+    },
+    {
+      "name": "gallery-driver.mjs",
+      "bytes": 4824,
+      "sha256": "af3b466a40bbfbeb91a97f783e18c9076f8688c17809410bd69051561acc22fd"
+    },
+    {
+      "name": "gallery-authoring.log",
+      "bytes": 2231,
+      "sha256": "db3d847eb894da13466b8e567d755d23e6e0a5329c675949e190e58af777dc4d"
+    },
+    {
+      "name": "gallery-receipt.json",
+      "bytes": 11888,
+      "sha256": "a158429947b7d749cc81cca1e69a0d140399f7420a78a15ffba5a8fe02cdc997"
+    },
+    {
+      "name": "gallery-original-contract-driver.mjs",
+      "bytes": 4309,
+      "sha256": "bdddebded9d8905eaabbf522cf1ddf03d058c19df6174df9319b48364d2acdf0"
+    },
+    {
+      "name": "gallery-original-contract.log",
+      "bytes": 2936,
+      "sha256": "2ac587fa7d3bc995287a9073c626c7fbaacc19b599dd3994f3d9e60a1853236c"
+    },
+    {
+      "name": "gallery-original-contract-receipt.json",
+      "bytes": 16834,
+      "sha256": "df4b7b743999f0f48400f6e8dbad78f9500a34a66e119db8f993138252fa427b"
+    },
+    {
+      "name": "expo-hello-world-validate.json",
+      "bytes": 1385,
+      "sha256": "a7a7aabe74edfb30d74655292a5c9ad0be788f26d3cec48ae982cf3d4985a23e"
+    },
+    {
+      "name": "nativescript-hello-world-validate.json",
+      "bytes": 944,
+      "sha256": "3a7c7226e1ddcc47b5199c1e32edb21f10a99f8eb706a4321e5bc7de9ac9b420"
+    },
+    {
+      "name": "nativescript-image-drawing-validate.json",
+      "bytes": 946,
+      "sha256": "c82106c960478d543bdbb0d484d6ce48d84a61e3a46a3a0d04b59e07d0fb8338"
+    },
+    {
+      "name": "sdk-only-departure-budget-validate.json",
+      "bytes": 1394,
+      "sha256": "47db27ec4abd1f060108198e6eb309af04c4841371371dbf7b55753d4299e8d5"
+    },
+    {
+      "name": "sdk-only-table-share-validate.json",
+      "bytes": 940,
+      "sha256": "cd8a8f9236a20279d22b50248cf758db10f8e4ac9b2a1bc3b66adee67e4c8d78"
+    },
+    {
+      "name": "expo-hello-world-build.json",
+      "bytes": 1492,
+      "sha256": "3ed1a5df7a3077717977b110a8eea44ccb0cf525114c343ff4c0c3aec6a2eced"
+    },
+    {
+      "name": "nativescript-hello-world-build.json",
+      "bytes": 1059,
+      "sha256": "6d84b93e1f682957761aba18646ec01ffccf6ecadc52de57b26cde7ed09b8959"
+    },
+    {
+      "name": "nativescript-image-drawing-build.json",
+      "bytes": 1063,
+      "sha256": "60225deec04db60f3e5988d207b19428f36973d5c87a936736c46d6fe3769da8"
+    },
+    {
+      "name": "sdk-only-departure-budget-build.json",
+      "bytes": 1510,
+      "sha256": "4fc2093018c4c253a33f899fe2410bffcd4feb4f086438fe9eb878537345cea2"
+    },
+    {
+      "name": "sdk-only-table-share-build.json",
+      "bytes": 1051,
+      "sha256": "d2c74f94edd4a8718aca4525e9c36b77600c262f7bbbbb406b7dab1107cc464a"
+    }
+  ]
+}

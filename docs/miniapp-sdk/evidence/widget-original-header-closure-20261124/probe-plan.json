@@ -1,0 +1,13 @@
+{
+  "owner": "/root/control_authoring",
+  "baseCommit": "788354f8e9e863eb5e4c9007a8b58ea71d028b19",
+  "originalFailure": "MAIN15 native widget extension implicit import, authenticated log SHA2547babc01695d8a058d54d57661020aa398dae17176cdb8cd49217bd1d49971",
+  "question": "Does fresh implicit versus explicit module loading reproduce and resolve the genuine original ExpoModulesCore header-import failure under the recorded consumer Clang roots?",
+  "operations": [
+    "One original-framework Swift6/C++ application-extension typecheck with fresh implicit module cache",
+    "One otherwise equivalent explicit-module typecheck with a separate fresh cache"
+  ],
+  "priorSuccessNotReused": "No old compiled dependency module cache is used for either comparison.",
+  "scope": "Actual original headers/interfaces only, no stubs/no API edits. This is a single-import compiler probe, not an app build.",
+  "limits": "Primary Mac SDK27.0 differs from configured full-gate27.2. Xcode-generated header maps, VFS overlay and SDK stat cache are absent and are not fabricated. Report actual outcomes without relabeling a non-reproduction as a failure/pass correction."
+}

@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "observedAt": "2026-11-25T19:08:49.688694+00:00",
+  "pid": 76241,
+  "argv": [
+    "/opt/homebrew/opt/python@3.12/bin/python3.12",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v7.py",
+    "--decision",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v2-decision.json"
+  ],
+  "decision": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v2-decision.json",
+  "decisionSHA256": "e6ecacf4375baa2dd59445bf9b05cb24a0bf94d0f034bc684d077d43b28b2fea",
+  "controllerSHA256": "a18a542aa525ead25d50f870f63a252aeef5328678e895e7f3d2f6d1c0961d5f",
+  "activeBaselineSeconds": 24661.120324003034,
+  "allowanceSeconds": 546.4113377500034,
+  "originalAllowanceSeconds": 900,
+  "priorChargedSeconds": 353.58866224999656,
+  "freshFreeBytes": 14574575616,
+  "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines",
+  "expectedTests": 1,
+  "phaseStatus": "NOT_RUN_AT_DISPATCH"
+}

@@ -1,0 +1,15 @@
+{
+  "ok": false,
+  "interpreter": "python3",
+  "sudo": false,
+  "cwd": null,
+  "cleanup": true,
+  "command": [
+    "python3",
+    "/var/lib/sentinelx/uploads/.sentinelx_uploads/script_job_4ff3d84651484081a9753d32f448f358/script.py"
+  ],
+  "output": "Traceback (most recent call last):\n  File \"/var/lib/sentinelx/uploads/.sentinelx_uploads/script_job_4ff3d84651484081a9753d32f448f358/script.py\", line 51, in <module>\n    m=nl.metadata_contract(json.loads(mp.read_text()))\n      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/development/projects/worktrees/hanlin-native-list-shortcuts-20261128/Scripts/ProductSplit/observe_shortcut_native_lists.py\", line 90, in metadata_contract\n    require(type(actions) is list, \"Actual compiled AppIntents action metadata is absent\")\n  File \"/mnt/development/projects/worktrees/hanlin-native-list-shortcuts-20261128/Scripts/ProductSplit/observe_shortcut_surfaces.py\", line 37, in require\n    raise ObservationError(message)\nobserve_shortcut_surfaces.ObservationError: Actual compiled AppIntents action metadata is absent",
+  "duration": 21.28,
+  "returncode": 1,
+  "hub_request_id": "hreq_48da85e9cd07452f"
+}

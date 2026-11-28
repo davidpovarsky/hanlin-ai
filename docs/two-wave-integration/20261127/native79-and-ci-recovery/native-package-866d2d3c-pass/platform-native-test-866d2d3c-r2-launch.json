@@ -1,0 +1,12 @@
+{
+  "status": "DETACHED_ORIGINAL_NATIVE_TEST_DISPATCHED",
+  "source": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "controller": "/Users/m1/builds/hanlin-two-wave-root-20261126/run-platform-native-866d2d3c-test-r2.py",
+  "controllerSHA256": "ba549b64d0145537f57ea52c535264dcd68c617dea07d2e2ab3f56dbfd354ed7",
+  "pid": 38114,
+  "buildReceiptSHA256": "a7e19f54fb23a65db5a13bbbec70be83042233b428226848f76db0142e5aef48",
+  "freeAtAdmission": 8786059264,
+  "requiredFreeBytes": 4073741824,
+  "launchAt": "2026-11-27T05:15:01.267167+00:00",
+  "log": "/Users/m1/builds/hanlin-two-wave-root-20261126/platform-native-test-866d2d3c-r2-detached.log"
+}

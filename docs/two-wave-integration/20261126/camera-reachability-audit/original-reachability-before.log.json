@@ -1,0 +1,7 @@
+{
+  "originalPath": "/tmp/hanlin-camera-reachability-audit-20261126-zpkn4sj0/original-reachability-before.log",
+  "sha256": "6ef14d01b1f48b073fe5391c121176131db6876ea3d597739dd4ea9ba44cbb7c",
+  "bytes": 1140,
+  "encoding": "utf-8",
+  "text": "Traceback (most recent call last):\n  File \"/mnt/development/projects/worktrees/hanlin-miniapps-native-compatibility-20261126/Scripts/Audit/audit_miniapp_reachability.py\", line 436, in <module>\n    main()\n  File \"/mnt/development/projects/worktrees/hanlin-miniapps-native-compatibility-20261126/Scripts/Audit/audit_miniapp_reachability.py\", line 414, in main\n    value = build()\n            ^^^^^^^\n  File \"/mnt/development/projects/worktrees/hanlin-miniapps-native-compatibility-20261126/Scripts/Audit/audit_miniapp_reachability.py\", line 196, in build\n    ref(\"miniAppsCapturePrincipal\", \"HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift\", \"struct HanlinMiniAppsCameraCaptureExtension: LockedCameraCaptureExtension\")\n  File \"/mnt/development/projects/worktrees/hanlin-miniapps-native-compatibility-20261126/Scripts/Audit/audit_miniapp_reachability.py\", line 86, in ref\n    raise ValueError(f\"Audit anchor changed: {file}: {anchor}\")\nValueError: Audit anchor changed: HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift: struct HanlinMiniAppsCameraCaptureExtension: LockedCameraCaptureExtension\n"
+}

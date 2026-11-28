@@ -1,0 +1,86 @@
+name: Validate production local code-fence WebKit renderer
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  webkit-renderer:
+    runs-on: xcode-27
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - name: Stage exact production sources, assets and tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 Scripts/CI/stage_chat_code_fence_proof.py
+          mkdir -p build/code-fence-evidence
+          cp build/ChatCodeFenceProof/production-inputs.json build/code-fence-evidence/
+          git rev-parse HEAD > build/code-fence-evidence/app-sha.txt
+      - name: Select installed stable Apple SDK and matching iPhone
+        id: toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode*.app' ! -name '*_beta*' -print | sort -V | tail -1)"
+          test -n "$selected_xcode"
+          echo "DEVELOPER_DIR=$selected_xcode/Contents/Developer" >> "$GITHUB_ENV"
+          export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
+          xcodebuild -version | tee build/code-fence-evidence/toolchain.txt
+          major="$(xcrun --sdk iphonesimulator --show-sdk-version | cut -d. -f1)"
+          xcrun simctl list devices available -j > build/code-fence-evidence/devices.json
+          device="$(python3 - "$major" <<'PY'
+          import json, sys
+          data = json.load(open('build/code-fence-evidence/devices.json'))
+          devices = [d for runtime, entries in data['devices'].items() if f'iOS-{sys.argv[1]}-' in runtime
+                     for d in entries if d.get('isAvailable') and d['name'].startswith('iPhone')]
+          if not devices:
+              raise SystemExit('No available iPhone matches the stable SDK')
+          print(devices[0]['udid'])
+          PY
+          )"
+          echo "device=$device" >> "$GITHUB_OUTPUT"
+      - name: Compile and execute actual offline WebKit renderer
+        working-directory: build/ChatCodeFenceProof
+        shell: bash
+        run: |
+          set -euo pipefail
+          xcodebuild test -scheme HanlinCodeFenceProof \
+            -destination 'platform=iOS Simulator,id=${{ steps.toolchain.outputs.device }}' \
+            -derivedDataPath "$RUNNER_TEMP/CodeFenceDerivedData" \
+            -resultBundlePath "$GITHUB_WORKSPACE/build/code-fence-evidence/CodeFences.xcresult" \
+            -only-testing:HanlinCodeFenceProofTests/ChatCodeFenceTests \
+            CODE_SIGNING_ALLOWED=NO 2>&1 | tee ../code-fence-evidence/xcodebuild.log
+          xcrun xcresulttool get test-results tests --path ../code-fence-evidence/CodeFences.xcresult --format json > ../code-fence-evidence/tests.json
+          python3 - <<'PY'
+          import json
+          expected = {'actualWebKitRendersRequiredMermaidFamiliesAndCachesExactInputs',
+                      'actualWebKitParsesFullUnifiedAndSplitDiffWithoutExecutingSource',
+                      'assetsFailClosedOnTamperingAndVisibleDocumentDisablesScripts',
+                      'cancellationRejectsAnOfflinePreviewWithoutReturningStaleContent'}
+          found = {}
+          def visit(node):
+              if isinstance(node, dict):
+                  if node.get('nodeType') == 'Test Case':
+                      name = node.get('name', '').split('(')[0]
+                      if name in expected:
+                          found.setdefault(name, []).append(node.get('result'))
+                  for value in node.values(): visit(value)
+              elif isinstance(node, list):
+                  for value in node: visit(value)
+          visit(json.load(open('../code-fence-evidence/tests.json')))
+          if set(found) != expected or any(results != ['Passed'] for results in found.values()):
+              raise SystemExit(f'Missing, duplicate or nonpassing required case: {found}')
+          print('EXECUTED_PASS: all four production WebKit cases')
+          PY
+      - uses: actions/upload-artifact@v7.0.0
+        if: always()
+        with:
+          name: chat-code-fence-webkit-evidence
+          path: build/code-fence-evidence
+          retention-days: 30

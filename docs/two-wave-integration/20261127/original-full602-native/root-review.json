@@ -1,0 +1,15 @@
+{
+  "reviewer": "/root",
+  "reviewedAtUTC": "2026-11-27T11:06:34.794804+00:00",
+  "source": "602b29e303a633155fe07583e9ece28fce0ba113",
+  "status": "ACTUAL_ORIGINAL_603_FAILED_ONLY_HTTP_WITH_LIVE_SAMPLE",
+  "allDeclared159MembersVerified": true,
+  "rawMethodStarts": 603,
+  "rawMethodTerminals": 603,
+  "sameMethodMultiset": true,
+  "passCount": 602,
+  "failCount": 1,
+  "skipCount": 0,
+  "actualSampleSHA256": "e70c29c64cdd1628bb2843a9a6e0f70a0b62415e5449334bc83baa423197ea44",
+  "boundary": "Original5-second HTTP budget, real transport and3600-second full gate preserved. Actual one-second sample captured while within-limit await pending. Full raw sample, wire, stages and source-bound controller retained. No transport/Promise cause or final completion inferred."
+}

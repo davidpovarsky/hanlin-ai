@@ -1,0 +1,167 @@
+import HanlinLocalization
+import Observation
+import SwiftUI
+import UniformTypeIdentifiers
+
+@MainActor
+@Observable
+private final class PythonPackagesModel {
+    var packageName = ""
+    var version = ""
+    var installed: [PythonPackageRecord] = []
+    var preview: PythonPackagePreview?
+    var probeOutput: String?
+    var installProgress: PythonPackageInstallProgress?
+    var message: String?
+    var isBusy = false
+    private var operation: Task<Void, Never>?
+
+    func reload() async {
+        do { installed = try await AppRuntimeCore.shared.pythonPackages.installed() }
+        catch { message = error.localizedDescription }
+    }
+
+    func inspect() { run { self.preview = try await AppRuntimeCore.shared.pythonPackages.preview(name: self.packageName, version: self.version.isEmpty ? nil : self.version) } }
+    func install(sourceURL: URL? = nil) {
+        let name = sourceURL?.path ?? packageName
+        let selectedVersion = sourceURL == nil && !version.isEmpty ? version : nil
+        run {
+            let scoped = sourceURL?.startAccessingSecurityScopedResource() ?? false
+            defer { if scoped { sourceURL?.stopAccessingSecurityScopedResource() } }
+            _ = try await AppRuntimeCore.shared.pythonPackages.install(
+                name: name,
+                version: selectedVersion
+            ) { update in
+                self.installProgress = update
+            }
+            self.preview = nil
+            await self.reload()
+        }
+    }
+    func update(_ item: PythonPackageRecord) { packageName = item.sourceRequirement ?? item.name; version = ""; install() }
+    func uninstall(_ item: PythonPackageRecord) { run { try await AppRuntimeCore.shared.pythonPackages.uninstall(item); await self.reload() } }
+    func probe(_ item: PythonPackageRecord) { run { let result = try await AppRuntimeCore.shared.pythonPackages.probe(item); self.probeOutput = result.stdout + result.stderr } }
+    func cancel() { operation?.cancel(); message = RuntimeL10n.string("Cancellation requested; waiting for the active operation to stop.") }
+
+    private func run(_ body: @escaping @MainActor () async throws -> Void) {
+        guard !isBusy else { return }
+        isBusy = true
+        installProgress = nil
+        message = nil
+        operation = Task {
+            defer { self.isBusy = false; self.operation = nil }
+            do { try await body(); self.message = RuntimeL10n.string("Completed") }
+            catch is CancellationError { self.message = RuntimeL10n.string("Cancelled") }
+            catch { self.message = error.localizedDescription }
+        }
+    }
+}
+
+struct PythonPackagesView: View {
+    @State private var model = PythonPackagesModel()
+    @State private var importsPackage = false
+
+    var body: some View {
+        List {
+            Section(RuntimeL10n.string("Python package or source")) {
+                TextField(RuntimeL10n.string("Requirement, URL or local path"), text: $model.packageName)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
+                    .accessibilityIdentifier("hanlin-python-package-name-field")
+                TextField(RuntimeL10n.string("Version (optional)"), text: $model.version)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
+                    .accessibilityIdentifier("hanlin-python-version-field")
+                HStack(spacing: 16) {
+                    Button(RuntimeL10n.string("Preview")) { model.inspect() }
+                        .disabled(model.isBusy)
+                        .buttonStyle(.borderless)
+                        .accessibilityIdentifier("hanlin-python-preview-button")
+                    Button(RuntimeL10n.string("Install")) { model.install() }
+                        .disabled(model.isBusy)
+                        .buttonStyle(.borderless)
+                        .accessibilityIdentifier("hanlin-python-install-button")
+                    if model.isBusy {
+                        Button(RuntimeL10n.string("Cancel"), role: .cancel) { model.cancel() }
+                            .buttonStyle(.borderless)
+                    }
+                }
+                .buttonStyle(.borderless)
+                Button { importsPackage = true } label: {
+                    Label(RuntimeL10n.string("Import package or source"), systemImage: "square.and.arrow.down")
+                }
+                .disabled(model.isBusy)
+                if model.isBusy {
+                    if let progress = model.installProgress {
+                        ProgressView(
+                            value: Double(progress.completedUnits),
+                            total: Double(max(1, progress.totalUnits))
+                        ) {
+                            Text(RuntimeL10n.string("Python package installation progress"))
+                        } currentValueLabel: {
+                            Text("\(progress.phase.rawValue.capitalized): \(progress.packageName)", bundle: HanlinLocalization.bundle)
+                        }
+                    } else {
+                        ProgressView(RuntimeL10n.string("Downloading and verifying wheel"))
+                    }
+                }
+                if let message = model.message {
+                    Text(message)
+                        .font(HanlinTypography.caption)
+                        .textSelection(.enabled)
+                        .accessibilityIdentifier("hanlin-python-message")
+                }
+            }
+
+            if let preview = model.preview {
+                Section(RuntimeL10n.string("Package details")) {
+                    LabeledContent(RuntimeL10n.string("Package"), value: preview.name)
+                    LabeledContent(RuntimeL10n.string("Version"), value: preview.version)
+                    if let summary = preview.summary { Text(summary) }
+                    LabeledContent(RuntimeL10n.string("Classification"), value: preview.isPurePython ? RuntimeL10n.string("Universal pure-Python wheel") : RuntimeL10n.string("Native or source distribution"))
+                    Text(preview.compatibilityExplanation).font(HanlinTypography.caption)
+                }
+                .accessibilityIdentifier("hanlin-python-preview-section")
+            }
+
+            Section(RuntimeL10n.string("Installed Python packages")) {
+                if model.installed.isEmpty {
+                    ContentUnavailableView(RuntimeL10n.string("No local Python packages"), systemImage: "shippingbox")
+                        .accessibilityIdentifier("hanlin-python-empty-state")
+                }
+                ForEach(model.installed) { item in
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack { Text(item.name); Spacer(); Text(item.version).foregroundStyle(.secondary) }
+                        Text(ByteCountFormatter.string(fromByteCount: item.storageBytes, countStyle: .file)).font(HanlinTypography.caption)
+                        if !item.dependencyRequirements.isEmpty { Text(item.dependencyRequirements.joined(separator: ", ")).font(HanlinTypography.caption2).foregroundStyle(.secondary) }
+                        if let dependencies = item.resolvedDependencies, !dependencies.isEmpty {
+                            Text(dependencies.map { "\($0.name) \($0.version)" }.joined(separator: ", "))
+                                .font(HanlinTypography.caption2)
+                                .foregroundStyle(.secondary)
+                        }
+                        Button(RuntimeL10n.string("Import Probe")) { model.probe(item) }
+                            .buttonStyle(.borderless)
+                            .accessibilityIdentifier("hanlin-python-probe-button-\(item.name)")
+                    }
+                    .accessibilityIdentifier("hanlin-python-installed-item-\(item.name)")
+                    .swipeActions {
+                        Button(RuntimeL10n.string("Uninstall"), role: .destructive) { model.uninstall(item) }
+                        Button(RuntimeL10n.string("Update")) { model.update(item) }.tint(.blue)
+                    }
+                }
+                if let probeOutput = model.probeOutput { Text(probeOutput).font(HanlinTypography.caption.monospaced()).textSelection(.enabled) }
+            }
+
+            Section { Text(RuntimeL10n.string("Install compatible wheels, local packages and source distributions. Source builds use compatible Python backends. Native extensions must be packaged and signed with this app.")) .font(HanlinTypography.caption).foregroundStyle(.secondary) }
+        }
+        .navigationTitle(RuntimeL10n.string("Python Packages"))
+        .fileImporter(isPresented: $importsPackage, allowedContentTypes: [.folder, .data]) { result in
+            switch result {
+            case .success(let url): model.packageName = url.path; model.version = ""; model.install(sourceURL: url)
+            case .failure(let error): model.message = error.localizedDescription
+            }
+        }
+        .task { await model.reload() }
+        .refreshable { await model.reload() }
+    }
+}

@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "node",
+    "Scripts/Audit/audit-miniapp-sdk.mjs",
+    "--write",
+    "--typescript-module",
+    "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/typescript/lib/typescript.js"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": "file:///mnt/development/projects/worktrees/hanlin-miniapps-version-audit-20261124/Scripts/Audit/audit-miniapp-sdk.mjs:163\n  throw new Error('Existing Expo facade/native operation drift; do not publish an inferred API.');\n        ^\n\nError: Existing Expo facade/native operation drift; do not publish an inferred API.\n    at file:///mnt/development/projects/worktrees/hanlin-miniapps-version-audit-20261124/Scripts/Audit/audit-miniapp-sdk.mjs:163:9\n\nNode.js v24.22.0\n",
+  "time": "2026-11-24T05:19:15.829516+00:00",
+  "scope": "Full existing source audit on the isolated worktree; its generated source inventory will not be committed."
+}

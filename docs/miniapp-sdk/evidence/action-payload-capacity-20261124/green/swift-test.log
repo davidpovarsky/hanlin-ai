@@ -1,0 +1,36 @@
+Building for debugging...
+[Computing dependencies]
+[Pre-planning 1 / 153]
+[Planning deferred tasks]
+[37 / 68] ActionPayloadCapacity_HanlinPlatformContracts
+[42 / 71] HanlinPlatformContracts
+[50 / 75] HanlinMiniAppCore
+[51 / 76] HanlinPlatformContracts
+[54 / 76] HanlinMiniAppCore
+[59 / 76] HanlinMiniAppCore
+[65 / 81] HanlinMiniAppCore
+[70 / 81] ActionPayloadCapacityTests-test-runner
+[70 / 81] ActionPayloadCapacityTests-product
+[74 / 82] ActionPayloadCapacityTests-product
+[78 / 85] ActionPayloadCapacityTests-test-runner
+[82 / 85] ActionPayloadCapacityTests-test-runner
+[86 / 86] ActionPayloadCapacityTests-test-runner
+Build complete! (22.14 secs)
+◇ Test run started.
+↳ Testing Library Version: 6.4.3 (ba0861fb203553c)
+↳ Target Platform: aarch64-unknown-linux-gnu
+◇ Suite "Personal Host action lifetime" started.
+◇ Suite NativeFoundationCodecTests started.
+◇ Test explicitlyRequestedDeadlinesAndSizeBudgetsAreStillEnforced() started.
+◇ Test nativeScriptJSONCodecsPreserveLargeDeepValuesAndRejectMalformedJSON() started.
+◇ Test appIntentJSONConversionPreservesLargeDeepValuesAndRejectsMalformedJSON() started.
+◇ Suite "Prepared MiniApp action delivery" started.
+✔ Test appIntentJSONConversionPreservesLargeDeepValuesAndRejectsMalformedJSON() passed after 0.173 seconds.
+◇ Test "An invocation returns its actual registered JavaScript result" started.
+✔ Test nativeScriptJSONCodecsPreserveLargeDeepValuesAndRejectMalformedJSON() passed after 1.088 seconds.
+✔ Suite NativeFoundationCodecTests passed after 1.114 seconds.
+✔ Test explicitlyRequestedDeadlinesAndSizeBudgetsAreStillEnforced() passed after 1.114 seconds.
+✔ Suite "Personal Host action lifetime" passed after 1.114 seconds.
+✔ Test "An invocation returns its actual registered JavaScript result" passed after 1.351 seconds.
+✔ Suite "Prepared MiniApp action delivery" passed after 1.525 seconds.
+✔ Test run with 4 tests in 3 suites passed after 1.525 seconds.

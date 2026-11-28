@@ -1,0 +1,32 @@
+{
+  "base_head": "8a505675eca035fbca3877afd1f8776f00f629d0",
+  "source": "AI_HLYUITests/HanlinCanvasRuntimeUITests.swift",
+  "source_sha256": "86c2b77736d7a0de549e040614f95ae42aef9ebbe187aede02d61a959c09bb27",
+  "proposed_sha256": "e0472eaa60b295c9c55372c50ae661ee843446805227829fe9051cc3ef9f03c8",
+  "patch": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\canvas-confirmation-popover-fix\\canvas-confirmation-popover-fix.diff",
+  "patch_sha256": "779eee26d729324d7db9fd5cfb3e8c8c2c8f59f3795e04edeaf76d5d568d0100",
+  "patch_bytes": 2667,
+  "checks": {
+    "swift_syntax": {
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "canonical_apply_check": {
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "preserved_assertions": {
+      "embedded_result": true,
+      "explicit_remote_confirmation": true,
+      "provider_disclosure": true,
+      "unchanged_output": true,
+      "cold_relaunch_and_recompute": true,
+      "remote_confirm_never_tapped": true
+    }
+  },
+  "native_execution": false,
+  "product_source_changed": false,
+  "canonical_modified": false
+}

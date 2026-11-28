@@ -1,0 +1,11 @@
+{
+  "target_validation_group": "exact_test_selector",
+  "exact_test_selector": "AI_HLYTests/HanlinAppAgentSessionOwnerTests,AI_HLYTests/RuntimeAutonomyV3Tests/nativeKeychainReplacementPreservesOriginalServiceIsolation(),AI_HLYTests/RuntimeAutonomyV3Tests/runtimeEnvironmentCommitFailurePreservesTheOriginalSecret(operation:),AI_HLYTests/RuntimeAutonomyV3Tests/mcpEnvironmentPrimaryWriteFailureRetainsBothDurableGenerations(),AI_HLYTests/RuntimeAutonomyV3Tests/mcpEnvironmentUnknownReadAfterBackupCommitPreservesTheStagedCredential(),AI_HLYTests/RuntimeAutonomyV3Tests/mcpEnvironmentPrecommitFailureKeepsOriginalSecretAndRemovesOnlyStagedValue(),AI_HLYTests/RuntimeAutonomyV3Tests/mcpEnvironmentEditPreservesOtherFieldsSharedReferencesAndRejectsStaleDraft(),AI_HLYTests/RuntimeAutonomyV3Tests/savedEnvironmentPrecedenceFollowsScopesAndPreservesUserPaths(),AI_HLYTests/HanlinUnifiedHostServicesTests/authorizedAttachmentRegistryCrossChatDenial(),AI_HLYTests/AgentSkillsExposureTests/fullSDKSkillToToolFlow(),AI_HLYTests/ClassicChatRestorationTests/mcpInstallSelectInvokeUninstallE2E(),AI_HLYTests/HanlinAppSplitOriginTests",
+  "fast_validation_only": "true",
+  "simulator_e2e_only": "false",
+  "compare_base_sha": "d6e2e3f062633fe7a55c0f44b922c5b3321aaf4a",
+  "full_validation": "false",
+  "testflight_upload": "false",
+  "runtime_publish_release": "false",
+  "runtime_bundle_artifact_run_id": "42926628418"
+}

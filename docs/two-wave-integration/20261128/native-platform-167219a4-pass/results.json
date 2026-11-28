@@ -1,0 +1,178 @@
+{
+  "actualSource": "167219a491a844ae838041f195c12abe9800dac3",
+  "qualification": "ACTUAL_MACOS_PACKAGE_NATIVE_PASS",
+  "focused": {
+    "command": [
+      "swift",
+      "test",
+      "--package-path",
+      "Packages/HanlinPlatform",
+      "--filter",
+      "(retainedNativeScriptSurfaceArchivePassesOriginalImportAnalysis|retainedExpoWidgetMaterializesWithOriginalArtifactWriter|HanlinWidgetInputOwnershipTests)"
+    ],
+    "methods": 10,
+    "semanticInvocations": 10,
+    "suites": 3,
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0,
+    "nativeExitCode": 0,
+    "controllerStop": null,
+    "methodResults": [
+      {
+        "method": "incompleteOrChangedVisibleInventoriesFailClosed",
+        "displayIdentity": "incompleteOrChangedVisibleInventoriesFailClosed()",
+        "outcome": "passed",
+        "durationSeconds": 0.023,
+        "nativeLogLine": 58
+      },
+      {
+        "method": "escapingChangedAndAmbiguousResourceCopiesFailClosed",
+        "displayIdentity": "escapingChangedAndAmbiguousResourceCopiesFailClosed()",
+        "outcome": "passed",
+        "durationSeconds": 0.029,
+        "nativeLogLine": 59
+      },
+      {
+        "method": "explicitlySharedLargeResourceStillHitsOriginalArtifactLimit",
+        "displayIdentity": "explicitlySharedLargeResourceStillHitsOriginalArtifactLimit()",
+        "outcome": "passed",
+        "durationSeconds": 0.19,
+        "nativeLogLine": 60
+      },
+      {
+        "method": "compiledInventoryDoesNotHideUnrecognizedPublishedHelpers",
+        "displayIdentity": "compiledInventoryDoesNotHideUnrecognizedPublishedHelpers()",
+        "outcome": "passed",
+        "durationSeconds": 0.301,
+        "nativeLogLine": 61
+      },
+      {
+        "method": "declaredSharedModuleAndMapOverrideForegroundPairClassification",
+        "displayIdentity": "declaredSharedModuleAndMapOverrideForegroundPairClassification()",
+        "outcome": "passed",
+        "durationSeconds": 0.318,
+        "nativeLogLine": 62
+      },
+      {
+        "method": "configuredDebuggerSourceRootDoesNotChangeOwnership",
+        "displayIdentity": "configuredDebuggerSourceRootDoesNotChangeOwnership()",
+        "outcome": "passed",
+        "durationSeconds": 0.323,
+        "nativeLogLine": 63
+      },
+      {
+        "method": "mixedNativeWidgetKeepsDynamicImportsAndResourceAliases",
+        "displayIdentity": "mixedNativeWidgetKeepsDynamicImportsAndResourceAliases()",
+        "outcome": "passed",
+        "durationSeconds": 0.498,
+        "nativeLogLine": 64
+      },
+      {
+        "method": "bundleOnlyAndUnrecognizedAuthoringKeepOriginalInputs",
+        "displayIdentity": "bundleOnlyAndUnrecognizedAuthoringKeepOriginalInputs()",
+        "outcome": "passed",
+        "durationSeconds": 0.61,
+        "nativeLogLine": 65
+      },
+      {
+        "method": "retainedNativeScriptSurfaceArchivePassesOriginalImportAnalysis",
+        "displayIdentity": "\"The actual prepared NativeScript surface archive remains installable with its retained sources\"",
+        "outcome": "passed",
+        "durationSeconds": 0.12,
+        "nativeLogLine": 747
+      },
+      {
+        "method": "retainedExpoWidgetMaterializesWithOriginalArtifactWriter",
+        "displayIdentity": "\"The retained widget materializes while all foreground and editable source bytes survive\"",
+        "outcome": "passed",
+        "durationSeconds": 0.206,
+        "nativeLogLine": 809
+      }
+    ],
+    "rawProductSummaries": [
+      "✔ Test run with 8 tests in 1 suite passed after 0.610 seconds.",
+      "✔ Test run with 2 tests in 2 suites passed after 0.206 seconds."
+    ],
+    "sourceAndInputsUnchanged": true,
+    "rawLogSHA256": "d933d053012faffa34b9cb2f6a0d1d64f714740bb9b827ffa3f681ab264caf4c",
+    "reconciliationSHA256": "6ca316571627067cff2576735e3eeb749260b399c1bfccec137000de016e2a9f"
+  },
+  "full": {
+    "command": [
+      "/usr/bin/swift",
+      "test",
+      "--package-path",
+      "Packages/HanlinPlatform",
+      "--parallel"
+    ],
+    "methodStarts": 619,
+    "methodPassTerminals": 619,
+    "failedOrSkippedMethods": 0,
+    "productSummaryRowsSeparate": 13,
+    "rawProductSummaryLines": [
+      "✔ Test run with 2 tests in 1 suite passed after 0.056 seconds.",
+      "✔ Test run with 32 tests in 5 suites passed after 2.123 seconds.",
+      "✔ Test run with 20 tests in 2 suites passed after 0.005 seconds.",
+      "✔ Test run with 52 tests in 5 suites passed after 1.668 seconds.",
+      "✔ Test run with 10 tests in 2 suites passed after 0.004 seconds.",
+      "✔ Test run with 5 tests in 1 suite passed after 0.005 seconds.",
+      "✔ Test run with 124 tests in 14 suites passed after 3.989 seconds.",
+      "✔ Test run with 29 tests in 4 suites passed after 0.053 seconds.",
+      "✔ Test run with 6 tests in 1 suite passed after 0.004 seconds.",
+      "✔ Test run with 50 tests in 6 suites passed after 0.359 seconds.",
+      "✔ Test run with 82 tests in 4 suites passed after 0.013 seconds.",
+      "✔ Test run with 25 tests in 6 suites passed after 16.873 seconds.",
+      "✔ Test run with 182 tests in 27 suites passed after 6.344 seconds."
+    ],
+    "productSummaryMethodTotal": 619,
+    "originalParameterStartRowsSeparate": 316,
+    "expectedMethodMapSHA256": "49d06ddbf1c647aa3a23f2b1d9367ecea6e192fb099de0ec609e9e43a1dfc515",
+    "expectedOriginalParameterMapSHA256": "7a34055434fea426c6e9394d4003b28af57ed571782fe6e43b35cc925299a1f0",
+    "exactMethodMultisets": true,
+    "exactOriginalParameterMultiset": true,
+    "nativeExitCode": 0,
+    "controllerStop": null,
+    "sourceAndInputsUnchanged": true,
+    "originalPhaseDeadlineSeconds": 3600,
+    "originalPerTestAndSuiteLimits": "All tracked original declarations remain unchanged by this controller.",
+    "actualStartedAt": "2026-11-28T00:50:48.809556+00:00",
+    "actualFinishedAt": "2026-11-28T00:51:30.330907+00:00",
+    "rawLogSHA256": "9f76be955309c21b18a831360c180b3db487fa8a5c1f3620680cd863c5cbec54",
+    "reconciliationSHA256": "91a5a92b7f350ee4bb93f3d8ca1753f4c1f643f28cfaf51189cb8fdb79a42473"
+  },
+  "countMeaning": {
+    "historicalMethods": 603,
+    "typedListMethodsAdded": 6,
+    "retainedArchiveMethodsAdded": 2,
+    "ownershipMethodsAdded": 8,
+    "totalMethods": 619,
+    "parameterRowsAreNotAdditionalMethods": true,
+    "no935TestClaim": true
+  },
+  "toolchain": {
+    "xcode": "Xcode 27.0\nBuild version 27A266a\n",
+    "swift": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0\n"
+  },
+  "nativeOutcomes": {
+    "nativeScriptCanInstall": true,
+    "nativeScriptErrorFindings": 0,
+    "nativeScriptRuntimeVersion": "9.1.1",
+    "nativeScriptCoreVersion": "9.1.4",
+    "expoProgramBytes": 5915,
+    "expoProgramSHA256": "6271aa1aa66723a1868c65ccd4819964854c8be7b318ebf5068b2ddea99025f9",
+    "expoOriginalWriterAndSourcePreservationAssertions": "PASS",
+    "expoScope": "Original Widget preparation/artifact writer; no native-version admission, foreground runtime, installed-store or OS claim.",
+    "nativeScriptCanInstallEvidence": "The unchanged retainedNativeScriptSurfaceArchivePassesOriginalImportAnalysis method passed its explicit preview.canInstall and no-error-finding assertions; canInstall is computed and not separately serialized in the preview observation."
+  },
+  "notClaimed": [
+    "current SDK archive",
+    "Host build",
+    "app compilation or app tests",
+    "iOS79",
+    "OS surface execution",
+    "physical-device or signing acceptance",
+    "native editor28058 qualification"
+  ],
+  "assemblyExecutedNoTests": true
+}

@@ -1,0 +1,13 @@
+{
+  "diagnosisDirectory": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w2-layout-concurrency-3634078f-terminal-r1/diagnosis-r1",
+  "manifestSHA256": "e321fdad65f08a10a7f23d0cc53eab619ac17d6027891e4210ed1b321be109b5",
+  "diagnosisSHA256": "7d573bafada61e63d76c6e52737c14b98118facb6d5e4a6aea0650b2f210e92c",
+  "sourceBindingSHA256": "3d9a3ed12455a43ac222a183d5fa51cb495c6f14838e6f9e59b908d6b0a63fb1",
+  "originalNativeRawSHA256": "337bca1cb9841156bbec988b25cd41ff14735e25703b36404cd25ee61e8182e7",
+  "actualOldCases": {
+    "started": 2,
+    "passed": 0,
+    "failed": 2
+  },
+  "qualification": "One actual observer path-mismatch error is recorded before identity; both own-case visible paths contain State//. Private files and exchange requests were not separately retained. Current-source behavior is source/portable qualified only."
+}

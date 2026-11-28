@@ -1,0 +1,1046 @@
+{
+  "status": "ORIGINAL_DECLARATIONS_EXTRACTED_NOT_PRODUCT_ACCEPTANCE",
+  "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+  "typescript": "6.0.3",
+  "retainedDeclarations": 90,
+  "modules": [
+    {
+      "path": "src/skills/loading/config.ts",
+      "retained": [
+        {
+          "kind": "FunctionDeclaration",
+          "start": 3967,
+          "end": 5227,
+          "sha256": "45dae6a3199f56e5f3d64025e4777923c3894009c74dbede34cbaa508643ac19"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 3605,
+          "end": 3965,
+          "sha256": "d5be63808631ca0247ff309f14a62d247b204072e0138e34f0e396e01ce5dbd4"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 1158,
+          "end": 1401,
+          "sha256": "843602bfe72c61f1fb883b69faa5a8c6c4b8dac2be4f47a4726c75d685184265"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 2956,
+          "end": 3201,
+          "sha256": "432f8c75358ea5cab38fb0c435e4eed3f191a83aa7ea3fc6c3f5ad8be8e9915d"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 1598,
+          "end": 1862,
+          "sha256": "223cd8189964ca50d510c7818c3eab8708b349ec0bb277fd74ed94da25533ad0"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 1947,
+          "end": 2107,
+          "sha256": "776191094c337fa3019d70b8ff721592fdd503b957d1a3d32dd50e3f280cb8fd"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 3203,
+          "end": 3505,
+          "sha256": "96108061b3d370fc41cdece3eba262fbec707bc1d3019a4248179726d5af104b"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 2443,
+          "end": 2876,
+          "sha256": "53d7aaf71da0ca851dfe14a10910f7af51f05f033f81bc6b0959516f1cd14da0"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 1403,
+          "end": 1596,
+          "sha256": "b365407ca45c9bb2cae48e785a51365e2af09877a59a3fc199188cb8ace41342"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 2878,
+          "end": 2954,
+          "sha256": "1cb43f569559a1a3acccfc77741a83130ac68d3c8595092065686390e4f46673"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 1012,
+          "end": 1133,
+          "sha256": "519f5347ca26579edabcde04816b505dd343ac8764bf7aa81a4b7e51804ff949"
+        }
+      ],
+      "unretainedInitializationStatements": []
+    },
+    {
+      "path": "src/skills/loading/frontmatter.ts",
+      "retained": [
+        {
+          "kind": "FunctionDeclaration",
+          "start": 4632,
+          "end": 5526,
+          "sha256": "32165281485b45217b95826d0d1d28ecbf028793929932de64c17037d5aa17ed"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 5528,
+          "end": 5896,
+          "sha256": "a715f393a343c2d575977c610b3beb99aca53a32416af955c178a2ec67937d33"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 5898,
+          "end": 6015,
+          "sha256": "367dc82555c0b231b1c9f37f73f2669fc3a18a018cfa629a13f80c45ce222f26"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 2616,
+          "end": 4630,
+          "sha256": "19cfc51aaca59cbef3f1ee1849bbd6eebe2025a36043100c18349ab623152ac6"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 1591,
+          "end": 1823,
+          "sha256": "a66bdb64b953a2d90f2abbe8d702518a421760abfdf5a82e7b68b9fab7c504d5"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 1825,
+          "end": 2091,
+          "sha256": "9cb4caac6697991828883c636eed5af7c45bb7605e9f73dceb23da637c026608"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 2093,
+          "end": 2286,
+          "sha256": "5d7f444e79a19ebfbb49fcb5d5f7ab39c6eea8bcec4282a34d563ccb096d1aa9"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 1520,
+          "end": 1589,
+          "sha256": "452803291008bce167f3f95f1061c828178f0b1923e4df629e9ffdc94444f3b0"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 1422,
+          "end": 1519,
+          "sha256": "91610b99b6eeaf02a38f1a913030a15c251bced783bef613bee5356289f3fcd3"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 2288,
+          "end": 2614,
+          "sha256": "3d9ebda70bca6be55c79540d8dbf5fd38844487c8573c03f2c9f363c57b9d461"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 1358,
+          "end": 1421,
+          "sha256": "f6db9bd996cec5e4474dabc29a08a3f6ec90053732e1629f298ea8c9253e657b"
+        }
+      ],
+      "unretainedInitializationStatements": []
+    },
+    {
+      "path": "src/secrets/runtime-degraded-state.ts",
+      "retained": [
+        {
+          "kind": "FunctionDeclaration",
+          "start": 6366,
+          "end": 6510,
+          "sha256": "a88d45ad03a45d0cee01c2548fbe0712cbac3062ad332d52bbd6ac2aad97c76a"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 5634,
+          "end": 5687,
+          "sha256": "bea68f70174b9d2f58478697a068a378c57027ac01afc19ed25795dc05443644"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 5981,
+          "end": 6272,
+          "sha256": "99d853dea808c3899b3b430c4ebd1e90c13e40adcd07d1d32245ba3c237a55bc"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 8531,
+          "end": 8991,
+          "sha256": "886d71717e5ec6433836e9fa3f276737a35eaa9f906a54121cbf75740bd9121e"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 5771,
+          "end": 5849,
+          "sha256": "6c09ee04bb91578110555eae410709685e9567bc279185cc5422b6906145e107"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 5851,
+          "end": 5979,
+          "sha256": "ad13c4ca3ad50db2b5fca57fed7128e6e26936fde6a862255d2084ab2111b754"
+        }
+      ],
+      "unretainedInitializationStatements": [
+        {
+          "kind": "FirstStatement",
+          "start": 304,
+          "end": 833,
+          "source": "const SECRET_DEGRADATION_REASONS = [\n  \"auth profile migration required\",\n  \"secret provider failed\",\n  \"secret provider is not configured\",\n  \"secret provider policy denied resolution\",\n  \"secret provider response violated its contract\",\n  \"secret reference is not allowed for this provider\",\n  \"secret reference was not found\",\n  \"secret reference was not materialized by the active runtime\",\n  \"resolved secret value was invalid\",\n  \"resolved secret value is a redaction placeholder\",\n  \"secret re"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 2420,
+          "end": 2500,
+          "source": "export const SECRET_DEGRADATION_RETRY_HINT = \"openclaw secrets reload\" as const;"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 4457,
+          "end": 4532,
+          "source": "const SECRET_SURFACE_UNAVAILABLE_ERROR_CODE = \"SECRET_SURFACE_UNAVAILABLE\";"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 4533,
+          "end": 4601,
+          "source": "const trustedSecretSurfaceUnavailableErrors = new WeakSet<object>();"
+        },
+        {
+          "kind": "ClassDeclaration",
+          "start": 4685,
+          "end": 5297,
+          "source": "export class SecretSurfaceUnavailableError extends Error {\n  readonly code = SECRET_SURFACE_UNAVAILABLE_ERROR_CODE;\n  readonly ownerKind: DegradedSecretOwner[\"ownerKind\"];\n  readonly ownerId: string;\n  readonly paths: string[];\n\n  constructor(owner: DegradedSecretOwner) {\n    super(\n      `Secret owner ${owner.ownerKind}:${owner.ownerId} is configured but unavailable (${owner.reason}).`,\n    );\n    this.name = \"SecretSurfaceUnavailableError\";\n    this.ownerKind = owner.ownerKind;\n    this.ownerI"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 5688,
+          "end": 5770,
+          "source": "const resolutionErrorOwners = new WeakMap<object, SecretResolutionErrorOwner[]>();"
+        }
+      ]
+    },
+    {
+      "path": "src/shared/frontmatter.ts",
+      "retained": [
+        {
+          "kind": "FunctionDeclaration",
+          "start": 4473,
+          "end": 4858,
+          "sha256": "9b1c52defa9ffd58ed5e5be1b39ba9e72b3632d6a0d70bcb4106813026a30fa4"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 998,
+          "end": 1187,
+          "sha256": "ed11e0ffc7e4193d85080a4ae5cde0dd399b7b0204fbf5affcecbbb11d00ae48"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 3623,
+          "end": 4382,
+          "sha256": "677455c9a704376be6c33ba5177524dd7df09d1f84552301951cf7276676bc07"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 1281,
+          "end": 1794,
+          "sha256": "73ef46c6b0a5a818ef3368a4e2bb8d946e7667f4437121e87b3bd833a9f03ce9"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 2487,
+          "end": 2859,
+          "sha256": "0ebec2b7bea23599f058ed9b485a8c66a823b0bb50f26229af07e86a7bfc8f41"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 2942,
+          "end": 3091,
+          "sha256": "09c643b7165e8189d03fe58e2a1028acf527baa8ee4e0179f04099b582871bf7"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 1882,
+          "end": 2390,
+          "sha256": "89dd0026145170c25940fbf1a463b1703644be4597d63d94887a74b21def3ac3"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 734,
+          "end": 896,
+          "sha256": "08679971626a64b764b6cf484ebf90947f6f10009a74998729df5f597b8f2a69"
+        }
+      ],
+      "unretainedInitializationStatements": []
+    },
+    {
+      "path": "src/shared/config-eval.ts",
+      "retained": [
+        {
+          "kind": "FunctionDeclaration",
+          "start": 1198,
+          "end": 2472,
+          "sha256": "95488ab956667d1cc8b5b97ea23b9a8f58cc9486abd8ef54fbb1529dc40534eb"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 352,
+          "end": 1106,
+          "sha256": "e8bcce18e2a4aa252c214666d9939bcf8f1f7379e0102e3396a12d4b02f6e7f8"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 3958,
+          "end": 4540,
+          "sha256": "1743b5d3f4b7cf6d7f9455af1cf868d80b159ab78ced44397945dadadca49a53"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 3027,
+          "end": 3379,
+          "sha256": "a53dd359085b51ef50f1fcb70bf1a8bf1d55caf23d3c191a7aafdb8afbf4b5d2"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 2943,
+          "end": 3025,
+          "sha256": "ca8d7929ffa5f0c0062843d7d8c1ed33a6c7071553ee59b2ecf2c8c229f3a346"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 3381,
+          "end": 3733,
+          "sha256": "c1b1062dcba4914eb18de779ebad53108d881bffd63e59264fe5094c254e28b2"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 3735,
+          "end": 3956,
+          "sha256": "8e102f6060b3e79242cd994dee9128f01ee07887dcec8483db9b2c198f81dc8d"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 2474,
+          "end": 2694,
+          "sha256": "9ff635b1b13dfed0d705a5ec527208035cb6b33fe94af5819f2e0de70a242cb2"
+        }
+      ],
+      "unretainedInitializationStatements": [
+        {
+          "kind": "FirstStatement",
+          "start": 2785,
+          "end": 2846,
+          "source": "const pendingBinaryAccess = new Map<string, Promise<void>>();"
+        }
+      ]
+    },
+    {
+      "path": "src/skills/loading/source.ts",
+      "retained": [
+        {
+          "kind": "FunctionDeclaration",
+          "start": 261,
+          "end": 493,
+          "sha256": "8aa3ef30bc3790aca3c792cf7c3d34cca08b1af289007ca56b68d92cc139112a"
+        }
+      ],
+      "unretainedInitializationStatements": []
+    },
+    {
+      "path": "src/skills/discovery/agent-filter.ts",
+      "retained": [
+        {
+          "kind": "FunctionDeclaration",
+          "start": 1480,
+          "end": 1936,
+          "sha256": "20985da3cc9722ce1594be6267eced31cda914e3a6956de662953c890b04efc9"
+        }
+      ],
+      "unretainedInitializationStatements": []
+    },
+    {
+      "path": "packages/normalization-core/src/string-normalization.ts",
+      "retained": [
+        {
+          "kind": "FunctionDeclaration",
+          "start": 767,
+          "end": 916,
+          "sha256": "b457b1936317a75cb6915ec75e7b7d85ad21a5d2a172c8e9aeeab6c658ba6d58"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 4568,
+          "end": 4824,
+          "sha256": "d426602e3a21932186bdc5bb19a1f988a16f0980123eed8fd92dc60101dd0610"
+        }
+      ],
+      "unretainedInitializationStatements": []
+    },
+    {
+      "path": "packages/normalization-core/src/string-coerce.ts",
+      "retained": [
+        {
+          "kind": "FunctionDeclaration",
+          "start": 78,
+          "end": 205,
+          "sha256": "5cdd61a8a220d9e3362bf137c3ed2896f3fcec5cda7ae8556029d48554fc4082"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 1418,
+          "end": 1588,
+          "sha256": "7caedd95b1d6092c47ec796d67c32cb38367bf49bdac4d48ff19c7275ed1fbdc"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 2387,
+          "end": 2531,
+          "sha256": "3274afc88f0298f55f07f4d883fe02f7ef1d3fe3d63e74cfa4262b157a50937e"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 565,
+          "end": 698,
+          "sha256": "78b191212ace5a486fc971a0d42e7dd9dee0db45daff4673a44f8cc6f45bef12"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 284,
+          "end": 481,
+          "sha256": "0d42793f9269bc621c6bf6279c233c1793fe2de15c02657baf6d869a4eb3f8c1"
+        }
+      ],
+      "unretainedInitializationStatements": []
+    },
+    {
+      "path": "src/utils/boolean.ts",
+      "retained": [
+        {
+          "kind": "FunctionDeclaration",
+          "start": 805,
+          "end": 1327,
+          "sha256": "028d815f44d099f7089b0f7648c398e8a680cb5db66284131b7da899d909f2b7"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 680,
+          "end": 803,
+          "sha256": "bba95ccc8ecff37a8937fe762d0744d48e452e276d360dc7689ee022a5ae2d74"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 539,
+          "end": 608,
+          "sha256": "5b31db3a4a0ace796e669229c276f57ed1c6a13543a8c0a3d5121bee3c8be57c"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 609,
+          "end": 678,
+          "sha256": "38520a5fc577f4c6e1f436ee57a5bf406f541e63ef9b85e76da5336963391293"
+        }
+      ],
+      "unretainedInitializationStatements": []
+    },
+    {
+      "path": "packages/normalization-core/src/record-coerce.ts",
+      "retained": [
+        {
+          "kind": "FunctionDeclaration",
+          "start": 1315,
+          "end": 1504,
+          "sha256": "abd19222ce4353bfd84bd60e4b4d277f57da49328897f1273b1ea1d53f8f8a83"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 75,
+          "end": 232,
+          "sha256": "5e765c9f485ba8694b1d0adfb70ffa82f2762f78bd543a352dc4c07884998bf6"
+        }
+      ],
+      "unretainedInitializationStatements": []
+    },
+    {
+      "path": "src/utils/parse-json-compat.ts",
+      "retained": [
+        {
+          "kind": "FunctionDeclaration",
+          "start": 1540,
+          "end": 1733,
+          "sha256": "5b375210cb128695048142e1d0b97534e4f893b7f423ffb453c80387c713c603"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 1008,
+          "end": 1441,
+          "sha256": "854d7a483acb746d4f9c1246b39686847b13476f9c592785cfc6c913e347a68d"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 357,
+          "end": 399,
+          "sha256": "d777b46632e84c7793cced647e97876d639dd95347c52f7dc395d61261abc692"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 645,
+          "end": 1006,
+          "sha256": "2d58bb7ae9a906647e553a6ee081cedddabc2fdf8980419c4fc9400d5879033e"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 400,
+          "end": 444,
+          "sha256": "3e0f0384c9a9b33e6f0d451070e15177ea3dab891cd4c6c883c4d8c12e51e398"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 446,
+          "end": 643,
+          "sha256": "63f95b8410519a892b719214b3c5aff974cb93c1bc9219c82c85d57975a9c09e"
+        }
+      ],
+      "unretainedInitializationStatements": []
+    },
+    {
+      "path": "src/compat/legacy-names.ts",
+      "retained": [
+        {
+          "kind": "FirstStatement",
+          "start": 79,
+          "end": 127,
+          "sha256": "ad9b8a086cd792b1b4ae37b63f3708849d11334172025d3aab02b45809e58ec9"
+        }
+      ],
+      "unretainedInitializationStatements": []
+    },
+    {
+      "path": "src/shared/requirements.ts",
+      "retained": [
+        {
+          "kind": "FunctionDeclaration",
+          "start": 894,
+          "end": 1262,
+          "sha256": "e79464d94cfedb12fdd61e8e0158307acc28f2bdc7772a7f480bb706a3c8c7d7"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 714,
+          "end": 892,
+          "sha256": "d500462f8b1a8b2df8d98a791f3a2358c048f9e61f63993307ea91b0ad245266"
+        }
+      ],
+      "unretainedInitializationStatements": []
+    },
+    {
+      "path": "src/infra/prototype-keys.ts",
+      "retained": [
+        {
+          "kind": "FunctionDeclaration",
+          "start": 254,
+          "end": 353,
+          "sha256": "65c6619a91b52aee19d7bce884577fea3327b3f17992cc649a5381db1e82b27c"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 99,
+          "end": 178,
+          "sha256": "367506b9172aa93e19a6c836cf4a91f65098067229fc64fff94347371d4a0e44"
+        }
+      ],
+      "unretainedInitializationStatements": []
+    },
+    {
+      "path": "src/config/types.secrets.ts",
+      "retained": [
+        {
+          "kind": "FunctionDeclaration",
+          "start": 4885,
+          "end": 5097,
+          "sha256": "ea7cf6cb1b46c9ba334acbb1a83e83e2cb8d9d9ab0aa18b467e4c7e4672a9121"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 5185,
+          "end": 5308,
+          "sha256": "d381ce1337792a44f7d62d53307fba57e5db4cc71b8be34bd7104aabcff30be9"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 4427,
+          "end": 4782,
+          "sha256": "eaa95bf05d69410a3869271314e8e0b21365853b7088975cb3a2ec680043d5bc"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 1726,
+          "end": 2148,
+          "sha256": "55d0afc125575b61d32efb0f4b0a212bce28baeca6acdfac88ad59ec4cced3af"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 4157,
+          "end": 4339,
+          "sha256": "3ede0eb74e18d575bc99be81df05cfea1ec9d7f8c8502574be9ff0299d91c842"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 2467,
+          "end": 2980,
+          "sha256": "581e84f18421c8298d8bb57e65d7f348c72e82a5859ca123147975175c8750ce"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 1073,
+          "end": 1138,
+          "sha256": "e0fdb2560e9bcbfbd868075e42a966725e09d74c93202506b384cc89a2ef85d9"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 1139,
+          "end": 1201,
+          "sha256": "7bee468a52d2f1e61e7d61406dd71c83d9b055d353f0e2120ddcc13a06436a59"
+        }
+      ],
+      "unretainedInitializationStatements": [
+        {
+          "kind": "FirstStatement",
+          "start": 802,
+          "end": 869,
+          "source": "export const LEGACY_SECRETREF_ENV_MARKER_PREFIX = \"secretref-env:\";"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 975,
+          "end": 1044,
+          "source": "export const LEGACY_DOUBLE_UNDERSCORE_ENV_MARKER_PREFIX = \"__env__:\";"
+        },
+        {
+          "kind": "ClassDeclaration",
+          "start": 5404,
+          "end": 5856,
+          "source": "export class UnresolvedSecretInputError extends Error {\n  readonly path: string;\n  readonly ref: SecretRef;\n\n  constructor(params: { path: string; ref: SecretRef }) {\n    super(\n      `${params.path}: unresolved SecretRef \"${secretRefKey(params.ref)}\". Resolve this command against an active gateway runtime snapshot before reading it.`,\n    );\n    this.name = \"UnresolvedSecretInputError\";\n    this.path = params.path;\n    this.ref = params.ref;\n  }\n}"
+        }
+      ]
+    },
+    {
+      "path": "src/infra/npm-registry-spec.ts",
+      "retained": [
+        {
+          "kind": "FunctionDeclaration",
+          "start": 3727,
+          "end": 3898,
+          "sha256": "839666a534d0605ed25c0f5eb5f47ae81c5a836bff9000219b2a0f3d4536ba1b"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 874,
+          "end": 3353,
+          "sha256": "367088ae3312027ab060d6f8f52d9c8fefa074f8e3bb8a2f7f08905a5714f1a1"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 431,
+          "end": 482,
+          "sha256": "09069ad60979b444679639c2be4c9647f4451118f5953280836d25424abd4a00"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 5070,
+          "end": 5257,
+          "sha256": "87b60e20c91a1afb2c82a4be0d3215bb0f2eeb07344f3019875826f075aca3ff"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 4182,
+          "end": 4979,
+          "sha256": "8a825251e3d9a21e2ee79d121cecf6a662cd5d3bef63b38209a6e9e72f7da18b"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 384,
+          "end": 430,
+          "sha256": "168043d682a92778b50ffcec60e787a2e90c3bd15523686aa7cfefbca5d38566"
+        }
+      ],
+      "unretainedInitializationStatements": []
+    },
+    {
+      "path": "src/infra/sealed-runtime-registry.ts",
+      "retained": [
+        {
+          "kind": "FunctionDeclaration",
+          "start": 323,
+          "end": 400,
+          "sha256": "6d2a1c2da5c649b13744b23edf041cbb79d63dd5810f3271527f8bc8de266400"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 194,
+          "end": 233,
+          "sha256": "13db9596a7b11df38ab14c7350b5bb4f4f7b3f467ffd4aab3d43693187ad6d8b"
+        }
+      ],
+      "unretainedInitializationStatements": []
+    },
+    {
+      "path": "src/secrets/ref-contract.ts",
+      "retained": [
+        {
+          "kind": "FirstStatement",
+          "start": 806,
+          "end": 861,
+          "sha256": "6adf9ea374c94dd1ba2a525c714e33a27bf80fefbb3c58f5eaa6130ab5a0b7e4"
+        },
+        {
+          "kind": "FunctionDeclaration",
+          "start": 1064,
+          "end": 1539,
+          "sha256": "d083bae8b0c7f399c770d2fab9c0920bfd57a266ba48250cd6d9439e40dc8f37"
+        }
+      ],
+      "unretainedInitializationStatements": [
+        {
+          "kind": "FirstStatement",
+          "start": 890,
+          "end": 952,
+          "source": "export const ENV_SECRET_REF_ID_RE = /^[A-Z][A-Z0-9_]{0,127}$/;"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 1681,
+          "end": 1741,
+          "source": "const FILE_SECRET_REF_SEGMENT_PATTERN = /^(?:[^~]|~0|~1)*$/;"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 1817,
+          "end": 1888,
+          "source": "export const SECRET_PROVIDER_ALIAS_PATTERN = /^[a-z][a-z0-9_-]{0,63}$/;"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 1889,
+          "end": 1964,
+          "source": "const EXEC_SECRET_REF_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._:/#-]{0,255}$/;"
+        },
+        {
+          "kind": "FirstStatement",
+          "start": 2043,
+          "end": 2091,
+          "source": "export const SINGLE_VALUE_FILE_REF_ID = \"value\";"
+        }
+      ]
+    },
+    {
+      "path": "packages/normalization-core/src/expect.ts",
+      "retained": [
+        {
+          "kind": "FunctionDeclaration",
+          "start": 92,
+          "end": 307,
+          "sha256": "adde8a4e7dd0ef891e439011093ebf9bfc063bc34e41510f552da2d5d8e1fb62"
+        }
+      ],
+      "unretainedInitializationStatements": []
+    },
+    {
+      "path": "src/infra/semver.ts",
+      "retained": [
+        {
+          "kind": "FunctionDeclaration",
+          "start": 291,
+          "end": 450,
+          "sha256": "0130ed0097571f77afea4f5caa9b3ff4952aa8a25ec0adfa75cb04ff58f56480"
+        }
+      ],
+      "unretainedInitializationStatements": []
+    }
+  ],
+  "externalImports": [
+    {
+      "name": "json5",
+      "symbols": [
+        "JSON5"
+      ]
+    },
+    {
+      "name": "node:fs",
+      "symbols": [
+        "fs"
+      ]
+    },
+    {
+      "name": "node:path",
+      "symbols": [
+        "path"
+      ]
+    },
+    {
+      "name": "node:module",
+      "symbols": [
+        "createRequire"
+      ]
+    },
+    {
+      "name": "semver",
+      "symbols": [
+        "parseSemver",
+        "parseSemverPrerelease",
+        "validSemver"
+      ]
+    }
+  ],
+  "unresolvedIdentifiers": [
+    "Array",
+    "Boolean",
+    "Error",
+    "JSON",
+    "Map",
+    "Object",
+    "Set",
+    "String",
+    "URL",
+    "process"
+  ],
+  "boundary": "Retained declaration bodies are original bytes; only imports are narrowed by TypeScript symbol reachability. Omitted initialization is checked structurally before emission. Native and parity evidence are separate.",
+  "initializationAudit": [],
+  "initializerCalls": [
+    {
+      "path": "packages/markdown-core/src/frontmatter.ts",
+      "retained": false,
+      "binding": "FREEFORM_TEXT_FIELDS",
+      "expression": "new Set([\"description\", \"read_when\", \"summary\"])"
+    },
+    {
+      "path": "packages/normalization-core/src/cjk-chars.ts",
+      "retained": false,
+      "binding": "WEIGHTED_CJK_RE",
+      "expression": "new RegExp(\n  `[${WEIGHTED_CJK_RANGES.flatMap((ranges) =>\n    ranges.map(([start, end]) => `\\\\u{${start.toString(16)}}-\\\\u{${end.toString(16)}}`),\n  ).join(\"\")}]`,\n  \"u\",\n)"
+    },
+    {
+      "path": "packages/normalization-core/src/cjk-chars.ts",
+      "retained": false,
+      "binding": "WEIGHTED_CJK_RE",
+      "expression": "WEIGHTED_CJK_RANGES.flatMap((ranges) =>\n    ranges.map(([start, end]) => `\\\\u{${start.toString(16)}}-\\\\u{${end.toString(16)}}`),\n  ).join(\"\")"
+    },
+    {
+      "path": "packages/normalization-core/src/cjk-chars.ts",
+      "retained": false,
+      "binding": "WEIGHTED_CJK_RE",
+      "expression": "WEIGHTED_CJK_RANGES.flatMap((ranges) =>\n    ranges.map(([start, end]) => `\\\\u{${start.toString(16)}}-\\\\u{${end.toString(16)}}`),\n  )"
+    },
+    {
+      "path": "packages/normalization-core/src/cjk-chars.ts",
+      "retained": false,
+      "binding": "CJK_CATEGORY",
+      "expression": "(() => {\n  const maxCodePoint = Math.max(\n    ...WEIGHTED_CJK_RANGES.flatMap((ranges) => ranges.map(([, end]) => end)),\n  );\n  const categories = new Uint8Array(maxCodePoint + 1);\n  for (const [bucket, ranges] of WEIGHTED_CJK_RANGES.entries()) {\n    for (const [start, end] of ranges) {\n      categories.fill(bucket + 1, start, end + 1);\n    }\n  }\n  return categories;\n})()"
+    },
+    {
+      "path": "packages/normalization-core/src/error-coercion.ts",
+      "retained": false,
+      "binding": "STRUCTURED_ERROR_OWNED_FIELDS",
+      "expression": "new Set([\"cause\", \"message\", \"name\", \"stack\"])"
+    },
+    {
+      "path": "packages/normalization-core/src/error-coercion.ts",
+      "retained": false,
+      "binding": "STRUCTURED_ERROR_PROTOTYPE_FIELDS",
+      "expression": "new Set([\"__proto__\", \"constructor\", \"prototype\"])"
+    },
+    {
+      "path": "packages/normalization-core/src/error-coercion.ts",
+      "retained": false,
+      "binding": "PROVIDER_AUTH_PERSISTENCE_ERROR_BRAND",
+      "expression": "Symbol.for(\n  \"openclaw.provider-auth-persistence-error\",\n)"
+    },
+    {
+      "path": "packages/normalization-core/src/number-coercion.ts",
+      "retained": false,
+      "binding": "MAX_TIMER_TIMEOUT_SECONDS",
+      "expression": "Math.floor(MAX_TIMER_TIMEOUT_MS / 1000)"
+    },
+    {
+      "path": "packages/retry/src/index.ts",
+      "retained": false,
+      "binding": "retryAsync",
+      "expression": "createRetryRunner()"
+    },
+    {
+      "path": "src/agents/agent-dir-registry.ts",
+      "retained": false,
+      "binding": "agentIdsByDir",
+      "expression": "new Map<string, Set<string>>()"
+    },
+    {
+      "path": "src/agents/agent-dir-registry.ts",
+      "retained": false,
+      "binding": "preparedPaths",
+      "expression": "resolveGlobalMap<string, { key: string; close(): void }>(\n  Symbol.for(\"openclaw.agentDirPreparedPaths\"),\n  (paths) => {\n    for (const prepared of paths.values()) {\n      prepared.close();\n    }\n    paths.clear();\n  },\n  \"shared-state\",\n)"
+    },
+    {
+      "path": "src/agents/agent-dir-registry.ts",
+      "retained": false,
+      "binding": "preparedPaths",
+      "expression": "Symbol.for(\"openclaw.agentDirPreparedPaths\")"
+    },
+    {
+      "path": "src/agents/agent-scope-config.ts",
+      "retained": false,
+      "binding": "agentRosterFacts",
+      "expression": "new WeakMap<\n  OpenClawConfig,\n  { publication: object | undefined; facts: AgentRosterFacts }\n>()"
+    },
+    {
+      "path": "src/agents/workspace-default.ts",
+      "retained": false,
+      "binding": "DEFAULT_AGENT_WORKSPACE_DIR",
+      "expression": "resolveDefaultAgentWorkspaceDir()"
+    },
+    {
+      "path": "src/config/model-policy-ref.ts",
+      "retained": false,
+      "binding": "MODEL_POLICY_COMPAT_SELECTORS",
+      "expression": "new Set([\"openrouter:auto\", \"openrouter:free\"])"
+    },
+    {
+      "path": "src/config/paths.ts",
+      "retained": false,
+      "binding": "isNixMode",
+      "expression": "resolveIsNixMode()"
+    },
+    {
+      "path": "src/config/paths.ts",
+      "retained": false,
+      "binding": "STATE_DIR",
+      "expression": "resolveStateDir()"
+    },
+    {
+      "path": "src/config/paths.ts",
+      "retained": false,
+      "binding": "CONFIG_PATH",
+      "expression": "resolveConfigPathCandidate()"
+    },
+    {
+      "path": "src/infra/boundary-path.ts",
+      "retained": false,
+      "binding": "runInBoundaryPathContext",
+      "expression": "AsyncLocalStorage.snapshot()"
+    },
+    {
+      "path": "src/infra/home-dir.ts",
+      "retained": false,
+      "binding": "userPathBaseDirectory",
+      "expression": "resolveGlobalSingleton(\n  Symbol.for(\"openclaw.userPathBaseDirectory\"),\n  () => new AsyncLocalStorage<string>(),\n)"
+    },
+    {
+      "path": "src/infra/home-dir.ts",
+      "retained": false,
+      "binding": "userPathBaseDirectory",
+      "expression": "Symbol.for(\"openclaw.userPathBaseDirectory\")"
+    },
+    {
+      "path": "src/infra/owned-directory-observation.ts",
+      "retained": false,
+      "binding": "directories",
+      "expression": "new Map<string, Directory>()"
+    },
+    {
+      "path": "src/infra/owned-directory-observation.ts",
+      "retained": false,
+      "binding": "sources",
+      "expression": "new Map<string, Source>()"
+    },
+    {
+      "path": "src/infra/prototype-keys.ts",
+      "retained": true,
+      "binding": "BLOCKED_OBJECT_KEYS",
+      "expression": "new Set([\"__proto__\", \"prototype\", \"constructor\"])"
+    },
+    {
+      "path": "src/routing/account-id.ts",
+      "retained": false,
+      "binding": "normalizedAccountIdCache",
+      "expression": "new Map<string, string | undefined>()"
+    },
+    {
+      "path": "src/secrets/runtime-degraded-state.ts",
+      "retained": false,
+      "binding": "trustedSecretSurfaceUnavailableErrors",
+      "expression": "new WeakSet<object>()"
+    },
+    {
+      "path": "src/secrets/runtime-degraded-state.ts",
+      "retained": false,
+      "binding": "resolutionErrorOwners",
+      "expression": "new WeakMap<object, SecretResolutionErrorOwner[]>()"
+    },
+    {
+      "path": "src/secrets/runtime-degraded-state.ts",
+      "retained": true,
+      "binding": "activeCredentialDegradedOwners",
+      "expression": "new Map<string, DegradedSecretOwner>()"
+    },
+    {
+      "path": "src/sessions/session-key-utils.ts",
+      "retained": false,
+      "binding": "SESSION_DELIVERY_PEER_KINDS",
+      "expression": "new Set<ParsedSessionDeliveryRoute[\"peerKind\"]>([\n  \"channel\",\n  \"direct\",\n  \"dm\",\n  \"group\",\n])"
+    },
+    {
+      "path": "src/shared/config-eval.ts",
+      "retained": false,
+      "binding": "pendingBinaryAccess",
+      "expression": "new Map<string, Promise<void>>()"
+    },
+    {
+      "path": "src/shared/detached-async-context.ts",
+      "retained": false,
+      "binding": "asyncHooks",
+      "expression": "process.getBuiltinModule(\"node:async_hooks\")"
+    },
+    {
+      "path": "src/shared/detached-async-context.ts",
+      "retained": false,
+      "binding": "detachedAsyncContext",
+      "expression": "resolveGlobalSingleton(\n      Symbol.for(\"openclaw.detachedAsyncContext\"),\n      () => new asyncHooks.AsyncResource(\"openclaw.detached-async-context\"),\n    )"
+    },
+    {
+      "path": "src/shared/detached-async-context.ts",
+      "retained": false,
+      "binding": "detachedAsyncContext",
+      "expression": "Symbol.for(\"openclaw.detachedAsyncContext\")"
+    },
+    {
+      "path": "src/shared/global-singleton.ts",
+      "retained": false,
+      "binding": "GLOBAL_SINGLETON_RESETS_KEY",
+      "expression": "Symbol.for(\"openclaw.globalSingletonLifecycleResets\")"
+    },
+    {
+      "path": "src/shared/immutable-data.ts",
+      "retained": false,
+      "binding": "deeplyFrozenPlainData",
+      "expression": "new WeakSet<object>()"
+    },
+    {
+      "path": "src/skills/loading/config.ts",
+      "retained": true,
+      "binding": "BUNDLED_SOURCES",
+      "expression": "new Set([\"openclaw-bundled\", \"openclaw-custodian\"])"
+    },
+    {
+      "path": "src/utils.ts",
+      "retained": false,
+      "binding": "CONFIG_DIR",
+      "expression": "resolveConfigDir()"
+    }
+  ]
+}

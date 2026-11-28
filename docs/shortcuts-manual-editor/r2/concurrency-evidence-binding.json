@@ -1,0 +1,8 @@
+{
+  "packet": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-concurrency-terminal-r1/normalized-r1",
+  "manifestSHA256": "2a5dbebf17b7a1c66c05837a412d6f7caf0c2337b844eb7ce059525ceb0f7c7d",
+  "reconciliationSHA256": "41a7ddf10e1403b9376c1d1934a8f8d8e97a62048fadc9a2dba610c1b4ca4c0a",
+  "rawVerificationSHA256": "8d150137aab89cc604fd6d754fcf1d618fb41b7f71862338930d5a54a272ffd5",
+  "actual2NativeFailuresUnchanged": true,
+  "R1Immutable": "CandidateR1source9db and its source/proof commits8274/78da retained; root-reviewed prior composition compile is separate and does not typecheck R2."
+}

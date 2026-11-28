@@ -1,0 +1,43 @@
+{
+  "kind": "vStack",
+  "properties": {
+    "spacing": 10,
+    "alignment": "leading"
+  },
+  "children": [
+    {
+      "kind": "text",
+      "properties": {
+        "content": "HanlinScript Translation Parity",
+        "font": "headline"
+      },
+      "children": []
+    },
+    {
+      "kind": "text",
+      "properties": {
+        "content": "Selected Text: {{selectedText}}",
+        "font": "body"
+      },
+      "children": []
+    },
+    {
+      "kind": "text",
+      "properties": {
+        "content": "Character Count: {{selectedTextLength}}",
+        "font": "subheadline",
+        "foreground": "secondary"
+      },
+      "children": []
+    },
+    {
+      "kind": "text",
+      "properties": {
+        "content": "Parity Verified: Extension-Safe Declarative Rendering",
+        "font": "caption",
+        "foreground": "secondary"
+      },
+      "children": []
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "git",
+    "-c",
+    "gc.auto=0",
+    "-C",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-widget-recovery-os-20261127",
+    "apply",
+    "--check",
+    "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/widget-families-os-f5d3fc0e/candidate-r1/proof/source.patch"
+  ],
+  "exitCode": 1,
+  "stdout": "",
+  "stderr": "error: dev/null: No such file or directory\nerror: dev/null: No such file or directory\n",
+  "status": ""
+}

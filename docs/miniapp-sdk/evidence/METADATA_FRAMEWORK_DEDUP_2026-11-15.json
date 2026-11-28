@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-15",
+  "attribution": "[נועם | Runtime/SDK] [MAIN_SESSION]",
+  "lease": "W1-001",
+  "baseline": "ba7a5ba3ed9e8983cc47df532114079f64bff0b0",
+  "tasks": ["1220373608755846", "1220374076374903"],
+  "localWrapperTests": {
+    "status": "EXECUTED_PASS",
+    "command": "py -3 -B -m unittest Scripts.CI.Tests.test_nativescript_metadata_wrapper -v",
+    "methods": 10,
+    "existingMethods": 4,
+    "newRegressionMethods": 6,
+    "seconds": 0.944,
+    "platform": "Windows",
+    "boundary": "Synthetic filesystem discovery/failure cases; no Apple/VM claim"
+  },
+  "focusedNativeMetadata": {"status": "NOT_RUN"},
+  "appConsumers": {"status": "NOT_RUN", "requestedMethods": 16},
+  "strictCompleteSDKTyping": {"status": "NOT_RUN"},
+  "physicalDevice": {"status": "NOT_RUN"},
+  "historicalFailure": {"run": 43650510166, "status": "FAILED", "executedMethods": 0},
+  "taskCompletion": false
+}

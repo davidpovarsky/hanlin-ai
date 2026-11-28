@@ -1,0 +1,53 @@
+{
+  "document": "COMPACT_COMPOSER_KEYBOARD_LAYOUT_20261118",
+  "recorded_at": "2026-11-18T09:09:09.730964+00:00",
+  "source_before_repair": "d7002ab1765f508ecb1263cfee6f21edf7e567fe",
+  "original_run": {
+    "id": 44263129438,
+    "sha": "2b5f2972d8b0f1b533ae205e0212a44fcd739375",
+    "conclusion": "failure",
+    "build": "PASS",
+    "ui": {
+      "passed": 0,
+      "failed": 2,
+      "skipped": 0
+    },
+    "device": "iPhone Air",
+    "os": "iOS 27.2"
+  },
+  "original_evidence": {
+    "artifact_id": 14411953773,
+    "artifact_size": 45518158,
+    "api_zip_sha256": "b2844073cc28367f3b39385dd39ddfae6f3cc5a89261368134f112f2ebf94831",
+    "full_zip_digest_recomputed": false,
+    "ui_json_sha256": "b08e87de585181523848be6f78b35eee218aec77d853d534c671f048da272c72",
+    "xcresult_database_sha256": "7d5028a87eca2d84f563431cefceef67b2b417e727127ac8762ff0ca76337f7a",
+    "large_text_original_recording_sha256": "428fc8aa30175ee82be6ee827be34b7ac6a6ab6913d9f3b62c6a5ff0e1859e77",
+    "normal_original_recording_sha256": "a44e752677ce2e632b94a730400a18b0407cb9896b6369584e3c657b5319152f",
+    "decoded_manifest": "build/continuation-evidence/44263129438/decoded-original-attachments/manifest.json"
+  },
+  "observed": [
+    "Both original recordings' final frames visually inspected. Large Text editor is now inside the viewport, at x107 y557.7 width203.7 height124, but the original tap does not acquire keyboard focus; original typeText fails.",
+    "Normal text enters the actual editor; the keyboard covers the composer and launcher. Original isHittable assertion fails.",
+    "Prior repair 2b5f fixed the off-screen editor extent but did not complete native keyboard/focus acceptance."
+  ],
+  "repair": {
+    "layout": "Remove the owning GeometryReader around NavigationStack. Keep native safeAreaInset and one persistent original ChatViewBottom. Observe the external container with onGeometryChange; budget from its usable safe area without deducting the dock twice.",
+    "scope": "Compact workspace only; canonical Morph shell, native editor, original drafts/attachments and wide workspace unchanged.",
+    "diagnosis_status": "Keyboard overlap is observed. Native confirmation of the layout/focus repair is pending; no speculative PASS claim.",
+    "test_changes": "Only add original hierarchy attachment after typing; retain every original assertion and action."
+  },
+  "validation": {
+    "swift_syntax": "PASS (Windows parser only; not Apple-framework typecheck)",
+    "git_diff_check": "PASS",
+    "native_ui": "PENDING",
+    "rerun_scope": "The two original failed compact UI selectors. Do not rerun the prior unchanged 20 native component cases merely because HEAD advanced."
+  },
+  "official_references": [
+    "https://developer.apple.com/documentation/swiftui/safearearegions",
+    "https://developer.apple.com/videos/play/wwdc2021/10021/"
+  ],
+  "phase2_complete": false,
+  "phase3_complete": false,
+  "release_decision": "NO_GO"
+}

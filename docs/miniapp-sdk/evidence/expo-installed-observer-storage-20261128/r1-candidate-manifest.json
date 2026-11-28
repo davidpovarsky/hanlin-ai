@@ -1,0 +1,66 @@
+{
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "files": [
+    {
+      "bytes": 1714,
+      "path": "README.md",
+      "sha256": "d99a13f7cef359c55964645bc39b674bf3fb442f77ccaa598d747ca4120ff9dc"
+    },
+    {
+      "bytes": 8032,
+      "path": "source/Scripts/CI/Tests/test_installed_expo_observer_storage.py",
+      "sha256": "8c71df979e5b2d4bc9aa977767ba5027fc0178e56e3eb30f93c2ac777c109ab0"
+    },
+    {
+      "bytes": 26856,
+      "path": "source/Scripts/ProductSplit/Tests/test_share_translation_surface_observer.py",
+      "sha256": "bfe2d444901c3caeb4f7fe40859358252340b505fcdc8c16f24bda74eed25207"
+    },
+    {
+      "bytes": 17762,
+      "path": "source/Scripts/ProductSplit/Tests/test_system_surface_input_producer.py",
+      "sha256": "483fc33d56e33614e5f73dfca297922be61192489a97424869144295d84a9c18"
+    },
+    {
+      "bytes": 38874,
+      "path": "source/Scripts/ProductSplit/observe_share_translation_surfaces.py",
+      "sha256": "f59353b1906429e323d9315edaa472c2f10582650f6244844d31a2f042ef4901"
+    },
+    {
+      "bytes": 38117,
+      "path": "source/Scripts/ProductSplit/observe_shortcut_concurrency.py",
+      "sha256": "794e514726d39b836f65c9c2bce3fea74c17b09076137480b61212a6bb5c3f8a"
+    },
+    {
+      "bytes": 44208,
+      "path": "source/Scripts/ProductSplit/observe_shortcut_long_running.py",
+      "sha256": "8d4296b354401a2fd79544792066886cab7a05a3c42b441483475c54994424de"
+    },
+    {
+      "bytes": 67114,
+      "path": "source/Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "sha256": "107fc49607d5700d6b6519c6abc71d6cfce03a374eb574a8e0ef1c3f3e84ae23"
+    },
+    {
+      "bytes": 28425,
+      "path": "source/Scripts/ProductSplit/observe_widget_action_surfaces.py",
+      "sha256": "3cb0d827bd1d29518f01c6e3ccf96aaf8ac077e01bf19c4ef6a60b53e20ba4a9"
+    },
+    {
+      "bytes": 101444,
+      "path": "source/Scripts/ProductSplit/run_paired_acceptance.py",
+      "sha256": "2e9a6f74e10fa08320c282ecf2f43384c9e74d0d62ef67b26e5ded4279eccea6"
+    },
+    {
+      "bytes": 9875,
+      "path": "source-qualification.json",
+      "sha256": "a2698d4b2ba073cc6e2bdcf811497d4e8a84d50c6602ad0840132617024f6f94"
+    },
+    {
+      "bytes": 33913,
+      "path": "source.patch",
+      "sha256": "a24a1a3235e32f52cdc1add5ebbb63dfae1f1e8c1b1cf317e654ef152f736101"
+    }
+  ],
+  "schema": 1
+}

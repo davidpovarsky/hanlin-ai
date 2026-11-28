@@ -1,0 +1,14 @@
+{
+  "status": "SOURCE_APPROVED_FOR_SEAL_AND_INTEGRATION_NATIVE_PENDING",
+  "at": "2026-11-28T07:07:32.824622+00:00",
+  "rootReviewSHA256": "e1e223ec7bbe7adf75b02ebbfff6ebaf80c9662f32ea54b9991a7fb2955eab94",
+  "independentUIReviewSHA256": "d8b1fe352a76a63f943caab3c77e5dc3d2e1d7468000f78759d331411a6d09cf",
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "sourcePaths": 12,
+  "workflowPaths": 1,
+  "finalTestSHA256": "3739ae95737748100e4b7f3a288083bceec21ef7a20a32f5a546de6bc1b15bc1",
+  "UIAndReaderUnchangedFromReviewedR2": true,
+  "native": "NOT_RUN",
+  "scope": "Four NS saved native list cases;8 real actions required,360s per pair. Expo4 and pre-change migration remain open. Original38 methods preserved.",
+  "sealing": "Source12 nonworkflow paths, compact proof separate. Keep workflow patch separate for authorized GitHub API route."
+}

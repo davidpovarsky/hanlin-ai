@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-28T04:12:04.111866+00:00",
+  "reviewer": "root",
+  "candidateManifestSHA256": "dfaa300634a30d6b329d58eeabd004f571d3914bba392f8bc0e9e470d5f99b9c",
+  "verifiedMembers": 16,
+  "verifiedBytes": 863527,
+  "baseGitObjectsVerified": 4,
+  "verdict": "R1_REQUIRES_REVISION_SOURCE_CAUSAL_DEFECT",
+  "native": "NOT_RUN",
+  "acceptedDesign": "Capturing/joining actual producer plus ordered final persistence before admission, preserving both writer guards and fast invalidate, is required. R1 retains those exact original source boundaries.",
+  "blockingFinding": "clearHistory synchronously calls cancel and then commits the original higher empty CAS revision. The retiring Session's late save can correctly fail with storeConflict. R1 retains that failed pendingInvalidation indefinitely and rejects future same-owner admissions even after the explicit successful clear. Existing source tests do not exercise active-clear-to-restart.",
+  "otherRequiredCorrection": "Revalidate the actual original conversation after internal invalidation even when dataAccess is nil, because that await can permit deletion/replacement.",
+  "approvedR2Boundary": "Bind recovery only to the successful original clear's exact canonical receipt, same owner/Session/store/row/replacement, join the actual old task, require !isRunning, accept only storeConflict, then reread/equal-check the exact clear receipt. No other failure reset or early writer state change. Minimal existing-store guarded synchronous accessor plus meaningful existing-suite persistent/temporary clear and nil-dataAccess regressions authorized.",
+  "originalTestsSelectorsAndDeadlines": "Preserve all original bodies/assertions/limits. Frozen R1 remains retained; no retroactive PASS."
+}

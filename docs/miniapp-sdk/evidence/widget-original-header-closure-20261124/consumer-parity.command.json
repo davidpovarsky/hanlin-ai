@@ -1,0 +1,7 @@
+{
+  "command": [
+    "/usr/bin/python3",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/docs/miniapp-sdk/evidence/widget-original-header-closure-20261124/run-focused-parity.py"
+  ],
+  "exitCode": 0
+}

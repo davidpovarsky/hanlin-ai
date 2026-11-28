@@ -1,0 +1,45 @@
+{
+  "ipad": {
+    "target_validation_group": "exact_test_selector",
+    "exact_test_selector": "AI_HLYTests/NativeComposerLineSizingTests,AI_HLYUITests/AgentRuntimeConversationUITests/testRealChatUISendsPromptShowsToolActivityAndFinalAnswer,AI_HLYUITests/AgentRuntimeConversationUITests/testUI01UnifiedHistoryPinSearchSwitchDraftPreservation,AI_HLYUITests/HanlinMorphComposerUITests/testLargeTextLongDraftFitsWithKeyboardAndAfterPalette,AI_HLYUITests/HanlinMorphComposerUITests/testRTLToolChipKeepsLongDraftAndAccessibleLabel,AI_HLYUITests/HanlinMorphComposerUITests/testWideNavigationKeepsDraft,AI_HLYUITests/HanlinNativeA2UIChatUITests,AI_HLYUITests/AgentRuntimeConversationUITests/testCompactToolsManagementDestinationsPreserveDraft,AI_HLYUITests/AgentRuntimeConversationUITests/testModelPopoverZoomWithKeyboardAndDraft,AI_HLYTests/ClassicChatRestorationTests/agentReasoningNeverLeaksRawCoTToViews(),AI_HLYTests/ClassicChatRestorationTests/expandedReasoningUsesApprovedSummaryProjection(),AI_HLYUITests/AgentRuntimeConversationUITests/testUI04CollapsedProgressAndInspectorWithoutRawCoT,AI_HLYUITests/HanlinCanvasRuntimeUITests/testOriginalCanvasRunsEmbeddedPythonAndRetainsSourceAfterRelaunch,AI_HLYUITests/AgentRuntimeConversationUITests/testNativePartialSelectionSaveAndOriginalLongPressPreview,AI_HLYTests/HanlinCompactKeyboardGeometryTests/dockedKeyboardUsesWorkspaceIntersection(),AI_HLYTests/HanlinCompactKeyboardGeometryTests/translatedWindowUsesLocalIntersection(),AI_HLYTests/HanlinCompactKeyboardGeometryTests/floatingDismissedAndInvalidFramesDoNotResize(),AI_HLYTests/HanlinCompactKeyboardGeometryTests/lateEditorDetachPreservesCurrentOwner()",
+    "fast_validation_only": "false",
+    "simulator_e2e_only": "false",
+    "compare_base_sha": "8a505675eca035fbca3877afd1f8776f00f629d0",
+    "full_validation": "false",
+    "testflight_upload": "false",
+    "runtime_publish_release": "false",
+    "runtime_bundle_artifact_run_id": "42926628418"
+  },
+  "iphone": {
+    "target_validation_group": "exact_test_selector",
+    "exact_test_selector": "AI_HLYUITests/HanlinMorphComposerUITests/testCompactNavigationKeepsDraft,AI_HLYUITests/HanlinMorphComposerUITests/testCompactLargeTextWithAttachment",
+    "fast_validation_only": "false",
+    "simulator_e2e_only": "false",
+    "compare_base_sha": "8a505675eca035fbca3877afd1f8776f00f629d0",
+    "full_validation": "false",
+    "testflight_upload": "false",
+    "runtime_publish_release": "false",
+    "runtime_bundle_artifact_run_id": "42926628418"
+  },
+  "paired": {
+    "paired_product_acceptance": "true",
+    "paired_test_scope": "product_and_share",
+    "native_test_scope": "baseline",
+    "host_proof_run_id": "44351078724",
+    "runtime_bundle_artifact_run_id": "42926628418",
+    "signed_release_archives": "false",
+    "audit_release_resources": "false",
+    "prepare_miniapps_registration": "false"
+  },
+  "live": {
+    "target_validation_group": "exact_test_selector",
+    "exact_test_selector": "AI_HLYUITests/AgentRuntimeConversationUITests/testLiveGeminiPythonConsentAndColdReopen",
+    "fast_validation_only": "false",
+    "simulator_e2e_only": "false",
+    "compare_base_sha": "8a505675eca035fbca3877afd1f8776f00f629d0",
+    "runtime_bundle_artifact_run_id": "42926628418",
+    "runtime_publish_release": "false",
+    "testflight_upload": "false",
+    "full_validation": "false"
+  }
+}

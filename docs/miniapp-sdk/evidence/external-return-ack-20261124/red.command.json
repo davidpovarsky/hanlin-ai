@@ -1,0 +1,36 @@
+{
+  "command": [
+    "swift",
+    "test",
+    "--package-path",
+    "/mnt/development/projects/worktrees/hanlin-external-return-receipt-20261124/docs/miniapp-sdk/evidence/external-return-ack-20261124/portable-red",
+    "--scratch-path",
+    "/tmp/hanlin-return-ack-20261124-red/build",
+    "--cache-path",
+    "/tmp/hanlin-return-ack-20261124-red/cache",
+    "--filter",
+    "CrossAppInvocationTests.testUnavailableCallbackRetainsResultForSourceRecovery"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-external-return-receipt-20261124",
+  "environment": {
+    "SWIFTPM_MODULECACHE_OVERRIDE": "/tmp/hanlin-return-ack-20261124-red/module-cache",
+    "CLANG_MODULE_CACHE_PATH": "/tmp/hanlin-return-ack-20261124-red/clang-cache"
+  },
+  "exitCode": 1,
+  "durationSeconds": 52.39627194404602,
+  "stdout": {
+    "path": "red.stdout.log",
+    "sha256": "5537fb3623a7ac420143707af491ff6e28b4be7d4c5947ba48dc049280ec19e5",
+    "bytes": 2268,
+    "storedAs": "red.stdout.log.gz",
+    "gzipSHA256": "a6dc57bb7240b7c35fa449329357ea23f32c487af14c52f20a90014800139c82"
+  },
+  "stderr": {
+    "path": "red.stderr.log",
+    "sha256": "67cf35884c8919b07d0012415f850aafe31ff7e16a2524fbd8b28aaeb3810b0d",
+    "bytes": 1527,
+    "storedAs": "red.stderr.log.gz",
+    "gzipSHA256": "832ed8ea3e446d658399818f862b59b86307d87200d45f9a81e358abe3d566f5"
+  },
+  "boundary": "Linux executes the exact existing XCTest failed-callback method against verbatim production return/mailbox methods and original Foundation store; not Apple/native runtime proof."
+}

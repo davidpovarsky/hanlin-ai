@@ -1,0 +1,80 @@
+warning: 'zipfoundation': /Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/.build/checkouts/ZIPFoundation/Package@swift-5.9.swift:23:61: warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+21 |     name: "ZIPFoundation",
+22 |     platforms: [
+23 |         .macOS(.v10_13), .iOS(.v12), .tvOS(.v12), .watchOS(.v4), .visionOS(.v1)
+   |                                                             `- warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+24 |     ],
+25 |     products: [
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+warning: 'opentelemetry-swift-core': /Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/.build/checkouts/opentelemetry-swift-core/Package.swift:13:15: warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+11 |     .iOS(.v12),
+12 |     .tvOS(.v12),
+13 |     .watchOS(.v4),
+   |               `- warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+14 |     .visionOS(.v1),
+15 |   ],
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+Building for debugging...
+[Computing dependencies]
+[Provisioning 6 / 80]
+[Using on-disk description]
+[1 / 5]
+[1 / 5] SwiftAISDK
+[1 / 5] OpenTelemetrySdk
+[1 / 4] SwiftAISDK
+[1 / 4] HanlinChatCoreTests-product
+[1 / 1] HanlinPlatform_HanlinScriptUI
+[1 / 2] HanlinScriptCompilerTests-product
+[2 / 6] HanlinScriptExtensionsTests-product
+/Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift:155:15: [1;33mwarning: [1;39m'catch' block is unreachable because no errors are thrown in 'do' block[0;0m
+ [0;36m153 |[0;0m                 try output.seekToEnd()
+ [0;36m154 |[0;0m                 try output.write(contentsOf: bytes)
+ [0;36m155 |[0;0m             } catch {
+     [0;36m|[0;0m               `- [1;33mwarning: [1;39m'catch' block is unreachable because no errors are thrown in 'do' block[0;0m
+ [0;36m156 |[0;0m                 print("Original HTTP diagnostic could not record \(label)/\(phase): \(error)")
+ [0;36m157 |[0;0m             }
+
+/Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift:277:27: [1;33mwarning: [1;39mno calls to throwing functions occur within 'try' expression[0;0m [#]8;;https://docs.swift.org/compiler/documentation/diagnostics/unnecessary-effect-marker\UnnecessaryEffectMarker]8;;\]
+ [0;36m275 |[0;0m             try program.validate(engine: .scriptwidget)
+ [0;36m276 |[0;0m             try HanlinOriginalScriptWidgetSession.validatePreparedJavaScript(program.javaScript)
+ [0;36m277 |[0;0m             let context = try #require(JSContext())
+     [0;36m|[0;0m                           `- [1;33mwarning: [1;39mno calls to throwing functions occur within 'try' expression[0;0m [#]8;;https://docs.swift.org/compiler/documentation/diagnostics/unnecessary-effect-marker\UnnecessaryEffectMarker]8;;\]
+ [0;36m278 |[0;0m             let native = try HanlinOriginalScriptWidgetSession(context: context,
+ [0;36m279 |[0;0m                 root: root.appending(path: label), identity: UUID().uuidString,
+
+[#UnnecessaryEffectMarker]: <https://docs.swift.org/compiler/documentation/diagnostics/unnecessary-effect-marker>
+[4 / 8] HanlinScriptExtensionsTests-product
+/Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift:346:53: [1;33mwarning: [1;39m'#require(_:_:)' is redundant because 'HanlinOriginalScriptWidgetSession.supportScript("util.js")' never equals 'nil' (from macro 'require')[0;0m
+ [0;36m344 |[0;0m                 context.exceptionHandler = { _, error in failed(error?.toString() ?? "Native HTTP fixture exception") }
+ [0;36m345 |[0;0m                 context.evaluateScript("globalThis.$storage = {set: __httpTestStore};")
+ [0;36m346 |[0;0m                 context.evaluateScript(try #require([4;39mHanlinOriginalScriptWidgetSession.supportScript("util.js")[0;0m))
+     [0;36m|[0;0m                                                     `- [1;33mwarning: [1;39m'#require(_:_:)' is redundant because 'HanlinOriginalScriptWidgetSession.supportScript("util.js")' never equals 'nil' (from macro 'require')[0;0m
+ [0;36m347 |[0;0m                 context.evaluateScript(program.javaScript)
+ [0;36m348 |[0;0m                 recordStage(label, "evaluating")
+
+/Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift:1456:25: [1;33mwarning: [1;39m'#require(_:_:)' is redundant because 'NSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:])' never equals 'nil' (from macro 'require')[0;0m
+[0;36m1454 |[0;0m     let image = try #require(renderer.cgImage)
+[0;36m1455 |[0;0m     #expect(image.width == 360 && image.height == 320)
+[0;36m1456 |[0;0m     return try #require([4;39mNSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:])[0;0m)
+     [0;36m|[0;0m                         `- [1;33mwarning: [1;39m'#require(_:_:)' is redundant because 'NSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:])' never equals 'nil' (from macro 'require')[0;0m
+[0;36m1457 |[0;0m }
+[0;36m1458 |[0;0m #endif
+[5 / 8] HanlinScriptExtensionsTests-product
+[7 / 13] HanlinScriptExtensionsTests-product
+[9 / 11] HanlinScriptExtensionsTests-product
+[11 / 11] HanlinScriptExtensionsTests-product
+Build complete! (12,70 secs)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Pass 3 installed widget programs, actions and transactions" started.
+◇ Test originalScriptWidgetHTTPUsesBoundedRealTransport() started.
+Original HTTP native evidence retained at /Users/m1/builds/hanlin-two-wave-root-20261126/validation/original-http-b84d5ffb-r1/native/original-http-hanlin-widget-pass3-DBFB0968-1A6B-4DF3-B46E-2DD17B4612DB
+✘ Test originalScriptWidgetHTTPUsesBoundedRealTransport() recorded an issue at HanlinDualWidgetEnginesTests.swift:131:6: Caught error: HanlinScriptWidgetError(message: "The network connection was lost.")
+✘ Test originalScriptWidgetHTTPUsesBoundedRealTransport() failed after 1.180 seconds with 1 issue.
+✘ Suite "Pass 3 installed widget programs, actions and transactions" failed after 1.180 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 1.180 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - HanlinScriptExtensionsTests (Swift Testing)

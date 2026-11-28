@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "kind": "BOUNDED_SHARED_PROJECT_TARGET_INVENTORY_CORRECTION",
+  "observedAt": "2026-11-25T06:53:32.050057+00:00",
+  "baseCommit": "6d0b77a8ae8b32487a2c493427556f4db0dd5fdd",
+  "productionCommit": "0c86e4fceb67f25ef773efaa587a52f1afa40c13",
+  "sourceScope": "AI_HLY.xcodeproj is the shared project for both products. The field targetsDeclaredInProject has no AI-only limitation. Only this target extraction and its exact parser input dependency changed.",
+  "sourceBindings": [
+    {
+      "path": "Scripts/Audit/audit_miniapp_reachability.py",
+      "beforeSHA256": "39b24956ef354e6adb3ed918ebc8ea067645c462b73bbbfea82f46d7ccd6224e",
+      "afterSHA256": "a98a0a46f70882e74f64fba51f9a75bce1956640332bb201d28fedaae266b883",
+      "modeBefore": "100644",
+      "modeAfter": "100644"
+    },
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "beforeSHA256": "1c23351919756510899c02f4f8b9ce305f4d31edeed49110b6b3d310e51b3d10",
+      "afterSHA256": "f0d2b438ee79ac0973f8d261ecf626b2a94268e5140c6dcb67f48b07cabd1f25",
+      "modeBefore": "100644",
+      "modeAfter": "100644"
+    }
+  ],
+  "unchangedCanonicalParser": {
+    "path": "Scripts/CI/IntegrationValidation/project_graph.py",
+    "sha256": "fc46f1e5266f054794811a0756fa51677a291b0533f816f1342a5d42f9ba85b8"
+  },
+  "retainedPreparedProject": {
+    "snapshot": "prepared-snapshot-attempt15",
+    "producerCommit": "c259b72243ccb62188f24e551648544bc57cc7c1",
+    "path": "AI_HLY.xcodeproj/project.pbxproj",
+    "bytes": 251761,
+    "sha256": "71409346bb25cdc8fd5d1d3e8b7363549146e9038044360c93b659615c3b3b3d"
+  },
+  "readOnlyExtraction": {
+    "legacyCommentSectionNames": [
+      "AI_HLYUITests",
+      "ChavrusaChatNotificationService",
+      "ChavrusaChatShare",
+      "ChavrusaChatTranslationProvider",
+      "HanlinScriptingWidgets"
+    ],
+    "declaredNativeTargets": [
+      {
+        "id": "B10000000000000000000007",
+        "name": "AI_HLYTests",
+        "productType": "com.apple.product-type.bundle.unit-test"
+      },
+      {
+        "id": "E30000000000000000000003",
+        "name": "AI_HLYUITests",
+        "productType": "com.apple.product-type.bundle.ui-testing"
+      },
+      {
+        "id": "E60000000000000000000050",
+        "name": "ChavrusaChatNotificationService",
+        "productType": "com.apple.product-type.app-extension"
+      },
+      {
+        "id": "E40000000000000000000050",
+        "name": "ChavrusaChatShare",
+        "productType": "com.apple.product-type.app-extension"
+      },
+      {
+        "id": "E50000000000000000000050",
+        "name": "ChavrusaChatTranslationProvider",
+        "productType": "com.apple.product-type.extensionkit-extension"
+      },
+      {
+        "id": "D7B6C3C02D50A55D004E3AD6",
+        "name": "HanlinApp",
+        "productType": "com.apple.product-type.application"
+      },
+      {
+        "id": "F80000000000000000000001",
+        "name": "HanlinMiniApps",
+        "productType": "com.apple.product-type.application"
+      },
+      {
+        "id": "FA34D7A774EB6BF57D06CAA6",
+        "name": "HanlinMiniAppsBootstrapTests",
+        "productType": "com.apple.product-type.bundle.unit-test"
+      },
+      {
+        "id": "AC1AB2E6EF07D8BD19B35EDC",
+        "name": "HanlinMiniAppsNotificationService",
+        "productType": "com.apple.product-type.app-extension"
+      },
+      {
+        "id": "AC1AF61019ACF70564084A0F",
+        "name": "HanlinMiniAppsShare",
+        "productType": "com.apple.product-type.app-extension"
+      },
+      {
+        "id": "ACBD51096D0F560753B6520B",
+        "name": "HanlinMiniAppsTests",
+        "productType": "com.apple.product-type.bundle.unit-test"
+      },
+      {
+        "id": "AC1AAB1214124A3513123C79",
+        "name": "HanlinMiniAppsTranslationProvider",
+        "productType": "com.apple.product-type.extensionkit-extension"
+      },
+      {
+        "id": "F9AB2938F7BF9D8F3F6C9844",
+        "name": "HanlinMiniAppsUITests",
+        "productType": "com.apple.product-type.bundle.ui-testing"
+      },
+      {
+        "id": "AC1A01653B049EEFD4A02BC6",
+        "name": "HanlinMiniAppsWidgets",
+        "productType": "com.apple.product-type.app-extension"
+      },
+      {
+        "id": "D20000000000000000000050",
+        "name": "HanlinScriptingWidgets",
+        "productType": "com.apple.product-type.app-extension"
+      }
+    ],
+    "allNativeObjectsEqualRootDeclaredTargets": true,
+    "omittedByLegacySection": [
+      "AI_HLYTests",
+      "HanlinApp",
+      "HanlinMiniApps",
+      "HanlinMiniAppsBootstrapTests",
+      "HanlinMiniAppsNotificationService",
+      "HanlinMiniAppsShare",
+      "HanlinMiniAppsTests",
+      "HanlinMiniAppsTranslationProvider",
+      "HanlinMiniAppsUITests",
+      "HanlinMiniAppsWidgets"
+    ]
+  },
+  "fingerprintImpact": {
+    "actualPreviousSDKInputs": 234,
+    "parserPreviouslyExplicit": false,
+    "newExactSDKInput": "Scripts/CI/IntegrationValidation/project_graph.py",
+    "expectedNextInputCountWithoutOtherSourceChanges": 235,
+    "expectedCountIsNotNewGenerationResult": true
+  },
+  "unchangedSemantics": [
+    "All matrix statuses, source references, runtime dispositions and OS evidence flags",
+    "Narrow93-source API/runtime source inventory scope",
+    "Existing native target graph, target products, entitlements and app embedding",
+    "The separate15 original vendor/native framework catalog entries"
+  ],
+  "validation": {
+    "pythonAST": "PASS",
+    "gitDiffCheck": "PASS",
+    "originalPureParserReadOnlyPreparedProjectExtraction": "PASS",
+    "auditGenerator": "NOT_RUN",
+    "SDKExport": "NOT_RUN",
+    "nativeBuildsTests": "NOT_RUN"
+  },
+  "requiredExistingRoute": "Sole native owner runs original Host preparation: source audit and reachability audit before fingerprint/reuse, then original SDK export. This record does not claim native execution or OS delivery."
+}

@@ -1,0 +1,83 @@
+{
+  "base_head": "f780cc12800b1f3c27295e9456d93b3947c43a7d",
+  "patch_sha256": "4683e53716f5d203a70020cdaf2cbfb40c0428c00ecfa5c24f1bdc19927d0c1f",
+  "source_fingerprints": [
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Environment/RuntimeEnvironment.swift",
+      "sha256": "af53ffbcbea48008181faabd263fbe36c95e433879f1acfc7a0ea8b805e2e2b9"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Persistence/MCPSecretStore.swift",
+      "sha256": "15ae03cb07b3f973bc97e989a2fd66f98d1de2ed8fa7c3e56e26624e759da1cd"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Persistence/MCPServerRegistryStore.swift",
+      "sha256": "a36fdd2c2615e673d517c59bf7b71e697bc3ccde8e9c7ca4c8a62ff0dbff34b0"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Runtime/MCPRuntimeProvider.swift",
+      "sha256": "a89473f050e635e5c06600dc53898f49398fd9fa1f61fda4792309deccba7133"
+    },
+    {
+      "path": "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+      "sha256": "8d0db644b805396033b4ac40b0e4393d6863edfee1b669664544288a1a0da522"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "sha256": "ce17bf0f8f0d3924d2b4a1680b125074495e282767112f53461e3dc50cbfc8a2"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/SystemOptimizer.swift",
+      "sha256": "d88ebc215c3e74d3c839cc124753b1cbea3f8925676b1435744ae08832b8f8ae"
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "sha256": "271881726aa6bda31acc5abb228c66fecf01e9e3dfa50982725d3e2175571fb0"
+    }
+  ],
+  "syntax_only": [
+    {
+      "file": "AI_HLY/Downstream/RuntimeCore/Environment/RuntimeEnvironment.swift",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "file": "AI_HLY/Downstream/MCP/Persistence/MCPSecretStore.swift",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "file": "AI_HLY/Downstream/MCP/Persistence/MCPServerRegistryStore.swift",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "file": "AI_HLY/Downstream/MCP/Runtime/MCPRuntimeProvider.swift",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "file": "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "file": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "file": "AI_HLY/Services/ChatServices/SystemOptimizer.swift",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "file": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "exit": 0,
+      "output": ""
+    }
+  ],
+  "diff_check": "PASS",
+  "native": "NOT_RUN",
+  "log_edit_scope": "19 print-only changes; every non-print line unchanged in both files"
+}

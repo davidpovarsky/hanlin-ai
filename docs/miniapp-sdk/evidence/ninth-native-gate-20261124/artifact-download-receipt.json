@@ -1,0 +1,240 @@
+{
+  "atUTC": "2026-11-24T07:48:01.909542+00:00",
+  "runID": 45343362337,
+  "source": "4ea670e120a3217423bc73db68dab514c78079de",
+  "artifactID": 14900225434,
+  "archive": "/mnt/development/projects/miniapp-acceptance-evidence/run-45343362337/artifact-14900225434.zip",
+  "bytes": 334550789,
+  "sha256": "cdc749408c30d994ffa32f6d67317b3ba484a3fb5b7b70b17bdb9c7dbc1b9fe0",
+  "authenticatedDigestMatched": true,
+  "extractedFiles": [
+    {
+      "name": "app-split-evidence/acceptance.json",
+      "bytes": 2012
+    },
+    {
+      "name": "app-split-evidence/ci-performance-report.json",
+      "bytes": 2238
+    },
+    {
+      "name": "app-split-evidence/foreground/foreground-results.json",
+      "bytes": 22617
+    },
+    {
+      "name": "app-split-evidence/foreground/raw-origin/commands.jsonl",
+      "bytes": 19288
+    },
+    {
+      "name": "app-split-evidence/foreground/raw-origin/contracts-provenance.json",
+      "bytes": 16187
+    },
+    {
+      "name": "app-split-evidence/foreground/raw-origin/core-provenance.json",
+      "bytes": 6349
+    },
+    {
+      "name": "app-split-evidence/foreground/raw-origin/foreground-binary-provenance.json",
+      "bytes": 8609
+    },
+    {
+      "name": "app-split-evidence/foreground/raw-origin/manifest.json",
+      "bytes": 5117
+    },
+    {
+      "name": "app-split-evidence/foreground/raw-origin/raw-001-toolchain.stderr.log",
+      "bytes": 30
+    },
+    {
+      "name": "app-split-evidence/foreground/raw-origin/raw-001-toolchain.stdout.log",
+      "bytes": 98
+    },
+    {
+      "name": "app-split-evidence/foreground/raw-origin/raw-002-compile-contracts.stderr.log",
+      "bytes": 98
+    },
+    {
+      "name": "app-split-evidence/foreground/raw-origin/raw-002-compile-contracts.stdout.log",
+      "bytes": 113939
+    },
+    {
+      "name": "app-split-evidence/foreground/raw-origin/raw-003-compile-core.stderr.log",
+      "bytes": 98
+    },
+    {
+      "name": "app-split-evidence/foreground/raw-origin/raw-003-compile-core.stdout.log",
+      "bytes": 7585
+    },
+    {
+      "name": "app-split-evidence/foreground/raw-origin/raw-004-link-foreground.stderr.log",
+      "bytes": 98
+    },
+    {
+      "name": "app-split-evidence/foreground/raw-origin/raw-004-link-foreground.stdout.log",
+      "bytes": 46335
+    },
+    {
+      "name": "app-split-evidence/foreground/raw-origin/raw-005-tests-foreground.stderr.log",
+      "bytes": 0
+    },
+    {
+      "name": "app-split-evidence/foreground/raw-origin/raw-005-tests-foreground.stdout.log",
+      "bytes": 2090
+    },
+    {
+      "name": "app-split-evidence/foreground/raw-origin/raw-006-commit-base.stderr.log",
+      "bytes": 0
+    },
+    {
+      "name": "app-split-evidence/foreground/raw-origin/raw-006-commit-base.stdout.log",
+      "bytes": 41
+    },
+    {
+      "name": "app-split-evidence/foreground/raw-origin/raw-007-working-tree.stderr.log",
+      "bytes": 0
+    },
+    {
+      "name": "app-split-evidence/foreground/raw-origin/raw-007-working-tree.stdout.log",
+      "bytes": 288
+    },
+    {
+      "name": "app-split-evidence/foreground-reuse.json",
+      "bytes": 83
+    },
+    {
+      "name": "app-split-evidence/foreground.log",
+      "bytes": 200
+    },
+    {
+      "name": "app-split-evidence/host-reuse.json",
+      "bytes": 70
+    },
+    {
+      "name": "app-split-evidence/miniapp-cli-relocation.log",
+      "bytes": 223
+    },
+    {
+      "name": "app-split-evidence/native-dependencies-duration-seconds.txt",
+      "bytes": 4
+    },
+    {
+      "name": "app-split-evidence/native-dependencies.log",
+      "bytes": 2810867
+    },
+    {
+      "name": "app-split-evidence/package-lifecycle-duration-seconds.txt",
+      "bytes": 3
+    },
+    {
+      "name": "app-split-evidence/package-lifecycle.log",
+      "bytes": 1415
+    },
+    {
+      "name": "app-split-evidence/paired-product/acceptance.json",
+      "bytes": 2012
+    },
+    {
+      "name": "app-split-evidence/paired-product/active-command.json",
+      "bytes": 513
+    },
+    {
+      "name": "app-split-evidence/paired-product/before-boot-host-resources.txt",
+      "bytes": 34
+    },
+    {
+      "name": "app-split-evidence/paired-product/before-boot-memory.txt",
+      "bytes": 1247
+    },
+    {
+      "name": "app-split-evidence/paired-product/before-boot-processes.txt",
+      "bytes": 78287
+    },
+    {
+      "name": "app-split-evidence/paired-product/boot.log",
+      "bytes": 0
+    },
+    {
+      "name": "app-split-evidence/paired-product/bootstatus.log",
+      "bytes": 131
+    },
+    {
+      "name": "app-split-evidence/paired-product/command-events.jsonl",
+      "bytes": 75383
+    },
+    {
+      "name": "app-split-evidence/paired-product/commands.jsonl",
+      "bytes": 4359
+    },
+    {
+      "name": "app-split-evidence/paired-product/container-command-help.txt",
+      "bytes": 386
+    },
+    {
+      "name": "app-split-evidence/paired-product/created-simulator.txt",
+      "bytes": 37
+    },
+    {
+      "name": "app-split-evidence/paired-product/device-types.json",
+      "bytes": 66366
+    },
+    {
+      "name": "app-split-evidence/paired-product/failure-device-state.json",
+      "bytes": 22750
+    },
+    {
+      "name": "app-split-evidence/paired-product/failure-memory.txt",
+      "bytes": 1247
+    },
+    {
+      "name": "app-split-evidence/paired-product/failure-processes.txt",
+      "bytes": 127841
+    },
+    {
+      "name": "app-split-evidence/paired-product/failure.png",
+      "bytes": 3667876
+    },
+    {
+      "name": "app-split-evidence/paired-product/mini-build.log",
+      "bytes": 4731618
+    },
+    {
+      "name": "app-split-evidence/paired-product/runtimes.json",
+      "bytes": 60640
+    },
+    {
+      "name": "app-split-evidence/paired-product/sdk.txt",
+      "bytes": 5
+    },
+    {
+      "name": "app-split-evidence/paired-product/source-sha.txt",
+      "bytes": 41
+    },
+    {
+      "name": "app-split-evidence/paired-product/screenshot.log",
+      "bytes": 264
+    },
+    {
+      "name": "app-split-evidence/preflight-duration-seconds.txt",
+      "bytes": 3
+    },
+    {
+      "name": "app-split-evidence/preflight.log",
+      "bytes": 128111
+    },
+    {
+      "name": "app-split-evidence/skill-health.txt",
+      "bytes": 84
+    },
+    {
+      "name": "app-split-evidence/upstream-resolution.json",
+      "bytes": 14914
+    },
+    {
+      "name": "app-split-evidence/upstream-resolution.log",
+      "bytes": 7866
+    },
+    {
+      "name": "runtime-host/host-metadata.json",
+      "bytes": 358
+    }
+  ]
+}

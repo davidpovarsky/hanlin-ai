@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "members": [
+    {
+      "originalPath": "FINAL12-root-only.patch",
+      "storedPath": "FINAL12-root-only.patch.gz",
+      "encoding": "gzip",
+      "originalBytes": 680,
+      "originalSHA256": "eccf26e631c9546163a29417ea82a9441f7748d3aaab3259006969dfc316369e",
+      "storedSHA256": "3f6730e9d267f94fc5dd7e56aea27f89788032b005682853976fad1b60321bde"
+    }
+  ]
+}

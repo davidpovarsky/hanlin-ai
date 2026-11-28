@@ -1,0 +1,18 @@
+{
+  "verified_at": "2026-11-19T03:57:10.032091+00:00",
+  "run": 44453570922,
+  "head": "873607e45e021b40fe5b940c836d398c329f95c8",
+  "exact_selectors": [
+    "AI_HLYTests/MaintainedSkillCorpusTests/maintainedPackagesFollowOriginalImportPolicyAndReadiness(_:)",
+    "AI_HLYTests/MaintainedSkillCorpusTests/cairoInvalidInputUsesTheCurrentRuntimePlan(_:)",
+    "AI_HLYTests/SkillStoreAndImportTests/nestedMetadataSurvivesStoreSaveAndOverride()",
+    "AI_HLYTests/SkillStoreAndImportTests/anchoredStoreEditDoesNotRewriteOriginal()",
+    "AI_HLYTests/SkillStoreAndImportTests/zipNestedMetadataAndResourcesRemainLossless()",
+    "AI_HLYTests/SkillStoreAndImportTests/catalogMetadataFollowsSelectedSource()",
+    "AI_HLYTests/MaintainedSkillCorpusTests/originalPythonPackageFactsUseRealInstallAndInvalidateChangedSource()"
+  ],
+  "actual_unit_filter_matches": true,
+  "configuration": "Debug",
+  "plan_archive_sha256": "b5203a3910216cc13f223ad4811ba8c0503c22c4cb1ff84f49882034af1acd4a",
+  "native_result": "PENDING"
+}

@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "kind": "SOURCE_PRESERVATION_ONLY",
+  "base": "445e2cb514012110cd865bdd33a3dbb8e6b8143d",
+  "patchSHA256": "cc1ecdcb25b2cc5730ea2dbf8809c725d8ba9bb92f4e63db0d8e8cf09aa41e91",
+  "checks": [
+    {
+      "check": "all five whole-file inverses",
+      "result": "PASS",
+      "files": [
+        {
+          "path": "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift",
+          "preimageSHA256": "b1ed3e326e5fe968671a15900c18cffb3606641674aafa9c47dd36fd49b6b5bd",
+          "candidateSHA256": "88eaefa67a733beb153d2c0d3310de2e23ae85c80bf854f22b161c0b9e49ebeb",
+          "wholeOriginalInverseExact": true
+        },
+        {
+          "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinShortcutValueCodec.swift",
+          "preimageSHA256": "3c3aee14c37a5835c6cc85a4ebb86271ff63b5fc3f60e1a62158bc5281eb332c",
+          "candidateSHA256": "633f70697d883b7c2b0e5a70bba016d6341ca55cc25038c2c87ba4edfbf5d605",
+          "wholeOriginalInverseExact": true
+        },
+        {
+          "path": "Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/HanlinShortcutValueCodecTests.swift",
+          "preimageSHA256": "6659534680b3404010eefa45146a07aa3ae1cdf5d53273bfd3f756a2be5c2055",
+          "candidateSHA256": "58f74de7836b2924ad0d95aa9f3988c9b4bfb4246b469de2fd929acd49597b95",
+          "wholeOriginalInverseExact": true
+        },
+        {
+          "path": "HanlinMiniAppsTests/MiniAppsShortcutIntentTests.swift",
+          "preimageSHA256": "7924240896003356d83cf65d484087719ad01f217e6eb9d90fee28131d652f7e",
+          "candidateSHA256": "f5d10d9cfe428a1be99f9c9314820de9484100ea3ab752c82134f562e74f46dd",
+          "wholeOriginalInverseExact": true
+        },
+        {
+          "path": "Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings",
+          "preimageSHA256": "8a8bd214e8e1e5856f529451d44a8b82e975f975e93cb77666e94a9775b4733e",
+          "candidateSHA256": "247c4bcbbf53f7b40746d161972d26b1478c731eb79d13fa6edf6ff6c32da02e",
+          "wholeOriginalInverseExact": true
+        }
+      ]
+    },
+    {
+      "check": "old parameter identities, declarations and defaults",
+      "result": "PASS",
+      "oldDeclarations": {
+        "action": "    @Parameter(title: LocalizedStringResource(\"Action\", table: \"HanlinAppIntents\"))\n    var action: HanlinScriptActionEntity\n",
+        "inputType": "    @Parameter(title: LocalizedStringResource(\"Input Type\", table: \"HanlinAppIntents\"), default: .text)\n    var inputType: MiniAppsShortcutInputType\n",
+        "input": "    @Parameter(title: LocalizedStringResource(\"Input\", table: \"HanlinAppIntents\"), default: \"\")\n    var input: String\n",
+        "jsonFile": "    @Parameter(title: LocalizedStringResource(\"JSON File\", table: \"HanlinAppIntents\"), supportedContentTypes: [.json])\n    var jsonFile: IntentFile?\n",
+        "allowLongRunning": "    @Parameter(title: LocalizedStringResource(\"Allow Long Running\", table: \"HanlinAppIntents\"), default: false)\n    var allowLongRunning: Bool\n"
+      },
+      "newOptionalParameterTypes": {
+        "textItems": "[String]?",
+        "integerItems": "[Int]?",
+        "numberItems": "[Double]?",
+        "booleanItems": "[Bool]?"
+      },
+      "sourceMetadataOnly": true
+    },
+    {
+      "check": "old summary and enum values",
+      "result": "PASS",
+      "oldSummaryBodySHA256": "af9e2e0361713d6e8653cf0c5b382d45868a92eb56195afffae165bcc916b9c9",
+      "defaultCaseRestoresOldSummaryBodyExactly": true,
+      "oldRawCases": [
+        "text",
+        "json",
+        "jsonFile"
+      ]
+    },
+    {
+      "check": "original input branches and complete execution/output helpers",
+      "result": "PASS",
+      "oldInputBranchesSHA256": "5a3e8ce9610c12cddc02160c1c2f166f86e5eafad1652c6140d0807f50ea8eae",
+      "lifecycleAndOutputSHA256": "e63153d64179c2a62c8942a7ac99dc4d9128f8c5d754fa67137490a36dbe1929",
+      "errorExecutionProgressHelperTailSHA256": "a2fab2f7a1e67f8610289320aa422fc9cbdebb5d777e5127b656fc7c7ce1c76a",
+      "unchangedCommandLeaseModeProgressCancellationOutput": true
+    },
+    {
+      "check": "old codec decode, encode and errors",
+      "result": "PASS",
+      "originalDecodeEncodeTailSHA256": "9180769993c95ec30af5a6d7a77937ddbaaeac35a590cab9df5b0b9bde362f0f",
+      "integerConversion": "Int64(exactly: Int), no Double intermediary",
+      "doubleValidation": "existing HanlinValue.finiteNumber"
+    },
+    {
+      "check": "all original test/helper bodies",
+      "result": "PASS",
+      "files": [
+        {
+          "path": "Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/HanlinShortcutValueCodecTests.swift",
+          "oldMethods": [
+            {
+              "name": "shortcutDictionaryAndListRetainStructureAndExactNumbers",
+              "sha256": "ce9a099ae0cfdd57b7a514243bf801dc7c1c4d136182ef6a51f2023dd7a00c1f"
+            },
+            {
+              "name": "shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding",
+              "sha256": "a210b3da3b1bc97e8c3f85089f2602bfdd6dc4cc2be26e650b71fd82897be626"
+            },
+            {
+              "name": "shortcutJSONRejectsMalformedOrLossyInput",
+              "sha256": "8c1bcacb22d1d0cd872acca604efc3c3b145fcbccbb7c057197cbb1e5ca606e1"
+            },
+            {
+              "name": "shortcutTextRemainsTextAndBinaryOutputRequiresAFile",
+              "sha256": "82e0b74179a49687257fe51494bfdf57f63728ee3e614401faf54f39ebe73820"
+            }
+          ],
+          "newMethods": [
+            "shortcutNativeBooleanListDoesNotCoerceToNumbersOrText",
+            "shortcutNativeEmptyListsRemainArrays",
+            "shortcutNativeIntegerListRetainsValuesBeyondBinary64Precision",
+            "shortcutNativeNumberListRejectsNonfiniteItems",
+            "shortcutNativeNumberListRetainsFiniteBinary64TypesAndBits",
+            "shortcutNativeTextListPreservesOrderAndExactUnicodeBytes"
+          ]
+        },
+        {
+          "path": "HanlinMiniAppsTests/MiniAppsShortcutIntentTests.swift",
+          "oldMethods": [
+            {
+              "name": "newAndLegacyIntentTitlesLoadTheirActualHostTranslations",
+              "sha256": "cee86d588cbe80f9f46a96ad8eb1966917f68c02f78a507c04465c796aa36fc1"
+            },
+            {
+              "name": "closedAndCancelledProgressCannotAffectAnotherInvocation",
+              "sha256": "7416c1d8b93d7594b20791af0cdd8ed4f8f566edf226948973870f5cf161bad2"
+            },
+            {
+              "name": "onlyTheMatchingTerminalReceiptSuppliesTheShortcutValue",
+              "sha256": "141a6859e4ad104f7f5d232e03bb101ef107bf3efebd88e6aa32e4ec146c0345"
+            },
+            {
+              "name": "successfulForegroundActionWithoutASurfaceSettlesWithoutCancellation",
+              "sha256": "b272529e91e4955da57c985f4c858eb17ff6a10372ef0896159b5c5f2157ad26"
+            },
+            {
+              "name": "command",
+              "sha256": "6a3eb87e3daa24d26f0140ec40fac0941043ad1a997b7f1d9663cd7a3f5d67ca"
+            }
+          ],
+          "newMethods": [
+            "absentAndExplicitlyEmptyNativeListsKeepLegacyDefaults",
+            "legacyInputBranchesKeepTextJSONAndFileSemantics",
+            "nativeListInputUsesOnlyTheSelectedParameter",
+            "nativeListLabelsLoadActualHostTranslations"
+          ]
+        }
+      ],
+      "testExecution": "NOT_RUN"
+    },
+    {
+      "check": "actual localization catalog",
+      "result": "PASS",
+      "unchangedOldKeys": 60,
+      "newKeys": [
+        "Boolean List",
+        "Integer List",
+        "Number List",
+        "Text List"
+      ],
+      "locales": [
+        "en",
+        "he",
+        "zh-Hans"
+      ]
+    }
+  ],
+  "nativeCompiler": "NOT_RUN",
+  "swiftTests": "NOT_RUN",
+  "savedShortcutOS": "NOT_RUN"
+}

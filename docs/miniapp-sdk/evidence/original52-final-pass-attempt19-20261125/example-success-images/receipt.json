@@ -1,0 +1,64 @@
+{
+  "manifestSHA256": "d18e842b4ff52dd7fcd833772d4468253b8aa2300f684206967fd459a99e0df5",
+  "rows": [
+    {
+      "package": "ModularTextSearch",
+      "testIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText()",
+      "testIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+      "configurationName": "Test Scheme Action",
+      "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+      "deviceName": "HanlinPaired-local",
+      "exportedFileName": "81B6BF1B-2A23-4136-B65B-63A9843E6AB3.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "modular-search-live-sefaria-full-text_0_AF9E476D-AA5B-4CDE-8711-DA36EAA58098.png",
+      "timestamp": 1795629883.146,
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/OriginalRuntimes-attachments/81B6BF1B-2A23-4136-B65B-63A9843E6AB3.png",
+      "bytes": 255718,
+      "sha256": "845df33295d92e76b5eca6fcf96db61365f1f56984b1a0d92dc43f144916a713"
+    },
+    {
+      "package": "SDKOnlyDepartureBudget",
+      "testIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents()",
+      "testIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+      "configurationName": "Test Scheme Action",
+      "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+      "deviceName": "HanlinPaired-local",
+      "exportedFileName": "AD75F22B-AFB6-4390-ABB7-6BAC4CA985D7.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "SDK-only Expo installed package relaunch_0_56E7591B-AD21-411C-834B-5FC3F0BE521A.png",
+      "timestamp": 1795630053.151,
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/OriginalRuntimes-attachments/AD75F22B-AFB6-4390-ABB7-6BAC4CA985D7.png",
+      "bytes": 284172,
+      "sha256": "1fea3ed4416911114f81879f6ccb9d054f785bc5ee802dea76278a90df2d4564"
+    },
+    {
+      "package": "SDKOnlyTableShare",
+      "testIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents()",
+      "testIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+      "configurationName": "Test Scheme Action",
+      "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+      "deviceName": "HanlinPaired-local",
+      "exportedFileName": "8DE5ADBA-8973-4F00-89C8-AEFA6144A51F.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "SDK-only NativeScript native reset result_0_253DAC4E-10FD-46E5-A3EF-7D7DC62076DA.png",
+      "timestamp": 1795630183.643,
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/OriginalRuntimes-attachments/8DE5ADBA-8973-4F00-89C8-AEFA6144A51F.png",
+      "bytes": 205440,
+      "sha256": "146395f1fdbc770683488a00ee0214c4215bb72701d1903505591d98e6f7856f"
+    }
+  ],
+  "observedAt": "2026-11-25T18:13:42.795267+00:00",
+  "newUICapture": false,
+  "schema": 1,
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "authority": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-v5-mini25-packet/OriginalRuntimes-attachments/manifest.json",
+    "sha256": "d18e842b4ff52dd7fcd833772d4468253b8aa2300f684206967fd459a99e0df5"
+  },
+  "original25": {
+    "passed": 25,
+    "failed": 0,
+    "skipped": 0
+  },
+  "original52": "RUNNING_AT_COPY"
+}

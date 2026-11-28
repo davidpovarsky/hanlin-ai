@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "changedPaths": [
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift"
+  ],
+  "staticInputMembershipOnly": true,
+  "nativeStatus": "NOT_RUN",
+  "sdk396": {
+    "authority": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/sdk13-9ee23af8-pass-r2/reconciliation/current396-live-inputs.json",
+    "authoritySHA256": "26596817f3023ea07901862d3782a99e60cbd8b2c1630210915a9103598ab074",
+    "rows": 396,
+    "intersection": []
+  },
+  "host99": {
+    "authority": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/sdk13-9ee23af8-pass-r2/reconciliation/host99-live-inputs.json",
+    "authoritySHA256": "460b6ebe9de738d033f841be7f99d992f5293e9739c208bea2eadbf057847889",
+    "rows": 99,
+    "intersection": []
+  },
+  "unchangedSourceTrees": {
+    "AI_HLY": "410402a8e31ab6012b240c2b4fe381387a040d93",
+    "HanlinMiniAppsApp": "5e856b6dac7cdff03ea22537faa46af34a11dc30",
+    "Packages": "326086571a5960c19eb6aa0afef742b25230a826",
+    "Fixtures": "748ad17954872ecedad92ac4b7a1207830cc1b43",
+    "Scripts": "7434e02e60b37bb5b926705e91349bacf4e6265e"
+  },
+  "affectedOriginalCases": [
+    "testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers",
+    "testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState",
+    "testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues",
+    "testMiniAppsMediumWidgetNativeControlsStayVisibleAcrossStateAndRotation",
+    "testMiniAppsSmallWidgetRetainsFamilyAndInstanceAcrossRotation",
+    "testMiniAppsMediumWidgetRetainsFamilyAndInstanceAcrossRotation",
+    "testMiniAppsLargeWidgetRetainsFamilyAndInstanceAcrossRotation",
+    "testMiniAppsExtraLargeWidgetRetainsFamilyAndInstanceAcrossRotation"
+  ],
+  "sourceCallPaths": {
+    "testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers": [
+      "testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers",
+      "placeMatrixWidget"
+    ],
+    "testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState": [
+      "testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState",
+      "placeMatrixWidget"
+    ],
+    "testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues": [
+      "testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues",
+      "placeMatrixWidget"
+    ],
+    "testMiniAppsMediumWidgetNativeControlsStayVisibleAcrossStateAndRotation": [
+      "testMiniAppsMediumWidgetNativeControlsStayVisibleAcrossStateAndRotation",
+      "openWidgetFamilyGallery"
+    ],
+    "testMiniAppsSmallWidgetRetainsFamilyAndInstanceAcrossRotation": [
+      "testMiniAppsSmallWidgetRetainsFamilyAndInstanceAcrossRotation",
+      "observeWidgetFamily",
+      "openWidgetFamilyGallery"
+    ],
+    "testMiniAppsMediumWidgetRetainsFamilyAndInstanceAcrossRotation": [
+      "testMiniAppsMediumWidgetRetainsFamilyAndInstanceAcrossRotation",
+      "observeWidgetFamily",
+      "openWidgetFamilyGallery"
+    ],
+    "testMiniAppsLargeWidgetRetainsFamilyAndInstanceAcrossRotation": [
+      "testMiniAppsLargeWidgetRetainsFamilyAndInstanceAcrossRotation",
+      "observeWidgetFamily",
+      "openWidgetFamilyGallery"
+    ],
+    "testMiniAppsExtraLargeWidgetRetainsFamilyAndInstanceAcrossRotation": [
+      "testMiniAppsExtraLargeWidgetRetainsFamilyAndInstanceAcrossRotation",
+      "observeWidgetFamily",
+      "openWidgetFamilyGallery"
+    ]
+  },
+  "sourceCallPathQualification": "Original method-body call-name inventory checked against exact helper/caller sources; this is source impact, not executed native coverage."
+}

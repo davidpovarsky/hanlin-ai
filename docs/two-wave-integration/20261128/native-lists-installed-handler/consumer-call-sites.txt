@@ -1,0 +1,20 @@
+Scripts/ProductSplit/observe_shortcut_surfaces.py:982:                from observe_shortcut_native_lists import observe_case
+Scripts/ProductSplit/observe_shortcut_concurrency.py:480:def current_identity(request, roots):
+Scripts/ProductSplit/observe_shortcut_concurrency.py:546:                identity = current_identity(request, roots)
+Scripts/ProductSplit/observe_shortcut_concurrency.py:571:            same_identity(current_identity(request, roots), case["identity"])
+Scripts/ProductSplit/observe_shortcut_concurrency.py:611:                same_identity(current_identity(request, roots), case["identity"])
+Scripts/ProductSplit/observe_shortcut_migration.py:16:import observe_shortcut_native_lists as lists
+Scripts/ProductSplit/observe_shortcut_migration.py:158:    identity, catalog = lists.current_identity(roots, request["engine"])
+Scripts/ProductSplit/observe_shortcut_migration.py:206:        identity, catalog = lists.current_identity(roots, engine)
+Scripts/ProductSplit/observe_shortcut_migration.py:271:        fresh_identity, fresh_catalog = lists.current_identity(fresh_roots, engine)
+Scripts/ProductSplit/shortcut_migration_contract.py:19:import observe_shortcut_native_lists as lists
+Scripts/ProductSplit/observe_shortcut_long_running.py:535:            current_identity = concurrency.current_identity(request, roots)
+Scripts/ProductSplit/upgrade_shortcut_migration.py:20:import observe_shortcut_native_lists as lists
+Scripts/ProductSplit/upgrade_shortcut_migration.py:254:    identity, catalog = lists.current_identity(roots, value["engine"])
+Scripts/ProductSplit/upgrade_shortcut_migration.py:281:    new_identity, new_catalog = lists.current_identity(after, value["engine"])
+Scripts/ProductSplit/run_paired_acceptance.py:680:    from observe_shortcut_native_lists import engine_contract
+Scripts/ProductSplit/run_paired_acceptance.py:1093:        from observe_shortcut_native_lists import create_inputs
+Scripts/ProductSplit/observe_shortcut_native_lists.py:51:    "Scripts/ProductSplit/observe_shortcut_native_lists.py",
+Scripts/ProductSplit/observe_shortcut_native_lists.py:290:def current_identity(roots, engine="nativescript"):
+Scripts/ProductSplit/observe_shortcut_native_lists.py:472:        identity, catalog = current_identity(roots, engine)
+Scripts/ProductSplit/observe_shortcut_native_lists.py:526:                fresh_identity, fresh_catalog = current_identity(fresh_roots, engine)

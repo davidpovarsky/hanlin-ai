@@ -1,0 +1,152 @@
+{
+  "reviewedUTC": "2026-11-23T20:54:32.536722+00:00",
+  "owner": "/root/release_hosts",
+  "run": {
+    "id": 45256955142,
+    "run_attempt": 1,
+    "head_sha": "0b40a021c6d28e4d1c47ed87060d063c8456ba9f",
+    "status": "completed",
+    "conclusion": "failure",
+    "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45256955142"
+  },
+  "nativeJobId": 137981476734,
+  "originalJobLog": {
+    "owner": "/root",
+    "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-bundle-scan-continuation-20261123/terminal/native-job.log",
+    "bytes": 25538449,
+    "sha256": "ac299969d6adf47a2f9061006c3c673869c4b8932c89a21dfca6f354ad4cfa4a"
+  },
+  "originalBuildLog": {
+    "path": "/mnt/development/projects/worktrees/hanlin-sdk02-interface-capture-20261123/build/sdk-localization-scan-45256955142/original/simulator-logs/06-xcodebuild-simulator.log",
+    "bytes": 17515592,
+    "sha256": "188ead31f2a4e974cbf1fc9db3379a603f5f625d07db47d9ca8896c54b523203"
+  },
+  "steps": [
+    {
+      "number": 30,
+      "name": "Build full arm64 simulator app",
+      "conclusion": "success",
+      "started_at": "2026-11-23T20:23:39Z",
+      "completed_at": "2026-11-23T20:34:06Z"
+    },
+    {
+      "number": 32,
+      "name": "Validate the current build-for-testing unit products",
+      "conclusion": "success",
+      "started_at": "2026-11-23T20:34:06Z",
+      "completed_at": "2026-11-23T20:34:08Z"
+    },
+    {
+      "number": 35,
+      "name": "Locate and scan simulator app",
+      "conclusion": "failure",
+      "started_at": "2026-11-23T20:34:08Z",
+      "completed_at": "2026-11-23T20:34:19Z"
+    },
+    {
+      "number": 37,
+      "name": "Boot iPad Simulator and stage fixtures",
+      "conclusion": "skipped",
+      "started_at": "2026-11-23T20:34:19Z",
+      "completed_at": "2026-11-23T20:34:19Z"
+    },
+    {
+      "number": 40,
+      "name": "Run simulator test suite",
+      "conclusion": "skipped",
+      "started_at": "2026-11-23T20:34:19Z",
+      "completed_at": "2026-11-23T20:34:19Z"
+    },
+    {
+      "number": 46,
+      "name": "Launch full app and verify runtime acceptance",
+      "conclusion": "skipped",
+      "started_at": "2026-11-23T20:34:20Z",
+      "completed_at": "2026-11-23T20:34:20Z"
+    }
+  ],
+  "resourceCopies": [
+    {
+      "entries": 49,
+      "files": 45,
+      "inventorySHA256": "4f2efaf63079fa86b52ccbd718a52f551a892186f53e3ccb766e53c52427287f",
+      "path": "HanlinSDK_AI_Hanlin.bundle"
+    },
+    {
+      "entries": 49,
+      "files": 45,
+      "inventorySHA256": "4f2efaf63079fa86b52ccbd718a52f551a892186f53e3ccb766e53c52427287f",
+      "path": "Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle"
+    }
+  ],
+  "copiedResourceCount": 37,
+  "canonicalGitResourcesByteEqual": 35,
+  "generatedDiagnosticsByteEqual": true,
+  "generatedRuntimeArchiveIndependentRehash": "NOT_RUN: bytes not in assigned smoke artifact; original CI scanner comparison PASS",
+  "localization": {
+    "status": "FAIL",
+    "catalogValues": 3683,
+    "packagedValues": 0,
+    "errorCount": 177,
+    "errorReasons": {
+      "canonical packaged table missing or ambiguous": 177
+    },
+    "runtimeInterpretation": "FAIL at canonical package table selection; this does not prove missing translations or successful locale runtime"
+  },
+  "unitProducts": {
+    "status": "SEALED",
+    "selectors": 27,
+    "files": 5,
+    "manifestSHA256": "991676610443473c1f6d71bf7727d8626082c257f77a970d1951403e46871a2c",
+    "buildLogHashVerified": true,
+    "diagnosticsHashVerified": true,
+    "resolvedPackageHashVerified": true,
+    "trackedWorkspaceModified": true,
+    "trackedDiffSHA256": "f163e2256bd5e50bcd91f4767e899dd2807299e8bfb1a57bab9793143fbc1c04",
+    "qualification": "Current build-for-testing may reuse validated compiler products; no fresh-compilation claim.",
+    "independentBinaryRehash": "NOT_RUN: binaries not in smoke artifact"
+  },
+  "testedProducer": "e7bf34111e603ca977becd007dd4e5bb109af857",
+  "sourceRecords": [
+    {
+      "path": "Scripts/SDK/verify_bundle_resources.py",
+      "bytes": 7440,
+      "sha256": "321fd8cf770b4461de8514394c1a1397539c483b893a96890a25f9a0c6f5bb5d",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/blob/0b40a021c6d28e4d1c47ed87060d063c8456ba9f/Scripts/SDK/verify_bundle_resources.py"
+    },
+    {
+      "path": "Scripts/CI/validate_chat_localization.py",
+      "bytes": 7821,
+      "sha256": "eb6541a07c159f89639724058c3ef0a7557bb881bedb62d4d26d58d44946a673",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/blob/0b40a021c6d28e4d1c47ed87060d063c8456ba9f/Scripts/CI/validate_chat_localization.py"
+    },
+    {
+      "path": "Scripts/CI/current_unit_xctestrun.py",
+      "bytes": 20020,
+      "sha256": "2d7839768ed684daee282382ab846e118adab049e22a6a7252053062e7f08efa",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/blob/0b40a021c6d28e4d1c47ed87060d063c8456ba9f/Scripts/CI/current_unit_xctestrun.py"
+    },
+    {
+      "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "bytes": 208094,
+      "sha256": "afeed29d2451d17f835230166cb2da894d574aa4474ca296b770ebb68e1f3d8c",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/blob/0b40a021c6d28e4d1c47ed87060d063c8456ba9f/.github/workflows/build-ios26-unsigned-ipa.yml"
+    }
+  ],
+  "acceptance": {
+    "requestedScopes": 32,
+    "authoredExpectedInvocations": 342,
+    "executedInvocations": 0,
+    "status": "NOT_RUN",
+    "sourceInventory": "docs/agent-sdk/evidence/selected-app-acceptance-inventory-45230545076/expected-inventory.json",
+    "qualification": "342 is authored expected inventory, not execution; boot/test/runtime steps skipped"
+  },
+  "preparedNativeArtifact": {
+    "id": 14858299149,
+    "status": "INELIGIBLE",
+    "acquired": false,
+    "published": false,
+    "reason": "Producer run failed"
+  },
+  "noNewTestExecution": true
+}

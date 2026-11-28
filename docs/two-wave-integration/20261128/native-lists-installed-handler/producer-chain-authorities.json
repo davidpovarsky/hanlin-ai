@@ -1,0 +1,216 @@
+{
+  "source": "da07904e482b5a1e2ea954dea32a6e6522c0ae5f",
+  "historicalFailureSource": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "bindings": [
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_native_lists.py",
+      "actualSource": "da07904e482b5a1e2ea954dea32a6e6522c0ae5f",
+      "gitBlob": "e4f4d83df736506b23a22a2eaca498c841323d37",
+      "bytes": 31668,
+      "sha256": "d81d55f260df28bde7946e9d46862a69818d61cb653b2a8893ca7c26a0a2248c",
+      "sourceDiagnosisBinding": {
+        "path": "Scripts/ProductSplit/observe_shortcut_native_lists.py",
+        "oldBytes": 31668,
+        "oldSHA256": "d81d55f260df28bde7946e9d46862a69818d61cb653b2a8893ca7c26a0a2248c",
+        "currentBytes": 31668,
+        "currentSHA256": "d81d55f260df28bde7946e9d46862a69818d61cb653b2a8893ca7c26a0a2248c",
+        "wholeFileEqual": true
+      }
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "actualSource": "da07904e482b5a1e2ea954dea32a6e6522c0ae5f",
+      "gitBlob": "bdc429c8755cc708b692a035dcc1d8e79d3d15bf",
+      "bytes": 68492,
+      "sha256": "a503e1e9dea29bfe151164b5f4fb2ffb4565d919344853a308415a6156b2be46",
+      "sourceDiagnosisBinding": {
+        "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+        "oldBytes": 67581,
+        "oldSHA256": "422c418689c6194268dccb54e8232711da44068925ca0a66fb27f1800610941a",
+        "currentBytes": 68492,
+        "currentSHA256": "a503e1e9dea29bfe151164b5f4fb2ffb4565d919344853a308415a6156b2be46",
+        "wholeFileEqual": false
+      }
+    },
+    {
+      "path": "Fixtures/ShortcutNativeLists/nativescript/script.json",
+      "actualSource": "da07904e482b5a1e2ea954dea32a6e6522c0ae5f",
+      "gitBlob": "09b394095c01c9529649c6e598dd9eb10b70bfb9",
+      "bytes": 877,
+      "sha256": "9b61a8b3503d72f2536c579cdea9625c1c9180f66e4cb88d66207c15343f7f08",
+      "sourceDiagnosisBinding": {
+        "path": "Fixtures/ShortcutNativeLists/nativescript/script.json",
+        "oldBytes": 877,
+        "oldSHA256": "9b61a8b3503d72f2536c579cdea9625c1c9180f66e4cb88d66207c15343f7f08",
+        "currentBytes": 877,
+        "currentSHA256": "9b61a8b3503d72f2536c579cdea9625c1c9180f66e4cb88d66207c15343f7f08",
+        "wholeFileEqual": true
+      }
+    },
+    {
+      "path": "Fixtures/ShortcutNativeLists/expo/script.json",
+      "actualSource": "da07904e482b5a1e2ea954dea32a6e6522c0ae5f",
+      "gitBlob": "e512e64caa4cb0bc7c08102878378b1afcbdea78",
+      "bytes": 814,
+      "sha256": "49c8ac12904493e4657d27d14b18b8bbfcdf355e18660e822b78a2b94728b194",
+      "sourceDiagnosisBinding": {
+        "path": "Fixtures/ShortcutNativeLists/expo/script.json",
+        "oldBytes": 814,
+        "oldSHA256": "49c8ac12904493e4657d27d14b18b8bbfcdf355e18660e822b78a2b94728b194",
+        "currentBytes": 814,
+        "currentSHA256": "49c8ac12904493e4657d27d14b18b8bbfcdf355e18660e822b78a2b94728b194",
+        "wholeFileEqual": true
+      }
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "actualSource": "da07904e482b5a1e2ea954dea32a6e6522c0ae5f",
+      "gitBlob": "eabb73fff70ad99f2b880e8145c5d67fc82a4d31",
+      "bytes": 60758,
+      "sha256": "7e3a1ff682abef2b319a4c428c9da6a4069989872cdbab777479e2eced0d1306",
+      "sourceDiagnosisBinding": {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+        "oldBytes": 60758,
+        "oldSHA256": "7e3a1ff682abef2b319a4c428c9da6a4069989872cdbab777479e2eced0d1306",
+        "currentBytes": 60758,
+        "currentSHA256": "7e3a1ff682abef2b319a4c428c9da6a4069989872cdbab777479e2eced0d1306",
+        "wholeFileEqual": true
+      }
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinWidgetPackagePreparation.swift",
+      "actualSource": "da07904e482b5a1e2ea954dea32a6e6522c0ae5f",
+      "gitBlob": "028d4e39f12a3580de6457c968127a29ace11f41",
+      "bytes": 3696,
+      "sha256": "c7f17d560a8bba185dac493eb10e646ba6210f41c0c60b1b9f4617faa238874d",
+      "sourceDiagnosisBinding": {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinWidgetPackagePreparation.swift",
+        "oldBytes": 3696,
+        "oldSHA256": "c7f17d560a8bba185dac493eb10e646ba6210f41c0c60b1b9f4617faa238874d",
+        "currentBytes": 3696,
+        "currentSHA256": "c7f17d560a8bba185dac493eb10e646ba6210f41c0c60b1b9f4617faa238874d",
+        "wholeFileEqual": true
+      }
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
+      "actualSource": "da07904e482b5a1e2ea954dea32a6e6522c0ae5f",
+      "gitBlob": "c1f5f3d1769b83fa681713445143b94605aec961",
+      "bytes": 18072,
+      "sha256": "745392896eb986e52c56ececce7eeb1b2f7331bc28733d3580f30c5aa5fbf577",
+      "sourceDiagnosisBinding": {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
+        "oldBytes": 18072,
+        "oldSHA256": "745392896eb986e52c56ececce7eeb1b2f7331bc28733d3580f30c5aa5fbf577",
+        "currentBytes": 18072,
+        "currentSHA256": "745392896eb986e52c56ececce7eeb1b2f7331bc28733d3580f30c5aa5fbf577",
+        "wholeFileEqual": true
+      }
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift",
+      "actualSource": "da07904e482b5a1e2ea954dea32a6e6522c0ae5f",
+      "gitBlob": "a20d066aaaff53be71652a79a12160274aea2784",
+      "bytes": 40516,
+      "sha256": "7402b0237d625ad1c0f920b2a2b1824d488ab99896eb3393a25b73ded11fe78d",
+      "sourceDiagnosisBinding": {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift",
+        "oldBytes": 40516,
+        "oldSHA256": "7402b0237d625ad1c0f920b2a2b1824d488ab99896eb3393a25b73ded11fe78d",
+        "currentBytes": 40516,
+        "currentSHA256": "7402b0237d625ad1c0f920b2a2b1824d488ab99896eb3393a25b73ded11fe78d",
+        "wholeFileEqual": true
+      }
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionContracts.swift",
+      "actualSource": "da07904e482b5a1e2ea954dea32a6e6522c0ae5f",
+      "gitBlob": "56a1e10a0fcad9a6f35b16736946e1f0db36dc76",
+      "bytes": 31677,
+      "sha256": "1298b4e420292a4e331cad7903f119861ae6df675a4fc90456fbde2bae24efd9",
+      "sourceDiagnosisBinding": {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionContracts.swift",
+        "oldBytes": 31677,
+        "oldSHA256": "1298b4e420292a4e331cad7903f119861ae6df675a4fc90456fbde2bae24efd9",
+        "currentBytes": 31677,
+        "currentSHA256": "1298b4e420292a4e331cad7903f119861ae6df675a4fc90456fbde2bae24efd9",
+        "wholeFileEqual": true
+      }
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift",
+      "actualSource": "da07904e482b5a1e2ea954dea32a6e6522c0ae5f",
+      "gitBlob": "21850d5a3d5282e54debdc11cf008dc5b6dd4f5d",
+      "bytes": 16108,
+      "sha256": "02d34beb9cd36bc236e0326427e800d369c50cab0d052b773c2e8c19bb0c6f8c",
+      "sourceDiagnosisBinding": {
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift",
+        "oldBytes": 16108,
+        "oldSHA256": "02d34beb9cd36bc236e0326427e800d369c50cab0d052b773c2e8c19bb0c6f8c",
+        "currentBytes": 16108,
+        "currentSHA256": "02d34beb9cd36bc236e0326427e800d369c50cab0d052b773c2e8c19bb0c6f8c",
+        "wholeFileEqual": true
+      }
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "actualSource": "da07904e482b5a1e2ea954dea32a6e6522c0ae5f",
+      "gitBlob": "2182b4d68b0149d140328fd7c3de03672768aff1",
+      "bytes": 187710,
+      "sha256": "dadde747dfad34c4ac8efdd8199253624376146956204babe52d90701404b950",
+      "sourceDiagnosisBinding": {
+        "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+        "oldBytes": 187710,
+        "oldSHA256": "dadde747dfad34c4ac8efdd8199253624376146956204babe52d90701404b950",
+        "currentBytes": 187710,
+        "currentSHA256": "dadde747dfad34c4ac8efdd8199253624376146956204babe52d90701404b950",
+        "wholeFileEqual": true
+      }
+    }
+  ],
+  "chain": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "anchor": "preparedEntrypoints lines895-897",
+      "effect": "Exact authored sourcePath is retained in the import preview, with prepared-foreground-action-v1 and the declared exported action."
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "anchor": "install path lines1020-1038",
+      "effect": "Original install invokes installedEntrypoints and places its descriptors into the real HanlinInstallPlan."
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinWidgetPackagePreparation.swift",
+      "anchor": "installedEntrypoints lines9-18",
+      "effect": "Every non-widget installed sourcePath is source/ plus the archive-relative path."
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
+      "anchor": "appDescriptor lines264-274",
+      "effect": "The action handler selects the actual matching installed source/ path."
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "anchor": "refreshExtensionSnapshot lines2180-2194",
+      "effect": "The unique declared action publishes that exact resolved installed handler."
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_native_lists.py",
+      "anchor": "ENGINE_CONTRACTS lines77-82 and current_identity lines255-272",
+      "effect": "The reader incorrectly compares the installed handler against the unprefixed archive path before installed_catalog/identity.json."
+    }
+  ],
+  "canonicalHandlers": {
+    "nativescript": "source/nativescript/app/bundle.mjs",
+    "expo": "source/bundle.js"
+  },
+  "sharedReaderFunctionsEqualAcrossFailureAndCandidateBase": [
+    "read_document",
+    "snapshot_document",
+    "installed_catalog"
+  ],
+  "actualRejectedCatalogRow": "NOT_RETAINED",
+  "interpretation": "The immutable source and prepared overlay prove canonical installed handlers would fail the previous comparison. They do not reveal the missing actual rejected row or establish later native success.",
+  "archiveAndEngineContracts": "UNCHANGED",
+  "runtimeProductSource": "UNCHANGED"
+}

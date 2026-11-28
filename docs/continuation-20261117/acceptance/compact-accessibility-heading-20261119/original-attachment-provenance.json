@@ -1,0 +1,74 @@
+[
+  {
+    "rowid": 1,
+    "name": "kXCTAttachmentScreenRecording",
+    "uniformTypeIdentifier": "public.mpeg-4",
+    "xcResultKitPayloadRefId": "0~gxZhE2rZpXgb4i0mHTPv7Eh2SO2fPM1ojCsc3V9z6svgQzK0bC0oT9EIFA_SNAEPwF0OCtFCLlgA2kG4_bSviQ==",
+    "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\hanlin-compact-44447123515\\artifact\\local-decoded\\attachment-1.mp4",
+    "member": "simulator-logs/NativeScriptProductionE2EResult.xcresult/Data/data.0~gxZhE2rZpXgb4i0mHTPv7Eh2SO2fPM1ojCsc3V9z6svgQzK0bC0oT9EIFA_SNAEPwF0OCtFCLlgA2kG4_bSviQ==",
+    "raw_sha256": "6040cf3d5ce636153350dbcd6ec507cdf9597fe1a80557575869338a417cbaa4",
+    "sha256": "6040cf3d5ce636153350dbcd6ec507cdf9597fe1a80557575869338a417cbaa4",
+    "bytes": 9391444,
+    "zip_crc_verified": true
+  },
+  {
+    "rowid": 3,
+    "name": "original-composer-before-keyboard",
+    "uniformTypeIdentifier": "public.plain-text",
+    "xcResultKitPayloadRefId": "0~Y9sPSoZtyh6ZT9fMNvWosxhlks4oaH-4qQS9E7KlOqUmjyZPIWKT5BSzrRca8Pgl0dUxC5XgxEg_uTo58YAMyg==",
+    "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\hanlin-compact-44447123515\\artifact\\local-decoded\\attachment-3.txt",
+    "member": "simulator-logs/NativeScriptProductionE2EResult.xcresult/Data/data.0~Y9sPSoZtyh6ZT9fMNvWosxhlks4oaH-4qQS9E7KlOqUmjyZPIWKT5BSzrRca8Pgl0dUxC5XgxEg_uTo58YAMyg==",
+    "raw_sha256": "cc2720832c9d2af6721d57cd07aaebbe5003f3f3e0855b68482149fac3cd0277",
+    "sha256": "fb95a69ff4b7f60081a79e12cf7deab3040b0814bbd33dbe9a9f131403e82aed",
+    "bytes": 11678,
+    "zip_crc_verified": true
+  },
+  {
+    "rowid": 8,
+    "name": "original-composer-with-keyboard",
+    "uniformTypeIdentifier": "public.plain-text",
+    "xcResultKitPayloadRefId": "0~8VgUcLUpaKaNkjuQZitFHaSYELApgoGI-mj4NyUbgFHe3Lt1roJeyMW2gO1qfyOnd7CTmN-JVLmHuLZET672mA==",
+    "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\hanlin-compact-44447123515\\artifact\\local-decoded\\attachment-8.txt",
+    "member": "simulator-logs/NativeScriptProductionE2EResult.xcresult/Data/data.0~8VgUcLUpaKaNkjuQZitFHaSYELApgoGI-mj4NyUbgFHe3Lt1roJeyMW2gO1qfyOnd7CTmN-JVLmHuLZET672mA==",
+    "raw_sha256": "108d9fab3355a1a31444ad0cc3147a136eaef6e01bc1c72ee5c454e640bedc5f",
+    "sha256": "5d2fe0ee42c5da522e3040278696ced430ce1ecbea2bfbb2f5a498137b27ba5c",
+    "bytes": 18401,
+    "zip_crc_verified": true
+  },
+  {
+    "rowid": 12,
+    "name": "App UI hierarchy for com.itorah.chavrusachat",
+    "uniformTypeIdentifier": "public.plain-text",
+    "xcResultKitPayloadRefId": "0~HSJKSOQxq8_kiFmPE1kCzKlRjWQLfkCcYA659lzM3CyHH2JzmmrLdW0QJDeXfrb9VobpTr3NMtav6fjkJS_bew==",
+    "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\hanlin-compact-44447123515\\artifact\\local-decoded\\attachment-12.txt",
+    "member": "simulator-logs/NativeScriptProductionE2EResult.xcresult/Data/data.0~HSJKSOQxq8_kiFmPE1kCzKlRjWQLfkCcYA659lzM3CyHH2JzmmrLdW0QJDeXfrb9VobpTr3NMtav6fjkJS_bew==",
+    "raw_sha256": "af020aa58870eef3c60cc523426316bc34500ff9c5f3e196e681a3421c6d3d0a",
+    "sha256": "79106a964326c7d4936658c270e1bbd5392dde8efade55462fbd43a480f9c5c0",
+    "bytes": 35827,
+    "zip_crc_verified": true
+  },
+  {
+    "rowid": 15,
+    "name": "App UI hierarchy for com.itorah.chavrusachat",
+    "uniformTypeIdentifier": "public.plain-text",
+    "xcResultKitPayloadRefId": "0~yxp1p9Xvt3pTv2BykXeuiy_Ly9X8ObQx3sFihE3YWgSi3_8A_tN8kzQEBmKtT_3xuf0xQOPxxIYlBT7xt81ntw==",
+    "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\hanlin-compact-44447123515\\artifact\\local-decoded\\attachment-15.txt",
+    "member": "simulator-logs/NativeScriptProductionE2EResult.xcresult/Data/data.0~yxp1p9Xvt3pTv2BykXeuiy_Ly9X8ObQx3sFihE3YWgSi3_8A_tN8kzQEBmKtT_3xuf0xQOPxxIYlBT7xt81ntw==",
+    "raw_sha256": "4c1b46a47ff46177013e0f2f3677cc5d886ac3a20ebe4505c79ae6f8405d69a0",
+    "sha256": "49c10138b90dcdba7eaa9fa11fbde137fce5b2d0fac854f6623082e1729cfd63",
+    "bytes": 35827,
+    "zip_crc_verified": true
+  },
+  {
+    "rowid": 18,
+    "name": "App UI hierarchy for com.itorah.chavrusachat",
+    "uniformTypeIdentifier": "public.plain-text",
+    "xcResultKitPayloadRefId": "0~q35gvhiC0LRJY2S6BeNqdo8dPe4eLfJmQ8XPVCbWjkbhFZ6pZHc5mPJB5-9jBwjGizPVHdOZe43voZLrAGof-g==",
+    "file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\hanlin-compact-44447123515\\artifact\\local-decoded\\attachment-18.txt",
+    "member": "simulator-logs/NativeScriptProductionE2EResult.xcresult/Data/data.0~q35gvhiC0LRJY2S6BeNqdo8dPe4eLfJmQ8XPVCbWjkbhFZ6pZHc5mPJB5-9jBwjGizPVHdOZe43voZLrAGof-g==",
+    "raw_sha256": "6bd86613d545bcff9d751a25d6c73abfdd7ac1b816921cc6d804907839bdd9d2",
+    "sha256": "940e421d3af07ad14f8734ca3e96d480a18aaf0100bf3aa437d86dfa130a778a",
+    "bytes": 35827,
+    "zip_crc_verified": true
+  }
+]

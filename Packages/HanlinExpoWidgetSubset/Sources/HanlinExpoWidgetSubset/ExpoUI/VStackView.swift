@@ -1,0 +1,65 @@
+// Copyright 2015-present 650 Industries. All rights reserved.
+
+import SwiftUI
+
+internal enum HorizontalAlignmentOptions: String, Enumerable {
+  case leading
+  case center
+  case trailing
+
+  func toHorizontalAlignment() -> HorizontalAlignment {
+    switch self {
+    case .leading:
+      return .leading
+    case .center:
+      return .center
+    case .trailing:
+      return .trailing
+    }
+  }
+}
+
+public final class VStackViewProps: UIBaseViewProps {
+  @Field var spacing: Double?
+  @Field var alignment: HorizontalAlignmentOptions?
+  // Universal `Column` sets this so a child percentage is a fraction of this stack.
+  // A SwiftUI `VStack` leaves it off and keeps the platform layout.
+  @Field var resolvesChildPercentages: Bool = false
+}
+
+public struct VStackView: ExpoSwiftUI.View {
+  @ObservedObject public var props: VStackViewProps
+  // A fraction on this stack is a real size only when the parent opted in.
+  @Environment(\.resolvesOwnPercentage) private var resolvesOwnPercentage
+
+  public init(props: VStackViewProps) {
+    self.props = props
+  }
+
+  public var body: some View {
+    if props.resolvesChildPercentages {
+      ParentAwareVStackLayout(
+        alignment: props.alignment ?? .center,
+        spacing: props.spacing.map { CGFloat($0) },
+        ownDimensions: universalLayoutDimensions(from: props.modifiers),
+        resolvesOwnPercentage: resolvesOwnPercentage
+      ) {
+        Children()
+      }
+      .environment(\.universalPercentageParent, true)
+    } else {
+      platformStack
+    }
+  }
+
+  private var platformStack: some View {
+    VStack(
+      alignment: props.alignment?.toHorizontalAlignment() ?? .center,
+      spacing: props.spacing.map { CGFloat($0) }
+    ) {
+      Children()
+    }
+    // Overrides a Host, so a percentage inside a SwiftUI stack keeps the child's own size.
+    .environment(\.universalPercentageParent, false)
+  }
+}

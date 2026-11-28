@@ -15,6 +15,7 @@ struct VisionStreamData {
     var reasoning: String?  // 推理/思考过程
 }
 
+@MainActor
 class VisionAPIManager {
     
     private var context: ModelContext
@@ -27,7 +28,7 @@ class VisionAPIManager {
         let predicate = #Predicate<APIKeys> { $0.company == company }
         let fetchDescriptorFiltered = FetchDescriptor<APIKeys>(predicate: predicate)
         if let result = try? context.fetch(fetchDescriptorFiltered).first {
-            return result.key
+            return result.resolvedKey
         }
         return nil
     }

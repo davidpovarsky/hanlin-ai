@@ -1,0 +1,13 @@
+{
+  "atUTC": "2026-11-27T08:31:42.672871+00:00",
+  "base": "b84d5ffb1c52361ac884a967f13e5500efe3d232",
+  "sourceCommit": "244a2b75675af452d0122dfacd7ca68bfd6dcfd9",
+  "head": "97ca89552b8e39fab4d0a26e51e3f77010e1811e",
+  "sourceSHA256": "c5846466716970ab7c4a1b5c2cd970e36a7d09cbedbc8a52417144fa6569a905",
+  "bundle": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-http-framing-from-b84.bundle",
+  "bundleBytes": 15534,
+  "bundleSHA256": "0a8ba988bf8b26112c777f6a13456fc2f1c7bc8f15a442ff147edf3c33276508",
+  "packageTree": "a0896c5a33c69f5daf29be90a98de88b1c3f8bda",
+  "native": "NOT_RUN",
+  "bundlePreflightCorrection": "Initial explicit SHA range had no advertised ref; no bundle/native job produced. Reused clean integrated commit with HEAD ref."
+}

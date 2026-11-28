@@ -1,0 +1,62 @@
+{
+  "observedAtUTC": "2026-11-27T05:26:05.789804+00:00",
+  "runID": 45942933110,
+  "jobID": 140321092861,
+  "source": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "logBytes": 5144427,
+  "logSHA256": "f045646db95f0b17fe4f7a00f45d9a6102a724ce087c3cd280a6b8b2c336b7e0",
+  "diagnostics": [
+    {
+      "line": 3568,
+      "text": "2026-11-27T05:01:26.3783300Z                                  Dload  Upload   Total   Spent    Left  Speed\n2026-11-27T05:01:26.3783590Z \n2026-11-27T05:01:26.7506750Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n2026-11-27T05:01:26.7507510Z 100 37.6M  100 37.6M    0     0   101M      0 --:--:-- --:--:-- --:--:--  101M\n2026-11-27T05:01:26.7561330Z [ReactNativeDependencies] Verifying checksum for downloaded reactnative-dependencies-0.88.1-debug.tar.gz...\n2026-11-27T05:01:26.8627680Z [Cache] SHA1 verified for reactnative-dependencies-0.88.1-debug.tar.gz\n2026-11-27T05:01:26.8850510Z [ReactNativeDependencies] Saved reactnative-dependencies-0.88.1-debug.tar.gz to shared cache (/Users/runner/Library/Caches/ReactNative)\n2026-11-27T05:01:26.9598790Z [ReactNativeDependencies] Cache miss: downloading reactnative-dependencies-0.88.1-release.tar.gz from https://repo.reactnative.dev/maven2/com/facebook/react/react-native-artifacts/0.88.1/react-native-artifacts-0.88.1-reactnative-dependencies-release.tar.gz\n2026-11-27T05:01:26.9729320Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n2026-11-27T05:01:26.9730070Z                                  Dload  Upload   Total   Spent    Left  Speed"
+    },
+    {
+      "line": 3577,
+      "text": "2026-11-27T05:01:26.9730070Z                                  Dload  Upload   Total   Spent    Left  Speed\n2026-11-27T05:01:26.9730390Z \n2026-11-27T05:01:27.2815700Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n2026-11-27T05:01:27.2917500Z 100 30.5M  100 30.5M    0     0  98.9M      0 --:--:-- --:--:-- --:--:-- 99.1M\n2026-11-27T05:01:27.2966470Z [ReactNativeDependencies] Verifying checksum for downloaded reactnative-dependencies-0.88.1-release.tar.gz...\n2026-11-27T05:01:27.4037100Z [Cache] SHA1 verified for reactnative-dependencies-0.88.1-release.tar.gz\n2026-11-27T05:01:27.4238390Z [ReactNativeDependencies] Saved reactnative-dependencies-0.88.1-release.tar.gz to shared cache (/Users/runner/Library/Caches/ReactNative)\n2026-11-27T05:01:27.4339920Z [ReactNativeDependencies] Source: {http: \"https://repo.reactnative.dev/maven2/com/facebook/react/react-native-artifacts/0.88.1/react-native-artifacts-0.88.1-reactnative-dependencies-debug.tar.gz\"}\n2026-11-27T05:01:27.4442350Z [ReactNativeCore] Setting up ReactNativeCore...\n2026-11-27T05:01:27.5257940Z [ReactNativeCore] Building from source: false"
+    },
+    {
+      "line": 3625,
+      "text": "2026-11-27T05:01:27.9755690Z \n2026-11-27T05:01:28.3660150Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n2026-11-27T05:01:28.8989960Z  14 96.2M   14 14.0M    0     0  36.0M      0  0:00:02 --:--:--  0:00:02 35.9M\n2026-11-27T05:01:28.9091990Z 100 96.2M  100 96.2M    0     0   104M      0 --:--:-- --:--:-- --:--:--  104M\n2026-11-27T05:01:28.9193700Z [ReactNativeCore] Verifying checksum for downloaded reactnative-core-0.88.1-debug.tar.gz...\n2026-11-27T05:01:29.0425470Z [Cache] SHA1 verified for reactnative-core-0.88.1-debug.tar.gz\n2026-11-27T05:01:29.1030820Z [ReactNativeCore] Saved reactnative-core-0.88.1-debug.tar.gz to shared cache (/Users/runner/Library/Caches/ReactNative)\n2026-11-27T05:01:29.1957540Z [ReactNativeCore] Cache miss: downloading reactnative-core-0.88.1-release.tar.gz from https://repo.reactnative.dev/maven2/com/facebook/react/react-native-artifacts/0.88.1/react-native-artifacts-0.88.1-reactnative-core-release.tar.gz\n2026-11-27T05:01:29.2112430Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n2026-11-27T05:01:29.2113960Z                                  Dload  Upload   Total   Spent    Left  Speed"
+    },
+    {
+      "line": 3635,
+      "text": "2026-11-27T05:01:29.2114750Z \n2026-11-27T05:01:29.3694020Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n2026-11-27T05:01:29.5711010Z  15 30.5M   15 4747k    0     0  29.9M      0  0:00:01 --:--:--  0:00:01 29.9M\n2026-11-27T05:01:29.5752820Z 100 30.5M  100 30.5M    0     0  85.7M      0 --:--:-- --:--:-- --:--:-- 85.5M\n2026-11-27T05:01:29.5847090Z [ReactNativeCore] Verifying checksum for downloaded reactnative-core-0.88.1-release.tar.gz...\n2026-11-27T05:01:29.6698300Z [Cache] SHA1 verified for reactnative-core-0.88.1-release.tar.gz\n2026-11-27T05:01:29.6858020Z [ReactNativeCore] Saved reactnative-core-0.88.1-release.tar.gz to shared cache (/Users/runner/Library/Caches/ReactNative)\n2026-11-27T05:01:29.6858900Z [ReactNativeCore] Resolved stable ReactNativeCore-prebuilt version:\n2026-11-27T05:01:29.6859880Z [ReactNativeCore]   ../../../../build/miniapp-upstreams/expo-native-source/ios/Pods/ReactNativeCore-artifacts/reactnative-core-0.88.1-debug.tar.gz\n2026-11-27T05:01:29.6867430Z [ReactNativeCore]   ../../../../build/miniapp-upstreams/expo-native-source/ios/Pods/ReactNativeCore-artifacts/reactnative-core-0.88.1-release.tar.gz"
+    },
+    {
+      "line": 3654,
+      "text": "2026-11-27T05:01:30.1567840Z \n2026-11-27T05:01:30.3658050Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n2026-11-27T05:01:30.5767230Z  17 30.3M   17 5520k    0     0  25.7M      0  0:00:01 --:--:--  0:00:01 25.6M\n2026-11-27T05:01:30.5852690Z 100 30.3M  100 30.3M    0     0  73.4M      0 --:--:-- --:--:-- --:--:-- 73.3M\n2026-11-27T05:01:30.5883420Z [Hermes] Verifying checksum for downloaded hermes-ios-260318099.0.5-debug.tar.gz...\n2026-11-27T05:01:30.6654040Z [Hermes] SHA1 verified for hermes-ios-260318099.0.5-debug.tar.gz\n2026-11-27T05:01:30.6818620Z [Hermes] Saved hermes-ios-260318099.0.5-debug.tar.gz to shared cache (/Users/runner/Library/Caches/ReactNative)\n2026-11-27T05:01:30.7701710Z [Hermes] Cache miss: downloading hermes-ios-260318099.0.5-release.tar.gz from https://repo.reactnative.dev/maven2/com/facebook/hermes/hermes-ios/260318099.0.5/hermes-ios-260318099.0.5-hermes-ios-release.tar.gz\n2026-11-27T05:01:30.7834070Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n2026-11-27T05:01:30.7834710Z                                  Dload  Upload   Total   Spent    Left  Speed"
+    },
+    {
+      "line": 3663,
+      "text": "2026-11-27T05:01:30.7834710Z                                  Dload  Upload   Total   Spent    Left  Speed\n2026-11-27T05:01:30.7834940Z \n2026-11-27T05:01:31.0388900Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0\n2026-11-27T05:01:31.0429800Z 100 24.2M  100 24.2M    0     0  96.0M      0 --:--:-- --:--:-- --:--:-- 96.0M\n2026-11-27T05:01:31.0438770Z [Hermes] Verifying checksum for downloaded hermes-ios-260318099.0.5-release.tar.gz...\n2026-11-27T05:01:31.1378730Z [Hermes] SHA1 verified for hermes-ios-260318099.0.5-release.tar.gz\n2026-11-27T05:01:31.1531150Z [Hermes] Saved hermes-ios-260318099.0.5-release.tar.gz to shared cache (/Users/runner/Library/Caches/ReactNative)\n2026-11-27T05:01:31.8970470Z Adding spec repo `trunk` with CDN `https://cdn.cocoapods.org/`\n2026-11-27T05:01:31.8970970Z Downloading dependencies\n2026-11-27T05:01:31.8978050Z Installing DoubleConversion (1.1.6)"
+    },
+    {
+      "line": 33048,
+      "text": "2026-11-27T05:09:52.8198480Z [HanlinExpoNativeAPI] Staged: /Users/runner/work/hanlin-ai/hanlin-ai/Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIMalformed.hanlinExpo (SHA256: 6061e8c26fdbcbbfe20fa7d8abc2a6a8ee63d0f665046583b96fcefd5d6ad301)\n2026-11-27T05:09:52.8199680Z [HanlinExpoNativeAPI] All test probe packages created and staged successfully.\n2026-11-27T05:09:52.9108160Z Validated /Users/runner/work/hanlin-ai/hanlin-ai/RuntimeDependencies.lock.json.\n2026-11-27T05:09:53.1232780Z d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5\n2026-11-27T05:09:54.4185600Z Traceback (most recent call last):\n2026-11-27T05:09:54.4287430Z   File \"/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/Runtime/runtime_bundle_source.py\", line 62, in <module>\n2026-11-27T05:09:54.4380610Z     print(download_candidate(*sys.argv[1:]))\n2026-11-27T05:09:54.4390000Z           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^\n2026-11-27T05:09:54.4392030Z   File \"/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/Runtime/runtime_bundle_source.py\", line 48, in download_candidate\n2026-11-27T05:09:54.4393580Z     validate_source(run, artifacts, repository, name)"
+    },
+    {
+      "line": 33056,
+      "text": "2026-11-27T05:09:54.4392030Z   File \"/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/Runtime/runtime_bundle_source.py\", line 48, in download_candidate\n2026-11-27T05:09:54.4393580Z     validate_source(run, artifacts, repository, name)\n2026-11-27T05:09:54.4655540Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n2026-11-27T05:09:54.4657290Z   File \"/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/Runtime/runtime_bundle_source.py\", line 19, in validate_source\n2026-11-27T05:09:54.4658070Z     raise ValueError(\"Expected one live Runtime bundle artifact\")\n2026-11-27T05:09:54.4658680Z ValueError: Expected one live Runtime bundle artifact\n2026-11-27T05:09:54.4873940Z ##[error]Process completed with exit code 1.\n2026-11-27T05:09:54.5170280Z ##[group]Run mkdir -p \"$SPLIT_EVIDENCE\"\n2026-11-27T05:09:54.5170790Z \u001b[36;1mmkdir -p \"$SPLIT_EVIDENCE\"\u001b[0m\n2026-11-27T05:09:54.5171260Z \u001b[36;1mif [ -f \"$SPLIT_EVIDENCE/paired-product/acceptance.json\" ]; then\u001b[0m"
+    },
+    {
+      "line": 33057,
+      "text": "2026-11-27T05:09:54.4393580Z     validate_source(run, artifacts, repository, name)\n2026-11-27T05:09:54.4655540Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n2026-11-27T05:09:54.4657290Z   File \"/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/Runtime/runtime_bundle_source.py\", line 19, in validate_source\n2026-11-27T05:09:54.4658070Z     raise ValueError(\"Expected one live Runtime bundle artifact\")\n2026-11-27T05:09:54.4658680Z ValueError: Expected one live Runtime bundle artifact\n2026-11-27T05:09:54.4873940Z ##[error]Process completed with exit code 1.\n2026-11-27T05:09:54.5170280Z ##[group]Run mkdir -p \"$SPLIT_EVIDENCE\"\n2026-11-27T05:09:54.5170790Z \u001b[36;1mmkdir -p \"$SPLIT_EVIDENCE\"\u001b[0m\n2026-11-27T05:09:54.5171260Z \u001b[36;1mif [ -f \"$SPLIT_EVIDENCE/paired-product/acceptance.json\" ]; then\u001b[0m\n2026-11-27T05:09:54.5171890Z \u001b[36;1m  cp \"$SPLIT_EVIDENCE/paired-product/acceptance.json\" \"$SPLIT_EVIDENCE/acceptance.json\"\u001b[0m"
+    },
+    {
+      "line": 33058,
+      "text": "2026-11-27T05:09:54.4655540Z     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n2026-11-27T05:09:54.4657290Z   File \"/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/Runtime/runtime_bundle_source.py\", line 19, in validate_source\n2026-11-27T05:09:54.4658070Z     raise ValueError(\"Expected one live Runtime bundle artifact\")\n2026-11-27T05:09:54.4658680Z ValueError: Expected one live Runtime bundle artifact\n2026-11-27T05:09:54.4873940Z ##[error]Process completed with exit code 1.\n2026-11-27T05:09:54.5170280Z ##[group]Run mkdir -p \"$SPLIT_EVIDENCE\"\n2026-11-27T05:09:54.5170790Z \u001b[36;1mmkdir -p \"$SPLIT_EVIDENCE\"\u001b[0m\n2026-11-27T05:09:54.5171260Z \u001b[36;1mif [ -f \"$SPLIT_EVIDENCE/paired-product/acceptance.json\" ]; then\u001b[0m\n2026-11-27T05:09:54.5171890Z \u001b[36;1m  cp \"$SPLIT_EVIDENCE/paired-product/acceptance.json\" \"$SPLIT_EVIDENCE/acceptance.json\"\u001b[0m\n2026-11-27T05:09:54.5172480Z \u001b[36;1mfi\u001b[0m"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 15173937145,
+      "name": "app-split-45942933110",
+      "size_in_bytes": 500353,
+      "expired": false
+    }
+  ],
+  "original90Artifact": {
+    "zipSHA256": "e52b97c22cb1df7196c53f344056445c1e1cf10cb995f6f8094da148dcf66f96",
+    "members": 57
+  }
+}

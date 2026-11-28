@@ -1,0 +1,39 @@
+Building for debugging...
+[Computing dependencies]
+[Pre-planning 1 / 240]
+[Planning deferred tasks]
+[14 / 35] HanlinScriptServices
+[19 / 40] HanlinScriptServicesTests-product
+[21 / 42] OriginalBoundaryProbe-product
+[23 / 43] HanlinScriptServices
+[30 / 47] OriginalBoundaryProbe-product
+[32 / 47] HanlinScriptServicesTests-product
+[34 / 47] HanlinScriptServicesTests-product
+[36 / 47] HanlinScriptServicesTests-product
+[40 / 48] HanlinScriptServicesTests-product
+[44 / 51] HanlinScriptServicesTests-test-runner
+[48 / 51] HanlinScriptServicesTests-test-runner
+[52 / 52] HanlinScriptServicesTests-test-runner
+Build complete! (6.46 secs)
+◇ Test run started.
+↳ Testing Library Version: 6.4.3 (ba0861fb203553c)
+↳ Target Platform: aarch64-unknown-linux-gnu
+◇ Suite "Autonomous Scripting service brokers" started.
+◇ Test "Legacy grant metadata does not add a Hanlin permission gate" started.
+◇ Suite "Legacy scripting grant input normalization" started.
+◇ Test "Identical repeated legacy grants coalesce" started.
+◇ Test "The public initializer accepts repeated rows without adding a legacy permission gate" started.
+◇ Test "Conflicting IDs retain the last complete record without merging fields" started.
+◇ Test "Public replacement accepts repeated rows without changing the existing authorization path" started.
+◇ Test case passing 1 argument conflicting → true to "The public initializer accepts repeated rows without adding a legacy permission gate" started.
+◇ Test case passing 1 argument conflicting → false to "Public replacement accepts repeated rows without changing the existing authorization path" started.
+◇ Test case passing 1 argument conflicting → true to "Public replacement accepts repeated rows without changing the existing authorization path" started.
+✔ Test "Legacy grant metadata does not add a Hanlin permission gate" passed after 0.004 seconds.
+✔ Test "Identical repeated legacy grants coalesce" passed after 0.002 seconds.
+✔ Test "Conflicting IDs retain the last complete record without merging fields" passed after 0.002 seconds.
+✔ Test "Public replacement accepts repeated rows without changing the existing authorization path" with 2 test cases passed after 0.002 seconds.
+✔ Suite "Autonomous Scripting service brokers" passed after 0.004 seconds.
+◇ Test case passing 1 argument conflicting → false to "The public initializer accepts repeated rows without adding a legacy permission gate" started.
+✔ Test "The public initializer accepts repeated rows without adding a legacy permission gate" with 2 test cases passed after 0.003 seconds.
+✔ Suite "Legacy scripting grant input normalization" passed after 0.003 seconds.
+✔ Test run with 5 tests in 2 suites passed after 0.006 seconds.

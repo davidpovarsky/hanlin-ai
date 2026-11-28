@@ -1,0 +1,89 @@
+{
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "decisionSHA256": "92df2d1dc2a829c7bb6e61effaad715af3923ba92a326cca1dee9c76de2383b7",
+  "observedAt": "2026-11-25T20:44:00.683250+00:00",
+  "device": "2EFAD83F-45A2-4A8B-B326-16B83BC56DA9",
+  "runnerBundleID": "com.itorah.hanlinminiapps.integration.uitests.xctrunner",
+  "uiRunnerInfoSHA256": "e807c6b2a4c5444448a527d598bb86195f0737209b6c15bc2b8ecc8273f75d87",
+  "runnerData": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/AE26449E-AAE5-42CC-89E4-C72258E2506B",
+  "appData": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/8BE3A52F-502A-4B30-A133-5AA85D733173",
+  "appGroup": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Shared/AppGroup/FAA877B9-C174-4F03-964C-8DEB65E1D3C5",
+  "actionInput": {
+    "source": "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting",
+    "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/8BE3A52F-502A-4B30-A133-5AA85D733173/Documents/Hanlin-ScriptWidget-Actions.scripting",
+    "bytes": 825,
+    "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+    "status": "COPIED_EXACT_ORIGINAL_INPUT"
+  },
+  "originalInputsStaged": [
+    {
+      "name": "Hanlin-ScriptWidget-Actions.scripting",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting",
+      "bytes": 825,
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "path": "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting"
+      },
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/8BE3A52F-502A-4B30-A133-5AA85D733173/Documents/Hanlin-ScriptWidget-Actions.scripting",
+      "status": "COPIED_EXACT_ORIGINAL_INPUT"
+    },
+    {
+      "name": "ExpoSwiftUIProbeA.hanlinExpo",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "origin": {
+        "kind": "AUTHENTICATED_PREPARED_OVERLAY",
+        "commit": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo"
+      },
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/8BE3A52F-502A-4B30-A133-5AA85D733173/Documents/ExpoSwiftUIProbeA.hanlinExpo",
+      "status": "COPIED_EXACT_ORIGINAL_INPUT"
+    },
+    {
+      "name": "hanlin-script-parity.hanlinNativeScript",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+      "bytes": 7512,
+      "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "path": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript"
+      },
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/8BE3A52F-502A-4B30-A133-5AA85D733173/Documents/hanlin-script-parity.hanlinNativeScript",
+      "status": "COPIED_EXACT_ORIGINAL_INPUT"
+    }
+  ],
+  "metadata": {
+    "runnerData": {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/AE26449E-AAE5-42CC-89E4-C72258E2506B",
+      "metadataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/AE26449E-AAE5-42CC-89E4-C72258E2506B/.com.apple.mobile_container_manager.metadata.plist",
+      "metadataBytes": 632,
+      "metadataSHA256": "40c9ec32dc0082c3b8f81cfa1d32379c5aa626a4849f7d3e7d410fdb845ca80a",
+      "metadataIdentifier": "com.itorah.hanlinminiapps.integration.uitests.xctrunner",
+      "containerUUID": "AE26449E-AAE5-42CC-89E4-C72258E2506B",
+      "metadataUUID": "00CA5030-63E6-4094-B2A4-B44CCFCF9D59"
+    },
+    "appData": {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/8BE3A52F-502A-4B30-A133-5AA85D733173",
+      "metadataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/8BE3A52F-502A-4B30-A133-5AA85D733173/.com.apple.mobile_container_manager.metadata.plist",
+      "metadataBytes": 602,
+      "metadataSHA256": "0fdef8b0e58640968540d9faafb7d92446ff9f3a2952a92556da905c1fecd289",
+      "metadataIdentifier": "com.itorah.hanlinminiapps",
+      "containerUUID": "8BE3A52F-502A-4B30-A133-5AA85D733173",
+      "metadataUUID": "64494AB0-F49B-4227-AA48-BFE2DBD80848"
+    },
+    "appGroup": {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Shared/AppGroup/FAA877B9-C174-4F03-964C-8DEB65E1D3C5",
+      "metadataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Shared/AppGroup/FAA877B9-C174-4F03-964C-8DEB65E1D3C5/.com.apple.mobile_container_manager.metadata.plist",
+      "metadataBytes": 606,
+      "metadataSHA256": "b4a9a83dd90b23d7d19ec83eefcc0af58eba2ca31535fcb1933e1bf3827231b4",
+      "metadataIdentifier": "group.com.itorah.chavrusachat",
+      "containerUUID": "FAA877B9-C174-4F03-964C-8DEB65E1D3C5",
+      "metadataUUID": "D1F36529-B0B7-46F8-B86C-B618B2CC02E1"
+    }
+  },
+  "boundary": "OS returned current owned-device containers. No permission grant, registry, queue or receipt is manufactured."
+}

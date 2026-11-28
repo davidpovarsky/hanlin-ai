@@ -1,0 +1,60 @@
+{
+  "artifact": {
+    "bytes": 2329670,
+    "digest_verified": true,
+    "file": "build/continuation-evidence/44380551059/artifact-14465637934.zip",
+    "file_path_base": "repository root",
+    "github_digest": "sha256:525f34eeb23f003b4f9eeb1e6154724c699acbed3a484c3e53f8b0e4adc856ef",
+    "id": 14465637934,
+    "name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+    "sha256": "525f34eeb23f003b4f9eeb1e6154724c699acbed3a484c3e53f8b0e4adc856ef"
+  },
+  "extracted_raw_files": [
+    {
+      "archive_member": "simulator-logs/08-downstream-unit-test-results.json",
+      "bytes": 20527,
+      "file": "raw/08-downstream-unit-test-results.json",
+      "sha256": "7bbd7a347849a61da773116b294b00dc517bf7a094b91d737564cbae5aa54579"
+    },
+    {
+      "archive_member": "simulator-logs/06-diagnostics-build-provenance.json",
+      "bytes": 6966,
+      "file": "raw/06-diagnostics-build-provenance.json",
+      "sha256": "9a0b0dd1ce9d9b42641b7b33b5918ce89810d076217abf87b7076c44c9edffb2"
+    },
+    {
+      "archive_member": "simulator-logs/Resolved-Package.resolved",
+      "bytes": 10451,
+      "file": "raw/Resolved-Package.resolved",
+      "sha256": "aabb429fa9f62273e681917748c5d4528fbac58596245216dec36f4bc27d224a"
+    },
+    {
+      "archive_member": "simulator-logs/01-environment.log",
+      "bytes": 963,
+      "file": "raw/01-environment.log",
+      "sha256": "3b668dcda21f7e87d5347b8dc8e7c8df185996680caf8451bf4ded423cab9b26"
+    },
+    {
+      "archive_member": "simulator-logs/02-prepare-runtime-core.log",
+      "bytes": 1125,
+      "file": "raw/02-prepare-runtime-core.log",
+      "sha256": "8cfac4e856b68757e83bf01c309a5bffa75dd54e69418fbc027d322bf70fd1b4"
+    },
+    {
+      "archive_member": "simulator-logs/08-downstream-unit-tests.log",
+      "bytes": 32865,
+      "file": "raw/08-downstream-unit-tests.log",
+      "sha256": "4e2f88b2cef66e68c7bdffe647644fcbedc11ae5d9a4ec393d106ca982405b47"
+    },
+    {
+      "archive_member": "simulator-logs/01-cache-mode.log",
+      "bytes": 260,
+      "file": "raw/01-cache-mode.log",
+      "sha256": "48ceb4453152401f811305f25a2599ef92a8fdb64b35b1e54978154438e56e6c"
+    }
+  ],
+  "extraction": "Selected raw native result, runner environment, locked package resolution, build provenance, runtime preparation, and unit test command/result log; no source changes or CI dispatch.",
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44380551059",
+  "schema_version": 1,
+  "source_sha": "3fcdedbdf980c000fabf484ee4568b7c253d766e"
+}

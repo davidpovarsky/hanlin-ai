@@ -1,0 +1,25 @@
+{
+  "total_count": 1,
+  "artifacts": [
+    {
+      "id": 14876925398,
+      "node_id": "MDg6QXJ0aWZhY3QxNDg3NjkyNTM5OA==",
+      "name": "app-split-45283243206",
+      "size_in_bytes": 104017911,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14876925398",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14876925398/zip",
+      "expired": false,
+      "digest": "sha256:8cab07eaf965d1f7a62731b6bf678dc22d849f441407f2e2c5dc7708f013a220",
+      "created_at": "2026-11-24T00:13:52Z",
+      "updated_at": "2026-11-24T00:13:52Z",
+      "expires_at": "2026-12-08T00:13:46Z",
+      "workflow_run": {
+        "id": 45283243206,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/hanlin-sdk-paired3-corrections-20261123",
+        "head_sha": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd"
+      }
+    }
+  ]
+}

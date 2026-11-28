@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "base": "3c5b6229dbd0fe4374eb3fafcc87abb7dcea45e7",
+  "auditSourceCommit": "d84fc98a96cd554bbc67613f96dedd8e380e7f97",
+  "nativeTestOnlyCommit": "36fdc933d36c5a171910116a5429bab5792b37f5",
+  "scope": "Canonical source-auditor linkage correction plus one actual native test macro fix. No production runtime, dependency pin, callback or test assertion removed.",
+  "validation": {
+    "originalExpoOperationTests": {
+      "status": "EXECUTED_PASS",
+      "tests": 5,
+      "failed": 0,
+      "skipped": 0,
+      "shortcutMutationNegatives": 46,
+      "node": "24.22.0",
+      "log": "original-contract-tests-connected.log.json"
+    },
+    "canonicalSourceAudit": {
+      "status": "EXECUTED_PASS",
+      "writeThenCheck": true,
+      "sources": 102,
+      "localPublicExports": 200,
+      "typescriptPackage": "@typescript/typescript6",
+      "typescriptVersion": "6.0.2",
+      "typescriptPath": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-recovery-20261125/Scripts/Expo/node_modules/typescript/lib/typescript.js",
+      "typescriptSHA256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+      "boundary": "Original source audit only; not a native/OS or full Host producer pass."
+    },
+    "independentSourceReview": {
+      "agent": "/root/wave1_chat_sdk",
+      "status": "APPROVED",
+      "receipt": "independent-review-d84fc98a.json",
+      "sha256": "01829c41612cdbf77ce77ba7d16cc45a6951b057c0bb5ec88481175131f17c7f",
+      "independentTestRerun": false
+    },
+    "queueNativeCases": {
+      "definitions": 19,
+      "expectations": 79,
+      "preserved": true,
+      "appleCompile": "NOT_RUN",
+      "nativeTests": "NOT_RUN"
+    }
+  },
+  "originalFailedGates": {
+    "macHost": {
+      "source": "628dbe083a5ceffc28b026e5701cd8c71c8734ff",
+      "log": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-628dbe08-original-phases-r1/original-pretest-phases.log",
+      "receipt": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-preparation-628dbe08-original-phases-r1.json",
+      "phase": "original pretest/source audit before SDK staging and full188 tests",
+      "diagnostic": "Shortcuts progress callback linkage changed; audit the owned native handler.",
+      "verifiedBy": "/root/mac_build_ops"
+    },
+    "originalCI": {
+      "runID": "45881659486",
+      "jobID": "140122618440",
+      "observedAtUTC": "2026-11-26T19:21:19Z",
+      "verifiedBy": "/root",
+      "diagnostic": "Same auditExpoOperationRoutes line43 failure after RuntimeCore download/checksum success."
+    },
+    "nativePackage": "See queue-test-compiler-correction.json; original build FAILED65, no tests executed."
+  },
+  "inputImpact": {
+    "sdkInventoryInputsChanged": [
+      "Scripts/Audit/miniapp-expo-operations.mjs",
+      "Scripts/Audit/audit-miniapp-sdk.mjs"
+    ],
+    "regressionGateChanged": "Scripts/Audit/Tests/expo-operation-contract.test.mjs",
+    "nativeTestInputChanged": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinInvocationQueueTests.swift",
+    "productionRuntimeChanged": false,
+    "lockfilesChanged": false,
+    "requiresCanonicalProducerFingerprintRefresh": true
+  },
+  "remaining": [
+    "Original Host producer on the final integrated input graph.",
+    "Original package78 native compile and execution, including all19 queue cases.",
+    "Current app/OS/physical-device gates; no pass inferred from this source correction."
+  ]
+}

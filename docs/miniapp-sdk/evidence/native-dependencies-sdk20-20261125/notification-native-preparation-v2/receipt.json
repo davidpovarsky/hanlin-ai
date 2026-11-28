@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "capturedAt": "2026-11-25T22:03:53.736601+00:00",
+  "files": [
+    {
+      "name": "ledger.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v2/ledger.json",
+      "bytes": 918,
+      "sha256": "cd80f10afb1848c12df73eca2de13663633794e3abf52b27b35e5ef2f3bd7d69",
+      "storedBytes": 918,
+      "storedSHA256": "cd80f10afb1848c12df73eca2de13663633794e3abf52b27b35e5ef2f3bd7d69",
+      "gzip": false,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v2/terminal/ledger.json"
+    },
+    {
+      "name": "prepare-original-nativescript-native.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v2/prepare-original-nativescript-native.log",
+      "bytes": 1911,
+      "sha256": "74f23955f6758197e325b5e010cc3494f4393e338f48e7cae618d884c9897954",
+      "storedBytes": 794,
+      "storedSHA256": "81a5b022ed47a7e6719143682be4e82679f14f33461f5cf78fe035c990149347",
+      "gzip": true,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v2/terminal/prepare-original-nativescript-native.log.gz"
+    },
+    {
+      "name": "state.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v2/state.json",
+      "bytes": 9897,
+      "sha256": "ce068c7cc498e57adeda19d300f30e109fc0dbee7c7b638bd3491b1aff00d923",
+      "storedBytes": 9897,
+      "storedSHA256": "ce068c7cc498e57adeda19d300f30e109fc0dbee7c7b638bd3491b1aff00d923",
+      "gzip": false,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v2/terminal/state.json"
+    }
+  ],
+  "toolObservation": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v2/terminal/required-tools-observation.json",
+    "bytes": 6624,
+    "sha256": "e482350cf7acfe68cc285e86678960997ef5555da463ee510b3646f6de9db3f5"
+  }
+}

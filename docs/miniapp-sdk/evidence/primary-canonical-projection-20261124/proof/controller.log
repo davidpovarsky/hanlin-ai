@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/projection-regression-attempt7/run.py", line 35, in <module>
+    run('baseline',1)
+  File "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/projection-regression-attempt7/run.py", line 30, in run
+    if 'duplicateEntryPoint' not in text or 'storedExpoActionsRemainDiscoverable' not in text:raise RuntimeError('Baseline did not report the expected canonical duplicate-kind failure.')
+                                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Baseline did not report the expected canonical duplicate-kind failure.

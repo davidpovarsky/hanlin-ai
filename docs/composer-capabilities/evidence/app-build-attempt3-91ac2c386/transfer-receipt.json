@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "transferredAtUTC": "2026-11-25T01:50:57.631093+00:00",
+  "transport": "Oracle pinned scaleway-mac SSH alias, BatchMode=yes, StrictHostKeyChecking=yes",
+  "sourceReadOnly": true,
+  "allSourceSHA256Verified": true,
+  "noBuildsTestsGeneratorsDevicesOrMacWrites": true,
+  "files": [
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt3-91ac2c386/ai-hly-build-attempt3.json",
+      "bytes": 1459,
+      "sha256": "97999bfde3bd950a5d3449c462a74b12d1bebee3d6fc88aedf4c4d50bd160736",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt3.json",
+      "sourceBytes": 1459,
+      "sourceSHA256": "97999bfde3bd950a5d3449c462a74b12d1bebee3d6fc88aedf4c4d50bd160736",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt3-91ac2c386/ai-hly-build-attempt3-errors.json",
+      "bytes": 1315,
+      "sha256": "6fd1ff5fb210ce9afb3322a801febed4abe0b51f7facb6c61952f11b65518663",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt3-errors.json",
+      "sourceBytes": 1315,
+      "sourceSHA256": "6fd1ff5fb210ce9afb3322a801febed4abe0b51f7facb6c61952f11b65518663",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt3-91ac2c386/ai-hly-build-attempt3.log.gz",
+      "bytes": 75305,
+      "sha256": "c2d51ba5f462c868d914a9199852d867ccb044f98e2a339fc9f9393eb36ff902",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt3.log",
+      "sourceBytes": 1376602,
+      "sourceSHA256": "81679428a7a197b18ebf412364c63851ebcb8bb3a05d83363234a03dafdc09ff",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "81679428a7a197b18ebf412364c63851ebcb8bb3a05d83363234a03dafdc09ff",
+      "uncompressedLogBytes": 1376602
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt3-91ac2c386/xcresult-sha256.json",
+      "bytes": 1942,
+      "sha256": "df7cd7cc645fed8e62407e6476c2a1187c2cfecb4b112e3831cdace5ab31e4a5",
+      "sourcePath": "Read-only original Mac xcresult file hashes",
+      "compressedForRepository": false,
+      "derived": true
+    }
+  ],
+  "existingProcessReceipt": "../runtime-host-final-attempt5-756d7f151/ai-hly-build-attempt3-process.json",
+  "rawCompilerErrorLines": [
+    "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift:38:28: error: value of optional type 'Result<HanlinValue, any Error>?' must be unwrapped to a value of type 'Result<HanlinValue, any Error>'"
+  ]
+}

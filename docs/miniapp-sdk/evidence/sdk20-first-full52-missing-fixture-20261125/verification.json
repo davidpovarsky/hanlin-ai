@@ -1,0 +1,188 @@
+{
+  "schema": 1,
+  "verifiedAt": "2026-11-25T23:12:03.450441+00:00",
+  "status": "VERIFIED_FAILED_WHOLE_RUN",
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "SDKInput": "0388d52ec3ceef1adddb21a8718566876db0ef693520bc761e4ec57573a96514",
+  "SDKManifest": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e",
+  "HostSHA256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22",
+  "summaries": {
+    "MiniApps": {
+      "total": 25,
+      "results": {
+        "Passed": 25
+      },
+      "skipped": 0,
+      "runtimeWarnings": 17
+    },
+    "AI": {
+      "total": 27,
+      "results": {
+        "Failed": 2,
+        "Passed": 25
+      },
+      "skipped": 0,
+      "runtimeWarnings": 4
+    }
+  },
+  "actualRepairCase": {
+    "children": [
+      {
+        "name": "Multiple Runtime Warnings",
+        "nodeType": "Runtime Warning"
+      }
+    ],
+    "duration": "3m 45s",
+    "durationInSeconds": 225.34472000598907,
+    "name": "testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport()",
+    "nodeIdentifier": "MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport()",
+    "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport",
+    "nodeType": "Test Case",
+    "result": "Passed"
+  },
+  "chargedSeconds": 2501.629630375013,
+  "remainingSeconds": 11898.370369624987,
+  "originalFailures": [
+    {
+      "failureText": "XCTAssertTrue failed - The original Metro preparation must stage the actual fixture",
+      "targetName": "AI_HLYTests",
+      "testIdentifier": 1,
+      "testIdentifierString": "HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure()",
+      "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+      "testName": "testInstalledExpoActionsReturnActualReplyAndFailure()"
+    },
+    {
+      "failureText": "XCTAssertTrue failed - The original Metro preparation must stage the actual fixture",
+      "targetName": "AI_HLYTests",
+      "testIdentifier": 2,
+      "testIdentifierString": "HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer()",
+      "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer",
+      "testName": "testPreparedExpoWidgetPublicationReachesExistingConsumer()"
+    }
+  ],
+  "sourceAndCleanupErrors": [],
+  "verifiedMembers": [
+    {
+      "name": "outer-state.json",
+      "bytes": 6485,
+      "sha256": "62fa0f2144ce6dd280e8a6615baea3f2ec822beb13f544528e9ec79b3e3d241a",
+      "rawBytes": 6485,
+      "rawSHA256": "62fa0f2144ce6dd280e8a6615baea3f2ec822beb13f544528e9ec79b3e3d241a",
+      "compression": null
+    },
+    {
+      "name": "outer-ledger.json",
+      "bytes": 4713,
+      "sha256": "f62166616dc312aa689cc2543bbe1f0ca1c9e75d619c0061bccda4f1c488e75f",
+      "rawBytes": 4713,
+      "rawSHA256": "f62166616dc312aa689cc2543bbe1f0ca1c9e75d619c0061bccda4f1c488e75f",
+      "compression": null
+    },
+    {
+      "name": "acceptance.json",
+      "bytes": 31072,
+      "sha256": "4b7aaef62c8c92e19e10c3e2e3f7cc0850e1a0d6cd99a30436939e51c3e54c27",
+      "rawBytes": 31072,
+      "rawSHA256": "4b7aaef62c8c92e19e10c3e2e3f7cc0850e1a0d6cd99a30436939e51c3e54c27",
+      "compression": null
+    },
+    {
+      "name": "test-summary.json",
+      "bytes": 3321,
+      "sha256": "e9dfb1f2dd55615c0305ef556c86366abe28bedc1436a5378012252364dcf8e1",
+      "rawBytes": 3321,
+      "rawSHA256": "e9dfb1f2dd55615c0305ef556c86366abe28bedc1436a5378012252364dcf8e1",
+      "compression": null
+    },
+    {
+      "name": "test-nodes.json",
+      "bytes": 23432,
+      "sha256": "ffc21db70d4f7c27589860eb74a69e58feccc2cb543f1770e0020a37866c6934",
+      "rawBytes": 23432,
+      "rawSHA256": "ffc21db70d4f7c27589860eb74a69e58feccc2cb543f1770e0020a37866c6934",
+      "compression": null
+    },
+    {
+      "name": "requested-tests.log.gz",
+      "bytes": 75,
+      "sha256": "640232ab2a02d5f6ef89211eba5cc0f82e226a0d760c715a6176a1e10c57ad1e",
+      "rawBytes": 57,
+      "rawSHA256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+      "compression": "gzip"
+    },
+    {
+      "name": "original-runtimes-summary.json",
+      "bytes": 3534,
+      "sha256": "bf96da93734b7703efa3ae76bff63759ff14de33e78f4fcf414274d5916afeb9",
+      "rawBytes": 3534,
+      "rawSHA256": "bf96da93734b7703efa3ae76bff63759ff14de33e78f4fcf414274d5916afeb9",
+      "compression": null
+    },
+    {
+      "name": "original-runtimes-nodes.json",
+      "bytes": 22896,
+      "sha256": "fe789d9785534b61c31052f5fc44b38dd9e455967eb607b7cc284526597afb41",
+      "rawBytes": 22896,
+      "rawSHA256": "fe789d9785534b61c31052f5fc44b38dd9e455967eb607b7cc284526597afb41",
+      "compression": null
+    },
+    {
+      "name": "original-runtimes-selected-tests.log.gz",
+      "bytes": 75,
+      "sha256": "640232ab2a02d5f6ef89211eba5cc0f82e226a0d760c715a6176a1e10c57ad1e",
+      "rawBytes": 57,
+      "rawSHA256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+      "compression": "gzip"
+    },
+    {
+      "name": "paired-tests.log.gz",
+      "bytes": 10744,
+      "sha256": "af502dd207f345d7ffcf8573810b8353a8441f7a9bb271197c02705a9e9b7269",
+      "rawBytes": 67152,
+      "rawSHA256": "ed8e4e7140d4598a1a7ea49e2a37abc3ef887120cc248242400af8eb3868a49a",
+      "compression": "gzip"
+    },
+    {
+      "name": "original-runtimes.log.gz",
+      "bytes": 49349,
+      "sha256": "bf05568960832ebae8b708a21094c5ab84394f5ba178a358c4cbd819f34ce1a3",
+      "rawBytes": 563652,
+      "rawSHA256": "ae369ba346888c4a0b53455350d5f66a2f9bd868d3af89e8ea14c5bd36546d13",
+      "compression": "gzip"
+    },
+    {
+      "name": "commands.jsonl.gz",
+      "bytes": 5760,
+      "sha256": "d1154bbdbe3613cf2a5fb1a8f1688012094db5a971d10bbfbc7d42ef37319576",
+      "rawBytes": 28333,
+      "rawSHA256": "e7f62dea247031ca72e9ec00dfa8db0a45c33bd2c5f4ec0d79db154a58abb10e",
+      "compression": "gzip"
+    },
+    {
+      "name": "command-events.jsonl.gz",
+      "bytes": 14190,
+      "sha256": "6a7f8c2f1a09fd247ed297fd842b081bb1bbe4dac5dbe6461ac6f92b3fbb767b",
+      "rawBytes": 360055,
+      "rawSHA256": "dc5dc89c2b845f4522f2c4277fd7b1587dd54b2f6cafd36dfde33497ced590e7",
+      "compression": "gzip"
+    },
+    {
+      "name": "runner.log.gz",
+      "bytes": 2219,
+      "sha256": "e43218f8c13fc570723fffe3463b0c69a4b30dfe1f9537209fde4db6e6e21c20",
+      "rawBytes": 24644,
+      "rawSHA256": "113d7717c53e3481840f84a95329405f0e033ecf57bae8f44adc82db1884ca7b",
+      "compression": "gzip"
+    },
+    {
+      "name": "controller-launch.log.gz",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "gzip"
+    }
+  ],
+  "protectedPathsUnchanged": true,
+  "noPassAggregation": true
+}

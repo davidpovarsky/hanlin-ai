@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "engine": "expo",
+  "operation": "validate",
+  "succeeded": false,
+  "diagnostics": [
+    {
+      "code": "TS2322",
+      "category": "error",
+      "message": "Type 'string' is not assignable to type 'number'.",
+      "file": "index.ts",
+      "line": 1,
+      "column": 14,
+      "endLine": 1,
+      "endColumn": 35
+    }
+  ],
+  "sourceRoot": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/sdk-resolution-proof/negative-project",
+  "sdk": {
+    "packageVersions": {
+      "@expo/ui": "58.0.29",
+      "@hanlin/expo-native-api": "1.0.0",
+      "@hanlin/expo-ui": "1.0.0",
+      "@nativescript/react-native": "9.1.2",
+      "expo": "58.0.26",
+      "expo-brownfield": "58.0.20",
+      "expo-modules-core": "58.1.0",
+      "expo-modules-jsi": "58.0.23",
+      "react": "19.3.0",
+      "react-native": "0.88.1",
+      "react-native-worklets": "0.13.0",
+      "expo-widgets": "58.0.29",
+      "@babel/core": "7.29.7",
+      "@react-native-community/cli": "20.2.0",
+      "@react-native/codegen": "0.88.1",
+      "@react-native/metro-config": "0.88.1",
+      "@types/react": "19.3.0",
+      "babel-preset-expo": "58.0.26",
+      "esbuild": "0.25.12",
+      "typescript": "6.0.2"
+    },
+    "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
+    "compilerVersion": "6.0.3"
+  },
+  "typecheck": {
+    "strict": true,
+    "checkJs": false,
+    "skipLibCheck": false,
+    "dependencyDeclarationsChecked": true
+  }
+}

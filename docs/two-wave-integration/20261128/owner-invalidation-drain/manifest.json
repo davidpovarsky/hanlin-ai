@@ -1,0 +1,67 @@
+{
+  "source": "16f44b8d0c7e60bb0b310a7c2d3036bc59c083ad",
+  "members": [
+    {
+      "path": "DESIGN.md",
+      "bytes": 4309,
+      "sha256": "94121ccbcbe4d8a65772d8fd3f645304475bbfb2ae61adb8d55bbda6922498f1"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1326,
+      "sha256": "0fc72daf2deea84d80633c2806341dfda84e53b9fbfa2a8616c74a0ff0f80e17"
+    },
+    {
+      "path": "git-source-bindings.json",
+      "bytes": 3194,
+      "sha256": "2514c63cd545478978bcfb6820bf3c44527b7e75badc8e56f6a546f6da739a96"
+    },
+    {
+      "path": "native-gate-admission.json",
+      "bytes": 5504,
+      "sha256": "217a6e314f5cf5587b8057fd2443ed4aa9d188af6fb8b2b37aa79c502e68de6f"
+    },
+    {
+      "path": "rejected-r1.patch.gz",
+      "bytes": 6139,
+      "sha256": "2c1b4128bdd75dcbc548c4862f1d5405dff0804ad23cce93a291c3f4220d1397"
+    },
+    {
+      "path": "reviewed-source-validation.json",
+      "bytes": 4153,
+      "sha256": "d0388e45b618bce2a30c4b468d1067c0d24e025a489fd8197d64da9f3d44b422"
+    },
+    {
+      "path": "root-r1-rejection.json",
+      "bytes": 1747,
+      "sha256": "18dd7dd856329db2b1789ffc55619b928c8704964791c56057988085c50e8563"
+    },
+    {
+      "path": "root-r2-approval.json",
+      "bytes": 3724,
+      "sha256": "f5114b94c2ca9da1c8ea740d71ddb2cf04bf6b798bb6c5db2a59940fee456397"
+    },
+    {
+      "path": "sdk396-and-host99.json.gz",
+      "bytes": 27877,
+      "sha256": "b1f275a6d33b41e99b65ad2e0c9ffcb33e7d33e37e438346a16f5e56eb4d718e"
+    },
+    {
+      "path": "source-impact.json",
+      "bytes": 2404,
+      "sha256": "ff16047fdc6ef27d2b3212bd786d5c6bf08b0b5ce1bb151bfeff2cc6a9d8b6ad"
+    },
+    {
+      "path": "source-r2.patch.gz",
+      "bytes": 8256,
+      "sha256": "6926c665d0940e0b7b3e00105dbf420f7354906476135a57a4f6c05caca414f2"
+    },
+    {
+      "path": "source-seal.json",
+      "bytes": 763,
+      "sha256": "c7826140f945b14f4ac30bb58a01ed277809e48d05ac1eddf0e3ae582591075f"
+    }
+  ],
+  "memberCount": 12,
+  "bytes": 69396
+}

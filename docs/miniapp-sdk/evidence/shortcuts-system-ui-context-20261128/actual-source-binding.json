@@ -1,0 +1,119 @@
+{
+  "testedSource": "5f827bac46543271991668a089830650893cd72d",
+  "currentComparisonSource": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+  "sourceSHAMember": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-5f-shortcuts-families-terminal-r1/selected-r1/shortcuts/artifact-selected-members/paired-product/source-sha.txt",
+  "sources": {
+    "5f827bac46543271991668a089830650893cd72d": {
+      "fileSHA256": "a04e44dd1dfb6b7eb6e56a540f951453152a510b47fed29f97731bcb1ad43278",
+      "blocks": {
+        "runMiniAppShortcut": {
+          "sha256": "01dadfbec3bc541fc6be809a838a06d202d298f4c007aad578edc46ab63fecf4",
+          "bytes": 5625
+        },
+        "configureConcurrencyShortcut": {
+          "sha256": "ea086acdfa5e830a65d8433a83a0e5c88cdebd6b5cce31d74b13baf5abc3c0f2",
+          "bytes": 3514
+        },
+        "runShortcut": {
+          "sha256": "78908681dc5706dd7ca925e7c4c0270e85b7a4d2486307850c433f4ab140ce72",
+          "bytes": 1976
+        },
+        "addShortcutAction": {
+          "sha256": "b46039219f5d71c398dc7a8f963f3704bf396967fa85adbb8e18aa7f30d85cd1",
+          "bytes": 886
+        },
+        "firstButton": {
+          "sha256": "890bf9cb46a44299582b2e9e390f59b1f3a54478bec74aeda71e28f385d95a5e",
+          "bytes": 321
+        },
+        "tap": {
+          "sha256": "3bfbba7dfdb1ef0809cc991e168d65f76e943841505577449b272b5108e19708",
+          "bytes": 203
+        },
+        "wait": {
+          "sha256": "c27e716b99824edc7d43ae9f9ab1d3c85c6cbf722627aec04604c3810ded18aa",
+          "bytes": 335
+        },
+        "bounded": {
+          "sha256": "666ee4598d009eb89442b8349c1ee10deb19564d5a411f79b45484ff8cbccead",
+          "bytes": 135
+        },
+        "observeLongRunningShortcut": {
+          "sha256": "f864619289f30d09bbdbd33d669c6354e7f732dddd7797d8bbff3568be66cbe8",
+          "bytes": 12933
+        }
+      }
+    },
+    "5facdb200df2ab339ae52ff317e445cc3dd800dd": {
+      "fileSHA256": "cc01c8fa77a3c1f41532861b47845aac35b11c822cdc2b7684dfb93b57d5f56b",
+      "blocks": {
+        "runMiniAppShortcut": {
+          "sha256": "01dadfbec3bc541fc6be809a838a06d202d298f4c007aad578edc46ab63fecf4",
+          "bytes": 5625
+        },
+        "configureConcurrencyShortcut": {
+          "sha256": "5c0be08f34fa0cae5209c15a82f97b8ed3270d2c6aefa5e55348b61556380b95",
+          "bytes": 4461
+        },
+        "createNativeListShortcut": {
+          "sha256": "f420ae489ce9ba9da4bf4c04bc1d19d03063d6a25c015aaf17ff090d66e3da76",
+          "bytes": 2161
+        },
+        "runShortcut": {
+          "sha256": "78908681dc5706dd7ca925e7c4c0270e85b7a4d2486307850c433f4ab140ce72",
+          "bytes": 1976
+        },
+        "addShortcutAction": {
+          "sha256": "b46039219f5d71c398dc7a8f963f3704bf396967fa85adbb8e18aa7f30d85cd1",
+          "bytes": 886
+        },
+        "firstButton": {
+          "sha256": "890bf9cb46a44299582b2e9e390f59b1f3a54478bec74aeda71e28f385d95a5e",
+          "bytes": 321
+        },
+        "tap": {
+          "sha256": "3bfbba7dfdb1ef0809cc991e168d65f76e943841505577449b272b5108e19708",
+          "bytes": 203
+        },
+        "wait": {
+          "sha256": "c27e716b99824edc7d43ae9f9ab1d3c85c6cbf722627aec04604c3810ded18aa",
+          "bytes": 335
+        },
+        "bounded": {
+          "sha256": "666ee4598d009eb89442b8349c1ee10deb19564d5a411f79b45484ff8cbccead",
+          "bytes": 135
+        },
+        "observeLongRunningShortcut": {
+          "sha256": "f864619289f30d09bbdbd33d669c6354e7f732dddd7797d8bbff3568be66cbe8",
+          "bytes": 12933
+        }
+      }
+    }
+  },
+  "retainedPreparedPatchSHA256": "6deb83d10e54540552c500da85b2d937c5dc20c3fe75ca357d5e1a391065f1d3",
+  "trackedOverlayPaths": [
+    "Fixtures/ExpoNativeAPIProbe/package.json",
+    "Fixtures/ExpoSwiftUIProbe/package.json",
+    "Fixtures/ExpoWidgetsProbe/package.json",
+    "Generated/SwiftUIBridge/HanlinGeneratedViews.swift",
+    "Generated/SwiftUIBridge/bridge-manifest.ts",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift",
+    "Packages/HanlinExpoUI/package.json",
+    "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+    "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ViewModifierRegistry.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+    "Scripts/Expo/dependency-lock.json",
+    "Scripts/Expo/package-lock.json",
+    "Scripts/Expo/package.json",
+    "Scripts/ExpoNativeAPI/dependency-lock.json",
+    "Scripts/MiniApps/scriptwidget/upstream/provenance.json",
+    "Scripts/MiniApps/upstream-resolution.json",
+    "Scripts/NativeScript/package-lock.json",
+    "Tools/SwiftUIBridge/configuration.json",
+    "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json"
+  ],
+  "inspectedOrdinarySourceIntersection": [],
+  "compiledUIFileHashRetained": false,
+  "scope": "Git source attribution plus complete retained tracked overlay; no claim of a separately hashed compiled UI input file"
+}

@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "swiftc",
+    "-I",
+    "/mnt/development/tooling/swiftly/toolchains/6.4.3/usr/lib/swift/host",
+    "-L",
+    "/mnt/development/tooling/swiftly/toolchains/6.4.3/usr/lib/swift/host",
+    "-Xlinker",
+    "-rpath",
+    "-Xlinker",
+    "/mnt/development/tooling/swiftly/toolchains/6.4.3/usr/lib/swift/host",
+    "-lSwiftSyntax",
+    "-lSwiftParser",
+    "-lSwiftParserDiagnostics",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/Classifier.swift",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/InterfaceParser.swift",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/Inventory.swift",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/OutputGenerator.swift",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/SHA256.swift",
+    "/dev/shm/hanlin-groupbox-generator-20261124/main.swift",
+    "-o",
+    "/dev/shm/hanlin-groupbox-generator-20261124/generator-parity"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124",
+  "startedAt": "2026-11-24T10:14:23.762742+00:00",
+  "exitCode": 0,
+  "scope": "Portable actual production core compilation against installed Swift6.4.3 host SwiftSyntax; not pinned SwiftPM603.0.2 or Apple build."
+}

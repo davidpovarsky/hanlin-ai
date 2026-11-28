@@ -1,0 +1,252 @@
+{
+  "schemaVersion": 1,
+  "atUTC": "2026-11-24T08:41:22Z",
+  "baseCommit": "25b14790e5c79b8ddd821984ed97d37e6af0bfa4",
+  "scope": "SDK05 complete source-only example index/export for original Expo and NativeScript; descriptor-qualified ScriptWidget documentation",
+  "implementation": {
+    "exampleCatalog": "Scripts/MiniApps/Examples/index.json",
+    "sdkIndex": "examples/index.json",
+    "engineMetadata": "selectedEngine.examples",
+    "fileIdentity": "Existing sourceInputs/inputSHA256 and manifest files digests include retained examples",
+    "exclusions": "Existing SDK input exclusions plus known authoring output roots .hanlin-build, .hanlin-authoring, .metro-cache at each project root; no archive-suffix or build/dist resource exclusion",
+    "frozenComplexSourcesChanged": false,
+    "scriptwidgetStandaloneEngineAdded": false
+  },
+  "checks": {
+    "existingStagingCase": {
+      "status": "EXECUTED_PASS",
+      "cases": 1,
+      "receipt": "staging.json"
+    },
+    "newHelloWorldBuilds": {
+      "status": "EXECUTED_PASS",
+      "cases": 2,
+      "receipt": "hello-world-builds.json",
+      "validation": "Actual public build operation includes the original compiler; separate redundant validate commands were not run"
+    },
+    "archiveSourceRetention": {
+      "status": "VERIFIED",
+      "files": 13,
+      "receipt": "archive-source-integrity.json"
+    },
+    "sourceExport": {
+      "status": "EXECUTED_PASS",
+      "projectFiles": 28,
+      "indexFiles": 1,
+      "receipt": "example-export.json"
+    },
+    "frozenComplexExamples": {
+      "status": "REUSED_VERIFIED_SOURCE_AND_ORIGINAL_BUILD_PROOF",
+      "files": 15,
+      "receipt": "complex-proof-reuse.json",
+      "buildsRepeated": 0
+    }
+  },
+  "sources": [
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "sha256": "a9d02de9128acde4bcdd14b60c3227627a43c004075f55c6d9f41e2045c9bcce"
+    },
+    {
+      "path": "Scripts/MiniApps/Tests/stage-sdk.test.mjs",
+      "sha256": "e4cda73e2ea6024f956bea1daddfdd205d36434835bb949ad79380ea73e34f12"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/index.json",
+      "sha256": "a0eddbc0e8dc3b15d6ddf74e8173d674afec99c5a52c77366e1000116eb4c8d1"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXAMPLES.md",
+      "sha256": "a17984f1d39f3f8ea73c9fe5be03eebec5884665a8fd18981639442ba1261e70"
+    },
+    {
+      "path": "docs/miniapp-sdk/README.md",
+      "sha256": "4427f49e5b729658d95d98eb6cdbb84ea08f2e4d2e33d7b7c480192914346637"
+    },
+    {
+      "path": "docs/miniapp-sdk/AUTHORING_WORKFLOW.md",
+      "sha256": "ff5b70055ac532e9f23cf3b56ac28aa01f4211d25fb86be2f16ac530eca7ad06"
+    },
+    {
+      "path": "docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md",
+      "sha256": "1c9a43f36b5317c263868ac549567a31d08440e600d20b96fd7fef493e31fbca"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/App.tsx",
+      "sha256": "e0ec9b33bbe972668b0be87b6f8263faff0977e5bfea7654334c7f7f68b95531"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/README.md",
+      "sha256": "367e2b77ec0d06230ed8b7a3756cc5ef6bd2b4328c2405977e383f8ecc52b403"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/hanlin.authoring.json",
+      "sha256": "23628daa17919961823da4ebc9a4166ab9e1d7a9b3ec2ff47fdc70d7b444bf94"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/index.ts",
+      "sha256": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/package.json",
+      "sha256": "ce6b14d9dd58a68d245000b2d9997086754acba6b3213087e9531b59701cd9bc"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/script.json",
+      "sha256": "308768a8274c3f58254c4f6daafa7b16a07f0c68dc519f17d3e5feae895dcafb"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/tsconfig.json",
+      "sha256": "02e14c4b983c0f436d32ce0eb2f96309512a7d69774ed0c7d39ffa4175ccf7df"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/README.md",
+      "sha256": "aae06c1b3c963f8a6cf246ea52642d73f5e6ec237cfb19fc4737dd4072570e6a"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/hanlin.authoring.json",
+      "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/index.ts",
+      "sha256": "bfb34d9b7ac0f50488468a5cf8200d55cefbb9d0d345d080bb652323a1df9bf6"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/package.json",
+      "sha256": "ab65e0e388ac19daf337b29965fd030e6196faf90cee439c786de9e1c3f49cb6"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/script.json",
+      "sha256": "521f9d8332544a7858dca222d635cf8530e13d72cfb4e2e62d4196acc3a249cb"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/tsconfig.json",
+      "sha256": "c979f6e45b2a9c6151dbb12b4d9f04b76a5ce3822a270680ce479ee25f28e43e"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "ExpoHelloWorld.hanlinExpo",
+      "bytes": 1948120,
+      "sha256": "1bada72ffd3d1394232d52f593e5222c74d16eff383eba552d57af4a26eb73c6"
+    },
+    {
+      "path": "NativeScriptHelloWorld.hanlinNativeScript",
+      "bytes": 5911,
+      "sha256": "740e812e6835a784e955691c941c99d7989c4c6dbd0f8aaf7a9c41fad30d1b08"
+    },
+    {
+      "path": "SDKSourceExamples.zip",
+      "bytes": 13619,
+      "sha256": "5e61776269a98cfb7ff1504e62dd6718206c8d2920d76e74ea1fb2bf82aa8a15"
+    },
+    {
+      "path": "archive-source-integrity.json",
+      "bytes": 4001,
+      "sha256": "713f91e5bbc9728d55f366095415ff42fce32451dec300c479ec7d0fe458b6b4"
+    },
+    {
+      "path": "authored-diff-check.json",
+      "bytes": 1360,
+      "sha256": "b9228e880c15bf236c3e4ad448687ea9d78935ca958907b18b0429ef270bee20"
+    },
+    {
+      "path": "complex-proof-reuse.json",
+      "bytes": 3604,
+      "sha256": "af6505af63bd430d54f29a56c579e0df79bcdb0fc56ed852ad4ba2d70f795586"
+    },
+    {
+      "path": "example-export.json",
+      "bytes": 11677,
+      "sha256": "b148d947e97a37802bd37d7d51340098b8aa95a81868912c6b3ab37479d3f68b"
+    },
+    {
+      "path": "expo-build.json",
+      "bytes": 1637,
+      "sha256": "7eb7cdfe153735698406bd838b4cb0c60256378f6abab050ca651a35ce6ac3b8"
+    },
+    {
+      "path": "expo-build.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "expo-build.stdout.log",
+      "bytes": 1637,
+      "sha256": "7eb7cdfe153735698406bd838b4cb0c60256378f6abab050ca651a35ce6ac3b8"
+    },
+    {
+      "path": "expo-command.json",
+      "bytes": 995,
+      "sha256": "2b9a2ab0feabd55000ab8d4dfba41cebddc58fc844caf1fbc602ce97540d9d4e"
+    },
+    {
+      "path": "export.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "export.stdout.json",
+      "bytes": 5086,
+      "sha256": "4331b124b62e29364e1f185b08393da93380f96475e61e8da888c1df79093c7f"
+    },
+    {
+      "path": "hello-world-builds.json",
+      "bytes": 2523,
+      "sha256": "d41ba417bde24932631540e6fb1ef4042df2125e2c8814755ca40dd0715a7f2b"
+    },
+    {
+      "path": "impact.json",
+      "bytes": 1164,
+      "sha256": "5faaf537989ae18f2a5f193b502aacc91d7ecd1da8f23a5177265bfe1fe1a42e"
+    },
+    {
+      "path": "nativescript-build.json",
+      "bytes": 1251,
+      "sha256": "4f6f3de4d2e29f0d247fac471014f2933728b99d55c405491b75f23de54ee6a9"
+    },
+    {
+      "path": "nativescript-build.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "nativescript-build.stdout.log",
+      "bytes": 1251,
+      "sha256": "4f6f3de4d2e29f0d247fac471014f2933728b99d55c405491b75f23de54ee6a9"
+    },
+    {
+      "path": "nativescript-command.json",
+      "bytes": 1055,
+      "sha256": "da3a0152f92359f15de523a53d889727b86c82851ba53f10602273c7089d71f8"
+    },
+    {
+      "path": "sdk-origin.json",
+      "bytes": 2275,
+      "sha256": "d4a53bd838622cc3c0c31e16ca70ee8f71f48d76c85dcddc25c40b2ac0a8002e"
+    },
+    {
+      "path": "staging.json",
+      "bytes": 413,
+      "sha256": "1a4556eac52f7945c6f7a4f9eaa0acb69012073dc66a04d55ed36b1517bc4b0a"
+    },
+    {
+      "path": "staging.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "staging.stdout.log",
+      "bytes": 223,
+      "sha256": "807443439213362b47b14d69dd849f350f67b887cca5d924cf7799fe4736b660"
+    }
+  ],
+  "notRun": [
+    "Full fresh SDK/native library assembly",
+    "Fresh whole-SDK shipping-document checker",
+    "Unchanged guide/source compiler cases",
+    "Apple build, simulator UI, physical device",
+    "CI dispatch or polling"
+  ],
+  "evidenceBoundary": "Portable authoring/source export only. The prior independent author proof remains frozen and separately attributed; the two new native interaction expectations are documented but not claimed executed."
+}

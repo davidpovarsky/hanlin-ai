@@ -1,0 +1,210 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-18T09:58:17.474937+00:00",
+  "base_sha": "c0ebf13e69601fa50dfd04ababf362803500af87",
+  "status": "NATIVE_COMPONENT21_PASS_UI2_FAIL_REPAIR_PENDING_REEXECUTION",
+  "run": {
+    "id": 44264369849,
+    "sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
+    "conclusion": "failure",
+    "app_build": "EXECUTED_PASS",
+    "platform": [
+      {
+        "architecture": "arm64",
+        "deviceId": "8F84ED93-88C9-4E7F-AE1A-94F7F5781DD7",
+        "deviceName": "Hanlin-Phase2-44264369849-1",
+        "modelName": "iPad Pro 13-inch (M5)",
+        "osBuildNumber": "24B8117",
+        "osVersion": "27.2",
+        "platform": "iOS Simulator"
+      }
+    ],
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44264369849"
+  },
+  "original_artifact": {
+    "id": 14415400557,
+    "bytes": 69033530,
+    "zip_sha256": "e7801417c49ea9260249f739a366f4f78170906306bd31db74ad195af2a56d8b",
+    "entire_zip_hash_matches_github_digest": true,
+    "structured_results": {
+      "unit_sha256": "f46e10dc295447d81d3ee25215dead60de0dfdecde7d44631f8dcecda2a89fd7",
+      "ui_sha256": "a16d7a9ea420a8e718c6ecfe272af112ee2ad4cdd507480e710d01c2f7df08d5",
+      "ui_database_sha256": "543b3c9cc2fb2d3f318287d48a39d2d4df329abe9a3b49fd81686cb7a0c15825"
+    },
+    "original_flow_video_sha256": "905003809f214ee2e4c3f33c51dd6b2fba1da77c9f6067c7ff83266d0e28525a",
+    "reviewed_flow_frame_sha256": "03f283c207870dfbcb1ae73da5ca8377c25d6579e02159ccbe09dec798cca6bb",
+    "original_fallback_video_sha256": "a5ef815697d6683042760b3724c1054323e0b1397e19cdaaed7e780312d11597",
+    "reviewed_fallback_frame_sha256": "634479fd9db6c23de124909a5b8c7c68a6f7bce512cee5835e20a501a00f652b",
+    "original_fallback_snapshot_sha256": "68bb90dec94418a1a194d708b113eb635a15c02d8ba7c5fa4fa32d8f0f83b62d"
+  },
+  "native_unit_cases": [
+    {
+      "identifier": "ChatCanonicalPresentationSurvivalTests/failedActivityTitle()",
+      "result": "Passed"
+    },
+    {
+      "identifier": "ChatCanonicalPresentationSurvivalTests/dynamicToolPresentationSurvival()",
+      "result": "Passed"
+    },
+    {
+      "identifier": "ChatCanonicalPresentationSurvivalTests/scriptingToolPresentationSurvival()",
+      "result": "Passed"
+    },
+    {
+      "identifier": "ChatCanonicalPresentationSurvivalTests/builtinCanonicalToolsFallback()",
+      "result": "Passed"
+    },
+    {
+      "identifier": "ChatCanonicalPresentationSurvivalTests/canonicalMetadataPrecedence()",
+      "result": "Passed"
+    },
+    {
+      "identifier": "EmbeddedResultResolverTests/resolverDispatchesToSwift()",
+      "result": "Passed"
+    },
+    {
+      "identifier": "EmbeddedResultResolverTests/resolverDispatchesToScriptingEngines()",
+      "result": "Passed"
+    },
+    {
+      "identifier": "EmbeddedResultResolverTests/resolverFallbackOnUnknown()",
+      "result": "Passed"
+    },
+    {
+      "identifier": "EmbeddedResultResolverTests/sessionLifecycleTearDown()",
+      "result": "Passed"
+    },
+    {
+      "identifier": "EmbeddedResultResolverTests/payloadPreservation()",
+      "result": "Passed"
+    },
+    {
+      "identifier": "EmbeddedResultResolverTests/boundedResultStoreCapacity()",
+      "result": "Passed"
+    },
+    {
+      "identifier": "EmbeddedResultResolverTests/boundedResultStoreHardBoundRejection()",
+      "result": "Passed"
+    },
+    {
+      "identifier": "EmbeddedResultResolverTests/resultStoreUnicodePagination()",
+      "result": "Passed"
+    },
+    {
+      "identifier": "EmbeddedResultResolverTests/resultStoreSessionCleanup()",
+      "result": "Passed"
+    },
+    {
+      "identifier": "EmbeddedResultResolverTests/swiftAdapterStrictResolution()",
+      "result": "Passed"
+    },
+    {
+      "identifier": "EmbeddedResultResolverTests/scriptingAdaptersStrictResolution()",
+      "result": "Passed"
+    },
+    {
+      "identifier": "EmbeddedResultResolverTests/resolverOwnerIdentityRouting()",
+      "result": "Passed"
+    },
+    {
+      "identifier": "EmbeddedResultResolverTests/chatPresentationBridgeMultiExpansions()",
+      "result": "Passed"
+    },
+    {
+      "identifier": "EmbeddedResultResolverTests/contentActionsAndLaunchRequestStructure()",
+      "result": "Passed"
+    },
+    {
+      "identifier": "EmbeddedResultResolverTests/contentActionsPipelineAndDispatch()",
+      "result": "Passed"
+    },
+    {
+      "identifier": "EmbeddedResultResolverTests/scriptUIEmbeddedInputContext()",
+      "result": "Passed"
+    }
+  ],
+  "native_ui_cases": [
+    {
+      "identifier": "AgentSkillsEmbeddedResultsUITests/testAgentSkillsDeferredExposureAndEmbeddedResultFlow()",
+      "result": "Failed",
+      "failures": [
+        "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\") - Original model/Host did not reach its next visible step"
+      ]
+    },
+    {
+      "identifier": "AgentSkillsEmbeddedResultsUITests/testUnresolvableEmbeddedHandlerFallback()",
+      "result": "Failed",
+      "failures": [
+        "XCTAssertTrue failed - The seeded original result must actually be visible"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "ORIGINAL_MARKDOWN_ACCESSIBILITY_TYPE",
+      "direct_evidence": "The original recording visibly shows both fallback messages in the correct Agent Acceptance Chat. The original XCResult snapshot exposes the Markdown paragraph as elementType 52 (TextView), and the native fallback body as elementType 48 (StaticText). The test queried the paragraph only among staticTexts.",
+      "snapshot_entries": [
+        {
+          "object": 1390,
+          "label": "UNRESOLVED_RESULT_ORIGINAL_MESSAGE",
+          "value": "UNRESOLVED_RESULT_ORIGINAL_MESSAGE",
+          "identifier": "",
+          "elementType": 52,
+          "frame": {
+            "NS.rectval": "{{336, 298}, {349, 22}}",
+            "NS.special": 3
+          },
+          "enabled": true,
+          "selected": false,
+          "traits": 140883517243456
+        },
+        {
+          "object": 1406,
+          "label": "UNRESOLVED_RESULT_ORIGINAL_MESSAGE",
+          "identifier": "",
+          "elementType": 52,
+          "frame": {
+            "NS.rectval": "{{336, 298}, {348.8818359375, 22}}",
+            "NS.special": 3
+          },
+          "enabled": true,
+          "selected": false,
+          "traits": 140746078289984
+        },
+        {
+          "object": 1508,
+          "label": "UNRESOLVED_HANDLER_NATIVE_FALLBACK_CONTENT",
+          "identifier": "",
+          "elementType": 48,
+          "frame": {
+            "NS.rectval": "{{352, 389.5}, {440, 20.5}}",
+            "NS.special": 3
+          },
+          "enabled": true,
+          "selected": false,
+          "traits": 8589934656
+        }
+      ],
+      "repair": "Query original Markdown result/final text as textViews. Retain original expected text, native fallback text, missing expansion and unrelated-renderer assertions."
+    },
+    {
+      "id": "STRICT_PROVIDER_MISSING_REQUIRED_METADATA",
+      "direct_evidence": "The original flow recording ends with Some activity failed and EMBEDDED_WEB_RESULT_NOT_VERIFIED. No successful original web-tool receipt was accepted.",
+      "source_evidence": "The seeded model has supportsToolUse=true; ProviderCapabilities.supportsProgressSummaryField is true; APIManager passes that to HanlinAISDKToolAdapter; ToolSchemaDecorator adds progress_summary to required fields; HanlinAppHostIntegration validates exact original arguments before requesting consent. Both fixture web calls omitted that required field.",
+      "repair": "Supply progress_summary in both existing valid web fixture calls, preserving the exact original code and card request. Do not alter original schemas, validation, permission/consent or tool implementation.",
+      "native_confirmation": "PENDING; original per-call rejection detail was not exported, so no claim that all remaining UI issues are resolved."
+    }
+  ],
+  "validation": {
+    "swift_syntax_parse": "EXECUTED_PASS_ON_WINDOWS_NOT_APPLE_TYPECHECK",
+    "original_business_arguments": "UNCHANGED_EXCEPT_ADDED_DECLARED_REQUIRED_PROGRESS_SUMMARY",
+    "ui_assertions_and_deadlines": "PRESERVED",
+    "failure_hierarchy_attachment": "Added only when the original wait fails",
+    "native_retry": "BLOCKED_PENDING_EXPLICIT_PUBLIC_SOURCE_PUBLICATION_APPROVAL"
+  },
+  "limits": [
+    "21 component cases are passing executions at their actual SHA; injected resolver doubles are not real NativeScript/Expo UI execution.",
+    "Both original UI tests remain FAILED until legitimate reexecution passes.",
+    "No live model, physical device or whole-feature acceptance is claimed."
+  ]
+}

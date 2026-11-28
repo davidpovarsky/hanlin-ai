@@ -1,0 +1,88 @@
+import XCTest
+
+final class MiniAppsProviderUITests: XCTestCase {
+    @MainActor
+    private func launchLibrary() -> XCUIApplication {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launch()
+        let parity = app.descendants(matching: .any)["hanlin-package-card-Swift Parity"].firstMatch
+        XCTAssertTrue(parity.waitForExistence(timeout: 45), "The real canonical library did not load")
+        return app
+    }
+
+    @MainActor
+    func testCanonicalLibraryLaunchesRealCompiledSwiftApp() {
+        let app = launchLibrary()
+        app.descendants(matching: .any)["hanlin-package-card-Swift Parity"].firstMatch.tap()
+        XCTAssertTrue(app.steppers.firstMatch.waitForExistence(timeout: 20), "The actual Swift Parity view did not appear")
+        XCTAssertTrue(app.buttons["Save"].exists)
+        XCTAssertTrue(app.buttons["Reload"].exists)
+        let attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment.name = "Real compiled Swift Parity application"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+        let close = app.buttons["hanlin-miniapps-app-close"]
+        XCTAssertTrue(close.exists)
+        close.tap()
+        XCTAssertTrue(app.buttons["hanlin-package-card-Swift Parity"].waitForExistence(timeout: 10))
+    }
+
+    @MainActor
+    func testManagementPresentsExistingPackageImportScreen() {
+        let app = launchLibrary()
+        app.buttons["hanlin-apps-add"].tap()
+        let importing = app.buttons["hanlin-import-script-package"]
+        XCTAssertTrue(importing.waitForExistence(timeout: 10))
+        importing.tap()
+        XCTAssertTrue(app.buttons["hanlin-file-importer"].waitForExistence(timeout: 10), "Original package importer was not presented")
+        XCTAssertTrue(app.descendants(matching: .any)["hanlin-share-inbox-link"].firstMatch.exists)
+        let attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment.name = "Existing package management and import screen"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+    }
+
+    @MainActor
+    func testOrdinaryInstalledScriptUICatalogAndStatefulLaunch() {
+        let app = launchLibrary()
+        app.buttons["hanlin-apps-add"].tap()
+        app.buttons["hanlin-import-script-package"].tap()
+        let package = app.buttons["MiniApps-Ordinary-ScriptUI"]
+        let packages = app.collectionViews["hanlin-package-import-list"]
+        XCTAssertTrue(packages.waitForExistence(timeout: 15))
+        for _ in 0..<12 {
+            if package.exists && package.isHittable { break }
+            packages.swipeUp()
+        }
+        XCTAssertTrue(package.exists && package.isHittable,
+                      "The actual package must be reachable in this simulator app's Documents list")
+        package.tap()
+        let install = app.buttons["hanlin-package-install"]
+        XCTAssertTrue(install.waitForExistence(timeout: 90), "Canonical package preview/compilation did not succeed")
+        XCTAssertTrue(install.isEnabled)
+        install.tap()
+        let installed = expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: install)
+        wait(for: [installed], timeout: 90)
+        app.navigationBars["Script Package"].buttons["Done"].tap()
+        let addDone = app.buttons["hanlin-apps-add-done"].firstMatch
+        XCTAssertTrue(addDone.waitForExistence(timeout: 10))
+        addDone.tap()
+        let card = app.buttons["hanlin-package-card-Production ScriptUI TSX"].firstMatch
+        for _ in 0..<5 {
+            if card.exists && card.isHittable { break }
+            app.swipeUp()
+        }
+        XCTAssertTrue(card.waitForExistence(timeout: 30), "An ordinary installed default-JSC app is absent from the canonical catalog")
+        card.tap()
+        XCTAssertTrue(app.staticTexts["Count 0"].waitForExistence(timeout: 30), "The actual ScriptUI runtime did not render the installed app")
+        app.buttons["Increment"].tap()
+        XCTAssertTrue(app.staticTexts["Count 1"].waitForExistence(timeout: 10), "Actual ScriptUI callback/state did not update")
+        let attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment.name = "Ordinary installed default-JSC app running real state callback"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+        app.buttons["hanlin-script-app-close"].tap()
+    }
+}

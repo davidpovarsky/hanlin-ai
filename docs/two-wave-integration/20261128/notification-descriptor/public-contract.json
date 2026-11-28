@@ -1,0 +1,17 @@
+{
+  "primaryURL": "https://developer.apple.com/library/archive/technotes/tn2339/_index.html",
+  "title": "Technical Note TN2339: Building from the Command Line with Xcode FAQ",
+  "retrievedUTC": "2026-11-28T07:15:31.410716+00:00",
+  "sections": [
+    {
+      "lines": "488-490",
+      "support": "build-for-testing writes the xctestrun file; test-without-building accepts either a scheme or that file."
+    },
+    {
+      "lines": "509-520",
+      "support": "Descriptor mode uses -xctestrun with destination and test selectors, and locates bundles at the paths recorded in the file."
+    }
+  ],
+  "currentImplementationAuthority": "Unchanged observe_runtime_image_origin.py descriptor_target, descriptor_path and origin_test_command; whole helper SHA is in helper-binding.json.",
+  "scope": "Public invocation contract, not an actual native result."
+}

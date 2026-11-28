@@ -1,0 +1,656 @@
+{
+  "file": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-http-778ed7e5-callbacks-r2/native-stages.jsonl",
+  "sha256": "4274c49d0a97466a32f67a0c41ca7f2871dc274e5678e7611e8f520c0eea12cb",
+  "labels": {
+    "limits": {
+      "outer": [
+        {
+          "at": 1795780823.938724,
+          "isMainThread": false,
+          "label": "limits",
+          "phase": "preparing",
+          "pid": 22526
+        },
+        {
+          "at": 1795780824.031371,
+          "isMainThread": false,
+          "label": "limits",
+          "phase": "evaluating",
+          "pid": 22526
+        },
+        {
+          "at": 1795780824.0317168,
+          "isMainThread": false,
+          "label": "limits",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 0,
+          "stage": "within-limit"
+        },
+        {
+          "at": 1795780829.044822,
+          "executionTimeout": 5,
+          "isMainThread": false,
+          "label": "limits",
+          "phase": "timeout",
+          "pid": 22526
+        },
+        {
+          "at": 1795780829.045341,
+          "isMainThread": false,
+          "label": "limits",
+          "phase": "original-callback-boundaries",
+          "pid": 22526
+        }
+      ],
+      "eventCount": 8,
+      "presenceCount": 1,
+      "absent": [
+        {
+          "at": 1795780824.042797,
+          "boundary": "promise-continuations",
+          "delivery": "ObjectIdentifier(0x0000007c8d8fd8c0)",
+          "isMainThread": false,
+          "pid": 22526,
+          "rejected": false,
+          "rejectPresent": false,
+          "resolvePresent": false,
+          "session": "CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C",
+          "uptime": 264638.836329625
+        }
+      ],
+      "sessionIDs": [
+        "CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C"
+      ],
+      "events": [
+        {
+          "at": 1795780824.039637,
+          "boundary": "fetch-native-completion",
+          "dataBytes": 2097152,
+          "errorPresent": false,
+          "isMainThread": false,
+          "pid": 22526,
+          "session": "CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C",
+          "task": 37,
+          "uptime": 264638.833168125
+        },
+        {
+          "at": 1795780824.041466,
+          "boundary": "fetch-completion-current",
+          "isMainThread": false,
+          "pid": 22526,
+          "session": "CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C",
+          "task": 37,
+          "uptime": 264638.83499916666
+        },
+        {
+          "at": 1795780824.041562,
+          "boundary": "fetch-raw-string-handoff",
+          "dataBytes": 2097152,
+          "isMainThread": false,
+          "pid": 22526,
+          "session": "CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C",
+          "task": 37,
+          "uptime": 264638.83509508334
+        },
+        {
+          "at": 1795780824.0427098,
+          "boundary": "promise-finish",
+          "delivery": "ObjectIdentifier(0x0000007c8d8fd8c0)",
+          "isMainThread": false,
+          "pid": 22526,
+          "rejected": false,
+          "session": "CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C",
+          "uptime": 264638.83624254167
+        },
+        {
+          "at": 1795780824.042762,
+          "boundary": "promise-deliver",
+          "delivery": "ObjectIdentifier(0x0000007c8d8fd8c0)",
+          "isMainThread": false,
+          "pid": 22526,
+          "rejected": false,
+          "session": "CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C",
+          "uptime": 264638.83629483334
+        },
+        {
+          "at": 1795780824.042797,
+          "boundary": "promise-continuations",
+          "delivery": "ObjectIdentifier(0x0000007c8d8fd8c0)",
+          "isMainThread": false,
+          "pid": 22526,
+          "rejected": false,
+          "rejectPresent": false,
+          "resolvePresent": false,
+          "session": "CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C",
+          "uptime": 264638.836329625
+        },
+        {
+          "at": 1795780824.0446649,
+          "boundary": "promise-current-call-attempt",
+          "delivery": "ObjectIdentifier(0x0000007c8d8fd8c0)",
+          "isMainThread": false,
+          "pid": 22526,
+          "rejected": false,
+          "session": "CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C",
+          "uptime": 264638.83819779166
+        },
+        {
+          "at": 1795780824.0446858,
+          "boundary": "promise-call-site-returned",
+          "delivery": "ObjectIdentifier(0x0000007c8d8fd8c0)",
+          "isMainThread": false,
+          "pid": 22526,
+          "session": "CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C",
+          "uptime": 264638.8382190833
+        }
+      ]
+    },
+    "response": {
+      "outer": [
+        {
+          "at": 1795780823.76226,
+          "isMainThread": false,
+          "label": "response",
+          "phase": "preparing",
+          "pid": 22526
+        },
+        {
+          "at": 1795780823.903188,
+          "isMainThread": false,
+          "label": "response",
+          "phase": "evaluating",
+          "pid": 22526
+        },
+        {
+          "at": 1795780823.903429,
+          "isMainThread": false,
+          "label": "response",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 0,
+          "stage": "delete"
+        },
+        {
+          "at": 1795780823.9146419,
+          "isMainThread": false,
+          "label": "response",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 1,
+          "stage": "status"
+        },
+        {
+          "at": 1795780823.92469,
+          "isMainThread": false,
+          "label": "response",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 2,
+          "stage": "binary"
+        },
+        {
+          "at": 1795780823.938366,
+          "childCount": 1,
+          "isMainThread": false,
+          "label": "response",
+          "phase": "rendered",
+          "pid": 22526,
+          "tag": "text"
+        },
+        {
+          "at": 1795780823.9384542,
+          "isMainThread": false,
+          "label": "response",
+          "phase": "resolved",
+          "pid": 22526,
+          "requests": 3
+        },
+        {
+          "at": 1795780823.938592,
+          "isMainThread": false,
+          "label": "response",
+          "phase": "original-callback-boundaries",
+          "pid": 22526
+        }
+      ],
+      "eventCount": 22,
+      "presenceCount": 3,
+      "absent": [],
+      "sessionIDs": [
+        "28B1AB79-334A-44EF-8C47-07C947D71A5A"
+      ],
+      "lastPresence": [
+        {
+          "at": 1795780823.934082,
+          "boundary": "promise-continuations",
+          "delivery": "ObjectIdentifier(0x0000007c8ea05680)",
+          "isMainThread": false,
+          "pid": 22526,
+          "rejected": false,
+          "rejectPresent": true,
+          "resolvePresent": true,
+          "session": "28B1AB79-334A-44EF-8C47-07C947D71A5A",
+          "uptime": 264638.72761508333
+        }
+      ]
+    },
+    "server": {
+      "outer": [
+        {
+          "at": 1795780821.523747,
+          "isMainThread": false,
+          "label": "server",
+          "phase": "started",
+          "pid": 22526,
+          "serverPID": 22541
+        },
+        {
+          "at": 1795780821.855264,
+          "isMainThread": false,
+          "label": "server",
+          "phase": "ready",
+          "pid": 22526,
+          "port": 58819
+        },
+        {
+          "at": 1795780829.257043,
+          "isMainThread": false,
+          "label": "server",
+          "phase": "terminated",
+          "pid": 22526,
+          "terminationReason": 2,
+          "terminationStatus": 15
+        }
+      ],
+      "eventCount": 0,
+      "presenceCount": 0,
+      "absent": [],
+      "sessionIDs": [],
+      "lastPresence": []
+    },
+    "test": {
+      "outer": [
+        {
+          "at": 1795780821.5183182,
+          "executionTimeout": 5,
+          "isMainThread": false,
+          "label": "test",
+          "phase": "started",
+          "pid": 22526
+        },
+        {
+          "at": 1795780829.257302,
+          "isMainThread": false,
+          "label": "test",
+          "phase": "exited-before-end",
+          "pid": 22526
+        }
+      ],
+      "eventCount": 0,
+      "presenceCount": 0,
+      "absent": [],
+      "sessionIDs": [],
+      "lastPresence": []
+    },
+    "verbs": {
+      "outer": [
+        {
+          "at": 1795780821.866259,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "preparing",
+          "pid": 22526
+        },
+        {
+          "at": 1795780822.006119,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "evaluating",
+          "pid": 22526
+        },
+        {
+          "at": 1795780822.010151,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 0,
+          "stage": "verb:get"
+        },
+        {
+          "at": 1795780822.088932,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 1,
+          "stage": "verb:post"
+        },
+        {
+          "at": 1795780822.125822,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 2,
+          "stage": "verb:put"
+        },
+        {
+          "at": 1795780822.182193,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 3,
+          "stage": "verb:patch"
+        },
+        {
+          "at": 1795780822.232168,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 4,
+          "stage": "budget:4"
+        },
+        {
+          "at": 1795780822.286962,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 5,
+          "stage": "budget:5"
+        },
+        {
+          "at": 1795780822.324089,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 6,
+          "stage": "budget:6"
+        },
+        {
+          "at": 1795780822.359364,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 7,
+          "stage": "budget:7"
+        },
+        {
+          "at": 1795780822.385175,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 8,
+          "stage": "budget:8"
+        },
+        {
+          "at": 1795780822.410939,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 9,
+          "stage": "budget:9"
+        },
+        {
+          "at": 1795780822.441248,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 10,
+          "stage": "budget:10"
+        },
+        {
+          "at": 1795780822.473825,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 11,
+          "stage": "budget:11"
+        },
+        {
+          "at": 1795780822.504404,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 12,
+          "stage": "budget:12"
+        },
+        {
+          "at": 1795780822.5457811,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 13,
+          "stage": "budget:13"
+        },
+        {
+          "at": 1795780822.5704641,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 14,
+          "stage": "budget:14"
+        },
+        {
+          "at": 1795780822.585093,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 15,
+          "stage": "budget:15"
+        },
+        {
+          "at": 1795780822.6016788,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 16,
+          "stage": "budget:16"
+        },
+        {
+          "at": 1795780822.623359,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 17,
+          "stage": "budget:17"
+        },
+        {
+          "at": 1795780822.6673331,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 18,
+          "stage": "budget:18"
+        },
+        {
+          "at": 1795780822.693413,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 19,
+          "stage": "budget:19"
+        },
+        {
+          "at": 1795780822.728239,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 20,
+          "stage": "budget:20"
+        },
+        {
+          "at": 1795780822.7633991,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 21,
+          "stage": "budget:21"
+        },
+        {
+          "at": 1795780822.795198,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 22,
+          "stage": "budget:22"
+        },
+        {
+          "at": 1795780822.8323488,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 23,
+          "stage": "budget:23"
+        },
+        {
+          "at": 1795780822.859184,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 24,
+          "stage": "budget:24"
+        },
+        {
+          "at": 1795780822.8804522,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 25,
+          "stage": "budget:25"
+        },
+        {
+          "at": 1795780822.909831,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 26,
+          "stage": "budget:26"
+        },
+        {
+          "at": 1795780822.938596,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 27,
+          "stage": "budget:27"
+        },
+        {
+          "at": 1795780822.966165,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 28,
+          "stage": "budget:28"
+        },
+        {
+          "at": 1795780822.987421,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 29,
+          "stage": "budget:29"
+        },
+        {
+          "at": 1795780823.010885,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 30,
+          "stage": "budget:30"
+        },
+        {
+          "at": 1795780823.0365062,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 31,
+          "stage": "budget:31"
+        },
+        {
+          "at": 1795780823.0580459,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "javascript",
+          "pid": 22526,
+          "requests": 32,
+          "stage": "over-budget"
+        },
+        {
+          "at": 1795780823.073433,
+          "childCount": 1,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "rendered",
+          "pid": 22526,
+          "tag": "text"
+        },
+        {
+          "at": 1795780823.073616,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "resolved",
+          "pid": 22526,
+          "requests": 32
+        },
+        {
+          "at": 1795780823.761379,
+          "isMainThread": false,
+          "label": "verbs",
+          "phase": "original-callback-boundaries",
+          "pid": 22526
+        }
+      ],
+      "eventCount": 262,
+      "presenceCount": 33,
+      "absent": [],
+      "sessionIDs": [
+        "9CB0BFF5-1783-4432-A8D1-D85FBD7F76F3"
+      ],
+      "lastPresence": [
+        {
+          "at": 1795780823.070261,
+          "boundary": "promise-continuations",
+          "delivery": "ObjectIdentifier(0x0000007c8ea44040)",
+          "isMainThread": false,
+          "pid": 22526,
+          "rejected": true,
+          "rejectPresent": true,
+          "resolvePresent": true,
+          "session": "9CB0BFF5-1783-4432-A8D1-D85FBD7F76F3",
+          "uptime": 264637.86379179166
+        }
+      ]
+    }
+  }
+}

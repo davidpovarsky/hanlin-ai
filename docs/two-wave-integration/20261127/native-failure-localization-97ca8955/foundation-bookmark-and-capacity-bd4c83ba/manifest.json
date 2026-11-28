@@ -1,0 +1,69 @@
+{
+  "sourceContext": "bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb",
+  "status": "FOUNDATION_DIAGNOSTIC_AND_VERIFIED_CACHE_RETIREMENT_RETAINED",
+  "createdAt": "2026-11-27T08:02:06.885862+00:00",
+  "members": [
+    {
+      "path": "diagnostics/foundation-bookmark-bd4c83ba-r1/controller.json",
+      "bytes": 1057,
+      "sha256": "47be83fbb7ac83e2c21a5a9b1d8543aef1f9647c1103b88340c0fff954fb1a86"
+    },
+    {
+      "path": "diagnostics/foundation-bookmark-bd4c83ba-r1/foundation-bookmark-bd4c83ba.swift",
+      "bytes": 6007,
+      "sha256": "8b9314e6a27a9e48caba4a67bc754ced8bb5a6588b30fa11c5ef0f144e9bbc98"
+    },
+    {
+      "path": "diagnostics/foundation-bookmark-bd4c83ba-r2/controller.json",
+      "bytes": 7390,
+      "sha256": "1f786ee1e0c86b01a9550a0da949df017670d45f01fe5207a9abd6c153104bda"
+    },
+    {
+      "path": "diagnostics/foundation-bookmark-bd4c83ba-r2/foundation-bookmark-bd4c83ba.swift",
+      "bytes": 6007,
+      "sha256": "8b9314e6a27a9e48caba4a67bc754ced8bb5a6588b30fa11c5ef0f144e9bbc98"
+    },
+    {
+      "path": "diagnostics/foundation-bookmark-bd4c83ba-r2/foundation-bookmark-cleanup.json",
+      "bytes": 212,
+      "sha256": "d6e985cb2ffcfaef49735106a83e21c0fe313be8133ac804427d89d40d1da41e"
+    },
+    {
+      "path": "diagnostics/foundation-bookmark-bd4c83ba-r2/foundation-bookmark-result.json",
+      "bytes": 5705,
+      "sha256": "2f9d3be25b3aed4168909f5cd2c5294077c1143b0af6069b5403db5dfacecd0c"
+    },
+    {
+      "path": "diagnostics/foundation-bookmark-bd4c83ba-r2/native-swift.log",
+      "bytes": 4957,
+      "sha256": "717c5e98273783ba322f0feace0f8b7fbafc07bd9e97fdf95284ef56960c0066"
+    },
+    {
+      "path": "diagnostics/foundation-bookmark-bd4c83ba-r2/raw-plainDiagnosticOnly.bookmark",
+      "bytes": 1248,
+      "sha256": "e8ddf24ac639119428144604291302116b1ca80ac0129614985e06403598d9ab"
+    },
+    {
+      "path": "diagnostics/foundation-bookmark-bd4c83ba-r2/resolvedSymlinks-plainDiagnosticOnly.bookmark",
+      "bytes": 1248,
+      "sha256": "e8ddf24ac639119428144604291302116b1ca80ac0129614985e06403598d9ab"
+    },
+    {
+      "path": "cleanup/own-obsolete-app-cache-bd4c83ba-r1/before.json.gz",
+      "bytes": 1081908,
+      "sha256": "4a2d8345fad71a7cae1a06bd8ea493025539f032c5e609fa79b9caec9be69411"
+    },
+    {
+      "path": "cleanup/own-obsolete-app-cache-bd4c83ba-r1/result.json",
+      "bytes": 1344,
+      "sha256": "0fbc2ff35f2d0e276f3924e7d3dfab330661ca08a78d7e6c13ffdae4305ee1e4"
+    }
+  ],
+  "compressedInventory": {
+    "path": "cleanup/own-obsolete-app-cache-bd4c83ba-r1/before.json.gz",
+    "uncompressedBytes": 13777063,
+    "uncompressedSHA256": "c11e40afecb2092171f9fa97e396c7a44d5472539bab9fae822308dca8f4672f",
+    "protectedProductEntries": 31047
+  },
+  "scope": "One actually executed Foundation-only4-case probe; first resource attempt had zero commands. Own obsolete app compiler cache retirement only, with complete protected-products metadata. No package gate rerun or product source change."
+}

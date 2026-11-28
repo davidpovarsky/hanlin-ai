@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "at": "2026-11-18T08:54:31.523872+00:00",
+  "native_run": {
+    "id": 44264365612,
+    "sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44264365612",
+    "app_build": "FAILED",
+    "host24": "NOT_RUN",
+    "ui19": "NOT_RUN",
+    "separate_baseline_job": "SUCCESS",
+    "build_log_sha256": "2490660895f8c6337e55787c13cc20af272ea11989a56f181518453672801735",
+    "errors": [
+      "ChatView.swift:526 cannot find HanlinA2UIAcceptanceStatusView in scope",
+      "ChatView.swift:567 unable to type-check expression; may be cascading from unresolved view"
+    ]
+  },
+  "cause": "Release acceptance defines HANLIN_TESTING. ChatView and the original native fixture provider both support DEBUG || HANLIN_TESTING, but the read-only observation view was gated by DEBUG alone.",
+  "repair": {
+    "path": "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UIAcceptanceStatusView.swift",
+    "old_condition": "#if HANLIN_A2UI_POC && DEBUG && targetEnvironment(simulator)",
+    "new_condition": "#if HANLIN_A2UI_POC && (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)"
+  },
+  "limits": [
+    "No new fixture provider, production behavior, transport or test result is introduced.",
+    "Observation still requires HANLIN_A2UI_POC plus Debug/HANLIN_TESTING plus Simulator; a shipping Release device build excludes it.",
+    "Local Swift syntax parse passed, not an Apple native type-check. Re-execute only the previously unexecuted native Host24 and UI19 Release scope."
+  ],
+  "native_after_repair": "PENDING"
+}

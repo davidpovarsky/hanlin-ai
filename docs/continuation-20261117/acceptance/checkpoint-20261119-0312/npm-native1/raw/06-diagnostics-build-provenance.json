@@ -1,0 +1,295 @@
+{
+  "dependencyPins": [
+    {
+      "identity": "a2ui",
+      "state": {
+        "revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079"
+      }
+    },
+    {
+      "identity": "bitbytedata",
+      "state": {
+        "revision": "e1a5443be67daf0833cbb5f4fa3a06a265ca3105",
+        "version": "2.1.0"
+      }
+    },
+    {
+      "identity": "corexlsx",
+      "state": {
+        "revision": "1391f3832ea2eeee5186ea8abb81ea49ed0609cc",
+        "version": "0.14.2"
+      }
+    },
+    {
+      "identity": "equatable",
+      "state": {
+        "revision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+        "version": "1.4.1"
+      }
+    },
+    {
+      "identity": "eventsource",
+      "state": {
+        "revision": "e83f076811f32757305b8bf69ac92d05626ffdd7",
+        "version": "1.1.0"
+      }
+    },
+    {
+      "identity": "hanlin-streaming-markdown",
+      "state": {
+        "revision": "6bde022876ef4af738c154b3d5c871984ef76195"
+      }
+    },
+    {
+      "identity": "highlightswift",
+      "state": {
+        "revision": "99c431b38a1444a5fd6a4978307fbbefe3a7af53"
+      }
+    },
+    {
+      "identity": "ios-spm",
+      "state": {
+        "revision": "a8e26efad02d792a62d2d015f0f7a632e336b2d1",
+        "version": "9.1.0"
+      }
+    },
+    {
+      "identity": "iosmath",
+      "state": {
+        "revision": "ba9ab7729b151329c54fd895a7c1859981d9484c"
+      }
+    },
+    {
+      "identity": "latexswiftui",
+      "state": {
+        "revision": "c45e0fd45f64923c49c5904a9f9626bc8939f05f",
+        "version": "1.5.0"
+      }
+    },
+    {
+      "identity": "llm.swift",
+      "state": {
+        "revision": "4b2517839f24498bea0695bae8967b359b9a35c4",
+        "version": "1.8.0"
+      }
+    },
+    {
+      "identity": "markdownui",
+      "state": {
+        "revision": "5f613358148239d0292c0cef674a3c2314737f9e",
+        "version": "2.4.1"
+      }
+    },
+    {
+      "identity": "mathjaxswift",
+      "state": {
+        "revision": "e23d6eab941da699ac4a60fb0e60f3ba5c937459",
+        "version": "3.4.0"
+      }
+    },
+    {
+      "identity": "networkimage",
+      "state": {
+        "revision": "2849f5323265386e200484b0d0f896e73c3411b9",
+        "version": "6.0.1"
+      }
+    },
+    {
+      "identity": "richtextkit",
+      "state": {
+        "revision": "8aa44cfa645404ad84e52e3ab7723ecf4b82f92b",
+        "version": "1.2.0"
+      }
+    },
+    {
+      "identity": "swcompression",
+      "state": {
+        "revision": "c729f0baa49e91bafef3921fea663db2b75acc46",
+        "version": "4.9.0"
+      }
+    },
+    {
+      "identity": "swift-ai-sdk",
+      "state": {
+        "revision": "e7bf34111e603ca977becd007dd4e5bb109af857"
+      }
+    },
+    {
+      "identity": "swift-argument-parser",
+      "state": {
+        "revision": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+        "version": "1.8.2"
+      }
+    },
+    {
+      "identity": "swift-atomics",
+      "state": {
+        "revision": "b601256eab081c0f92f059e12818ac1d4f178ff7",
+        "version": "1.3.0"
+      }
+    },
+    {
+      "identity": "swift-cmark",
+      "state": {
+        "revision": "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
+        "version": "0.9.0"
+      }
+    },
+    {
+      "identity": "swift-collections",
+      "state": {
+        "revision": "7b847a3b7008b2dc2f47ca3110d8c782fb2e5c7e",
+        "version": "1.3.0"
+      }
+    },
+    {
+      "identity": "swift-html-entities",
+      "state": {
+        "revision": "d8ca73197f59ce260c71bd6d7f6eb8bbdccf508b",
+        "version": "4.0.1"
+      }
+    },
+    {
+      "identity": "swift-json-schema",
+      "state": {
+        "revision": "c0a9375ea9cd3fd47d875c98ed7f027ea61c03cb",
+        "version": "0.13.2"
+      }
+    },
+    {
+      "identity": "swift-log",
+      "state": {
+        "revision": "96a2f8a0fa41e9e09af4585e2724c4e825410b91",
+        "version": "1.6.2"
+      }
+    },
+    {
+      "identity": "swift-markdown",
+      "state": {
+        "revision": "7d9a5ce307528578dfa777d505496bd5f544ad94",
+        "version": "0.7.3"
+      }
+    },
+    {
+      "identity": "swift-nio",
+      "state": {
+        "revision": "5e72fc102906ebe75a3487595a653e6f43725552",
+        "version": "2.94.0"
+      }
+    },
+    {
+      "identity": "swift-sdk",
+      "state": {
+        "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605",
+        "version": "0.12.1"
+      }
+    },
+    {
+      "identity": "swift-syntax",
+      "state": {
+        "revision": "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
+        "version": "603.0.2"
+      }
+    },
+    {
+      "identity": "swift-system",
+      "state": {
+        "revision": "c8a44d836fe7913603e246acab7c528c2e780168",
+        "version": "1.4.0"
+      }
+    },
+    {
+      "identity": "swift-tree-sitter",
+      "state": {
+        "revision": "08ef81eb8620617b55b08868126707ad72bf754f"
+      }
+    },
+    {
+      "identity": "swiftdraw",
+      "state": {
+        "revision": "2a36e6ce369cbecdd031ee95f5b5b3faa69ef50f",
+        "version": "0.21.0"
+      }
+    },
+    {
+      "identity": "swiftsoup",
+      "state": {
+        "revision": "bba848db50462894e7fc0891d018dfecad4ef11e",
+        "version": "2.8.7"
+      }
+    },
+    {
+      "identity": "swiftui-shimmer",
+      "state": {
+        "revision": "0226e21f9bf355d40e07e5f5e1c33679d50e167f",
+        "version": "1.5.1"
+      }
+    },
+    {
+      "identity": "swiftyjson",
+      "state": {
+        "revision": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+        "version": "5.0.1"
+      }
+    },
+    {
+      "identity": "tree-sitter",
+      "state": {
+        "revision": "da6fe9beb4f7f67beb75914ca8e0d48ae48d6406"
+      }
+    },
+    {
+      "identity": "tree-sitter-bash",
+      "state": {
+        "revision": "a06c2e4415e9bc0346c6b86d401879ffb44058f7"
+      }
+    },
+    {
+      "identity": "xmlcoder",
+      "state": {
+        "revision": "ca932442d7481700f5434a7b138c47dd42d9902b",
+        "version": "0.14.0"
+      }
+    },
+    {
+      "identity": "yams",
+      "state": {
+        "revision": "a27b21e0c81c5bf42049b897a62aaf387e80f279",
+        "version": "6.2.2"
+      }
+    },
+    {
+      "identity": "zipfoundation",
+      "state": {
+        "revision": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
+        "version": "0.9.19"
+      }
+    }
+  ],
+  "packageResolvedSHA256": "aabb429fa9f62273e681917748c5d4528fbac58596245216dec36f4bc27d224a",
+  "requestedRevisionPins": [
+    {
+      "identity": "a2ui",
+      "revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079"
+    },
+    {
+      "identity": "hanlin-streaming-markdown",
+      "revision": "6bde022876ef4af738c154b3d5c871984ef76195"
+    },
+    {
+      "identity": "swift-tree-sitter",
+      "revision": "08ef81eb8620617b55b08868126707ad72bf754f"
+    },
+    {
+      "identity": "tree-sitter",
+      "revision": "da6fe9beb4f7f67beb75914ca8e0d48ae48d6406"
+    },
+    {
+      "identity": "tree-sitter-bash",
+      "revision": "a06c2e4415e9bc0346c6b86d401879ffb44058f7"
+    }
+  ],
+  "schemaVersion": 1,
+  "sourceCommit": "3a87634b8b478833ddd90c896fe494bd4becda82",
+  "trackedWorkspaceModified": true
+}

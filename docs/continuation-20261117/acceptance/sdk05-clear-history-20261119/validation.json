@@ -1,0 +1,67 @@
+{
+  "status": "UNAPPLIED_SOURCE_PROPOSAL_NATIVE_NOT_RUN",
+  "base_commit": "1480b347f519073b384cd86f7efc506e9c2d1aab",
+  "verified_at_utc": "2026-11-19T03:15:34.501464+00:00",
+  "canonical_files_unchanged": true,
+  "swift_syntax": {
+    "command": [
+      "C:\\Users\\DAVID\\AppData\\Local\\Programs\\Swift\\Toolchains\\6.3.3+Asserts\\usr\\bin\\swiftc.EXE",
+      "-frontend",
+      "-parse",
+      "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\sdk05-clear-history-fix\\proposed\\AI_HLY\\Downstream\\ChatCore\\HanlinAppConversationStore.swift",
+      "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\sdk05-clear-history-fix\\proposed\\AI_HLY\\Downstream\\ChatCore\\HanlinAppAgentSessionOwner.swift",
+      "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\sdk05-clear-history-fix\\proposed\\AI_HLY\\ChatView.swift",
+      "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\sdk05-clear-history-fix\\proposed\\AI_HLYTests\\HanlinAppAgentSessionOwnerTests.swift"
+    ],
+    "exit_code": 0,
+    "platform": "Windows Swift 6.3.3; parsing only, not Apple typecheck or test execution"
+  },
+  "git_apply_check": {
+    "exit_code": 0
+  },
+  "new_native_method_groups": 5,
+  "new_native_expanded_cases": 7,
+  "new_native_selectors": [
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests/clearHistoryCommitsCanonicalBarrierAndVisibleReplacementToOriginalDiskStore()",
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests/clearHistoryRejectsAlreadySuspendedOriginalStoreWriter(hadCanonicalRecord:)",
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests/clearHistorySaveFailureRestoresOriginalDiskContentWithoutSuccessMarker()",
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests/temporaryClearHistoryDropsOriginalSessionHistoryWithoutInsertingStoreRows()",
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests/clearHistoryPreservesUnrecognizedOrExhaustedCanonicalRecord(futureFormat:)"
+  ],
+  "affected_existing_native_group": "AI_HLYTests/HanlinAppAgentSessionOwnerTests",
+  "relevant_original_regressions": [
+    "existingSwiftDataRowPreservesLegacyFieldsAndRejectsConflictForeignScopeAndDeletion()",
+    "diskBackedOriginalConversationReopensWithoutLosingLegacyOrCanonicalHistory()",
+    "temporaryCanonicalMetadataSurvivesCancellationWithoutDatabaseWrite()"
+  ],
+  "patch_sha256": "9e844f56b27b35e21eca61cc867f1c1ff56af541f2f3fa315617b24a99a59696",
+  "files": [
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppConversationStore.swift",
+      "base_sha256": "b6bcce0a80f381a372cfb5213092110b1b83f2bc589d849725616d2ff371de0b",
+      "proposed_sha256": "adad494a872a28a53b4143dcc7686fe77d8d23611a691f144b4ebe459ccd1593"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "base_sha256": "02547a1a784cf9902054ba713f20cb5147d975e92c554d4974422c105f158e53",
+      "proposed_sha256": "4f57a668dca2d6a06047498e9986751d31383e2f8e14f873052626bb9f31a2dd"
+    },
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "base_sha256": "e328ce86d07d9a17e4f3d5e3d30895912604b65a452b1f3adc6bdd886fc684bd",
+      "proposed_sha256": "c042da669f660e20be9757da40a517b954bcb3c67b145238dee08dfba2636424"
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "base_sha256": "bf426a03afae01cc903c94714cdca4c9f276a07800f6f2852418b2b87db7af30",
+      "proposed_sha256": "bd3c545b0605488adc795583b07dc0fc7ce2dcac89eca976befd6b1e70600764"
+    }
+  ],
+  "official_api_receipt": "official-api/receipt.json",
+  "limits": [
+    "No native compilation, SwiftData execution or UI interaction was run.",
+    "Read-only configuration rollback and temporary relationship behavior require the proposed actual SwiftData native tests.",
+    "This change clears history in the selected original owner/store; it does not implement account logout, CloudKit account fencing, all-window presentation cache invalidation, global erase, backup expiry or forensic SQLite/WAL erasure.",
+    "No credential migration, entitlement modification, account service or namespace schema is introduced."
+  ]
+}

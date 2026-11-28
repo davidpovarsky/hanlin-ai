@@ -1,0 +1,99 @@
+{
+  "status": "ACTUAL_ORIGINAL_GALLERY5_PASS_INDEPENDENTLY_RECONCILED",
+  "at": "2026-11-28T07:46:50.727260+00:00",
+  "run": 46109307098,
+  "attempt": 1,
+  "source": "de7758a9647122e302e996e72f3b9c63776764cc",
+  "scope": "miniapp_studio_gallery_os",
+  "manifestSHA256": "20c2875c6e5d458eab34d984c6722ac480b582d1a4990c6f5a0bb281869cfa20",
+  "normalizedSHA256": "730ee4cbfc156ffc89ae5ec57d7558dd6a109d1ab9488d64506c614cc296a571",
+  "payloadsRehashed": 130,
+  "payloadBytes": 12166124,
+  "originalSelectedMemberCRCReadbacks": 22,
+  "primaryOutcomes": {
+    "selected": 5,
+    "started": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0
+  },
+  "actualCommands": {
+    "miniBuild": {
+      "exit": 0,
+      "seconds": 1231.8034690420004
+    },
+    "aiBuild": {
+      "exit": 0,
+      "seconds": 1156.5481721250003
+    },
+    "native": {
+      "exit": 0,
+      "seconds": 1967.0606393750004
+    },
+    "selectedVerifier": {
+      "exit": 0,
+      "seconds": 0.34771066599932965
+    }
+  },
+  "bounds": "Original7200s command/observer and1200s maximum XCTest allowance retained; exact5selectororder verified from actualsource.",
+  "cases": [
+    {
+      "selector": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+      "exampleID": "expo-hello-world",
+      "runID": "974166c9-6d91-4c88-8178-490aaaff8815",
+      "installedSourceRows": 14,
+      "before": "Button taps: 0",
+      "after": "Button taps: 1"
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+      "exampleID": "sdk-only-departure-budget",
+      "runID": "51d6f70e-c781-4bc0-91fa-81f8841c756c",
+      "installedSourceRows": 14,
+      "before": "55 minutes reserved before the target",
+      "after": "35 minutes reserved before the target"
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+      "exampleID": "nativescript-hello-world",
+      "runID": "d3275731-71ae-4190-b392-f4e85faabe9d",
+      "installedSourceRows": 16,
+      "before": "Button taps: 0",
+      "after": "Button taps: 1"
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+      "exampleID": "sdk-only-table-share",
+      "runID": "3ae49d44-e3e6-408e-a370-4d077ddef85a",
+      "installedSourceRows": 16,
+      "before": "3 people pay $35.42 each.",
+      "after": "2 pay $26.57; 2 pay $26.56."
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns",
+      "exampleID": "nativescript-image-drawing",
+      "runID": "ce733813-ac14-4096-9c0a-0a6f21760c56",
+      "installedSourceRows": 16,
+      "before": "0° clockwise • 8 invalid inputs rejected",
+      "after": "180° clockwise • 8 invalid inputs rejected"
+    }
+  ],
+  "sixOriginalGitTestReaderAuthoritiesMatched": true,
+  "SDKManifestSHA256": "3463dee88fe7ba8cb8792360a5e11ddb5e131de9bc0a67d4abbff29b6c7a3c83",
+  "actualSDKFingerprint": "a0d09da5f05cbcc1ac200a295f1c45bb690ae73954ab20124788692f00ec55fb",
+  "sdkSourceInputRows": 396,
+  "equalCleanGit": 378,
+  "differentCleanGit": 18,
+  "actualAdaptedSourceFiles": 255,
+  "actualTrackedOverlayPaths": 20,
+  "runtimeWarnings": 5,
+  "qualification": "Actual de checkout + original prepared overlay + actual SDK. Stored installed source/hash/generation relations reconciled; full81.9MB SDK and sourcearchives were not redownloaded or independently rehashed. No new native execution. Laterroot/source or MacSDK equivalence is not inferred.",
+  "excludedClaims": [
+    "Physical device",
+    "Provisioned distribution",
+    "iCloud/account",
+    "Native image pixel correctness",
+    "All editor/file-provider interactions",
+    "All original90 or other scopes"
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "group": "correction",
+  "binary": {
+    "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\DurabilityCorrectionTests.exe",
+    "bytes": 482304,
+    "sha256": "d4e1d6c07c39a300a88fa6e63a7be73304ff2d77ba1f7ac4707367ca46cf1990"
+  },
+  "compile_event": {
+    "kind": "completed",
+    "argv": [
+      "C:\\Users\\DAVID\\AppData\\Local\\Programs\\Swift\\Toolchains\\6.3.3+Asserts\\usr\\bin\\swiftc.EXE",
+      "-v",
+      "-swift-version",
+      "6",
+      "-strict-concurrency=complete",
+      "-warnings-as-errors",
+      "-parse-as-library",
+      "-I",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build",
+      "-L",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build",
+      "-lHanlinPlatformContracts",
+      "-lHanlinMiniAppCore",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinProductSplit\\Sources\\HanlinProductSplit\\CanonicalRequestAdapter.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinProductSplit\\Sources\\HanlinProductSplit\\DurableMigration.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinProductSplit\\Sources\\HanlinProductSplit\\DurableReceiver.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinProductSplit\\Sources\\HanlinProductSplit\\ForegroundBridge.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinProductSplit\\Sources\\HanlinProductSplit\\SplitFixtureStore.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinProductSplit\\Sources\\HanlinProductSplit\\SplitMigration.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinProductSplit\\Sources\\HanlinProductSplit\\SplitMigrationFixturePersistence.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinProductSplit\\Sources\\HanlinProductSplit\\SplitReceiverFixturePersistence.swift",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinProductSplit\\Tests\\DurabilityCorrectionTests.swift",
+      "-o",
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\DurabilityCorrectionTests.exe"
+    ],
+    "cwd": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115",
+    "exit_code": 0,
+    "pid": null,
+    "stdout": {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-007-link-correction.stdout.log",
+      "bytes": 22416,
+      "sha256": "ff427177b9c99a4e2eb0ffa4088e498f968cce4684c32678cd3fe20aa4cf819f"
+    },
+    "stderr": {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\docs\\product-split\\evidence\\durability-fix\\07f681de-6ce1-472f-bab7-faa457ee2e70\\raw-007-link-correction.stderr.log",
+      "bytes": 3035,
+      "sha256": "cc1e1bbbb2c4eee7c86b73ed96bec3c7339bdd4e1e2e9efccd8c5d7003138d5d"
+    }
+  },
+  "source_inputs": [
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinProductSplit\\Sources\\HanlinProductSplit\\CanonicalRequestAdapter.swift",
+      "bytes": 1840,
+      "sha256": "c83de1cc18e027210f2ea44f5c632fee2598cc9db39e888c07d1848e86f6b3d7"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinProductSplit\\Sources\\HanlinProductSplit\\DurableMigration.swift",
+      "bytes": 1994,
+      "sha256": "80c3ee98ca765dbf9a4c356bb883eabd0c2b0fe5f6c5ebf231fe59b11a1db5c7"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinProductSplit\\Sources\\HanlinProductSplit\\DurableReceiver.swift",
+      "bytes": 10899,
+      "sha256": "cf13973aaa8421074fdd0ec6849401fee82a76931833d238f44bb8a903b9240a"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinProductSplit\\Sources\\HanlinProductSplit\\ForegroundBridge.swift",
+      "bytes": 8827,
+      "sha256": "b153bdfc8d9c3747ed1b3e7a48596cac510d8d020a04382ef1c95eb80f4085a0"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinProductSplit\\Sources\\HanlinProductSplit\\SplitFixtureStore.swift",
+      "bytes": 3784,
+      "sha256": "db40251edffc6458bc1afa883de0977bb5a7da1f015aa9b05e570a2825d55f2e"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinProductSplit\\Sources\\HanlinProductSplit\\SplitMigration.swift",
+      "bytes": 6416,
+      "sha256": "0a289a90c2fd601385549b3e8b4f4582f54a9fafeac7cad7ad706f0e2a710fd2"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinProductSplit\\Sources\\HanlinProductSplit\\SplitMigrationFixturePersistence.swift",
+      "bytes": 7244,
+      "sha256": "353eecf17fc27891d2ad7c5e89a8f156a0d761eafd0df02d121d527d81abd183"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinProductSplit\\Sources\\HanlinProductSplit\\SplitReceiverFixturePersistence.swift",
+      "bytes": 803,
+      "sha256": "b6e9ddba8b5159e9c2d9e1565f7caa70e739590ee7e9f6af446324adf4a965ba"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Packages\\HanlinProductSplit\\Tests\\DurabilityCorrectionTests.swift",
+      "bytes": 18657,
+      "sha256": "787605bd3a3cdaf0c860504e5610ae6753776833fc979c7a08bea135b63ee4e0"
+    }
+  ],
+  "compiler_tools": [
+    {
+      "path": "C:\\Users\\DAVID\\AppData\\Local\\Programs\\Swift\\Toolchains\\6.3.3+Asserts\\usr\\bin\\swiftc.EXE",
+      "bytes": 41472,
+      "sha256": "e1d0a0b20d95a92b22f4906e7ca331a7c8b89be86b2d9a2d215ac24f753e945a"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\AppData\\Local\\Programs\\Swift\\Toolchains\\6.3.3+Asserts\\usr\\bin\\swift-frontend.exe",
+      "bytes": 160625664,
+      "sha256": "c9584d52e589cdbb089a9c028cb9fc79b6da5e549ac0d23f6ee067c0a48ba6e2"
+    }
+  ],
+  "linked_canonical_outputs": [
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinPlatformContracts.dll",
+      "bytes": 2735104,
+      "sha256": "48754ba1d3982a464204d0875362229d9a1dcf14ef2ac8cc3eba6b02b3c95434"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinPlatformContracts.swiftmodule",
+      "bytes": 1904140,
+      "sha256": "22539c3582c20b30e0c023ab2f4bc941457537ee2b25c2a4d0e938b60aa52e1e"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinPlatformContracts.swiftdoc",
+      "bytes": 29452,
+      "sha256": "52ce9611c5937f107a5b535992b3a593a17aae928e045909659cb5b745a78d46"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinPlatformContracts.swiftsourceinfo",
+      "bytes": 285144,
+      "sha256": "cef80ef8641e9ed17555e4d80f4297345ff1f7727fae47758b36fddcf7b8407f"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinPlatformContracts.lib",
+      "bytes": 1592382,
+      "sha256": "04de2552f280abfb6dfc05c8cb04e5734051a366ab712f276cd2c78ae078eb36"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinPlatformContracts.exp",
+      "bytes": 1099580,
+      "sha256": "91ffa52bc39bc9a2f313bbd8645641c0afc24ce4b37020c9638463778268b355"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinMiniAppCore.dll",
+      "bytes": 185344,
+      "sha256": "624660ede4841e3745f0f92c35e3280fd7e5aaaaa5630eb1bbdca5d6b5a5d60a"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinMiniAppCore.swiftmodule",
+      "bytes": 106484,
+      "sha256": "7a4ac0280bd5562fd8a150a3573d28410c6fd62f5e3ba67df05c9b26a1e0ef65"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinMiniAppCore.swiftdoc",
+      "bytes": 2248,
+      "sha256": "e6abe40314efd310b70b2cefaf4ea1c18c92e5f8fd97997562b26fc0d5d8f10f"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinMiniAppCore.swiftsourceinfo",
+      "bytes": 15796,
+      "sha256": "3b43a0b9e013631b5ad0f3a579b52bc10164e22837a32d41cbe58ff3e9fbf362"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinMiniAppCore.lib",
+      "bytes": 80956,
+      "sha256": "4e7a0024a470788ca1567a5b74b254425020f892ba30089cd0a9fb7dece0273b"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\Tests\\ProductSplit\\.build\\HanlinMiniAppCore.exp",
+      "bytes": 54952,
+      "sha256": "971bbdde05273e2c4cc0d065fa7de9a5beeb501a2fc88ce6cffdeea0a710dacb"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+✖ SDK documentation staging retains exact guides without excluded evidence (2.664376ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 94.581227
+
+✖ failing tests:
+
+test at Scripts/MiniApps/Tests/stage-sdk.test.mjs:71:1
+✖ SDK documentation staging retains exact guides without excluded evidence (2.664376ms)
+  ReferenceError [Error]: tmpdir is not defined
+      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/MiniApps/Tests/stage-sdk.test.mjs:74:38)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

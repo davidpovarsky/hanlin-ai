@@ -1,0 +1,34 @@
+{
+  "file": "report.py",
+  "sourceSHA256": "811398418ed9696bec8c581c77514b447da5968ed7400c61ab60ff65c64d14b7",
+  "completion": "complete",
+  "provenance": {
+    "scanner": "cpython.ast",
+    "engineVersion": "3.12.5"
+  },
+  "findings": [
+    {
+      "kind": "moduleReference",
+      "value": "PIL",
+      "confidence": "literalSyntax",
+      "source": {
+        "file": "report.py",
+        "line": 1,
+        "utf8Column": 8,
+        "byteOffset": 7,
+        "byteLength": 3
+      },
+      "reason": "literalImportNotDistributionMapping"
+    }
+  ],
+  "visitedNodes": 3,
+  "inputBytes": 11,
+  "limitations": [
+    "syntaxOnlyNotReadinessOrPermission",
+    "noImportDistributionMapping",
+    "noReferencedFileReadsOrExecution",
+    "aliasesAndBindingsNotResolved",
+    "conditionalFactsDoNotProveReachability",
+    "parseIsSynchronousInputBoundedNotHardTimeOrRSSCap"
+  ]
+}

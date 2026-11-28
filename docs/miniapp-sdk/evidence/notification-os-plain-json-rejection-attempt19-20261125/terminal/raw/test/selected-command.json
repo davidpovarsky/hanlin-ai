@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "xcodebuild",
+    "test-without-building",
+    "-xctestrun",
+    "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+    "-destination",
+    "platform=iOS Simulator,id=2EFAD83F-45A2-4A8B-B326-16B83BC56DA9",
+    "-parallel-testing-enabled",
+    "NO",
+    "-collect-test-diagnostics",
+    "never",
+    "-resultBundlePath",
+    "/Users/m1/builds/hanlin-notification-os-recovery-20261125/build/notification-os-recovery-v1/test/NotificationOS.xcresult",
+    "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines"
+  ],
+  "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines",
+  "expectedTests": 1,
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "runnerSHA256": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+  "executionMode": "UNCHANGED_PREBUILT_XCTESTRUN",
+  "xctestrun": {
+    "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+    "role": "xctestrun",
+    "bytes": 16737,
+    "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"
+  }
+}

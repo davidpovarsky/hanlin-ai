@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "run_id": "45064949924",
+  "source_commit": "ad3a13dfe3fa491adeb8c9c278b254de33f5fd9c",
+  "job_id": "137338975562",
+  "conclusion": "failure",
+  "failure_stage": "current_unit_xctestrun admission before any selected test",
+  "failure": "Command ['xcodebuild', '-version'] timed out after 30 seconds",
+  "app_and_selected_tests_compiled": true,
+  "build_log_result": "TEST BUILD SUCCEEDED",
+  "owned_simulator_booted": true,
+  "native_tests_executed": 0,
+  "ui_tests_executed": 0,
+  "ui_screenshots_produced": false,
+  "artifact_id": "14771658050",
+  "artifact_name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+  "artifact_sha256": "0e7621b64f9d9eacbd10b5b9e91e743999d5d7a33846988ac8432b9a80eef621",
+  "runtime_producer_run": "42926628418",
+  "renderer_pin": "5cbb4b6c950051f98f02a0b0ae56756f5174a9b8",
+  "interpretation": "Apple compilation evidence only; selected native test and visual acceptance remain unknown."
+}

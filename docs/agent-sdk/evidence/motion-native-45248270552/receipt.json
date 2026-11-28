@@ -1,0 +1,84 @@
+{
+  "source": "9575dd15e816009e11d84ab7f4e21b45cb67c5e8",
+  "native_run": 45248270552,
+  "native_job": 137950733725,
+  "native_runner": 1000024894,
+  "native_job_started_at": "2026-11-23T19:26:11Z",
+  "native_job_completed_at": "2026-11-23T19:50:21Z",
+  "native_job_wall_seconds": 1450,
+  "unchanged_job_budget_seconds": 1500,
+  "build": "TEST_BUILD_SUCCEEDED",
+  "readiness": {
+    "status": "PASS",
+    "native_bootstatus_seconds": 279.588,
+    "startup_budget_seconds": 300,
+    "recovery_count": 0
+  },
+  "B": {
+    "status": "FAIL",
+    "duration_seconds": 35.08790397644043,
+    "failure_line": 160,
+    "burst_callback_gaps_seconds": [
+      0.0652,
+      0.022
+    ],
+    "burst_pre_action_heights_points": [
+      0,
+      0,
+      0
+    ],
+    "later_checks": "NOT_RUN",
+    "configured_preset": "v1.relaxed",
+    "effective_motion": "shimmer=true;numeric=true"
+  },
+  "C": {
+    "native": "PASS",
+    "native_duration_seconds": 40.88393807411194,
+    "visual": "PASS_WITHIN_ORIGINAL_MOTION_PROOF_SCOPE",
+    "original_images_reviewed": 4,
+    "capture_boundary": "App-boundary landscape is rotated/cropped with black strip; separately retained full-screen original confirms actual complete landscape surface."
+  },
+  "A": "NOT_RUN_ON_CORRECTED_ROW; previous acceptance unresolved",
+  "D": "PREVIOUS_DIAGNOSTIC_CAPTURED; not rerun, not B acceptance",
+  "inspection_run": 45258652803,
+  "inspection": "READ_ONLY_ORIGINAL_XCRESULT_EXPORT_PASS",
+  "reviewed_video_frames": [
+    {
+      "frame": 388,
+      "pts_seconds": 29.066667,
+      "observed": "actions=2, collapsed, v1.relaxed, Smooth and relaxed, shimmer=true;numeric=true"
+    },
+    {
+      "frame": 408,
+      "pts_seconds": 30.021667,
+      "observed": "actions=3, collapsed, no visible summary"
+    },
+    {
+      "frame": 409,
+      "pts_seconds": 30.106667,
+      "observed": "actions=3, transitioning, no visible summary"
+    },
+    {
+      "frame": 410,
+      "pts_seconds": 30.141667,
+      "observed": "actions=5, collapsed, no visible summary"
+    },
+    {
+      "frame": 412,
+      "pts_seconds": 30.168333,
+      "observed": "actions=5, transitioning, no visible summary"
+    },
+    {
+      "frame": 416,
+      "pts_seconds": 30.25,
+      "observed": "actions=5, first visible clipped summary in reviewed encoded frame sequence"
+    },
+    {
+      "frame": 424,
+      "pts_seconds": 30.366667,
+      "observed": "actions=5, summary plus nested header visible and following footer displaced"
+    }
+  ],
+  "visual_review_limit": "No exact XCTest wall-clock/media PTS alignment and no guarantee about frames absent from variable-frame-rate recording. The observed delayed first visible summary is consistent with the mounting/layout hypothesis but does not prove its cause. No product change or new native rerun is claimed.",
+  "raw_binary_storage": "Complete original verified artifacts and xcresult/video remain in the run artifacts and Oracle build directories; original member hashes recorded in run/collection-result.json and inspection/run/collection-result.json."
+}

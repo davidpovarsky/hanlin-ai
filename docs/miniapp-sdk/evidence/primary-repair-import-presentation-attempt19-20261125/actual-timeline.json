@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "executedSource": "7bf0c2fdc2f7168d6b98dda66f443ae032fe1c11",
+  "actualAIOriginalBuildSeconds": 135.76386762500624,
+  "repairCase": {
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "seconds": 467.93,
+    "xcodeExit": 65,
+    "failureSource": "AI_HLYUITests/MiniAppAuthoringUITests.swift:110",
+    "failure": "Search Apps exists/enabled/hittable predicate timed out under a re-presented import sheet"
+  },
+  "actualBuildJob": {
+    "id": "74b7afb4-c245-480a-9333-f0986a1ec05b",
+    "durationMilliseconds": 104485,
+    "succeeded": true,
+    "exitCode": 0
+  },
+  "receiverValidation": {
+    "id": "567cd014-f0ba-42cf-b24d-4ac59c86352c",
+    "durationMilliseconds": 34605,
+    "succeeded": true,
+    "exitCode": 0
+  },
+  "installedReceipt": {
+    "installedPackageID": "install-script-d7e81598bd3fabb072c5e57c",
+    "status": "installed",
+    "transferID": "56F463EE-F2A6-4F6C-AD43-7614F7DCF2B1",
+    "updatedAt": 817310916.843681
+  },
+  "installedReceiptSHA256": "2dea9f53e15c9f031a8ca0da56d733afbe71ffbe5c2e575852a5339c1067c90d",
+  "installedAtUTC": "2026-11-25T14:48:36.843681Z",
+  "archive": {
+    "bytes": 7247,
+    "sha256": "02d9e28ece89f212f18f65924a29bc43bdec3025d40122f0c070f02cded19396",
+    "zipMembers": 16
+  },
+  "native42": "NOT_REACHED",
+  "agentFinalInstalledMarker": "NOT_REACHED",
+  "actualFocusedCharges": [
+    366.7222996670025,
+    977.134837125006,
+    39.67624695900304,
+    713.0760274589993,
+    544.1797895409982,
+    443.2465754169971,
+    735.968727458996
+  ],
+  "cumulativeFocusedSeconds": 3820.004503627002,
+  "originalAllowanceSeconds": 3600,
+  "separateV8AdditionalGrantSeconds": 400,
+  "currentTotalAllowanceSeconds": 4000,
+  "remainingSeconds": 179.99549637299788,
+  "cumulativePrimarySeconds": 19292.91627621104,
+  "nextRun": "NOT_RUN"
+}

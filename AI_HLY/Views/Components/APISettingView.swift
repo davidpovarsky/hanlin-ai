@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  APISettingView.swift
 //  AI_Hanlin
@@ -63,13 +64,13 @@ struct APIKeysView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "key.2.on.ring")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding()
                     
-                    Text("点击名称或钥匙设置厂商密钥，并打开厂商开关以使用该厂商的模型")
-                        .font(.footnote)
+                    Text(String(localized: "点击名称或钥匙设置厂商密钥，并打开厂商开关以使用该厂商的模型", bundle: HanlinLocalization.bundle))
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -92,12 +93,12 @@ struct APIKeysView: View {
                         HStack {
                             // 自定义供应商使用 defaultIcon，系统供应商使用资源图片
                             if key.from == .custom {
-                                Image("defaultIcon")
+                                Image(hanlinAsset: "defaultIcon")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 24, height: 24)
                             } else {
-                                Image(getCompanyIcon(for: company))
+                                Image(hanlinAsset: getCompanyIcon(for: company))
                                     .resizable()
                                     .frame(width: 24, height: 24)
                             }
@@ -107,7 +108,7 @@ struct APIKeysView: View {
                             Spacer()
                             if isAPISettingAllowed(for: key) {
                                 Image(systemName: "key")
-                                    .foregroundColor(.hlBluefont)
+                                    .foregroundColor(.hanlinHLBluefont)
                             }
                         }
                     }
@@ -117,28 +118,28 @@ struct APIKeysView: View {
                     if loadingCompany == company {
                         ProgressView()
                     } else {
-                        Toggle("", isOn: Binding(
+                        Toggle(hanlin: "", isOn: Binding(
                             get: { !key.isHidden },
                             set: { newValue in
                                 toggleVendor(key: key, company: company, newValue: newValue)
                             }
                         ))
                         .labelsHidden()
-                        .tint(.hlBlue)
+                        .tint(.hanlinHLBlue)
                         // 当 API Key 无效时，不允许通过 Toggle 开启厂商
                         .disabled(!hasValidAPIKey(for: key))
                     }
                 }
             }
         }
-        .navigationTitle("模型厂商")
+        .navigationTitle(String(localized: "模型厂商", bundle: HanlinLocalization.bundle))
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     showAddCustomProvider = true
                 } label: {
                     Image(systemName: "plus")
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                 }
             }
         }
@@ -148,8 +149,8 @@ struct APIKeysView: View {
         .sheet(isPresented: $showAddCustomProvider) {
             addCustomProviderView()
         }
-        .alert("无法开启厂商", isPresented: $showAPIKeyError) {
-            Button("确定", role: .cancel) {}
+        .alert(String(localized: "无法开启厂商", bundle: HanlinLocalization.bundle), isPresented: $showAPIKeyError) {
+            Button(String(localized: "确定", bundle: HanlinLocalization.bundle), role: .cancel) {}
         } message: {
             Text(errorMessage)
         }
@@ -175,6 +176,9 @@ private struct EditKeyContent: View {
     let modelContext: ModelContext
     let allModels: [AllModels]
     @Binding var selectedKey: APIKeys?
+    @State private var credentialDraft = HanlinCredentialEditDraft()
+    @State private var credentialError: String?
+    @State private var compactPublicationNeedsRetry = false
 
     @State private var testResult: Bool? = nil
     @State private var isTesting = false
@@ -242,34 +246,34 @@ private struct EditKeyContent: View {
                     VStack(alignment: .center) {
                         // 自定义供应商使用 defaultIcon
                         if key.from == .custom {
-                            Image("defaultIcon")
+                            Image(hanlinAsset: "defaultIcon")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 50, height: 50)
                                 .padding()
                         } else {
-                            Image(getCompanyIcon(for: key.company ?? "Unknown"))
+                            Image(hanlinAsset: getCompanyIcon(for: key.company ?? "Unknown"))
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 50, height: 50)
                                 .padding()
                         }
 
-                        Text("设置 \(getCompanyName(for: key)) API密钥，以启用该厂商的模型")
-                            .font(.footnote)
+                        Text("设置 \(getCompanyName(for: key)) API密钥，以启用该厂商的模型", bundle: HanlinLocalization.bundle)
+                            .font(HanlinTypography.footnote)
                             .multilineTextAlignment(.center)
 
                         // 自定义供应商不显示获取API密钥的链接
                         if key.from != .custom {
                             if let url = URL(string: key.help) {
-                                Link("🔗 点此获取 \(getCompanyName(for: key)) API密钥", destination: url)
-                                    .font(.footnote)
+                            Link(String(format: String(localized: "🔗 点此获取 %@ API密钥", bundle: HanlinLocalization.bundle), getCompanyName(for: key)), destination: url)
+                                    .font(HanlinTypography.footnote)
                                     .multilineTextAlignment(.center)
                                     .padding(.bottom)
                             } else {
                                 // 当 URL 无效时可以提供一个备用视图
-                                Text("建议进入其开放平台获取API密钥")
-                                    .font(.footnote)
+                                Text(String(localized: "建议进入其开放平台获取API密钥", bundle: HanlinLocalization.bundle))
+                                    .font(HanlinTypography.footnote)
                                     .multilineTextAlignment(.center)
                                     .padding(.bottom)
                             }
@@ -277,20 +281,23 @@ private struct EditKeyContent: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
-                Section(header: Text("API Key")) {
-                    SecureField("请输入密钥", text: Binding(
-                        get: { key.key ?? "" },
-                        set: { key.key = $0 }
+                Section(header: Text("API Key", bundle: HanlinLocalization.bundle)) {
+                    SecureField(String(localized: "请输入密钥", bundle: HanlinLocalization.bundle), text: Binding(
+                        get: { credentialDraft.text },
+                        set: { credentialDraft.replaceText($0); compactPublicationNeedsRetry = false }
                     ))
+                    ProviderCredentialStorageNotice(canMigrate: credentialDraft.canMigrate(key)) {
+                        saveOrRetryCompactPublication(migrate: true)
+                    }
                 }
                 // 自定义供应商或LAN供应商显示请求地址设置
                 if key.company == "LAN" || key.from == .custom {
-                    Section(header: Text("请求地址（URL）")) {
-                        Text(verbatim: "例如：http://127.0.0.1:1234/v1/chat/completions")
-                            .font(.caption)
-                        TextField("请输入请求地址", text: Binding(
+                    Section(header: Text(String(localized: "请求地址（URL）", bundle: HanlinLocalization.bundle))) {
+                        Text(verbatim: String(localized: "例如：http://127.0.0.1:1234/v1/chat/completions", bundle: HanlinLocalization.bundle))
+                            .font(HanlinTypography.caption)
+                        TextField(String(localized: "请输入请求地址", bundle: HanlinLocalization.bundle), text: Binding(
                             get: { key.requestURL ?? "" },
-                            set: { key.requestURL = $0 }
+                            set: { key.requestURL = $0; compactPublicationNeedsRetry = false }
                         ))
                         .keyboardType(.URL)
                         .autocapitalization(.none)
@@ -299,12 +306,12 @@ private struct EditKeyContent: View {
                 }
                 // 测试 API 按钮及状态显示（局域网模型和自定义供应商不显示）
                 if key.company != "LAN" && key.from != .custom {
-                    Section(header: Text("API 测试")) {
+                    Section(header: Text(String(localized: "API 测试", bundle: HanlinLocalization.bundle))) {
                         // 模型选择器（如果有可测试的模型）
                         if !testableModels.isEmpty {
-                            Picker("测试模型", selection: $selectedTestModelName) {
+                            Picker(String(localized: "测试模型", bundle: HanlinLocalization.bundle), selection: $selectedTestModelName) {
                                 ForEach(testableModels, id: \.name) { model in
-                                    Text(model.displayName ?? model.name ?? "未知模型")
+                                    Text(model.displayName ?? model.name ?? String(localized: "未知模型", bundle: HanlinLocalization.bundle))
                                         .tag(model.name ?? "")
                                 }
                             }
@@ -312,7 +319,7 @@ private struct EditKeyContent: View {
                         
                         // 测试按钮
                         HStack {
-                            Button("测试 API") {
+                            Button(String(localized: "测试 API", bundle: HanlinLocalization.bundle)) {
                                 testAPI(for: key)
                             }
                             .disabled(isTesting || testableModels.isEmpty)
@@ -320,18 +327,18 @@ private struct EditKeyContent: View {
                             if isTesting {
                                 ProgressView()
                             } else if let result = testResult {
-                                Text(result ? "测试通过" : "测试失败")
+                                Text(result ? String(localized: "测试通过", bundle: HanlinLocalization.bundle) : String(localized: "测试失败", bundle: HanlinLocalization.bundle))
                                     .foregroundColor(result ? .green : .red)
                             } else if testableModels.isEmpty {
-                                Text("无可用模型")
-                                    .font(.caption)
+                                Text(String(localized: "无可用模型", bundle: HanlinLocalization.bundle))
+                                    .font(HanlinTypography.caption)
                                     .foregroundColor(.secondary)
                             }
                         }
                         if let errorMessage = testErrorMessage, !errorMessage.isEmpty {
                             Text(errorMessage)
-                                .font(.caption)
-                                .foregroundColor(.hlOrange)
+                                .font(HanlinTypography.caption)
+                                .foregroundColor(.hanlinHLOrange)
                         }
                     }
                 }
@@ -339,7 +346,7 @@ private struct EditKeyContent: View {
                     // 余额查询及状态显示
                     Section {
                         HStack {
-                            Button("查询 API 余额") {
+                            Button(String(localized: "查询 API 余额", bundle: HanlinLocalization.bundle)) {
                                 queryBalance(for: key)
                             }
                             .disabled(isInquiring)
@@ -347,7 +354,7 @@ private struct EditKeyContent: View {
                             if isInquiring {
                                 ProgressView()
                             } else if let result = inquiryResult {
-                                Text(result == -999 ? "该厂商暂未支持" : "¥\(result)")
+                                Text(result == -999 ? String(localized: "该厂商暂未支持", bundle: HanlinLocalization.bundle) : "¥\(result)")
                                     .foregroundColor(result < 10 ? .red : .green)
                             }
                         }
@@ -355,15 +362,15 @@ private struct EditKeyContent: View {
                 }
                 // 刷新模型列表按钮和已添加模型展示（仅对支持的厂商显示）
                 if shouldShowModelRefresh(for: key) {
-                    Section(header: Text("模型管理")) {
+                    Section(header: Text(String(localized: "模型管理", bundle: HanlinLocalization.bundle))) {
                         // 刷新模型列表按钮
                         Button {
                             showModelManagement = true
                         } label: {
                             HStack(spacing: 6) {
                                 Image(systemName: "arrow.triangle.2.circlepath")
-                                    .foregroundColor(.hlBluefont)
-                                Text("刷新模型列表")
+                                    .foregroundColor(.hanlinHLBluefont)
+                                Text(String(localized: "刷新模型列表", bundle: HanlinLocalization.bundle))
                                 Spacer()
                                 Image(systemName: "chevron.right")
                                     .foregroundColor(.secondary)
@@ -374,24 +381,29 @@ private struct EditKeyContent: View {
                 }
 
                 Section {
-                    Text("⚠️ 注意：配置API后，厂商将自动开启，如需修改，可以在菜单中关闭厂商")
-                        .font(.footnote)
+                    Text(String(localized: "⚠️ 注意：配置API后，厂商将自动开启，如需修改，可以在菜单中关闭厂商", bundle: HanlinLocalization.bundle))
+                        .font(HanlinTypography.footnote)
                 }
             }
-            .navigationTitle("编辑密钥")
+            .navigationTitle(String(localized: "编辑密钥", bundle: HanlinLocalization.bundle))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") {
+                    Button(compactPublicationNeedsRetry ? String(localized: "Close", bundle: HanlinLocalization.bundle) : String(localized: "取消", bundle: HanlinLocalization.bundle)) {
                         selectedKey = nil
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("保存") {
-                        key.timestamp = Date()
-                        key.isHidden = false
-                        try? modelContext.save()
-                        selectedKey = nil
+                    Button(compactPublicationNeedsRetry ? String(localized: "Retry extension update", bundle: HanlinLocalization.bundle) : String(localized: "保存", bundle: HanlinLocalization.bundle)) {
+                        saveOrRetryCompactPublication()
                     }
+                    .disabled(!credentialDraft.isReadyToSave)
+                }
+            }
+            .credentialSaveAlert($credentialError)
+            .onAppear {
+                if credentialDraft.recordID != key.persistentModelID {
+                    do { try credentialDraft.load(key) }
+                    catch { credentialError = HanlinAppProviderCredentials.userMessage(for: error) }
                 }
             }
             .onAppear {
@@ -403,10 +415,43 @@ private struct EditKeyContent: View {
                 }
             }
             .sheet(isPresented: $showModelManagement) {
-                ModelManagementView(apiKey: key)
+                ModelManagementView(apiKey: key, configurationOverride: .init(provider: key, credential: credentialDraft.text))
             }
     }
     
+    private func saveOrRetryCompactPublication(migrate: Bool = false) {
+        let publish = {
+            try HanlinScriptingPlatformAIIntegration(modelContext: modelContext).publishCompactAgentConfig()
+        }
+        let publication: HanlinCredentialEditDraft.Publication
+        // An explicit migration must not be mistaken for a publication-only retry.
+        if compactPublicationNeedsRetry && !migrate {
+            publication = HanlinCredentialEditDraft.retryPublication(publish)
+        } else {
+            do {
+                if migrate {
+                    publication = try credentialDraft.migrateAndPublish(key, in: modelContext,
+                        update: { $0.timestamp = Date() }, publishCompactConfiguration: publish)
+                } else {
+                    publication = try credentialDraft.saveAndPublish(to: key, in: modelContext,
+                        update: { $0.timestamp = Date(); $0.isHidden = false },
+                        publishCompactConfiguration: publish)
+                }
+            } catch {
+                credentialError = HanlinAppProviderCredentials.userMessage(for: error)
+                return
+            }
+        }
+        switch publication {
+        case .updated:
+            compactPublicationNeedsRetry = false
+            selectedKey = nil
+        case .needsRetry:
+            compactPublicationNeedsRetry = true
+            credentialError = String(localized: "The key was saved, but the translation extension could not be updated. Retry the extension update or close these settings.", bundle: HanlinLocalization.bundle)
+        }
+    }
+
     /// 判断是否应该显示模型刷新按钮
     private func shouldShowModelRefresh(for key: APIKeys) -> Bool {
         // 自定义供应商和 LAN 不显示
@@ -436,7 +481,7 @@ private struct EditKeyContent: View {
         
         Task {
             let result = await testAIAPIWithModel(
-                apiKey: key.key ?? "",
+                apiKey: credentialDraft.text,
                 requestURL: key.requestURL ?? "",
                 company: key.company ?? "",
                 modelName: modelToTest
@@ -453,8 +498,8 @@ private struct EditKeyContent: View {
         inquiryResult = nil
         Task {
             defer { isInquiring = false }
-            guard let company = key.company?.uppercased(),
-                  let token = key.key, !token.isEmpty else { return }
+            let token = credentialDraft.text
+            guard let company = key.company?.uppercased(), !token.isEmpty else { return }
             do {
                 switch company {
                 case "DEEPSEEK":
@@ -478,29 +523,25 @@ extension APIKeysView {
     /// 处理厂商开关逻辑，并增加加载状态
     private func toggleVendor(key: APIKeys, company: String, newValue: Bool) {
         loadingCompany = company
-        DispatchQueue.global(qos: .userInitiated).async {
-            DispatchQueue.main.async {
-                if !newValue {
-                    // 关闭厂商
-                    key.isHidden = true
-                    updateModelVisibility(for: company, isHidden: true)
-                } else if hasValidAPIKey(for: key) {
-                    // 开启厂商（API Key 有效）
-                    key.isHidden = false
-                } else {
-                    // API Key 为空时阻止开启，并显示错误提示
-                    errorMessage = "\(getCompanyName(for: key)) 需要有效的 API Key，请先设置密钥。"
-                    showAPIKeyError = true
-                }
-                saveChanges()
-                loadingCompany = nil
-            }
+        if !newValue {
+            // 关闭厂商
+            key.isHidden = true
+            updateModelVisibility(for: company, isHidden: true)
+        } else if hasValidAPIKey(for: key) {
+            // 开启厂商（API Key 有效）
+            key.isHidden = false
+        } else {
+            // API Key 为空时阻止开启，并显示错误提示
+            errorMessage = String(format: String(localized: "%@ 需要有效的 API Key，请先设置密钥。", bundle: HanlinLocalization.bundle), getCompanyName(for: key))
+            showAPIKeyError = true
         }
+        saveChanges()
+        loadingCompany = nil
     }
     
     /// 检查 APIKey 是否有效（非空即可）
     private func hasValidAPIKey(for key: APIKeys) -> Bool {
-        return !(key.key?.isEmpty ?? true)
+        return !(key.resolvedKey?.isEmpty ?? true)
     }
     
     /// 保存数据
@@ -574,70 +615,71 @@ struct AddCustomProviderForm: View {
         Form {
             Section {
                 VStack(alignment: .center) {
-                    Image("defaultIcon")
+                    Image(hanlinAsset: "defaultIcon")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 50, height: 50)
                         .padding()
 
-                    Text("添加自定义 API 供应商，使用兼容 OpenAI 格式的 API 服务")
-                        .font(.footnote)
+                    Text(String(localized: "添加自定义 API 供应商，使用兼容 OpenAI 格式的 API 服务", bundle: HanlinLocalization.bundle))
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
             }
 
-            Section(header: Text("供应商名称")) {
-                TextField("请输入供应商名称", text: $providerName)
+            Section(header: Text(String(localized: "供应商名称", bundle: HanlinLocalization.bundle))) {
+                TextField(String(localized: "请输入供应商名称", bundle: HanlinLocalization.bundle), text: $providerName)
             }
 
-            Section(header: Text("API Key")) {
-                SecureField("请输入 API 密钥", text: $apiKey)
+            Section(header: Text("API Key", bundle: HanlinLocalization.bundle)) {
+                SecureField(String(localized: "请输入 API 密钥", bundle: HanlinLocalization.bundle), text: $apiKey)
+                ProviderCredentialStorageNotice(canMigrate: false, performMigration: {})
             }
 
-            Section(header: Text("请求地址（URL）")) {
-                Text("例如：https://api.example.com/v1/chat/completions")
-                    .font(.caption)
+            Section(header: Text(String(localized: "请求地址（URL）", bundle: HanlinLocalization.bundle))) {
+                Text(String(localized: "例如：https://api.example.com/v1/chat/completions", bundle: HanlinLocalization.bundle))
+                    .font(HanlinTypography.caption)
                     .foregroundColor(.secondary)
 
-                TextField("请输入请求地址", text: $requestURL)
+                TextField(String(localized: "请输入请求地址", bundle: HanlinLocalization.bundle), text: $requestURL)
                     .keyboardType(.URL)
                     .autocapitalization(.none)
                     .autocorrectionDisabled()
 
                 if !requestURL.isEmpty && !requestURL.hasSuffix("/v1/chat/completions") {
-                    Button("补全 /v1/chat/completions") {
+                    Button(String(localized: "补全 /v1/chat/completions", bundle: HanlinLocalization.bundle)) {
                         completeURL()
                     }
-                    .font(.caption)
-                    .foregroundColor(.hlBluefont)
+                    .font(HanlinTypography.caption)
+                    .foregroundColor(.hanlinHLBluefont)
                 }
             }
 
             Section {
-                Text("💡 提示：此功能适用于兼容 OpenAI API 格式的服务，如 LocalAI、Ollama 等本地部署服务，或其他第三方 API 服务")
-                    .font(.footnote)
+                Text(String(localized: "💡 提示：此功能适用于兼容 OpenAI API 格式的服务，如 LocalAI、Ollama 等本地部署服务，或其他第三方 API 服务", bundle: HanlinLocalization.bundle))
+                    .font(HanlinTypography.footnote)
                     .foregroundColor(.secondary)
             }
         }
-        .navigationTitle("新增自定义供应商")
+        .navigationTitle(String(localized: "新增自定义供应商", bundle: HanlinLocalization.bundle))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button("取消") {
+                Button(String(localized: "取消", bundle: HanlinLocalization.bundle)) {
                     isPresented = false
                 }
             }
             ToolbarItem(placement: .confirmationAction) {
-                Button("保存") {
+                Button(String(localized: "保存", bundle: HanlinLocalization.bundle)) {
                     saveCustomProvider()
                 }
                 .disabled(!isFormValid)
             }
         }
-        .alert("验证失败", isPresented: $showValidationError) {
-            Button("确定", role: .cancel) {}
+        .alert(String(localized: "验证失败", bundle: HanlinLocalization.bundle), isPresented: $showValidationError) {
+            Button(String(localized: "确定", bundle: HanlinLocalization.bundle), role: .cancel) {}
         } message: {
             Text(validationMessage)
         }
@@ -673,25 +715,25 @@ struct AddCustomProviderForm: View {
 
         // 验证
         guard !trimmedName.isEmpty else {
-            validationMessage = "供应商名称不能为空"
+                validationMessage = String(localized: "供应商名称不能为空", bundle: HanlinLocalization.bundle)
             showValidationError = true
             return
         }
 
         guard !trimmedKey.isEmpty else {
-            validationMessage = "API Key 不能为空"
+                validationMessage = String(localized: "API Key 不能为空", bundle: HanlinLocalization.bundle)
             showValidationError = true
             return
         }
 
         guard !trimmedURL.isEmpty else {
-            validationMessage = "请求地址不能为空"
+                validationMessage = String(localized: "请求地址不能为空", bundle: HanlinLocalization.bundle)
             showValidationError = true
             return
         }
 
         guard trimmedURL.hasPrefix("http://") || trimmedURL.hasPrefix("https://") else {
-            validationMessage = "请求地址必须以 http:// 或 https:// 开头"
+                validationMessage = String(localized: "请求地址必须以 http:// 或 https:// 开头", bundle: HanlinLocalization.bundle)
             showValidationError = true
             return
         }
@@ -700,7 +742,7 @@ struct AddCustomProviderForm: View {
         let customProvider = APIKeys(
             name: trimmedName,
             company: "CUSTOM_\(UUID().uuidString.prefix(8).uppercased())", // 使用唯一标识避免冲突
-            key: trimmedKey,
+            key: "",
             requestURL: trimmedURL,
             isHidden: false, // 默认启用
             help: "自定义 API 供应商",
@@ -709,13 +751,12 @@ struct AddCustomProviderForm: View {
             timestamp: Date()
         )
 
-        modelContext.insert(customProvider)
-
         do {
-            try modelContext.save()
+            try HanlinAppProviderCredentials.shared.insert(customProvider, value: trimmedKey, in: modelContext)
+            // The next host activation republishes the selected compact configuration.
             isPresented = false
         } catch {
-            validationMessage = "保存失败：\(error.localizedDescription)"
+            validationMessage = HanlinAppProviderCredentials.userMessage(for: error)
             showValidationError = true
         }
     }
@@ -732,9 +773,12 @@ struct SearchSettingView: View {
     // SearchKeysView 部分状态
     // 用于编辑 API 配置状态
     @State private var selectedKey: SearchKeys?
+    @State private var credentialDraft = HanlinCredentialEditDraft()
+    @State private var credentialError: String?
     // API 测试相关状态
     @State private var testResult: Bool? = nil
     @State private var isTesting = false
+    @State private var diagnosticResult: AutomaticWebSearchCoordinator.DiagnosticResult? = nil
     // 切换厂商启用状态时的加载与错误提示状态
     @State private var loadingCompany: String? = nil
     @State private var errorMessage: String = ""
@@ -748,6 +792,8 @@ struct SearchSettingView: View {
     // SearchKeysView 排序（按照公司名称拼音排序）
     private var sortedSearchKeys: [SearchKeys] {
         searchKeys.sorted { key1, key2 in
+            if key1.company == "AUTOMATIC_KEYLESS" { return true }
+            if key2.company == "AUTOMATIC_KEYLESS" { return false }
             let pinyin1 = getPinyin(for: getCompanyName(for: key1.company ?? "Unknown"))
             let pinyin2 = getPinyin(for: getCompanyName(for: key2.company ?? "Unknown"))
             return pinyin1 < pinyin2
@@ -760,13 +806,13 @@ struct SearchSettingView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "magnifyingglass")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding()
                     
-                    Text("设置搜索功能，以便在聊天对话时获取互联网内容，提升回答效果。个性化的设置能最大程度的平衡你的需求与检索带来的成本消耗")
-                        .font(.footnote)
+                    Text(String(localized: "设置搜索功能，以便在聊天对话时获取互联网内容，提升回答效果。个性化的设置能最大程度的平衡你的需求与检索带来的成本消耗", bundle: HanlinLocalization.bundle))
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -774,26 +820,26 @@ struct SearchSettingView: View {
             }
             
             // 检索设置部分
-            Section(header: Text("模型在需要时主动搜索")) {
-                Toggle("启用主动搜索", isOn: Binding(
+            Section(header: Text(String(localized: "模型在需要时主动搜索", bundle: HanlinLocalization.bundle))) {
+                Toggle(String(localized: "启用主动搜索", bundle: HanlinLocalization.bundle), isOn: Binding(
                     get: { searchEnable },
                     set: { searchEnable = $0 }))
-                .tint(.hlBlue)
+                .tint(.hanlinHLBlue)
             }
             
-            Section(header: Text("搜索结果数量（范围：5-20）")) {
+            Section(header: Text(String(localized: "搜索结果数量（范围：5-20）", bundle: HanlinLocalization.bundle))) {
                 Stepper(value: $searchCount, in: 5...20) {
-                    Text("搜索结果数量：\(searchCount)")
+                    Text("搜索结果数量：\(searchCount)", bundle: HanlinLocalization.bundle)
                 }
             }
             
-            Section(header: Text("搜索时同时搜索中英文内容")) {
-                Toggle("中英文双语检索", isOn: $bilingualSearch)
-                    .tint(.hlBlue)
+            Section(header: Text(String(localized: "搜索时同时搜索中英文内容", bundle: HanlinLocalization.bundle))) {
+                Toggle(String(localized: "中英文双语检索", bundle: HanlinLocalization.bundle), isOn: $bilingualSearch)
+                    .tint(.hanlinHLBlue)
             }
             
             // 搜索 API 配置及厂商选择部分
-            Section(header: Text("搜索引擎选择（最多只能开启一个）")) {
+            Section(header: Text(String(localized: "搜索引擎选择（最多只能开启一个）", bundle: HanlinLocalization.bundle))) {
                 ForEach(sortedSearchKeys) { key in
                     HStack {
                         // 点击左侧区域进入编辑 API 配置界面
@@ -801,7 +847,7 @@ struct SearchSettingView: View {
                             selectedKey = key
                         } label: {
                             HStack {
-                                Image(getCompanyIcon(for: key.company ?? "Unknown"))
+                                Image(hanlinAsset: getCompanyIcon(for: key.company ?? "Unknown"))
                                     .resizable()
                                     .frame(width: 24, height: 24)
                                 Text(getCompanyName(for: key.company ?? "Unknown"))
@@ -809,26 +855,30 @@ struct SearchSettingView: View {
                                 
                                 // 显示各厂商的计费或免费说明
                                 switch key.company?.uppercased() {
+                                case "AUTOMATIC_KEYLESS":
+                                    Text(String(localized: "免费 (自动切换)", bundle: HanlinLocalization.bundle))
+                                        .font(HanlinTypography.caption)
+                                        .foregroundColor(.green)
                                 case "GOOGLE_SEARCH":
-                                    Text("100次免费/日")
-                                        .font(.caption)
+                                    Text(String(localized: "100次免费/日", bundle: HanlinLocalization.bundle))
+                                        .font(HanlinTypography.caption)
                                         .foregroundColor(.green)
                                 case "TAVILY":
-                                    Text("1000免费积分/月")
-                                        .font(.caption)
+                                    Text(String(localized: "1000免费积分/月", bundle: HanlinLocalization.bundle))
+                                        .font(HanlinTypography.caption)
                                         .foregroundColor(.green)
                                 case "LANGSEARCH":
-                                    Text("免费")
-                                        .font(.caption)
+                                    Text(String(localized: "免费", bundle: HanlinLocalization.bundle))
+                                        .font(HanlinTypography.caption)
                                         .foregroundColor(.green)
                                 case "BRAVE":
-                                    Text("2000次免费/月")
-                                        .font(.caption)
+                                    Text(String(localized: "2000次免费/月", bundle: HanlinLocalization.bundle))
+                                        .font(HanlinTypography.caption)
                                         .foregroundColor(.green)
                                 default:
                                     if let price = key.price {
-                                        Text("¥\(String(format: "%.4f", price))/次")
-                                            .font(.caption)
+                                        Text(String(format: String(localized: "¥%.4f/次", bundle: HanlinLocalization.bundle), price))
+                                            .font(HanlinTypography.caption)
                                             .foregroundColor(.orange)
                                     }
                                 }
@@ -836,7 +886,7 @@ struct SearchSettingView: View {
                                 Spacer()
                                 
                                 Image(systemName: "key")
-                                    .foregroundColor(.hlBluefont)
+                                    .foregroundColor(.hanlinHLBluefont)
                             }
                         }
                         .buttonStyle(PlainButtonStyle())
@@ -845,34 +895,37 @@ struct SearchSettingView: View {
                         if loadingCompany == key.company {
                             ProgressView()
                         } else {
-                            Toggle("", isOn: Binding(
+                            Toggle(hanlin: "", isOn: Binding(
                                 get: { key.isUsing },
                                 set: { newValue in
                                     toggleVendor(for: key, newValue: newValue)
                                 }
                             ))
                             .labelsHidden()
-                            .tint(.hlBlue)
+                            .tint(.hanlinHLBlue)
                         }
                     }
                 }
             }
             
-            Section(header: Text("功能列表")) {
-                Label("联网信息检索", systemImage: "network")
-                Label("学术论文检索", systemImage: "graduationcap")
-                Label("网页信息阅读", systemImage: "text.and.command.macwindow")
-                Label("网络文件阅读", systemImage: "text.document")
+            Section(header: Text(String(localized: "功能列表", bundle: HanlinLocalization.bundle))) {
+                Label(String(localized: "联网信息检索", bundle: HanlinLocalization.bundle), systemImage: "network")
+                Label(String(localized: "学术论文检索", bundle: HanlinLocalization.bundle), systemImage: "graduationcap")
+                Label(String(localized: "网页信息阅读", bundle: HanlinLocalization.bundle), systemImage: "text.and.command.macwindow")
+                Label(String(localized: "网络文件阅读", bundle: HanlinLocalization.bundle), systemImage: "text.document")
             }
         }
-        .navigationTitle("联网搜索")
+        .navigationTitle(String(localized: "联网搜索", bundle: HanlinLocalization.bundle))
         // 编辑 API 配置界面（SearchKeysView 部分）的弹出 sheet
-        .sheet(item: $selectedKey) { key in
+        .sheet(item: $selectedKey, onDismiss: {
+            credentialDraft = HanlinCredentialEditDraft()
+            credentialError = nil
+        }) { key in
             editKeyView(for: key)
         }
         // 出现错误时弹出警告
         .alert(errorMessage, isPresented: $showError) {
-            Button("确定", role: .cancel) { }
+            Button(String(localized: "确定", bundle: HanlinLocalization.bundle), role: .cancel) { }
         }
         // 加载/保存双语检索相关的用户信息
         .onAppear {
@@ -923,72 +976,171 @@ struct SearchSettingView: View {
             Form {
                 Section {
                     VStack(alignment: .center) {
-                        Image(getCompanyIcon(for: key.company ?? "Unknown"))
+                        Image(hanlinAsset: getCompanyIcon(for: key.company ?? "Unknown"))
                             .resizable()
                             .scaledToFit()
                             .frame(width: 50, height: 50)
                             .padding()
 
-                        Text("设置 \(getCompanyName(for: key.company ?? "Unknown")) API密钥，以开启该搜索引擎")
-                            .font(.footnote)
-                            .multilineTextAlignment(.center)
+                        if key.company == "AUTOMATIC_KEYLESS" {
+                            Text(getCompanyName(for: key.company ?? "Unknown"))
+                                .font(HanlinTypography.headline)
+                                .fontWeight(.bold)
+                                .multilineTextAlignment(.center)
 
-                        if let url = URL(string: key.help) {
-                            Link("🔗 点此获取 \(getCompanyName(for: key.company ?? "Unknown")) API密钥", destination: url)
-                                .font(.footnote)
+                            Text(String(localized: "内置免密钥自动搜索服务，根据网络状况与速率限制自动在 You.com、Tavily 和 Keenable 之间平滑回退，即开即用。", bundle: HanlinLocalization.bundle))
+                                .font(HanlinTypography.footnote)
+                                .foregroundColor(.secondary)
                                 .multilineTextAlignment(.center)
-                                .padding(.bottom)
+                                .padding(.top, 2)
+                                .padding(.bottom, 6)
                         } else {
-                            Text("建议进入其开放平台获取API密钥")
-                                .font(.footnote)
+                            Text(String(format: String(localized: "设置 %@ API密钥，以开启该搜索引擎", bundle: HanlinLocalization.bundle), getCompanyName(for: key.company ?? "Unknown")))
+                                .font(HanlinTypography.footnote)
                                 .multilineTextAlignment(.center)
-                                .padding(.bottom)
+
+                            if let url = URL(string: key.help) {
+                                Link(String(format: String(localized: "🔗 点此获取 %@ API密钥", bundle: HanlinLocalization.bundle), getCompanyName(for: key.company ?? "Unknown")), destination: url)
+                                    .font(HanlinTypography.footnote)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.bottom)
+                            } else {
+                                Text(String(localized: "建议进入其开放平台获取API密钥", bundle: HanlinLocalization.bundle))
+                                    .font(HanlinTypography.footnote)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.bottom)
+                            }
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
-                Section(header: Text("密钥")) {
-                    SecureField("请输入密钥", text: Binding(
-                        get: { key.key ?? "" },
-                        set: { key.key = $0 }
-                    ))
-                }
-                // 测试 API 部分
-                Section {
-                    HStack {
-                        Button("测试 API") {
-                            testAPI(for: key)
+                if key.company == "AUTOMATIC_KEYLESS" {
+                    Section(header: Text(String(localized: "运行模式", bundle: HanlinLocalization.bundle))) {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(String(localized: "内置三级自动回退策略：", bundle: HanlinLocalization.bundle))
+                                .font(HanlinTypography.subheadline)
+                                .fontWeight(.semibold)
+                            Text("1. You.com Keyless (~100/day/IP)", bundle: HanlinLocalization.bundle)
+                                .font(HanlinTypography.caption)
+                                .foregroundColor(.secondary)
+                            Text("2. Tavily Keyless (Keyless Fallback)", bundle: HanlinLocalization.bundle)
+                                .font(HanlinTypography.caption)
+                                .foregroundColor(.secondary)
+                            Text("3. Keenable Public (Public Search)", bundle: HanlinLocalization.bundle)
+                                .font(HanlinTypography.caption)
+                                .foregroundColor(.secondary)
                         }
-                        .disabled(isTesting)
-                        
-                        Spacer()
-                        
-                        if isTesting {
-                            ProgressView()
-                        } else if let result = testResult {
-                            Text(result ? "测试通过" : "测试失败")
-                                .foregroundColor(result ? .green : .red)
+                        .padding(.vertical, 4)
+                    }
+                    
+                    Section(header: Text(String(localized: "服务说明与限制", bundle: HanlinLocalization.bundle))) {
+                        Text(String(localized: "无需 API Key。公共端点受网络连通性、服务商速率及配额限制，不承诺无限制可用。", bundle: HanlinLocalization.bundle))
+                            .font(HanlinTypography.footnote)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    Section(header: Text(String(localized: "诊断测试", bundle: HanlinLocalization.bundle))) {
+                        VStack(alignment: .leading, spacing: 8) {
+                            HStack {
+                                Button(String(localized: "测试自动搜索", bundle: HanlinLocalization.bundle)) {
+                                    testAPI(for: key)
+                                }
+                                .disabled(isTesting)
+                                
+                                Spacer()
+                                
+                                if isTesting {
+                                    ProgressView()
+                                } else if let result = testResult {
+                                    Text(result ? String(localized: "测试通过", bundle: HanlinLocalization.bundle) : String(localized: "测试失败", bundle: HanlinLocalization.bundle))
+                                        .foregroundColor(result ? .green : .red)
+                                        .fontWeight(.semibold)
+                                }
+                            }
+                            
+                            if let diag = diagnosticResult {
+                                Divider()
+                                if diag.success {
+                                    Text(String(format: String(localized: "响应服务商: %@", bundle: HanlinLocalization.bundle), diag.providerUsed))
+                                        .font(HanlinTypography.caption)
+                                    Text(String(format: String(localized: "耗时: %.2fs", bundle: HanlinLocalization.bundle), diag.duration))
+                                        .font(HanlinTypography.caption)
+                                    if !diag.topSourceTitle.isEmpty {
+                                        Text(String(format: String(localized: "首选结果: %@", bundle: HanlinLocalization.bundle), diag.topSourceTitle))
+                                            .font(HanlinTypography.caption)
+                                            .foregroundColor(.hanlinHLBluefont)
+                                    }
+                                } else if let err = diag.errorMessage {
+                                    Text(String(format: String(localized: "失败原因: %@", bundle: HanlinLocalization.bundle), err))
+                                        .font(HanlinTypography.caption)
+                                        .foregroundColor(.red)
+                                }
+                            }
                         }
                     }
-                }
-                Section {
-                    Text("⚠️ 注意：配置 API 后，请在菜单中打开您要使用的搜索引擎")
-                        .font(.footnote)
+                } else {
+                    Section(header: Text(String(localized: "密钥", bundle: HanlinLocalization.bundle))) {
+                        SecureField(String(localized: "请输入密钥", bundle: HanlinLocalization.bundle), text: Binding(
+                            get: { credentialDraft.text },
+                            set: { credentialDraft.replaceText($0) }
+                        ))
+                        ProviderCredentialStorageNotice(canMigrate: credentialDraft.canMigrate(key)) {
+                            do {
+                                try credentialDraft.migrate(key, in: modelContext) { $0.timestamp = Date() }
+                                selectedKey = nil
+                            } catch {
+                                credentialError = HanlinAppProviderCredentials.userMessage(for: error)
+                            }
+                        }
+                    }
+                    // 测试 API 部分
+                    Section {
+                        HStack {
+                            Button(String(localized: "测试 API", bundle: HanlinLocalization.bundle)) {
+                                testAPI(for: key)
+                            }
+                            .disabled(isTesting)
+                            
+                            Spacer()
+                            
+                            if isTesting {
+                                ProgressView()
+                            } else if let result = testResult {
+                                Text(result ? String(localized: "测试通过", bundle: HanlinLocalization.bundle) : String(localized: "测试失败", bundle: HanlinLocalization.bundle))
+                                    .foregroundColor(result ? .green : .red)
+                            }
+                        }
+                    }
+                    Section {
+                        Text(String(localized: "⚠️ 注意：配置 API 后，请在菜单中打开您要使用的搜索引擎", bundle: HanlinLocalization.bundle))
+                            .font(HanlinTypography.footnote)
+                    }
                 }
             }
-            .navigationTitle("编辑密钥")
+            .navigationTitle(String(localized: "编辑密钥", bundle: HanlinLocalization.bundle))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") {
+                    Button(String(localized: "取消", bundle: HanlinLocalization.bundle)) {
                         selectedKey = nil
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("保存") {
-                        key.timestamp = Date()
-                        try? modelContext.save()
-                        selectedKey = nil
+                    Button(String(localized: "保存", bundle: HanlinLocalization.bundle)) {
+                        do {
+                            try credentialDraft.save(to: key, in: modelContext) { $0.timestamp = Date() }
+                            selectedKey = nil
+                        } catch {
+                            credentialError = HanlinAppProviderCredentials.userMessage(for: error)
+                        }
                     }
+                    .disabled(!credentialDraft.isReadyToSave)
+                }
+            }
+            .credentialSaveAlert($credentialError)
+            .onAppear {
+                if credentialDraft.recordID != key.persistentModelID {
+                    do { try credentialDraft.load(key) }
+                    catch { credentialError = HanlinAppProviderCredentials.userMessage(for: error) }
                 }
             }
             .onAppear {
@@ -1001,12 +1153,21 @@ struct SearchSettingView: View {
     private func testAPI(for key: SearchKeys) {
         isTesting = true
         testResult = nil
+        diagnosticResult = nil
         
         Task {
+            if key.company == "AUTOMATIC_KEYLESS" {
+                let diagnostic = await AutomaticWebSearchCoordinator.shared.runDiagnosticTest()
+                diagnosticResult = diagnostic
+                testResult = diagnostic.success
+                isTesting = false
+                return
+            }
+            
             // 根据 key.company 获取对应的搜索引擎，默认使用 .LANGSEARCH
             let engine = SearchEngine(rawValue: key.company?.uppercased() ?? "") ?? .LANGSEARCH
             let result = await testSearchAPI(
-                apiKey: key.key ?? "",
+                apiKey: credentialDraft.text,
                 requestURL: key.requestURL ?? "",
                 engine: engine
             )
@@ -1022,9 +1183,9 @@ struct SearchSettingView: View {
         
         DispatchQueue.main.async {
             if newValue {
-                // 开启前检查是否已配置 API Key
-                if key.key?.isEmpty ?? true {
-                    errorMessage = "\(getCompanyName(for: key.company ?? "Unknown")) 需要配置 API Key 才能启用。"
+                // 开启前检查是否已配置 API Key（AUTOMATIC_KEYLESS 无需配置 API Key）
+                if key.company != "AUTOMATIC_KEYLESS" && (key.resolvedKey?.isEmpty ?? true) {
+            errorMessage = String(format: String(localized: "%@ 需要配置 API Key 才能启用。", bundle: HanlinLocalization.bundle), getCompanyName(for: key.company ?? "Unknown"))
                     showError = true
                     loadingCompany = nil
                     return
@@ -1041,7 +1202,7 @@ struct SearchSettingView: View {
             do {
                 try modelContext.save()
             } catch {
-                errorMessage = "保存失败: \(error.localizedDescription)"
+            errorMessage = String(format: String(localized: "保存失败: %@", bundle: HanlinLocalization.bundle), error.localizedDescription)
                 showError = true
             }
             loadingCompany = nil
@@ -1071,44 +1232,44 @@ struct KnowledgeSettingView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "backpack")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding()
                     
-                    Text("设置知识功能，以便在聊天对话时翻找知识背包，获取私有知识库内容，提升回答效果。")
-                        .font(.footnote)
+                    Text(String(localized: "设置知识功能，以便在聊天对话时翻找知识背包，获取私有知识库内容，提升回答效果。", bundle: HanlinLocalization.bundle))
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
             }
             
-            Section(header: Text("模型在需要时主动翻找知识背包")) {
-                Toggle("启用主动翻找", isOn: Binding(
+            Section(header: Text(String(localized: "模型在需要时主动翻找知识背包", bundle: HanlinLocalization.bundle))) {
+                Toggle(String(localized: "启用主动翻找", bundle: HanlinLocalization.bundle), isOn: Binding(
                     get: { knowledgeEnable },
                     set: { knowledgeEnable = $0 }))
-                .tint(.hlBlue)
+                .tint(.hanlinHLBlue)
             }
             
-            Section(header: Text("翻找结果数量（范围：5-20）")) {
+            Section(header: Text(String(localized: "翻找结果数量（范围：5-20）", bundle: HanlinLocalization.bundle))) {
                 Stepper(value: $knowledgeCount, in: 5...20) {
-                    Text("翻找结果数量：\(knowledgeCount)")
+                    Text("翻找结果数量：\(knowledgeCount)", bundle: HanlinLocalization.bundle)
                 }
             }
             
-            Section(header: Text("匹配度阈值（范围：0.05 - 1.0）")) {
+            Section(header: Text(String(localized: "匹配度阈值（范围：0.05 - 1.0）", bundle: HanlinLocalization.bundle))) {
                 Stepper(value: $knowledgeSimilarity, in: 0.05...1.0, step: 0.05) {
-                    Text(String(format: "匹配度阈值：%.2f", knowledgeSimilarity))
+                    Text(String(format: String(localized: "匹配度阈值：%.2f", bundle: HanlinLocalization.bundle), knowledgeSimilarity))
                 }
             }
             
-            Section(header: Text("功能列表")) {
-                Label("知识背包翻找", systemImage: "backpack")
-                Label("知识文档撰写", systemImage: "text.document")
+            Section(header: Text(String(localized: "功能列表", bundle: HanlinLocalization.bundle))) {
+                Label(String(localized: "知识背包翻找", bundle: HanlinLocalization.bundle), systemImage: "backpack")
+                Label(String(localized: "知识文档撰写", bundle: HanlinLocalization.bundle), systemImage: "text.document")
             }
         }
-        .navigationTitle("知识背包")
+        .navigationTitle(String(localized: "知识背包", bundle: HanlinLocalization.bundle))
         .onAppear {
             loadUserInfo()
         }
@@ -1165,6 +1326,8 @@ struct MapSettingView: View {
     
     // 用于地图引擎配置相关状态
     @State private var selectedMapKey: ToolKeys?
+    @State private var credentialDraft = HanlinCredentialEditDraft()
+    @State private var credentialError: String?
     @State private var loadingMapCompany: String? = nil
     @State private var errorMessage: String = ""
     @State private var showError: Bool = false
@@ -1180,13 +1343,13 @@ struct MapSettingView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "map")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding()
                     
-                    Text("设置地图功能，以便在与支持工具的模型对话时，更好的获取位置相关的信息并让模型向你展示地图")
-                        .font(.footnote)
+                    Text(String(localized: "设置地图功能，以便在与支持工具的模型对话时，更好的获取位置相关的信息并让模型向你展示地图", bundle: HanlinLocalization.bundle))
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -1195,13 +1358,13 @@ struct MapSettingView: View {
             }
             
             Section {
-                Toggle("启用地图", isOn: Binding(
+                Toggle(String(localized: "启用地图", bundle: HanlinLocalization.bundle), isOn: Binding(
                     get: { mapEnable },
                     set: { mapEnable = $0 }))
-                .tint(.hlBlue)
+                .tint(.hanlinHLBlue)
             }
             
-            Section(header: Text("地图引擎选择（最多只能开启一个）")) { 
+            Section(header: Text(String(localized: "地图引擎选择（最多只能开启一个）", bundle: HanlinLocalization.bundle))) {
                 ForEach(sortedMapKeys) { key in
                     HStack {
                         // 左侧区域：点击可进入 API 配置界面（APPLEMAPP 不可配置 API）
@@ -1211,7 +1374,7 @@ struct MapSettingView: View {
                             }
                         } label: {
                             HStack {
-                                Image(getCompanyIcon(for: key.company))
+                                Image(hanlinAsset: getCompanyIcon(for: key.company))
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 24, height: 24)
@@ -1220,12 +1383,12 @@ struct MapSettingView: View {
                                 Spacer()
                                 // 对于默认的 APPLEMAP，显示"默认"标识
                                 if key.company.uppercased() == "APPLEMAP" {
-                                    Text("默认")
-                                        .font(.caption)
+                                    Text(String(localized: "默认", bundle: HanlinLocalization.bundle))
+                                        .font(HanlinTypography.caption)
                                         .foregroundColor(.gray)
                                 } else {
                                     Image(systemName: "key")
-                                        .foregroundColor(.hlBluefont)
+                                        .foregroundColor(.hanlinHLBluefont)
                                 }
                             }
                         }
@@ -1235,27 +1398,27 @@ struct MapSettingView: View {
                         if loadingMapCompany == key.company {
                             ProgressView()
                         } else {
-                            Toggle("", isOn: Binding(
+                            Toggle(hanlin: "", isOn: Binding(
                                 get: { key.isUsing },
                                 set: { newValue in
                                     toggleMapEngine(for: key, newValue: newValue)
                                 }
                             ))
                             .labelsHidden()
-                            .tint(.hlBlue)
+                            .tint(.hanlinHLBlue)
                         }
                     }
                 }
             }
             
-            Section(header: Text("功能列表")) {
-                Label("用户定位查询", systemImage: "location")
-                Label("特定位置搜索", systemImage: "mappin.and.ellipse")
-                Label("附近兴趣搜索", systemImage: "mecca")
-                Label("自动路线规划", systemImage: "point.bottomleft.forward.to.point.topright.filled.scurvepath")
+            Section(header: Text(String(localized: "功能列表", bundle: HanlinLocalization.bundle))) {
+                Label(String(localized: "用户定位查询", bundle: HanlinLocalization.bundle), systemImage: "location")
+                Label(String(localized: "特定位置搜索", bundle: HanlinLocalization.bundle), systemImage: "mappin.and.ellipse")
+                Label(String(localized: "附近兴趣搜索", bundle: HanlinLocalization.bundle), systemImage: "mecca")
+                Label(String(localized: "自动路线规划", bundle: HanlinLocalization.bundle), systemImage: "point.bottomleft.forward.to.point.topright.filled.scurvepath")
             }
         }
-        .navigationTitle("地图规划")
+        .navigationTitle(String(localized: "地图规划", bundle: HanlinLocalization.bundle))
         .onAppear {
             loadUserInfo()
         }
@@ -1263,11 +1426,14 @@ struct MapSettingView: View {
             saveUserInfo()
         }
         // 弹出编辑 API 配置界面
-        .sheet(item: $selectedMapKey) { key in
+        .sheet(item: $selectedMapKey, onDismiss: {
+            credentialDraft = HanlinCredentialEditDraft()
+            credentialError = nil
+        }) { key in
             editMapKeyView(for: key)
         }
         .alert(errorMessage, isPresented: $showError) {
-            Button("确定", role: .cancel) { }
+            Button(String(localized: "确定", bundle: HanlinLocalization.bundle), role: .cancel) { }
         }
     }
     
@@ -1304,8 +1470,8 @@ struct MapSettingView: View {
         DispatchQueue.main.async {
             if newValue {
                 // 对于非 AppleMap 必须配置 API Key 才能启用
-                if key.company.uppercased() != "APPLEMAP" && key.key.isEmpty {
-                    errorMessage = "\(getCompanyName(for: key.company)) 需要配置 API Key 才能启用。"
+                if key.company.uppercased() != "APPLEMAP" && (key.resolvedKey?.isEmpty ?? true) {
+            errorMessage = String(format: String(localized: "%@ 需要配置 API Key 才能启用。", bundle: HanlinLocalization.bundle), getCompanyName(for: key.company))
                     showError = true
                     loadingMapCompany = nil
                     return
@@ -1322,7 +1488,7 @@ struct MapSettingView: View {
             do {
                 try modelContext.save()
             } catch {
-                errorMessage = "保存失败: \(error.localizedDescription)"
+            errorMessage = String(format: String(localized: "保存失败: %@", bundle: HanlinLocalization.bundle), error.localizedDescription)
                 showError = true
             }
             ensureDefaultEngine()
@@ -1355,31 +1521,31 @@ struct MapSettingView: View {
                 // APPLEMAP 无需配置 API
                 if key.company.uppercased() == "APPLEMAP" {
                     Section {
-                        Text("APPLEMAP 不需要配置 API Key")
+                        Text(String(localized: "APPLEMAP 不需要配置 API Key", bundle: HanlinLocalization.bundle))
                             .foregroundColor(.gray)
                     }
                 } else {
                     Section {
                         VStack(alignment: .center) {
-                            Image(getCompanyIcon(for: key.company))
+                            Image(hanlinAsset: getCompanyIcon(for: key.company))
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 50, height: 50)
                                 .padding()
 
-                            Text("设置 \(getCompanyName(for: key.company)) API密钥，以开启该地图引擎")
-                                .font(.footnote)
+                            Text("设置 \(getCompanyName(for: key.company)) API密钥，以开启该地图引擎", bundle: HanlinLocalization.bundle)
+                                .font(HanlinTypography.footnote)
                                 .multilineTextAlignment(.center)
 
                             if let url = URL(string: key.help) {
-                                Link("🔗 点此获取 \(getCompanyName(for: key.company)) API密钥", destination: url)
-                                    .font(.footnote)
+                            Link(String(format: String(localized: "🔗 点此获取 %@ API密钥", bundle: HanlinLocalization.bundle), getCompanyName(for: key.company)), destination: url)
+                                    .font(HanlinTypography.footnote)
                                     .multilineTextAlignment(.center)
                                     .padding(.bottom)
                             } else {
                                 // 当 URL 无效时可以提供一个备用视图
-                                Text("建议进入其开放平台获取API密钥")
-                                    .font(.footnote)
+                                Text(String(localized: "建议进入其开放平台获取API密钥", bundle: HanlinLocalization.bundle))
+                                    .font(HanlinTypography.footnote)
                                     .multilineTextAlignment(.center)
                                     .padding(.bottom)
                             }
@@ -1387,27 +1553,46 @@ struct MapSettingView: View {
                         .frame(maxWidth: .infinity, alignment: .center)
                     }
                     
-                    Section(header: Text("密钥")) {
-                        SecureField("请输入 API Key", text: Binding(
-                            get: { key.key },
-                            set: { key.key = $0 }
+                    Section(header: Text(String(localized: "密钥", bundle: HanlinLocalization.bundle))) {
+                        SecureField(String(localized: "请输入 API Key", bundle: HanlinLocalization.bundle), text: Binding(
+                            get: { credentialDraft.text },
+                            set: { credentialDraft.replaceText($0) }
                         ))
+                        ProviderCredentialStorageNotice(canMigrate: credentialDraft.canMigrate(key)) {
+                            do {
+                                try credentialDraft.migrate(key, in: modelContext) { $0.timestamp = Date() }
+                                selectedMapKey = nil
+                            } catch {
+                                credentialError = HanlinAppProviderCredentials.userMessage(for: error)
+                            }
+                        }
                     }
                 }
             }
-            .navigationTitle("编辑密钥")
+            .navigationTitle(String(localized: "编辑密钥", bundle: HanlinLocalization.bundle))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") {
+                    Button(String(localized: "取消", bundle: HanlinLocalization.bundle)) {
                         selectedMapKey = nil
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("保存") {
-                        key.timestamp = Date()
-                        try? modelContext.save()
-                        selectedMapKey = nil
+                    Button(String(localized: "保存", bundle: HanlinLocalization.bundle)) {
+                        do {
+                            try credentialDraft.save(to: key, in: modelContext) { $0.timestamp = Date() }
+                            selectedMapKey = nil
+                        } catch {
+                            credentialError = HanlinAppProviderCredentials.userMessage(for: error)
+                        }
                     }
+                    .disabled(!credentialDraft.isReadyToSave)
+                }
+            }
+            .credentialSaveAlert($credentialError)
+            .onAppear {
+                if credentialDraft.recordID != key.persistentModelID {
+                    do { try credentialDraft.load(key) }
+                    catch { credentialError = HanlinAppProviderCredentials.userMessage(for: error) }
                 }
             }
         }
@@ -1427,13 +1612,13 @@ struct CalendarSettingView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "calendar")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding()
                     
-                    Text("设置日历功能，以便在与支持工具的模型对话时，获取日历日程、提醒事项信息或者让模型写入日历日程、提醒事项")
-                        .font(.footnote)
+                    Text(String(localized: "设置日历功能，以便在与支持工具的模型对话时，获取日历日程、提醒事项信息或者让模型写入日历日程、提醒事项", bundle: HanlinLocalization.bundle))
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -1441,20 +1626,20 @@ struct CalendarSettingView: View {
             }
             
             Section {
-                Toggle("启用日历", isOn: Binding(
+                Toggle(String(localized: "启用日历", bundle: HanlinLocalization.bundle), isOn: Binding(
                     get: { calendarEnable },
                     set: { calendarEnable = $0 }))
-                .tint(.hlBlue)
+                .tint(.hanlinHLBlue)
             }
             
-            Section(header: Text("功能列表")) {
-                Label("查找日历事件", systemImage: "calendar.badge.checkmark")
-                Label("查找提醒事项", systemImage: "checklist")
-                Label("新增日历事件", systemImage: "calendar.badge.plus")
-                Label("新增提醒事项", systemImage: "text.badge.plus")
+            Section(header: Text(String(localized: "功能列表", bundle: HanlinLocalization.bundle))) {
+                Label(String(localized: "查找日历事件", bundle: HanlinLocalization.bundle), systemImage: "calendar.badge.checkmark")
+                Label(String(localized: "查找提醒事项", bundle: HanlinLocalization.bundle), systemImage: "checklist")
+                Label(String(localized: "新增日历事件", bundle: HanlinLocalization.bundle), systemImage: "calendar.badge.plus")
+                Label(String(localized: "新增提醒事项", bundle: HanlinLocalization.bundle), systemImage: "text.badge.plus")
             }
         }
-        .navigationTitle("日历提醒")
+        .navigationTitle(String(localized: "日历提醒", bundle: HanlinLocalization.bundle))
         .onAppear {
             loadUserInfo()
         }
@@ -1503,13 +1688,13 @@ struct CodeSettingView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "apple.terminal")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding()
                     
-                    Text("设置代码功能，以便在与支持工具的模型对话时，模型为你运行Python代码，或查看模型为你制作网页内容，并与其交互。")
-                        .font(.footnote)
+                    Text(String(localized: "设置代码功能，以便在与支持工具的模型对话时，模型为你运行Python代码，或查看模型为你制作网页内容，并与其交互。", bundle: HanlinLocalization.bundle))
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -1517,18 +1702,18 @@ struct CodeSettingView: View {
             }
             
             Section {
-                Toggle("启用代码", isOn: Binding(
+                Toggle(String(localized: "启用代码", bundle: HanlinLocalization.bundle), isOn: Binding(
                     get: { CodeEnable },
                     set: { CodeEnable = $0 }))
-                .tint(.hlBlue)
+                .tint(.hanlinHLBlue)
             }
             
-            Section(header: Text("功能列表")) {
-                Label("渲染网页内容", systemImage: "macwindow.badge.plus")
-                Label("运行程序代码", systemImage: "apple.terminal")
+            Section(header: Text(String(localized: "功能列表", bundle: HanlinLocalization.bundle))) {
+                Label(String(localized: "渲染网页内容", bundle: HanlinLocalization.bundle), systemImage: "macwindow.badge.plus")
+                Label(String(localized: "运行程序代码", bundle: HanlinLocalization.bundle), systemImage: "apple.terminal")
             }
         }
-        .navigationTitle("代码执行")
+        .navigationTitle(String(localized: "代码执行", bundle: HanlinLocalization.bundle))
         .onAppear {
             loadUserInfo()
         }
@@ -1577,13 +1762,13 @@ struct HealthSettingView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "heart")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding()
                     
-                    Text("设置健康功能，以便在与支持工具的模型对话时，模型能够获取你的健康信息或帮你记录健康、饮食等信息。")
-                        .font(.footnote)
+                    Text(String(localized: "设置健康功能，以便在与支持工具的模型对话时，模型能够获取你的健康信息或帮你记录健康、饮食等信息。", bundle: HanlinLocalization.bundle))
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -1591,20 +1776,20 @@ struct HealthSettingView: View {
             }
             
             Section {
-                Toggle("启用健康", isOn: Binding(
+                Toggle(String(localized: "启用健康", bundle: HanlinLocalization.bundle), isOn: Binding(
                     get: { healthEnable },
                     set: { healthEnable = $0 }))
-                .tint(.hlBlue)
+                .tint(.hanlinHLBlue)
             }
             
-            Section(header: Text("功能列表")) {
-                Label("查询步数距离", systemImage: "figure.walk")
-                Label("查询能量消耗", systemImage: "flame")
-                Label("查询营养摄入", systemImage: "bubbles.and.sparkles")
-                Label("写入营养摄入", systemImage: "pencil.and.list.clipboard")
+            Section(header: Text(String(localized: "功能列表", bundle: HanlinLocalization.bundle))) {
+                Label(String(localized: "查询步数距离", bundle: HanlinLocalization.bundle), systemImage: "figure.walk")
+                Label(String(localized: "查询能量消耗", bundle: HanlinLocalization.bundle), systemImage: "flame")
+                Label(String(localized: "查询营养摄入", bundle: HanlinLocalization.bundle), systemImage: "bubbles.and.sparkles")
+                Label(String(localized: "写入营养摄入", bundle: HanlinLocalization.bundle), systemImage: "pencil.and.list.clipboard")
             }
         }
-        .navigationTitle("健康生活")
+        .navigationTitle(String(localized: "健康生活", bundle: HanlinLocalization.bundle))
         .onAppear {
             loadUserInfo()
         }
@@ -1653,13 +1838,13 @@ struct CanvasSettingView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "pencil.and.outline")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding()
                     
-                    Text("设置画布功能，以便在与支持工具的模型对话时，模型能够使用画布工具，带来更好的长文本、大段落或结构化内容的输出编辑体验。")
-                        .font(.footnote)
+                    Text(String(localized: "设置画布功能，以便在与支持工具的模型对话时，模型能够使用画布工具，带来更好的长文本、大段落或结构化内容的输出编辑体验。", bundle: HanlinLocalization.bundle))
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -1667,20 +1852,20 @@ struct CanvasSettingView: View {
             }
             
             Section {
-                Toggle("启用画布", isOn: Binding(
+                Toggle(String(localized: "启用画布", bundle: HanlinLocalization.bundle), isOn: Binding(
                     get: { canvasEnable },
                     set: { canvasEnable = $0 }))
-                .tint(.hlBlue)
+                .tint(.hanlinHLBlue)
             }
             
-            Section(header: Text("功能列表")) {
-                Label("创建信息画布", systemImage: "pencil.and.outline")
-                Label("编辑画布内容", systemImage: "pencil.and.scribble")
-                Label("运行画布代码", systemImage: "play.circle")
-                Label("渲染画布网页", systemImage: "macwindow")
+            Section(header: Text(String(localized: "功能列表", bundle: HanlinLocalization.bundle))) {
+                Label(String(localized: "创建信息画布", bundle: HanlinLocalization.bundle), systemImage: "pencil.and.outline")
+                Label(String(localized: "编辑画布内容", bundle: HanlinLocalization.bundle), systemImage: "pencil.and.scribble")
+                Label(String(localized: "运行画布代码", bundle: HanlinLocalization.bundle), systemImage: "play.circle")
+                Label(String(localized: "渲染画布网页", bundle: HanlinLocalization.bundle), systemImage: "macwindow")
             }
         }
-        .navigationTitle("信息画布")
+        .navigationTitle(String(localized: "信息画布", bundle: HanlinLocalization.bundle))
         .onAppear {
             loadUserInfo()
         }
@@ -1731,6 +1916,8 @@ struct WeatherSettingView: View {
     
     // 用于天气服务商配置相关状态
     @State private var selectedWeatherKey: ToolKeys?
+    @State private var credentialDraft = HanlinCredentialEditDraft()
+    @State private var credentialError: String?
     @State private var loadingWeatherCompany: String? = nil
     @State private var errorMessage: String = ""
     @State private var showError: Bool = false
@@ -1745,13 +1932,13 @@ struct WeatherSettingView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "cloud.sun")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding()
                     
-                    Text("设置天气功能，以便在与支持工具的模型对话时，获取实时天气信息和未来天气预报")
-                        .font(.footnote)
+                    Text(String(localized: "设置天气功能，以便在与支持工具的模型对话时，获取实时天气信息和未来天气预报", bundle: HanlinLocalization.bundle))
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
@@ -1759,14 +1946,14 @@ struct WeatherSettingView: View {
             }
             
             Section {
-                Toggle("启用天气", isOn: Binding(
+                Toggle(String(localized: "启用天气", bundle: HanlinLocalization.bundle), isOn: Binding(
                     get: { weatherEnable },
                     set: { weatherEnable = $0 }
                 ))
-                .tint(.hlBlue)
+                .tint(.hanlinHLBlue)
             }
             
-            Section(header: Text("天气服务商选择（最多只能开启一个）")) {
+            Section(header: Text(String(localized: "天气服务商选择（最多只能开启一个）", bundle: HanlinLocalization.bundle))) {
                 ForEach(sortedWeatherKeys) { key in
                     HStack {
                         // 点击进入 API 配置界面
@@ -1774,7 +1961,7 @@ struct WeatherSettingView: View {
                             selectedWeatherKey = key
                         } label: {
                             HStack {
-                                Image(getCompanyIcon(for: key.company))
+                                Image(hanlinAsset: getCompanyIcon(for: key.company))
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 24, height: 24)
@@ -1782,7 +1969,7 @@ struct WeatherSettingView: View {
                                     .foregroundColor(.primary)
                                 Spacer()
                                 Image(systemName: "key")
-                                    .foregroundColor(.hlBluefont)
+                                    .foregroundColor(.hanlinHLBluefont)
                             }
                         }
                         .buttonStyle(PlainButtonStyle())
@@ -1791,25 +1978,25 @@ struct WeatherSettingView: View {
                         if loadingWeatherCompany == key.company {
                             ProgressView()
                         } else {
-                            Toggle("", isOn: Binding(
+                            Toggle(hanlin: "", isOn: Binding(
                                 get: { key.isUsing },
                                 set: { newValue in
                                     toggleWeatherService(for: key, newValue: newValue)
                                 }
                             ))
                             .labelsHidden()
-                            .tint(.hlBlue)
+                            .tint(.hanlinHLBlue)
                         }
                     }
                 }
             }
             
-            Section(header: Text("功能列表")) {
-                Label("查询实时天气", systemImage: "cloud.sun")
-                Label("未来天气预报", systemImage: "calendar")
+            Section(header: Text(String(localized: "功能列表", bundle: HanlinLocalization.bundle))) {
+                Label(String(localized: "查询实时天气", bundle: HanlinLocalization.bundle), systemImage: "cloud.sun")
+                Label(String(localized: "未来天气预报", bundle: HanlinLocalization.bundle), systemImage: "calendar")
             }
         }
-        .navigationTitle("天气查询")
+        .navigationTitle(String(localized: "天气查询", bundle: HanlinLocalization.bundle))
         .onAppear {
             loadUserInfo()
         }
@@ -1817,11 +2004,14 @@ struct WeatherSettingView: View {
             saveUserInfo()
         }
         // 弹出编辑 API 配置界面
-        .sheet(item: $selectedWeatherKey) { key in
+        .sheet(item: $selectedWeatherKey, onDismiss: {
+            credentialDraft = HanlinCredentialEditDraft()
+            credentialError = nil
+        }) { key in
             editWeatherKeyView(for: key)
         }
         .alert(errorMessage, isPresented: $showError) {
-            Button("确定", role: .cancel) { }
+            Button(String(localized: "确定", bundle: HanlinLocalization.bundle), role: .cancel) { }
         }
     }
     
@@ -1853,7 +2043,7 @@ struct WeatherSettingView: View {
         loadingWeatherCompany = key.company
         DispatchQueue.main.async {
             if newValue {
-                if key.key.isEmpty {
+                if (key.resolvedKey?.isEmpty ?? true) {
                     errorMessage = "\(getCompanyName(for: key.company)) 需要配置 API Key 才能启用。"
                     showError = true
                     loadingWeatherCompany = nil
@@ -1889,24 +2079,24 @@ struct WeatherSettingView: View {
             Form {
                 Section {
                     VStack(alignment: .center) {
-                        Image(getCompanyIcon(for: key.company))
+                        Image(hanlinAsset: getCompanyIcon(for: key.company))
                             .resizable()
                             .scaledToFit()
                             .frame(width: 50, height: 50)
                             .padding()
 
-                        Text("设置 \(getCompanyName(for: key.company)) API 密钥，以开启该天气服务")
-                            .font(.footnote)
+                        Text("设置 \(getCompanyName(for: key.company)) API 密钥，以开启该天气服务", bundle: HanlinLocalization.bundle)
+                            .font(HanlinTypography.footnote)
                             .multilineTextAlignment(.center)
 
                         if let url = URL(string: key.help) {
-                            Link("🔗 点此获取 \(getCompanyName(for: key.company)) API 密钥", destination: url)
-                                .font(.footnote)
+                            Link(hanlin: "🔗 点此获取 \(getCompanyName(for: key.company)) API 密钥", destination: url)
+                                .font(HanlinTypography.footnote)
                                 .multilineTextAlignment(.center)
                                 .padding(.bottom)
                         } else {
-                            Text("建议进入其开放平台获取 API 密钥")
-                                .font(.footnote)
+                            Text(String(localized: "建议进入其开放平台获取 API 密钥", bundle: HanlinLocalization.bundle))
+                                .font(HanlinTypography.footnote)
                                 .multilineTextAlignment(.center)
                                 .padding(.bottom)
                         }
@@ -1914,34 +2104,84 @@ struct WeatherSettingView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
                 
-                Section(header: Text("密钥")) {
-                    SecureField("请输入 API Key", text: Binding(
-                        get: { key.key },
-                        set: { key.key = $0 }
+                Section(header: Text(String(localized: "密钥", bundle: HanlinLocalization.bundle))) {
+                    SecureField(String(localized: "请输入 API Key", bundle: HanlinLocalization.bundle), text: Binding(
+                        get: { credentialDraft.text },
+                        set: { credentialDraft.replaceText($0) }
                     ))
+                    ProviderCredentialStorageNotice(canMigrate: credentialDraft.canMigrate(key)) {
+                        do {
+                            try credentialDraft.migrate(key, in: modelContext) { $0.timestamp = Date() }
+                            selectedWeatherKey = nil
+                        } catch {
+                            credentialError = HanlinAppProviderCredentials.userMessage(for: error)
+                        }
+                    }
                 }
                 
-                Section(header: Text("请求地址")) {
-                    TextField("请输入 API Host", text: Binding(
+                Section(header: Text(String(localized: "请求地址", bundle: HanlinLocalization.bundle))) {
+                    TextField(String(localized: "请输入 API Host", bundle: HanlinLocalization.bundle), text: Binding(
                         get: { key.requestURL },
                         set: { key.requestURL = $0 }
                     ))
                 }
             }
-            .navigationTitle("编辑密钥")
+            .navigationTitle(String(localized: "编辑密钥", bundle: HanlinLocalization.bundle))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") {
+                    Button(String(localized: "取消", bundle: HanlinLocalization.bundle)) {
                         selectedWeatherKey = nil
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("保存") {
-                        key.timestamp = Date()
-                        try? modelContext.save()
-                        selectedWeatherKey = nil
+                    Button(String(localized: "保存", bundle: HanlinLocalization.bundle)) {
+                        do {
+                            try credentialDraft.save(to: key, in: modelContext) { $0.timestamp = Date() }
+                            selectedWeatherKey = nil
+                        } catch {
+                            credentialError = HanlinAppProviderCredentials.userMessage(for: error)
+                        }
                     }
+                    .disabled(!credentialDraft.isReadyToSave)
                 }
+            }
+            .credentialSaveAlert($credentialError)
+            .onAppear {
+                if credentialDraft.recordID != key.persistentModelID {
+                    do { try credentialDraft.load(key) }
+                    catch { credentialError = HanlinAppProviderCredentials.userMessage(for: error) }
+                }
+            }
+        }
+    }
+}
+
+
+private extension View {
+    func credentialSaveAlert(_ message: Binding<String?>) -> some View {
+        alert(String(localized: "Key settings", bundle: HanlinLocalization.bundle), isPresented: Binding(
+            get: { message.wrappedValue != nil },
+            set: { if !$0 { message.wrappedValue = nil } }
+        )) {
+            Button(String(localized: "OK", bundle: HanlinLocalization.bundle), role: .cancel) { message.wrappedValue = nil }
+        } message: {
+            Text(message.wrappedValue ?? "")
+        }
+    }
+}
+
+
+private struct ProviderCredentialStorageNotice: View {
+    let canMigrate: Bool
+    let performMigration: () -> Void
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(String(localized: "New and changed keys are saved in Keychain. Update Hanlin and enable iCloud Keychain on your other devices to use them there. Synchronization can take time.", bundle: HanlinLocalization.bundle))
+                .font(HanlinTypography.footnote)
+                .foregroundStyle(.secondary)
+            if canMigrate {
+                Button(String(localized: "Move this key to Keychain", bundle: HanlinLocalization.bundle), action: performMigration)
             }
         }
     }

@@ -1,0 +1,17 @@
+test_changed_historical_description_rejected (test_parity_inventory.ParityValidatorTests.test_changed_historical_description_rejected) ... ok
+test_complete_inventory (test_parity_inventory.ParityValidatorTests.test_complete_inventory) ... ok
+test_duplicate_id_rejected (test_parity_inventory.ParityValidatorTests.test_duplicate_id_rejected) ... ok
+test_missing_id_rejected (test_parity_inventory.ParityValidatorTests.test_missing_id_rejected) ... ok
+test_missing_owner_or_evidence_rejected (test_parity_inventory.ParityValidatorTests.test_missing_owner_or_evidence_rejected) ... ok
+test_missing_required_status_fields_rejected (test_parity_inventory.ParityValidatorTests.test_missing_required_status_fields_rejected) ... ok
+test_source_anchor_must_match_selected_target_revision (test_parity_inventory.ParityValidatorTests.test_source_anchor_must_match_selected_target_revision) ... ok
+test_target_project_fingerprint_cannot_be_changed (test_parity_inventory.ParityValidatorTests.test_target_project_fingerprint_cannot_be_changed) ... ok
+test_target_revision_must_be_exact_commit (test_parity_inventory.ParityValidatorTests.test_target_revision_must_be_exact_commit) ... ok
+test_unexpected_id_rejected (test_parity_inventory.ParityValidatorTests.test_unexpected_id_rejected) ... ok
+test_unproven_pass_rejected (test_parity_inventory.ParityValidatorTests.test_unproven_pass_rejected) ... ok
+test_wrong_source_digest_rejected (test_parity_inventory.ParityValidatorTests.test_wrong_source_digest_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 3.269s
+
+OK

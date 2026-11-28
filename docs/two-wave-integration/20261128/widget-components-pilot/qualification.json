@@ -1,0 +1,67 @@
+{
+  "actualTypecheck": {
+    "exit": 0,
+    "localSimulatorSDK": "27.0",
+    "localXcode": "27.0 / 27A266a",
+    "originalDeadlineSeconds": 120,
+    "receiptSHA256": "741d574bb9cc61f3b9a24fd7c739f79a45130b3dbe3981d8dd46898829ec459e",
+    "seconds": 1.7057347919999999,
+    "sourceSHA256": "0242e3cd6074290011b8239626b1406009973ebe0a267b1082a12df7bfd2a2ed",
+    "stderrBytes": 0,
+    "stdoutBytes": 0,
+    "tests": 0
+  },
+  "addedUITestMethods": 1,
+  "base": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "controlsPlan": {
+    "observerMethods": 8,
+    "plannerMethods": 1,
+    "route": "Run once in next required full original CI after root composition. No focused repeat."
+  },
+  "historicalSnapshotPolicy": "Verbatim freeze/source reviews retain their earlier NOT_RUN state; actual later typecheck is added separately, never rewritten.",
+  "inputImpact": {
+    "collectorExecuted": false,
+    "collectorRootOrExplicitInputIntersection": 0,
+    "qualification": "Source closure evidence, not a new SDK or Host execution.",
+    "staticCurrentSDK396Intersection": 0,
+    "staticHost99Intersection": 0
+  },
+  "notExecuted": {
+    "SimulatorCase": true,
+    "appBuild": true,
+    "hosted27_2": true,
+    "nativeAXOrPixels": true,
+    "packagingRecipe": true,
+    "portableControls": true,
+    "workflowDispatch": true
+  },
+  "oldUITestMethodsPreserved": 46,
+  "preserved": {
+    "jobMinutes": 210,
+    "newCaseSeconds": 420,
+    "observerSeconds": 2100,
+    "oldRunnerDispatcherPlannerAST": true,
+    "originalMatrixAnd25RecipeOutputs": true,
+    "wholeOriginalUIAndHelpers": true
+  },
+  "recordedAt": "2026-11-28T11:38:12.553021+00:00",
+  "schema": 1,
+  "scope": "miniapp_widget_components_os",
+  "scopeLimits": [
+    "Actual Large Home Screen pilot only; eight metadata declarations are not eight tested families.",
+    "Real native element identity/value/frame/window, AX and PNG remain mandatory and currently unobserved.",
+    "State-derived labels are not pixel proof of chart bars, progress fill or SF Symbol shape; PNG requires review.",
+    "No appearance, RTL, VoiceOver speech, asset image, preview, Link navigation, ActivityKit or physical-device acceptance."
+  ],
+  "selector": "HanlinEntrypointSystemSurfaceUITests/testMiniAppsLargeWidgetComponentsTrackActualNativeState",
+  "sourceCommit": "8c968dd2c38f6277216a70288991a7efa2656511",
+  "sourcePaths": 9,
+  "sourceTree": "5eb4a2a433d0f8464812d4573044af0919ebd2eb",
+  "status": "SOURCE_APPROVED_AND_LOCAL_WHOLE_UI_TYPECHECK_PASS",
+  "workflow": {
+    "committed": false,
+    "literalInsertions": 2,
+    "originalWidgetProducerConditionChanged": false,
+    "separatePatchSHA256": "856a4e8c22a1779c865aa29dfab3cc53ac06ecdacf1044b08d063e9d664942d6"
+  }
+}

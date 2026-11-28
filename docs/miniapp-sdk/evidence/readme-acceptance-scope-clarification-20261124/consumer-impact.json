@@ -1,0 +1,216 @@
+{
+  "activeRunID": 45412939674,
+  "activeSource": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
+  "base": "33f28ccb7d58da5ad5bc5e515665ea43b51af3ea",
+  "scopeCounts": {
+    "miniapp_authoring": {
+      "AI": 25,
+      "MiniApps": 17,
+      "total": 42
+    },
+    "miniapp_sdk04StandaloneSelectors": 9,
+    "overlapWithAuthoring": [
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents"
+    ],
+    "miniapp_complete": {
+      "AI": 27,
+      "MiniApps": 25,
+      "total": 52
+    }
+  },
+  "selectionCountsAreNotExecutedPasses": true,
+  "readme": {
+    "path": "docs/miniapp-sdk/README.md",
+    "beforeSHA256": "4427f49e5b729658d95d98eb6cdbb84ea08f2e4d2e33d7b7c480192914346637",
+    "afterSHA256": "90068db0d87718cc9f995f9d45c1e2e8a7bd670aa8b8f3b324f0bf4cfc591d95",
+    "beforeBytes": 15776,
+    "afterBytes": 15957,
+    "sameBeforeAtActiveSourceAndBase": true,
+    "changedLines": [
+      109
+    ],
+    "allOtherLinesByteIdentical": true,
+    "inventoriedDescriptorBodySHA256": "8400a12ff5af95866661765d5ee6d0af938c157b0567e0f3ff703c5643fdbb7d",
+    "descriptorBodyUnchanged": true
+  },
+  "inventorySourceMatches": [],
+  "currentReachabilityReference": {
+    "file": "docs/miniapp-sdk/README.md",
+    "line": 82,
+    "anchor": "## Entry points and native surfaces",
+    "sha256": "4427f49e5b729658d95d98eb6cdbb84ea08f2e4d2e33d7b7c480192914346637"
+  },
+  "sourceEvidence": [
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "sha256": "b27ca38423d3d0eb179f2b8bb7f25568d8ee9a7a70a36da7dd9e57e243ca004c",
+      "sameAtActiveSourceAndBase": true,
+      "excerpts": [
+        {
+          "firstLine": 25,
+          "lastLine": 66,
+          "text": "    \"miniapp_authoring\": ([\n        \"AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings\",\n        \"AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft\",\n        \"AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic\",\n        \"AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair\",\n        \"AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource\",\n        \"AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode\",\n        \"AI_HLYTests/HanlinOriginalScriptWidgetAPITests\",\n        \"AI_HLYTests/HanlinNativePresentationTests\",\n        \"AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests\",\n        \"AI_HLYTests/HanlinOriginalScriptWidgetControlTests\",\n        \"AI_HLYTests/HanlinMiniAppStorageCapacityTests\",\n        \"AI_HLYTests/HanlinOriginalExpoWidgetTests\",\n        \"AI_HLYUITests/MiniAppAuthoringUITests\"], 25),\n    \"miniapp_sdk04\": ([\n        \"AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure\",\n        \"AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer\"], 2),\n    \"cross_product\": ([\"AI_HLYUITests/HanlinPairedProductUITests\"], 3),\n    \"shared_ingress\": ([\"AI_HLYTests/ShareInboxHostIntegrationTests\", \"AI_HLYUITests/HanlinShareInboxUITests\"], 5),\n    \"product_and_share\": ([\"AI_HLYUITests/HanlinPairedProductUITests\",\n                          \"AI_HLYTests/ShareInboxHostIntegrationTests\",\n                          \"AI_HLYUITests/HanlinShareInboxUITests\"], 8),\n}\n\n\n# The earlier42 app cases never executed after the failed first product build.\n# Complete acceptance combines their exact plan with only the new current cases.\nTEST_PLANS[\"miniapp_complete\"] = (\n    TEST_PLANS[\"miniapp_authoring\"][0] + TEST_PLANS[\"miniapp_sdk04\"][0], 27)\nSDK04_MINIAPPS_SELECTORS = (\n    \"HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata\",\n    \"HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList\",\n    \"HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout\",\n    \"HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry\",\n    \"HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope\",\n    \"HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts\",\n    \"HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication\",\n    \"HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents\",\n    \"HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery\",\n)\n\n"
+        },
+        {
+          "firstLine": 597,
+          "lastLine": 626,
+          "text": "            runtime_selectors = [\n                \"HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch\",\n                \"HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents\",\n                \"HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters\",\n                \"HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents\",\n                \"HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets\",\n                \"HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities\",\n                \"HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText\",\n                \"HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents\",\n                \"HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents\",\n                \"HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation\",\n                \"HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent\",\n                \"HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained\",\n                \"HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes\",\n                \"HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner\",\n                \"HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions\",\n                \"HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation\",\n                \"HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal\"]\n            if TEST_SCOPE == \"miniapp_complete\":\n                runtime_selectors += [selector for selector in SDK04_MINIAPPS_SELECTORS if selector not in runtime_selectors]\n            adapter_assets = start_native_adapter_assets(state)\n            state[\"original_runtime_selectors\"] = runtime_selectors\n            runtime_result = EVIDENCE / \"OriginalRuntimes.xcresult\"\n            argv = base + [\"-scheme\", \"HanlinMiniApps\", \"test-without-building\",\n                \"-resultBundlePath\", str(runtime_result)]\n            argv += [\"-only-testing:\" + selector for selector in runtime_selectors]\n            code, _ = command(argv, \"original-runtimes.log\", timeout=1200, allow_failure=True)\n            state[\"original_runtime_summary\"] = verify_native_result(runtime_result, \"original-runtimes\",\n                runtime_selectors, 17 if TEST_SCOPE == \"miniapp_authoring\" else 25, code)\n            observed_images = {(request[\"path\"], request[\"status\"])"
+        }
+      ]
+    },
+    {
+      "path": "Scripts/MiniApps/check-authoring-examples.mjs",
+      "sha256": "419f295ee6f0e7dcbf9cee42560ef1e8760010ae07b1d6767a0f6017fc7b317a",
+      "sameAtActiveSourceAndBase": true,
+      "excerpts": [
+        {
+          "firstLine": 55,
+          "lastLine": 79,
+          "text": "export async function readGuideExamples(root = repositoryRoot, overrides = new Map()) {\n  const manifest = await readJSON(path.join(repositoryRoot, 'Scripts/MiniApps/authoring-examples.json'));\n  requireValue(manifest.schemaVersion === 1, 'Unknown authoring example inventory');\n  const blocks = new Map();\n  const documents = [];\n  for (const document of manifest.documents) {\n    const bytes = overrides.has(document.path) ? Buffer.from(overrides.get(document.path))\n      : await fs.readFile(path.join(root, document.path));\n    const found = extractGuideBlocks(bytes.toString('utf8'), document.path);\n    requireValue(found.length === document.blocks.length, document.path + ': fenced-block inventory changed');\n    const expected = new Map(document.blocks.map(item => [item.id, item]));\n    for (const block of found) {\n      const declaration = expected.get(block.id);\n      requireValue(declaration, document.path + ': unclassified snippet ' + block.id);\n      requireValue(block.language === declaration.language, block.id + ': language changed without inventory review');\n      requireValue(!blocks.has(block.id), 'Duplicate snippet label: ' + block.id);\n      if (declaration.kind === 'excluded') requireValue(declaration.reason, block.id + ': excluded block needs a reason');\n      else requireValue(['json', 'source'].includes(declaration.kind), block.id + ': unknown check kind');\n      blocks.set(block.id, {...block, ...declaration, sha256: digest(block.source)});\n      expected.delete(block.id);\n    }\n    requireValue(!expected.size, document.path + ': missing snippets');\n    documents.push({path: document.path, sha256: digest(bytes)});\n  }\n  return {blocks, documents};"
+        },
+        {
+          "firstLine": 205,
+          "lastLine": 239,
+          "text": "export async function checkAuthoringExamples({sdkRoot, root = repositoryRoot, outputDirectory,\n  requireSDKDocs = false, documentOverrides = new Map()} = {}) {\n  const guides = await readGuideExamples(root, documentOverrides);\n  const sdk = await readMiniAppSDK(sdkRoot);\n  const nativePath = 'Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift';\n  const nativeSource = await fs.readFile(path.join(root, nativePath), 'utf8');\n  const ts = (await import(pathToFileURL(path.join(sdkRoot, sdk.engines.expo.typescriptPath)).href)).default;\n  const registration = checkExpoRegistration(ts, guides.blocks.get('expo.registration').source, nativeSource);\n  const documentation = [];\n  for (const document of guides.documents) {\n    const shipped = await fs.readFile(path.join(sdkRoot, document.path));\n    const matches = digest(shipped) === document.sha256;\n    requireValue(!requireSDKDocs || matches, document.path + ': staged SDK guide differs from the checked repository guide');\n    documentation.push({...document, stagedSDKMatches: matches, stagedSDKSHA256: digest(shipped)});\n  }\n  const temporary = outputDirectory ?? await fs.mkdtemp(path.join(os.tmpdir(), 'hanlin-guide-check-'));\n  try {\n    const projects = await prepareGuideProjects({blocks: guides.blocks, directory: temporary});\n    const results = [];\n    for (const project of projects) {\n      const validation = await validateGuideProject(project, sdkRoot);\n      results.push({name: project.name, engine: project.engine, snippets: project.snippets,\n        context: project.context, validation});\n    }\n    return {\n      schemaVersion: 1, status: results.every(item => item.validation.succeeded) ? 'EXECUTED_PASS' : 'FAILED',\n      scope: 'Static authoring examples in the six inventoried current public guides',\n      sdk: {manifestSHA256: sdk.manifestSHA256, inputSHA256: sdk.inputSHA256},\n      checkerInputs: await Promise.all([\n        'Scripts/MiniApps/check-authoring-examples.mjs',\n        'Scripts/MiniApps/authoring-examples.json',\n        'AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs'\n      ].map(async file => ({path: file, sha256: digest(await fs.readFile(path.join(repositoryRoot, file)))}))),\n      documentation, registration: {...registration, nativePath},\n      sourceBlockCount: [...guides.blocks.values()].filter(item => item.kind === 'source').length,"
+        }
+      ]
+    },
+    {
+      "path": "Scripts/MiniApps/authoring-examples.json",
+      "sha256": "3ff3b2272bb77eb22fcc3df81063aab3994ec555b1e78562ee9e256b3cd0aa26",
+      "sameAtActiveSourceAndBase": true,
+      "excerpts": [
+        {
+          "firstLine": 177,
+          "lastLine": 189,
+          "text": "    },\n    {\n      \"path\": \"docs/miniapp-sdk/README.md\",\n      \"blocks\": [\n        {\n          \"id\": \"readme.descriptor\",\n          \"language\": \"json\",\n          \"kind\": \"json\"\n        }\n      ]\n    }\n  ]\n}"
+        }
+      ]
+    },
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "sha256": "a9d02de9128acde4bcdd14b60c3227627a43c004075f55c6d9f41e2045c9bcce",
+      "sameAtActiveSourceAndBase": true,
+      "excerpts": [
+        {
+          "firstLine": 141,
+          "lastLine": 157,
+          "text": "export async function inputReceipt(root=repositoryRoot) {\n  const files=[];\n  for(const relative of sdkInputs) {\n    const bytes=await readFile(path.join(root,relative));\n    files.push({path:relative,sha256:sha(bytes)});\n  }\n  for(const relative of ['Scripts/MiniApps','Packages/HanlinExpoUI','Packages/HanlinExpoNativeAPIJS',\n    'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services',\n    'Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal',\n    'Packages/HanlinExpoRuntime/Sources/ExpoWidgets',\n    'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift',\n    'docs/miniapp-sdk','docs/hanlin-nativescript-guide.md','docs/hanlin-expo-runtime.md']) {\n    files.push(...await collectSDKSourceInputs(path.join(root,relative),relative));\n  }\n  const unique=[...new Map(files.map(f=>[f.path,f])).values()].sort((a,b)=>a.path.localeCompare(b.path));\n  return {files:unique,sha256:sha(JSON.stringify(unique))};\n}"
+        },
+        {
+          "firstLine": 218,
+          "lastLine": 224,
+          "text": "          plugins:{'@expo/ui':expoLock.expo.uiVersion,'expo-widgets':expoLock.expo.widgetsVersion,'@hanlin/expo-ui':bridgeConfiguration.bridgeVersion,\n            '@nativescript/react-native':nativeAPILock.nativeApi.version,'react-native-worklets':nativeAPILock.worklets.version}}}:{}),\n        typeCheckingPolicy:{strictSource:true,checkOriginalDeclarationBodies:engine==='expo',\n          explanation:engine==='expo'?'Original declarations and source are checked.':'Original NativeScript consumer mode: source is strict; original declaration bodies are not revalidated. Set skipLibCheck:false for SDK declaration diagnostics.'},\n        docs:engine==='expo'?['docs/hanlin-expo-runtime.md','docs/miniapp-sdk/README.md','docs/miniapp-sdk/EXPO_WIDGETS_ORIGINAL.md']:['docs/hanlin-nativescript-guide.md','docs/miniapp-sdk/README.md'],\n        capabilities:engine==='expo'?['foreground','native-ui','host-services','prepared-widgets','original-widget-api','original-live-activity-api']:['foreground','native-ui','host-services','esm-package'],\n        build:{nativeHostRebuildRequiredForNativeDependencyChanges:true}};"
+        },
+        {
+          "firstLine": 280,
+          "lastLine": 285,
+          "text": "    await collect(staging);\n    const manifest={schemaVersion:1,inputSHA256:inputs.sha256,engines,examplesIndexPath:'examples/index.json',\n      upstream:{expo:expoLock.expo,nativescript:nativeLock.nativeScript,scriptwidget:engines.scriptwidget?.packageVersions},\n      files:files.sort((a,b)=>a.path.localeCompare(b.path)),\n      sourceInputs:inputs.files,\n      nativeBinaries:'Native host binaries are installed by the host build. This SDK contains original JavaScript and declaration sources.'};"
+        }
+      ]
+    },
+    {
+      "path": "Scripts/Audit/audit_miniapp_reachability.py",
+      "sha256": "a28d4702744f94e265489ca9df18ae6a2fd666290598d6faa693810d794a0dce",
+      "sameAtActiveSourceAndBase": true,
+      "excerpts": [
+        {
+          "firstLine": 79,
+          "lastLine": 85,
+          "text": "    def ref(name: str, file: str, anchor: str) -> str:\n        data = sources.read_bytes(file)\n        text = data.decode(\"utf-8\")\n        if anchor not in text:\n            raise ValueError(f\"Audit anchor changed: {file}: {anchor}\")\n        refs[name] = {\"file\": file, \"line\": text[:text.index(anchor)].count(\"\\n\") + 1,\n                      \"anchor\": anchor, \"sha256\": hashlib.sha256(data).hexdigest()}"
+        },
+        {
+          "firstLine": 157,
+          "lastLine": 157,
+          "text": "    ref(\"currentScope\", \"docs/miniapp-sdk/README.md\", \"## Entry points and native surfaces\")"
+        },
+        {
+          "firstLine": 317,
+          "lastLine": 339,
+          "text": "def main() -> None:\n    parser = argparse.ArgumentParser()\n    parser.add_argument(\"--check\", action=\"store_true\")\n    args = parser.parse_args()\n    value = build()\n    output = OUT / \"extension-reachability.json\"\n    if args.check:\n        prior = json.loads(output.read_text(encoding=\"utf-8\"))\n        recorded_commit = prior[\"sourceCommit\"]\n        prior.pop(\"sourceCommit\", None)\n        prior.pop(\"uncommittedSourcePaths\", None)\n        value.pop(\"sourceCommit\", None)\n        value.pop(\"uncommittedSourcePaths\", None)\n        if prior != value:\n            raise SystemExit(\"Extension source inventory drift; re-audit before regenerating.\")\n        value[\"sourceCommit\"] = recorded_commit\n        if (OUT / \"extension-reachability.md\").read_text(encoding=\"utf-8\") != markdown(value):\n            raise SystemExit(\"Reachability Markdown differs from the versioned matrix.\")\n        print(\"PASS: 80 unique source-backed reachability cells; no E2E pass inferred.\")\n    else:\n        output.write_text(json.dumps(value, ensure_ascii=False, indent=2) + \"\\n\", encoding=\"utf-8\", newline=\"\\n\")\n        (OUT / \"extension-reachability.md\").write_text(markdown(value), encoding=\"utf-8\", newline=\"\\n\")\n        print(\"Wrote 80 canonical Host-runtime reachability cells plus separate original-library surface records; no physical/E2E pass inferred.\")"
+        }
+      ]
+    },
+    {
+      "path": "AI_HLYTests/MiniAppAuthoringToolTests.swift",
+      "sha256": "e516af0f7ecfa920cbb4e226224934fdbb389bbd43b063cdfaacd1a2d909f750",
+      "sameAtActiveSourceAndBase": true,
+      "excerpts": [
+        {
+          "firstLine": 8,
+          "lastLine": 19,
+          "text": "@Suite(\"MiniApp Authoring Tools\", .serialized)\nstruct MiniAppAuthoringToolTests {\n    @Test(\"Original installed SDK writes, typechecks, repairs and builds a source-preserving archive\")\n    func originalSDKWriteValidateBuildAndRepair() async throws {\n        let root = FileManager.default.temporaryDirectory.appending(path: \"miniapp-authoring-\" + UUID().uuidString)\n        defer { try? FileManager.default.removeItem(at: root) }\n        let sdk = await execute(.sdk, [\"engine\": \"nativescript\"])\n        try #require(sdk.outcome == .succeeded, Comment(rawValue: sdk.modelText))\n        #expect(sdk.modelText.contains(\"@nativescript/core\"))\n        let files: [[String: String]] = [\n            [\"path\": \"script.json\", \"content\": #\"{\"name\":\"Authoring Native Acceptance\",\"version\":\"1.0.0\",\"entry\":\"nativescript/app/bundle.mjs\",\"runInApp\":true,\"hanlinRuntime\":\"hanlin-nativescript\"}\"#],\n            [\"path\": \"package.json\", \"content\": #\"{\"name\":\"hanlin-authoring-native-acceptance\",\"version\":\"1.0.0\",\"private\":true,\"type\":\"module\"}\"#],"
+        }
+      ]
+    },
+    {
+      "path": "Scripts/MiniApps/Tests/authoring-examples.test.mjs",
+      "sha256": "e40ace95a429ba0ee013f2832a00e1d0d004106a18e2f7709ecd6275726c682e",
+      "sameAtActiveSourceAndBase": true,
+      "excerpts": [
+        {
+          "firstLine": 62,
+          "lastLine": 92,
+          "text": "test('new or removed guide blocks and stale staged documentation fail closed', async () => {\n  const name = 'docs/miniapp-sdk/README.md';\n  const original = await fs.readFile(path.join(root, name), 'utf8');\n  const fence = String.fromCharCode(96).repeat(3);\n  await assert.rejects(readGuideExamples(root, new Map([[name, original + '\\n' + fence + 'ts\\nconst added = 1;\\n' + fence + '\\n']])),\n    /unclassified fenced block/);\n  const unsupportedPrefixes = ['> ', '> > ', '- ', '1. ', '> 1. ', '    ', '\\t'];\n  for (const prefix of unsupportedPrefixes) {\n    const hidden = prefix + fence + 'ts\\n' + prefix + 'const example: string = 1;\\n' + prefix + fence + '\\n';\n    await assert.rejects(readGuideExamples(root, new Map([[name, original + '\\n' + hidden]])),\n      /unsupported Markdown fence form/, 'A container/indented fence must not disappear from coverage: ' + JSON.stringify(prefix));\n  }\n  await assert.rejects(readGuideExamples(root, new Map([[name, original + '\\n' + fence + 'ts title=example\\nconst example = 1;\\n' + fence + '\\n']])),\n    /unsupported Markdown fence form/);\n  await assert.rejects(readGuideExamples(root, new Map([[name, original.replace('miniapp-snippet: readme.descriptor', 'miniapp-snippet: unreviewed.descriptor')]])),\n    /unclassified snippet/);\n  const removed = original.replace(/<!-- miniapp-snippet: readme.descriptor -->[\\s\\S]*?\\x60{3}json[\\s\\S]*?\\x60{3}/, '');\n  await assert.rejects(readGuideExamples(root, new Map([[name, removed]])), /inventory changed/);\n  // A changed checked document must not silently validate the older bytes in a staged SDK.\n  let observedDocumentationMismatch;\n  await assert.rejects(checkAuthoringExamples({sdkRoot, root, requireSDKDocs: true,\n    documentOverrides: new Map([[name, original + '\\n<!-- deliberate documentation drift -->\\n']])}), error => {\n      observedDocumentationMismatch = error.message;\n      return /staged SDK guide differs/.test(error.message);\n    });\n  await record('coverage-and-shipping-guards', {unclassifiedBlock: 'REJECTED', unreviewedLabel: 'REJECTED',\n    removedBlock: 'REJECTED', unsupportedPrefixes, unsupportedFenceInfo: 'REJECTED',\n    stagedDocumentationDrift: {status: 'REJECTED', observedError: observedDocumentationMismatch,\n      isolatedChangedDocument: observedDocumentationMismatch.startsWith(name + ':'),\n      wholeSDKDocumentationPositive: 'NOT_RUN'},\n    sdkInputSHA256: sdk.inputSHA256});"
+        }
+      ]
+    },
+    {
+      "path": "Scripts/MiniApps/Tests/stage-sdk.test.mjs",
+      "sha256": "e4cda73e2ea6024f956bea1daddfdd205d36434835bb949ad79380ea73e34f12",
+      "sameAtActiveSourceAndBase": true,
+      "excerpts": [
+        {
+          "firstLine": 68,
+          "lastLine": 97,
+          "text": "}));\n\n\ntest('SDK documentation and complete example staging retain exact source without known outputs', async () => {\n  const fs = await import('node:fs/promises');\n  const {copySDKDocumentation,copySDKExamples,collectSDKSourceInputs} = await import('../stage-sdk.mjs');\n  const {createHash} = await import('node:crypto');\n  const {tmpdir} = await import('node:os');\n  const work = await fs.mkdtemp(path.join(tmpdir(), 'hanlin-sdk-docs-'));\n  const source = path.join(work, 'source'), destination = path.join(work, 'sdk-docs');\n  try {\n    await fs.mkdir(path.join(source, 'reference', 'images'), {recursive:true});\n    const guide = await fs.readFile(new URL('../../../docs/miniapp-sdk/README.md', import.meta.url));\n    const nested = await fs.readFile(new URL('../../../docs/miniapp-sdk/IMPORT_REPAIR.md', import.meta.url));\n    const image = Buffer.from([0,1,2,255]);\n    await fs.writeFile(path.join(source, 'README.md'), guide);\n    await fs.writeFile(path.join(source, 'reference', 'IMPORT_REPAIR.md'), nested);\n    await fs.writeFile(path.join(source, 'reference', 'images', 'public-asset.bin'), image);\n    for (const folder of ['evidence', 'reference/evidence', 'Tests', 'node_modules', '.git']) {\n      await fs.mkdir(path.join(source, folder), {recursive:true});\n      await fs.writeFile(path.join(source, folder, 'intermediate.json'), '{\"intermediate\":true}');\n    }\n    await fs.writeFile(path.join(source, 'README.bak.old.md'), 'old guide');\n    await copySDKDocumentation(source, destination);\n    assert.deepEqual(await fs.readFile(path.join(destination, 'README.md')), guide);\n    assert.deepEqual(await fs.readFile(path.join(destination, 'reference', 'IMPORT_REPAIR.md')), nested);\n    assert.deepEqual(await fs.readFile(path.join(destination, 'reference', 'images', 'public-asset.bin')), image);\n    for (const excluded of ['evidence', 'reference/evidence', 'Tests', 'node_modules', '.git', 'README.bak.old.md']) {\n      await assert.rejects(fs.access(path.join(destination, excluded)), {code:'ENOENT'}, excluded+' is outside the existing SDK source-input policy');\n    }"
+        }
+      ]
+    }
+  ],
+  "affectedConsumers": [
+    {
+      "consumer": "stage-sdk.mjs inputReceipt + shipped README file record",
+      "effect": "Whole-document hash and SDK input/manifest identity change when normally restaged; public path and engine/version/type files do not change."
+    },
+    {
+      "consumer": "check-authoring-examples.mjs --require-sdk-docs",
+      "effect": "Its exact staged-document equality must compare the revised README with a correspondingly staged SDK. Using the old active-run SDK against the newly edited repository README correctly reports documentation drift. Existing native active-source attribution remains valid."
+    },
+    {
+      "consumer": "readGuideExamples + prepareGuideProjects",
+      "effect": "README has one inventoried JSON descriptor block; it is byte-identical. No fence, inventory, generated compiler project, root-registration input, native fixture or compiler policy changes."
+    },
+    {
+      "consumer": "audit_miniapp_reachability.py",
+      "effect": "sourceRefs.currentScope records the complete README hash. Root must perform the existing reachability write/check after integration; this lane does not regenerate it."
+    },
+    {
+      "consumer": "audit-miniapp-sdk.mjs",
+      "effect": "README is absent from source-inventory.sources. A paragraph-only change does not require source-inventory generation/check or manifest-reference changes."
+    },
+    {
+      "consumer": "existing README staging/coverage regression cases",
+      "effect": "They read the current README dynamically and do not assert the old prose count. No test source changes or repeated negative/compiler regressions are necessary for this text-only correction."
+    },
+    {
+      "consumer": "SDK-only package and application/runtime semantic evidence",
+      "effect": "Unchanged examples, code blocks, compiler inputs, routes, fixtures and assertions permit retaining their existing evidence with its actual source/artifact attribution. No unexecuted test becomes PASS. Updated paragraph/SDK delivery requires exact new shipping-byte identity; this is not automatic wholesale test reuse or proof of the new text in an older installed binary."
+    }
+  ],
+  "notExecuted": [
+    "generators",
+    "tests",
+    "compiler",
+    "build",
+    "CI",
+    "network/download",
+    "Asana mutation"
+  ],
+  "pendingOwnedByRoot": [
+    "reachability refresh/check once after integration",
+    "timing and source attribution relative to active MAIN15",
+    "normal updated SDK documentation identity when shipped"
+  ],
+  "taskStatus": "SDK05 remains completed. No new unmet API/types/authoring DoD was found."
+}

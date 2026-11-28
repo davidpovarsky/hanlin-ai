@@ -1,0 +1,457 @@
+{
+  "status": "FAIL",
+  "catalog_values": 3535,
+  "packaged_values": 0,
+  "errors": [
+    {
+      "table": "Localizable",
+      "key": "The permission change could not be saved. Please try again.",
+      "locale": "he",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "The permission change could not be saved. Please try again.",
+      "locale": "zh-Hans",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "Remembered permissions apply across your conversations on this device. System permissions remain controlled in Settings.",
+      "locale": "he",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "Remembered permissions apply across your conversations on this device. System permissions remain controlled in Settings.",
+      "locale": "zh-Hans",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "Revoke all tool permissions",
+      "locale": "he",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "Revoke all tool permissions",
+      "locale": "zh-Hans",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "Revoke permission for %@",
+      "locale": "he",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "Revoke permission for %@",
+      "locale": "zh-Hans",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "Revoke permission",
+      "locale": "he",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "Revoke permission",
+      "locale": "zh-Hans",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "Sensitive tools will ask before their first use.",
+      "locale": "he",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "Sensitive tools will ask before their first use.",
+      "locale": "zh-Hans",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "No remembered tool permissions",
+      "locale": "he",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "No remembered tool permissions",
+      "locale": "zh-Hans",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "Tool permissions",
+      "locale": "he",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "Tool permissions",
+      "locale": "zh-Hans",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "Collapse",
+      "locale": "he",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "Collapse",
+      "locale": "zh-Hans",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "This permission will also apply in your other conversations.",
+      "locale": "he",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "This permission will also apply in your other conversations.",
+      "locale": "zh-Hans",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "Allow and remember",
+      "locale": "he",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "Allow and remember",
+      "locale": "zh-Hans",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "Allowed and remembered",
+      "locale": "he",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "Allowed and remembered",
+      "locale": "zh-Hans",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "The permission change could not be saved. Please try again.",
+      "locale": "he",
+      "reason": "Hebrew text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "The permission change could not be saved. Please try again.",
+      "locale": "zh-Hans",
+      "reason": "Chinese text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "Remembered permissions apply across your conversations on this device. System permissions remain controlled in Settings.",
+      "locale": "he",
+      "reason": "Hebrew text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "Remembered permissions apply across your conversations on this device. System permissions remain controlled in Settings.",
+      "locale": "zh-Hans",
+      "reason": "Chinese text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "Revoke all tool permissions",
+      "locale": "he",
+      "reason": "Hebrew text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "Revoke all tool permissions",
+      "locale": "zh-Hans",
+      "reason": "Chinese text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "Revoke permission for %@",
+      "locale": "he",
+      "reason": "Hebrew text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "Revoke permission for %@",
+      "locale": "zh-Hans",
+      "reason": "Chinese text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "Revoke permission",
+      "locale": "he",
+      "reason": "Hebrew text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "Revoke permission",
+      "locale": "zh-Hans",
+      "reason": "Chinese text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "Sensitive tools will ask before their first use.",
+      "locale": "he",
+      "reason": "Hebrew text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "Sensitive tools will ask before their first use.",
+      "locale": "zh-Hans",
+      "reason": "Chinese text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "No remembered tool permissions",
+      "locale": "he",
+      "reason": "Hebrew text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "No remembered tool permissions",
+      "locale": "zh-Hans",
+      "reason": "Chinese text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "Tool permissions",
+      "locale": "he",
+      "reason": "Hebrew text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "Tool permissions",
+      "locale": "zh-Hans",
+      "reason": "Chinese text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "Collapse",
+      "locale": "he",
+      "reason": "Hebrew text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "Collapse",
+      "locale": "zh-Hans",
+      "reason": "Chinese text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "This permission will also apply in your other conversations.",
+      "locale": "he",
+      "reason": "Hebrew text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "This permission will also apply in your other conversations.",
+      "locale": "zh-Hans",
+      "reason": "Chinese text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "Allow and remember",
+      "locale": "he",
+      "reason": "Hebrew text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "Allow and remember",
+      "locale": "zh-Hans",
+      "reason": "Chinese text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "Allowed and remembered",
+      "locale": "he",
+      "reason": "Hebrew text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "Allowed and remembered",
+      "locale": "zh-Hans",
+      "reason": "Chinese text missing"
+    },
+    {
+      "table": "Localizable",
+      "key": "Thought for %@",
+      "locale": "en",
+      "reason": "missing required UI translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "Thought for %@",
+      "locale": "he",
+      "reason": "missing required UI translation"
+    },
+    {
+      "table": "Localizable",
+      "key": "Thought for %@",
+      "locale": "zh-Hans",
+      "reason": "missing required UI translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Background continuation was not available before the system suspended the app.",
+      "locale": "he",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Background continuation was not available before the system suspended the app.",
+      "locale": "zh-Hans",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Processed %@",
+      "locale": "he",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Processed %@",
+      "locale": "zh-Hans",
+      "reason": "damaged Unicode translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Background continuation was not available before the system suspended the app.",
+      "locale": "he",
+      "reason": "Hebrew text missing"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Background continuation was not available before the system suspended the app.",
+      "locale": "zh-Hans",
+      "reason": "Chinese text missing"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Waiting for a response",
+      "locale": "en",
+      "reason": "missing required UI translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Waiting for a response",
+      "locale": "he",
+      "reason": "missing required UI translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Waiting for a response",
+      "locale": "zh-Hans",
+      "reason": "missing required UI translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Thinking",
+      "locale": "en",
+      "reason": "missing required UI translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Thinking",
+      "locale": "he",
+      "reason": "missing required UI translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Thinking",
+      "locale": "zh-Hans",
+      "reason": "missing required UI translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Writing the response",
+      "locale": "en",
+      "reason": "missing required UI translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Writing the response",
+      "locale": "he",
+      "reason": "missing required UI translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Writing the response",
+      "locale": "zh-Hans",
+      "reason": "missing required UI translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Waiting for your approval",
+      "locale": "en",
+      "reason": "missing required UI translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Waiting for your approval",
+      "locale": "he",
+      "reason": "missing required UI translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Waiting for your approval",
+      "locale": "zh-Hans",
+      "reason": "missing required UI translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Response complete",
+      "locale": "en",
+      "reason": "missing required UI translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Response complete",
+      "locale": "he",
+      "reason": "missing required UI translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Response complete",
+      "locale": "zh-Hans",
+      "reason": "missing required UI translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Response stopped",
+      "locale": "en",
+      "reason": "missing required UI translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Response stopped",
+      "locale": "he",
+      "reason": "missing required UI translation"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "key": "Response stopped",
+      "locale": "zh-Hans",
+      "reason": "missing required UI translation"
+    }
+  ]
+}

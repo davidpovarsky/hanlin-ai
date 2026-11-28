@@ -1,0 +1,55 @@
+{
+  "appliedAt": "2026-11-19T05:35:37.314651+00:00",
+  "base": "8e2f89241c2cf471624d21a018f780e28bb71d92",
+  "patchSHA256": "2417533e8689a769642017d5a33e5a57128655e067361356aabc2a21087bff57",
+  "sourceAPIProof": [
+    {
+      "path": "swift/core/Sources/A2UICore/Models/SurfaceViewModel.swift",
+      "revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079",
+      "git_blob": "127ce02d9edbb32747da49132c9803ced53efd4c",
+      "sha256": "165cecd21284bbedc69d4d0c63cc2e2a7128e994c0ada1da3ccfca72742e3b71",
+      "url": "https://github.com/a2ui-project/a2ui/blob/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/Models/SurfaceViewModel.swift"
+    },
+    {
+      "path": "swift/core/Sources/A2UICore/State/SurfaceComponentsModel.swift",
+      "revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079",
+      "git_blob": "d4a3efa57058454ee527c9d6372321bee3da53fa",
+      "sha256": "a46913365cc7dba40dd8036e8b2a93fd6ca99411eeeae71b5507842afedca9f6",
+      "url": "https://github.com/a2ui-project/a2ui/blob/3ed9601862ecc78027e20ac80ad8b1b98a5d9079/swift/core/Sources/A2UICore/State/SurfaceComponentsModel.swift"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "AI_HLYTests/HanlinA2UIProductPerformanceTests.swift",
+      "base_sha256": "d9a86caf0fb06fb682fed8f4db0bf0ed292f298f57a20579150fdfe89d7fa477",
+      "proposed_sha256": "f32a9e7897ce1e0bfb3f9843a3eaaaf6d7d87260f4eb19f39c76836f4213f310",
+      "replacements": 3
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "base_sha256": "566f659f3bc906355e74cd2adf17025311c7066a87c6923b76aa13f38e6bb2d1",
+      "proposed_sha256": "29c604cc8e0a689c632b21dbb948f9a899f4b4358e1d401d069325c878c04232",
+      "replacements": 4
+    }
+  ],
+  "portableParse": "PASS authenticated proposed-source proof reused; exact resulting hashes verified",
+  "native": "NOT_RUN_FOR_CORRECTION",
+  "originalFailure": {
+    "run": 44456578432,
+    "source": "37a246f404cc2ed253200ddf6fd647f999637f68",
+    "job": 135332997373,
+    "full_log_sha256": "eb107dadfb57e24b799514f5644832e497053839d27c75f6311b850dd5f736e8",
+    "observed_compiler_diagnostics": 5,
+    "test_cases_started": 0
+  },
+  "testCoverageUnchanged": {
+    "methods": 6,
+    "expandedA2UICases": 36,
+    "credentialAssertions": "All retained; four inner try expressions only"
+  },
+  "evidenceArchive": {
+    "file": "a2ui-compile-2417533e.zip",
+    "sha256": "d7b891d1ce04f8ec387aa72e24de1cb5d84028a747505239f8b8f7cdfb71e3e0",
+    "CRC": "PASS"
+  }
+}

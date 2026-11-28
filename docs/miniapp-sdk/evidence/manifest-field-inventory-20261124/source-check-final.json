@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "node",
+    "--test",
+    "Scripts/Audit/Tests/manifest-contracts.test.mjs"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 0.2614079052582383,
+  "node": "v24.22.0",
+  "logSHA256": "191a55ece644d2a3960d8a35a461e2c4d6b2cee392c0d31499303b7b2c6ccfaa",
+  "reason": "Same focused check after correcting actual application-versus-dependency pkg reader scope; prior failed result retained.",
+  "scope": "Source mapping/drift only; no runtime/native execution or combined output regeneration."
+}

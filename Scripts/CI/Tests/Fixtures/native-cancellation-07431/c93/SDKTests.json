@@ -1,0 +1,375 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "c2f3d8c3c50a09cab4d39dbcad6bb4d4abca76e4",
+      "deviceName" : "My Mac",
+      "modelName" : "Virtual Machine",
+      "osBuildNumber" : "26A434",
+      "osVersion" : "27.0.1",
+      "platform" : "macOS"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "Expectation failed: await state.requests.count == 1",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.6umk_lm0/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+                        "lineNumber" : 131
+                      }
+                    }
+                  ],
+                  "duration" : "0.22s",
+                  "durationInSeconds" : 0.2180159091949463,
+                  "name" : "An invalid numeric sibling blocks the complete batch before approval or effect",
+                  "nodeIdentifier" : "HanlinAppleToolSessionBridgeTests/nativeNumericSiblingCannotPartiallyExecute()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeNumericSiblingCannotPartiallyExecute()",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Expectation failed: outcome.failure == nil\noutcome.failure → \"unsupportedSettings\"",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.6umk_lm0/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+                        "lineNumber" : 114
+                      }
+                    },
+                    {
+                      "name" : "Expectation failed: outcome.approvals == [\"native_a\"]\noutcome.approvals → []",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.6umk_lm0/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+                        "lineNumber" : 116
+                      }
+                    },
+                    {
+                      "name" : "Expectation failed: outcome.denials == [\"native_a\"]\noutcome.denials → []",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.6umk_lm0/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+                        "lineNumber" : 118
+                      }
+                    },
+                    {
+                      "name" : "Expectation failed: outcome.text == \"NATIVE_CONTINUATION\"\noutcome.text → \"\"",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.6umk_lm0/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+                        "lineNumber" : 119
+                      }
+                    },
+                    {
+                      "name" : "Expectation failed: requests.count == 2\nrequests.count → 0",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.6umk_lm0/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+                        "lineNumber" : 189
+                      }
+                    },
+                    {
+                      "name" : "Expectation failed: requests.last\nrequests → []\nlast → nil",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.6umk_lm0/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+                        "lineNumber" : 205
+                      }
+                    }
+                  ],
+                  "duration" : "0.16s",
+                  "durationInSeconds" : 0.16291594505310059,
+                  "name" : "A denied native call has no effect and continues with the correlated tool denial",
+                  "nodeIdentifier" : "HanlinAppleToolSessionBridgeTests/nativeDenialReturnsThroughCanonicalHistory()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeDenialReturnsThroughCanonicalHistory()",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Expectation failed: await state.requests.count == 1",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.6umk_lm0/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+                        "lineNumber" : 142
+                      }
+                    },
+                    {
+                      "name" : "Expectation failed: await state.cancelled",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.6umk_lm0/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+                        "lineNumber" : 148
+                      }
+                    }
+                  ],
+                  "duration" : "5s",
+                  "durationInSeconds" : 5.053863286972046,
+                  "name" : "Cancelling a waiting native request reaches its public executor and produces no host effect",
+                  "nodeIdentifier" : "HanlinAppleToolSessionBridgeTests/nativeCancellationStopsAwaitingExecutor()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeCancellationStopsAwaitingExecutor()",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "duration" : "0.04s",
+                  "durationInSeconds" : 0.0404360294342041,
+                  "name" : "The admitted closed schema constructs through actual public native schema APIs",
+                  "nodeIdentifier" : "HanlinAppleToolSessionBridgeTests/nativeSchemaConstructorsAndStructuredNumberRejection()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeSchemaConstructorsAndStructuredNumberRejection()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Expectation failed: outcome.failure == nil\noutcome.failure → \"unsupportedSettings\"",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.6umk_lm0/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+                        "lineNumber" : 93
+                      }
+                    },
+                    {
+                      "name" : "Expectation failed: outcome.effects.sorted() == [\"native_a\", \"native_b\"]\noutcome.effects.sorted() → []",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.6umk_lm0/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+                        "lineNumber" : 94
+                      }
+                    },
+                    {
+                      "name" : "Expectation failed: outcome.approvals.sorted() == [\"native_a\", \"native_b\"]\noutcome.approvals.sorted() → []",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.6umk_lm0/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+                        "lineNumber" : 95
+                      }
+                    },
+                    {
+                      "name" : "Expectation failed: outcome.provenances == [.normalized, .normalized]\noutcome.provenances → []\n[.normalized, .normalized] → [HanlinChatCore.HanlinAISDKToolInputProvenance.normalized, HanlinChatCore.HanlinAISDKToolInputProvenance.normalized]",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.6umk_lm0/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+                        "lineNumber" : 96
+                      }
+                    },
+                    {
+                      "name" : "Expectation failed: outcome.text == \"NATIVE_CONTINUATION\"\noutcome.text → \"\"",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.6umk_lm0/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+                        "lineNumber" : 97
+                      }
+                    },
+                    {
+                      "name" : "Expectation failed: requests.count == 2\nrequests.count → 0",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.6umk_lm0/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+                        "lineNumber" : 99
+                      }
+                    },
+                    {
+                      "name" : "Expectation failed: requests.count == 2\nrequests.count → 0",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.6umk_lm0/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+                        "lineNumber" : 189
+                      }
+                    },
+                    {
+                      "name" : "Expectation failed: requests.last\nrequests → []\nlast → nil",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.6umk_lm0/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+                        "lineNumber" : 205
+                      }
+                    }
+                  ],
+                  "duration" : "0.16s",
+                  "durationInSeconds" : 0.1623837947845459,
+                  "name" : "Two same-name calls keep their identities and continue through the original executor",
+                  "nodeIdentifier" : "HanlinAppleToolSessionBridgeTests/nativeFrameworkHandoffUsesCanonicalExecutorAndHistory()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeFrameworkHandoffUsesCanonicalExecutorAndHistory()",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "duration" : "0.041s",
+                  "durationInSeconds" : 0.04119467735290527,
+                  "name" : "History rejects duplicate calls, orphan results and incomplete continuations",
+                  "nodeIdentifier" : "HanlinAppleToolSessionBridgeTests/invalidCanonicalHistoriesFailBeforeGeneration()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/invalidCanonicalHistoriesFailBeforeGeneration()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.26s",
+                  "durationInSeconds" : 0.26328301429748535,
+                  "name" : "Nonstreaming use of the original provider preserves native handoff calls",
+                  "nodeIdentifier" : "HanlinAppleToolSessionBridgeTests/nativeGeneratePreservesToolCalls()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeGeneratePreservesToolCalls()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "FoundationModels handoff through the original provider and engine",
+              "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0.0056s",
+                  "durationInSeconds" : 0.005644083023071289,
+                  "name" : "Required fields, closed objects, enum and array bounds survive admission",
+                  "nodeIdentifier" : "HanlinAppleToolSchemaTests/validatesSupportedSubsetBeforeHandoff()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/validatesSupportedSubsetBeforeHandoff()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "duration" : "0.027s",
+                      "durationInSeconds" : 0.02714705467224121,
+                      "name" : "\"{\"type\":\"object\",\"additionalProperties\":true}\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=9aac8933583abb7914ebb57d1265f5c4fd1a42ce1ec0a7090d3f2dcbaacb1ebf",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0.00017s",
+                      "durationInSeconds" : 0.0001659393310546875,
+                      "name" : "\"{\"type\":\"object\",\"properties\":{\"a\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"minItems\":2,\"maxItems\":1}},\"additionalProperties\":false}\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=94ad2b940777c4d112ca64f57b3f994e6550b396387215181fba5b77ecd65901",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0.0009s",
+                      "durationInSeconds" : 0.000904083251953125,
+                      "name" : "\"{\"type\":\"object\",\"properties\":{\"a\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"uniqueItems\":true}},\"additionalProperties\":false}\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=01ecbfa02e51dca2bf0054a5562ff12f6e9af70cacec80ea1ed35b9ea7018c11",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0.00078s",
+                      "durationInSeconds" : 0.0007827281951904297,
+                      "name" : "\"{\"type\":\"object\",\"properties\":{\"n\":{\"type\":\"integer\"}},\"additionalProperties\":false}\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=3bfd07bb2a5904c8bc138995195855fe7738f50ace2b127c5ddb2b27da8d5bc0",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0.0058s",
+                      "durationInSeconds" : 0.005813121795654297,
+                      "name" : "\"{\"type\":\"object\",\"properties\":{\"n\":{\"type\":\"number\"}},\"additionalProperties\":false}\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=63dcca93e6ee35ec39504e98bcf30eccb5c966f105bfb01db85e222aaa942ebf",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0.0003s",
+                      "durationInSeconds" : 0.0003018379211425781,
+                      "name" : "\"{\"type\":\"object\",\"properties\":{\"s\":{\"type\":\"string\",\"minLength\":1}},\"additionalProperties\":false}\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=824278a56db893d25da0c2e6da7c6fd6b0755693280bb88d1081dadbab1452e1",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0.0004s",
+                      "durationInSeconds" : 0.00040411949157714844,
+                      "name" : "\"{\"type\":\"object\",\"properties\":{\"s\":{\"type\":\"string\",\"pattern\":\"x+\"}},\"additionalProperties\":false}\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=00ff2cdaf25261786fb38734f182123b1cd00d27144125256f775f074459b310",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0.00026s",
+                      "durationInSeconds" : 0.00026488304138183594,
+                      "name" : "\"{\"type\":\"object\",\"properties\":{\"x\":{\"type\":\"string\"}},\"required\":[\"x\",\"x\"],\"additionalProperties\":false}\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=03492fd2be13813919d566c73a6b0b234079df43bdd9e66f8165cc075fb0efe5",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0.00057s",
+                      "durationInSeconds" : 0.0005671977996826172,
+                      "name" : "\"{\"type\":\"object\",\"properties\":{\"x\":{\"type\":[\"string\",\"null\"]}},\"additionalProperties\":false}\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=292384b42dffb8badfcba84843b2aec45f1e4447d3073e1260df61192f0eaf5e",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0.00017s",
+                      "durationInSeconds" : 0.00017023086547851562,
+                      "name" : "\"{\"type\":\"object\",\"properties\":{},\"oneOf\":[{}],\"additionalProperties\":false}\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=d8856404f6e00d276eda4f35e239e7547fab8ab95c5dc9ca11a89d2589ed539a",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0.0005s",
+                      "durationInSeconds" : 0.0005018711090087891,
+                      "name" : "\"{\"type\":\"object\",\"properties\":{},\"required\":[\"missing\"],\"additionalProperties\":false}\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=d43f55938e4de390ab215ef3f60fb9a58d38b1064f24e75ce565d266ad29337c",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0.00025s",
+                      "durationInSeconds" : 0.0002532005310058594,
+                      "name" : "\"{\"type\":\"object\",\"properties\":{}}\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)?args=c1219ff7c42884da3ba40b2039bb37c7aa8229d87a907d290e1466a741a62c2e",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    }
+                  ],
+                  "duration" : "0.0031s",
+                  "durationInSeconds" : 0.003106355667114258,
+                  "name" : "Unsupported constraints and numeric schemas are never advertised",
+                  "nodeIdentifier" : "HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests/rejectsUnrepresentedSemantics(_:)",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "Closed native tool schema admission",
+              "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSchemaTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "HanlinAgentCoreTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Failed"
+        }
+      ],
+      "name" : "HanlinAgentSDK-Package",
+      "nodeType" : "Test Plan",
+      "result" : "Failed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

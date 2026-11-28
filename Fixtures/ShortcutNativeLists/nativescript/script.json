@@ -1,0 +1,35 @@
+{
+  "name": "Native Lists NativeScript",
+  "version": "1.0.0",
+  "description": "Echoes actual native-array Shortcut input into its own window and returned JSON.",
+  "hanlinAppID": "hanlin.shortcutlists.nativescript",
+  "entry": "nativescript/app/bundle.mjs",
+  "runInApp": true,
+  "hanlinRuntime": "hanlin-nativescript",
+  "icon": "list.bullet",
+  "color": "#2455B2",
+  "capabilities": [
+    "storage",
+    "inter-app.share"
+  ],
+  "actions": [
+    {
+      "id": "native-lists.echo",
+      "title": "Echo Native Lists NativeScript",
+      "handler": "nativescript/app/bundle.mjs",
+      "capability": "inter-app.share"
+    }
+  ],
+  "entrypoints": [
+    {
+      "id": "native-lists-intent",
+      "kind": "appIntent",
+      "sourcePath": "nativescript/app/bundle.mjs",
+      "exportedSymbol": "native-lists.echo"
+    }
+  ],
+  "intentInputTypes": [
+    "Text",
+    "URLs"
+  ]
+}

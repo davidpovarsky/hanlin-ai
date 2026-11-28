@@ -1,0 +1,197 @@
+{
+  "schemaVersion": 1,
+  "kind": "FOCUSED_SDK19_ENVIRONMENT_AND_LAUNCHER_RECOVERY",
+  "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+  "createdAt": "2026-11-25T12:51:30.017121+00:00",
+  "scope": "Preparation failure, original Node restoration, rejected preflight and corrected startup only; final UI cases require separate native evidence",
+  "fileCount": 37,
+  "totalBytes": 540097,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4116,
+      "sha256": "08c79706fe77f3eb27a0706d8542632cf867e52d687ba926daee2a7d91ec288e"
+    },
+    {
+      "path": "raw/environment-failure/raw/focused19-v3/controller-child.log",
+      "bytes": 1842,
+      "sha256": "5c3085ba2ea41118eae72f8f33666d910d72dc64ca42f8a873f24b23ed8e755a"
+    },
+    {
+      "path": "raw/environment-failure/raw/focused19-v3/decision.json",
+      "bytes": 67174,
+      "sha256": "e5317f244c6cf6cecb4b9a9c1b3043b1921fbe646d922f332d7bdcd103fea86a"
+    },
+    {
+      "path": "raw/environment-failure/raw/focused19-v3/events.jsonl",
+      "bytes": 1403,
+      "sha256": "23437522d18f00b78e66fd6bd3ac9c2110798c40345e64d949426b5a8c068a26"
+    },
+    {
+      "path": "raw/environment-failure/raw/focused19-v3/ledger.json",
+      "bytes": 2199,
+      "sha256": "c69a3001ec612c74afeaeafcbdf3e8fc2b0ea59fbb96bf18488a2ff641e76ebf"
+    },
+    {
+      "path": "raw/environment-failure/raw/focused19-v3/native-result/paired-prefix/active-command.json",
+      "bytes": 393,
+      "sha256": "0718feaa1d1c51b29db10085382a3814116c68e327e6882ab04b988613d79e73"
+    },
+    {
+      "path": "raw/environment-failure/raw/focused19-v3/native-result/paired-prefix/boot.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/environment-failure/raw/focused19-v3/native-result/paired-prefix/bootstatus.log",
+      "bytes": 597,
+      "sha256": "ee8305a7b2ea0207733aa6304d52bdf5e01ffb2118dff24dfe922719c312581f"
+    },
+    {
+      "path": "raw/environment-failure/raw/focused19-v3/native-result/paired-prefix/command-events.jsonl",
+      "bytes": 3507,
+      "sha256": "fdd7146cc6788b3aed73fef7be2632df323db3b6fd433cb85a2549a9efc5f4eb"
+    },
+    {
+      "path": "raw/environment-failure/raw/focused19-v3/native-result/paired-prefix/commands.jsonl",
+      "bytes": 656,
+      "sha256": "8ff163aaa5c1313964cf790afbc2ba0203257e8131a20533c9c5684ae32b47d5"
+    },
+    {
+      "path": "raw/environment-failure/raw/focused19-v3/native-result/paired-prefix/created-simulator.txt",
+      "bytes": 37,
+      "sha256": "df333300ba32a39a07bcd88aed5fc6bb5f0b51f738c521f6a0949dc54456a37e"
+    },
+    {
+      "path": "raw/environment-failure/raw/focused19-v3/native-result/paired-prefix/original-expo-probe.log",
+      "bytes": 1731,
+      "sha256": "ab98064ae777bae26834eb567b7c2061d03d5ed9d6d4d760f699d962650670f5"
+    },
+    {
+      "path": "raw/environment-failure/raw/focused19-v3/native-result/state.json",
+      "bytes": 4238,
+      "sha256": "627355b9bb7c970106c2c5dee504937235d6d55e5782b2129b7427e3f1024e48"
+    },
+    {
+      "path": "raw/environment-failure/raw/focused19-v3/state.json",
+      "bytes": 4538,
+      "sha256": "fc722c1417dfcb5029336df1b27f06fd1ec636ae2bc5bcfc82a2258d4f894d25"
+    },
+    {
+      "path": "raw/environment-failure/raw/node245-restoration/receipt.json",
+      "bytes": 1529,
+      "sha256": "1b34ad8a2a392cebdfa34ee6a56da504e020189788f1d3bbdb440522e035ecc6"
+    },
+    {
+      "path": "raw/environment-failure/raw/state.json",
+      "bytes": 114399,
+      "sha256": "2a07e871c02d8f23458995446c8267c4681f5b864c0485b260f41de08e73c2eb"
+    },
+    {
+      "path": "raw/environment-failure/receipt.json",
+      "bytes": 3070,
+      "sha256": "6b4a254d8a7bc4178f0294abf003fbd406c8e1726e95b6314c429a2cb3418e77"
+    },
+    {
+      "path": "raw/node-restoration/SHASUMS256.txt",
+      "bytes": 2943,
+      "sha256": "16988564d18cce79ef0db0f3e645df921cfdcab3467ec36dcd0ff3d2ce6603b4"
+    },
+    {
+      "path": "raw/node-restoration/official-publication.json",
+      "bytes": 600,
+      "sha256": "b4b6324319a6884926265e966f7581be15135b09d8dac03dd12df9cbbe0d3078"
+    },
+    {
+      "path": "raw/node-restoration/restore-command.json",
+      "bytes": 1795,
+      "sha256": "49f94e109546c3bc636704ca651271f6ced83fbc408aae0e53007a262ef8fbc6"
+    },
+    {
+      "path": "raw/rejected-preflight/focused19-v4-decision.json",
+      "bytes": 68394,
+      "sha256": "e8ada819b562484a9834662c33d2452d77c49eeb314f66e29469ae582c24a603"
+    },
+    {
+      "path": "raw/rejected-preflight/focused19-v4-launch.json",
+      "bytes": 2292,
+      "sha256": "a210df388b4cce520c7975b9ca090f89f3a64a787c3ea6ddf7de20cbd796f749"
+    },
+    {
+      "path": "raw/rejected-preflight/focused19-v4-launch.log",
+      "bytes": 572,
+      "sha256": "5cb15346a4bbafd69c0385dfe77356ab8dc03cc717b5ab5b1ee314d0de90d292"
+    },
+    {
+      "path": "raw/rejected-preflight/receipt.json",
+      "bytes": 866,
+      "sha256": "487fb7971ab47b738e1918c468ece129f547a88555fc1f90e2780de2948a85df"
+    },
+    {
+      "path": "raw/snapshots/focused19-draft/focused-native-child-v3.py",
+      "bytes": 22575,
+      "sha256": "bfa992d6793451374eb847f9e0b0f4d28d32a153163ded9ae427acd0bfa5f478"
+    },
+    {
+      "path": "raw/snapshots/focused19-draft/focused19-recovery-controller-v3.py",
+      "bytes": 33146,
+      "sha256": "1a87e3942d879092ec452b48bb7e72f59d2aa093f33a179a5a94f952f373f793"
+    },
+    {
+      "path": "raw/snapshots/focused19-draft/focused19-recovery-controller-v4.py",
+      "bytes": 36061,
+      "sha256": "b0796a73342a8e65568661e402a43f1a70e923b6aa0fbf62b56ef3c88e223d15"
+    },
+    {
+      "path": "raw/snapshots/focused19-draft/focused19-recovery-controller-v5.py",
+      "bytes": 37006,
+      "sha256": "d5fd2939cf2082d449ced62dd7e5b1c5107067280e6d36fa6f13689b0f54a4f8"
+    },
+    {
+      "path": "raw/snapshots/focused19-v3-node-environment-observation.json",
+      "bytes": 2271,
+      "sha256": "e493097c40f835797204068aeb8ce301b82c7b961d164a3f99515af452780c4e"
+    },
+    {
+      "path": "raw/snapshots/focused19-v3-node-graph-comparison.json",
+      "bytes": 1188,
+      "sha256": "411cc6bb208cf644a9f9441322003a14ae536cebd9c80d2bdb8a6f890f89d337"
+    },
+    {
+      "path": "raw/snapshots/focused19-v3-observation-122423.json",
+      "bytes": 12848,
+      "sha256": "e5b281e993c6c9e3e51eb68f05d79260e5d81b26cb2e246dbd10850df02ad296"
+    },
+    {
+      "path": "raw/snapshots/focused19-v3-recovery-inputs.json",
+      "bytes": 4142,
+      "sha256": "2791472af9e3fc99292ce8889ac3c2f2b6f08bf11f8faa1bdd1ac7e561d3f56c"
+    },
+    {
+      "path": "raw/snapshots/focused19-v4-preflight-pid-observation.json",
+      "bytes": 817,
+      "sha256": "f2cef4a00b83bf5d0128d7734207fab40db9538400f4eb8db68319a5ff9fe278"
+    },
+    {
+      "path": "raw/snapshots/focused19-v5-decision.json",
+      "bytes": 68875,
+      "sha256": "288fff0babef0edb6cf02f392285a194d9707a79af6214fe4d1e1396a3dff51b"
+    },
+    {
+      "path": "raw/snapshots/focused19-v5-first-observation.json",
+      "bytes": 11515,
+      "sha256": "650e0675335d49c7545f01a32879dacf70f1b9afc1aa101b5ecac0a6f94b8c66"
+    },
+    {
+      "path": "raw/snapshots/focused19-v5-launch.json",
+      "bytes": 2292,
+      "sha256": "2b9b269aae79238b4a42fd1aa26c819494ca3d5d9e0b8c5ceb01e6d140cfc6af"
+    },
+    {
+      "path": "raw/snapshots/focused19-v5-observation-124245.json",
+      "bytes": 18470,
+      "sha256": "cb8624a3d882723efbf66f9d13305c6a3b89911423e9dc98e02a28a3e2ab75e7"
+    }
+  ],
+  "nativeAcceptance": "NOT_ESTABLISHED_BY_THIS_PACKET"
+}

@@ -1,0 +1,34 @@
+{
+  "head": "873607e45e021b40fe5b940c836d398c329f95c8",
+  "remote_verified": "873607e45e021b40fe5b940c836d398c329f95c8",
+  "dispatch_at": "2026-11-19T03:44:49.188515+00:00",
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "prior_cancelled_run": 44440354095,
+  "selectors_exactly_preserved": [
+    "AI_HLYTests/MaintainedSkillCorpusTests/maintainedPackagesFollowOriginalImportPolicyAndReadiness(_:)",
+    "AI_HLYTests/MaintainedSkillCorpusTests/cairoInvalidInputUsesTheCurrentRuntimePlan(_:)",
+    "AI_HLYTests/SkillStoreAndImportTests/nestedMetadataSurvivesStoreSaveAndOverride()",
+    "AI_HLYTests/SkillStoreAndImportTests/anchoredStoreEditDoesNotRewriteOriginal()",
+    "AI_HLYTests/SkillStoreAndImportTests/zipNestedMetadataAndResourcesRemainLossless()",
+    "AI_HLYTests/SkillStoreAndImportTests/catalogMetadataFollowsSelectedSource()",
+    "AI_HLYTests/MaintainedSkillCorpusTests/originalPythonPackageFactsUseRealInstallAndInvalidateChangedSource()"
+  ],
+  "original_inputs_changes": {
+    "compare_base_sha": {
+      "before": "ca49d1381d186dcc481eeb7c7eb753dd19bd0085",
+      "after": "589420f3da0db240df8aa5a466bba9303a6bf4c5"
+    }
+  },
+  "inputs_sha256": "1aad97246b3226ab839d1d66817f9922a6690f473c85e43f6bc98ebba1d3e6f8",
+  "matching_runs": [
+    {
+      "conclusion": "",
+      "createdAt": "2026-11-19T03:44:50Z",
+      "databaseId": 44453570922,
+      "event": "workflow_dispatch",
+      "headSha": "873607e45e021b40fe5b940c836d398c329f95c8",
+      "status": "queued",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44453570922"
+    }
+  ]
+}

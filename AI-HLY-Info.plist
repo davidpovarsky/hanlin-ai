@@ -8,12 +8,17 @@
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>CFBundleURLName</key>
-			<string>com.aihanlin.AI-HLY</string>
+			<string>com.itorah.chavrusachat</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>AI-Hanlin</string>
+				<string>chavrusachat</string>
 			</array>
 		</dict>
+	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>hanlinminiapps</string>
+		<string>maktabah</string>
 	</array>
 	<key>HANLIN_API_KEY</key>
 	<string>$(HANLIN_API_KEY)</string>
@@ -21,34 +26,107 @@
 	<string>$(HANLIN_OPEN_API_KEY)</string>
 	<key>INIntentsSupported</key>
 	<array/>
-	<key>MKDirectionsApplicationSupportedModes</key>
-	<array>
-		<string>MKDirectionsModeBike</string>
-		<string>MKDirectionsModeBus</string>
-		<string>MKDirectionsModeCar</string>
-		<string>MKDirectionsModeFerry</string>
-		<string>MKDirectionsModeOther</string>
-		<string>MKDirectionsModePedestrian</string>
-		<string>MKDirectionsModePlane</string>
-		<string>MKDirectionsModeRideShare</string>
-		<string>MKDirectionsModeStreetCar</string>
-		<string>MKDirectionsModeSubway</string>
-		<string>MKDirectionsModeTaxi</string>
-		<string>MKDirectionsModeTrain</string>
-	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Hanlin AI uses the camera only when you ask it to take a photo.</string>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
+		<string>processing</string>
 	</array>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER).runtime.*</string>
+	</array>
+	<key>UIFileSharingEnabled</key>
+	<true/>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict/>
 	</array>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
-		<dict/>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.zip-archive</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Scripting Package</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.hanlin.scripting-package</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>scripting</string>
+					<string>hanlinNativeScript</string>
+					<string>hanlinExpo</string>
+				</array>
+			</dict>
+		</dict>
 	</array>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
+	<key>ExpoWidgets_EnablePushNotifications</key>
+	<true/>
+	<key>NSSupportsLiveActivitiesFrequentUpdates</key>
+	<true/>
+	<key>NSAlarmKitUsageDescription</key>
+	<string>Hanlin schedules system alarms only for the times you choose.</string>
 	<key>com.apple.developer.translation-ui-provider.network-access</key>
 	<true/>
+	<key>HanlinExtensionHost</key>
+	<dict>
+		<key>AppGroupIdentifier</key>
+		<string>group.com.itorah.chavrusachat</string>
+		<key>WidgetKind</key>
+		<string>com.hanlin.scripting.widget</string>
+		<key>NotificationCategoryIdentifier</key>
+		<string>CHAVRUSA_REMINDER</string>
+		<key>VisionURL</key>
+		<string>chavrusachat://openVisionView</string>
+	</dict>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>Your mini apps use Calendar to read the calendars you choose and create or update requested events.</string>
+	<key>NSCalendarsWriteOnlyAccessUsageDescription</key>
+	<string>Your mini apps add calendar events when you request them.</string>
+	<key>NSRemindersFullAccessUsageDescription</key>
+	<string>Your mini apps read and update the reminders you choose.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Your mini apps use the contacts you select for their requested features.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your mini apps use your location for features such as nearby places and local weather.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Your selected widgets use location to keep local information current.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Your mini apps display the Health information you choose to share.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Your mini apps display photos and albums you choose.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Your mini apps save images when you request them.</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Your mini apps display the current music item.</string>
+	<key>NSHomeKitUsageDescription</key>
+	<string>Your mini apps display and control the Home accessories and scenes you select.</string>
+	<key>HanlinScriptWidgetICloudContainerIdentifier</key>
+	<string>iCloud.com.itorah.chavrusachat</string>
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+	<dict>
+		<key>ScriptWidget</key>
+		<string>Your selected mini app uses precise location for the feature you requested.</string>
+	</dict>
+	<key>ScriptWidgetServiceKeychainGroup</key>
+	<string>$(AppIdentifierPrefix)com.itorah.chavrusachat.scriptwidget.services</string>
+	<key>ExpoWidgetsAppGroupIdentifier</key>
+	<string>group.com.itorah.chavrusachat</string>
+	<key>HanlinExpoWidgetsProductIdentifier</key>
+	<string>com.itorah.chavrusachat</string>
 </dict>
 </plist>

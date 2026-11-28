@@ -1,0 +1,21 @@
+{
+  "status": "FOUNDATION_DIAGNOSTIC_CONTROLLER_FAILED",
+  "sourceContext": "bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb",
+  "sourceSHA256": "8b9314e6a27a9e48caba4a67bc754ced8bb5a6588b30fa11c5ef0f144e9bbc98",
+  "startedAt": "2026-11-27T07:54:17.655702+00:00",
+  "nativeCommandsStarted": 0,
+  "originalTestsReexecuted": false,
+  "productionModified": false,
+  "resourceEstimate": {
+    "nativeCompileAndTemporaryAllowanceBytes": 268435456,
+    "foreignAllowanceBytes": 268435456,
+    "osReserveBytes": 1073741824,
+    "admissionBytes": 1610612736
+  },
+  "deadlineSeconds": 45,
+  "freeAtAdmission": 257822720,
+  "error": "AssertionError()",
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/m1/sentinelx/uploads/.sentinelx_uploads/script_job_b862edec953646aaa42c1bddee818363/script.py\", line 14, in <module>\n    data[\"freeAtAdmission\"]=shutil.disk_usage(s).free;assert data[\"freeAtAdmission\"]>=data[\"resourceEstimate\"][\"admissionBytes\"]\nAssertionError\n",
+  "finishedAt": "2026-11-27T07:54:18.086730+00:00",
+  "freeEnd": 257822720
+}

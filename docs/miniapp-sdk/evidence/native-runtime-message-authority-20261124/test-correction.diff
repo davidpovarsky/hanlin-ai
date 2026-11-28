@@ -1,0 +1,13 @@
+diff --git a/Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift b/Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift
+index 48234f09..a4adeacd 100644
+--- a/Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift
++++ b/Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift
+@@ -252,7 +252,7 @@ struct HanlinScriptAnalyzerTests {
+         ))
+         let supportedPreview = try analyzer.analyze(supported)
+         #expect(supportedPreview.canInstall)
+-        #expect(supportedPreview.findings.contains { $0.message.contains("supported by embedded runtime \(HanlinMiniAppHostVersions.nativeScriptCoreVersion)") })
++        #expect(supportedPreview.findings.contains { $0.message.contains("supported by embedded runtime \(HanlinMiniAppHostVersions.nativeScriptRuntimeVersion)") })
+ 
+         let unsupported = try package(files: [
+             "script.json": #"{"name":"Unsupported Core Fixture","version":"1.0.0","entry":"nativescript/app/bundle.mjs","hanlinRuntime":"hanlin-nativescript"}"#,

@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "sourceBase": "36ad5c3205700153300539750ed66e8030f806cc",
+  "runnerIdentity": {
+    "canonicalTestBundle": "com.itorah.hanlinminiapps.integration.uitests",
+    "canonicalRunner": "com.itorah.hanlinminiapps.integration.uitests.xctrunner",
+    "currentPBXSHA256": "4f1afea0f0d166c55962b619d187efdc59b3c394a4b6c246af0f120260d74d80",
+    "actualRetainedBuiltInfoSHA256": "e807c6b2a4c5444448a527d598bb86195f0737209b6c15bc2b8ecc8273f75d87",
+    "actualRetainedExecutionRecordSHA256": "b96b00ec8665a2489c7a021b40c386424a9016e501b79348971b9e72cc2b58ed",
+    "actualRetainedPostXCTestMCMMetadataSHA256": "e33388ed2669b77bf984cc1515bc1cfa7ec61034620aae03cdfda0e74d1e5e80",
+    "behavior": "Read the selected built Info.plist and validate it against the canonical target and actually observed runner identifier. Reject another test product rather than accept an arbitrary xctrunner."
+  },
+  "fixtureRetention": {
+    "beforeRecordSHA256": "b96b00ec8665a2489c7a021b40c386424a9016e501b79348971b9e72cc2b58ed",
+    "afterRecordSHA256": "9964effd96c281c26f8487c0f0ac0c5978cd8fbb6d1165858a127b6891f70f82",
+    "exactThreeInputHashesPreserved": true,
+    "originalActionsSHA256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+    "originalExpoSHA256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+    "originalNativeScriptSHA256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199",
+    "boundary": "Observed Documents preservation across the retained real XCTest container replacement, not a claim that app startup repopulates input files or an unconditional future OS guarantee. The new route verifies all three exact current source inputs in the post-XCTest OS-returned Documents before the first push and again before acceptance; missing/changed inputs fail closed. No restaging into product storage after XCTest starts."
+  },
+  "retainedBeforeAndAfterAppContainersDiffer": true,
+  "repositoryEvidenceReferences": [
+    {
+      "path": "docs/miniapp-sdk/evidence/notification-os-container-rebinding-attempt19-20261125/terminal/notification-os-v1/execution-containers.json",
+      "bytes": 2350,
+      "sha256": "b96b00ec8665a2489c7a021b40c386424a9016e501b79348971b9e72cc2b58ed"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/notification-os-container-rebinding-attempt19-20261125/current-container-inputs.json",
+      "bytes": 7807,
+      "sha256": "9964effd96c281c26f8487c0f0ac0c5978cd8fbb6d1165858a127b6891f70f82"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/notification-os-container-rebinding-attempt19-20261125/handshake/containers/FC80577A-6432-4FB4-A113-DA91458A21B0/metadata.plist",
+      "bytes": 632,
+      "sha256": "e33388ed2669b77bf984cc1515bc1cfa7ec61034620aae03cdfda0e74d1e5e80"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/notification-os-container-rebinding-attempt19-20261125/handshake/containers/CD73F996-FB42-42E4-B1DE-7287569F3A54/metadata.plist",
+      "bytes": 602,
+      "sha256": "cde9660338425f9d80813bfce0c335fca4780f4390b8e84b108c7f0b306ccf8f"
+    },
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "bytes": 266128,
+      "sha256": "4f1afea0f0d166c55962b619d187efdc59b3c394a4b6c246af0f120260d74d80"
+    }
+  ],
+  "nativeExecutionForNewScope": "NOT_RUN"
+}

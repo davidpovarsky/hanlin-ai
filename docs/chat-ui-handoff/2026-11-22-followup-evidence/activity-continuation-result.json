@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "date": "2026-11-22",
+  "scope": "Follow-up after TestFlight 145401; original production sources, no simulator",
+  "activity": {
+    "status": "PASS",
+    "assertions": 160,
+    "job_id": "job_2bedd1c6031f",
+    "started_at": "2026-11-22T04:25:06.743113+00:00",
+    "finished_at": "2026-11-22T04:25:39.159956+00:00",
+    "output": "PASS: 160 production activity lifetime and motion-policy checks\nCreating library C:\\Users\\DAVID\\AppData\\Local\\Temp\\hanlin_activity_followup_20261122.lib and object C:\\Users\\DAVID\\AppData\\Local\\Temp\\hanlin_activity_followup_20261122.exp",
+    "prior_attempt": {
+      "job_id": "job_eda1c88fe729",
+      "status": "TIMEOUT",
+      "successful_retry": "job_2bedd1c6031f"
+    },
+    "sources": {
+      "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityHeaderPhase.swift": "b93e7708c5efd3e49fcf0b96afe4f01ad12c548b4dfcbd7af9542a0a81be3e3d",
+      "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityVisibilityPolicy.swift": "22e68bd61ac6af7744a4e7199d7a6bdfafdea2fafc35cbcd71ca5b30fa889cee",
+      "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift": "d8ff25aa0ba06895108f09edf00709db04efe4f7467d1b8302adf1bae1785577",
+      "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift": "a19e5c748ab601d598116e364d2d7b4bedc36de396b120b3fc40eea3aa4d68a8",
+      "Scripts/CI/AgentActivityHeaderChecks.swift": "a5557621a101d717f16b75e54c246edfc8bd28047b4493648eb4c1c875d1f770"
+    }
+  },
+  "continuation": {
+    "status": "PASS",
+    "assertions": 118,
+    "job_id": "job_19e4df45ff63",
+    "started_at": "2026-11-22T04:38:17.736279+00:00",
+    "finished_at": "2026-11-22T04:38:48.280268+00:00",
+    "output": "PASS: 118 production continuation ownership/progress checks\nCreating library C:\\Users\\DAVID\\AppData\\Local\\Temp\\hanlin_continuation_followup_final_20261122.lib and object C:\\Users\\DAVID\\AppData\\Local\\Temp\\hanlin_continuation_followup_final_20261122.exp",
+    "compiler_arguments": [
+      "-parse-as-library",
+      "-swift-version",
+      "6",
+      "-strict-concurrency=complete",
+      "-warnings-as-errors"
+    ],
+    "command": "swiftc -parse-as-library -swift-version 6 -strict-concurrency=complete -warnings-as-errors AI_HLY/Downstream/RuntimeCore/Core/RuntimeUserOperation.swift Scripts/CI/RuntimeContinuationChecks.swift -o <temporary-executable>; execute produced binary",
+    "sources": {
+      "AI_HLY/Downstream/RuntimeCore/Core/RuntimeUserOperation.swift": "d947f1462b1b5f092929af7580160e86518db84b1de9a84234115c55015dc5ad",
+      "Scripts/CI/RuntimeContinuationChecks.swift": "2278a1489e82ce6c5a30d439025972e4b4989151401437b05884ea7ab5b1e850"
+    },
+    "coverage": [
+      "original TaskLocal ownership",
+      "actual output progress only",
+      "deduplicated work/journal receipts",
+      "first interruption cause",
+      "terminal no-progress updates",
+      "success finalization",
+      "Foundation AsyncThrowingStream finished(success/error) does not cancel",
+      "nested cancelled producer cannot cancel shared root run"
+    ]
+  },
+  "integration": {
+    "initial_parse_job": "job_1aa270ef9934",
+    "swift_files_parsed": 15,
+    "parse_status": "PASS",
+    "combined_exit": 2,
+    "combined_failure": "Three newly introduced whitespace errors only; fixed and git diff --check succeeded. Final API delta parsed in continuation job.",
+    "final_hashes": {
+      "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityHeaderPhase.swift": "b93e7708c5efd3e49fcf0b96afe4f01ad12c548b4dfcbd7af9542a0a81be3e3d",
+      "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityVisibilityPolicy.swift": "22e68bd61ac6af7744a4e7199d7a6bdfafdea2fafc35cbcd71ca5b30fa889cee",
+      "AI_HLY/Downstream/MCP/Runtime/MCPRuntimeProvider.swift": "aa652fe417d435591b36b52fe6b0c91059e85efa74976b0c7012b1e51dd05994",
+      "AI_HLY/Downstream/RuntimeCore/Core/RuntimeBackgroundContinuation.swift": "7eadd8551074075b52357969256a9a7ea4cac36e069f37f98eb2edb96aa4afab",
+      "AI_HLY/Downstream/RuntimeCore/Core/RuntimeLifecycleBridge.swift": "f84ca4120961e3d1866cec59f1f2f5a4a714f0354db84b0d5d61aba510329062",
+      "AI_HLY/Downstream/RuntimeCore/Core/RuntimeUserOperation.swift": "d947f1462b1b5f092929af7580160e86518db84b1de9a84234115c55015dc5ad",
+      "AI_HLY/Services/ChatServices/APIManager.swift": "b2e44ca0ce6bb8ebd9fa84679a8cbfcd76f92bf848f445cf9c783e7434947e49",
+      "AI_HLY/Views/Components/ChatViewComponents.swift": "3a3258718482e72e0b8475df8c71e5676b5dc1eca65b8ba0c73001865d3c00a3",
+      "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinInlineToolApproval.swift": "7b48e7e113d83e3f03c4a87a9e17a819b9aa8a309cd0611bae300d017cc9359a",
+      "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift": "d8ff25aa0ba06895108f09edf00709db04efe4f7467d1b8302adf1bae1785577",
+      "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift": "a19e5c748ab601d598116e364d2d7b4bedc36de396b120b3fc40eea3aa4d68a8",
+      "Scripts/CI/AgentActivityHeaderChecks.swift": "a5557621a101d717f16b75e54c246edfc8bd28047b4493648eb4c1c875d1f770",
+      "Scripts/CI/RuntimeContinuationChecks.swift": "2278a1489e82ce6c5a30d439025972e4b4989151401437b05884ea7ab5b1e850"
+    }
+  },
+  "limits": [
+    "Windows Swift syntax parsing does not typecheck Apple APIs.",
+    "No UIKit gesture/device runtime/OS admission was executed by these jobs.",
+    "Apple archive and physical iPad acceptance are separate obligations.",
+    "Source hashes are actual working bytes; repository line-ending normalization can affect Git blob hashes."
+  ]
+}

@@ -8,9 +8,14 @@
 import Foundation
 import PhotosUI
 import SwiftData
-import LLM
+@preconcurrency import LLM
 import MapKit
 import Accelerate
+import HanlinChatCore
+import HanlinAgentCore
+import HanlinHostContracts
+import HanlinPlatformContracts
+import HanlinPresentationKit
 
 // MARK: - 数据结构定义
 struct splitMarkerGroup {
@@ -31,6 +36,7 @@ struct StreamData {
     var audioContent: Data?         // 音频数据
     var document_text: String?      // 文件内容
     var search_text: String?        // 搜索内容
+    var searchQueries: [String]?    // Actual search queries, separate from result text
     var locations_info: [Location]? // 位置信息
     var route_info: [RouteInfo]?    // 路线信息
     var events: [EventItem]?        // 事件信息
@@ -45,6 +51,8 @@ struct StreamData {
     var operationalDescription: String? // 运行描述
     var splitMarkers: splitMarkerGroup? // 分割标记组
     var canvas_info: CanvasData?    // 画布数据
+    var agentEvents: [AgentEvent] = [] // Provider-neutral activity events
+    var modelRoundID: UUID? = nil
 }
 
 struct RequestMessage {
@@ -64,32 +72,81 @@ struct RequestMessage {
 
 
 // MARK: - APIManager
-class APIManager {
+@MainActor
+class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
+    var presentationInstructions: String = ""
+    let agentSessionOwner: HanlinAppAgentSessionOwner
+    private var agentSDKRequest: HanlinAppAgentSessionOwner.Request?
+    private var dataAccess: HanlinAppAgentSessionOwner.DataAccess?
+    private var dataModel: HanlinModelReference?
     
     // MARK: 属性声明
-    private var searchResources: [Resource]?
-    private var searchEngine: String?           // 搜索引擎
+    var searchResources: [Resource]?
+    var searchEngine: String?           // 搜索引擎
     private var documentText: String?           // 文件内容
     private var imageText: String?              // 图片描述
-    private var searchText: String?             // 搜索内容
-    private var locationsInfo: [Location]?      // 位置信息
-    private var storeRouteInfo: [RouteInfo]?    // 路线信息
-    private var events: [EventItem]?            // 事件信息
-    private var htmlContent: String?            // 网页编码
-    private var healthCard: [HealthData]?       // 营养卡片
-    private var codeBlock: [CodeBlock]?         // 代码块
-    private var knowledgeCard: [KnowledgeCard]? // 知识卡片
-    private var canvasInfo: CanvasData?         // 画布信息
+    var searchText: String?             // 搜索内容
+    var searchQueries: [String] = []    // Actual queries in execution order
+    var locationsInfo: [Location]?      // 位置信息
+    var storeRouteInfo: [RouteInfo]?    // 路线信息
+    var events: [EventItem]?            // 事件信息
+    var htmlContent: String?            // 网页编码
+    var healthCard: [HealthData]?       // 营养卡片
+    var codeBlock: [CodeBlock]?         // 代码块
+    var knowledgeCard: [KnowledgeCard]? // 知识卡片
+    var canvasInfo: CanvasData?         // 画布信息
     private var toolMessage: String?            // 工具使用说明
     private var toolMessageReasoning: String?   // 工具使用思考
+    private var reportProgressController = ReportProgressController()
+    private var latestToolProgressSummary: String?
+    private var agentDiagnosticsRecorder: AgentDiagnosticsRecorder?
     private var dataIndex: Int?
+    var localLLMDriverOverride: ((_ modelPath: String, _ systemPrompt: String, _ history: [Chat], _ topP: Float, _ temp: Float, _ maxTokenCount: Int32) -> LocalLLMStreamDriver?)?
+    private var activeLocalLLMDriver: LocalLLMStreamDriver?
+
+    private func captureSearchQuery(_ value: String) {
+        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+        let normalized = AgentActivityDeduplicator.normalized(trimmed)
+        guard !searchQueries.contains(where: {
+            AgentActivityDeduplicator.normalized($0) == normalized
+        }) else { return }
+        searchQueries.append(trimmed)
+    }
     
     private var context: ModelContext
+    private let providerCredentials: HanlinAppProviderCredentials
+    private let chatEngineFactory: () -> HanlinChatEngine
     private var currentTask: URLSessionDataTask? // 当前流式请求任务
     private var isCancelled = false              // 请求取消标记
+    private var activeAgentProducerTask: Task<Void, Never>?
+    private var pendingAgentProducerDrain: Task<Void, Never>?
+    private var requestAdmissionEpoch = UUID()
+    private var requestLifecycleAdmission: AgentRunLifecycleCoordinator.RunAdmission?
+    private var activeAgentRunID: UUID?
+    private var initializingRunID: UUID?
     
-    init(context: ModelContext) {
+    init(
+        context: ModelContext,
+        chatEngineFactory: (() -> HanlinChatEngine)? = nil,
+        agentSessionOwner: HanlinAppAgentSessionOwner? = nil,
+        providerCredentials: HanlinAppProviderCredentials = .shared
+    ) {
         self.context = context
+        self.providerCredentials = providerCredentials
+        self.agentSessionOwner = agentSessionOwner ?? HanlinAppAgentSessionOwner()
+        self.chatEngineFactory = chatEngineFactory ?? {
+            if HanlinNativeA2UIAcceptanceProvider.isEnabled { return HanlinNativeA2UIAcceptanceProvider.makeChatEngine() }
+            return AgentRuntimeUIAcceptanceProvider.makeChatEngine()
+        }
+    }
+
+    func diagnosticsSnapshot() async -> AgentDiagnosticsSession? {
+        await agentDiagnosticsRecorder?.session
+    }
+
+    var currentRecorder: AgentDiagnosticsRecorder? {
+        agentDiagnosticsRecorder
     }
     
     // 解析参数
@@ -101,7 +158,7 @@ class APIManager {
                 return value
             }
         } catch {
-            print("JSON解析失败：\(error)")
+            print("JSON解析失败")
         }
         return nil
     }
@@ -114,29 +171,133 @@ class APIManager {
                 return value
             }
         } catch {
-            print("JSON解析失败：\(error)")
+            print("JSON解析失败")
         }
         return []
     }
     
+    enum DataPortError: Error, Equatable {
+        case legacyMemoryReplacementUnsupported
+    }
+
+    /// Uses the already selected model and original request. No account/Space provenance is
+    /// inferred for the legacy global APIKeys or MemoryArchive tables.
+    @discardableResult
+    func bindDataAccess(request: HanlinAppAgentSessionOwner.Request, model: HanlinModelReference) throws -> HanlinAppAgentSessionOwner.DataAccess {
+        let access = try agentSessionOwner.prepareDataAccess(request: request, modelContext: context)
+        agentSDKRequest = request
+        dataAccess = access
+        dataModel = model
+        return access
+    }
+
+    private func requireDataAccess(namespace: HanlinConversationNamespace? = nil,
+                                   expected: HanlinAppAgentSessionOwner.DataAccess? = nil) throws -> HanlinAppAgentSessionOwner.DataAccess {
+        guard !isCancelled, let dataAccess, let request = agentSDKRequest,
+              namespace.map({ $0 == dataAccess.namespace }) ?? true,
+              expected.map({ $0 == dataAccess }) ?? true else { throw HanlinHostError.staleContext }
+        try agentSessionOwner.requireDataAccess(dataAccess, request: request, modelContext: context)
+        return dataAccess
+    }
+
+    func credential(for model: HanlinModelReference, namespace: HanlinConversationNamespace) throws -> String {
+        _ = try requireDataAccess(namespace: namespace)
+        guard model == dataModel else { throw HanlinHostError.staleContext }
+        // Resolve from the original current record after the owner/request checks.
+        // Legacy values remain readable; unavailable references fail closed.
+        guard let record = getAPIConfiguration(for: model.provider),
+              let key = try providerCredentials.resolve(record), !key.isEmpty else {
+            throw HanlinHostError.denied
+        }
+        return key
+    }
+
+    /// Capture only this request's existing lease and original provider identity.
+    /// The final check runs after transport diagnostics, never against a later turn.
+    func makeProviderRequestAdmission(
+        model: HanlinModelReference, configuration: APIKeys, credential: String
+    ) throws -> HanlinChatRequestAdmission {
+        let access = try requireDataAccess()
+        guard dataModel == model, configuration.modelContext === context, !configuration.isDeleted,
+              getAPIConfiguration(for: model.provider)?.persistentModelID == configuration.persistentModelID,
+              try providerCredentials.matches(credential, for: configuration) else {
+            throw HanlinHostError.staleContext
+        }
+        let providerID = configuration.persistentModelID
+        let storedValue = configuration.key.map { Data($0.utf8) }
+        let endpoint = configuration.requestURL.map { Data($0.utf8) }
+        let apiType = configuration.apiType.rawValue
+        return { [weak self] _ in
+            try await MainActor.run {
+                try Task.checkCancellation()
+                guard let self else { throw HanlinHostError.staleContext }
+                _ = try self.requireDataAccess(expected: access)
+                guard self.dataModel == model,
+                      let current = self.getAPIConfiguration(for: model.provider),
+                      current.modelContext === self.context, !current.isDeleted,
+                      current.persistentModelID == providerID, current.company == model.provider,
+                      current.key.map({ Data($0.utf8) }) == storedValue,
+                      current.requestURL.map({ Data($0.utf8) }) == endpoint, current.apiType.rawValue == apiType else {
+                    throw HanlinHostError.staleContext
+                }
+                // A different context or CloudKit import must not leave a cached
+                // managed object authorizing an obsolete durable credential.
+                let reader = ModelContext(self.context.container)
+                reader.autosaveEnabled = false
+                guard let durable = try reader.fetch(FetchDescriptor<APIKeys>())
+                    .first(where: { $0.persistentModelID == providerID }),
+                      durable.company == model.provider, durable.key.map({ Data($0.utf8) }) == storedValue,
+                      durable.requestURL.map({ Data($0.utf8) }) == endpoint, durable.apiType.rawValue == apiType,
+                      try self.providerCredentials.matches(credential, for: current) else {
+                    throw HanlinHostError.staleContext
+                }
+            }
+        }
+    }
+
+    func requireMemoryAccess(crossSession: Bool,
+                                     expected: HanlinAppAgentSessionOwner.DataAccess? = nil) throws -> HanlinAppAgentSessionOwner.DataAccess {
+        let access = try requireDataAccess(expected: expected)
+        guard isMemoryEnabled(), !crossSession || isCrossMemoryEnabled() else { throw HanlinHostError.denied }
+        return access
+    }
+
+    func read(namespace: HanlinConversationNamespace) throws -> [String] {
+        _ = try requireDataAccess(namespace: namespace)
+        _ = try requireMemoryAccess(crossSession: true)
+        // Rows have no conversation/account origin. Only the user's explicit legacy
+        // cross-conversation setting permits this global read; they are never relabelled.
+        return try context.fetch(FetchDescriptor<MemoryArchive>(
+            sortBy: [SortDescriptor(\.timestamp, order: .reverse)])).compactMap(\.content)
+    }
+
+    func replace(_ memories: [String], namespace: HanlinConversationNamespace) throws {
+        _ = try requireDataAccess(namespace: namespace)
+        // A namespace-scoped replace cannot safely delete or overwrite originless rows.
+        // Keep the existing explicit append/update owner and leave every legacy row intact.
+        throw DataPortError.legacyMemoryReplacementUnsupported
+    }
+
     // 记忆函数
     func saveMemory(content: String) -> Bool {
         do {
+            _ = try requireMemoryAccess(crossSession: false)
             let newMemory = MemoryArchive(content: content, timestamp: Date())
             context.insert(newMemory)
             try context.save()
-            print("成功保存记忆：\(content)")
+            print("成功保存记忆")
             return true
         } catch {
-            print("保存记忆失败：\(error)")
+            print("保存记忆失败")
             return false
         }
     }
 
     // 回忆函数
-    func retrieveMemory(keyword: String) -> String {
+    func retrieveMemory(keyword: String) async -> String {
+        guard let access = try? requireMemoryAccess(crossSession: true) else { return "" }
         
-        print("召回记忆关键词：", keyword)
+        print("召回记忆关键词已接收")
         
         // 1. 加载 JSON 配置（仅加载一次）
         let config: (stopWords: Set<String>, stopChars: Set<Character>, synonymMap: [String: [String]]) = {
@@ -201,15 +362,14 @@ class APIManager {
         }
         
         do {
-            let descriptor = FetchDescriptor<MemoryArchive>(
-                sortBy: [SortDescriptor(\.timestamp, order: .reverse)]
-            )
-            let allMemories = try context.fetch(descriptor)
-            
-            var scored: [(MemoryArchive, Int)] = []
-            
-            for mem in allMemories {
-                guard let raw = mem.content, !raw.isEmpty else { continue }
+            let memories: any HanlinMemoryStore = self
+            let allMemories = try await memories.read(namespace: access.namespace)
+            _ = try requireMemoryAccess(crossSession: true, expected: access)
+
+            var scored: [(content: String, score: Int, originalIndex: Int)] = []
+
+            for (originalIndex, raw) in allMemories.enumerated() {
+                guard !raw.isEmpty else { continue }
                 let content = raw.lowercased()
                 let words = tokenize(content)
                 var score = 0
@@ -259,7 +419,7 @@ class APIManager {
                 }
                 
                 if score > 0 {
-                    scored.append((mem, score))
+                    scored.append((raw, score, originalIndex))
                 }
             }
             
@@ -269,14 +429,14 @@ class APIManager {
             }
             
             let sorted = scored.sorted {
-                $0.1 != $1.1 ? $0.1 > $1.1 : $0.0.timestamp > $1.0.timestamp
+                $0.score != $1.score ? $0.score > $1.score : $0.originalIndex < $1.originalIndex
             }
             
             let results = sorted.map {
-                $0.0.content!.trimmingCharacters(in: .whitespacesAndNewlines)
+                $0.content.trimmingCharacters(in: .whitespacesAndNewlines)
             }
             
-            print("召回记忆结果：", results.joined(separator: "\n\n"))
+            print("召回记忆完成，记录数：", results.count)
             return results.joined(separator: "\n\n")
             
         } catch {
@@ -286,6 +446,9 @@ class APIManager {
     
     // 更新记忆
     func updateMemory(originalContent: String, updatedContent: String) -> String {
+        guard (try? requireMemoryAccess(crossSession: true)) != nil else {
+            return "Memory access is unavailable for this request."
+        }
         // 1. 使用 SwiftData 的类型安全谓词，匹配 content 等于 originalContent
         let descriptor = FetchDescriptor<MemoryArchive>(
             predicate: #Predicate { memory in
@@ -320,6 +483,7 @@ class APIManager {
     
     // 主动搜索
     func searchOnline(query: String) async -> String {
+        captureSearchQuery(query)
         guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return Locale.preferredLanguages.first?.hasPrefix("zh") ?? true
                 ? "没有有效的查询内容"
@@ -381,8 +545,10 @@ class APIManager {
                     } else {
                         self.dataIndex! += 1
                     }
-                    let title = combinedTitles[i]
+                    let title = combinedTitles.indices.contains(i) ? combinedTitles[i] : "Source"
+                    let sourceURL = combinedLinks.indices.contains(i) ? combinedLinks[i] : ""
                     md += "[\(self.dataIndex ?? i+1)] \(title)\n"
+                    if !sourceURL.isEmpty { md += "Source URL: \(sourceURL)\n" }
                     md += content.prefix(6000) + "\n\n"
                 }
             } else {
@@ -393,8 +559,8 @@ class APIManager {
             
             // 构造最终回复
             let prefix = isZh
-                ? "搜索关键词：\(query)\n\n网络资料，供您参考，引用内容时在对应的内容后标注 [index] 引用：\n\n\(md)"
-                : "Search keywords: \(query)\n\nWeb materials for your reference. When citing content, please indicate with [index] after the corresponding content:\n\(md)"
+                ? "搜索关键词：\(query)\n\n网络资料：请在完整句子后的标点后用 [source](原始来源URL) 引用对应来源：\n\n\(md)"
+                : "Search keywords: \(query)\n\nWeb materials: cite each supported sentence after its punctuation using [source](the exact Source URL):\n\(md)"
             
             let searchResult = prefix
             
@@ -421,6 +587,7 @@ class APIManager {
     
     /// 主动搜索 arXiv 文献
     func searchArxivPapers(query: String) async -> String {
+        captureSearchQuery(query)
         guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return Locale.preferredLanguages.first?.hasPrefix("zh") ?? true
                 ? "没有有效的查询内容"
@@ -511,6 +678,7 @@ class APIManager {
                     }
                     
                     md += "## [\(self.dataIndex ?? i+1)] \(paper.title)\n\n"
+                    md += "Source URL: \(paper.idLink)\n\n"
                     md += isZh
                         ? "**发表时间：** \(paper.published)\n\n"
                         : "**Published Date:** \(paper.published)\n\n"
@@ -547,8 +715,8 @@ class APIManager {
             
             // 构造最终回复
             let prefix = isZh
-                ? "搜索关键词：\(query)\n\narXiv 文献资料，供您参考，引用内容时在对应的内容后标注 [index] 引用：\n\n\(md)"
-                : "Search keywords: \(query)\n\narXiv papers for your reference. When citing content, please indicate with [index] after the corresponding content:\n\n\(md)"
+                ? "搜索关键词：\(query)\n\narXiv 文献资料：请在完整句子后的标点后用 [source](原始来源URL) 引用对应来源：\n\n\(md)"
+                : "Search keywords: \(query)\n\narXiv papers: cite each supported sentence after its punctuation using [source](the exact Source URL):\n\n\(md)"
             
             let searchResult = prefix
             
@@ -577,6 +745,7 @@ class APIManager {
     
     /// 根据在线文件 URL 下载并提取文本内容
     func extractContentFromRemoteFile(urlString: String) async throws -> String {
+        captureSearchQuery(urlString)
         guard let originalURL = URL(string: urlString) else {
             return "无效的链接：\(urlString)"
         }
@@ -669,6 +838,7 @@ class APIManager {
     
     // 主动翻找
     func searchKnowledgeBag(query: String) async -> String {
+        captureSearchQuery(query)
         guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return Locale.preferredLanguages.first?.hasPrefix("zh") ?? true
                 ? "没有有效的查询内容"
@@ -701,6 +871,7 @@ class APIManager {
     
     /// 主动读取网页内容：从单个 URL 中提取正文并构造 Markdown 格式摘要
     func readWebPage(url: String) async -> String {
+        captureSearchQuery(url)
         // 校验 URL 是否有效
         guard !url.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return Locale.preferredLanguages.first?.hasPrefix("zh") ?? true
@@ -811,7 +982,8 @@ class APIManager {
     private func getAPIKey(for company: String) -> String? {
         let predicate = #Predicate<APIKeys> { $0.company == company }
         let fetchDescriptor = FetchDescriptor<APIKeys>(predicate: predicate)
-        return (try? context.fetch(fetchDescriptor).first)?.key
+        guard let record = try? context.fetch(fetchDescriptor).first else { return nil }
+        return try? providerCredentials.resolve(record)
     }
     
     // 查询模型请求地址
@@ -819,6 +991,12 @@ class APIManager {
         let predicate = #Predicate<APIKeys> { $0.company == company }
         let fetchDescriptor = FetchDescriptor<APIKeys>(predicate: predicate)
         return (try? context.fetch(fetchDescriptor).first)?.requestURL
+    }
+
+    private func getAPIConfiguration(for company: String) -> APIKeys? {
+        let predicate = #Predicate<APIKeys> { $0.company == company }
+        let fetchDescriptor = FetchDescriptor<APIKeys>(predicate: predicate)
+        return try? context.fetch(fetchDescriptor).first
     }
     
     // 双语检索是否启用
@@ -921,33 +1099,35 @@ class APIManager {
     }
     
     // 检查使用的地图
-    private func findUseMap() -> (company: String, apiKey: String)? {
+    func findUseMap() -> (company: String, apiKey: String)? {
         let fetchRequest = FetchDescriptor<ToolKeys>(predicate: #Predicate {
             $0.toolClass == "map" && $0.isUsing == true
         })
         do {
             let mapKeys = try context.fetch(fetchRequest)
-            if let activeMap = mapKeys.first {
-                return (activeMap.company, activeMap.key)
+            if let activeMap = mapKeys.first,
+               let secret = try providerCredentials.resolve(activeMap) {
+                return (activeMap.company, secret)
             }
         } catch {
-            print("获取地图服务失败: \(error.localizedDescription)")
+            print("获取地图服务失败")
         }
         return nil
     }
     
     // 检查使用的天气
-    private func findUseWeather() -> (company: String, apiKey: String, requestURL: String)? {
+    func findUseWeather() -> (company: String, apiKey: String, requestURL: String)? {
         let fetchRequest = FetchDescriptor<ToolKeys>(predicate: #Predicate {
             $0.toolClass == "weather" && $0.isUsing == true
         })
         do {
             let mapKeys = try context.fetch(fetchRequest)
-            if let activeMap = mapKeys.first {
-                return (activeMap.company, activeMap.key, activeMap.requestURL)
+            if let activeMap = mapKeys.first,
+               let secret = try providerCredentials.resolve(activeMap) {
+                return (activeMap.company, secret, activeMap.requestURL)
             }
         } catch {
-            print("获取天气服务失败: \(error.localizedDescription)")
+            print("获取天气服务失败")
         }
         return nil
     }
@@ -981,15 +1161,19 @@ class APIManager {
     
     // 激活的搜索引擎
     private func getActiveSearchEngine() -> (engine: SearchEngine, apiKey: String?, requestURL: String)? {
+        guard isSearchEnabled() else { return nil }
         let fetchRequest = FetchDescriptor<SearchKeys>(predicate: #Predicate { $0.isUsing == true })
         do {
             let searchKeys = try context.fetch(fetchRequest)
-            if let activeKey = searchKeys.first,
+            let chosenKey = searchKeys.first(where: { $0.company != "AUTOMATIC_KEYLESS" && $0.preservesCredentialSelection })
+                ?? searchKeys.first(where: { $0.company == "AUTOMATIC_KEYLESS" })
+                ?? searchKeys.first
+            if let activeKey = chosenKey,
                let engine = SearchEngine(rawValue: activeKey.company?.uppercased() ?? "Unknown") {
-                return (engine, activeKey.key, activeKey.requestURL) as? (engine: SearchEngine, apiKey: String?, requestURL: String)
+                return (engine, try providerCredentials.resolve(activeKey), activeKey.requestURL) as? (engine: SearchEngine, apiKey: String?, requestURL: String)
             }
         } catch {
-            print("获取搜索引擎失败: \(error.localizedDescription)")
+            print("获取搜索引擎失败")
         }
         return nil
     }
@@ -998,8 +1182,9 @@ class APIManager {
     private func getSystemMessageText(
         modelDisplayName: String,
         modelInfo: AllModels,
-        query: String
-    ) -> String {
+        query: String,
+        toolUseEnabled: Bool
+    ) async -> HanlinSystemPromptSections {
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         let isZh = currentLanguage.hasPrefix("zh")
 
@@ -1074,7 +1259,7 @@ class APIManager {
             """
 
         var goalSection = ""
-        if modelInfo.supportsToolUse {
+        if toolUseEnabled {
             goalSection = isZh
                 ? "# 群聊目标：\n严格遵守规范，通过多元视角启发用户决策。\n# 工具提示：系统支持工具递归多次调用，你可以通过灵活的工具组合使用更好的解决任务，维持高效协作。"
                 : "# Chat Goal:\nStrictly adhere to standards and inspire user decisions through diverse perspectives.\n# Tool Tip: The system supports multiple recursive calls of tools, allowing you to flexibly combine tools to better solve tasks and maintain efficient collaboration."
@@ -1107,7 +1292,7 @@ class APIManager {
         // 模块 6：记忆信息
         var memorySection = ""
         if !query.isEmpty {
-            let result = retrieveMemory(keyword: query).trimmingCharacters(in: .whitespacesAndNewlines)
+            let result = await retrieveMemory(keyword: query).trimmingCharacters(in: .whitespacesAndNewlines)
             
             let invalidPhrases = [
                 "没有找到与",
@@ -1134,7 +1319,7 @@ class APIManager {
                 Information:
                 \(result)
                 """
-                if modelInfo.supportsToolUse {
+                if toolUseEnabled {
                     memorySection.append(
                         isZh ? "\n\n如果用户更新了记忆，你可以调用记忆工具重新记忆。"
                         : "\n\nIf the user updates the memory, you may call the memory tool to update it."
@@ -1144,24 +1329,30 @@ class APIManager {
         }
 
         // 汇总所有模块
-        let sections = [
+        var stableSections = [
             identitySection,
-            timeSection,
             guidelineSection,
             goalSection,
             userInfoSection,
-            memorySection
-        ].filter { !$0.isEmpty }
-
-        return sections.joined(separator: "\n\n")
+            HanlinCitationProjection.modelInstructions,
+            presentationInstructions
+        ]
+        if toolUseEnabled && modelInfo.agentCapabilities.supportsReportProgressTool {
+            stableSections.append("For multi-step tasks, you may use report_progress to provide a brief user-facing update between tool calls. Keep it to one short sentence. Describe only what has been found or what action will happen next. Never reveal private chain-of-thought or hidden reasoning.")
+        }
+        return HanlinSystemPromptSections(
+            stableSections: stableSections,
+            contextSections: [timeSection, memorySection]
+        )
     }
     
     private func getCustomSystemMessageText(
         modelDisplayName: String,
         customSystemMessage: String,
         modelInfo: AllModels,
-        query: String
-    ) -> String {
+        query: String,
+        toolUseEnabled: Bool
+    ) async -> HanlinSystemPromptSections {
         
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         let isZh = currentLanguage.hasPrefix("zh")
@@ -1248,7 +1439,7 @@ class APIManager {
         // 模块 4：记忆信息（retrieveMemory）
         var memorySection = ""
         if !query.isEmpty {
-            let result = retrieveMemory(keyword: query).trimmingCharacters(in: .whitespacesAndNewlines)
+            let result = await retrieveMemory(keyword: query).trimmingCharacters(in: .whitespacesAndNewlines)
             
             let invalidPhrases = [
                 "没有找到与",
@@ -1275,7 +1466,7 @@ class APIManager {
                 Information:
                 \(result)
                 """
-                if modelInfo.supportsToolUse {
+                if toolUseEnabled {
                     memorySection.append(
                         isZh ? "\n\n如果用户更新了记忆，你可以调用记忆工具重新记忆。"
                         : "\n\nIf the user updates the memory, you may call the memory tool to update it."
@@ -1285,21 +1476,71 @@ class APIManager {
         }
         
         // MARK: - 拼接所有非空模块
-        let allSections = [
+        var stableSections = [
             personalitySection,
             userInfoSection,
             systemSection,
-            memorySection
-        ].filter { !$0.isEmpty }
-        
-        return allSections.joined(separator: "\n\n")
+            HanlinCitationProjection.modelInstructions,
+            presentationInstructions
+        ]
+        if toolUseEnabled && modelInfo.agentCapabilities.supportsReportProgressTool {
+            stableSections.append("For multi-step tasks, you may use report_progress to provide a brief user-facing update between tool calls. Keep it to one short sentence. Describe only what has been found or what action will happen next. Never reveal private chain-of-thought or hidden reasoning.")
+        }
+        return HanlinSystemPromptSections(
+            stableSections: stableSections,
+            contextSections: [memorySection]
+        )
     }
     
     // MARK: - 任务取消
+    @discardableResult
+    private func retireAgentProducer() -> Task<Void, Never>? {
+        guard let producer = activeAgentProducerTask else { return pendingAgentProducerDrain }
+        let previous = pendingAgentProducerDrain
+        producer.cancel()
+        let drain = Task { @MainActor in
+            await previous?.value
+            await producer.value
+        }
+        pendingAgentProducerDrain = drain
+        activeAgentProducerTask = nil
+        activeAgentRunID = nil
+        return drain
+    }
+
+    private func requireRequestAdmission(epoch: UUID,
+                                         ownerAdmission: HanlinAppAgentSessionOwner.RequestAdmission,
+                                         lifecycleAdmission: AgentRunLifecycleCoordinator.RunAdmission) throws {
+        try Task.checkCancellation()
+        guard requestAdmissionEpoch == epoch, requestLifecycleAdmission == lifecycleAdmission,
+              AgentRunLifecycleCoordinator.shared.isCurrentAdmission(lifecycleAdmission) else {
+            throw HanlinChatError.cancelled
+        }
+        try agentSessionOwner.requireRequestAdmission(ownerAdmission)
+    }
+
     func cancelCurrentRequest() {
+        let cancelledRunID = initializingRunID ?? activeAgentRunID
+        requestAdmissionEpoch = UUID()
+        requestLifecycleAdmission = nil
         isCancelled = true
+        dataAccess = nil
+        dataModel = nil
+        agentSessionOwner.cancel()
+        activeLocalLLMDriver?.stop()
+        activeLocalLLMDriver = nil
         currentTask?.cancel()
         currentTask = nil
+        retireAgentProducer()
+        activeAgentRunID = nil
+        initializingRunID = nil
+        if let cancelledRunID { AgentRunLifecycleCoordinator.shared.cancelRun(runID: cancelledRunID) }
+    }
+
+    func completeAgentDiagnostics(status: String, error: Error? = nil) async {
+        guard let recorder = agentDiagnosticsRecorder else { return }
+        await recorder.complete(status: status, error: error.map { AgentSafeError($0).message })
+        if agentDiagnosticsRecorder === recorder { agentDiagnosticsRecorder = nil }
     }
     
     // MARK: - 本地模型处理相关
@@ -1390,6 +1631,7 @@ class APIManager {
         
         return AsyncThrowingStream<StreamData, Error> { continuation in
             Task(priority: .userInitiated) {
+                var diagnosticsRoundID: UUID?
                 do {
                     let isChinese = currentLanguage.hasPrefix("zh")
                     
@@ -1397,19 +1639,23 @@ class APIManager {
                     continuation.yield(StreamData(operationalState: isChinese ? "处理对话内容" : "Processing dialogue content"))
                     
                     // 构造系统提示（默认或自定义）
-                    let finalSystemMessage: String = systemMessage == "Default" ?
-                    getSystemMessageText(
+                    let systemPromptSections = systemMessage == "Default" ?
+                    await getSystemMessageText(
                         modelDisplayName: modelInfo.displayName ?? "Unknown",
                         modelInfo: modelInfo,
-                        query: messages.last?.text ?? ""
+                        query: messages.last?.text ?? "",
+                        toolUseEnabled: false
                     ) :
-                    getCustomSystemMessageText(
+                    await getCustomSystemMessageText(
                         modelDisplayName: modelInfo.displayName ?? "Unknown",
                         customSystemMessage: systemMessage,
                         modelInfo: modelInfo,
-                        query: messages.last?.text ?? ""
+                        query: messages.last?.text ?? "",
+                        toolUseEnabled: false
                     )
                     
+                    let finalSystemMessage = systemPromptSections.rendered
+
                     // 利用模板格式化对话记录，转换为 Chat 数组
                     let chats = try await buildLocalFormattedMessages(
                         from: messages,
@@ -1430,8 +1676,9 @@ class APIManager {
                     // 输出状态：加载本地模型
                     continuation.yield(StreamData(operationalState: isChinese ? "加载本地模型" : "Loading local models"))
                     
-                    // 获取本地模型路径（确保 getLocalModelPath 返回非 nil）
-                    guard let modelPath = getLocalModelPath(for: modelInfo.name ?? "Unknown") else {
+                    // 获取本地模型路径（确保 getLocalModelPath 返回非 nil，或在测试重写 driver 时允许使用 mock 路径）
+                    let resolvedModelPath = getLocalModelPath(for: modelInfo.name ?? "Unknown") ?? (self.localLLMDriverOverride != nil ? (modelInfo.name ?? "mock_model") : nil)
+                    guard let modelPath = resolvedModelPath else {
                         throw NSError(domain: "LocalModel", code: -1, userInfo: [NSLocalizedDescriptionKey: "模型路径无效"])
                     }
                     
@@ -1448,18 +1695,46 @@ class APIManager {
                     if maxTokens > 0 {
                         maxtokens = maxTokens
                     }
+
+                    if let recorder = self.agentDiagnosticsRecorder {
+                        let requestData = try JSONSerialization.data(withJSONObject: [
+                            "system": finalSystemMessage,
+                            "messages": chats.map { String(describing: $0) },
+                            "currentInput": currentInput,
+                            "temperature": tem,
+                            "topP": topp,
+                            "maxTokens": maxtokens
+                        ])
+                        diagnosticsRoundID = await recorder.beginRound(
+                            index: 1,
+                            trigger: "initialUserRequest",
+                            requestData: requestData
+                        )
+                        if let diagnosticsRoundID {
+                            await recorder.responseStarted(roundID: diagnosticsRoundID, httpStatus: nil, providerRequestID: nil)
+                        }
+                    }
                     
                     // 初始化 LLM.swift 本地模型及参数调节
-                    guard let llm = LLM(
-                        from: URL(fileURLWithPath: modelPath),
-                        template: .chatML(finalSystemMessage),
-                        history: chats,
-                        topP: Float(topp),
-                        temp: Float(tem),
-                        maxTokenCount: Int32(maxtokens),
-                    ) else {
-                        throw NSError(domain: "LocalLLMInit", code: -1, userInfo: [NSLocalizedDescriptionKey: "本地 LLM 初始化失败"])
+                    let driver: LocalLLMStreamDriver
+                    if let overrideFactory = self.localLLMDriverOverride,
+                       let overriddenDriver = overrideFactory(modelPath, finalSystemMessage, chats, Float(topp), Float(tem), Int32(maxtokens)) {
+                        driver = overriddenDriver
+                    } else {
+                        guard let llm = LLM(
+                            from: URL(fileURLWithPath: modelPath),
+                            template: .chatML(finalSystemMessage),
+                            history: chats,
+                            topP: Float(topp),
+                            temp: Float(tem),
+                            maxTokenCount: Int32(maxtokens),
+                        ) else {
+                            throw NSError(domain: "LocalLLMInit", code: -1, userInfo: [NSLocalizedDescriptionKey: "本地 LLM 初始化失败"])
+                        }
+                        driver = LocalLLMStreamDriver(llm)
                     }
+                    self.activeLocalLLMDriver = driver
+                    defer { self.activeLocalLLMDriver = nil }
                     
                     // 输出状态：等待模型响应
                     continuation.yield(StreamData(operationalState: isChinese ? "等待模型响应" : "Waiting for model response"))
@@ -1471,14 +1746,13 @@ class APIManager {
                     var prefixStripped = false
                     var buffer = ""
                     // 调用流式接口逐 token 返回结果
-                    await llm.respond(to: currentInput) { responseStream in
-                        for await delta in responseStream {
+                    await LocalLLMStreamingAdapter.consume(driver: driver, prompt: currentInput) { delta in
                             
                             if self.isCancelled {
-                                llm.stop()
+                                driver.stop()
                                 continuation.finish()
                                 self.isCancelled = false
-                                break
+                                return false
                             }
                             
                             accumulatedOutput += delta
@@ -1511,21 +1785,41 @@ class APIManager {
                             // 检测累积输出中是否出现停止标记
                             if accumulatedOutput.contains("im_end") {
                                 // 检测到停止标记后调用停止方法，让底层模型尽快结束生成
-                                llm.stop()
-                                break
+                                driver.stop()
+                                return false
                             }
                             if accumulatedOutput.contains("im_start") {
                                 // 检测到停止标记后调用停止方法，让底层模型尽快结束生成
-                                llm.stop()
-                                break
+                                driver.stop()
+                                return false
                             }
-                        }
-                        return ""
+                            return true
+                    }
+
+                    if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {
+                        await recorder.recordStreamEvent(
+                            roundID: diagnosticsRoundID,
+                            visibleContent: accumulatedOutput,
+                            visibleReasoningSummary: nil
+                        )
+                        await recorder.finishRound(
+                            roundID: diagnosticsRoundID,
+                            finishReason: "stop",
+                            usage: nil
+                        )
                     }
                     
                     continuation.finish()
                     
                 } catch {
+                    if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {
+                        await recorder.finishRound(
+                            roundID: diagnosticsRoundID,
+                            finishReason: nil,
+                            usage: nil,
+                            error: AgentSafeError(error).message
+                        )
+                    }
                     
                     continuation.finish(throwing: error)
                     
@@ -1541,6 +1835,7 @@ class APIManager {
                                         currentLanguage: String,
                                         selectedPromptsContent: [String]?,
                                         isObservation: Bool,
+                                        toolUseEnabled: Bool,
                                         systemMessage: String,
                                         canvasData: CanvasData,
                                         continuation: AsyncThrowingStream<StreamData, Error>.Continuation?
@@ -1557,28 +1852,33 @@ class APIManager {
             }
         }()
         
-        var finalSystemMessage: String
+        let finalSystemMessage: HanlinSystemPromptSections
         
         if systemMessage == "Default" {
-            finalSystemMessage = getSystemMessageText(
+            finalSystemMessage = await getSystemMessageText(
                 modelDisplayName: modelInfo.displayName ?? "Unknown",
                 modelInfo: modelInfo,
-                query: messages.last?.text ?? ""
+                query: messages.last?.text ?? "",
+                toolUseEnabled: toolUseEnabled
             )
         } else {
-            finalSystemMessage = getCustomSystemMessageText(
+            finalSystemMessage = await getCustomSystemMessageText(
                 modelDisplayName: modelInfo.displayName ?? "Unknown",
                 customSystemMessage: systemMessage,
                 modelInfo: modelInfo,
-                query: messages.last?.text ?? ""
+                query: messages.last?.text ?? "",
+                toolUseEnabled: toolUseEnabled
             )
         }
         
-        if !finalSystemMessage.isEmpty {
-            if updatedMessages.first?.role != "system" {
+        // Keep the stable prefix in its own system block. Time and retrieved
+        // memory remain system context, but cannot invalidate the preceding
+        // provider cache breakpoint on every turn.
+        if updatedMessages.first?.role != "system" {
+            for text in finalSystemMessage.messageTexts.reversed() {
                 let systemMessage = RequestMessage(
                     role: systemRole,
-                    text: finalSystemMessage,
+                    text: text,
                     modelName: "system",
                     modelDisplayName: "system"
                 )
@@ -1839,6 +2139,7 @@ class APIManager {
             let images = currentMessage?.images
             let optimizer = SystemOptimizer(context: self.context)
             let optimizedQuery = try await optimizer.optimizeSearchQuestion(inputPrompt: timeQuery, recentMessages: recentMessages, inputImages: images)
+            captureSearchQuery(optimizedQuery)
             let bilingualSearchEnabled = isBilingualSearchEnabled()
             let searchCount = getSearchCount()
             
@@ -1857,6 +2158,7 @@ class APIManager {
             // 若启用双语搜索，则翻译查询并执行第二次搜索
             if bilingualSearchEnabled {
                 let translatedQuery = try await optimizer.translatePrompt(inputPrompt: optimizedQuery)
+                captureSearchQuery(translatedQuery)
                 let (searchResult2, _) = try await searchTool(query: translatedQuery, engine: engine, apiKey: apiKey, requestURL: requestURL, searchCount: searchCount)
                 
                 combinedTitles.append(contentsOf: searchResult2.titles)
@@ -1877,15 +2179,18 @@ class APIManager {
                     } else {
                         self.dataIndex! += 1
                     }
-                    markdownContent.append("[\(self.dataIndex ?? index + 1)]: \(title)\n\(content.prefix(6000))\n\n")
+                    let sourceURL = combinedLinks.indices.contains(index) ? combinedLinks[index] : ""
+                    markdownContent.append("[\(self.dataIndex ?? index + 1)]: \(title)\n")
+                    if !sourceURL.isEmpty { markdownContent.append("Source URL: \(sourceURL)\n") }
+                    markdownContent.append("\(content.prefix(6000))\n\n")
                 }
             } else {
                 markdownContent.append(Locale.preferredLanguages.first?.hasPrefix("zh") ?? true ? "未找到相关信息\n" : "No relevant information found\n")
             }
             
             let userMessage = Locale.preferredLanguages.first?.hasPrefix("zh") ?? true
-                ? "搜索关键词：\(optimizedQuery)\n\n网络资料，供您参考，引用内容时在对应的内容后标注 [index] 引用：\n\n\(markdownContent)"
-                : "Search keywords: \(optimizedQuery)\n\nWeb materials for your reference. When citing content, please indicate with [index] after the corresponding content:\n\(markdownContent)"
+                ? "搜索关键词：\(optimizedQuery)\n\n网络资料：请在完整句子后的标点后用 [source](原始来源URL) 引用对应来源：\n\n\(markdownContent)"
+                : "Search keywords: \(optimizedQuery)\n\nWeb materials: cite each supported sentence after its punctuation using [source](the exact Source URL):\n\(markdownContent)"
             
             // 记录搜索数据
             self.searchText = userMessage.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -1898,23 +2203,24 @@ class APIManager {
             }
             self.searchEngine = searchEngine
         } catch {
-            print("搜索过程中发生错误: \(error.localizedDescription)")
+            print("搜索过程中发生错误")
         }
     }
     
     /// 网页阅读任务：从选中的 URL 中提取网页内容，并构造 Markdown 格式摘要
     private func performWebPageTask(with selectedURLs: [String]) async {
         guard !selectedURLs.isEmpty else { return }
+        selectedURLs.forEach(captureSearchQuery)
         let extractedWebPages = await fetchWebPageContent(from: selectedURLs)
         if !extractedWebPages.isEmpty {
             var webContentMarkdown = ""
-            for (_, title, content, icon) in extractedWebPages {
+            for (url, title, content, _) in extractedWebPages {
                 if self.dataIndex == nil {
                     self.dataIndex = 1
                 } else {
                     self.dataIndex! += 1
                 }
-                webContentMarkdown.append("- [\(self.dataIndex ?? 1)](\(title))(\(icon))\n  \(content.prefix(5000))\n\n")
+                webContentMarkdown.append("[\(self.dataIndex ?? 1)] \(title)\nSource URL: \(url)\n\(content.prefix(5000))\n\n")
             }
             let webMessage = Locale.preferredLanguages.first?.hasPrefix("zh") ?? true
             ? "\n网页内容，供您参考：\n\n\(webContentMarkdown)"
@@ -2134,7 +2440,7 @@ class APIManager {
             
             return markdown
         } catch {
-            print("计算向量失败: \(error.localizedDescription)")
+            print("计算向量失败")
             return error.localizedDescription
         }
     }
@@ -2152,12 +2458,13 @@ class APIManager {
                 .map { "- " + $0.text + ($0.imageText ?? "") + ($0.documentText ?? "") }
                 .joined(separator: "\n")
             
-            print("优化的原问题：", query)
+            print("正在优化问题")
             let currentMessage = updatedMessages.last
             let images = currentMessage?.images
             let optimizer = SystemOptimizer(context: self.context)
             let optimizedQuery = try await optimizer.optimizeKnowledgeQuestion(inputPrompt: query, recentMessages: recentMessages, inputImages: images)
-            print("优化后的问题：", optimizedQuery)
+            captureSearchQuery(optimizedQuery)
+            print("问题优化完成")
             
             if let knowledgeMarkdown = await self.performKnowledgeSearch(query: optimizedQuery) {
                 // 将搜索结果追加到 searchText 中
@@ -2177,7 +2484,7 @@ class APIManager {
                 ))
             }
         } catch {
-            print("知识背包搜索过程中发生错误: \(error.localizedDescription)")
+            print("知识背包搜索过程中发生错误")
         }
     }
     
@@ -2186,10 +2493,12 @@ class APIManager {
                                     formattedMessages: [[String: Any]]? = nil,
                                     modelInfo: AllModels,
                                     groupID: UUID,
+                                    runID: UUID? = nil,
                                     currentLanguage: String,
                                     ifSearch: Bool,
                                     ifKnowledge: Bool,
                                     ifToolUse: Bool,
+                                    assistantToolScope: AssistantToolRequestScope,
                                     ifThink: Bool,
                                     ifAudio: Bool,
                                     ifPlanning: Bool,
@@ -2203,15 +2512,83 @@ class APIManager {
                                     selectedURLs: [String]?,
                                     selectedPromptsContent: [String]?,
                                     systemMessage: String,
-                                    depth: Int = 0
+                                    depth: Int = 0,
+                                    capabilitySession: AssistantCapabilitySession? = nil
     ) async throws -> AsyncThrowingStream<StreamData, Error> {
         
-        var updatedMessages = messages
-        
+        let stableChatID = assistantToolScope.chatID?.uuidString ?? groupID.uuidString
+        let session = capabilitySession ?? AssistantCapabilitySession(
+            chatID: stableChatID,
+            isTemporaryChat: assistantToolScope.isTemporaryChat,
+            capabilityAttachments: assistantToolScope.capabilityAttachments
+        )
+        guard session.capabilityAttachments == assistantToolScope.capabilityAttachments else {
+            throw HanlinHostError.staleContext
+        }
+        let currentRunID = runID ?? session.id
+        if let original = agentSDKRequest {
+            guard original.uiRunID == currentRunID, original.conversationID.uuidString == stableChatID,
+                  original.temporary == assistantToolScope.isTemporaryChat else { throw HanlinHostError.staleContext }
+        }
+
         return AsyncThrowingStream<StreamData, Error> { continuation in
-            
-            Task(priority: .userInitiated) {
+            let userOperation = depth == 0 ? RuntimeUserOperation(id: currentRunID) : RuntimeUserOperation.current
+            // Establish the OS handoff before scheduling the producer or any
+            // attachment/preparation await, while the original send is active.
+            if depth == 0, AgentRunLifecycleCoordinator.shared.isCurrentRun(currentRunID), let userOperation {
+                RuntimeBackgroundContinuation.shared.begin(userOperation)
+                userOperation.recordWorkEvent(id: "run:admitted")
+            }
+            let producerTask = RuntimeUserOperation.producerTask(operation: userOperation) {
+                defer {
+                    if depth == 0 {
+                        if let userOperation { RuntimeBackgroundContinuation.shared.end(userOperation) }
+                        AgentRunLifecycleCoordinator.shared.finishRun(runID: currentRunID)
+                    }
+                }
+                guard AgentRunLifecycleCoordinator.shared.isCurrentRun(currentRunID) else {
+                    RuntimeUserOperation.finishStream(continuation)
+                    return
+                }
+                var diagnosticsRoundID: UUID?
+                var diagnosticsRoundFinished = false
+                var diagnosticsUsage: AgentTokenUsage?
+                var diagnosticsFinishReason: String?
                 do {
+                    var updatedMessages = messages
+                    // Register authentic attachments inside the protected original operation.
+                    var registeredAttachmentHandles: [String] = []
+                    #if canImport(UIKit)
+                    for msg in messages {
+                        try userOperation?.checkInterruption()
+                        try Task.checkCancellation()
+                        if let imgs = msg.images {
+                            for img in imgs {
+                                if let data = img.jpegData(compressionQuality: 0.9) ?? img.pngData() {
+                                    if let handle = try? await AuthorizedAttachmentRegistry.shared.register(
+                                        data: data,
+                                        mimeType: "image/jpeg",
+                                        chatID: stableChatID,
+                                        requestID: currentRunID.uuidString
+                                    ) {
+                                        registeredAttachmentHandles.append(handle)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    #endif
+
+                    // Provide model-visible opaque attachment handles for tool calls (such as torah_ocr_excerpt)
+                    if !registeredAttachmentHandles.isEmpty {
+                        let handleNotes = registeredAttachmentHandles.enumerated().map { idx, h in
+                            "[Image \(idx + 1) Attachment Handle: \(h)]"
+                        }.joined(separator: " ")
+                        if let lastIdx = updatedMessages.indices.last(where: { updatedMessages[$0].role == "user" }) {
+                            updatedMessages[lastIdx].text += "\n\n" + handleNotes
+                        }
+                    }
+                    try userOperation?.checkInterruption()
                     let currentLanguagePrefix = currentLanguage.hasPrefix("zh")
                     var tempFormattedMessages: [[String: Any]]
                     var finalFormattedMessages: [[String: Any]]
@@ -2223,7 +2600,7 @@ class APIManager {
                             await self.performSearchTask(updatedMessages: &updatedMessages)
                             // 推送搜索信息
                             if let searchEngine = self.searchEngine, !searchEngine.isEmpty {
-                                continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText))
+                                continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText, searchQueries: self.searchQueries))
                             }
                         }
                         
@@ -2233,7 +2610,7 @@ class APIManager {
                             await self.performSearchTask(with: messages)
                             // 推送搜索信息
                             if let searchEngine = self.searchEngine, !searchEngine.isEmpty {
-                                continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText))
+                                continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText, searchQueries: self.searchQueries))
                             }
                         }
                         
@@ -2243,7 +2620,7 @@ class APIManager {
                             await self.performWebPageTask(with: urls)
                             // 推送搜索信息
                             if let searchEngine = self.searchEngine, !searchEngine.isEmpty {
-                                continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText))
+                                continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText, searchQueries: self.searchQueries))
                             }
                         }
                         
@@ -2261,12 +2638,13 @@ class APIManager {
                         continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "处理对话内容" : "Processing"))
                         
                         // 格式化消息
-                        finalFormattedMessages = try await buildFormattedMessages(
+                        finalFormattedMessages = try await self.buildFormattedMessages(
                             from: updatedMessages,
                             modelInfo: modelInfo,
                             currentLanguage: currentLanguage,
                             selectedPromptsContent: selectedPromptsContent,
                             isObservation: isObservation,
+                            toolUseEnabled: modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse,
                             systemMessage: systemMessage,
                             canvasData: canvasData,
                             continuation: continuation
@@ -2327,169 +2705,220 @@ class APIManager {
                     
                     continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在发送请求" : "Sending request"))
                     
-                    print(finalFormattedMessages)
-                    
-                    // 获取 API Key 和请求 URL
-                    guard let apiKey = getAPIKey(for: modelInfo.company ?? "Unknown") else {
-                        throw NSError(domain: "APIConfigError", code: -1, userInfo: [NSLocalizedDescriptionKey: "无效的 API Key"])
+                    // 获取与模型厂商匹配的完整 Provider 配置。
+                    if HanlinAppleModelCatalogAdapter.isNative(modelInfo) {
+                        let nativeConfiguration = try HanlinAppleModelCatalogAdapter.configuration(
+                            for: modelInfo, temperature: temperature, topP: topP, maxTokens: maxTokens)
+                        await self.agentDiagnosticsRecorder?.setAgentEngineKind("apple_on_device")
+                        try await self.processSDKAgentEngine(runID: currentRunID,
+                            formattedMessages: finalFormattedMessages, modelInfo: modelInfo,
+                            chatConfig: nativeConfiguration, preparedAssistantTools: nil, session: session,
+                            currentLanguage: currentLanguage, currentLanguagePrefix: currentLanguagePrefix,
+                            continuation: continuation)
+                        return
                     }
-                    guard let requestURLString = getRequestURL(for: modelInfo.company ?? "Unknown"),
+                    let access = try self.requireDataAccess()
+                    let selectedModel = HanlinModelReference(provider: modelInfo.company ?? "Unknown",
+                        modelID: modelInfo.name ?? "Unknown")
+                    let credentials: any HanlinCredentialResolver = self
+                    let apiKey = try await credentials.credential(for: selectedModel, namespace: access.namespace)
+                    _ = try self.requireDataAccess(expected: access)
+                    guard selectedModel == HanlinModelReference(provider: modelInfo.company ?? "Unknown",
+                        modelID: modelInfo.name ?? "Unknown") else { throw HanlinHostError.staleContext }
+                    guard let providerConfiguration = self.getAPIConfiguration(for: selectedModel.provider),
+                          try self.providerCredentials.matches(apiKey, for: providerConfiguration) else { throw HanlinHostError.staleContext }
+                    let requestAdmission = try self.makeProviderRequestAdmission(
+                        model: selectedModel, configuration: providerConfiguration, credential: apiKey)
+                    guard let requestURLString = providerConfiguration.requestURL,
                           let requestURL = URL(string: requestURLString),
                           !requestURLString.isEmpty else {
                         throw NSError(domain: "URLConfigError", code: -1, userInfo: [NSLocalizedDescriptionKey: "无效的请求 URL"])
                     }
-                    
-                    // 构造请求
-                    var request = URLRequest(url: requestURL)
-                    request.httpMethod = "POST"
-                    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                    request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-                    
-                    let baseName = restoreBaseModelName(from: modelInfo.name ?? "Unknown")
-                    var requestBody: [String: Any] = [
-                        "model": baseName,
-                        "messages": finalFormattedMessages,
-                        "stream": true,
-                    ]
-                    
-                    // 参数设置
-                    if temperature > 0 {
-                        requestBody["temperature"] = temperature
-                    }
-                    if topP > 0 {
-                        requestBody["top_p"] = topP
-                    }
-                    if maxTokens > 0 {
-                        requestBody["max_tokens"] = maxTokens
+
+                    if modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse,
+                       !finalFormattedMessages.contains(where: {
+                           ($0["content"] as? String) == ToolSchemaDecorator.resultPresentationModelInstruction
+                       }) {
+                        Self.insertGeneratedSystemInstruction(
+                            ToolSchemaDecorator.resultPresentationModelInstruction,
+                            into: &finalFormattedMessages)
                     }
                     
-                    // 工具设置
-                    if modelInfo.supportsToolUse && ifToolUse {
-                        let memoryEnabled = isMemoryEnabled()
-                        let mapEnabled = isMapEnabled()
-                        let calendarEnabled = isCalendarEnabled()
-                        let searchEnabled = isSearchEnabled()
-                        let knowledgeEnabled = isKnowledgeEnabled()
-                        let codeEnabled = isCodeEnabled()
-                        let healthEnabled = isHealthEnabled()
-                        let weatherEnabled = isWeatherEnabled()
-                        let canvasEnabled = isCanvasEnabled()
-                        let tools = buildMemoryTools(
-                            memoryEnabled: memoryEnabled,
-                            mapEnabled: mapEnabled,
-                            calendarEnabled: calendarEnabled,
-                            searchEnabled: searchEnabled,
-                            knowledgeEnabled: knowledgeEnabled,
-                            codeEnabled: codeEnabled,
-                            healthEnabled: healthEnabled,
-                            weatherEnabled: weatherEnabled,
-                            canvasEnabled: canvasEnabled,
+                    // 构造工具与配置
+                    var preparedAssistantTools: AssistantToolBridge.PreparedTools?
+                    var tools: [[String: Any]]? = nil
+                    if modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse {
+                        let legacySources = LegacyToolCanonicalAdapter.sources(
+                            memoryEnabled: self.isMemoryEnabled(),
+                            mapEnabled: self.isMapEnabled(),
+                            calendarEnabled: self.isCalendarEnabled(),
+                            searchEnabled: self.isSearchEnabled(),
+                            knowledgeEnabled: self.isKnowledgeEnabled(),
+                            codeEnabled: self.isCodeEnabled(),
+                            healthEnabled: self.isHealthEnabled(),
+                            weatherEnabled: self.isWeatherEnabled(),
+                            canvasEnabled: self.isCanvasEnabled()
                         )
-                        // 获得工具
-                        requestBody["tools"] = tools
-                    }
-                    
-                    if modelInfo.supportReasoningChange {
-                        if modelInfo.company == "QWEN" ||
-                            modelInfo.company == "MODELSCOPE" ||
-                            modelInfo.company == "SILICONCLOUD" ||
-                            modelInfo.company == "WENXIN"
-                        {
-                            requestBody["enable_thinking"] = ifThink
-                        } else if modelInfo.company == "ANTHROPIC" {
-                            if ifThink {
-                                requestBody["think"] = [
-                                    "type": "enabled",
-                                ]
-                            } else {
-                                requestBody["think"] = [
-                                    "type": "disabled",
-                                ]
+                        preparedAssistantTools = try await AssistantToolBridge.prepare(
+                            scope: assistantToolScope,
+                            legacySources: legacySources,
+                            legacyExecutor: { [weak self] toolName, argumentsJSON, context in
+                                guard let self else {
+                                    return NativeToolResult(modelText: "APIManager deallocated", outcome: .failed)
+                                }
+                                return await self.executeLegacyTool(
+                                    name: toolName,
+                                    argumentsJSON: argumentsJSON,
+                                    context: context,
+                                    continuation: continuation
+                                )
                             }
-                        } else if modelInfo.company == "ZHIPUAI" || modelInfo.company == "HANLIN" || modelInfo.company == "DOUBAO" || modelInfo.company == "OPENROUTER" {
-                            if ifThink {
-                                requestBody["thinking"] = [
-                                    "type": "enabled",
-                                ]
-                            } else {
-                                requestBody["thinking"] = [
-                                    "type": "disabled",
-                                ]
-                            }
-                        } else {
-                            // 给最后一句话加上/think 或者/no_think
-                            if var lastMessage = finalFormattedMessages.last,
-                               lastMessage["role"] as? String == "user",
-                               var content = lastMessage["content"] as? String,
-                               !content.contains("/think") && !content.contains("/no_think") {
-                                content += ifThink ? " /think" : " /no_think"
-                                lastMessage["content"] = content
-                                finalFormattedMessages[finalFormattedMessages.count - 1] = lastMessage
-                            }
-                            // 更新 requestBody
-                            requestBody["messages"] = finalFormattedMessages
-                        }
-                    }
-                    
-                    if modelInfo.supportsReasoning && ifThink && thinkingLength != 0 {
-                        switch thinkingLength {
-                        case 1:
-                            // 短暂思考
-                            if modelInfo.company == "OPENAI" || modelInfo.company == "GOOGLE" || modelInfo.company == "XAI" || modelInfo.company == "DOUBAO" || modelInfo.company == "OPENROUTER"  {
-                                requestBody["reasoning_effort"] = "low"
-                            } else if modelInfo.company == "QWEN" || modelInfo.company == "MODELSCOPE" || modelInfo.company == "SILICONCLOUD" {
-                                requestBody["thinking_budget"] = 1024
-                            }
-                            
-                        case 2:
-                            // 中等思考
-                            if modelInfo.company == "OPENAI" || modelInfo.company == "GOOGLE" || modelInfo.company == "XAI" || modelInfo.company == "DOUBAO" || modelInfo.company == "OPENROUTER"  {
-                                requestBody["reasoning_effort"] = "medium"
-                            } else if modelInfo.company == "QWEN" || modelInfo.company == "MODELSCOPE" || modelInfo.company == "SILICONCLOUD" {
-                                requestBody["thinking_budget"] = 8192
-                            }
+                        )
 
-                        case 3:
-                            // 深度思考
-                            if modelInfo.company == "OPENAI" || modelInfo.company == "GOOGLE" || modelInfo.company == "XAI" {
-                                requestBody["reasoning_effort"] = "high"
-                            } else if modelInfo.company == "QWEN" || modelInfo.company == "MODELSCOPE" || modelInfo.company == "SILICONCLOUD" || modelInfo.company == "OPENROUTER"  {
-                                requestBody["thinking_budget"] = 16384
+                        if (AgentRuntimeUIAcceptanceProvider.isEnabled && !AgentRuntimeUIAcceptanceProvider.isSkillsEnabled) ||
+                           HanlinSkillCatalog.shared.allSkills().isEmpty {
+                            if let prepared = preparedAssistantTools {
+                                session.exposeTools(aliases: Array(prepared.authority.schemasByAlias.keys).sorted())
                             }
+                        }
 
-                        default:
-                            break
+                        if let prepared = preparedAssistantTools {
+                            try await session.prepareExplicitSelections(using: prepared)
+                        }
+                        let modelSkills = await HanlinSkillCatalog.shared.modelVisibleSkills()
+                        await session.retainCurrentlyEligibleSkills(modelSkills: modelSkills)
+                        if let selection = session.explicitSelectionInstruction,
+                           !finalFormattedMessages.contains(where: { ($0["content"] as? String) == selection }) {
+                            finalFormattedMessages.append(["role": "user", "content": selection])
+                        }
+
+                        // Inject compact Skill Index once when depth == 0
+                        if depth == 0 {
+                            let skillIndexPrompt = HanlinSkillIndex.prompt(for: modelSkills)
+                            if !skillIndexPrompt.isEmpty && !finalFormattedMessages.contains(where: { ($0["content"] as? String)?.contains("## Available Skills") == true }) {
+                                Self.insertGeneratedSystemInstruction(
+                                    skillIndexPrompt, into: &finalFormattedMessages)
+                            }
+                        }
+
+                        // Inject active loaded Skill instructions into system messages on subsequent rounds
+                        if !session.loadedSkillInstructions.isEmpty {
+                            for instruction in session.loadedSkillInstructions {
+                                if !finalFormattedMessages.contains(where: { ($0["content"] as? String)?.contains(instruction) == true }) {
+                                    Self.insertGeneratedSystemInstruction(
+                                        "### Active Skill Instructions\n\(instruction)",
+                                        into: &finalFormattedMessages)
+                                }
+                            }
+                        }
+
+                        // Build model-visible tool schemas strictly from session + meta tools
+                        var visibleTools: [[String: Any]] = []
+                        visibleTools.append(LoadSkillTool.schema)
+                        visibleTools.append(ToolSearchTool.schema)
+                        visibleTools.append(ReadToolResultTool.schema)
+                        visibleTools.append(ReadSkillResourceTool.schema)
+                        if let prepared = preparedAssistantTools {
+                            let exposed = prepared.schemas(for: session.exposedToolAliases)
+                            visibleTools.append(contentsOf: exposed)
+                        }
+                        visibleTools = ToolSchemaDecorator.decorate(
+                            schemas: visibleTools,
+                            progressSummaryRequired: modelInfo.agentCapabilities.supportsProgressSummaryField
+                        )
+                        if modelInfo.agentCapabilities.supportsReportProgressTool {
+                            visibleTools.append(ToolSchemaDecorator.reportProgressSchema())
+                        }
+                        tools = visibleTools
+                    }
+
+                    let chatConfig = HanlinChatModelConfiguration(
+                        modelID: modelInfo.name ?? "Unknown",
+                        baseModelID: restoreBaseModelName(from: modelInfo.name ?? "Unknown"),
+                        displayName: modelInfo.displayName,
+                        company: modelInfo.company,
+                        apiType: providerConfiguration.apiType.rawValue,
+                        endpoint: requestURL,
+                        apiKey: apiKey,
+                        temperature: temperature,
+                        topP: topP,
+                        maxTokens: maxTokens > 0 ? maxTokens : HanlinChatGenerationDefaults.maxTokens,
+                        supportsReasoning: modelInfo.supportsReasoning && ifThink,
+                        supportReasoningChange: modelInfo.supportReasoningChange,
+                        thinkingLength: thinkingLength,
+                        supportsToolUse: modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse,
+                        promptCachePolicy: modelInfo.promptCachePolicy
+                    )
+
+                    if modelInfo.agentCapabilities.supportsNativeToolCalling
+                        || HanlinAISDKProviderFactory.descriptor(for: chatConfig).kind == .openAIResponses
+                        || self.agentSessionOwner.canRequestNativeStructured(chatConfig) {
+                        await self.agentDiagnosticsRecorder?.setAgentEngineKind("swift_ai_sdk")
+                        try await self.processSDKAgentEngine(
+                            runID: currentRunID,
+                            formattedMessages: finalFormattedMessages,
+                            modelInfo: modelInfo,
+                            chatConfig: chatConfig,
+                            preparedAssistantTools: ifToolUse ? preparedAssistantTools : nil,
+                            session: session,
+                            currentLanguage: currentLanguage,
+                            currentLanguagePrefix: currentLanguagePrefix,
+                            continuation: continuation,
+                            requestAdmission: requestAdmission
+                        )
+                        return
+                    }
+
+                    await self.agentDiagnosticsRecorder?.setAgentEngineKind("plain_text")
+
+                    var request = try HanlinChatRequestBuilder.buildRequest(
+                        formattedMessages: finalFormattedMessages,
+                        configuration: chatConfig,
+                        tools: tools,
+                        cacheScope: .init(
+                            namespace: [access.namespace.app, access.namespace.account,
+                                        access.namespace.workspace, access.namespace.space],
+                            conversationID: stableChatID,
+                            promptVersion: "hanlin-system-v2"
+                        )
+                    )
+
+                    if modelInfo.supportsVoiceGen && ifAudio && modelInfo.company == "QWEN" {
+                        guard let bodyData = request.httpBody,
+                              var requestBody = try JSONSerialization.jsonObject(with: bodyData) as? [String: Any] else {
+                            throw HanlinChatError.invalidRequest("QWEN audio request body is unavailable")
+                        }
+                        requestBody["modalities"] = ["text", "audio"]
+                        requestBody["audio"] = ["voice": "Cherry", "format": "wav"]
+                        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
+                    }
+
+                    if let recorder = self.agentDiagnosticsRecorder {
+                        let requestData = request.httpBody ?? Data()
+                        diagnosticsRoundID = await recorder.beginRound(
+                            index: depth + 1,
+                            trigger: depth == 0 ? "initialUserRequest" : "continueAfterToolResult",
+                            requestData: requestData
+                        )
+                        if let roundID = diagnosticsRoundID {
+                            await recorder.recordModelRequest(roundID: roundID, requestData: requestData, httpHeaders: request.allHTTPHeaderFields)
                         }
                     }
-                    
-                    if modelInfo.supportsVoiceGen && ifAudio {
-                        if modelInfo.company == "QWEN" {
-                            requestBody["modalities"] = ["text", "audio"]
-                            requestBody["audio"] = [
-                                "voice": "Cherry",
-                                "format": "wav"
-                            ]
-                        }
-                    }
-                    
-                    request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody, options: [])
                     
                     // 推送请求状态
                     continuation.yield(StreamData(operationalState: currentLanguagePrefix ?  "等待模型响应" : "Waiting for model response"))
                     
-                    let (result, response) = try await URLSession.shared.bytes(for: request)
-                    let httpResponse = response as? HTTPURLResponse
-                    
-                    if let httpResponse = httpResponse, !(200...299).contains(httpResponse.statusCode) {
-                        var errorContent = ""
-                        do {
-                            let errorData = try await result.reduce(into: Data()) { $0.append($1) }
-                            if let errorString = String(data: errorData, encoding: .utf8) {
-                                errorContent = ":\(errorString)"
-                            }
-                        }
-                        throw NSError(domain: "NetworkError", code: -1, userInfo: [NSLocalizedDescriptionKey: "\(httpResponse.statusCode)请求错误\(errorContent)"])
+                    let legacyRequestID = diagnosticsRoundID ?? UUID()
+                    userOperation?.updateModelPhase(.waitingForResponse)
+                    continuation.yield(StreamData(agentEvents: [.modelRequestStarted(id: legacyRequestID.uuidString)],
+                        modelRoundID: legacyRequestID))
+                    defer {
+                        continuation.yield(StreamData(agentEvents: [.modelRequestEnded(id: legacyRequestID.uuidString)]))
                     }
+                    let chatEngine = self.chatEngineFactory()
+                    let result = await chatEngine.stream(request: request, configuration: chatConfig,
+                        transportObserver: self.agentDiagnosticsRecorder?.journal.transportObserver,
+                        requestAdmission: requestAdmission)
                     
                     // 定义变量保存所有分片累计的 tool_calls
                     var accumulatedToolCalls: [[String: Any]] = []
@@ -2498,32 +2927,67 @@ class APIManager {
                     self.toolMessage = ""
                     self.toolMessageReasoning = ""
                     var tempOperationalState = ""
-                    var zhipuReasoning: Bool = (
-                        (modelInfo.company == "ZHIPUAI" || modelInfo.company == "HANLIN")
-                        && modelInfo.supportsReasoning
-                        && (modelInfo.name?.hasPrefix("glm-z1") ?? false)
-                    )
+                    // Inline reasoning tags are normalized by HanlinChatStreamParser.
+                    var zhipuReasoning = false
                     var zhipuInThink = false      // 当前是否在 <think>…</think> 区间内
                     var zhipuBuffer = ""          // 用于拼接片段
                     var audioB64 = ""
                     var planning = ""
                     
                     // 处理流式响应
-                    for try await line in result.lines {
+                    for try await event in result {
+                        try userOperation?.checkInterruption()
+                        userOperation?.recordStreamBytes((event.content?.utf8.count ?? 0)
+                            + (event.reasoning?.utf8.count ?? 0))
+                        if let finishReason = event.finishReason {
+                            userOperation?.recordWorkEvent(id: "legacy-step:\(depth):\(finishReason)")
+                        }
                         if self.isCancelled {
-                            continuation.finish()
+                            RuntimeUserOperation.finishStream(continuation)
                             self.isCancelled = false
                             break
                         }
-                        
-                        if line.hasPrefix("data: ") {
-                            let jsonString = line.replacingOccurrences(of: "data: ", with: "").trimmingCharacters(in: .whitespacesAndNewlines)
-                            guard let jsonData = jsonString.data(using: .utf8),
-                                  let jsonObject = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any],
-                                  let choices = jsonObject["choices"] as? [[String: Any]],
-                                  let delta = choices.first?["delta"] as? [String: Any] else {
-                                continue
-                            }
+
+                        if let metadata = event.responseMetadata,
+                           let recorder = self.agentDiagnosticsRecorder,
+                           let diagnosticsRoundID {
+                            await recorder.responseStarted(
+                                roundID: diagnosticsRoundID,
+                                httpStatus: metadata.statusCode,
+                                providerRequestID: metadata.providerRequestID
+                            )
+                        }
+
+                        if let usage = event.tokenUsage {
+                            let providerUsage = AgentTokenUsage(
+                                inputTokens: usage.inputTokens,
+                                outputTokens: usage.outputTokens,
+                                reasoningTokens: usage.reasoningTokens,
+                                cachedInputTokens: usage.cachedInputTokens,
+                        cacheWriteTokens: usage.cacheWriteTokens,
+                                totalTokens: usage.totalTokens,
+                                source: .providerReported
+                            )
+                            diagnosticsUsage = providerUsage
+                            NativeToolTraceLogger.shared.log(
+                                "ModelUsageReceived",
+                                ["inputTokens": providerUsage.inputTokens as Any, "outputTokens": providerUsage.outputTokens as Any],
+                                modelStep: depth + 1
+                            )
+                        }
+
+                        var delta: [String: Any] = [:]
+                        if let content = event.content { delta["content"] = content }
+                        if let reasoning = event.reasoning { delta["reasoning_content"] = reasoning }
+                        if let toolCalls = event.toolCalls { delta["tool_calls"] = toolCalls }
+                        if let audio = event.audioDelta { delta["audio"] = audio }
+                        let choices: [[String: Any]] = [[
+                            "delta": delta,
+                            "finish_reason": event.finishReason as Any
+                        ]]
+                        guard !delta.isEmpty || event.finishReason != nil else {
+                            continue
+                        }
                             
                             var responseData = StreamData()
                             
@@ -2532,8 +2996,6 @@ class APIManager {
                                     if ifThink {
                                         responseData.reasoning = reasoningContent
                                         self.toolMessageReasoning?.append(reasoningContent)
-                                    } else {
-                                        continuation.yield(StreamData(operationalDescription: "\(reasoningContent)"))
                                     }
                                 }
                             }
@@ -2573,7 +3035,7 @@ class APIManager {
                                                 planning.append(contentText)
                                             } else {
                                                 responseData.content = contentText
-                                                toolMessage?.append(contentText)
+                                                self.toolMessage?.append(contentText)
                                             }
                                         } else {
                                             buffer += contentText
@@ -2589,7 +3051,7 @@ class APIManager {
                                             planning.append(contentText)
                                         } else {
                                             responseData.content = contentText
-                                            toolMessage?.append(contentText)
+                                            self.toolMessage?.append(contentText)
                                         }
                                     }
                                 }
@@ -2607,12 +3069,26 @@ class APIManager {
                                         planning.append(transcript)
                                     } else {
                                         responseData.content = transcript
-                                        toolMessage?.append(transcript)
+                                        self.toolMessage?.append(transcript)
                                     }
                                 }
                             }
                             
                             if responseData.content != nil || responseData.reasoning != nil {
+                                // Describe the admitted UI content, after planning,
+                                // inline reasoning and audio transcription normalize it.
+                                if responseData.content?.contains(where: { !$0.isWhitespace }) == true {
+                                    userOperation?.updateModelPhase(.responding)
+                                } else if responseData.reasoning?.contains(where: { !$0.isWhitespace }) == true {
+                                    userOperation?.updateModelPhase(.thinking)
+                                }
+                                if let recorder = self.agentDiagnosticsRecorder, let diagnosticsRoundID {
+                                    await recorder.recordStreamEvent(
+                                        roundID: diagnosticsRoundID,
+                                        visibleContent: responseData.content,
+                                        visibleReasoningSummary: responseData.reasoning
+                                    )
+                                }
                                 continuation.yield(responseData)
                             }
                             
@@ -2648,7 +3124,11 @@ class APIManager {
                                                 } else {
                                                     currentFunction["arguments"] = functionArguments
                                                 }
-                                                continuation.yield(StreamData(operationalDescription: "\(String(describing: currentFunction["arguments"]))"))
+                                                if let callID = currentToolCall["id"] as? String {
+                                                    continuation.yield(StreamData(agentEvents: [
+                                                        .toolCallArgumentsDelta(id: callID, delta: functionArguments)
+                                                    ]))
+                                                }
                                             }
                                             currentToolCall["function"] = currentFunction
                                         }
@@ -2659,1067 +3139,12 @@ class APIManager {
                             }
                             
                             if let finishReason = choices.first?["finish_reason"] as? String {
-                                if finishReason == "tool_calls" {
-                                    var toolResult = ""
-                                    var toolResultFront = ""
-                                    var useFunctionName = ""
-                                    var toolID = ""
-                                    for toolCall in accumulatedToolCalls {
-                                        if let toolCallID = toolCall["id"] as? String,
-                                           let functionDict = toolCall["function"] as? [String: Any],
-                                           let functionName = functionDict["name"] as? String,
-                                           let functionArguments = functionDict["arguments"] as? String {
-                                            toolID = toolCallID
-                                            print("\n🔢 输入参数：\n\(functionArguments)")
-                                            continuation.yield(StreamData(operationalDescription: "\(functionName): \(functionArguments)"))
-                                            
-                                            // 根据具体函数名称调用对应的本地函数
-                                            switch functionName {
-                                            case "save_memory":
-                                                // 记忆函数
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在记忆" : "Taking Notes"))
-                                                
-                                                let content = extractValue(from: functionArguments, forKey: "content") ?? functionArguments
-                                                let success = saveMemory(content: content)
-                                                
-                                                toolResult = currentLanguagePrefix
-                                                ? (success ? "记忆已保存。" : "记忆保存失败。")
-                                                : (success ? "Memory saved." : "Failed to save memory.")
-                                                
-                                                toolResultFront = toolResult
-                                                
-                                                useFunctionName = functionName
-                                                
-                                            case "retrieve_memory":
-                                                // 回忆函数
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在回忆" : "Looking at the Notes"))
-                                                
-                                                let keyword = extractValue(from: functionArguments, forKey: "keyword") ?? functionArguments
-                                                let memory = retrieveMemory(keyword: keyword)
-                                                
-                                                toolResult = currentLanguagePrefix
-                                                ? "记忆内容：\n\(memory)"
-                                                : "Memory content: \n\(memory)"
-                                                
-                                                toolResultFront = toolResult
-                                                
-                                                useFunctionName = functionName
-                                                
-                                            case "update_memory":
-                                                // 更新记忆
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在更新记忆" : "Updating Memory"))
-                                                
-                                                let original = extractValue(from: functionArguments, forKey: "originalContent") ?? ""
-                                                let updated = extractValue(from: functionArguments, forKey: "updatedContent") ?? ""
-                                                
-                                                if original.isEmpty || updated.isEmpty {
-                                                    toolResult = currentLanguagePrefix ? "更新失败，参数不完整。" : "Update failed: missing parameters."
-                                                } else {
-                                                    let result = updateMemory(originalContent: original, updatedContent: updated)
-                                                    toolResult = currentLanguagePrefix ? "记忆更新结果：\(result)" : "Memory update result: \(result)"
-                                                }
-                                                useFunctionName = functionName
-                                                toolResultFront = toolResult
-                                                
-                                            case "search_online":
-                                                // 调用网络搜索工具
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在联网搜索" : "Searching Online"))
-                                                useFunctionName = functionName
-                                                
-                                                // 提取 query 参数
-                                                let actualQuery = extractValue(from: functionArguments, forKey: "query") ?? functionArguments
-                                                
-                                                // 执行搜索
-                                                let resultMarkdown = await searchOnline(query: actualQuery)
-                                                
-                                                // 将搜索结果设置为 toolResult 返回给大模型
-                                                toolResult = resultMarkdown
-                                                toolResultFront = toolResult
-                                                
-                                                // 推送搜索信息
-                                                if let searchEngine = self.searchEngine, !searchEngine.isEmpty {
-                                                    continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText))
-                                                }
-                                                
-                                            case "search_arxiv_papers":
-                                                // 调用 arXiv 文献检索工具
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在检索文献" : "Searching Papers"))
-                                                useFunctionName = functionName
-                                                
-                                                // 提取 query 参数
-                                                let actualQuery = extractValue(from: functionArguments, forKey: "query") ?? functionArguments
-                                                
-                                                // 执行搜索
-                                                let resultMarkdown = await searchArxivPapers(query: actualQuery)
-                                                
-                                                // 将搜索结果设置为 toolResult 返回给大模型
-                                                toolResult = resultMarkdown
-                                                toolResultFront = toolResult
-                                                
-                                                // 推送搜索信息
-                                                if let searchEngine = self.searchEngine, !searchEngine.isEmpty {
-                                                    continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText))
-                                                }
-                                                
-                                            case "extract_remote_file_content":
-                                                // 调用远程文件内容提取工具
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在分析文件" : "Analyzing the Document"))
-                                                useFunctionName = functionName
-                                                
-                                                // 提取 url 参数
-                                                let actualURL = extractValue(from: functionArguments, forKey: "url") ?? functionArguments
-                                                
-                                                // 执行提取
-                                                do {
-                                                    let extractedContent = try await extractContentFromRemoteFile(urlString: actualURL)
-                                                    toolResult = extractedContent
-                                                } catch {
-                                                    let isZh = Locale.preferredLanguages.first?.hasPrefix("zh") ?? true
-                                                    toolResult = isZh
-                                                    ? "提取文件内容时发生错误：\(error.localizedDescription)"
-                                                    : "An error occurred while extracting file content: \(error.localizedDescription)"
-                                                }
-                                                
-                                                toolResultFront = toolResult
-                                                
-                                                // 推送搜索信息
-                                                if let searchEngine = self.searchEngine, !searchEngine.isEmpty {
-                                                    continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText))
-                                                }
-                                                
-                                            case "read_web_page":
-                                                // 调用网页阅读工具
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在读取网页" : "Reading Web"))
-                                                useFunctionName = functionName
-                                                
-                                                // 提取 url 参数
-                                                let actualURL = extractValue(from: functionArguments, forKey: "url") ?? functionArguments
-                                                
-                                                // 执行网页提取
-                                                let resultMarkdown = await readWebPage(url: actualURL)
-                                                
-                                                // 将网页内容摘要设置为 toolResult 返回给大模型
-                                                toolResult = resultMarkdown
-                                                toolResultFront = toolResult
-                                                
-                                                // 推送搜索信息
-                                                if let searchEngine = self.searchEngine, !searchEngine.isEmpty {
-                                                    continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText))
-                                                }
-                                                
-                                            case "search_knowledge_bag":
-                                                // 调用知识背包搜索工具
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在翻找背包" : "Searching in Bag"))
-                                                useFunctionName = functionName
-                                                
-                                                // 提取 query 参数
-                                                let actualQuery = extractValue(from: functionArguments, forKey: "query") ?? functionArguments
-                                                
-                                                // 执行知识背包搜索
-                                                let resultMarkdown = await searchKnowledgeBag(query: actualQuery)
-                                                
-                                                // 将搜索结果设置为 toolResult 返回给大模型
-                                                toolResult = resultMarkdown
-                                                toolResultFront = toolResult
-                                                
-                                                // 推送搜索信息
-                                                if let searchEngine = self.searchEngine, !searchEngine.isEmpty {
-                                                    continuation.yield(StreamData(searchEngine: self.searchEngine, search_text: self.searchText))
-                                                }
-                                                
-                                            case "create_knowledge_document":
-                                                // 调用创建知识卡片工具
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "创建知识文档" : "Creating Knowledge"))
-                                                useFunctionName = functionName
-                                                
-                                                // 提取 title 和 content 参数
-                                                let title   = extractValue(from: functionArguments, forKey: "title")   ?? ""
-                                                let content = extractValue(from: functionArguments, forKey: "content") ?? ""
-                                                
-                                                let card = createKnowledgeCard(title: title, content: content)
-                                                
-                                                let feedbackMD: String
-                                                if currentLanguage.hasPrefix("zh") {
-                                                    feedbackMD = """
-                                                    已创建知识文档《\(card.title)》。用户现在可以在界面中看到知识文档的详细内容了，不用重复文档内容。
-                                                    """
-                                                } else {
-                                                    feedbackMD = """
-                                                    The knowledge document "\(card.title)" has been created. Users can now view the detailed content of the knowledge document in the interface without duplicating the document content.
-                                                    """
-                                                }
-                                                
-                                                if self.knowledgeCard == nil {
-                                                    knowledgeCard = []
-                                                }
-                                                knowledgeCard?.append(card)
-                                                
-                                                toolResult = feedbackMD
-                                                
-                                                if currentLanguage.hasPrefix("zh") {
-                                                    toolResultFront = """
-                                                    已创建知识文档《\(card.title)》。
-                                                    """
-                                                } else {
-                                                    toolResultFront = """
-                                                    The knowledge document "\(card.title)" has been created.
-                                                    """
-                                                }
-                                                
-                                            case "query_location":
-                                                // 调用查询位置函数
-                                                guard let mapInfo = findUseMap() else {
-                                                    toolResult = "当前无激活的地图服务，请先配置地图服务。"
-                                                    useFunctionName = functionName
-                                                    break
-                                                }
-                                                
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在查询位置" : "Querying Location"))
-                                                
-                                                do {
-                                                    let actualKeyword = extractValue(from: functionArguments, forKey: "keyword") ?? functionArguments
-                                                    useFunctionName = functionName
-                                                    
-                                                    let locations = try await queryLocation(with: actualKeyword, company: mapInfo.company, apiKey: mapInfo.apiKey)
-                                                    
-                                                    if locations.isEmpty {
-                                                        toolResult = "未查询到与关键字 \"\(actualKeyword)\" 相关的位置"
-                                                    } else {
-                                                        // 初始化 locationsInfo
-                                                        if self.locationsInfo == nil {
-                                                            self.locationsInfo = []
-                                                        }
-                                                        
-                                                        // 追加到全局位置数组中
-                                                        self.locationsInfo?.append(contentsOf: locations)
-                                                        
-                                                        // 构造结果提示字符串
-                                                        let formatted = locations.enumerated().map { index, loc in
-                                                            "(\(index + 1)) \(loc.name)：纬度 \(loc.latitude)，经度 \(loc.longitude)"
-                                                        }.joined(separator: "\n")
-                                                        
-                                                        toolResult = currentLanguagePrefix ?
-                                                        "\(actualKeyword) 的位置查询成功，共找到 \(locations.count) 个地点：\n\(formatted)" :
-                                                        "\(actualKeyword) The location query was successful, a total of \(locations.count) locations were found: \n\(formatted)\n and have been mapped in the interface."
-                                                        
-                                                        toolResultFront = currentLanguagePrefix ?
-                                                        "\(actualKeyword) 的位置查询成功，共找到 \(locations.count) 个地点：\n\(formatted)" :
-                                                        "\(actualKeyword) The location query was successful, a total of \(locations.count) locations were found: \n\(formatted)."
-                                                    }
-                                                } catch {
-                                                    toolResult = "查询位置出错：\(error.localizedDescription)"
-                                                    useFunctionName = functionName
-                                                    toolResultFront = toolResult
-                                                }
-                                                
-                                            case "query_weather":
-                                                // 检查是否有激活的天气服务
-                                                guard let weatherInfo = findUseWeather() else {
-                                                    toolResult = currentLanguagePrefix
-                                                    ? "当前无激活的天气服务，请先配置天气服务。"
-                                                    : "No active weather service configured. Please set one up first."
-                                                    useFunctionName = functionName
-                                                    break
-                                                }
-                                                
-                                                // 天气查询函数
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在查询天气" : "Querying Weather"))
-                                                
-                                                do {
-                                                    // 解析 JSON 参数
-                                                    guard
-                                                        let jsonData = functionArguments.data(using: .utf8),
-                                                        let json = try JSONSerialization.jsonObject(with: jsonData) as? [String: Any],
-                                                        let latitude  = json["latitude"]  as? Double,
-                                                        let longitude = json["longitude"] as? Double,
-                                                        let timeRange = json["timeRange"] as? String
-                                                    else {
-                                                        throw NSError(
-                                                            domain: "ToolArgumentError",
-                                                            code: -1,
-                                                            userInfo: [NSLocalizedDescriptionKey: "参数解析失败"]
-                                                        )
-                                                    }
-                                                    
-                                                    let coordinate = CLLocationCoordinate2D(
-                                                        latitude: latitude,
-                                                        longitude: longitude
-                                                    )
-                                                    useFunctionName = functionName
-                                                    
-                                                    // 调用新版天气查询函数：支持 timeRange、apiKey、requestURL
-                                                    let weatherDescription = try await queryWeatherDescription(
-                                                        at: coordinate,
-                                                        company: weatherInfo.company,
-                                                        timeRange: timeRange,
-                                                        apiKey: weatherInfo.apiKey,
-                                                        requestURL: weatherInfo.requestURL
-                                                    )
-                                                    
-                                                    toolResult = currentLanguagePrefix
-                                                    ? "该位置的天气信息如下：\n\(weatherDescription)"
-                                                    : "Weather information for the location:\n\(weatherDescription)"
-                                                    
-                                                } catch {
-                                                    toolResult = currentLanguagePrefix
-                                                    ? "天气查询失败：\(error.localizedDescription)"
-                                                    : "Failed to fetch weather: \(error.localizedDescription)"
-                                                    useFunctionName = functionName
-                                                }
-                                                
-                                                toolResultFront = toolResult
-                                                
-                                            case "get_current_location":
-                                                // 获取当前位置函数
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "获取当前位置" : "Getting Location"))
-                                                do {
-                                                    let location = try await getCurrentLocation()
-                                                    useFunctionName = functionName
-                                                    toolResult = currentLanguagePrefix ?
-                                                    "当前位置为 \(location.name)，坐标：纬度 \(location.latitude)，经度 \(location.longitude)" :
-                                                    "Current location is \(location.name), coordinates: latitude \(location.latitude), longitude \(location.longitude)"
-                                                    
-                                                } catch {
-                                                    toolResult = currentLanguagePrefix ?
-                                                    "获取当前位置失败：\(error.localizedDescription)" :
-                                                    "Failed to get current location: \(error.localizedDescription)"
-                                                    useFunctionName = functionName
-                                                }
-                                                
-                                                toolResultFront = toolResult
-                                                
-                                            case "search_nearby_locations":
-                                                // 搜索范围兴趣点函数
-                                                
-                                                guard let mapInfo = findUseMap() else {
-                                                    toolResult = "当前无激活的地图服务，请先配置地图服务。"
-                                                    useFunctionName = functionName
-                                                    break
-                                                }
-                                                
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "搜索周边地点" : "Searching Nearby"))
-                                                
-                                                do {
-                                                    guard let jsonData = functionArguments.data(using: .utf8),
-                                                          let json = try JSONSerialization.jsonObject(with: jsonData) as? [String: Any],
-                                                          let coordinateDict = json["coordinate"] as? [String: Any],
-                                                          let latitude = coordinateDict["latitude"] as? Double,
-                                                          let longitude = coordinateDict["longitude"] as? Double,
-                                                          let keyword = json["keyword"] as? String else {
-                                                        throw NSError(domain: "ToolArgumentError", code: -1, userInfo: [NSLocalizedDescriptionKey: "参数解析失败"])
-                                                    }
-                                                    
-                                                    useFunctionName = functionName
-                                                    let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                                                    let results = try await searchNearbyLocations(around: coordinate, with: keyword, company: mapInfo.company, apiKey: mapInfo.apiKey)
-                                                    
-                                                    if results.isEmpty {
-                                                        toolResult = currentLanguagePrefix ?
-                                                        "未搜索到 \(keyword) 相关地点" :
-                                                        "No results found for \(keyword)"
-                                                    } else {
-                                                        if self.locationsInfo == nil {
-                                                            self.locationsInfo = []
-                                                        }
-                                                        self.locationsInfo?.append(contentsOf: results)
-                                                        
-                                                        let formatted = results.enumerated().map { index, loc in
-                                                            "(\(index + 1)) \(loc.name)：纬度 \(loc.latitude)，经度 \(loc.longitude)"
-                                                        }.joined(separator: "\n")
-                                                        
-                                                        toolResult = currentLanguagePrefix ?
-                                                        "成功找到以下与 \(keyword) 相关的周边地点：\n\(formatted)\n并已绘制在地图中。" :
-                                                        "Found the following nearby places related to \(keyword):\n\(formatted)\nThey are marked on the map."
-                                                    }
-                                                } catch {
-                                                    toolResult = currentLanguagePrefix ?
-                                                    "周边搜索失败：\(error.localizedDescription)" :
-                                                    "Nearby search failed: \(error.localizedDescription)"
-                                                    useFunctionName = functionName
-                                                }
-                                                
-                                                toolResultFront = toolResult
-                                                
-                                            case "get_route":
-                                                // 根据起点、终点及交通方式规划路线
-                                                guard let mapInfo = findUseMap() else {
-                                                    toolResult = "当前无激活的地图服务，请先配置地图服务。"
-                                                    useFunctionName = functionName
-                                                    break
-                                                }
-                                                
-                                                // 通知用户正在规划路线
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在规划路线" : "Planning Route"))
-                                                
-                                                do {
-                                                    // 解析 JSON 数据，提取起点、终点及交通方式
-                                                    guard let jsonData = functionArguments.data(using: .utf8),
-                                                          let json = try JSONSerialization.jsonObject(with: jsonData) as? [String: Any],
-                                                          let startDict = json["start"] as? [String: Any],
-                                                          let startLatitude = startDict["latitude"] as? Double,
-                                                          let startLongitude = startDict["longitude"] as? Double,
-                                                          let endDict = json["end"] as? [String: Any],
-                                                          let endLatitude = endDict["latitude"] as? Double,
-                                                          let endLongitude = endDict["longitude"] as? Double,
-                                                          let mode = json["mode"] as? String else {
-                                                        throw NSError(domain: "ToolArgumentError", code: -1,
-                                                                      userInfo: [NSLocalizedDescriptionKey: "参数解析失败"])
-                                                    }
-                                                    print("json", jsonData)
-                                                    useFunctionName = functionName
-                                                    
-                                                    let startCoordinate = CLLocationCoordinate2D(latitude: startLatitude, longitude: startLongitude)
-                                                    let endCoordinate = CLLocationCoordinate2D(latitude: endLatitude, longitude: endLongitude)
-                                                    
-                                                    // 调用统一接口获取路线信息，返回自定义 RouteInfo 对象
-                                                    let routeInfo = try await getRoute(from: startCoordinate,
-                                                                                       to: endCoordinate,
-                                                                                       with: mode,
-                                                                                       company: mapInfo.company,
-                                                                                       apiKey: mapInfo.apiKey)
-                                                    
-                                                    // 格式化返回提示信息
-                                                    let distanceMeters = routeInfo.distance
-                                                    let expectedTravelTime = routeInfo.expectedTravelTime
-                                                    let travelTimeMinutes = expectedTravelTime / 60.0
-                                                    let formattedSteps = routeInfo.instructions.isEmpty ? "" : "\n途经: " + routeInfo.instructions.joined(separator: " -> ")
-                                                    
-                                                    toolResult = currentLanguagePrefix ?
-                                                    "路线规划成功：总距离 \(Int(distanceMeters)) 米，预计花费时间 \(Int(travelTimeMinutes)) 分钟\(formattedSteps)" :
-                                                    "Route planned successfully: Total distance \(Int(distanceMeters)) meters, estimated travel time \(Int(travelTimeMinutes)) minutes\(formattedSteps)"
-                                                    
-                                                    // 存储路线信息
-                                                    if self.storeRouteInfo == nil {
-                                                        self.storeRouteInfo = []
-                                                    }
-                                                    self.storeRouteInfo?.append(routeInfo)
-                                                    
-                                                    // 生成起点和终点对应的 Location 对象，并添加到 locationsInfo 中
-                                                    let startLocation = Location(
-                                                        id: UUID(),
-                                                        identifier: "start-\(UUID().uuidString)",
-                                                        name: currentLanguagePrefix ? "起点" : "Start",
-                                                        latitude: startLatitude,
-                                                        longitude: startLongitude,
-                                                        style: "mark"
-                                                    )
-                                                    let endLocation = Location(
-                                                        id: UUID(),
-                                                        identifier: "end-\(UUID().uuidString)",
-                                                        name: currentLanguagePrefix ? "终点" : "Destination",
-                                                        latitude: endLatitude,
-                                                        longitude: endLongitude,
-                                                        style: "mark"
-                                                    )
-                                                    if self.locationsInfo == nil {
-                                                        self.locationsInfo = []
-                                                    }
-                                                    self.locationsInfo?.append(contentsOf: [startLocation, endLocation])
-                                                    
-                                                } catch {
-                                                    // 根据交通方式提供更详细的错误说明
-                                                    var errorDesc = error.localizedDescription
-                                                    if let jsonData = functionArguments.data(using: .utf8),
-                                                       let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any],
-                                                       let mode = json["mode"] as? String {
-                                                        switch mode.lowercased() {
-                                                        case "walking":
-                                                            errorDesc = currentLanguagePrefix ?
-                                                            "步行路线规划失败，可能原因包括：距离过长、路径不通或步行道路不支持。" :
-                                                            "Walking route planning failed. Possible reasons include: distance too long, path blocked, or walking paths not supported."
-                                                        case "transit":
-                                                            errorDesc = currentLanguagePrefix ?
-                                                            "公共交通规划失败，可能原因包括：停运、换乘不可用、起点/终点公共交通服务不足或该地区不支持公共交通规划。" :
-                                                            "Transit route planning failed. Possible reasons: service suspensions, unavailable transfers, insufficient public transport at origin/destination, or region not supported."
-                                                        case "driving", "automobile":
-                                                            errorDesc = currentLanguagePrefix ?
-                                                            "驾车路线规划失败，请检查起点、终点是否在道路网络覆盖区域内。" :
-                                                            "Driving route planning failed. Please check if the starting point and destination are within road network coverage."
-                                                        default:
-                                                            break
-                                                        }
-                                                    }
-                                                    toolResult = currentLanguagePrefix ?
-                                                    "规划路线出错：\(errorDesc)，建议更换交通方式或选择其他路线。" :
-                                                    "Error in planning the route: \(errorDesc), suggesting a change of transportation or an alternative."
-                                                    useFunctionName = functionName
-                                                }
-                                                
-                                                toolResultFront = toolResult
-                                                
-                                            case "search_calendar_and_reminders":
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "查询日程事项" : "Searching Calendar"))
-                                                useFunctionName = functionName
-                                                
-                                                do {
-                                                    // 从函数参数中分别提取各字段
-                                                    let keyword = extractValue(from: functionArguments, forKey: "keyword")
-                                                    let startDateString = extractValue(from: functionArguments, forKey: "start_date")
-                                                    let endDateString = extractValue(from: functionArguments, forKey: "end_date")
-                                                    let location = extractValue(from: functionArguments, forKey: "location")
-                                                    let eventType = extractValue(from: functionArguments, forKey: "event_type")
-                                                    
-                                                    // 将日期字符串转换为 Date 对象，格式要求为 "yyyy-MM-dd"
-                                                    let dateFormatter = DateFormatter()
-                                                    dateFormatter.dateFormat = "yyyy-MM-dd"
-                                                    var startDate: Date? = nil
-                                                    var endDate: Date? = nil
-                                                    if let startStr = startDateString, !startStr.isEmpty {
-                                                        startDate = dateFormatter.date(from: startStr)
-                                                    }
-                                                    if let endStr = endDateString, !endStr.isEmpty {
-                                                        endDate = dateFormatter.date(from: endStr)
-                                                    }
-                                                    
-                                                    // 调用新的搜索函数，按照各条件查询日历与提醒事项
-                                                    let items = await searchSystemEvents(keyword: keyword, startDate: startDate, endDate: endDate, location: location, eventType: eventType)
-                                                    
-                                                    if items.isEmpty {
-                                                        toolResult = currentLanguagePrefix ?
-                                                        "未查询到符合条件的日历事件或提醒事项。" :
-                                                        "No calendar events or reminders found matching the criteria."
-                                                    } else {
-                                                        
-                                                        // 格式化输出结果
-                                                        let outputFormatter = DateFormatter()
-                                                        outputFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-                                                        
-                                                        let formatted = items.enumerated().map { index, item in
-                                                            let timeString: String = {
-                                                                if let start = item.startDate {
-                                                                    return outputFormatter.string(from: start)
-                                                                } else if let due = item.dueDate {
-                                                                    return outputFormatter.string(from: due)
-                                                                } else {
-                                                                    return currentLanguagePrefix ? "无时间信息" : "No time info"
-                                                                }
-                                                            }()
-                                                            
-                                                            let notePart = item.notes?.isEmpty == false ? "（备注：\(item.notes!)）" : ""
-                                                            let locPart = item.location?.isEmpty == false ? "（地点：\(item.location!)）" : ""
-                                                            let typePart = item.type == "calendar" ? (currentLanguagePrefix ? "日历事件" : "Calendar") : (currentLanguagePrefix ? "提醒事项" : "Reminder")
-                                                            
-                                                            return "(\(index + 1)) [\(typePart)] \(item.title) - \(timeString)\(notePart)\(locPart)"
-                                                        }.joined(separator: "\n")
-                                                        
-                                                        toolResult = currentLanguagePrefix ?
-                                                        "查询成功，共找到 \(items.count) 个相关项目：\n\(formatted)" :
-                                                        "Query successful. Found \(items.count) matching items:\n\(formatted)"
-                                                    }
-                                                }
-                                                
-                                                toolResultFront = toolResult
-                                                
-                                            case "write_system_event":
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "写入系统事件" : "Writing System Event"))
-                                                useFunctionName = functionName
-                                                
-                                                do {
-                                                    // 从函数参数中分别提取各字段
-                                                    let typeStr = extractValue(from: functionArguments, forKey: "type") ?? ""
-                                                    let titleStr = extractValue(from: functionArguments, forKey: "title") ?? ""
-                                                    let startDateStr = extractValue(from: functionArguments, forKey: "start_date") ?? ""
-                                                    let endDateStr = extractValue(from: functionArguments, forKey: "end_date") ?? ""
-                                                    let dueDateStr = extractValue(from: functionArguments, forKey: "due_date") ?? ""
-                                                    let locationValue = extractValue(from: functionArguments, forKey: "location") ?? ""
-                                                    let notesValue = extractValue(from: functionArguments, forKey: "notes") ?? ""
-                                                    let priorityStr = extractValue(from: functionArguments, forKey: "priority")
-                                                    let reminderMinutesStr = extractValue(from: functionArguments, forKey: "reminder_minutes")
-                                                    
-                                                    // 使用 ISO8601 格式转换日期字符串（格式示例：2025-04-16T12:34:56Z）
-                                                    print("时间：", startDateStr, endDateStr, dueDateStr)
-                                                    let isoFormatter = ISO8601DateFormatter()
-                                                    var startDate: Date? = nil
-                                                    var endDate: Date? = nil
-                                                    var dueDate: Date? = nil
-                                                    
-                                                    if !startDateStr.isEmpty {
-                                                        startDate = isoFormatter.date(from: startDateStr)
-                                                    }
-                                                    if !endDateStr.isEmpty {
-                                                        endDate = isoFormatter.date(from: endDateStr)
-                                                    }
-                                                    if !dueDateStr.isEmpty {
-                                                        dueDate = isoFormatter.date(from: dueDateStr)
-                                                    }
-                                                    
-                                                    // 将 priority 转换为 Int（若传入值非空）
-                                                    var priorityValue: Int? = nil
-                                                    if let pStr = priorityStr, let pInt = Int(pStr) {
-                                                        priorityValue = pInt
-                                                    }
-                                                    
-                                                    // 将 reminder_minutes 转换为 Int（若传入值非空）
-                                                    var reminderMinutesValue: Int? = nil
-                                                    if let rmStr = reminderMinutesStr, let rmInt = Int(rmStr) {
-                                                        reminderMinutesValue = rmInt
-                                                    }
-                                                    
-                                                    // 调用写入系统事件的函数
-                                                    let (writtenEvent, success) = await writeSystemEvent(type: typeStr,
-                                                                                                         title: titleStr,
-                                                                                                         startDate: startDate,
-                                                                                                         endDate: endDate,
-                                                                                                         dueDate: dueDate,
-                                                                                                         location: locationValue,
-                                                                                                         notes: notesValue,
-                                                                                                         priority: priorityValue,
-                                                                                                         reminderMinutes: reminderMinutesValue)
-                                                    
-                                                    if success, let event = writtenEvent {
-                                                        // 使用 DateFormatter 格式化时间输出
-                                                        let outputFormatter = DateFormatter()
-                                                        outputFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-                                                        let timeString: String = {
-                                                            if typeStr.lowercased() == "calendar", let start = event.startDate {
-                                                                return outputFormatter.string(from: start)
-                                                            } else if typeStr.lowercased() == "reminder", let due = event.dueDate {
-                                                                return outputFormatter.string(from: due)
-                                                            } else {
-                                                                return currentLanguagePrefix ? "无时间信息" : "No time info"
-                                                            }
-                                                        }()
-                                                        
-                                                        toolResult = currentLanguagePrefix ?
-                                                        "写入成功：[ \(event.title) - \(timeString) ]" :
-                                                        "Event written successfully: [ \(event.title) - \(timeString) ]"
-                                                        
-                                                        // 存入聊天框
-                                                        if self.events == nil {
-                                                            self.events = []
-                                                        }
-                                                        self.events?.append(event)
-                                                        
-                                                    } else {
-                                                        toolResult = currentLanguagePrefix ?
-                                                        "写入系统事件失败。" :
-                                                        "Failed to write system event."
-                                                    }
-                                                }
-                                                
-                                                toolResultFront = toolResult
-                                                
-                                            case "create_web_view":
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在创建网页" : "Creating Webpage"))
-                                                
-                                                useFunctionName = functionName
-                                                
-                                                let htmlString = try await createWebView(extractValue(from: functionArguments, forKey: "code") ?? "Unknown")
-                                                
-                                                if !htmlString.isEmpty, htmlString != "Unknown" {
-                                                    self.htmlContent = htmlString
-                                                    toolResult = currentLanguagePrefix ?
-                                                    "成功渲染网页，现在用户可以看到网页内容及网页的源代码了。" :
-                                                    "The webpage has been successfully rendered, and users can now see both the webpage content and its source code."
-                                                    toolResultFront = currentLanguagePrefix ?
-                                                    "成功向系统发送渲染网页请求" :
-                                                    "The request to render the webpage has been successfully sent to the system."
-                                                } else {
-                                                    toolResult = currentLanguagePrefix ?
-                                                    "网页渲染失败" :
-                                                    "Web page rendering failed."
-                                                    toolResultFront = toolResult
-                                                }
-                                                
-                                            case "execute_python_code":
-                                                // 调用 Python 执行工具
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在执行代码" : "Executing Code"))
-                                                useFunctionName = functionName
-                                                
-                                                // 提取 code 参数
-                                                let pythonCode = extractValue(from: functionArguments, forKey: "code") ?? ""
-                                                
-                                                do {
-                                                    // 执行脚本并获取 CodeBlock（包含 output + error 状态）
-                                                    let resultBlock = try await PistonExecutor.executePythonCode(code: pythonCode)
-                                                    
-                                                    // 设置输出内容（作为 toolResult 返回给大模型）
-                                                    toolResult = resultBlock.output
-                                                    
-                                                    // 存入聊天框
-                                                    if self.codeBlock == nil {
-                                                        self.codeBlock = []
-                                                    }
-                                                    self.codeBlock?.append(resultBlock)
-                                                    
-                                                } catch {
-                                                    // 出现严重异常（如网络失败、结构解析错误等）
-                                                    toolResult = currentLanguagePrefix
-                                                    ? "执行 Python 代码时发生错误：\(error.localizedDescription)"
-                                                    : "An error occurred while executing the Python code: \(error.localizedDescription)"
-                                                }
-                                                
-                                                toolResultFront = toolResult
-                                                
-                                            case "create_canvas":
-                                                // 1) 通知开始创建
-                                                continuation.yield(StreamData(
-                                                    operationalState: currentLanguagePrefix ? "正在创建画布" : "Creating Canvas"
-                                                ))
-                                                useFunctionName = functionName
-
-                                                // 2) 提取参数
-                                                let title   = extractValue(from: functionArguments, forKey: "title")   ?? ""
-                                                let content = extractValue(from: functionArguments, forKey: "content") ?? ""
-                                                let type    = extractValue(from: functionArguments, forKey: "type")    ?? "text"
-
-                                                // 3) 调用 createCanvasData，仅构建未保存的 CanvasData
-                                                let canvasData = CanvasServices.createCanvasData(
-                                                    title: title,
-                                                    content: content,
-                                                    type: type
-                                                )
-                                                // 4) 将画布信息赋给 self.canvasInfo，由前端负责后续保存
-                                                self.canvasInfo = canvasData
-
-                                                // 5) 准备返回给大模型的结果
-                                                if currentLanguagePrefix {
-                                                    toolResult = "画布已创建：\(title)\n内容：\(content)。用户现在可以阅读画布的内容，后续回答中避免赘述画布内容重复，而是应该引导用户点击右下角的画布按钮前往画布以查看和编辑画布内容。"
-                                                } else {
-                                                    toolResult = "Canvas created: \(title)\nContent: \(content). Users can now read the content of the canvas. In subsequent responses, avoid repeating the canvas content and instead guide users to click the canvas button in the lower right corner to view and edit the canvas."
-                                                }
-                            
-                                                toolResultFront = currentLanguagePrefix
-                                                        ? "标题为 \(title) 的画布已创建"
-                                                        : "The canvas titled \(title) has been created."
-                                                
-                                            case "edit_canvas":
-                                                continuation.yield(StreamData(
-                                                    operationalState: currentLanguagePrefix ? "正在修改画布" : "Editing canvas"
-                                                ))
-                                                useFunctionName = functionName
-
-                                                // 2) 尝试解析 patterns 和 replacements 为 [String]
-                                                let patterns = extractStringArray(from: functionArguments, forKey: "patterns")
-                                                let replacements = extractStringArray(from: functionArguments, forKey: "replacements")
-
-                                                // 3) 若数组长度不一致，构造错误反馈并返回（无需 guard）
-                                                if patterns.count != replacements.count {
-                                                    let msg = currentLanguagePrefix
-                                                        ? "修改失败：patterns 与 replacements 数组长度不一致"
-                                                        : "Edit failed: patterns and replacements arrays must be of the same length"
-                                                    toolResult = msg
-                                                    toolResultFront = msg
-                                                    break
-                                                }
-
-                                                // 4) 构造规则数组
-                                                let rules: [(String, String)] = zip(patterns, replacements).map { ($0, $1) }
-
-                                                do {
-                                                    // 5) 执行 Canvas 内容修改
-                                                    let updatedCanvas = try CanvasServices.editCanvasContent(
-                                                        canvas: canvasData,
-                                                        rules: rules
-                                                    )
-
-                                                    self.canvasInfo = updatedCanvas // 6) 更新到临时状态，供前端决定保存
-
-                                                    // 7) 构造规则摘要
-                                                    let ruleSummary = rules.enumerated().map { (index, pair) in
-                                                        currentLanguagePrefix
-                                                            ? "规则 \(index + 1)：模式：\(pair.0) → 替换为：\(pair.1)"
-                                                            : "Rule \(index + 1): pattern: \(pair.0) → replacement: \(pair.1)"
-                                                    }.joined(separator: "\n")
-
-                                                    // 8) 生成完整内容
-                                                    toolResult = currentLanguagePrefix
-                                                        ? """
-                                                        画布已修改，应用以下规则：
-                                                        \(ruleSummary)
-
-                                                        修改后内容如下：
-                                                        \(updatedCanvas.content)
-
-                                                        用户现在可以阅读画布的内容，后续回答中避免赘述画布内容重复，而是应该引导用户点击右下角的画布按钮前往画布以查看和编辑画布内容。
-                                                        """
-                                                        : """
-                                                        Canvas has been updated using the following rules:
-                                                        \(ruleSummary)
-
-                                                        Updated content:
-                                                        \(updatedCanvas.content)
-
-                                                        Users can now read the content of the canvas. In subsequent responses, avoid repeating the canvas content and instead guide users to click the canvas button in the lower right corner to view and edit the canvas.
-                                                        """
-
-                                                    toolResultFront = currentLanguagePrefix
-                                                        ? "画布内容已更新\n\(ruleSummary)"
-                                                        : "Canvas content updated\n\(ruleSummary)"
-
-                                                } catch {
-                                                    let errorMsg = currentLanguagePrefix
-                                                        ? "修改画布内容时发生错误：\(error.localizedDescription)"
-                                                        : "An error occurred while editing the canvas: \(error.localizedDescription)"
-                                                    toolResult = errorMsg
-                                                    toolResultFront = errorMsg
-                                                }
-                                                
-                                            case "fetch_step_details":
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "查询距离步数" : "Fetching Steps"))
-                                                useFunctionName = functionName
-                                                
-                                                do {
-                                                    // 从函数参数中提取日期字符串
-                                                    let startDateString = extractValue(from: functionArguments, forKey: "start_date")
-                                                    let endDateString = extractValue(from: functionArguments, forKey: "end_date")
-                                                    
-                                                    // 日期格式转换
-                                                    let dateFormatter = DateFormatter()
-                                                    dateFormatter.dateFormat = "yyyy-MM-dd"
-                                                    dateFormatter.timeZone = TimeZone.current
-                                                    
-                                                    guard
-                                                        let startStr = startDateString,
-                                                        let endStr = endDateString,
-                                                        let startDate = dateFormatter.date(from: startStr),
-                                                        let endDate = dateFormatter.date(from: endStr)
-                                                    else {
-                                                        toolResult = currentLanguagePrefix ?
-                                                        "日期格式无效，请传入格式为 yyyy-MM-dd 的有效日期。" :
-                                                        "Invalid date format. Please provide dates in yyyy-MM-dd format."
-                                                        break
-                                                    }
-                                                    
-                                                    // 调用步数详情查询函数
-                                                    let detail = await HealthTool.shared.fetchStepDetails(from: startDate, to: endDate)
-                                                    toolResult = detail
-                                                }
-                                                
-                                                toolResultFront = toolResult
-                                                
-                                            case "fetch_energy_details":
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "查询能量详情" : "Fetching Energy"))
-                                                useFunctionName = functionName
-                                                
-                                                do {
-                                                    // 提取日期字符串
-                                                    let startDateString = extractValue(from: functionArguments, forKey: "start_date")
-                                                    let endDateString = extractValue(from: functionArguments, forKey: "end_date")
-                                                    
-                                                    let dateFormatter = DateFormatter()
-                                                    dateFormatter.dateFormat = "yyyy-MM-dd"
-                                                    dateFormatter.timeZone = TimeZone.current
-                                                    
-                                                    guard
-                                                        let startStr = startDateString,
-                                                        let endStr = endDateString,
-                                                        let startDate = dateFormatter.date(from: startStr),
-                                                        let endDate = dateFormatter.date(from: endStr)
-                                                    else {
-                                                        toolResult = currentLanguagePrefix ?
-                                                        "日期格式无效，请传入格式为 yyyy-MM-dd 的有效日期。" :
-                                                        "Invalid date format. Please provide dates in yyyy-MM-dd format."
-                                                        break
-                                                    }
-                                                    
-                                                    // 调用能量消耗详情查询函数
-                                                    let detail = await HealthTool.shared.fetchEnergyDetails(from: startDate, to: endDate)
-                                                    toolResult = detail
-                                                }
-                                                
-                                                toolResultFront = toolResult
-                                                
-                                            case "fetch_nutrition_details":
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "查询营养摄入" : "Fetching Nutrition"))
-                                                useFunctionName = functionName
-                                                
-                                                do {
-                                                    // 提取日期字符串
-                                                    let startDateString = extractValue(from: functionArguments, forKey: "start_date")
-                                                    let endDateString   = extractValue(from: functionArguments, forKey: "end_date")
-                                                    
-                                                    let dateFormatter = DateFormatter()
-                                                    dateFormatter.dateFormat = "yyyy-MM-dd"
-                                                    dateFormatter.timeZone = TimeZone.current
-                                                    
-                                                    guard
-                                                        let startStr = startDateString,
-                                                        let endStr   = endDateString,
-                                                        let startDate = dateFormatter.date(from: startStr),
-                                                        let endDate   = dateFormatter.date(from: endStr)
-                                                    else {
-                                                        toolResult = currentLanguagePrefix ?
-                                                        "日期格式无效，请传入格式为 yyyy-MM-dd 的有效日期。" :
-                                                        "Invalid date format. Please provide dates in yyyy-MM-dd format."
-                                                        break
-                                                    }
-                                                    
-                                                    // 调用营养摄入详情查询函数
-                                                    let detail = await HealthTool.shared.fetchNutritionDetails(from: startDate, to: endDate)
-                                                    toolResult = detail
-                                                }
-                                                
-                                                toolResultFront = toolResult
-                                                
-                                            case "make_nutrition_data":
-                                                continuation.yield(StreamData(
-                                                    operationalState: currentLanguagePrefix ? "生成营养卡片" : "Generating Nutrition Card"))
-                                                useFunctionName = functionName
-                                                
-                                                guard
-                                                    let raw = functionArguments.data(using: .utf8),
-                                                    let dict = try? JSONSerialization.jsonObject(with: raw) as? [String: Any]
-                                                else {
-                                                    toolResult = currentLanguagePrefix
-                                                    ? "无法解析 nutrition 参数（应为 JSON 字符串）。"
-                                                    : "Failed to parse nutrition parameters (should be JSON string)."
-                                                    break
-                                                }
-                                                
-                                                func val(_ key: String) -> Double? {
-                                                    if let n = dict[key] as? Double           { return n }
-                                                    if let s = dict[key] as? String, let d = Double(s) { return d }
-                                                    return nil
-                                                }
-                                                
-                                                let card = HealthTool.shared.makeNutritionData(
-                                                    protein:       val("protein"),
-                                                    carbohydrates: val("carbohydrates"),
-                                                    fat:           val("fat"),
-                                                    energy:        val("energy"),
-                                                    date:          Date()                     // 如需自定义时间可再解析
-                                                )
-                                                
-                                                // 缓存供 UI 用
-                                                self.healthCard = (self.healthCard ?? []) + [card]
-                                                
-                                                var lines: [String] = []
-                                                if let p = card.proteinGrams        { lines.append("蛋白质：\(String(format: "%.1f", p)) g") }
-                                                if let c = card.carbohydratesGrams  { lines.append("碳水化合物：\(String(format: "%.1f", c)) g") }
-                                                if let f = card.fatGrams            { lines.append("总脂肪：\(String(format: "%.1f", f)) g") }
-                                                if let e = card.energyKilocalories  { lines.append("膳食能量：\(String(format: "%.1f", e)) kcal") }
-                                                
-                                                let header = currentLanguagePrefix ? "营养卡片已成功生成" : "Nutrition card generated successfully."
-                                                toolResult = "\(header)\n" + lines.joined(separator: "\n")
-                                                
-                                                toolResultFront = toolResult
-                                                
-                                            default:
-                                                toolResult = "Unknown"
-                                                useFunctionName = functionName
-                                                continuation.yield(StreamData(operationalState: currentLanguagePrefix ?  "工具不存在" : "Tool does not exist"))
-                                                toolResultFront = currentLanguagePrefix ?  "工具不存在" : "Tool does not exist"
-                                            }
-                                            print("💡 输出结果：", toolResult)
-                                            continuation.yield(StreamData(
-                                                toolContent: "\(toolResultFront)",
-                                                toolName: "\(functionName)",
-                                                operationalDescription: "\(toolResultFront)")
-                                            )
-                                        }
-                                    }
-                                    
-                                    try await Task.sleep(nanoseconds: 300_000_000)
-                                    
-                                    print("toolID:", toolID)
-                                    
-                                    var newFormattedMessages = finalFormattedMessages
-                                    
-                                    let reasoningContent = toolMessageReasoning?.isEmpty == false ? "<think>\(toolMessageReasoning!)</think>\n" : ""
-                                    let textContent = toolMessage?.isEmpty == false ? "\(toolMessage!)\n" : ""
-
-                                    if !reasoningContent.isEmpty || !textContent.isEmpty {
-                                        newFormattedMessages.append([
-                                            "role": "assistant",
-                                            "content": """
-                                            \(reasoningContent)\(textContent)\n
-                                            """
-                                        ])
-                                    }
-                                    
-                                    var toolRole = "user"
-                                    if modelInfo.company == "ZHIPUAI" {
-                                        toolRole = "tool"
-                                    }
-                                    
-                                    if toolResult.isEmpty {
-                                        newFormattedMessages.append([
-                                            "role": toolRole,
-                                            "content": currentLanguagePrefix ?
-                                                "已调用工具「\(useFunctionName)」，但未获得任何有效结果。请基于该结果继续前文内容，你需要保持语义和段落的连贯性，不要重复之前已经说过的内容，并合理处理结果缺失的情况。" :
-                                                "You have called the tool \"\(useFunctionName)\". However, no valid results were obtained. Please continue with the previous content based on this result, ensuring that you maintain semantic and paragraph coherence, avoid repeating what has already been said, and appropriately address the situation of missing results."
-                                        ])
-                                    } else if toolResult == "Unknown" {
-                                        newFormattedMessages.append([
-                                            "role": toolRole,
-                                            "content": currentLanguagePrefix ?
-                                                "注意：工具「\(useFunctionName)」不存在，请不要使用该工具，也不要尝试再次调用它。" :
-                                                "Note: The tool \"\(useFunctionName)\" does not exist. Please do not use or attempt to call this tool again."
-                                        ])
-                                    } else {
-                                        newFormattedMessages.append([
-                                            "role": toolRole,
-                                            "content": currentLanguagePrefix ?
-                                                "已使用工具「\(useFunctionName)」，并获得了如下结果：\n\(toolResult)\n\n请基于该结果继续前文内容，你需要保持语义和段落的连贯性，不要重复之前已经说过的内容。" :
-                                                "The tool \"\(useFunctionName)\" has been used and the following result has been obtained: \n\(toolResult)\n\nPlease continue with the previous content based on this result, you need to keep the semantics and consistency of the paragraph, don't repeat what has already been said before, and don't call the tool \"\(useFunctionName)\" again for the same You need to maintain semantic and paragraph coherence in the preceding text."
-                                        ])
-
-                                    }
-                                    
-                                    print(newFormattedMessages)
-                                    continuation.yield(StreamData(content: "\n\n"))
-                                    if modelInfo.supportsReasoning && ifThink {continuation.yield(StreamData(reasoning: "\n\n"))}
-                                    
-                                    continuation.yield(
-                                        StreamData(
-                                            locations_info: self.locationsInfo,
-                                            route_info: self.storeRouteInfo,
-                                            events: self.events,
-                                            htmlContent: self.htmlContent,
-                                            health_info: self.healthCard,
-                                            code_info: self.codeBlock,
-                                            knowledge_card: self.knowledgeCard,
-                                            splitMarkers: splitMarkerGroup(
-                                                groupID: groupID, modelName: modelInfo.name ?? "Unknown", modelDisplayName: modelInfo.displayName ?? "Unknown"
-                                            ),
-                                            canvas_info: self.canvasInfo,
-                                        )
-                                    )
-                                    
-                                    self.locationsInfo = nil
-                                    self.storeRouteInfo = nil
-                                    self.events = nil
-                                    self.htmlContent = nil
-                                    self.healthCard = nil
-                                    self.codeBlock = nil
-                                    self.knowledgeCard = nil
-                                    self.canvasInfo = nil
-                                    
-                                    // 递归处理
-                                    let recursiveStream = try await self.processRemoteModel(messages: messages,
-                                                                                            formattedMessages: newFormattedMessages,
-                                                                                            modelInfo: modelInfo,
-                                                                                            groupID: groupID,
-                                                                                            currentLanguage: currentLanguage,
-                                                                                            ifSearch: ifSearch,
-                                                                                            ifKnowledge: ifKnowledge,
-                                                                                            ifToolUse: ifToolUse,
-                                                                                            ifThink: ifThink,
-                                                                                            ifAudio: ifAudio,
-                                                                                            ifPlanning: ifPlanning,
-                                                                                            thinkingLength: thinkingLength,
-                                                                                            planningMessage: planningMessage,
-                                                                                            isObservation: isObservation,
-                                                                                            temperature: temperature,
-                                                                                            topP: topP,
-                                                                                            maxTokens: maxTokens,
-                                                                                            canvasData: canvasData,
-                                                                                            selectedURLs: selectedURLs,
-                                                                                            selectedPromptsContent: selectedPromptsContent,
-                                                                                            systemMessage: systemMessage,
-                                                                                            depth: depth + 1)
-                                    for try await recursiveData in recursiveStream {
-                                        continuation.yield(recursiveData)
-                                    }
-                                    
-                                    // 结束递归
-                                    break
-                                    
-                                } else {
+                                diagnosticsFinishReason = finishReason
+                                if finishReason != "tool_calls" {
                                     responseData.content = ""
                                     responseData.resources = self.searchResources
                                     responseData.searchEngine = self.searchEngine
+                                    responseData.searchQueries = self.searchQueries.isEmpty ? nil : self.searchQueries
                                     if !audioB64.isEmpty {
                                         if modelInfo.company == "QWEN" {
                                             if let pcmData = Data(base64Encoded: audioB64) {
@@ -3733,7 +3158,7 @@ class APIManager {
                                                     let tmpPlayer = try AVAudioPlayer(data: wavFile)
                                                     duration = tmpPlayer.duration
                                                 } catch {
-                                                    print("无法读取 WAV 时长：\(error)")
+                                                    print("无法读取 WAV 时长")
                                                 }
                                                 let asset = AudioAsset(
                                                     data: wavFile,
@@ -3753,10 +3178,12 @@ class APIManager {
                                                                                                     formattedMessages: tempFormattedMessages,
                                                                                                     modelInfo: modelInfo,
                                                                                                     groupID: groupID,
+                                                                                                    runID: currentRunID,
                                                                                                     currentLanguage: currentLanguage,
                                                                                                     ifSearch: ifSearch,
                                                                                                     ifKnowledge: ifKnowledge,
                                                                                                     ifToolUse: ifToolUse,
+                                                                                                    assistantToolScope: assistantToolScope,
                                                                                                     ifThink: ifThink,
                                                                                                     ifAudio: ifAudio,
                                                                                                     ifPlanning: ifPlanning,
@@ -3770,7 +3197,8 @@ class APIManager {
                                                                                                     selectedURLs: selectedURLs,
                                                                                                     selectedPromptsContent: selectedPromptsContent,
                                                                                                     systemMessage: systemMessage,
-                                                                                                    depth: depth + 1)
+                                                                                                    depth: depth + 1,
+                                                                                                    capabilitySession: session)
                                             for try await recursiveData in recursiveStream {
                                                 continuation.yield(recursiveData)
                                             }
@@ -3794,18 +3222,61 @@ class APIManager {
                                     }
                                 }
                             }
-                        }
+                    }
+                    if let recorder = self.agentDiagnosticsRecorder,
+                       let diagnosticsRoundID,
+                       !diagnosticsRoundFinished {
+                        await recorder.finishRound(
+                            roundID: diagnosticsRoundID,
+                            finishReason: diagnosticsFinishReason,
+                            usage: diagnosticsUsage
+                        )
+                    }
+                    if depth == 0 {
+                        try userOperation?.markSucceeded()
+                        await self.agentDiagnosticsRecorder?.complete(status: "completed")
                     }
                     // 流完成
-                    continuation.finish()
+                    RuntimeUserOperation.finishStream(continuation)
                     self.isCancelled = false
                 } catch {
-                    continuation.finish(throwing: error)
+                    userOperation?.markFailed()
+                    if let recorder = self.agentDiagnosticsRecorder,
+                       let diagnosticsRoundID,
+                       !diagnosticsRoundFinished {
+                        await recorder.finishRound(
+                            roundID: diagnosticsRoundID,
+                            finishReason: diagnosticsFinishReason,
+                            usage: diagnosticsUsage,
+                            error: AgentSafeError(error).message
+                        )
+                    }
+                    if depth == 0 {
+                        await self.agentDiagnosticsRecorder?.complete(
+                            status: userOperation?.snapshot.reason == nil ? "failed" : "interrupted",
+                            error: userOperation?.snapshot.reason ?? AgentSafeError(error).message
+                        )
+                    }
+                    if let userOperation, let reason = userOperation.snapshot.reason {
+                        continuation.finish(throwing: RuntimeOperationInterruptionError(operationID: userOperation.id, reason: reason))
+                    } else { continuation.finish(throwing: error) }
                 }
-                
-                continuation.onTermination = { _ in
-                    continuation.finish()
-                }
+            }
+            if depth == 0 {
+                userOperation?.bindProducerCancellation { producerTask.cancel() }
+                self.activeAgentProducerTask?.cancel()
+                self.activeAgentProducerTask = producerTask
+                self.activeAgentRunID = currentRunID
+                AgentRunLifecycleCoordinator.shared.attachProducerTask(producerTask, for: currentRunID)
+            }
+            continuation.onTermination = { @Sendable termination in
+                RuntimeUserOperation.handleStreamTermination(termination, ownsRun: depth == 0,
+                    cancelProducer: { producerTask.cancel() },
+                    cancelOwnedRun: {
+                        Task { @MainActor in
+                            AgentRunLifecycleCoordinator.shared.cancelRun(runID: currentRunID)
+                        }
+                    })
             }
         }
     }
@@ -3828,7 +3299,7 @@ class APIManager {
             
             return optimizedQuery
         } catch {
-            print("发生错误: \(error.localizedDescription)")
+            print("发生错误")
             return nil
         }
     }
@@ -3872,7 +3343,7 @@ class APIManager {
                     continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "自动优化提示" : "Automatic optimization prompt"))
                     var updatedMessages = messages
                     let optimizedPrompt = await ImagePromptTask(updatedMessages: &updatedMessages) ?? updatedMessages.last?.text ?? updatedMessages.last?.imageText ?? ""
-                    print("生成提示词：", optimizedPrompt)
+                    print("生成提示词已准备")
                     
                     var url: URL
                     var request: URLRequest
@@ -4045,23 +3516,37 @@ class APIManager {
                     // 发请求
                     let (data, response) = try await URLSession.shared.data(for: request)
                     guard let httpResponse = response as? HTTPURLResponse else {
-                        throw NSError(domain: "ImageGen", code: -1, userInfo: [NSLocalizedDescriptionKey: "响应格式错误"])
+                        let invalidMsg = currentLanguagePrefix ? "图像生成响应格式错误" : "Invalid image generation response format"
+                        throw NSError(domain: "ImageGen", code: -1, userInfo: [NSLocalizedDescriptionKey: invalidMsg])
                     }
                     guard httpResponse.statusCode == 200 else {
-                        throw NSError(domain: "ImageGen", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "图像生成请求失败"])
+                        let failureMessage = Self.buildImageGenerationFailureMessage(
+                            statusCode: httpResponse.statusCode,
+                            responseData: data,
+                            modelName: baseName,
+                            company: company,
+                            isChinese: currentLanguagePrefix
+                        )
+                        throw NSError(
+                            domain: "ImageGen",
+                            code: httpResponse.statusCode,
+                            userInfo: [NSLocalizedDescriptionKey: failureMessage]
+                        )
                     }
                     
                     let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
                     
-                    // 提取图片 URL
+                    // 提取图片 URL 或 Base64 数据
                     var imageURLString: String?
+                    var directImageData: Data?
                     
                     switch company {
                     case "QWEN":
                         // 异步返回，需要轮询 task_id（可以保留原先的轮询代码逻辑）
                         let output = json?["output"] as? [String: Any]
                         guard let taskId = output?["task_id"] as? String else {
-                            throw NSError(domain: "ImageGen", code: -1, userInfo: [NSLocalizedDescriptionKey: "未获取到任务 ID"])
+                            let msg = currentLanguagePrefix ? "未获取到图像生成任务 ID" : "Failed to obtain image generation task ID"
+                            throw NSError(domain: "ImageGen", code: -1, userInfo: [NSLocalizedDescriptionKey: msg])
                         }
                         
                         continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "排队生成图像" : "Waiting in line"))
@@ -4084,23 +3569,26 @@ class APIManager {
                                     break
                                 }
                             } else if taskStatus == "FAILED" {
-                                throw NSError(domain: "ImageGen", code: -1, userInfo: [NSLocalizedDescriptionKey: "任务失败"])
+                                let msg = currentLanguagePrefix ? "图像生成任务执行失败" : "Image generation task failed"
+                                throw NSError(domain: "ImageGen", code: -1, userInfo: [NSLocalizedDescriptionKey: msg])
                             }
                             
                             attempts -= 1
                         }
                         
-                    case "SILICONCLOUD", "HANLIN_OPEN", "MODELSCOPE":
-                        if let images = json?["images"] as? [[String: Any]],
-                           let urlStr = images.first?["url"] as? String {
-                            imageURLString = urlStr
-                        }
-                        
                     default:
-                        if let dataArr = json?["data"] as? [[String: Any]],
-                           let urlStr = dataArr.first?["url"] as? String {
-                            imageURLString = urlStr
-                        }
+                        let extracted = Self.extractGeneratedImagePayload(from: json, company: company)
+                        imageURLString = extracted.urlString
+                        directImageData = extracted.imageData
+                    }
+                    
+                    if let directImageData, let image = UIImage(data: directImageData) {
+                        var final = StreamData()
+                        final.image_content = [image]
+                        final.image_text = optimizedPrompt
+                        continuation.yield(final)
+                        continuation.finish()
+                        return
                     }
                     
                     // 下载图片并返回
@@ -4114,10 +3602,14 @@ class APIManager {
                             continuation.finish()
                             return
                         } else {
-                            throw NSError(domain: "ImageGen", code: -1, userInfo: [NSLocalizedDescriptionKey: "图片数据解码失败"])
+                            let msg = currentLanguagePrefix ? "图片数据解码失败" : "Failed to decode generated image data"
+                            throw NSError(domain: "ImageGen", code: -1, userInfo: [NSLocalizedDescriptionKey: msg])
                         }
                     } else {
-                        throw NSError(domain: "ImageGen", code: -1, userInfo: [NSLocalizedDescriptionKey: "未获取到图像 URL"])
+                        let msg = currentLanguagePrefix
+                            ? "未获取到图像结果（模型 \(baseName) 未返回有效的 url 或 b64_json）"
+                            : "No image returned (model \(baseName) did not return a valid url or b64_json)"
+                        throw NSError(domain: "ImageGen", code: -1, userInfo: [NSLocalizedDescriptionKey: msg])
                     }
                 } catch {
                     continuation.finish(throwing: error)
@@ -4125,14 +3617,123 @@ class APIManager {
             }
         }
     }
+
+    enum ModelExecutionRoute: Equatable {
+        case localText
+        case remoteText
+        case remoteImageGeneration
+    }
+
+    nonisolated static func resolveModelExecutionRoute(
+        company: String?,
+        modelName: String?,
+        supportsTextGen: Bool,
+        supportsImageGen: Bool,
+        prefersImageGeneration: Bool = false
+    ) -> ModelExecutionRoute {
+        if company?.uppercased() == "LOCAL" {
+            return .localText
+        }
+        if supportsImageGen && (!supportsTextGen || prefersImageGeneration) {
+            return .remoteImageGeneration
+        }
+        if supportsTextGen {
+            return .remoteText
+        }
+        let baseName = restoreBaseModelName(from: modelName ?? "")
+        if ModelRefreshService.isKnownImageOnlyModelID(baseName) {
+            return .remoteImageGeneration
+        }
+        return .remoteText
+    }
+
+    nonisolated static func extractGeneratedImagePayload(
+        from json: [String: Any]?,
+        company: String
+    ) -> (urlString: String?, imageData: Data?) {
+        guard let json else { return (nil, nil) }
+        let items: [[String: Any]]
+        switch company.uppercased() {
+        case "SILICONCLOUD", "HANLIN_OPEN", "MODELSCOPE":
+            items = (json["images"] as? [[String: Any]]) ?? (json["data"] as? [[String: Any]]) ?? []
+        default:
+            items = (json["data"] as? [[String: Any]]) ?? (json["images"] as? [[String: Any]]) ?? []
+        }
+        guard let first = items.first else { return (nil, nil) }
+        if let b64 = (first["b64_json"] as? String) ?? (first["base64"] as? String),
+           !b64.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            let cleaned: String
+            if let commaIndex = b64.firstIndex(of: ","), b64.hasPrefix("data:image") {
+                cleaned = String(b64[b64.index(after: commaIndex)...])
+            } else {
+                cleaned = b64
+            }
+            if let decoded = Data(base64Encoded: cleaned, options: .ignoreUnknownCharacters) {
+                return (nil, decoded)
+            }
+        }
+        if let urlStr = first["url"] as? String, !urlStr.isEmpty {
+            if urlStr.hasPrefix("data:image"),
+               let commaIndex = urlStr.firstIndex(of: ",") {
+                let b64Part = String(urlStr[urlStr.index(after: commaIndex)...])
+                if let decoded = Data(base64Encoded: b64Part, options: .ignoreUnknownCharacters) {
+                    return (nil, decoded)
+                }
+            }
+            return (urlStr, nil)
+        }
+        return (nil, nil)
+    }
+
+    nonisolated static func buildImageGenerationFailureMessage(
+        statusCode: Int,
+        responseData: Data,
+        modelName: String,
+        company: String,
+        isChinese: Bool
+    ) -> String {
+        var detail = ""
+        if let json = try? JSONSerialization.jsonObject(with: responseData) as? [String: Any] {
+            if let errorDict = json["error"] as? [String: Any],
+               let msg = (errorDict["message"] as? String) ?? (errorDict["code"] as? String) {
+                detail = msg
+            } else if let msg = (json["message"] as? String) ?? (json["detail"] as? String) ?? (json["error"] as? String) {
+                detail = msg
+            }
+        }
+        if detail.isEmpty, let rawText = String(data: responseData, encoding: .utf8) {
+            detail = rawText
+                .replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        // Redact any accidental bearer/key tokens and bound length
+        detail = detail.replacingOccurrences(
+            of: "(?i)(bearer\\s+[a-z0-9._\\-]+|sk-[a-z0-9._\\-]{8,})",
+            with: "[REDACTED]",
+            options: .regularExpression
+        )
+        if detail.count > 220 {
+            detail = String(detail.prefix(220)) + "…"
+        }
+        if isChinese {
+            let suffix = detail.isEmpty ? "" : "：\(detail)"
+            return "图像生成请求失败（HTTP \(statusCode)，模型 \(modelName)）\(suffix)"
+        } else {
+            let suffix = detail.isEmpty ? "" : ": \(detail)"
+            return "Image generation request failed (HTTP \(statusCode), model \(modelName))\(suffix)"
+        }
+    }
     
     // MARK: - 主流式请求入口
     func sendStreamRequest(messages: [RequestMessage],
                            modelName: String,
+                           modelRecordID: UUID? = nil,
                            groupID: UUID,
+                           runID: UUID,
                            ifSearch: Bool,
                            ifKnowledge: Bool,
                            ifToolUse: Bool,
+                           assistantToolScope: AssistantToolRequestScope,
                            ifThink: Bool,
                            ifAudio: Bool,
                            ifPlanning: Bool,
@@ -4146,24 +3747,108 @@ class APIManager {
                            selectedPromptsContent: [String]?,
                            systemMessage: String,
                            selectedImageSize: String,
-                           imageReversePrompt: String
+                           imageReversePrompt: String,
+                           agentSDKRequest: HanlinAppAgentSessionOwner.Request? = nil
     ) async throws -> AsyncThrowingStream<StreamData, Error> {
         // 取消当前任务
+        if !assistantToolScope.capabilityAttachments.isEmpty && !ifToolUse {
+            throw HanlinComposerCapabilityError.toolsUnsupported
+        }
+        try HanlinComposerCapabilities.validate(assistantToolScope.capabilityAttachments)
+        if let agentSDKRequest, agentSDKRequest.uiRunID != runID { throw HanlinHostError.resultMismatch }
+        // Revoke the captured same-manager request synchronously, before the first suspension.
+        // Both the outer producer and its entered Host/CAS work must retire before B owns diagnostics.
+        let ownerAdmission = try agentSessionOwner.beginRequestAdmission(
+            replacing: self.agentSDKRequest, request: agentSDKRequest, modelContext: context)
+        let admissionEpoch = UUID()
+        requestAdmissionEpoch = admissionEpoch
+        initializingRunID = runID
+        guard let lifecycleAdmission = AgentRunLifecycleCoordinator.shared.reserveRunAdmission(runID: runID) else {
+            throw HanlinChatError.cancelled
+        }
+        requestLifecycleAdmission = lifecycleAdmission
+        let producerDrain = retireAgentProducer()
         currentTask?.cancel()
         currentTask = nil
+        await producerDrain?.value
+        try requireRequestAdmission(epoch: admissionEpoch, ownerAdmission: ownerAdmission,
+                                    lifecycleAdmission: lifecycleAdmission)
+        try await agentSessionOwner.drainRequestAdmission(ownerAdmission)
+        try requireRequestAdmission(epoch: admissionEpoch, ownerAdmission: ownerAdmission,
+                                    lifecycleAdmission: lifecycleAdmission)
+        self.agentSDKRequest = agentSDKRequest
+        dataAccess = nil
+        dataModel = nil
+        guard await AgentRunLifecycleCoordinator.shared.beginRun(admission: lifecycleAdmission, recorder: nil) else {
+            throw HanlinChatError.cancelled
+        }
+        try requireRequestAdmission(epoch: admissionEpoch, ownerAdmission: ownerAdmission,
+                                    lifecycleAdmission: lifecycleAdmission)
+        guard AgentRunLifecycleCoordinator.shared.isCurrentRun(runID) else { throw HanlinChatError.cancelled }
         isCancelled = false
+        reportProgressController = ReportProgressController()
+        latestToolProgressSummary = nil
+        searchQueries = []
         
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         
         // 从数据库查询模型信息
-        guard let modelInfo = try? context.fetch(
+        let matchingModels = try context.fetch(
             FetchDescriptor<AllModels>(predicate: #Predicate { $0.name == modelName })
-        ).first else {
+        )
+        let selectedModels = modelRecordID.map { id in matchingModels.filter { $0.id == id } } ?? matchingModels
+        guard let modelInfo = selectedModels.first else {
             throw NSError(domain: "DatabaseError", code: -1, userInfo: [NSLocalizedDescriptionKey: "无法获取模型信息"])
         }
+        if modelRecordID != nil, selectedModels.count != 1 {
+            throw HanlinAISDKError.invalidConversation("The selected original model record is ambiguous.")
+        }
+        if modelName == HanlinAppleOnDeviceProvider.modelID {
+            guard matchingModels.count == 1, HanlinAppleModelCatalogAdapter.isNative(modelInfo) else {
+                throw HanlinAISDKError.invalidConversation("The native model selection is ambiguous or unavailable.")
+            }
+        }
+
+        if let agentSDKRequest {
+            try bindDataAccess(request: agentSDKRequest,
+                model: .init(provider: modelInfo.company ?? "Unknown", modelID: modelInfo.name ?? modelName))
+        }
+
+        let recorder = await AgentDiagnosticsRecorder.start(
+            runID: runID,
+            groupID: groupID,
+            providerID: modelInfo.company ?? "Unknown",
+            modelID: modelInfo.name ?? modelName
+        )
+        do {
+            try requireRequestAdmission(epoch: admissionEpoch, ownerAdmission: ownerAdmission,
+                                    lifecycleAdmission: lifecycleAdmission)
+        } catch {
+            await recorder?.complete(status: "cancelled")
+            throw error
+        }
+        guard !isCancelled, !Task.isCancelled,
+              AgentRunLifecycleCoordinator.shared.attachRecorder(recorder, for: runID) else {
+            await recorder?.complete(status: "cancelled")
+            throw HanlinChatError.cancelled
+        }
+        agentDiagnosticsRecorder = recorder
+        agentDiagnosticsRecorder?.journal.stage("model.catalog", text: modelInfo.catalogMetadataJSON ?? "unknown",
+            fields: ["requestedModelID": modelName, "priceTier": String(modelInfo.catalogPriceTier),
+                     "imageOutputVerified": String(modelInfo.hasVerifiedImageOutput)])
         
         let company = modelInfo.company?.uppercased()
-        if company == "LOCAL" {
+        let executionRoute = Self.resolveModelExecutionRoute(
+            company: company,
+            modelName: modelInfo.name ?? modelName,
+            supportsTextGen: modelInfo.supportsTextGen,
+            supportsImageGen: modelInfo.supportsImageGen
+        )
+        switch executionRoute {
+        case .localText:
+            await agentDiagnosticsRecorder?.setAgentEngineKind("local")
+            try requireRequestAdmission(epoch: admissionEpoch, ownerAdmission: ownerAdmission,
+                                    lifecycleAdmission: lifecycleAdmission)
             return try await processLocalModel(messages: messages,
                                                modelInfo: modelInfo,
                                                currentLanguage: currentLanguage,
@@ -4174,37 +3859,583 @@ class APIManager {
                                                systemMessage: systemMessage,
                                                isObservation: isObservation
             )
-        } else {
-            if modelInfo.supportsTextGen {
-                return try await processRemoteModel(messages: messages,
-                                                    modelInfo: modelInfo,
-                                                    groupID: groupID,
-                                                    currentLanguage: currentLanguage,
-                                                    ifSearch: ifSearch,
-                                                    ifKnowledge: ifKnowledge,
-                                                    ifToolUse: ifToolUse,
-                                                    ifThink: ifThink,
-                                                    ifAudio: ifAudio,
-                                                    ifPlanning: ifPlanning,
-                                                    thinkingLength: thinkingLength,
-                                                    planningMessage: "",
-                                                    isObservation: isObservation,
-                                                    temperature: temperature,
-                                                    topP: topP,
-                                                    maxTokens: maxTokens,
-                                                    canvasData: canvasData,
-                                                    selectedURLs: selectedURLs,
-                                                    selectedPromptsContent: selectedPromptsContent,
-                                                    systemMessage: systemMessage
-                )
-            } else {
-                return try await processImageGenModel(messages: messages,
-                                                      modelInfo: modelInfo,
-                                                      currentLanguage: currentLanguage,
-                                                      selectedImageSize: selectedImageSize,
-                                                      imageReversePrompt: imageReversePrompt
-                )
+        case .remoteText:
+            if !modelInfo.supportsTextGen {
+                modelInfo.supportsTextGen = true
+                try? context.save()
             }
+            return try await processRemoteModel(messages: messages,
+                                                modelInfo: modelInfo,
+                                                groupID: groupID,
+                                                runID: runID,
+                                                currentLanguage: currentLanguage,
+                                                ifSearch: ifSearch,
+                                                ifKnowledge: ifKnowledge,
+                                                ifToolUse: ifToolUse,
+                                                assistantToolScope: assistantToolScope,
+                                                ifThink: ifThink,
+                                                ifAudio: ifAudio,
+                                                ifPlanning: ifPlanning,
+                                                thinkingLength: thinkingLength,
+                                                planningMessage: "",
+                                                isObservation: isObservation,
+                                                temperature: temperature,
+                                                topP: topP,
+                                                maxTokens: maxTokens,
+                                                canvasData: canvasData,
+                                                selectedURLs: selectedURLs,
+                                                selectedPromptsContent: selectedPromptsContent,
+                                                systemMessage: systemMessage
+            )
+        case .remoteImageGeneration:
+            await agentDiagnosticsRecorder?.setAgentEngineKind("image")
+            try requireRequestAdmission(epoch: admissionEpoch, ownerAdmission: ownerAdmission,
+                                    lifecycleAdmission: lifecycleAdmission)
+            return try await processImageGenModel(messages: messages,
+                                                  modelInfo: modelInfo,
+                                                  currentLanguage: currentLanguage,
+                                                  selectedImageSize: selectedImageSize,
+                                                  imageReversePrompt: imageReversePrompt
+            )
+        }
+    }
+
+    // MARK: - SDK Agent Engine
+    private static func insertGeneratedSystemInstruction(
+        _ instruction: String, into messages: inout [[String: Any]]
+    ) {
+        // Keep host instructions in the leading authority segment. Preserve the
+        // existing stable first block and every conversational turn's order.
+        let insertionIndex = messages.firstIndex { message in
+            let role = (message["role"] as? String ?? "").lowercased()
+            return role != "system" && role != "developer"
+        } ?? messages.endIndex
+        messages.insert(["role": "system", "content": instruction], at: insertionIndex)
+    }
+
+    static func convertFormattedMessagesToSDKMessages(
+        _ formattedMessages: [[String: Any]]
+    ) -> (baseSystemPrompt: String?, messages: [HanlinAISDKMessage]) {
+        var systemParts: [String] = []
+        var sdkMessages: [HanlinAISDKMessage] = []
+
+        for msg in formattedMessages {
+            let role = (msg["role"] as? String ?? "").lowercased()
+            let parts = extractMessageParts(from: msg["content"])
+
+            if role == "system" || role == "developer" {
+                let text = parts.compactMap { part -> String? in
+                    if case .text(let value) = part { return value }
+                    return nil
+                }.joined(separator: "\n")
+                if !text.isEmpty && !systemParts.contains(text) {
+                    // The generated prompt's first block contains stable
+                    // instructions; subsequent system blocks retain their
+                    // authority and distinct provider-cache boundaries.
+                    sdkMessages.append(HanlinAISDKMessage(
+                        role: .system, text: text, cacheBreakpoint: systemParts.isEmpty
+                    ))
+                    systemParts.append(text)
+                }
+            } else if role == "assistant" {
+                let text = parts.compactMap { part -> String? in
+                    if case .text(let value) = part { return value }
+                    return nil
+                }.joined(separator: "\n")
+                sdkMessages.append(HanlinAISDKMessage(role: .assistant, text: text))
+            } else {
+                guard !parts.isEmpty else { continue }
+                sdkMessages.append(HanlinAISDKMessage(role: .user, parts: parts))
+            }
+        }
+
+        if !sdkMessages.contains(where: { $0.role != .system }) {
+            sdkMessages.append(HanlinAISDKMessage(role: .user, text: ""))
+        }
+
+        // nil selects the shared engine's structured system-message path.
+        // Collapsing these blocks back to one string loses the stable boundary.
+        return (nil, sdkMessages)
+    }
+
+    private static func extractMessageParts(from rawContent: Any?) -> [HanlinAISDKMessagePart] {
+        if let stringContent = rawContent as? String {
+            return [.text(stringContent)]
+        }
+
+        guard let arrayContent = rawContent as? [[String: Any]] else {
+            return []
+        }
+
+        var parts: [HanlinAISDKMessagePart] = []
+        for item in arrayContent {
+            let itemType = (item["type"] as? String ?? "").lowercased()
+            if itemType == "text", let text = item["text"] as? String {
+                parts.append(.text(text))
+            } else if itemType == "image_url" {
+                let urlString: String?
+                if let dict = item["image_url"] as? [String: Any] {
+                    urlString = dict["url"] as? String
+                } else {
+                    urlString = item["image_url"] as? String
+                }
+                guard let rawURL = urlString?.trimmingCharacters(in: .whitespacesAndNewlines),
+                      !rawURL.isEmpty else { continue }
+
+                if rawURL.lowercased().hasPrefix("data:") {
+                    // Format: data:image/jpeg;base64,<payload>
+                    let withoutPrefix = String(rawURL.dropFirst("data:".count))
+                    let segments = withoutPrefix.components(separatedBy: ";base64,")
+                    if segments.count == 2,
+                       let data = Data(base64Encoded: segments[1], options: .ignoreUnknownCharacters) {
+                        let mediaType = segments[0].isEmpty ? "image/jpeg" : segments[0]
+                        parts.append(.imageData(data, mediaType: mediaType))
+                    }
+                } else if rawURL.lowercased().hasPrefix("http://") || rawURL.lowercased().hasPrefix("https://"),
+                          let url = URL(string: rawURL) {
+                    parts.append(.imageURL(url, mediaType: nil))
+                } else if let data = Data(base64Encoded: rawURL, options: .ignoreUnknownCharacters) {
+                    parts.append(.imageData(data, mediaType: "image/jpeg"))
+                }
+            }
+        }
+        return parts
+    }
+
+    private func processSDKAgentEngine(
+        runID: UUID,
+        formattedMessages: [[String: Any]],
+        modelInfo: AllModels,
+        chatConfig: HanlinChatModelConfiguration,
+        preparedAssistantTools: AssistantToolBridge.PreparedTools?,
+        session: AssistantCapabilitySession,
+        currentLanguage: String,
+        currentLanguagePrefix: Bool,
+        continuation: AsyncThrowingStream<StreamData, Error>.Continuation,
+        requestAdmission: HanlinChatRequestAdmission? = nil
+    ) async throws {
+        let converted = Self.convertFormattedMessagesToSDKMessages(formattedMessages)
+        let baseSystemPrompt = converted.baseSystemPrompt
+        let sdkMessages = converted.messages
+        let userOperation = RuntimeUserOperation.current
+        let callbackEpoch = requestAdmissionEpoch
+        let callbackLifecycleAdmission = requestLifecycleAdmission
+        let acceptsLiveCallback: @MainActor @Sendable () -> Bool = { [weak self] in
+            guard let self, let callbackLifecycleAdmission else { return false }
+            return self.requestAdmissionEpoch == callbackEpoch
+                && AgentRunLifecycleCoordinator.shared.isCurrentAdmission(callbackLifecycleAdmission)
+                && self.agentSessionOwner.isCurrentRequest(runID)
+                && AgentRunLifecycleCoordinator.shared.isCurrentRun(runID)
+        }
+
+        let toolAdapter = preparedAssistantTools.map { prepared in HanlinAISDKToolAdapter(
+            session: session,
+            preparedTools: prepared,
+            modelContext: self.context,
+            currentLanguage: currentLanguage,
+            progressSummaryRequired: modelInfo.agentCapabilities.supportsProgressSummaryField,
+            supportsReportProgress: modelInfo.agentCapabilities.supportsReportProgressTool,
+            callbacks: HanlinAISDKToolAdapter.Callbacks(
+                onStreamData: {
+                    guard acceptsLiveCallback() else { return }
+                    continuation.yield($0)
+                },
+                onAgentEvent: { event in
+                    guard acceptsLiveCallback() else { return }
+                    switch event {
+                    case .toolExecutionStarted(let execution):
+                        if !AgentActivityVisibilityPolicy.isInternalTool(execution.name) {
+                            let profile = prepared.presentationProfile(for: execution.name)
+                            let title = ToolPresentationRegistry.presentation(for: execution.name, profile: profile).runningDescription
+                            userOperation?.beginTool(id: execution.id, title: title)
+                        }
+                    case .toolExecutionCompleted(let id, _), .toolExecutionFailed(let id, _):
+                        userOperation?.endTool(id: id)
+                    case .toolApprovalChanged(let approval):
+                        userOperation?.updateApproval(id: approval.callID, isPending: approval.disposition == .awaiting
+                            || approval.disposition == .providerRequired)
+                    default:
+                        break
+                    }
+                    continuation.yield(StreamData(agentEvents: [event]))
+                },
+                onProgressMessage: {
+                    guard acceptsLiveCallback() else { return }
+                    continuation.yield(StreamData(agentEvents: [.progressMessage($0)]))
+                },
+                currentReasoningSummary: { [weak self] in
+                    guard acceptsLiveCallback() else { return nil }
+                    return self?.toolMessageReasoning
+                }
+            ),
+            reportProgressController: self.reportProgressController,
+            diagnosticsRecorder: self.agentDiagnosticsRecorder
+        ) }
+
+        guard let originalRequest = agentSDKRequest, originalRequest.uiRunID == runID else {
+            throw HanlinAISDKError.invalidConversation("The original response row and conversation must be bound before starting the SDK session.")
+        }
+        let sessionConfiguration = agentSessionOwner.configurationForPresentation(chatConfig)
+        let turnTransport: HanlinAISDKTurnTransport?
+        if HanlinAppleModelCatalogAdapter.isNative(modelInfo) {
+            turnTransport = nil
+        } else {
+            guard let requestAdmission else { throw HanlinHostError.staleContext }
+            let chatEngine = self.chatEngineFactory()
+            let fetch = await chatEngine.makeAISDKFetch(
+                onRequest: { [weak self] request in
+                    let (recorder, roundID, isActive) = await MainActor.run { [weak self] () -> (AgentDiagnosticsRecorder?, UUID?, Bool) in
+                        (self?.agentDiagnosticsRecorder, toolAdapter?.currentRoundID, AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
+                    }
+                    if isActive, let recorder, let roundID {
+                        let body = request.httpBody ?? Data()
+                        let headers = request.allHTTPHeaderFields ?? [:]
+                        await recorder.recordModelRequest(roundID: roundID, requestData: body, httpHeaders: headers)
+                    }
+                },
+                onResponse: { [weak self] request, response in
+                    let (recorder, roundID, isActive) = await MainActor.run { [weak self] () -> (AgentDiagnosticsRecorder?, UUID?, Bool) in
+                        (self?.agentDiagnosticsRecorder, toolAdapter?.currentRoundID, AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
+                    }
+                    if isActive, let recorder, let roundID {
+                        let reqID = response.allHeaderFields["x-request-id"] as? String
+                        await recorder.responseStarted(roundID: roundID, httpStatus: response.statusCode, providerRequestID: reqID)
+                    }
+                },
+                transportObserver: self.agentDiagnosticsRecorder?.journal.transportObserver,
+                requestAdmission: requestAdmission
+            )
+            turnTransport = .init(fetch: fetch)
+        }
+        let sdkStream = try await agentSessionOwner.stream(request: originalRequest, modelContext: context,
+            configuration: sessionConfiguration, engineFactory: {
+                if HanlinAppleModelCatalogAdapter.isNative(modelInfo) {
+                    guard toolAdapter == nil else { throw HanlinAppleProviderError.unsupportedTools }
+                    return try HanlinAppleOnDeviceProvider.makeEngine(configuration: sessionConfiguration)
+                }
+                return try HanlinAISDKAgentEngine(configuration: sessionConfiguration,
+                    telemetry: AgentDiagnosticsConfiguration.level == .off
+                        ? nil : HanlinOpenTelemetryTracer.local.telemetrySettings())
+            }, toolAdapter: toolAdapter, messages: sdkMessages, systemPrompt: baseSystemPrompt,
+            dataAccess: try requireDataAccess(), transport: turnTransport)
+
+        var currentStepID: UUID?
+        var visibleFinalCharacters = 0
+        var hasCompletedToolAction = false
+        var hasStructuredContent = false
+        var terminalReason: String?
+
+        do {
+        for try await agentEvent in sdkStream {
+            try agentSessionOwner.receive(agentEvent, uiRunID: runID)
+            if agentSessionOwner.hasVisibleModelOutput(agentEvent, uiRunID: runID) {
+                userOperation?.updateModelPhase(.responding)
+                if let stepID = currentStepID {
+                    continuation.yield(StreamData(agentEvents: [.modelRequestEnded(id: stepID.uuidString)]))
+                }
+            }
+            let event = agentEvent.event
+            self.agentDiagnosticsRecorder?.journal.stage("SwiftAISDK.event", round: currentStepID, text: String(describing: event))
+            try RuntimeUserOperation.current?.checkInterruption()
+            if Task.isCancelled || !AgentRunLifecycleCoordinator.shared.isCurrentRun(runID) {
+                await agentSessionOwner.invalidate(uiRunID: runID)
+                RuntimeUserOperation.finishStream(continuation)
+                await self.agentDiagnosticsRecorder?.complete(status: "cancelled")
+                return
+            }
+
+            switch event {
+            case .runStarted:
+                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在处理" : "Processing"))
+
+            case .structuredResponseStarted:
+                break // Metadata only; canonical parts are delivered through the session projection.
+
+            case .stepStarted(let index, let prep):
+                RuntimeUserOperation.current?.recordWorkEvent(id: "step:\(index):started")
+                userOperation?.updateModelPhase(.waitingForResponse)
+                currentStepID = toolAdapter?.takePreparedRoundID(forStep: index) ?? UUID()
+                visibleFinalCharacters = 0
+                if let stepID = currentStepID {
+                    continuation.yield(StreamData(agentEvents: [.modelRequestStarted(id: stepID.uuidString)]))
+                }
+                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "等待模型响应" : "Waiting for model response", modelRoundID: currentStepID))
+
+            case .textDelta(let text):
+                self.agentDiagnosticsRecorder?.journal.stage("SwiftAISDK.content", round: currentStepID, text: text)
+                visibleFinalCharacters += text.trimmingCharacters(in: .whitespacesAndNewlines).count
+                RuntimeUserOperation.current?.recordStreamBytes(text.utf8.count)
+                if text.contains(where: { !$0.isWhitespace }) { userOperation?.updateModelPhase(.responding) }
+                if self.toolMessage == nil { self.toolMessage = "" }
+                self.toolMessage?.append(text)
+                if let stepID = currentStepID {
+                    await self.agentDiagnosticsRecorder?.recordStreamEvent(
+                        roundID: stepID,
+                        visibleContent: text,
+                        visibleReasoningSummary: nil,
+                        isMeaningful: true
+                    )
+                }
+                continuation.yield(StreamData(content: text))
+
+            case .structuredPart(let part):
+                hasStructuredContent = true
+                if case .textDelta(let text) = part.payload {
+                    visibleFinalCharacters += text.trimmingCharacters(in: .whitespacesAndNewlines).count
+                    RuntimeUserOperation.current?.recordStreamBytes(text.utf8.count)
+                    if text.contains(where: { !$0.isWhitespace }) { userOperation?.updateModelPhase(.responding) }
+                    if self.toolMessage == nil { self.toolMessage = "" }
+                    self.toolMessage?.append(text)
+                    // Existing text is a history/search/fallback projection. Ordered presentation
+                    // replaces its visible body, so it is not displayed twice.
+                    continuation.yield(StreamData(content: text))
+                }
+
+            case .reasoningDelta(let text):
+                self.agentDiagnosticsRecorder?.journal.stage("SwiftAISDK.reasoning", round: currentStepID, text: text)
+                RuntimeUserOperation.current?.recordStreamBytes(text.utf8.count)
+                if text.contains(where: { !$0.isWhitespace }) { userOperation?.updateModelPhase(.thinking) }
+                if self.toolMessageReasoning == nil { self.toolMessageReasoning = "" }
+                self.toolMessageReasoning?.append(text)
+                if let stepID = currentStepID {
+                    await self.agentDiagnosticsRecorder?.recordStreamEvent(
+                        roundID: stepID,
+                        visibleContent: nil,
+                        visibleReasoningSummary: text,
+                        isMeaningful: true
+                    )
+                }
+                continuation.yield(StreamData(reasoning: text))
+
+            case .source(let sourceID, let url, let title):
+                RuntimeUserOperation.current?.recordWorkEvent(id: "source:\(sourceID)")
+                if let parsedURL = URL(string: url),
+                   let scheme = parsedURL.scheme?.lowercased(),
+                   (scheme == "http" || scheme == "https"),
+                   parsedURL.host()?.lowercased() != "search.local" {
+                    continuation.yield(StreamData(agentEvents: [.sourceObserved(.init(id: sourceID,
+                        kind: .webPage, title: title ?? url, url: url, wasReturnedToModel: true))]))
+                }
+
+            case .textCitations(let citations):
+                let admitted = citations.compactMap { citation -> AgentSourceCitation? in
+                    guard let range = citation.utf16Range else { return nil }
+                    return .init(textPartID: citation.textPartID, text: citation.text, range: range,
+                        source: .init(id: citation.textPartID + ":" + String(citation.startIndex), kind: .webPage,
+                            title: citation.title, url: citation.url, wasReturnedToModel: true))
+                }
+                continuation.yield(StreamData(agentEvents: [.sourceCitations(segmentID: nil, citations: admitted)]))
+
+            case .file(let mediaType, let data):
+                RuntimeUserOperation.current?.recordStreamBytes(data.count)
+                #if canImport(UIKit)
+                if mediaType.lowercased().hasPrefix("image/"), let img = UIImage(data: data) {
+                    userOperation?.updateModelPhase(.responding)
+                    if let stepID = currentStepID {
+                        continuation.yield(StreamData(agentEvents: [.modelRequestEnded(id: stepID.uuidString)]))
+                    }
+                    continuation.yield(StreamData(image_content: [img]))
+                }
+                #endif
+
+            case .toolApprovalRequest(let request):
+                RuntimeUserOperation.current?.recordWorkEvent(id: "approval:\(request.approvalID):requested")
+                userOperation?.updateApproval(id: request.toolCallID, isPending: true)
+                continuation.yield(StreamData(
+                    toolContent: currentLanguagePrefix ? "请求执行工具：\(request.toolName)" : "Requesting approval for tool: \(request.toolName)",
+                    toolName: request.toolName,
+                    agentEvents: [.toolApprovalChanged(.init(id: request.approvalID,
+                        canonicalRunID: agentEvent.runID, callID: request.toolCallID,
+                        toolName: request.toolName,
+                        reviewText: AgentDiagnosticsRedactor.sanitize(request.argumentsJSON),
+                        disposition: .awaiting))]
+                ))
+
+            case .toolApprovalResolved(let request, let allowed):
+                RuntimeUserOperation.current?.recordWorkEvent(id: "approval:\(request.approvalID):resolved")
+                userOperation?.updateApproval(id: request.toolCallID, isPending: false)
+                continuation.yield(StreamData(agentEvents: [.toolApprovalChanged(.init(
+                    id: request.approvalID, canonicalRunID: agentEvent.runID,
+                    callID: request.toolCallID, toolName: request.toolName,
+                    reviewText: AgentDiagnosticsRedactor.sanitize(request.argumentsJSON),
+                    disposition: allowed ? .allowedOnce : .notApproved))]))
+
+            case .toolOutputDenied(let toolCallID, let toolName):
+                let executionID = "\(toolCallID):execution"
+                userOperation?.updateApproval(id: toolCallID, isPending: false)
+                userOperation?.endTool(id: executionID)
+                let deniedText = currentLanguagePrefix ? "工具执行被拒绝：\(toolName)" : "Tool execution denied: \(toolName)"
+                continuation.yield(StreamData(
+                    toolContent: deniedText,
+                    toolName: toolName,
+                    agentEvents: [
+                        .toolApprovalChanged(.init(id: "provider-denial:" + toolCallID, canonicalRunID: agentEvent.runID,
+                            callID: toolCallID, toolName: toolName, reviewText: "", disposition: .notApproved)),
+                        .toolExecutionFailed(id: executionID, error: AgentSafeError(message: deniedText))
+                    ]
+                ))
+
+            case .toolCallArgumentsStarted(let id, let name):
+                RuntimeUserOperation.current?.recordWorkEvent(id: "tool:\(id):arguments-started")
+                continuation.yield(StreamData(operationalState: currentLanguagePrefix ? "正在使用工具" : "Using Tools"))
+
+            case .toolCallArgumentsDelta(let id, let delta):
+                RuntimeUserOperation.current?.recordStreamBytes(delta.utf8.count)
+                continuation.yield(StreamData(agentEvents: [.toolCallArgumentsDelta(id: id, delta: delta)]))
+
+            case .toolCall:
+                break
+
+            case .toolResult(let callID, let name, let modelText, let resultRef, let isError):
+                RuntimeUserOperation.current?.recordWorkEvent(id: "tool:\(callID):result")
+                RuntimeUserOperation.current?.recordStreamBytes(modelText.utf8.count)
+                guard let toolAdapter, let preparedAssistantTools else { throw HanlinAppleProviderError.unsupportedTools }
+                if !isError { hasCompletedToolAction = true }
+                if !toolAdapter.completedCallIDs.contains(callID) {
+                    let profile = preparedAssistantTools.presentationProfile(for: name)
+                        ?? ToolPresentationProfileRegistry.resolve(toolName: name)
+                    let parsedCall = AgentToolCall.parse(
+                        id: callID,
+                        name: name,
+                        argumentsJSON: "{}",
+                        presentationProfile: profile
+                    )
+                    let fallbackErrorText = HanlinAISDKToolAdapter.buildUnknownToolErrorMessage(
+                        alias: name,
+                        catalog: .shared,
+                        preparedTools: toolAdapter.preparedTools,
+                        currentLanguage: currentLanguage
+                    )
+                    let finalErrorText = modelText.isEmpty ? fallbackErrorText : modelText
+                    let executionID = "\(callID):execution"
+
+                    let safeError = AgentSafeError(message: finalErrorText)
+                    let errorBlocks: [NativeUIBlock] = safeError.message.isEmpty ? [] : [
+                        NativeUIBlock(
+                            type: .error,
+                            title: profile.activity.failedTitle ?? name,
+                            body: safeError.message,
+                            systemImage: "exclamationmark.triangle"
+                        )
+                    ]
+                    let presentationDecision = ToolResultPresentationCoordinator.decide(
+                        call: parsedCall,
+                        profile: profile,
+                        hasPayload: !errorBlocks.isEmpty,
+                        hasModelText: !safeError.message.isEmpty,
+                        isError: true
+                    )
+                    let resultEvent: AgentEvent
+                    if presentationDecision.shouldPresent {
+                        resultEvent = .toolExecutionCompleted(
+                            id: executionID,
+                            result: AgentToolResult(
+                                modelText: safeError.message,
+                                userText: safeError.message,
+                                richResultBlocks: errorBlocks,
+                                hasLegacyPresentationPayload: false,
+                                isError: true,
+                                semanticOutcome: .invalidArguments,
+                                duration: 0
+                            )
+                        )
+                    } else {
+                        resultEvent = .toolExecutionFailed(id: executionID, error: safeError)
+                    }
+
+                    continuation.yield(StreamData(agentEvents: [
+                        .toolCallStarted(parsedCall),
+                        .toolCallCompleted(parsedCall),
+                        .toolExecutionStarted(AgentToolExecution(
+                            id: executionID,
+                            callID: callID,
+                            name: name,
+                            startedAt: Date()
+                        )),
+                        resultEvent
+                    ]))
+
+                    if let stepID = currentStepID {
+                        await self.agentDiagnosticsRecorder?.recordToolCall(roundID: stepID, call: parsedCall)
+                        var diag = NativeToolExecutionDiagnostics()
+                        diag.failureCategory = NativeToolExecutionOutcome.invalidArguments.rawValue
+                        let logicalID = preparedAssistantTools.authority.toolDescriptor(for: name)?.logicalID
+                        diag.canonicalLogicalToolID = logicalID.map { "\($0.providerInstanceID.rawValue)|\($0.localToolID.rawValue)" } ?? name
+                        diag.modelFacingAlias = name
+                        await self.agentDiagnosticsRecorder?.completeToolCall(
+                            roundID: stepID,
+                            callID: callID,
+                            resultForModel: finalErrorText,
+                            resultForUser: finalErrorText,
+                            duration: 0,
+                            outcome: .invalidArguments,
+                            diagnostics: diag,
+                            error: finalErrorText,
+                            presentationDecision: presentationDecision
+                        )
+                    }
+                    toolAdapter.completedCallIDs.insert(callID)
+                }
+
+            case .stepFinished(let index, let finishReason, let usage, let meaningfulCount):
+                RuntimeUserOperation.current?.recordWorkEvent(id: "step:\(index):finished")
+                if let stepID = currentStepID {
+                    continuation.yield(StreamData(agentEvents: [.modelRequestEnded(id: stepID.uuidString)]))
+                    let tokenUsage = AgentTokenUsage(
+                        inputTokens: usage.inputTokens,
+                        outputTokens: usage.outputTokens,
+                        reasoningTokens: usage.reasoningTokens,
+                        cachedInputTokens: usage.cachedInputTokens,
+                        cacheWriteTokens: usage.cacheWriteTokens,
+                        totalTokens: usage.totalTokens,
+                        source: .providerReported
+                    )
+                    await self.agentDiagnosticsRecorder?.finishRound(
+                        roundID: stepID,
+                        finishReason: finishReason,
+                        usage: tokenUsage,
+                        meaningfulEventCount: meaningfulCount
+                    )
+                    toolAdapter?.finishPreparedRound(forStep: index, roundID: stepID)
+                    currentStepID = nil
+                }
+
+            case .finished(let reason, let usage):
+                guard visibleFinalCharacters > 0 || hasCompletedToolAction || hasStructuredContent else {
+                    let error = HanlinAISDKError.incompleteProviderResponse(reason: reason)
+                    await self.agentDiagnosticsRecorder?.complete(status: "failed", error: error.localizedDescription)
+                    throw error
+                }
+                if reason == "other" || reason == "error" || reason == "failed" || reason == "unknown" || reason.isEmpty {
+                    await self.agentDiagnosticsRecorder?.complete(status: "failed", error: "Stream ended unexpectedly without terminal event: \(reason)")
+                    let error = HanlinChatError.networkFailure("Stream ended unexpectedly without terminal event")
+                    throw error
+                }
+                terminalReason = reason
+
+            case .cancelled:
+                await agentSessionOwner.invalidate(uiRunID: runID)
+                await self.agentDiagnosticsRecorder?.complete(status: "cancelled")
+                RuntimeUserOperation.finishStream(continuation)
+                return
+            }
+        }
+
+        if let terminalReason {
+            try agentSessionOwner.producerStreamDrained(uiRunID: runID)
+            try RuntimeUserOperation.current?.markSucceeded()
+            await self.agentDiagnosticsRecorder?.complete(status: "completed")
+            if terminalReason == "length" { continuation.yield(StreamData(errorInfo: "length")) }
+            RuntimeUserOperation.finishStream(continuation)
+            return
+        }
+        await self.agentDiagnosticsRecorder?.complete(status: "failed", error: "Stream ended unexpectedly without terminal event")
+        let error = HanlinChatError.networkFailure("Stream ended unexpectedly without terminal event")
+        throw error
+        } catch {
+            HanlinNativeA2UIAcceptanceProvider.recordEngineFailure(error)
+            await agentSessionOwner.invalidate(uiRunID: runID)
+            throw error
         }
     }
 }

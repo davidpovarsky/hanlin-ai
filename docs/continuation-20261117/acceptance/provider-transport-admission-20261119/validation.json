@@ -1,0 +1,98 @@
+{
+  "created_utc": "2026-11-19T04:47:02.184306+00:00",
+  "base_commit": "25c28ae8981eceba18a2beb648da5d1a7660ac63",
+  "checked_canonical_commit": "25c28ae8981eceba18a2beb648da5d1a7660ac63",
+  "patch": {
+    "path": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\sdk05-transport-admission\\original-provider-transport-admission.diff",
+    "bytes": 45183,
+    "sha256": "c03136b216e123b665ba3eb04dabdf4bbca05847286757b99716858da47cd2f1"
+  },
+  "apply_check": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "syntax": {
+    "platform": "Windows Swift6.3.3 -frontend -parse; not Apple SDK typechecking",
+    "results": [
+      {
+        "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+        "exit": 0,
+        "stderr": ""
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+        "exit": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+        "exit": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatEngine.swift",
+        "exit": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+        "exit": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift",
+        "exit": 0,
+        "stderr": ""
+      },
+      {
+        "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+        "exit": 0,
+        "stderr": ""
+      }
+    ]
+  },
+  "canonical_inputs_unchanged": true,
+  "native": {
+    "status": "NOT_RUN",
+    "new_methods": 4,
+    "new_expanded_cases": 10,
+    "selectors": [
+      {
+        "selector": "AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalProviderAdmissionRejectsChangesDuringDiagnosticAwait(change:)",
+        "cases": 7
+      },
+      {
+        "selector": "AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalDirectTransportRechecksOwnerInsideItsProducer()",
+        "cases": 1
+      },
+      {
+        "selector": "AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalReusedSDKEngineUsesEachTurnsManagerAndTransport()",
+        "cases": 1
+      },
+      {
+        "selector": "AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalInjectedProviderCannotBeReplacedByTurnTransport()",
+        "cases": 1
+      }
+    ],
+    "retained_provider_selector_count": 23,
+    "retained_provider_expanded_cases": 38
+  },
+  "pinned_sdk_fetch": {
+    "commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+    "path": "Sources/AISDKProviderUtils/FetchFunction.swift",
+    "sha256": "5d3e4c4bb2082fc86ae3c8c23b476d90b052b316a544d3fcd1f20af4ec02ad3c",
+    "declarations": [
+      {
+        "line": 13,
+        "text": "public struct FetchResponse: Sendable {"
+      },
+      {
+        "line": 24,
+        "text": "public typealias FetchFunction = @Sendable (URLRequest) async throws -> FetchResponse"
+      }
+    ],
+    "scope": "Original pinned Git object in existing checkout; no fetch/build or SDK mutation"
+  },
+  "parent_owns_phase1_observer": true
+}

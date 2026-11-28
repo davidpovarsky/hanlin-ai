@@ -1,0 +1,328 @@
+TAP version 13
+# Subtest: local origin retains genuine170 accounting, original source and unexecuted credential claim
+ok 1 - local origin retains genuine170 accounting, original source and unexecuted credential claim
+  ---
+  duration_ms: 8.945214
+  type: 'test'
+  ...
+# Subtest: local consumer requires the independently trusted producer pin and recomputes raw proof
+ok 2 - local consumer requires the independently trusted producer pin and recomputes raw proof
+  ---
+  duration_ms: 8.742172
+  type: 'test'
+  ...
+# Subtest: missing independent pin cannot qualify a local producer
+ok 3 - missing independent pin cannot qualify a local producer
+  ---
+  duration_ms: 1.71557
+  type: 'test'
+  ...
+# Subtest: tampered original receipt cannot qualify a local producer
+ok 4 - tampered original receipt cannot qualify a local producer
+  ---
+  duration_ms: 2.992578
+  type: 'test'
+  ...
+# Subtest: different source commit cannot qualify a local producer
+ok 5 - different source commit cannot qualify a local producer
+  ---
+  duration_ms: 1.57477
+  type: 'test'
+  ...
+# Subtest: module derivative archive cannot qualify a local producer
+ok 6 - module derivative archive cannot qualify a local producer
+  ---
+  duration_ms: 3.802343
+  type: 'test'
+  ...
+# Subtest: changed source closure cannot qualify a local producer
+ok 7 - changed source closure cannot qualify a local producer
+  ---
+  duration_ms: 1.306928
+  type: 'test'
+  ...
+# Subtest: unrecorded toolchain cannot qualify a local producer
+ok 8 - unrecorded toolchain cannot qualify a local producer
+  ---
+  duration_ms: 5.501793
+  type: 'test'
+  ...
+# Subtest: non-Mac origin cannot qualify a local producer
+ok 9 - non-Mac origin cannot qualify a local producer
+  ---
+  duration_ms: 2.842817
+  type: 'test'
+  ...
+# Subtest: changed controller cannot qualify a local producer
+ok 10 - changed controller cannot qualify a local producer
+  ---
+  duration_ms: 2.475455
+  type: 'test'
+  ...
+# Subtest: changed native input cannot qualify a local producer
+ok 11 - changed native input cannot qualify a local producer
+  ---
+  duration_ms: 2.591215
+  type: 'test'
+  ...
+# Subtest: changed native inventory cannot qualify a local producer
+ok 12 - changed native inventory cannot qualify a local producer
+  ---
+  duration_ms: 1.61989
+  type: 'test'
+  ...
+# Subtest: changed native catalog cannot qualify a local producer
+ok 13 - changed native catalog cannot qualify a local producer
+  ---
+  duration_ms: 1.483889
+  type: 'test'
+  ...
+# Subtest: failed producer cannot qualify a local producer
+ok 14 - failed producer cannot qualify a local producer
+  ---
+  duration_ms: 1.107766
+  type: 'test'
+  ...
+# Subtest: reuse-only producer cannot qualify a local producer
+ok 15 - reuse-only producer cannot qualify a local producer
+  ---
+  duration_ms: 1.081406
+  type: 'test'
+  ...
+# Subtest: failed Host step cannot qualify a local producer
+ok 16 - failed Host step cannot qualify a local producer
+  ---
+  duration_ms: 1.709131
+  type: 'test'
+  ...
+# Subtest: different command cannot qualify a local producer
+ok 17 - different command cannot qualify a local producer
+  ---
+  duration_ms: 1.040366
+  type: 'test'
+  ...
+# Subtest: ambiguous Host steps cannot qualify a local producer
+ok 18 - ambiguous Host steps cannot qualify a local producer
+  ---
+  duration_ms: 1.087767
+  type: 'test'
+  ...
+# Subtest: unfinished Host step cannot qualify a local producer
+ok 19 - unfinished Host step cannot qualify a local producer
+  ---
+  duration_ms: 1.075647
+  type: 'test'
+  ...
+# Subtest: incomplete native closure cannot qualify a local producer
+ok 20 - incomplete native closure cannot qualify a local producer
+  ---
+  duration_ms: 1.149367
+  type: 'test'
+  ...
+# Subtest: historical153 summary cannot substitute for original170 acceptance
+ok 21 - historical153 summary cannot substitute for original170 acceptance
+  ---
+  duration_ms: 1.292648
+  type: 'test'
+  ...
+# Subtest: summary with missing actual case cannot substitute for original170 acceptance
+ok 22 - summary with missing actual case cannot substitute for original170 acceptance
+  ---
+  duration_ms: 2.178053
+  type: 'test'
+  ...
+# Subtest: indented nested case transcript cannot substitute for original170 acceptance
+ok 23 - indented nested case transcript cannot substitute for original170 acceptance
+  ---
+  duration_ms: 1.523649
+  type: 'test'
+  ...
+# Subtest: duplicate case identity cannot substitute for original170 acceptance
+ok 24 - duplicate case identity cannot substitute for original170 acceptance
+  ---
+  duration_ms: 0.934405
+  type: 'test'
+  ...
+# Subtest: ambiguous suite summaries cannot substitute for original170 acceptance
+ok 25 - ambiguous suite summaries cannot substitute for original170 acceptance
+  ---
+  duration_ms: 1.177887
+  type: 'test'
+  ...
+# Subtest: different skipped obligation cannot substitute for original170 acceptance
+ok 26 - different skipped obligation cannot substitute for original170 acceptance
+  ---
+  duration_ms: 2.115853
+  type: 'test'
+  ...
+# Subtest: hidden cancellation cannot substitute for original170 acceptance
+ok 27 - hidden cancellation cannot substitute for original170 acceptance
+  ---
+  duration_ms: 1.088206
+  type: 'test'
+  ...
+# Subtest: hidden todo cannot substitute for original170 acceptance
+ok 28 - hidden todo cannot substitute for original170 acceptance
+  ---
+  duration_ms: 0.846925
+  type: 'test'
+  ...
+# Subtest: absent packed smoke cannot substitute for original170 acceptance
+ok 29 - absent packed smoke cannot substitute for original170 acceptance
+  ---
+  duration_ms: 1.489049
+  type: 'test'
+  ...
+# Subtest: missing fetch contract cannot substitute for original170 acceptance
+ok 30 - missing fetch contract cannot substitute for original170 acceptance
+  ---
+  duration_ms: 1.885292
+  type: 'test'
+  ...
+# Subtest: second original test invocation cannot substitute for original170 acceptance
+ok 31 - second original test invocation cannot substitute for original170 acceptance
+  ---
+  duration_ms: 0.995246
+  type: 'test'
+  ...
+# Subtest: nonterminal archive completion cannot substitute for original170 acceptance
+ok 32 - nonterminal archive completion cannot substitute for original170 acceptance
+  ---
+  duration_ms: 1.65253
+  type: 'test'
+  ...
+# Subtest: actual direct execution is attributed to the Host stage and current run
+ok 33 - actual direct execution is attributed to the Host stage and current run
+  ---
+  duration_ms: 4.381507
+  type: 'test'
+  ...
+# Subtest: verified same-run reuse identifies the native-origin execution separately
+ok 34 - verified same-run reuse identifies the native-origin execution separately
+  ---
+  duration_ms: 0.761965
+  type: 'test'
+  ...
+# Subtest: reuse and passed metadata booleans without a verified execution origin remain UNKNOWN
+ok 35 - reuse and passed metadata booleans without a verified execution origin remain UNKNOWN
+  ---
+  duration_ms: 0.556684
+  type: 'test'
+  ...
+# Subtest: origin missing capture cannot authorize consumer acceptance
+ok 36 - origin missing capture cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.418723
+  type: 'test'
+  ...
+# Subtest: origin other run cannot authorize consumer acceptance
+ok 37 - origin other run cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.696124
+  type: 'test'
+  ...
+# Subtest: origin other attempt cannot authorize consumer acceptance
+ok 38 - origin other attempt cannot authorize consumer acceptance
+  ---
+  duration_ms: 1.101247
+  type: 'test'
+  ...
+# Subtest: origin other source head cannot authorize consumer acceptance
+ok 39 - origin other source head cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.441843
+  type: 'test'
+  ...
+# Subtest: origin changed source inputs cannot authorize consumer acceptance
+ok 40 - origin changed source inputs cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.420123
+  type: 'test'
+  ...
+# Subtest: origin changed Node fingerprint cannot authorize consumer acceptance
+ok 41 - origin changed Node fingerprint cannot authorize consumer acceptance
+  ---
+  duration_ms: 1.60005
+  type: 'test'
+  ...
+# Subtest: origin wrong archive cannot authorize consumer acceptance
+ok 42 - origin wrong archive cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.860685
+  type: 'test'
+  ...
+# Subtest: origin missing environment cannot authorize consumer acceptance
+ok 43 - origin missing environment cannot authorize consumer acceptance
+  ---
+  duration_ms: 1.802891
+  type: 'test'
+  ...
+# Subtest: origin missing source hash cannot authorize consumer acceptance
+ok 44 - origin missing source hash cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.389362
+  type: 'test'
+  ...
+# Subtest: origin missing direct capture cannot authorize consumer acceptance
+ok 45 - origin missing direct capture cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.628043
+  type: 'test'
+  ...
+# Subtest: origin wrong counts cannot authorize consumer acceptance
+ok 46 - origin wrong counts cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.422242
+  type: 'test'
+  ...
+# Subtest: origin missing packed probe cannot authorize consumer acceptance
+ok 47 - origin missing packed probe cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.407243
+  type: 'test'
+  ...
+# Subtest: ambiguous duplicate fresh origins cannot authorize the archive
+ok 48 - ambiguous duplicate fresh origins cannot authorize the archive
+  ---
+  duration_ms: 1.834091
+  type: 'test'
+  ...
+# Subtest: receipt consumer recomputes accounting from raw proof rather than trusting its accepted boolean
+ok 49 - receipt consumer recomputes accounting from raw proof rather than trusting its accepted boolean
+  ---
+  duration_ms: 1.289688
+  type: 'test'
+  ...
+# Subtest: historical150/149/0/1 execution remains recorded but cannot satisfy the current153 suite
+ok 50 - historical150/149/0/1 execution remains recorded but cannot satisfy the current153 suite
+  ---
+  duration_ms: 31.161507
+  type: 'test'
+  ...
+# Subtest: historical suite cannot substitute for the exact current153-case suite
+ok 51 - historical suite cannot substitute for the exact current153-case suite
+  ---
+  duration_ms: 0.403802
+  type: 'test'
+  ...
+# Subtest: one missing case cannot substitute for the exact current153-case suite
+ok 52 - one missing case cannot substitute for the exact current153-case suite
+  ---
+  duration_ms: 0.211561
+  type: 'test'
+  ...
+# Subtest: unexpected additional case cannot substitute for the exact current153-case suite
+ok 53 - unexpected additional case cannot substitute for the exact current153-case suite
+  ---
+  duration_ms: 0.179121
+  type: 'test'
+  ...
+1..53
+# tests 53
+# suites 0
+# pass 53
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 410.041386

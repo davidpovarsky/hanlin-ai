@@ -1,0 +1,697 @@
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	﻿2026-11-15T19:46:06.5939150Z Current runner version: '2.338.2'
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5969960Z ##[group]Runner Image Provisioner
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5970710Z Hosted Compute Agent
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5971130Z Version: 20261103.629
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5971600Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5972120Z Build Date: 2026-11-03T17:26:59Z
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5972620Z Worker ID: {a79d2530-4be4-4847-b1cc-4b99cf7e75d1}
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5973090Z Region: westus
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5973460Z Cloud: MacCloud
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5973840Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5974970Z ##[group]Operating System
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5975460Z macOS
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5975800Z 27.0.1
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5976200Z 26A434
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5976560Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5976930Z ##[group]Runner Image
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5977310Z Image: xcode-27-arm64
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5977780Z Version: 20261104.0337.1
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5978780Z Included Software: https://github.com/actions/runner-images/blob/xcode-27-arm64/20261104.0337/images/macos/xcode-27-arm64-Readme.md
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5979940Z Image Release: https://github.com/actions/runner-images/releases/tag/xcode-27-arm64%2F20261104.0337
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5980680Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5981690Z ##[group]GITHUB_TOKEN Permissions
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5983140Z Actions: write
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5983640Z Contents: write
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5984120Z Metadata: read
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5984550Z PullRequests: write
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5984930Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5988100Z Secret source: Actions
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5988860Z Cache mode: write
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.5989410Z Prepare workflow directory
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.6395010Z Prepare all required actions
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.6432340Z Getting action download info
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:06.9748210Z Download action repository 'actions/checkout@v7.0.1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.2888620Z Download action repository 'actions/setup-node@v7.1.0' (SHA:949feb2413d6458794dcd2491c4babbbce0c15c1)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.4197010Z Download action repository 'actions/upload-artifact@v7.0.2' (SHA:cf430e030ddbb5b0abf93d22962f4752f3646cd9)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.6318210Z Uses: davidpovarsky/hanlin-ai/.github/workflows/check-runtime-dependency-updates.yml@refs/heads/codex/renovate/semver-7.x (ea969bee9c1b18a19eafeeecb16ecf454935c244)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.6322140Z ##[group] Inputs
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.6322510Z   operation: candidate
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.6322860Z   candidate_pr: 6
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.6323200Z   runtime_baseline_run_id: 42926628418
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.6323610Z   upstream_operation: candidate
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.6323980Z   upstream_pr: 6
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.6324340Z   runtime_bundle_artifact_run_id: 42926628418
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.6324760Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.6325200Z Complete job name: upstream-validation / Hanlin upstream acceptance
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7024060Z ##[group]Run actions/checkout@v7.0.1
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7024730Z with:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7025100Z   ref: ea969bee9c1b18a19eafeeecb16ecf454935c244
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7025640Z   fetch-depth: 0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7025990Z   persist-credentials: false
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7026390Z   repository: davidpovarsky/hanlin-ai
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7029340Z   token: ***
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7029670Z   ssh-strict: true
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7029990Z   ssh-user: git
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7030310Z   clean: true
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7030680Z   sparse-checkout-cone-mode: true
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7031140Z   fetch-tags: false
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7031480Z   show-progress: true
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7031820Z   lfs: false
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7032130Z   submodules: false
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7032480Z   set-safe-directory: true
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7032850Z   allow-unsafe-pr-checkout: false
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7033420Z env:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7033750Z   UPDATE_OPERATION: candidate
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7034160Z   CANDIDATE_PR: 6
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:07.7034480Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.2447150Z Syncing repository: davidpovarsky/hanlin-ai
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.2449910Z ##[group]Getting Git version info
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.2450460Z Working directory is '/Users/runner/work/hanlin-ai/hanlin-ai'
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.2451250Z [command]/opt/homebrew/bin/git version
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3099620Z git version 2.56.0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3168020Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3181780Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/2a648c47-ba3e-4ce6-882d-d4f4034aa29e/.gitconfig'
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3195710Z Temporarily overriding HOME='/Users/runner/work/_temp/2a648c47-ba3e-4ce6-882d-d4f4034aa29e' before making global git config changes
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3201830Z Adding repository directory to the temporary git global config as a safe directory
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3202970Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/hanlin-ai/hanlin-ai
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3395140Z Deleting the contents of '/Users/runner/work/hanlin-ai/hanlin-ai'
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3436170Z ##[group]Determining repository object format
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3437750Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3438840Z ##[group]Initializing the repository
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3444030Z [command]/opt/homebrew/bin/git init /Users/runner/work/hanlin-ai/hanlin-ai
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3979730Z hint: Using 'master' as the name for the initial branch. This default branch name
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3980950Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3981790Z hint: to use in all of your new repositories, which will suppress this warning,
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3982370Z hint: call:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3982740Z hint:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3983230Z hint: 	git config --global init.defaultBranch <name>
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3983750Z hint:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3984250Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3985040Z hint: 'development'. The just-created branch can be renamed via this command:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3985590Z hint:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3986020Z hint: 	git branch -m <name>
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3986390Z hint:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3986870Z hint: Disable this message with "git config set advice.defaultBranchName false"
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.3994630Z Initialized empty Git repository in /Users/runner/work/hanlin-ai/hanlin-ai/.git/
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.4011610Z [command]/opt/homebrew/bin/git remote add origin https://github.com/davidpovarsky/hanlin-ai
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.4108330Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.4109000Z ##[group]Disabling automatic garbage collection
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.4115890Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.4252270Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.4252970Z ##[group]Setting up auth
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.4253440Z Removing SSH command configuration
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.4260470Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.4372660Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.5670510Z Removing HTTP extra header
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.5675120Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.5766060Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.8145200Z Removing includeIf entries pointing to credentials config files
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.8185080Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.8188860Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.9812850Z [command]/opt/homebrew/bin/git config --file /Users/runner/work/_temp/git-credentials-d43bbc36-4820-45b3-964c-1fae4954befd.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.9819600Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path /Users/runner/work/_temp/git-credentials-d43bbc36-4820-45b3-964c-1fae4954befd.config
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.9821960Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path /Users/runner/work/_temp/git-credentials-d43bbc36-4820-45b3-964c-1fae4954befd.config
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.9883690Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-d43bbc36-4820-45b3-964c-1fae4954befd.config
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:08.9966220Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-d43bbc36-4820-45b3-964c-1fae4954befd.config
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:09.0038850Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:09.0039810Z ##[group]Fetching the repository
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:09.0043560Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7035670Z From https://github.com/davidpovarsky/hanlin-ai
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7039050Z  * [new branch]        agent/agentui-sdk-adapter -> origin/agent/agentui-sdk-adapter
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7040630Z  * [new branch]        agent/team-orchestration-20261018 -> origin/agent/team-orchestration-20261018
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7042330Z  * [new branch]        artifacts/expo-widget-lab-20261026 -> origin/artifacts/expo-widget-lab-20261026
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7044180Z  * [new branch]        artifacts/expo-widget-lab-diagnostics-20261026 -> origin/artifacts/expo-widget-lab-diagnostics-20261026
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7046780Z  * [new branch]        chatgpt/expo-swiftui-all-components-gallery -> origin/chatgpt/expo-swiftui-all-components-gallery
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7048550Z  * [new branch]        codex/agent-skills-embedded-results -> origin/codex/agent-skills-embedded-results
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7049960Z  * [new branch]        codex/agent-ui-surgical-recovery -> origin/codex/agent-ui-surgical-recovery
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7053210Z  * [new branch]        codex/app-runtime-core -> origin/codex/app-runtime-core
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7057460Z  * [new branch]        codex/canonical-swift-nativescript-miniapps -> origin/codex/canonical-swift-nativescript-miniapps
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7061350Z  * [new branch]        codex/chatgpt-style-tool-timeline -> origin/codex/chatgpt-style-tool-timeline
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7065250Z  * [new branch]        codex/chatgpt-tool-activity-timeline-v2 -> origin/codex/chatgpt-tool-activity-timeline-v2
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7076980Z  * [new branch]        codex/classic-chat-native-composer-search -> origin/codex/classic-chat-native-composer-search
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7081960Z  * [new branch]        codex/embedded-mcp-runtime -> origin/codex/embedded-mcp-runtime
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7087790Z  * [new branch]        codex/expo-nativescript-jsi-hybrid-20261027 -> origin/codex/expo-nativescript-jsi-hybrid-20261027
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7094390Z  * [new branch]        codex/expo-swiftui-runtime-spike -> origin/codex/expo-swiftui-runtime-spike
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7097500Z  * [new branch]        codex/fix-ios-system-command-registration -> origin/codex/fix-ios-system-command-registration
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7101820Z  * [new branch]        codex/fix-mcp-reachable-compatibility -> origin/codex/fix-mcp-reachable-compatibility
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7105160Z  * [new branch]        codex/full-scripting-multiruntime -> origin/codex/full-scripting-multiruntime
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7108280Z  * [new branch]        codex/full-scripting-platform -> origin/codex/full-scripting-platform
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7111790Z  * [new branch]        codex/hanlin-a2ui-proof-2bae5a3e -> origin/codex/hanlin-a2ui-proof-2bae5a3e
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7115190Z  * [new branch]        codex/hanlin-a2ui-proof-9611ab6e -> origin/codex/hanlin-a2ui-proof-9611ab6e
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7119380Z  * [new branch]        codex/hanlin-a2ui-proof-a43f1563 -> origin/codex/hanlin-a2ui-proof-a43f1563
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7121300Z  * [new branch]        codex/hanlin-a2ui-proof-c40e617b -> origin/codex/hanlin-a2ui-proof-c40e617b
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7123000Z  * [new branch]        codex/hanlin-a2ui-proof-c777b65e -> origin/codex/hanlin-a2ui-proof-c777b65e
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7124720Z  * [new branch]        codex/hanlin-a2ui-proof-f654ac11 -> origin/codex/hanlin-a2ui-proof-f654ac11
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7125820Z  * [new branch]        codex/hanlin-a2ui-proof-fa810e87 -> origin/codex/hanlin-a2ui-proof-fa810e87
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7127080Z  * [new branch]        codex/hanlin-a2ui-wave1-20261115 -> origin/codex/hanlin-a2ui-wave1-20261115
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7128700Z  * [new branch]        codex/hanlin-agent-sdk-proof-08b5d6f -> origin/codex/hanlin-agent-sdk-proof-08b5d6f
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7130700Z  * [new branch]        codex/hanlin-agent-sdk-wave1-20261115 -> origin/codex/hanlin-agent-sdk-wave1-20261115
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7135530Z  * [new branch]        codex/hanlin-app-split-wave1-20261115 -> origin/codex/hanlin-app-split-wave1-20261115
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7138350Z  * [new branch]        codex/hanlin-composer-wave1-20261115 -> origin/codex/hanlin-composer-wave1-20261115
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7139690Z  * [new branch]        codex/hanlin-wave1-integration-20261115 -> origin/codex/hanlin-wave1-integration-20261115
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7140990Z  * [new branch]        codex/integrate-expo-runtime -> origin/codex/integrate-expo-runtime
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7142110Z  * [new branch]        codex/integrate-swiftui-sdk-bridge -> origin/codex/integrate-swiftui-sdk-bridge
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7143320Z  * [new branch]        codex/ios-translation-provider -> origin/codex/ios-translation-provider
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7144690Z  * [new branch]        codex/local-backup-20261109/codex/integrate-swiftui-sdk-bridge -> origin/codex/local-backup-20261109/codex/integrate-swiftui-sdk-bridge
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7146520Z  * [new branch]        codex/local-backup-20261109/codex/nativescript-swiftui-production -> origin/codex/local-backup-20261109/codex/nativescript-swiftui-production
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7152330Z  * [new branch]        codex/local-backup-20261109/feature/agent-chat-ui-improvements -> origin/codex/local-backup-20261109/feature/agent-chat-ui-improvements
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7154050Z  * [new branch]        codex/local-backup-20261109/gemini/prompt-01 -> origin/codex/local-backup-20261109/gemini/prompt-01
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7156470Z  * [new branch]        codex/local-backup-20261109/integration/hanlin-preserve-all-20261007 -> origin/codex/local-backup-20261109/integration/hanlin-preserve-all-20261007
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7183100Z  * [new branch]        codex/local-backup-20261109/nativescript_build_cache_acceptance -> origin/codex/local-backup-20261109/nativescript_build_cache_acceptance
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7184930Z  * [new branch]        codex/native-app-platform-integration -> origin/codex/native-app-platform-integration
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7186370Z  * [new branch]        codex/nativescript-core-runtime-sefaria -> origin/codex/nativescript-core-runtime-sefaria
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7187720Z  * [new branch]        codex/nativescript-full-integration -> origin/codex/nativescript-full-integration
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7189100Z  * [new branch]        codex/nativescript-swiftui-production -> origin/codex/nativescript-swiftui-production
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7190520Z  * [new branch]        codex/nativescript-sync-scripting-fixes -> origin/codex/nativescript-sync-scripting-fixes
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7191960Z  * [new branch]        codex/recover-ios-system-dyld -> origin/codex/recover-ios-system-dyld
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7195190Z  * [new branch]        codex/renovate/semver-7.x -> origin/codex/renovate/semver-7.x
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7198840Z  * [new branch]        codex/runtime-autonomy-plan-20261110 -> origin/codex/runtime-autonomy-plan-20261110
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7200130Z  * [new branch]        codex/swiftui-sdk-bridge -> origin/codex/swiftui-sdk-bridge
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7202080Z  * [new branch]        codex/translation-widget-miniapps -> origin/codex/translation-widget-miniapps
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7203990Z  * [new branch]        codex/unified-agent-activity-runtime -> origin/codex/unified-agent-activity-runtime
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7205730Z  * [new branch]        codex/upstream-validation-base-20261115-abbcd4ce -> origin/codex/upstream-validation-base-20261115-abbcd4ce
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7207530Z  * [new branch]        codex/upstream-validation-base-20261115-b8ab2c84 -> origin/codex/upstream-validation-base-20261115-b8ab2c84
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7209190Z  * [new branch]        codex/verify-chat-20261112 -> origin/codex/verify-chat-20261112
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7210490Z  * [new branch]        codex/verify-chat-app-20261112 -> origin/codex/verify-chat-app-20261112
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7216600Z  * [new branch]        codex/verify-chat-replay-20261112 -> origin/codex/verify-chat-replay-20261112
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7220100Z  * [new branch]        codex/verify-diagnostics-export-20261112 -> origin/codex/verify-diagnostics-export-20261112
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7225530Z  * [new branch]        codex/verify-markdown-renderer-20261112 -> origin/codex/verify-markdown-renderer-20261112
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7227030Z  * [new branch]        feat/expo-modular-text-search-20261029 -> origin/feat/expo-modular-text-search-20261029
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7228350Z  * [new branch]        feat/torah-photo-study -> origin/feat/torah-photo-study
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7229660Z  * [new branch]        feature/agent-chat-ui-improvements -> origin/feature/agent-chat-ui-improvements
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7231000Z  * [new branch]        feature/chat-agent-presentation -> origin/feature/chat-agent-presentation
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7232490Z  * [new branch]        feature/nativescript-runtime-integration -> origin/feature/nativescript-runtime-integration
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7234370Z  * [new branch]        feature/universal-miniapps -> origin/feature/universal-miniapps
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7235890Z  * [new branch]        fix/classic-source-first-agent-acceptance-20261025 -> origin/fix/classic-source-first-agent-acceptance-20261025
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7237580Z  * [new branch]        fix/expo-native-search-events-20261029 -> origin/fix/expo-native-search-events-20261029
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7239080Z  * [new branch]        fix/expo-searchable-content-bridge-20261029 -> origin/fix/expo-searchable-content-bridge-20261029
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7240340Z  * [new branch]        fix/hanlin-approved-plan-20261108 -> origin/fix/hanlin-approved-plan-20261108
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7241680Z  * [new branch]        fix/hanlin-organizerdock-source-parity-20261101 -> origin/fix/hanlin-organizerdock-source-parity-20261101
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7246890Z  * [new branch]        fix/hanlin-organizerdock-v33-final-repair-20261101 -> origin/fix/hanlin-organizerdock-v33-final-repair-20261101
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7258930Z  * [new branch]        fix/hanlin-pass7-audio-widget-integrity-20261105 -> origin/fix/hanlin-pass7-audio-widget-integrity-20261105
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7270290Z  * [new branch]        fix/hanlin-voice-tap-swift6-crash-20261104 -> origin/fix/hanlin-voice-tap-swift6-crash-20261104
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7275230Z  * [new branch]        fix/hanlin-widget-picker-dock-unified-20261103 -> origin/fix/hanlin-widget-picker-dock-unified-20261103
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7278410Z  * [new branch]        fix/runtime-autolifecycle-20261028 -> origin/fix/runtime-autolifecycle-20261028
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7282620Z  * [new branch]        gemini/prompt-01       -> origin/gemini/prompt-01
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7289000Z  * [new branch]        hebrew-localization-foundation -> origin/hebrew-localization-foundation
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7300070Z  * [new branch]        integration/expo-nativescript-search-20261029 -> origin/integration/expo-nativescript-search-20261029
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7303250Z  * [new branch]        integration/hanlin-dual-widget-engines-20261029 -> origin/integration/hanlin-dual-widget-engines-20261029
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7308860Z  * [new branch]        integration/universal-miniapps-chat-agent -> origin/integration/universal-miniapps-chat-agent
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7312730Z  * [new branch]        main                   -> origin/main
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7315420Z  * [new branch]        native-tool-search-foundation -> origin/native-tool-search-foundation
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7318190Z  * [new branch]        testflight/chat-ui-20261111 -> origin/testflight/chat-ui-20261111
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7322330Z  * [new branch]        text-chat-without-vision-model -> origin/text-chat-without-vision-model
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7327010Z  * [new branch]        tmp/chatgpt-nativescript-test-pack-20260914 -> origin/tmp/chatgpt-nativescript-test-pack-20260914
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7330970Z  * [new tag]           runtime-core-v1-7d967563db0809a4efa0f07b75d6b5928379a3b6f3aafb886899a79f59512a93 -> runtime-core-v1-7d967563db0809a4efa0f07b75d6b5928379a3b6f3aafb886899a79f59512a93
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7333780Z  * [new tag]           runtime-core-v1-93417cff5ce62098919711e7f6d239a6501fd7a5de1621e38eb2fb5cc8c79269 -> runtime-core-v1-93417cff5ce62098919711e7f6d239a6501fd7a5de1621e38eb2fb5cc8c79269
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7337710Z [command]/opt/homebrew/bin/git rev-parse --verify --quiet ea969bee9c1b18a19eafeeecb16ecf454935c244^{object}
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7338750Z ea969bee9c1b18a19eafeeecb16ecf454935c244
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7342980Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7343830Z ##[group]Determining the checkout info
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7344810Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7345650Z [command]/opt/homebrew/bin/git sparse-checkout disable
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7452010Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7533230Z ##[group]Checking out the ref
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:11.7534840Z [command]/opt/homebrew/bin/git checkout --progress --force ea969bee9c1b18a19eafeeecb16ecf454935c244
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:12.8888310Z Updating files:  61% (2780/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:12.9148400Z Updating files:  62% (2820/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:12.9285770Z Updating files:  63% (2866/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:12.9600870Z Updating files:  64% (2911/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:12.9717630Z Updating files:  65% (2957/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:12.9898180Z Updating files:  66% (3002/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.0069130Z Updating files:  67% (3048/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.0133600Z Updating files:  68% (3093/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.0327100Z Updating files:  69% (3139/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.0388240Z Updating files:  70% (3184/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.0447960Z Updating files:  71% (3230/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.0543400Z Updating files:  72% (3275/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.0631710Z Updating files:  73% (3321/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.0691220Z Updating files:  74% (3366/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.0768760Z Updating files:  75% (3411/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.0878710Z Updating files:  76% (3457/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.0968070Z Updating files:  77% (3502/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.1168500Z Updating files:  78% (3548/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.1426800Z Updating files:  79% (3593/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.1613950Z Updating files:  80% (3639/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.1678350Z Updating files:  81% (3684/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.1776140Z Updating files:  82% (3730/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.1977630Z Updating files:  83% (3775/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.2116830Z Updating files:  84% (3821/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.2486240Z Updating files:  85% (3866/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.2732040Z Updating files:  86% (3912/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.2868720Z Updating files:  87% (3957/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.2956910Z Updating files:  88% (4003/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.3075760Z Updating files:  89% (4048/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.3175290Z Updating files:  90% (4094/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.3265780Z Updating files:  91% (4139/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.3424850Z Updating files:  92% (4185/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.3638520Z Updating files:  93% (4230/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.4281740Z Updating files:  94% (4276/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.4857260Z Updating files:  95% (4321/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.5113310Z Updating files:  96% (4367/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.5214420Z Updating files:  97% (4412/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.5280040Z Updating files:  98% (4458/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.5507850Z Updating files:  99% (4503/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.5509620Z Updating files: 100% (4548/4548)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.5510650Z Updating files: 100% (4548/4548), done.
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.5797620Z HEAD is now at ea969bee Bring isolated upstream CI adapter into the unmerged validation candidate
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.6307660Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.6547610Z [command]/opt/homebrew/bin/git log -1 --format=%H
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.6654080Z ea969bee9c1b18a19eafeeecb16ecf454935c244
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.6675250Z ##[group]Removing auth
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.6677520Z Removing SSH command configuration
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.6680450Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.6969040Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.9119600Z Removing HTTP extra header
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.9201390Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:13.9265780Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.1095570Z Removing includeIf entries pointing to credentials config files
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.1109870Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.1228610Z includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.1229180Z includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.1229710Z includeif.gitdir:/github/workspace/.git.path
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.1230120Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.1245890Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.1335250Z /Users/runner/work/_temp/git-credentials-d43bbc36-4820-45b3-964c-1fae4954befd.config
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.1350080Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path \/Users\/runner\/work\/_temp\/git\-credentials\-d43bbc36\-4820\-45b3\-964c\-1fae4954befd\.config
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.1568620Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.1690210Z /Users/runner/work/_temp/git-credentials-d43bbc36-4820-45b3-964c-1fae4954befd.config
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.1697770Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path \/Users\/runner\/work\/_temp\/git\-credentials\-d43bbc36\-4820\-45b3\-964c\-1fae4954befd\.config
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.1799120Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.1888110Z /github/runner_temp/git-credentials-d43bbc36-4820-45b3-964c-1fae4954befd.config
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.1898410Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-d43bbc36\-4820\-45b3\-964c\-1fae4954befd\.config
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.1991250Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.2060230Z /github/runner_temp/git-credentials-d43bbc36-4820-45b3-964c-1fae4954befd.config
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.2069470Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-d43bbc36\-4820\-45b3\-964c\-1fae4954befd\.config
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.2153050Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.3695740Z Removing credentials config '/Users/runner/work/_temp/git-credentials-d43bbc36-4820-45b3-964c-1fae4954befd.config'
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.3724920Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.4150110Z ##[group]Run actions/setup-node@v7.1.0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.4150880Z with:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.4151430Z   node-version: 24.22.1
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.4151950Z   cache: npm
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.4152740Z   cache-dependency-path: Scripts/Runtime/DependencyUpdates/package-lock.json
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.4153750Z   check-latest: false
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.4159200Z   token: ***
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.4159770Z   package-manager-cache: true
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.4160030Z env:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.4160270Z   UPDATE_OPERATION: candidate
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.4160560Z   CANDIDATE_PR: 6
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.4160770Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:14.9006560Z Attempting to download 24.22.1...
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:15.5678330Z Acquiring 24.22.1 - arm64 from https://github.com/actions/node-versions/releases/download/24.22.1-39619001896/node-24.22.1-darwin-arm64.tar.gz
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:16.4850350Z Extracting ...
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:16.5095160Z [command]/usr/bin/tar xz --strip 1 -C /Users/runner/work/_temp/59c4bf9f-857a-4d39-b346-33fc505aefee -f /Users/runner/work/_temp/f7b0deab-5b4b-4fc5-b230-7e811d6ee04f
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:18.7933750Z Adding to the cache ...
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:22.5400650Z ##[group]Environment details
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:23.2228170Z node: v24.22.1
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:23.2229190Z npm: 11.19.1
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:23.2229730Z yarn: 1.22.22
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:23.2230540Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:23.2594770Z [command]/Users/runner/hostedtoolcache/node/24.22.1/arm64/bin/npm config get cache
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:23.4431500Z /Users/runner/.npm
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:23.7186490Z npm cache is not found
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:23.7616230Z ##[group]Run set -euo pipefail
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:23.7619230Z ^[[36;1mset -euo pipefail^[[0m
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:23.7619980Z ^[[36;1mmkdir -p build/upstream-updates^[[0m
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:23.7621550Z ^[[36;1m{ sw_vers; uname -m; xcodebuild -version; node --version; npm --version; df -h .; } > build/upstream-updates/preflight.log^[[0m
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:23.7772590Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:23.7774060Z env:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:23.7774880Z   UPDATE_OPERATION: candidate
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:23.7775960Z   CANDIDATE_PR: 6
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:23.7776270Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:24.7369610Z ##[group]Run npm ci --ignore-scripts --workspaces=false --no-audit --no-fund
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:24.7371050Z ^[[36;1mnpm ci --ignore-scripts --workspaces=false --no-audit --no-fund^[[0m
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:24.7371650Z ^[[36;1mnpm rebuild re2 --foreground-scripts --workspaces=false^[[0m
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:24.7372390Z ^[[36;1mnpm sbom --sbom-format cyclonedx > ../../../build/upstream-updates/tooling-sbom.json^[[0m
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:24.7425020Z shell: /bin/bash -e {0}
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:24.7425320Z env:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:24.7425700Z   UPDATE_OPERATION: candidate
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:24.7425990Z   CANDIDATE_PR: 6
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:24.7426300Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:27.9157850Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:30.0634020Z npm warn deprecated rimraf@2.4.5: Rimraf versions prior to v4 are no longer supported
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:30.1217910Z npm warn deprecated glob@6.0.4: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:30.1389590Z npm warn deprecated boolean@3.2.0: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:30.8741480Z npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:32.4090680Z npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:41.8417630Z 
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:41.8421330Z added 614 packages in 17s
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:43.6037470Z 
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:43.6140900Z > re2@1.27.0 install
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:43.6244810Z > install-from-cache --artifact build/Release/re2.node --host-var RE2_DOWNLOAD_MIRROR --skip-path-var RE2_DOWNLOAD_SKIP_PATH --skip-ver-var RE2_DOWNLOAD_SKIP_VER --force-build-var RE2_DOWNLOAD_FORCE_BUILD || node-gyp -j max rebuild
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:43.6351030Z 
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:43.7985580Z Trying https://github.com/uhop/node-re2/releases/download/1.27.0/darwin-arm64-137.br ...
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:44.1288450Z Writing to build/Release/re2.node ...
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:44.7606630Z Done.
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:44.8008980Z npm warn rebuild 4 packages have install scripts not yet covered by allowScripts. Run `npm install-scripts ls` to review.
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:44.8010920Z rebuilt dependencies successfully
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:45.9210990Z ##[group]Run node Scripts/Runtime/DependencyUpdates/node_modules/renovate/dist/config-validator.js --strict .renovaterc.json
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:45.9212700Z ^[[36;1mnode Scripts/Runtime/DependencyUpdates/node_modules/renovate/dist/config-validator.js --strict .renovaterc.json^[[0m
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:45.9305440Z shell: /bin/bash -e {0}
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:45.9305760Z env:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:45.9305970Z   UPDATE_OPERATION: candidate
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:45.9306370Z   CANDIDATE_PR: 6
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:45.9306520Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:46.9007460Z  INFO: Validating .renovaterc.json as global config
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:46.9122380Z  INFO: Config validated successfully against 1 file(s)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:46.9220120Z ##[group]Run node --test Scripts/Runtime/Tests/dependency-updates.test.mjs
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:46.9220990Z ^[[36;1mnode --test Scripts/Runtime/Tests/dependency-updates.test.mjs^[[0m
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:46.9260870Z shell: /bin/bash -e {0}
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:46.9261210Z env:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:46.9261390Z   UPDATE_OPERATION: candidate
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:46.9261710Z   CANDIDATE_PR: 6
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:46.9261920Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1056440Z ✔ real updater selects supported Host version without upgrading the embedded ABI (4.892542ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1058130Z ✔ explicit incompatible target cannot bypass the original engine constraint (0.381917ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1059670Z ✔ unknown package and missing upstream provenance fail before changing a manifest (0.39525ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1062170Z ✔ major changes are proposals requiring review rather than a safe patch (0.184584ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1100940Z ✔ canonical dependency hash preserves its existing output/provenance boundary (8.368667ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1117130Z ✔ only complete, current, protected and explicitly enabled evidence can qualify (0.307708ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1118820Z ✔ merge refuses missing checks (0.175833ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1119440Z ✔ merge refuses failed CI (0.069292ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1119810Z ✔ merge refuses skipped CI (0.067209ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1120130Z ✔ merge refuses pending CI (0.099666ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1120520Z ✔ merge refuses wrong check source (0.058709ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1120970Z ✔ merge refuses stale check head (0.070417ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1121320Z ✔ merge refuses stale receipt (0.048875ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1121730Z ✔ merge refuses unknown impact (0.037291ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1122260Z ✔ merge refuses native ABI (0.047792ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1122740Z ✔ merge refuses major (0.04175ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1123110Z ✔ merge refuses missing license (0.035042ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1124540Z ✔ merge refuses missing checksum (0.02675ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1124870Z ✔ merge refuses no gates (0.058875ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1125190Z ✔ merge refuses no rollback (0.0335ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1125550Z ✔ merge refuses unprotected branch (0.029166ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1125910Z ✔ merge refuses merge not enabled (0.027083ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1126550Z ✔ a familiar lock filename cannot hide unknown source/native changes (0.128791ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1179010Z ℹ tests 23
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1180060Z ℹ suites 0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1180570Z ℹ pass 23
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1181290Z ℹ fail 0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1182180Z ℹ cancelled 0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1182490Z ℹ skipped 0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1182670Z ℹ todo 0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1182940Z ℹ duration_ms 119.301792
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1243770Z ##[group]Run node Scripts/Runtime/inventory-upstream-dependencies.mjs
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1244220Z ^[[36;1mnode Scripts/Runtime/inventory-upstream-dependencies.mjs^[[0m
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1279680Z shell: /bin/bash -e {0}
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1279900Z env:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1280170Z   UPDATE_OPERATION: candidate
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1280370Z   CANDIDATE_PR: 6
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.1280650Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.2903410Z {"path":"build/upstream-updates/inventory.json","manifests":51,"sourceSHA":"ea969bee9c1b18a19eafeeecb16ecf454935c244"}
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.3000490Z ##[group]Run node Scripts/Runtime/prepare-upstream-verification.mjs "davidpovarsky/hanlin-ai" "$CANDIDATE_PR"
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.3001180Z ^[[36;1mnode Scripts/Runtime/prepare-upstream-verification.mjs "davidpovarsky/hanlin-ai" "$CANDIDATE_PR"^[[0m
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.3041130Z shell: /bin/bash -e {0}
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.3041340Z env:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.3041510Z   UPDATE_OPERATION: candidate
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.3041720Z   CANDIDATE_PR: 6
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.3044170Z   GH_TOKEN: ***
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:47.3044360Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:48.4961430Z From https://github.com/davidpovarsky/hanlin-ai
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:48.4962790Z  * branch              abbcd4ce9a72177a068f52c0d21fa226c7df42f6 -> FETCH_HEAD
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:49.0210160Z {"schemaVersion":1,"repository":"davidpovarsky/hanlin-ai","pullRequest":6,"head":"ea969bee9c1b18a19eafeeecb16ecf454935c244","base":"abbcd4ce9a72177a068f52c0d21fa226c7df42f6","changedPaths":["AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json","AI_HLY/Downstream/RuntimeCore/Node/Host/package.json","RuntimeDependencies.lock.json"],"impact":"runtime-host","updateType":"patch","updates":[{"name":"semver","previous":"7.8.5","version":"7.8.6","updateType":"patch","integrity":"sha512-9lpSSU4Mly3mrtruwLs1eLK6+gzbzqeBFwRNjIjE+9LuDpWdYctrQlQ3ej1Ilgi7gknpsTRnPoLP8DpCHqHIJw==","license":"ISC","licenseReview":"UNCHANGED_FROM_PARENT_LOCK","sourceRepository":"npm/node-semver","upstreamCommit":"b37b033b585ad5e575afeccadb426ea41bc6cea4","tarball":"https://registry.npmjs.org/semver/-/semver-7.8.6.tgz"}],"nativeArtifact":"Unchanged exact native identity must also pass the existing authenticated consumer before Host tests","rollback":{"commit":"ea969bee9c1b18a19eafeeecb16ecf454935c244","parent":"abbcd4ce9a72177a068f52c0d21fa226c7df42f6","strategy":"Revert the isolated dependency candidate; preserve original binary pins and regenerate the original Host archive"}}
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:49.0374670Z ##[group]Run actions/setup-node@v7.1.0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:49.0374910Z with:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:49.0375040Z   node-version: 24.5.0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:49.0375250Z   check-latest: false
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:49.0377310Z   token: ***
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:49.0377490Z   package-manager-cache: true
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:49.0377670Z env:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:49.0377830Z   UPDATE_OPERATION: candidate
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:49.0378010Z   CANDIDATE_PR: 6
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:49.0378170Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:49.4066650Z Attempting to download 24.5.0...
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:50.0852180Z Acquiring 24.5.0 - arm64 from https://github.com/actions/node-versions/releases/download/24.5.0-16666195981/node-24.5.0-darwin-arm64.tar.gz
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:50.9893430Z Extracting ...
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:51.0148780Z [command]/usr/bin/tar xz --strip 1 -C /Users/runner/work/_temp/f0122f74-e3d4-4922-9f75-8ce79d345974 -f /Users/runner/work/_temp/2e2e74fc-4ac8-4a40-a7de-da5ba15a1a2c
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:52.7647050Z Adding to the cache ...
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:56.6748510Z ##[group]Environment details
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:57.0837370Z node: v24.5.0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:57.0940300Z npm: 11.5.1
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:57.1040920Z yarn: 1.22.22
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:57.1145530Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:57.1878760Z ##[group]Run python3 Scripts/Runtime/runtime_native_identity.py --verify-reuse
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:57.1879400Z ^[[36;1mpython3 Scripts/Runtime/runtime_native_identity.py --verify-reuse^[[0m
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:57.1879960Z ^[[36;1mbash Scripts/Runtime/prepare-runtime-core.sh 2>&1 | tee build/upstream-updates/native-origin.log^[[0m
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:57.1941190Z shell: /bin/bash -e {0}
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:57.1941630Z env:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:57.1941910Z   UPDATE_OPERATION: candidate
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:57.1942300Z   CANDIDATE_PR: 6
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:57.1945880Z   GH_TOKEN: ***
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:57.1946300Z   RUNTIME_CORE_ARTIFACT_RUN_ID: 42926628418
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:57.1946770Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:57.5166160Z d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:57.5966960Z Validated /Users/runner/work/hanlin-ai/hanlin-ai/RuntimeDependencies.lock.json.
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:46:57.7729810Z d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:03.7416730Z /private/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/tmp.MOVZgspwyU/hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:06.3967900Z /var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/tmp.MOVZgspwyU/payload/NodeMobile.xcframework/Info.plist: OK
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:06.4084890Z /var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/tmp.MOVZgspwyU/payload/Python.xcframework/Info.plist: OK
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:12.7763650Z 
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:12.7765870Z added 1 package in 521ms
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:14.1789420Z npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:14.6816640Z 
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:14.6817290Z added 166 packages in 2s
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:14.7730800Z {"package":"@yarnpkg/shell","version":"4.1.3","files":5}
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:15.2164320Z {"unicode":"16.0","patterns":3,"comparedPerPattern":1114112,"ranges":736,"upstreamSHA256":"1847afd90236234c0797bd072647aca486a027c6ff696029e294b742985b57fb","patchedSHA256":"35d8582e121e974a0bd611fd2e628f5ea7c992ada05fc584b8eb1be57c575e85"}
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:15.3126910Z {"compiler":"0.10.0","originalParserReproduced":true,"grammarSHA256":"7471bb6efa3ffc8cafeeb73ae5443121d8f98fd55c12e04e3d2595f3ff25024f","parserSHA256":"cc894ae3938649fc62037e0a574ad3cded99c9771e4e042a2d893185789a47ef"}
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:15.4495950Z 
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:15.4496970Z > hanlin-runtime-host@2.0.0 test
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:15.4498000Z > node --test Tests/*.test.mjs
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:15.4498330Z 
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:20.7877580Z ✔ real archive inventory exceeds former file/size caps with bounded I/O and preserves caller budgets (5219.490709ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:20.8175150Z ✔ actual CLI Worker resolves extensionless scripts and directory mains using Node resolution (143.706792ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:20.8279940Z ✔ runtime probe retries opaque Worker exits and loader diagnostics from stderr (1.409792ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:20.8385650Z ✔ unused client stdio and cross-spawn code do not reject the selected server path (117.230583ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:20.8488450Z ✔ direct-blocked may import child_process without executing it (65.124667ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:20.8603750Z ✔ esm-import-only may import child_process without executing it (46.377375ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:20.8706180Z ✔ transitive-blocked may import child_process without executing it (50.730792ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:20.8808280Z ✔ commonjs-blocked may import child_process without executing it (49.274ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:20.8913060Z ✔ dynamic-blocked may import child_process without executing it (58.14075ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:20.8990880Z ✔ get-builtin-blocked may import child_process without executing it (47.898792ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:20.9097050Z ✔ spawn-call is rejected when subprocess execution is attempted (55.488375ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:20.9201270Z ✔ exec-call is rejected when subprocess execution is attempted (47.090792ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:20.9303290Z ✔ exec-file-call is rejected when subprocess execution is attempted (41.630458ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:20.9311220Z ✔ fork-call is rejected when subprocess execution is attempted (40.485834ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:20.9381870Z ✔ spawn-sync-call is rejected when subprocess execution is attempted (57.787375ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:20.9492260Z ✔ exec-sync-call is rejected when subprocess execution is attempted (91.583ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:20.9596790Z ✔ exec-file-sync-call is rejected when subprocess execution is attempted (51.089708ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:20.9702290Z ✔ child-process-bypass is rejected when subprocess execution is attempted (61.0825ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:20.9828570Z ✔ fork-child-call is rejected when subprocess execution is attempted (58.870583ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:20.9935310Z ✔ commonjs-spawn-call is rejected when subprocess execution is attempted (48.84ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:21.0017190Z ✔ get-builtin-call is rejected when subprocess execution is attempted (45.220084ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:21.0061010Z ✔ transitive-call is rejected when subprocess execution is attempted (48.448083ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:21.0163260Z ✔ cluster-blocked is rejected by the Worker runtime policy (41.675375ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:21.0270360Z ✔ binding-blocked is rejected by the Worker runtime policy (43.997167ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:21.0373000Z ✔ process-wrap-blocked is rejected by the Worker runtime policy (48.577584ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:21.0477750Z ✔ unreachable native build material is inventory, not an execution-path rejection (43.654375ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:21.0594950Z ✔ bounded concurrent archive scanning preserves serial safety results (3.082791ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:21.0677460Z ✔ only the selected reachable TypeScript entry is compiled by the Worker loader (285.150917ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:21.0678600Z ✔ a native addon actually resolved by the selected entry is rejected (54.248417ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:21.0679490Z ✔ archive safety rejects a symlink that escapes packageRoot (9.963958ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:21.0680370Z ✔ canonical parent aliases do not make a contained entry point appear to escape (117.495625ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:21.0681280Z ✔ execution-path analysis requires an explicit selected entry point (2.135209ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:21.0682180Z ✔ runtime probe bounds forced shutdown after MCP protocol success (1059.034709ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:21.0683130Z ✔ the production installer rejects executed child_process and preserves the prior package (510.476375ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:21.0684230Z ✔ MCP probe forwards explicitly supplied paths and credentials after bootstrap without argv caps (262.50575ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:23.4856730Z ✔ owned UTF-8 input remains strict without ICU TextDecoder, including scalar splits and BOM (298.303708ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:23.4956920Z ✔ actual authenticated HTTP control executes >32MiB Unicode input with exact durable hashes and no replay (2981.605542ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:23.5842070Z ✔ wrong digest, size, identity and invalid UTF8 preserve failed input without executing its source (96.426417ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:23.6705850Z ✔ interruption during claimed input preparation settles the original ID without a Worker or later replay (88.205334ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:23.6886330Z ✔ never-started receipts and nonregular inbox paths cannot be claimed as fresh execution (15.048375ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:23.7819130Z ✔ actual process termination during preflight recovers the claimed input as interrupted without source replay (97.061666ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:23.8040490Z ✔ ordinary cancellation before POST persists the first cause and prevents delayed file or Host operation side effects (22.639584ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:23.8185870Z ✔ cancelling an unregistered pre-existing journal never overwrites or classifies its history as never-started (13.603625ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.1703760Z ✔ Host-generated child job identity reaches input validation and its durable receipt (57.776292ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.1820680Z ✔ actual Worker interruption retains its cause and full output through reopen (66.63675ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.1924800Z ✔ late Host operation completion cannot erase an already requested system interruption (59.024458ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.2050230Z ✔ interruption before POST or during journal creation cannot start or replay side effects (32.320458ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.2127100Z ✔ esm resolves workspace modules and local exports before pinned global packages (116.182958ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.2128160Z ✔ commonjs resolves workspace modules and local exports before pinned global packages (109.903417ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.2129170Z ✔ managed CLI preload does not configure or leak its private bootstrap into nested Workers (85.762042ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.2130310Z ✔ Host command wait wakes for actual requests and aborts without cancelling the execution (337.231209ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.2131350Z ✔ full stdout and stderr survive preview limits and store reopen with verified hashes (1667.516208ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.2132360Z ✔ ordinary event-loop work finishes after module evaluation without being terminated early (233.105917ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.2133330Z ✔ explicit timeout retains partial output and is distinct from user cancellation (1510.437833ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.2242600Z ✔ explicit cancellation terminates the actual worker and retains partial output (55.536542ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.2347030Z ﹣ actual Node job crosses 300 seconds with no hidden deadline (0.086042ms) # SKIP
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.2722170Z ✔ a later nonzero exit cannot be hidden by an earlier successful module export (40.560834ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.3128970Z ✔ user worker messages cannot hide the final module result (47.224542ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.3231660Z ✔ a restored job with no opened streams has an empty lossless output page (4.47925ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.4935300Z ✔ actual CommonJS CLI main preserves argv, cwd, environment, binary stdin and late stdout (177.517167ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.5673800Z ✔ actual ESM CLI errors and exit status are retained without interpreting user messages as results (63.441542ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.6116880Z ✔ CLI cancellation stops the actual main and retains partial output; launch environment is frozen (45.016875ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.6868940Z ✔ user PATH HOME and NODE_OPTIONS apply to the job without reconfiguring Worker bootstrap (78.855333ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.7020370Z ✔ Fetch transport follows actual WebAssembly availability (1.144834ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.7027380Z ✔ real JITless Node supports Fetch request, streaming, clone, redirects, gzip, multipart and abort (303.604125ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.7129230Z ✔ native Fetch reference proves TLS, SRI and actual controlled Proxy routing (353.054292ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.7229820Z ✔ actual published Yarn patch is idempotent and refuses changed bytes or versions (130.897666ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.7332420Z ✔ Host operation survives observer loss and retains complete progress, UTF8 previews, digests and reopen (38.215167ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.7434440Z ✔ Host cancellation stays requested until the real asynchronous operation drains (14.813625ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.7535980Z ✔ a real Host journal failure aborts extraction and exposes failed in-memory status with partial output (11.871709ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.7638240Z ✔ Host operation claims real oversized owned inputs before invoking the existing callback and never replays (269.838667ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.7738720Z ✔ Host operation ingress rejects changed input identity without executing its callback and retains the real bytes (9.642458ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.7840710Z ✔ worker stdin and stdout remain isolated for multiple servers (41.702791ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.7941520Z ✔ lifecycle scripts retain native execution metadata while incompatible engines remain rejected (4.304458ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.8042660Z ✔ integrity mismatch fails closed (0.767917ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.8131830Z ✔ install cancellation aborts work (0.187292ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.8235580Z ✔ multiple package bins are listed and an explicit path preserves its bin name (0.516958ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:25.8338440Z ✔ unknown legacy transactions preserve both the installed package and its backup (8.955083ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:36.8367540Z ✔ host redirects npm state before preview and install modules initialize (11128.026333ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:36.8535050Z ✔ worker terminal status is observable only after its actual atomic journal rename (54.244459ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:36.8537050Z ✔ operation terminal status is observable only after its actual atomic journal rename (14.794ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:47:36.8538550Z ✔ actual MCP installation executes lifecycle before initialize/tools-list and preserves the prior server after failure (3673.549584ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:02.1243110Z ✔ actual MCP tools/list above the former one-MiB probe cap passes by default (88.505125ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:02.1347350Z ✔ ordinary installation probes a real >one-MiB schema after the former thirty-second deadline and journals exact output (31600.918584ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.2901170Z ✔ a stopped probe cancels its actual Worker without waiting for a protocol timeout (1161.865792ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.3409830Z ✔ exit zero without a protocol response fails promptly instead of waiting forever (62.59575ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.4026310Z ✔ complete protocol reply immediately followed by exit zero remains a valid probe (51.767959ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.4693920Z ✔ a caller-selected probe byte budget is honored without a hidden minimum (64.429334ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.5045380Z ✔ real MCP HTTP transport retains >eight-MiB disconnected frames, accepts owned >ten-MiB input, and binds generation (2566.989125ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.5172760Z ✔ cancelling an actual pending MCP startup settles the managed job and permits a clean later generation (3577.047375ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.5279370Z ✔ MCP generations retain actual late Worker imports across commit, rollback and process-style reopen (59.992ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.5386030Z ✔ explicit esm native command module executes a real CLI and retains complete binary streams (361.620458ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.5491340Z ✔ explicit commonjs native command module executes a real CLI and retains complete binary streams (319.579792ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.5596550Z ✔ an unattached context never fabricates an execution, PID or successful empty output (0.8055ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.5701590Z ✔ actual persistent MCP Worker can inspect the module but cannot inherit a chat command owner (38.021375ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.5804520Z ✔ network diagnostics preserve bounded cyclic AggregateError cause codes (0.658041ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.5908820Z ✔ the HTTPS diagnostic never disables TLS or accepts credential-bearing echo URLs (0.502917ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.6013290Z ✔ real TLS handshake failures remain failures for both fetch and node:https GET/POST (51.675542ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.6118510Z ✔ actual optional failure prunes its required ancestor and cyclic private deps, preserving required/shared builds and journals (938.889333ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.6227010Z ✔ required failures and forged optional flags cannot erase required packages (715.811583ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.6333390Z ✔ aborted optional work never becomes an optional success or omission (24.698417ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.6441630Z ✔ malformed optional shell syntax is a real journaled build failure, while required syntax remains rejected (926.92825ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.6544170Z ✔ actual registry reify retries previously omitted hooks after an unrelated root version update (647.400125ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.6646950Z ✔ actual Arborist tree plans dependency phases, root project phases and skips unchanged build products (51.792542ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.6753860Z ✔ immutable package generations preserve old files, reject conflicting commits and retain published generations (28.149916ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.6859150Z ✔ root aliases expose the same physical legacy and published generation without mutating reads (16.449583ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.6963500Z ✔ competing commits through host root aliases preserve conflict rejection (9.719875ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.7065870Z ✔ reading a missing legacy host does not create directories or introduce a missing-path error (1.167583ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.7168000Z ✔ npm lifecycle environment retains user values and flattens RFC183 package metadata (3.533209ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.7279540Z ✔ actual registry extraction and Arborist dependency hooks publish atomically and preserve unchanged builds (1020.813708ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.7386430Z ✔ command-only package validation hashes actual entries without executing invented CLI arguments (89.707125ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.7491390Z ✔ actual Worker loads import and require-only public roots from the staged package generation (90.875208ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.7492390Z ✔ an actual root dependency failure is not hidden by CLI or require fallback (43.623ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.7595720Z ✔ subpath metadata does not pretend a nonexistent root was imported; invalid bin targets still fail (43.48875ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.7704570Z ✔ actual Yarn language preserves quoting, Unicode argv, environment and cwd across command adapters (16.342625ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.7820590Z ✔ original multiline shell source retains file redirection and stdout-to-stderr duplication (14.912ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.7928650Z ✔ grammar newline boundaries preserve quoted text, comments, CRLF and continued commands (11.946208ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.8041390Z ✔ real interpreter pipes stdin and redirects output while retaining exact failing exit status (7.07325ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.8144570Z ✔ dynamic command names and command substitutions always reach adapters, never OS spawn (2.076875ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.8249200Z ✔ globs, groups and logical short-circuiting use the actual parser/interpreter (14.315875ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.8352370Z ✔ missing adapters fail truthfully and can be handled with shell control flow (1.940625ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.8471510Z ✔ real parent Worker spools a >10MiB Unicode pipeline through actual CLI jobs without output loss (958.436291ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.8574630Z ✔ npm run uses actual pre/main/post CLI jobs, lifecycle environment and stops at real exit23 (977.598917ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.8692950Z ✔ durable completion receipt is idempotent across lost/reordered acknowledgements and rejects conflicts (13.694208ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.8799110Z ✔ parent cancellation remains pending until the actual linked-command receipt arrives (320.049583ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:03.8902240Z ✔ actual journal write failure returns a failed in-memory status and retains partial output (63.101208ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.0046950Z ✔ manifest compatibility uses the actual Node version, OS and architecture (2.059625ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.0132040Z ✔ an iOS target is not substituted with Darwin and CPU constraints remain effective (0.176334ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.0233010Z ✔ actual registry preview and global install use the running interpreter target (183.375459ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.0337490Z ✔ MCP candidate selection uses the actual interpreter against supplied registry metadata (5.26ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.0386180Z ✔ actual global installation retains and executes a package beyond fifty thousand files (23978.675875ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.1402360Z ✔ commonjs waits for an exported asynchronous network operation before worker teardown (226.781166ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.1505880Z ✔ esm waits for an exported asynchronous network operation before worker teardown (148.899625ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.1608390Z ✔ generic ESM execution captures Hebrew output and a structured value (82.320583ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.1712070Z ✔ generic CommonJS execution returns module.exports (77.985417ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.1815900Z ✔ TypeScript 6 compiler emits JavaScript and source maps (53.438083ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.1921590Z ✔ execution output is capped without splitting the worker protocol (46.665041ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.2026080Z ✔ UTF-8 output budgets never split Hebrew or emoji (584.168333ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.2129640Z ✔ lifecycle planner preserves original portable shell source and rejects malformed syntax (4.153167ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.2233740Z ✔ failed executions preserve aggregate HTTPS cause codes (54.057792ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.2337600Z ✔ console errors preserve cyclic causes within the output budget (157.373584ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.4103500Z ✔ actual compiler Worker accepts >10MiB durable source and retains full typed output/hash/reopen (4108.341833ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.4115100Z ✔ actual project compiler preserves >128 argv values, emits files and reports locked compiler identity (957.781917ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.4117980Z ✔ compiler diagnostics are preserved with actual failing exit and no emitted JavaScript (1288.74725ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.4120350Z ✔ virtual source does not replace an installed dependency with the same basename (4089.125292ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.4123060Z ✔ actual compiler job cancellation retains entered Worker output and does not block another job (838.707916ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.4568410Z ✔ warning tracing is scoped, reference counted and idempotent (1.368209ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.4569420Z ✔ diagnostic execution retains the actual warning stack and worker identity (84.459875ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.4808200Z ✔ named fs and fs/promises imports use the execution workspace (59.794458ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.5230190Z ✔ relative copy and rename destinations plus native realpath stay in the execution workspace (41.820708ms)
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.5344020Z ℹ tests 150
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.5453800Z ℹ suites 0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.5556490Z ℹ pass 149
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.5629610Z ℹ fail 0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.5731090Z ℹ cancelled 0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.5739320Z ℹ skipped 1
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.5740140Z ℹ todo 0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:17.5740590Z ℹ duration_ms 62034.953375
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:22.3303520Z {"passed":true,"fetchImplementation":"node-fetch@3.3.2+native-web-api","webAssemblyAvailable":false,"nonce":"790dfc05-1f62-42a3-b854-b30a595f7a22","contracts":["GET","Request POST Unicode","redirect","HTTP error","ReadableStream","clone","gzip","multipart File","abort","HEAD","204"]}
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:22.8792110Z Prepared RuntimeHostResources.zip (0730ae26a1d01470aaf81c2577c887e952be494177d8346046db7173bca506d4).
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:23.2723480Z Runtime Host: rebuilt locked dependencies and modules
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:23.3319030Z Generated /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json.
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:23.3908940Z /Users/runner/work/hanlin-ai/hanlin-ai/Vendor/Python/Python.xcframework/build/iOS-dylib-Info-template.plist: OK
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:23.4048080Z Verified native artifact 2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194; current Host dependency closure ecc97fd7ea7e730df1f1924afc499fc97543cac12072a5d136e157f0d843cdd5.
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:23.4049660Z Prepared verified RuntimeCore ecc97fd7ea7e730df1f1924afc499fc97543cac12072a5d136e157f0d843cdd5: Node 24.5.0, Python 3.14.6.
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:23.6515010Z ##[group]Run set -euo pipefail
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:23.6515420Z ^[[36;1mset -euo pipefail^[[0m
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:23.6517170Z ^[[36;1mtest "$(node --version)" = 'v24.5.0'^[[0m
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:23.6517980Z ^[[36;1mbash Scripts/Runtime/prepare-runtime-host.sh 2>&1 | tee build/upstream-updates/host.log^[[0m
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:23.6518690Z ^[[36;1mnode Scripts/Runtime/validate-runtime-lock.mjs^[[0m
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:23.6519790Z ^[[36;1m(cd AI_HLY/Downstream/RuntimeCore/Node/Host && npm sbom --sbom-format cyclonedx) > build/upstream-updates/host-sbom.json^[[0m
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:23.6520440Z ^[[36;1mnode Scripts/Runtime/record-upstream-receipt.mjs^[[0m
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:23.7651630Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:23.7652170Z env:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:23.7653350Z   UPDATE_OPERATION: candidate
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:23.7653900Z   CANDIDATE_PR: 6
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:23.7654670Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:24.3476820Z Reusing verified current RuntimeHostResources.zip and its completed Host/JITless checks.
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:24.4363720Z Validated RuntimeDependencies.lock.json.
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6357180Z npm error code ESBOMPROBLEMS
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6359300Z npm error missing: @npmcli/arborist@9.9.3, required by hanlin-runtime-host@2.0.0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6360970Z npm error missing: @types/node@24.5.2, required by hanlin-runtime-host@2.0.0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6362620Z npm error missing: @yarnpkg/fslib@3.1.5, required by hanlin-runtime-host@2.0.0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6364130Z npm error missing: @yarnpkg/parsers@3.1.0, required by hanlin-runtime-host@2.0.0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6366050Z npm error missing: @yarnpkg/shell@4.1.3, required by hanlin-runtime-host@2.0.0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6368000Z npm error missing: node-fetch@3.3.2, required by hanlin-runtime-host@2.0.0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6370410Z npm error missing: pacote@21.5.3, required by hanlin-runtime-host@2.0.0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6372340Z npm error missing: semver@7.8.6, required by hanlin-runtime-host@2.0.0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6374110Z npm error missing: ssri@12.0.0, required by hanlin-runtime-host@2.0.0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6376110Z npm error missing: typescript@6.0.3, required by hanlin-runtime-host@2.0.0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6378600Z npm error A complete log of this run can be found in: /Users/runner/.npm/_logs/2026-11-15T19_48_24_701Z-debug-0.log
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6609200Z ##[error]Process completed with exit code 1.
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6815000Z ##[group]Run actions/upload-artifact@v7.0.2
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6816070Z with:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6816650Z   name: upstream-proof-43754245990
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6817470Z   path: build/upstream-updates
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6818100Z   if-no-files-found: error
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6818810Z   retention-days: 14
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6819400Z   compression-level: 6
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6820290Z   overwrite: false
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6820960Z   include-hidden-files: false
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6821550Z   archive: true
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6822160Z env:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6822670Z   UPDATE_OPERATION: candidate
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6823360Z   CANDIDATE_PR: 6
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:25.6823890Z ##[endgroup]
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:26.4445980Z With the provided path, there will be 7 files uploaded
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:26.4446880Z Artifact name is valid!
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:26.4449490Z Root directory input is valid!
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:26.8344720Z Uploading artifact: upstream-proof-43754245990.zip
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:26.8556380Z Beginning upload of artifact content to blob storage
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:27.5570280Z Uploaded bytes 303537
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:27.5973400Z Finished uploading artifact content to blob storage!
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:27.6075850Z SHA256 digest of uploaded artifact is 67333d847b0885e330d1c51119489ac0c42a32d7621811de23af7396552c8f15
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:27.6175880Z Finalizing artifact upload
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:28.0578870Z Artifact upstream-proof-43754245990 successfully finalized. Artifact ID 14178031532
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:28.0588220Z Artifact upstream-proof-43754245990 has been successfully uploaded! Final size is 303537 bytes. Artifact ID is 14178031532
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:28.0589870Z Artifact download URL: https://github.com/davidpovarsky/hanlin-ai/actions/runs/43754245990/artifacts/14178031532
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:28.0779720Z Post job cleanup.
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:28.3135450Z [command]/opt/homebrew/bin/git version
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:28.3795430Z git version 2.56.0
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:28.4255610Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/26761e7e-c46d-4682-bfd1-ccf2a4712731/.gitconfig'
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:28.4304100Z Temporarily overriding HOME='/Users/runner/work/_temp/26761e7e-c46d-4682-bfd1-ccf2a4712731' before making global git config changes
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:28.4308180Z Adding repository directory to the temporary git global config as a safe directory
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:28.4309490Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/hanlin-ai/hanlin-ai
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:28.4312930Z Removing SSH command configuration
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:28.4313690Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:28.4315480Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:28.5905100Z Removing HTTP extra header
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:28.5905830Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:28.6036310Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:28.7795760Z Removing includeIf entries pointing to credentials config files
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:28.7897130Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:28.8203610Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+upstream-validation / Hanlin upstream acceptance	UNKNOWN STEP	2026-11-15T19:48:28.9596410Z Cleaning up orphan processes

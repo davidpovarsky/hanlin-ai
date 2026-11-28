@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "at": "2026-11-28T06:02:06.173072+00:00",
+  "decision": "APPROVED_SOURCE_ONLY",
+  "base": "5f827bac46543271991668a089830650893cd72d",
+  "currentRoot": "1a8d46ecc52950e0fa6ee9c17a1725e19946afa3",
+  "packetManifestSHA256": "4f9d7ce316a90535200cf36acc7e285de643508d7300ab58b9b706c3d4299fc3",
+  "sixMembersVerified": true,
+  "sourcePatchSHA256": "4c131edd07dbdf079b1f4119eee8835dffba29f891bd2d2857a60fc17ae197cd",
+  "candidateSHA256": "5e5d2bb1db9ebd78383e4128c2194ca4a2402d9c1745c4f710343736c11b6adb",
+  "projectedCombinedUISHA256": "b1c993f84b8e9ebff3890be47797f60531f3c80a67b938e5ee5a17369fc837bd",
+  "whole5fUIByteInverse": true,
+  "wholeCurrent38MethodUIByteInverse": true,
+  "widgetInsertionByteExact": true,
+  "reusedBlockOnlyDifference": "Original concurrency-specific final diagnostic retained",
+  "originalCreationWaitSeconds": 12,
+  "observedContinueTapUpperBound": 1,
+  "allSubsequentNativeActionAssertionsUnchanged": true,
+  "affectedCallers": [
+    "observeShortcutConcurrency",
+    "observeLongRunningShortcut"
+  ],
+  "causalBoundary": "Actual own-PID Shortcuts onboarding/New Shortcut evidence already reviewed for the same system UI; historical concurrency2 failures stopped at catalog readiness. LR own terminal evidence remains separately pending.",
+  "nativeTestsRun": 0,
+  "publicationOrPOST": false
+}

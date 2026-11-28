@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "recordedAtUTC": "2026-11-27T18:11:15.812794+00:00",
+  "base": "fe0001ac868339d0825d1cc3d07f8383341d163d",
+  "sourceFiles": [
+    {
+      "path": "Scripts/SDK/update_project.py",
+      "beforeSHA256": "ec476b5266ebaf28161796010c948dbc92122af16caa38e0c1bc7bf777e103f5",
+      "afterSHA256": "12c2fbd6d91788680404656b639e1475596eee7254dac7551431306fb46ba378"
+    },
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "beforeSHA256": "3563bca75df76ae2862be5272bf5daa958eceb9ef4d6110498e410e0050fa15e",
+      "afterSHA256": "5b70df51a40bb8bad27a531cba6e931c19bb68686c4ba7e28b490b133da97808"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_original_source_fixtures.py",
+      "beforeSHA256": "37b0b1a08a06e71f535cfd6996fc3896aa81d2ae59c1962cde014f769f177dd2",
+      "afterSHA256": "1b5a0f3673a191bc28fcab14a1de3b7064c27117fdb569897ae8fbe1b083d934"
+    }
+  ],
+  "patchSHA256": "04c4cd9d7bb25c5a5b949fa6d3f6f0facff04fef7ed432c762faa76824f07eed",
+  "sourceScope": "Canonical test-product output declarations only; unchanged producer, original23 copied inputs and fixture contents, test-only bundle identity, ownership, always-run setting and sandbox settings.",
+  "declaredOutputs": {
+    "total": 40,
+    "directoriesIncludingOwnedBundle": 16,
+    "copiedOriginalFiles": 23,
+    "manifestFiles": 1,
+    "paths": [
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Downstream",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Downstream/ChatPresentation",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Services",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Services/ChatServices",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Views",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Views/Components",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/docs",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/docs/hanlin-dock-v33-source-parity",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/docs/hanlin-platform",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/docs/hanlin-platform/personal-runtime-completion",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Downstream/ChatPresentation/ChatMessagePreview.swift",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Downstream/ChatPresentation/ChatMessagePreviewMetrics.swift",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Services/ChatServices/APIManager.swift",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Views/Components/ChatViewComponents.swift",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Views/Components/ChatandFile.swift",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinFileContentView.swift",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinImageViewer.swift",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActionBar.swift",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActions.swift",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageBubble.swift",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageDocumentAttachments.swift",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageImageAttachments.swift",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageMarkdownView.swift",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessagePreview.swift",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessagePreviewMetrics.swift",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageSelectionView.swift",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinVisualEffectBlur.swift",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinWritingTool.swift",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2.json",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/docs/hanlin-dock-v33-source-parity/SOURCE_REFERENCE_AND_SHA.md",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/capability-invariants.json",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/docs/hanlin-platform/personal-runtime-completion/tool-inventory.json",
+      "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/manifest.json"
+    ],
+    "noOutputOutsideOwnedBundle": true
+  },
+  "preservation": {
+    "generatorWholeFileRecoveredByRemovingNewHelperImportAndRestoringSingleOutputExpression": true,
+    "projectWholeTextRecoveredByRestoringOnlyOutputPaths": true,
+    "parsedProjectGraphRecoveredByRestoringOnlyOutputPaths": true,
+    "testWholeTextRecoveredByRemovingOneNewMethodAndRestoringOneMetadataExpectation": true,
+    "originalTestMethods": 9,
+    "originalMethodsASTIdentical": 8,
+    "necessarilyChangedMetadataExpectation": "test_canonical_phase_belongs_only_to_the_original_unit_test_product now independently checks original literal bundle root at outputPaths[0]; new real filesystem test checks complete closure.",
+    "newMethods": [
+      "test_sandbox_outputs_cover_the_actual_copied_tree_with_sandboxing_enabled"
+    ],
+    "nativeProductTestBodiesAssertionsSelectorsAndDeadlinesChanged": 0
+  },
+  "actualPortableEvidence": {
+    "originalCommand": "python3 -m unittest discover -s Scripts/CI/Tests -p test_original_source_fixtures.py -v",
+    "finalMethods": 10,
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0,
+    "receiptSHA256": "1bbf5fca28cc1a728d53297623c2f47369dbaf398bef689da438ae225ec1d984",
+    "priorR1Retained": true,
+    "removedR1TautologicalSetLoopsAreNotNegativeAcceptanceEvidence": true
+  },
+  "sdkImpact": {
+    "manifestSHA256": "e343105966824d478319096d673c9801b39dca4d753624252903c970ad6ba61d",
+    "inputSHA256": "7af6ecb6a4041d98d37bd71cf65fa9520ec93978e09ea8f7c9cfe4f1e0cad986",
+    "inputCount": 396,
+    "directPathIntersection": [],
+    "caveat": "Generated reachability project-reference metadata must be truthfully refreshed/qualified by the original auditor after the PBX change; zero direct intersection does not claim a new producer/native execution."
+  },
+  "nativeStatus": "NOT_RUN_ON_CORRECTED_DECLARATIONS",
+  "actualFailureBasis": {
+    "packet": "current-f57-six-native-routes/46033781797/sandbox-diagnostic.json",
+    "sha256": "24cb34dbe99c4fb6fa6e6a573a2a5935a91612e9d59cd637a4766d5ab21997f5",
+    "secondIndependentRun": 46033434171
+  },
+  "primaryDocumentation": [
+    "https://developer.apple.com/documentation/xcode/running-custom-scripts-during-a-build",
+    "https://developer.apple.com/documentation/xcode/build-settings-reference"
+  ],
+  "sourceCommit": "fd445cdb49ea23bf0a9e519bf8102f41842b262f",
+  "privateFullValidationSHA256": "5979936eda2b861f228bce7277b5fbe51e7767b03952fb5a78aa810b3b7cb895",
+  "generatedReferenceImpact": {
+    "acceptedReachabilityField": "sourceRefs.projectTargets",
+    "acceptedProjectReference": {
+      "file": "AI_HLY.xcodeproj/project.pbxproj",
+      "line": 3061,
+      "anchor": "/* Begin PBXNativeTarget section */",
+      "sha256": "3563bca75df76ae2862be5272bf5daa958eceb9ef4d6110498e410e0050fa15e"
+    },
+    "correctedProjectSHA256": "5b70df51a40bb8bad27a531cba6e931c19bb68686c4ba7e28b490b133da97808",
+    "sourceInventoryJSONDirectPBXPathReferenceCount": 0,
+    "qualification": "The actual accepted reachability JSON is itself an SDK input. Refresh its original auditor metadata against the integrated PBX before calling a new final SDK fingerprint current. No copied fixture, runtime source or API contract is changed."
+  },
+  "independentFinalReviewSHA256": "ac4bf42f1716e8906e73452e8351669b7427bd30470601270b707ab988d0d0de"
+}

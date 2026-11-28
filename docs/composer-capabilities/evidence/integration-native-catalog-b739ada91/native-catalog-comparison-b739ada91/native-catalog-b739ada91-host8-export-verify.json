@@ -1,0 +1,44 @@
+{
+  "sourceCommit": "b739ada91aca115093e3511f9df58c15edcb5923",
+  "outputPath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/native-catalog-b739ada91-host8",
+  "steps": [
+    {
+      "stage": "export",
+      "sourceCommit": "b739ada91aca115093e3511f9df58c15edcb5923",
+      "startedAtUTC": "2026-11-25T02:39:49.535571+00:00",
+      "finishedAtUTC": "2026-11-25T02:44:16.406083+00:00",
+      "exitCode": 0,
+      "durationSeconds": 266.869,
+      "command": [
+        "python3",
+        "Scripts/SDK/native_artifacts.py",
+        "export",
+        "--root",
+        "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124",
+        "--prepared-root",
+        "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124",
+        "--output",
+        "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/native-catalog-b739ada91-host8"
+      ],
+      "logSHA256": "ccd1370b757e19b9f2ca2e4a0e2b03c9f62905494d060fb214cb381b77568ee9"
+    },
+    {
+      "stage": "verify",
+      "sourceCommit": "b739ada91aca115093e3511f9df58c15edcb5923",
+      "startedAtUTC": "2026-11-25T02:44:16.407660+00:00",
+      "finishedAtUTC": "2026-11-25T02:44:25.676865+00:00",
+      "exitCode": 0,
+      "durationSeconds": 9.269,
+      "command": [
+        "python3",
+        "Scripts/SDK/native_artifacts.py",
+        "verify",
+        "--catalog",
+        "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/native-catalog-b739ada91-host8/native-artifacts.json",
+        "--assets",
+        "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/native-catalog-b739ada91-host8"
+      ],
+      "logSHA256": "4c9d4a5204d1cbac0f74163fc660f12c97db3b8c023041f4855974835bff7a86"
+    }
+  ]
+}

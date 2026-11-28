@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "sourceCommit": "7fc9776f8996cd8b3b8838ceaf3fd8f11fddcf29",
+  "base": "04e33c45acedd3f372f836b06f17b805bc91293d",
+  "scope": "Public technical proof only; original OS/CLI/migration acceptance remains pending.",
+  "frozenCandidateManifestSHA256": "c04f2977d91963b3209fa13b0d001261788272d52d923adf90b82897c3157a4f",
+  "payloads": [
+    {
+      "path": "README.md",
+      "bytes": 5500,
+      "sha256": "b6aae2abff9dc938c607cd5dbb0b01b7a997dbc7a7233c4f09f2bd0f1f1198e8"
+    },
+    {
+      "path": "independent-root-review.json",
+      "bytes": 3237,
+      "sha256": "006273ddc5e19a2b6c71b76a354063aeb31ce09695a013f31fe2994c2d1d3b5e"
+    },
+    {
+      "path": "independent-w1-ui-fixture-review.json",
+      "bytes": 9621,
+      "sha256": "e6fc8f3fb66016044064caae8fe069d29c691a2310445da45f28813587043b29"
+    },
+    {
+      "path": "migration-proposal.json",
+      "bytes": 4056,
+      "sha256": "ba74e7b4e38002354f56bf78f42a814b2807a8359c924859ee1aac6cf6330c13"
+    },
+    {
+      "path": "original-planner-input-admission.json",
+      "bytes": 1949,
+      "sha256": "ca6df554fb6fb832fdac01744f898760160bb864b7768568ae1b98ab42e53a11"
+    },
+    {
+      "path": "portable/receipt.json",
+      "bytes": 3839,
+      "sha256": "027789afb1d93a84c8c8891cfbf524759f972770c353a9da6ee9deac39454714"
+    },
+    {
+      "path": "portable/stderr.log.gz",
+      "bytes": 1177,
+      "sha256": "ebfd2eb05c224b8602c2cfc3c3e2dfd84e23af2fa00ffa09b6f25a2b6329d124"
+    },
+    {
+      "path": "portable/stdout.log.gz",
+      "bytes": 20,
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "qualification.json",
+      "bytes": 5557,
+      "sha256": "25600ca440db51f30c820ea86b1eb9b802364bade79e4cd79a04acadc1455563"
+    },
+    {
+      "path": "source-impact.json",
+      "bytes": 2854,
+      "sha256": "6d8f00a708b053ba35df594e712a014bdf9b7f2ceeedca4f5a769f5db6b109a6"
+    },
+    {
+      "path": "source-seal.json",
+      "bytes": 4450,
+      "sha256": "db5745cae58bd8d9ff3cd060c8ad1100cc073d6e6598612714574134b961d2a0"
+    },
+    {
+      "path": "source-validation.json",
+      "bytes": 6660,
+      "sha256": "7f7bee837aaedf57d09da5615bf02a40df8e4b7371bbc1284a20546e40cd0b62"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 14475,
+      "sha256": "9cede4dde9db3e4bf9ed61fa14f8fe3cf09a2ac31b08ae06162fe9bd8ccd36af"
+    },
+    {
+      "path": "ui-composition.json",
+      "bytes": 995,
+      "sha256": "fa0ef03bd89cf983dc06b5826bfa69a66080f7bd5755cbb95f62c6d7604851a5"
+    }
+  ],
+  "payloadCount": 14,
+  "payloadBytes": 64390,
+  "rawLogBindings": {
+    "stdout.log": {
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gzipSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    "stderr.log": {
+      "rawBytes": 6716,
+      "rawSHA256": "0b8067c55f68a00063492a6b4c7663d301e7435e470d651269b47b57ad3c9628",
+      "gzipSHA256": "ebfd2eb05c224b8602c2cfc3c3e2dfd84e23af2fa00ffa09b6f25a2b6329d124"
+    }
+  }
+}

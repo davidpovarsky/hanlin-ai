@@ -1,0 +1,68 @@
+{
+  "atUTC": "2026-11-27T09:05:53.840615+00:00",
+  "source": "33d949fa8d91d238ba93a9ef09373c5eafe58b84",
+  "manifestSHA256": "49477fffe59634c3d2bbdd37aabcbdc1e724b98b56174c88615305bab12c6adf",
+  "rawMembersVerified": 157,
+  "rawBytes": 1031326,
+  "targetSummaries": [
+    {
+      "count": 2,
+      "state": "passed"
+    },
+    {
+      "count": 32,
+      "state": "passed"
+    },
+    {
+      "count": 20,
+      "state": "passed"
+    },
+    {
+      "count": 52,
+      "state": "passed"
+    },
+    {
+      "count": 10,
+      "state": "passed"
+    },
+    {
+      "count": 5,
+      "state": "passed"
+    },
+    {
+      "count": 114,
+      "state": "failed"
+    },
+    {
+      "count": 29,
+      "state": "passed"
+    },
+    {
+      "count": 6,
+      "state": "passed"
+    },
+    {
+      "count": 48,
+      "state": "passed"
+    },
+    {
+      "count": 76,
+      "state": "passed"
+    },
+    {
+      "count": 25,
+      "state": "passed"
+    },
+    {
+      "count": 182,
+      "state": "passed"
+    }
+  ],
+  "originalFailedMethods": [
+    "\u2718 Test originalScriptWidgetHTTPUsesBoundedRealTransport() failed after 7.345 seconds with 1 issue."
+  ],
+  "originalFileManagerFullPass": [
+    "\u2714 Test \"Imports FileManager selections and previews the package copy through system UI\" passed after 0.016 seconds."
+  ],
+  "scope": "Original full601 FAILED:600pass1HTTPtimeout; focused FileManagerPASS and fullPASS. HTTPserverwrite completion is not proof of JSsettlement or a provedGCcause. All original raw prior failures/reconciliation correction retained."
+}

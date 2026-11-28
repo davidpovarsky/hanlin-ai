@@ -1,0 +1,69 @@
+FFEEEE
+======================================================================
+ERROR: test_real_widget_consumers_preserve_original_expo_cpp_import_contract (Scripts.SDK.tests.test_widget_cxx_imports.WidgetCxxImportTests.test_real_widget_consumers_preserve_original_expo_cpp_import_contract) (host='HanlinScriptingWidgets', config='Debug')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/SDK/tests/test_widget_cxx_imports.py", line 74, in test_real_widget_consumers_preserve_original_expo_cpp_import_contract
+    self.assertEqual(settings["SWIFT_OBJC_INTEROP_MODE"], "objcxx")
+                     ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'SWIFT_OBJC_INTEROP_MODE'
+
+======================================================================
+ERROR: test_real_widget_consumers_preserve_original_expo_cpp_import_contract (Scripts.SDK.tests.test_widget_cxx_imports.WidgetCxxImportTests.test_real_widget_consumers_preserve_original_expo_cpp_import_contract) (host='HanlinScriptingWidgets', config='Release')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/SDK/tests/test_widget_cxx_imports.py", line 74, in test_real_widget_consumers_preserve_original_expo_cpp_import_contract
+    self.assertEqual(settings["SWIFT_OBJC_INTEROP_MODE"], "objcxx")
+                     ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'SWIFT_OBJC_INTEROP_MODE'
+
+======================================================================
+ERROR: test_real_widget_consumers_preserve_original_expo_cpp_import_contract (Scripts.SDK.tests.test_widget_cxx_imports.WidgetCxxImportTests.test_real_widget_consumers_preserve_original_expo_cpp_import_contract) (host='HanlinMiniAppsWidgets', config='Debug')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/SDK/tests/test_widget_cxx_imports.py", line 74, in test_real_widget_consumers_preserve_original_expo_cpp_import_contract
+    self.assertEqual(settings["SWIFT_OBJC_INTEROP_MODE"], "objcxx")
+                     ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'SWIFT_OBJC_INTEROP_MODE'
+
+======================================================================
+ERROR: test_real_widget_consumers_preserve_original_expo_cpp_import_contract (Scripts.SDK.tests.test_widget_cxx_imports.WidgetCxxImportTests.test_real_widget_consumers_preserve_original_expo_cpp_import_contract) (host='HanlinMiniAppsWidgets', config='Release')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/SDK/tests/test_widget_cxx_imports.py", line 74, in test_real_widget_consumers_preserve_original_expo_cpp_import_contract
+    self.assertEqual(settings["SWIFT_OBJC_INTEROP_MODE"], "objcxx")
+                     ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'SWIFT_OBJC_INTEROP_MODE'
+
+======================================================================
+FAIL: test_real_widget_consumers_preserve_original_expo_cpp_import_contract (Scripts.SDK.tests.test_widget_cxx_imports.WidgetCxxImportTests.test_real_widget_consumers_preserve_original_expo_cpp_import_contract) (target='HanlinScriptingWidgets')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/SDK/tests/test_widget_cxx_imports.py", line 58, in test_real_widget_consumers_preserve_original_expo_cpp_import_contract
+    self.assertEqual(swift_import_contract(source), expected)
+AssertionError: Tuples differ: ([], []) != (['Cxx'], ['-Xcc', '-std=gnu++20', '-Xcc', [2432 chars]rs'])
+
+First differing element 0:
+[]
+['Cxx']
+
+Diff is 2709 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_real_widget_consumers_preserve_original_expo_cpp_import_contract (Scripts.SDK.tests.test_widget_cxx_imports.WidgetCxxImportTests.test_real_widget_consumers_preserve_original_expo_cpp_import_contract) (target='HanlinWidgetUI')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/SDK/tests/test_widget_cxx_imports.py", line 58, in test_real_widget_consumers_preserve_original_expo_cpp_import_contract
+    self.assertEqual(swift_import_contract(source), expected)
+AssertionError: Tuples differ: ([], []) != (['Cxx'], ['-Xcc', '-std=gnu++20', '-Xcc', [2432 chars]rs'])
+
+First differing element 0:
+[]
+['Cxx']
+
+Diff is 2709 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 1 test in 3.921s
+
+FAILED (failures=2, errors=4)

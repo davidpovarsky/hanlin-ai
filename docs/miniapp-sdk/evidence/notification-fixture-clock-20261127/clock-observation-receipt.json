@@ -1,0 +1,185 @@
+{
+  "recordedAtUTC": "2026-11-27T22:00:04.846739+00:00",
+  "source": "5870896b0aa2bea7a58aeab9bb2d9416700e152a",
+  "exitCode": 0,
+  "codeSHA256": "86f9c90555325ee620c4ee7758d7d753031cad8eddfa93a17b07288dbf8312e8",
+  "stdoutSHA256": "e3de91e7e964ecbabf139404deabbbc399d758cb9cdd815d2f9b6fa972f291c2",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "samples": {
+    "kind": "BOUNDED_TEMP_FILE_CLOCK_OBSERVATION_NOT_TEST_SUITE",
+    "atUTC": "2026-11-27T22:00:04.836442+00:00",
+    "uid": 1002,
+    "temporaryParent": "/tmp",
+    "device": 2049,
+    "writer": "Original fixture mkdir plus json.dumps(sort_keys=True, indent=2) newline write_text; immediate original wallclock freshness predicate",
+    "samples": [
+      {
+        "sample": 0,
+        "startedAfter": 1795816804.8310945,
+        "mtime": 1795816804.831324,
+        "mtimeNS": 1795816804831324056,
+        "guardNow": 1795816804.8313448,
+        "mtimeMinusStartSeconds": 0.0002295970916748047,
+        "mtimeMinusNowSeconds": -2.0742416381835938e-05,
+        "originalFreshnessPredicate": true
+      },
+      {
+        "sample": 1,
+        "startedAfter": 1795816804.8313851,
+        "mtime": 1795816804.8314466,
+        "mtimeNS": 1795816804831446657,
+        "guardNow": 1795816804.8316038,
+        "mtimeMinusStartSeconds": 6.151199340820312e-05,
+        "mtimeMinusNowSeconds": -0.0001571178436279297,
+        "originalFreshnessPredicate": true
+      },
+      {
+        "sample": 2,
+        "startedAfter": 1795816804.8316426,
+        "mtime": 1795816804.8318136,
+        "mtimeNS": 1795816804831813579,
+        "guardNow": 1795816804.8318276,
+        "mtimeMinusStartSeconds": 0.0001709461212158203,
+        "mtimeMinusNowSeconds": -1.4066696166992188e-05,
+        "originalFreshnessPredicate": true
+      },
+      {
+        "sample": 3,
+        "startedAfter": 1795816804.8318594,
+        "mtime": 1795816804.8320107,
+        "mtimeNS": 1795816804832010860,
+        "guardNow": 1795816804.8320234,
+        "mtimeMinusStartSeconds": 0.0001513957977294922,
+        "mtimeMinusNowSeconds": -1.2636184692382812e-05,
+        "originalFreshnessPredicate": true
+      },
+      {
+        "sample": 4,
+        "startedAfter": 1795816804.8320525,
+        "mtime": 1795816804.8322272,
+        "mtimeNS": 1795816804832227261,
+        "guardNow": 1795816804.832242,
+        "mtimeMinusStartSeconds": 0.0001747608184814453,
+        "mtimeMinusNowSeconds": -1.4781951904296875e-05,
+        "originalFreshnessPredicate": true
+      },
+      {
+        "sample": 5,
+        "startedAfter": 1795816804.8322756,
+        "mtime": 1795816804.83243,
+        "mtimeNS": 1795816804832429862,
+        "guardNow": 1795816804.8324437,
+        "mtimeMinusStartSeconds": 0.00015425682067871094,
+        "mtimeMinusNowSeconds": -1.3828277587890625e-05,
+        "originalFreshnessPredicate": true
+      },
+      {
+        "sample": 6,
+        "startedAfter": 1795816804.832473,
+        "mtime": 1795816804.8326967,
+        "mtimeNS": 1795816804832696624,
+        "guardNow": 1795816804.8327122,
+        "mtimeMinusStartSeconds": 0.00022363662719726562,
+        "mtimeMinusNowSeconds": -1.5497207641601562e-05,
+        "originalFreshnessPredicate": true
+      },
+      {
+        "sample": 7,
+        "startedAfter": 1795816804.8327465,
+        "mtime": 1795816804.832907,
+        "mtimeNS": 1795816804832907065,
+        "guardNow": 1795816804.8329206,
+        "mtimeMinusStartSeconds": 0.00016045570373535156,
+        "mtimeMinusNowSeconds": -1.3589859008789062e-05,
+        "originalFreshnessPredicate": true
+      },
+      {
+        "sample": 8,
+        "startedAfter": 1795816804.8329513,
+        "mtime": 1795816804.8330965,
+        "mtimeNS": 1795816804833096386,
+        "guardNow": 1795816804.8331087,
+        "mtimeMinusStartSeconds": 0.00014519691467285156,
+        "mtimeMinusNowSeconds": -1.2159347534179688e-05,
+        "originalFreshnessPredicate": true
+      },
+      {
+        "sample": 9,
+        "startedAfter": 1795816804.8331368,
+        "mtime": 1795816804.8332713,
+        "mtimeNS": 1795816804833271347,
+        "guardNow": 1795816804.8332837,
+        "mtimeMinusStartSeconds": 0.00013446807861328125,
+        "mtimeMinusNowSeconds": -1.239776611328125e-05,
+        "originalFreshnessPredicate": true
+      },
+      {
+        "sample": 10,
+        "startedAfter": 1795816804.8333101,
+        "mtime": 1795816804.8334515,
+        "mtimeNS": 1795816804833451468,
+        "guardNow": 1795816804.833464,
+        "mtimeMinusStartSeconds": 0.00014138221740722656,
+        "mtimeMinusNowSeconds": -1.239776611328125e-05,
+        "originalFreshnessPredicate": true
+      },
+      {
+        "sample": 11,
+        "startedAfter": 1795816804.833492,
+        "mtime": 1795816804.8336878,
+        "mtimeNS": 1795816804833687710,
+        "guardNow": 1795816804.8337023,
+        "mtimeMinusStartSeconds": 0.0001957416534423828,
+        "mtimeMinusNowSeconds": -1.4543533325195312e-05,
+        "originalFreshnessPredicate": true
+      },
+      {
+        "sample": 12,
+        "startedAfter": 1795816804.8337417,
+        "mtime": 1795816804.834129,
+        "mtimeNS": 1795816804834129112,
+        "guardNow": 1795816804.834146,
+        "mtimeMinusStartSeconds": 0.00038743019104003906,
+        "mtimeMinusNowSeconds": -1.6927719116210938e-05,
+        "originalFreshnessPredicate": true
+      },
+      {
+        "sample": 13,
+        "startedAfter": 1795816804.8341837,
+        "mtime": 1795816804.8343408,
+        "mtimeNS": 1795816804834340753,
+        "guardNow": 1795816804.8343532,
+        "mtimeMinusStartSeconds": 0.0001571178436279297,
+        "mtimeMinusNowSeconds": -1.239776611328125e-05,
+        "originalFreshnessPredicate": true
+      },
+      {
+        "sample": 14,
+        "startedAfter": 1795816804.8343816,
+        "mtime": 1795816804.8345256,
+        "mtimeNS": 1795816804834525474,
+        "guardNow": 1795816804.8345375,
+        "mtimeMinusStartSeconds": 0.00014400482177734375,
+        "mtimeMinusNowSeconds": -1.1920928955078125e-05,
+        "originalFreshnessPredicate": true
+      },
+      {
+        "sample": 15,
+        "startedAfter": 1795816804.83461,
+        "mtime": 1795816804.8347702,
+        "mtimeNS": 1795816804834770276,
+        "guardNow": 1795816804.8347847,
+        "mtimeMinusStartSeconds": 0.00016021728515625,
+        "mtimeMinusNowSeconds": -1.4543533325195312e-05,
+        "originalFreshnessPredicate": true
+      }
+    ],
+    "staleCount": 0,
+    "futureCount": 0,
+    "sampleCount": 16,
+    "sourceEdits": 0,
+    "nativeInvocations": 0
+  },
+  "fixtureFileSHA256": "d4837d2817ccbc67b1d4311c82993f3fdf4317709e52c7f3e6aafd5e8d86968d",
+  "runnerSHA256": "ad292cae96fe84b8c7672c21b83d790b97b12d3f73ec344466993e595db8f7b3"
+}

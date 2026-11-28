@@ -16,6 +16,7 @@ enum SearchEngine: String {
     case LANGSEARCH
     case BRAVE
     case PERPLEXITY
+    case AUTOMATIC_KEYLESS
 }
 
 /// 搜索结果解析结构体
@@ -45,6 +46,8 @@ func searchTool(query: String, engine: SearchEngine, apiKey: String?, requestURL
         return try await searchBrave(query: query, apiKey: apiKey, requestURL: requestURL, searchCount: searchCount)
     case .PERPLEXITY:
         return try await searchPerplexity(query: query, apiKey: apiKey, requestURL: requestURL, searchCount: searchCount)
+    case .AUTOMATIC_KEYLESS:
+        return try await AutomaticWebSearchCoordinator.shared.search(query: query, count: searchCount)
     }
 }
 
@@ -652,6 +655,10 @@ func searchBrave(query: String, apiKey: String?, requestURL: String, searchCount
 
 // MARK: 测试API有效性
 func testSearchAPI(apiKey: String, requestURL: String, engine: SearchEngine) async -> Bool {
+    if engine == .AUTOMATIC_KEYLESS {
+        let diagnostic = await AutomaticWebSearchCoordinator.shared.runDiagnosticTest()
+        return diagnostic.success
+    }
     // 1. 校验 API Key 和 URL 是否有效
     guard !apiKey.isEmpty,
           !requestURL.isEmpty,
@@ -693,6 +700,9 @@ func testSearchAPI(apiKey: String, requestURL: String, engine: SearchEngine) asy
             let (_, engineName) = try await searchPerplexity(query: testQuery, apiKey: apiKey, requestURL: requestURL, searchCount: 5)
             print("\(engineName) 搜索测试通过")
             return true
+        case .AUTOMATIC_KEYLESS:
+            let diagnostic = await AutomaticWebSearchCoordinator.shared.runDiagnosticTest()
+            return diagnostic.success
         }
     } catch {
         print("搜索 API 测试失败: \(error)")

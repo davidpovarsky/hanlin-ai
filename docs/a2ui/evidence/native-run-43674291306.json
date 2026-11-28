@@ -1,0 +1,183 @@
+{
+  "run_id": 43674291306,
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/43674291306",
+  "tested_source_sha": "9611ab6e79d8f4177d44b7282b91dbfb9de4b744",
+  "workflow_sha": "b34ea9d90104a4787665aa2c3ae1869edcf76ecf",
+  "upstream_revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079",
+  "build_result": "FAILED before tests",
+  "xcodebuild_exit_code": 65,
+  "actual_test_case_nodes": 0,
+  "expected_cases": 34,
+  "case_result": "All34 NOT_RUN, not3 failed tests",
+  "cause": {
+    "file": "AI_HLYTests/A2UITests.swift",
+    "line": 507,
+    "message": "recursive expansion of macro 'require(_:_:sourceLocation:)'",
+    "expression": "Outer #require(store.register(... sink: try #require(sink)))"
+  },
+  "artifact": {
+    "id": 14146360033,
+    "name": "a2ui-exact-pin-43674291306",
+    "size_in_bytes": 187011,
+    "advertised_digest": "sha256:a4e95fe23467286caba8769dad1bd308c9e36ca9da9ead6f06eac46fc9d063f8",
+    "digest_provenance": "Observed GitHub API digest; extracted files independently read, ZIP not independently downloaded/rehashed by this owner"
+  },
+  "independent_owner_observations": [
+    "GitHub run completed/failure metadata",
+    "Extracted process status65 and tested source/workflow identities",
+    "Raw tests.json has0 actual Test Case nodes",
+    "xcodebuild.log shows recursive #require expansion at line507"
+  ],
+  "retained_raw_sha256": {
+    "tests.json": "5206c7f4b3bca2f7166dc686d096d7f3f93eea91561ca3e8e31c438e4ed8db8d",
+    "process-status.json": "64d39425d7bf10e51d0191ad828541c333e5458d3163693be98b05bea3c9ae0c",
+    "tested-source-commit.txt": "bdcc00f35c3f60d50c089391c4caf64e1f45d245cc4d8202a54b5632bb3b7d7c",
+    "workflow-commit.txt": "112fc0cafff359be25d9cee8e9db2382abecfe60515f05d5631246649cc8c330",
+    "compile-diagnostic.txt": "8a63a19dca56b94d87c469bb9a013250a95141874a06b0c7a766445d645bf4a7"
+  },
+  "extracted_full_xcodebuild_log_sha256": "e3d273edeb075dbb4065923688c4b7a1f00656541de8fcbe87229fa24ef0b27d",
+  "cases": [
+    {
+      "name": "acceptsOfficialV1FixtureFrames",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "rejectsMalformedAndAmbiguousFrames",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "rejectsOtherProtocolVersions",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "preservesUnicodeSurfaceIdentity",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "boundsUTF8MessageAndComponentBatch",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "rejectsRPCAndUnnegotiatedCatalogs",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "rejectedEnvelopesNeverExportSurfaceCorrelation",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "componentValidationRemainsWithSDK",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "transientOwnerLookupKeepsWireIDsIndependent",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "transientReceiveRejectsWrongIdentityAndSequence",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "sealedResultRetainsModelsAndRevokesActions",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "sealingRunDoesNotRevokeOtherRun",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "replacementRevokesOldGenerationBeforeNewDelivery",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "endingResultCancelsOwnedReceiveTask",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "presentationCopiesDoNotOwnDiscard",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "eventSinkIsWeakAndCannotKeepAuthorityAlive",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "deletedSurfaceDropsQueuedOwnedEvents",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "parsesAndRendersTextCardInputButton",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "nativeInputBindingWritesAndReadsOfficialModel",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "stableIDsAndNodeIdentityAcrossUpdates",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "malformedAndUnknownContentFallsBackAndRecovers",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "officialSchemasRejectInvalidTextInputButton",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "independentSurfacesKeepModelsSeparate",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "independentOwnersCanReuseWireSurfaceID",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "deleteDisposesAndRecreateStartsWithNewIdentity",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "closeRejectsLateFramesAndDisposesSurfaces",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "buttonEventUsesCurrentBoundValue",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "hebrewFixtureRetainsBindingsInRTLComposition",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "surfaceLimitDoesNotRemoveExistingContent",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "closeRevokesQueuedAndRetainedActionCallbacks",
+      "result": "NOT_RUN"
+    },
+    {
+      "name": "closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce",
+      "result": "NOT_RUN"
+    }
+  ],
+  "toolchain": {
+    "xcode": "27.2 (27B52)",
+    "swift": "6.4.2",
+    "macos_sdk": "27.2"
+  },
+  "followup": "e1d3d242 retained this same nested expression. Current follow-up replaces it with sequential requires inside a returning helper; current35 SDK/core and6 iOS hosted cases remain NOT_RUN. f65425PASS covers f654 only."
+}

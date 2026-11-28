@@ -1,0 +1,17 @@
+{
+  "source": "9a76309c29d716d3f5676e392457937ec8846e56",
+  "runID": 46093875911,
+  "method": "actualOwnedShareDispatchWaitsForTheVMAndPreservesResultsAcrossTwoSessions()",
+  "outcome": "FAILED",
+  "observedBoundary": "Second iteration remained queued with attempt 0 and no lease/result, the current installed generation/source/artifact and an active application/native session at the original 120-second wait failure.",
+  "observationQualification": "Sequential failure-only reads; not an atomic ownership snapshot.",
+  "rawJob": {
+    "gzipBytes": 2990432,
+    "gzipSHA256": "3869ed7eea87af922fc3db2da71b0d84e327eb7724facf16ed5e5989f4c86e49",
+    "expandedBytes": 35931127,
+    "expandedSHA256": "a0c49b474235a9fd86cfc841b101ee910c8c335c8e138d08d592710fcf29fac2"
+  },
+  "immutableTechnicalPacket": "old-original90-swift-triage-9a-to-3634078f",
+  "packetManifestSHA256": "2c88d641baf133adcdec052bf9a15ec32b97cdeef841e92f636497e7d9c1d542",
+  "failureObservationSHA256": "820acf5ef694e39c579fafb7c246b24b6d235ebb43ef6eee37582337a1064eab"
+}

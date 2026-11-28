@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3581,
+      "sha256": "3df94cbc3e0ff648ad18a4bcc12268353bc34b393b1070fcc8343cdc6facc985"
+    },
+    {
+      "path": "after-consumer-typecheck.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-consumer.swift",
+      "bytes": 178,
+      "sha256": "8b43d76d077181cd9b771c609abe803847d5c33c973acc29fcb27a7d46b8e69a"
+    },
+    {
+      "path": "archive-policy/archive-import-policy.json",
+      "bytes": 1783,
+      "sha256": "c12cb9ca1e18055138a5733383c3fc92b9af31977bbf7283c540284eb776a6c7"
+    },
+    {
+      "path": "archive-policy/archive-import-policy.txt",
+      "bytes": 4698,
+      "sha256": "2d6dbd38377ce1e8c125cc6f819994d4882a2c53e04ba5066505640044151480"
+    },
+    {
+      "path": "before-consumer-typecheck.log",
+      "bytes": 437,
+      "sha256": "eaaa99d171962bf4e351b10cbaf3ae947df6decc4a472a6233f894a66de22adc"
+    },
+    {
+      "path": "before-consumer.swift",
+      "bytes": 180,
+      "sha256": "b0d82d78d063073c0c538e33d6804a836acb9463a9222291f07f4c2022e2dc38"
+    },
+    {
+      "path": "initial-direct-swiftc/module-boundary.json",
+      "bytes": 11035,
+      "sha256": "c08872ab16f18179011ce808fdd3acb794a5f392e093ad0fe54582da6f89a191"
+    },
+    {
+      "path": "initial-direct-swiftc/module-compile.log",
+      "bytes": 491,
+      "sha256": "d005f4d69418261f77a9e0fc966f603f013554ceee4b41cb6b46c7330dd1b84b"
+    },
+    {
+      "path": "initial-direct-swiftc/verify-module-boundary.py",
+      "bytes": 5754,
+      "sha256": "69034cbcd19bdeeb3c2eab11c1fc83fb034721a494a460cced042ad412d8bbef"
+    },
+    {
+      "path": "module-boundary.json",
+      "bytes": 9898,
+      "sha256": "f79feda0cb1a926d046dddb44a5dc43ed9b60304b763215a4929ee4d258035f5"
+    },
+    {
+      "path": "module-compile.log",
+      "bytes": 259,
+      "sha256": "9dd63f2aa9cad8bcdd842baff40e5bc914e7532613a16be661be81d69daeabe4"
+    },
+    {
+      "path": "native-before-compiler-error.log",
+      "bytes": 1662,
+      "sha256": "a1f6ceb05ba2055eeebb2be8cbc158968577b86fd136656c00e03f4da1b2215c"
+    },
+    {
+      "path": "probe-Package.swift",
+      "bytes": 527,
+      "sha256": "21b1b5616a3f78800b4ca4c3c77a1fdc29b13f14e30337d38608d4e94facc455"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 3752,
+      "sha256": "36aa30831966536aefe8668332e6f434a487e80cd7bc1519ef243b5efedab79a"
+    },
+    {
+      "path": "validation-plan.json",
+      "bytes": 2539,
+      "sha256": "89cb794164693ab432438d3919969085ebebd1bccc8483c63eb34995ddf6b12a"
+    },
+    {
+      "path": "verify-module-boundary.py",
+      "bytes": 7481,
+      "sha256": "54bb8d2e78165ac9671f868855362201c088c57d3b78c708556d2f77f18f5ae6"
+    }
+  ]
+}

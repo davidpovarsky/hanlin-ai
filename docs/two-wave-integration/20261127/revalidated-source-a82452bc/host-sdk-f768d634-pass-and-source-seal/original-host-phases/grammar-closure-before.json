@@ -1,0 +1,197 @@
+{
+  "sha256": "19074380392a37fc4c6c9758e8ffbb25acd345f5a55419ba46fb50cfb9879fb2",
+  "fileCount": 32,
+  "files": [
+    {
+      "path": "node_modules/.bin/pegjs",
+      "kind": "symlink",
+      "target": "../pegjs/bin/pegjs"
+    },
+    {
+      "path": "node_modules/.package-lock.json",
+      "kind": "file",
+      "bytes": 488,
+      "sha256": "52b770dfba981ef2ce0d9029385153b3d59fed0aa9e50e56eb20b8e5f7fdeaf1"
+    },
+    {
+      "path": "node_modules/pegjs/CHANGELOG.md",
+      "kind": "file",
+      "bytes": 20997,
+      "sha256": "2bf3436b72909e1810f4ce544e11e6fbbedf4eb921bfcc0eae19b09b7373a45a"
+    },
+    {
+      "path": "node_modules/pegjs/LICENSE",
+      "kind": "file",
+      "bytes": 1060,
+      "sha256": "e56890ff38a31e1adc0617f57c23056289dd27a9ff6263eaf6137dacd1253d9d"
+    },
+    {
+      "path": "node_modules/pegjs/VERSION",
+      "kind": "file",
+      "bytes": 7,
+      "sha256": "dc24feb5bd35084d8ae32a4eafbec12352707d4662401fcbcc9bbd696cde77a9"
+    },
+    {
+      "path": "node_modules/pegjs/bin/pegjs",
+      "kind": "file",
+      "bytes": 8943,
+      "sha256": "72e794a8d04239ba938ba64648e0dafebead712416200a14b88969f934fd920c"
+    },
+    {
+      "path": "node_modules/pegjs/examples/arithmetics.pegjs",
+      "kind": "file",
+      "bytes": 859,
+      "sha256": "7536c68668290405a1586f677a450d9e2079369deed7cdd868dfcdb2a85b4c2a"
+    },
+    {
+      "path": "node_modules/pegjs/examples/css.pegjs",
+      "kind": "file",
+      "bytes": 11239,
+      "sha256": "5edaa86faa48a7861e854b57b329a9b5cf2a7df340a1a3b2293c4da5bd8e5ea3"
+    },
+    {
+      "path": "node_modules/pegjs/examples/javascript.pegjs",
+      "kind": "file",
+      "bytes": 48046,
+      "sha256": "352f91ee0284708762dca05a55d7dac7eacfec73fcb96593f1f3ef345e92708a"
+    },
+    {
+      "path": "node_modules/pegjs/examples/json.pegjs",
+      "kind": "file",
+      "bytes": 2907,
+      "sha256": "b56e8f6c1dec6cf04e32cdabad2752fd679e6b6163703168f1445ae7d230d8f6"
+    },
+    {
+      "path": "node_modules/pegjs/lib/compiler/asts.js",
+      "kind": "file",
+      "bytes": 1599,
+      "sha256": "7cbaba9955ca3941d4b4dd773a7f5571c69e74c79ef6bdc8a507c441fcb71747"
+    },
+    {
+      "path": "node_modules/pegjs/lib/compiler/index.js",
+      "kind": "file",
+      "bytes": 2197,
+      "sha256": "121f6798a8d0955bd5bb567be20e74c091770ee17fa69988c67fd75b4eb85863"
+    },
+    {
+      "path": "node_modules/pegjs/lib/compiler/js.js",
+      "kind": "file",
+      "bytes": 2473,
+      "sha256": "dbe7efbfdbcc695db9af9ebc273b58ea02810fd51e4e7f9e3e46a3f9498a08bd"
+    },
+    {
+      "path": "node_modules/pegjs/lib/compiler/opcodes.js",
+      "kind": "file",
+      "bytes": 1526,
+      "sha256": "f1c335e1d0217804ed80f10d8096a908e11b910076f1d63204514c32e91c4ec1"
+    },
+    {
+      "path": "node_modules/pegjs/lib/compiler/passes/generate-bytecode.js",
+      "kind": "file",
+      "bytes": 15821,
+      "sha256": "2b7f164b048023c333124281b63bbb48098130eb27745cc64a4d9527347820cf"
+    },
+    {
+      "path": "node_modules/pegjs/lib/compiler/passes/generate-js.js",
+      "kind": "file",
+      "bytes": 43718,
+      "sha256": "743b396d5f00b15f219dc17ce926bfd52e2aad305b5e2d1a16d5cbc44b34721c"
+    },
+    {
+      "path": "node_modules/pegjs/lib/compiler/passes/remove-proxy-rules.js",
+      "kind": "file",
+      "bytes": 946,
+      "sha256": "a7d08dd83de636753b750b6239e15f8431f54dcc6bca47104d24cfe9c1fe4950"
+    },
+    {
+      "path": "node_modules/pegjs/lib/compiler/passes/report-duplicate-labels.js",
+      "kind": "file",
+      "bytes": 1548,
+      "sha256": "3e1bb51b0b2063c9cf63b08a659b3e2a694e287a8d35bef0b1d77558e6ed43f8"
+    },
+    {
+      "path": "node_modules/pegjs/lib/compiler/passes/report-duplicate-rules.js",
+      "kind": "file",
+      "bytes": 686,
+      "sha256": "0046762d6c7830bc53c2554784a1d9ae906fc05b7890b43d8113c6cf35031353"
+    },
+    {
+      "path": "node_modules/pegjs/lib/compiler/passes/report-infinite-recursion.js",
+      "kind": "file",
+      "bytes": 1420,
+      "sha256": "cd069855a7c0cc778bfda1f3654a52328dc5bfc8430449fde59f130aebd2e3cd"
+    },
+    {
+      "path": "node_modules/pegjs/lib/compiler/passes/report-infinite-repetition.js",
+      "kind": "file",
+      "bytes": 1036,
+      "sha256": "de4968b153f0686f67dc02017b6a73fe664df8aa242f7c4f36c50a86fffa73c5"
+    },
+    {
+      "path": "node_modules/pegjs/lib/compiler/passes/report-undefined-rules.js",
+      "kind": "file",
+      "bytes": 536,
+      "sha256": "b005d20a050575298555064a3d4376b4942bdbadbb9c4326ebd72d3dfbfb8633"
+    },
+    {
+      "path": "node_modules/pegjs/lib/compiler/visitor.js",
+      "kind": "file",
+      "bytes": 2065,
+      "sha256": "c1233502d9118bab1a5a8c5d4fab6dec43d509f78f67dda0fb0d1c58fa2723c3"
+    },
+    {
+      "path": "node_modules/pegjs/lib/grammar-error.js",
+      "kind": "file",
+      "bytes": 417,
+      "sha256": "2f1d7889a69c0c4ab782dcb404e5f09a2bd5284a11b78b614573114f0b13806b"
+    },
+    {
+      "path": "node_modules/pegjs/lib/parser.js",
+      "kind": "file",
+      "bytes": 165594,
+      "sha256": "9dbb34d2da6fb8d26ccc2f08e26039585b81e1fecdce857e5d93e5443e657c1a"
+    },
+    {
+      "path": "node_modules/pegjs/lib/peg.js",
+      "kind": "file",
+      "bytes": 1549,
+      "sha256": "be357d9a163f7f8bbc60ed7696847facb91091e4717cc8ad81d2347cf990e670"
+    },
+    {
+      "path": "node_modules/pegjs/lib/utils/arrays.js",
+      "kind": "file",
+      "bytes": 2099,
+      "sha256": "9f7058f27b0ee3ce30f163404aaa514ce1cef6cf0b16f45e642313febbaaa563"
+    },
+    {
+      "path": "node_modules/pegjs/lib/utils/classes.js",
+      "kind": "file",
+      "bytes": 248,
+      "sha256": "9f517c89ee49be4a56225b733d782fd0b9af18fc2019872752551761184ee953"
+    },
+    {
+      "path": "node_modules/pegjs/lib/utils/objects.js",
+      "kind": "file",
+      "bytes": 887,
+      "sha256": "24f0b13b1e10d56534fd9d801ab500385d1ad7a2258d37d1c268d76f54ce5eba"
+    },
+    {
+      "path": "node_modules/pegjs/package.json",
+      "kind": "file",
+      "bytes": 1604,
+      "sha256": "58cbf9af325acd8ffec18fe6f31acc843438da9a8ce34a6e21a5231cb7043ea4"
+    },
+    {
+      "path": "package-lock.json",
+      "kind": "file",
+      "bytes": 606,
+      "sha256": "8a76d3aba3058502335f8b3c529ed84d9417c6c3ca5c77890a49256c2a79a564"
+    },
+    {
+      "path": "package.json",
+      "kind": "file",
+      "bytes": 108,
+      "sha256": "1a43e3f26c6ca992c43cff593ee0b5391dd6a30833d20e6303e53beeb9d1ad0a"
+    }
+  ]
+}

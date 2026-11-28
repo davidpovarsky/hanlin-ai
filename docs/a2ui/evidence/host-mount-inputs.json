@@ -1,0 +1,52 @@
+{
+  "status": "SOURCE_PREPARED_NOT_NATIVE_EXECUTED",
+  "frozen_benchmark_source_sha": "9611ab6e79d8f4177d44b7282b91dbfb9de4b744",
+  "host_baseline_sha": "bd208e06183bb32494af6d4da73f37d5a735f9b3",
+  "benchmark_sdk_cases": 34,
+  "current_isolated_sdk_cases": 35,
+  "hosted_suite": "A2UIHostedResultTests",
+  "hosted_case_names": [
+    "projectionSourceRequiresExactRegisteredIdentityAndGeneration",
+    "chatBubblePreservesDisplayGateAndDoesNotInferProjectionFromPayload",
+    "actualHostInputBindsWithoutReplayAcrossBodyUpdates",
+    "sealedHostRetainsVisibleModelAndDisablesNativeInput",
+    "presentedProjectionDismissalAndHostRemovalDoNotDiscardOwner",
+    "nilAndMismatchedProjectionKeepExistingNativeFallbacks"
+  ],
+  "hosted_cases": 6,
+  "hosted_platform_gate": "HANLIN_A2UI_POC && os(iOS)",
+  "benchmark_plan_sha256": "168d04f1bc2fb8a93275ba84a805c9c6ae5bf0a455a3dd0581f462f773b2561a",
+  "current_sdk_plan_sha256": "c814c90a12e7b20044c140885e4829b3780c67e8b1c91fb101b305a9832aae1a",
+  "files": {
+    "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptToolResultView.swift": "109d671bc7bdea6c295020be1aeac29b8dcdc5146578d049d8f75b69d08a6a64",
+    "AI_HLY/Views/Components/ChatViewComponents.swift": "5ac247cefa2af11771d538d954cb1eea63f5970b644d9f1f857a21ff9af446ac",
+    "AI_HLYTests/A2UIHostedResultTests.swift": "68c04e9eb86a60604f09d268656a53ec56f1e0dc859bcbeba204592f45dca981",
+    "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultProjectionSource.swift": "8ede697eeb8524227f621e76866dfb36863b949ddc2fca84f753ba55fb3d131a",
+    "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultOwner.swift": "0bc24e163d0c7ef2d5fff6bffb57a60861552778919abe99ec9ac8c5e72c9348",
+    "AI_HLYTests/A2UITests.swift": "8575df2ad4794208917e26a81fc39e958806dec84588a52bc6488d81e500d696"
+  },
+  "local_observations": [
+    "8 portable cases executed PASS",
+    "Windows Swift frontend syntax only, iOS target: enabled and flag-off; Windows sysroot warnings, no Apple API/typecheck",
+    "7 synthetic verifier checks PASS; prior real25-case identities and synthetic benchmark34 case set rejected for current35",
+    "Original canonical/modern/legacy result body preserved byte-for-byte inside existingResult helper",
+    "3 real AsyncStream/extracted-helper regression checks PASS; strict positive helper unchanged, no SDK ended catch"
+  ],
+  "native_execution": "NOT_RUN",
+  "limitations": [
+    "No current SDK/iOS API compilation or host/test-bundle execution",
+    "UIKit presentation test does not activate host expansion controls",
+    "No production frame/event/run-continuation connection, project/lock/flag change or native job",
+    "Inline/expanded controls, RTL/accessibility and physical iPad acceptance remain open",
+    "Observer-corrected35-case native proof and6 iOS-hosted acceptance remain open;fa810 compiled but failed2 cases"
+  ],
+  "benchmark_actual_native_evidence": "native-run-43674291306.json",
+  "benchmark_actual_native_result": "Build FAILED exit65 before tests;0 actual cases; all34 NOT_RUN",
+  "local_testing_macro_typecheck": {
+    "status": "UNAVAILABLE",
+    "reason": "Active Windows Swift import Testing: no such module;0 macros expanded"
+  },
+  "latest_actual_native_evidence": "native-run-43679728130.json",
+  "latest_actual_native_result": "fa810 compiled;35 executed,33 PASS /2 FAIL ended;6 iOS hosted NOT_RUN",
+  "observer_regression_evidence": "async-observation-results.json"
+}

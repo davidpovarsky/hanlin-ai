@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "status": "FAILED",
+  "runID": "45303812645",
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45303812645",
+  "jobID": "138142602138",
+  "headSHA": "b0327d1c3195e64ad1db56351406bd88b10185fe",
+  "jobStartedAt": "2026-11-24T01:35:56Z",
+  "jobCompletedAt": "2026-11-24T01:52:32Z",
+  "actualSteps": {
+    "originalUpstreamResolution": "EXECUTED_PASS",
+    "actualMacForegroundRouteAndLedger": "EXECUTED_PASS",
+    "actualPackageLifecycle": "EXECUTED_PASS",
+    "originalExpoUIIPhoneOSBuild": "EXECUTED_PASS",
+    "originalExpoUIIPhoneSimulatorBuild": "EXECUTED_PASS",
+    "originalExpoUIInternalXCFrameworkAssembly": "EXECUTED_PASS",
+    "originalExpoModulesJSIBuildAndStaging": "EXECUTED_PASS",
+    "runtimeHostPreparation": "FAILED",
+    "shippingAppBuilds": "NOT_RUN",
+    "selectedNativeCases": "NOT_RUN"
+  },
+  "upstreamVersions": {
+    "expo": {
+      "expo": "58.0.26",
+      "@expo/ui": "58.0.29",
+      "expo-brownfield": "58.0.20",
+      "react": "19.3.0",
+      "react-native": "0.88.1",
+      "react-native-worklets": "0.13.0",
+      "expo-modules-core": "58.1.0",
+      "expo-modules-jsi": "58.0.23",
+      "expo-widgets": "58.0.29",
+      "@nativescript/react-native": "9.1.2",
+      "@react-native/codegen": "0.88.1",
+      "@react-native/metro-config": "0.88.1",
+      "babel-preset-expo": "58.0.26"
+    },
+    "nativescript": {
+      "@nativescript/core": "9.1.4",
+      "@nativescript/ios": "9.1.1",
+      "@nativescript/swift-ui": "4.0.2",
+      "@nativescript/types": "9.1.4",
+      "@nativescript/vite": "8.0.24"
+    },
+    "scriptwidget": {
+      "revision": "4da256d58247bbafb9a5cd443a285250b97b3c4b"
+    }
+  },
+  "originalExpoUISourceBuildInputSHA256": "c6fd6d9e86b946daed16bd4f666392f1e03404184f64eae1771b873c8068749b",
+  "runtimeHostTests": {
+    "executedPass": 164,
+    "failed": 1,
+    "skipped": 1,
+    "reportedTotal": 166,
+    "failedTest": "the real CLI archives and revalidates retained source, diagnostics and output identity",
+    "failure": "Cannot find module '/Scripts/MiniApps/miniapp.mjs'",
+    "cause": "The CLI test derived its repository path from a copied RUNNER_TEMP/hanlin-runtime-host test file. The original repository CLI was not at that derived root.",
+    "correction": "Read explicit HANLIN_MINIAPP_REPOSITORY_ROOT from the original preparer; retain source-relative resolution for normal repository execution. No test is skipped or replaced.",
+    "focusedRelocationCheck": {
+      "status": "EXECUTED_PASS",
+      "command": [
+        "node",
+        "--test",
+        "--test-name-pattern=the real CLI archives and revalidates retained source, diagnostics and output identity",
+        "Tests/miniapp-authoring.test.mjs"
+      ],
+      "workingDirectory": "/dev/shm/hanlin-relocated-authoring-20261124",
+      "repository": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123",
+      "exitCode": 0,
+      "seconds": 6.939,
+      "logSHA256": "201a284f0df8bdb81cfa3b9126ab75c6601da8869bc5289f2caf743a4974e4e1",
+      "sourceSHA256": "41ecaba1a11e350ec1340c5567e05aab81268ae230c5c915fe45698d48a42a7b",
+      "note": "Same original CLI and authoring implementation; test copied outside repository to reproduce actual Mac staging location. Actual Apple retest pending."
+    }
+  },
+  "rawEvidence": {
+    "artifactID": 14882420210,
+    "artifactName": "app-split-45303812645",
+    "failedLogSHA256": "429294351e4e5f76aa82309f59c155280e21628b9e3fdc249e7777b132027e65",
+    "files": {
+      "acceptance.json": "30f74b27f3a636bc46ec12ee70345455ebb630f4e07b0ec75bf8847ff09c2e3c",
+      "upstream-resolution.json": "0df9db9c5b6f5f745f393c9d29a390b6dd9b317bac94cb9dd8c362b43c45d185",
+      "upstream-inputs.patch": "d5638069af9370bc745430c1ee6aceed241b14f07978bcf4944bb030c5838d65",
+      "native-dependencies.log": "2d3c2c4a5ac1748858e354bc6afe734b71c17a48ba13b091532041c8d769d0f0",
+      "preflight.log": "a2c3b843ad3faae3ca7688e060f8257bf15cc29529534c7a134ea58b0c46da6b",
+      "ci-performance-report.json": "a021a8a507e342b6b41deb5be2be7afb22bf137febdf5817267ac5d5a3325676"
+    }
+  },
+  "remaining": "Integrated Control Widgets, import/store quota fixes and original npm installation/typing integrity need the next affected Apple gate. No shipping-app or physical-device PASS has been established by this run."
+}

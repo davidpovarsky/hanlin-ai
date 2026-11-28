@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "developer_dir": "/Applications/Xcode_27.2.app/Contents/Developer",
+  "effective_uid": 501,
+  "python_executable": "/opt/homebrew/opt/python@3.15/bin/python3.15",
+  "scope": "Read-only startup diagnostics; not simulator readiness",
+  "simctl_lookup": {
+    "command": [
+      "xcrun",
+      "--find",
+      "simctl"
+    ],
+    "timeout_seconds": 5,
+    "return_code": 0,
+    "timed_out": false,
+    "elapsed_seconds": 0.015,
+    "output_file": "simctl-tool-path.log",
+    "output_sha256": "887a054e45a5aa90839e2dd2273ff492549d196193751ec9f8b85ac36e51035a"
+  },
+  "simctl_path": "/Applications/Xcode_27.2.app/Contents/Developer/usr/bin/simctl"
+}

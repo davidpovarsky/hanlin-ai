@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "status": "SOURCE_CHECKPOINT_PENDING_COMBINED_PUBLIC_CLI_AND_NATIVE_ACCEPTANCE",
+  "baseSHA": "6d9a59bfc1bd1830a8d56e694c42b19c6bd7d468",
+  "createdUTC": "2026-11-24T09:59:19.726168+00:00",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-generated-modifier-probe-20261124",
+  "source": {
+    "path": "Fixtures/ExpoSwiftUIProbe/GeneratedModifiersProbe.tsx",
+    "bytes": 16669,
+    "sha256": "3b20939a057885bd2293fc65080bfdb28b51ecaa68adab8a26298e8fd251ea1d"
+  },
+  "sourceConformance": {
+    "compilerVersion": "6.0.3",
+    "parserDiagnostics": 0,
+    "generatedFactories": 87,
+    "effectivePublicFactories": 83,
+    "matchedProbeFactories": 83,
+    "excludedUpstreamPrecedence": [
+      "navigationBarTitleDisplayMode",
+      "preferredColorScheme",
+      "presentationCornerRadius",
+      "sectionIndexLabel"
+    ],
+    "nativeRecordPayloadAndForwardingBindings": 83,
+    "receipt": "source-conformance.json",
+    "scope": "Source/TSX parsing and exact public/native contract identities; no recreated adapter implementation or native-success stubs."
+  },
+  "originalFactory": "original-factory-provenance.json",
+  "observations": "native-observation-plan.json",
+  "publicCLI": {
+    "status": "PENDING",
+    "owner": "/root/entrypoints",
+    "scope": "One combined affected fixture validation/build using original compiler/dependency closure, original public CLI and corrected current facade graph; frozen kit remains unmodified."
+  },
+  "native": {
+    "status": "NOT_RUN",
+    "owner": "Root",
+    "scope": "Three authored UI selectors owned by entrypoints; actual executed results required."
+  },
+  "boundaries": [
+    "Original public onAppear callback acknowledges only mounted panel context",
+    "Visible/event/frame assertions are separate from source-forwarding evidence",
+    "Document/file presenter, preview, accessibility-service and OS-specific effects remain explicitly unestablished in this embedded context",
+    "No as-any or TypeScript diagnostic suppression",
+    "No generated native adapter, original library, permission/grant, quota, runtime registration or production test hook changed",
+    "No SDK assembly, CI call, native execution or duplicate semantic build performed in this lane"
+  ],
+  "artifacts": {
+    "README.md": {
+      "bytes": 4001,
+      "sha256": "dea24fcc3e50e097dea1f9988d3233795869029a26e95f2b599d75c28ff1eba4"
+    },
+    "capture-source-conformance.cjs": {
+      "bytes": 7917,
+      "sha256": "22a1bae5cf3ce04c840162c550b11a74098cce0f05398152516b83ddc8ca62e0"
+    },
+    "initial-source-conformance.command.json": {
+      "bytes": 1024,
+      "sha256": "aacc0ac0c1da8ee90f498e4c6c153cfd198e225cd4e026be243e7b790baec6be"
+    },
+    "initial-source-conformance.json": {
+      "bytes": 95561,
+      "sha256": "dfac1eed552c53ac31578d5d82631e3df123bfbb4513556baed94a0e7a95aabc"
+    },
+    "initial-source-conformance.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "native-observation-plan.json": {
+      "bytes": 6182,
+      "sha256": "1725ebacb5abb37a2ccd7b6ea226bfba1c086865ce7942f9356387c53e66b54e"
+    },
+    "original-factory-provenance.json": {
+      "bytes": 678,
+      "sha256": "957d1d2b8b9b031e6d7c3fefdb4bf7f3b4bc3c2ed0c582129489d6d2de888ecd"
+    },
+    "source-conformance.command.json": {
+      "bytes": 1043,
+      "sha256": "c0df2d2d83d30a06db97e5b167013136665f9abf2911a857eb9c5f23a2311646"
+    },
+    "source-conformance.json": {
+      "bytes": 95561,
+      "sha256": "49740e56f1d7d86283fce3a572a67c28b3d92c380f9cad0528c1c9b5531e3b17"
+    },
+    "source-conformance.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

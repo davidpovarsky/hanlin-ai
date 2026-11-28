@@ -1,0 +1,100 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project ChatMotionProof.xcodeproj -scheme ChatMotionProof -derivedDataPath /Users/m1/caches/DerivedData/hanlin-motion-dacb4ca5-20261126 -destination "platform=iOS Simulator,id=B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D" -destination-timeout 60 -resultBundlePath /Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/24bc34c6/evidence/B/Motion.xcresult -disableAutomaticPackageResolution -skipMacroValidation -parallel-testing-enabled NO -test-timeouts-enabled YES -default-test-execution-time-allowance 600 -maximum-test-execution-time-allowance 720 CODE_SIGNING_ALLOWED=NO "-only-testing:ChatMotionProofUITests/MotionUITests/testBRapidReversalPresetSwitchAndPersistence"
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  cmark-gfm: https://github.com/swiftlang/swift-cmark @ 0.9.0
+  iosMath: https://github.com/junyan72/iosMath @ ba9ab77
+  HighlightSwift: https://github.com/appstefan/highlightswift @ 99c431b
+  swift-markdown: https://github.com/swiftlang/swift-markdown.git @ 0.7.3
+  Equatable: https://github.com/ordo-one/equatable @ 1.4.1
+  SwiftUI-Shimmer: https://github.com/markiv/SwiftUI-Shimmer @ 1.5.1
+  swift-syntax: https://github.com/swiftlang/swift-syntax.git @ 603.0.2
+  HanlinSDK: /Users/m1/builds/hanlin-motion-dacb4ca5-20261126/proof/Vendor/HanlinSDK
+  SwiftStreamingMarkdown: https://github.com/davidpovarsky/hanlin-streaming-markdown @ 5cbb4b6
+
+Writing result bundle at path:
+	/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/24bc34c6/evidence/B/Motion.xcresult
+
+2026-11-26 16:07:58.704987+0100 ChatMotionProofUITests-Runner[98341:15177928] [Default] Running tests...
+2026-11-26 16:07:58.999729+0100 ChatMotionProofUITests-Runner[98341:15177928] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-26 16:08:04.939.
+Test Suite 'ChatMotionProofUITests.xctest' started at 2026-11-26 16:08:04.941.
+Test Suite 'MotionUITests' started at 2026-11-26 16:08:04.942.
+Test Case '-[ChatMotionProofUITests.MotionUITests testBRapidReversalPresetSwitchAndPersistence]' started.
+    t =     0.01s Start Test at 2026-11-26 16:08:04.948
+    t =     0.07s Set Up
+    t =     0.08s     Open ai.hanlin.motion-proof
+    t =     0.08s         Launch ai.hanlin.motion-proof
+2026-11-26 16:08:05.461 xcodebuild[98315:15177485] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-26 16:08:05.461 xcodebuild[98315:15177485] [MT] IDELaunchParametersSnapshot: no debugger version
+objc[98341]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.3CDVUO/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10a8c8310) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.3CDVUO/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x10a87c398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     4.48s             Setting up automation session
+    t =     7.95s             Wait for ai.hanlin.motion-proof to idle
+    t =    12.97s     Waiting 10.0s for "proof-thinking" Button to exist
+    t =    14.03s         Checking `Expect predicate `existsNoRetry == 1` for object "proof-thinking" Button`
+    t =    14.03s             Checking existence of `"proof-thinking" Button`
+<unknown>:0: warning: -[ChatMotionProofUITests.MotionUITests testBRapidReversalPresetSwitchAndPersistence] : Update the Info.plist: Support for all orientations will soon be required.
+    t =    15.33s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    15.33s     Find the "proof-geometry-state" StaticText
+    t =    15.35s Find the "proof-thinking" Button
+    t =    15.40s Tap "proof-thinking" Button
+    t =    15.40s     Wait for ai.hanlin.motion-proof to idle
+    t =    15.40s     Find the "proof-thinking" Button
+    t =    15.42s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    15.46s         Wait for com.apple.springboard to idle
+    t =    15.50s     Synthesize event
+    t =    15.82s     Wait for ai.hanlin.motion-proof to idle
+    t =    16.86s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    16.86s     Find the "proof-geometry-state" StaticText
+    t =    16.91s Checking existence of `"proof-summary" StaticText`
+    t =    16.93s Tap "proof-thinking" Button
+    t =    16.93s     Wait for ai.hanlin.motion-proof to idle
+    t =    16.93s     Find the "proof-thinking" Button
+    t =    16.95s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    16.97s         Wait for com.apple.springboard to idle
+    t =    16.99s     Synthesize event
+    t =    17.28s     Wait for ai.hanlin.motion-proof to idle
+    t =    18.35s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    18.35s     Find the "proof-geometry-state" StaticText
+    t =    18.37s Checking existence of `"proof-summary" StaticText`
+/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/proof/UITests/MotionUITests.swift:144: error: -[ChatMotionProofUITests.MotionUITests testBRapidReversalPresetSwitchAndPersistence] : XCTAssertFalse failed
+    t =    18.41s Tear Down
+    t =    18.41s     Setting device orientation to Portrait
+    t =    18.41s         Wait for ai.hanlin.motion-proof to idle
+    t =    18.41s         Wait for com.apple.springboard to idle
+    t =    18.41s     Terminate ai.hanlin.motion-proof:98416
+Test Case '-[ChatMotionProofUITests.MotionUITests testBRapidReversalPresetSwitchAndPersistence]' failed (19.909 seconds).
+2026-11-26 16:08:24.857526+0100 ChatMotionProofUITests-Runner[98341:15177928] [Default] Flushing outgoing messages to the IDE with timeout 600.00s
+2026-11-26 16:08:24.857804+0100 ChatMotionProofUITests-Runner[98341:15178437] [Default] Received confirmation that IDE processed remaining outgoing messages
+2026-11-26 16:08:26.083085+0100 ChatMotionProofUITests-Runner[98559:15180363] [Default] Running tests...
+2026-11-26 16:08:26.143068+0100 ChatMotionProofUITests-Runner[98559:15180363] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+    t =      nans Interface orientation changed to Portrait
+
+Restarting after unexpected exit, crash, or test timeout; summary will include totals from previous launches.
+
+Test Suite 'Selected tests' started at 2026-11-26 16:08:29.105.
+Test Suite 'ChatMotionProofUITests.xctest' started at 2026-11-26 16:08:29.106.
+Test Suite 'ChatMotionProofUITests.xctest' passed at 2026-11-26 16:08:29.106.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-11-26 16:08:29.107.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.002) seconds
+2026-11-26 16:08:46.691 xcodebuild[98315:15177485] [MT] IDETestOperationsObserverDebug: 54.224 elapsed -- Testing started completed.
+2026-11-26 16:08:46.691 xcodebuild[98315:15177485] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-26 16:08:46.691 xcodebuild[98315:15177485] [MT] IDETestOperationsObserverDebug: 54.224 sec, +54.224 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/24bc34c6/evidence/B/Motion.xcresult
+
+Failing tests:
+	MotionUITests.testBRapidReversalPresetSwitchAndPersistence()
+
+** TEST EXECUTE FAILED **
+
+Testing started

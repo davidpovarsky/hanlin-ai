@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-28T00:38:06.951818+00:00",
+  "classification": "APPROVED_SCOPED_UI_DRIVER_SOURCE_ONLY",
+  "sourceBase": "1aef1ec13b980454b5aba43f0a4787cd5301a748",
+  "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "beforeSHA256": "07dab2303533a16e0a1e0dc36f0ebfa9f8689e1ec6f5ea203347c3170bcfd7ed",
+  "candidateSHA256": "7c5e0a0c64e7bd46444cf71d01439a7738900f278805cead17e153237147f6a4",
+  "patchSHA256": "3d07fac71518a7d1e892de19edd8b8b90ec8e443029e4a98c27327cdb0362d75",
+  "verifiedMembers": 9,
+  "original37TestMethodBlocksExact": true,
+  "originalWaitAndBoundedHelpersExact": true,
+  "review": [
+    "Alert-only public delete keys consume the actually observed current value, then require empty before original exact-value assertion; no ordinary editor selection change.",
+    "Nonrunning/unknown Files candidates are skipped before query construction; no invented provider, activation or import success.",
+    "Only initially unknown orientation triggers explicit owned-simulator Home/portrait setup; public enum and original Home geometry both required within existing bounded25s and original420s outer deadline.",
+    "Original known baseline and subsequent rotation/configuration/restoration assertions remain; new evidence explicitly distinguishes bootunknown from preparedbaseline."
+  ],
+  "nativeCompilation": "NOT_RUN",
+  "nativeAcceptance": "NOT_RUN",
+  "productionChange": false
+}

@@ -1,0 +1,109 @@
+[
+  {
+    "task_id": "1220542174541940",
+    "comment_id": "1220690944186802",
+    "created_at": "2026-11-19T01:02:10.040Z",
+    "text": "[ChatGPT | DEV/QA] תיקוני Safari / WebKit / אישור כלים פורסמו — 19.11.2026\nפורסמו תיקונים ממוקדים: 22dab4a2 משמר את מחוות הקישור ב-Markdown לצד סגירת המקלדת; fb183712 מפריד זמן עלייה של WebKit (30 שניות) מתקציב ביצוע JavaScript הקיים (8 שניות), מוסיף אבחון שגיאות ובדיקת cold-start מקבילית אמיתית; b7879a6a מתקן את בדיקת האישור כך שתזהה בעלות UUID יציבה ותלחץ על הכפתור העדכני ללא שאילתות נגישות חוזרות. דדליין האישור במוצר נשמר 30 שניות, וכל קריאות הכלים והטענות המקוריות נשמרו.\nריצת המקור e564dc29d24239309b113244bec4556c211c5b2d: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431811538 — ChatCodeFenceTests ועוד 8 תרחישי UI מקוריים: code fence, Safari, partial selection, Python consent, UI03, embedded result, Skills CRUD ו-override/reset. נשלחה עם RuntimeCore producer המקורי המאומת 42926628418; קבלה Native עדיין ממתינה.\nתיקון קישורי הריצות הקודמות: 44426497443 ו-44426508137 בוטלו לפני הבדיקות לאחר שאותר קלט Runtime חסר. ההחלפות הן https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429703865 (compact iPhone) ו-https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429728630 (editor/A2UI + שני מסלולי המקלדת ב-iPad). אין לייחס הצלחה לריצות שבוטלו או לבדיקת תחביר בלבד.",
+    "readback_verified": true,
+    "completed": false,
+    "completed_at": null
+  },
+  {
+    "task_id": "1220546710417618",
+    "comment_id": "1220690944152001",
+    "created_at": "2026-11-19T01:02:13.510Z",
+    "text": "[ChatGPT | DEV/QA] תיקוני ניווט Skill Center ותיקון מידע שגוי ב-Skill המקורי — 19.11.2026\nבדיקת הראיות של 44383949859 מצאה ש-CRUD הגיע למגבלת 300 שניות אחרי שאילתות נגישות מיותרות, ו-reset גלל לכיוון שגוי כששורת ה-Skill הוסתרה מתחת לסרגל החיפוש. פורסם 6167e2ee: לחיצה מיידית לאחר isHittable, חיפוש חוזר בתחומי הרשימה הנראים בפועל, ושמירת כל פעולות יצירה/עריכה/השבתה/מחיקה/reset המקוריות. שתי בדיקות המקור נכללות בהרצה https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431811538 על e564dc29d24239309b113244bec4556c211c5b2d. תוצאה Native עדיין ממתינה; המגבלה והדרישות לא הוחלשו.\nתיקון מוצר נוסף פורסם ב-e0089cfb8c192530056aba39c7c8bbf945da75d3: Skills/cairo-genizah-research/scripts/browse.py החזיר בעבר רשומת Cambridge ותמלול מומצאים בכל שגיאת רשת/JSON. כעת הוא מחזיר stderr ו-exit 1. ארבע בדיקות offline של הסקריפט המקורי עברו: כשל תעבורה/timeout/503 ללא retry, JSON שגוי, שמירת תגובה אמיתית או תוצאה ריקה, וחוסר מזהה ללא קריאת רשת. הבדיקות אינן טענה להרצת השירות החיצוני או להרצה ב-iOS.\nנבנית בדיקת corpus של חבילות Skills מקוריות ותחזוקתיות; 22 התרחישים הפרמטריים מההרצה הקודמת נשארים הוכחת fixtures ואינם מוצגים כ-22 Skills עסקיים אמיתיים. המשימה נשארת פתוחה עד השלמת שערי הקבלה.",
+    "readback_verified": true,
+    "completed": false,
+    "completed_at": null
+  },
+  {
+    "task_id": "1219605282038820",
+    "comment_id": "1220691093576198",
+    "created_at": "2026-11-19T01:02:16.993Z",
+    "text": "[ChatGPT | DEV/QA] בידוד כשל provisioning והמשך אבחון חתימה — 19.11.2026\nריצת האבחון https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426766800 על 7a9ad537 נכשלה גם בארכיון מזערי של זהות MiniApps המקורית: Xcode לא קיבל את פרופיל ה-UUID לפני compilation/export. כל ששת משאבי הפרופילים הותקנו ונקראו בחזרה מאותם bytes בשני מיקומי Apple, ובדיקות הזהות והניקוי עברו. לכן הכשל אינו מוסבר רק בגודל ארכיוני שתי האפליקציות. Artifact 14486100943 אומת מול SHA256 394bac45d3b94112d5ad0a6c9c174109d2a73e06bb641fa5fb38e155c33375f7.\nפורסם e564dc29d24239309b113244bec4556c211c5b2d: נוסף אימות חתימת CMS ושרשרת האמון באמצעות Security.framework, נפרד מפענוח plist, וכן לוג Xcode מסונן לפי PID וחלון הזמן של ההרצה. 23 בדיקות portable עברו. לא הוחלפו תעודות/פרופילים או דרישות entitlements.\nהרצת האבחון המעודכנת: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431826560 . היא ממתינה לתוצאת Apple. קבלת שני היצואים החתומים, ההתקנה הפיזית וההשוואה החזותית עדיין פתוחה; ההרצה המזערית אינה מחליפה אותן.",
+    "readback_verified": true,
+    "completed": false,
+    "completed_at": null
+  },
+  {
+    "task_id": "1220546571007976",
+    "comment_id": "1220691036621520",
+    "created_at": "2026-11-19T01:12:47.920Z",
+    "text": "[ChatGPT | DEV/QA] פורסם corpus של 23 חבילות מקוריות ונשלח ל-iOS — 19.11.2026\nמקור המימוש והבדיקה: c91732b21456f964c8e1cf612b06497277ae9fdf. הבדיקה כוללת 20 תיקיות Skills מקוריות ושלמות של OpenClaw ב-847611dcaa3bf0e2783335f961dd1fd0580e4d9f ועוד 3 תיקיות Skills מקוריות של Hanlin ב-e0089cfb8c192530056aba39c7c8bbf945da75d3. אימות עצמאי השווה את כל 51 קובצי המקור/הרישיונות לעץ Git הרשמי ול-bytes המקוריים, כולל שלמות התיקיות; לא נספרו fixtures שנוצרו או תיאורי כלים מובנים כ-Skills אמיתיים.\nמסלול הבדיקה משתמש ב-ZIP המקורי שנבנה מאותם bytes, SkillImporter, SkillStore, קטלוג, תכנון פסיבי ללא עבודות Runtime, המדיניות המקורית, load/read, הכנת שלב SDK ופתיחה מחדש של ה-store. דרישות OS/bin/env שלא נצפו נשארות חסומות/לא ידועות. ניתוח AST מתועד בנפרד מהרצת המשאב. תוקן גם סיווג .mjs/.cjs כטקסט JavaScript ב-import/store/read לאחר שהחבילה המקורית meme-maker חשפה את הפער.\n97 בדיקות ניתוב CI ובדיקת תחביר Swift עברו. ריצה https://github.com/davidpovarsky/hanlin-ai/actions/runs/44434893361 כוללת 23 מקרי חבילות, 2 מקרי Cairo עם argv חסר ו-4 בדיקות חיבור Yams קיימות — 29 מקרים מתוכננים. מקור RuntimeCore המאומת42926628418 נשמר. תוצאות native טרם התקבלו; הצלחה עתידית במסלולי הייבוא/המדיניות לא תוצג כהצלחה של23 workflows חיצוניים.",
+    "readback_verified": true,
+    "completed": false,
+    "completed_at": null
+  },
+  {
+    "task_id": "1220546710401425",
+    "comment_id": "1220691095845399",
+    "created_at": "2026-11-19T01:12:52.149Z",
+    "text": "[ChatGPT | DEV/QA] אימות מקור Yams וחיבור לבדיקת הצרכן בפועל — 19.11.2026\nחבילת HanlinSkillFormat הנוכחית עדיין משתמשת ב-Yams6.2.2 המקורית, resolved revision a27b21e0c81c5bf42049b897a62aaf387e80f279. נבדקו כל9 קלטי החבילה — manifest/lock/README/ארבעת קובצי המקור/fixture/בדיקות — מול e44c57cf348b1037baa8416277a3414d7e93b805 של ריצת Apple43757913093; כולם זהים byte-for-byte. זוהי התאמת ראיות היסטוריות, לא הרצה native חדשה. manifest metadata עבר ב-Swift6.3.3; אין בכך הוכחת Apple compilation.\nארבע בדיקות האימוץ הקיימות באפליקציה נשלחו כעת ללא שינוי ל-https://github.com/davidpovarsky/hanlin-ai/actions/runs/44434893361 על c91732b21456f964c8e1cf612b06497277ae9fdf: nestedMetadataSurvivesStoreSaveAndOverride, anchoredStoreEditDoesNotRewriteOriginal, zipNestedMetadataAndResourcesRemainLossless, catalogMetadataFollowsSelectedSource.\nבאותה ריצה נבדקות23 חבילות Skills תחזוקתיות מקוריות דרך ה-import/store/catalog בפועל. כך יאומת גם פענוח frontmatter המקור שלהן דרך Yams ולא דרך parser חלופי. תוצאת הצרכן native עדיין ממתינה; המשימה נשארת פתוחה.",
+    "readback_verified": true,
+    "completed": false,
+    "completed_at": null
+  },
+  {
+    "task_id": "1220542174541844",
+    "comment_id": "1220690945278605",
+    "created_at": "2026-11-19T01:07:10.532Z",
+    "text": "[ChatGPT | DEV/QA] תוצר ביקורת SDK-01 פורסם והושלם — 19.11.2026\nתוצר מקור עדכני: https://github.com/davidpovarsky/hanlin-ai/blob/585f3196e973d22c2fec3c81d590a128818131c8/docs/agent-sdk/SDK_01_CURRENT_AUDIT_20261119.md\nהדוח משלים את כל סעיפי ה-DELIVERABLE המקורי: SHAs נעולים של Hanlin/SwiftAISDK/Markdown/Yams/Anytype/Otzaria; DAG של המודולים והמוצרים; מפת מעבר מקור לחבילות; גבולות Session/Host/הרשאות/תוצאות/ניווט/אחסון/UI; אסטרטגיית Host API 1.1 ופורמט שיחה2; ומטריצת iOS26/27 בפועל. נשמרו המימושים המקוריים ללא שכפול agent loop או renderer.\nאימות ממוקד: 4 manifest evaluations מקוריים עברו ב-Swift6.3.3; גרפי התלות הפנימיים ללא מעגל; מיפוי PBX והקישוריות עברו לכל11 היעדים; כל5 קלטי manifest/PBX נבדקו ללא שינוי בין מקור ההערכה e564dc29 למקור הביקורת e0089cfb. נשמרו פלטים גולמיים, fingerprints של30 קובצי מקור ומפות הצרכנים. 9 קלטי Yams זהים byte-for-byte למקור Apple שנבדק קודם; זה מסומן שימוש חוזר בראיות בלבד.\nפערי יישום מתועדים במפורש: Anytype משתמש ב-HanlinAgentSession ו-HanlinChatUI על pin116cc6be; Otzaria כרגע מקשר רק HostContracts/PlatformContracts על gitlink080d1a2b, ללא חיבור AgentSession/ChatUI. Apple on-device עדיין אינו מצהיר תמיכה בכלים. המינימום של ה-SDK המלא הוא iOS27; iOS26 שייך לחבילת parser הנפרדת.\nהיקף הסגירה הוא משימת מחקר/עיצוב SDK-01 המקורית בלבד. אין כאן טענת build/Simulator/device חדשה. קבלת SDK-02/03/04/05/06/07, ה-epic, UI, המוצר והחתימה נשארת במשימותיהן הפתוחות. הדוחות ההיסטוריים נשמרו עם קישור ברור לדוח העדכני.",
+    "readback_verified": true,
+    "completed": true,
+    "completed_at": "2026-11-19T01:07:12.340Z"
+  },
+  {
+    "task_id": "1220542174541940",
+    "comment_id": "1220690509849094",
+    "created_at": "2026-11-19T00:27:24.740Z",
+    "text": "[ChatGPT | DEV/QA] תיקוני UI פורסמו והבדיקות הממוקדות נשלחו — 19.11.2026\nהתקדמות מאומתת במקור: תוקן מרוץ ה-UITextView שהחזיר טקסט ישן בזמן הקלדה; תוקנה בעלות פריסת המקלדת במסך compact; תוקן מסלול Reasoning המורחב כך שהוא משתמש בהיטל הסיכום המסונן; כפתור New chat קיבל Label נגיש, וניווט Saved messages תואם לתפריט UIKit המקורי.\nנמצא גם כשל מוצר ממשי ב-Canvas בריצה44383943178: Binding השייך ל-MainActor נקרא מתור background וגרם SIGTRAP. תיקון2809500f מצלם טקסט ושפה על MainActor לפני ההדגשה ברקע, ומונע מתוצאה ישנה לדרוס עריכה/בחירה עדכנית. מבחן Canvas המקורי לא הוחלש.\nפורסם ונבדק מול GitHub: d6cb7d0b704abf11d0296e77eea246700c390f5c. בדיקות תחביר Swift עברו; קבלה Native עדיין ממתינה.\nריצות:\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44428104345 — Reasoning/Canvas/UI01/Saved messages על d6cb7d0b.\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44426497443 — שני תרחישי compact המקוריים על90314963.\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44426508137 — עורך/טיוטות/פריסה ו-7 תרחישי NativeA2UI על90314963.\nהוכחות קודמות שנשמרו:44383943178 — 34/34 unit invocations עברו;3/11 UI עברו,8 נכשלו. אין לייחס אותן לתיקונים החדשים. Safari, יתר כשלים והוכחות בין-אפליקטיביות נשארים פתוחים; המשימה אינה מסומנת הושלמה.",
+    "readback_verified": true,
+    "readback_method": "Authenticated current task activity, exact previously recorded comment ID",
+    "completed": false
+  },
+  {
+    "task_id": "1220548022593831",
+    "comment_id": "1220690400186045",
+    "created_at": "2026-11-19T00:27:26.570Z",
+    "text": "[ChatGPT | DEV/QA] המשך ביצוע על הקוד העדכני — 19.11.2026\nהשלמתי את הניקוי האחרון של שתי הפניות לאישור חוזר ב-PROJECT_AGENT_GUIDANCE.md ופרסמתי3a87634b8b478833ddd90c896fe494bd4becda82. באותו קומיט נשמר גם owned_simulator_receipts.py בארכיון המקור ובמניפסט ה-OpenClaw, כך שראיות ההרצה כוללות את תלות ההכנה החדשה.\nתיקוני Canvas/MainActor, Reasoning, הקלדה, מקלדת וניווט פורסמו עד d6cb7d0b. ריצת UI ממוקדת: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428104345 . ריצת הספק החי המקורית: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428114202 . שתיהן נשלחו על d6cb7d0b ותוצאות Native עדיין נדרשות.\nלריצת הספק החי הועבר המפתח הקיים דרך stdin לסוד CI זמני; הערך לא נרשם בלוג/בקוד. לאחר שליחת הריצה הסוד הזמני נמחק, והיעדרו אומת. לא נוצר מפתח חלופי.\nמסמכי הקבלה וכל30משימות המקור נשמרו בקומיט54098fc7 וב-HQ, כולל הריצות שנכשלו. ריצת Skills44425850134 נעצרה בהכנת RuntimeCore לפני בדיקות Native; הלוג נמצא בבדיקה. יתר הריצות ממשיכות ללא ביטול או שליחה כפולה. העבודה נמשכת; אין עדיין קבלת שלבים2/3 או release.",
+    "readback_verified": true,
+    "readback_method": "Authenticated current task activity, exact previously recorded comment ID",
+    "completed": false
+  },
+  {
+    "task_id": "1220546710400478",
+    "comment_id": "1220690632352301",
+    "created_at": "2026-11-19T00:43:16.447Z",
+    "text": "[ChatGPT | DEV/QA] תוקן מקור ה-Runtime בהרצות — 19.11.2026\n44425850134 נעצרה ב-Prepare verified embedded RuntimeCore לפני בניית האפליקציה/בדיקות: פרמטר runtime_bundle_artifact_run_id נשאר ריק וה-Release fallback לא קיים.44425855469 בוטלה לפני בדיקות מאותה סיבה מאומתת.\nאומת יצרן החבילה המקורי42926628418: inner archive SHA196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f תואם ל-RuntimeDependencies.lock.json; בדיקת native-input reuse עברה.\nנשלחו מחדש על3a87634b8b478833ddd90c896fe494bd4becda82 עם כל הבדיקות המקוריות ועם מזהה החבילה:\nSkills/cache: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429654565\nnpm generations: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429680236\nאין תוצאת Native חדשה מהריצות שהוחלפו. הקבלה נותרת פתוחה עד לתוצאות בפועל.",
+    "readback_verified": true,
+    "readback_method": "Authenticated current task activity, exact previously recorded comment ID",
+    "completed": false
+  },
+  {
+    "task_id": "1220546571007976",
+    "comment_id": "1220690488669072",
+    "created_at": "2026-11-19T00:43:18.341Z",
+    "text": "[ChatGPT | DEV/QA] הרצת OpenClaw הוחלפה לאחר אבחון הכנת Runtime — 19.11.2026\nהריצה44425850134 לא הגיעה לבדיקות: החסירו ממנה את מזהה חבילת RuntimeCore, והורדת Release fallback נכשלה. זה כשל בהכנת ההרצה; אין ממנו תוצאה על המדיניות החדשה.\nההרצה המתוקנת https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429654565 משתמשת בקוד3a87634b8b478833ddd90c896fe494bd4becda82 ובחבילה המאומתת42926628418, ושומרת את4המתודות/25ה-invocations המתוכננים, כולל בדיקת המדיניות המקורית בתוך Node המשובץ והמשך SDK.\nבאותו מקור הושלם גם שימור owned_simulator_receipts.py בארכיון ובמניפסט המקור של ה-probe.28בדיקות המקור/64assertions ו-11חוזי המתאם לא הוחלשו. תוצאות Native עדיין ממתינות; המשימה פתוחה.",
+    "readback_verified": true,
+    "readback_method": "Authenticated current task activity, exact previously recorded comment ID",
+    "completed": false
+  },
+  {
+    "task_id": "1220539644804804",
+    "comment_id": "1220690632371850",
+    "created_at": "2026-11-19T00:43:20.018Z",
+    "text": "[ChatGPT | DEV/QA] עודכנו ריצות קבלת המקלדת והעורך — 19.11.2026\nהריצות44426497443 ו-44426508137 הוחלפו לפני ביצוע בדיקות לאחר שאומת שחסר בהן מזהה חבילת RuntimeCore. כל הבדיקות המקוריות נשמרו, ונוסף המקור המאומת42926628418.\nקומיט נבדק מתוכנן:3a87634b8b478833ddd90c896fe494bd4becda82.\niPhone compact: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429703865\niPad editor/A2UI: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429728630\nבריצת iPad נוספו גם שני הכשלים המקוריים testCompactToolsManagementDestinationsPreserveDraft ו-testModelPopoverZoomWithKeyboardAndDraft: ה-AX המאומת הראה שהכפתורים נמצאו מתחת למקלדת ובאותו compact workspace שתוקן ב916f77eb. אין טענת קבלה עד שההרצות החדשות יסיימו.",
+    "readback_verified": true,
+    "readback_method": "Authenticated current task activity, exact previously recorded comment ID",
+    "completed": false
+  },
+  {
+    "task_id": "1220542414733348",
+    "comment_id": "1220691096843948",
+    "created_at": "2026-11-19T01:17:52.619Z",
+    "text": "[ChatGPT | DEV/QA] אומתה רגרסיית רכיבי SDK06 ונשלמה התאמת המקור — 19.11.2026\nהריצה המקורית https://github.com/davidpovarsky/anytype-swift/actions/runs/44411181882 על 89ea7976762b85b83d0c1b137a4cf74047cb2aea כוללת תת-קבוצה מדויקת של73 שיטות / 74 הרצות בפועל, כולן Passed וללא Failed/Skipped: HostAdapter35, ReadWrite17, Write15, SDKConsumer6. ה-pin המקורי הוא Hanlin116cc6be0654a5d11bc56ba00e0310031107ee36. הפיצול73/74 נובע משיטת budget עם שני ערכים. SHA256 של עץ התוצאות הגולמי:373d615d8ce8abddb73e007575d25571e39e67a1b47fb3ac12996efb83dfcb17.\nכל29 קלטי המקור הרלוונטיים לתת-הקבוצה —23 קובצי שילוב,4 קובצי מבחנים, מקור ה-SDK ופרויקט Xcode — הושוו ל-90fcb6033ca4f8aecf8e04d4959cf06fb104adf9 ונמצאו זהים byte-for-byte. זו התאמת שימוש חוזר ברגרסיית הרכיבים, לא הרצה חדשה או קבלת היישום המלא.\nהצלחת selected-block ב-iPad בריצה44277421934 נשארת משויכת למקורה10fb06193d17aca43bd020094beaaf61d466d031; לא שייכנו אותה אוטומטית לשינויים המאוחרים. הוגדרה תצורת הקבלה החסרה iPhone/en בהרצה https://github.com/davidpovarsky/anytype-swift/actions/runs/44435210654 על90fcb6033ca4f8aecf8e04d4959cf06fb104adf9; היא ממתינה.\nאבחנת UI22 והדרישות שנרשמו בעדכון הקודם נשמרות. תיקון גבול הביטול לפני ה-runner מטופל בעותק עבודה מבודד, תוך שמירת uncertain אחרי dispatch, הקוד של שאר העבודה ודרישות הקבלה המקוריות. המשימה עדיין פתוחה.",
+    "readback_verified": true,
+    "completed": false
+  }
+]

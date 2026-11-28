@@ -1,0 +1,22 @@
+[
+  {
+    "path": "README.md",
+    "bytes": 3769,
+    "sha256": "79eb868edaa95e1c05bad4664626f3aef639e04dc005a90529aa083f40e0a791"
+  },
+  {
+    "path": "asana-source-observations.json",
+    "bytes": 6340,
+    "sha256": "6a6334e22e1f2782a11e9e547f546c727649fe87d14127d7800943040d6e2173"
+  },
+  {
+    "path": "own-storage-inventory.json",
+    "bytes": 3569,
+    "sha256": "58236d1e0030c3ff1e8dfafc9b56c0e1e3784c93bb47d5b8bdfc932625463273"
+  },
+  {
+    "path": "source-qualification.json",
+    "bytes": 13070,
+    "sha256": "17629516283b471886af1d261b84a41a0ab3c426fccb9fa7c44319129a1b1201"
+  }
+]

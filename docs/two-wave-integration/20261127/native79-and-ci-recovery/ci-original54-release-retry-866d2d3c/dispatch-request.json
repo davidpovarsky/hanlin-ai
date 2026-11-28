@@ -1,0 +1,15 @@
+{
+  "ref": "codex/hanlin-two-wave-integration-20261126",
+  "inputs": {
+    "paired_product_acceptance": "true",
+    "paired_test_scope": "miniapp_complete",
+    "runtime_bundle_artifact_run_id": "",
+    "host_proof_run_id": "",
+    "foreground_proof_run_id": "",
+    "native_test_scope": "baseline",
+    "signed_release_archives": "false",
+    "prepare_miniapps_registration": "false",
+    "audit_release_resources": "false",
+    "signing_preflight_only": "false"
+  }
+}

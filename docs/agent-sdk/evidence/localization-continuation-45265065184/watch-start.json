@@ -1,0 +1,19 @@
+{
+  "startedUTC": "2026-11-23T21:00:00.775444+00:00",
+  "runId": 45265065184,
+  "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+  "command": [
+    "gh",
+    "run",
+    "watch",
+    "45265065184",
+    "--repo",
+    "davidpovarsky/hanlin-ai",
+    "--exit-status",
+    "--compact",
+    "--interval",
+    "60"
+  ],
+  "timeoutSeconds": 3300,
+  "owner": "root"
+}

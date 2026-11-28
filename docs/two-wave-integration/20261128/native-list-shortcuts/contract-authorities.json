@@ -1,0 +1,28 @@
+{
+  "source": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "authorities": {
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinValue.swift": {
+      "sha256": "cd266a8b820ae8673fd576697bc30d77ba5dd563feaa670f7e5b2f18319ff3d8",
+      "bytes": 57167
+    },
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinShortcutValueCodec.swift": {
+      "sha256": "633f70697d883b7c2b0e5a70bba016d6341ca55cc25038c2c87ba4edfbf5d605",
+      "bytes": 2577
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift": {
+      "sha256": "0085600e6e48bb8e40565a85e081403854639279e82f2bc72664cf7f56e69248",
+      "bytes": 57913
+    },
+    "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift": {
+      "sha256": "88eaefa67a733beb153d2c0d3310de2e23ae85c80bf854f22b161c0b9e49ebeb",
+      "bytes": 16315
+    }
+  },
+  "facts": {
+    "integerTag": "integer / canonical decimal string",
+    "numberTag": "number / binary64 hexadecimal string",
+    "store": "JSONEncoder millisecondsSince1970, sortedKeys, withoutEscapingSlashes",
+    "intent": "decodeNativeList -> input directly stored in invocation.parameters",
+    "result": "Plain JS/JSON numeric domain; native tags separately checked"
+  }
+}

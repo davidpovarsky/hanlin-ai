@@ -1,0 +1,119 @@
+{
+  "scope": "One original HTTP selector actual native PASS on97ca. Full601 remains open.",
+  "members": [
+    {
+      "stored": "handoff/original-http-97ca8955-pass/controller-binding.diff.gz",
+      "rawBytes": 2755,
+      "rawSHA256": "23c58a8334655c58172c17adec5b6604b58dfb65417e9cd72aab93d916b37027",
+      "encoding": "gzip"
+    },
+    {
+      "stored": "handoff/original-http-97ca8955-pass/focused-pass-reconciliation.json",
+      "rawBytes": 1063,
+      "rawSHA256": "4541474418189308deef7337ca275afd4e5e72f4bd7718fed8a0fb7301ba4e5f",
+      "encoding": "identity"
+    },
+    {
+      "stored": "import-97ca8955/root-http-framing-integrated.json",
+      "rawBytes": 785,
+      "rawSHA256": "3261acb5225874ad3cc86e7d912202d22f290abbf5e588b54b7846cbc21656ad",
+      "encoding": "identity"
+    },
+    {
+      "stored": "original-http-diagnostic-launch-97ca8955-r1.json",
+      "rawBytes": 386,
+      "rawSHA256": "6f8b5207b9c93dbdf1859634d8cd27de37899147f9cefbf755f6e3e5dce19a7f",
+      "encoding": "identity"
+    },
+    {
+      "stored": "original-http-diagnostic-supervisor-97ca8955-r1.log.gz",
+      "rawBytes": 640,
+      "rawSHA256": "d4d854db660e6747e50c6072c1fb21c8bf7b8174c5640b05afa9e9557659d7ba",
+      "encoding": "gzip"
+    },
+    {
+      "stored": "run-original-http-diagnostic-97ca8955.py",
+      "rawBytes": 12565,
+      "rawSHA256": "f5b6b5931da6ce44adead6acbf2032d9a441b4f80d6f187c762c84786eabe062",
+      "encoding": "identity"
+    },
+    {
+      "stored": "source/Packages/HanlinPlatform/Package.resolved",
+      "rawBytes": 1771,
+      "rawSHA256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d",
+      "encoding": "identity"
+    },
+    {
+      "stored": "source/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+      "rawBytes": 99347,
+      "rawSHA256": "c5846466716970ab7c4a1b5c2cd970e36a7d09cbedbc8a52417144fa6569a905",
+      "encoding": "identity"
+    },
+    {
+      "stored": "source-stage-97ca8955-r1.json",
+      "rawBytes": 5459,
+      "rawSHA256": "2f83416687063358d91261e599ddcc5a9eb912097536140125f43140bac61919",
+      "encoding": "identity"
+    },
+    {
+      "stored": "validation/original-http-97ca8955-r1/controller.json",
+      "rawBytes": 5480,
+      "rawSHA256": "7aa9b2d3d2e10b36a2a35c0e902f25fa159cff3579a37483b53461f9da157631",
+      "encoding": "identity"
+    },
+    {
+      "stored": "validation/original-http-97ca8955-r1/native/original-http-hanlin-widget-pass3-5F69E524-45A3-49A8-AE24-6C3280AA8319/native-stages.jsonl",
+      "rawBytes": 7337,
+      "rawSHA256": "efc72b075ff9095949f208442e1ec611626037d75e139383256dfc05716dd749",
+      "encoding": "identity"
+    },
+    {
+      "stored": "validation/original-http-97ca8955-r1/native/original-http-hanlin-widget-pass3-5F69E524-45A3-49A8-AE24-6C3280AA8319/port",
+      "rawBytes": 5,
+      "rawSHA256": "24575f966b03b8d9ed258998b4cb26181af1d937124a363ce8f97f4cc507a1d4",
+      "encoding": "identity"
+    },
+    {
+      "stored": "validation/original-http-97ca8955-r1/native/original-http-hanlin-widget-pass3-5F69E524-45A3-49A8-AE24-6C3280AA8319/server.stderr",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "identity"
+    },
+    {
+      "stored": "validation/original-http-97ca8955-r1/native/original-http-hanlin-widget-pass3-5F69E524-45A3-49A8-AE24-6C3280AA8319/server.stdout",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "identity"
+    },
+    {
+      "stored": "validation/original-http-97ca8955-r1/native/original-http-hanlin-widget-pass3-5F69E524-45A3-49A8-AE24-6C3280AA8319/wire.jsonl",
+      "rawBytes": 11657,
+      "rawSHA256": "642ad50840a90c45f44a0edaef05342b07cb950e30ed128c90e26c318d74f895",
+      "encoding": "identity"
+    },
+    {
+      "stored": "validation/original-http-97ca8955-r1/original-http-selector.log.gz",
+      "rawBytes": 6439,
+      "rawSHA256": "a002e0142ba02d8ce69fc6d29eeb5cd8062c2e6023ef17f1b54886c52e17dee3",
+      "encoding": "gzip"
+    },
+    {
+      "stored": "producer-manifest.json",
+      "rawBytes": 3543,
+      "rawSHA256": "196d42eca53ac2fcdcb0bacade2f5ae57595e3a4e8245c13c9995563e7af8448",
+      "encoding": "identity"
+    },
+    {
+      "stored": "transfer-readback.json",
+      "rawBytes": 338,
+      "rawSHA256": "cabaaf39b83a54e53d318da0d189209651ba086c979537d60c2b20e3d69fee52",
+      "encoding": "identity"
+    },
+    {
+      "stored": "root-independent-review.json",
+      "rawBytes": 1701,
+      "rawSHA256": "7739bde1e774ddf4fed7d7342d4f627e17647bb5b05ac18d065610f914ad7df0",
+      "encoding": "identity"
+    }
+  ]
+}

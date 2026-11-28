@@ -1,0 +1,14 @@
+{
+  "atUTC": "2026-11-27T08:39:18.328938+00:00",
+  "base": "3be9acbd9b1cef949076688a51208f7e559f3c2e",
+  "head": "33d949fa8d91d238ba93a9ef09373c5eafe58b84",
+  "macBase": "97ca89552b8e39fab4d0a26e51e3f77010e1811e",
+  "sourceSHA256": "a1ead7e7e54c6d4e578fd9f3b7b6696f966ab1050540908c4e9d70ba75493cf3",
+  "reviewSHA256": "2e30df0abc35573b8b6b722e64130eb1e774ef1caa5f1d59e795684714b49194",
+  "bundle": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-bookmark-policy-from-97ca.bundle",
+  "bundleBytes": 6208410,
+  "bundleSHA256": "85dacca7f5a631cf6c46e567ead9ff0a1d30d0aeb7ba02c0e256076d159ca054",
+  "packageTree": "e7e9799ec642d8011e87f92563fdb6d5d359093e",
+  "nativeBookmark": "NOT_RUN",
+  "nativeHTTP": "Original selector PASS97ca;19 retained proof files plus retention index"
+}

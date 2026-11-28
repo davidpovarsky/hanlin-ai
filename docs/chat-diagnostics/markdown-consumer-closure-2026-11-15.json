@@ -1,0 +1,228 @@
+{
+  "scope": "Six original renderer consumer methods, three citation/media regressions and one retained native paragraph host-action regression; exact app-selected renderer revision and authenticated runtime dependency closure.",
+  "renderer_repository": "https://github.com/davidpovarsky/hanlin-streaming-markdown",
+  "renderer_revision": "6bde022876ef4af738c154b3d5c871984ef76195",
+  "app_evidence": {
+    "run": 43761037885,
+    "source": "c1a539774072b70047f128b5fde89d155fe7d986",
+    "artifact": 14180119013,
+    "artifact_sha256": "d245f3e04099528f99286784a244f417b78fb47c5665a061dce49954997abb53",
+    "raw_lock_sha256": "c71ab78897eb3c84f245f5efa96c5371b61172f712b8ff534bec7a9d19982fb6"
+  },
+  "historical_evidence": {
+    "run": 43255693521,
+    "app_source": "b667a281b793010a33ddb07860267a8eb2860afa",
+    "artifact": 13961961091,
+    "artifact_sha256": "8e80e7314c27a3e7beeebc43cb875a97a78e390d52b6eba3e81a372927985d8e",
+    "methods": 6,
+    "status": "EXECUTED_PASS_HISTORICAL",
+    "reuse_for_current": false
+  },
+  "runtime_pin_projection": [
+    {
+      "identity": "equatable",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/ordo-one/equatable",
+      "state": {
+        "revision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+        "version": "1.4.1"
+      }
+    },
+    {
+      "identity": "highlightswift",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/appstefan/highlightswift",
+      "state": {
+        "revision": "99c431b38a1444a5fd6a4978307fbbefe3a7af53"
+      }
+    },
+    {
+      "identity": "iosmath",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/junyan72/iosMath",
+      "state": {
+        "revision": "ba9ab7729b151329c54fd895a7c1859981d9484c"
+      }
+    },
+    {
+      "identity": "swift-cmark",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/swiftlang/swift-cmark",
+      "state": {
+        "revision": "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
+        "version": "0.9.0"
+      }
+    },
+    {
+      "identity": "swift-markdown",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/swiftlang/swift-markdown.git",
+      "state": {
+        "revision": "7d9a5ce307528578dfa777d505496bd5f544ad94",
+        "version": "0.7.3"
+      }
+    },
+    {
+      "identity": "swift-syntax",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/swiftlang/swift-syntax.git",
+      "state": {
+        "revision": "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
+        "version": "603.0.2"
+      }
+    },
+    {
+      "identity": "swiftui-shimmer",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/markiv/SwiftUI-Shimmer",
+      "state": {
+        "revision": "0226e21f9bf355d40e07e5f5e1c33679d50e167f",
+        "version": "1.5.1"
+      }
+    }
+  ],
+  "original_renderer_lock": {
+    "pins": [
+      {
+        "identity": "equatable",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/ordo-one/equatable",
+        "state": {
+          "revision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+          "version": "1.4.1"
+        }
+      },
+      {
+        "identity": "highlightswift",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/appstefan/highlightswift",
+        "state": {
+          "revision": "99c431b38a1444a5fd6a4978307fbbefe3a7af53"
+        }
+      },
+      {
+        "identity": "iosmath",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/junyan72/iosMath",
+        "state": {
+          "revision": "ba9ab7729b151329c54fd895a7c1859981d9484c"
+        }
+      },
+      {
+        "identity": "swift-cmark",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/swiftlang/swift-cmark.git",
+        "state": {
+          "revision": "924936d0427cb25a61169739a7660230bffa6ea6",
+          "version": "0.8.0"
+        }
+      },
+      {
+        "identity": "swift-custom-dump",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/pointfreeco/swift-custom-dump",
+        "state": {
+          "revision": "06c57924455064182d6b217f06ebc05d00cb2990",
+          "version": "1.5.0"
+        }
+      },
+      {
+        "identity": "swift-markdown",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/swiftlang/swift-markdown.git",
+        "state": {
+          "revision": "7d9a5ce307528578dfa777d505496bd5f544ad94",
+          "version": "0.7.3"
+        }
+      },
+      {
+        "identity": "swift-snapshot-testing",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/pointfreeco/swift-snapshot-testing",
+        "state": {
+          "revision": "1bc16f430d8410e7f087d4c787767b26fd32fe30",
+          "version": "1.19.3"
+        }
+      },
+      {
+        "identity": "swift-syntax",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/swiftlang/swift-syntax.git",
+        "state": {
+          "revision": "0687f71944021d616d34d922343dcef086855920",
+          "version": "600.0.1"
+        }
+      },
+      {
+        "identity": "swiftui-shimmer",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/markiv/SwiftUI-Shimmer",
+        "state": {
+          "revision": "0226e21f9bf355d40e07e5f5e1c33679d50e167f",
+          "version": "1.5.1"
+        }
+      },
+      {
+        "identity": "xctest-dynamic-overlay",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/pointfreeco/xctest-dynamic-overlay",
+        "state": {
+          "revision": "dfd70507def84cb5fb821278448a262c6ff2bbad",
+          "version": "1.9.0"
+        }
+      }
+    ],
+    "version": 2
+  },
+  "affected_transitive_changes": {
+    "swift-cmark": {
+      "original": {
+        "revision": "924936d0427cb25a61169739a7660230bffa6ea6",
+        "version": "0.8.0"
+      },
+      "app": {
+        "revision": "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
+        "version": "0.9.0"
+      }
+    },
+    "swift-syntax": {
+      "original": {
+        "revision": "0687f71944021d616d34d922343dcef086855920",
+        "version": "600.0.1"
+      },
+      "app": {
+        "revision": "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
+        "version": "603.0.2"
+      }
+    }
+  },
+  "expected_cases": {
+    "CodeBlockRendererTests": [
+      "testDefaultRendererRemainsOptIn",
+      "testParsedBlocksKeepLiteralSourceAndStableSelectionIdentity",
+      "testViewHookReceivesTheExistingParsedBlock"
+    ],
+    "CodeBlockConfigTests": [
+      "testCustomTextFontsAreStoredForRendering",
+      "testDefaultTextFontsPreserveBundledTypography",
+      "testOriginalInitializerFunctionTypeRemainsSourceCompatible"
+    ],
+    "CitationIconTests": [
+      "testOriginalCitationInitializerFunctionTypeRemainsCompatible",
+      "testFormattingBuildersPreserveImagesCitationsAndSelection",
+      "testHostSuppliedIconRendersInsideTheOriginalCitationAttachmentInBothDirections"
+    ],
+    "ParagraphLinkHostTests": [
+      "testMountedParagraphUsesUpdatedHostLinkAction"
+    ]
+  },
+  "continuation_basis": {
+    "base_renderer_revision": "f59bd0d533b6d94e01408bf6bdf9f5b09db57891",
+    "reason": "Native V17 citation icons in the original attachment; discovered imageConfig reset by formatting builders. Existing six assertions retained."
+  },
+  "retained_host_action_continuation": {
+    "base_renderer_revision": "4072507bf5c5a1c9786d4c9a607873e65be59cc8",
+    "reason": "Refresh the original mounted ParagraphUIView URL callback when its host environment changes. Preserve all nine existing renderer/citation assertions.",
+    "native_status": "NOT_RUN_AT_CANDIDATE"
+  }
+}

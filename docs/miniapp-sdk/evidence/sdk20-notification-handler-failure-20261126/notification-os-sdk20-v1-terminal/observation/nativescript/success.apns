@@ -1,0 +1,28 @@
+{
+  "aps": {
+    "alert": {
+      "body": "nativescript",
+      "title": "Hanlin notification probe"
+    }
+  },
+  "hanlin-miniapp-event": {
+    "actionID": "parity.intent",
+    "appID": "hanlin.demo.script-parity",
+    "createdAtUnixMilliseconds": 1795653383430,
+    "expiresAtUnixMilliseconds": 1795653563430,
+    "id": "92b8db9f-87f8-4e99-b1be-8a5e70066b67",
+    "identity": {
+      "entrypointID": "appIntent",
+      "generation": 2,
+      "installedPackageID": "install-hanlin.demo.script-parity",
+      "packageID": "hanlin.demo.script-parity",
+      "variantID": "default"
+    },
+    "parameters": {
+      "challenge": "notification-os-ff86a083-2ff7-4f74-a03d-e8f24bcc95bb",
+      "ordinal": 41,
+      "unicode": "שלום🙂"
+    },
+    "schemaVersion": 1
+  }
+}

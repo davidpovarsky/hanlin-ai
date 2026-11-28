@@ -1,0 +1,28 @@
+{
+  "argv": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_notification_os_scope.py",
+    "-v"
+  ],
+  "elapsedSeconds": 0.6024169651791453,
+  "returncode": 0,
+  "source": {
+    "Scripts/ProductSplit/run_native_acceptance.py": "a08434296ba9dc7c143029353043f0b0f32176fb65434829047802d5f406172f",
+    "Scripts/CI/Tests/test_notification_os_scope.py": "98ae6e922e349ffa5af2e87cbd13669286cc4672e2c03e8eb835db7ebf7fee57"
+  },
+  "nativeExecuted": false,
+  "expectedMethods": 23,
+  "logSHA256": "f82b5b94cf00bbc312f2971a5a357736ace3f94bb673473cdfb69c45de2980d0",
+  "priorR2": "23 controls ran; one malformed-host path failed closed with unnormalized FileNotFoundError instead of the expected RuntimeError. Original14 passed. Convert owned-path lstat failures to the same admission exception; no expectation or test change.",
+  "testSHAUnchangedFromR2": true
+}

@@ -1,0 +1,32 @@
+[MiniApps] Preparing original npm inputs: No verified original npm installation receipt. Run Scripts/MiniApps/install-tooling.mjs for /dev/shm/hanlin-install-integrity-b5WGAv/tooling
+
+added 3 packages in 301ms
+▶ real original npm install rejects stale transitive bytes and local declarations, then reuses exact verified inputs
+  ✔ unchanged original inputs reuse the existing installation (17.279859ms)
+[MiniApps] Preparing original npm inputs: Installed SDK original file is missing or changed: node_modules/original-child/index.d.ts
+
+added 3 packages in 298ms
+  ✔ missing transitive declaration is rejected and restored by original npm ci (407.756137ms)
+[MiniApps] Preparing original npm inputs: Installed SDK original file is missing or changed: node_modules/original-child/index.js
+
+added 3 packages in 307ms
+  ✔ same-version transitive JavaScript modification cannot pass a version-only check (418.800321ms)
+[MiniApps] Preparing original npm inputs: Installed SDK package differs from package-lock: node_modules/original-child
+
+added 3 packages in 331ms
+  ✔ transitive package version drift is rejected even when direct versions match (430.154226ms)
+[MiniApps] Preparing original npm inputs: Installed local SDK source differs from this checkout: node_modules/@hanlin/local/index.d.ts
+
+added 3 packages in 299ms
+  ✔ a copied local package must match current source bytes despite an unchanged version (407.196014ms)
+  ✔ a changed transitive lock identity cannot reuse a receipt with unchanged installed versions (23.181653ms)
+  ✔ authenticated declaration reseal cannot conceal another changed original file (19.11875ms)
+✔ real original npm install rejects stale transitive bytes and local declarations, then reuses exact verified inputs (3341.386994ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3430.073502

@@ -1,0 +1,381 @@
+{
+  "status": "FAILED_EXTENSION_CLOSURE",
+  "records": [
+    {
+      "file": "ExpoModulesCore.xcframework/ios-arm64/ExpoModulesCore.framework/ExpoModulesCore",
+      "sha256": "1f3cb224ffd7b735831faa62b7e2fe8239f94baf9d914a512692f7ac2071414c",
+      "inspectedArchitecture": "arm64",
+      "flags": "0x118085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libc++.1.dylib",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/System/Library/Frameworks/UserNotifications.framework/UserNotifications",
+        "/System/Library/Frameworks/AVKit.framework/AVKit",
+        "/System/Library/Frameworks/AVFoundation.framework/AVFoundation",
+        "/System/Library/Frameworks/UIKit.framework/UIKit",
+        "/System/Library/Frameworks/Combine.framework/Combine",
+        "/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics",
+        "/System/Library/Frameworks/CoreMedia.framework/CoreMedia",
+        "/System/Library/Frameworks/SwiftUI.framework/SwiftUI",
+        "@rpath/hermesvm.framework/hermesvm",
+        "@rpath/React.framework/React",
+        "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies",
+        "@rpath/ExpoModulesJSI.framework/ExpoModulesJSI",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/usr/lib/swift/libswiftAVFoundation.dylib",
+        "/usr/lib/swift/libswiftAccelerate.dylib",
+        "/usr/lib/swift/libswiftCore.dylib",
+        "/usr/lib/swift/libswiftCoreAudio.dylib",
+        "/usr/lib/swift/libswiftCoreFoundation.dylib",
+        "/usr/lib/swift/libswiftCoreImage.dylib",
+        "/usr/lib/swift/libswiftCoreMIDI.dylib",
+        "/usr/lib/swift/libswiftCoreMedia.dylib",
+        "/usr/lib/swift/libswiftDarwin.dylib",
+        "/usr/lib/swift/libswiftDispatch.dylib",
+        "/usr/lib/swift/libswiftMetal.dylib",
+        "/usr/lib/swift/libswiftOSLog.dylib",
+        "/usr/lib/swift/libswiftObjectiveC.dylib",
+        "/usr/lib/swift/libswiftQuartzCore.dylib",
+        "/usr/lib/swift/libswiftRegexBuilder.dylib",
+        "/usr/lib/swift/libswiftSpatial.dylib",
+        "/usr/lib/swift/libswiftUniformTypeIdentifiers.dylib",
+        "/usr/lib/swift/libswiftXPC.dylib",
+        "/usr/lib/swift/libswift_Concurrency.dylib",
+        "/usr/lib/swift/libswift_StringProcessing.dylib",
+        "/usr/lib/swift/libswiftos.dylib",
+        "/usr/lib/swift/libswiftsimd.dylib",
+        "/usr/lib/swift/libswiftCoreGraphics.dylib",
+        "/usr/lib/swift/libswiftUIKit.dylib"
+      ]
+    },
+    {
+      "file": "ExpoModulesCore.xcframework/ios-arm64_x86_64-simulator/ExpoModulesCore.framework/ExpoModulesCore",
+      "sha256": "2ba4f347444ddb97f2f816dac5ee4f7d6b11c478f0f9bc15be9b9ba713fd7449",
+      "inspectedArchitecture": "arm64",
+      "flags": "0x118085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libc++.1.dylib",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/System/Library/Frameworks/UserNotifications.framework/UserNotifications",
+        "/System/Library/Frameworks/AVKit.framework/AVKit",
+        "/System/Library/Frameworks/AVFoundation.framework/AVFoundation",
+        "/System/Library/Frameworks/UIKit.framework/UIKit",
+        "/System/Library/Frameworks/Combine.framework/Combine",
+        "/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics",
+        "/System/Library/Frameworks/CoreMedia.framework/CoreMedia",
+        "/System/Library/Frameworks/SwiftUI.framework/SwiftUI",
+        "@rpath/hermesvm.framework/hermesvm",
+        "@rpath/React.framework/React",
+        "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies",
+        "@rpath/ExpoModulesJSI.framework/ExpoModulesJSI",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/usr/lib/swift/libswiftAVFoundation.dylib",
+        "/usr/lib/swift/libswiftAccelerate.dylib",
+        "/usr/lib/swift/libswiftCore.dylib",
+        "/usr/lib/swift/libswiftCoreAudio.dylib",
+        "/usr/lib/swift/libswiftCoreFoundation.dylib",
+        "/usr/lib/swift/libswiftCoreImage.dylib",
+        "/usr/lib/swift/libswiftCoreMIDI.dylib",
+        "/usr/lib/swift/libswiftCoreMedia.dylib",
+        "/usr/lib/swift/libswiftDarwin.dylib",
+        "/usr/lib/swift/libswiftDispatch.dylib",
+        "/usr/lib/swift/libswiftMetal.dylib",
+        "/usr/lib/swift/libswiftOSLog.dylib",
+        "/usr/lib/swift/libswiftObjectiveC.dylib",
+        "/usr/lib/swift/libswiftQuartzCore.dylib",
+        "/usr/lib/swift/libswiftRegexBuilder.dylib",
+        "/usr/lib/swift/libswiftSpatial.dylib",
+        "/usr/lib/swift/libswiftUniformTypeIdentifiers.dylib",
+        "/usr/lib/swift/libswiftXPC.dylib",
+        "/usr/lib/swift/libswift_Concurrency.dylib",
+        "/usr/lib/swift/libswift_StringProcessing.dylib",
+        "/usr/lib/swift/libswiftos.dylib",
+        "/usr/lib/swift/libswiftsimd.dylib",
+        "/usr/lib/swift/libswiftCoreGraphics.dylib",
+        "/usr/lib/swift/libswiftUIKit.dylib"
+      ]
+    },
+    {
+      "file": "ExpoModulesJSI.xcframework/ios-arm64/ExpoModulesJSI.framework/ExpoModulesJSI",
+      "sha256": "0de705fb128c05b8d16992fd66ff29d61a63455c04c6b44c5c9b5c8df9310863",
+      "inspectedArchitecture": "arm64",
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "ExpoModulesJSI.xcframework/ios-arm64_x86_64-simulator/ExpoModulesJSI.framework/ExpoModulesJSI",
+      "sha256": "0de705fb128c05b8d16992fd66ff29d61a63455c04c6b44c5c9b5c8df9310863",
+      "inspectedArchitecture": "arm64",
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "ExpoModulesWorklets.xcframework/ios-arm64/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+      "sha256": "0d6f177e1029c5b21ac66eb8ea0a604e6df5efd1e505263877695e14f31d2da8",
+      "inspectedArchitecture": "arm64",
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libc++.1.dylib",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "@rpath/hermesvm.framework/hermesvm",
+        "@rpath/React.framework/React",
+        "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies",
+        "@rpath/ExpoModulesJSI.framework/ExpoModulesJSI",
+        "@rpath/ExpoModulesCore.framework/ExpoModulesCore",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/usr/lib/swift/libswiftAVFoundation.dylib",
+        "/usr/lib/swift/libswiftCore.dylib",
+        "/usr/lib/swift/libswiftCoreAudio.dylib",
+        "/usr/lib/swift/libswiftCoreFoundation.dylib",
+        "/usr/lib/swift/libswiftCoreImage.dylib",
+        "/usr/lib/swift/libswiftCoreMIDI.dylib",
+        "/usr/lib/swift/libswiftCoreMedia.dylib",
+        "/usr/lib/swift/libswiftDarwin.dylib",
+        "/usr/lib/swift/libswiftDispatch.dylib",
+        "/usr/lib/swift/libswiftMetal.dylib",
+        "/usr/lib/swift/libswiftOSLog.dylib",
+        "/usr/lib/swift/libswiftObjectiveC.dylib",
+        "/usr/lib/swift/libswiftQuartzCore.dylib",
+        "/usr/lib/swift/libswiftSpatial.dylib",
+        "/usr/lib/swift/libswiftUniformTypeIdentifiers.dylib",
+        "/usr/lib/swift/libswiftXPC.dylib",
+        "/usr/lib/swift/libswiftos.dylib",
+        "/usr/lib/swift/libswiftsimd.dylib",
+        "/usr/lib/swift/libswiftUIKit.dylib"
+      ]
+    },
+    {
+      "file": "ExpoModulesWorklets.xcframework/ios-arm64_x86_64-simulator/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+      "sha256": "fca861d41978494d022599f370ed9c46f46d2e001d5b8449d011f124d0e7b1ba",
+      "inspectedArchitecture": "arm64",
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libc++.1.dylib",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "@rpath/hermesvm.framework/hermesvm",
+        "@rpath/React.framework/React",
+        "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies",
+        "@rpath/ExpoModulesJSI.framework/ExpoModulesJSI",
+        "@rpath/ExpoModulesCore.framework/ExpoModulesCore",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/usr/lib/swift/libswiftAVFoundation.dylib",
+        "/usr/lib/swift/libswiftCore.dylib",
+        "/usr/lib/swift/libswiftCoreAudio.dylib",
+        "/usr/lib/swift/libswiftCoreFoundation.dylib",
+        "/usr/lib/swift/libswiftCoreImage.dylib",
+        "/usr/lib/swift/libswiftCoreMIDI.dylib",
+        "/usr/lib/swift/libswiftCoreMedia.dylib",
+        "/usr/lib/swift/libswiftDarwin.dylib",
+        "/usr/lib/swift/libswiftDispatch.dylib",
+        "/usr/lib/swift/libswiftMetal.dylib",
+        "/usr/lib/swift/libswiftOSLog.dylib",
+        "/usr/lib/swift/libswiftObjectiveC.dylib",
+        "/usr/lib/swift/libswiftQuartzCore.dylib",
+        "/usr/lib/swift/libswiftSpatial.dylib",
+        "/usr/lib/swift/libswiftUniformTypeIdentifiers.dylib",
+        "/usr/lib/swift/libswiftXPC.dylib",
+        "/usr/lib/swift/libswiftos.dylib",
+        "/usr/lib/swift/libswiftsimd.dylib",
+        "/usr/lib/swift/libswiftUIKit.dylib"
+      ]
+    },
+    {
+      "file": "ExpoUI.xcframework/ios-arm64/ExpoUI.framework/ExpoUI",
+      "sha256": "b398f1d7004191033789d96c296c9c28d18d4c6d267d26d56af02074410eeefa",
+      "inspectedArchitecture": "arm64",
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libc++.1.dylib",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/System/Library/Frameworks/UIKit.framework/UIKit",
+        "@rpath/hermesvm.framework/hermesvm",
+        "@rpath/React.framework/React",
+        "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies",
+        "@rpath/ExpoModulesCore.framework/ExpoModulesCore",
+        "@rpath/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+        "@rpath/ExpoModulesJSI.framework/ExpoModulesJSI",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/Charts.framework/Charts",
+        "/System/Library/Frameworks/Combine.framework/Combine",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics",
+        "/System/Library/Frameworks/CoreText.framework/CoreText",
+        "/System/Library/Frameworks/CoreTransferable.framework/CoreTransferable",
+        "/System/Library/Frameworks/SwiftUI.framework/SwiftUI",
+        "/System/Library/Frameworks/Symbols.framework/Symbols",
+        "/System/Library/Frameworks/WidgetKit.framework/WidgetKit",
+        "/usr/lib/swift/libswiftAVFoundation.dylib",
+        "/usr/lib/swift/libswiftCore.dylib",
+        "/usr/lib/swift/libswiftCoreAudio.dylib",
+        "/usr/lib/swift/libswiftCoreFoundation.dylib",
+        "/usr/lib/swift/libswiftCoreImage.dylib",
+        "/usr/lib/swift/libswiftCoreLocation.dylib",
+        "/usr/lib/swift/libswiftCoreMIDI.dylib",
+        "/usr/lib/swift/libswiftCoreMedia.dylib",
+        "/usr/lib/swift/libswiftDarwin.dylib",
+        "/usr/lib/swift/libswiftDispatch.dylib",
+        "/usr/lib/swift/libswiftIntents.dylib",
+        "/usr/lib/swift/libswiftMetal.dylib",
+        "/usr/lib/swift/libswiftOSLog.dylib",
+        "/usr/lib/swift/libswiftObjectiveC.dylib",
+        "/usr/lib/swift/libswiftObservation.dylib",
+        "/usr/lib/swift/libswiftQuartzCore.dylib",
+        "/usr/lib/swift/libswiftSpatial.dylib",
+        "/usr/lib/swift/libswiftUniformTypeIdentifiers.dylib",
+        "/usr/lib/swift/libswiftXPC.dylib",
+        "/usr/lib/swift/libswift_Concurrency.dylib",
+        "/usr/lib/swift/libswiftos.dylib",
+        "/usr/lib/swift/libswiftsimd.dylib",
+        "/usr/lib/swift/libswiftUIKit.dylib",
+        "/usr/lib/swift/libswiftCoreGraphics.dylib"
+      ]
+    },
+    {
+      "file": "ExpoUI.xcframework/ios-arm64_x86_64-simulator/ExpoUI.framework/ExpoUI",
+      "sha256": "8016020de0ff3c8abf936d50311ecb38007439da6f9b68e5f1f16fef1894879d",
+      "inspectedArchitecture": "arm64",
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libc++.1.dylib",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/System/Library/Frameworks/UIKit.framework/UIKit",
+        "@rpath/hermesvm.framework/hermesvm",
+        "@rpath/React.framework/React",
+        "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies",
+        "@rpath/ExpoModulesCore.framework/ExpoModulesCore",
+        "@rpath/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+        "@rpath/ExpoModulesJSI.framework/ExpoModulesJSI",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/Charts.framework/Charts",
+        "/System/Library/Frameworks/Combine.framework/Combine",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics",
+        "/System/Library/Frameworks/CoreText.framework/CoreText",
+        "/System/Library/Frameworks/CoreTransferable.framework/CoreTransferable",
+        "/System/Library/Frameworks/SwiftUI.framework/SwiftUI",
+        "/System/Library/Frameworks/Symbols.framework/Symbols",
+        "/System/Library/Frameworks/WidgetKit.framework/WidgetKit",
+        "/usr/lib/swift/libswiftAVFoundation.dylib",
+        "/usr/lib/swift/libswiftCore.dylib",
+        "/usr/lib/swift/libswiftCoreAudio.dylib",
+        "/usr/lib/swift/libswiftCoreFoundation.dylib",
+        "/usr/lib/swift/libswiftCoreImage.dylib",
+        "/usr/lib/swift/libswiftCoreLocation.dylib",
+        "/usr/lib/swift/libswiftCoreMIDI.dylib",
+        "/usr/lib/swift/libswiftCoreMedia.dylib",
+        "/usr/lib/swift/libswiftDarwin.dylib",
+        "/usr/lib/swift/libswiftDispatch.dylib",
+        "/usr/lib/swift/libswiftIntents.dylib",
+        "/usr/lib/swift/libswiftMetal.dylib",
+        "/usr/lib/swift/libswiftOSLog.dylib",
+        "/usr/lib/swift/libswiftObjectiveC.dylib",
+        "/usr/lib/swift/libswiftObservation.dylib",
+        "/usr/lib/swift/libswiftQuartzCore.dylib",
+        "/usr/lib/swift/libswiftSpatial.dylib",
+        "/usr/lib/swift/libswiftUniformTypeIdentifiers.dylib",
+        "/usr/lib/swift/libswiftXPC.dylib",
+        "/usr/lib/swift/libswift_Concurrency.dylib",
+        "/usr/lib/swift/libswiftos.dylib",
+        "/usr/lib/swift/libswiftsimd.dylib",
+        "/usr/lib/swift/libswiftUIKit.dylib",
+        "/usr/lib/swift/libswiftCoreGraphics.dylib"
+      ]
+    }
+  ],
+  "forbiddenDependencies": [
+    {
+      "file": "ExpoModulesCore.xcframework/ios-arm64/ExpoModulesCore.framework/ExpoModulesCore",
+      "library": "@rpath/hermesvm.framework/hermesvm"
+    },
+    {
+      "file": "ExpoModulesCore.xcframework/ios-arm64/ExpoModulesCore.framework/ExpoModulesCore",
+      "library": "@rpath/React.framework/React"
+    },
+    {
+      "file": "ExpoModulesCore.xcframework/ios-arm64/ExpoModulesCore.framework/ExpoModulesCore",
+      "library": "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies"
+    },
+    {
+      "file": "ExpoModulesCore.xcframework/ios-arm64_x86_64-simulator/ExpoModulesCore.framework/ExpoModulesCore",
+      "library": "@rpath/hermesvm.framework/hermesvm"
+    },
+    {
+      "file": "ExpoModulesCore.xcframework/ios-arm64_x86_64-simulator/ExpoModulesCore.framework/ExpoModulesCore",
+      "library": "@rpath/React.framework/React"
+    },
+    {
+      "file": "ExpoModulesCore.xcframework/ios-arm64_x86_64-simulator/ExpoModulesCore.framework/ExpoModulesCore",
+      "library": "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies"
+    },
+    {
+      "file": "ExpoModulesWorklets.xcframework/ios-arm64/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+      "library": "@rpath/hermesvm.framework/hermesvm"
+    },
+    {
+      "file": "ExpoModulesWorklets.xcframework/ios-arm64/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+      "library": "@rpath/React.framework/React"
+    },
+    {
+      "file": "ExpoModulesWorklets.xcframework/ios-arm64/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+      "library": "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies"
+    },
+    {
+      "file": "ExpoModulesWorklets.xcframework/ios-arm64_x86_64-simulator/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+      "library": "@rpath/hermesvm.framework/hermesvm"
+    },
+    {
+      "file": "ExpoModulesWorklets.xcframework/ios-arm64_x86_64-simulator/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+      "library": "@rpath/React.framework/React"
+    },
+    {
+      "file": "ExpoModulesWorklets.xcframework/ios-arm64_x86_64-simulator/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+      "library": "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies"
+    },
+    {
+      "file": "ExpoUI.xcframework/ios-arm64/ExpoUI.framework/ExpoUI",
+      "library": "@rpath/hermesvm.framework/hermesvm"
+    },
+    {
+      "file": "ExpoUI.xcframework/ios-arm64/ExpoUI.framework/ExpoUI",
+      "library": "@rpath/React.framework/React"
+    },
+    {
+      "file": "ExpoUI.xcframework/ios-arm64/ExpoUI.framework/ExpoUI",
+      "library": "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies"
+    },
+    {
+      "file": "ExpoUI.xcframework/ios-arm64_x86_64-simulator/ExpoUI.framework/ExpoUI",
+      "library": "@rpath/hermesvm.framework/hermesvm"
+    },
+    {
+      "file": "ExpoUI.xcframework/ios-arm64_x86_64-simulator/ExpoUI.framework/ExpoUI",
+      "library": "@rpath/React.framework/React"
+    },
+    {
+      "file": "ExpoUI.xcframework/ios-arm64_x86_64-simulator/ExpoUI.framework/ExpoUI",
+      "library": "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+/usr/bin/python3 exit 65; inspect mini-build.log
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.052s
+
+OK

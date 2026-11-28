@@ -1,0 +1,264 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project AI_HLY.xcodeproj -destination "platform=iOS Simulator,id=E742FBCD-8FF0-4130-B143-7F8328637138" -parallel-testing-enabled NO -derivedDataPath /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete -clonedSourcePackagesDirPath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=YES CODE_SIGNING_REQUIRED=YES CODE_SIGN_IDENTITY=- -collect-test-diagnostics never -scheme AI_HLY test-without-building -resultBundlePath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v7/native-result/paired-prefix/FocusedRepair1.xcresult -test-timeouts-enabled YES -maximum-test-execution-time-allowance 600 "-only-testing:AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGNING_ALLOWED = YES
+    CODE_SIGNING_REQUIRED = YES
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  HTMLEntities: https://github.com/Kitura/swift-html-entities @ 4.0.1
+  mcp-swift-sdk: https://github.com/modelcontextprotocol/swift-sdk.git @ a0ae212
+  HanlinSDK: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete @ local
+  iosMath: https://github.com/junyan72/iosMath @ ba9ab77
+  SwiftDraw: https://github.com/swhitty/SwiftDraw @ 0.21.0
+  SwiftTreeSitter: https://github.com/tree-sitter/swift-tree-sitter @ 08ef81e
+  Yams: https://github.com/jpsim/Yams.git @ 6.2.2
+  TreeSitterBash: https://github.com/tree-sitter/tree-sitter-bash @ a06c2e4
+  swift-argument-parser: https://github.com/apple/swift-argument-parser @ 1.8.2
+  SwiftUI-Shimmer: https://github.com/markiv/SwiftUI-Shimmer @ 1.5.1
+  swift-system: https://github.com/apple/swift-system.git @ 1.4.0
+  LLM: https://github.com/eastriverlee/LLM.swift/ @ 4b25178
+  SwiftyJSON: https://github.com/SwiftyJSON/SwiftyJSON.git @ 5.0.1
+  SwiftSoup: https://github.com/scinfu/SwiftSoup @ bba848d
+  swift-nio: https://github.com/apple/swift-nio.git @ 2.94.0
+  Equatable: https://github.com/ordo-one/equatable @ 1.4.1
+  swift-markdown: https://github.com/swiftlang/swift-markdown.git @ 0.7.3
+  cmark-gfm: https://github.com/swiftlang/swift-cmark @ 0.9.0
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.3.0
+  SwiftAISDK: https://github.com/davidpovarsky/swift-ai-sdk.git @ 07431ab
+  NativeScriptSDK: https://github.com/NativeScript/ios-spm.git @ 9.1.1
+  SwiftStreamingMarkdown: https://github.com/davidpovarsky/hanlin-streaming-markdown @ 5cbb4b6
+  BitByteData: https://github.com/tsolomko/BitByteData @ 2.1.0
+  LaTeXSwiftUI: https://github.com/colinc86/LaTeXSwiftUI @ c45e0fd
+  SWCompression: https://github.com/tsolomko/SWCompression.git @ c729f0b
+  CoreXLSX: https://github.com/CoreOffice/CoreXLSX @ 1391f38
+  swift-json-schema: https://github.com/ajevans99/swift-json-schema @ 0.13.2
+  A2UISwiftCore: https://github.com/a2ui-project/a2ui @ 3ed9601
+  TreeSitter: https://github.com/tree-sitter/tree-sitter @ da6fe9b
+  swift-log: https://github.com/apple/swift-log.git @ 96a2f8a
+  NetworkImage: https://github.com/gonzalezreal/NetworkImage @ 6.0.1
+  MathJaxSwift: https://github.com/colinc86/MathJaxSwift @ 3.4.0
+  swift-markdown-ui: https://github.com/gonzalezreal/MarkdownUI.git @ 5f61335
+  EventSource: https://github.com/mattt/eventsource.git @ 1.1.0
+  HighlightSwift: https://github.com/appstefan/highlightswift @ 99c431b
+  RichTextKit: https://github.com/danielsaidi/RichTextKit.git @ 8aa44cf
+  swift-syntax: https://github.com/swiftlang/swift-syntax.git @ 603.0.2
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation @ 0.9.19
+  XMLCoder: https://github.com/maxdesiatov/XMLCoder.git @ 0.14.0
+  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.0
+
+Writing result bundle at path:
+	/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v7/native-result/paired-prefix/FocusedRepair1.xcresult
+
+Resolve Package Graph
+2026-11-25 15:04:36.216531+0100 AI_HLYUITests-Runner[19685:6019447] [Default] Running tests...
+2026-11-25 15:04:36.273187+0100 AI_HLYUITests-Runner[19685:6019447] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+
+    t =      nans Interface orientation changed to Portrait
+objc[19685]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x107fe0398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x108504310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+Test Suite 'Selected tests' started at 2026-11-25 15:04:40.480.
+Test Suite 'AI_HLYUITests.xctest' started at 2026-11-25 15:04:40.481.
+Test Suite 'MiniAppAuthoringUITests' started at 2026-11-25 15:04:40.481.
+Test Case '-[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport]' started.
+    t =     0.01s Start Test at 2026-11-25 15:04:40.491
+    t =     0.36s Set Up
+    t =     0.36s Open com.itorah.chavrusachat
+    t =     0.36s     Launch com.itorah.chavrusachat
+2026-11-25 15:04:41.102 xcodebuild[19377:6017418] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 15:04:41.102 xcodebuild[19377:6017418] [MT] IDELaunchParametersSnapshot: no debugger version
+Resolve Package Graph
+
+    t =    21.76s         Setting up automation session
+    t =    26.15s         Wait for com.itorah.chavrusachat to idle
+    t =    29.36s Waiting 45.0s for "hanlin-settings-tab" Button to exist
+    t =    30.44s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-settings-tab" Button`
+    t =    30.44s         Checking existence of `"hanlin-settings-tab" Button`
+    t =    30.60s Open com.itorah.hanlinminiapps
+2026-11-25 15:05:11.092 xcodebuild[19377:6017418] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 15:05:11.092 xcodebuild[19377:6017418] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    30.60s     Launch com.itorah.hanlinminiapps
+Resolve Package Graph
+
+    t =    39.70s         Setting up automation session
+Resolve Package Graph
+    t =    43.78s         Wait for com.itorah.hanlinminiapps to idle
+<unknown>:0: warning: -[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport] : Update the Info.plist: Support for all orientations will soon be required.
+    t =    46.58s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-apps-add" Button`
+    t =    46.58s     Checking existence of `"hanlin-apps-add" Button`
+    t =    46.69s     Find the "hanlin-apps-add" Button
+    t =    46.77s     Find the "hanlin-apps-add" Button
+    t =    46.89s Tap "hanlin-apps-add" Button
+    t =    46.89s     Wait for com.itorah.hanlinminiapps to idle
+    t =    46.89s     Find the "hanlin-apps-add" Button
+    t =    46.93s     Check for interrupting elements affecting "hanlin-apps-add" Button
+    t =    47.09s         Wait for com.apple.springboard to idle
+    t =    47.46s     Synthesize event
+    t =    47.94s     Wait for com.itorah.hanlinminiapps to idle
+
+    t =    49.66s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-import-script-package" Button`
+    t =    49.66s     Checking existence of `"hanlin-import-script-package" Button`
+    t =    49.82s     Find the "hanlin-import-script-package" Button
+    t =    49.95s     Find the "hanlin-import-script-package" Button
+    t =    50.22s Tap "hanlin-import-script-package" Button
+    t =    50.22s     Wait for com.itorah.hanlinminiapps to idle
+    t =    50.22s     Find the "hanlin-import-script-package" Button
+    t =    50.37s     Check for interrupting elements affecting "hanlin-import-script-package" Button
+    t =    50.45s         Wait for com.apple.springboard to idle
+    t =    50.48s     Synthesize event
+    t =    50.79s     Wait for com.itorah.hanlinminiapps to idle
+    t =    51.26s Waiting 20.0s for "hanlin-package-import-list" Any to exist
+    t =    52.33s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-import-list" Any`
+    t =    52.33s         Checking existence of `"hanlin-package-import-list" Any`
+    t =    52.45s Checking existence of `"MiniAppTypeError" Button`
+    t =    52.62s Find the "MiniAppTypeError" Button
+    t =    52.79s Waiting 15.0s for "MiniAppTypeError" Button to exist
+    t =    53.87s     Checking `Expect predicate `existsNoRetry == 1` for object "MiniAppTypeError" Button`
+    t =    53.87s         Checking existence of `"MiniAppTypeError" Button`
+    t =    55.10s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "MiniAppTypeError" Button`
+    t =    55.10s     Checking existence of `"MiniAppTypeError" Button`
+    t =    55.25s     Find the "MiniAppTypeError" Button
+    t =    55.39s     Find the "MiniAppTypeError" Button
+    t =    55.55s Tap "MiniAppTypeError" Button
+    t =    55.55s     Wait for com.itorah.hanlinminiapps to idle
+    t =    55.55s     Find the "MiniAppTypeError" Button
+    t =    55.69s     Check for interrupting elements affecting "MiniAppTypeError" Button
+    t =    55.77s         Wait for com.apple.springboard to idle
+    t =    55.79s     Synthesize event
+    t =    56.08s     Wait for com.itorah.hanlinminiapps to idle
+    t =    56.08s Waiting 90.0s for "hanlin-import-diagnostics-sheet" Any to exist
+    t =    57.15s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    57.15s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    57.49s         Capturing element debug description
+    t =    58.13s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    58.13s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    58.47s         Capturing element debug description
+    t =    59.12s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    59.12s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    59.38s         Capturing element debug description
+    t =    60.13s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    60.13s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    60.41s         Capturing element debug description
+    t =    61.14s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    61.14s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    61.53s         Capturing element debug description
+    t =    62.15s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    62.15s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    62.43s         Capturing element debug description
+    t =    63.16s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    63.16s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    63.47s         Capturing element debug description
+    t =    64.10s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    64.10s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    64.39s         Capturing element debug description
+    t =    65.12s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    65.12s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    65.38s         Capturing element debug description
+    t =    66.11s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    66.11s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    66.41s         Capturing element debug description
+    t =    67.14s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    67.14s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    67.42s         Capturing element debug description
+    t =    68.14s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    68.14s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    68.40s         Capturing element debug description
+    t =    69.13s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    69.13s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    69.38s         Capturing element debug description
+    t =    70.11s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    70.11s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    70.38s         Capturing element debug description
+    t =    71.11s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    71.11s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    71.36s         Capturing element debug description
+    t =    72.09s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    72.09s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    72.51s         Capturing element debug description
+    t =    73.13s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    73.13s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    73.71s         Capturing element debug description
+    t =    74.12s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    74.12s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    74.41s         Capturing element debug description
+    t =    75.14s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    75.14s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    75.40s         Capturing element debug description
+    t =    76.12s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    76.12s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    76.41s         Capturing element debug description
+    t =    77.13s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    77.13s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    77.45s         Capturing element debug description
+    t =    78.17s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    78.17s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    78.43s         Capturing element debug description
+    t =    79.15s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    79.15s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    79.32s Checking existence of `Any (First Match)`
+    t =    79.57s Find the Any (First Match)
+    t =    79.93s Waiting 15.0s for "hanlin-import-diagnostic-2" StaticText to exist
+    t =    80.95s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostic-2" StaticText`
+    t =    80.95s         Checking existence of `"hanlin-import-diagnostic-2" StaticText`
+    t =    81.14s Checking existence of `"hanlin-import-diagnostic-2" StaticText`
+    t =    81.34s Find the Application 'com.itorah.hanlinminiapps'
+    t =    81.72s Added attachment named 'MiniApp original TypeScript diagnostics'
+    t =    81.72s Find the "hanlin-import-repair-agent" Button
+    t =    82.97s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-import-repair-agent" Button`
+    t =    82.97s     Checking existence of `"hanlin-import-repair-agent" Button`
+    t =    83.21s     Find the "hanlin-import-repair-agent" Button
+    t =    83.42s     Find the "hanlin-import-repair-agent" Button
+    t =    83.66s Tap "hanlin-import-repair-agent" Button
+    t =    83.66s     Wait for com.itorah.hanlinminiapps to idle
+    t =    83.66s     Find the "hanlin-import-repair-agent" Button
+    t =    83.88s     Check for interrupting elements affecting "hanlin-import-repair-agent" Button
+    t =    83.98s         Wait for com.apple.springboard to idle
+    t =    84.00s     Synthesize event
+    t =    84.41s     Wait for com.itorah.hanlinminiapps to idle
+    t =    85.04s Wait for com.itorah.chavrusachat to become Running Foreground
+    t =    85.04s Checking existence of `"MiniApp repair unavailable" Alert`
+<unknown>:0: warning: -[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport] :     AVAudioSession_iOS.mm:978   This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread.
+<unknown>:0: warning: -[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport] :            SessionCore.mm:631   This method can lead to UI unresponsiveness if called on the main thread while the audio session is active.
+    t =    86.72s Waiting 45.0s for StaticText (First Match) to exist
+    t =    87.79s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    87.79s         Checking existence of `StaticText (First Match)`
+    t =    87.95s Wait for com.itorah.hanlinminiapps to become Running Foreground
+    t =   234.19s Waiting 90.0s for "hanlin-file-importer" Button to exist
+    t =   235.22s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-file-importer" Button`
+    t =   235.22s         Checking existence of `"hanlin-file-importer" Button`
+    t =   235.47s Checking existence of `"hanlin-import-error-message" Any`
+    t =   235.96s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+Resolve Package Graph
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLYUITests/MiniAppAuthoringUITests.swift:92: error: -[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport] : XCTAssertFalse failed
+    t =   236.70s Tear Down
+    t =   236.70s     Terminate com.itorah.chavrusachat:20367
+    t =   237.72s     Find the Application 'com.itorah.hanlinminiapps'
+    t =   238.03s     Added attachment named 'MiniApps authoring'
+    t =   238.03s     Requesting snapshot of accessibility hierarchy for app with pid 21722
+    t =   239.35s     Requesting snapshot of accessibility hierarchy for app with pid 21722
+    t =   239.59s     Added attachment named 'MiniApps authoring accessibility'
+    t =   239.59s     Terminate com.itorah.hanlinminiapps:21722
+
+Test Case '-[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport]' failed (251.326 seconds).
+Test Suite 'MiniAppAuthoringUITests' failed at 2026-11-25 15:08:51.817.
+	 Executed 1 test, with 1 failure (0 unexpected) in 251.326 (251.336) seconds
+Test Suite 'AI_HLYUITests.xctest' failed at 2026-11-25 15:08:51.818.
+	 Executed 1 test, with 1 failure (0 unexpected) in 251.326 (251.337) seconds
+Test Suite 'Selected tests' failed at 2026-11-25 15:08:51.818.
+	 Executed 1 test, with 1 failure (0 unexpected) in 251.326 (251.338) seconds
+2026-11-25 15:08:52.370 xcodebuild[19377:6017418] [MT] IDETestOperationsObserverDebug: 258.883 elapsed -- Testing started completed.
+2026-11-25 15:08:52.370 xcodebuild[19377:6017418] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-25 15:08:52.370 xcodebuild[19377:6017418] [MT] IDETestOperationsObserverDebug: 258.883 sec, +258.882 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v7/native-result/paired-prefix/FocusedRepair1.xcresult
+
+Failing tests:
+	MiniAppAuthoringUITests.testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport()
+
+** TEST EXECUTE FAILED **
+
+Testing started

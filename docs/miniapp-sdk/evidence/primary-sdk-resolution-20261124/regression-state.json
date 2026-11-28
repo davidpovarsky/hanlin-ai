@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "compiler": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/typescript/lib/typescript.js",
+  "nodeVersion": "v24.5.0",
+  "testSHA256": "958d0e0a71f47fa7677e412cd1a0ed40da43feb898b182df84e63256a05e5865",
+  "runs": {
+    "baseline": {
+      "status": "PASS",
+      "argv": [
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/bin/node",
+        "--test",
+        "--test-reporter=tap",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/sdk-resolution-proof/baseline-regression/Tests/miniapp-sdk-resolution.test.mjs"
+      ],
+      "sourceSHA256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+      "startedAt": "2026-11-24T21:50:00.711455+00:00",
+      "pid": 96554,
+      "exitCode": 1,
+      "finishedAt": "2026-11-24T21:50:02.777791+00:00",
+      "seconds": 2.063525124998705,
+      "logSHA256": "2ebbaab7ed23680f6cd6b8ca653a797660720a6090e41deb6f7cf288241a9b0b",
+      "logBytes": 4027
+    },
+    "final": {
+      "status": "PASS",
+      "argv": [
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/bin/node",
+        "--test",
+        "--test-reporter=tap",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/sdk-resolution-proof/final-regression/Tests/miniapp-sdk-resolution.test.mjs"
+      ],
+      "sourceSHA256": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9",
+      "startedAt": "2026-11-24T21:50:02.778877+00:00",
+      "pid": 96556,
+      "exitCode": 0,
+      "finishedAt": "2026-11-24T21:50:05.487117+00:00",
+      "seconds": 2.7059772919965326,
+      "logSHA256": "90b845533f587b1115b3c33d4e4021190f6bacd36653d10368c0d9bc551bc2ad",
+      "logBytes": 949
+    }
+  },
+  "phase": "final",
+  "finishedAt": "2026-11-24T21:50:05.487828+00:00"
+}

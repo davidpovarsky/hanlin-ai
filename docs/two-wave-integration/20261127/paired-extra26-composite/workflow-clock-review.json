@@ -1,0 +1,11 @@
+{
+  "status": "ACTUAL_JOB_SCHEMA_ACCEPTED_WITH_OBSERVED_CLOCK",
+  "jobID": 140464550717,
+  "jobStartedAt": 1795780338.0,
+  "deadline": 1795792938.0,
+  "remainingAtObservation": 12401.032643079758,
+  "workflowSHA256": "03346592cc0b8a91ab03e719942c939d957b91cd590aef4bf37c27d99cb2df6f",
+  "helperSHA256": "b3ec17758b36e12fe329ce47cb08e483d906134c4185f7a64ae4a910a393835a",
+  "clockSHA256": "24a91274c680c548153ed88cf429bf47a9774770a6f1d5b24a599e8729a0c2d1",
+  "scope": "Pure clock/schema control, no CI or native execution"
+}

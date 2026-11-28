@@ -1,0 +1,342 @@
+Building for debugging...
+[Computing dependencies]
+[Provisioning 2 / 15]
+[Pre-planning 1 / 389]
+[Planning 286 / 389]
+[Planning deferred tasks]
+[Constructing 300 / 1157]
+[Starting]
+[1 / 506]
+[75 / 508] HanlinStoreLifecycleProjection_HanlinPlatformContracts
+[78 / 514] CryptoBoringWrapper
+[79 / 514] HanlinPlatformContracts
+[81 / 514] HanlinPlatformContracts
+[88 / 514] CryptoBoringWrapper
+[91 / 514] HanlinMiniAppCore
+[93 / 515] HanlinPlatformContracts
+[97 / 515] CXKCP
+[100 / 516]
+[105 / 521] HanlinMiniAppCore
+[106 / 526] Crypto
+[107 / 526] CXKCP
+[110 / 526] HanlinMiniAppCore
+[114 / 526] HanlinMiniAppCore
+[115 / 526] HanlinMiniAppCore
+[118 / 527] Crypto
+[125 / 527] HanlinMiniAppCore
+[127 / 527] CCryptoBoringSSL
+[128 / 528] CCryptoBoringSSL
+[129 / 528] CCryptoBoringSSL
+[131 / 528] CCryptoBoringSSL
+[133 / 528] CCryptoBoringSSL
+[134 / 528] CCryptoBoringSSL
+[135 / 528] CCryptoBoringSSL
+[137 / 528] CCryptoBoringSSL
+[139 / 528] CCryptoBoringSSL
+[141 / 528] CCryptoBoringSSL
+[144 / 528] CCryptoBoringSSL
+[147 / 528] CCryptoBoringSSL
+[148 / 528] CCryptoBoringSSL
+[151 / 528] CCryptoBoringSSL
+[153 / 528] CCryptoBoringSSL
+[154 / 528] CCryptoBoringSSL
+[156 / 528] CCryptoBoringSSL
+[158 / 528] CCryptoBoringSSL
+[160 / 528] CCryptoBoringSSL
+[162 / 528] CCryptoBoringSSL
+[163 / 528] CCryptoBoringSSL
+[164 / 528] CCryptoBoringSSL
+[165 / 528] CCryptoBoringSSL
+[168 / 528] CCryptoBoringSSL
+[174 / 528] CCryptoBoringSSL
+[176 / 528] CCryptoBoringSSL
+[177 / 528] CCryptoBoringSSL
+[178 / 528] CCryptoBoringSSL
+[180 / 528] CCryptoBoringSSL
+[181 / 528] CCryptoBoringSSL
+[182 / 528] CCryptoBoringSSL
+[184 / 528] CCryptoBoringSSL
+[186 / 528] CCryptoBoringSSL
+[188 / 528] CCryptoBoringSSL
+[190 / 528] CCryptoBoringSSL
+[192 / 528] CCryptoBoringSSL
+[194 / 528] CCryptoBoringSSL
+[196 / 528] CCryptoBoringSSL
+[198 / 528] CCryptoBoringSSL
+[200 / 528] CCryptoBoringSSL
+[202 / 528] CCryptoBoringSSL
+[203 / 528] CCryptoBoringSSL
+[204 / 528] CCryptoBoringSSL
+[205 / 528] CCryptoBoringSSL
+[207 / 528] CCryptoBoringSSL
+[208 / 528] CCryptoBoringSSL
+[210 / 528] CCryptoBoringSSL
+[212 / 528] CCryptoBoringSSL
+[214 / 528] CCryptoBoringSSL
+[215 / 528] CCryptoBoringSSL
+[216 / 528] CCryptoBoringSSL
+[218 / 528] CCryptoBoringSSL
+[220 / 528] CCryptoBoringSSL
+[221 / 528] CCryptoBoringSSL
+[222 / 528] CCryptoBoringSSL
+[224 / 528] CCryptoBoringSSL
+[228 / 528] CCryptoBoringSSL
+[232 / 528] CCryptoBoringSSL
+[237 / 528] CCryptoBoringSSL
+[239 / 528] CCryptoBoringSSL
+[243 / 528] CCryptoBoringSSL
+[247 / 528] CCryptoBoringSSL
+[249 / 528] CCryptoBoringSSL
+[254 / 528] CCryptoBoringSSL
+[255 / 528] CCryptoBoringSSL
+[256 / 528] CCryptoBoringSSL
+[258 / 528] CCryptoBoringSSL
+[259 / 528] CCryptoBoringSSL
+[263 / 528] CCryptoBoringSSL
+[265 / 528] CCryptoBoringSSL
+[266 / 528] CCryptoBoringSSL
+[269 / 528] CCryptoBoringSSL
+[270 / 528] CCryptoBoringSSL
+[272 / 528] CCryptoBoringSSL
+[275 / 528] CCryptoBoringSSL
+[276 / 528] CCryptoBoringSSL
+[279 / 528] CCryptoBoringSSL
+[280 / 528] CCryptoBoringSSL
+[282 / 528] CCryptoBoringSSL
+[283 / 528] CCryptoBoringSSL
+[284 / 528] CCryptoBoringSSL
+[285 / 528] CCryptoBoringSSL
+[286 / 528] CCryptoBoringSSL
+[287 / 528] CCryptoBoringSSL
+[289 / 528] CCryptoBoringSSL
+[290 / 528] CCryptoBoringSSL
+[292 / 528] CCryptoBoringSSL
+[294 / 528] CCryptoBoringSSL
+[296 / 528] CCryptoBoringSSL
+[298 / 528] CCryptoBoringSSL
+[300 / 528] CCryptoBoringSSL
+[302 / 528] CCryptoBoringSSL
+[304 / 528] CCryptoBoringSSL
+[307 / 528] CCryptoBoringSSL
+[310 / 528] CCryptoBoringSSL
+[313 / 528] CCryptoBoringSSL
+[315 / 528] CCryptoBoringSSL
+[317 / 528] CCryptoBoringSSL
+[318 / 528] CCryptoBoringSSL
+[319 / 528] CCryptoBoringSSL
+[321 / 528] CCryptoBoringSSL
+[325 / 528] CCryptoBoringSSL
+[326 / 528] CCryptoBoringSSL
+[328 / 528] CCryptoBoringSSL
+[329 / 528] CCryptoBoringSSL
+[330 / 528] CCryptoBoringSSL
+[332 / 528] CCryptoBoringSSL
+[334 / 528] CCryptoBoringSSL
+[336 / 528] CCryptoBoringSSL
+[339 / 528] CCryptoBoringSSL
+[344 / 528] CCryptoBoringSSL
+[349 / 528] CCryptoBoringSSL
+[352 / 528] CCryptoBoringSSL
+[354 / 528] CCryptoBoringSSL
+[357 / 528] CCryptoBoringSSL
+[359 / 528] CCryptoBoringSSL
+[363 / 528] CCryptoBoringSSL
+[365 / 528] CCryptoBoringSSL
+[367 / 528] CCryptoBoringSSL
+[369 / 528] CCryptoBoringSSL
+[370 / 528] CCryptoBoringSSL
+[371 / 528] CCryptoBoringSSL
+[373 / 528] CCryptoBoringSSL
+[374 / 528] CCryptoBoringSSL
+[375 / 528] CCryptoBoringSSL
+[376 / 528] CCryptoBoringSSL
+[378 / 528] CCryptoBoringSSL
+[379 / 528] CCryptoBoringSSL
+[380 / 528] CCryptoBoringSSL
+[382 / 528] CCryptoBoringSSL
+[383 / 528] CCryptoBoringSSL
+[384 / 528] CCryptoBoringSSL
+[386 / 528] CCryptoBoringSSL
+[388 / 528] CCryptoBoringSSL
+[391 / 528] CCryptoBoringSSL
+[392 / 528] CCryptoBoringSSL
+[394 / 528] CCryptoBoringSSL
+[395 / 528] CCryptoBoringSSL
+[397 / 528] CCryptoBoringSSL
+[398 / 528] CCryptoBoringSSL
+[399 / 528] CCryptoBoringSSL
+[401 / 528] CCryptoBoringSSL
+[403 / 528] CCryptoBoringSSL
+[405 / 528] CCryptoBoringSSL
+[407 / 528] CCryptoBoringSSL
+[409 / 528] CCryptoBoringSSL
+[413 / 528] CCryptoBoringSSL
+[416 / 528] CCryptoBoringSSL
+[418 / 528] CCryptoBoringSSL
+[421 / 528] CCryptoBoringSSL
+[426 / 528] CCryptoBoringSSL
+[427 / 528] CCryptoBoringSSL
+[429 / 528] CCryptoBoringSSL
+[431 / 528] CCryptoBoringSSL
+[432 / 528] CCryptoBoringSSL
+[435 / 528] CCryptoBoringSSL
+[439 / 528] CCryptoBoringSSL
+[441 / 528] CCryptoBoringSSL
+[443 / 528] CCryptoBoringSSL
+[444 / 528] CCryptoBoringSSL
+[445 / 528] CCryptoBoringSSL
+[446 / 528] CCryptoBoringSSL
+[447 / 528] CCryptoBoringSSL
+[448 / 528] CCryptoBoringSSL
+[449 / 528] CCryptoBoringSSL
+[452 / 528] CCryptoBoringSSL
+[454 / 528] CCryptoBoringSSL
+[457 / 528] CCryptoBoringSSL
+[460 / 528] CCryptoBoringSSL
+[463 / 528] CCryptoBoringSSL
+[466 / 528] CCryptoBoringSSL
+[469 / 528] CCryptoBoringSSL
+[470 / 528] CCryptoBoringSSL
+[473 / 528] CCryptoBoringSSL
+[475 / 528] CCryptoBoringSSL
+[476 / 528] CCryptoBoringSSL
+[477 / 528] CCryptoBoringSSL
+[478 / 528] CCryptoBoringSSL
+[479 / 528] CCryptoBoringSSL
+[480 / 528] CCryptoBoringSSL
+[481 / 528] CCryptoBoringSSL
+[482 / 528] CCryptoBoringSSL
+[483 / 528] CCryptoBoringSSL
+[485 / 528] CCryptoBoringSSL
+[487 / 528] CCryptoBoringSSL
+[490 / 528] CCryptoBoringSSL
+[491 / 528] CCryptoBoringSSL
+[492 / 528] HanlinPlatformContracts
+[494 / 528]
+[497 / 532] HanlinScriptContracts
+[498 / 532] CCryptoBoringSSL
+[501 / 532] HanlinScriptContracts
+[507 / 536] HanlinScriptStore
+[507 / 536] HanlinScriptContracts
+[510 / 537] HanlinScriptStore
+[516 / 537] HanlinMiniAppCore
+[519 / 541] HanlinScriptStoreTests-product
+[519 / 541] HanlinScriptStore
+[524 / 542] HanlinScriptStoreTests-product
+[528 / 542]
+[529 / 542] Crypto-product
+[531 / 542] HanlinScriptStore
+[531 / 542] HanlinScriptStoreTests-product
+[535 / 543] HanlinScriptStoreTests-product
+[539 / 546] HanlinScriptStoreTests-test-runner
+[544 / 547] HanlinScriptStoreTests-test-runner
+[547 / 547] HanlinScriptStoreTests-test-runner
+Build complete! (117.93 secs)
+◇ Test run started.
+↳ Testing Library Version: 6.4.3 (ba0861fb203553c)
+↳ Target Platform: aarch64-unknown-linux-gnu
+◇ Suite "Atomic Scripting installation store" started.
+◇ Test "Install, update, rollback, disable, restore, and uninstall preserve stable identity" started.
+✘ Test "Install, update, rollback, disable, restore, and uninstall preserve stable identity" recorded an issue at HanlinAtomicScriptStoreTests.swift:64:9: Expectation failed: rolledBackSnapshot.entrypoints == [firstEntrypoint]
+↳ rolledBackSnapshot.entrypoints == [firstEntrypoint] → false
+↳   rolledBackSnapshot.entrypoints → [HanlinScriptContracts.HanlinPackageEntrypointDescriptor(id: "app", kind: HanlinScriptContracts.HanlinPackageEntrypointKind.app, sourcePath: "nativescript/app/bundle.mjs", exportedSymbol: nil, supportedContexts: Set([HanlinPlatformContracts.HanlinExecutionContext.mainApplication]), requiredCapabilities: [], runtimePolicyID: "foreground-app-v1", runtimeProfile: HanlinPlatformContracts.HanlinRuntimeProfile.hanlinNativeScript, artifactDigest: Optional("dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"), compatibility: HanlinScriptContracts.HanlinCompatibilityState.supported, widgetEngine: nil)]
+↳   [firstEntrypoint] → [HanlinScriptContracts.HanlinPackageEntrypointDescriptor(id: "app", kind: HanlinScriptContracts.HanlinPackageEntrypointKind.app, sourcePath: "expo/app/bundle.js", exportedSymbol: nil, supportedContexts: Set([HanlinPlatformContracts.HanlinExecutionContext.mainApplication]), requiredCapabilities: [], runtimePolicyID: "foreground-app-v1", runtimeProfile: HanlinPlatformContracts.HanlinRuntimeProfile.hanlinExpo, artifactDigest: Optional("cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"), compatibility: HanlinScriptContracts.HanlinCompatibilityState.supported, widgetEngine: nil)]
+✘ Test "Install, update, rollback, disable, restore, and uninstall preserve stable identity" recorded an issue at HanlinAtomicScriptStoreTests.swift:65:9: Expectation failed: rolledBackSnapshot.manifest == firstManifest
+↳ rolledBackSnapshot.manifest == firstManifest → false
+↳   rolledBackSnapshot.manifest → HanlinScriptingManifest(name: "Lifecycle NativeScript", version: "2.0.0", description: nil, localizedNames: [:], localizedDescriptions: [:], author: nil, contributors: [], icon: nil, iconImage: nil, color: nil, entry: Optional("nativescript/app/bundle.mjs"), runInApp: false, intentInputTypes: [], remoteResource: nil, hanlinAppID: Optional("fixture.lifecycle"), hanlinRuntime: Optional("hanlin-nativescript"), unknownFields: [:])
+↳     some → HanlinScriptingManifest(name: "Lifecycle NativeScript", version: "2.0.0", description: nil, localizedNames: [:], localizedDescriptions: [:], author: nil, contributors: [], icon: nil, iconImage: nil, color: nil, entry: Optional("nativescript/app/bundle.mjs"), runInApp: false, intentInputTypes: [], remoteResource: nil, hanlinAppID: Optional("fixture.lifecycle"), hanlinRuntime: Optional("hanlin-nativescript"), unknownFields: [:])
+↳       name → "Lifecycle NativeScript"
+↳       version → "2.0.0"
+↳       description → nil
+↳       localizedNames → [:]
+↳       localizedDescriptions → [:]
+↳       author → nil
+↳       contributors → []
+↳       icon → nil
+↳       iconImage → nil
+↳       color → nil
+↳       entry → "nativescript/app/bundle.mjs"
+↳         some → "nativescript/app/bundle.mjs"
+↳       runInApp → false
+↳       intentInputTypes → []
+↳       remoteResource → nil
+↳       hanlinAppID → "fixture.lifecycle"
+↳         some → "fixture.lifecycle"
+↳       hanlinRuntime → "hanlin-nativescript"
+↳         some → "hanlin-nativescript"
+↳       unknownFields → [:]
+↳   firstManifest → HanlinScriptingManifest(name: "Lifecycle Expo", version: "1.0.0", description: nil, localizedNames: [:], localizedDescriptions: [:], author: nil, contributors: [], icon: nil, iconImage: nil, color: nil, entry: Optional("expo/app/bundle.js"), runInApp: false, intentInputTypes: [], remoteResource: nil, hanlinAppID: Optional("fixture.lifecycle"), hanlinRuntime: Optional("hanlin-expo"), unknownFields: [:])
+↳     name → "Lifecycle Expo"
+↳     version → "1.0.0"
+↳     description → nil
+↳     localizedNames → [:]
+↳     localizedDescriptions → [:]
+↳     author → nil
+↳     contributors → []
+↳     icon → nil
+↳     iconImage → nil
+↳     color → nil
+↳     entry → "expo/app/bundle.js"
+↳       some → "expo/app/bundle.js"
+↳     runInApp → false
+↳     intentInputTypes → []
+↳     remoteResource → nil
+↳     hanlinAppID → "fixture.lifecycle"
+↳       some → "fixture.lifecycle"
+↳     hanlinRuntime → "hanlin-expo"
+↳       some → "hanlin-expo"
+↳     unknownFields → [:]
+✘ Test "Install, update, rollback, disable, restore, and uninstall preserve stable identity" recorded an issue at HanlinAtomicScriptStoreTests.swift:73:9: Expectation failed: restored[0].entrypoints == [firstEntrypoint]
+↳ restored[0].entrypoints == [firstEntrypoint] → false
+↳   restored[0].entrypoints → [HanlinScriptContracts.HanlinPackageEntrypointDescriptor(id: "app", kind: HanlinScriptContracts.HanlinPackageEntrypointKind.app, sourcePath: "nativescript/app/bundle.mjs", exportedSymbol: nil, supportedContexts: Set([HanlinPlatformContracts.HanlinExecutionContext.mainApplication]), requiredCapabilities: [], runtimePolicyID: "foreground-app-v1", runtimeProfile: HanlinPlatformContracts.HanlinRuntimeProfile.hanlinNativeScript, artifactDigest: Optional("dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"), compatibility: HanlinScriptContracts.HanlinCompatibilityState.supported, widgetEngine: nil)]
+↳   [firstEntrypoint] → [HanlinScriptContracts.HanlinPackageEntrypointDescriptor(id: "app", kind: HanlinScriptContracts.HanlinPackageEntrypointKind.app, sourcePath: "expo/app/bundle.js", exportedSymbol: nil, supportedContexts: Set([HanlinPlatformContracts.HanlinExecutionContext.mainApplication]), requiredCapabilities: [], runtimePolicyID: "foreground-app-v1", runtimeProfile: HanlinPlatformContracts.HanlinRuntimeProfile.hanlinExpo, artifactDigest: Optional("cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"), compatibility: HanlinScriptContracts.HanlinCompatibilityState.supported, widgetEngine: nil)]
+✘ Test "Install, update, rollback, disable, restore, and uninstall preserve stable identity" recorded an issue at HanlinAtomicScriptStoreTests.swift:74:9: Expectation failed: restored[0].manifest == firstManifest
+↳ restored[0].manifest == firstManifest → false
+↳   restored[0].manifest → HanlinScriptingManifest(name: "Lifecycle NativeScript", version: "2.0.0", description: nil, localizedNames: [:], localizedDescriptions: [:], author: nil, contributors: [], icon: nil, iconImage: nil, color: nil, entry: Optional("nativescript/app/bundle.mjs"), runInApp: false, intentInputTypes: [], remoteResource: nil, hanlinAppID: Optional("fixture.lifecycle"), hanlinRuntime: Optional("hanlin-nativescript"), unknownFields: [:])
+↳     some → HanlinScriptingManifest(name: "Lifecycle NativeScript", version: "2.0.0", description: nil, localizedNames: [:], localizedDescriptions: [:], author: nil, contributors: [], icon: nil, iconImage: nil, color: nil, entry: Optional("nativescript/app/bundle.mjs"), runInApp: false, intentInputTypes: [], remoteResource: nil, hanlinAppID: Optional("fixture.lifecycle"), hanlinRuntime: Optional("hanlin-nativescript"), unknownFields: [:])
+↳       name → "Lifecycle NativeScript"
+↳       version → "2.0.0"
+↳       description → nil
+↳       localizedNames → [:]
+↳       localizedDescriptions → [:]
+↳       author → nil
+↳       contributors → []
+↳       icon → nil
+↳       iconImage → nil
+↳       color → nil
+↳       entry → "nativescript/app/bundle.mjs"
+↳         some → "nativescript/app/bundle.mjs"
+↳       runInApp → false
+↳       intentInputTypes → []
+↳       remoteResource → nil
+↳       hanlinAppID → "fixture.lifecycle"
+↳         some → "fixture.lifecycle"
+↳       hanlinRuntime → "hanlin-nativescript"
+↳         some → "hanlin-nativescript"
+↳       unknownFields → [:]
+↳   firstManifest → HanlinScriptingManifest(name: "Lifecycle Expo", version: "1.0.0", description: nil, localizedNames: [:], localizedDescriptions: [:], author: nil, contributors: [], icon: nil, iconImage: nil, color: nil, entry: Optional("expo/app/bundle.js"), runInApp: false, intentInputTypes: [], remoteResource: nil, hanlinAppID: Optional("fixture.lifecycle"), hanlinRuntime: Optional("hanlin-expo"), unknownFields: [:])
+↳     name → "Lifecycle Expo"
+↳     version → "1.0.0"
+↳     description → nil
+↳     localizedNames → [:]
+↳     localizedDescriptions → [:]
+↳     author → nil
+↳     contributors → []
+↳     icon → nil
+↳     iconImage → nil
+↳     color → nil
+↳     entry → "expo/app/bundle.js"
+↳       some → "expo/app/bundle.js"
+↳     runInApp → false
+↳     intentInputTypes → []
+↳     remoteResource → nil
+↳     hanlinAppID → "fixture.lifecycle"
+↳       some → "fixture.lifecycle"
+↳     hanlinRuntime → "hanlin-expo"
+↳       some → "hanlin-expo"
+↳     unknownFields → [:]
+✘ Test "Install, update, rollback, disable, restore, and uninstall preserve stable identity" failed after 0.086 seconds with 4 issues.
+✘ Suite "Atomic Scripting installation store" failed after 0.087 seconds with 4 issues.
+✘ Test run with 1 test in 1 suite failed after 0.087 seconds with 4 issues.
+Note: Some test targets reported failures:
+  - HanlinScriptStoreTests (Swift Testing)

@@ -1,0 +1,39 @@
+{
+  "source": "34dc92c16b37c7e14453e86f25f14d8e5063556a",
+  "swiftFixturePath": "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinCanonicalEntrypointProjectionTests.swift",
+  "swiftFixtureSHA256": "5babc16bfe0a33eaa723f8915f4b64eb4292fefd075da0a047201fca09722d70",
+  "storedRegistryWidgetEntry": {
+    "artifactDigest": "171ecc1ab7e2eb33806822a417f0efa95393c096fcd5561e414a84b0b2a2e737",
+    "compatibility": "partial",
+    "id": "widget",
+    "kind": "widget",
+    "requiredCapabilities": [
+      {
+        "capabilityID": "inter-app.share",
+        "purpose": "Declared in package manifest.",
+        "required": false,
+        "scope": {
+          "type": "object",
+          "value": []
+        }
+      },
+      {
+        "capabilityID": "storage",
+        "purpose": "Declared in package manifest.",
+        "required": false,
+        "scope": {
+          "type": "object",
+          "value": []
+        }
+      }
+    ],
+    "runtimePolicyID": "widget-v1",
+    "runtimeProfile": "hanlin-expo",
+    "sourcePath": "widgets/widget.json",
+    "supportedContexts": [
+      "widget"
+    ],
+    "widgetEngine": "expo"
+  },
+  "qualification": "The unmodified original Swift stored-registry semantic fixture supplies the complete catalog entry. The filesystem publication/program is a pure control constructed from the unchanged original Matrix fixture metadata; it is not a recovered native snapshot or an OS pass."
+}

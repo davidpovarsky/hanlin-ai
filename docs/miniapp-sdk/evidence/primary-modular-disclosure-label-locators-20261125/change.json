@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "createdAtUTC": "2026-11-25T03:55:18.140294+00:00",
+  "status": "SOURCE_CORRECTION_NATIVE_VERIFICATION_PENDING",
+  "authorBaseCommit": "2ed8a8a624ef6ab8f5e704b40bd3cdb785b77936",
+  "actualFailedSourceCommit": "1a611764779b0a57cc57d71b26d2cd6449895d8d",
+  "failedPacketSHA256": "dce3d86d2073def816ba95f5ff6f47c82a1b231657c5748518f99e42941df06c",
+  "firstPacketSHA256": "64d0a53c3e23baa09158ad8dfd6b0275342143b7b59799264cc020a3a0d9095b",
+  "firstPacketMembersIndependentlyVerified": 14,
+  "observed": {
+    "caseStatus": "FAIL",
+    "caseSeconds": 172.791,
+    "assertionOriginalLine": 1220,
+    "firstSourceIdentifier": "modular-source-version-Genesis 1:1 (The Holy Scriptures: A New Translation (JPS 1917) [en])",
+    "originalNativeStateBefore": "expanded",
+    "originalNativeStateAfter": "collapsed",
+    "firstGroupButtonMatchesBefore": 2,
+    "firstGroupButtonMatchesAfter": 1,
+    "expectedLoadIdentifierCountBefore": 0,
+    "expectedLoadIdentifierCountAfter": 0,
+    "fullTextAPIStage": "NOT_REACHED",
+    "interpretation": "The real native disclosure collapsed and removed its own Full text row; the outer group's identifier replaced the child Button's requested identifier, so the old existence query was false in both states."
+  },
+  "changes": [
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/App.tsx",
+      "mode": "100644",
+      "before": {
+        "bytes": 25786,
+        "sha256": "4e8389eb6a232e6ed5db8273dd2686e45ab04edabd2e86bfea74cbdf862e5b7c"
+      },
+      "after": {
+        "bytes": 26038,
+        "sha256": "ac62c2f394dceedb422c0fbe05d4182afba07e1bf78fb15828d3f936d212ae8a"
+      }
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "mode": "100644",
+      "before": {
+        "bytes": 76913,
+        "sha256": "93db32b6af9af1eeba85070086c5d0eb6b9b80198dc161004d5729c7cc38d4d0"
+      },
+      "after": {
+        "bytes": 78468,
+        "sha256": "84ede1a7dbafac2415c88cb276d2b04c0c0bce0a139f704b7737bcd307dd4ad8"
+      }
+    }
+  ],
+  "originalAPIs": [
+    "DisclosureGroup.Label",
+    "Text modifiers accessibilityIdentifier"
+  ],
+  "preserved": [
+    "original SwiftUI DisclosureGroup state and actions",
+    "original full-text request and response content",
+    "source-entry and returned-version binding",
+    "40-character and six-word body checks",
+    "language and source attachments",
+    "original 10/15/60/420-second waits and case limit",
+    "original 600-second focused command limit",
+    "SDK10/Host/native framework inputs"
+  ],
+  "review": {
+    "independentSourceReview": "CLEAR by sdk_reconcile on exact two candidate hashes",
+    "nativeResult": "NOT_RUN"
+  }
+}

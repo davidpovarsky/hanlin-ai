@@ -1,0 +1,35 @@
+{
+  "atUTC": "2026-11-28T10:32:29.436380+00:00",
+  "reviewer": "/root",
+  "status": "EXACT_THREE_EVENT_FIXTURE_REPAIR_APPROVED_SOURCE_ONLY",
+  "base": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+  "beforeSHA256": "cab45c3fe1e7733cc772e6e08cc0cc3fddef2c8254a0d98e219f392e1f17408f",
+  "afterSHA256": "c48f33bd0179cc95b0fbf1c5f7455c8e49831ddc612e32ce2eef6fa55a6cb474",
+  "candidateManifestSHA256": "8990cde4279134295fe45840789ecbd7113ea5a4daef2b8037dcc2dd51592d69",
+  "patchSHA256": "241d3b8c83e97595d20e6f2055d6fde09f214cb47fc1a699af6a074331217b74",
+  "allFourFrozenPayloadsVerified": true,
+  "actualCurrentGitPreimageVerified": true,
+  "literalOnlyThreeEventInsertions": true,
+  "wholeFileInverseExact": true,
+  "allOriginalTestBodiesAssertionsAndBudgetsUnchanged": true,
+  "controlledInstallWaitActorContinuationAndReleaseUnchanged": true,
+  "noContentBeforeOriginalFinishRelease": true,
+  "actualFailedMethods": [
+    "HanlinAppAgentSessionOwnerTests/differentOwnerCannotUseTheDrainBarrierToBypassALiveWriter()",
+    "HanlinAppAgentSessionOwnerTests/deletedOriginalRowDuringInternalInvalidationCannotConstructANewEngine()"
+  ],
+  "actualEightFailureEvidenceSHA256": "c24e8fd4b5e846bc9aa96dc77e95c04ccc6330b27417fa3767b62d7889e4f57d",
+  "actualNativeSource": "de7758a9647122e302e996e72f3b9c63776764cc",
+  "actualFailureQualification": "Actual Gitde plus retained36-path tracked preparation patch and255 adapted native files. The relevant five test files and listed owner/API/Session/engine files are absent from the actual tracked overlay. No separate hash of every compiled Swift input is claimed.",
+  "productionEmptyResponseGuardUnchanged": {
+    "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+    "sha256": "454a3cb784d8c0e64541bf3204ee77ebd4852d79e8e4bd98d1768f41ff93cf29"
+  },
+  "existingOriginalV3EventAuthoritiesVerified": true,
+  "independentMacReviewSHA256": "34026aa96ac76cc2218eecfe1e5b76393ac52ce4f3132ba5284d2cca42e7ddc1",
+  "sixSharedConsumersRetainOriginalNativeGate": true,
+  "native": "NOT_RUN",
+  "portableMirrorTests": "NOT_RUN",
+  "approvalLimit": "Source repair only. All original owner-suite cases, including four previously passing cancellation/CAS consumers, remain required in the admitted native route."
+}

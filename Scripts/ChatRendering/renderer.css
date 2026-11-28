@@ -1,0 +1,11 @@
+:root { color-scheme: light dark; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+html, body { margin: 0; padding: 0; direction: ltr; background: transparent; }
+#render-host { display: inline-block; min-width: 100%; }
+svg { display: block; max-width: none !important; height: auto; }
+.d2h-wrapper { text-align: left; direction: ltr; }
+.d2h-code-line, .d2h-code-side-line, .d2h-code-line-ctn, .d2h-code-linenumber, .d2h-code-side-linenumber {
+  direction: ltr; unicode-bidi: isolate; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 1rem;
+}
+.d2h-code-line-ctn { white-space: pre; }
+.d2h-file-wrapper { margin-bottom: 0; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }

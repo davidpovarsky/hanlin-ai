@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "source": "4cde88df07a2f3cd86cc99ad87786c79ae207390",
+  "observedAt": "2026-11-25T16:33:46.683607+00:00",
+  "members": [
+    {
+      "name": "0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-5D47B2CD-46E6-4C92-8B2E-C7A3AC68D0CF-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-7D722BAF-C324-45C5-B39A-93F7337C63C0/Session-AI_HLYUITests-2026-11-25_171902-p5XxYC.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v10-diagnostics-export/0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-5D47B2CD-46E6-4C92-8B2E-C7A3AC68D0CF-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-7D722BAF-C324-45C5-B39A-93F7337C63C0/Session-AI_HLYUITests-2026-11-25_171902-p5XxYC.log",
+      "originalBytes": 12698373,
+      "originalSHA256": "6aac24831c61489350623a0ab9389c9403bbbd14a4fb3a98da646571d10d7d65",
+      "bytes": 1245934,
+      "sha256": "9c2b66bb5cf0c19e9f32654fea6e9e5137941c0550ccc70529dc301cfaf90729",
+      "mtimeNs": "1795624357449373482"
+    },
+    {
+      "name": "0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-5D47B2CD-46E6-4C92-8B2E-C7A3AC68D0CF-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-7D722BAF-C324-45C5-B39A-93F7337C63C0/StandardOutputAndStandardError-com.itorah.chavrusachat.txt.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v10-diagnostics-export/0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-5D47B2CD-46E6-4C92-8B2E-C7A3AC68D0CF-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-7D722BAF-C324-45C5-B39A-93F7337C63C0/StandardOutputAndStandardError-com.itorah.chavrusachat.txt",
+      "originalBytes": 636956,
+      "originalSHA256": "1fbe9ad52e783c25462291117caa27fc7ba0a8fce94cab9bdbae713b460d21a5",
+      "bytes": 41050,
+      "sha256": "e955484f87e462937e2d77486d5fe6d43bfa1c7949774ecf3bb9d1f8e090f136",
+      "mtimeNs": "1795624357439198879"
+    },
+    {
+      "name": "0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-5D47B2CD-46E6-4C92-8B2E-C7A3AC68D0CF-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-7D722BAF-C324-45C5-B39A-93F7337C63C0/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v10-diagnostics-export/0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-5D47B2CD-46E6-4C92-8B2E-C7A3AC68D0CF-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-7D722BAF-C324-45C5-B39A-93F7337C63C0/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+      "originalBytes": 78624187,
+      "originalSHA256": "7feb9112b2e7e257f0f620649ae06624c3dc7e00b5d03cef00153e23be665b87",
+      "bytes": 4478919,
+      "sha256": "90f676b6db7553f237a01c9496246e5f28bc809e6b5f3ef576cd95a3c449773e",
+      "mtimeNs": "1795624357436967176"
+    },
+    {
+      "name": "0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-5D47B2CD-46E6-4C92-8B2E-C7A3AC68D0CF-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-7D722BAF-C324-45C5-B39A-93F7337C63C0/StandardOutputAndStandardError.txt.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v10-diagnostics-export/0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-5D47B2CD-46E6-4C92-8B2E-C7A3AC68D0CF-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-7D722BAF-C324-45C5-B39A-93F7337C63C0/StandardOutputAndStandardError.txt",
+      "originalBytes": 55817,
+      "originalSHA256": "2ef30af3cef02e3dd8a120d5775bd4d4874b6353794aea83897e2e65fe1539a8",
+      "bytes": 5025,
+      "sha256": "dd8baaa7c8de4f4904157d196f05d8b9503b85dfa48aedb509665fdb1a49d18d",
+      "mtimeNs": "1795624357375192939"
+    },
+    {
+      "name": "0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-5D47B2CD-46E6-4C92-8B2E-C7A3AC68D0CF-Configuration-Test Scheme Action-Iteration-1/scheduling.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v10-diagnostics-export/0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-5D47B2CD-46E6-4C92-8B2E-C7A3AC68D0CF-Configuration-Test Scheme Action-Iteration-1/scheduling.log",
+      "originalBytes": 667,
+      "originalSHA256": "5d0308944062559a2192d7c8dc2a128accab79e9705c289722da921b264cbaf6",
+      "bytes": 298,
+      "sha256": "8bd24af1207400eb970f0a63ba1e9c1cfbc453e9657aa03b2535324881065980",
+      "mtimeNs": "1795624357374535565"
+    },
+    {
+      "name": "0_Test_HanlinPaired-local_Diagnostics/HanlinPaired-local_E742FBCD-8FF0-4130-B143-7F8328637138/testmanagerd.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v10-diagnostics-export/0_Test_HanlinPaired-local_Diagnostics/HanlinPaired-local_E742FBCD-8FF0-4130-B143-7F8328637138/testmanagerd.log",
+      "originalBytes": 2366,
+      "originalSHA256": "d7ab473d6c8193169b345a1117d712459c7e66de0dc023e398d7bf5370f3da1b",
+      "bytes": 830,
+      "sha256": "d3bbce33d1aa29a1e2b1af89547392a23f4a1fdeb14b0caa1bfd08377aad9773",
+      "mtimeNs": "1795624357374137650"
+    }
+  ],
+  "markerExcerpt": {
+    "path": "marker-excerpts.json",
+    "bytes": 18358,
+    "sha256": "5c58c9bdf6119c86b1c767de3452a48c1c9fb693e59c225c2f93b86318542bdb"
+  },
+  "collectorSHA256": "6caf1b65343fa0564f085527f5e3a2e5eba2d0bf815e97ad2b16fe321a7e4db5",
+  "exportCommandSHA256": "dfa24330fd910ac03c3f47bf3e012de3070d75cf1df524a7d9ca4fc3c8e630ba",
+  "boundary": "All six finalized diagnostic raw members retained losslessly; gzip raw hashes verified on Oracle. Read-only export/capture, no additional app/test execution."
+}

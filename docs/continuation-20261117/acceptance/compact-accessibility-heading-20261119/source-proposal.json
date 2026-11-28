@@ -1,0 +1,20 @@
+{
+  "observed_at": "2026-11-19T04:26:58.131498+00:00",
+  "canonical_head": "7d5f0a47d7cfb98b28fd9f16d83a2b917618da95",
+  "source_file": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinMorphComposer.swift",
+  "before_sha256": "769baa617e282b957b33c51e34c413ee1696673d399345faddb4fb2264b5b764",
+  "after_sha256": "1557a79d273f0fdf6e1def1a2d40790c5da81a2b80fdd8f102f7b9f8aed1d404",
+  "patch_sha256": "629a014424ab02762b913c83213909626efb5977b8a7b03a37698537d49e4e35",
+  "swift_parse_exit": 0,
+  "git_apply_check_exit": 0,
+  "native_affected_selectors": [
+    "AI_HLYUITests/HanlinMorphComposerUITests/testCompactLargeTextWithAttachment",
+    "AI_HLYUITests/HanlinMorphComposerUITests/testCompactNavigationKeepsDraft"
+  ],
+  "native_acceptance": "PENDING; original assertions unchanged",
+  "root_mutated": false,
+  "evidence_run": "44447123515",
+  "evidence_source": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+  "artifact_sha256": "a78d7b0fc7404df07d48f27386806fee7c15a33208127346ba3c68c5a654796d",
+  "cause": "At accessibility Dynamic Type, the fixed title+subtitle toolbar consumes 535.7pt, pageBudget clamps to0 and all three original swipes see a zero-height viewport. Heading moves into the existing page scroll at accessibility sizes; back/close remain in the fixed toolbar. Text scaling, original contents, bounds/keyboard owner and input state remain original."
+}

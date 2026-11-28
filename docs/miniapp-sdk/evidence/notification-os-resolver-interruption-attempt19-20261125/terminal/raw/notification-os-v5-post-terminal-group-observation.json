@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T19:52:00.043183+00:00",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "terminal": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/state.json",
+    "bytes": 6435,
+    "sha256": "ba83da13e54a4bc839d9d99a9a9dfc29c3e5896eb4416d8ae965bcbfa637760e"
+  },
+  "recordedCleanupErrors": [
+    "test group cleanup: [Errno 1] Operation not permitted"
+  ],
+  "pidLiveness": {
+    "7320": "ABSENT",
+    "7517": "ABSENT",
+    "7530": "ABSENT"
+  },
+  "groupLiveness": "ABSENT",
+  "signalsSent": [],
+  "groupCandidates": {
+    "argv": [
+      "/usr/bin/pgrep",
+      "-g",
+      "7517"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "primary": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/state.json",
+    "bytes": 126822,
+    "sha256": "009d98edeb4b2a7a4efd6640f91f1b6424b8151a79454e7508cc6753b1264108",
+    "status": "FAIL",
+    "controllerPID": null,
+    "phasePID": null,
+    "activeElapsedSeconds": 25204.83441242004
+  },
+  "ledger": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/ledger.json",
+    "bytes": 2219,
+    "sha256": "7b710d0bba8e359839a0f15cb61d4fc9509a3709234b7a52c8213358455dbaa4",
+    "data": {
+      "schema": 1,
+      "id": "notification-os-v5",
+      "maximumActiveSeconds": 900,
+      "activeElapsedSeconds": 897.3027506670041,
+      "charges": [
+        {
+          "id": "notification-os-v1",
+          "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+          "status": "FAILED",
+          "elapsedSeconds": 353.58866224999656,
+          "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/state.json",
+          "decisionSHA256": "6c6daf1c44424cd0c7e68de78a6a46f8727cac01c392eda43c4ed97648109d88",
+          "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines",
+          "separateFromPaired4500AndCompanion1200": true
+        },
+        {
+          "id": "notification-os-v3",
+          "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+          "status": "FAILED",
+          "elapsedSeconds": 12.940106750000268,
+          "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v3/state.json",
+          "decisionSHA256": "0705ed2f72a5a17bcd82b9ce94e8eda8dc5e96eb368f921e438042a6b25716c8",
+          "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines",
+          "separateFromPaired4500AndCompanion1200": true
+        },
+        {
+          "id": "notification-os-v5",
+          "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+          "status": "CLEANUP_INCOMPLETE",
+          "elapsedSeconds": 530.7739816670073,
+          "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/state.json",
+          "decisionSHA256": "ce8d33c24728872dcab36cf20d643f9b5d2b1e94ae312b144513824237a48aa5",
+          "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines",
+          "separateFromPaired4500AndCompanion1200": true
+        }
+      ],
+      "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+      "separateFromPaired4500AndCompanion1200": true,
+      "priorLedger": {
+        "path": "build/primary-control/notification-os-v3/ledger.json",
+        "bytes": 1618,
+        "sha256": "daf72502217aab831e6cf60a662c444990cd14634db8840d254671ed7b83ae44"
+      }
+    }
+  },
+  "boundary": "Read-only observation of exact recorded controller/test/xcode PIDs and test PGID after actual terminal. No process signal, simulator action, test, build or ledger rewrite."
+}

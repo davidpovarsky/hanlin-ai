@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-23T20:43:36.636768+00:00",
+  "repository": "davidpovarsky/swift-ai-sdk",
+  "base": "e7bf34111e603ca977becd007dd4e5bb109af857",
+  "candidate": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "exactAncestor": true,
+  "mergeBase": "e7bf34111e603ca977becd007dd4e5bb109af857",
+  "existingOwnerWorktree": "/mnt/development/projects/worktrees/swift-ai-sdk-otzaria-continuation-20261123",
+  "ownerWorktreeCleanAtInspection": true,
+  "descendantCommits": [
+    {
+      "sha": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+      "subject": "ci: qualify complete package after deterministic abort fixture repair"
+    },
+    {
+      "sha": "c576700678efd099e2f9c9f0df33c745a7698989",
+      "subject": "test: order abort forwarding after actual tool entry [skip ci]"
+    },
+    {
+      "sha": "06388864fd8fce188c4c8caf64c149ee6561185b",
+      "subject": "fix(ci): reuse authentic red evidence and read Swift Testing reports"
+    },
+    {
+      "sha": "77608e3156175165439eed6dad90581863db43c2",
+      "subject": "fix(ci): retain stream evidence and compare normalized finish reasons"
+    },
+    {
+      "sha": "32115be05939fad026d40f0e41e479a2742c3f72",
+      "subject": "ci: run unchanged stream regression on supported macOS Intel pool"
+    },
+    {
+      "sha": "450b844f2cd11c9d59d73ed57ec040361e38560a",
+      "subject": "ci: verify original tool-result regression and shared streaming fix on Apple"
+    },
+    {
+      "sha": "29c966696795fe1431bca7afd8cb91011c665a41",
+      "subject": "fix: continue streaming from completed tool results regardless of finish label"
+    }
+  ],
+  "changedPaths": [
+    "A\t.github/workflows/otzaria-stream-continuation.yml",
+    "M\tSources/SwiftAISDK/GenerateText/StreamTextActor.swift",
+    "M\tTests/SwiftAISDKTests/GenerateText/GenerateTextTests.swift",
+    "A\tTests/SwiftAISDKTests/GenerateText/StreamTextToolResultContinuationTests.swift",
+    "A\tscripts/otzaria-stream-continuation-evidence.py"
+  ],
+  "productionPaths": [
+    "Sources/SwiftAISDK/GenerateText/StreamTextActor.swift"
+  ],
+  "productionOrigin": "29c966696795fe1431bca7afd8cb91011c665a41",
+  "privateFunction": "StreamTextActor.shouldStartAnotherStep()",
+  "newEligibility": "Nonempty completed client tool outputs or pending deferred calls, then unchanged stop conditions; provider finish label no longer determines continuation.",
+  "publicAPIsChanged": false,
+  "packageManifestChanged": false,
+  "providerOrAuthSourcesChanged": false,
+  "reviewedFileHashes": {
+    "Sources/SwiftAISDK/GenerateText/StreamTextActor.swift": {
+      "e7bf34111e603ca977becd007dd4e5bb109af857": {
+        "bytes": 67087,
+        "sha256": "b9f6de97279affdfea026c1c1a4e4ba2561446d2f852b96bdb787b7648f4debf"
+      },
+      "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8": {
+        "bytes": 67180,
+        "sha256": "f50df181f9fa6c4bf33ab52c76a8a2b5ac07b1965cea5421ad6eafad168c1a1d"
+      }
+    },
+    "Package.swift": {
+      "e7bf34111e603ca977becd007dd4e5bb109af857": {
+        "bytes": 16849,
+        "sha256": "d722e29048a402885debf80068629cad76c40ff7c91c539ff978a50b109ac58c"
+      },
+      "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8": {
+        "bytes": 16849,
+        "sha256": "d722e29048a402885debf80068629cad76c40ff7c91c539ff978a50b109ac58c"
+      }
+    },
+    "Sources/SwiftAISDK/GenerateText/StreamText.swift": {
+      "e7bf34111e603ca977becd007dd4e5bb109af857": {
+        "bytes": 85451,
+        "sha256": "94449a5545198efcc142ccf2e6d0582538be744d849e9c04e313f988beb81eed"
+      },
+      "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8": {
+        "bytes": 85451,
+        "sha256": "94449a5545198efcc142ccf2e6d0582538be744d849e9c04e313f988beb81eed"
+      }
+    }
+  },
+  "patchSHA256": "8db5b2cd5fa4d92b721dc5be5de2454e4484a0fa72d9f475ffecdf05bd699fe6",
+  "testOrArtifactAcquisitionByThisReview": 0
+}

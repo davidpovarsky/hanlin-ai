@@ -1,0 +1,3 @@
+Paired command starting: mini-build.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: mini-build.log; pid=3536748; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: mini-build.log; pid=3536748; elapsed=0.0s; log_bytes=13; observed_exit=65

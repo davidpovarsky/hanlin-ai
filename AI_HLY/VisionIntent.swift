@@ -6,24 +6,29 @@
 //
 
 import AppIntents
+import HanlinLocalization
 import SwiftUI
 
 
-struct OpenVisionIntent: AppIntent {
-    static var openAppWhenRun: Bool = true
-    static var title: LocalizedStringResource = "启动视觉"
-    static var description = IntentDescription("打开应用的视觉页面")
-    static var supportsWidget: Bool = true
-    static var supportsForegroundExecution: Bool = true
-    static var suggestedInvocationPhrase: String? = "启动视觉"
+public struct OpenVisionIntent: AppIntent {
+    public static let openAppWhenRun: Bool = true
+    public static let title = LocalizedStringResource("Open Hanlin Camera", table: "HanlinAppIntents")
+    public static let description = IntentDescription(LocalizedStringResource("Opens Hanlin’s camera and visual analysis.", table: "HanlinAppIntents"))
+    public static let supportsWidget: Bool = true
+    public static let supportsForegroundExecution: Bool = true
+    public static let suggestedInvocationPhrase: String? = "Open Hanlin Camera"
     
+    public init() {}
+
     @MainActor
-    func perform() async throws -> some IntentResult {
+    public func perform() async throws -> some IntentResult {
         
-        if let url = URL(string: "AI-Hanlin://openVisionView") { // 自定义 URL Scheme
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        guard let url = HanlinApplicationProcessRuntime.shared.systemIntegrations.visionURL else {
+            throw HanlinApplicationSystemIntegrationError.visionRouteNotConfigured
         }
-        
+        guard await UIApplication.shared.open(url, options: [:]) else {
+            throw HanlinApplicationSystemIntegrationError.visionRouteUnavailable
+        }
         return .result()
     }
 }

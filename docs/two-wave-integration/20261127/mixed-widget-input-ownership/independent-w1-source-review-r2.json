@@ -1,0 +1,57 @@
+{
+  "status": "APPROVED_FOR_ORIGINAL_NATIVE_GREEN",
+  "reviewer": "/root/w1_review_resume",
+  "at": "2026-11-28T00:10:27.301242+00:00",
+  "sourceBase": "34dc92c16b37c7e14453e86f25f14d8e5063556a",
+  "manifestSHA256": "5748d4ccc60c237e0e088efef79ae0b30418be35bae57dff5f8e5bfbe7dd1567",
+  "verifiedPacketMembers": 10,
+  "compilerSHA256": "84f13725a823e11c473b97c62a807858c6acb5fb03370ecb750f8bcab3a72dd2",
+  "newTestsSHA256": "35f2f46958ede390460b2811220a4ec0c1fdff3a80a57d6c937e53093c4e85c3",
+  "wholeOriginalCompilerByteInverse": true,
+  "newMethods": [
+    "mixedNativeWidgetKeepsDynamicImportsAndResourceAliases",
+    "compiledInventoryDoesNotHideUnrecognizedPublishedHelpers",
+    "configuredDebuggerSourceRootDoesNotChangeOwnership",
+    "declaredSharedModuleAndMapOverrideForegroundPairClassification",
+    "incompleteOrChangedVisibleInventoriesFailClosed",
+    "escapingChangedAndAmbiguousResourceCopiesFailClosed",
+    "explicitlySharedLargeResourceStillHitsOriginalArtifactLimit",
+    "bundleOnlyAndUnrecognizedAuthoringKeepOriginalInputs"
+  ],
+  "reviewedProperties": [
+    "Projection applies only to recognized source-bearing mixed Expo/NativeScript Widget packages. Unrecognized/legacy inputs retain the original path.",
+    "Complete visible source/compiled inventories, hash equality, normalized paths, no file/directory overlap, original/retained manifest identity, engine and prepared entry/package contracts are checked before subtraction.",
+    "Compiled inventory membership alone never classifies ownership. Native module/map pairs bind emitted paths to exact retained source bytes; canonical wrappers and dedicated assistant roots are checked.",
+    "Declared resource copies and byte-exact native presentation/root copies protect shared assets and computed dynamic-import helpers; NativeScript resource aliases override foreground subtraction. Unrecognized published helpers remain visible.",
+    "Configured TypeScript sourceRoot is debugger metadata, never fetched or used as a file path. Exact installed TS5.9.3 source confirms normalized string/source-path semantics. R2 addresses the observed source-review default incompatibility.",
+    "Optional retained descriptor, entry/config inheritance and optional package/name/version match the unchanged canonical producer. Distinct assistant source requirement is an original producer contract.",
+    "Original compiler adapter/runtime, native presentation preparation, resource parsing and 3MiB artifact writer remain unchanged. All original source bytes remain with the installation caller; only Widget input projection changes."
+  ],
+  "controlsReviewed": {
+    "newMethods": 8,
+    "malformedInventoryAndResourceVariants": 11,
+    "coverage": [
+      "shared computed imports and aliases",
+      "unknown compiled helper retained",
+      "configured debugger sourceRoot",
+      "shared module/map precedence",
+      "visible inventory corruption and file/directory overlap",
+      "escaping/changed/overlapping resources",
+      "original oversized shared-resource writer rejection",
+      "legacy/unrecognized envelope behavior",
+      "inherited descriptor and optional package fields"
+    ]
+  },
+  "sourceAuthorities": {
+    "canonicalAuthoring": "06fbe72f889da3befe00c2dfe9b286f062decd59a50c1df9c961df3bcb46b745",
+    "assistantTools": "721ed8ccf94803776a8d0c2f9ea8e7bb9e9fb7bc9faa27cc216d6ec65512ebcf",
+    "installedTSReceipt": "c14caad16fa3c884dc4662e76028ace66e0a9011ce469ea0a145605bfdf2ef48",
+    "installedTSSource": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675"
+  },
+  "limitations": [
+    "Source/API review is not native compilation or acceptance PASS.",
+    "The exact two unchanged retained-archive methods and eight new controls still require actual native reconciliation on integrated R2.",
+    "One actual SDK source input changes; the old packed SDK/Host is not current-qualified by this review."
+  ],
+  "testsOrNativeRunByReviewer": false
+}

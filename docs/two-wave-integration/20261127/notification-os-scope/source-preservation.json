@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "base": "36ad5c3205700153300539750ed66e8030f806cc",
+  "runnerBeforeSHA256": "2416d7330be0fef0f40193493c8c657eb095e5401b8aa50438250d89a9a0bee3",
+  "runnerAfterSHA256": "b10f64e508e512b4099dba2fab430dca915287d46c8afa5b6d472994965d316b",
+  "entireOriginalModuleASTRecovered": true,
+  "projection": "Remove only notification constants/helpers/imports, one plan key, exact notification-only branches and one notification device-family member. All remaining complete module AST equals the original.",
+  "originalDefault": "baseline",
+  "originalPlanCounts": {
+    "cross_app": 23,
+    "baseline": 7,
+    "production_runtimes": 25
+  },
+  "newOriginalSelector": {
+    "scope": "notification_os",
+    "expectedXCTestCases": 1,
+    "workerPushObservations": 5
+  },
+  "newPortableControls": [
+    "test_missing_build_reuse_wrong_selector_and_parallelism_never_launch",
+    "test_wrong_source_missing_worker_or_changed_prepared_diff_never_launch",
+    "test_wrong_created_device_or_prior_result_never_launch",
+    "test_current_metadata_binds_both_containers_without_equating_directory_and_metadata_uuid",
+    "test_installed_debug_code_test_binary_and_post_xctest_fixture_must_match",
+    "test_stale_future_nonfinite_or_coerced_active_identity_is_rejected",
+    "test_complete_original_five_observations_require_both_actual_process_results",
+    "test_foreign_run_missing_observation_and_bool_version_cannot_pass",
+    "test_changed_durable_receipt_or_wrong_product_store_cannot_pass",
+    "test_push_command_and_raw_output_are_bound_to_the_owned_device",
+    "test_actual_failed_result_and_duplicate_semantics_cannot_be_relabelled",
+    "test_worker_starts_only_after_actual_fresh_ui_exchange_and_uses_original_budgets",
+    "test_worker_deadline_stops_only_its_owned_children_and_zero_exit_cannot_pass",
+    "test_exited_child_race_or_one_cleanup_error_still_stops_other_child_and_persists_receipt"
+  ],
+  "workerPreservedSHA256": "f6cf4e040f592fa94ebf9fd813b6e03d125d5c7c32dc2d2a43f3b42cdb33d085",
+  "wholeUIFilePreservedSHA256": "87be423d2e5bbe9e8fbd4ab97182f2dc1415ca7538f6a705a5bec46d85cf9cc0",
+  "nativeExecution": "NOT_RUN",
+  "reviewCorrection": "Only owned-child exit-race handling and independent cleanup/receipt persistence added after R2; all thirteen prior control methods preserved."
+}

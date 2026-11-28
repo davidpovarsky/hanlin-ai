@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "path": "candidate.swift",
+      "bytes": 298143,
+      "sha256": "463f118a38c6945eac42ed0d66037d9a6f4925092897f5eb4983e64f0ba88a6c"
+    },
+    {
+      "path": "edit-recipe.json",
+      "bytes": 21631,
+      "sha256": "82ac768793136e9e2ee42cfba39956edb042ec6e61b96a1ca29da6bba21c41cc"
+    },
+    {
+      "path": "original.swift",
+      "bytes": 294721,
+      "sha256": "94287f72d62edf8e15a77a01cc6b7869d46b591575f811886e0c5fe3661eeb93"
+    },
+    {
+      "path": "qualification.json",
+      "bytes": 4008,
+      "sha256": "539ae4483e6b11a5f909c1b486d2bb934ade0c59e66a8b8cf87e8f43c61e0841"
+    },
+    {
+      "path": "r1-to-r2.patch",
+      "bytes": 1531,
+      "sha256": "c0a711548a15cebb32172f2b55fe249a1b0dc06fefb1352188a2c257786fe323"
+    },
+    {
+      "path": "source.patch",
+      "bytes": 5865,
+      "sha256": "6f33bc0f4767b41678a5091899a728a9ea2ef8a49c6a5b13008ccf51dad9cee1"
+    }
+  ]
+}

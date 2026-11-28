@@ -1,0 +1,558 @@
+{
+  "schemaVersion": 1,
+  "declarationDefaults": {
+    "global.d.ts": {
+      "status": "not-yet-implemented",
+      "notes": "The authorized ambient API has no complete runtime binding and conformance test yet; declaration presence is not treated as support."
+    },
+    "node.d.ts": {
+      "status": "not-yet-implemented",
+      "notes": "Untrusted packages receive no ambient Node runtime. Individual compatible operations require an explicit brokered binding and test."
+    },
+    "safari-ext.d.ts": {
+      "status": "not-yet-implemented",
+      "notes": "Safari extension declarations require a separately entitled, precompiled extension surface and are not currently bound."
+    },
+    "scripting.d.ts": {
+      "status": "not-yet-implemented",
+      "notes": "The symbol is authorized for compatibility work but lacks a complete observable binding and conformance test."
+    },
+    "web-fetch.d.ts": {
+      "status": "not-yet-implemented",
+      "notes": "A capability-gated network broker exists, but this declaration is not yet connected through the package runtime as a tested Web-compatible binding."
+    }
+  },
+  "symbolGroups": [
+    {
+      "symbols": [
+        "AppIntentManager",
+        "AppIntentProtocol",
+        "BarChart",
+        "Button",
+        "Capsule",
+        "Chart",
+        "Circle",
+        "Color",
+        "ControlGroup",
+        "ContentUnavailableView",
+        "Divider",
+        "DisclosureGroup",
+        "Form",
+        "Fragment",
+        "Group",
+        "GroupBox",
+        "HStack",
+        "Image",
+        "Label",
+        "LazyVGrid",
+        "List",
+        "Link",
+        "Markdown",
+        "Menu",
+        "Navigation",
+        "NavigationDestination",
+        "NavigationLink",
+        "NavigationSplitView",
+        "NavigationStack",
+        "Picker",
+        "ProgressView",
+        "Rectangle",
+        "RoundedRectangle",
+        "Section",
+        "Slider",
+        "ScrollView",
+        "ScrollViewReader",
+        "SVG",
+        "Spacer",
+        "Tab",
+        "TabView",
+        "Text",
+        "TextField",
+        "Toggle",
+        "Toolbar",
+        "ToolbarItem",
+        "VStack",
+        "ZStack",
+        "createContext",
+        "createElement",
+        "useCallback",
+        "useContext",
+        "useEffect",
+        "useEffectEvent",
+        "useMemo",
+        "useObservable",
+        "useReducer",
+        "useRef",
+        "useState"
+      ],
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession",
+      "hanlinAPIVersion": "hanlin.scriptui/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["The live JavaScriptCore bridge implements the listed component, hook, navigation and presentation subset, including observable subscription, reducer state, native URL links, NavigationStack paths, dynamic string NavigationDestination builders, direct NavigationLink destinations, split-view bindings, ScrollViewReader proxy scrolling and native back propagation; declaration members outside that tested subset remain unavailable and are not synthesized dynamically."],
+      "tests": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReconcilerTests.swift",
+        "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"
+      ],
+      "notes": "Validated with untouched Sefaria and agent projects reaching native split-navigation roots, a real 49-source-module package rendering a 356-node interactive ScriptUI tree, the real FileManager package, and targeted state, navigation, scrolling and control tests."
+    },
+    {
+      "symbols": [
+        "addFileBookmark",
+        "bookmarkExists",
+        "bookmarkedPath",
+        "DocumentPickerBookmarkResult",
+        "exportFiles",
+        "ExportFilesOptions",
+        "getAllFileBookmarks",
+        "pickDirectoryBookmark",
+        "PickDirectoryBookmarkOptions",
+        "pickFileBookmark",
+        "PickFileBookmarkOptions",
+        "removeFileBookmark"
+      ],
+      "status": "implemented",
+      "hanlinSymbol": "HanlinScriptingPackageFileSystem",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "files",
+      "allowedContexts": ["mainApplication"],
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
+      "notes": "The declared file-bookmark and native export values and operations are connected end to end with bounded validation, package-local persistence, security-scope lifecycle handling, cancellation semantics and deterministic contract coverage."
+    },
+    {
+      "symbols": ["addItems", "getItems", "setItems"],
+      "status": "implemented",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Pasteboard",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "pasteboard",
+      "allowedContexts": ["mainApplication"],
+      "tests": [
+        "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+        "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"
+      ],
+      "notes": "Typed UTType item dictionaries round-trip strings, Data and UIImage values through a bounded capability-gated native bridge. setItems also preserves local-only and expiration-date privacy options."
+    }
+  ],
+  "symbols": [
+    {
+      "symbol": "Clipboard",
+      "status": "implemented",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Clipboard",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "pasteboard",
+      "allowedContexts": ["mainApplication"],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "The deprecated copyText/getText compatibility namespace delegates exactly to the bounded asynchronous Pasteboard string channel and inherits its fail-closed capability enforcement."
+    },
+    {
+      "symbol": "Crypto",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Crypto",
+      "hanlinAPIVersion": "hanlin.crypto/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Bounded synchronous native operations use CryptoKit for random 128/192/256-bit symmetric keys, MD5, SHA-1, SHA-256/384/512, matching HMAC variants, and authenticated AES-GCM combined boxes with optional nonce and AAD. MD5 and SHA-1 are exposed only for declaration compatibility and remain cryptographically insecure. HMAC-SHA224 remains explicitly unavailable because CryptoKit has no SHA-224 hash implementation."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Known digest and HMAC vectors plus AES-GCM authenticated round-trip and generated-key length are covered without implementing cryptography in JavaScript."
+    },
+    {
+      "symbol": "UUID",
+      "status": "implemented",
+      "hanlinSymbol": "Foundation.UUID",
+      "hanlinAPIVersion": "hanlin.crypto/1.0",
+      "allowedContexts": ["mainApplication"],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "UUID.string returns a native Foundation UUID string through the bounded synchronous utility bridge."
+    },
+    {
+      "symbol": "Device",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingDeviceSnapshot",
+      "hanlinAPIVersion": "hanlin.device/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["A launch-time snapshot exposes the real Apple device model, OS, scene screen, battery, proximity, interface orientation, color scheme, iOS-on-Mac state, locale, language, region and script fields. Battery/orientation/proximity listeners, network interfaces, wake-lock ownership and orientation mutation remain unavailable and are not synthesized."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "AI_HLY/Downstream/ScriptingPlatform/HanlinAppleDeviceSnapshotProvider.swift"],
+      "notes": "The app adapter uses the active UIWindowScene rather than the deprecated global screen/window APIs, and immutable nested JavaScript values prevent a package from mutating the captured host state."
+    },
+    {
+      "symbol": "SQLite",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingSQLiteStore",
+      "hanlinAPIVersion": "hanlin.storage/1.0",
+      "requiredCapability": "files",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["SQLite.open and openInMemory provide package-confined databases over the system SQLite library with asynchronous execute, fetchAll, fetchSet, fetchOne and ordered transaction steps. Positional and named scalar arguments, multi-statement schema setup, foreign keys, WAL and bounded busy timeouts are implemented. Schema-introspection and table/index convenience methods remain unimplemented and are not claimed."],
+      "tests": ["Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift"],
+      "notes": "Database paths are resolved through the same symlink-safe per-package VFS used by FileManager; statements, bindings, open handles and returned rows are bounded."
+    },
+    {
+      "symbol": "LiveActivityUI",
+      "status": "partial",
+      "hanlinSymbol": "HanlinLiveActivityUILayout",
+      "hanlinAPIVersion": "hanlin.extensions/1.0",
+      "allowedContexts": ["mainApplication", "liveActivity"],
+      "behaviorDifferences": ["The JavaScriptCore renderer preserves the Lock Screen, compact-leading, compact-trailing, minimal and expanded Dynamic Island regions as separate typed nodes. The precompiled Widget extension maps those nodes to ActivityConfiguration and DynamicIsland regions. LiveActivity registration, lifecycle and snapshot publication remain separately classified."],
+      "tests": ["Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift"],
+      "notes": "Implemented against the original Scripting declarations and the untouched nativ-ai acceptance package without editing its sources."
+    },
+    {
+      "symbol": "LiveActivityUIExpandedLeading",
+      "status": "partial",
+      "hanlinSymbol": "HanlinLiveActivityUILayout.expandedLeading",
+      "hanlinAPIVersion": "hanlin.extensions/1.0",
+      "allowedContexts": ["mainApplication", "liveActivity"],
+      "behaviorDifferences": ["Preserved as a distinct Dynamic Island expanded-leading region and rendered by the precompiled Widget extension."],
+      "tests": ["Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift"]
+    },
+    {
+      "symbol": "LiveActivityUIExpandedTrailing",
+      "status": "partial",
+      "hanlinSymbol": "HanlinLiveActivityUILayout.expandedTrailing",
+      "hanlinAPIVersion": "hanlin.extensions/1.0",
+      "allowedContexts": ["mainApplication", "liveActivity"],
+      "behaviorDifferences": ["Preserved as a distinct Dynamic Island expanded-trailing region and rendered by the precompiled Widget extension."],
+      "tests": ["Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift"]
+    },
+    {
+      "symbol": "LiveActivityUIExpandedCenter",
+      "status": "partial",
+      "hanlinSymbol": "HanlinLiveActivityUILayout.expandedCenter",
+      "hanlinAPIVersion": "hanlin.extensions/1.0",
+      "allowedContexts": ["mainApplication", "liveActivity"],
+      "behaviorDifferences": ["Preserved as a distinct Dynamic Island expanded-center region and rendered by the precompiled Widget extension."],
+      "tests": ["Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift"]
+    },
+    {
+      "symbol": "LiveActivityUIExpandedBottom",
+      "status": "partial",
+      "hanlinSymbol": "HanlinLiveActivityUILayout.expandedBottom",
+      "hanlinAPIVersion": "hanlin.extensions/1.0",
+      "allowedContexts": ["mainApplication", "liveActivity"],
+      "behaviorDifferences": ["Preserved as a distinct Dynamic Island expanded-bottom region and rendered by the precompiled Widget extension."],
+      "tests": ["Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift"]
+    },
+    {
+      "symbol": "Assistant",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingAssistantLoader",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "assistant",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["The live JavaScriptCore binding implements requestStreaming and both requestStructuredData overloads over a capability-gated native AsyncThrowingStream transport, including text/reasoning/usage chunks, bounded multimodal payloads, provider/model selection, schema validation, sequential iteration, early-return cancellation, native errors and deterministic teardown. The host resolves credentials and models from the user's SwiftData configuration and executes bounded OpenAI-compatible Chat Completions SSE or JSON Schema requests; provider-native protocols, streamed image output, document parts and the system-hosted conversation UI remain unavailable."],
+      "tests": ["Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests.swift"],
+      "notes": "The transport and configured-provider path used by the nativ-ai, new-agent and smart-eating acceptance projects are implemented without changing those projects. Credentials remain in the host request and are never copied into the JavaScriptCore package context."
+    },
+    {
+      "symbol": "AssistantTool",
+      "status": "partial",
+      "hanlinSymbol": "HanlinJavaScriptCoreSession",
+      "hanlinAPIVersion": "hanlin.script/1.0",
+      "requiredCapability": "assistant",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["The checked-artifact JavaScriptCore ABI implements execute-tool registration, legacy and structured user/assistant output parts (including bounded embedded images rendered natively), canonical invocation, bounded call state, replaceable progress reports, cooperative onCancel, host task cancellation, timeout, deterministic disposal and session reuse; approval requests, registerUIView and ScriptEditorProvider remain unavailable."],
+      "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Scripts/ScriptingReference/Tests/assistant-tool-runtime.test.mjs"],
+      "notes": "Operational for integrity-checked scripting-jsc assistant-tool artifacts and routed through the canonical native/MCP/Scripting tool authority."
+    },
+    {
+      "symbol": "Script",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptUIModel",
+      "hanlinAPIVersion": "hanlin.wire/2.0",
+      "allowedContexts": ["mainApplication", "widget", "appIntent", "liveActivity"],
+      "behaviorDifferences": ["Script.exit serializes plain or typed Intent results exactly once into the native session, including interactive intent entrypoints that first await Navigation.present. Basic metadata and deterministic dismissal are available; minimize/resume parity and the broader Script namespace remain partial."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Connected to installed scripting-jsc app artifacts, native ScriptUI presentation and the intent result bridge."
+    },
+    {
+      "symbol": "Intent",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Intent",
+      "hanlinAPIVersion": "hanlin.extensions/1.0",
+      "allowedContexts": ["appIntent", "mainApplication"],
+      "behaviorDifferences": ["A typed intent entrypoint context injects shortcut text/JSON/file input, shared text and URL arrays, image paths and file URLs. imagesParameter lazily decodes and caches package-visible UIImage values. text, attributedText, url, json, image, file, fileURL and single-root view results retain their discriminated wire form through Script.exit. App Intents confirmation/snippet UI and continueInForeground still require additional host integration and reject explicitly."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Implements the input and return-value runtime used by intent.tsx, including the untouched FileManager interactive intent entrypoint."
+    },
+    {
+      "symbol": "Storage",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingPackageStorage",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "storage",
+      "allowedContexts": ["mainApplication", "backgroundTask", "appIntent"],
+      "behaviorDifferences": ["The live synchronous binding uses canonical Mini App State/KeyValue.sqlite3 through the existing SQLite service, with no default Hanlin KV quota. Explicit shared:true selects a separate host-local durable shared namespace; App Group cross-process sharing is not claimed. Legacy per-installation UserDefaults values migrate transactionally without deleting the source or resurrecting cleared values. Canonical identity persists across reinstallation; synchronous Storage calls still materialize their JSON/Data values in memory."],
+      "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Packages/HanlinPlatform/Tests/HanlinScriptServicesTests/HanlinScriptServiceBrokerTests.swift"],
+      "notes": "Connected to original application, Widget/Intent and embedded-result sessions with canonical identity. Portable SQLite migration/large-value/concurrency checks passed; fresh Apple JavaScriptCore and physical consumer verification remain pending."
+    },
+    {
+      "symbol": "FileManager",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingPackageFileSystem",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "files",
+      "allowedContexts": ["mainApplication", "backgroundTask", "appIntent"],
+      "behaviorDifferences": ["Hanlin exposes documents, app-group, temporary and read-only package-source roots through a bounded capability-gated VFS. File bookmarks are persisted per installed package as security-scoped bookmark data, restored lazily across launches, refreshed when stale, removed when revoked or missing, and released with the package session. iCloud, WebDAV, links and archive operations remain unavailable."],
+      "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Packages/HanlinPlatform/Tests/HanlinScriptServicesTests/HanlinScriptServiceBrokerTests.swift"],
+      "notes": "The synchronous and Promise APIs used by the real FileManager acceptance project are connected to native filesystem operations; raw paths outside package roots are rejected."
+    },
+    {
+      "symbol": "Path",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Path",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Implements the declared POSIX normalize, join, dirname, basename, extname, parse, sep and delimiter surface; conformance is currently validated against acceptance use and targeted edge cases rather than the complete Node path corpus."],
+      "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Runs entirely inside the isolated JavaScriptCore context."
+    },
+    {
+      "symbol": "Data",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Data",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Implements byte mutation, slicing, concatenation and UTF-8, ASCII, base64, hex, ArrayBuffer and Uint8Array conversion; compression, legacy encodings and image conversion remain unavailable."],
+      "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Binary values remain JavaScript objects and cross the native boundary as bounded base64 payloads."
+    },
+    {
+      "symbol": "fetch",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingURLSessionLoader",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "network",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Uses an ephemeral URLSession with bounded buffered request and response bodies, HTTPS-by-default policy, cancellation and timeout propagation; streaming, redirect callbacks, cookie persistence and cache APIs remain unavailable."],
+      "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "HTTP error statuses resolve as Response values; transport and permission failures reject the Promise."
+    },
+    {
+      "symbol": "Headers",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Headers",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Implements case-insensitive mutation, lookup, array enumeration, iteration, getSetCookie and JSON conversion; URLSession currently collapses duplicate response header fields."],
+      "tests": ["Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Used by Request, Response and fetch."
+    },
+    {
+      "symbol": "Request",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Request",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "network",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Implements construction, cloning, buffered body consumption, headers, signals and timeout metadata; streams, form-data parsing and redirect callbacks remain unavailable."],
+      "tests": ["Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "GET and HEAD bodies are rejected."
+    },
+    {
+      "symbol": "Response",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Response",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Implements buffered single-consumption text, JSON, Data, bytes, ArrayBuffer and Blob bodies plus clone/json/redirect helpers; ReadableStream, form-data parsing and structured cookies remain unavailable."],
+      "tests": ["AI_HLYTests/HanlinScriptingRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Network response bodies are capped before crossing into JavaScriptCore."
+    },
+    {
+      "symbol": "Blob",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Blob",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Implements buffered construction, slicing and text/bytes/ArrayBuffer reads; stream() is unavailable."],
+      "tests": ["Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Backed by isolated JavaScript Data values."
+    },
+    {
+      "symbol": "FormData",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.FormData",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Implements mutation, lookup, enumeration and multipart request encoding; response parsing and File values remain unavailable."],
+      "tests": ["Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Multipart bodies are bounded by the native fetch request limit."
+    },
+    {
+      "symbol": "Location",
+      "status": "partial",
+      "hanlinSymbol": "HanlinLocationService",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "location",
+      "requiredEntitlement": "NSLocationWhenInUseUsageDescription",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Implements capability-gated requestCurrent with cache/force semantics, setAccuracy, and bounded forward/reverse geocoding through modern MapKit requests. Heading, continuous location streams, map picking, background configuration, distance/activity filters and the less-structured legacy placemark fields remain unavailable."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinAppleServiceContractsTests.swift", "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Uses CLLocationUpdate.liveUpdates plus MKGeocodingRequest/MKReverseGeocodingRequest and the nondeprecated MKMapItem location/addressRepresentations surface."
+    },
+    {
+      "symbol": "Notification",
+      "status": "partial",
+      "hanlinSymbol": "HanlinNotificationService",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "notifications",
+      "requiredEntitlement": "com.apple.developer.usernotifications.time-sensitive",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["The live JavaScriptCore namespace implements capability-gated schedule with immediate, time-interval and calendar triggers, content, badge, sound suppression, interruption level, thread and JSON userInfo, plus package-scoped removal of pending requests. Delivered/pending queries, location triggers, actions, custom UI, custom sounds/icons, tap actions, badge updates and launch context remain unavailable and are rejected rather than silently emulated."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Uses UserNotifications with per-installed-package identifier prefixes and requests OS authorization at the first schedule."
+    },
+    {
+      "symbol": "Health",
+      "status": "partial",
+      "hanlinSymbol": "HanlinHealthService",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "health",
+      "requiredEntitlement": "com.apple.developer.healthkit",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["The live JavaScriptCore namespace exposes isHealthDataAvailable; capability-gated queryStatistics for stepCount, distanceWalkingRunning, activeEnergyBurned and heartRate; bounded activity-summary ranges; and bounded workout queries sorted by startDate. cumulativeSum/discreteAverage, activity ring quantities, workout identity/dates/duration/type, and available step/distance/energy/heart-rate workout statistics are backed by HealthKit and projected as Scripting-compatible HealthStatistics, HealthActivitySummary, HealthWorkout and HealthUnit values. Other statistics options, raw samples, workout events/metadata/source details, characteristics and writes remain unavailable and are rejected rather than fabricated."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Each query is bounded to one year (workouts also to 500 results) and requires both the package capability grant and the corresponding HealthKit read authorization."
+    },
+    {
+      "symbol": "Widget",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingWidget",
+      "hanlinAPIVersion": "hanlin.extensions/1.0",
+      "allowedContexts": ["widget"],
+      "behaviorDifferences": ["A precompiled generic widget renders a safe ScriptUI subset from integrity-checked snapshots. Hanlin executes each installed widget entrypoint in a bounded JavaScriptCore widget context for every supported family, preserves Widget.family, App Intent button parameters and reload dates, and publishes family-specific snapshots. Unsupported ScriptUI nodes remain excluded rather than running arbitrary code inside WidgetKit."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift", "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"],
+      "notes": "The untouched smart-eating widget entrypoint renders systemSmall, systemMedium and systemLarge trees with 27, 70 and 77 nodes. The generic widget extension and full application compile and launch on the Xcode 26 iPad Simulator; visual and physical-device interaction remain pending."
+    },
+    {
+      "symbol": "Pasteboard",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Pasteboard",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "pasteboard",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Text, URL, image and typed UTType dictionary values use the iOS system pasteboard through an asynchronous capability-gated native channel with bounded payloads. Typed items preserve string, Data and UIImage representations plus expiration/local-only options. onChanged and onRemoved callbacks remain unavailable."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Implements the untouched FileManager and nativ-ai setString calls without modifying either project."
+    },
+    {
+      "symbol": "Safari",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Safari",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "open-url",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["openURL validates a bounded URL with an explicit scheme and delegates to the modern UIApplication asynchronous open operation. present accepts bounded HTTP/HTTPS URLs, presents SFSafariViewController in-app, and resolves when the user closes it. The fullscreen hint is transported but the current sheet host uses its standard adaptive presentation."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Implements the untouched nativ-ai SettingsScreen.openURL path."
+    },
+    {
+      "symbol": "Reminder",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Reminder",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "reminders",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Bounded Reminder create/update, completion state, calendar selection, identifier lookup, deletion, all/incomplete/completed queries and calendar discovery use EventKit through a capability-gated async bridge. DateComponents and completion dates round-trip with stable calendar-item identities. Recurrence rules, alarms and attendee values remain unavailable and reject explicitly."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Implements the untouched nativ-ai reminder tool flow and requests modern full Reminders access only when an EventKit operation is invoked. Query results are bounded and malformed identities, calendars, dates and ranges fail closed."
+    },
+    {
+      "symbol": "Calendar",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Calendar",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "reminders",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["forReminders and defaultForReminders return real EventKit calendar identities, titles, types and editability for Reminder filtering and assignment. Event calendars, sources, colors, creation, mutation, deletion and chooser presentation remain unavailable."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "The Calendar bridge is intentionally limited to the reminder-calendar subset completed in this unit and remains classified partial."
+    },
+    {
+      "symbol": "DocumentPicker",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.DocumentPicker",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "files",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["pickFiles, pickDirectory and bookmark variants present the native Files picker with validated initial-directory routing. Selected paths remain package-scoped; named security-scoped bookmarks persist across launches and duplicate names require explicit user renaming. exportFiles stages bounded Data values under the package temporary root, presents the native export picker, deletes staging data at completion, and returns an empty array on cancellation. stopAcessingSecurityScopedResources releases every retained scope."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Implements the untouched FileManager import, persistent bookmark and native export paths without expanding general filesystem access."
+    },
+    {
+      "symbol": "QuickLook",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.QuickLook",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "files",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["previewURLs resolves only package-confined or currently security-scoped file paths and presents QLPreviewController until the user finishes. previewText presents selectable text and previewImage presents a decoded UIImage bridge value; both resolve only after the user finishes. The fullscreen hint currently uses the host's standard modal presentation."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Implements the untouched FileManager file and UIImage preview paths while preventing remote or arbitrary absolute URL previews."
+    },
+    {
+      "symbol": "Photos",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Photos",
+      "hanlinAPIVersion": "hanlin.services/1.0",
+      "requiredCapability": "photos",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["pickPhotos presents PHPickerViewController with ordered, image-only, bounded selection and requires no broad photo-library authorization. takePhoto presents the system camera interface full screen and returns null on cancellation. Both return native-selected images as encoded UIImage bridge values. Asset queries, albums, saving, advanced filters, metadata and Live Photos remain unavailable and are not claimed."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Implements the untouched nativ-ai Photos.pickPhotos and Photos.takePhoto attachment flows."
+    },
+    {
+      "symbol": "UIImage",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.UIImage",
+      "hanlinAPIVersion": "hanlin.runtime/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["Photo-picker, camera and UIImage.fromFile preserve encoded image bytes in an opaque UIImage bridge value. Data.fromJPEG and UIImage.toJPEGData perform real native UIImage JPEG encoding at the requested bounded compression quality, and QuickLook decodes the value for native preview. Other constructors, geometry, transforms, symbols, PNG encoding and ScriptUI UIImage rendering remain unavailable and are not claimed."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Provides the exact image-to-Data path used by untouched nativ-ai chat attachments and background-photo persistence."
+    },
+    {
+      "symbol": "Dialog",
+      "status": "implemented",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.Dialog",
+      "hanlinAPIVersion": "hanlin.ui/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["alert, confirm, prompt and actionSheet use native UIAlertController presentation and resolve only after the selected action. String and object overloads, custom labels, secure/default/selected prompt text, keyboard type, destructive actions and nullable cancellation results are preserved. Inputs and action counts are bounded by the host."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Implements the untouched FileManager create/rename/delete flows and nativ-ai confirmation, rename and error dialogs."
+    },
+    {
+      "symbol": "EditorController",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptingApplicationSession.EditorController",
+      "hanlinAPIVersion": "hanlin.ui/1.0",
+      "allowedContexts": ["mainApplication"],
+      "behaviorDifferences": ["The controller preserves bounded content, declared text extensions, read-only mode, repeated modal presentation, user-edited content, onContentChanged on completed user edits, disposal and cancellation-backed dismiss. Selection, replacement, append and whole-document search operate on the controller text model. The modal host uses native SwiftUI TextEditor/selectable monospaced text without syntax highlighting. Inline Editor rendering, viewport commands, undo/redo and comment toggles remain unavailable and throw explicitly."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs"],
+      "notes": "Implements the untouched FileManager editable and read-only EditorController.present/content/dispose flow."
+    },
+    {
+      "symbol": "LiveActivity",
+      "status": "partial",
+      "hanlinSymbol": "HanlinScriptLiveActivityController",
+      "hanlinAPIVersion": "hanlin.extensions/1.0",
+      "allowedContexts": ["mainApplication", "liveActivity"],
+      "behaviorDifferences": ["Hanlin uses one static ActivityAttributes type and canonical package state because installed packages cannot add dynamic Swift types. register creates isolated instances whose start, update and end operations rebuild the registered ScriptUI tree and cross a bounded asynchronous native transport into ActivityKit. Stale date, relevance score and immediate/dated/default dismissal are preserved. Instance listeners reflect operations performed by that instance. Cross-process lookup, global listeners and bulk lifecycle operations remain unavailable and are not claimed."],
+      "tests": ["Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift"],
+      "notes": "The host injects the ActivityKit adapter and the precompiled Widget extension renders the transported state; physical-device verification remains pending."
+    },
+    {
+      "symbol": "AppIntent",
+      "status": "partial",
+      "hanlinSymbol": "HanlinRunScriptActionIntent",
+      "hanlinAPIVersion": "hanlin.extensions/1.0",
+      "allowedContexts": ["appIntent"],
+      "behaviorDifferences": ["One static parameterized AppIntent transports dynamic package actions because installed packages cannot add new Swift AppIntent types. AppIntentManager.register produces callable widget descriptors, registrations are published as AppEntity records, widget buttons enqueue bounded typed parameters, and the foreground host executes the original registered async perform function before regenerating snapshots and requesting WidgetKit reload."],
+      "tests": ["Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift", "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift", "Scripts/ScriptingReference/Tests/application-runtime-foundation.test.mjs", "Scripts/ScriptingReference/smoke-scripting-package-runtime.mjs"],
+      "notes": "The untouched smart-eating app_intents entrypoint registers CompleteStationIntent and OpenStationIntent. Static AppIntent discovery, application compilation and iPad Simulator launch are Xcode-verified; physical widget-button invocation remains pending."
+    }
+  ]
+}

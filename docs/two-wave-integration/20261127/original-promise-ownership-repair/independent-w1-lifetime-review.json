@@ -1,0 +1,80 @@
+{
+  "reviewer": "/root/w1_review_resume",
+  "status": "APPROVED_SOURCE_ONLY_FOR_ORIGINAL_NATIVE603_RETRY",
+  "observedSource": "778ed7e597a2fe19708e1dde5598350b56b25d6d",
+  "lifetimeRepairPatchSHA256": "1f2d7dd290652d6d04e458a4e3cc85ed5eda6634b4030daa83f47053df1941a6",
+  "sourceHashes": {
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift": "98d40a32ac40bb4488dc21205b852aea2c552e80294657ab6dcb6fe44285dd4f",
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift": "eab1f759ee1a5cb7b72af88883154225891a424cbab7ccbdc5a9c8f618544142",
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift": "433703973e69d764686c6761ad1851c40d76f5e53afa4561d1720d873a5a1ae4"
+  },
+  "actualEvidenceRead": {
+    "path": "handoff/original-http-778ed7e5-callbacks-r2/native-stages.jsonl",
+    "sha256": "4274c49d0a97466a32f67a0c41ca7f2871dc274e5678e7611e8f520c0eea12cb",
+    "actualPID": 22526,
+    "task": 37,
+    "nativeCompletionAt": 1795780824.039637,
+    "rawHandoffAt": 1795780824.041562,
+    "deliveryAt": 1795780824.042762,
+    "bothManagedContinuationsAbsentAt": 1795780824.042797,
+    "currentGuardCallAttemptAt": 1795780824.0446649,
+    "originalTimeoutAt": 1795780829.044822,
+    "responseBytes": 2097152,
+    "inference": "The retained diagnostic directly locates missing continuations before the original timeout despite native completion and active/current admission. A returned optional-call site is not evidence a callback was invoked."
+  },
+  "reviewFindings": [
+    "Pending resolve/reject JSValues are retained in one optional pair; takeCallbacks marks settled and detaches the pair once under the delivery lock.",
+    "The detached local pair remains strongly retained while both delivery and session locks are released; callback invocation/final JSValue release occurs outside both locks.",
+    "The session keeps only weak delivery entries. Its cancel snapshots live deliveries, clears the registry under its lock, unlocks, then cancels pairs; no strong session-to-delivery ownership cycle is added.",
+    "finish does not unregister when merely queued. Cancellation can release pending continuations while the serial callback queue is blocked.",
+    "Registration rejection and guarded-JSValue construction failure both clear the pair; deinit removes any weak entry.",
+    "Settlement removes the registry entry before invoking JS; reentrant completion/cancellation cannot invoke the same pair twice or reacquire a held delivery lock.",
+    "Existing isActive/current-identity checks, rejection strings and async callback queue remain; no synthetic result, quota increase, timeout increase or suppression was introduced.",
+    "Network32 total/8concurrent and native data-query/cancellation8 quotas are unchanged. The new weak lifetime registry does not consume those quota slots.",
+    "All pre-existing query-cancellation, running-state and execution-guard code after the session is byte-identical.",
+    "Fetch and HTTP test files recover exact uninstrumented prediagnostic bytes; no DEBUG logger/reader is carried into the repair."
+  ],
+  "quotaAndCompletionFunctionsByteIdentical": [
+    "registerDataQuery",
+    "register(",
+    "registerServiceNetworkRequest",
+    "completeServiceNetworkRequest",
+    "complete(",
+    "registerCancellation",
+    "completeCancellation",
+    "finish"
+  ],
+  "existingHTTPBudgetSeconds": 5,
+  "existingResponseBoundaryBytes": 2097152,
+  "originalTestCount": 603,
+  "nativeTestsExecutedByReviewer": 0,
+  "limitations": [
+    "Actual Swift compilation, original HTTP transport, existing two GC/lifetime controls and full603 must execute on the corrected source.",
+    "The code review preserves existing active/current check race semantics; it does not claim universal cancellation or context-release behavior beyond the native tests.",
+    "The diagnostic proves this lost-continuation failure path; it does not establish that every possible HTTP timeout has this cause."
+  ],
+  "fullFiveFilePatchSHA256": "96615634d62b4988375c3a4d43650d39ebbac73637ee9d9f92137ade08459c06",
+  "manifestReview": {
+    "beforeSHA256": "68c029c3a8af0d667f4d4117da95c47da4d275f0cd37073c1d029a829ab43133",
+    "afterSHA256": "9f734715989941ac4cdb8bfdb3196b5f36cce4d06ffadcf9aa645b9589516cc9",
+    "onlyChangedFields": [
+      [
+        "files",
+        148,
+        "localSHA256"
+      ],
+      [
+        "files",
+        160,
+        "localSHA256"
+      ],
+      [
+        "files",
+        168,
+        "localSHA256"
+      ]
+    ],
+    "allOtherPinsAndMetadataFieldsUnchanged": true
+  }
+}

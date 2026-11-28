@@ -1,0 +1,72 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "FF5AE3E7-1286-47EC-96AF-A278CC41C27F",
+      "deviceName" : "Hanlin-Phase2-44447123515-1",
+      "modelName" : "iPhone Air",
+      "osBuildNumber" : "24B8117",
+      "osVersion" : "27.2",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "Failed to unable to perform Swipe up on \"hanlin-composer-page-scroll\" ScrollView: visible frame is empty, which may happen if the element is offscreen.",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinMorphComposerUITests.swift",
+                        "lineNumber" : 390
+                      }
+                    }
+                  ],
+                  "duration" : "1m 32s",
+                  "durationInSeconds" : 92.45339798927307,
+                  "name" : "testCompactLargeTextWithAttachment()",
+                  "nodeIdentifier" : "HanlinMorphComposerUITests/testCompactLargeTextWithAttachment()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinMorphComposerUITests/testCompactLargeTextWithAttachment",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "duration" : "2m 3s",
+                  "durationInSeconds" : 123.69240403175354,
+                  "name" : "testCompactNavigationKeepsDraft()",
+                  "nodeIdentifier" : "HanlinMorphComposerUITests/testCompactNavigationKeepsDraft()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinMorphComposerUITests/testCompactNavigationKeepsDraft",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "HanlinMorphComposerUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinMorphComposerUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            }
+          ],
+          "name" : "AI_HLYUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Failed"
+        }
+      ],
+      "name" : "AI_HLY",
+      "nodeType" : "Test Plan",
+      "result" : "Failed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

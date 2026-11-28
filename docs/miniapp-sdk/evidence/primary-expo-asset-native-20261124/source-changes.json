@@ -1,0 +1,58 @@
+[
+  {
+    "path": "Packages/HanlinExpoRuntime/Package.swift",
+    "mode": "100644",
+    "beforeSHA256": "116a910cffe061ff3eea0e289402bc51769d3268daedc94ea5b1e043e6d109a4",
+    "afterSHA256": "d4157d16c1d505b408cf4b78f7ab59f53ff607ea94e0c4e51a4e2c088a691f37",
+    "bytes": 8705
+  },
+  {
+    "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
+    "mode": "100644",
+    "beforeSHA256": "27505a611dbe1b61ab100ca53c393ca9a72aedb76bbc084015c35423f25804c7",
+    "afterSHA256": "852828b5e9548de003195cef2253b892a5b4a1c039e71946bb0e7fb0b61d7107",
+    "bytes": 14804
+  },
+  {
+    "path": "Scripts/Expo/build-original-expo-source.mjs",
+    "mode": "100644",
+    "beforeSHA256": "5a446cd0e1701a91f4eed5d5a3c5d5ea41be05d15cec668ca36edca3a38b2488",
+    "afterSHA256": "855a9a79f1c27a2ba2f3796cf784ebb66a4a48df928b2ea8f6ca1ffd9e886c03",
+    "bytes": 9828
+  },
+  {
+    "path": "Scripts/Expo/dependency-lock.json",
+    "mode": "100644",
+    "beforeSHA256": "549d100eca28b6b5f59b0cc6bb55d64c27e7bb88f02fd58eb8f1b2f6097be64f",
+    "afterSHA256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+    "bytes": 5375
+  },
+  {
+    "path": "Scripts/Expo/prepare-ios-dependencies.mjs",
+    "mode": "100644",
+    "beforeSHA256": "072c3432d299e4081d11d052b4bfe74d195e5775ace19362aaaea25652137dbb",
+    "afterSHA256": "97069b0e1ec619d906f4b6d196e38e6527790c3661f798abcca6258dacf18163",
+    "bytes": 66677
+  },
+  {
+    "path": "Scripts/MiniApps/Tests/upstream-resolution.test.mjs",
+    "mode": "100644",
+    "beforeSHA256": "4ae2f944b0bd1cbeebc78599385c664fdb194eedae42d4cd376b44b5677b1b90",
+    "afterSHA256": "42001deb8dd18953b96f6a22d63fcc5ad9b27ab400ce701a3cf183922cbc35f6",
+    "bytes": 9807
+  },
+  {
+    "path": "Scripts/MiniApps/resolve-upstreams.mjs",
+    "mode": "100644",
+    "beforeSHA256": "b2222aad85f1a6c5ba38a6d52282674bb37627e05ab484b637614dfc7b9892f8",
+    "afterSHA256": "f6c92fb61dd5d06f806a9f2c89c931bb57c390201133f941b5c7e7498b2a777d",
+    "bytes": 29012
+  },
+  {
+    "path": "Scripts/SDK/native_artifacts.py",
+    "mode": "100755",
+    "beforeSHA256": "9d093f9207d8f2f3cdfea8c35420c725661c78eda2b97849abb3482240bd7fcc",
+    "afterSHA256": "6c11725c13a7ba9a47ac1c6e2e6056606ef9f5da4899b265daaf62e326f2574b",
+    "bytes": 40936
+  }
+]

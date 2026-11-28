@@ -1,0 +1,46 @@
+{
+  "scope": "Complete original file inverse proof and Swift syntax only; no SwiftUI typecheck/runtime claim",
+  "swift": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+  "sourceChanges": [
+    {
+      "path": "AI_HLY/SettingsView.swift",
+      "beforeSHA256": "9a5ebc67ebbc0a136bce1c11505d7c7f164d6c10e5ed02dffad7e5ab03861c72",
+      "afterSHA256": "250cf1afa83bcfeb6646e2ac9f93ae853420292bd7b78609dcfdfa6a084f5a19",
+      "inverseRestoresCompleteOriginalFile": true,
+      "changes": 2,
+      "syntaxExitCode": 0,
+      "syntaxDiagnostic": ""
+    },
+    {
+      "path": "AI_HLY/Views/Components/ChatViewBottom.swift",
+      "beforeSHA256": "22a1b2ac6957e7ab639f03dfca3a62d09e801b6b26e5277c7077ec7057859361",
+      "afterSHA256": "79cd7118bd94b01a18f291067566692279a7c0d3eb75e7acf782ad4ff95bfc47",
+      "inverseRestoresCompleteOriginalFile": true,
+      "changes": 1,
+      "syntaxExitCode": 0,
+      "syntaxDiagnostic": ""
+    },
+    {
+      "path": "AI_HLY/Views/Components/VoiceInputView.swift",
+      "beforeSHA256": "a02436f7fc29f49c80c8ef926baf1271ef7e4152549be6e8375b85c0b264e702",
+      "afterSHA256": "93ce8b76681a38c5890fbfbe8f8a08ba71040bc035e607dad7cda9a60096108b",
+      "inverseRestoresCompleteOriginalFile": true,
+      "changes": 1,
+      "syntaxExitCode": 0,
+      "syntaxDiagnostic": ""
+    },
+    {
+      "path": "ChavrusaChatTranslationProvider/ChavrusaChatTranslationProvider.swift",
+      "beforeSHA256": "258e92e1c5794f3160d56f20ce38818dc2035200be7d667f6158983f6b5013c3",
+      "afterSHA256": "0504513b3e3ddeb034434272fc336d8e421dd0d66354b177ad8031604e6433e1",
+      "inverseRestoresCompleteOriginalFile": true,
+      "changes": 1,
+      "syntaxExitCode": 0,
+      "syntaxDiagnostic": ""
+    }
+  ],
+  "publicCallbackTypesUnchanged": true,
+  "sdkLocalizedButtonActorContractUnchanged": true,
+  "newUnitTests": 0,
+  "reason": "Actual native compile failed on converting stored ordinary onDone to actor-isolated localized Button action. Capture original MainActor view and invoke its original optional callback in the actor-isolated action. Direct imports repair three actual module-boundary warnings."
+}

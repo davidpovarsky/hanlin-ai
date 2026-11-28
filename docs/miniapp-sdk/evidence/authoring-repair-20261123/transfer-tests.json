@@ -1,0 +1,10 @@
+{
+  "exitCode": 0,
+  "scope": "Original transfer source and five behavioral tests; not iOS UI or full-product evidence.",
+  "files": {
+    "Packages/HanlinProductSplit/Sources/HanlinProductSplit/MiniAppAuthoringTransfer.swift": "813fc2564abbeec081a2b5d656f726a55874d6891cb34f50c08a37d4920d1604",
+    "Packages/HanlinProductSplit/Tests/RegisteredIntegrationTests/MiniAppAuthoringTransferTests.swift": "fd01d2e530134323142f3bc4ca953d3ace6b877e51ed0388d9b1c67941e96bf2"
+  },
+  "swift": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu\n",
+  "harness": "/tmp/hanlin-miniapp-transfer-_d3cen0c"
+}

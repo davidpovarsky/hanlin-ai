@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/w1_review_resume",
+  "base": "602b29e303a633155fe07583e9ece28fce0ba113",
+  "status": "APPROVED_FOR_ORIGINAL_NATIVE_DIAGNOSTIC_RETRY_SOURCE_ONLY",
+  "sourcePatchSHA256": "8ea95dcdea4dd8f4d3b3cad8d7204333a78cd85cb0fd9c30054f6817be34d07b",
+  "sourceValidationSHA256": "e53f2f5d7326385802619bbb318f1f26a266a62f8baebfcbb8e05810871c68ec",
+  "sourceFiles": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
+      "sha256": "9cfc569a213595e7e39fbfaf70e37e3a2006fa9737c75cd6923cd3d3e3b68d3a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+      "sha256": "f8c4adb4cf19e9302ae69167ac7a6e654460423e8cbea25cf763ddbc0259b0df"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+      "sha256": "9e14ca1f36323df4afcc7df09f7f32bedd4ba55dae667fa1c9d46c81fdbe1993"
+    },
+    {
+      "path": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
+      "sha256": "68c029c3a8af0d667f4d4117da95c47da4d275f0cd37073c1d029a829ab43133"
+    }
+  ],
+  "independentReleaseProjection": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
+      "exactOriginalSHA256": "13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5",
+      "candidateSHA256": "9cfc569a213595e7e39fbfaf70e37e3a2006fa9737c75cd6923cd3d3e3b68d3a",
+      "equalAfterDEBUGRemovalAndOnlyKnownFormatting": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+      "exactOriginalSHA256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3",
+      "candidateSHA256": "f8c4adb4cf19e9302ae69167ac7a6e654460423e8cbea25cf763ddbc0259b0df",
+      "equalAfterDEBUGRemovalAndOnlyKnownFormatting": true
+    }
+  ],
+  "reviewedInvariants": [
+    "All new runtime observations are DEBUG-only and opt in through the existing fetchManagerForTesting.",
+    "The existing one-shot lock, managed-continuation reads/removal, active/current guards, selected optional JS call, and callbackQueue dispatch are retained.",
+    "No added stored property, registry, managed reference, cancellation hook, runtime-control API or JSValue/context/callback capture.",
+    "Only scalar event metadata and bounded JSON strings reach the existing main-queue logger.",
+    "The original logger bounds each string to8192bytes and holds at most500entries. Its asynchronous closures retain the logger, not the runtime.",
+    "Cleanup still cancels/finishes the original session and clears the original JS globals before retaining only the logger. main.sync occurs outside the original5second outcome wait, with an explicit main-thread branch.",
+    "Installed Swift6.4 Dispatch.sync(execute:) takes a synchronous nonescaping closure without Sendable/sending; main has no explicit actor annotation. This is API source review, not a compile result.",
+    "All original603 test identities, server traffic, network guards, body sizes, deadlines and assertions remain unchanged.",
+    "The upstream manifest changes only the two current top-level localSHA256 values, with pins, upstream blobs, adaptation history and all other rows preserved."
+  ],
+  "limits": [
+    "No compilation, native tests, repair outcome or GC causal conclusion is claimed.",
+    "Diagnostic allocation/logging can perturb timing and lifetime; a changed observed outcome alone is not a production fix.",
+    "Snapshot flush covers already-enqueued main-queue records. Callbacks/logs arriving later can be absent.",
+    "Call-attempt/returned markers are not proof that an optional nil JS callback executed; presence fields and actual original JS/test terminal markers must be correlated."
+  ],
+  "loggerSource": {
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift",
+    "sha256": "f7b50ceacdf034833c92554a769fe692abebe296b87e55091e7a2fb09146d9da",
+    "line": 237
+  },
+  "installedAPIEvidence": {
+    "macOSReceiptSHA256": "af2417b86a1ce6d78cb7dd3a8c92ef70eb411e65daade158bb5912520e5d2a4a",
+    "interfaceSHA256": "f6ff6151cb0a82e0f4b1c046e5527e8359c9473ec4871ce59d9c8e3107eef9e7",
+    "location": "handoff/installed-dispatch-signatures-602b29e3",
+    "independentlyReadReceipt": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/installed-dispatch-signatures-602b29e3/installed-dispatch-sync-macos-602b29e3.json",
+      "sha256": "af2417b86a1ce6d78cb7dd3a8c92ef70eb411e65daade158bb5912520e5d2a4a",
+      "receipt": {
+        "status": "READ_ONLY_INSTALLED_MACOS_DISPATCH_INTERFACE_NO_COMPILE",
+        "at": "2026-11-27T11:17:58.262332+00:00",
+        "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/swift/Dispatch.swiftmodule/arm64e-apple-macos.swiftinterface",
+        "sha256": "f6ff6151cb0a82e0f4b1c046e5527e8359c9473ec4871ce59d9c8e3107eef9e7",
+        "header": [
+          "// swift-interface-format-version: 1.0",
+          "// swift-compiler-version: Apple Swift version 6.4 effective-5.10 (swiftlang-6.4.0.31.4 clang-2100.3.31.1)",
+          "// swift-module-flags: -target arm64e-apple-macos27.0 -target-variant arm64e-apple-ios27.0-macabi -enable-objc-interop -target-arch-variant arm64e.x1 -autolink-force-load -enable-library-evolution -module-link-name swiftDispatch -language-mode 5 -O -library-level api -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -user-module-version 1605.0.2 -module-name Dispatch",
+          "// swift-module-flags-ignorable:  -formal-cxx-interoperability-mode=off -interface-compiler-version 6.4"
+        ],
+        "declarations": [
+          {
+            "line": 137,
+            "text": "    }\n  }\n  @preconcurrency public class func concurrentPerform(iterations: Swift::Int, execute work: @Sendable (Swift::Int) -> Swift::Void)\n  public class var main: Dispatch::DispatchQueue {\n    get\n  }\n  @available(macOS, deprecated: 10.10)"
+          },
+          {
+            "line": 153,
+            "text": "    get\n  }\n  @available(macOS 10.10, iOS 8.0, *)\n  public func sync(execute workItem: Dispatch::DispatchWorkItem)\n  @available(macOS 10.10, iOS 8.0, *)\n  public func async(execute workItem: Dispatch::DispatchWorkItem)\n  @available(macOS 10.14, iOS 12.0, *)"
+          },
+          {
+            "line": 167,
+            "text": "  public func asyncAndWait<T>(execute work: () throws -> T) rethrows -> T\n  @available(macOS 10.14, iOS 12.0, tvOS 12.0, watchOS 5.0, *)\n  public func asyncAndWait<T>(flags: Dispatch::DispatchWorkItemFlags, execute work: () throws -> T) rethrows -> T\n  public func sync<T>(execute work: () throws -> T) rethrows -> T\n  public func sync<T>(flags: Dispatch::DispatchWorkItemFlags, execute work: () throws -> T) rethrows -> T\n  @available(macOS 14.0, iOS 17.0, tvOS 17.0, watchOS 10.0, *)\n  public func asyncAfterUnsafe(deadline: Dispatch::DispatchTime, qos: Dispatch::DispatchQoS = .unspecified, flags: Dispatch::DispatchWorkItemFlags = [], execute work: @escaping @convention(block) () -> Swift::Void)"
+          },
+          {
+            "line": 168,
+            "text": "  @available(macOS 10.14, iOS 12.0, tvOS 12.0, watchOS 5.0, *)\n  public func asyncAndWait<T>(flags: Dispatch::DispatchWorkItemFlags, execute work: () throws -> T) rethrows -> T\n  public func sync<T>(execute work: () throws -> T) rethrows -> T\n  public func sync<T>(flags: Dispatch::DispatchWorkItemFlags, execute work: () throws -> T) rethrows -> T\n  @available(macOS 14.0, iOS 17.0, tvOS 17.0, watchOS 10.0, *)\n  public func asyncAfterUnsafe(deadline: Dispatch::DispatchTime, qos: Dispatch::DispatchQoS = .unspecified, flags: Dispatch::DispatchWorkItemFlags = [], execute work: @escaping @convention(block) () -> Swift::Void)\n  @preconcurrency public func asyncAfter(deadline: Dispatch::DispatchTime, qos: Dispatch::DispatchQoS = .unspecified, flags: Dispatch::DispatchWorkItemFlags = [], execute work: @escaping @Sendable @convention(block) () -> Swift::Void)"
+          }
+        ],
+        "sdkPath": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk"
+      }
+    }
+  },
+  "independentManifestChanges": [
+    {
+      "jsonPath": [
+        "files",
+        148,
+        "localSHA256"
+      ],
+      "before": "13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5",
+      "after": "9cfc569a213595e7e39fbfaf70e37e3a2006fa9737c75cd6923cd3d3e3b68d3a"
+    },
+    {
+      "jsonPath": [
+        "files",
+        160,
+        "localSHA256"
+      ],
+      "before": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3",
+      "after": "f8c4adb4cf19e9302ae69167ac7a6e654460423e8cbea25cf763ddbc0259b0df"
+    }
+  ],
+  "reviewedAtUTC": "2026-11-27T11:20:37.258858+00:00"
+}

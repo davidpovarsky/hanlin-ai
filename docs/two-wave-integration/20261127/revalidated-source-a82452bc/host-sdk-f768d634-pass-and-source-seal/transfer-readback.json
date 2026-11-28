@@ -1,0 +1,14 @@
+{
+  "status": "ALL41_CURRENT_HOST_AND_SEAL_PACKET_MEMBERS_HASH_VERIFIED",
+  "source": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "sealedSource": "d2902ba9a4b18d5dba92662430e7eda355744b0c",
+  "actualNative79ExecutionSource": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "archiveSHA256": "3fde0e15e1b9a660bbc193adef169445a1165f9b04298e4ac6a8c5b2ee55bc1d",
+  "manifestSHA256": "640239c4a68eefcd4f705b5c9abe9d6f0f9439d770d457059e4ae1a851ac9d1c",
+  "membersVerified": 41,
+  "rawBytes": 20606710,
+  "shippingRuntimeHostZIP": "Not transferred; exact three copies retained and hash-verified onMac. Current metadata/full392 manifest/original188 phase proof transferred.",
+  "oracleFreeBefore": 917979136,
+  "oracleFreeAfter": 892661760,
+  "at": "2026-11-27T06:37:30.967299+00:00"
+}

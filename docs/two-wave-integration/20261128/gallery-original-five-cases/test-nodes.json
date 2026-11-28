@@ -1,0 +1,119 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "4B8E5419-FD52-4AB8-BEE7-EF72E1D79C94",
+      "deviceName" : "HanlinPaired-46109307098",
+      "modelName" : "iPad mini (A20 Pro)",
+      "osBuildNumber" : "24B8117",
+      "osVersion" : "27.2",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "Modifying state during view update, this will cause undefined behavior.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "7m 19s",
+                  "durationInSeconds" : 439.278067946434,
+                  "name" : "testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns()",
+                  "nodeIdentifier" : "HanlinEntrypointSystemSurfaceUITests/testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Modifying state during view update, this will cause undefined behavior.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "4m 38s",
+                  "durationInSeconds" : 278.1491080522537,
+                  "name" : "testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns()",
+                  "nodeIdentifier" : "HanlinEntrypointSystemSurfaceUITests/testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Modifying state during view update, this will cause undefined behavior.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "7m 13s",
+                  "durationInSeconds" : 433.62380492687225,
+                  "name" : "testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns()",
+                  "nodeIdentifier" : "HanlinEntrypointSystemSurfaceUITests/testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Modifying state during view update, this will cause undefined behavior.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "5m 8s",
+                  "durationInSeconds" : 308.1294159889221,
+                  "name" : "testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns()",
+                  "nodeIdentifier" : "HanlinEntrypointSystemSurfaceUITests/testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Modifying state during view update, this will cause undefined behavior.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "6m 57s",
+                  "durationInSeconds" : 417.29834401607513,
+                  "name" : "testStudioTableShareCopiesEditsBuildsInstallsAndRuns()",
+                  "nodeIdentifier" : "HanlinEntrypointSystemSurfaceUITests/testStudioTableShareCopiesEditsBuildsInstallsAndRuns()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "HanlinEntrypointSystemSurfaceUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "AI_HLYUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "AI_HLY",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

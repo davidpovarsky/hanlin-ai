@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "sourceCommit": "2e1909d61c1ca31e8783c97dd694156c518883db",
+  "status": "SOURCE_ONLY_NATIVE_NOT_RUN",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 8294,
+      "sha256": "9b96fc7bc16e3a8f66e3bd1f9800fa473c0f8ddc8b868d03e0e1579ba792991f"
+    },
+    {
+      "path": "source-qualification.json",
+      "bytes": 7985,
+      "sha256": "115ba960ef2269d59ceacd53f217b2bbda22f2987a5b18eb5bc95f564228dbc7"
+    },
+    {
+      "path": "independent-w1-source-review.json",
+      "bytes": 8103,
+      "sha256": "424c3c6a3ddf74ef0506360d6dff1e83dc240dccc4e6dc7aa486f5816c205faa"
+    },
+    {
+      "path": "independent-root-source-review.json",
+      "bytes": 1344,
+      "sha256": "66e5834f97afe76fde09eac08e51f26aa5767342b92d1f0595d2bcd422d717ae"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 5580,
+      "sha256": "e8805c712ac6dbb0555982fad492a30287fd8d6c610f3ed210471353d6ec9bf6"
+    },
+    {
+      "path": "native-selector-inventory.json",
+      "bytes": 5315,
+      "sha256": "d30678834ea1635fa8bc774fe8c9138926f9c1b230f9dbda339bb7364b699c23"
+    },
+    {
+      "path": "sdk-admission-summary.json",
+      "bytes": 4673,
+      "sha256": "f0d72ee3de5390cf3017bb94bf3c04c5c3abcf2f4215a078350dd304bbcc3c8c"
+    },
+    {
+      "path": "source-seal.json",
+      "bytes": 1486,
+      "sha256": "4b29fdcb6538be2b16ab596797d0c41d4f5e34e193e2c2ab696c17d66197ed71"
+    }
+  ]
+}

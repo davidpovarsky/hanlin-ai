@@ -1,0 +1,39 @@
+{
+  "artifactID": 15177263270,
+  "ZIPBytes": 335576642,
+  "ZIPSHA256": "506f5f7f5965f4e4f8050949af2036d95ef4f3bb5b00b9519a25cc056a4b8953",
+  "memberCount": 92,
+  "uncompressedBytes": 366648316,
+  "selectedMembers": [
+    {
+      "member": "app-split-evidence/acceptance.json",
+      "bytes": 2840,
+      "sha256": "49cd838f605049211eae41ec05ad8148b97d8fa1554ed7676e587e64707d25d8",
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-45949456866-paired-failure/selected/app-split-evidence/acceptance.json",
+      "CRCVerifiedByZipFile": true
+    },
+    {
+      "member": "app-split-evidence/paired-product/acceptance.json",
+      "bytes": 2840,
+      "sha256": "49cd838f605049211eae41ec05ad8148b97d8fa1554ed7676e587e64707d25d8",
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-45949456866-paired-failure/selected/app-split-evidence/paired-product/acceptance.json",
+      "CRCVerifiedByZipFile": true
+    },
+    {
+      "member": "app-split-evidence/paired-product/mini-build.log",
+      "bytes": 12908193,
+      "sha256": "afeaad542c92e3c4e356b191e4066eab066ff9c4426b6588c24df58a4d9a7f85",
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-45949456866-paired-failure/selected/app-split-evidence/paired-product/mini-build.log",
+      "CRCVerifiedByZipFile": true
+    },
+    {
+      "member": "app-split-evidence/paired-product/screenshot.log",
+      "bytes": 264,
+      "sha256": "f6824adb043cc0be15916ca0f51fbb6e7a0e7b1f585850093ca7f7aaff0463cd",
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-45949456866-paired-failure/selected/app-split-evidence/paired-product/screenshot.log",
+      "CRCVerifiedByZipFile": true
+    }
+  ],
+  "freeAfter": 394870784,
+  "atUTC": "2026-11-27T06:53:56.204956+00:00"
+}

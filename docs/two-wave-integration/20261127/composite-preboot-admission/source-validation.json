@@ -1,0 +1,20 @@
+{
+  "actualFailedSource": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+  "baseCommit": "d165b9fc6a1c4e810a21957c063bfeae52eecb59",
+  "candidateBootLine": 988,
+  "candidateCaptureLine": 985,
+  "candidateSHA256": "a74c87bc753f12db25c34069695f5290bcc53e70eed932361a9717e8ad886278",
+  "moduleASTAfterRemovingMovedBlockEqual": true,
+  "nativeExecution": "NOT_RUN",
+  "onlyExactBlockMoved": true,
+  "originalCaptureLine": 1006,
+  "originalClockAndNativeLimitsUnchanged": true,
+  "originalSHA256": "8f626ecbac93eee4da4785d59b6c24718010bd243c4b7c8ace93d1f493dc9244",
+  "patchSHA256": "44f722de5b8d66527f8d4e4131b4693557b0f33496d831f9594632e47691b822",
+  "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+  "productSourceModified": false,
+  "repeatedTests": "NONE",
+  "sourceSnapshotTimeoutSeconds": 120,
+  "testsSelectorsAssertionsAndProductsChecksUnchanged": true,
+  "unchangedExtra26ModuleSHA256": "b3ec17758b36e12fe329ce47cb08e483d906134c4185f7a64ae4a910a393835a"
+}

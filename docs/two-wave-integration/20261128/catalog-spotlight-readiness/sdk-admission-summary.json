@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "status": "READ_ONLY_SOURCE_ADMISSION_FRESH_SDK_EXECUTION_REQUIRED",
+  "sourceCommit": "2e1909d61c1ca31e8783c97dd694156c518883db",
+  "acceptedSDKSource": "700664fdbf0871321c30433172f39299e706b0f8",
+  "acceptedSDKManifestSHA256": "4819de6f518a2b9ea1c6e3c80a3567dbf46ef0ec886e883be162bb77766be480",
+  "acceptedSDKInputSHA256": "c4463f0f702e5b070f1e0236c452f90e5e31e8a2fa6a1978e72b9ad55caaf307",
+  "currentInputCount": 396,
+  "equalInputs": 394,
+  "changedInputs": [
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
+      "acceptedSHA256": "411e14d15044a86e6313b2c75bce1a1b29a24b0601db4938d05b57fa2a2a3bc4",
+      "sourceSHA256": "1de0f3645c522a9ebe38fd94dbba7f4705ae39d368ab5a47c400768821b973ed",
+      "sourceGitBlob": "0845751e2367c65359a83ddc3331019394cd4b67",
+      "equal": false
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "acceptedSHA256": "bfdd4be6c3e5bb28a15c43be589cb87c9ee58ce80daa794ef8fd4adf478c7b50",
+      "sourceSHA256": "fef6a058c6b06838e64089933424803e66deeb30bbe9ecac1e7e24aca839fa95",
+      "sourceGitBlob": "d25cfbe50f4a994cee9c8f909158f3054fd34cad",
+      "equal": false
+    }
+  ],
+  "host99InputCount": 99,
+  "host99AllExact": true,
+  "unchangedTreesAndTools": [
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host",
+      "acceptedObject": "d460ae6fa03c5d28c8a1fbfacc5c57d27662e6bd",
+      "sourceObject": "d460ae6fa03c5d28c8a1fbfacc5c57d27662e6bd",
+      "equal": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests",
+      "acceptedObject": "90770ea3bd789aa3cf11ce165dbfc30c31b857eb",
+      "sourceObject": "90770ea3bd789aa3cf11ce165dbfc30c31b857eb",
+      "equal": true
+    },
+    {
+      "path": "Scripts/Runtime/prepare-runtime-host.sh",
+      "acceptedObject": "0347bf9d1e532b4e4ade29bb662a5ac0351e0160",
+      "sourceObject": "0347bf9d1e532b4e4ade29bb662a5ac0351e0160",
+      "equal": true
+    },
+    {
+      "path": "Scripts/Runtime/runtime_host_archive.py",
+      "acceptedObject": "22e41aecb0e080c6c47af756f33a35b59929d531",
+      "sourceObject": "22e41aecb0e080c6c47af756f33a35b59929d531",
+      "equal": true
+    },
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "acceptedObject": "98882a8ce4fe6e5eb2208897e0c1f962826da2be",
+      "sourceObject": "98882a8ce4fe6e5eb2208897e0c1f962826da2be",
+      "equal": true
+    },
+    {
+      "path": "RuntimeDependencies.lock.json",
+      "acceptedObject": "914e8d51b58a8a4c79cdbb5977d26ef5e55f6f88",
+      "sourceObject": "914e8d51b58a8a4c79cdbb5977d26ef5e55f6f88",
+      "equal": true
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "acceptedObject": "6804f2da508d7967196669b5f31bbc59b6fd3a3c",
+      "sourceObject": "6804f2da508d7967196669b5f31bbc59b6fd3a3c",
+      "equal": true
+    },
+    {
+      "path": "Scripts/NativeScript/package-lock.json",
+      "acceptedObject": "f9650197589599783843b63c93ccad4b7b42e3d6",
+      "sourceObject": "f9650197589599783843b63c93ccad4b7b42e3d6",
+      "equal": true
+    },
+    {
+      "path": "Packages/HanlinPlatform",
+      "acceptedObject": "4861e402c7be59a8d9454d9d320c5e5c96f3389c",
+      "sourceObject": "4861e402c7be59a8d9454d9d320c5e5c96f3389c",
+      "equal": true
+    }
+  ],
+  "sourceMapSHA256": "ae84932a12fa54a9a26369c6e9cb3b9aa0a27b5f83f303c17a2e1fd0d4df31b7",
+  "originalPhaseAuthoritySHA256": "192cc4516d3840a27c60651fd31cd44743adc1b732572c3ddc0bdb54405f2c93",
+  "originalPhaseCount": 13,
+  "sourceControllerPhaseCallCount": 13,
+  "admissionRequirements": [
+    "Root must integrate and bind final clean source before Mac intake.",
+    "Use the retained original 13 phase calls, time/resource/ownership guards, actual logs and original archive/JITless checks; no phase was run by this source review.",
+    "Original canonical document audits may require their original regeneration; any actual generated delta must be retained and source-reviewed before the final fingerprint. No generated source was changed here.",
+    "Fresh staging must qualify complete actual runtime payload bytes and modes; historic allowed-four-docs-plus-manifest set is not new evidence of final equality.",
+    "Host188 remains a historical execution; reuse requires both the unchanged99/source/tool closure and fresh complete actual packed-payload qualification. No new188 or new12-phase claim.",
+    "Original app catalog/Spotlight/Capture/transfer acceptance is separate from SDK staging and controlled XCTest ownership tests."
+  ],
+  "nativeExecuted": false,
+  "producerExecuted": false,
+  "downloads": false,
+  "archiveMaterialized": false,
+  "candidatePackedSHA256": null
+}

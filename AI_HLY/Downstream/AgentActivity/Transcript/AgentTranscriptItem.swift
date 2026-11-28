@@ -1,0 +1,7 @@
+// Original shared implementation is owned by the SDK.
+import HanlinAgentActivityCore
+
+typealias AgentTranscriptItemKind = HanlinAgentActivityCore.AgentTranscriptItemKind
+typealias AgentTranscriptTextRole = HanlinAgentActivityCore.AgentTranscriptTextRole
+typealias AgentTranscriptCompletionVisibility = HanlinAgentActivityCore.AgentTranscriptCompletionVisibility
+typealias AgentTranscriptItem = HanlinAgentActivityCore.AgentTranscriptItem

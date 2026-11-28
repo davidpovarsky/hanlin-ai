@@ -1,0 +1,25 @@
+{
+  "total_count": 1,
+  "artifacts": [
+    {
+      "id": 14847359495,
+      "node_id": "MDg6QXJ0aWZhY3QxNDg0NzM1OTQ5NQ==",
+      "name": "chat-motion-ui-45223225171",
+      "size_in_bytes": 62064111,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14847359495",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14847359495/zip",
+      "expired": false,
+      "digest": "sha256:1100fce7733df41a14552ccc4510d1c63b1e450cb1aee6d018faacdf04adf8b0",
+      "created_at": "2026-11-23T17:54:14Z",
+      "updated_at": "2026-11-23T17:54:14Z",
+      "expires_at": "2026-12-23T17:54:08Z",
+      "workflow_run": {
+        "id": 45223225171,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/hanlin-sdk-motion-b-20261123",
+        "head_sha": "c1c9fde5299124953d7ced72748dc09b50b72f7f"
+      }
+    }
+  ]
+}

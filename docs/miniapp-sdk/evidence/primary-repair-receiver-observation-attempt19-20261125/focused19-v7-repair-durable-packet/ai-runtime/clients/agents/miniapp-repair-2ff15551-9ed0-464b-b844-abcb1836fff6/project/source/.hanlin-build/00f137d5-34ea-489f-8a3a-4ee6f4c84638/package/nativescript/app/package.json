@@ -1,0 +1,14 @@
+{
+  "name": "hanlin-miniapp-authoring-acceptance",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@nativescript/core": "9.1.4"
+  },
+  "main": "bundle.mjs",
+  "hanlinRuntime": "hanlin-nativescript",
+  "hanlinNativeScript": {
+    "runtimeVersion": "9.1.1",
+    "plugins": {}
+  }
+}

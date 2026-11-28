@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-26T17:29:25.562365+00:00",
+  "classification": "REUSE_ACCEPTED_SOURCE_BYTES_ONLY",
+  "recipe": "git diff --name-only cf0d26c7^ cf0d26c7; path contains cache (case insensitive); prefix AI_HLY/, AI_HLYTests/ or Packages/",
+  "pr22": "cf0d26c7cb0df29f0f3e644e125dd6dd6d5172db",
+  "documentationBase": "4373c1897b1460718593ef2f9b5de73f7e17d883",
+  "candidate": "b80f897a5b890fb2ade8e272ffefbb25ec601844",
+  "count": 12,
+  "files": [
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinModelPromptCachePreferences.swift",
+      "pr22Blob": "11f6b6d4b98e6c66233033a594af40485a8c3506",
+      "base4373Blob": "11f6b6d4b98e6c66233033a594af40485a8c3506",
+      "candidateB80Blob": "11f6b6d4b98e6c66233033a594af40485a8c3506",
+      "sha256": "6663ca617b09e90827a6c641c4b309f7d5dd6e96021d286f1c81d4e208c72802",
+      "allEqual": true
+    },
+    {
+      "path": "AI_HLYTests/AgentTokenUsageCacheTests.swift",
+      "pr22Blob": "4c4f9c11ea5652bc6b673fa9f3734c358696fa80",
+      "base4373Blob": "4c4f9c11ea5652bc6b673fa9f3734c358696fa80",
+      "candidateB80Blob": "4c4f9c11ea5652bc6b673fa9f3734c358696fa80",
+      "sha256": "622fa32878079e11c3f3dcd502b216f270d22ad3a0c277e021b0aa77a3afa33f",
+      "allEqual": true
+    },
+    {
+      "path": "AI_HLYTests/AutomaticWebSearchCacheTests.swift",
+      "pr22Blob": "a63165a9b72721e30b227823ffa6b493be74ec24",
+      "base4373Blob": "a63165a9b72721e30b227823ffa6b493be74ec24",
+      "candidateB80Blob": "a63165a9b72721e30b227823ffa6b493be74ec24",
+      "sha256": "faa0342db6fe61bac1eb65da32622e47284b00e669ca1ff1d3ebd276f105438c",
+      "allEqual": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinModelPromptCachePersistenceTests.swift",
+      "pr22Blob": "7b8bab5e5324528db072c810623536309335e498",
+      "base4373Blob": "7b8bab5e5324528db072c810623536309335e498",
+      "candidateB80Blob": "7b8bab5e5324528db072c810623536309335e498",
+      "sha256": "da9b9b3d35a9194b2cb54833f3a5bebe552833ae9fe133e415a9b88513252bfe",
+      "allEqual": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinGoogleCachedContent.swift",
+      "pr22Blob": "203a61bbfdd11049c66db02371e74f058bf597b3",
+      "base4373Blob": "203a61bbfdd11049c66db02371e74f058bf597b3",
+      "candidateB80Blob": "203a61bbfdd11049c66db02371e74f058bf597b3",
+      "sha256": "5954892745f45e4498089775eeba1ae4a32718912c23eae2bbb4f1166e9f092c",
+      "allEqual": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinPromptCachePolicy.swift",
+      "pr22Blob": "24fda84f586583930136200a1368e6371d4a9772",
+      "base4373Blob": "24fda84f586583930136200a1368e6371d4a9772",
+      "candidateB80Blob": "24fda84f586583930136200a1368e6371d4a9772",
+      "sha256": "7cce9937a6ca748c24ca8fd21ddfc8b5ef5f9a5d0453dcb706ecbbc71af1e752",
+      "allEqual": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinPromptCachePolicyMutation.swift",
+      "pr22Blob": "312dd5c7734602844f22cf82453cd94f7d780a07",
+      "base4373Blob": "312dd5c7734602844f22cf82453cd94f7d780a07",
+      "candidateB80Blob": "312dd5c7734602844f22cf82453cd94f7d780a07",
+      "sha256": "137c820ca8849be5568d8b4c741afa36a38951a0a8b99c8fc4ee80f49457be6d",
+      "allEqual": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinPromptCachePreset.swift",
+      "pr22Blob": "d4d84553385b62e39f340fea7a350758e2abef50",
+      "base4373Blob": "d4d84553385b62e39f340fea7a350758e2abef50",
+      "candidateB80Blob": "d4d84553385b62e39f340fea7a350758e2abef50",
+      "sha256": "a50e123107a8e59791c32a4228ba12bf690c1038a6324238ffbfa0e68ebc7cf4",
+      "allEqual": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinGoogleCachedContentTests.swift",
+      "pr22Blob": "b240225c7269058f59ca18c9f3b2f9a215c71a64",
+      "base4373Blob": "b240225c7269058f59ca18c9f3b2f9a215c71a64",
+      "candidateB80Blob": "b240225c7269058f59ca18c9f3b2f9a215c71a64",
+      "sha256": "b8e637abfb78e500166b76dff3ee417c936b8806d46e086c0cdb398b6a82e0da",
+      "allEqual": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinPromptCachePolicyMutationTests.swift",
+      "pr22Blob": "5172e11dd7513d670912a2880ced1368382036bc",
+      "base4373Blob": "5172e11dd7513d670912a2880ced1368382036bc",
+      "candidateB80Blob": "5172e11dd7513d670912a2880ced1368382036bc",
+      "sha256": "4f04b3744bca9b5b5554ef001786c3fec53a4d6288474891ae42e39740aecdb4",
+      "allEqual": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinPromptCachePresetTests.swift",
+      "pr22Blob": "6ddba7f0dad090f7fea06e241cf6aef0ccc9882c",
+      "base4373Blob": "6ddba7f0dad090f7fea06e241cf6aef0ccc9882c",
+      "candidateB80Blob": "6ddba7f0dad090f7fea06e241cf6aef0ccc9882c",
+      "sha256": "00c7a0a3ea365b5893d37c83cd076b89bc856453300a446a071cb76fa438da35",
+      "allEqual": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinPromptCacheTests.swift",
+      "pr22Blob": "931071c160370aba1cca16e3fd9b72d28a8ee984",
+      "base4373Blob": "931071c160370aba1cca16e3fd9b72d28a8ee984",
+      "candidateB80Blob": "931071c160370aba1cca16e3fd9b72d28a8ee984",
+      "sha256": "1b123ce1ad4e1206f8b259bc6ed97d5bc1151066796bee936d9aafb16295eda5",
+      "allEqual": true
+    }
+  ],
+  "limitation": "Exact 12-file equivalence is not full PR22 ancestry and is not execution of app cache native tests."
+}

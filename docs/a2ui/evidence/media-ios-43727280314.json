@@ -1,0 +1,279 @@
+{
+  "source_sha": "b68e0300904c1ac269e557f93f5d8861734b16e3",
+  "run": 43727280314,
+  "job": 132851884942,
+  "artifact": 14167208711,
+  "artifact_bytes": 270056,
+  "artifact_sha256": "82ff549dddb04bb0197419bb92c91711af7d8d11d2c9cd2abbf1fcdb813aed84",
+  "status": "EXECUTED_PASS",
+  "cases": [
+    {
+      "name": "customMediaCatalogResolvesYouTubeThroughOfficialGraphAndBinding()",
+      "result": "Passed"
+    },
+    {
+      "name": "customMediaCannotAlterOfficialCatalogOrAdmitScriptFields()",
+      "result": "Passed"
+    },
+    {
+      "name": "acceptsPublicHTTPS()",
+      "result": "Passed"
+    },
+    {
+      "name": "rejectsCredentialsAndOtherSchemes()",
+      "result": "Passed"
+    },
+    {
+      "name": "rejectsLiteralNetworkAddresses()",
+      "result": "Passed"
+    },
+    {
+      "name": "rejectsLocalNamesAndAmbiguousHosts()",
+      "result": "Passed"
+    },
+    {
+      "name": "boundsURLAndHostLabels()",
+      "result": "Passed"
+    },
+    {
+      "name": "preservesOpaqueSourceBytes()",
+      "result": "Passed"
+    }
+  ],
+  "job_seconds": 657,
+  "scope": "iOS official catalog/binding and lexical media URL component controls; actual A2UI/media source compilation",
+  "inputs": {
+    "status": "PREPARED_NOT_EXECUTED",
+    "upstream": "https://github.com/a2ui-project/a2ui",
+    "revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079",
+    "consumer_module": "AI_Hanlin",
+    "test_module": "AI_HLYTests",
+    "portable_cases": [
+      "acceptsOfficialV1FixtureFrames",
+      "rejectsMalformedAndAmbiguousFrames",
+      "rejectsOtherProtocolVersions",
+      "preservesUnicodeSurfaceIdentity",
+      "boundsUTF8MessageAndComponentBatch",
+      "rejectsRPCAndUnnegotiatedCatalogs",
+      "rejectedEnvelopesNeverExportSurfaceCorrelation",
+      "componentValidationRemainsWithSDK"
+    ],
+    "sdk_cases": [
+      "customMediaCatalogResolvesYouTubeThroughOfficialGraphAndBinding",
+      "customMediaCannotAlterOfficialCatalogOrAdmitScriptFields",
+      "successfulProducerEOFKeepsOriginalModelActionAndClosesInput",
+      "producerEOFDoesNotSurviveRevocationOrFollowAnotherGeneration",
+      "producerEOFCancelsOnlyItsReceiverAndCannotReplaceFinishedTool",
+      "modelPartUsesMessageIdentityWithoutToolCall",
+      "orderedModelProjectionPreservesTextAndRegisteredSurface",
+      "modelProjectionRejectsForeignIdentityAndAmbiguousParts",
+      "modelProjectionNeverFollowsReplacedGeneration",
+      "transientOwnerLookupKeepsWireIDsIndependent",
+      "transientReceiveRejectsWrongIdentityAndSequence",
+      "sealedResultRetainsModelsAndRevokesActions",
+      "sealingRunDoesNotRevokeOtherRun",
+      "replacementRevokesOldGenerationBeforeNewDelivery",
+      "endingResultCancelsOwnedReceiveTask",
+      "presentationCopiesDoNotOwnDiscard",
+      "eventSinkIsWeakAndCannotKeepAuthorityAlive",
+      "deletedSurfaceDropsQueuedOwnedEvents",
+      "retiredSurfaceCannotReanimateQueuedEventsInSameResult",
+      "parsesAndRendersTextCardInputButton",
+      "nativeInputBindingWritesAndReadsOfficialModel",
+      "stableIDsAndNodeIdentityAcrossUpdates",
+      "malformedAndUnknownContentFallsBackAndRecovers",
+      "officialSchemasRejectInvalidTextInputButton",
+      "independentSurfacesKeepModelsSeparate",
+      "independentOwnersCanReuseWireSurfaceID",
+      "deleteDisposesAndRecreateStartsWithNewIdentity",
+      "closeRejectsLateFramesAndDisposesSurfaces",
+      "buttonEventUsesCurrentBoundValue",
+      "hebrewFixtureRetainsBindingsInRTLComposition",
+      "surfaceLimitDoesNotRemoveExistingContent",
+      "rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound",
+      "unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks",
+      "unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC",
+      "closeRevokesQueuedAndRetainedActionCallbacks",
+      "closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce"
+    ],
+    "ownership_cases": [
+      "successfulProducerEOFKeepsOriginalModelActionAndClosesInput",
+      "producerEOFDoesNotSurviveRevocationOrFollowAnotherGeneration",
+      "producerEOFCancelsOnlyItsReceiverAndCannotReplaceFinishedTool",
+      "modelPartUsesMessageIdentityWithoutToolCall",
+      "orderedModelProjectionPreservesTextAndRegisteredSurface",
+      "modelProjectionRejectsForeignIdentityAndAmbiguousParts",
+      "modelProjectionNeverFollowsReplacedGeneration",
+      "transientOwnerLookupKeepsWireIDsIndependent",
+      "transientReceiveRejectsWrongIdentityAndSequence",
+      "sealedResultRetainsModelsAndRevokesActions",
+      "sealingRunDoesNotRevokeOtherRun",
+      "replacementRevokesOldGenerationBeforeNewDelivery",
+      "endingResultCancelsOwnedReceiveTask",
+      "presentationCopiesDoNotOwnDiscard",
+      "eventSinkIsWeakAndCannotKeepAuthorityAlive",
+      "deletedSurfaceDropsQueuedOwnedEvents",
+      "retiredSurfaceCannotReanimateQueuedEventsInSameResult"
+    ],
+    "media_cases": [
+      "customMediaCatalogResolvesYouTubeThroughOfficialGraphAndBinding",
+      "customMediaCannotAlterOfficialCatalogOrAdmitScriptFields",
+      "acceptsPublicHTTPS",
+      "rejectsCredentialsAndOtherSchemes",
+      "rejectsLiteralNetworkAddresses",
+      "rejectsLocalNamesAndAmbiguousHosts",
+      "boundsURLAndHostLabels",
+      "preservesOpaqueSourceBytes"
+    ],
+    "files": [
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIIngress.swift",
+        "sha256": "0033c2f4522ac2fcee212becdaff3a2285d6a47349a2101457511116bda2cb1c"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultOwner.swift",
+        "sha256": "bb8c8a6d8669e38faed9cb5504e8ad543aa2655b9f1a56246c6e947c0ea4053d"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultProjectionSource.swift",
+        "sha256": "4420dd5bcd3d8cd3c65018a4a994f2cd65eb5e4f8162b7e318514f5004607f4a"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultView.swift",
+        "sha256": "396e7b2b19d71dc1d4678662db7e76955e1706bfe2fafc3c418ead007a37361e"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UISession.swift",
+        "sha256": "ffb7e4950935d9b5a90d93d6eea13f35900819402f6140cc879b010ed70593be"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinChatContentProjection.swift",
+        "sha256": "7a86ff30312082539295f3e317989d39b9a34d025cd7947f6609e7a81d8386f2"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinMediaCatalog.swift",
+        "sha256": "d39331996522721bfa1d482914ea2ef886d40f329aacecd77b63b093fdb5c99f"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinA2UIMediaURLGate.swift",
+        "sha256": "ef136368a38ad0ab2a970c4163e3f8f6427ab7556e82dc1d39e580077e79a4a4"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinMediaCatalogImplementation.swift",
+        "sha256": "c75e75e13b024f28cfcb2da911090557398bf83d2dc458cbdcdf9a767f42e762"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinRemoteMediaURL.swift",
+        "sha256": "691a095aca71d0ffcdd7fa3af56480bc470d35e4d8f049042948f1bb949d9caa"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubeDocument.swift",
+        "sha256": "c7dbf50affd9ff18288b425617e583ca92fee44149a9d305f386ff42e8f44e90"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubePlayerView.swift",
+        "sha256": "3b37a1fc23a49205b2475182c1ea9af480236788227e135d38b8b8b05e31caac"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubeVideo.swift",
+        "sha256": "5791cfa1ca552332628ce4b4c9fc1145e3cbcaf1bdec05188bd74e4e340020c8"
+      },
+      {
+        "path": "AI_HLYTests/HanlinRemoteMediaURLTests.swift",
+        "sha256": "77c289184c8001c5925b1323eb9e823164fd367c6a1057faac186ec09716e467"
+      },
+      {
+        "path": "AI_HLYTests/A2UITests.swift",
+        "sha256": "63138cab575cc2df1ca531937ef050365e97c377b26b7be633d2774ad5826861"
+      },
+      {
+        "path": "AI_HLYTests/A2UIFixtures/form.jsonl",
+        "sha256": "c3f9f393341162f541321eb3c8462e111724d0f62d0cebc2f418f0967de5891d"
+      },
+      {
+        "path": "AI_HLYTests/A2UIFixtures/invalid-components.jsonl",
+        "sha256": "e761c8070080e37bea0e22c5ed7a19d6424ff4237a214d9c4b0ace0cce51eba3"
+      },
+      {
+        "path": "AI_HLYTests/A2UIFixtures/malformed.txt",
+        "sha256": "5471e5d32b13c8a0bcee95f767fb9580fda7fa47ee0e7a4c124bcb3498fe77da"
+      },
+      {
+        "path": "AI_HLYTests/A2UIFixtures/rtl.jsonl",
+        "sha256": "2e0ce205c2351e8a6baa0ecb184667ecab82e8d73a4c5172dfefa938c4664705"
+      },
+      {
+        "path": "AI_HLYTests/A2UIFixtures/unknown-function.jsonl",
+        "sha256": "058f52de611a570b1a4db5116ea31a3f6fa01ab061d971249e6f51bb2041e63f"
+      },
+      {
+        "path": "AI_HLYTests/A2UIFixtures/unknown.jsonl",
+        "sha256": "14218c93f9e8b4a9b2b05f27f57de89a4a53617f115fe303c9c06f6ef37eb4da"
+      },
+      {
+        "path": "AI_HLYTests/A2UIFixtures/update.jsonl",
+        "sha256": "4ac7c02500a3d797f72b9184a181534949767b75547dd62ca354c1a20b0233a5"
+      }
+    ],
+    "target_platform": "ios",
+    "harness_manifest_sha256": "a9817aaad46caf77fa2fac1dd2cb0088f9275e03cf61d12fe5549b473bb7314b",
+    "native_execution": "NOT_RUN",
+    "platform": "ios27 / current stable Xcode"
+  },
+  "toolchain": "Xcode 27.2\nBuild version 27B52\nApple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0\nDriverKit SDKs:\n\tDriverKit 27.2                \t-sdk driverkit27.2\n\niOS SDKs:\n\tiOS 27.2                      \t-sdk iphoneos27.2\n\niOS Simulator SDKs:\n\tSimulator - iOS 27.2          \t-sdk iphonesimulator27.2\n\nmacOS SDKs:\n\tmacOS 27.2                    \t-sdk macosx27.2\n\tmacOS 27.2                    \t-sdk macosx27.2\n\ntvOS SDKs:\n\ttvOS 27.2                     \t-sdk appletvos27.2\n\ntvOS Simulator SDKs:\n\tSimulator - tvOS 27.2         \t-sdk appletvsimulator27.2\n\nvisionOS SDKs:\n\tvisionOS 27.2                 \t-sdk xros27.2\n\nvisionOS Simulator SDKs:\n\tSimulator - visionOS 27.2     \t-sdk xrsimulator27.2\n\nwatchOS SDKs:\n\twatchOS 27.2                  \t-sdk watchos27.2\n\nwatchOS Simulator SDKs:\n\tSimulator - watchOS 27.2      \t-sdk watchsimulator27.2\n\nProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\narm64\n/opt/homebrew/bin/python3\n",
+  "phase_seconds": {
+    "build-and-test": 478,
+    "diagnostics": 0,
+    "preflight": 20,
+    "resolution": 70,
+    "result-verification": 19,
+    "scheme-preflight": 44
+  },
+  "raw_files_sha256": {
+    "build-and-test-duration-seconds.txt": "65d53765ffdad4dbac70ece7bf15fb4cbf8829e8c82429e632b407971f2e7df6",
+    "ci-performance-report.json": "e2bcb4628146f599664efc396f614cd4f30dfbcaab52a1f7a61394dfe4e40034",
+    "destinations.txt": "283856f915c2018c920b81dd144afce2d60ebf9f7c8a55c58c4b7dcdc55fd85a",
+    "devices.json": "98d36717798ad15b8cfe7d3facd4f815d3326cfd90b7a24ff03266b84e364b32",
+    "diagnostics-duration-seconds.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "disk.txt": "1db14d8bc56082f6d4336decd3d47b178ca9fc027f12cbc359cdad56d841ba35",
+    "Package.resolved": "f310122dfabd9ec5cdde35fa73b7ddf335346d408fe7782d46c5e3015939e033",
+    "Package.swift": "a9817aaad46caf77fa2fac1dd2cb0088f9275e03cf61d12fe5549b473bb7314b",
+    "pin-validation.json": "4de9800094bf4efcdd83ee584c3aeff43e6bb6bd0a07921593ae82842febdfe8",
+    "preflight-duration-seconds.txt": "5378796307535df3ec8d8b15a2e2dc5641419c3d3060cfe32238c0fa973f7aa3",
+    "preflight.txt": "7153ee9afec99bd21885564100557c5899b41d10d4029316efbb0937882bbcc2",
+    "preparation.json": "42baea8453e83d028135afe4934cfeddb748c34acd739f2a79195a77a42b7e6d",
+    "process-status.json": "deda35a50339a9ae73d3287237d999ebaaaf4912b97b7ed836dc797b97cf7b41",
+    "proof-inputs.json": "0cf25502b79a793fb76122e2dfa9e65f31985743af190ea8624fe0ced22c952c",
+    "resolution-duration-seconds.txt": "6442bc26a7c562f5afe6467dab36365c709909f6a81afcecfc0c25cff0f1bab0",
+    "resolve.log": "887e2ce8135a7e62582b87b79381e42b9616dbff06e3f89afdb99782358bf8f4",
+    "resolved-before.json": "f310122dfabd9ec5cdde35fa73b7ddf335346d408fe7782d46c5e3015939e033",
+    "result-validation.json": "a3389a6a73e755d8c285d1e0915fe95c5bd8e6ef3d85539d6c1c16032a9bde87",
+    "result-verification-duration-seconds.txt": "a9742eb8ee320e006666aef25ae9aeed948247f3125c9cafa7cf97b7e7467dd5",
+    "runtimes.json": "f345edb41a3353e655248f96b878c9d09afb5f64a3c86989a3d6e0d9058b656e",
+    "scheme-preflight-duration-seconds.txt": "b1ce0aa6fdf3cf349d773243dab9fbbe09d30619f38b0c1e8977e28c4f0bc495",
+    "schemes.json": "0a4632d5b2623e3440fba5addd1118b627a3475ef625ed39a46a627bbec02c8a",
+    "selected-cases.txt": "338ed8e3deb232f000850b78cdc675cd195a9bc85f284c7d1a42950ceaccf2d7",
+    "selected-device.txt": "a964b846a4a5d36046ae57070d5b9e94fcd04abd5e4dfe867702670b51fb1dfb",
+    "selected-scheme.txt": "e5518ac578be32d0671a42bd5e85a37db2ce564910ff02a7456a3e33435662cd",
+    "skill-health.txt": "cd05dcc4e7d479bdf3c2f2741ad8b8115ed2fc4c386646eba9f959fccf94c749",
+    "source-sha.txt": "094be706c772fe4d505ed3e60ef1ef0d17d247f0c1160edb02da5bb27d8caef0",
+    "tests.json": "698311cb21f555e05c2b48a34db93a1e727cc98561f2dda00ad4282340fe3c4f",
+    "xcodebuild.log": "3e3d3388069c1de17ba29a97d0c2fd1a44326f2bbb995a692309bafb4b41ea21"
+  },
+  "prior_failed_ios": {
+    "run": 43725994662,
+    "source_sha": "8838c5604e35dcc508e183aecb8e8590a4ddb0b2",
+    "status": "TEST_FAILED",
+    "executed_pass": 1,
+    "failed": 1,
+    "artifact": 14167260669,
+    "artifact_sha256": "cfa54ec966b57cdfd95c5a0d2a635fe2d83f709db27ecee8268bcbc3f4ac3292",
+    "cause": "DynamicString binding classification; corrected by a8336b4e"
+  },
+  "not_run": [
+    "original app build/XCUITest",
+    "playback/network/redirect/DNS/pixel bounds",
+    "physical/RTL/AX/production model acceptance"
+  ],
+  "fresh_full_suite_claim": false
+}

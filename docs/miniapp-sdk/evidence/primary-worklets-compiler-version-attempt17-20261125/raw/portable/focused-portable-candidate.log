@@ -1,0 +1,20 @@
+✖ Worklets native compiler flags must match the resolved original JS graph in both manifests (31.180739ms)
+✔ Worklets native compiler definition follows future exact resolver selection without changing other settings (11.728467ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 147.673611
+
+✖ failing tests:
+
+test at Scripts/Audit/Tests/runtime-version-contract.test.mjs:153:1
+✖ Worklets native compiler flags must match the resolved original JS graph in both manifests (31.180739ms)
+  Error: Expo bridge metadata mirrors differ from their canonical generated sources
+      at auditPreparedRuntimeContract (file:///mnt/development/projects/worktrees/hanlin-primary-sdk-preparation-20261124/Scripts/Audit/miniapp-runtime-contract.mjs:210:11)
+      at async TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-primary-sdk-preparation-20261124/Scripts/Audit/Tests/runtime-version-contract.test.mjs:162:18)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

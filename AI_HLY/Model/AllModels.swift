@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  AllModels.swift
 //  AI_HLY
@@ -6,10 +7,14 @@
 //
 
 import Foundation
+import HanlinChatCore
 import SwiftData
 
 @Model
 class AllModels {
+    var catalogMetadataJSON: String? = nil
+    /// Optional original SwiftData column; existing model rows keep automatic caching.
+    var promptCachePolicyJSON: String? = nil
     var id = UUID()
     var name: String?
     var displayName: String?
@@ -77,5 +82,45 @@ class AllModels {
         self.briefDescription = briefDescription
         self.characterDesign = characterDesign
         self.relatedKnowledge = relatedKnowledge
+    }
+}
+
+extension AllModels {
+    var promptCachePolicy: HanlinPromptCachePolicy? {
+        guard let data = promptCachePolicyJSON?.data(using: .utf8) else { return nil }
+        return try? JSONDecoder().decode(HanlinPromptCachePolicy.self, from: data)
+    }
+
+    /// Model preferences must never persist another conversation's cache resource
+    /// or comparison response. Those belong to explicitly scoped requests.
+    func setPromptCachePolicy(_ policy: HanlinPromptCachePolicy?) throws {
+        promptCachePolicyJSON = try HanlinModelPromptCachePreferences.encode(policy)
+    }
+
+    var presentationName: String {
+        HanlinModelDisplayName.resolve(displayName: displayName, modelName: name)
+    }
+
+    var catalogMetadata: ProviderModelCatalogMetadata? {
+        guard let data = catalogMetadataJSON?.data(using: .utf8) else { return nil }
+        return try? JSONDecoder().decode(ProviderModelCatalogMetadata.self, from: data)
+    }
+    var catalogPriceTier: Int16 {
+        guard company?.uppercased() == "OPENROUTER" else { return price }
+        guard let metadata = catalogMetadata, metadata.isFresh else { return -1 }
+        switch metadata.priceStatus { case .free: return 0; case .paid: return 4; case .unknown: return -1 }
+    }
+    var hasVerifiedImageOutput: Bool {
+        guard company?.uppercased() == "OPENROUTER" else { return supportsImageGen }
+        return supportsImageGen && (catalogMetadata.map { $0.isFresh && $0.hasImageOutput } ?? false)
+    }
+    var catalogPriceDescription: String? {
+        guard company?.uppercased() == "OPENROUTER" else { return nil }
+        guard let metadata = catalogMetadata, metadata.isFresh else { return String(localized: "Price unknown", bundle: HanlinLocalization.bundle) }
+        switch metadata.priceStatus {
+        case .free: return String(localized: "Free", bundle: HanlinLocalization.bundle)
+        case .paid: return metadata.rateDescription
+        case .unknown: return String(localized: "Price unknown", bundle: HanlinLocalization.bundle)
+        }
     }
 }

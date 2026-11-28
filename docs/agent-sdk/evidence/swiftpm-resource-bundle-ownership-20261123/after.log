@@ -1,0 +1,13 @@
+test_changed_nested_resource_is_rejected (Scripts.SDK.tests.test_bundle_resources.BundleResourceTests.test_changed_nested_resource_is_rejected) ... ok
+test_different_nested_copy_in_framework_cannot_be_ignored (Scripts.SDK.tests.test_bundle_resources.BundleResourceTests.test_different_nested_copy_in_framework_cannot_be_ignored) ... ok
+test_different_processed_resource_in_duplicate_bundle_is_rejected (Scripts.SDK.tests.test_bundle_resources.BundleResourceTests.test_different_processed_resource_in_duplicate_bundle_is_rejected) ... ok
+test_duplicate_bundle_resource_link_cannot_escape_its_owner (Scripts.SDK.tests.test_bundle_resources.BundleResourceTests.test_duplicate_bundle_resource_link_cannot_escape_its_owner) ... ok
+test_duplicate_module_bundle_is_ambiguous (Scripts.SDK.tests.test_bundle_resources.BundleResourceTests.test_duplicate_module_bundle_is_ambiguous) ... ok
+test_identical_copies_cannot_mask_a_missing_canonical_resource (Scripts.SDK.tests.test_bundle_resources.BundleResourceTests.test_identical_copies_cannot_mask_a_missing_canonical_resource) ... ok
+test_identical_swiftpm_main_and_framework_bundle_copies_are_validated (Scripts.SDK.tests.test_bundle_resources.BundleResourceTests.test_identical_swiftpm_main_and_framework_bundle_copies_are_validated) ... ok
+test_original_resources_are_verified_in_sdk_bundle_and_main_copy_cannot_mask_loss (Scripts.SDK.tests.test_bundle_resources.BundleResourceTests.test_original_resources_are_verified_in_sdk_bundle_and_main_copy_cannot_mask_loss) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.025s
+
+OK

@@ -1,0 +1,62 @@
+diff --git a/AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift b/AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift
+index bae6bdef..621ed01a 100644
+--- a/AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift
++++ b/AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift
+@@ -102,5 +102,3 @@ public struct HanlinOpenInstalledMiniAppIntent: OpenIntent {
+         return .result()
+     }
+ }
+-
+-public struct HanlinMiniAppSystemIntentsPackage: AppIntentsPackage {}
+diff --git a/HanlinMiniAppsApp/HanlinMiniAppsApp.swift b/HanlinMiniAppsApp/HanlinMiniAppsApp.swift
+index c8a267c5..6794037a 100644
+--- a/HanlinMiniAppsApp/HanlinMiniAppsApp.swift
++++ b/HanlinMiniAppsApp/HanlinMiniAppsApp.swift
+@@ -271,6 +271,6 @@ private struct HanlinMiniAppsReadyRoot: View {
+ /// Index the original shared actions in the foreground app that executes them.
+ struct HanlinMiniAppsIntents: AppIntentsPackage {
+     static var includedPackages: [any AppIntentsPackage.Type] {
+-        [HanlinWidgetIntentsPackage.self, HanlinNativePresentationIntentsPackage.self, HanlinExpoWidgetsIntentsPackage.self, HanlinMiniAppSystemIntentsPackage.self, HanlinCameraCaptureIntentsPackage.self]
++        [HanlinWidgetIntentsPackage.self, HanlinNativePresentationIntentsPackage.self, HanlinExpoWidgetsIntentsPackage.self, HanlinCameraCaptureIntentsPackage.self]
+     }
+ }
+diff --git a/Scripts/SDK/tests/test_system_extension_targets.py b/Scripts/SDK/tests/test_system_extension_targets.py
+index 4b4a9fd1..a1b9359d 100644
+--- a/Scripts/SDK/tests/test_system_extension_targets.py
++++ b/Scripts/SDK/tests/test_system_extension_targets.py
+@@ -1,6 +1,7 @@
+ """Portable graph and signed-bundle ownership checks for real extension targets."""
+ from copy import deepcopy
+ import json
++import re
+ from pathlib import Path
+ import subprocess
+ import sys
+@@ -64,7 +65,26 @@ class SystemExtensionTargetsTests(unittest.TestCase):
+         self.assertNotIn("HanlinCameraCaptureControl", widget)
+         mini = (ROOT / "HanlinMiniAppsApp/HanlinMiniAppsApp.swift").read_text()
+         self.assertIn(".hanlinMiniAppSystemEntrypoints(", mini)
+-        self.assertIn("HanlinMiniAppSystemIntentsPackage.self", mini)
++        package_pattern = r"\b(?:struct|class|enum|extension)\s+(\w+)\s*:\s*AppIntentsPackage\b"
++        self.assertEqual(re.findall(package_pattern, mini), ["HanlinMiniAppsIntents"])
++        self.assertEqual(re.findall(package_pattern, intents), ["HanlinApplicationIntentsPackage"])
++        self.assertNotIn("HanlinMiniAppSystemIntentsPackage.self", mini)
++        objects = self.project["objects"]
++        mini_sources = {
++            objects[objects[file]["fileRef"]].get("path")
++            for phase in self.target(self.project, "HanlinMiniApps")["buildPhases"]
++            if objects[phase]["isa"] == "PBXSourcesBuildPhase"
++            for file in objects[phase]["files"] if "fileRef" in objects[file]
++        }
++        entity_path = "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift"
++        self.assertIn(entity_path, mini_sources)
++        entity = (ROOT / entity_path).read_text()
++        self.assertIn("public struct HanlinInstalledMiniAppEntity: IndexedEntity", entity)
++        self.assertIn("public struct HanlinInstalledMiniAppQuery: EnumerableEntityQuery, EntityStringQuery, IndexedEntityQuery", entity)
++        self.assertIn("public struct HanlinOpenInstalledMiniAppIntent: OpenIntent", entity)
++        self.assertEqual(re.findall(package_pattern, entity), [])
++        app = (ROOT / "AI_HLY/AI_HLY.swift").read_text()
++        self.assertIn("HanlinApplicationIntentsPackage.self", app)
+         self.assertIn("HanlinCameraCaptureIntentsPackage.self", mini)
+         project = deepcopy(self.project)
+         objects = project["objects"]

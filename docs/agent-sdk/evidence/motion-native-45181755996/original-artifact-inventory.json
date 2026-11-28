@@ -1,0 +1,116 @@
+[
+  {
+    "name": "boot-initial.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "retained_in_this_directory": true
+  },
+  {
+    "name": "bootstatus-attempt-1.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "retained_in_this_directory": true
+  },
+  {
+    "name": "bootstatus.log",
+    "bytes": 261,
+    "sha256": "85d5973b94b0e4c95d24435a6d2c7990eee5e2606e5a48b07bd640947d06f7ef",
+    "retained_in_this_directory": true
+  },
+  {
+    "name": "ci-performance-report.json",
+    "bytes": 2035,
+    "sha256": "c074f7101b9bcfeba2776baba2be957dfa4bdb0bb898391f8664d1feffa4f344",
+    "retained_in_this_directory": true
+  },
+  {
+    "name": "core-simulator-log.timeout",
+    "bytes": 24,
+    "sha256": "380338e6873abcf07093e46530492652b7bc8aadd3fd6ba7ee4a2a69b85814cb",
+    "retained_in_this_directory": true
+  },
+  {
+    "name": "device-strategy.txt",
+    "bytes": 6,
+    "sha256": "02db0d2659c9d48bc15f81a388594fc0e3cf4c780fdc27ea21e0671afc37de19",
+    "retained_in_this_directory": true
+  },
+  {
+    "name": "devices-after.timeout",
+    "bytes": 24,
+    "sha256": "380338e6873abcf07093e46530492652b7bc8aadd3fd6ba7ee4a2a69b85814cb",
+    "retained_in_this_directory": true
+  },
+  {
+    "name": "devices.json",
+    "bytes": 22084,
+    "sha256": "98d36717798ad15b8cfe7d3facd4f815d3326cfd90b7a24ff03266b84e364b32",
+    "retained_in_this_directory": false
+  },
+  {
+    "name": "motion-boot-readiness.json",
+    "bytes": 1961,
+    "sha256": "cdc482ddffc3c85fdfc2b768100c60ceefb7d58b27136b1aa7373839deb2e989",
+    "retained_in_this_directory": true
+  },
+  {
+    "name": "owned-simulator-cleanup.log",
+    "bytes": 1683,
+    "sha256": "692015b0476089ff7199d338618e7f86267aa8289311a39cd0cf12e37a954124",
+    "retained_in_this_directory": true
+  },
+  {
+    "name": "preflight-duration-seconds.txt",
+    "bytes": 4,
+    "sha256": "ce16e9dea9b0c470e088bc121136ee735118e474eafbf78a69828bf6f51490df",
+    "retained_in_this_directory": true
+  },
+  {
+    "name": "preflight.txt",
+    "bytes": 962,
+    "sha256": "f284b4ef718929a36b93576892c9e6c599ed58ea7aa7e9d4a2693b1bd433d032",
+    "retained_in_this_directory": true
+  },
+  {
+    "name": "process-status.txt",
+    "bytes": 28,
+    "sha256": "5fecb30c9edeef67794fce1856d1b70fc392c560e8e3459bc2662c377e2f0b3d",
+    "retained_in_this_directory": true
+  },
+  {
+    "name": "requested-scope.txt",
+    "bytes": 17,
+    "sha256": "6ad2ebf1c8ea86183a5c729a7c063461f65b152e056155a2515424821719badf",
+    "retained_in_this_directory": true
+  },
+  {
+    "name": "runtimes.json",
+    "bytes": 60604,
+    "sha256": "ab4c239dbd548b70c6f649f8a8ec4df8c6ec13c1495da04c4c0f2b7262f91504",
+    "retained_in_this_directory": false
+  },
+  {
+    "name": "shutdown-recovery.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "retained_in_this_directory": true
+  },
+  {
+    "name": "source-sha.txt",
+    "bytes": 41,
+    "sha256": "299739f54f94542468f59388030f3d2e09e6a2c16ec5127936a70b85f768c46e",
+    "retained_in_this_directory": true
+  },
+  {
+    "name": "verified-environment.json",
+    "bytes": 81347,
+    "sha256": "c5d50aabf89592c986c800b6f47fd39a665622c059b001e85bb6d91842402968",
+    "retained_in_this_directory": false
+  },
+  {
+    "name": "xcodegen-install.log",
+    "bytes": 327,
+    "sha256": "5543c39402b2867d94bc6d9c2f8f3108dd11a86c87515448a3a3d4932506347d",
+    "retained_in_this_directory": true
+  }
+]

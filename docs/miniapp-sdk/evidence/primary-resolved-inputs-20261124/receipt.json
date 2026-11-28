@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T18:08:11.282055+00:00",
+  "status": "INTERIM_MATERIALIZED_INPUTS",
+  "baseSource": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+  "integrationParent": "67f555e99e15de202bea41dde74a660c1c252026",
+  "actualExecution": "Original primary-Mac resolver, retained initial snapshot; not rerun on root",
+  "snapshotSHA256": "5626229fd75bdcdfc89d1ecbf2b834a924a35e186a7669df3eaad56f5d09aefc",
+  "patchSHA256": "8dba74dc69ac22e81dd0b058e1ef02f64042165f4cf0bc6875b30092f5c26c60",
+  "before": {
+    "Scripts/Expo/package-lock.json": "e3da3f23bf663dd927d1db5f34750053c611603cc968f200f51c309f3f8ccf60",
+    "Scripts/MiniApps/upstream-resolution.json": "8fa9c33d9df17cd019d1b5893ed65d090c7e91b07613e60f6b500e07405c9513",
+    "Scripts/NativeScript/package-lock.json": "e05c5bddd7d242d1b28fd7ad6c7ec23fcf9fdaf50dad668df4389f2b7771ca58",
+    "Scripts/NativeScript/package.json": "db255f51de179afb603cffa5d42830a27fcf0e2650d3401364f7338f94a328b5"
+  },
+  "after": {
+    "Scripts/Expo/package-lock.json": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf",
+    "Scripts/MiniApps/upstream-resolution.json": "2bf8f371f06949fbe56858c38addeb417a07f9b598fc38ff72aedb39d5f364eb",
+    "Scripts/NativeScript/package-lock.json": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+    "Scripts/NativeScript/package.json": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b"
+  },
+  "review": "Independent SDK review authenticated all35 listed snapshot members and exact Git patch identities. These four output hashes equal corresponding actual MAIN16 source-input rows; no whole archive equality is inferred.",
+  "boundary": "Interim authenticated resolution checkpoint before automatic provenance refresh. Final native preparation may produce additional tracked resources/provenance. Native builds and52 cases remain NOT_RUN."
+}

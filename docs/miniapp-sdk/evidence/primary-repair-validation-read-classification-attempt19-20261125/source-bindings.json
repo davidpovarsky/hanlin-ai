@@ -1,0 +1,36 @@
+{
+  "source": "958cf666da7be83b9b63e46e3013e3344fb31585",
+  "parent": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+  "tree": "8fead677f6da019ea032b6329adbceafbf745e7d",
+  "productionChangedPaths": [
+    "AI_HLY/Downstream/ChatCore/HanlinAppHostIntegration.swift"
+  ],
+  "files": [
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppHostIntegration.swift",
+      "source": "958cf666da7be83b9b63e46e3013e3344fb31585",
+      "bytes": 23884,
+      "sha256": "f09bd56c25571bbc897fb40327b424ddc67f0e9926e86b7bf8d674eeaa5ce216"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "source": "958cf666da7be83b9b63e46e3013e3344fb31585",
+      "bytes": 50327,
+      "sha256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+      "source": "958cf666da7be83b9b63e46e3013e3344fb31585",
+      "bytes": 35047,
+      "sha256": "179e222f04e185d941c0f42416f6df6d391cf308bd79b63af341093c460d1e1b"
+    }
+  ],
+  "sdkProducer": "a2c8a1b1be746461272ba77254603304567c309d",
+  "sdkHostArchiveSHA256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+  "sdkInputManifestSHA256": "ba8f3f1f09054887eed62532fa1d5ca2ac3bd60e6aa99a98ab1035c7653882a2",
+  "upstreamProvider": {
+    "repository": "davidpovarsky/swift-ai-sdk",
+    "commit": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+    "textAndErrorText": "Preserved without an added prefix by original OpenAI/OpenAI-compatible serializers."
+  }
+}

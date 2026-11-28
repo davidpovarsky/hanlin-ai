@@ -1,0 +1,6 @@
+{
+  "name": "Production ScriptUI TSX",
+  "version": "1.0.0",
+  "entry": "index.tsx",
+  "runInApp": true
+}

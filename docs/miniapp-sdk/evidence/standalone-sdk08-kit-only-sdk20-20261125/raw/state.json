@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "status": "SIX_COMMANDS_EXECUTED_EXPECTED",
+  "startedAt": "2026-11-25T21:30:36.930846+00:00",
+  "pid": 2143313,
+  "productionSource": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "SDKProducerSource": "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
+  "nativeExecution": "NOT_RUN",
+  "upstreamResolution": false,
+  "npmInstallUsed": false,
+  "completed": [
+    {
+      "id": "expo-validate",
+      "returncode": 0,
+      "elapsedSeconds": 9.217229077592492
+    },
+    {
+      "id": "expo-build",
+      "returncode": 0,
+      "elapsedSeconds": 35.07494869455695
+    },
+    {
+      "id": "nativescript-validate",
+      "returncode": 0,
+      "elapsedSeconds": 7.63492555078119
+    },
+    {
+      "id": "nativescript-build",
+      "returncode": 0,
+      "elapsedSeconds": 14.968809400685132
+    },
+    {
+      "id": "negative-type-error-validate",
+      "returncode": 1,
+      "elapsedSeconds": 7.8312846180051565
+    },
+    {
+      "id": "negative-type-error-build",
+      "returncode": 1,
+      "elapsedSeconds": 8.213286276906729
+    }
+  ],
+  "phase": "CLI",
+  "finishedAt": "2026-11-25T21:32:37.599109+00:00",
+  "elapsedSeconds": 120.66825711540878,
+  "SDKFilesByteAndModeIdenticalAfter": 25682,
+  "independentTraceAndArchiveAudit": "PENDING"
+}

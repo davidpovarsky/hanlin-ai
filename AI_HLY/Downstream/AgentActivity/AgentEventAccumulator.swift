@@ -1,0 +1,694 @@
+import HanlinLocalization
+//
+//  AgentEventAccumulator.swift
+//  AI_HLY
+//
+
+import Foundation
+import HanlinPresentationKit
+
+struct AgentEventAccumulator {
+  private(set) var run: AgentRun
+  private var transcript: AgentTranscriptAccumulator
+  private var evidence: AgentEvidenceAccumulator
+  private var stepIndexByExternalID: [String: Int] = [:]
+  private var nextStepSequence: Int
+  private var pendingToolArguments: [String: String] = [:]
+  private var toolTranscriptIDByCallID: [String: String] = [:]
+  private var callIDByExecutionID: [String: String] = [:]
+  private var toolCallByID: [String: AgentToolCall] = [:]
+  private var profileByCallID: [String: ToolPresentationProfile] = [:]
+
+  init(run: AgentRun) {
+    self.run = run
+    transcript = AgentTranscriptAccumulator(items: run.transcriptItems)
+    evidence = AgentEvidenceAccumulator(items: run.evidenceItems)
+    nextStepSequence = (run.steps.map(\.sequence).max() ?? -1) + 1
+    for (index, step) in run.steps.enumerated() {
+      if let externalID = step.externalID {
+        stepIndexByExternalID[externalID] = index
+      }
+    }
+  }
+
+  mutating func apply(_ event: AgentEvent) {
+    AgentDiagnosticsRecorder.trace(runID: run.id, stage: "AgentEventAccumulator.input", text: String(describing: event))
+    if case .runStarted = event {
+      // Allow initial runStarted while status is .running
+    } else if run.status != .running && run.status != .pending {
+      return
+    }
+    defer {
+      run.transcriptItems = transcript.items
+      run.evidenceItems = evidence.items
+      assert(AgentTranscriptValidation.hasStrictlyIncreasingSequence(run.transcriptItems))
+      assert(!AgentTranscriptValidation.containsDuplicateNativeUIResults(run.transcriptItems))
+      assert(AgentTranscriptValidation.satisfiesCompletedRunInvariant(run))
+    }
+
+    // A provider's real output takes over from request latency. Neither
+    // transport prose nor an unrelated late request-end can revive/erase it.
+    switch event {
+    case .reasoningStarted, .reasoningDelta, .answerSegmentStarted, .answerSegmentDelta,
+         .toolCallStarted, .toolCallArgumentsDelta, .toolCallCompleted,
+         .toolExecutionStarted, .toolApprovalChanged, .searchStarted,
+         .runCompleted, .runFailed, .runCancelled:
+      run.pendingModelRequestID = nil
+    default: break
+    }
+
+    switch event {
+    case .modelRequestStarted(let id):
+      guard !id.isEmpty else { return }
+      run.pendingModelRequestID = id
+    case .modelRequestEnded(let id):
+      if run.pendingModelRequestID == id { run.pendingModelRequestID = nil }
+    case .sourceObserved(let source):
+      evidence.insert(contentsOf: [source])
+    case .sourceCitations(let segmentID, let citations):
+      for citation in citations {
+        var source = citation.source
+        let candidates = transcript.items.filter { item in
+          item.kind == .assistantText && item.externalID != nil && item.text?.hasSuffix(citation.text) == true
+            && (segmentID == nil || item.externalID == segmentID)
+        }
+        if candidates.count == 1, let item = candidates.first,
+           let segmentID = item.externalID, let text = item.text, !citation.text.isEmpty,
+           citation.range.lowerBound >= 0, citation.range.upperBound <= citation.text.utf16.count {
+          let base = text.utf16.count - citation.text.utf16.count
+          source.claimAnchors = [.init(providerTextPartID: citation.textPartID, transcriptSegmentID: segmentID,
+            prefixSHA256: ChatSavedExcerpt.digest(text), prefixUTF16Length: text.utf16.count,
+            startUTF16: base + citation.range.lowerBound, endUTF16: base + citation.range.upperBound)]
+        }
+        evidence.insert(contentsOf: [source])
+      }
+    case .modelRoundStarted(let id):
+      run.finalAnswerStartedAt = nil
+      transcript.setModelRound(id)
+    case .runStarted(let metadata):
+      guard metadata.id == run.id else { return }
+      run.startedAt = metadata.startedAt
+      run.finalAnswerStartedAt = nil
+
+    case .reasoningStarted(let metadata):
+      let sequence = transcript.allocateSequence()
+      let stepID = appendStep(
+        externalID: metadata.id,
+        sequence: sequence,
+        kind: .reasoning,
+        title: metadata.title,
+        startedAt: metadata.startedAt
+      )
+      transcript.begin(
+        externalID: metadata.id,
+        kind: .reasoning,
+        activityStepID: stepID,
+        startedAt: metadata.startedAt,
+        visibility: .collapseIntoThinking,
+        sequence: sequence
+      )
+
+    case .reasoningDelta(let id, let text):
+      append(
+        text, to: id, keyPath: \.output, kind: .reasoning, title: String(localized: "Thinking", bundle: HanlinLocalization.bundle))
+      transcript.appendText(text, to: id)
+
+    case .reasoningCompleted(let id):
+      completeStep(externalID: id)
+      transcript.complete(externalID: id)
+
+    case .progressMessage(let progress):
+      guard !hasDuplicateProgress(progress.message) else { return }
+      let sequence = transcript.allocateSequence()
+      let stepID = appendStep(
+        externalID: progress.id,
+        sequence: sequence,
+        kind: .progress,
+        title: progress.message,
+        summary: progress.message,
+        source: progress.source,
+        status: .completed,
+        startedAt: progress.timestamp,
+        completedAt: progress.timestamp
+      )
+      transcript.begin(
+        externalID: progress.id,
+        kind: .progress,
+        activityStepID: stepID,
+        startedAt: progress.timestamp,
+        status: .completed,
+        text: progress.message,
+        visibility: .collapseIntoThinking,
+        sequence: sequence
+      )
+
+    case .toolCallStarted(let call):
+      let profile = call.presentationProfile
+      let presentation = ToolPresentationRegistry.presentation(for: call.name, profile: profile)
+      let visibleKeys = profile.activity.visibleArgumentKeys
+      let userFacingArguments = ToolProgressSummary.userFacingArguments(
+        from: call.sanitizedArgumentsJSON,
+        visibleKeys: visibleKeys
+      )
+      let queryItems =
+        profile.activity.kind == .search
+        ? ToolProgressSummary.stringValues(
+          from: call.sanitizedArgumentsJSON,
+          keys: visibleKeys
+        )
+        : []
+      let sequence = transcript.allocateSequence()
+      let stepID = appendStep(
+        externalID: "call:\(call.id)",
+        sequence: sequence,
+        kind: .toolCall,
+        profile: profile,
+        resultPresentationRequest: call.resultPresentationRequest,
+        title: presentation.title,
+        subtitle: call.name,
+        summary: call.progressSummary ?? presentation.runningDescription,
+        source: call.progressSummarySource ?? .applicationGenerated,
+        input: userFacingArguments,
+        queryItems: queryItems
+      )
+      let transcriptID = "tool:\(call.id)"
+      toolTranscriptIDByCallID[call.id] = transcriptID
+      transcript.begin(
+        externalID: transcriptID,
+        kind: .toolActivity,
+        callID: call.id,
+        toolName: call.name,
+        activityStepID: stepID,
+        text: call.progressSummary ?? presentation.runningDescription,
+        visibility: .collapseIntoThinking,
+        sequence: sequence,
+        canonicalExecutionPresentation: profile.canonicalExecutionPresentation,
+        canonicalEmbeddedPresentation: profile.canonicalEmbeddedPresentation
+      )
+      pendingToolArguments[call.id] = userFacingArguments
+      toolCallByID[call.id] = call
+      profileByCallID[call.id] = profile
+
+    case .toolCallArgumentsDelta(let id, let delta):
+      pendingToolArguments[id, default: ""].append(delta)
+
+    case .toolCallCompleted(let call):
+      toolCallByID[call.id] = call
+      profileByCallID[call.id] = call.presentationProfile
+      let externalID = "call:\(call.id)"
+      if stepIndexByExternalID[externalID] == nil {
+        apply(.toolCallStarted(call))
+      }
+      updateStep(externalID: externalID) { step in
+        step.input = ToolProgressSummary.userFacingArguments(
+          from: call.sanitizedArgumentsJSON,
+          visibleKeys: call.presentationProfile.activity.visibleArgumentKeys
+        )
+        step.status = .completed
+        step.completedAt = Date()
+      }
+
+    case .toolExecutionStarted(let execution):
+      let presentation = ToolPresentationRegistry.presentation(
+        for: execution.name,
+        profile: profileByCallID[execution.callID]
+      )
+      let stepID = appendStep(
+        externalID: "execution:\(execution.id)",
+        kind: presentation.activityKind,
+        profile: profileByCallID[execution.callID],
+        resultPresentationRequest: toolCallByID[execution.callID]?.resultPresentationRequest,
+        title: presentation.title,
+        subtitle: execution.name,
+        summary: presentation.runningDescription,
+        source: .applicationGenerated,
+        startedAt: execution.startedAt,
+        input: pendingToolArguments[execution.callID]
+      )
+      callIDByExecutionID[execution.id] = execution.callID
+      let transcriptID = toolTranscriptIDByCallID[execution.callID] ?? "tool:\(execution.callID)"
+      toolTranscriptIDByCallID[execution.callID] = transcriptID
+      let profile = profileByCallID[execution.callID]
+      if transcript.item(externalID: transcriptID) == nil {
+        transcript.begin(
+          externalID: transcriptID,
+          kind: .toolActivity,
+          callID: execution.callID,
+          toolName: execution.name,
+          activityStepID: stepID,
+          startedAt: execution.startedAt,
+          text: presentation.runningDescription,
+          visibility: .collapseIntoThinking,
+          canonicalExecutionPresentation: profile?.canonicalExecutionPresentation,
+          canonicalEmbeddedPresentation: profile?.canonicalEmbeddedPresentation
+        )
+      } else {
+        transcript.update(externalID: transcriptID) { item in
+          item.activityStepID = stepID
+          item.status = .running
+          item.completedAt = nil
+          if item.toolName == nil { item.toolName = execution.name }
+          if item.canonicalExecutionPresentation == nil {
+            item.canonicalExecutionPresentation = profile?.canonicalExecutionPresentation
+          }
+          if item.canonicalEmbeddedPresentation == nil {
+            item.canonicalEmbeddedPresentation = profile?.canonicalEmbeddedPresentation
+          }
+        }
+      }
+
+    case .toolExecutionProgress(let id, let message):
+      let sanitized = ProgressSummarySanitizer.sanitize(message)
+      updateStep(externalID: "execution:\(id)") { step in
+        step.userFacingSummary = sanitized ?? step.userFacingSummary
+      }
+      if let callID = callIDByExecutionID[id], let transcriptID = toolTranscriptIDByCallID[callID] {
+        transcript.update(externalID: transcriptID) { item in
+          item.text = sanitized ?? item.text
+        }
+      }
+
+    case .toolExecutionCompleted(let id, let result):
+      let callID = callIDByExecutionID[id] ?? id.replacingOccurrences(of: ":execution", with: "")
+      let profile = profileByCallID[callID]
+      let evidenceSequence = run.steps.first(where: { $0.externalID == "execution:\(id)" })?
+        .sequence
+      updateStep(externalID: "execution:\(id)") { step in
+        step.output = Self.safePreview(result.userText ?? result.modelText)
+        step.richResultBlocks = result.richResultBlocks
+        if let profile {
+          step.title = Self.executionTitle(
+            outcome: result.semanticOutcome,
+            profile: profile
+          )
+        }
+        step.status = Self.activityStatus(for: result.semanticOutcome)
+        if result.isError {
+          step.errorDescription = Self.safePreview(result.userText ?? result.modelText)
+        }
+        step.completedAt = step.startedAt.addingTimeInterval(max(0, result.duration))
+      }
+      if let transcriptID = toolTranscriptIDByCallID[callID] {
+        transcript.complete(
+          externalID: transcriptID,
+          status: Self.activityStatus(for: result.semanticOutcome)
+        )
+      }
+      if let call = toolCallByID[callID], let profile {
+        evidence.insert(
+          contentsOf: AgentEvidenceExtractor.extract(
+            call: call,
+            result: result,
+            sequence: evidenceSequence
+          ))
+        let decision = ToolResultPresentationCoordinator.decide(
+          call: call,
+          profile: profile,
+          hasPayload: !result.richResultBlocks.isEmpty || result.hasLegacyPresentationPayload || result.embeddedResultPayload != nil,
+          isError: result.isError
+        )
+        if decision.shouldPresent, let rendererKind = decision.rendererKind {
+          transcript.insertUserVisibleResult(
+            callID: callID,
+            toolName: call.name,
+            rendererKind: rendererKind,
+            request: call.resultPresentationRequest,
+            blocks: result.richResultBlocks,
+            completedAt: Date(),
+            canonicalExecutionPresentation: profile.canonicalExecutionPresentation,
+            canonicalEmbeddedPresentation: profile.canonicalEmbeddedPresentation,
+            embeddedResultPayload: result.embeddedResultPayload
+          )
+        }
+      }
+
+    case .toolApprovalChanged(let approval):
+      if let index = run.approvals.firstIndex(where: { $0.id == approval.id }) {
+        guard run.approvals[index].callID == approval.callID else { return }
+        run.approvals[index] = approval
+      } else { run.approvals.append(approval) }
+      let externalID = "call:\(approval.callID)"
+      if stepIndexByExternalID[externalID] == nil {
+        apply(.toolCallStarted(.parse(id: approval.callID, name: approval.toolName, argumentsJSON: "{}")))
+      }
+      updateStep(externalID: externalID) { step in
+        step.input = approval.reviewText
+        switch approval.disposition {
+        case .awaiting, .providerRequired:
+          step.status = .pending
+          step.userFacingSummary = String(localized: "Awaiting approval", bundle: HanlinLocalization.bundle)
+        case .allowedOnce: step.userFacingSummary = String(localized: "Allowed once", bundle: HanlinLocalization.bundle)
+        case .allowedAlways: step.userFacingSummary = String(localized: "Allowed and remembered", bundle: HanlinLocalization.bundle)
+        case .notApproved:
+          step.status = .cancelled; step.completedAt = Date()
+          step.userFacingSummary = String(localized: "Not approved", bundle: HanlinLocalization.bundle)
+          step.errorDescription = nil
+        }
+      }
+
+    case .toolExecutionFailed(let id, let error):
+      let callID = callIDByExecutionID[id] ?? id.replacingOccurrences(of: ":execution", with: "")
+      let notApproved = run.approvals.contains { $0.callID == callID && $0.disposition == .notApproved }
+      let failedTitle = profileByCallID[callID]?.activity.failedTitle
+      updateStep(externalID: "execution:\(id)") { step in
+        step.status = notApproved ? .cancelled : .failed
+        if let failedTitle { step.title = failedTitle }
+        step.errorDescription = notApproved ? nil : error.message
+        if notApproved { step.title = String(localized: "Not approved", bundle: HanlinLocalization.bundle); step.userFacingSummary = step.title }
+        step.completedAt = Date()
+      }
+      if let transcriptID = toolTranscriptIDByCallID[callID] {
+        transcript.update(externalID: transcriptID) { item in
+          item.text = notApproved ? String(localized: "Not approved", bundle: HanlinLocalization.bundle) : error.message
+        }
+        transcript.complete(externalID: transcriptID, status: notApproved ? .cancelled : .failed)
+      }
+
+    case .answerSegmentStarted(let metadata):
+      transcript.begin(
+        externalID: metadata.id,
+        kind: .assistantText,
+        startedAt: metadata.startedAt,
+        textRole: .provisional,
+        visibility: .collapseIntoThinking
+      )
+
+    case .answerSegmentDelta(let id, let text):
+      transcript.appendText(text, to: id)
+
+    case .answerSegmentEnded(let id, let disposition):
+      transcript.endAnswerSegment(externalID: id, disposition: disposition)
+      preserveExplicitSourceAnchors(for: id)
+      if disposition == .final {
+        run.finalAnswer = Self.nonemptyText(transcript.item(externalID: id)?.text)
+        if run.finalAnswer != nil { run.finalAnswerStartedAt = transcript.item(externalID: id)?.startedAt }
+      }
+
+    case .searchStarted(let id, let title, let queries, let providerName):
+      let normalizedQueries = AgentActivityDeduplicator.uniqueStrings(queries)
+      if stepIndexByExternalID[id] != nil {
+        updateStep(externalID: id) { step in
+          step.queryItems = AgentActivityDeduplicator.uniqueStrings(
+            step.queryItems + normalizedQueries
+          )
+          step.searchProviderName = providerName ?? step.searchProviderName
+        }
+        break
+      }
+      let sequence = transcript.allocateSequence()
+      let stepID = appendStep(
+        externalID: id,
+        sequence: sequence,
+        kind: .webSearch,
+        title: title,
+        summary: title,
+        source: .applicationGenerated,
+        queryItems: normalizedQueries,
+        searchProviderName: providerName
+      )
+      transcript.begin(
+        externalID: id,
+        kind: .toolActivity,
+        activityStepID: stepID,
+        text: title,
+        visibility: .collapseIntoThinking,
+        sequence: sequence
+      )
+
+    case .searchCompleted(let id, let sources, let output):
+      updateStep(externalID: id) { step in
+        step.sourceItems = sources
+        step.output = Self.safePreview(output)
+        step.status = .completed
+        step.completedAt = Date()
+      }
+      evidence.insert(
+        contentsOf: AgentEvidenceExtractor.evidence(
+          from: sources,
+          sequence: run.steps.first(where: { $0.externalID == id })?.sequence
+        ))
+      transcript.complete(externalID: id)
+
+    case .runCompleted:
+      for item in transcript.items where item.kind == .assistantText {
+        if let id = item.externalID { preserveExplicitSourceAnchors(for: id) }
+      }
+      closeRunningSteps(as: .completed)
+      transcript.closeActiveItems(as: .completed)
+      run.finalAnswer = transcript.selectFinalAnswerForCompletedRun()
+      run.finalAnswerStartedAt = transcript.items.last(where: {
+        $0.kind == .assistantText && $0.textRole == .final
+          && $0.text?.contains(where: { !$0.isWhitespace }) == true
+      })?.startedAt
+      run.status = .completed
+      run.completedAt = Date()
+
+    case .runFailed(let error):
+      closeRunningSteps(as: .failed, error: error.message)
+      transcript.closeActiveItems(as: .failed)
+      appendErrorTranscript(text: error.message, status: .failed, remainInChat: true)
+      run.finalAnswer = AgentTranscriptValidation.finalAnswer(in: transcript.items)
+      run.status = .failed
+      run.completedAt = Date()
+
+    case .runCancelled:
+      closeRunningSteps(as: .cancelled)
+      transcript.closeActiveItems(as: .cancelled)
+      run.finalAnswer = AgentTranscriptValidation.finalAnswer(in: transcript.items)
+      run.status = .cancelled
+      run.completedAt = Date()
+      let timestamp = Date()
+      let sequence = transcript.allocateSequence()
+      let stepID = appendStep(
+        externalID: "cancel:\(run.id.uuidString)",
+        sequence: sequence,
+        kind: .cancellation,
+        title: String(localized: "Cancelled", bundle: HanlinLocalization.bundle),
+        status: .cancelled,
+        startedAt: timestamp,
+        completedAt: timestamp
+      )
+      transcript.begin(
+        externalID: "cancel:\(run.id.uuidString)",
+        kind: .error,
+        activityStepID: stepID,
+        startedAt: timestamp,
+        status: .cancelled,
+        text: String(localized: "Cancelled", bundle: HanlinLocalization.bundle),
+        visibility: .collapseIntoThinking,
+        sequence: sequence
+      )
+    }
+  }
+
+  private mutating func preserveExplicitSourceAnchors(for segmentID: String) {
+    guard let text = transcript.item(externalID: segmentID)?.text, !text.isEmpty else { return }
+    let references = evidence.items.filter(\.wasReturnedToModel).map {
+      HanlinSourceReference(id: $0.id, title: $0.title, url: $0.url.flatMap(URL.init(string:)),
+        alternateURLs: ($0.alternateURLs ?? []).compactMap(URL.init(string:)))
+    }
+    let anchors = HanlinCitationProjection.explicitSourceLinkAnchors(text: text, sources: references)
+    guard !anchors.isEmpty else { return }
+    let digest = ChatSavedExcerpt.digest(text)
+    let byID = Dictionary(evidence.items.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
+    let sources = anchors.compactMap { anchor -> AgentEvidenceItem? in
+      guard var source = byID[anchor.sourceID] else { return nil }
+      source.claimAnchors = [.init(providerTextPartID: "markdown:\(segmentID)", transcriptSegmentID: segmentID,
+        prefixSHA256: digest, prefixUTF16Length: text.utf16.count,
+        startUTF16: anchor.range.lowerBound, endUTF16: anchor.range.upperBound)]
+      return source
+    }
+    evidence.insert(contentsOf: sources)
+  }
+
+  private static func activityStatus(
+    for outcome: NativeToolExecutionOutcome
+  ) -> AgentActivityStatus {
+    switch outcome {
+    case .succeeded: .completed
+    case .cancelled: .cancelled
+    case .failed, .invalidArguments, .rejectedByCapability,
+         .rejectedByAvailability, .timedOut: .failed
+    }
+  }
+
+  private static func executionTitle(
+    outcome: NativeToolExecutionOutcome,
+    profile: ToolPresentationProfile
+  ) -> String {
+    switch outcome {
+    case .succeeded: profile.activity.completedTitle
+    case .failed: profile.activity.failedTitle
+    case .invalidArguments: String(localized: "Invalid arguments", bundle: HanlinLocalization.bundle)
+    case .rejectedByCapability: String(localized: "Denied", bundle: HanlinLocalization.bundle)
+    case .rejectedByAvailability: String(localized: "Unavailable", bundle: HanlinLocalization.bundle)
+    case .timedOut: String(localized: "Timed out", bundle: HanlinLocalization.bundle)
+    case .cancelled: String(localized: "Cancelled", bundle: HanlinLocalization.bundle)
+    }
+  }
+
+  @discardableResult
+  private mutating func appendStep(
+    externalID: String?,
+    sequence: Int? = nil,
+    kind: AgentActivityKind,
+    profile: ToolPresentationProfile? = nil,
+    resultPresentationRequest: ToolResultPresentationRequest? = nil,
+    title: String,
+    subtitle: String? = nil,
+    summary: String? = nil,
+    source: ProgressSummarySource? = nil,
+    status: AgentActivityStatus = .running,
+    startedAt: Date = Date(),
+    completedAt: Date? = nil,
+    input: String? = nil,
+    output: String? = nil,
+    queryItems: [String] = [],
+    searchProviderName: String? = nil,
+    sourceItems: [AgentActivitySource] = []
+  ) -> UUID? {
+    if let externalID, let index = stepIndexByExternalID[externalID],
+      run.steps.indices.contains(index)
+    {
+      return run.steps[index].id
+    }
+    let assignedSequence = sequence ?? nextStepSequence
+    nextStepSequence = max(nextStepSequence, assignedSequence + 1)
+    let step = AgentActivityStep(
+      externalID: externalID,
+      sequence: assignedSequence,
+      kind: kind,
+      presentationProfile: profile,
+      resultPresentationRequest: resultPresentationRequest,
+      title: title,
+      subtitle: subtitle,
+      userFacingSummary: summary,
+      summarySource: source,
+      status: status,
+      startedAt: startedAt,
+      completedAt: completedAt,
+      input: input,
+      output: output,
+      queryItems: queryItems,
+      searchProviderName: searchProviderName,
+      sourceItems: sourceItems
+    )
+    run.steps.append(step)
+    if let externalID { stepIndexByExternalID[externalID] = run.steps.count - 1 }
+    return step.id
+  }
+
+  private mutating func append(
+    _ text: String,
+    to externalID: String,
+    keyPath: WritableKeyPath<AgentActivityStep, String?>,
+    kind: AgentActivityKind,
+    title: String
+  ) {
+    if stepIndexByExternalID[externalID] == nil {
+      appendStep(externalID: externalID, kind: kind, title: title)
+    }
+    updateStep(externalID: externalID) { step in
+      step[keyPath: keyPath] = (step[keyPath: keyPath] ?? "") + text
+    }
+  }
+
+  private mutating func completeStep(externalID: String) {
+    updateStep(externalID: externalID) { step in
+      step.status = .completed
+      step.completedAt = Date()
+    }
+  }
+
+  private mutating func updateStep(externalID: String, update: (inout AgentActivityStep) -> Void) {
+    guard let index = stepIndexByExternalID[externalID], run.steps.indices.contains(index) else {
+      return
+    }
+    update(&run.steps[index])
+  }
+
+  private func hasDuplicateProgress(_ message: String) -> Bool {
+    run.steps.reversed().prefix(3).contains {
+      AgentActivityDeduplicator.normalized($0.userFacingSummary)
+        == AgentActivityDeduplicator.normalized(message)
+    }
+  }
+
+  private mutating func closeRunningSteps(as status: AgentActivityStatus, error: String? = nil) {
+    let completion = Date()
+    for index in run.steps.indices
+    where run.steps[index].status == .running || run.steps[index].status == .pending {
+      run.steps[index].status = status
+      run.steps[index].completedAt = completion
+      if status == .failed { run.steps[index].errorDescription = error }
+    }
+  }
+
+  private mutating func appendErrorTranscript(
+    text: String, status: AgentActivityStatus, remainInChat: Bool
+  ) {
+    let id = "error:\(run.id.uuidString):\(transcript.nextSequence)"
+    transcript.begin(
+      externalID: id,
+      kind: .error,
+      status: status,
+      text: text,
+      visibility: remainInChat ? .remainInChat : .collapseIntoThinking
+    )
+  }
+
+  private static func safePreview(_ value: String?) -> String? {
+    guard let value = nonemptyText(value) else { return nil }
+    return String(value.prefix(1_000))
+  }
+
+  private static func nonemptyText(_ value: String?) -> String? {
+    guard let trimmed = value?.trimmingCharacters(in: .whitespacesAndNewlines), !trimmed.isEmpty
+    else {
+      return nil
+    }
+    return trimmed
+  }
+
+}
+@MainActor
+final class AgentRunCoordinator {
+  let runID: UUID
+  private var accumulator: AgentEventAccumulator
+
+  var run: AgentRun { accumulator.run }
+
+  init(groupID: UUID, providerID: String?, modelID: String?) {
+    let run = AgentRun(groupID: groupID, providerID: providerID, modelID: modelID)
+    runID = run.id
+    accumulator = AgentEventAccumulator(run: run)
+    accumulator.apply(
+      .runStarted(
+        AgentRunMetadata(
+          id: run.id,
+          groupID: groupID,
+          providerID: providerID,
+          modelID: modelID,
+          startedAt: run.startedAt
+        )))
+  }
+
+  /// A user action in an existing rich message adds real tool events to that
+  /// message's original display transcript; it does not create another engine.
+  init(continuingActivity original: AgentRun) {
+    var run = original
+    run.status = .running; run.completedAt = nil
+    run.pendingModelRequestID = nil
+    runID = run.id
+    accumulator = AgentEventAccumulator(run: run)
+  }
+
+  func consume(_ events: [AgentEvent]) {
+    guard accumulator.run.status == .running else { return }
+    for event in events { accumulator.apply(event) }
+  }
+
+  func complete() { consume([.runCompleted]) }
+  func cancel() { consume([.runCancelled]) }
+  func fail(_ error: Error) { consume([.runFailed(AgentSafeError(error))]) }
+}

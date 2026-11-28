@@ -1,0 +1,143 @@
+{
+  "recorded_at": "2026-11-19T00:13:13.651919+00:00",
+  "runs": [
+    {
+      "name": "skills-policy-offline-cache",
+      "id": "44425850134",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44425850134",
+      "head_sha": "3de8cf6c4f884c9041dd1c833abda0b0f45cfce5",
+      "status": "queued",
+      "conclusion": null,
+      "inputs": {
+        "target_validation_group": "exact_test_selector",
+        "exact_test_selector": "AI_HLYTests/SkillOpenClawPolicyTests/originalPolicyRunsInTheActualEmbeddedNode(),AI_HLYTests/SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation(),AI_HLYTests/SkillRuntimeProductTests/ordinaryInstructionsSurviveUnrelatedPolicyInspectionFailure(),AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)",
+        "fast_validation_only": "true",
+        "simulator_e2e_only": "false",
+        "compare_base_sha": "6f294a8fe2047e028f5b5f75df485825027badf0",
+        "full_validation": "false",
+        "testflight_upload": "false",
+        "runtime_publish_release": "false"
+      },
+      "recorded_at": "2026-11-19T00:03:17.041448+00:00"
+    },
+    {
+      "name": "isolated-global-npm-cache",
+      "id": "44425855469",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44425855469",
+      "head_sha": "3de8cf6c4f884c9041dd1c833abda0b0f45cfce5",
+      "status": "queued",
+      "conclusion": null,
+      "inputs": {
+        "target_validation_group": "exact_test_selector",
+        "exact_test_selector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualGlobalNpmInstallUpdateImportAndRemovalUsePreservedGenerations()",
+        "fast_validation_only": "true",
+        "simulator_e2e_only": "false",
+        "compare_base_sha": "6f294a8fe2047e028f5b5f75df485825027badf0",
+        "full_validation": "false",
+        "testflight_upload": "false",
+        "runtime_publish_release": "false"
+      },
+      "recorded_at": "2026-11-19T00:03:19.372028+00:00"
+    },
+    {
+      "name": "compact-keyboard-iphone",
+      "workflow": "build-ios26-unsigned-ipa.yml",
+      "id": "44426497443",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426497443",
+      "head_sha": "90314963decf82ff64d4265346fbaf8279ffc965",
+      "status": "queued",
+      "conclusion": null,
+      "inputs": {
+        "target_validation_group": "exact_test_selector",
+        "exact_test_selector": "AI_HLYUITests/HanlinMorphComposerUITests/testCompactNavigationKeepsDraft,AI_HLYUITests/HanlinMorphComposerUITests/testCompactLargeTextWithAttachment",
+        "fast_validation_only": "false",
+        "simulator_e2e_only": "false",
+        "compare_base_sha": "3de8cf6c4f884c9041dd1c833abda0b0f45cfce5",
+        "full_validation": "false",
+        "testflight_upload": "false",
+        "runtime_publish_release": "false"
+      },
+      "recorded_at": "2026-11-19T00:07:58.876194+00:00"
+    },
+    {
+      "name": "editor-a2ui-ipad",
+      "workflow": "build-ios26-unsigned-ipa.yml",
+      "id": "44426508137",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426508137",
+      "head_sha": "90314963decf82ff64d4265346fbaf8279ffc965",
+      "status": "in_progress",
+      "conclusion": null,
+      "inputs": {
+        "target_validation_group": "exact_test_selector",
+        "exact_test_selector": "AI_HLYTests/NativeComposerLineSizingTests,AI_HLYUITests/AgentRuntimeConversationUITests/testRealChatUISendsPromptShowsToolActivityAndFinalAnswer,AI_HLYUITests/AgentRuntimeConversationUITests/testUI01UnifiedHistoryPinSearchSwitchDraftPreservation,AI_HLYUITests/HanlinMorphComposerUITests/testLargeTextLongDraftFitsWithKeyboardAndAfterPalette,AI_HLYUITests/HanlinMorphComposerUITests/testRTLToolChipKeepsLongDraftAndAccessibleLabel,AI_HLYUITests/HanlinMorphComposerUITests/testWideNavigationKeepsDraft,AI_HLYUITests/HanlinNativeA2UIChatUITests",
+        "fast_validation_only": "false",
+        "simulator_e2e_only": "false",
+        "compare_base_sha": "3de8cf6c4f884c9041dd1c833abda0b0f45cfce5",
+        "full_validation": "false",
+        "testflight_upload": "false",
+        "runtime_publish_release": "false"
+      },
+      "recorded_at": "2026-11-19T00:08:06.862665+00:00"
+    },
+    {
+      "name": "paired-products-original-eight",
+      "workflow": "validate-app-split.yml",
+      "id": "44426526923",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426526923",
+      "head_sha": "90314963decf82ff64d4265346fbaf8279ffc965",
+      "status": "queued",
+      "conclusion": null,
+      "inputs": {
+        "paired_product_acceptance": "true",
+        "paired_test_scope": "product_and_share",
+        "native_test_scope": "baseline",
+        "host_proof_run_id": "44351078724",
+        "runtime_bundle_artifact_run_id": "42926628418",
+        "signed_release_archives": "false",
+        "audit_release_resources": "false",
+        "prepare_miniapps_registration": "false"
+      },
+      "recorded_at": "2026-11-19T00:08:12.589558+00:00"
+    },
+    {
+      "name": "original-signing-native-preflight",
+      "workflow": "validate-app-split.yml",
+      "id": "44426766800",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426766800",
+      "head_sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
+      "status": "queued",
+      "conclusion": null,
+      "inputs": {
+        "signed_release_archives": "true",
+        "signing_preflight_only": "true",
+        "audit_release_resources": "false",
+        "prepare_miniapps_registration": "false",
+        "paired_product_acceptance": "false",
+        "runtime_bundle_artifact_run_id": "42926628418",
+        "native_test_scope": "baseline",
+        "paired_test_scope": "cross_product"
+      },
+      "recorded_at": "2026-11-19T00:09:56.467655+00:00"
+    },
+    {
+      "name": "motion-scroll-touch-diagnostic",
+      "workflow": "build-ios26-unsigned-ipa.yml",
+      "id": "44426771946",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44426771946",
+      "head_sha": "7a9ad537cbfd7dc5f459adea2a6bb658df2eae89",
+      "status": "queued",
+      "conclusion": null,
+      "inputs": {
+        "target_validation_group": "chat_motion_product",
+        "exact_test_selector": "MotionUITests/testDRapidInputDiagnosticOnly",
+        "fast_validation_only": "false",
+        "simulator_e2e_only": "false",
+        "full_validation": "false",
+        "testflight_upload": "false",
+        "runtime_publish_release": "false",
+        "compare_base_sha": "90314963decf82ff64d4265346fbaf8279ffc965"
+      },
+      "recorded_at": "2026-11-19T00:09:58.870196+00:00"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "nativeExecuted": false,
+  "swiftSyntax": "PASS",
+  "sourceSHA256": {
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/General/ScriptWidgetAttributeFrameModifier.swift": "57ebbad1315c3fbc86b48aec79f5e8c2a14bfc8209eee3ca09384a9854d5e9f2",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Effect/ScriptWidgetAttributeRotationEffectModifier.swift": "0fcbb02e023eafae89323e31db6ea41d7e385126d1ca9031e127262149e09ec3",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Image/ScriptWidgetAttributeImageModifier.swift": "e56758652d71ab08cec689c82320af4bea8612fc7417618a2a19702db165098d",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests.swift": "2f956189f3ee14b7dab4991ac9feb9a9e0b27e21fbf8ecf6fc9cb450ce241a1b"
+  },
+  "upstreamTypeCheckJob": "job_b9bc0b04b095",
+  "galleryStagingJob": "job_47a7cc4e37b5"
+}

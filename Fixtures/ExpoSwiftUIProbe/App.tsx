@@ -1,0 +1,433 @@
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
+import {
+  Host,
+  NavigationSplitView,
+  NavigationStack,
+  Searchable,
+  List,
+  Section,
+  Button,
+  Text,
+  Toggle,
+  BottomSheet,
+  HStack,
+  VStack,
+  Toolbar,
+  TextEditor,
+  LazyVGrid,
+  LazyHGrid,
+  ViewThatFits,
+  EditButton,
+  EmptyView,
+  hostServices,
+} from '@hanlin/expo-ui';
+import { renderWidget } from './widget';
+import { ManualAdapterProbe } from './ManualAdapterProbe';
+import { GeneratedViewsProbe } from './GeneratedViewsProbe';
+import { GeneratedModifiersProbe } from './GeneratedModifiersProbe';
+import { HostServicesProbe } from './HostServicesProbe';
+import {
+  navigationTitle,
+  padding,
+  foregroundStyle,
+  font,
+  listStyle,
+  navigationBarTitleDisplayMode,
+} from '@hanlin/expo-ui/modifiers';
+
+export interface AppProps {
+  variant?: 'A' | 'B';
+}
+
+const TORAH_BOOKS = [
+  {
+    id: 'genesis',
+    name: 'בראשית',
+    english: 'Genesis',
+    sections: ['בראשית', 'נח', 'לך לך', 'וירא', 'חיי שרה', 'תולדות', 'ויצא'],
+    sampleText: 'בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ׃',
+  },
+  {
+    id: 'exodus',
+    name: 'שמות',
+    english: 'Exodus',
+    sections: ['שמות', 'וארא', 'בא', 'בשלח', 'יתרו', 'משפטים', 'תרומה'],
+    sampleText: 'וְאֵ֗לֶּה שְׁמוֹת֙ בְּנֵ֣י יִשְׂרָאֵ֔ל הַבָּאִ֖ים מִצְרָ֑יְמָה אֵ֣ת יַעֲקֹ֔ב אִ֥ישׁ וּבֵית֖וֹ בָּֽאוּ׃',
+  },
+  {
+    id: 'leviticus',
+    name: 'ויקרא',
+    english: 'Leviticus',
+    sections: ['ויקרא', 'צו', 'שמיני', 'תזריע', 'מצורע', 'אחרי מות', 'קדושים'],
+    sampleText: 'וַיִּקְרָ֖א אֶל־מֹשֶׁ֑ה וַיְדַבֵּ֤ר יְהֹוָה֙ אֵלָ֔יו מֵאֹ֥הֶל מוֹעֵ֖ד לֵאמֹֽר׃',
+  },
+  {
+    id: 'benchmark1000',
+    name: 'בדיקת 1,000 שורות',
+    english: '1,000 Rows Stress / Scroll Probe',
+    sections: ['בדיקת עומס'],
+    sampleText: 'בדיקת עומס וגלילה: 1,000 פריטי רשימה ב-SwiftUI',
+  },
+];
+
+export default function App({ variant = 'A' }: AppProps) {
+  const [selectedBookId, setSelectedBookId] = useState<string>('genesis');
+  const [selectedSection, setSelectedSection] = useState<string>('בראשית');
+  const [showSettingsSheet, setShowSettingsSheet] = useState<boolean>(false);
+  const [showNikkud, setShowNikkud] = useState<boolean>(true);
+  const [toolbarActionCount, setToolbarActionCount] = useState<number>(0);
+  const [editorText, setEditorText] = useState<string>('SwiftUI bridge text');
+  const [counter, setCounter] = useState<number>(7);
+  const [showSearchProbe, setShowSearchProbe] = useState<boolean>(false);
+  const [showManualAdapters, setShowManualAdapters] = useState(false);
+  const [showGeneratedViews, setShowGeneratedViews] = useState(false);
+  const [showGeneratedModifiers, setShowGeneratedModifiers] = useState(false);
+  const [showHostServices, setShowHostServices] = useState(false);
+  const [searchProbeText, setSearchProbeText] = useState<string>('');
+  const [searchProbeSubmits, setSearchProbeSubmits] = useState<number>(0);
+  const [searchProbeActions, setSearchProbeActions] = useState<number>(0);
+  const [hostFileProbe, setHostFileProbe] = useState('HOST_FILES_NOT_RUN');
+
+  useEffect(() => {
+    let mounted = true;
+    const path = `sdk-file-probe-${Date.now()}-${Math.random().toString(36).slice(2)}.bin`;
+    const run = async () => {
+      try {
+        for (const bytes of [new Uint8Array(0), Uint8Array.from({length: 256}, (_, i) => i),
+          Uint8Array.from({length: 131_073}, (_, i) => i % 256)]) {
+          const written = await hostServices.writeFile(path, bytes, 'documents');
+          const actual = await hostServices.readFile(path, 'documents');
+          if (!written.ok || actual === null || actual.length !== bytes.length ||
+              actual.some((byte, index) => byte !== bytes[index])) throw new Error('File bytes changed');
+          await hostServices.deleteFile(path, 'documents');
+          if (await hostServices.readFile(path, 'documents') !== null) throw new Error('Deleted file was not missing');
+        }
+        if (mounted) setHostFileProbe('HOST_FILES_PASS:131073');
+      } catch {
+        if (mounted) setHostFileProbe('HOST_FILES_FAILED');
+      } finally {
+        try { await hostServices.deleteFile(path, 'documents'); } catch { /* Context may already have closed. */ }
+      }
+    };
+    void run();
+    return () => { mounted = false; };
+  }, []);
+
+  const publishCurrentWidget = async (cnt: number) => {
+    try {
+      const widgetState = { counter: cnt, title: 'Expo SwiftUI Probe' };
+      for (const family of ['systemSmall', 'systemMedium', 'systemLarge', 'systemExtraLarge']) {
+        const root = renderWidget(widgetState, family);
+        await hostServices.publishWidget('widget', family, root);
+      }
+    } catch (e) {
+      console.warn('Failed to publish widget:', e);
+    }
+  };
+
+  useEffect(() => {
+    publishCurrentWidget(counter);
+  }, []);
+
+  const handleIncrement = () => {
+    const next = counter + 1;
+    setCounter(next);
+    publishCurrentWidget(next);
+  };
+
+  const currentBook = TORAH_BOOKS.find((b) => b.id === selectedBookId) ?? TORAH_BOOKS[0];
+
+  if (showManualAdapters) return <ManualAdapterProbe close={() => setShowManualAdapters(false)} />;
+  if (showGeneratedViews) return <GeneratedViewsProbe close={() => setShowGeneratedViews(false)} />;
+  if (showGeneratedModifiers) return <GeneratedModifiersProbe close={() => setShowGeneratedModifiers(false)} />;
+  if (showHostServices) return <HostServicesProbe close={() => setShowHostServices(false)} />;
+
+  if (showSearchProbe) {
+    return (
+      <View style={styles.container}>
+        <Host style={styles.host}>
+          <NavigationStack modifiers={[navigationTitle('Searchable Regression Probe')]}>
+            <Searchable
+              value={searchProbeText}
+              onValueChange={setSearchProbeText}
+              onSubmit={(value) => {
+                setSearchProbeText(value);
+                setSearchProbeSubmits((count) => count + 1);
+              }}
+              prompt="Search native test"
+            >
+              <List>
+                <Section title="Native Searchable Content">
+                  <Text>SEARCHABLE_CONTENT_VISIBLE</Text>
+                  <Button label={'SEARCHABLE_ACTION_COUNT_' + searchProbeActions}
+                    onPress={() => setSearchProbeActions((count) => count + 1)} />
+                  <Text>{'SEARCHABLE_QUERY_VALUE:' + searchProbeText}</Text>
+                  <Text>{'SEARCHABLE_SUBMIT_COUNT:' + searchProbeSubmits}</Text>
+                  <Button label="Exit Searchable Probe" onPress={() => setShowSearchProbe(false)} />
+                </Section>
+              </List>
+            </Searchable>
+          </NavigationStack>
+        </Host>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <Host style={styles.host}>
+        <NavigationSplitView
+          columnVisibility="all"
+          modifiers={[
+            navigationTitle('Hanlin Sefaria Expo Reader'),
+            navigationBarTitleDisplayMode('inline'),
+          ]}
+        >
+          {/* 1. SIDEBAR COLUMN */}
+          <NavigationSplitView.Sidebar>
+            <NavigationStack modifiers={[navigationTitle('חומשי תורה')]}>
+              <List modifiers={[listStyle('sidebar')]}>
+                <Section title="ספרי תורה">
+                  <Button label="Open Searchable Probe" onPress={() => setShowSearchProbe(true)} />
+                  <Button label="Open Manual Adapter Probe" onPress={() => setShowManualAdapters(true)} />
+                  <Button label="Open Generated Views Probe" onPress={() => setShowGeneratedViews(true)} />
+                  <Button label="Open Generated Modifiers Probe" onPress={() => setShowGeneratedModifiers(true)} />
+                  <Button label="Open Host Services Probe" onPress={() => setShowHostServices(true)} />
+                  {TORAH_BOOKS.map((book) => (
+                    <Button
+                      key={book.id}
+                      label={`${book.name} (${book.english})`}
+                      onPress={() => {
+                        setSelectedBookId(book.id);
+                        setSelectedSection(book.sections[0]);
+                      }}
+                    />
+                  ))}
+                </Section>
+                <Section title="גרסת זמן-ריצה">
+                  <Text modifiers={[font({ size: 13 }), foregroundStyle('tint')]}>
+                    {variant === 'A' ? '🟢 Expo Dynamic A' : '🔵 Expo Dynamic B'}
+                  </Text>
+                </Section>
+              </List>
+            </NavigationStack>
+          </NavigationSplitView.Sidebar>
+
+          {/* 2. CONTENT COLUMN */}
+          <NavigationSplitView.Content>
+            <NavigationStack modifiers={[navigationTitle(currentBook.name)]}>
+              <List>
+                <Section title="פרשיות השבוע">
+                  {currentBook.sections.map((section) => (
+                    <Button
+                      key={section}
+                      label={section}
+                      onPress={() => setSelectedSection(section)}
+                    />
+                  ))}
+                </Section>
+                <Section title="בדיקות ביצועים">
+                  <Button
+                    label="מבחן 1,000 שורות (1,000 Rows Probe)"
+                    onPress={() => {
+                      setSelectedBookId('benchmark1000');
+                      setSelectedSection('בדיקת עומס');
+                    }}
+                  />
+                </Section>
+              </List>
+            </NavigationStack>
+          </NavigationSplitView.Content>
+
+          {/* 3. DETAIL COLUMN */}
+          <NavigationSplitView.Detail>
+            <NavigationStack
+              modifiers={[
+                navigationTitle(
+                  selectedBookId === 'benchmark1000'
+                    ? 'מבחן 1,000 שורות SwiftUI'
+                    : `${currentBook.name} — ${selectedSection}`
+                ),
+                navigationBarTitleDisplayMode('inline'),
+              ]}
+            >
+              <Toolbar>
+                {selectedBookId === 'benchmark1000' ? (
+                  <List modifiers={[listStyle('plain')]}>
+                    <Section title="רשימת 1,000 שורות SwiftUI פעילה">
+                      {Array.from({ length: 1000 }, (_, i) => (
+                        <Button
+                          key={i}
+                          label={`Row #${i + 1} • שורה #${i + 1} (פריט בדיקה ${i + 1})`}
+                          onPress={() => {}}
+                        />
+                      ))}
+                    </Section>
+                  </List>
+                ) : (
+                  <VStack modifiers={[padding({ all: 24 })]}>
+                    <HStack modifiers={[padding({ bottom: 16 })]}>
+                      <Text
+                        modifiers={[
+                          font({ size: 28, weight: 'bold' }),
+                          foregroundStyle('primary'),
+                        ]}
+                      >
+                        {currentBook.name} : {selectedSection}
+                      </Text>
+                      <Button
+                        label="1,000 Rows Stress / Scroll Probe"
+                        onPress={() => {
+                          setSelectedBookId('benchmark1000');
+                          setSelectedSection('בדיקת עומס');
+                        }}
+                      />
+                      <Button
+                        label="הגדרות"
+                        onPress={() => setShowSettingsSheet(true)}
+                      />
+                      <Button
+                        testID="IncrementCounterButton"
+                        label={`Widget Counter: ${counter}`}
+                        onPress={handleIncrement}
+                      />
+                    </HStack>
+
+                    <Text
+                      modifiers={[
+                        font({ size: 14, weight: 'semibold' }),
+                        foregroundStyle('secondary'),
+                        padding({ bottom: 12 }),
+                      ]}
+                    >
+                      {`Toolbar action count: ${toolbarActionCount}`}
+                    </Text>
+                    <Text testID="HostFileProbeStatus">{hostFileProbe}</Text>
+
+                    <VStack
+                      modifiers={[
+                        padding({ all: 16 }),
+                        navigationTitle('טקסט מקור'),
+                      ]}
+                    >
+                      <Text
+                        modifiers={[
+                          font({ size: 22 }),
+                          foregroundStyle('primary'),
+                        ]}
+                      >
+                        {showNikkud
+                          ? currentBook.sampleText
+                          : currentBook.sampleText.replace(/[\u0591-\u05C7]/g, '')}
+                      </Text>
+                    </VStack>
+
+                    <VStack modifiers={[padding({ top: 32 })]}>
+                      <Text modifiers={[font({ size: 13 }), foregroundStyle('secondary')]}>
+                        זוהי הרצת בדיקה דינמית של Expo / React Native UI בתוך Hanlin.
+                      </Text>
+                      <Text
+                        modifiers={[
+                          font({ size: 14, weight: 'semibold' }),
+                          foregroundStyle(variant === 'A' ? 'green' : 'blue'),
+                        ]}
+                      >
+                        {variant === 'A'
+                          ? 'מצב פעיל: Expo Dynamic A (Initial MiniApp)'
+                          : 'מצב פעיל: Expo Dynamic B (Dynamic Switched MiniApp)'}
+                      </Text>
+                    </VStack>
+
+                    <VStack modifiers={[padding({ top: 24 })]}>
+                      <TextEditor
+                        value={editorText}
+                        placeholder="Type through Binding<String>"
+                        onValueChange={setEditorText}
+                      />
+                      <ViewThatFits axes="horizontal">
+                        <HStack>
+                          <Text>ViewThatFits horizontal candidate</Text>
+                          <EditButton />
+                        </HStack>
+                        <VStack>
+                          <Text>ViewThatFits compact candidate</Text>
+                          <EditButton />
+                        </VStack>
+                      </ViewThatFits>
+                      <LazyVGrid
+                        tracks={[
+                          { size: 'adaptive', minimum: 96, maximum: 180 },
+                        ]}
+                        spacing={8}
+                      >
+                        <Text>Grid A</Text>
+                        <Text>Grid B</Text>
+                        <Text>Grid C</Text>
+                      </LazyVGrid>
+                      <LazyHGrid tracks={[{ size: 'fixed', value: 32 }]} spacing={8}>
+                        <Text>Row A</Text>
+                        <Text>Row B</Text>
+                      </LazyHGrid>
+                      <EmptyView />
+                    </VStack>
+
+                    {/* BottomSheet settings modal */}
+                    <BottomSheet
+                      isPresented={showSettingsSheet}
+                      onIsPresentedChange={setShowSettingsSheet}
+                      onDismiss={() => setShowSettingsSheet(false)}
+                    >
+                      <VStack modifiers={[padding({ all: 20 })]}>
+                        <Text modifiers={[font({ size: 20, weight: 'bold' }), padding({ bottom: 12 })]}>
+                          הגדרות קריאה
+                        </Text>
+                        <Toggle
+                          testID="NikkudToggle"
+                          isOn={showNikkud}
+                          onIsOnChange={setShowNikkud}
+                          label="הצג ניקוד וטעמים"
+                        />
+                        <Text
+                          testID="NikkudStateMarker"
+                          modifiers={[
+                            font({ size: 14, weight: 'semibold' }),
+                            padding({ top: 8, bottom: 8 }),
+                          ]}
+                        >
+                          {showNikkud ? 'Nikkud: ON' : 'Nikkud: OFF'}
+                        </Text>
+                        <Button
+                          testID="CloseSettingsSheetButton"
+                          label="סגור הגדרות"
+                          onPress={() => setShowSettingsSheet(false)}
+                        />
+                      </VStack>
+                    </BottomSheet>
+                  </VStack>
+                )}
+                <Toolbar.Content>
+                  <Button
+                    testID="ToolbarProbeButton"
+                    label="Toolbar Probe"
+                    systemImage="magnifyingglass"
+                    onPress={() => setToolbarActionCount(1)}
+                  />
+                </Toolbar.Content>
+              </Toolbar>
+            </NavigationStack>
+          </NavigationSplitView.Detail>
+        </NavigationSplitView>
+      </Host>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  host: {
+    flex: 1,
+  },
+});

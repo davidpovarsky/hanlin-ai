@@ -1,0 +1,136 @@
+TAP version 13
+# Subtest: one exact protected-base current-head candidate is selected
+ok 1 - one exact protected-base current-head candidate is selected
+  ---
+  duration_ms: 2.1398
+  type: 'test'
+  ...
+# Subtest: generic base-branch audit cannot select a candidate
+ok 2 - generic base-branch audit cannot select a candidate
+  ---
+  duration_ms: 0.1806
+  type: 'test'
+  ...
+# Subtest: a moved candidate does not inherit the old run
+ok 3 - a moved candidate does not inherit the old run
+  ---
+  duration_ms: 0.4703
+  type: 'test'
+  ...
+# Subtest: foreign repository run is rejected
+ok 4 - foreign repository run is rejected
+  ---
+  duration_ms: 0.3358
+  type: 'test'
+  ...
+# Subtest: non-dispatch and noncanonical run paths are rejected
+ok 5 - non-dispatch and noncanonical run paths are rejected
+  ---
+  duration_ms: 0.2032
+  type: 'test'
+  ...
+# Subtest: ambiguous and incomplete pull inventories are rejected
+ok 6 - ambiguous and incomplete pull inventories are rejected
+  ---
+  duration_ms: 0.2707
+  type: 'test'
+  ...
+# Subtest: draft and unowned candidate branches cannot become eligible
+ok 7 - draft and unowned candidate branches cannot become eligible
+  ---
+  duration_ms: 0.2829
+  type: 'test'
+  ...
+# Subtest: failed or skipped source run cannot use an otherwise positive receipt
+ok 8 - failed or skipped source run cannot use an otherwise positive receipt
+  ---
+  duration_ms: 0.3489
+  type: 'test'
+  ...
+# Subtest: green audit without schema2 native-origin accounting is rejected
+ok 9 - green audit without schema2 native-origin accounting is rejected
+  ---
+  duration_ms: 0.3573
+  type: 'test'
+  ...
+# Subtest: legacy schema1 proof is never upgraded
+ok 10 - legacy schema1 proof is never upgraded
+  ---
+  duration_ms: 0.5515
+  type: 'test'
+  ...
+# Subtest: base and source receipt drift are rejected
+ok 11 - base and source receipt drift are rejected
+  ---
+  duration_ms: 0.3424
+  type: 'test'
+  ...
+# Subtest: unknown or failed source validation cannot qualify
+ok 12 - unknown or failed source validation cannot qualify
+  ---
+  duration_ms: 0.3158
+  type: 'test'
+  ...
+# Subtest: strict source and proof app bindings are both required
+ok 13 - strict source and proof app bindings are both required
+  ---
+  duration_ms: 0.8231
+  type: 'test'
+  ...
+# Subtest: an additional required failed gate prevents automatic merge
+ok 14 - an additional required failed gate prevents automatic merge
+  ---
+  duration_ms: 0.2481
+  type: 'test'
+  ...
+# Subtest: pending, stale, skipped and ambiguous server gates prevent automatic merge
+ok 15 - pending, stale, skipped and ambiguous server gates prevent automatic merge
+  ---
+  duration_ms: 1.7118
+  type: 'test'
+  ...
+# Subtest: only activation-disabled can remain after all gates pass
+ok 16 - only activation-disabled can remain after all gates pass
+  ---
+  duration_ms: 0.1971
+  type: 'test'
+  ...
+# Subtest: closed or draft proposals cannot activate automatic merge
+ok 17 - closed or draft proposals cannot activate automatic merge
+  ---
+  duration_ms: 0.1646
+  type: 'test'
+  ...
+# Subtest: only the three explicitly protected acceptance bases are recognized
+ok 18 - only the three explicitly protected acceptance bases are recognized
+  ---
+  duration_ms: 0.2279
+  type: 'test'
+  ...
+# Subtest: v2 selects only its own exact candidate and never inherits the original base
+ok 19 - v2 selects only its own exact candidate and never inherits the original base
+  ---
+  duration_ms: 0.2903
+  type: 'test'
+  ...
+# Subtest: a matching PR cannot authorize a main or unlisted target
+ok 20 - a matching PR cannot authorize a main or unlisted target
+  ---
+  duration_ms: 0.8124
+  type: 'test'
+  ...
+# Subtest: v3 selects only its own exact candidate and cannot inherit either older base
+ok 21 - v3 selects only its own exact candidate and cannot inherit either older base
+  ---
+  duration_ms: 0.1952
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 273.7535

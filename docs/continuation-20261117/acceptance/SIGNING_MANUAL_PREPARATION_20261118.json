@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-11-18T19:45:43.166046+00:00",
+  "source_parent": "26219eb8fa965097e761f9dc30e7ec51f97a16ae",
+  "original_failure_run": "44243216104",
+  "original_failure": "Both device archives passed; automatic export failed with cloud signing permission/profile errors.",
+  "scope": "Existing original local distribution identity and six original App Store profiles; local export only.",
+  "changes": [
+    "Exact OS codesigning identity preflight",
+    "Reuse validated compatible profiles; create only missing compatible profiles with the existing public certificate relationship",
+    "Read back and validate all original entitlements",
+    "Manual export with exact per-product profile mapping",
+    "Private atomic cache installation and cleanup preserving preexisting/changed files"
+  ],
+  "local_validation": {
+    "status": "EXECUTED_PASS",
+    "tests": 14,
+    "log_sha256": "f18205471424661404583375835588f60df5a12decc11c3ded1ab13cbacbb0da",
+    "environment": "Windows Python; no actual Apple signing claim"
+  },
+  "source_sha256": {
+    "Scripts/ProductSplit/prepare_signed_products.py": "a89dcfd2ccc8a5ac8d21e70e40154f5c40fd543bafc2dbfa99b3b50cbc5fa3cd",
+    "Scripts/ProductSplit/resolve_signing_profiles.py": "ea445b60f64788ed1e87796c1ca82ef30a38f055d8e9585e96850a9a5140e95b",
+    "Scripts/ProductSplit/test_signing_profiles.py": "a6e38df14e12f8005aa88c5596d9309764d4c33d3dba21e8b89a9cf09640cc7b"
+  },
+  "native_export": "NOT_RUN_ON_THIS_IMPLEMENTATION",
+  "physical_device": "NOT_RUN",
+  "release_decision": "NO_GO",
+  "references": [
+    "https://developer.apple.com/documentation/appstoreconnectapi/post-v1-profiles",
+    "https://developer.apple.com/documentation/appstoreconnectapi/get-v1-certificates",
+    "https://developer.apple.com/documentation/appstoreconnectapi/get-v1-bundleids-_id_-profiles"
+  ]
+}

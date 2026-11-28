@@ -1,0 +1,681 @@
+import Darwin
+import Foundation
+import Synchronization
+import ios_system
+import IOSSystemStreamBridge
+
+public struct IOSSystemExecution: Sendable {
+    public let stdout: String
+    public let stderr: String
+    public let exitCode: Int32
+    public var stdoutFileURL: URL? = nil
+    public var stderrFileURL: URL? = nil
+
+    public init(stdout: String, stderr: String, exitCode: Int32, stdoutFileURL: URL? = nil, stderrFileURL: URL? = nil) {
+        self.stdout = stdout
+        self.stderr = stderr
+        self.exitCode = exitCode
+        self.stdoutFileURL = stdoutFileURL
+        self.stderrFileURL = stderrFileURL
+    }
+}
+
+public enum IOSSystemRegistrationFailureCategory: String, Codable, Sendable {
+    case resourceMissing
+    case malformedDictionary
+    case dictionaryCatalogMismatch
+    case initializationFailure
+    case commandNotRegistered
+    case commandNotExecutable
+}
+
+public struct IOSSystemRegistrationError: Error, Codable, LocalizedError, Sendable {
+    public let category: IOSSystemRegistrationFailureCategory
+    public let code: String
+    public let message: String
+    public let resourcePath: String?
+    public let missingCommands: [String]
+    public let unexpectedCommands: [String]
+    public let underlyingErrorDomain: String?
+    public let underlyingErrorCode: Int?
+
+    public var errorDescription: String? { message }
+
+    public init(
+        category: IOSSystemRegistrationFailureCategory,
+        code: String,
+        message: String,
+        resourcePath: String? = nil,
+        missingCommands: [String] = [],
+        unexpectedCommands: [String] = [],
+        underlyingError: Error? = nil
+    ) {
+        let nsError = underlyingError.map { $0 as NSError }
+        self.category = category
+        self.code = code
+        self.message = message
+        self.resourcePath = resourcePath
+        self.missingCommands = missingCommands
+        self.unexpectedCommands = unexpectedCommands
+        underlyingErrorDomain = nsError?.domain
+        underlyingErrorCode = nsError?.code
+    }
+}
+
+public struct IOSSystemRegistrationReport: Codable, Sendable {
+    public let mainBundlePath: String
+    public let moduleBundlePath: String
+    public let mainDictionaryPath: String
+    public let extraDictionaryPath: String
+    public let moduleDictionaryPath: String
+    public let dictionaryCommands: [String]
+    public let registeredCommands: [String]
+    public let executableCommands: [String]
+    public let missingRegisteredCommands: [String]
+    public let missingExecutableCommands: [String]
+    public let rawCommandsClass: String
+    public let rawCommandsCount: Int
+    public let rawCommandValues: [String]
+    public let sideLoadingEnabled: Bool
+    public let initializeEnvironmentCallCount: Int
+}
+
+public struct IOSSystemCommandDependencyDiagnostic: Codable, Equatable, Sendable {
+    public let command: String
+    public let framework: String
+    public let symbol: String
+    public let isAvailable: Bool
+    public let missingDependencyReason: String?
+
+    public init(
+        command: String,
+        framework: String,
+        symbol: String,
+        isAvailable: Bool,
+        missingDependencyReason: String?
+    ) {
+        self.command = command
+        self.framework = framework
+        self.symbol = symbol
+        self.isAvailable = isAvailable
+        self.missingDependencyReason = missingDependencyReason
+    }
+}
+
+public enum IOSSystemRunner {
+    public static let linkedCommands: Set<String> = [
+        "awk", "cat", "cp", "curl", "grep", "head", "ln", "ls", "mkdir", "mv",
+        "readlink", "rm", "rmdir", "sed", "sort", "stat", "tail", "tar", "touch",
+        "tr", "uniq", "unlink", "wc"
+    ]
+
+    private enum RegistrationState: Sendable {
+        case uninitialized
+        case initialized(IOSSystemRegistrationReport)
+        case failed(IOSSystemRegistrationError)
+    }
+
+    private static let registrationState = Mutex<RegistrationState>(.uninitialized)
+    private static let executionLock = Mutex<Void>(())
+
+    /// Serialize operations that temporarily mutate the process-wide current
+    /// directory. Embedded CPython and ios_system share that global state even
+    /// though their higher-level runtime actors are otherwise independent.
+    public static func withProcessCurrentDirectoryLock<Result>(
+        _ operation: () throws -> Result
+    ) rethrows -> Result {
+        try executionLock.withLock { _ in
+            try operation()
+        }
+    }
+
+    public static func registrationReport() throws -> IOSSystemRegistrationReport {
+        try registrationState.withLock { state in
+            switch state {
+            case .initialized(let report):
+                return report
+            case .failed(let error):
+                throw error
+            case .uninitialized:
+                do {
+                    let report = try initializeRegistration()
+                    state = .initialized(report)
+                    return report
+                } catch let error as IOSSystemRegistrationError {
+                    state = .failed(error)
+                    throw error
+                } catch {
+                    let wrapped = IOSSystemRegistrationError(
+                        category: .initializationFailure,
+                        code: "unexpected_initialization_error",
+                        message: "ios_system registration failed unexpectedly: \(error.localizedDescription)",
+                        underlyingError: error
+                    )
+                    state = .failed(wrapped)
+                    throw wrapped
+                }
+            }
+        }
+    }
+
+    public static func availableCommands() throws -> [String] {
+        let report = try registrationReport()
+        guard report.missingRegisteredCommands.isEmpty else {
+            throw IOSSystemRegistrationError(
+                category: .commandNotRegistered,
+                code: "command_not_registered",
+                message: "Some approved ios_system commands were not registered: \(report.missingRegisteredCommands.joined(separator: ", ")).",
+                missingCommands: report.missingRegisteredCommands
+            )
+        }
+        guard report.missingExecutableCommands.isEmpty else {
+            throw IOSSystemRegistrationError(
+                category: .commandNotExecutable,
+                code: "command_not_executable",
+                message: "Some registered ios_system commands are not executable: \(report.missingExecutableCommands.joined(separator: ", ")).",
+                missingCommands: report.missingExecutableCommands
+            )
+        }
+        return report.executableCommands
+    }
+
+    public static func evaluateCommandDependencies(
+        dictionaryURL: URL? = nil
+    ) throws -> [String: IOSSystemCommandDependencyDiagnostic] {
+        let targetURL: URL
+        if let dictionaryURL {
+            targetURL = dictionaryURL
+        } else {
+            targetURL = try requiredResource(
+                named: "commandDictionary",
+                in: Bundle.module,
+                code: "module_command_dictionary_missing"
+            )
+        }
+        let commands = try parseCommandDictionary(at: targetURL)
+        let rtldDefault = UnsafeMutableRawPointer(bitPattern: -2)
+        var diagnostics: [String: IOSSystemCommandDependencyDiagnostic] = [:]
+        for (command, metadata) in commands {
+            let framework = metadata[0].trimmingCharacters(in: .whitespacesAndNewlines)
+            let symbol = metadata[1].trimmingCharacters(in: .whitespacesAndNewlines)
+            if framework.isEmpty {
+                diagnostics[command] = IOSSystemCommandDependencyDiagnostic(
+                    command: command,
+                    framework: framework,
+                    symbol: symbol,
+                    isAvailable: false,
+                    missingDependencyReason: "Command '\(command)' is missing a required framework declaration."
+                )
+                continue
+            }
+            if symbol.isEmpty {
+                diagnostics[command] = IOSSystemCommandDependencyDiagnostic(
+                    command: command,
+                    framework: framework,
+                    symbol: symbol,
+                    isAvailable: false,
+                    missingDependencyReason: "Command '\(command)' in framework '\(framework)' is missing an entry-point symbol."
+                )
+                continue
+            }
+            if framework == "SELF" {
+                let resolved = symbol.withCString { cSymbol in
+                    dlsym(rtldDefault, cSymbol)
+                }
+                if resolved != nil {
+                    diagnostics[command] = IOSSystemCommandDependencyDiagnostic(
+                        command: command,
+                        framework: framework,
+                        symbol: symbol,
+                        isAvailable: true,
+                        missingDependencyReason: nil
+                    )
+                } else {
+                    diagnostics[command] = IOSSystemCommandDependencyDiagnostic(
+                        command: command,
+                        framework: framework,
+                        symbol: symbol,
+                        isAvailable: false,
+                        missingDependencyReason: "Missing entry-point symbol '\(symbol)' in framework '\(framework)' for command '\(command)'."
+                    )
+                }
+            } else {
+                let frameworkPath = Bundle.main.privateFrameworksPath.map { "\($0)/\(framework).framework/\(framework)" } ?? "\(framework).framework/\(framework)"
+                let handle = frameworkPath.withCString { cPath in
+                    dlopen(cPath, RTLD_LAZY | RTLD_LOCAL)
+                }
+                guard let handle else {
+                    diagnostics[command] = IOSSystemCommandDependencyDiagnostic(
+                        command: command,
+                        framework: framework,
+                        symbol: symbol,
+                        isAvailable: false,
+                        missingDependencyReason: "Missing framework '\(framework)' (required symbol '\(symbol)') for command '\(command)'."
+                    )
+                    continue
+                }
+                defer { dlclose(handle) }
+                let resolved = symbol.withCString { cSymbol in
+                    dlsym(handle, cSymbol)
+                }
+                if resolved != nil {
+                    diagnostics[command] = IOSSystemCommandDependencyDiagnostic(
+                        command: command,
+                        framework: framework,
+                        symbol: symbol,
+                        isAvailable: true,
+                        missingDependencyReason: nil
+                    )
+                } else {
+                    diagnostics[command] = IOSSystemCommandDependencyDiagnostic(
+                        command: command,
+                        framework: framework,
+                        symbol: symbol,
+                        isAvailable: false,
+                        missingDependencyReason: "Missing entry-point symbol '\(symbol)' in framework '\(framework)' for command '\(command)'."
+                    )
+                }
+            }
+        }
+        return diagnostics
+    }
+
+    public static func execute(
+        tokens: [String],
+        workspace: URL,
+        environment: [String: String],
+        standardInput: Data = Data(),
+        standardInputURL: URL? = nil,
+        outputDirectory: URL? = nil,
+        maximumPreviewBytes: Int? = nil,
+        onStart: @Sendable () throws -> Void = {}
+    ) throws -> IOSSystemExecution {
+        guard let command = tokens.first, !tokens.isEmpty else {
+            throw NSError(
+                domain: "IOSSystemLite",
+                code: 1,
+                userInfo: [NSLocalizedDescriptionKey: "The command is empty."]
+            )
+        }
+        let available = (try? availableCommands()) ?? Array(linkedCommands)
+        guard available.contains(command) || linkedCommands.contains(command) else {
+            throw NSError(
+                domain: "IOSSystemLite",
+                code: 1,
+                userInfo: [NSLocalizedDescriptionKey: "The command '\(command)' is not linked or allowed."]
+            )
+        }
+        _ = try availableCommands()
+        return try withProcessCurrentDirectoryLock {
+            try onStart()
+            return try executeLocked(
+                tokens: tokens,
+                workspace: workspace,
+                environment: environment,
+                standardInput: standardInput,
+                standardInputURL: standardInputURL,
+                outputDirectory: outputDirectory,
+                maximumPreviewBytes: maximumPreviewBytes
+            )
+        }
+    }
+
+    public static func executeCommand(
+        command: String,
+        workspace: URL,
+        environment: [String: String],
+        standardInput: Data = Data(),
+        standardInputURL: URL? = nil,
+        outputDirectory: URL? = nil,
+        maximumPreviewBytes: Int? = nil,
+        onStart: @Sendable () throws -> Void = {}
+    ) throws -> IOSSystemExecution {
+        _ = try availableCommands()
+        return try withProcessCurrentDirectoryLock {
+            try onStart()
+            let previousDirectory = FileManager.default.currentDirectoryPath
+            defer {
+                _ = FileManager.default.changeCurrentDirectoryPath(previousDirectory)
+            }
+            guard ios_setMiniRootURL(workspace) == 1 else {
+                throw NSError(
+                    domain: "IOSSystemLite",
+                    code: 2,
+                    userInfo: [NSLocalizedDescriptionKey: "ios_system rejected the workspace miniRoot."]
+                )
+            }
+            ios_setDirectoryURL(workspace)
+
+            let oldEnvironment = ProcessInfo.processInfo.environment
+            for (name, value) in environment { setenv(name, value, 1) }
+            defer {
+                for name in environment.keys where oldEnvironment[name] == nil { unsetenv(name) }
+                for (name, value) in oldEnvironment where environment[name] != nil { setenv(name, value, 1) }
+            }
+
+            let capture = try OutputCapture(directory: outputDirectory)
+            let output = capture.stdout, error = capture.stderr
+            let input = try openInput(standardInput, url: standardInputURL)
+            defer { fclose(input) }
+            hanlin_ios_system_set_streams(input, output, error)
+            let status = command.withCString { ios_system(UnsafeMutablePointer(mutating: $0)) }
+            guard fflush(output) == 0, fflush(error) == 0, ferror(output) == 0, ferror(error) == 0 else {
+                throw POSIXError(.init(rawValue: errno) ?? .EIO)
+            }
+            let stdout = try read(output, maximumBytes: maximumPreviewBytes)
+            let stderrBudget = maximumPreviewBytes.map { max(0, $0 - stdout.utf8.count) }
+            let stderr = try read(error, maximumBytes: stderrBudget)
+            return IOSSystemExecution(stdout: stdout, stderr: stderr, exitCode: Int32(status),
+                stdoutFileURL: capture.stdoutURL, stderrFileURL: capture.stderrURL)
+        }
+    }
+
+    private static func initializeRegistration() throws -> IOSSystemRegistrationReport {
+        let mainBundle = Bundle.main
+        let moduleBundle = Bundle.module
+        let mainDictionary = try requiredResource(
+            named: "commandDictionary",
+            in: mainBundle,
+            code: "main_command_dictionary_missing"
+        )
+        let extraDictionary = try requiredResource(
+            named: "extraCommandsDictionary",
+            in: mainBundle,
+            code: "main_extra_dictionary_missing"
+        )
+        let moduleDictionary = try requiredResource(
+            named: "commandDictionary",
+            in: moduleBundle,
+            code: "module_command_dictionary_missing"
+        )
+
+        let mainCommands = try parseCommandDictionary(at: mainDictionary)
+        let moduleCommands = (try? parseCommandDictionary(at: moduleDictionary)) ?? [:]
+        let extraCommands = (try? parsePropertyListDictionary(at: extraDictionary)) ?? [:]
+        var allConfiguredCommands = Set(mainCommands.keys)
+        allConfiguredCommands.formUnion(extraCommands.keys)
+        allConfiguredCommands.formUnion(moduleCommands.keys)
+        let actual = allConfiguredCommands
+        // R11 / SH-01: No exact-23 clamp. Extra commands are allowed.
+        let missing = linkedCommands.subtracting(actual).sorted()
+        guard missing.isEmpty else {
+            throw IOSSystemRegistrationError(
+                category: .dictionaryCatalogMismatch,
+                code: "main_dictionary_catalog_mismatch",
+                message: "The main ios_system dictionary is missing required commands: \(missing.joined(separator: ", ")).",
+                resourcePath: mainDictionary.path,
+                missingCommands: missing
+            )
+        }
+        initializeEnvironment()
+
+        guard let rawCommands = commandsAsArray() else {
+            throw IOSSystemRegistrationError(
+                category: .initializationFailure,
+                code: "commands_array_nil",
+                message: "ios_system returned no registered command array after initialization."
+            )
+        }
+        let bridgedArray = rawCommands as NSArray
+        var normalizedCommands: [String] = []
+        normalizedCommands.reserveCapacity(rawCommands.count)
+        for value in rawCommands {
+            if let string = value as? String {
+                normalizedCommands.append(string)
+            } else if let string = value as? NSString {
+                normalizedCommands.append(string as String)
+            } else {
+                throw IOSSystemRegistrationError(
+                    category: .initializationFailure,
+                    code: "commands_array_bridge_failure",
+                    message: "ios_system returned a non-string command value of type \(String(describing: type(of: value)))."
+                )
+            }
+        }
+
+        let registered = Array(Set(normalizedCommands)).sorted()
+        let registeredSet = Set(registered)
+        // R11 / SH-01: Dynamically accept all registered commands without rejecting unexpected commands.
+        let missingRegistered = linkedCommands.subtracting(registeredSet).sorted()
+        let allKnown = registeredSet.union(actual).union(linkedCommands)
+        let executable = allKnown.sorted().filter { command in
+            command.withCString { ios_executable($0) == 1 }
+        }
+        let missingExecutable = linkedCommands.subtracting(executable).sorted()
+
+        return IOSSystemRegistrationReport(
+            mainBundlePath: mainBundle.bundlePath,
+            moduleBundlePath: moduleBundle.bundlePath,
+            mainDictionaryPath: mainDictionary.path,
+            extraDictionaryPath: extraDictionary.path,
+            moduleDictionaryPath: moduleDictionary.path,
+            dictionaryCommands: actual.sorted(),
+            registeredCommands: registered,
+            executableCommands: executable,
+            missingRegisteredCommands: missingRegistered,
+            missingExecutableCommands: missingExecutable,
+            rawCommandsClass: NSStringFromClass(type(of: bridgedArray)),
+            rawCommandsCount: rawCommands.count,
+            rawCommandValues: normalizedCommands,
+            sideLoadingEnabled: false,
+            initializeEnvironmentCallCount: 1
+        )
+    }
+
+    private static func requiredResource(
+        named name: String,
+        in bundle: Bundle,
+        code: String
+    ) throws -> URL {
+        guard let url = bundle.url(forResource: name, withExtension: "plist") else {
+            throw IOSSystemRegistrationError(
+                category: .resourceMissing,
+                code: code,
+                message: "Required ios_system resource \(name).plist is missing from \(bundle.bundlePath).",
+                resourcePath: bundle.bundlePath
+            )
+        }
+        return url
+    }
+
+    private static func parseCommandDictionary(at url: URL) throws -> [String: [String]] {
+        let dictionary = try parsePropertyListDictionary(at: url)
+        var commands: [String: [String]] = [:]
+        for (command, rawEntry) in dictionary {
+            guard let values = rawEntry as? [Any], values.count == 4 else {
+                throw malformedDictionary(
+                    at: url,
+                    code: "invalid_command_entry",
+                    message: "Command \(command) must contain exactly four metadata values."
+                )
+            }
+            var normalized: [String] = []
+            for value in values {
+                if let string = value as? String {
+                    normalized.append(string)
+                } else if let string = value as? NSString {
+                    normalized.append(string as String)
+                } else {
+                    throw malformedDictionary(
+                        at: url,
+                        code: "invalid_command_metadata_type",
+                        message: "Command \(command) metadata values must be strings."
+                    )
+                }
+            }
+            commands[command] = normalized
+        }
+        return commands
+    }
+
+    private static func parsePropertyListDictionary(at url: URL) throws -> [String: Any] {
+        let data: Data
+        do {
+            data = try Data(contentsOf: url)
+        } catch {
+            throw IOSSystemRegistrationError(
+                category: .resourceMissing,
+                code: "resource_unreadable",
+                message: "Required ios_system resource could not be read: \(url.lastPathComponent).",
+                resourcePath: url.path,
+                underlyingError: error
+            )
+        }
+        do {
+            let object = try PropertyListSerialization.propertyList(from: data, options: [], format: nil)
+            guard let dictionary = object as? [String: Any] else {
+                throw malformedDictionary(
+                    at: url,
+                    code: "dictionary_root_type_invalid",
+                    message: "The root property-list value must be a dictionary."
+                )
+            }
+            return dictionary
+        } catch let error as IOSSystemRegistrationError {
+            throw error
+        } catch {
+            throw IOSSystemRegistrationError(
+                category: .malformedDictionary,
+                code: "property_list_parse_failed",
+                message: "ios_system resource is not a valid property list: \(url.lastPathComponent).",
+                resourcePath: url.path,
+                underlyingError: error
+            )
+        }
+    }
+
+    private static func malformedDictionary(
+        at url: URL,
+        code: String,
+        message: String
+    ) -> IOSSystemRegistrationError {
+        IOSSystemRegistrationError(
+            category: .malformedDictionary,
+            code: code,
+            message: message,
+            resourcePath: url.path
+        )
+    }
+
+    private static func executeLocked(
+        tokens: [String],
+        workspace: URL,
+        environment: [String: String],
+        standardInput: Data,
+        standardInputURL: URL?,
+        outputDirectory: URL?,
+        maximumPreviewBytes: Int?
+    ) throws -> IOSSystemExecution {
+        let previousDirectory = FileManager.default.currentDirectoryPath
+        defer {
+            _ = FileManager.default.changeCurrentDirectoryPath(previousDirectory)
+        }
+        guard ios_setMiniRootURL(workspace) == 1 else {
+            throw NSError(
+                domain: "IOSSystemLite",
+                code: 2,
+                userInfo: [NSLocalizedDescriptionKey: "ios_system rejected the workspace miniRoot."]
+            )
+        }
+        ios_setDirectoryURL(workspace)
+
+        let oldEnvironment = ProcessInfo.processInfo.environment
+        for (name, value) in environment { setenv(name, value, 1) }
+        defer {
+            for name in environment.keys where oldEnvironment[name] == nil { unsetenv(name) }
+            for (name, value) in oldEnvironment where environment[name] != nil { setenv(name, value, 1) }
+        }
+
+        let capture = try OutputCapture(directory: outputDirectory)
+        let output = capture.stdout, error = capture.stderr
+        let input = try openInput(standardInput, url: standardInputURL)
+        defer { fclose(input) }
+        hanlin_ios_system_set_streams(input, output, error)
+        let rendered = tokens.map(shellEscape).joined(separator: " ")
+        let status = rendered.withCString { ios_system(UnsafeMutablePointer(mutating: $0)) }
+        guard fflush(output) == 0, fflush(error) == 0, ferror(output) == 0, ferror(error) == 0 else {
+            throw POSIXError(.init(rawValue: errno) ?? .EIO)
+        }
+        let stdout = try read(output, maximumBytes: maximumPreviewBytes)
+        let stderrBudget = maximumPreviewBytes.map { max(0, $0 - stdout.utf8.count) }
+        let stderr = try read(error, maximumBytes: stderrBudget)
+        return IOSSystemExecution(stdout: stdout, stderr: stderr, exitCode: Int32(status),
+            stdoutFileURL: capture.stdoutURL, stderrFileURL: capture.stderrURL)
+    }
+
+    private static func openInput(_ data: Data, url: URL?) throws -> UnsafeMutablePointer<FILE> {
+        if let url {
+            guard url.isFileURL, !url.path.contains("\0") else { throw POSIXError(.EINVAL) }
+            guard let input = url.path.withCString({ fopen($0, "rb") }) else {
+                throw POSIXError(.init(rawValue: errno) ?? .EIO)
+            }
+            return input
+        }
+        guard let input = tmpfile() else { throw POSIXError(.init(rawValue: errno) ?? .EIO) }
+        do {
+            if !data.isEmpty {
+                let written = data.withUnsafeBytes { bytes in fwrite(bytes.baseAddress, 1, bytes.count, input) }
+                guard written == data.count, ferror(input) == 0, fseek(input, 0, SEEK_SET) == 0 else {
+                    throw POSIXError(.init(rawValue: errno) ?? .EIO)
+                }
+            }
+            return input
+        } catch { fclose(input); throw error }
+    }
+
+    private static func shellEscape(_ value: String) -> String {
+        "'" + value.replacingOccurrences(of: "'", with: "'\\''") + "'"
+    }
+
+    private static func read(_ file: UnsafeMutablePointer<FILE>, maximumBytes: Int? = nil) throws -> String {
+        rewind(file)
+        var bytes: [UInt8] = []
+        var buffer = [UInt8](repeating: 0, count: 4096)
+        while true {
+            let allowance = maximumBytes.map { min(buffer.count, max(0, $0 - bytes.count)) } ?? buffer.count
+            if allowance == 0 { break }
+            let count = fread(&buffer, 1, allowance, file)
+            if count == 0 { break }
+            bytes.append(contentsOf: buffer.prefix(count))
+        }
+        guard ferror(file) == 0 else { throw POSIXError(.init(rawValue: errno) ?? .EIO) }
+        // A preview may end inside a UTF-8 scalar. Full binary bytes remain in
+        // the log; avoid manufacturing a replacement character at the cut.
+        if maximumBytes != nil, !bytes.isEmpty {
+            var start = bytes.count - 1
+            while start > 0 && bytes[start] & 0xc0 == 0x80 { start -= 1 }
+            let lead = bytes[start]
+            let width = lead >= 0xf0 ? 4 : lead >= 0xe0 ? 3 : lead >= 0xc0 ? 2 : 1
+            if bytes.count - start < width { bytes.removeSubrange(start...) }
+        }
+        return String(decoding: bytes, as: UTF8.self)
+    }
+
+    /// Named streams retain full output even if native execution fails or the
+    /// process ends. Each descriptor is closed on all allocation/error paths.
+    private final class OutputCapture {
+        let stdout: UnsafeMutablePointer<FILE>
+        let stderr: UnsafeMutablePointer<FILE>
+        let stdoutURL: URL?
+        let stderrURL: URL?
+
+        init(directory: URL?) throws {
+            if let directory { try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true) }
+            stdoutURL = directory?.appending(path: "stdout.log")
+            stderrURL = directory?.appending(path: "stderr.log")
+            func open(_ url: URL?) -> UnsafeMutablePointer<FILE>? {
+                if let url { return url.path.withCString { fopen($0, "w+b") } }
+                return tmpfile()
+            }
+            guard let output = open(stdoutURL) else { throw POSIXError(.init(rawValue: errno) ?? .EIO) }
+            guard let error = open(stderrURL) else {
+                let code = errno
+                fclose(output)
+                throw POSIXError(.init(rawValue: code) ?? .EIO)
+            }
+            stdout = output
+            stderr = error
+        }
+        deinit { fclose(stdout); fclose(stderr) }
+    }
+}

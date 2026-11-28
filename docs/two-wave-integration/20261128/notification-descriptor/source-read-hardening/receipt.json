@@ -1,0 +1,10 @@
+{
+  "reason": "Read-only source review required O_NOFOLLOW on the final descriptor open and strict empty-list selection fields; prior portable-r1 stopped before substantive controls due to an unmaterialized existing project_graph dependency.",
+  "sourceBefore": "c2dad5f1227fd72b4e90747dd21cee4e9ac47baed0bbf47ad1c505aac39dec63",
+  "sourceAfter": "139c454e004a37d169a42510a1f078fd231c79a4185db624b29477f1c3a9c364",
+  "testBefore": "45200ba7c98e9b3814f6e74128d5ac60e0087945a25b4545f997455e1dfc9088",
+  "testAfter": "98ae6e922e349ffa5af2e87cbd13669286cc4672e2c03e8eb835db7ebf7fee57",
+  "sparseAddExit": 0,
+  "materializedDependency": "Scripts/CI/IntegrationValidation",
+  "nativeExecuted": false
+}

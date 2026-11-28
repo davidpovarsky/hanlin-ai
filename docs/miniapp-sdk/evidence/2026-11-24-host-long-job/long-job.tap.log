@@ -1,0 +1,17 @@
+TAP version 13
+# {"proof":"actual-node-job-over-300-seconds","elapsedMilliseconds":305078.587501,"executionID":"eb91769a-1331-48ac-8e2d-4f7ded1266b7"}
+# Subtest: actual Node job crosses 300 seconds with no hidden deadline
+ok 1 - actual Node job crosses 300 seconds with no hidden deadline
+  ---
+  duration_ms: 305088.783362
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 305201.214144

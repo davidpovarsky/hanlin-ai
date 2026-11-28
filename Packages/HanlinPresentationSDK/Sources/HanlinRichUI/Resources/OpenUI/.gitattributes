@@ -1,0 +1,3 @@
+# esbuild retains upstream template-string whitespace; do not alter these bytes.
+bridge.js -whitespace linguist-generated=true
+bridge.css linguist-generated=true

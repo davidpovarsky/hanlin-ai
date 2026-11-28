@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "scope": "Pure Widget/Activity observer controls only; native and OS acceptance NOT_RUN",
+  "argv": [
+    "/usr/bin/python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/ProductSplit/Tests",
+    "-p",
+    "test_widget_action_surface_observer.py",
+    "-v"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-miniapps-widget-recovery-os-20261127",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "startedUTC": "2026-11-27T06:20:33.558188+00:00",
+  "returncode": 0,
+  "seconds": 0.20805236045271158,
+  "sourceFiles": {
+    "Scripts/ProductSplit/observe_widget_action_surfaces.py": "535d08e24e918779bb4ff90d2a2ec4c95710486ef99a4913d62191c35a9f3f4a",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "c857061c584eca56a97ede1b750347096213887bfa0c72c38b91ba5ca6c4dcb3",
+    "Scripts/ProductSplit/Tests/test_widget_action_surface_observer.py": "e740b14315777d527665223e8619b2061c545a7e600e3a6ca7789f870d3024b7"
+  },
+  "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSHA256": "d37b4dd7725726f9f3f6493a103ec4950784e5b4079afdf4e471100b736dfa70",
+  "stderr": "test_both_original_engines_and_real_native_source_forms_qualify (test_widget_action_surface_observer.OriginalWidgetActivityEvidenceControls.test_both_original_engines_and_real_native_source_forms_qualify) ... ok\ntest_changed_prepared_request_or_exchange_cannot_rebind_a_live_case (test_widget_action_surface_observer.OriginalWidgetActivityEvidenceControls.test_changed_prepared_request_or_exchange_cannot_rebind_a_live_case) ... ok\ntest_consistent_wrong_native_button_payload_still_fails (test_widget_action_surface_observer.OriginalWidgetActivityEvidenceControls.test_consistent_wrong_native_button_payload_still_fails) ... ok\ntest_current_extension_root_replacement_is_not_a_terminal_product_match (test_widget_action_surface_observer.OriginalWidgetActivityEvidenceControls.test_current_extension_root_replacement_is_not_a_terminal_product_match) ... ok\ntest_current_publication_verifies_exact_artifact_bytes_and_generation (test_widget_action_surface_observer.OriginalWidgetActivityEvidenceControls.test_current_publication_verifies_exact_artifact_bytes_and_generation) ... ok\ntest_identical_sibling_result_or_replaced_activity_cannot_claim_the_owner (test_widget_action_surface_observer.OriginalWidgetActivityEvidenceControls.test_identical_sibling_result_or_replaced_activity_cannot_claim_the_owner) ... ok\ntest_native_node_activity_cannot_borrow_a_widget_origin (test_widget_action_surface_observer.OriginalWidgetActivityEvidenceControls.test_native_node_activity_cannot_borrow_a_widget_origin) ... ok\ntest_original_archive_is_byte_bound_and_cannot_be_replaced_by_a_link (test_widget_action_surface_observer.OriginalWidgetActivityEvidenceControls.test_original_archive_is_byte_bound_and_cannot_be_replaced_by_a_link) ... ok\ntest_pending_replayed_cancelled_or_duplicate_system_commands_do_not_pass (test_widget_action_surface_observer.OriginalWidgetActivityEvidenceControls.test_pending_replayed_cancelled_or_duplicate_system_commands_do_not_pass) ... ok\ntest_stale_wrong_or_unbound_widget_origins_cannot_qualify (test_widget_action_surface_observer.OriginalWidgetActivityEvidenceControls.test_stale_wrong_or_unbound_widget_origins_cannot_qualify) ... ok\ntest_widget_and_activity_publications_bind_the_ui_prepared_challenge (test_widget_action_surface_observer.OriginalWidgetActivityEvidenceControls.test_widget_and_activity_publications_bind_the_ui_prepared_challenge) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 0.074s\n\nOK\n"
+}

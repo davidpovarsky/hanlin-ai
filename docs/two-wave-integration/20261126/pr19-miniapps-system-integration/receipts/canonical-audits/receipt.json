@@ -1,0 +1,35 @@
+[
+  {
+    "name": "project-generation",
+    "command": [
+      "python3",
+      "Scripts/SDK/update_project.py"
+    ],
+    "exit": 0,
+    "stdout_tail": "Original application source ownership: SDK; executable entry point: AI_HLY/AI_HLY.swift\n",
+    "stderr_tail": ""
+  },
+  {
+    "name": "source-targets",
+    "command": [
+      "python3",
+      "Scripts/ProductSplit/verify_targets.py"
+    ],
+    "exit": 0,
+    "stdout_tail": "{\"status\": \"SOURCE_VALIDATED\", \"shared_source_count\": 87, \"graph\": {\"miniapps_products\": [\"HanlinA2UI\", \"HanlinAgentActivityCore\", \"HanlinCameraCaptureUI\", \"HanlinExpoNativeAPI\", \"HanlinExpoRuntime\", \"HanlinExpoWidgetsOriginal\", \"HanlinExtensionContracts\", \"HanlinLocalization\", \"HanlinMiniAppCore\", \"HanlinMiniAppsBridge\", \"HanlinMiniAppsPicker\", \"HanlinMiniAppsUI\", \"HanlinNativeScriptRuntime\", \"HanlinParityMiniApp\", \"HanlinPlatformContracts\", \"HanlinPresentationKit\", \"HanlinProductSplit\", \"HanlinScriptCompiler\", \"HanlinScriptContracts\", \"HanlinScriptDeviceServices\", \"HanlinScriptExtensions\", \"HanlinScriptStore\", \"HanlinScriptUI\", \"HanlinScriptingApplicationRuntime\", \"HanlinScriptingSDK\", \"HanlinSefariaMiniApp\", \"HanlinTextStudioMiniApp\", \"HanlinTranslationUI\", \"HanlinWidgetUI\", \"HanlinWikipediaMiniApp\", \"IOSSystemLite\", \"SWCompression\", \"TorahLibraryKit\", \"ZIPFoundation\"], \"miniapps_source_groups\": [\"HanlinMiniAppsApp\"], \"deployment_target\": \"27.0\", \"signed_or_install_proof\": false}, \"sdk\": {\"ai_products\": [\"HanlinApplication\"], \"unit_test_products\": [\"HanlinApplication\"], \"miniapps_agent_products\": [], \"sdk_application_sources\": 532, \"host_sources\": [\"AI_HLY.swift\"], \"native_adapter\": \"Model/HanlinAppleModelCatalogAdapter.swift\", \"linked_application_products\": {\"HanlinApp\": [\"HanlinApplication\"], \"AI_HLYTests\": [\"HanlinApplication\"]}, \"apple_compilation\": \"NOT_RUN\"}, \"ios_build\": \"NOT_RUN\", \"ios_ui\": \"NOT_RUN\", \"signed_group\": \"NOT_RUN\"}\n",
+    "stderr_tail": ""
+  },
+  {
+    "name": "sdk-inventory-write",
+    "command": [
+      "node",
+      "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "--typescript-module",
+      "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-recovery-20261125/Scripts/Expo/node_modules/typescript/lib/typescript.js",
+      "--write"
+    ],
+    "exit": 1,
+    "stdout_tail": "",
+    "stderr_tail": "node:internal/fs/promises:1345\n  return new FileHandle(await PromisePrototypeThen(\n                        ^\n\nError: ENOENT: no such file or directory, open '/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Tools/SwiftUIBridge/configuration.json'\n    at async open (node:internal/fs/promises:1345:25)\n    at async readFile (node:internal/fs/promises:2003:14)\n    at async source (file:///mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/Audit/audit-miniapp-sdk.mjs:31:19)\n    at async json (file:///mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/Audit/audit-miniapp-sdk.mjs:36:48)\n    at async file:///mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/Audit/audit-miniapp-sdk.mjs:101:16 {\n  errno: -2,\n  code: 'ENOENT',\n  syscall: 'open',\n  path: '/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Tools/SwiftUIBridge/configuration.json'\n}\n\nNode.js v24.22.0\n"
+  }
+]

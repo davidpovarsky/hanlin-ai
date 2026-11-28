@@ -1,0 +1,104 @@
+{
+  "workflowID": "310046367",
+  "workflowRunID": "44989992516",
+  "runNumber": 1458,
+  "attempt": 1,
+  "workflowConclusion": "success",
+  "appSourceSHA": "de9ccac5d38c44f597b2a057701de4757587d6a8",
+  "rendererSourceSHA": "ebbbf889276098f3642448e5439ad049c3cd2d6c",
+  "buildNumber": "145801",
+  "artifactID": "14743740296",
+  "githubReportedOuterArtifactDigest": "sha256:db15558dee16e202e14b96dca9dacb84c44fa38cbb7f86fc83158eec300383f1",
+  "retrieval": {
+    "fullOuterArtifactDigestVerified": false,
+    "selectedEntriesCRCAndSizeVerified": true,
+    "ipaChecksumReceiptMatches": true,
+    "bytesTransferred": 180451646,
+    "rangeRequests": 75,
+    "signedLocationRequests": 8,
+    "elapsedSeconds": 268.984,
+    "files": [
+      {
+        "file": "ChavrusaChat-145801.ipa",
+        "zipEntry": "export/ChavrusaChat-145801.ipa",
+        "bytes": 183542533,
+        "compressedBytes": 180422536,
+        "sha256": "02858c65f0be03caa71c214a3f80c427ed4f1e464927f3b6e6526ebeea16badc",
+        "crc32": "39967d13"
+      },
+      {
+        "file": "ChavrusaChat-145801.ipa.sha256",
+        "zipEntry": "export/ChavrusaChat-145801.ipa.sha256",
+        "bytes": 153,
+        "compressedBytes": 124,
+        "sha256": "be8437e01ec9580a91442d45488f9b4af4c30842d1d24248e32ac840259394e1",
+        "crc32": "24195fd4"
+      },
+      {
+        "file": "testflight-readiness.json",
+        "zipEntry": "logs/testflight-readiness.json",
+        "bytes": 410,
+        "compressedBytes": 273,
+        "sha256": "5816a36e79947f2a5219b9e39a71cf7b1f919416e6602a35c495843adf5aba73",
+        "crc32": "a5f26300"
+      },
+      {
+        "file": "runtime-distribution.json",
+        "zipEntry": "logs/runtime-distribution.json",
+        "bytes": 508,
+        "compressedBytes": 346,
+        "sha256": "bb21f27e360ca27374dd6508102cace1e9e2a6807a45f787e713725257b624df",
+        "crc32": "ea27e9a9"
+      },
+      {
+        "file": "runtime-memory-entitlements.json",
+        "zipEntry": "logs/runtime-memory-entitlements.json",
+        "bytes": 182,
+        "compressedBytes": 122,
+        "sha256": "21133f0f6fde2a47c2d67ce9c314e6cc57149ee9593d853e619fb41b978472d3",
+        "crc32": "9a64277e"
+      },
+      {
+        "file": "node-source-uuid.txt",
+        "zipEntry": "logs/node-source-uuid.txt",
+        "bytes": 45,
+        "compressedBytes": 47,
+        "sha256": "c8549740c76b4c488c702b8fb83402c3fb4740c5646d5efd93e9c4d94d30e431",
+        "crc32": "d51aa91b"
+      },
+      {
+        "file": "node-packaged-uuid.txt",
+        "zipEntry": "logs/node-packaged-uuid.txt",
+        "bytes": 45,
+        "compressedBytes": 47,
+        "sha256": "c8549740c76b4c488c702b8fb83402c3fb4740c5646d5efd93e9c4d94d30e431",
+        "crc32": "d51aa91b"
+      },
+      {
+        "file": "main-privacy-purpose-strings.txt",
+        "zipEntry": "logs/main-privacy-purpose-strings.txt",
+        "bytes": 1690,
+        "compressedBytes": 523,
+        "sha256": "28c02872180c66cc4640fe5994e2ede5e67e61867bd66ae3fc039b3bdfbeac5b",
+        "crc32": "c126791f"
+      }
+    ]
+  },
+  "retrievalReceiptSHA256": "c900b10f44b13cf7ddfeafdfe76d23ddf72e4ab048f1ae625a901cd04080da6a",
+  "independentVerification": {
+    "jobID": "job_cb031a896a5a",
+    "exitCode": 0,
+    "receipt": "testflight-145801-verified.json",
+    "receiptSHA256": "f62b4214fde3e9fc2ea320916bb08664c70cba8fb27754354b7334941f0d8680",
+    "reviewedVerifierSHA256": "c700ee34e32e2c3c6a344584575237a76e0399793dfddea8191dc882fea8011d",
+    "reviewedFetchHelperSHA256": "4868c6c0462772bdf60f6a6a40c429d591a968d463a18bac3933652083ffcec2"
+  },
+  "githubJobs": {
+    "total": 27,
+    "skipped": 26,
+    "succeeded": 1,
+    "failed": 0,
+    "metadataSHA256": "5e6c6764f95b8239bf8f74f7fa96a349910232e1b5df40e36516dde3055c2abe"
+  },
+  "physicalIPadAcceptance": "OPEN / NOT_RUN"
+}

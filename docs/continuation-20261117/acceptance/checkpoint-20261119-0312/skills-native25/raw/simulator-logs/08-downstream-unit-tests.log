@@ -1,0 +1,359 @@
+Command line invocation:
+    /Applications/Xcode_27.2.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project AI_HLY.xcodeproj -scheme AI_HLY -configuration Debug -destination "platform=iOS Simulator,id=029B78CA-2FF2-4992-8CCC-2F3B338E1532" -derivedDataPath build/SimulatorDerivedData -clonedSourcePackagesDirPath build/SourcePackages -resultBundlePath simulator-logs/DownstreamTestsResult.xcresult -skipPackagePluginValidation -skipMacroValidation -parallel-testing-enabled NO -test-timeouts-enabled YES -maximum-test-execution-time-allowance 300 "-only-testing:AI_HLYTests/SkillOpenClawPolicyTests/originalPolicyRunsInTheActualEmbeddedNode()" "-only-testing:AI_HLYTests/SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation()" "-only-testing:AI_HLYTests/SkillRuntimeProductTests/ordinaryInstructionsSurviveUnrelatedPolicyInspectionFailure()" "-only-testing:AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  RichTextKit: https://github.com/danielsaidi/RichTextKit.git @ 1.2.0
+  SWCompression: https://github.com/tsolomko/SWCompression.git @ 4.9.0
+  HanlinNativeScriptRuntime: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinNativeScriptRuntime @ local
+  HanlinExpoWidgetSubset: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset @ local
+  SwiftTreeSitter: https://github.com/tree-sitter/swift-tree-sitter @ 08ef81e
+  IOSSystemLite: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/IOSSystemLite @ local
+  TorahLibraryKit: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/TorahLibraryKit @ local
+  swift-log: https://github.com/apple/swift-log.git @ 1.6.2
+  HanlinSkillFormat: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinSkillFormat @ local
+  iosMath: https://github.com/junyan72/iosMath @ ba9ab77
+  SwiftStreamingMarkdown: https://github.com/davidpovarsky/hanlin-streaming-markdown @ 6bde022
+  SwiftyJSON: https://github.com/SwiftyJSON/SwiftyJSON.git @ 5.0.1
+  Yams: https://github.com/jpsim/Yams.git @ 6.2.2
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation @ 0.9.19
+  HanlinTextStudioMiniApp: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinTextStudioMiniApp @ local
+  SwiftAISDK: https://github.com/davidpovarsky/swift-ai-sdk.git @ e7bf341
+  SwiftUI-Shimmer: https://github.com/markiv/SwiftUI-Shimmer @ 1.5.1
+  swift-json-schema: https://github.com/ajevans99/swift-json-schema @ 0.13.2
+  HanlinExpoRuntime: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime @ local
+  HanlinQuickJS: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinQuickJS @ local
+  XMLCoder: https://github.com/maxdesiatov/XMLCoder.git @ 0.14.0
+  SwiftSoup: https://github.com/scinfu/SwiftSoup.git @ 2.8.7
+  NativeScriptSDK: https://github.com/NativeScript/ios-spm.git @ 9.1.0
+  BitByteData: https://github.com/tsolomko/BitByteData @ 2.1.0
+  swift-markdown: https://github.com/swiftlang/swift-markdown.git @ 0.7.3
+  HanlinProductSplit: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinProductSplit @ local
+  swift-nio: https://github.com/apple/swift-nio.git @ 2.94.0
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.3.0
+  swift-argument-parser: https://github.com/apple/swift-argument-parser @ 1.8.2
+  HanlinPlatform: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform @ local
+  TreeSitterBash: https://github.com/tree-sitter/tree-sitter-bash @ a06c2e4
+  MathJaxSwift: https://github.com/colinc86/MathJaxSwift @ 3.4.0
+  LaTeXSwiftUI: https://github.com/colinc86/LaTeXSwiftUI @ 1.5.0
+  CoreXLSX: https://github.com/CoreOffice/CoreXLSX.git @ 0.14.2
+  HTMLEntities: https://github.com/Kitura/swift-html-entities @ 4.0.1
+  cmark-gfm: https://github.com/swiftlang/swift-cmark @ 0.9.0
+  HanlinExpoNativeAPI: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoNativeAPI @ local
+  NetworkImage: https://github.com/gonzalezreal/NetworkImage @ 6.0.1
+  HanlinPresentationSDK: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPresentationSDK @ local
+  EventSource: https://github.com/mattt/eventsource.git @ 1.1.0
+  HighlightSwift: https://github.com/appstefan/highlightswift @ 99c431b
+  A2UISwiftCore: https://github.com/a2ui-project/a2ui @ 3ed9601
+  HanlinAgentSDK: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinAgentSDK @ local
+  HanlinWikipediaMiniApp: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWikipediaMiniApp @ local
+  swift-system: https://github.com/apple/swift-system.git @ 1.4.0
+  SwiftDraw: https://github.com/swhitty/SwiftDraw @ 0.21.0
+  mcp-swift-sdk: https://github.com/modelcontextprotocol/swift-sdk.git @ 0.12.1
+  HanlinSefariaMiniApp: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinSefariaMiniApp @ local
+  LLM: https://github.com/eastriverlee/LLM.swift/ @ 1.8.0
+  swift-syntax: https://github.com/swiftlang/swift-syntax.git @ 603.0.2
+  Equatable: https://github.com/ordo-one/equatable @ 1.4.1
+  TreeSitter: https://github.com/tree-sitter/tree-sitter @ da6fe9b
+  swift-markdown-ui: https://github.com/gonzalezreal/MarkdownUI.git @ 2.4.1
+  HanlinParityMiniApp: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinParityMiniApp @ local
+  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.0
+
+Writing result bundle at path:
+	/Users/runner/work/hanlin-ai/hanlin-ai/simulator-logs/DownstreamTestsResult.xcresult
+
+objc[64432]: Class _TtC14HanlinChatCore22HanlinAISDKAgentEngine is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinChatCore_-2DB629D706599C8F_PackageProduct.framework/HanlinChatCore_-2DB629D706599C8F_PackageProduct (0x1089fc778) and /Users/runner/Library/Developer/CoreSimulator/Devices/029B78CA-2FF2-4992-8CCC-2F3B338E1532/data/Containers/Bundle/Application/49066763-4CAF-4FFA-A46D-3A0D62D32127/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x110d6d370). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+objc[64432]: Class _TtCC14HanlinChatCore22HanlinAISDKAgentEngineP33_B167859EAB289DB913EE7254B409B5F813StreamStopper is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinChatCore_-2DB629D706599C8F_PackageProduct.framework/HanlinChatCore_-2DB629D706599C8F_PackageProduct (0x1089fc850) and /Users/runner/Library/Developer/CoreSimulator/Devices/029B78CA-2FF2-4992-8CCC-2F3B338E1532/data/Containers/Bundle/Application/49066763-4CAF-4FFA-A46D-3A0D62D32127/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x110d6d448). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+objc[64432]: Class _TtCO14HanlinChatCore26HanlinCapturedStreamReplayP33_BF1B5D5DE3918B87F9D16260980FD53D12ReplaySource is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinChatCore_-2DB629D706599C8F_PackageProduct.framework/HanlinChatCore_-2DB629D706599C8F_PackageProduct (0x1089fcf38) and /Users/runner/Library/Developer/CoreSimulator/Devices/029B78CA-2FF2-4992-8CCC-2F3B338E1532/data/Containers/Bundle/Application/49066763-4CAF-4FFA-A46D-3A0D62D32127/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x110d6db30). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+objc[64432]: Class _TtC14HanlinChatCore16HanlinChatEngine is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinChatCore_-2DB629D706599C8F_PackageProduct.framework/HanlinChatCore_-2DB629D706599C8F_PackageProduct (0x1089fd050) and /Users/runner/Library/Developer/CoreSimulator/Devices/029B78CA-2FF2-4992-8CCC-2F3B338E1532/data/Containers/Bundle/Application/49066763-4CAF-4FFA-A46D-3A0D62D32127/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x110d6dc48). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+objc[64432]: Class _TtC14HanlinChatCore22HanlinChatStreamParser is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinChatCore_-2DB629D706599C8F_PackageProduct.framework/HanlinChatCore_-2DB629D706599C8F_PackageProduct (0x1089fd438) and /Users/runner/Library/Developer/CoreSimulator/Devices/029B78CA-2FF2-4992-8CCC-2F3B338E1532/data/Containers/Bundle/Application/49066763-4CAF-4FFA-A46D-3A0D62D32127/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x110d6e030). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+objc[64432]: Class _TtC14HanlinChatCore27HanlinNonEmptyLanguageModel is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinChatCore_-2DB629D706599C8F_PackageProduct.framework/HanlinChatCore_-2DB629D706599C8F_PackageProduct (0x1089fd6b0) and /Users/runner/Library/Developer/CoreSimulator/Devices/029B78CA-2FF2-4992-8CCC-2F3B338E1532/data/Containers/Bundle/Application/49066763-4CAF-4FFA-A46D-3A0D62D32127/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x110d6e2a8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+objc[64432]: Class _TtC17HanlinMiniAppCore29HanlinCompiledMiniAppRegistry is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinMiniAppCore_40504E8DD4B90DA2_PackageProduct.framework/HanlinMiniAppCore_40504E8DD4B90DA2_PackageProduct (0x104384a18) and /Users/runner/Library/Developer/CoreSimulator/Devices/029B78CA-2FF2-4992-8CCC-2F3B338E1532/data/Containers/Bundle/Application/49066763-4CAF-4FFA-A46D-3A0D62D32127/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x110d75160). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+objc[64432]: Class _TtC17HanlinMiniAppCore22HanlinMiniAppDataStore is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinMiniAppCore_40504E8DD4B90DA2_PackageProduct.framework/HanlinMiniAppCore_40504E8DD4B90DA2_PackageProduct (0x104384c08) and /Users/runner/Library/Developer/CoreSimulator/Devices/029B78CA-2FF2-4992-8CCC-2F3B338E1532/data/Containers/Bundle/Application/49066763-4CAF-4FFA-A46D-3A0D62D32127/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x110d75350). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+objc[64432]: Class _TtC17HanlinMiniAppCore26HanlinMiniAppKeyValueStore is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinMiniAppCore_40504E8DD4B90DA2_PackageProduct.framework/HanlinMiniAppCore_40504E8DD4B90DA2_PackageProduct (0x104384f00) and /Users/runner/Library/Developer/CoreSimulator/Devices/029B78CA-2FF2-4992-8CCC-2F3B338E1532/data/Containers/Bundle/Application/49066763-4CAF-4FFA-A46D-3A0D62D32127/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x110d75648). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+objc[64432]: Class _TtC17HanlinMiniAppCore26HanlinMiniAppRequestBroker is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinMiniAppCore_40504E8DD4B90DA2_PackageProduct.framework/HanlinMiniAppCore_40504E8DD4B90DA2_PackageProduct (0x104385310) and /Users/runner/Library/Developer/CoreSimulator/Devices/029B78CA-2FF2-4992-8CCC-2F3B338E1532/data/Containers/Bundle/Application/49066763-4CAF-4FFA-A46D-3A0D62D32127/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x110d75a58). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+objc[64432]: Class _TtC17HanlinMiniAppCore28HanlinMiniAppVisibilityStore is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinMiniAppCore_40504E8DD4B90DA2_PackageProduct.framework/HanlinMiniAppCore_40504E8DD4B90DA2_PackageProduct (0x104385478) and /Users/runner/Library/Developer/CoreSimulator/Devices/029B78CA-2FF2-4992-8CCC-2F3B338E1532/data/Containers/Bundle/Application/49066763-4CAF-4FFA-A46D-3A0D62D32127/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x110d75bc0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+objc[64432]: Class _TtC17HanlinMiniAppCore19HanlinSQLiteService is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinMiniAppCore_40504E8DD4B90DA2_PackageProduct.framework/HanlinMiniAppCore_40504E8DD4B90DA2_PackageProduct (0x104385658) and /Users/runner/Library/Developer/CoreSimulator/Devices/029B78CA-2FF2-4992-8CCC-2F3B338E1532/data/Containers/Bundle/Application/49066763-4CAF-4FFA-A46D-3A0D62D32127/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x110d75da0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+objc[64432]: Class _TtCC17HanlinMiniAppCore19HanlinSQLiteServiceP33_400391C966374BC85F9B40C6FE5B29F211WeakService is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinMiniAppCore_40504E8DD4B90DA2_PackageProduct.framework/HanlinMiniAppCore_40504E8DD4B90DA2_PackageProduct (0x104385728) and /Users/runner/Library/Developer/CoreSimulator/Devices/029B78CA-2FF2-4992-8CCC-2F3B338E1532/data/Containers/Bundle/Application/49066763-4CAF-4FFA-A46D-3A0D62D32127/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x110d75e70). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+objc[64432]: Class _TtCC17HanlinMiniAppCore19HanlinSQLiteServiceP33_400391C966374BC85F9B40C6FE5B29F212LiveServices is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinMiniAppCore_40504E8DD4B90DA2_PackageProduct.framework/HanlinMiniAppCore_40504E8DD4B90DA2_PackageProduct (0x1043857c8) and /Users/runner/Library/Developer/CoreSimulator/Devices/029B78CA-2FF2-4992-8CCC-2F3B338E1532/data/Containers/Bundle/Application/49066763-4CAF-4FFA-A46D-3A0D62D32127/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x110d75f10). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+2026-11-19 02:49:40.576520+0000 AI_Hanlin[64432:168768] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+2026-11-19 02:49:40.613826+0000 AI_Hanlin[64432:168815] [error] CoreData: warning: CDCS OS-driven reindex (all items) requested for index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92
+CoreData: warning: CDCS OS-driven reindex (all items) requested for index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92
+2026-11-19 02:49:42.193231+0000 AI_Hanlin[64432:167839] HANLIN_EXPO_APP_DEFINES_LOADED
+新增系统模型：google/gemini-3-flash-preview_repeat_cherryin
+新增系统模型：qwen-flash
+新增系统模型：qwen-plus
+新增系统模型：qwen3-max
+新增系统模型：qwen-omni-flash
+新增系统模型：qwen3-vl-plus
+新增系统模型：qwen3-vl-flash
+新增系统模型：wanx2.1-t2i-turbo
+新增系统模型：wanx2.1-t2i-plus
+新增系统模型：qwen-image-plus
+新增系统模型：glm-4.7-flash
+新增系统模型：glm-4.6v-flash
+新增系统模型：glm-4.5-air
+新增系统模型：glm-4.5
+新增系统模型：glm-4.7
+新增系统模型：doubao-seed-1-8-251228
+新增系统模型：doubao-seed-1-6-lite-251015
+新增系统模型：doubao-seed-1-6-flash-250828
+新增系统模型：deepseek-chat
+新增系统模型：deepseek-reasoner
+新增系统模型：ernie-speed-128k
+新增系统模型：ernie-4.5-turbo-128k
+新增系统模型：ernie-4.5-turbo-vl-32k
+新增系统模型：ernie-x1-turbo-32k
+新增系统模型：hunyuan-lite
+新增系统模型：hunyuan-turbos-latest
+新增系统模型：hunyuan-t1-latest
+新增系统模型：hunyuan-vision
+新增系统模型：hunyuan-turbo-vision
+新增系统模型：yi-lightning
+新增系统模型：yi-vision-v2
+新增系统模型：kimi-k2-0905-preview
+新增系统模型：step-2-mini
+新增系统模型：step-3
+新增系统模型：lite
+新增系统模型：MiniMax-M2
+新增系统模型：Qwen/Qwen3-30B-A3B-Instruct-2507_repeat_sc
+新增系统模型：Qwen/Qwen3-8B_repeat_sc
+新增系统模型：Kwai-Kolors/Kolors_repeat_sc
+新增系统模型：Qwen/Qwen3-30B-A3B-Instruct-2507_repeat_ms
+新增系统模型：Qwen/Qwen3-30B-A3B-Thinking-2507_repeat_ms
+新增系统模型：GLM-4.7
+新增系统模型：kimi-k2-instruct
+新增系统模型：gpt-5.2
+新增系统模型：gpt-5-mini
+新增系统模型：gpt-5-nano
+新增系统模型：dall-e-3
+新增系统模型：gpt-image-1
+新增系统模型：gemini-3-flash-preview
+新增系统模型：gemini-3-pro-preview
+新增系统模型：claude-haiku-4-5
+新增系统模型：claude-sonnet-4-5
+新增系统模型：claude-opus-4-5
+新增系统模型：grok-4
+新增系统模型：grok-4-fast-non-reasoning
+新增系统模型：grok-4-fast-reasoning
+新增系统模型：grok-2-image
+新增系统模型：sonar
+新增系统模型：sonar-pro
+新增系统模型：anthropic/claude-opus-4.5_repeat_openrouter
+新增系统模型：google/gemini-3-pro-preview_repeat_openrouter
+新增系统模型：openai/gpt-5.2_repeat_openrouter
+新增系统模型：gpt-4o_repeat_n1n
+新增系统模型：claude-3-5-sonnet-20240620_repeat_n1n
+新增系统模型：gemini-1.5-pro-latest_repeat_n1n
+新增系统模型：mimo-v2-flash
+新增系统模型：LongCat-Flash-Chat
+新增系统模型：gemini-3-pro-preview_repeat_ai302
+新增系统模型：gemini-3-flash-preview_repeat_aihubmix
+新增系统模型：gemini-3-pro_repeat_poe
+新增系统模型：qwen3-max_repeat_iflow
+模型数据同步完成
+新增 API Key：CHERRY_IN_API_KEY
+新增 API Key：ZHIPUAI_API_KEY
+新增 API Key：DASHSCOPE_API_KEY
+新增 API Key：DEEPSEEK_API_KEY
+新增 API Key：SILICONCLOUD_API_KEY
+新增 API Key：ARK_API_KEY
+新增 API Key：KIMI_API_KEY
+新增 API Key：OPENAI_API_KEY
+新增 API Key：GEMINI_API_KEY
+新增 API Key：XAI_API_KEY
+新增 API Key：ANTHROPIC_API_KEY
+新增 API Key：YI_API_KEY
+新增 API Key：HUNYUAN_API_KEY
+新增 API Key：STEP_API_KEY
+新增 API Key：WENXIN_API_KEY
+新增 API Key：PERPLEXITY_API_KEY
+新增 API Key：OPENROUTER_API_KEY
+新增 API Key：MODELSCOPE_API_KEY
+新增 API Key：GITEE_API_KEY
+新增 API Key：MINIMAX_API_KEY
+新增 API Key：MIMO_API_KEY
+新增 API Key：LONGCAT_API_KEY
+新增 API Key：AI302_API_KEY
+新增 API Key：AIHUBMIX_API_KEY
+新增 API Key：POE_API_KEY
+新增 API Key：IFLOW_API_KEY
+新增 API Key：N1N_API_KEY
+新增 API Key：LAN
+新增 API Key：LOCAL
+API 密钥同步完成
+新增 SearchKey：AUTOMATIC_SEARCH_KEY
+新增 SearchKey：ZHIPUAI_SEARCH_KEY
+新增 SearchKey：BOCHAAI_SEARCH_KEY
+新增 SearchKey：LANGSEARCH_SEARCH_KEY
+新增 SearchKey：EXA_KEY
+新增 SearchKey：TAVILY_KEY
+新增 SearchKey：BRAVE_KEY
+新增 SearchKey：PERPLEXITY_KEY
+SearchKeys 同步完成
+新增 ToolKey: APPLE_MAP_KEY
+新增 ToolKey: AMAP_MAP_KEY
+新增 ToolKey: GOOGLE_MAP_KEY
+新增 ToolKey: QWEATHER_KEY
+新增 ToolKey: OPENWEATHER_KEY
+ToolKeys 同步完成
+新增默认 UserInfo
+UserInfo 同步完成
+PromptRepo 已插入预置数据
+孤立的 ChatMessages 清理完成
+孤立的 KnowledgeChunk 清理完成
+孤立数据清理保存成功
+2026-11-19 02:49:44.257417+0000 AI_Hanlin[64432:167839] [API] cannot add handler to 0 from 0 - dropping
+2026-11-19 02:49:44.257749+0000 AI_Hanlin[64432:167839] [API] cannot add handler to 0 from 0 - dropping
+2026-11-19 02:49:44.323571+0000 AI_Hanlin[64432:167839] [XPCErrors] non-launching port is incompatible with service identifier "com.apple.PointerUI.pointeruid.default-service"
+2026-11-19 02:49:44.396639+0000 AI_Hanlin[64432:167839] [API] cannot add handler to 0 from 0 - dropping
+2026-11-19 02:49:44.397461+0000 AI_Hanlin[64432:167839] [API] cannot add handler to 0 from 0 - dropping
+2026-11-19 02:49:44.397557+0000 AI_Hanlin[64432:167839] [API] cannot add handler to 0 from 0 - dropping
+2026-11-19 02:49:44.397856+0000 AI_Hanlin[64432:167839] [API] cannot add handler to 0 from 0 - dropping
+2026-11-19 02:49:44.398714+0000 AI_Hanlin[64432:167839] [API] cannot add handler to 0 from 0 - dropping
+2026-11-19 02:49:44.498806+0000 AI_Hanlin[64432:167839] [TrackingElementWindowController] The tracking window controller is unable to get the keyboard scene from <UIWindowScene: 0x11a364000; role: UIWindowSceneSessionRoleApplication; persistentIdentifier: FC81E51E-1D60-46BB-AD16-B525064967EA; activationState: UISceneActivationStateForegroundInactive> for conversions
+Test Suite 'Selected tests' started at 2026-11-19 02:49:48.990.
+Test Suite 'AI_HLYTests.xctest' started at 2026-11-19 02:49:48.995.
+Test Suite 'AI_HLYTests.xctest' passed at 2026-11-19 02:49:48.995.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-11-19 02:49:48.996.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.005) seconds
+◇ Test run started.
+↳ Testing Library Version: 2403
+↳ Target Platform: arm64-apple-ios17.0-simulator
+◇ Suite "Original OpenClaw policy through the existing app runtime" started.
+◇ Test originalPolicyRunsInTheActualEmbeddedNode() started.
+OPENCLAW_ORIGINAL_POLICY_NATIVE {"measuredMilliseconds":48.62358299999687,"memoryBefore":{"heapUsed":3255888,"arrayBuffers":32884,"external":2125929,"rss":624640000,"heapTotal":6995968},"scope":"Original policy and thin adapter in the existing Node engine, using owned synthetic fixtures","platform":"ios","arch":"arm64","upstreamAssertions":64,"upstreamCases":28,"offlinePolicyBoundary":{"status":"EXECUTED_PASS","networkAttempts":0,"processLaunchAttempts":0,"scope":"Offline original-policy boundary only; not whole-app or physical-device offline acceptance","policyAttempts":[],"installedBeforePolicyImport":true,"restored":true,"installerAttempts":0,"selfChecksPassed":6},"memoryAfter":{"heapUsed":5019100,"arrayBuffers":224345,"external":3692734,"rss":627474432,"heapTotal":8585216},"artifactIdentity":{"revision":"847611dcaa3bf0e2783335f961dd1fd0580e4d9f","artifactSHA256":"d6cc833943108245a2a68fc85ff4d67bf50719ade36e52fc63c784afedf9d565","nativeContractSHA256":"b9da6ef964550eeb68b432eda195448707b9bc945558aadcd986246a0bafdb19","declarationClosureSHA256":"fb9956a6cd0210127db8e5060bceb5a69a02139955e09be2b3444410b432ed09"},"importedSkillExecution":"NOT_RUN_BY_THIS_PROBE","ok":true,"execArgv":["--jitless","--wasm-jitless"],"node":"24.5.0","challenge":"b8584f96fd724f3194049a7349d4d811","cases":[{"name":"exact original policy artifact and dependency closure are pinned","status":"EXECUTED_PASS","milliseconds":3.3979160000017146},{"name":"28 unchanged upstream policy tests run against the production artifact","status":"EXECUTED_PASS","milliseconds":12.088834000001953},{"name":"original selection, source allowlist and disabled policy retain separate authority","status":"EXECUTED_PASS","milliseconds":0.125},{"name":"original invocation policy and install preferences are data, not installation","status":"EXECUTED_PASS","milliseconds":0.056208999998489162},{"name":"missing observations remain unknown but original any-bin and always short circuits stay decisive","status":"EXECUTED_PASS","milliseconds":0.58383300000059535},{"name":"unknown OpenClaw config cannot inherit a browser default as a verified Hanlin capability","status":"EXECUTED_PASS","milliseconds":0.1166670000020531},{"name":"original disabled and degraded owner controls are isolated between inspections","status":"EXECUTED_PASS","milliseconds":0.09074999999938882},{"name":"native snapshots cannot borrow iSH platform or observations","status":"EXECUTED_PASS","milliseconds":0.09245799999916926},{"name":"absent, invalid and future requirement shapes never become execution proof","status":"EXECUTED_PASS","milliseconds":0.10375000000203727},{"name":"original JSON5, CSV normalization and install-hint rejection survive the typed boundary","status":"EXECUTED_PASS","milliseconds":0.3727500000022701},{"name":"rechecking actual snapshots observes both installation and removal without a stale eligibility cache","status":"EXECUTED_PASS","milliseconds":0.068750000002182787}],"physicalDeviceAcceptance":"NOT_RUN"}
+✔ Test originalPolicyRunsInTheActualEmbeddedNode() passed after 9.585 seconds.
+◇ Test currentOriginalPolicyControlsLoadReadAndActualSDKContinuation() started.
+✔ Test currentOriginalPolicyControlsLoadReadAndActualSDKContinuation() passed after 0.462 seconds.
+✔ Suite "Original OpenClaw policy through the existing app runtime" passed after 10.050 seconds.
+◇ Suite "Imported Skills through the original product execution path" started.
+◇ Test ordinaryInstructionsSurviveUnrelatedPolicyInspectionFailure() started.
+SKILL_INSTRUCTIONS_POLICY_FAILURE_ISOLATED real_policy_byte_budget / load / read / SDK / enablement
+✔ Test ordinaryInstructionsSurviveUnrelatedPolicyInspectionFailure() passed after 0.331 seconds.
+◇ Test importedSkillPlanExecuteAndReopen(_:) started.
+◇ Test case passing 1 argument fixture → "instructions" to importedSkillPlanExecuteAndReopen(_:) started.
+SKILL_PRODUCT INSTRUCTIONS_LOADED instructions phase2-326e8498-a1ea-4203-98d2-6e649a998e14
+​◇ Test case passing 1 argument fixture → "node" to importedSkillPlanExecuteAndReopen(_:) started.
+SKILL_PRODUCT EXECUTION_PASS node job=2597685A-04F7-48D5-B665-AF609B466AED source=eb1e02307ac9286452340649925d6efbf9ebbfa8394aebafe53ef1457c80e197
+​◇ Test case passing 1 argument fixture → "python" to importedSkillPlanExecuteAndReopen(_:) started.
+SKILL_PRODUCT EXECUTION_PASS python job=94331DE2-5795-4884-9F9E-0ED77A2EC873 source=16e80ec4cb534853fb663ebc975778988e73b0c3ecff24dba934e5c961f12619
+​◇ Test case passing 1 argument fixture → "typescript" to importedSkillPlanExecuteAndReopen(_:) started.
+2026-11-19 02:50:14.697648+0000 AI_Hanlin[64432:167839] [BackgroundTask] Background Task 3 ("CoreData: Spotlight Indexing"), was created over 30 seconds ago. In applications running in the background, this creates a risk of termination. Remember to call UIApplication.endBackgroundTask(_:) for your task in a timely manner to avoid this.
+SKILL_PRODUCT EXECUTION_PASS typescript job=7D7D971F-D5E5-40C6-BE8B-3EC2C3616A73 source=5b9e35e7bae814a30ea15a94d2203d80f696c82f472a369855488e0cdb6d3893
+​◇ Test case passing 1 argument fixture → "jsc" to importedSkillPlanExecuteAndReopen(_:) started.
+2026-11-19 02:50:23.995532+0000 AI_Hanlin[64432:168768] [error] CoreData: warning: CDCS storeRequiresFullReindex: fullReindex=1 reason=no framework-version metadata (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: warning: CDCS storeRequiresFullReindex: fullReindex=1 reason=no framework-version metadata (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+2026-11-19 02:50:23.996062+0000 AI_Hanlin[64432:168768] [error] CoreData: warning: CDCS starting full reimport (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: warning: CDCS starting full reimport (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+2026-11-19 02:50:24.002842+0000 AI_Hanlin[64432:168768] [error] CoreData: warning: CDCS full reimport baseline: allKnownItems=0 (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: warning: CDCS full reimport baseline: allKnownItems=0 (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92): (null)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92): (null)
+CoreData: annotation: CDCS reimport gate ENTER (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92): (null)
+SKILL_PRODUCT EXECUTION_PASS jsc job=A7890B4A-5AE1-419B-BC2D-1A5DE691C70B source=d058ad35ee8c370e606576f56b0ec45e1f9997ebf6ece3828ceb4dfccf68ee6d
+​◇ Test case passing 1 argument fixture → "argv" to importedSkillPlanExecuteAndReopen(_:) started.
+2026-11-19 02:50:27.715790+0000 AI_Hanlin[64432:168768] [error] CoreData: warning: CDCS reindex committed caught-up client-state token (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: warning: CDCS reindex committed caught-up client-state token (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: annotation: CDCS reimport gate EXIT (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+2026-11-19 02:50:27.718208+0000 AI_Hanlin[64432:168768] [error] CoreData: warning: CDCS caught-up metadata stamped: importComplete=YES frameworkVersion=1634 (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: warning: CDCS caught-up metadata stamped: importComplete=YES frameworkVersion=1634 (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92): <NSPersistentHistoryToken - {
+    "3B042466-73F9-4E40-837A-682C68DADD92" = 7;
+}>
+2026-11-19 02:50:27.719441+0000 AI_Hanlin[64432:168768] [error] CoreData: warning: CDCS full reimport completed (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: warning: CDCS full reimport completed (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+2026-11-19 02:50:27.719545+0000 AI_Hanlin[64432:168768] [error] CoreData: warning: CDCS state transition: Initializing → Active (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: warning: CDCS state transition: Initializing → Active (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+2026-11-19 02:50:27.720538+0000 AI_Hanlin[64432:168768] [error] CoreData: warning: CDCS starting full reimport (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: warning: CDCS starting full reimport (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+2026-11-19 02:50:27.720728+0000 AI_Hanlin[64432:168768] [error] CoreData: warning: CDCS full reimport baseline: allKnownItems=0 (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: warning: CDCS full reimport baseline: allKnownItems=0 (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92): (null)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92): (null)
+CoreData: annotation: CDCS reimport gate ENTER (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92): (null)
+SKILL_PRODUCT EXECUTION_PASS argv job=B11D6335-A082-4E48-B649-94DCCB11010D source=0c91fbf1f37a5f501c42fe0fd4031db21d06c8921506d37cfc96d53ec61e488c
+​◇ Test case passing 1 argument fixture → "unicode" to importedSkillPlanExecuteAndReopen(_:) started.
+SKILL_PRODUCT EXECUTION_PASS unicode job=4CC34AE1-59AB-4DB2-ABB5-A8A9AD0DB9C5 source=d67a6a91489e52b49c03f8a694f72e8cd19be4185698b2563612651a9586296d
+​◇ Test case passing 1 argument fixture → "missing-module" to importedSkillPlanExecuteAndReopen(_:) started.
+2026-11-19 02:50:29.139312+0000 AI_Hanlin[64432:168768] [error] CoreData: warning: CDCS reindex committed caught-up client-state token (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: warning: CDCS reindex committed caught-up client-state token (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: annotation: CDCS reimport gate EXIT (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+2026-11-19 02:50:29.140361+0000 AI_Hanlin[64432:168768] [error] CoreData: warning: CDCS caught-up metadata stamped: importComplete=YES frameworkVersion=1634 (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: warning: CDCS caught-up metadata stamped: importComplete=YES frameworkVersion=1634 (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92): <NSPersistentHistoryToken - {
+    "3B042466-73F9-4E40-837A-682C68DADD92" = 7;
+}>
+2026-11-19 02:50:29.141422+0000 AI_Hanlin[64432:168768] [error] CoreData: warning: CDCS full reimport completed (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+CoreData: warning: CDCS full reimport completed (index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92)
+2026-11-19 02:50:29.141530+0000 AI_Hanlin[64432:168768] [error] CoreData: warning: CDCS OS-driven reindex (all items) acknowledged for index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92
+CoreData: warning: CDCS OS-driven reindex (all items) acknowledged for index spotlight_com.itorah.chavrusachat_3B042466-73F9-4E40-837A-682C68DADD92
+SKILL_PRODUCT REJECTED_OR_FAILED missing-module invalidArguments
+​◇ Test case passing 1 argument fixture → "unknown-engine" to importedSkillPlanExecuteAndReopen(_:) started.
+SKILL_PRODUCT REJECTED_OR_FAILED unknown-engine invalidArguments
+​◇ Test case passing 1 argument fixture → "disabled" to importedSkillPlanExecuteAndReopen(_:) started.
+SKILL_PRODUCT REJECTED_OR_FAILED disabled invalidArguments
+​◇ Test case passing 1 argument fixture → "denied" to importedSkillPlanExecuteAndReopen(_:) started.
+SKILL_PRODUCT REJECTED_OR_FAILED denied rejectedByCapability
+​◇ Test case passing 1 argument fixture → "wrong-engine" to importedSkillPlanExecuteAndReopen(_:) started.
+SKILL_PRODUCT REJECTED_OR_FAILED wrong-engine invalidArguments
+​◇ Test case passing 1 argument fixture → "failure" to importedSkillPlanExecuteAndReopen(_:) started.
+SKILL_PRODUCT REJECTED_OR_FAILED failure failed
+​◇ Test case passing 1 argument fixture → "cancel" to importedSkillPlanExecuteAndReopen(_:) started.
+SKILL_PRODUCT REJECTED_OR_FAILED cancel cancelled
+​◇ Test case passing 1 argument fixture → "restart" to importedSkillPlanExecuteAndReopen(_:) started.
+SKILL_PRODUCT EXECUTION_PASS restart job=FB2C13D5-0D66-4386-BCF1-AA4D4ED4096E source=6d8f04eb41f7ecb32a1b52b0c07e8b3b7f03fffb9797af933cfacb7db5d8c4d8
+​◇ Test case passing 1 argument fixture → "reinstall" to importedSkillPlanExecuteAndReopen(_:) started.
+SKILL_PRODUCT CACHE_INVALIDATION reinstall verified_before=true same_argv=true receipt_preserved=true
+SKILL_PRODUCT EXECUTION_PASS reinstall job=CA98E2E6-81FF-457B-AA3E-2EAC3ACC701D source=fd379462845030719290718a8ea2197ff3f3fd3d9186464e2872b7545da3b475
+​◇ Test case passing 1 argument fixture → "openclaw" to importedSkillPlanExecuteAndReopen(_:) started.
+SKILL_PRODUCT EXECUTION_PASS openclaw job=5D0E29DC-63A3-49A3-A653-BCE99EC98C69 source=6c23c4ed2b1130c27203381a49d1671c02e593769de6d80f9a6ce629451b320b
+​◇ Test case passing 1 argument fixture → "shell" to importedSkillPlanExecuteAndReopen(_:) started.
+2026-11-19 02:50:42.833809+0000 AI_Hanlin[64432:168817] command = 'awk' 'BEGIN { print "085bd3e6-1ae2-4c39-a901-04373755fcbc"; exit }' '085bd3e6-1ae2-4c39-a901-04373755fcbc' 'עברית' pid= 0
+2026-11-19 02:50:42.833903+0000 AI_Hanlin[64432:168817] Starting command: 'awk' 'BEGIN { print "085bd3e6-1ae2-4c39-a901-04373755fcbc"; exit }' '085bd3e6-1ae2-4c39-a901-04373755fcbc' 'עברית' currentSession->isMainThread: 1
+2026-11-19 02:50:42.834291+0000 AI_Hanlin[64432:168817] After params creation, stdout 0 stderr 0
+2026-11-19 02:50:42.834361+0000 AI_Hanlin[64432:168817] After files parsing, stdout 2e681c38 stderr 2e681cd0
+2026-11-19 02:50:42.834905+0000 AI_Hanlin[64432:168817] After command parsing, stdout 2e681c38 stderr 2e681cd0
+2026-11-19 02:50:42.835112+0000 AI_Hanlin[64432:168817] params->stdout: 47 thread_stdout: 47
+2026-11-19 02:50:42.835177+0000 AI_Hanlin[64432:168817] params->stdin: 49 thread_stdin: 49
+2026-11-19 02:50:43.011141+0000 AI_Hanlin[64432:168817] 
+Num file descriptors opened = 48 limit= 1048575
+2026-11-19 02:50:43.011257+0000 AI_Hanlin[64432:168817] Starting command: awk, currentSession->isMainThread: 1
+2026-11-19 02:50:43.030421+0000 AI_Hanlin[64432:175198] Storing thread_id: 6d1d7000 pid: 0 isPipeOut: 0 isPipeErr: 0 stdin 49 stdout 47 stderr 48 command= awk
+2026-11-19 02:50:43.030577+0000 AI_Hanlin[64432:175198] Storing thread_id: 6d1d7000 as root_thread
+2026-11-19 02:50:43.032931+0000 AI_Hanlin[64432:175198] cleanup_function: awk thread_id 6d1d7000 pid: 0 stdin 49 stdout 47 stderr 48 isPipeOut 0
+2026-11-19 02:50:43.033024+0000 AI_Hanlin[64432:175198] currentSession->commandName: awk root_thread: 6d1d7000
+2026-11-19 02:50:43.033080+0000 AI_Hanlin[64432:175198] Num commands stored: 1
+2026-11-19 02:50:43.033142+0000 AI_Hanlin[64432:175198] Terminating command: awk thread_id 6d1d7000 stdin 49 stdout 47 stderr 48 isPipeOut 0
+2026-11-19 02:50:43.033197+0000 AI_Hanlin[64432:175198] Current thread 6d1d7000 lastthread 0 pid: 0
+2026-11-19 02:50:43.033242+0000 AI_Hanlin[64432:175198] returning from cleanup_function, session: (null)
+2026-11-19 02:50:43.033354+0000 AI_Hanlin[64432:168817] returning from ios_system, global_errno= 0
+SKILL_PRODUCT EXECUTION_PASS shell job=378F22C2-3CE1-469F-BCA1-9BAC22F2356E source=dd2dbc29dc8a695dc2c456611926e5764d25240b74af75ae647ff2a180b77be5
+​◇ Test case passing 1 argument fixture → "requirements" to importedSkillPlanExecuteAndReopen(_:) started.
+SKILL_PRODUCT REJECTED_OR_FAILED requirements invalidArguments
+​◇ Test case passing 1 argument fixture → "toml" to importedSkillPlanExecuteAndReopen(_:) started.
+SKILL_PRODUCT REJECTED_OR_FAILED toml invalidArguments
+​◇ Test case passing 1 argument fixture → "package-manifest" to importedSkillPlanExecuteAndReopen(_:) started.
+SKILL_PRODUCT REJECTED_OR_FAILED package-manifest invalidArguments
+​◇ Test case passing 1 argument fixture → "hidden-resource" to importedSkillPlanExecuteAndReopen(_:) started.
+SKILL_PRODUCT CACHE_INVALIDATION hidden-resource verified_before=true same_argv=true receipt_preserved=true
+SKILL_PRODUCT EXECUTION_PASS hidden-resource job=8944E1D7-369D-4DD1-8145-FF90D835D13A source=6c087c61ce68e4579b8f64e0c721375fdda139e48fd32a2fd2b7ebba42de9419
+​✔ Test importedSkillPlanExecuteAndReopen(_:) with 22 test cases passed after 52.758 seconds.
+✔ Suite "Imported Skills through the original product execution path" passed after 53.091 seconds.
+✔ Test run with 4 tests in 2 suites passed after 63.149 seconds.
+2026-11-19 02:50:52.906 xcodebuild[60844:157343] [MT] IDETestOperationsObserverDebug: 106.737 elapsed -- Testing started completed.
+2026-11-19 02:50:52.906 xcodebuild[60844:157343] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-19 02:50:52.906 xcodebuild[60844:157343] [MT] IDETestOperationsObserverDebug: 106.737 sec, +106.737 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/hanlin-ai/hanlin-ai/simulator-logs/DownstreamTestsResult.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

@@ -1,0 +1,43 @@
+{
+  "initial": {
+    "engine": "dcb11e1049c03537d1d66ab1eb3a1da13e356af0dcf32f3e98609e94fdb2fa65",
+    "environment": "6f62cb25ef2fe30b4f7f3f6b61cbc341b9e0b950b53e9c36cb150217c09d6744",
+    "oldInputs": "absent:absent:absent",
+    "pointer": "absent",
+    "policy": "cfea6a644157f1968c230decc940a953b4518da76633bf13ec7b3c0d9b938e8f",
+    "version": "24.5.0"
+  },
+  "installed": {
+    "engine": "dcb11e1049c03537d1d66ab1eb3a1da13e356af0dcf32f3e98609e94fdb2fa65",
+    "environment": "0b74d4cb8fb2870c6419b53578963a08b5b251ce7b10c5dacc13ca4ea16156d6",
+    "oldInputs": "absent:absent:absent",
+    "pointer": "03ba4a16f8428fc640e83ebac6ba2a489cc9c2372d0596c198a6361488d5afb2",
+    "policy": "d7c3863403adeffdc7ceaa4b67863ed3a50805dbe4eeb1d2ade03b5a500968d0",
+    "version": "24.5.0"
+  },
+  "rejected": {
+    "engine": "dcb11e1049c03537d1d66ab1eb3a1da13e356af0dcf32f3e98609e94fdb2fa65",
+    "environment": "f3b923d8c5d6a7f403e2f4a475c1b9d60e25fa0c30bc0b880815656e31efbfa5",
+    "oldInputs": "absent:absent:absent",
+    "pointer": "ab2466f7458e43041d4fce1e5336a7e365a0455bd8aa2028f2d65590aac85ab9",
+    "policy": "8c6bd6600c3f27395d688cde7c89a1baaae5fc551810c9157ca1f0e38c31982e",
+    "version": "24.5.0"
+  },
+  "removed": {
+    "engine": "dcb11e1049c03537d1d66ab1eb3a1da13e356af0dcf32f3e98609e94fdb2fa65",
+    "environment": "f8983a20e300d663c1557e974e389689eda22d97c7f9304cacd6391423edb847",
+    "oldInputs": "absent:absent:absent",
+    "pointer": "83ada88cbe303c7eb67e114921a724ada2762d84be69be29559f65b074117c99",
+    "policy": "337940188d5ec94657f7fd028bf74c22a981157e56b993b1cba667be01a086de",
+    "version": "24.5.0"
+  },
+  "route": "original NodePackageManager / published generations / Runtime05 identities",
+  "updated": {
+    "engine": "dcb11e1049c03537d1d66ab1eb3a1da13e356af0dcf32f3e98609e94fdb2fa65",
+    "environment": "f3b923d8c5d6a7f403e2f4a475c1b9d60e25fa0c30bc0b880815656e31efbfa5",
+    "oldInputs": "absent:absent:absent",
+    "pointer": "ab2466f7458e43041d4fce1e5336a7e365a0455bd8aa2028f2d65590aac85ab9",
+    "policy": "8c6bd6600c3f27395d688cde7c89a1baaae5fc551810c9157ca1f0e38c31982e",
+    "version": "24.5.0"
+  }
+}

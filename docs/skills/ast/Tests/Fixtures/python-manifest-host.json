@@ -1,0 +1,34 @@
+{
+  "file": "requirements.txt",
+  "sourceSHA256": "53233e8dfbed17a27fb6404f34b68fe2a8d00d68c743c4e6f4ac073b2833bab2",
+  "completion": "complete",
+  "provenance": {
+    "scanner": "python.tomllib+packaging/26.3",
+    "engineVersion": "3.12.5"
+  },
+  "findings": [
+    {
+      "kind": "dependencyDeclaration",
+      "value": "Pillow>=10",
+      "confidence": "literalSyntax",
+      "source": {
+        "file": "requirements.txt",
+        "line": 1,
+        "utf8Column": 1,
+        "byteOffset": 0,
+        "byteLength": 11
+      },
+      "reason": "declaredPEP508NotInstalled"
+    }
+  ],
+  "visitedNodes": 1,
+  "inputBytes": 11,
+  "limitations": [
+    "declaredConstraintsNotInstalledOrCompatible",
+    "noImportDistributionMapping",
+    "noReferencedFileReadsOrExecution",
+    "noBuildBackendOrDynamicMetadataExecution",
+    "TOMLDeclarationsUseWholeDocumentSpanNotInventedTokenPositions",
+    "synchronousInputBoundedParseNotHardTimeOrRSSCap"
+  ]
+}

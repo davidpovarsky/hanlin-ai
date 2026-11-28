@@ -1,0 +1,32 @@
+{
+  "exitCode": 0,
+  "evidence": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/package-idempotence-20261124",
+  "preflight": {
+    "at": "2026-11-24T19:08:23.675148+00:00",
+    "sourceHEAD": "312472e91c05a7d32bbef4e936c001d713409370",
+    "nativeResume": false,
+    "xcode": "Xcode 27.0\nBuild version 27A266a"
+  },
+  "files": {
+    "focused-result.json": {
+      "bytes": 80804,
+      "sha256": "538396ade3032884e91a36645fbc57fdc4338d2271fc129f6f9829ed4f07a24e"
+    },
+    "focused.log": {
+      "bytes": 1627,
+      "sha256": "b4dace26738a53b30fa708a2b57f408e39ec41859b9b9c142d2c45aa3980294a"
+    },
+    "focused-preflight.json": {
+      "bytes": 180,
+      "sha256": "26dabff5883b76dc5f586f9a29e6e63fd12a543b5d48072eded5cb66a30ce064"
+    },
+    "generator-recovery.log": {
+      "bytes": 112,
+      "sha256": "7f655f532fc99ed42bc980f3062eea39147697d1bf6d6a3cfd8aeaeabf55e6d3"
+    },
+    "generator-check.log": {
+      "bytes": 112,
+      "sha256": "480742f18b8ef01a023f07eff2064a34b4a8f65a59deef55e49b505788f8b263"
+    }
+  }
+}

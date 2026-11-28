@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "path": "source.patch.gz",
+      "encoding": "gzip; exact original bytes",
+      "rawBytes": 11509,
+      "rawSHA256": "f8a46ad32350e4156c17985afbb0390395be9ca2ca0f7211cbf2318b73404531",
+      "encodedSHA256": "21b8350bc38218f9fba39b67d911c9d337c9018e07d418ca6e97884f061d0581"
+    },
+    {
+      "path": "original-parser-positive-control.stdout.gz",
+      "encoding": "gzip; exact original bytes",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encodedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "original-parser-positive-control.stderr.gz",
+      "encoding": "gzip; exact original bytes",
+      "rawBytes": 1021,
+      "rawSHA256": "eff582d55f8d98b2ab3044689f50ec49cd089c51040f99b586626a9f20e84599",
+      "encodedSHA256": "89739b3d17d1ec3bac161bfc98701706ce299117484176dbcfcb1f50b7218b84"
+    },
+    {
+      "path": "corrected-parser-controls.stdout.gz",
+      "encoding": "gzip; exact original bytes",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encodedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "corrected-parser-controls.stderr.gz",
+      "encoding": "gzip; exact original bytes",
+      "rawBytes": 1218,
+      "rawSHA256": "6f67fb487d3eae5f553bdd3f63a477f1f1958246bfe5472f7e980f5e730c4495",
+      "encodedSHA256": "e5951ac2fd47be1e6b52b34b900048c097babe3a7f0cf9fa47ffce21d57d57c4"
+    }
+  ]
+}

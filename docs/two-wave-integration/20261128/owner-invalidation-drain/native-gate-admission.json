@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "status": "SOURCE_ROUTE_PREPARED_NOT_DISPATCHED",
+  "sourceDonor": "16f44b8d0c7e60bb0b310a7c2d3036bc59c083ad",
+  "parentSource": "c9908a25ebeda3562170f16d2cf852ec4fd788b1",
+  "sourceReviewSHA256": "f5114b94c2ca9da1c8ea740d71ddb2cf04bf6b798bb6c5db2a59940fee456397",
+  "route": {
+    "workflow": ".github/workflows/build-ios26-unsigned-ipa.yml",
+    "target_validation_group": "agent_sdk_session_only_proof",
+    "exact_test_selector": "",
+    "composer_validation_only": false,
+    "testflight_upload": false,
+    "jobScope": [
+      {
+        "id": "agent-sdk-proof",
+        "runner": "xcode-27",
+        "timeoutMinutes": 60,
+        "script": "Scripts/CI/IntegrationValidation/run_agent_sdk.sh",
+        "selection": [
+          "HanlinAgentCoreTests/AgentSessionTests",
+          "HanlinHostContractsTests/ContextTests",
+          "HanlinPersistenceAdaptersTests/StoreTests"
+        ],
+        "originalCommand": "xcodebuild test -scheme \"$sdk_scheme\" -destination 'platform=macOS' -derivedDataPath \"$scratch/SDKDerivedData\" -resultBundlePath \"$evidence/SDKTests.xcresult\" -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO -only-testing:HanlinAgentCoreTests/AgentSessionTests -only-testing:HanlinHostContractsTests/ContextTests -only-testing:HanlinPersistenceAdaptersTests/StoreTests",
+        "scope": "All three original suites, unchanged native command. AgentSession now25 source definitions:22 original +3 drain additions. Producer/Core tests and separate iOS build skipped by original SESSION_ONLY control.",
+        "evidence": "build/agent-sdk-validation-evidence"
+      },
+      {
+        "id": "presentation-sdk-proof",
+        "runner": "xcode-27",
+        "timeoutMinutes": 15,
+        "script": "Scripts/CI/IntegrationValidation/run_presentation_sdk.sh",
+        "originalCommands": [
+          "xcrun swift test --package-path \"$package\"",
+          "xcodebuild build -scheme HanlinChatUI -destination 'generic/platform=iOS Simulator' -derivedDataPath \"$scratch/IOSDerivedData\" -resultBundlePath \"$evidence/IOSBuild.xcresult\" -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO"
+        ],
+        "scope": "Original coupled companion gate remains enabled exactly; no presentation-job exclusion is proposed.",
+        "evidence": "build/presentation-sdk-evidence"
+      }
+    ],
+    "budget": "Each original job ceiling includes its own checkout, preparation, execution and upload. These are two independent lanes; no new3600s phase or added native budget."
+  },
+  "presentationImpact": {
+    "manifest": "Packages/HanlinPresentationSDK/Package.swift",
+    "manifestSHA256": "951afd5b85422e7d6ed99cf497602e7122b988c1d956132bd9c00e04c695b4c3",
+    "directDependencies": [
+      "../HanlinPlatform",
+      "hanlin-streaming-markdown@5cbb4b6c950051f98f02a0b0ae56756f5174a9b8",
+      "a2ui@3ed9601862ecc78027e20ac80ad8b1b98a5d9079",
+      "SwiftSoup@bba848db50462894e7fc0891d018dfecad4ef11e"
+    ],
+    "AgentSDKDependency": false,
+    "changedPathIntersection": [],
+    "reasonRetained": "Parent explicitly preserves the original coupled workflow contract. It does not itself exercise or qualify the changed owner/Session lifecycle."
+  },
+  "appCoverage": {
+    "requestReceiptSHA256": "9d8b2f79587165581d5408ba4738fef011fb73f55bc6878a8d6e4d24678b867c",
+    "wholeOwnerSuite": "AI_HLYTests/HanlinAppAgentSessionOwnerTests",
+    "originalConversationSuite": "AI_HLYTests/AgentRuntimeConversationAcceptanceTests",
+    "newOwnerDefinitions": 6,
+    "newOwnerInvocations": 8,
+    "ownerSourceDefinitions": 57,
+    "scope": "Future unchanged original90 selection includes all owner additions and the unchanged original supersession assertion. Current9a run has neither these additions nor the repaired lifecycle. Actual conditional/native identity reconciliation remains required."
+  },
+  "capacity": {
+    "lastMacRead": {
+      "at": "2026-11-28T03:59:30.580501+00:00",
+      "freeBytes": 6909771776,
+      "sourceHEAD": "9a76309c29d716d3f5676e392457937ec8846e56",
+      "readExit": 0,
+      "nativeCommandsRun": 0,
+      "scope": "Read-only free bytes and existing source identity; no build admission or process mutation."
+    },
+    "localNativeLaunchAdmitted": false,
+    "hostedAllocation": "NOT_DISPATCHED; no future host capacity or exact toolchain asserted",
+    "existingOriginalPreparation": "Cold exact-source archives and pinned original producer, original temporary scratch and selected Xcode, locks/source/evidence retained by unchanged scripts",
+    "concurrency": "Existing session-only group distinct from the run-ID-isolated original95/generic5 run46100858458; verify no active same session-only group at final dispatch. No W1 watcher changes."
+  },
+  "requiredBeforeDispatch": [
+    "Integrate approved donor/proof into the root-owned source, run the required original CI, publish and verify exact public source.",
+    "Retain exact final source/request inputs and verify no active conflicting session-only group; one authorized root POST only.",
+    "Read actual allocated worker/toolchain/disk/source/pins and preserve both original job outcomes independently; no source or timeout changes."
+  ],
+  "nonRepetition": [
+    "No local native job launched",
+    "No Platform619/SDK13/Host188 rerun from this source impact",
+    "No duplicate original95/generic5 dispatch",
+    "No fourth Mac MCP attempt",
+    "No signing/provisioning retry"
+  ],
+  "nativeCommandsRun": 0,
+  "dispatches": 0
+}

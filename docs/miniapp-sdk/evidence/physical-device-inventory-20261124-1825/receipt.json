@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-24T18:26:11.534823+00:00",
+  "sourceBase": "36a044c3c147eda2baa4fbe99e0fe698dcd0c13e",
+  "route": "Oracle SentinelX -> authorized sudo -u ubuntu SSH scaleway-mac",
+  "scope": "One read-only current devicectl list devices inventory. No details query was necessary because every entry explicitly identifies itself as simulated.",
+  "observedAt": "2026-11-24T18:25:04.122801+00:00",
+  "command": [
+    "/usr/bin/xcrun",
+    "devicectl",
+    "list",
+    "devices",
+    "--timeout",
+    "15",
+    "--json-output",
+    "/var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/hanlin-device-inventory-20261124-1mf8deza/devices.json"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 0.4389255839996622,
+  "tool": {
+    "arguments": [
+      "devicectl",
+      "list",
+      "devices",
+      "--timeout",
+      "15",
+      "--json-output",
+      "/var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/hanlin-device-inventory-20261124-1mf8deza/devices.json"
+    ],
+    "commandType": "devicectl.list.devices",
+    "environment": {},
+    "jsonVersion": 5,
+    "outcome": "success",
+    "version": "642.16"
+  },
+  "counts": {
+    "listed": 7,
+    "explicitCoreSimulator": 7,
+    "observedPhysical": 0,
+    "opaqueOrUnclassified": 0,
+    "connectedSimulators": 1,
+    "shutdownSimulators": 6
+  },
+  "devices": [
+    {
+      "identifier": "18C10FC6-644D-4A10-9972-5A600F32BEB5",
+      "name": "GSD48-iphone-he-136c74ac",
+      "deviceType": "iPhone",
+      "model": "iPhone 17 Pro",
+      "reality": "simulated",
+      "visibilityClass": "simulators",
+      "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+      "connectionState": "connected",
+      "transport": "sameMachine",
+      "bootState": "booted",
+      "osVersion": "27.2"
+    },
+    {
+      "identifier": "1FCFCC98-C7BC-4BBF-96BA-E075B321F411",
+      "name": "Pinkha-UI27-local-ab929a60-6259-4c4c-bf4b-012641158d3e-ipad",
+      "deviceType": "iPad",
+      "model": "iPad Pro 13-inch (M5) (16GB)",
+      "reality": "simulated",
+      "visibilityClass": "simulators",
+      "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+      "connectionState": "disconnected",
+      "transport": "sameMachine",
+      "bootState": "shutdown",
+      "osVersion": "27.0"
+    },
+    {
+      "identifier": "782643BA-C9C8-4C70-9EF6-629AF929A19A",
+      "name": "Pinkha-UI27-local-ab929a60-6259-4c4c-bf4b-012641158d3e-iphone",
+      "deviceType": "iPhone",
+      "model": "iPhone 18 Pro",
+      "reality": "simulated",
+      "visibilityClass": "simulators",
+      "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+      "connectionState": "disconnected",
+      "transport": "sameMachine",
+      "bootState": "shutdown",
+      "osVersion": "27.0"
+    },
+    {
+      "identifier": "ECB60AA6-34E0-4CA8-8A6A-BEC8697EE79B",
+      "name": "Pinkha-UI27-local-e513119f-bfd2-48ba-a4a9-7f3909ecd26d-ipad",
+      "deviceType": "iPad",
+      "model": "iPad Pro 13-inch (M5) (16GB)",
+      "reality": "simulated",
+      "visibilityClass": "simulators",
+      "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+      "connectionState": "disconnected",
+      "transport": "sameMachine",
+      "bootState": "shutdown",
+      "osVersion": "27.0"
+    },
+    {
+      "identifier": "5E5FBCB4-098C-4728-AA26-BF371476CB5F",
+      "name": "Pinkha-UI27-local-e513119f-bfd2-48ba-a4a9-7f3909ecd26d-iphone",
+      "deviceType": "iPhone",
+      "model": "iPhone 18 Pro",
+      "reality": "simulated",
+      "visibilityClass": "simulators",
+      "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+      "connectionState": "disconnected",
+      "transport": "sameMachine",
+      "bootState": "shutdown",
+      "osVersion": "27.0"
+    },
+    {
+      "identifier": "90338403-D249-45C9-B432-267A9C8C931C",
+      "name": "iPad Pro 13-inch (M5)",
+      "deviceType": "iPad",
+      "model": "iPad Pro 13-inch (M5)",
+      "reality": "simulated",
+      "visibilityClass": "simulators",
+      "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+      "connectionState": "disconnected",
+      "transport": "sameMachine",
+      "bootState": "shutdown",
+      "osVersion": "27.0"
+    },
+    {
+      "identifier": "457C88BB-8253-4206-A9A9-5D2863503B97",
+      "name": "iPhone 18 Pro",
+      "deviceType": "iPhone",
+      "model": "iPhone 18 Pro",
+      "reality": "simulated",
+      "visibilityClass": "simulators",
+      "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+      "connectionState": "disconnected",
+      "transport": "sameMachine",
+      "bootState": "shutdown",
+      "osVersion": "27.0"
+    }
+  ],
+  "finding": "The primary Mac returned only explicitly simulated CoreSimulator devices at this observation time. No reachable physical iPad/iPhone route was established by this inventory. This does not establish absence on other hosts or at other times.",
+  "SDK08PhysicalAcceptance": "BLOCKED on the observed route; physical-device execution NOT_RUN. No simulator entry is treated as physical acceptance.",
+  "coordination": "Native owner /root/control_authoring confirmed this metadata-only read could overlap its dependency preparation. No simulator/device state, pairing, signing, installs, builds, tests or recordings were changed or started.",
+  "rawEvidence": {
+    "path": "device-inventory-raw.json.gz",
+    "encoding": "lossless gzip of the complete SSH JSON response containing original command stdout/stderr and devicectl JSON",
+    "uncompressedBytes": 27962,
+    "uncompressedSHA256": "ae84fec9f572fb43deadbf109873e33ebda7b1904e36675febc052e3ca3770ff",
+    "compressedBytes": 3005,
+    "compressedSHA256": "0a5adfdcaa81ff63a5bae86bcff700757bf18efc77d0b991d0381c7bbfdda730"
+  },
+  "sshCommandReceipt": {
+    "path": "command.json",
+    "sha256": "362b61fdf47ecf4b989674ea273cf7f10721311b491e2ccc21c6a018092bf7bb"
+  }
+}

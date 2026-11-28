@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "base": "f57dfcc2292c0830f454e28d87293e85fe426a44",
+  "paths": {
+    ".github/workflows/build-ios26-unsigned-ipa.yml": "e9777f014bde0a00f8dafd583e5470bf0fbefe469d4c22cba837af443b6c0c36",
+    "Scripts/CI/Tests/test_legacy_widget_case_budget.py": "8d4e441aebdd1b7af898b0ac56d25f2524adc141cd5bd3cb85152da96b2e354d"
+  },
+  "patchSHA256": "ddb9ecc47a0a41935d617b6e4b41c53cadeed16e5aae039f66294e71aabee613",
+  "wholeWorkflowInverse": true,
+  "allOtherParsedYAMLValuesIdentical": true,
+  "originalDefaults": {
+    "defaultUI": 300,
+    "liveProvider": 420,
+    "scriptUI": 600,
+    "fullValidation": 600
+  },
+  "newMapping": {
+    "group": "exact_test_selector",
+    "selector": "AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeLegacyWidgetWithHostTerminated",
+    "seconds": 600,
+    "basis": "Same allowance actually used for this unchanged original case in run45977172889."
+  },
+  "controlsReceiptSHA256": "cee4df9337ac7c0e5e481522bc0484c096a0c923a7f3d67727bb93b0ac1ca02b",
+  "nativeStatus": "NOT_RUN",
+  "workflowPublicationOwner": "root"
+}

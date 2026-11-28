@@ -1,0 +1,37 @@
+[
+  {
+    "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatEngine.swift",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift",
+    "exit": 0,
+    "stderr": ""
+  },
+  {
+    "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+    "exit": 0,
+    "stderr": ""
+  }
+]

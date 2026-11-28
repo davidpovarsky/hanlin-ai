@@ -1,0 +1,26 @@
+{
+  "reviewed_at": "2026-11-19T03:54:56.099017+00:00",
+  "base": "031a331ad8c9819abe477f3c91517533d07234d4",
+  "proposal_patch_sha256": "01149c6fc2f2d1acee190441f5b5c54c2dd9fa9bd3e76876c9bb72f265b1a26a",
+  "new_source_sha256": "d9a86caf0fb06fb682fed8f4db0bf0ed292f298f57a20579150fdfe89d7fa477",
+  "map_sha256": "566fbe3826698f67ce0fa0bc45a5caa99417c3cd23dc286b548c8890370159c2",
+  "native_methods": 6,
+  "configuration_observations_expected": 36,
+  "selectors": [
+    "AI_HLYTests/HanlinA2UIProductPerformanceTests/testPacedCanonicalPartsOneNodeOriginalMatrix",
+    "AI_HLYTests/HanlinA2UIProductPerformanceTests/testPacedCanonicalPartsTenNodesOriginalMatrix",
+    "AI_HLYTests/HanlinA2UIProductPerformanceTests/testPacedCanonicalPartsHundredNodesOriginalMatrix",
+    "AI_HLYTests/HanlinA2UIProductPerformanceTests/testPacedResponsesOneNodeOriginalMatrix",
+    "AI_HLYTests/HanlinA2UIProductPerformanceTests/testPacedResponsesTenNodesOriginalMatrix",
+    "AI_HLYTests/HanlinA2UIProductPerformanceTests/testPacedResponsesHundredNodesOriginalMatrix"
+  ],
+  "root_changes": [
+    "Attach test UIWindow to the original host's actual UIWindowScene and assert attachment/visibility",
+    "Split 18 configurations per route into three six-configuration XCTest methods without changing original per-method deadlines or fixture matrix"
+  ],
+  "enabled_swift_parse": "PASS; not typecheck",
+  "exact_routing": "PASS",
+  "fixture_generator": "Agent's original18 fixture verification retained; generator body and payload unchanged by root",
+  "native": "NOT_RUN",
+  "limitations": "Actual monotonic offers/receipts, native admitted-model time, UIWindow layout callback, process CPU time, sampled physical footprint, replay duration. No token/FPS/pixelTTFR/CPUpeak/regression claims."
+}

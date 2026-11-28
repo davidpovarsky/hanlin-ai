@@ -1,0 +1,409 @@
+{
+  "canonicalShadow" : {
+    "domains" : [
+      {
+        "domain" : "foundation.json",
+        "findings" : [
+          {
+            "code" : "foundation.json.directTestsOnly",
+            "message" : "Source state was not observable at this diagnostic point.",
+            "path" : "foundation.json",
+            "severity" : "information"
+          }
+        ],
+        "status" : "skipped"
+      },
+      {
+        "domain" : "native.applications",
+        "findings" : [
+          {
+            "code" : "native.applications.notObservable",
+            "message" : "Source state was not observable at this diagnostic point.",
+            "path" : "native.applications",
+            "severity" : "information"
+          }
+        ],
+        "status" : "skipped"
+      },
+      {
+        "domain" : "native.tools",
+        "findings" : [
+          {
+            "code" : "native.tools.notObservable",
+            "message" : "Source state was not observable at this diagnostic point.",
+            "path" : "native.tools",
+            "severity" : "information"
+          }
+        ],
+        "status" : "skipped"
+      },
+      {
+        "domain" : "mcp",
+        "findings" : [
+          {
+            "code" : "mcp.notObservable",
+            "message" : "Source state was not observable at this diagnostic point.",
+            "path" : "mcp",
+            "severity" : "information"
+          }
+        ],
+        "status" : "skipped"
+      },
+      {
+        "domain" : "runtime.core",
+        "findings" : [
+
+        ],
+        "projectedCount" : 1,
+        "sourceCount" : 1,
+        "status" : "passed"
+      },
+      {
+        "domain" : "cross-domain.tools",
+        "findings" : [
+          {
+            "code" : "cross-domain.tools.notObservable",
+            "message" : "Source state was not observable at this diagnostic point.",
+            "path" : "cross-domain.tools",
+            "severity" : "information"
+          }
+        ],
+        "status" : "skipped"
+      }
+    ],
+    "schemaVersion" : 1,
+    "summary" : {
+      "mismatchCount" : 0,
+      "passedCount" : 1,
+      "skippedCount" : 5,
+      "warningCount" : 0
+    }
+  },
+  "generatedAt" : "2026-11-27T14:06:17Z",
+  "passed" : true,
+  "registration" : {
+    "dictionaryCommands" : [
+      "awk",
+      "cat",
+      "cp",
+      "curl",
+      "grep",
+      "head",
+      "ln",
+      "ls",
+      "mkdir",
+      "mv",
+      "readlink",
+      "rm",
+      "rmdir",
+      "sed",
+      "sort",
+      "stat",
+      "tail",
+      "tar",
+      "touch",
+      "tr",
+      "uniq",
+      "unlink",
+      "wc"
+    ],
+    "executableCommands" : [
+      "awk",
+      "cat",
+      "cp",
+      "curl",
+      "grep",
+      "head",
+      "ln",
+      "ls",
+      "mkdir",
+      "mv",
+      "readlink",
+      "rm",
+      "rmdir",
+      "sed",
+      "sort",
+      "stat",
+      "tail",
+      "tar",
+      "touch",
+      "tr",
+      "uniq",
+      "unlink",
+      "wc"
+    ],
+    "extraDictionaryPath" : "\/Users\/m1\/Library\/Developer\/CoreSimulator\/Devices\/91E67528-D543-42B0-B111-56D27C739882\/data\/Containers\/Bundle\/Application\/293E39B2-D256-4ED4-A53B-590BB14E21A3\/AI_Hanlin.app\/extraCommandsDictionary.plist",
+    "initializeEnvironmentCallCount" : 1,
+    "mainBundlePath" : "\/Users\/m1\/Library\/Developer\/CoreSimulator\/Devices\/91E67528-D543-42B0-B111-56D27C739882\/data\/Containers\/Bundle\/Application\/293E39B2-D256-4ED4-A53B-590BB14E21A3\/AI_Hanlin.app",
+    "mainDictionaryPath" : "\/Users\/m1\/Library\/Developer\/CoreSimulator\/Devices\/91E67528-D543-42B0-B111-56D27C739882\/data\/Containers\/Bundle\/Application\/293E39B2-D256-4ED4-A53B-590BB14E21A3\/AI_Hanlin.app\/commandDictionary.plist",
+    "missingExecutableCommands" : [
+
+    ],
+    "missingRegisteredCommands" : [
+
+    ],
+    "moduleBundlePath" : "\/Users\/m1\/Library\/Developer\/CoreSimulator\/Devices\/91E67528-D543-42B0-B111-56D27C739882\/data\/Containers\/Bundle\/Application\/293E39B2-D256-4ED4-A53B-590BB14E21A3\/AI_Hanlin.app\/HanlinSDK_IOSSystemLite.bundle",
+    "moduleDictionaryPath" : "\/Users\/m1\/Library\/Developer\/CoreSimulator\/Devices\/91E67528-D543-42B0-B111-56D27C739882\/data\/Containers\/Bundle\/Application\/293E39B2-D256-4ED4-A53B-590BB14E21A3\/AI_Hanlin.app\/HanlinSDK_IOSSystemLite.bundle\/commandDictionary.plist",
+    "rawCommandValues" : [
+      "cp",
+      "tr",
+      "unlink",
+      "mv",
+      "wc",
+      "sort",
+      "grep",
+      "readlink",
+      "tail",
+      "ls",
+      "rmdir",
+      "uniq",
+      "stat",
+      "head",
+      "cat",
+      "awk",
+      "rm",
+      "mkdir",
+      "ln",
+      "sed",
+      "tar",
+      "curl",
+      "touch"
+    ],
+    "rawCommandsClass" : "__NSArrayI_Transfer",
+    "rawCommandsCount" : 23,
+    "registeredCommands" : [
+      "awk",
+      "cat",
+      "cp",
+      "curl",
+      "grep",
+      "head",
+      "ln",
+      "ls",
+      "mkdir",
+      "mv",
+      "readlink",
+      "rm",
+      "rmdir",
+      "sed",
+      "sort",
+      "stat",
+      "tail",
+      "tar",
+      "touch",
+      "tr",
+      "uniq",
+      "unlink",
+      "wc"
+    ],
+    "sideLoadingEnabled" : false
+  },
+  "schemaVersion" : 1,
+  "smoke" : {
+    "commandResults" : [
+      {
+        "command" : "awk",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "1\n2"
+      },
+      {
+        "command" : "cat",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "cat-ok"
+      },
+      {
+        "command" : "cp",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "exit=0"
+      },
+      {
+        "command" : "curl",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "curl 8.1.2 (x86_64-apple-darwin22.5.0) libcurl\/8.1.2 OpenSSL\/1.1.1w zlib\/1.2.12\nRelease-Date: 2023-05-30\nProtocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp smb smbs smtp smtps telnet tftp\nFeatures: alt-svc AsynchDNS HSTS HTTPS-proxy IPv6 Largefile libz NTLM NTLM_WB SSL threadsafe TLS-SRP UnixSockets"
+      },
+      {
+        "command" : "grep",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "beta"
+      },
+      {
+        "command" : "head",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "first"
+      },
+      {
+        "command" : "ln",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "exit=0"
+      },
+      {
+        "command" : "ls",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "ls-visible.txt"
+      },
+      {
+        "command" : "mkdir",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "exit=0"
+      },
+      {
+        "command" : "mv",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "exit=0"
+      },
+      {
+        "command" : "readlink",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "readlink-target.txt"
+      },
+      {
+        "command" : "rm",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "exit=0"
+      },
+      {
+        "command" : "rmdir",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "exit=0"
+      },
+      {
+        "command" : "sed",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "second"
+      },
+      {
+        "command" : "sort",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "alpha\nbravo\ncharlie"
+      },
+      {
+        "command" : "stat",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "16777232 74897424 -rw-r--r-- 1 (501) staff 0 8 \"Nov 27 15:05:30 2026\" \"Nov 27 15:05:30 2026\" \"Nov 27 15:05:30 2026\" \"Nov 27 15:05:30 2026\" 4096 8 0 stat-input.txt"
+      },
+      {
+        "command" : "tail",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "last"
+      },
+      {
+        "command" : "tar",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "tar-input.txt"
+      },
+      {
+        "command" : "touch",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "exit=0"
+      },
+      {
+        "command" : "tr",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "LOWER"
+      },
+      {
+        "command" : "uniq",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "alpha\nbeta"
+      },
+      {
+        "command" : "unlink",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "exit=0"
+      },
+      {
+        "command" : "wc",
+        "exitCode" : 0,
+        "passed" : true,
+        "representativeOutput" : "2 wc-input.txt"
+      }
+    ],
+    "passed" : true,
+    "policyResults" : [
+      {
+        "detail" : "The requested command is not in the verified ios_system catalog.",
+        "passed" : true,
+        "policy" : "verified_command_catalog"
+      },
+      {
+        "detail" : "Linked native commands execute the original pipeline and output redirection.",
+        "passed" : true,
+        "policy" : "native_pipeline_and_redirection"
+      },
+      {
+        "detail" : "exit=Optional(0); file=\"first\\nsecond\\n\"; stdout=\"\"; stderr=\"\"",
+        "passed" : true,
+        "policy" : "portable_command_chaining"
+      },
+      {
+        "detail" : "curl accepted the URL and completed its offline version command. This does not verify a network transfer.",
+        "passed" : true,
+        "policy" : "curl_http_native_dispatch"
+      },
+      {
+        "detail" : "curl accepted the URL and completed its offline version command. This does not verify a network transfer.",
+        "passed" : true,
+        "policy" : "curl_https_native_dispatch"
+      }
+    ],
+    "testedCommands" : [
+      "awk",
+      "cat",
+      "cp",
+      "curl",
+      "grep",
+      "head",
+      "ln",
+      "ls",
+      "mkdir",
+      "mv",
+      "readlink",
+      "rm",
+      "rmdir",
+      "sed",
+      "sort",
+      "stat",
+      "tail",
+      "tar",
+      "touch",
+      "tr",
+      "uniq",
+      "unlink",
+      "wc"
+    ],
+    "workspaceContained" : true,
+    "workspaceEscapeCount" : 0
+  },
+  "snapshot" : {
+    "activeExecutionCount" : 0,
+    "healthCategory" : "ready",
+    "kind" : "shell",
+    "lastDiagnostic" : "All 23 approved ios_system commands and shell policy checks passed.",
+    "lastHealthCheck" : "2026-11-27T14:05:30Z",
+    "source" : "holzschu\/ios_system",
+    "state" : "ready",
+    "version" : "3.0.5"
+  }
+}

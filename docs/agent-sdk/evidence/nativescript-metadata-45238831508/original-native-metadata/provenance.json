@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "5d4569c197810cdd4c1e02e7c16d42a01a77d5c0",
+  "sourceArchiveSHA256": "fad3c54f5d321148e39c46eae6d9cbc8e2891afb414064eb3a10f64ba25d3f8b",
+  "cmakeSourceCommit": "8856ee520a44641dfed313a71cfc01dd47e0352b",
+  "cmakeSHA256": {
+    "metadata-generator/CMakeLists.txt": "0d64383530493f13d1bce04d367984bb6081e665814d893693f4b065fd1bcf51",
+    "metadata-generator/src/CMakeLists.txt": "0f0a48c60391e75c62db3387639de62088cb688e2d004a7576db36e02f18788b"
+  },
+  "llvmArchiveSHA256": "4d2eade1e9fb7a5fae1a502d0e5d935d20190007477743a1379d81838d87b832",
+  "architecture": "arm64",
+  "xcode": "Xcode 27.2\nBuild version 27B52",
+  "patchSourceSHA256": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+  "generatorSHA256": "ca40f0190fa0f10fc8b6da42ce5956b48698718f20778f09919f9e22d3860ae8",
+  "boundary": "Build tool only. No NativeScript/Node/Python engine or app rebuilt; no VM pass."
+}

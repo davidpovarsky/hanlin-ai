@@ -1,0 +1,2 @@
+{"passed":true,"fetchImplementation":"node-fetch@3.3.2+native-web-api","webAssemblyAvailable":false,"nonce":"254b95ae-d2df-41f2-ad62-582dd464b232","contracts":["GET","Request POST Unicode","redirect","HTTP error","ReadableStream","clone","gzip","multipart File","abort","HEAD","204"]}
+Prepared RuntimeHostResources.zip (cfda1ac4ae05729f309ac235eec883b57df0fc6fbd158de46e986cd3ebac4158).

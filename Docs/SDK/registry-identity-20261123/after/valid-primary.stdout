@@ -1,0 +1,2 @@
+{"case":"valid-primary","installedIDs":["fixture-alternate","fixture-install"],"registryBytesUnchanged":true,"status":"ADMITTED_ORIGINAL_SNAPSHOTS"}
+{"case":"valid-primary","identities":2,"registryBytesUnchanged":true,"status":"FALLBACK_EXPRESSION_COMPLETED"}

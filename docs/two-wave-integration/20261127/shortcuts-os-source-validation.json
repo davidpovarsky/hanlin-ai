@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "dateUTC": "2026-11-27",
+  "status": "SOURCE_REVIEWED_PORTABLE_VALIDATED_OS_NOT_RUN",
+  "sourceBase": "e751892b36800d8f90afaf4d4321bd32059514ff",
+  "ownerAgent": "/root/w2_source_resume",
+  "scope": "Extend the original paired runner and system-surface UI companion with four real Run MiniApp Action cases; adapt the original two HostActionSurfaces fixtures to current bound services and add a read-only observer for the existing runner exchange.",
+  "sourceSHA256": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "1dc0cf723dccd5016c9cb6192555d99dfb06680939ad5223b48f4c283cd7e150",
+    "Fixtures/HostActionSurfaces/README.md": "32a0dbb938e3bb8ea40b18f791c3536640c3d7b8d4e34510e916241165eacb23",
+    "Fixtures/HostActionSurfaces/expo/App.tsx": "3139ff15dfc85411e7954476908dc94ae458eb96e3ddeff165e00dd5d929b3f5",
+    "Fixtures/HostActionSurfaces/expo/proof.ts": "de2e2c2d24abb9f5d8f82c105ce51b504c782eb1c0512fde0d9c10b393bde1ea",
+    "Fixtures/HostActionSurfaces/nativescript/index.ts": "13599e9040ce6c32f0ad0838cfb52fdb483976416871a77d0791d92dd4c0b867",
+    "Fixtures/HostActionSurfaces/nativescript/package.json": "048e5efb91e28f9d198c885297cfdf7c7a0081b6e4c3c7b945398797dc283e4a",
+    "Fixtures/HostActionSurfaces/nativescript/proof.ts": "1e89a6b068e71cc5c172b0943b8fbd4d142b1e33383d46f28bc35a82e2cd184e",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "872a7f6e7f786e2d578a54e3107bbe00e42a8dd2238e23f10fd656a63d9ab3f7",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "3273ebb10864c8e7703db3a70d4036e07fa587c1f5e8826fce47e03eaf4afc71",
+    "Scripts/ProductSplit/Tests/test_shortcut_surface_observer.py": "f4e0a7a4b8599fb4ea024a37a0f2dfc0c56274ba470066c3258cf0409212e339"
+  },
+  "portableValidation": {
+    "command": "runuser -u chatgpt-agent -- python3 -B -m unittest discover -s /mnt/development/projects/worktrees/hanlin-miniapps-shortcuts-os-20261127/Scripts/ProductSplit/Tests -p test_shortcut_surface_observer.py -v",
+    "exitCode": 0,
+    "testCount": 14,
+    "reportedTestDurationSeconds": 0.066,
+    "sentinelCommandDurationSeconds": 0.54,
+    "actualOutput": "test_current_expo_result_qualifies_only_its_exact_challenge (test_shortcut_surface_observer.ShortcutEvidenceControls.test_current_expo_result_qualifies_only_its_exact_challenge) ... ok\ntest_current_identity_and_exact_native_payload_are_required (test_shortcut_surface_observer.ShortcutEvidenceControls.test_current_identity_and_exact_native_payload_are_required) ... ok\ntest_duplicate_execution_and_unmatched_private_result_fail (test_shortcut_surface_observer.ShortcutEvidenceControls.test_duplicate_execution_and_unmatched_private_result_fail) ... ok\ntest_native_window_and_mode_are_independently_bound (test_shortcut_surface_observer.ShortcutEvidenceControls.test_native_window_and_mode_are_independently_bound) ... ok\ntest_original_wire_format_preserves_unicode_and_types (test_shortcut_surface_observer.ShortcutEvidenceControls.test_original_wire_format_preserves_unicode_and_types) ... ok\ntest_os_delivery_and_mode_cannot_be_inferred (test_shortcut_surface_observer.ShortcutEvidenceControls.test_os_delivery_and_mode_cannot_be_inferred) ... ok\ntest_pending_and_preexisting_invocations_cannot_pass (test_shortcut_surface_observer.ShortcutEvidenceControls.test_pending_and_preexisting_invocations_cannot_pass) ... ok\ntest_primary_catalog_requires_enabled_current_supported_action (test_shortcut_surface_observer.ShortcutEvidenceControls.test_primary_catalog_requires_enabled_current_supported_action) ... ok\ntest_returned_and_private_scalar_types_cannot_coerce (test_shortcut_surface_observer.ShortcutEvidenceControls.test_returned_and_private_scalar_types_cannot_coerce) ... ok\ntest_run_path_and_preparation_schema_are_strict (test_shortcut_surface_observer.ShortcutEvidenceControls.test_run_path_and_preparation_schema_are_strict) ... ok\ntest_self_reported_engine_labels_without_outputs_cannot_pass (test_shortcut_surface_observer.ShortcutEvidenceControls.test_self_reported_engine_labels_without_outputs_cannot_pass) ... ok\ntest_snapshot_hash_and_links_are_checked (test_shortcut_surface_observer.ShortcutEvidenceControls.test_snapshot_hash_and_links_are_checked) ... ok\ntest_terminal_failure_or_cancellation_never_qualifies (test_shortcut_surface_observer.ShortcutEvidenceControls.test_terminal_failure_or_cancellation_never_qualifies) ... ok\ntest_ui_configured_input_rejects_consistently_coerced_native_results (test_shortcut_surface_observer.ShortcutEvidenceControls.test_ui_configured_input_rejects_consistently_coerced_native_results) ... ok\n\n----------------------------------------------------------------------\nRan 14 tests in 0.066s\n\nOK",
+    "boundary": "All synthetic negative-control records are unit inputs only; this is not simulator, app, runtime or system acceptance."
+  },
+  "preservedControls": {
+    "originalAcceptancePlans": "UNCHANGED_AST; previous check reused because paired runner SHA872a7f6e7f786e2d578a54e3107bbe00e42a8dd2238e23f10fd656a63d9ab3f7 is unchanged",
+    "originalSystemSurfaceMethods": 10,
+    "originalObserverUnitTestBodies": 12,
+    "gitDiffCheckExitCode": 0,
+    "overlapWithRootThrough00a": "No changes to the existing eight modified paths between the candidate base and 00aabecd5e4cf7995fe358d63a9724edb3b299e4"
+  },
+  "independentReview": {
+    "reviewerAgent": "/root/w1_review_resume",
+    "status": "APPROVED_FOR_INTEGRATION_AND_REAL_MAC_PILOT",
+    "attribution": "Actual independent agent message after reading the on-disk final observer, UI and test hashes.",
+    "assessment": "Exact scalar/container checks bind configured input to canonical parameters, native reply/private result and OS-displayed JSON. Boolean/integer/floating and counter coercion cannot self-validate. Original 12 test bodies remain plus two meaningful negatives. No further source blocker found.",
+    "notClaimed": "Swift compilation and real OS outcomes remain NOT_RUN."
+  },
+  "executionBoundary": {
+    "fixtureValidateAndBuildWithCurrentShippingSDK": "NOT_RUN",
+    "nativeCompile": "NOT_RUN",
+    "fourRealShortcutsCases": "NOT_RUN",
+    "physicalDeviceGates": "NOT_RUN",
+    "remainingGates": "Native snippet, cancellation UI, Home Screen, Hebrew/RTL system UI, widget and Live Activity surfaces are outside this four-case source acceptance scope.",
+    "macOwner": "/root/mac_build_resume"
+  }
+}

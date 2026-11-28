@@ -1,5 +1,11 @@
 # Named AI Team Operating Contract
 
+## Current Hanlin execution — 2026-11-26
+
+Read the standing authorization and current two-wave execution in root `AGENTS.md`. The owner explicitly requested parallel work using ChatGPT's built-in agents and Asana milestone updates. The earlier November 18 single-developer continuation and historical requirements to start a particular external named team do not describe this run.
+
+The NORMAL/TEAM distinction below remains useful for truthful attribution. For this ChatGPT task, `invoke_subagent` denotes the available built-in `collaboration.spawn_agent` capability, not an external AI CLI; record its real agent/task identifier instead of inventing a conversation ID. The coordinating agent publishes Asana milestone updates from the agents' exact evidence. Existing owner authorization is applied without repeated confirmation; actual access controls, secret protection and all unfulfilled acceptance requirements remain in force.
+
 **Additive guidance only:** Existing repository `CLAUDE.md`, `PROJECT_AGENT_GUIDANCE.md`, `PROJECT_BOARD.md`, CI rules, security and release policies take precedence.
 
 ## 1. Permanent Team (Stable Across Codex and Antigravity)

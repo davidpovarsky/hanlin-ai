@@ -1,0 +1,27 @@
+{
+  "status": "EXACT_REVIEWED_SOURCE_STAGED_ALL_392_SDK_INPUTS_MATCH_HOST_PRESERVED",
+  "at": "2026-11-27T08:16:15.192438+00:00",
+  "base": "bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb",
+  "source": "b84d5ffb1c52361ac884a967f13e5500efe3d232",
+  "sourceClean": true,
+  "packageChanges": [
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift"
+  ],
+  "packageTree": "67635c39682942321de5a4f0626ec4ec7b9f52b4",
+  "sourceTree": "1586a7e95b6a3245bf0bb0ea60600c9b5086bc63",
+  "testsTree": "265db47c1fb52da7bc3bf7907215d92a9a4ab600",
+  "widgetsFixtureTree": "a0b7b0b1cb9e1ce756ccff40593a325ffffa73d6",
+  "httpFileSHA256": "519cb2c41cf1835b30d9e82da54703c3ca844668686b1d933cb49a1bc2f8f974",
+  "SDK392Matched": 392,
+  "SDKManifestSHA256": "f6603fc7f62b91a80cef33eb72a77e93711504b3b2f0a1851ead62f49c787a7a",
+  "SDKInputSHA256": "4b75c9122e17ff24464a8dfb757b1b3c72d2817d55472b4c0be035e7c71b55cc",
+  "hostZIP_SHA256": "fae9778f1b6548a069f6bd16bef3e2f22c710445a84d1fb025f4e90a5d1e1718",
+  "pins": {
+    "Packages/HanlinPlatform/Package.resolved": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d",
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "56d19a4b8c677831fb91e1f8155a68e411b42fd4807ad618d6f169569e1bb5a4"
+  },
+  "warmBuildInode": 71920668,
+  "freeBytesAfter": 2559090688,
+  "nativeCommandsStarted": 0,
+  "rootManifestSHA256": "06197f16c548c67093ce02606568dfb0ebc8a7b6c4e92fb8f205d49e6c356cb2"
+}

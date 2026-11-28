@@ -1,0 +1,13 @@
+{
+  "reviewed_at_utc": "2026-11-27T02:30:48.675988+00:00",
+  "reviewer": "root",
+  "original_source": "f103996cc03d2cc5321c7e83b6cdf77c3b60e509",
+  "verified_payload_files": 34,
+  "all_payload_sizes_and_sha256_match": true,
+  "unlisted_payloads": 0,
+  "manifest_sha256": "23623cfae0e3416811bc5d9b80beabef9ef53b5dbaff7bc460cb20bc4cf0694a",
+  "retained_archive_sha256": "7571b84f6efe3f78d8862882a201119926c0e7e2a23a0813c0b920ac781486c1",
+  "meaning": "ORIGINAL_MINIAPPS_BUILD_FAILED_TESTS_NOT_RUN",
+  "native_acceptance_claimed": false,
+  "correction": "The first transport attempt was rejected before execution (NOT_RUN). The later original detached runner started with unchanged phase timeouts, then MiniApps build failed with exit65 before paired54 or extra26 tests. Prior RUNNING readbacks describe their observation time only."
+}

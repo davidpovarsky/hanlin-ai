@@ -1,0 +1,181 @@
+{
+  "schema": 1,
+  "base": "602b29e303a633155fe07583e9ece28fce0ba113",
+  "sourceCommit": "1ba29c65c607f813be9acb0ac4de3707ae18d210",
+  "status": "ORIGINAL_FAILURE_AND_SOURCE_REVIEW_ONLY",
+  "members": [
+    {
+      "path": "lossless-log-encoding.json",
+      "bytes": 908,
+      "sha256": "c3f4cc4a5a85e46d45beb6b5835e2e6d938633c165f7e6c87101828316fd29c2"
+    },
+    {
+      "path": "original54/artifact-central-directory.bin",
+      "bytes": 9999,
+      "sha256": "69260d2c75e0d1bc12dd42b680e50d96ce4616d6a6fc4e90473bb8fd15b42eb9"
+    },
+    {
+      "path": "original54/artifact-eocd-tail.bin",
+      "bytes": 65557,
+      "sha256": "4c78c910a83e97a9ec0aebdbb05f70e29be9e812197af853c1af2796b498275a"
+    },
+    {
+      "path": "original54/artifact-range-index.json",
+      "bytes": 24120,
+      "sha256": "0fa7f2e625b106e100bc114205dbc3309e6d461ec0a085de4affeb7ae79a1342"
+    },
+    {
+      "path": "original54/artifacts.json",
+      "bytes": 768,
+      "sha256": "c7d88a0b5f4b577602c15bdfeb789dd70b3b1b986aecf94bdd6cf0f1abd29cb0"
+    },
+    {
+      "path": "original54/clearance-initial-parser-failure.json",
+      "bytes": 422,
+      "sha256": "5df1e12dcffc5b63b3db69d8de8891951362dcf7f46dc9be8d82005a68f9f03a"
+    },
+    {
+      "path": "original54/diagnostic-extract.json",
+      "bytes": 16450,
+      "sha256": "d65466ccc1a6d827ccfa7f91594d40c699b673dc59625b60bcb116810fca170d"
+    },
+    {
+      "path": "original54/download-receipt.json",
+      "bytes": 1356,
+      "sha256": "df38ae198c5979bfc14c1fd4de742e29126d6d2af4521f43b2dc934dc0668225"
+    },
+    {
+      "path": "original54/download.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original54/final-manifest.json",
+      "bytes": 3667,
+      "sha256": "ae8c0f4248b6c3a7c860a7f99a726507df97571e5ede908674ad0d405b464265"
+    },
+    {
+      "path": "original54/job.json",
+      "bytes": 6251,
+      "sha256": "e3992d16d1631fde4e37d500560c49ea81a4a9aa7b0072388b057e9528fbdfeb"
+    },
+    {
+      "path": "original54/native-build-diagnostic.json",
+      "bytes": 52716,
+      "sha256": "72c80cb19408051582bf19160a05a759e92b5408e827162b29790c30fe8da7c6"
+    },
+    {
+      "path": "original54/original-job.log.gz",
+      "bytes": 634144,
+      "sha256": "6f7d5a8f41266ce7f7d553f7c22441ff4e2a003394dde8fd1306a329921bdd2b"
+    },
+    {
+      "path": "original54/os-scope-impact-clearance.json",
+      "bytes": 4339,
+      "sha256": "f5153b768c3abc018ffeb16e3d5ee03d531cd3b0312c95b0f55b58a9555c9c12"
+    },
+    {
+      "path": "original54/phase-events-and-artifacts.json",
+      "bytes": 8977,
+      "sha256": "c7c43829cac8c6d76580413fbbe7886a8f227cf0fd05f3ada7097e42b35eb02c"
+    },
+    {
+      "path": "original54/selected-members/app-split-evidence/paired-product/acceptance.json",
+      "bytes": 2841,
+      "sha256": "daaa64756a83c7b988d98eab4dcbb7e3e20e22320a539718cb835420e67dec19"
+    },
+    {
+      "path": "original54/selected-members/app-split-evidence/paired-product/active-command.json",
+      "bytes": 513,
+      "sha256": "36057f88ed5efe864deea9e2549a41f498693d0af1804c135c5f836ea2a2cd0b"
+    },
+    {
+      "path": "original54/selected-members/app-split-evidence/paired-product/commands.jsonl",
+      "bytes": 4367,
+      "sha256": "a2be1a9a75ff1a8506f07aa17f4da949353a1599c9a030d4f41613cb004e6604"
+    },
+    {
+      "path": "original54/selected-members/app-split-evidence/paired-product/mini-build.log.gz",
+      "bytes": 480486,
+      "sha256": "7b47fd0481e8c42b062de2624433da03eaef2fda28adcd1780726939ad360885"
+    },
+    {
+      "path": "original54/selected-members/app-split-evidence/paired-product/source-sha.txt",
+      "bytes": 41,
+      "sha256": "abaf22fdf40ebce82b1f375edc6e2b3bd1e763e38d924e48583c42fecd6c8d6d"
+    },
+    {
+      "path": "original54/test-target-impact-source.json",
+      "bytes": 27692,
+      "sha256": "765fa88f09dd171698df45dcdc759b05f13a27f5f9e9e3366fd3aa4a2465138d"
+    },
+    {
+      "path": "source-review/independent-root-source-review.json",
+      "bytes": 910,
+      "sha256": "472611e04e4097472d8a62ce436f6bec119257a429b3d703fd8d52177b2458b2"
+    },
+    {
+      "path": "source-review/installed-concurrency-signatures-602b29e3-r2.json",
+      "bytes": 6183,
+      "sha256": "9439560be491751fbbf43bbb6c14ac79b282e4a2ed60d8bc93e0dc430885d3a2"
+    },
+    {
+      "path": "source-review/source-after.swift",
+      "bytes": 37843,
+      "sha256": "1f8816dc2d89ec068725166774f8c3bcd236b02b1f81aa502eac0f2561dc7953"
+    },
+    {
+      "path": "source-review/source-before.swift",
+      "bytes": 37400,
+      "sha256": "0140aa07c4cb545b159f0c2e13fbfedfe620183e8b1b49cd93c25a29370a1f7a"
+    },
+    {
+      "path": "source-review/source-commit.json",
+      "bytes": 326,
+      "sha256": "2f5b1eccef1dcaa59001d7aada7a59dca7af915ca65a7ff302173fe7671028aa"
+    },
+    {
+      "path": "source-review/source-impact.json",
+      "bytes": 1893,
+      "sha256": "4cdaeea266b5f8d3c78f9329dbfa122508a27b44335029d004c69625f7d94b17"
+    },
+    {
+      "path": "source-review/source-validation.json",
+      "bytes": 3275,
+      "sha256": "0b6031132c17f8999f3cd221197f57d9b7ca9c33cab11593dd1c4103c5b43ac7"
+    },
+    {
+      "path": "source-review/source.patch",
+      "bytes": 3804,
+      "sha256": "01984e54187a900eacc8f02c91f1d506e67e8d52219319d6652be4f5e07977d6"
+    }
+  ],
+  "losslessLogEncoding": [
+    {
+      "originalPath": "original-job.log",
+      "originalBytes": 5205860,
+      "originalSHA256": "f6a5394922df7f0c7a9f48c8fdd8a7fe5666d50d124f271745d84cf45c3a0a50",
+      "archivePath": "original54/original-job.log.gz",
+      "encoding": "gzip",
+      "compressedBytes": 634144,
+      "compressedSHA256": "6f7d5a8f41266ce7f7d553f7c22441ff4e2a003394dde8fd1306a329921bdd2b"
+    },
+    {
+      "originalPath": "selected-members/app-split-evidence/paired-product/mini-build.log",
+      "originalBytes": 12889703,
+      "originalSHA256": "c827c8fb0460179d4e76cb70a6b1201dc106faf1af9c6e0f99019d334f5bd22b",
+      "archivePath": "original54/selected-members/app-split-evidence/paired-product/mini-build.log.gz",
+      "encoding": "gzip",
+      "compressedBytes": 480486,
+      "compressedSHA256": "7b47fd0481e8c42b062de2624433da03eaef2fda28adcd1780726939ad360885"
+    }
+  ],
+  "wholeGitHubArtifactDownloaded": false,
+  "wholeGitHubArtifactDigestVerified": false,
+  "rangeMemberCRCVerified": true,
+  "archive": {
+    "name": "original-source-and-native-failure.tar.gz",
+    "bytes": 1212691,
+    "sha256": "49f6c5b9046d5020562d1f6f8ad323174ce58710cfe17d28bacb0b4452d7392a"
+  }
+}

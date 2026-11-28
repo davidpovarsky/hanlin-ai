@@ -1,0 +1,387 @@
+{
+  "date": "2026-11-25",
+  "timezone": "Asia/Hebron",
+  "repository": "davidpovarsky/hanlin-ai",
+  "branch": "codex/hanlin-ai-cache-integration-20261125",
+  "baseline": "a6738f1ebbaec4a767c790c7842a0168ef4b93ee",
+  "parents": [
+    "d65c6ab6ccd4fc535f32ffac1f9ad095f6d514b1",
+    "a27e1a36e1272e17413c283ad928916f0489c1b5",
+    "635bc66274436d21236500cda4c2e873b1abe1bd"
+  ],
+  "task": "1220884079387447",
+  "phases": [
+    {
+      "id": "C0",
+      "title": "בסיס עדכני ובעלות",
+      "owner": "איתן + תומר",
+      "contract": "לאתר ראשים מרוחקים ומקומיים, dirty state וקומיטים פעילים; להתחיל מהראש העדכני ולאחד את composer/wave/SDK הרלוונטיים בעותק מבודד. לשמור SHA מלא, תוכנית בעלות ומפת קבצים. קבלה: בסיס משולב נקי, אין דריסה/force-push של עבודת אחרים, נקודות סנכרון מתועדות.",
+      "asana": "1220884041271966",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "C1",
+      "title": "הכרעת ספריות, גרסאות ומפת יכולות מקוריות",
+      "owner": "יעל + איתן",
+      "contract": "לאמת מה מתוחזק ונדרש בפועל: Swift AI SDK, MCP, OTel; להחליט מפורשות על Vercel/LRUCache/NSCache/GRDB/Redis/Valkey/RediStack/LiteLLM/Langfuse/SwiftMetrics. למפות capabilities נגישים, ממשקי מוצר, מגבלות ומניעת כפילות; לעדכן pin רק בהיקף נחוץ עם הבדלי source. קבלה: ADR ומטריצה עם primary sources, צרכן לכל dependency שנוספה.",
+      "asana": "1220884041330206",
+      "status": "EXECUTED_PASS",
+      "evidence": [
+        "CACHE_AND_OBSERVABILITY_ADR.md",
+        "evidence/canonical-graph-20261125/graph-tests-receipt.json"
+      ]
+    },
+    {
+      "id": "C2",
+      "title": "מדיניות מטמון וכל אפשרויות הספקים",
+      "owner": "נועם",
+      "contract": "HanlinChatModelConfiguration/ProviderFactory/AgentEngine/RequestBuilder/Parser: חוזה טיפוסי, options merging עם reasoning, scope יציב שאינו כולל סודות, OpenAI controls נתמכים, Anthropic TTL/breakpoints, Google reference. SIWC ו-compatible לא מקבלים שדות לא נתמכים. לעדכן פורק SDK המקורי אם serializer חסר. קבלה: wire + stream tests ב-Mac, מסלול רגיל וכלים/structured, unknown/zero והגדרות לא נתמכות.",
+      "asana": "1220884143828951",
+      "status": "EXECUTED_PASS",
+      "evidence": [
+        "evidence/native-core-20261125/final-pin/receipt.json",
+        "evidence/producer-publication-20261125.json"
+      ]
+    },
+    {
+      "id": "C3",
+      "title": "קידומת יציבה ושימור ההקשר הדינמי",
+      "owner": "נועם",
+      "contract": "לסדר identity/guidelines/presentation/skills/tools לפני time/query memory; להבטיח סדר דטרמיניסטי ושימור מלוא המשמעות. להעביר cacheScope מהשיחה המקורית; לא להוסיף cache של תשובות משתנות. קבלה: prompt invariants, שינוי clock/query אינו משנה prefix קבוע, עדכון skill/tool/policy כן מבטל זהות מתאימה.",
+      "asana": "1220884194759247",
+      "status": "EXECUTED_PASS",
+      "evidence": [
+        "evidence/app-native-20261125/attempt06/test/receipt.json",
+        "evidence/native-core-20261125/final-pin/receipt.json"
+      ],
+      "acceptance_note": "Actual App05 and App06 original builds and all48requiredinvocations passed at their recorded source revisions. C9 final synchronized source/standalone dependency locks/publication remains separate; live-provider/billing NOT_RUN."
+    },
+    {
+      "id": "C4",
+      "title": "מדידת קריאה וכתיבה במטמון ואבחון",
+      "owner": "נועם + רוני",
+      "contract": "cache-read/cache-write לאורך SDK→APIManager→AgentTokenUsage→Recorder→JSON/readable/UI; תיקון unavailable≠0; יחס hit עם מכנה תקין ומידע מסופק בלבד. לחבר telemetry מקורי לפי החלטת C1 ללא prompts/keys או ייצוא אוטומטי. קבלה: decoding ישן, aggregation, export, privacy והצגה, בלי טענת חסכון שאינה מדודה.",
+      "asana": "1220884041034869",
+      "status": "EXECUTED_PASS",
+      "evidence": [
+        "evidence/app-native-20261125/attempt06/test/receipt.json",
+        "evidence/native-core-20261125/final-pin/receipt.json"
+      ],
+      "acceptance_note": "Actual App05 and App06 original builds and all48requiredinvocations passed at their recorded source revisions. C9 final synchronized source/standalone dependency locks/publication remains separate; live-provider/billing NOT_RUN."
+    },
+    {
+      "id": "C5",
+      "title": "מטמון חיפוש מקומי: TTL, LRU, coalescing וביטול",
+      "owner": "נועם",
+      "contract": "שיפור AutomaticWebSearchCoordinator המקורי: TTL מתחילת השלמה, LRU מוגבל, איחוד בקשות זהות, per-waiter cancellation, כשל לא נשמר, bypass/invalidation וסטטיסטיקה לא רגישה. מאגרי תוצאות כלים נשארים עמידים. קבלה: בדיקות התנהגות עם provider נשלט/clock מוזרק, בלי sleep, כולל ביטול ושינוי generation תוך כדי בקשה.",
+      "asana": "1220884013934618",
+      "status": "EXECUTED_PASS",
+      "evidence": [
+        "evidence/local-cache-20261125/receipt.json"
+      ],
+      "acceptance_note": "11 actual original local cache lifecycle tests passed; 7 accounting tests in same run are recorded separately for C4."
+    },
+    {
+      "id": "C6",
+      "title": "מסלול AI מקורי ל־Expo ול־NativeScript",
+      "owner": "נועם",
+      "contract": "למפות בפועל את ה-Host services של שני המנועים הפעילים; לחבר שירות assistant משותף ל-Swift AI SDK/ChatCore המקורי לפי מנגנוני invoke/sendRequest הקיימים, עם session-bound context, הרשאות, ביטול/streaming ושגיאות. לעדכן declarations והמקור הקנוני, לא להרחיב legacy ScriptUI. קבלה: native host routing + public contract tests, סוכן/consumer לא עוקף credential/tool policy; הוכחת reachability בשני המנועים או חסימה מפורשת.",
+      "asana": "1220884013885908",
+      "status": "EXECUTED_PASS",
+      "evidence": [
+        "evidence/app-native-20261125/attempt06/test/receipt.json",
+        "evidence/native-core-20261125/final-pin/receipt.json"
+      ],
+      "acceptance_note": "Actual App05 and App06 original builds and all48requiredinvocations passed at their recorded source revisions. C9 final synchronized source/standalone dependency locks/publication remains separate; live-provider/billing NOT_RUN."
+    },
+    {
+      "id": "C7",
+      "title": "מחזור חיים מפורש ל־Google cachedContent",
+      "owner": "נועם",
+      "contract": "מנהל native מצומצם דרך API המקורי התומך create/get/updateTTL/delete; model eligibility, קשירת endpoint/model/scope, reference expiry, ביטול ושגיאות. רק explicit opt-in; implicit נשאר ברירת מחדל. הגנה ממידע stale ומסכמת tools/system לא תואמת. קבלה: חוזה REST ובדיקות lifecycle; live provider receipt כאשר חשבון מורשה זמין.",
+      "asana": "1220884013901248",
+      "status": "EXECUTED_PASS",
+      "evidence": [
+        "USAGE.md",
+        "evidence/native-core-20261125/final-pin/receipt.json",
+        "evidence/native-core-20261125/final-pin/raw.log.gz"
+      ],
+      "acceptance_note": "9 Google native lifecycle cases passed in final48/48native run. Public Swift API is documented and opt-in; no automatic paid app/JS manager. Full application acceptance remains C8.",
+      "live_status": "NOT_RUN: no authorized live provider account configured in isolated validation environment; no actual-hit or billing claim."
+    },
+    {
+      "id": "C8",
+      "title": "אינטגרציה ובדיקות Native במק",
+      "owner": "תומר + רוני",
+      "contract": "לרענן ראשים ולשלב קומיטים שהושלמו, לפתור קונפליקטים סמנטית, לעדכן source graphs/pins. להריץ פעם אחת בדיקות מושפעות על SHA מדויק במרחב Mac נפרד ובהתאם לעומס; reuse רק לפי ראיות מקור עם dependency closure. קבלה: build/tests, commands/raw logs/hashes, כיסוי failure/cancellation/isolation/streaming וכל קבלה חיה בנפרד. אין כפילות suite של סוכן אחר.",
+      "asana": "1220884040998180",
+      "status": "EXECUTED_PASS",
+      "evidence": [
+        "evidence/app-native-20261125/attempt06/test/receipt.json",
+        "evidence/native-core-20261125/final-pin/receipt.json"
+      ],
+      "acceptance_note": "Actual App05 and App06 original builds and all48requiredinvocations passed at their recorded source revisions. C9 final synchronized source/standalone dependency locks/publication remains separate; live-provider/billing NOT_RUN."
+    },
+    {
+      "id": "C9",
+      "title": "סנכרון אחרון, פרסום וקבלת התוכנית",
+      "owner": "תומר",
+      "contract": "לבדוק שוב latest branches ועבודת הסוכנים, לפרסם normal push/PR עם תיאור scope, שינויים, בדיקות ומגבלות; לעדכן תיעוד שימוש, rollback/config ומטריצת קבלה. לעדכן Asana אחרי כל שלב; לסגור רק שלבים שקבלתם מולאה. קבלה מלאה דורשת כל תנאי תוכנית; blocker נשאר פתוח עם ראיה ופעולה ברורה.",
+      "asana": "1220884144031583",
+      "status": "IN_PROGRESS"
+    }
+  ],
+  "ownership": {
+    "provider_cache": "HanlinChatCore policy/config/Factory/Engine/RequestBuilder/Parser; original Swift AI SDK serializer changes",
+    "native_bridge": "APIManager prompts/scopes/usage mapping; HanlinAgentSession; active Expo/NativeScript assistant Host service and declarations",
+    "cache_observability": "AutomaticWebSearchCoordinator; AgentDiagnostics; OpenTelemetry adapter; dependency ADR",
+    "root": "Google explicit resource lifecycle; manifest/dependency/lock updates; integration; all Native validation; Asana; publication"
+  },
+  "validation": {
+    "runner": "Scaleway Mac, Xcode 27.0 / Swift 6.4; inspect capacity before dispatch",
+    "policy": "Execute affected/new/unknown checks; reuse only authenticated unchanged evidence; fixtures are not live provider hits",
+    "live": "No existing account credential has been accessed; locate intended runtime channel before live calls; never expose credentials",
+    "other_work": "Preserve other active branches/worktrees and running jobs; synchronize completed source changes after each stage",
+    "publication": "Normal push only; no main force/rewrite; exact reviewable commits",
+    "current_core_result": {
+      "source": "04c1942bc88cd4de7deafda7dd342b9b6c401dcf",
+      "executed": 48,
+      "passed": 48,
+      "failed_tests": 0,
+      "status": "EXECUTED_PASS",
+      "swift_ai_sdk": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+      "receipt": "evidence/native-core-20261125/final-pin/receipt.json",
+      "source_unchanged": true
+    },
+    "reuse_receipt": "evidence/final-reuse-20261125/reuse-receipt.json",
+    "current_app_result": {
+      "source": "40a778f5faf9df99e692033a2c762d4664d6d8f8",
+      "status": "BUILD_FAILED_TESTS_NOT_RUN",
+      "expected_methods": 46,
+      "expected_invocations": 48,
+      "executed": 0,
+      "build_exit_code": 65,
+      "source_unchanged": true,
+      "locks_unchanged": true,
+      "receipt": "evidence/app-native-20261125/attempt09/test/receipt.json",
+      "summary": "evidence/app-native-20261125/attempt09/native-acceptance-summary.json",
+      "raw_log_sha256": "82922b730b7c33c14224bc6ea7d160bac25d6e6e962175528431d2183c233211",
+      "next_attempt": "10",
+      "repair_commit": "5a0351f7e452789fd41c715c1ccb7f020cff44c5"
+    },
+    "runtime_host_result": {
+      "source": "5a0351f7e452789fd41c715c1ccb7f020cff44c5",
+      "generated_commit": "c72df9dfd20204abb04b9447c4a375d346cfa8c6",
+      "status": "EXECUTED_PASS",
+      "passed": 177,
+      "failed": 0,
+      "skipped": 1,
+      "skip": "Original opt-in long worker duration test",
+      "jitless_actual_archive_smoke": "PASS",
+      "raw_log_sha256": "67a000cd44c75dfe45626eac461bf267190102083492517bc7a914a33489cdd8",
+      "archive_sha256": "7f0f6cd49c058673ffb9699fd2262ae768ca2843282f88e51d0ade293535df64",
+      "source_inputs_hash": "212e401bce8905c47620cd70f6bf7786eb7efa58b6c72ffd0cd35e345d0d80a7",
+      "receipt": "evidence/app-native-20261125/attempt10/host-refresh/receipt.json"
+    },
+    "latest_sync_receipt": "evidence/latest-sync-f391-20261125/receipt.json",
+    "current_host_refresh": {
+      "source": "5a0351f7e452789fd41c715c1ccb7f020cff44c5",
+      "generated_commit": "c72df9dfd20204abb04b9447c4a375d346cfa8c6",
+      "status": "EXECUTED_PASS",
+      "passed": 177,
+      "failed": 0,
+      "skipped": 1,
+      "skip": "Original opt-in long worker duration test",
+      "jitless_actual_archive_smoke": "PASS",
+      "raw_log_sha256": "67a000cd44c75dfe45626eac461bf267190102083492517bc7a914a33489cdd8",
+      "archive_sha256": "7f0f6cd49c058673ffb9699fd2262ae768ca2843282f88e51d0ade293535df64",
+      "source_inputs_hash": "212e401bce8905c47620cd70f6bf7786eb7efa58b6c72ffd0cd35e345d0d80a7",
+      "receipt": "evidence/app-native-20261125/attempt10/host-refresh/receipt.json"
+    },
+    "app_attempts": [
+      {
+        "source": "72bff522e6a13bff60c16d7a82e7c12f86abf8f9",
+        "status": "FAILED_RETRY_PENDING",
+        "declared_cases": 46,
+        "prepare_status": "PREPARED",
+        "actual_resolved": {
+          "swift-ai-sdk": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+          "lrucache": "1.3.0",
+          "opentelemetry-swift-core": "2.6.0",
+          "swift-atomics": "1.3.1"
+        },
+        "atomics_reason": "Original OpenTelemetry core2.6.0 manifest requires swift-atomics from1.3.1; all other existing pins unchanged.",
+        "executed": 0,
+        "build_exit_code": 65,
+        "reason": "Cloned Clang ModuleCache retained donor absolute path; owned nonportable cache quarantined.",
+        "receipt": "evidence/app-native-20261125/attempt01-module-cache/test/receipt.json",
+        "repair": "evidence/app-native-20261125/attempt01-module-cache/test/module-cache-repair.json"
+      },
+      {
+        "source": "b2b17ca2078c632c87b95d6f766ec13b09b344d7",
+        "status": "FAILED_RETRY_PENDING",
+        "executed": 0,
+        "build_exit_code": 65,
+        "reason": "AssistantToolBridge.Executors.live factory is not implicitly MainActor-isolated by its enclosing type; NativeTool.name access fails Swift6isolation check.",
+        "receipt": "evidence/app-native-20261125/attempt02-factory-isolation/test/receipt.json"
+      },
+      {
+        "source": "5b69bbb52013686922efa7c4e7d9f2d44b774f94",
+        "status": "BUILD_FAILED_BEFORE_TESTS",
+        "executed": 0,
+        "build_exit_code": 65,
+        "receipt": "evidence/app-native-20261125/attempt03/test/receipt.json",
+        "reason": "HanlinMiniAppAssistantIntegrationTests.swift:11 missing requiredcanPresentUI argument",
+        "fix": "4f2bc9864a4fefa62f69ca54fb9f6b33351ba1df"
+      },
+      {
+        "source": "1710bc6119983799f7d22cb723659ac274fe96b1",
+        "status": "BUILD_PASS_RUNTIME_FAILED",
+        "build_exit_code": 0,
+        "executed": null,
+        "runtime_failures": [
+          "ClassicChatRestoration case25: three obsolete pre-policy UI expectations",
+          "SwiftData round-trip case: NSInternalInconsistencyException No eligible connection available at context.save; process abort"
+        ],
+        "failure_evidence": "evidence/app04-persistence-crash-20261125/index.json",
+        "fixture_fixes": [
+          "a48ba95d351374de3f70189a9a7d6bd61670b2f1",
+          "36d97c5a2b9fde92bbbc480adcff473dcb66698e"
+        ],
+        "complete_xcresult": "Unavailable: after crash/restart completion, idle xcodebuild required scoped SIGINT thenSIGTERM; xcresulttool exited64 on partialbundle. RawfailuresandIPSretained.",
+        "receipt": "evidence/app-native-20261125/attempt04/test/receipt.json",
+        "evidence_index": "evidence/app-native-20261125/attempt04/test-index.json",
+        "test_process_exit_code": -15,
+        "simulator_shutdown_exit_code": 0,
+        "source_unchanged": true
+      },
+      {
+        "source": "300fe80b0927f898740fba8a926e852906f52660",
+        "status": "EXECUTED_PASS",
+        "declared_cases": 46,
+        "executed": 48,
+        "latest_attempt": "evidence/app-native-20261125/attempt05/test-index.json",
+        "fix": "4f2bc9864a4fefa62f69ca54fb9f6b33351ba1df",
+        "preparation_reason": "Latest source synchronized; exact source-declared invocation gate installed; current original Host and fixtures remain valid.",
+        "expected_invocations": 48,
+        "prepare_status": "REUSED_VERIFIED_PREPARED",
+        "prepare_receipt": "evidence/app-native-20261125/attempt04/prepare/receipt.json",
+        "expected_methods": 46,
+        "fixes": [
+          "a48ba95d351374de3f70189a9a7d6bd61670b2f1",
+          "36d97c5a2b9fde92bbbc480adcff473dcb66698e"
+        ],
+        "prepare_reuse_receipt": "evidence/app-native-20261125/attempt05/prepare-reuse.json",
+        "preparation_input_count": 58,
+        "passed": 48,
+        "failed": 0,
+        "source_unchanged": true,
+        "receipt": "evidence/app-native-20261125/attempt05/test/receipt.json",
+        "summary": "evidence/app-native-20261125/attempt05/test/acceptance-summary.json"
+      },
+      {
+        "source": "495680e928d5f4fd9735d14b0be5f267ced84b42",
+        "status": "EXECUTED_PASS",
+        "expected_methods": 46,
+        "expected_invocations": 48,
+        "executed": 48,
+        "passed": 48,
+        "failed": 0,
+        "source_unchanged": true,
+        "receipt": "evidence/app-native-20261125/attempt06/test/receipt.json",
+        "summary": "evidence/app-native-20261125/attempt06/test/acceptance-summary.json",
+        "raw_log_sha256": "afba612d4ea2ad45dcd7dd1447b01d94e22136b2815259b51c6d21998a612f8b",
+        "final_current_source_gate": "C9 pending startup/standalone-lock reconciliation and final native execution"
+      }
+    ],
+    "future_runner_lock_correction": {
+      "source": "2d2d0a396848b97338dce62f57d8334462afc362",
+      "fixture_tests_passed": 7,
+      "receipt": "evidence/active-lock-snapshot-20261125/receipt.json",
+      "scope": "Only validation tooling; full tracked source hashing retained, historical-proof mutation rejected; nine actual tracked locks copied. App03 remains sealed at5b69bbb5 and is not relabeled."
+    },
+    "standalone_package_resolution": {
+      "status": "RESOLUTION_PASS",
+      "source": "37367b3d6bbd7e8321d6828a9052d502dd9d7522",
+      "producer_fix": "26e94ea93cc16dee392138b2a40c9f699f263f79",
+      "guard_fixtures_passed": 12,
+      "guard_evidence": "evidence/standalone-lock-guard-20261125/guard-receipt.json",
+      "recipe": "Scripts/CI/IntegrationValidation/resolve_agent_sdk_locks.sh",
+      "job": "job_220cdb233362",
+      "scope": "Original six standalone SwiftPM graphs; canonical app lock remains authority; no hand-edited pins",
+      "graphs": 6,
+      "builds": 0,
+      "tests": 0,
+      "generated_commit": "0e782f60bb28c704cae6200d5ff161826b771154",
+      "evidence": "evidence/standalone-lock-resolution-20261125/receipt.json",
+      "unrelated_pins_changed": false,
+      "canonical_app_lock_unchanged": true
+    },
+    "reuse_extension": "evidence/final-reuse-extension-20261125/reuse-extension.json",
+    "latest_observed_owner_heads": {
+      "observed_at": "2026-11-25T05:13:09Z",
+      "composer": "f39142d3d14ae1bbbb81febceeef61fdc605f2a0",
+      "miniapps_sdk": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+      "wave3": "f3a0a97e63cc38acd58c0673447efe8d61b556da",
+      "status": "READ_ONLY_REVIEW: new MiniSDK notification/Host source not included in App07; preserve separate acceptance boundary"
+    },
+    "latest_incoming_source_acceptance": {
+      "source": "d8150350901b245d52b2637277f454a6f2da5446",
+      "status": "SOURCE_CHECKS_PASS_NATIVE_PENDING",
+      "source_fixture_passes": 26,
+      "receipt": "evidence/latest-sync-b0cf-20261125/candidate-receipt.json",
+      "host_refresh_required": true,
+      "app_attempt": "08",
+      "notification_native_owner_scope": "NOT_RUN_HERE"
+    },
+    "last_successful_app_result": {
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276",
+      "status": "EXECUTED_PASS",
+      "expected_methods": 46,
+      "expected_invocations": 48,
+      "executed": 48,
+      "passed": 48,
+      "failed": 0,
+      "source_unchanged": true,
+      "receipt": "evidence/app-native-20261125/attempt07/test/receipt.json",
+      "summary": "evidence/app-native-20261125/attempt07/test/acceptance-summary.json",
+      "raw_log_sha256": "07c830e0b4fb16158ffe41a6e584a14b75635fa3c9a5aaefe5d2191f8f499f07",
+      "prepare_status": "PREPARED",
+      "prepare_receipt": "evidence/app-native-20261125/attempt07/prepare/receipt.json",
+      "result_bundle_manifest_sha256": "798725b1c5e427b69f87a84c5cd3a5ca6304e772f8cd106669f9771ad4a52747"
+    },
+    "notification_delegate_repair": {
+      "source": "5a0351f7e452789fd41c715c1ccb7f020cff44c5",
+      "status": "SOURCE_REVIEWED_NATIVE_PENDING",
+      "receipt": "evidence/notification-witness-20261125/receipt.json",
+      "required_gate": "Original build and strict48 invocations, with no optional delegate near-match warning."
+    },
+    "latest_head_observation": "evidence/final-head-observation-app08-20261125/observation.json",
+    "next_app_source": "c72df9dfd20204abb04b9447c4a375d346cfa8c6",
+    "app_failure_history": [
+      {
+        "source": "1ae93941a34cf555f8a7293106efeff80978ebfa",
+        "status": "BUILD_FAILED_TESTS_NOT_RUN",
+        "expected_methods": 46,
+        "expected_invocations": 48,
+        "executed": 0,
+        "build_exit_code": 65,
+        "source_unchanged": true,
+        "locks_unchanged": true,
+        "receipt": "evidence/app-native-20261125/attempt08/test/receipt.json",
+        "summary": "evidence/app-native-20261125/attempt08/native-acceptance-summary.json",
+        "raw_log_sha256": "93ab30a42855a01db0f2dcaf674d5deccdc2c64969437fb53393bdeec1b86b95",
+        "next_attempt": "09",
+        "repair_commit": "5c51b3f2a5c97ae374a8dfbbb0be73ecba7908fc"
+      }
+    ]
+  },
+  "updated_at": "2026-11-25T06:08:14.355584+00:00",
+  "latest_integrated_source": "c72df9dfd20204abb04b9447c4a375d346cfa8c6",
+  "synchronized_heads": {
+    "composer": "f39142d3d14ae1bbbb81febceeef61fdc605f2a0",
+    "miniapps_sdk": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+    "wave3": "f3a0a97e63cc38acd58c0673447efe8d61b556da"
+  },
+  "synchronization_cutoff_utc": "2026-11-25T05:13:09Z"
+}

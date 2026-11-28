@@ -1,0 +1,30 @@
+[
+  {
+    "source_file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\hanlin-compact-44447123515\\accessibility-header-proposal\\receipt.json",
+    "source_sha256": "d0278a4ca11cde0b06ea5053113fa5044bd189ada8fde504aa9e5de3f565240b",
+    "repository_file": "docs\\continuation-20261117\\acceptance\\compact-accessibility-heading-20261119\\source-proposal.json",
+    "repository_sha256": "d0278a4ca11cde0b06ea5053113fa5044bd189ada8fde504aa9e5de3f565240b",
+    "normalization": "CRLF to LF only"
+  },
+  {
+    "source_file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\hanlin-compact-44447123515\\artifact\\range-receipt.json",
+    "source_sha256": "33f90e06ee91004e5f392ad0fc2ec94d68423e5274f2ca554fa825a1ee2cee6c",
+    "repository_file": "docs\\continuation-20261117\\acceptance\\compact-accessibility-heading-20261119\\original-native-artifact.json",
+    "repository_sha256": "3fb124072bc2fbf71a2c4721885a9fcf6597015b8c4d3cae718db1ac3e17b560",
+    "normalization": "CRLF to LF only"
+  },
+  {
+    "source_file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\hanlin-compact-44447123515\\artifact\\08-nativescript-production-ui-test-results.json",
+    "source_sha256": "8d8ab02a899c8dffaa60e6cbb8ce4e30e07add9b97046d92a82c174a07b96d81",
+    "repository_file": "docs\\continuation-20261117\\acceptance\\compact-accessibility-heading-20261119\\original-native-results.json",
+    "repository_sha256": "8d8ab02a899c8dffaa60e6cbb8ce4e30e07add9b97046d92a82c174a07b96d81",
+    "normalization": "CRLF to LF only"
+  },
+  {
+    "source_file": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\hanlin-compact-44447123515\\artifact\\local-decoded\\decoded-provenance.json",
+    "source_sha256": "13f36c4c00a84b60d8c420397a94969ee8a59a8a0c9cc37ef2ef9529a85a92f4",
+    "repository_file": "docs\\continuation-20261117\\acceptance\\compact-accessibility-heading-20261119\\original-attachment-provenance.json",
+    "repository_sha256": "13f36c4c00a84b60d8c420397a94969ee8a59a8a0c9cc37ef2ef9529a85a92f4",
+    "normalization": "CRLF to LF only"
+  }
+]

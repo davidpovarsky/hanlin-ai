@@ -1,0 +1,144 @@
+{
+  "component": "GeneratedModifiersProbe({close})",
+  "routeOwnedBy": "entrypoints",
+  "probeSHA256": "3b20939a057885bd2293fc65080bfdb28b51ecaa68adab8a26298e8fd251ea1d",
+  "nativeStatus": "NOT_RUN",
+  "sourceEffectiveModifiers": 83,
+  "appearanceMarker": "MODIFIER_NATIVE_CONTEXT:<panel>:appeared",
+  "appearanceMeaning": "Original public native onAppear callback; mounted context only, never a per-modifier semantic pass.",
+  "panels": [
+    "Accessibility",
+    "Geometry",
+    "Input",
+    "Containers",
+    "Search",
+    "Navigation",
+    "Inspector",
+    "Host Context"
+  ],
+  "observableSequences": [
+    {
+      "panel": "Accessibility",
+      "modifiers": [
+        "accessibility"
+      ],
+      "steps": [
+        "Read native accessibility value of generated-accessibility-value: Allowance 7",
+        "Tap Increase modifier allowance",
+        "Read same native element value: Allowance 8"
+      ],
+      "separateCompanionAction": "Generated accessibility action produces MODIFIER_ACCESSIBILITY_ACTIONS:1; this does not verify VoiceOver/direct-touch behavior."
+    },
+    {
+      "panel": "Geometry",
+      "modifiers": [
+        "tracking",
+        "position"
+      ],
+      "steps": [
+        "Read native frame of generated-position-text and width of generated-tracking-text",
+        "Tap Change modifier geometry",
+        "Position center X increases by 120 points; tracked text width increases; MODIFIER_GEOMETRY_STATE:changed"
+      ],
+      "tolerance": "Native layout rounding tolerance is acceptable; compare actual before/after frames, not the JS state marker alone."
+    },
+    {
+      "panel": "Input",
+      "modifiers": [
+        "allowsHitTesting"
+      ],
+      "steps": [
+        "Tap physical center of generated-hit-front while disabled; expect MODIFIER_HIT_COUNTS:front=0;back=1",
+        "Tap Enable generated front target",
+        "Tap same target center; expect MODIFIER_HIT_COUNTS:front=1;back=1"
+      ],
+      "reason": "Two real native buttons occupy the same ZStack; the actual receiving button increments its own event count."
+    },
+    {
+      "panel": "Input",
+      "modifiers": [
+        "submitScope"
+      ],
+      "steps": [
+        "Type into native generated-modifier-input and verify MODIFIER_INPUT matches the complete text",
+        "Press native return while blocked; expect MODIFIER_SUBMITS:0",
+        "Tap Allow generated submit; refocus field and press native return",
+        "Expect MODIFIER_SUBMITS:1"
+      ],
+      "reason": "Ancestor original onSubmit handler receives native submission; no JS test event invokes it."
+    },
+    {
+      "panel": "Containers",
+      "modifiers": [
+        "selectionDisabled"
+      ],
+      "steps": [
+        "Tap Generated selectable row in actual native List edit mode while selection is disabled",
+        "Expect MODIFIER_LIST_SELECTION:none",
+        "Tap Allow generated selection and tap the row again",
+        "Expect MODIFIER_LIST_SELECTION:invoice"
+      ],
+      "reason": "Modifier is on the real tagged row, not the Table container."
+    },
+    {
+      "panel": "Containers",
+      "modifiers": [
+        "tableColumnHeaders"
+      ],
+      "steps": [
+        "Observe native Generated item header and Generated amount header",
+        "Tap Toggle generated headers",
+        "Headers are hidden; actual data rows remain"
+      ],
+      "boundary": "Use native header element observation and screenshot; do not infer from an unrelated state label."
+    },
+    {
+      "panel": "Search",
+      "modifiers": [
+        "searchCompletion"
+      ],
+      "steps": [
+        "Open Generated search context and focus original native search field",
+        "Tap Generated suggestion Isaiah",
+        "Expect complete MODIFIER_SEARCH_QUERY:Isaiah"
+      ],
+      "boundary": "searchSuggestions content/menu policy is separately forwarded; completion must come from the native suggestion interaction."
+    },
+    {
+      "panel": "Navigation",
+      "modifiers": [
+        "navigationBarTitle",
+        "navigationBarHidden",
+        "navigationBarBackButtonHidden"
+      ],
+      "steps": [
+        "Observe Generated native title in native navigation bar",
+        "Toggle generated navigation bar and observe hidden/restored bar",
+        "Open generated detail; native back is hidden",
+        "Tap Show generated native back; back is restored",
+        "Return via actual native back or Close generated detail"
+      ],
+      "boundary": "Additional subtitle/link-indicator forwarding is not proven solely by navigation success."
+    }
+  ],
+  "additionalContextInteractions": [
+    "Swipe Generated swipe row and trigger Record generated swipe; native action count increments",
+    "Open generated inspector, observe real inspector content, then controlled close; width is a layout observation only if the OS uses a column",
+    "Adjust real native Slider and observe callback value; label/thumb visual effects require actual visible inspection"
+  ],
+  "unestablishedFullEffects": [
+    "Xcode previewDisplayName runtime effect is inapplicable",
+    "Document launch title/subtitle requires actual host-owned DocumentLaunchView/scene",
+    "File-dialog option/label/message/customization/alias behavior requires a real SwiftUI file importer/exporter presenter",
+    "Accessibility speech/direct-touch, large-content viewer and drag/drop point effects require their OS service/context",
+    "Inactive-window activation, Assistive Access, system gestures/status/overlays, external URL preference and RTL flipping require corresponding OS conditions"
+  ],
+  "validationOwner": "entrypoints; one combined actual original SDK/compiler/public CLI validation and Metro build after current facade metadata fix",
+  "noNewProductionHooks": true,
+  "noMockedNativeSuccess": true,
+  "modeSynchronization": {
+    "Enable generated front target": "Wait for native button label Generated front target enabled before repeating the physical target tap.",
+    "Allow generated submit": "Wait for native button label Generated submit allowed before Return.",
+    "Allow generated selection": "Wait for native button label Generated selection allowed before tapping the tagged row."
+  }
+}

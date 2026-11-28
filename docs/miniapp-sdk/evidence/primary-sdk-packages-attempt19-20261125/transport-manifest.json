@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-packages-sdk19/Hanlin-MiniApp-Examples-and-Repair-2026-11-25.zip",
+  "filename": "Hanlin-MiniApp-Examples-and-Repair-2026-11-25.zip",
+  "bytes": 4184536,
+  "sha256": "149cd5ce63e41d4a78c346a1936aee367ca8d7aefa151bc22ff4595126537904",
+  "chunkBytesMaximum": 786432,
+  "chunks": [
+    {
+      "index": 0,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-packages-sdk19/transport-chunks/packages-sdk19-000.bin",
+      "filename": "packages-sdk19-000.bin",
+      "offset": 0,
+      "bytes": 786432,
+      "sha256": "7c704bad1c526e272a34518025e1230d15753d988df7b331c28124c95e9653f2"
+    },
+    {
+      "index": 1,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-packages-sdk19/transport-chunks/packages-sdk19-001.bin",
+      "filename": "packages-sdk19-001.bin",
+      "offset": 786432,
+      "bytes": 786432,
+      "sha256": "b6c340ccfb9fb71de866f7eab2938746077184bd3221d4ec9f60167ca679e375"
+    },
+    {
+      "index": 2,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-packages-sdk19/transport-chunks/packages-sdk19-002.bin",
+      "filename": "packages-sdk19-002.bin",
+      "offset": 1572864,
+      "bytes": 786432,
+      "sha256": "d878e46dacc145ea2e944954f166ec72df1390816ac120241746d989759da42d"
+    },
+    {
+      "index": 3,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-packages-sdk19/transport-chunks/packages-sdk19-003.bin",
+      "filename": "packages-sdk19-003.bin",
+      "offset": 2359296,
+      "bytes": 786432,
+      "sha256": "a85cebf2e6bfdc3ba4c64b1e2517192886a848b02d67842a37f29e4b4159d04b"
+    },
+    {
+      "index": 4,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-packages-sdk19/transport-chunks/packages-sdk19-004.bin",
+      "filename": "packages-sdk19-004.bin",
+      "offset": 3145728,
+      "bytes": 786432,
+      "sha256": "c1ac326d0bfd0b7935b36cb5170fc589597c0c1552a343bc3b94869f995a6b0c"
+    },
+    {
+      "index": 5,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-packages-sdk19/transport-chunks/packages-sdk19-005.bin",
+      "filename": "packages-sdk19-005.bin",
+      "offset": 3932160,
+      "bytes": 252376,
+      "sha256": "7d4c57afbfe267a14eaf878bdcd55841388696e869d84f5b0f9bf0d2fe029f0f"
+    }
+  ]
+}

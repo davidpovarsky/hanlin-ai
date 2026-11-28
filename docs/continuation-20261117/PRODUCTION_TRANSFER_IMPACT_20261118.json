@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-18",
+  "base_sha": "b44c764858654e272d7b75c094984f6a9ef41328",
+  "scope": "Production MiniApps transfer through the original HanlinAtomicScriptStore and HanlinMiniAppDataStore",
+  "source_is_preserved": true,
+  "stores": [
+    "Application Support/Hanlin/ScriptingPlatform/Installed",
+    "Application Support/Hanlin/MiniApps"
+  ],
+  "transport": "Existing signed App Group / HanlinSplit/v1/ProductTransfer; no network transfer",
+  "properties": [
+    "Original package IDs, generations, grants and enabled state retained",
+    "Streamed SHA-256 verification of actual files; symlinks and conflicting existing bytes rejected",
+    "Private staging, persistent two-store promotion/rollback journal, recovery before MiniApps providers are initialized",
+    "Existing destination-only data preserved; retries do not replace later edits; rollback refuses changed live data",
+    "Canonical store IO serialized across both store owners; host admission paused for transfer",
+    "NativeScript/Expo use requires a fresh process before transfer because teardown may finish asynchronously",
+    "Scripting native task and SQLite disposal owners are retained until completion; widget bootstrap cannot permanently prevent transfer",
+    "AI chats, Skills, CloudKit, models, credentials and settings stay in the original AI container"
+  ],
+  "native_compile_fixes": {
+    "origin_run": 44212133389,
+    "artifact": 14387860291,
+    "sha256": "59a70effc123f2fc83fef91eb5cb6eb5ea169c8d71b0b8d1c7840fe7c04d1ac7",
+    "diagnosis": [
+      "MiniApps native scripts now execute; Swift 6 compilation exposed State default-expression isolation and Safari delegate conformance isolation"
+    ],
+    "changes": [
+      "Named MainActor bootstrap operation",
+      "MainActor-isolated Safari delegate conformance"
+    ]
+  },
+  "acceptance": {
+    "source_parse": "PASS Windows Swift 6.3.3; not Apple type checking",
+    "package_tests": "NOT_RUN: original store lifecycle plus 16 actual-files transfer cases and affected SQLite/runtime suites",
+    "iOS27_build": "NOT_RUN on changed sources",
+    "paired_installed_apps": "NOT_RUN",
+    "signed_app_group": "NOT_RUN",
+    "physical_device": "NOT_RUN"
+  },
+  "boundary": "Source implementation is not completed phase acceptance. No fabricated data, provider replacement, optional Full-SDK metadata expansion, or release upload.",
+  "storage_owner_followup": {
+    "date": "2026-11-18",
+    "owners": [
+      "Actual ScriptUI sessions, including embedded chat results",
+      "Pending native task disposal",
+      "Canonical SQLite and KV services"
+    ],
+    "changes": [
+      "Storage-root-scoped session admission and failed-initializer cleanup",
+      "Checkpoint and close live SQLite owners before export, import or rollback; retained KV owners reopen their canonical paths",
+      "Lock order keeps stop/interrupt independent from query completion",
+      "Restore original localization formatting without semantic changes"
+    ],
+    "tests_added": [
+      "Live SQLite/WAL and private/shared canonical KV round trip and rollback",
+      "Later committed KV edits preserved and rollback rejected",
+      "Three real JavaScriptCore storage-root/session lifecycle cases"
+    ],
+    "previous_run": {
+      "id": "44214908271",
+      "head": "0e7afb9e0c1ac19bc91bbc8a40ce357647a8b9d4",
+      "result": "FAILED",
+      "issues": [
+        "Transfer comparisons used in-memory pre-persistence timestamps; now compare complete cold-opened durable source snapshots",
+        "An older catalog assertion omitted ScriptUI despite existing intentional discovery in f632ef54; coverage now includes all four original engines"
+      ]
+    },
+    "acceptance": "Pending Apple compilation and test execution; Windows syntax parsing and source target graph passed only."
+  }
+}

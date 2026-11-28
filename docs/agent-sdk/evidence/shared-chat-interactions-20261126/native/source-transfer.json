@@ -1,0 +1,20 @@
+{
+  "source_sha": "a84ecd6db0dfa77e2241cb9481b9f9d43a7a13c6",
+  "source_tree": "7fe927b3aaf605c92e6088475d629134386f7e07",
+  "paths": [
+    "Packages",
+    "AI_HLY",
+    "AI_HLY.xcodeproj",
+    "Scripts/SDK",
+    "Scripts/CI/IntegrationValidation",
+    "Examples/HanlinLauncherLab",
+    "Package.swift",
+    "Generated",
+    "Vendor",
+    "AGENTS.md",
+    "PROJECT_AGENT_GUIDANCE.md"
+  ],
+  "archive_bytes": 31819273,
+  "archive_sha256": "b40b8d4a4ec4c33e9c4dd5e8e883261b4282956100f7d814908157ff93188d38",
+  "mac_stage": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126"
+}

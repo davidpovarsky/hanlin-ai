@@ -1,0 +1,23 @@
+{
+  "utc": "2026-11-25T06:46:02.384199+00:00",
+  "source_sha": "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40",
+  "context": "Actual failed450argumentSwiftfrontend appcontext; only primary/output paths reduced to oneoriginaldelegate file; all original imports/C++interoperability/platform/Swift6 flags and remaining actualappsource retained",
+  "records": [
+    {
+      "tag": "original",
+      "exit": -6,
+      "seconds": 1.6650623340101447,
+      "source_sha256": "eacf5e748287603ef4e6796d2f2d0016b7563aa5de62bca4478a693d2b82eb83",
+      "object_exists": false,
+      "log_sha256": "93f8d76c1ebbb086d730f8cf2977992ea5b218eb536abb1c4bff9b2157fc392a"
+    },
+    {
+      "tag": "continuation",
+      "exit": 0,
+      "seconds": 1.2873321249935543,
+      "source_sha256": "ccf58292abc2286ab3ddf115e3586d538fade9f9c3d7255297e484e79ee54cfa",
+      "object_exists": true,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

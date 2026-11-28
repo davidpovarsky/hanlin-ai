@@ -1,0 +1,331 @@
+{
+  "schemaVersion": 1,
+  "observedAtUTC": "2026-11-25T03:55:46.176757+00:00",
+  "sourceCommit": "1a611764779b0a57cc57d71b26d2cd6449895d8d",
+  "sourceTree": "032432920c093a561a6b2cc6ff61c908d02705a6",
+  "operation": "Immutable Oracle evidence inspection only; no Mac access, source mutation, native build or test.",
+  "packet": {
+    "producerReceiptSHA256": "dce3d86d2073def816ba95f5ff6f47c82a1b231657c5748518f99e42941df06c",
+    "producerCapturedAtUTC": "2026-11-25T03:49:24.500755+00:00",
+    "members": 55,
+    "bytes": 5725010,
+    "verification": "All55 exact bytes and hashes verified; reused the first14 verification and verified41 added members. All3 gzip streams roundtrip to their declared original lengths/hashes.",
+    "firstPacketSHA256": "64d0a53c3e23baa09158ad8dfd6b0275342143b7b59799264cc020a3a0d9095b",
+    "firstPacketMembers": 14,
+    "firstPacketBytes": 2238312,
+    "schemaNote": "First packet uses files; full packet uses members. One initial read-only inspection addressed the first schema key on the full receipt and was corrected before any evidence copy; no producer record changed."
+  },
+  "actualResult": {
+    "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "finalized": true,
+    "actualCaseDurationSeconds": 172.79144597053528,
+    "driverFinishedAtUTC": "2026-11-25T03:42:11.337019+00:00",
+    "driverExitCode": 65,
+    "failureLine": 1220,
+    "failure": "Source version must respond to the original disclosure control",
+    "collectorCorrection": "The generic original error says did not execute every selected case; original nodes prove the sole selected case executed and failed. This is not a missing-case conclusion.",
+    "fullTextAPIAndBodyStage": "NOT_REACHED",
+    "completeOriginal52": "NOT_RUN",
+    "SDK03OwnershipLifetime3": "NOT_RUN"
+  },
+  "actualBuildAndImport": {
+    "commands": [
+      {
+        "argv": [
+          "xcodebuild",
+          "-project",
+          "AI_HLY.xcodeproj",
+          "-destination",
+          "platform=iOS Simulator,id=4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25",
+          "-parallel-testing-enabled",
+          "NO",
+          "-derivedDataPath",
+          "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete",
+          "-clonedSourcePackagesDirPath",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages",
+          "-skipPackagePluginValidation",
+          "-skipMacroValidation",
+          "CODE_SIGNING_ALLOWED=YES",
+          "CODE_SIGNING_REQUIRED=YES",
+          "CODE_SIGN_IDENTITY=-",
+          "-scheme",
+          "HanlinMiniApps",
+          "build-for-testing",
+          "-resultBundlePath",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/MiniBuild.xcresult"
+        ],
+        "exit": 0,
+        "seconds": 158.24876395799947,
+        "log": "mini-build.log",
+        "sha256": "4dd6ebaf2fc23dc431cdb3fa81b77fc1d849eb45bdba6bbfa7c0eea2f57c0429"
+      },
+      {
+        "argv": [
+          "xcodebuild",
+          "-project",
+          "AI_HLY.xcodeproj",
+          "-destination",
+          "platform=iOS Simulator,id=4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25",
+          "-parallel-testing-enabled",
+          "NO",
+          "-derivedDataPath",
+          "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete",
+          "-clonedSourcePackagesDirPath",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages",
+          "-skipPackagePluginValidation",
+          "-skipMacroValidation",
+          "CODE_SIGNING_ALLOWED=YES",
+          "CODE_SIGNING_REQUIRED=YES",
+          "CODE_SIGN_IDENTITY=-",
+          "-scheme",
+          "AI_HLY",
+          "build-for-testing",
+          "-resultBundlePath",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/AIBuild.xcresult"
+        ],
+        "exit": 0,
+        "seconds": 114.46803570900374,
+        "log": "ai-build.log",
+        "sha256": "ccd11eb826ba72c2d35b20e838829f3c0daf6605cdc1ea32c97cb5db8ba639e8"
+      },
+      {
+        "argv": [
+          "node",
+          "Scripts/MiniApps/miniapp.mjs",
+          "build",
+          "--sdk",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/original-authoring-sdk/MiniAppSDK",
+          "--engine",
+          "expo",
+          "--project",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/miniapps/modular-text-search",
+          "--archive",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/ModularTextSearch.hanlinExpo",
+          "--report",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/modular-search-build.json"
+        ],
+        "exit": 0,
+        "seconds": 13.811592082995048,
+        "log": "modular-search-build.log",
+        "sha256": "4cc6726b8349cbdd3586244a8b0a6eb62e5fa905813ceacc7b120f6a4028cde0"
+      },
+      {
+        "argv": [
+          "xcodebuild",
+          "-project",
+          "AI_HLY.xcodeproj",
+          "-destination",
+          "platform=iOS Simulator,id=4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25",
+          "-parallel-testing-enabled",
+          "NO",
+          "-derivedDataPath",
+          "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete",
+          "-clonedSourcePackagesDirPath",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages",
+          "-skipPackagePluginValidation",
+          "-skipMacroValidation",
+          "CODE_SIGNING_ALLOWED=YES",
+          "CODE_SIGNING_REQUIRED=YES",
+          "CODE_SIGN_IDENTITY=-",
+          "-collect-test-diagnostics",
+          "never",
+          "-scheme",
+          "HanlinMiniApps",
+          "test-without-building",
+          "-resultBundlePath",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic.xcresult",
+          "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText"
+        ],
+        "exit": 65,
+        "seconds": 203.9294566249955,
+        "log": "ModularFocusedDiagnostic.log",
+        "sha256": "3f21d43bad9ed2869dd146669a92167379c1b8e2048f5d95b4b6e62f21b99e6b"
+      }
+    ],
+    "importJob": {
+      "executionID": "30f75bb6-e894-48ed-97cf-ee567f9e4619",
+      "state": "completed",
+      "durationMilliseconds": 44917,
+      "exitCode": 0,
+      "didTimeOut": false,
+      "wasCancelled": false,
+      "outputWasTruncated": false,
+      "diagnosticCount": 0,
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": false,
+        "dependencyDeclarationsChecked": true
+      },
+      "manifestSHA256": "19726b5eecc1459e30dae9e7ec4ca6761001de92b22055ac41b9a96aabdd7a88",
+      "compilerVersion": "6.0.3",
+      "typescriptPackageVersion": "6.0.2"
+    },
+    "archive": {
+      "path": "raw/focused-diagnostics-attempt12/paired-prefix/ModularTextSearch.hanlinExpo",
+      "bytes": 2203330,
+      "sha256": "3f4dc26706ded3590674eceaa4314554e1564e4bf4ab7a46d57bb1bf2e50b33e",
+      "sourceMember": "source/App.tsx",
+      "sourceMemberBytes": 25786,
+      "sourceMemberSHA256": "4e8389eb6a232e6ed5db8273dd2686e45ab04edabd2e86bfea74cbdf862e5b7c",
+      "matchesActualSourceCommit": true
+    }
+  },
+  "visualAndAccessibility": {
+    "actualSearch": {
+      "png": "raw/focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/1AD14F22-EA19-4398-B5AE-E7861B41DCBE.png",
+      "sha256": "252e06341b30dd71d464ea6d7fb1a9582af280da48a961bd2b935b43b409059c",
+      "inspected": true,
+      "finding": "Normally oriented English and Hebrew glyphs, native search controls and real Sefaria results. The earlier mirrored-glyph artifact is absent in this captured route after original Host key={locale}. No broader locale coverage is inferred."
+    },
+    "beforeTap": {
+      "png": "raw/focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/33BAC638-FEF4-4CB2-9BFE-D0F13FBDE8A1.png",
+      "sha256": "5577e8e8109170638c7d1d031e60e5ca904bf7fbb938e4999f202d895d471ac7",
+      "ax": "raw/focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/4A415529-833F-4AE9-9E5D-0CD83C749C68.txt",
+      "axSHA256": "205a6783b15120dd8e29d526e80cc52a65238866c1c96fc16cd40b66a1967f64",
+      "inspected": true,
+      "finding": "First JPS1917 disclosure expanded, with its visible Full text button. Native image expanded at AX176; header AX173 and Full text AX183 share the parent source-version identifier."
+    },
+    "afterTap": {
+      "png": "raw/focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/CD45B46D-B622-4F39-9035-C52C645CD694.png",
+      "sha256": "7b9de14ebc4e60c1af1ad43ea22efe8433b51ed77b388a1cfd2fe81c765deaa0",
+      "ax": "raw/focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/337F5944-3C60-45BB-96B1-9051AF562CC6.txt",
+      "axSHA256": "7453050d31b8b0c6781cdce64753126250062627497a946685665541593e002b",
+      "inspected": true,
+      "finding": "Same first JPS1917 disclosure visibly collapsed; native image collapsed at AX176 and its Full text row removed. Neighbor groups remain expanded."
+    },
+    "diagnosis": {
+      "classification": "TEST_LOCATOR_ORACLE_MISMATCH_WITH_ACTUAL_NATIVE_ID_INHERITANCE",
+      "expectedChildIDOccurrencesBefore": 0,
+      "expectedChildIDOccurrencesAfter": 0,
+      "actualEntryIdentifier": "modular-source-version-Genesis 1:1 (The Holy Scriptures: A New Translation (JPS 1917) [en])",
+      "actualMatchingRowsBefore": 2,
+      "actualMatchingRowsAfter": 1,
+      "effect": "Parent disclosure accessibilityIdentifier overrides descendant button identifiers. UI1218 observes false for the nonexistent intended loadText ID both before and after a successful collapse. The observed failure is not a nonresponsive native disclosure and not retained collapsed-child accessibility presence.",
+      "futureBoundary": "The unchanged live API/new-version/nonempty full-text/body assertions remain necessary; this failed run did not reach them."
+    }
+  },
+  "sourceAndSDKBindings": {
+    "producerSourceBindings": [
+      {
+        "path": "Scripts/Expo/miniapps/modular-text-search/App.tsx",
+        "bytes": 25786,
+        "sha256": "4e8389eb6a232e6ed5db8273dd2686e45ab04edabd2e86bfea74cbdf862e5b7c"
+      },
+      {
+        "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "bytes": 76913,
+        "sha256": "93db32b6af9af1eeba85070086c5d0eb6b9b80198dc161004d5729c7cc38d4d0"
+      },
+      {
+        "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+        "bytes": 47460,
+        "sha256": "6e3abbb16c9b55b048b69c2391784510d8c143c7ed00e760a73ecb903cdbb61d"
+      },
+      {
+        "path": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+        "bytes": 7512,
+        "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199"
+      },
+      {
+        "path": "AI_HLY/RuntimeHostResources.zip",
+        "bytes": 81813686,
+        "sha256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3"
+      }
+    ],
+    "gitVerifiedBindings": [
+      {
+        "path": "Scripts/Expo/miniapps/modular-text-search/App.tsx",
+        "bytes": 25786,
+        "sha256": "4e8389eb6a232e6ed5db8273dd2686e45ab04edabd2e86bfea74cbdf862e5b7c"
+      },
+      {
+        "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "bytes": 76913,
+        "sha256": "93db32b6af9af1eeba85070086c5d0eb6b9b80198dc161004d5729c7cc38d4d0"
+      },
+      {
+        "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+        "bytes": 47460,
+        "sha256": "6e3abbb16c9b55b048b69c2391784510d8c143c7ed00e760a73ecb903cdbb61d"
+      },
+      {
+        "path": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+        "bytes": 7512,
+        "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199"
+      }
+    ],
+    "originalDisclosureAPI": [
+      {
+        "originalPath": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/@expo/ui/ios/DisclosureGroupView.swift",
+        "storedPath": "original-api/ios/DisclosureGroupView.swift",
+        "bytes": 1483,
+        "sha256": "b5a8dca4d93a2c9048dc465ae10179a7632a2ba36bc303103786c1bab74b9728"
+      },
+      {
+        "originalPath": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/@expo/ui/src/swift-ui/DisclosureGroup/index.tsx",
+        "storedPath": "original-api/src/swift-ui/DisclosureGroup/index.tsx",
+        "bytes": 1753,
+        "sha256": "6583e7db1f26c58e3a998352282938f3d719221389be34269a39480c45473ef0"
+      }
+    ],
+    "originalPackage": {
+      "name": "@expo/ui",
+      "version": "58.0.29",
+      "packageJSONSHA256": "5332dd3b83612fcc7e30f50cb2e137f1e0051b6b2032b0d006f5840a13cf5281"
+    },
+    "SDK10Proof": {
+      "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/receipt.json",
+      "sha256": "6abde3960cc6283dfc624377e94c4af89568ca89e5bcf27cfe15251a4d699bfc",
+      "archiveSHA256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3",
+      "freshScope": "Current producer archive identity and actual import manifest match the already verified SDK10. No archive copy/repack or repeated full SDK audit. The producer omits its nonexistent Scripts/Runtime/Host/miniapp-authoring.mjs path; no binding is invented for it."
+    }
+  },
+  "retention": {
+    "rawMembersPreserved": 55,
+    "producerReceiptsPreserved": true,
+    "losslessCompression": [
+      {
+        "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/runtime-logstream.jsonl",
+        "path": "focused-diagnostics-attempt12/runtime-logstream.jsonl.gz",
+        "rawBytes": 7581366,
+        "rawSHA256": "89382dccef8997e875a15ad22c5423c92fa6a2d5c13b223ae96fd975b5fe610a",
+        "bytes": 804356,
+        "sha256": "b8e340f5536a10b8583af46967e27b3c44f689b4fe4272e0894c76b2097df011"
+      },
+      {
+        "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/mini-build.log",
+        "path": "focused-diagnostics-attempt12/paired-prefix/mini-build.log.gz",
+        "rawBytes": 979669,
+        "rawSHA256": "4dd6ebaf2fc23dc431cdb3fa81b77fc1d849eb45bdba6bbfa7c0eea2f57c0429",
+        "bytes": 66989,
+        "sha256": "14f06bccc86add1a55a86cf0df977eaed9a720ce12e1d0bcf2b2f895c2cec349"
+      },
+      {
+        "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/ai-build.log",
+        "path": "focused-diagnostics-attempt12/paired-prefix/ai-build.log.gz",
+        "rawBytes": 949110,
+        "rawSHA256": "ccd11eb826ba72c2d35b20e838829f3c0daf6605cdc1ea32c97cb5db8ba639e8",
+        "bytes": 49558,
+        "sha256": "0cd227e1e05753d586a0872d5f08124a2c210ec777d7338b7f6307810105dfa3"
+      }
+    ],
+    "attachmentManifestEntries": 31,
+    "selectedAttachmentsRetained": 8,
+    "visuallyInspectedPNGs": 3,
+    "attachmentLimit": "All55 bounded packet members are retained, including selected import/search/detail/failure PNG+AX. This is not a claim that all31 attachment-manifest exports or every producer-referenced file is in the packet.",
+    "originalPrelaunchRejectionAndAuthorizedStorageContinuation": "Both preserved unchanged. Retirement receipt reports the actual measured free-byte change, not an invented reclaimed amount.",
+    "ownedSimulatorCleanup": {
+      "simulator": "4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25",
+      "state": "Shutdown",
+      "remainingOwnedRunners": []
+    },
+    "originalUIVariantUsed": false,
+    "originalTestRebuild": "PASS",
+    "originalSourceRestored": true,
+    "taskClosuresChanged": false
+  }
+}

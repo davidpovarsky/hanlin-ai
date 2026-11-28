@@ -1,0 +1,34 @@
+[
+  {
+    "call": "$storage.setJSON(missingImport, Bool)",
+    "prior": "Invalid: original JSExport takes a dictionary.",
+    "candidate": "Existing $storage.set(String, Any); forwards to native.setValue / setExportedValue with fragmentsAllowed, existing identity and budgets.",
+    "expectation": "Same stored Bool false and unchanged assertion."
+  },
+  {
+    "call": "$storage.setJSON(mapCount, Number)",
+    "prior": "Invalid: original JSExport takes a dictionary.",
+    "candidate": "Same existing typed $storage.set route; keeps the original numeric value.",
+    "expectation": "Same integer 9 and unchanged assertion."
+  },
+  {
+    "call": "$import(path)",
+    "shape": "Dynamic strings joined from path segments; exact shipping (String)->Bool. Missing path returns false. Calls/arguments unchanged."
+  },
+  {
+    "call": "$file.readJSON(path)",
+    "shape": "String paths to actual object-root record/map bytes; original dictionary return. Both authored record.count and source-map version remain real reads, no expected-value injection."
+  },
+  {
+    "call": "$render(JSX)",
+    "shape": "Original compiled text element containing actual helper result; unchanged element pipeline."
+  },
+  {
+    "call": "hanlinWidget metadata",
+    "shape": "All four required fields present after prior separate actions=[] correction."
+  },
+  {
+    "call": "nativePresentations metadata in overlap negative",
+    "shape": "Original custom decoder permits absent actions and input. No new default or production decoder change."
+  }
+]

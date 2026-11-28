@@ -1,0 +1,183 @@
+{
+  "base": "fbf92dc3bf3bc780a5308d8b994d50dee81ad8f6",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-shortcut-taskgroup-compiler-20261127",
+  "branch": "codex/hanlin-native-scope-cardinality-20261127",
+  "file": "Scripts/ProductSplit/run_native_acceptance.py",
+  "beforeSHA256": "0070ab53ebc486c4df2a722cdd74b036bb5cf002aa72e772813ffaa434dbf23a",
+  "afterSHA256": "2416d7330be0fef0f40193493c8c657eb095e5401b8aa50438250d89a9a0bee3",
+  "patchSHA256": "01e9d06c3c1ff271f826928fdb84652c8839ad47181f74e2f3f85aa10a1b8c89",
+  "originalPlans": {
+    "cross_app": [
+      [
+        "HanlinMiniAppsTests/CrossAppInvocationTests",
+        "HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests",
+        "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests",
+        "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests",
+        "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests",
+        "HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests",
+        "HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests"
+      ],
+      22
+    ],
+    "baseline": [
+      [
+        "HanlinMiniAppsUITests/HanlinMiniAppsUITests",
+        "HanlinMiniAppsUITests/MiniAppsProviderUITests"
+      ],
+      7
+    ],
+    "production_runtimes": [
+      [
+        "HanlinMiniAppsTests/CrossAppInvocationTests",
+        "HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests",
+        "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests",
+        "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests",
+        "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests",
+        "HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+        "HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests"
+      ],
+      24
+    ]
+  },
+  "candidatePlans": {
+    "cross_app": [
+      [
+        "HanlinMiniAppsTests/CrossAppInvocationTests",
+        "HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests",
+        "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests",
+        "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests",
+        "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests",
+        "HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests",
+        "HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests"
+      ],
+      23
+    ],
+    "baseline": [
+      [
+        "HanlinMiniAppsUITests/HanlinMiniAppsUITests",
+        "HanlinMiniAppsUITests/MiniAppsProviderUITests"
+      ],
+      7
+    ],
+    "production_runtimes": [
+      [
+        "HanlinMiniAppsTests/CrossAppInvocationTests",
+        "HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests",
+        "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests",
+        "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests",
+        "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests",
+        "HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+        "HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests"
+      ],
+      25
+    ]
+  },
+  "methodInventory": [
+    {
+      "path": "HanlinMiniAppsTests/CrossAppInvocationTests.swift",
+      "sha256": "22f91c12d0953f0d1e08ee1a1157bd595a6da01adb85ac8a104c069c4073b936",
+      "methods": [
+        "testCompletionIsSavedBeforeSourceOpensAndSurvivesColdRestore",
+        "testTwoWindowsKeepTheirOwnInputOutputAndCallbacks",
+        "testCancelAndDisplayDoneReturnNoDocumentMutation",
+        "testActualProducerAttachmentOperationsPreserveBytes",
+        "testUnavailableCallbackRetainsResultForSourceRecovery",
+        "testTextStudioWindowsRestoreTheirOwnDrafts",
+        "testReusingValueWindowKeepsItsInvocationBindingCurrent",
+        "testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+        "testActualIncomingRequestsCreateDistinctIPadScenes"
+      ]
+    },
+    {
+      "path": "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests.swift",
+      "sha256": "fdb3f0d3a54e8c25e437ce97faeb728d1f6b904ad9f73516dd5118a15eac1396",
+      "methods": [
+        "testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+        "testClosingWindowReleasesLifecycleCaptureBeforeRuntimeStops"
+      ]
+    },
+    {
+      "path": "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests.swift",
+      "sha256": "fac1a7336a3b233a18015f56df18fe615c04f56064029af2d292a7f8ea9d4386",
+      "methods": [
+        "testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
+        "testInvalidationReleasesHandlersAndRejectsLateActions"
+      ]
+    },
+    {
+      "path": "HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests.swift",
+      "sha256": "1cc69028a11ee5b2276a87931684658e6e726e1bcc77dee0153f274084d49910",
+      "methods": [
+        "testSharedNewWindowPreferencePersistsAfterProcessRestart",
+        "testAppleStyleEditorAddsFavoriteWithNativeEditControls",
+        "testPreferencesUsesEnglishAndHebrewNativeToolbarLayouts",
+        "testNativeFavoriteDragRemovalAndVisibilityPersistAfterColdRelaunch"
+      ]
+    },
+    {
+      "path": "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests.swift",
+      "sha256": "76bd2441ee618b5d0cc6db88902f5985408a7b77842b6724fa991cee4c24ef83",
+      "methods": [
+        "testExternalInvocationSurvivesNestedFullScreenModal"
+      ]
+    },
+    {
+      "path": "HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests.swift",
+      "sha256": "74042d7ae01eb7cc880e8c5c26e99a8d2ca2619c4012c0519726c253c97a871d",
+      "methods": [
+        "testTwoNativeWindowsCompleteInReverseOrderWithoutContextMixing",
+        "testCancellingOneNativeWindowKeepsOtherWindowAndPreparedCallbackAlive"
+      ]
+    },
+    {
+      "path": "HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests.swift",
+      "sha256": "fc1464986b44e13f560e03404ca271f72797ce3d5af73714058fb3b20d2de9ed",
+      "methods": [
+        "testDifferentPackagesKeepModulesResourcesAndCallbacksWhenCompletingInReverseOrder",
+        "testCancellingOnePackageKeepsOtherPackageAndItsPreparedCallbackAlive",
+        "testReturningToCatalogKeepsPendingRequestInExistingRootWindow"
+      ]
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "sha256": "87be423d2e5bbe9e8fbd4ab97182f2dc1415ca7538f6a705a5bec46d85cf9cc0",
+      "methods": [
+        "testStandaloneCatalogOpensRealCompiledApp",
+        "testPrivateStateSurvivesStandaloneProcessRelaunch",
+        "testPackageImportUsesExistingPreviewScreen",
+        "testInstalledScriptUIAppearsAndRunsAfterRestart",
+        "testOriginalCardMenuHideRestoreAndSearch",
+        "testOriginalPhotoStudyActionOpensCapture",
+        "testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+        "testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+        "testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
+        "testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
+        "testStandaloneExpoManualInputLayoutAndDataAdapters",
+        "testStandaloneExpoManualPresentationAdaptersAndDismissalEvents",
+        "testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+        "testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+        "testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+        "testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+        "testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+        "testStandaloneExpoGeneratedModifierNativeContainerContexts",
+        "testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication",
+        "testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+        "testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+        "testStandaloneModularSearchLoadsActualSefariaText",
+        "testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines"
+      ]
+    }
+  ],
+  "selectorListsIdentical": true,
+  "allASTExceptTwoCountsIdentical": true,
+  "directExpectationSearch": {
+    "exit": 1,
+    "matches": ""
+  },
+  "nativeStatus": "NOT_RUN",
+  "testsRun": false
+}

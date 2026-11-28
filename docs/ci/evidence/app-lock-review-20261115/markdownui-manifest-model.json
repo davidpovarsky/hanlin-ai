@@ -1,0 +1,207 @@
+{
+  "cLanguageStandard": null,
+  "cxxLanguageStandard": null,
+  "defaultLocalization": null,
+  "dependencies": [
+    {
+      "sourceControl": [
+        {
+          "identity": "networkimage",
+          "location": {
+            "remote": [
+              {
+                "urlString": "https://github.com/gonzalezreal/NetworkImage"
+              }
+            ]
+          },
+          "productFilter": null,
+          "requirement": {
+            "range": [
+              {
+                "lowerBound": "6.0.0",
+                "upperBound": "7.0.0"
+              }
+            ]
+          },
+          "traits": [
+            {
+              "name": "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl": [
+        {
+          "identity": "swift-snapshot-testing",
+          "location": {
+            "remote": [
+              {
+                "urlString": "https://github.com/pointfreeco/swift-snapshot-testing"
+              }
+            ]
+          },
+          "productFilter": null,
+          "requirement": {
+            "range": [
+              {
+                "lowerBound": "1.10.0",
+                "upperBound": "2.0.0"
+              }
+            ]
+          },
+          "traits": [
+            {
+              "name": "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl": [
+        {
+          "identity": "swift-cmark",
+          "location": {
+            "remote": [
+              {
+                "urlString": "https://github.com/swiftlang/swift-cmark"
+              }
+            ]
+          },
+          "productFilter": null,
+          "requirement": {
+            "range": [
+              {
+                "lowerBound": "0.4.0",
+                "upperBound": "1.0.0"
+              }
+            ]
+          },
+          "traits": [
+            {
+              "name": "default"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "name": "swift-markdown-ui",
+  "packageKind": {
+    "root": [
+      "C:\\Users\\DAVID\\Code\\hanlin-app-split-wave1-20261115\\.scratch\\app-yams-pin-review\\markdownui"
+    ]
+  },
+  "pkgConfig": null,
+  "platforms": [
+    {
+      "options": [],
+      "platformName": "macos",
+      "version": "12.0"
+    },
+    {
+      "options": [],
+      "platformName": "ios",
+      "version": "15.0"
+    },
+    {
+      "options": [],
+      "platformName": "tvos",
+      "version": "15.0"
+    },
+    {
+      "options": [],
+      "platformName": "maccatalyst",
+      "version": "15.0"
+    },
+    {
+      "options": [],
+      "platformName": "watchos",
+      "version": "8.0"
+    }
+  ],
+  "products": [
+    {
+      "name": "MarkdownUI",
+      "settings": [],
+      "targets": [
+        "MarkdownUI"
+      ],
+      "type": {
+        "library": [
+          "automatic"
+        ]
+      }
+    }
+  ],
+  "providers": null,
+  "swiftLanguageVersions": null,
+  "targets": [
+    {
+      "dependencies": [
+        {
+          "product": [
+            "cmark-gfm",
+            "swift-cmark",
+            null,
+            null
+          ]
+        },
+        {
+          "product": [
+            "cmark-gfm-extensions",
+            "swift-cmark",
+            null,
+            null
+          ]
+        },
+        {
+          "product": [
+            "NetworkImage",
+            "NetworkImage",
+            null,
+            null
+          ]
+        }
+      ],
+      "exclude": [],
+      "name": "MarkdownUI",
+      "packageAccess": false,
+      "resources": [],
+      "settings": [],
+      "type": "regular"
+    },
+    {
+      "dependencies": [
+        {
+          "byName": [
+            "MarkdownUI",
+            null
+          ]
+        },
+        {
+          "product": [
+            "SnapshotTesting",
+            "swift-snapshot-testing",
+            null,
+            null
+          ]
+        }
+      ],
+      "exclude": [
+        "__Snapshots__"
+      ],
+      "name": "MarkdownUITests",
+      "packageAccess": false,
+      "resources": [],
+      "settings": [],
+      "type": "test"
+    }
+  ],
+  "toolsVersion": {
+    "_version": "5.6.0"
+  },
+  "traits": []
+}

@@ -1,0 +1,23 @@
+{
+  "reviewer": "/root",
+  "verifiedAt": "2026-11-27T03:35:26.500145+00:00",
+  "archiveSHA256": "935b1117d5afd61e9836cbcb2f6bed7a88128b184178becf0e24fae9b2aef2be",
+  "manifestSHA256": "4de2cfd0a522d2432dc7fce754809b65fe0c25b3b4e3717f2b3131f52ce268a4",
+  "verifiedOriginalFiles": 47,
+  "allSizesAndSHA256Match": true,
+  "extraOrMissingFiles": [],
+  "status": "HOST188_PASSED_NOT_APP_ACCEPTANCE",
+  "originalLongJobMilliseconds": 305023.617542,
+  "sdkInputs": 392,
+  "sdkInputSHA256": "821d74235aac47e6be3d35c834a6eff85c63dd27e6a15994ac89601ae6046e5d",
+  "priorRootRecomputation": {
+    "before": "fb2b4a8446a5d8735d6ddc3dbee2d6da8474c835aebadf99640ea25e98f6d864",
+    "after": "821d74235aac47e6be3d35c834a6eff85c63dd27e6a15994ac89601ae6046e5d",
+    "delta": [
+      "docs/miniapp-sdk/extension-reachability.json",
+      "docs/miniapp-sdk/extension-reachability.md",
+      "docs/miniapp-sdk/source-inventory.json"
+    ]
+  },
+  "currentPairedStatusCorrection": "Raw manifest records RUNNING at02:46:46; subsequent original4cb build failed at02:48:44 in Studio before tests. See adjacent failure packet. Raw status is preserved unchanged."
+}

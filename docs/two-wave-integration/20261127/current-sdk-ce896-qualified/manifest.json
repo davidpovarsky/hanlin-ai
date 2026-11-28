@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "sourceVerified": "eb3bf673435d9aa43de7a821a6e7399369b8d1f0",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1963,
+      "sha256": "d459c4025647466aaa173763037772d3b0e2d59e65ab8a0cf9e94f966fd57bbc"
+    },
+    {
+      "path": "independent-source-outcome-review.json",
+      "bytes": 5234,
+      "sha256": "bf04cfaa22d1a144e6585458fe1a59afa0cb6233506472045f20d3615975424d"
+    },
+    {
+      "path": "original-packed-and-ns-logs.json.gz",
+      "bytes": 933,
+      "sha256": "29e37824fa7c52c2fbde2dfa8cb791547435143e9d4c3ca9584cf7858f1a7bec"
+    },
+    {
+      "path": "qualification.json",
+      "bytes": 3592,
+      "sha256": "30ce5536d6ce312c0f28727572109c19936e9b0f8403caca7d7e908ec6ad1910"
+    },
+    {
+      "path": "sdk396-current-git-match.json.gz",
+      "bytes": 20462,
+      "sha256": "4d7a39036a33c028eb07fc4f6f59727d802b2e04774b9aff502d077f82d43b6a"
+    },
+    {
+      "path": "test-reuse-qualification.json",
+      "bytes": 1953,
+      "sha256": "febe292133e951031e9b7c84ea51252bc0c9a6caf42bd698f8a4a295c9f93619"
+    }
+  ],
+  "memberCount": 6,
+  "nativeRerunsByRoot": 0
+}

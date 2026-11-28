@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "status": "FAILED_VALIDATION",
+  "startedAtUTC": "2026-11-25T03:57:09.924866+00:00",
+  "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+  "group": "ui_phone",
+  "command": [
+    "xcodebuild",
+    "test-without-building",
+    "-xctestrun",
+    "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+    "-destination-timeout",
+    "60",
+    "-parallel-testing-enabled",
+    "NO",
+    "-maximum-concurrent-test-simulator-destinations",
+    "1",
+    "-maximum-parallel-testing-workers",
+    "1",
+    "-collect-test-diagnostics",
+    "never",
+    "-destination",
+    "platform=iOS Simulator,id=F1D52257-55E0-4927-8029-E19D47B51AC0",
+    "-resultBundlePath",
+    "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-ui_phone-attempt1/Tests.xcresult",
+    "-only-testing:AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+    "-only-testing:AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+    "-only-testing:AI_HLYUITests/HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing",
+    "-only-testing:AI_HLYUITests/HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft"
+  ],
+  "planSHA256": "f7dea489f9bbadcb7aec787be9e349de45117c092d3040971db2262a7d709005",
+  "expectedMethods": [
+    {
+      "target": "AI_HLYUITests",
+      "suite": "HanlinComposerCapabilitiesUITests",
+      "method": "testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+      "signature": "testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+      "relativeIdentity": "HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+      "selector": "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+      "sourceFile": "AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift",
+      "sourceLine": 34,
+      "framework": "XCTest",
+      "argumentNames": [],
+      "expectedInvocations": 1
+    },
+    {
+      "target": "AI_HLYUITests",
+      "suite": "HanlinComposerCapabilitiesUITests",
+      "method": "testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+      "signature": "testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+      "relativeIdentity": "HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+      "selector": "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+      "sourceFile": "AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift",
+      "sourceLine": 70,
+      "framework": "XCTest",
+      "argumentNames": [],
+      "expectedInvocations": 1
+    },
+    {
+      "target": "AI_HLYUITests",
+      "suite": "HanlinComposerCapabilitiesUITests",
+      "method": "testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing",
+      "signature": "testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing",
+      "relativeIdentity": "HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing",
+      "selector": "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing",
+      "sourceFile": "AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift",
+      "sourceLine": 101,
+      "framework": "XCTest",
+      "argumentNames": [],
+      "expectedInvocations": 1
+    },
+    {
+      "target": "AI_HLYUITests",
+      "suite": "HanlinMorphComposerUITests",
+      "method": "testDismissModelPickerKeepsSelectedModelAndDraft",
+      "signature": "testDismissModelPickerKeepsSelectedModelAndDraft",
+      "relativeIdentity": "HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft",
+      "selector": "AI_HLYUITests/HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft",
+      "sourceFile": "AI_HLYUITests/HanlinMorphComposerUITests.swift",
+      "sourceLine": 43,
+      "framework": "XCTest",
+      "argumentNames": [],
+      "expectedInvocations": 1
+    }
+  ],
+  "resultBundle": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-ui_phone-attempt1/Tests.xcresult",
+  "executionOwner": "/root",
+  "timeoutSeconds": 1200,
+  "buildForTestingManifests": {
+    "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun": {
+      "sha256": "7a298177b07b04a7554677049a6f557865f0aa9387e352107bec3ea2c60253e5",
+      "mtime": 1795578015.538609
+    }
+  },
+  "buildReceipt": {
+    "path": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt6.json",
+    "sha256": "aeb414df2dc399bb14b792f4482b6ffc2b8545c9dec745a7b6e3ef176aeff958"
+  },
+  "executedManifest": {
+    "path": "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+    "sha256": "7a298177b07b04a7554677049a6f557865f0aa9387e352107bec3ea2c60253e5",
+    "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+    "buildReceiptSHA256": "aeb414df2dc399bb14b792f4482b6ffc2b8545c9dec745a7b6e3ef176aeff958",
+    "preflightReceipt": "built-products-preflight-attempt2.json"
+  },
+  "schemeEnvironment": {
+    "HANLIN_UNIT_TEST_HOST": "1"
+  },
+  "packageResolvedSHA256Before": "4a55e370d71d69933efb0bc54a08973da962b4d7270da59791aa3b1ed58910bd",
+  "sourceInputs": {
+    "AI_HLY.xcodeproj/project.pbxproj": "541fc1bfc13a5ba7a5ad34b27c5b7d230a9a7e2b4b46e7bc1c64fb44da9fd645",
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "4a55e370d71d69933efb0bc54a08973da962b4d7270da59791aa3b1ed58910bd",
+    "AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme": "1a37dc5e015ee2e29e873f3e6d6035d6e933ec4eb27848c1263e51c9958af480",
+    "AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift": "e8a66bb39eef590cee23cc67367e0258f62f7d4b4d2133124e49dcc50cbe70ed",
+    "AI_HLYUITests/HanlinMorphComposerUITests.swift": "46622c7813446f3467fcea823b19200044855ee1739652ea9deb0d6f1de893c8"
+  },
+  "allowedDocumentationChanges": [],
+  "toolchain": "Xcode 27.0\nBuild version 27A266a",
+  "pid": 41619,
+  "exitCode": 65,
+  "durationSeconds": 424.962,
+  "logSHA256": "87cb58b4622dc7e181d59bc4b7cb2e8139ab83e93f5f87006d290d9ad52e2c4c",
+  "actual": {
+    "expectedMethodCount": 4,
+    "expectedInvocationCount": 4,
+    "observedMethodCount": 4,
+    "observedInvocationCount": 4,
+    "observedDeviceIDs": [
+      "F1D52257-55E0-4927-8029-E19D47B51AC0"
+    ],
+    "cases": [
+      {
+        "selector": "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+        "relativeIdentity": "HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+        "expectedInvocations": 1,
+        "observedCopies": 1,
+        "rawIdentity": "HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend()",
+        "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+        "rawResult": "Failed",
+        "durationSeconds": 46.32673692703247,
+        "arguments": [],
+        "status": "OBSERVED_NONPASS"
+      },
+      {
+        "selector": "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+        "relativeIdentity": "HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+        "expectedInvocations": 1,
+        "observedCopies": 1,
+        "rawIdentity": "HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity()",
+        "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+        "rawResult": "Failed",
+        "durationSeconds": 30.31432604789734,
+        "arguments": [],
+        "status": "OBSERVED_NONPASS"
+      },
+      {
+        "selector": "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing",
+        "relativeIdentity": "HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing",
+        "expectedInvocations": 1,
+        "observedCopies": 1,
+        "rawIdentity": "HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing()",
+        "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing",
+        "rawResult": "Failed",
+        "durationSeconds": 187.0529750585556,
+        "arguments": [],
+        "status": "OBSERVED_NONPASS"
+      },
+      {
+        "selector": "AI_HLYUITests/HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft",
+        "relativeIdentity": "HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft",
+        "expectedInvocations": 1,
+        "observedCopies": 1,
+        "rawIdentity": "HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft()",
+        "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft",
+        "rawResult": "Failed",
+        "durationSeconds": 18.55938696861267,
+        "arguments": [],
+        "status": "OBSERVED_NONPASS"
+      }
+    ],
+    "problems": [
+      "METHOD_NONPASS: HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+      "METHOD_NONPASS: HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+      "METHOD_NONPASS: HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing",
+      "METHOD_NONPASS: HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft",
+      "SUMMARY_NONPASS",
+      "SUMMARY_failedTests: 4",
+      "SUMMARY_COUNT_MISMATCH_passedTests: 0",
+      "SUMMARY_HAS_FAILURE_DIAGNOSTICS"
+    ],
+    "passed": false
+  },
+  "summary": {
+    "result": "Failed",
+    "totalTestCount": 4,
+    "passedTests": 0,
+    "failedTests": 4,
+    "skippedTests": 0,
+    "expectedFailures": 0
+  },
+  "packageResolvedSHA256After": "4a55e370d71d69933efb0bc54a08973da962b4d7270da59791aa3b1ed58910bd",
+  "sourceInputsUnchanged": true,
+  "testProductManifestsUnchanged": true,
+  "xcresultFilesManifestSHA256": "65393521bbe9343a1bc161f96b9574afd6eddc7667955cdbf8cdcbd93bf902d5",
+  "postRunHEAD": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+  "finishedAtUTC": "2026-11-25T04:04:26.574538+00:00"
+}

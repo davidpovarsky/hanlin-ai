@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "date_utc": "2026-11-22",
+  "scope": "Provider-only pre-window invalidation correction following the isolated UIKit attachment provider review.",
+  "supersedes_only": "The window-presence invalidation gate recorded in selection-provider-isolation-followup.json. Prior receipt and tested hashes are retained unchanged.",
+  "parent_renderer_commit": "cbcbdda4aa3d279cfbdecbbee4647111990dbc6f",
+  "renderer_file": "Sources/MarkdownText/UI/Paragraph/UIKit/MarkdownRichBlockAttachment.swift",
+  "source_sha256": {
+    "before": "7d679298db17f75b88784fa3b29676929a5ffb81a6a66cb9451f757763bd720a",
+    "after": "a4cb6823e50dbac34a5165832fbe6b7e3f24679ade1ecca29faaeca07fae56cb"
+  },
+  "diagnosis": "An off-main measurement may return the finite1pt placeholder before the owner text view enters a window. Its deferred main measurement must invalidate TextKit even during pre-window layout; dropping that invalidation could leave cached placeholder geometry until another layout event.",
+  "correction": "Removed only the window-presence gate. The deferred MainActor task now unwraps the weak owner and requires a nonnil attachmentEnvironment before invalidating TextKit and notifying intrinsic layout.",
+  "lifecycle_evidence": {
+    "teardown_file": "Sources/MarkdownText/UI/Paragraph/UIKit/ParagraphView+iOS.swift",
+    "teardown": "Remote source read confirms dismantleUIView invokes view.setAttachmentEnvironment(nil), after removing the selection callbacks and Markdown controller.",
+    "notification_file": "Sources/MarkdownText/UI/Paragraph/UIKit/ParagraphUIView.swift",
+    "notification": "attachmentSizeDidChange performs invalidateCachedSize(), invalidateIntrinsicContentSize(), and setNeedsLayout(); none requires a mounted window.",
+    "invariant": "A live pre-window owner receives the geometry invalidation; a deallocated owner or dismantled owner with a cleared environment receives no invalidation."
+  },
+  "validation": {
+    "job": {
+      "id": "job_96ea72e02d8c",
+      "type": "job_result",
+      "source": "exec@host_7ec8382e82747448",
+      "severity": "info",
+      "tool": "exec",
+      "host": "host_7ec8382e82747448",
+      "status": "succeeded",
+      "exit_code": 0,
+      "created_at": 1795325501.6607795,
+      "started_at": "2026-11-22T05:31:41.686636+00:00",
+      "finished_at": "2026-11-22T05:31:44.532573+00:00",
+      "duration_s": 2.85,
+      "error": null,
+      "output_truncated": false,
+      "timeout_s": 120,
+      "read": false,
+      "notified": {
+        "telegram": null,
+        "resend": null
+      },
+      "notify_spec": {},
+      "output": "PROVIDER_SYNTAX_EXIT=0\r\nWHITESPACE_EXIT=0\r\nA4CB6823E50DBAC34A5165832FBE6B7E3F24679ADE1ECCA29FAAECA07FAE56CB\nwarning: in the working copy of 'Sources/MarkdownText/UI/Paragraph/UIKit/MarkdownRichBlockAttachment.swift', LF will be replaced by CRLF the next time Git touches it"
+    },
+    "local_and_remote_sha256_match": true,
+    "parse_exit": 0,
+    "whitespace_exit": 0,
+    "prior_checks": "The unchanged25 cache-domain assertions and corrected Swift5 actor harness were not rerun. Their exact prior tested source hash remains in the original isolation receipt."
+  },
+  "reproduction": [
+    "swiftc -frontend -parse Sources/MarkdownText/UI/Paragraph/UIKit/MarkdownRichBlockAttachment.swift",
+    "git diff --check -- Sources/MarkdownText/UI/Paragraph/UIKit/MarkdownRichBlockAttachment.swift",
+    "Get-FileHash -Algorithm SHA256 Sources/MarkdownText/UI/Paragraph/UIKit/MarkdownRichBlockAttachment.swift"
+  ],
+  "limitations": "Focused syntax/ownership review only. No Apple SDK typecheck, simulator, or device runtime acceptance is claimed. The signed Apple archive remains the API compilation gate."
+}

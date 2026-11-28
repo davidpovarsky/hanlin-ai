@@ -1,0 +1,27 @@
+{
+  "base_sha": "7d5c4bae7693bebafcc7890fd74f777b05311666",
+  "generated_at_utc": "2026-11-26T16:36:35.585744+00:00",
+  "original_affected_plan_sha256": "1930975b4cb8a9dc0f79f4089d47f8ff9b80a3a202596c8a34d69fec21866f14",
+  "native_execution": "PENDING",
+  "paths_sha256": {
+    ".github/workflows/build-ios26-unsigned-ipa.yml": "2c617e44da45285e25f1dce0f47eac555528e74c5252575c18ba6a9e8e768e12",
+    "Scripts/CI/select_installed_simulator.py": "96c84db083361488c3feb79dfbc45a898fa48b6aed4cec9a76f90bf0ed8267d1",
+    "Scripts/CI/ui_viewport_cohorts.py": "ddfaaa62950551560643dcb32dc9d0c2e0949f38cbb9c04bd92278498fada48c",
+    "Scripts/CI/ui_viewport_cohorts.json": "396026ec3818d35bc715156afa0a52fd20e16a523279021b225739e9ed99333a",
+    "Scripts/CI/Tests/test_ui_viewport_cohorts.py": "8124eb2d77906f7a2c1ae8c5d1741dc4b5fd3c5f5108f4da6c1d625e5eb12ffc",
+    "AI_HLYUITests/HanlinMorphComposerUITests.swift": "033fc452d12dc94b207da7291592b147a6f1dde311162a837e5ae3ff1075affe",
+    "AI_HLYUITests/HanlinSidebarNavigationUITests.swift": "fd127f93a392517b86ff2f0771cb02d7054393b6bedce1a5875b4d99330d5d86"
+  },
+  "shell_validation": [
+    {
+      "step": "Boot iPad Simulator and stage fixtures",
+      "shell_syntax_exit": 0,
+      "stderr": ""
+    },
+    {
+      "step": "Run simulator test suite",
+      "shell_syntax_exit": 0,
+      "stderr": ""
+    }
+  ]
+}

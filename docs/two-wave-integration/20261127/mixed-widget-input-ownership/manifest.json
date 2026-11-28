@@ -1,0 +1,47 @@
+{
+  "members": [
+    {
+      "bytes": 6938,
+      "path": "README.md",
+      "sha256": "f44dd24c5fe95c02e2bb7abbf6017dcd5e5d1cf4e69a59f78e3aab48a4214129"
+    },
+    {
+      "bytes": 2121,
+      "path": "independent-root-source-review-r2.json",
+      "sha256": "39022e689ac8ae428ae6f724c6a8e08040cde87abdd979108e7cbf776e724940"
+    },
+    {
+      "bytes": 3957,
+      "path": "independent-w1-source-review-r2.json",
+      "sha256": "13cc23fe2e56060d0ec36316ec5b6d56bbd5b8778c50bc68a35183b8538a5485"
+    },
+    {
+      "bytes": 1087,
+      "path": "native-command.json",
+      "sha256": "f7b4ff9f4142be3d05142d5a991dd0221cebbd6c720de8a1c216b533510f6b17"
+    },
+    {
+      "bytes": 2580,
+      "path": "original-red-reference.json",
+      "sha256": "fed31a40064ce0bc46b3a681de2e8a22e3ce84dbac02b070b0570106cd8342ed"
+    },
+    {
+      "bytes": 6466,
+      "path": "qualification.json",
+      "sha256": "311af02034a856dbf5fc57f15b13ba2d396b76eef3be137b50da369bcec08330"
+    },
+    {
+      "bytes": 1942,
+      "path": "source-r1-to-r2.patch.gz",
+      "sha256": "85e91f913eb8e986e40196d50a4ef8e683db459c90ba6bf60d998c4a1205b900"
+    },
+    {
+      "bytes": 8613,
+      "path": "source-r2.patch.gz",
+      "sha256": "ccd1b4af5c174205b30538896af49de379d6c36b8732bc939f54ef6ebfffb06c"
+    }
+  ],
+  "nativeGreen": "NOT_RUN",
+  "schemaVersion": 1,
+  "sourceCommit": "4aff8526c3037d1b18a2af831911771e342d7742"
+}

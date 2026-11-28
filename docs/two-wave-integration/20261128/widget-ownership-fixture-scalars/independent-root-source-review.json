@@ -1,0 +1,28 @@
+{
+  "at": "2026-11-28T00:40:42.556586+00:00",
+  "classification": "APPROVED_TEST_FIXTURE_TYPED_SCALAR_STORAGE_ONLY",
+  "base": "5baa01fb0c2102c45c2d1167dde2cec92ac658de",
+  "candidateSHA256": "1f19fadfa4112a8a93f6ad3c3a2c42452566eb56932f537dc8097f9cfee8464c",
+  "patchSHA256": "450c320968c6fffdb382e286f3fa7a354a89e3d79ca5969ba4cdde6b7a37c94d",
+  "sourceManifestSHA256": "ed3d9665977d66f66030eb123f3f4b09050839df8154f95f20599fdb13ae7871",
+  "sourceMembersVerified": 8,
+  "originalAPIAuthoritiesRehashedAtCurrentHEAD": 4,
+  "wholeFileInverse": "Only setJSON\u2192set for two exact shared fixture calls; all arguments, false/9 assertions and eight test method bodies remain byte-identical.",
+  "review": "Original setJSON JSExport requires dictionary; existing shipping $storage.set accepts String/Any and calls original identity/budget-checked typed transaction, which permits fragments. Existing original typed-storage regression uses number/Bool. No engine or production modification.",
+  "priorNativePacket": {
+    "manifestSHA256": "21a842af7bd829557428ae03e82b3e53dd891a7e75cdbf1fe2522da7358d1da6",
+    "reconciliationSHA256": "fcdcc74449465be7834b16c37ab461efda6a6122d530a506b637933ae737330e",
+    "membersVerified": 22,
+    "bytesVerified": 5679739,
+    "rawLogSHA256": "fe2d9436677aae3d88a4f7e68142d36e76a5d591b47189a25e52535e8969e9fb",
+    "rawBoundStarts": 10,
+    "rawBoundTerminals": 10,
+    "passed": 7,
+    "failed": 3,
+    "exitCode": 1,
+    "stopReason": null
+  },
+  "correctedNative": "NOT_RUN",
+  "productionChangedPaths": [],
+  "SDK396ChangedPaths": []
+}

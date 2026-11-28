@@ -1,0 +1,341 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-18T08:37:49.871919+00:00",
+  "source_sha": "ee8890a31d857eb20554ed5cd2d3bcbf09058489",
+  "native_run": {
+    "id": 44197039335,
+    "sha": "ffa75eb3fbe1917f0bcb824988668625de852eb3",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44197039335",
+    "all_selected_test_nodes": 53,
+    "passed": 53,
+    "failed": 0,
+    "skipped": 0,
+    "case_json_sha256": {
+      "CoreTests.json": "f58ab60ecef1e8a683510f29bfeeec7f433d6cac96f14451e8dfe11f4c66851b",
+      "SDKTests.json": "bfe291e9d0dcce5bdf8830bf67b638a06025f48b0ce0af09b4f915d4e90567b1"
+    },
+    "original_tested_source_manifest_sha256": "b0e14854f88ef76e9f470a77022c5e8d766d7311e0d98e7696d4c61e48791434"
+  },
+  "mapping": [
+    {
+      "feature_id": "RUN-02",
+      "test_ids": [
+        "HanlinAISDKAgentEngineTests/cancellationWhileProviderApprovalIsPendingHasNoEffect()",
+        "HanlinAISDKAgentEngineTests/cancellationAfterFortyStopsTheActualTool()"
+      ],
+      "assertion": "Cancelling the canonical stream cancels the pending approval exactly once without executing the effect; after 45 actual scripted tool steps it cancels the executing tool and starts no step 46.",
+      "limits": "Native SDK fixture transport only; app Stop control, lifecycle and a live provider are separate gates.",
+      "scope": "PARTIAL_NATIVE_COMPONENT_EVIDENCE"
+    },
+    {
+      "feature_id": "RUN-14",
+      "test_ids": [
+        "AgentSessionTests/structuredChannelPreservesInterleavingAndDeduplicatesExactReplay()"
+      ],
+      "assertion": "Canonical session preserves text/A2UI/text sequence with original part identity and deduplicates exact replay.",
+      "limits": "Does not prove all conversation grouping or the integrated transcript layout.",
+      "scope": "PARTIAL_NATIVE_COMPONENT_EVIDENCE"
+    },
+    {
+      "feature_id": "RUN-18",
+      "test_ids": [
+        "AgentSessionTests/existingEngineRunsHostToolOnceAndPersistsCorrelation()",
+        "StoreTests/versionOneCheckpointCanBeRestoredWithoutDestructiveMigration()"
+      ],
+      "assertion": "Original session writes one tool receipt with exact run/session/call identity; private on-disk store checkpoint restores original entries and draft without accepting a future format or symlink root.",
+      "limits": "The host/session test uses its explicit in-memory fixture; the separate checkpoint test uses the real private-file store. Original SwiftData app reopen remains an independent gate.",
+      "scope": "PARTIAL_NATIVE_COMPONENT_EVIDENCE"
+    },
+    {
+      "feature_id": "AGENT-12",
+      "test_ids": [
+        "HanlinAISDKAgentEngineTests/testDynamicToolExposure()"
+      ],
+      "assertion": "Step preparation initially exposes load_skill, then includes execute_python and the loaded skill ID.",
+      "limits": "Scripted transport and preparation behavior only; does not prove production tool_search, installed skill execution or actual model decisions.",
+      "scope": "PARTIAL_NATIVE_COMPONENT_EVIDENCE"
+    },
+    {
+      "feature_id": "RESULT-11",
+      "test_ids": [
+        "HanlinAISDKAgentEngineTests/testProviderTextCitationsKeepExactPartAndUnicodeRange()"
+      ],
+      "assertion": "Canonical provider events retain exact text-part ID and a valid Unicode/UTF-16 citation range while rejecting malformed source annotation.",
+      "limits": "No proof of citation chip, icon/title, actual URL navigation or live provider.",
+      "scope": "PARTIAL_NATIVE_COMPONENT_EVIDENCE"
+    },
+    {
+      "feature_id": "RESULT-27",
+      "test_ids": [
+        "AgentSessionTests/generalMutationProgressAndReceiptKeepOriginalContextAndStep()"
+      ],
+      "assertion": "Original dispatcher progress and receipt preserve original session, run, step, provider call and invocation identity.",
+      "limits": "Does not prove all activity variants, chronological UI display, inspector, or animation.",
+      "scope": "PARTIAL_NATIVE_COMPONENT_EVIDENCE"
+    }
+  ],
+  "mapped_unique_cases": 8,
+  "direct_source_identity": [
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+      "tested_sha256": "83dc0bb73e30c1f2d702371d49add640df0bde52597714bd51cb73c31a1c9f73",
+      "current_committed_sha256": "83dc0bb73e30c1f2d702371d49add640df0bde52597714bd51cb73c31a1c9f73"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostDispatcher.swift",
+      "tested_sha256": "bb4a4c7c97559687f6a2d739f5f1e2d2f779a4a6c7d6f0c4a1f6a8d64b2a3e7f",
+      "current_committed_sha256": "bb4a4c7c97559687f6a2d739f5f1e2d2f779a4a6c7d6f0c4a1f6a8d64b2a3e7f"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostSchemaValidation.swift",
+      "tested_sha256": "2f08264c2c2473f587afdcf2a29a1dcde7fdd04904a9cc84b6e11dac2f01d713",
+      "current_committed_sha256": "2f08264c2c2473f587afdcf2a29a1dcde7fdd04904a9cc84b6e11dac2f01d713"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinModelToolInputGuard.swift",
+      "tested_sha256": "003693d1f14d1a19839f878e1dcfb93a80fa66bd3f6cfd1c9dd1b6e491a04746",
+      "current_committed_sha256": "003693d1f14d1a19839f878e1dcfb93a80fa66bd3f6cfd1c9dd1b6e491a04746"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleOnDeviceProvider.swift",
+      "tested_sha256": "e9cce91de6ae2ad7b93d86efe81d3ee8c550c504fe167c0a6bc17098f7ded22f",
+      "current_committed_sha256": "e9cce91de6ae2ad7b93d86efe81d3ee8c550c504fe167c0a6bc17098f7ded22f"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleTextDelta.swift",
+      "tested_sha256": "c40a267b83f68e803c515ae43846d6b9d98d58b3c89007065f0909adb3477c7a",
+      "current_committed_sha256": "c40a267b83f68e803c515ae43846d6b9d98d58b3c89007065f0909adb3477c7a"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinHostContracts/HanlinConversationStore.swift",
+      "tested_sha256": "7a19c8b974a35bae6fc16eebbd71684ab7bc3ed0526a15efa81e5c24d48848ed",
+      "current_committed_sha256": "7a19c8b974a35bae6fc16eebbd71684ab7bc3ed0526a15efa81e5c24d48848ed"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinHostContracts/HanlinHostContext.swift",
+      "tested_sha256": "fd308d1d583a0205fb1305677b87878d6e82396b21eb20082ddd335981be2f6f",
+      "current_committed_sha256": "fd308d1d583a0205fb1305677b87878d6e82396b21eb20082ddd335981be2f6f"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinHostContracts/HanlinHostEvents.swift",
+      "tested_sha256": "1bd20a915332012ea2156260f062b138d519c1ecd6eabe0a7338587f6e8eba2b",
+      "current_committed_sha256": "1bd20a915332012ea2156260f062b138d519c1ecd6eabe0a7338587f6e8eba2b"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinHostContracts/HanlinHostIntegration.swift",
+      "tested_sha256": "5058e0e331612aa8d9eba2372f77530947719156efc7c8c40c0bee98144df7bf",
+      "current_committed_sha256": "5058e0e331612aa8d9eba2372f77530947719156efc7c8c40c0bee98144df7bf"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinHostContracts/HanlinHostInteraction.swift",
+      "tested_sha256": "067a6e3e0a8099e14345d2d67ca24b706bd352f4e28ce84aea6caa8360f627c5",
+      "current_committed_sha256": "067a6e3e0a8099e14345d2d67ca24b706bd352f4e28ce84aea6caa8360f627c5"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinPersistenceAdapters/HanlinInMemoryConversationStore.swift",
+      "tested_sha256": "0c3f501fc503bb448e594da824a57b3052e72c294f800c363198e03eab7e7c49",
+      "current_committed_sha256": "0c3f501fc503bb448e594da824a57b3052e72c294f800c363198e03eab7e7c49"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinPersistenceAdapters/HanlinPrivateConversationStore.swift",
+      "tested_sha256": "3b33d595c6003ac2e733220e28c56e0ab73f81e5f61c1eff61a3bbcb98c301f3",
+      "current_committed_sha256": "3b33d595c6003ac2e733220e28c56e0ab73f81e5f61c1eff61a3bbcb98c301f3"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/Fixtures/GatedContextHost.swift",
+      "tested_sha256": "911bf6a2edfccb85ed7218aab6a0d3297b444b7d496d170fc2daf62eb4b63d03",
+      "current_committed_sha256": "911bf6a2edfccb85ed7218aab6a0d3297b444b7d496d170fc2daf62eb4b63d03"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/Fixtures/SyntheticFixtureHost.swift",
+      "tested_sha256": "7d4a3512d74a0b491cf1a11e26d536c0fe81ad5e884c7457e483d3d059ed4b5b",
+      "current_committed_sha256": "7d4a3512d74a0b491cf1a11e26d536c0fe81ad5e884c7457e483d3d059ed4b5b"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift",
+      "tested_sha256": "bc17417831248d82b532a9c445dc78a263d03ac4dfc839f2737c6b0d8f7abdbb",
+      "current_committed_sha256": "bc17417831248d82b532a9c445dc78a263d03ac4dfc839f2737c6b0d8f7abdbb"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HostSchemaValidationTests.swift",
+      "tested_sha256": "32c7d2350bc871bc87fa45d0536d81e2c631af594bff7d5f941f6f3f0e4cb327",
+      "current_committed_sha256": "32c7d2350bc871bc87fa45d0536d81e2c631af594bff7d5f941f6f3f0e4cb327"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinHostConcurrencyTests/HostCallbackConventionTests.swift",
+      "tested_sha256": "2c62df5acd430311a51955ffdd1d1df5f31c42e04f8b1c6c3f77c33f9c80cdcc",
+      "current_committed_sha256": "2c62df5acd430311a51955ffdd1d1df5f31c42e04f8b1c6c3f77c33f9c80cdcc"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinHostContractsTests/ContextTests.swift",
+      "tested_sha256": "2d5db843f416115e292c04bc085462200b1b569a5967ac77bac6bd5ff7163832",
+      "current_committed_sha256": "2d5db843f416115e292c04bc085462200b1b569a5967ac77bac6bd5ff7163832"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinPersistenceAdaptersTests/StoreTests.swift",
+      "tested_sha256": "40307c92461e3b14705573e42cf2a815634f08f30f96cbd79137dfc9dcedac25",
+      "current_committed_sha256": "40307c92461e3b14705573e42cf2a815634f08f30f96cbd79137dfc9dcedac25"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/PortableProof/main.swift",
+      "tested_sha256": "b3502bacfb5e431f08986390551a16c4a91716e8f48e3c1a6156afe8e4690a77",
+      "current_committed_sha256": "b3502bacfb5e431f08986390551a16c4a91716e8f48e3c1a6156afe8e4690a77"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/PortableProof/run.ps1",
+      "tested_sha256": "95c3dacb2a9b94771e17217986102913d1e90dacc191afee6add2e067b0751e5",
+      "current_committed_sha256": "95c3dacb2a9b94771e17217986102913d1e90dacc191afee6add2e067b0751e5"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+      "tested_sha256": "0fadca052c3d9f131b72f31892940e734aefd28898be2d169e6affe177284fd9",
+      "current_committed_sha256": "0fadca052c3d9f131b72f31892940e734aefd28898be2d169e6affe177284fd9"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift",
+      "tested_sha256": "c8e0ecfdda95960195c3454f76d35fa5bd6c48c08781e920d39903157416eb92",
+      "current_committed_sha256": "c8e0ecfdda95960195c3454f76d35fa5bd6c48c08781e920d39903157416eb92"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift",
+      "tested_sha256": "a1b62896cb60494872843c2bf23a62cb635b8a107c806ed37f5b78fb5ceeb67f",
+      "current_committed_sha256": "a1b62896cb60494872843c2bf23a62cb635b8a107c806ed37f5b78fb5ceeb67f"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinCapturedStreamReplay.swift",
+      "tested_sha256": "ad4f7d48c49e918db2f826d02556b63a95e29f0b34637d1f853a9bc6c20169ce",
+      "current_committed_sha256": "ad4f7d48c49e918db2f826d02556b63a95e29f0b34637d1f853a9bc6c20169ce"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatEngine.swift",
+      "tested_sha256": "2bccec0d98941fb9ad89b8b8ca2325e773f853908d379e15617ca877af4700ca",
+      "current_committed_sha256": "2bccec0d98941fb9ad89b8b8ca2325e773f853908d379e15617ca877af4700ca"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatMessage.swift",
+      "tested_sha256": "b6ebae1ff8788ca405cb9e5b54379894d9c5f29a58e81101d07b8df53f805704",
+      "current_committed_sha256": "b6ebae1ff8788ca405cb9e5b54379894d9c5f29a58e81101d07b8df53f805704"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatModelConfiguration.swift",
+      "tested_sha256": "f7b52386256f944677ef7d96380bdab99be8d724c88236112fdf79841a1edfa6",
+      "current_committed_sha256": "f7b52386256f944677ef7d96380bdab99be8d724c88236112fdf79841a1edfa6"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatRequestBuilder.swift",
+      "tested_sha256": "7d0dbe545c2642e32f9a1dcaade6776e917b9a5603cb1535f7eac492a9efade6",
+      "current_committed_sha256": "7d0dbe545c2642e32f9a1dcaade6776e917b9a5603cb1535f7eac492a9efade6"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatStreamEvent.swift",
+      "tested_sha256": "d5760c05a0c9154b8716e3f9c95be4df7dc1c42974dd21612ab43bdb235094ef",
+      "current_committed_sha256": "d5760c05a0c9154b8716e3f9c95be4df7dc1c42974dd21612ab43bdb235094ef"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatStreamParser.swift",
+      "tested_sha256": "ff20771a6aed636bd4abbb5de26f4adc350c338f16e30659ba919c6fa1614826",
+      "current_committed_sha256": "ff20771a6aed636bd4abbb5de26f4adc350c338f16e30659ba919c6fa1614826"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatStructuredPart.swift",
+      "tested_sha256": "3cd3fbb880ee98450dc022920380b4c38baa84bca421b4739b6b525ac17ae262",
+      "current_committed_sha256": "3cd3fbb880ee98450dc022920380b4c38baa84bca421b4739b6b525ac17ae262"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatTransportTrace.swift",
+      "tested_sha256": "6acef2c38d98f14c34221a1995913d03c6ec1b34f3ad6df31b0d889cddbb8395",
+      "current_committed_sha256": "6acef2c38d98f14c34221a1995913d03c6ec1b34f3ad6df31b0d889cddbb8395"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinNativeStructuredResponse.swift",
+      "tested_sha256": "aa102dfa161fdc72b939bbf103fad18d8c5e20ac307ab4c0ae92425cd2987eb6",
+      "current_committed_sha256": "aa102dfa161fdc72b939bbf103fad18d8c5e20ac307ab4c0ae92425cd2987eb6"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinNonEmptyLanguageModel.swift",
+      "tested_sha256": "d62ad35a0e618bbfedb56dd79a9301585725589184aaaf3a26ab870d8a17716e",
+      "current_committed_sha256": "d62ad35a0e618bbfedb56dd79a9301585725589184aaaf3a26ab870d8a17716e"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAISDKTests.swift",
+      "tested_sha256": "aa16486f9288494c0abfdc24ea15d16116cb0228be76d84c8c486e17f7c77264",
+      "current_committed_sha256": "aa16486f9288494c0abfdc24ea15d16116cb0228be76d84c8c486e17f7c77264"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinCapturedStreamReplayTests.swift",
+      "tested_sha256": "4b7774f583d6bda645ce74b4175cbff326cb8210a697b9dd6e86eb334ef29c56",
+      "current_committed_sha256": "4b7774f583d6bda645ce74b4175cbff326cb8210a697b9dd6e86eb334ef29c56"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinChatCoreTests.swift",
+      "tested_sha256": "1c360129ad71ed3ad24d2a5228787fca602b1c5bdd2faff9a18d342dcb985341",
+      "current_committed_sha256": "1c360129ad71ed3ad24d2a5228787fca602b1c5bdd2faff9a18d342dcb985341"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinInjectedProviderTests.swift",
+      "tested_sha256": "8083778b8ab95d912879fde570ea497710c010f4eeae2d5578dc0e3fd673152c",
+      "current_committed_sha256": "8083778b8ab95d912879fde570ea497710c010f4eeae2d5578dc0e3fd673152c"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinNativeStructuredResponseTests.swift",
+      "tested_sha256": "0edf376b95c4b90bed6c985896bb4dc9a572e4a00a2b7354a28f12641fbbea09",
+      "current_committed_sha256": "0edf376b95c4b90bed6c985896bb4dc9a572e4a00a2b7354a28f12641fbbea09"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinTransportTraceTests.swift",
+      "tested_sha256": "7ef3785c16aad89b922d9207e53b5ab1c8fa765f1b1b3b4dea5194bd923583c0",
+      "current_committed_sha256": "7ef3785c16aad89b922d9207e53b5ab1c8fa765f1b1b3b4dea5194bd923583c0"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/DirectChatPathConformanceTests.swift",
+      "tested_sha256": "94f3ec0a2c2625c53e931df02265bf69944b77850449d79dcb014b3380973cb5",
+      "current_committed_sha256": "94f3ec0a2c2625c53e931df02265bf69944b77850449d79dcb014b3380973cb5"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderConformanceScenarioTests.swift",
+      "tested_sha256": "e7824ccde340596203b5f28370988d493e2b3dba5db68449d026c842a0e7d955",
+      "current_committed_sha256": "e7824ccde340596203b5f28370988d493e2b3dba5db68449d026c842a0e7d955"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderConformanceTypes.swift",
+      "tested_sha256": "604ef8d64402e4fe7c6e3df9199497d5250d7616656e0570fe8f6cfee2d778dc",
+      "current_committed_sha256": "604ef8d64402e4fe7c6e3df9199497d5250d7616656e0570fe8f6cfee2d778dc"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderFaultInjectionTests.swift",
+      "tested_sha256": "877fb8044aaf91b38596f4bf7d09789620ee39b393a3e9fa8e8a338d13557732",
+      "current_committed_sha256": "877fb8044aaf91b38596f4bf7d09789620ee39b393a3e9fa8e8a338d13557732"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderLongHorizonTests.swift",
+      "tested_sha256": "08f03bc11bdf43bfed054646de0d0f5b4bc0dcaf3a8813214f2feaa6eee76f5a",
+      "current_committed_sha256": "08f03bc11bdf43bfed054646de0d0f5b4bc0dcaf3a8813214f2feaa6eee76f5a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderRequestValidators.swift",
+      "tested_sha256": "63afa58919ec493c4ac1ffe11b912d7b6f0a9d7ce586118ab94f38a7bf21d20f",
+      "current_committed_sha256": "63afa58919ec493c4ac1ffe11b912d7b6f0a9d7ce586118ab94f38a7bf21d20f"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderResponseFixtures.swift",
+      "tested_sha256": "de14c4620dfe2f8b49eb104eb22ca1467efa85ab31ff2968547d0cfb00e9f17a",
+      "current_committed_sha256": "de14c4620dfe2f8b49eb104eb22ca1467efa85ab31ff2968547d0cfb00e9f17a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderRoutingTests.swift",
+      "tested_sha256": "cfcb3f699f22f033a80614895d42f976c548d292fe30cfb8306b83e3d52f2624",
+      "current_committed_sha256": "cfcb3f699f22f033a80614895d42f976c548d292fe30cfb8306b83e3d52f2624"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/StatefulProviderEmulator.swift",
+      "tested_sha256": "998e56953980a75281046d58ef45feabd583b76e13f4c5c6bdbac916e67c1172",
+      "current_committed_sha256": "998e56953980a75281046d58ef45feabd583b76e13f4c5c6bdbac916e67c1172"
+    }
+  ],
+  "limits": [
+    "Historical Apple-native evidence at its actual SHA; this mapping did not rerun tests.",
+    "Only the listed SDK/ChatCore source and test files are checked byte-for-byte against the tested artifact. It is not a claim that the entire product dependency closure is unchanged.",
+    "HanlinPlatform Package.swift separately adds HanlinMiniAppCore to HanlinScriptStore and its tests; MiniApps, ScriptStore and shared file-access changes have their separate recorded native gates.",
+    "Full feature acceptance, original app UI, physical device and live-provider gates remain open."
+  ]
+}

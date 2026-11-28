@@ -1,0 +1,30 @@
+{
+  "at_utc": "2026-11-26T16:39:42.299960+00:00",
+  "command": [
+    "node",
+    "--test",
+    "--test-name-pattern=the real CLI archives and revalidates retained source, diagnostics and output identity",
+    "Tests/miniapp-authoring.test.mjs"
+  ],
+  "repository": "/mnt/development/projects/worktrees/hanlin-wave2-ci-completion-20261126",
+  "copied_source_sha256": {
+    "miniapp-authoring.mjs": "ed6244894695eeb4b83aa41ea1f7523cda2d5db2059452b666fd21a099238a30",
+    "miniapp-assistant-tools.mjs": "721ed8ccf94803776a8d0c2f9ea8e7bb9e9fb7bc9faa27cc216d6ec65512ebcf",
+    "Tests/miniapp-authoring.test.mjs": "43a3e0c34ccba2045033e18ba84ae7c09411117eb2eaf74f745055de06e46d9b"
+  },
+  "typescript_package": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-recovery-20261125/Scripts/NativeScript/node_modules/typescript",
+  "typescript_version": "5.9.3",
+  "node_version": "v24.22.0",
+  "override": "HANLIN_AUTHORING_TYPESCRIPT absent",
+  "negative_original_copy": {
+    "exit": 1,
+    "stdout": "node:internal/modules/esm/resolve:272\n    throw new ERR_MODULE_NOT_FOUND(\n          ^\n\nError [ERR_MODULE_NOT_FOUND]: Cannot find module '/mnt/development/projects/evidence/hanlin-wave2-ci-completion-20261126/hanlin-authoring-relocation-iwh0cjd9/miniapp-assistant-tools.mjs' imported from /mnt/development/projects/evidence/hanlin-wave2-ci-completion-20261126/hanlin-authoring-relocation-iwh0cjd9/miniapp-authoring.mjs\n    at finalizeResolution (node:internal/modules/esm/resolve:272:11)\n    at moduleResolve (node:internal/modules/esm/resolve:879:10)\n    at defaultResolve (node:internal/modules/esm/resolve:1006:11)\n    at #cachedDefaultResolve (node:internal/modules/esm/loader:705:20)\n    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:725:38)\n    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:763:56)\n    at #resolve (node:internal/modules/esm/loader:687:17)\n    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:607:35)\n    at ModuleJob.syncLink (node:internal/modules/esm/module_job:276:33)\n    at ModuleJob.link (node:internal/modules/esm/module_job:381:17) {\n  code: 'ERR_MODULE_NOT_FOUND',\n  url: 'file:///mnt/development/projects/evidence/hanlin-wave2-ci-completion-20261126/hanlin-authoring-relocation-iwh0cjd9/miniapp-assistant-tools.mjs'\n}\n\nNode.js v24.22.0\n\u2716 Tests/miniapp-authoring.test.mjs (70.915853ms)\n\u2139 tests 1\n\u2139 suites 0\n\u2139 pass 0\n\u2139 fail 1\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 91.748654\n\n\u2716 failing tests:\n\ntest at Tests/miniapp-authoring.test.mjs:1:1\n\u2716 Tests/miniapp-authoring.test.mjs (70.915853ms)\n  'test failed'\n",
+    "stderr": ""
+  },
+  "fixed_copy": {
+    "exit": 0,
+    "stdout": "\u2714 the real CLI archives and revalidates retained source, diagnostics and output identity (8593.223119ms)\n\u2139 tests 1\n\u2139 suites 0\n\u2139 pass 1\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 9046.923763\n",
+    "stderr": ""
+  },
+  "qualification": "Original portable relocation test only; no Mac native acceptance"
+}

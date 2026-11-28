@@ -1,0 +1,19 @@
+{
+  "command": [
+    "python3",
+    "Scripts/CI/prepare_original_source_fixtures.py",
+    "--source-root",
+    "/mnt/development/projects/worktrees/hanlin-original-source-fixtures-20261127",
+    "--output",
+    "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-source-fixture-delivery-95c12227/actual-producer/OriginalSourceFixtures.bundle"
+  ],
+  "startedAtUTC": "2026-11-27T15:15:21.183241+00:00",
+  "finishedAtUTC": "2026-11-27T15:15:21.720013+00:00",
+  "exitCode": 0,
+  "status": "COPIED_AND_GIT_QUALIFIED",
+  "files": 23,
+  "bytes": 574715,
+  "allCurrentSourceBytesEqualGitHEADAndProducedBytes": true,
+  "manifestSHA256": "1de22a5f14a2658bd66e34810f337bff5cd435b4800dee35cd21689df21156b9",
+  "nativeBuildAndBundleLoading": "NOT_RUN"
+}

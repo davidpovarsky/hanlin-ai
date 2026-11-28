@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "repository": "davidpovarsky/hanlin-ai",
+  "run_id": 45313324655,
+  "job_id": 138174088187,
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45313324655",
+  "source_sha": "ac0ffd34dad2ba77002638aa9175a8e08f9f6585",
+  "artifact": {
+    "id": 14885291598,
+    "name": "app-split-45313324655",
+    "bytes": 16900488,
+    "sha256": "f5a3b53c97294bd1496687cc0f6e209ae824b1dbe3ecb2e8ec7af37b1d5180eb",
+    "verification": "COMPLETE_DOWNLOADED_ZIP_HASH_VERIFIED_BEFORE_MEMBER_EXTRACTION"
+  },
+  "outcome": {
+    "workflow": "failure",
+    "acceptance": "INFRA_ERROR",
+    "build": "NOT_RUN",
+    "ui": "NOT_RUN",
+    "xcresult": "NOT_CREATED",
+    "previous_passes_admitted": 0
+  },
+  "failure": {
+    "error": "Command '('gh', 'api', 'repos/davidpovarsky/hanlin-ai/actions/artifacts/14881066965')' timed out after 120 seconds"
+  },
+  "observed_commands": [
+    {
+      "argv": [
+        "xcrun",
+        "simctl",
+        "bootstatus",
+        "0347C570-46D8-406E-A088-D3EBD0122BAB",
+        "-b"
+      ],
+      "exit": 0,
+      "seconds": 163.10878624999998,
+      "log": "bootstatus.log",
+      "sha256": "7d26b1971be05adc39f8ebd659cf08210ae18b7028cfc33198f10523fad3eb74"
+    },
+    {
+      "argv": [
+        "vm_stat"
+      ],
+      "exit": 0,
+      "seconds": 16.615011707999997,
+      "log": "failure-memory.txt",
+      "sha256": "c83968fd68c4ec3ee8843fe01184a5386d2c2745e863c63684bfb2622e2ebb5f"
+    },
+    {
+      "argv": [
+        "ps",
+        "-axo",
+        "pid,ppid,%cpu,%mem,state,etime,comm"
+      ],
+      "exit": -1,
+      "seconds": 18.436017250000077,
+      "log": "failure-processes.txt",
+      "sha256": "a68e793271ad053d52f69c731ffa95dad7a761980b8fccb0aa764f17d7e97e10"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "simctl",
+        "io",
+        "0347C570-46D8-406E-A088-D3EBD0122BAB",
+        "screenshot",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/failure.png"
+      ],
+      "exit": -1,
+      "seconds": 31.619892625000034,
+      "log": "screenshot.log",
+      "sha256": "fe1213ca6907f3e4e88601cc362a691fddb1efcf7193aa131adf6bf7f847bf58"
+    }
+  ],
+  "memory_observation": {
+    "page_bytes": 16384,
+    "free_pages": 4306,
+    "wired_pages": 191373,
+    "compressor_pages": 151864,
+    "swapouts": 121972
+  },
+  "inference": "Observed host resource pressure after owned Simulator boot is consistent with metadata timeout; this does not establish an API endpoint defect.",
+  "correction": {
+    "proof_order": "Authenticate archive, ancestry, source closures and observed environment before owned Simulator boot.",
+    "metadata_transport": "Use exact-run artifact listing already used by Host restore; retain full API/ZIP/source identity and digest checks; one bounded read-only retry only after a recorded transport timeout.",
+    "unchanged": "No production code, test assertions, test-selection count or native time budgets changed; unchanged passed tests are not rerun."
+  },
+  "raw_members": {
+    "acceptance.json": {
+      "path": "run-45313324655/acceptance.json",
+      "sha256": "6fa89c55d50996ae7ca28f2c20559e7269584f8f91a6a544f18b1f9d845dfdd4"
+    },
+    "commands.jsonl": {
+      "path": "run-45313324655/commands.jsonl",
+      "sha256": "93d9ca95106ecd0e83d1fc3c0572222dfa4d5e3e1bbefddfaaf04bb2e353c333"
+    },
+    "failure-memory.txt": {
+      "path": "run-45313324655/failure-memory.txt",
+      "sha256": "c83968fd68c4ec3ee8843fe01184a5386d2c2745e863c63684bfb2622e2ebb5f"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-23T20:06:32.005381+00:00",
+  "run": 45246711373,
+  "attempt": 1,
+  "sourceCommit": "36d3c51bdba93ada2c2722ed0e9b99109d84a616",
+  "nativeJob": 137945550349,
+  "producerStatus": "FAIL",
+  "steps": [
+    {
+      "name": "Build full arm64 simulator app",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 30,
+      "started_at": "2026-11-23T19:30:54Z",
+      "completed_at": "2026-11-23T19:50:10Z"
+    },
+    {
+      "name": "Validate the current build-for-testing unit products",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 32,
+      "started_at": "2026-11-23T19:50:10Z",
+      "completed_at": "2026-11-23T19:50:11Z"
+    },
+    {
+      "name": "Locate and scan simulator app",
+      "status": "completed",
+      "conclusion": "failure",
+      "number": 35,
+      "started_at": "2026-11-23T19:51:27Z",
+      "completed_at": "2026-11-23T19:51:42Z"
+    },
+    {
+      "name": "Run simulator test suite",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 40,
+      "started_at": "2026-11-23T19:51:42Z",
+      "completed_at": "2026-11-23T19:51:42Z"
+    }
+  ],
+  "fullArm64ApplicationTestBuild": "PASS",
+  "currentBuildProductsValidation": "PASS",
+  "runtimeResignAndVerification": "PASS",
+  "resourceScan": "FAIL",
+  "originalResourceScan": {
+    "errors": [
+      {
+        "reason": "Expected one AI_Hanlin SDK resource bundle, found 2: Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle, HanlinSDK_AI_Hanlin.bundle"
+      }
+    ],
+    "module": "AI_Hanlin",
+    "status": "FAIL"
+  },
+  "testSuite": "NOT_RUN",
+  "authoredExpectedInvocations": 342,
+  "selectedScopes": 32,
+  "unitSelectorsInSealedReceipt": 27,
+  "currentProductsReceiptStatus": "SEALED",
+  "receiptBindings": {
+    "buildLogSHA256Matches": true,
+    "manifestSHA256Matches": true,
+    "duplicatedManifestBytesMatch": true,
+    "diagnosticsProvenanceSHA256Matches": true,
+    "priorDescriptors": [],
+    "productReferenceCount": 5,
+    "productBytesIndependentlyRehashed": false,
+    "limitation": "Product binaries are not in the smoke ZIP; their sizes/hashes are original runner receipt references."
+  },
+  "trackedWorkspaceModified": true,
+  "trackedDiffSHA256": "e06a876023a00115162f1ba3b8d87f7dd0257247dde85da1db02bae8e35386d4",
+  "freshCompilationClaim": false,
+  "nativeMetadataFilesIdenticalToPrior": true,
+  "appIntentsFilesIdenticalToPrior": true,
+  "runtimeOrUIAcceptance": "NOT_RUN",
+  "preparedNativeArtifact": 14855355631,
+  "preparedNativeEligible": false,
+  "preparedNativeAcquired": false,
+  "publication": "BLOCKED",
+  "hostPinsChanged": false,
+  "newTestsOrBuilds": 0
+}

@@ -1,0 +1,40 @@
+Validated /Users/runner/work/hanlin-ai/hanlin-ai/RuntimeDependencies.lock.json.
+Validated 8 IOSSystemLite binary targets and complete curl_ios link closure.
+{
+  "approvedCommandCount": 23,
+  "approvedCommands": [
+    "awk",
+    "cat",
+    "cp",
+    "curl",
+    "grep",
+    "head",
+    "ln",
+    "ls",
+    "mkdir",
+    "mv",
+    "readlink",
+    "rm",
+    "rmdir",
+    "sed",
+    "sort",
+    "stat",
+    "tail",
+    "tar",
+    "touch",
+    "tr",
+    "uniq",
+    "unlink",
+    "wc"
+  ],
+  "commandDictionarySHA256": "bc70ee9fce71b624c9f80c55be93d8a7c7d67bd06d48902ebe9fef32a906173b",
+  "extraDictionarySHA256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c",
+  "unexpectedCommands": []
+}
+Validated 196 RuntimeL10n localization keys for en, he, zh-Hans.
+Validated 129 MCPL10n localization keys for en, he, zh-Hans.
+{"excludedNodeModules": "Downstream/RuntimeCore/Node/Host/node_modules", "group": "D7B6C3C32D50A55D004E3AD6", "membershipProof": [{"exception": "A10000000000000000000030", "excludedPath": "Downstream"}, {"exception": "A10000000000000000000030", "excludedPath": "Downstream/RuntimeCore/Node/Host"}, {"exception": "A10000000000000000000030", "excludedPath": "Downstream/RuntimeCore/Node/Host/node_modules"}], "target": "D7B6C3C02D50A55D004E3AD6"}
+/Users/runner/work/hanlin-ai/hanlin-ai/Vendor/NodeMobile/NodeMobile.xcframework/Info.plist: OK
+/Users/runner/work/hanlin-ai/hanlin-ai/Vendor/Python/Python.xcframework/Info.plist: OK
+Verified RuntimeCore dependency identity: 2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194
+RuntimeCore preflight passed: verified Node 24.5.0, Python 3.14.6, TypeScript 6.0.3, host resources, ios_system 3.0.5 pins, and the complete pinned curl_ios link closure.

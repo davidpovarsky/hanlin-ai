@@ -1,0 +1,148 @@
+{
+  "status": "FAILED",
+  "started_at": "2026-11-25T00:13:35.165237+00:00",
+  "source_sha": "c679fa3f285772f33decc914c0d7845feae9daff",
+  "scope": "Original complete ChatCore/PlatformContracts source closure; affected suites only.",
+  "not_claimed": [
+    "full application build",
+    "live provider cache hits",
+    "billing savings"
+  ],
+  "command": [
+    "swift",
+    "test",
+    "--package-path",
+    "/Users/m1/builds/hanlin-ai-cache-core-proof-20261125",
+    "--scratch-path",
+    "/Users/m1/caches/DerivedData/hanlin-ai-cache-20261125/core-proof",
+    "--jobs",
+    "2",
+    "--filter",
+    "HanlinPromptCacheTests|HanlinPromptCachePresetTests|HanlinGoogleCachedContentTests|HanlinOpenTelemetryTracerTests|HanlinAISDKJSONOutputTests|OpenAIPromptCacheControlTests|HanlinCompactResponsesTests|testAnthropicRequestBuilder|testOpenAIResponseRouting"
+  ],
+  "canonical_source_sha256": {
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinAssistantToolDeclaration.swift": "eced270fa6b134eb082125550af2518f59d43b72ff99fe75ec05b7150aa8b6ab",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinCapabilityAttachment.swift": "eb8ec5975b912c87f973064fef9ce000051894b27e9c58fdeec7f4aee23a531b",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinCatalogContracts.swift": "757478b238a1fc3144ef51c70275539502f959dd2aca9e67dbbf2449b24f7473",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinChatStructuredPart.swift": "07479b91a7ce77a8fdf5d53f3cb16939d9d46b0287efbd50b8b20b446c8ea2fa",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift": "5ce136bc896c30dd8b4a6f0cdbd5a51308d083d90cbdc4549e97418cf3ac2baa",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinContractError.swift": "ad59a698345d7c218b3787c721b93fc6104ae462f7f11000d9204b1dd03e8518",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift": "52cef01505c00514be2df9a1f59bf6acb14b800b88687ac6a292510106d0536b",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinExposureContracts.swift": "a975c82c8584d3f46e06150efc1222c4688283c62b5cb767b777fbafaf08ed64",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift": "2287b3e02197a940f01ee4470fe7bd50206865480f9eadb0f4e975098c47163a",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinJSONSchemaDocument.swift": "d763b95edd959241d4c6931892802eb20f1bf90bd21037ed6371c4d68a5e661a",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinManifestJSONValue.swift": "ebf50ac1114b9f7c3d2264ab2ef86dadb7b3b720c5e4201901a7cbcc30a64e72",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinManifestSchema.swift": "c1dd837d01913bc58b72d62cf47a9a21ef4bf1f23a1b3ccdaf93858e987c4d23",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinMiniAppAuthoring.swift": "ef40e7b0ee39954a7d704a121adb03a13b1cd02db0cba8c28e47fb0af49a7a33",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinMiniAppContracts.swift": "eb880c3c00a789bcd21d8e0cbc353018e32b4e7d7f781415809781751515ae63",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPackagePath.swift": "ab230354fd913397dfb2cb776bdde629fe0cf603b17729a7b9dc7cd9aab98c76",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPermissionContracts.swift": "f0911d44d578d35f2714b30e4aa925a953475d54fb4f9ee2da39cf0f8590fed3",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift": "e7e6dcb882b853a086c8ea33023de3a3f6889eefd6ed7c7075ba26d1ba511134",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPresentationContracts.swift": "96cde68f978ef19a5de552835be8c6dc2c62741f4aeab38c40f27586272e99b4",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinRuntimeProfiles.swift": "43bffad1d4245d9a00924aab08ffd498a622d32321b5165ff036f0e425140262",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinScriptContracts.swift": "e92224cd4a0a1b5ed8e49bd85881c647595337b95ccbb20e6a6684110977679c",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinSessionContracts.swift": "03493cb4f2f414088282d97b2b4c0a01a918c0df1db78451974400bbfcba7386",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinSkillContracts.swift": "cb8910c6d12ac4cc0f8546e89a0a514151fc9d3cd53d30aacd8abc479f2af99f",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinStoreFileAccess.swift": "ee87c52bc778c1a3848c37e125a709378f69e032ca91f80cc58f250a3c81a3f5",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolApprovalDescriptor.swift": "f091f9d83f629f5ba94b4fd30c6775255226f13a671eb047a1dc40f3c3a30ca7",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolContracts.swift": "8ce9c0771689e43f24b42fb16b0f1bf2a545628e99f972b625af57314257156d",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinValue.swift": "cd266a8b820ae8673fd576697bc30d77ba5dd563feaa670f7e5b2f18319ff3d8",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift": "014a9f0d5d078b84cda43d805e8b95b89203cabd834254f4e30030805e8dad0f",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinWireProtocol.swift": "13fc4ffbffef08ac7d439f6e9f961b4b94b05d6d0e45ba3cec6522709b7870d7",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json": "2d0f3ced366774bac16af0bfaa29047f7a1cb2d413b9940515668c59bfc44d12",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": "7ce3e4d446ec4674b3977e6dbd680742478f583fd0300702c706765185d331d2",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKJSONOutput.swift": "33625097663a99aacb96db8b1905231fe758609c407d6c730176d0ff4309e275",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift": "c5c14c6feb0643b286cb23373887c5ec1c8b291f318fc900536718b601105474",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift": "a599cd8dad70140c25e1e76d86b1b207f0c46cb53d281f265dcda73e4e32ebcb",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinCapturedStreamReplay.swift": "ad4f7d48c49e918db2f826d02556b63a95e29f0b34637d1f853a9bc6c20169ce",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatEngine.swift": "e8ae25a23484916b42dd1af11b580b33c20f0a5adc2d63bdcadc26182ddfb088",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatGPTPlanClient.swift": "14f8bc46a2590eb483b94d292e05a37d732cb34af207872faf897abe50bc3aab",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatGPTPlanTransport.swift": "2000443780bf8038ca7a02c156bf49087e84937bbe77e1cee1bca766374440e2",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatGPTPlanWire.swift": "18fed34ca6de1742f18b5b59bd3b4774103acfce57e44803ff537818e8327900",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatMessage.swift": "b6ebae1ff8788ca405cb9e5b54379894d9c5f29a58e81101d07b8df53f805704",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatModelConfiguration.swift": "41eabd65699bd1a457e10d541295a8fd26964b9480eeefbc6f0083f82be9a824",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatRequestBuilder.swift": "3d4dca321ec21c8e374ff2a74305405fbb8b97a044187684c1a1825f7416881a",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatStreamEvent.swift": "d5760c05a0c9154b8716e3f9c95be4df7dc1c42974dd21612ab43bdb235094ef",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatStreamParser.swift": "c80ca72c21163f34daa2e3a35a8343f2fd6bdac63cf76897bd003eecfe68fec8",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatStructuredPart.swift": "3cd3fbb880ee98450dc022920380b4c38baa84bca421b4739b6b525ac17ae262",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatTransportTrace.swift": "6acef2c38d98f14c34221a1995913d03c6ec1b34f3ad6df31b0d889cddbb8395",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinGoogleCachedContent.swift": "5954892745f45e4498089775eeba1ae4a32718912c23eae2bbb4f1166e9f092c",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinNativeStructuredResponse.swift": "aa102dfa161fdc72b939bbf103fad18d8c5e20ac307ab4c0ae92425cd2987eb6",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinNonEmptyLanguageModel.swift": "d62ad35a0e618bbfedb56dd79a9301585725589184aaaf3a26ab870d8a17716e",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinOpenTelemetryTracer.swift": "3278fd5539dfb554b645180886aa31421b3d02096a67b45aa6ba26b21e442292",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinPromptCachePolicy.swift": "7cce9937a6ca748c24ca8fd21ddfc8b5ef5f9a5d0453dcb706ecbbc71af1e752",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinPromptCachePreset.swift": "a50e123107a8e59791c32a4228ba12bf690c1038a6324238ffbfa0e68ebc7cf4",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAISDKJSONOutputTests.swift": "d6e5a40a1d7e04985a6cc5ca65c59ecf017d9973ae0a44f36dae7999fdae870f",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAISDKTests.swift": "aa16486f9288494c0abfdc24ea15d16116cb0228be76d84c8c486e17f7c77264",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": "0c24a0b2cb54e5ed7589d20f18325e5b93a5946aa68dee1ffcef05ee9fab8815",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinCapturedStreamReplayTests.swift": "4b7774f583d6bda645ce74b4175cbff326cb8210a697b9dd6e86eb334ef29c56",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinCatalogReloadCancellationTests.swift": "187084c5b97cd02c0e490f92b5238289d04deff0ffe1a16c81843ff7a7dc0ccc",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinChatCoreTests.swift": "078ada7b03364b27dcf24e319960a331e1fd9fc1929a8a3f49c1cba2764e4b98",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinChatGPTPlanTests.swift": "d2f061d50a2deabf73847afecd1c78d1577ce6bca1ce4390e5a4161d140bde55",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinCompactResponsesTests.swift": "fe0f743de609cf8cda5f2f91fea827a891c364d655f497b22bdb266cbc06cf93",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinGoogleCachedContentTests.swift": "db4d2ae50df725309abef37a5af0093a8609ed0d79727604fbcfd009c715e2e0",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinInjectedProviderTests.swift": "8083778b8ab95d912879fde570ea497710c010f4eeae2d5578dc0e3fd673152c",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinNativeStructuredResponseTests.swift": "0edf376b95c4b90bed6c985896bb4dc9a572e4a00a2b7354a28f12641fbbea09",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinOpenTelemetryTracerTests.swift": "be9b6fe280dfe43c4791644a333e90bdfc142936c51c909f12d84173bb22d4b5",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinPromptCachePresetTests.swift": "00c7a0a3ea365b5893d37c83cd076b89bc856453300a446a071cb76fa438da35",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinPromptCacheTests.swift": "1b123ce1ad4e1206f8b259bc6ed97d5bc1151066796bee936d9aafb16295eda5",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinTransientToolCatalogTests.swift": "1f5f18df56420a7b9b41acfb67f9995d8c4596cc42609c75337f542fcf1de65a",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinTransportTraceTests.swift": "7ef3785c16aad89b922d9207e53b5ab1c8fa765f1b1b3b4dea5194bd923583c0",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/DirectChatPathConformanceTests.swift": "94f3ec0a2c2625c53e931df02265bf69944b77850449d79dcb014b3380973cb5",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderConformanceScenarioTests.swift": "e7824ccde340596203b5f28370988d493e2b3dba5db68449d026c842a0e7d955",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderConformanceTypes.swift": "604ef8d64402e4fe7c6e3df9199497d5250d7616656e0570fe8f6cfee2d778dc",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderFaultInjectionTests.swift": "877fb8044aaf91b38596f4bf7d09789620ee39b393a3e9fa8e8a338d13557732",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderLongHorizonTests.swift": "08f03bc11bdf43bfed054646de0d0f5b4bc0dcaf3a8813214f2feaa6eee76f5a",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderRequestValidators.swift": "63afa58919ec493c4ac1ffe11b912d7b6f0a9d7ce586118ab94f38a7bf21d20f",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderResponseFixtures.swift": "de14c4620dfe2f8b49eb104eb22ca1467efa85ab31ff2968547d0cfb00e9f17a",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderRoutingTests.swift": "ce2a0ec794953ff18b3363cdd4e7d1abf34e19ff4a05613c49949fc16ad66fa9",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/StatefulProviderEmulator.swift": "998e56953980a75281046d58ef45feabd583b76e13f4c5c6bdbac916e67c1172",
+    "Packages/HanlinPlatform/Package.swift": "dab6f5e0a143a18249c2202e90c7044722dffea6506f9de9975f58c517fac7ef"
+  },
+  "producer_test_sha256": {
+    "MockTracer.swift": "43a8a631eb25287b6aa4ce4b92068e5c5a75fefc9be189bcea75611a8d0eb506",
+    "OpenAIPromptCacheControlTests.swift": "c51a9f85277316cea68624411c1027dcc59b23616650c13df3146392053829d7"
+  },
+  "swift": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+  "finished_at": "2026-11-25T00:13:44.678406+00:00",
+  "exit_code": 1,
+  "source_unchanged": true,
+  "log_sha256": "983b881760cf4261c2c56cbecd32320ec610a162242db7003a1443cd0c898068",
+  "resolved_pins": [
+    {
+      "identity": "opentelemetry-swift-core",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/open-telemetry/opentelemetry-swift-core.git",
+      "state": {
+        "revision": "c6fcee77cfc21ba400366f12475217c7b6e1d605",
+        "version": "2.6.0"
+      }
+    },
+    {
+      "identity": "swift-ai-sdk",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/davidpovarsky/swift-ai-sdk.git",
+      "state": {
+        "revision": "ec935fd0a098d52c211307c8ad14c7203bd73fb2"
+      }
+    },
+    {
+      "identity": "swift-argument-parser",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/apple/swift-argument-parser",
+      "state": {
+        "revision": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+        "version": "1.8.2"
+      }
+    },
+    {
+      "identity": "swift-atomics",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/apple/swift-atomics.git",
+      "state": {
+        "revision": "0442cb5a3f98ab802acb777929fdb446bda11a34",
+        "version": "1.3.1"
+      }
+    }
+  ]
+}

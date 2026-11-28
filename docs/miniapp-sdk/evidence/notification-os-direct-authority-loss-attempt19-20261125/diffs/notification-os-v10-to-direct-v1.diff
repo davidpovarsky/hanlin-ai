@@ -1,0 +1,267 @@
+--- notification-os-v10.py
++++ notification-os-direct-v1.py
+@@ -1,5 +1,5 @@
+ """DRAFT only. Native owner seals a final-input decision before any execution.
+-Continuation within the original separate OS900 uses the published original UI case and actual simctl-push worker.
++A distinct direct-artifact900 observation uses the same original UI case and actual simctl-push worker; original OS900 history is immutable.
+ No build, source/fixture generation, restaging or product queue writes.
+ The current11 inputs and unchanged825-byte Actions input are authenticated read-only.
+ """
+@@ -20,7 +20,7 @@
+ import time
+ import uuid
+ 
+-ID = "notification-os-v5"
++ID = "notification-os-direct-v1"
+ SELECTOR = "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines"
+ WORKER = "Scripts/CI/observe_notification_os_delivery.py"
+ WORKER_SHA = "f6cf4e040f592fa94ebf9fd813b6e03d125d5c7c32dc2d2a43f3b42cdb33d085"
+@@ -33,10 +33,12 @@
+ ACTIONS_SHA = "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+ PRODUCT_ID = "com.itorah.hanlinminiapps"
+ GROUP = "group.com.itorah.chavrusachat"
+-PRIOR_OS_RECORDS = json.loads(r'''{"terminal":{"path":"build/primary-control/notification-os-v1/state.json","bytes":5104,"sha256":"f2b15c99f3d9e131149722f3b6d4215eb4d9dcd07fa9440752fa120ee95415ea"},"ledger":{"path":"build/primary-control/notification-os-v1/ledger.json","bytes":839,"sha256":"1eb53a953ac2e06396dbe0766ed2c68c03fc5ec493c649c9a9a98d6171098bf5"},"decision":{"path":"build/primary-control/notification-os-v1/decision.json","bytes":158863,"sha256":"6c6daf1c44424cd0c7e68de78a6a46f8727cac01c392eda43c4ed97648109d88"},"containers":{"path":"build/primary-control/notification-os-v1/execution-containers.json","bytes":2350,"sha256":"b96b00ec8665a2489c7a021b40c386424a9016e501b79348971b9e72cc2b58ed"},"primaryBefore":{"path":"build/primary-control/notification-os-v1/primary-state-before.json","bytes":124965,"sha256":"783d3f71a3b6ac01271b68a22280e265062bc6642ba18de9bdd3dc4c4da78af2"},"currentContainers":{"path":"build/primary-control/notification-os-v1-current-container-inputs.json","bytes":7807,"sha256":"9964effd96c281c26f8487c0f0ac0c5978cd8fbb6d1165858a127b6891f70f82"},"latestTerminal":{"path":"build/primary-control/notification-os-v3/state.json","bytes":5166,"sha256":"5cd2fc85c3fb0c58e399f9aa5bbc33ab61e88bd48a4a5fd8b8fbc102b7023c17"},"latestLedger":{"path":"build/primary-control/notification-os-v3/ledger.json","bytes":1618,"sha256":"daf72502217aab831e6cf60a662c444990cd14634db8840d254671ed7b83ae44"},"latestDecision":{"path":"build/primary-control/notification-os-v3/decision.json","bytes":165910,"sha256":"0705ed2f72a5a17bcd82b9ce94e8eda8dc5e96eb368f921e438042a6b25716c8"},"latestContainers":{"path":"build/primary-control/notification-os-v3/execution-containers.json","bytes":2360,"sha256":"3e1d47f48333f0aa89fca330d9b2e7c9f1c2189583d458cd024d414aafd00bea"},"latestPrimaryBefore":{"path":"build/primary-control/notification-os-v3/primary-state-before.json","bytes":125648,"sha256":"1abe474150ca068f20234af7fd698cfd877173fcb65a22a7dd839ab3c02ca171"}}''')
++PRIOR_OS_RECORDS = json.loads(r'''{"terminal":{"path":"build/primary-control/notification-os-v1/state.json","bytes":5104,"sha256":"f2b15c99f3d9e131149722f3b6d4215eb4d9dcd07fa9440752fa120ee95415ea"},"ledger":{"path":"build/primary-control/notification-os-v1/ledger.json","bytes":839,"sha256":"1eb53a953ac2e06396dbe0766ed2c68c03fc5ec493c649c9a9a98d6171098bf5"},"decision":{"path":"build/primary-control/notification-os-v1/decision.json","bytes":158863,"sha256":"6c6daf1c44424cd0c7e68de78a6a46f8727cac01c392eda43c4ed97648109d88"},"containers":{"path":"build/primary-control/notification-os-v1/execution-containers.json","bytes":2350,"sha256":"b96b00ec8665a2489c7a021b40c386424a9016e501b79348971b9e72cc2b58ed"},"primaryBefore":{"path":"build/primary-control/notification-os-v1/primary-state-before.json","bytes":124965,"sha256":"783d3f71a3b6ac01271b68a22280e265062bc6642ba18de9bdd3dc4c4da78af2"},"currentContainers":{"path":"build/primary-control/notification-os-v1-current-container-inputs.json","bytes":7807,"sha256":"9964effd96c281c26f8487c0f0ac0c5978cd8fbb6d1165858a127b6891f70f82"},"latestTerminal":{"path":"build/primary-control/notification-os-v3/state.json","bytes":5166,"sha256":"5cd2fc85c3fb0c58e399f9aa5bbc33ab61e88bd48a4a5fd8b8fbc102b7023c17"},"latestLedger":{"path":"build/primary-control/notification-os-v3/ledger.json","bytes":1618,"sha256":"daf72502217aab831e6cf60a662c444990cd14634db8840d254671ed7b83ae44"},"latestDecision":{"path":"build/primary-control/notification-os-v3/decision.json","bytes":165910,"sha256":"0705ed2f72a5a17bcd82b9ce94e8eda8dc5e96eb368f921e438042a6b25716c8"},"latestContainers":{"path":"build/primary-control/notification-os-v3/execution-containers.json","bytes":2360,"sha256":"3e1d47f48333f0aa89fca330d9b2e7c9f1c2189583d458cd024d414aafd00bea"},"latestPrimaryBefore":{"path":"build/primary-control/notification-os-v3/primary-state-before.json","bytes":125648,"sha256":"1abe474150ca068f20234af7fd698cfd877173fcb65a22a7dd839ab3c02ca171"},"resolverTerminal":{"path":"build/primary-control/notification-os-v5/state.json","bytes":6435,"sha256":"ba83da13e54a4bc839d9d99a9a9dfc29c3e5896eb4416d8ae965bcbfa637760e"},"resolverLedger":{"path":"build/primary-control/notification-os-v5/ledger.json","bytes":2219,"sha256":"7b710d0bba8e359839a0f15cb61d4fc9509a3709234b7a52c8213358455dbaa4"},"resolverDecision":{"path":"build/primary-control/notification-os-v5/decision.json","bytes":172479,"sha256":"ce8d33c24728872dcab36cf20d643f9b5d2b1e94ae312b144513824237a48aa5"},"resolverContainers":{"path":"build/primary-control/notification-os-v5/execution-containers.json","bytes":2360,"sha256":"594a42c830e0ef45af08be817997066d8ccd6edc155dae0139d9c9bf45d603e8"},"resolverPrimaryBefore":{"path":"build/primary-control/notification-os-v5/primary-state-before.json","bytes":126205,"sha256":"73de5a617bfb057fe56e5767296ba847c1e56ff6756a647ff0569b06a815c255"},"resolverCleanup":{"path":"build/primary-control/notification-os-v5-post-terminal-group-observation.json","bytes":3930,"sha256":"479c32388bda3ad690e19444f4986c71ab68e2aef98e06c04ad69a373c1fd9e9"},"directXctestrunInspection":{"path":"build/primary-control/notification-os-v5-prebuilt-xctestrun-inspection.json","bytes":9165,"sha256":"5e17d5519f116fea9b2ccbbf9535523650ea0b0f000bcda765286a9f8ec41f17"}}''')
+ ORIGINAL_OS_CHARGE = 353.58866224999656
+ LATEST_OS_CHARGE = 12.940106750000268
+-PRIOR_OS_CHARGE = math.fsum([ORIGINAL_OS_CHARGE, LATEST_OS_CHARGE])
++RESOLVER_OS_CHARGE = 530.7739816670073
++PRIOR_OS_CHARGE = math.fsum([ORIGINAL_OS_CHARGE, LATEST_OS_CHARGE, RESOLVER_OS_CHARGE])
++DIRECT_OBSERVATION = json.loads(r'''{"kind":"UNCHANGED_PREBUILT_XCTESTRUN","authorizedBy":"/root","allowanceSeconds":900,"separateFromOriginalOS900":true,"scope":"Same original notification OS case using the exact already-built xctestrun","xctestrun":{"path":"/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun","bytes":16737,"sha256":"2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"},"identityObservation":{"path":"build/primary-control/notification-os-v5-prebuilt-xctestrun-inspection.json","bytes":9165,"sha256":"5e17d5519f116fea9b2ccbbf9535523650ea0b0f000bcda765286a9f8ec41f17"},"cleanupReconciliation":{"path":"build/primary-control/notification-os-v5-post-terminal-group-observation.json","bytes":3930,"sha256":"479c32388bda3ad690e19444f4986c71ab68e2aef98e06c04ad69a373c1fd9e9"}}''')
+ 
+ 
+ def digest(path):
+@@ -58,14 +60,16 @@
+     raw = path.read_bytes()
+     d = json.loads(raw)
+     assert d["schema"] == 1 and d["id"] == ID and d["owner"] == "/root/native_execution"
+-    assert d["authorization"] == {"by": "/root", "scope": "separate original notification OS probe"}
++    assert d["authorization"] == {"by": "/root", "scope": "separate direct-artifact original notification OS observation"}
+     assert d["selector"] == SELECTOR and d["expectedTests"] == 1 and d["allowanceSeconds"] == 900
+     assert d["separateFromPaired4500AndCompanion1200"] is True
+-    continuation = d["osContinuation"]
+-    assert continuation["records"] == PRIOR_OS_RECORDS
+-    assert continuation["priorChargedSeconds"] == PRIOR_OS_CHARGE
+-    assert continuation["remainingAllowanceSeconds"] == 900 - PRIOR_OS_CHARGE
+-    assert d["activeBaselineSeconds"] == 24674.060430753034
++    history = d["osHistory"]
++    assert history["records"] == PRIOR_OS_RECORDS
++    assert history["priorChargedSeconds"] == PRIOR_OS_CHARGE
++    assert history["originalAllowanceSeconds"] == 900
++    assert history["remainingOriginalAllowanceSeconds"] == 900 - PRIOR_OS_CHARGE
++    assert d["directArtifactObservation"] == DIRECT_OBSERVATION
++    assert d["activeBaselineSeconds"] == 25204.83441242004
+     assert len(d["stagedFiles"]) == len({row["name"] for row in d["stagedFiles"]}) == 11
+     root = Path(d["root"]).resolve()
+     helper = (root / d["originalController"]["path"]).resolve()
+@@ -151,19 +155,19 @@
+     evidence = out / "test"
+     r = original_runner(root, evidence)
+     device = str(uuid.UUID(d["simulator"]["udid"])).upper()
+-    argv = ["xcodebuild", "-project", "AI_HLY.xcodeproj",
++    artifact = d["directArtifactObservation"]["xctestrun"]
++    xctestrun = Path(artifact["path"])
++    assert xctestrun.stat().st_size == artifact["bytes"] and digest(xctestrun) == artifact["sha256"]
++    argv = ["xcodebuild", "test-without-building", "-xctestrun", str(xctestrun),
+             "-destination", "platform=iOS Simulator,id=" + device,
+-            "-parallel-testing-enabled", "NO", "-derivedDataPath", d["derivedData"],
+-            "-clonedSourcePackagesDirPath", str(root / "build/SourcePackages"),
+-            "-skipPackagePluginValidation", "-skipMacroValidation",
+-            "CODE_SIGNING_ALLOWED=YES", "CODE_SIGNING_REQUIRED=YES", "CODE_SIGN_IDENTITY=-",
+-            "-collect-test-diagnostics", "never", "-scheme", "HanlinMiniApps", "test-without-building",
++            "-parallel-testing-enabled", "NO", "-collect-test-diagnostics", "never",
+             "-resultBundlePath", str(evidence / "NotificationOS.xcresult"),
+             "-only-testing:" + SELECTOR]
+-    # Preserve the original UI600s executionTimeAllowance and worker650s limit.
+-    # Original1200s command timeout is bounded by the outer separate900s allowance.
++    # Same original compiled UI case and worker limits; the new separate900s
++    # observation bounds the original1200s command timeout without rebuilding.
+     h.write(evidence / "selected-command.json", {"argv": argv, "selector": SELECTOR,
+-             "expectedTests": 1, "source": d["source"], "runnerSHA256": RUNNER_SHA})
++             "expectedTests": 1, "source": d["source"], "runnerSHA256": RUNNER_SHA,
++             "executionMode": "UNCHANGED_PREBUILT_XCTESTRUN", "xctestrun": artifact})
+     code, _ = r.command(argv, "notification-os-tests.log", timeout=1200, allow_failure=True)
+     result = evidence / "NotificationOS.xcresult"
+     assert (result / "Info.plist").is_file(), "Actual XCTest result must finalize"
+@@ -404,9 +408,9 @@
+     device = str(uuid.UUID(ownership.read_text().strip())).upper()
+     assert device == str(uuid.UUID(d["simulator"]["udid"])).upper()
+     assert ns5["ownedSimulatorCleanup"]["device"] == device and ns5["ownedSimulatorCleanup"]["observedState"] == "Shutdown"
+-    continuation = d["osContinuation"]
++    history = d["osHistory"]
+     previous_os = {}
+-    for name, item in continuation["records"].items():
++    for name, item in history["records"].items():
+         path = h.relative(root, item["path"])
+         assert path.is_file() and path.stat().st_size == item["bytes"] and digest(path) == item["sha256"]
+         previous_os[name] = json.loads(path.read_text())
+@@ -421,7 +425,7 @@
+     assert len(prior_os_ledger["charges"]) == 1
+     prior_charge = prior_os_ledger["charges"][0]
+     assert prior_charge["id"] == prior_os["id"] and prior_charge["status"] == "FAILED"
+-    assert prior_charge["decisionSHA256"] == prior_os["decisionSHA256"] == continuation["records"]["decision"]["sha256"]
++    assert prior_charge["decisionSHA256"] == prior_os["decisionSHA256"] == history["records"]["decision"]["sha256"]
+     assert prior_charge["elapsedSeconds"] == prior_os["chargedSeconds"] == prior_os_ledger["activeElapsedSeconds"] == ORIGINAL_OS_CHARGE
+     assert previous_os["primaryBefore"]["activeElapsedSeconds"] == prior_os["activeBaselineSeconds"] == ns5["cumulativeActiveSeconds"]
+     assert previous_os["primaryBefore"]["status"] == "COMPLETED"
+@@ -441,33 +445,74 @@
+     latest_charge = prior_os_ledger["charges"][-1]
+     assert latest_charge["id"] == prior_os["id"] and latest_charge["status"] == prior_os["status"]
+     assert latest_charge["source"] == d["source"] and latest_charge["selector"] == SELECTOR
+-    assert latest_charge["decisionSHA256"] == prior_os["decisionSHA256"] == continuation["records"]["latestDecision"]["sha256"]
++    assert latest_charge["decisionSHA256"] == prior_os["decisionSHA256"] == history["records"]["latestDecision"]["sha256"]
+     assert latest_charge["elapsedSeconds"] == prior_os["chargedSeconds"] == LATEST_OS_CHARGE
+-    assert prior_os_ledger["activeElapsedSeconds"] == math.fsum(row["elapsedSeconds"] for row in prior_os_ledger["charges"]) == PRIOR_OS_CHARGE
++    assert prior_os_ledger["activeElapsedSeconds"] == math.fsum(row["elapsedSeconds"] for row in prior_os_ledger["charges"]) == math.fsum([ORIGINAL_OS_CHARGE, LATEST_OS_CHARGE])
+     assert previous_os["latestPrimaryBefore"]["source"] == d["source"]
+     assert previous_os["latestPrimaryBefore"]["status"] == "FAIL"
+     assert previous_os["latestPrimaryBefore"]["osProbeCharges"] == original_os_ledger["charges"]
+     assert previous_os["latestPrimaryBefore"]["activeElapsedSeconds"] == prior_os["activeBaselineSeconds"] == original_os["cumulativeActiveSeconds"]
+-    assert previous_os["latestDecision"]["primaryStateSHA256"] == continuation["records"]["latestPrimaryBefore"]["sha256"]
++    assert previous_os["latestDecision"]["primaryStateSHA256"] == history["records"]["latestPrimaryBefore"]["sha256"]
+     assert previous_os["latestContainers"]["source"] == d["source"]
+     assert previous_os["latestContainers"]["device"] == device
+     assert previous_os["latestContainers"]["decisionSHA256"] == prior_os["decisionSHA256"]
+-    assert primary["osProbeCharges"] == prior_os_ledger["charges"]
++    second_os, second_os_ledger = prior_os, prior_os_ledger
++    prior_os, prior_os_ledger = previous_os["resolverTerminal"], previous_os["resolverLedger"]
++    assert prior_os["id"] == "notification-os-v5" and prior_os["status"] == "CLEANUP_INCOMPLETE"
++    assert prior_os["source"] == d["source"] and prior_os["chargeCommitted"] is True
++    assert not prior_os["sourceErrors"]
++    assert prior_os["cleanupErrors"] == ["test group cleanup: [Errno 1] Operation not permitted"]
++    assert prior_os["remainingOwnedProcessGroups"] == {"setup": []}
++    assert set(prior_os["ownedProcessGroups"]) == {"setup", "test"}
++    assert prior_os["ownedSimulatorCleanup"]["device"] == device
++    assert prior_os["ownedSimulatorCleanup"]["observedState"] == "Shutdown"
++    assert previous_os["resolverDecision"]["source"] == d["source"]
++    assert previous_os["resolverDecision"]["sourceTree"] == d["sourceTree"]
++    assert previous_os["resolverDecision"]["allowanceSeconds"] == prior_os_ledger["maximumActiveSeconds"] == 900
++    assert len(prior_os_ledger["charges"]) == 3 and prior_os_ledger["charges"][:-1] == second_os_ledger["charges"]
++    resolver_charge = prior_os_ledger["charges"][-1]
++    assert resolver_charge["id"] == prior_os["id"] and resolver_charge["status"] == prior_os["status"]
++    assert resolver_charge["source"] == d["source"] and resolver_charge["selector"] == SELECTOR
++    assert resolver_charge["decisionSHA256"] == prior_os["decisionSHA256"] == history["records"]["resolverDecision"]["sha256"]
++    assert resolver_charge["elapsedSeconds"] == prior_os["chargedSeconds"] == RESOLVER_OS_CHARGE
++    assert prior_os_ledger["activeElapsedSeconds"] == math.fsum(row["elapsedSeconds"] for row in prior_os_ledger["charges"]) == PRIOR_OS_CHARGE
++    assert previous_os["resolverPrimaryBefore"]["source"] == d["source"] and previous_os["resolverPrimaryBefore"]["status"] == "FAIL"
++    assert previous_os["resolverPrimaryBefore"]["osProbeCharges"] == second_os_ledger["charges"]
++    assert previous_os["resolverPrimaryBefore"]["activeElapsedSeconds"] == prior_os["activeBaselineSeconds"] == second_os["cumulativeActiveSeconds"]
++    assert previous_os["resolverDecision"]["primaryStateSHA256"] == history["records"]["resolverPrimaryBefore"]["sha256"]
++    assert previous_os["resolverContainers"]["source"] == d["source"] and previous_os["resolverContainers"]["device"] == device
++    assert previous_os["resolverContainers"]["decisionSHA256"] == prior_os["decisionSHA256"]
++    reconciliation = previous_os["resolverCleanup"]
++    assert reconciliation["source"] == d["source"]
++    assert reconciliation["terminal"]["sha256"] == history["records"]["resolverTerminal"]["sha256"]
++    assert reconciliation["recordedCleanupErrors"] == prior_os["cleanupErrors"]
++    assert reconciliation["pidLiveness"] == {"7320": "ABSENT", "7517": "ABSENT", "7530": "ABSENT"}
++    assert reconciliation["groupLiveness"] == "ABSENT" and reconciliation["signalsSent"] == []
++    assert reconciliation["groupCandidates"] == {"argv": ["/usr/bin/pgrep", "-g", "7517"], "exitCode": 1, "stdout": "", "stderr": ""}
++    assert prior_os["ownedProcessGroups"]["test"]["pgid"] == 7517 and prior_os["controllerPID"] == 7320
++    assert datetime.datetime.fromisoformat(reconciliation["observedAt"]) > datetime.datetime.fromisoformat(prior_os["finishedAt"])
++    assert reconciliation["ledger"]["sha256"] == history["records"]["resolverLedger"]["sha256"]
++    assert reconciliation["primary"]["sha256"] == d["primaryStateSHA256"]
++    assert primary["osProbeCharges"] == prior_os_ledger["charges"] and not primary.get("directArtifactOSCharges")
+     assert primary["activeElapsedSeconds"] == prior_os["cumulativeActiveSeconds"]
+-    assert primary["activeElapsedSeconds"] == math.fsum([prior_os["activeBaselineSeconds"], LATEST_OS_CHARGE])
+-    for terminal_key in ("terminal", "latestTerminal"):
++    assert primary["activeElapsedSeconds"] == math.fsum([prior_os["activeBaselineSeconds"], RESOLVER_OS_CHARGE])
++    for terminal_key in ("terminal", "latestTerminal", "resolverTerminal"):
+         historical_os = previous_os[terminal_key]
+         for role, group in historical_os["ownedProcessGroups"].items():
+-            historical = {"phasePID": group["pgid"], "finishedAt": historical_os["finishedAt"],
+-                          "remainingOwnedProcessGroup": historical_os["remainingOwnedProcessGroups"][role],
++            reconciled = terminal_key == "resolverTerminal" and role == "test"
++            historical = {"phasePID": group["pgid"],
++                          "finishedAt": reconciliation["observedAt"] if reconciled else historical_os["finishedAt"],
++                          "remainingOwnedProcessGroup": [] if reconciled else historical_os["remainingOwnedProcessGroups"][role],
+                           "ownedSimulatorCleanup": historical_os["ownedSimulatorCleanup"]}
+-            exclusion = historical_group_exclusion(historical,
+-                {"terminal": continuation["records"][terminal_key], "ownedRole": role},
++            authority = {"terminal": history["records"][terminal_key], "ownedRole": role}
++            if reconciled:
++                authority["postTerminalAbsenceObservation"] = history["records"]["resolverCleanup"]
++            exclusion = historical_group_exclusion(historical, authority,
+                 root, Path(d["derivedData"]), live_group, h.utc)
+             if exclusion is not None:
+                 historical_group_exclusions.append(exclusion)
+     prior_controllers = {paired["controllerPID"], ns5["controllerPID"], original_os["controllerPID"],
+-                         prior_os["controllerPID"], primary.get("controllerPID")} - {None}
++                         second_os["controllerPID"], prior_os["controllerPID"], primary.get("controllerPID")} - {None}
+     historic_pids = prior_controllers - {os.getpid()}
+     process_rows = []
+     live_historic_pids = set()
+@@ -538,17 +583,20 @@
+     for role in ["pairedTerminal", "ns5Terminal"]:
+         (out / (role + "-before.json")).write_bytes(h.relative(root, d[role]["path"]).read_bytes())
+     state_path, ledger_path, events = out / "state.json", out / "ledger.json", out / "events.jsonl"
+-    baseline, allowance = primary["activeElapsedSeconds"], continuation["remainingAllowanceSeconds"]
+-    ledger = {**prior_os_ledger, "id": ID, "charges": [dict(row) for row in prior_os_ledger["charges"]],
+-              "priorLedger": continuation["records"]["latestLedger"]}
+-    (out / "os-ledger-before.json").write_bytes(h.relative(root, continuation["records"]["latestLedger"]["path"]).read_bytes())
++    baseline, allowance = primary["activeElapsedSeconds"], d["directArtifactObservation"]["allowanceSeconds"]
++    ledger = {"schema": 1, "id": ID, "source": d["source"], "maximumActiveSeconds": allowance,
++              "activeElapsedSeconds": 0, "charges": [], "separateFromOriginalOS900": True,
++              "originalOSLedger": history["records"]["resolverLedger"],
++              "historicalOSChargedSeconds": PRIOR_OS_CHARGE}
++    (out / "os-ledger-before.json").write_bytes(h.relative(root, history["records"]["resolverLedger"]["path"]).read_bytes())
+     h.write(ledger_path, ledger)
+     state = {"schema": 1, "id": ID, "owner": d["owner"], "source": d["source"],
+              "status": "STARTING", "selector": SELECTOR, "expectedTests": 1,
+              "controllerPID": os.getpid(), "activeBaselineSeconds": baseline, "allowanceSeconds": 900,
+              "decisionSHA256": hashlib.sha256(decision_bytes).hexdigest(),
+              "remainingAllowanceSeconds": allowance, "priorOSChargedSeconds": PRIOR_OS_CHARGE,
+-             "osContinuation": continuation,
++             "osHistory": history, "directArtifactObservation": d["directArtifactObservation"],
++             "postTerminalCleanupReconciliation": history["records"]["resolverCleanup"],
+              "original52Status": paired.get("original52"), "NS5Status": ns5["status"],
+              "historicalProcessGroupExclusions": historical_group_exclusions,
+              "resourceObservationAtLaunch": {"observedAt": h.utc(), "freeBytes": free, "df": disk}}
+@@ -595,7 +643,7 @@
+     def remaining():
+         value = allowance - (time.monotonic() - start)
+         if value <= 0:
+-            raise TimeoutError("Remaining separate900s original OS probe allowance elapsed")
++            raise TimeoutError("Separate900s direct-artifact OS observation allowance elapsed")
+         return value
+ 
+     error = None
+@@ -718,7 +766,7 @@
+             for role in ["pairedTerminal", "ns5Terminal"]:
+                 if digest(h.relative(root, d[role]["path"])) != d[role]["sha256"]:
+                     source_errors.append("Historical terminal changed: " + role)
+-            for name, item in continuation["records"].items():
++            for name, item in history["records"].items():
+                 if digest(h.relative(root, item["path"])) != item["sha256"]:
+                     source_errors.append("Prior OS authority changed: " + name)
+             if digest(companion_ledger_path) != d["companionLedgerSHA256"]:
+@@ -733,8 +781,9 @@
+                      for p in out.glob("*.log") if p.is_file()]
+         checkpoint("charge_ready", finishedAt=h.utc(), elapsedSeconds=elapsed, chargedSeconds=elapsed,
+                    cumulativeActiveSeconds=baseline + elapsed,
+-                   cumulativeOSProbeSeconds=math.fsum([PRIOR_OS_CHARGE, elapsed]),
+-                   allowanceExceededDuringCleanup=math.fsum([PRIOR_OS_CHARGE, elapsed]) > 900,
++                   directArtifactObservationChargedSeconds=elapsed,
++                   cumulativeAllOSObservationSeconds=math.fsum([PRIOR_OS_CHARGE, elapsed]),
++                   allowanceExceededDuringCleanup=elapsed > allowance,
+                    processLogs=log_files)
+         try:
+             current = json.loads(primary_path.read_text())
+@@ -742,12 +791,16 @@
+             charge = {"id": ID, "source": d["source"], "status": state["status"],
+                       "elapsedSeconds": elapsed, "statePath": str(state_path),
+                       "decisionSHA256": state["decisionSHA256"], "selector": SELECTOR,
+-                      "separateFromPaired4500AndCompanion1200": True}
++                      "separateFromPaired4500AndCompanion1200": True,
++                      "separateFromOriginalOS900": True, "budgetGroup": ID}
+             ledger["charges"].append(charge)
+             ledger["activeElapsedSeconds"] = math.fsum(row["elapsedSeconds"] for row in ledger["charges"])
+             h.write(ledger_path, ledger)
+             current["activeElapsedSeconds"] = baseline + elapsed
+-            current.setdefault("osProbeCharges", []).append(charge)
++            assert current["osProbeCharges"] == prior_os_ledger["charges"]
++            current.setdefault("directArtifactOSCharges", []).append(charge)
++            current["cumulativeAllOSObservationSeconds"] = math.fsum(
++                row["elapsedSeconds"] for row in current["osProbeCharges"] + current["directArtifactOSCharges"])
+             current.update(status=previous_os["primaryBefore"]["status"] if state["status"] == "EXECUTED_PASS" else "FAIL",
+                            phase=primary.get("phase"), controllerPID=None, finishedAt=state["finishedAt"])
+             if error:

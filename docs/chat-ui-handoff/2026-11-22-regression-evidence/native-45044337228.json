@@ -1,0 +1,258 @@
+{
+  "run_id": 45044337228,
+  "artifact_id": 14763926439,
+  "status": "PASS",
+  "artifact_zip_bytes": 251571185,
+  "artifact_zip_sha256": "7aa7d8af7d1ac820a47a7ad22d76d7ef38241a42eff5da6a01566fc31de76a7b",
+  "sources": {
+    "app": "45612d73532f1ad77c312353c66de81631cb67c3",
+    "baseline_app": "de9ccac5d38c44f597b2a057701de4757587d6a8",
+    "baseline_renderer": "ebbbf889276098f3642448e5439ad049c3cd2d6c",
+    "candidate_renderer": "5cbb4b6c950051f98f02a0b0ae56756f5174a9b8",
+    "candidate_manifest_sha256": "9b287993943f4e4636f27e0893a3f92aff4e1d9ac8b1944fbeeeea99928d45b1"
+  },
+  "native_source_receipt": {
+    "baseline_app_commit": "de9ccac5d38c44f597b2a057701de4757587d6a8",
+    "baseline_source": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinMorphComposer.swift",
+    "baseline_sha256": "45454e8c5080ff002999672abcbd9ba6b4ecc5cda9a59c8e7c7751aa8786e4fa",
+    "candidate_app_commit": "45612d73532f1ad77c312353c66de81631cb67c3",
+    "candidate_sha256": "8c1e6c2f9db85c020a8730c620a0bb638a214714d3243d7ffc40efd319e077ea",
+    "scope": "Two actual Composer implementations rendered by the same native UIKit host. No Runtime, accounts, live tools, or physical-device acceptance."
+  },
+  "baseline": {
+    "exit_code": 65,
+    "tests": 1,
+    "failed": 1,
+    "skipped": 0,
+    "failures": [
+      {
+        "test": "RichBlockAttachmentRenderingTests.testProviderLookupUsesRichRenderer()",
+        "message": "XCTUnwrap failed: expected non-nil value of type \"NSTextAttachmentViewProvider\""
+      }
+    ],
+    "status": "EXPECTED_PROVIDER_FAILURE"
+  },
+  "candidate": {
+    "exit_code": 0,
+    "tests": 4,
+    "failed": 0,
+    "skipped": 0,
+    "failures": [],
+    "status": "PASS"
+  },
+  "attachments": [
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "activity-collapsed-parent_0_DCE97DD9-E22B-4263-B1D0-1A96E0F494CF.png",
+      "file": "C93BEA68-BBE1-465F-BB06-C81509F6BF22.png",
+      "bytes": 222257,
+      "sha256": "23266631579fd99102091c46c5f35bef3dc07598b48cc9c34e69ff6406e98e99"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "activity-expanded-leaf_0_F99E6F60-17F1-45E7-A2A1-6DCEF5D1CA07.png",
+      "file": "1935D581-DC79-4488-9940-CE1350E07B92.png",
+      "bytes": 226876,
+      "sha256": "241748aca614c354a2a1cc6ec30cab8ca2e2e042180fbd20044080966079f8de"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "moved-origin-rtl-corrected-frames_0_E7A7E424-86A6-4C16-B367-34373F1C9D24.json",
+      "file": "943F4601-3339-41C8-B183-4AF38836A289.json",
+      "bytes": 627,
+      "sha256": "58df5072984007f49f7f46119f852676768303c7ab44d50fb3b4e6199af96551"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "moved-origin-rtl-corrected_0_989F2E17-5224-4689-AC54-E712CAD6D407.png",
+      "file": "DC74D497-59EB-4EDB-AFDB-246F62C6F1A8.png",
+      "bytes": 10807882,
+      "sha256": "46beac5a46becce878fa195f04135d8be85425154f698bed81dba6ed7458fb0c"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "moved-origin-rtl-145801-frames_0_38F892E7-0245-4B94-84AD-B1DF0356867C.json",
+      "file": "523D1A4E-1047-4B82-836A-AA93C4F8DC0C.json",
+      "bytes": 627,
+      "sha256": "58df5072984007f49f7f46119f852676768303c7ab44d50fb3b4e6199af96551"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "moved-origin-rtl-145801_0_6AC2752E-7B2C-465A-A64E-83E43FAE32A4.png",
+      "file": "CB98AADF-2F14-4D67-8269-F8D35BD97A6B.png",
+      "bytes": 10818138,
+      "sha256": "cc868c2ccbb1df6a5a7eb2d6bcb264e7856e186012da83cb9192ee7bacad1329"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "expanded-rtl-corrected-frames_0_75D95ED4-C3AD-49A4-89CF-F595D3AE6A8C.json",
+      "file": "C88EC368-0142-4DA0-8B14-023F5E6ECF0D.json",
+      "bytes": 628,
+      "sha256": "d3dfac009b33ac56bab9b1aeb75e49b7bb0a26862f7380247bd01e023a9e8fdf"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "expanded-rtl-corrected_0_2EA2A843-CA6B-44A3-B4F8-A0143DD2E5D8.png",
+      "file": "96E2C8BE-9E02-4DBB-A101-8BB4B9E2C200.png",
+      "bytes": 9521363,
+      "sha256": "ad50e5e129394a24fb8a4014ac6f04fb38996712d5ab8aa88717790a616c9f50"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "expanded-rtl-145801-frames_0_740F5CC2-EF5E-453E-BF44-FE446C450F41.json",
+      "file": "4EABBD90-9A03-4D1F-8ED9-DCE45FB1CAA2.json",
+      "bytes": 628,
+      "sha256": "d3dfac009b33ac56bab9b1aeb75e49b7bb0a26862f7380247bd01e023a9e8fdf"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "expanded-rtl-145801_0_3F2FAED6-CC0F-4CA1-A04D-317E6AE94ECF.png",
+      "file": "71775DF2-B89D-4D47-8058-96A7DE22B168.png",
+      "bytes": 9531400,
+      "sha256": "ef41dbb6a59067a0ae4648681f9845afad7586cae75a1f44ebb463a24c685c66"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "narrow-long-rtl-corrected-frames_0_29B4327E-2D6E-4414-9D1A-F2E9C2A04C13.json",
+      "file": "13839EFB-7629-4243-919F-4101FD4EBE1F.json",
+      "bytes": 627,
+      "sha256": "8b835497c76998ef6c1eedbfbde964270297d9c5f5f5bb7e313e390b512baa05"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "narrow-long-rtl-corrected_0_14ED025B-C898-4860-886A-27D5C77AE3C0.png",
+      "file": "C9C91908-9410-48A9-BB15-BEA38227ED51.png",
+      "bytes": 11300422,
+      "sha256": "caddaa0cad60313ef21bff59db8de799e83b108ccdc49b0b2a33a1503a0224e1"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "narrow-long-rtl-145801-frames_0_EEDFDCE5-B866-4038-90B2-B1200553F34A.json",
+      "file": "02331B16-4B36-4B7E-B0EA-CDF3C7D86CEE.json",
+      "bytes": 627,
+      "sha256": "8b835497c76998ef6c1eedbfbde964270297d9c5f5f5bb7e313e390b512baa05"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "narrow-long-rtl-145801_0_C5D97483-1BB2-4C88-B76D-60C776A19F07.png",
+      "file": "F8369863-0A8B-46FF-94B5-35C96E73F5E6.png",
+      "bytes": 11352719,
+      "sha256": "e72990690d3d0015d7d3731a5313ce7a90317bfe29b2e125da613456b6f09b4e"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "wide-long-corrected-frames_0_C8114B14-569E-4AE6-B3F1-98957CCB3D59.json",
+      "file": "D0085EDE-91EC-4CFB-97DB-E0D63288E2F8.json",
+      "bytes": 628,
+      "sha256": "59f96d05c95ec0a7e312c88c3af97500d34a25292069faa2f1b3fb6ce8f2d4fc"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "wide-long-corrected_0_2853F60C-93CE-4424-A8E8-5E86E86224A9.png",
+      "file": "DB37E091-1A06-43BA-8DE4-124DC1CD7A4D.png",
+      "bytes": 10107611,
+      "sha256": "661ec181fa30baa8a305c7d259bab89bae244e56004b62311114757c386026d8"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "wide-long-145801-frames_0_A15FB421-A5F6-4CFE-8230-156594490624.json",
+      "file": "B3A174EC-D92A-4198-988F-5194D9152F9F.json",
+      "bytes": 628,
+      "sha256": "59f96d05c95ec0a7e312c88c3af97500d34a25292069faa2f1b3fb6ce8f2d4fc"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "wide-long-145801_0_130CCE80-9658-4B1B-96A0-656427263FEA.png",
+      "file": "219E1AC6-27F4-4EC7-8A01-0DB5E657E72B.png",
+      "bytes": 10133538,
+      "sha256": "d6f00a53d84daa36071f84a89e522d25cf254bd9f75b70ba91d51083cf59b4d6"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "narrow-empty-rtl-corrected-frames_0_CA067099-5FF5-483E-88C7-FC65F19B71A1.json",
+      "file": "4C922FB3-741A-4889-9657-3903032AE714.json",
+      "bytes": 626,
+      "sha256": "dcdb22d7c94c2a3950e948df8715bffb2f0d9cae7947ba5d94392098200b1c71"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "narrow-empty-rtl-corrected_0_A7F21B62-0664-41C8-B41A-201CE098870C.png",
+      "file": "D657CC06-7932-4819-9546-FA71B54B60D3.png",
+      "bytes": 11406811,
+      "sha256": "950d87cdd24ef75da5cf3cfbc6f4cad8c8148989a915428e6b460315ebd91002"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "narrow-empty-rtl-145801-frames_0_CA2ECAA6-F7E2-44F4-92AE-FE9004746274.json",
+      "file": "400F82C3-5966-4A0B-861F-F8144B7421F8.json",
+      "bytes": 626,
+      "sha256": "dcdb22d7c94c2a3950e948df8715bffb2f0d9cae7947ba5d94392098200b1c71"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "narrow-empty-rtl-145801_0_CED532B3-6016-4D36-B1AF-E119B15D6782.png",
+      "file": "8DE6A003-C066-47F2-94DA-9D21E98BCF7F.png",
+      "bytes": 11431255,
+      "sha256": "54fa2c28bac75ddb31a59b2c98e25e0003030ad80a1ec23055fa7c9a271cc11b"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "wide-empty-corrected-frames_0_2C0BA5BB-E8FA-42AF-A09B-CA3134737047.json",
+      "file": "3B4A8696-CDC6-43BC-A89C-2EE5F18DC806.json",
+      "bytes": 627,
+      "sha256": "49788356d376ab00bf18dd99266021ce80114a0bfea2e931399682f3626e7dee"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "wide-empty-corrected_0_63B104C8-C2E0-41C9-B1FD-77094931D525.png",
+      "file": "3397FDDA-9773-4C00-AC77-E35E003557F7.png",
+      "bytes": 10492971,
+      "sha256": "eb436fae43ca3e9459b5479868db98f80e3000415ec7f8355a55282f044ef1fd"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "wide-empty-145801-frames_0_20D66E3F-1160-4BC4-9A3A-6A790D45295A.json",
+      "file": "86A54592-E029-4B79-B0AF-E84DD1F9A555.json",
+      "bytes": 627,
+      "sha256": "49788356d376ab00bf18dd99266021ce80114a0bfea2e931399682f3626e7dee"
+    },
+    {
+      "test": "ComposerGlassRenderingTests/testOriginalAndCorrectedGlassAcrossDraftsAndViewports()",
+      "label": "wide-empty-145801_0_D64C9EE1-05EF-4567-83B8-6F1B905E1D8F.png",
+      "file": "FF4A8FFA-0E7A-4DB4-84F7-00840CECFD6F.png",
+      "bytes": 10491186,
+      "sha256": "32712bd8691e6d0fc1ceb1c8f8f016c9f8cd65565017a389eac59b2760828d18"
+    },
+    {
+      "test": "RichBlockAttachmentRenderingTests/testNativeDocumentDisplaysDividerAndTableAcrossWidths()",
+      "label": "rich-blocks-width-320_0_1A7E77B2-01E7-42B8-9825-A71BCF83B139.png",
+      "file": "4E366E95-9AFD-4CF5-88EB-DA5934AA8143.png",
+      "bytes": 168647,
+      "sha256": "3c5a77283e61b4dc596150344ed450936052bf1a043f4aadc8e7a0d108d308ae"
+    },
+    {
+      "test": "RichBlockAttachmentRenderingTests/testNativeDocumentDisplaysDividerAndTableAcrossWidths()",
+      "label": "rich-blocks-width-640_0_22C4443D-CF2A-4128-9DBE-9E3E235EEF1B.png",
+      "file": "F68A8950-C585-4C82-98E3-4DAABFD3681C.png",
+      "bytes": 174182,
+      "sha256": "17fed2675894478797abbfb5f381c311c2ea7bc7b5efb44c9ebf3ae02e0d1d64"
+    }
+  ],
+  "root_visual_review": {
+    "rich_blocks": "Root inspected 320; independent attachment reviewer inspected both320 and640 and confirmed actual divider/table and surrounding text, with no document icons.",
+    "activity": "Root inspected both final states: expanded static parent and blue active leaf; collapsed blue parent with no displayed child. Static captures do not prove temporal shimmer.",
+    "composer_moved_origin_rtl": "Root inspected corrected moved-origin RTL capture: continuous outer glass contour reaches the plus/close lobe; controls remain inside in one bottom row. Small enclosed native glass aperture does not detach the lobe.",
+    "limits": "Focused production components with fixture controls/content; not full application, keyboard, live network, temporal animation or physical iPad acceptance."
+  },
+  "scope": "Focused native fixture uses production Composer, activity components and TextKit renderer. No full-app, physical-device, live-network, temporal animation or background lifetime acceptance inferred.",
+  "other_jobs_skipped": 26,
+  "testflight_dispatched": false,
+  "independent_composer_review": {
+    "scenarios": 6,
+    "frame_receipts": 12,
+    "result": "PASS",
+    "finding": "All six genuine baseline/corrected pairs inspected. Corrected outer glass contour reaches launcher continuously; all controls stay inside in one bottom row. Corresponding baseline/candidate frames identical. Native hit/action assertions passed.",
+    "coordinate_spaces": "Named SwiftUI input/page coordinates differ from UIWindow hit coordinates by32points; converted bottom inset is8points. No mixed-space overflow claim.",
+    "scope": "Production-shell fixtures; not full-app keyboard/popover or physical iPad acceptance."
+  }
+}

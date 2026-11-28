@@ -1,0 +1,10 @@
+{
+  "status": "DETACHED_OWNED_ORIGINAL_FULL_CONTROLLER_STARTED",
+  "controllerPID": 38508,
+  "controllerPGID": 38508,
+  "at": "2026-11-27T08:49:45.104260+00:00",
+  "controllerSHA256": "df8c0e2d99f053dbfdee7587d7b2210ea7333485bab46ca8bd3288e582181dad",
+  "source": "33d949fa8d91d238ba93a9ef09373c5eafe58b84",
+  "originalUnfilteredCommandAnd3600sDeadlineUnchanged": true,
+  "transportTimeoutSeconds": 15
+}

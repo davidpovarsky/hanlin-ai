@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-24T09:54:55.650760+00:00",
+  "command": [
+    "node",
+    "--test",
+    "--test-name-pattern=Expo UI public runtime metadata follows",
+    "Scripts/Audit/Tests/runtime-version-contract.test.mjs"
+  ],
+  "exit": 1
+}

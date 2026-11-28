@@ -1,0 +1,172 @@
+{
+  "devices": [
+    {
+      "architecture": "arm64",
+      "deviceId": "029B78CA-2FF2-4992-8CCC-2F3B338E1532",
+      "deviceName": "Hanlin-Phase2-44429654565-1",
+      "modelName": "iPad Pro 13-inch (M5)",
+      "osBuildNumber": "24B8117",
+      "osVersion": "27.2",
+      "platform": "iOS Simulator"
+    }
+  ],
+  "expanded_cases": 25,
+  "failed": 0,
+  "method_groups": 4,
+  "passed": 25,
+  "selectors": [
+    "AI_HLYTests/SkillOpenClawPolicyTests/originalPolicyRunsInTheActualEmbeddedNode()",
+    "AI_HLYTests/SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation()",
+    "AI_HLYTests/SkillRuntimeProductTests/ordinaryInstructionsSurviveUnrelatedPolicyInspectionFailure()",
+    "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+  ],
+  "tests": [
+    {
+      "result": "Passed",
+      "seconds": 9.583970069885254,
+      "selector": "AI_HLYTests/SkillOpenClawPolicyTests/originalPolicyRunsInTheActualEmbeddedNode()"
+    },
+    {
+      "result": "Passed",
+      "seconds": 0.4624009132385254,
+      "selector": "AI_HLYTests/SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation()"
+    },
+    {
+      "result": "Passed",
+      "seconds": 0.331143856048584,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/ordinaryInstructionsSurviveUnrelatedPolicyInspectionFailure()"
+    },
+    {
+      "argument": "argv",
+      "result": "Passed",
+      "seconds": 1.8051607608795166,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "cancel",
+      "result": "Passed",
+      "seconds": 1.9003901481628418,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "denied",
+      "result": "Passed",
+      "seconds": 0.024538755416870117,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "disabled",
+      "result": "Passed",
+      "seconds": 0.023382902145385742,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "failure",
+      "result": "Passed",
+      "seconds": 1.7601821422576904,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "hidden-resource",
+      "result": "Passed",
+      "seconds": 5.1962690353393555,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "instructions",
+      "result": "Passed",
+      "seconds": 0.03176593780517578,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "jsc",
+      "result": "Passed",
+      "seconds": 2.027036190032959,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "missing-module",
+      "result": "Passed",
+      "seconds": 1.7176752090454102,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "node",
+      "result": "Passed",
+      "seconds": 2.674811840057373,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "openclaw",
+      "result": "Passed",
+      "seconds": 2.0041322708129883,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "package-manifest",
+      "result": "Passed",
+      "seconds": 3.3724539279937744,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "python",
+      "result": "Passed",
+      "seconds": 0.3850409984588623,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "reinstall",
+      "result": "Passed",
+      "seconds": 5.214187860488892,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "requirements",
+      "result": "Passed",
+      "seconds": 0.361572265625,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "restart",
+      "result": "Passed",
+      "seconds": 1.7902939319610596,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "shell",
+      "result": "Passed",
+      "seconds": 0.8981058597564697,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "toml",
+      "result": "Passed",
+      "seconds": 0.048065185546875,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "typescript",
+      "result": "Passed",
+      "seconds": 21.422041177749634,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "unicode",
+      "result": "Passed",
+      "seconds": 0.04681873321533203,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "unknown-engine",
+      "result": "Passed",
+      "seconds": 0.02981424331665039,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    },
+    {
+      "argument": "wrong-engine",
+      "result": "Passed",
+      "seconds": 0.020909786224365234,
+      "selector": "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+    }
+  ]
+}

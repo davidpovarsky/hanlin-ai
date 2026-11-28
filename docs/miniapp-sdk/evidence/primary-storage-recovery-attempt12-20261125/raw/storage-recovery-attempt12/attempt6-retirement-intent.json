@@ -1,0 +1,37 @@
+{
+  "startedAt": "2026-11-25T04:03:26.945536+00:00",
+  "attempt": 6,
+  "uid": "3797CDB6-6A26-41AF-8E80-11A011B62F80",
+  "source": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+  "candidateSHA256": "f790f3e6f2559ff52d611fe8dbcb6751a7815848af2263db8c124e4657af09ba",
+  "freeBytesBefore": 6245015552,
+  "candidateLogicalBytes": 4905066496,
+  "command": [
+    "xcrun",
+    "simctl",
+    "delete",
+    "3797CDB6-6A26-41AF-8E80-11A011B62F80"
+  ],
+  "authorization": "Root explicit named6 then5 only as measured necessary; standing user task cleanup",
+  "preserved": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt6/AIBuild.xcresult",
+      "duKiB": 852,
+      "InfoPlistExists": true,
+      "topLevel": [
+        "Data",
+        "Info.plist"
+      ]
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt6/MiniBuild.xcresult",
+      "duKiB": 588,
+      "InfoPlistExists": true,
+      "topLevel": [
+        "Data",
+        "Info.plist"
+      ]
+    }
+  ],
+  "status": "STARTING"
+}

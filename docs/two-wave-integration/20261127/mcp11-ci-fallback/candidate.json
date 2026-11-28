@@ -1,0 +1,74 @@
+{
+  "at": "2026-11-27T16:59:45.085966+00:00",
+  "status": "SOURCE_ONLY_FALLBACK_CANDIDATE",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-mcp11-ci-fallback-20261127",
+  "branch": "codex/hanlin-mcp11-ci-fallback-20261127",
+  "baseSource": "f57dfcc2292c0830f454e28d87293e85fe426a44",
+  "changes": [
+    {
+      "path": "Scripts/CI/IntegrationValidation/run_agent_sdk.sh",
+      "bytes": 13062,
+      "sha256": "ace71bbfcb2be24dc3ffef177f4e1e63a1111998be68008f6aa3e428275790eb"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/run_host_mcp_wire_comparison.py",
+      "bytes": 25872,
+      "sha256": "5865ed78117ac14d82055441481c5a51853061b9780069eb0e903887ae57b841"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_mcp_wire_supervision.py",
+      "bytes": 11120,
+      "sha256": "989ae19a5c6c5b10621f474bbb63353bc4ddacdae8ae37ff9bc5102389b9fa80"
+    }
+  ],
+  "patchSHA256": "aa36133977b08871322c437fa8621fed0c62812499ecbbe3ac2b85cc00e2ddf1",
+  "unchangedOriginalFunctionASTs": [
+    "now",
+    "git",
+    "save",
+    "process_snapshot",
+    "process_identity",
+    "scoped_ps_query",
+    "process_topology",
+    "process_descendants",
+    "owned_process_snapshot",
+    "owned_tree",
+    "stop_owned_processes"
+  ],
+  "adaptedOriginalHelpers": {
+    "digest": "Equivalent streamed SHA256 for runner Python compatibility",
+    "free": "Query actual checkout filesystem instead of fixed Scaleway Data path"
+  },
+  "portableControls": {
+    "passed": 16,
+    "exitCode": 0,
+    "logSHA256": "9582d8b7b1c7a2de107b5d113bd9e70b988d0dbcf7dff0eb4eb16a85ace5282c"
+  },
+  "sdkSourceInputCount": 396,
+  "sdkManifestSHA256": "fde01eda875902fd4b399921902ad8589f03f6c7926d3298fcb4f4c929339838",
+  "changedSourceIntersectionWithSDK396": [],
+  "workflowChanged": false,
+  "existingRoute": {
+    "workflow": "build-ios26-unsigned-ipa.yml",
+    "job": "agent-sdk-proof",
+    "runner": "xcode-27",
+    "jobTimeoutMinutes": 60,
+    "target_validation_group": "agent_sdk_exact_source_proof",
+    "exact_test_selector": "HostMCPWireComparisonTests",
+    "composer_validation_only": false,
+    "testflight_upload": false,
+    "full_validation": false
+  },
+  "nativeGateCommand": [
+    "/usr/bin/swift",
+    "test",
+    "--package-path",
+    "Packages/HanlinAgentSDK",
+    "--filter",
+    "HostMCPWireComparisonTests",
+    "--jobs",
+    "2"
+  ],
+  "nativeStatus": "NOT_RUN",
+  "rootOwnsPublicationAndDispatch": true
+}

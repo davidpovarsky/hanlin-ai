@@ -1,0 +1,1764 @@
+{
+  "status": "FAILED_EXTENSION_CLOSURE",
+  "mode": "appex-reachable-closure",
+  "records": [
+    {
+      "file": "AI_Hanlin",
+      "sha256": "c4ae37a4e58a947cbe9b346dad10036c1705ea525c54c832f6caf846421141c0",
+      "inspectedArchitecture": "arm64",
+      "fileType": 2,
+      "flags": "0xa18085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libicucore.A.dylib",
+        "/usr/lib/libz.1.dylib",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/System/Library/Frameworks/UIKit.framework/UIKit",
+        "/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics",
+        "/System/Library/Frameworks/CoreServices.framework/CoreServices",
+        "/System/Library/Frameworks/Security.framework/Security",
+        "/System/Library/Frameworks/SwiftUI.framework/SwiftUI",
+        "/System/Library/Frameworks/WidgetKit.framework/WidgetKit",
+        "/System/Library/Frameworks/ActivityKit.framework/ActivityKit",
+        "/System/Library/Frameworks/JavaScriptCore.framework/JavaScriptCore",
+        "/System/Library/Frameworks/QuartzCore.framework/QuartzCore",
+        "/System/Library/Frameworks/UniformTypeIdentifiers.framework/UniformTypeIdentifiers",
+        "/usr/lib/libsqlite3.dylib",
+        "/System/Library/Frameworks/AVKit.framework/AVKit",
+        "@rpath/TNSWidgets.framework/TNSWidgets",
+        "@rpath/NSCWinterTC.framework/NSCWinterTC",
+        "@rpath/NativeScript.framework/NativeScript",
+        "@rpath/TKLiveSync.framework/TKLiveSync",
+        "@rpath/React.framework/React",
+        "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies",
+        "@rpath/hermesvm.framework/hermesvm",
+        "@rpath/ExpoModulesJSI.framework/ExpoModulesJSI",
+        "@rpath/ExpoModulesCore.framework/ExpoModulesCore",
+        "@rpath/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+        "@rpath/ExpoBrownfield.framework/ExpoBrownfield",
+        "@rpath/ios_system.framework/ios_system",
+        "@rpath/files.framework/files",
+        "@rpath/text.framework/text",
+        "@rpath/tar.framework/tar",
+        "@rpath/curl_ios.framework/curl_ios",
+        "@rpath/libssh2.framework/libssh2",
+        "@rpath/openssl.framework/openssl",
+        "@rpath/awk.framework/awk",
+        "@rpath/NodeMobile.framework/NodeMobile",
+        "@rpath/Python.framework/Python",
+        "@rpath/llama.framework/llama",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/AVFAudio.framework/AVFAudio",
+        "/System/Library/Frameworks/AVFoundation.framework/AVFoundation",
+        "/System/Library/Frameworks/Accelerate.framework/Accelerate",
+        "/System/Library/Frameworks/Accessibility.framework/Accessibility",
+        "/System/Library/Frameworks/AlarmKit.framework/AlarmKit",
+        "/System/Library/Frameworks/AppIntents.framework/AppIntents",
+        "/System/Library/Frameworks/BackgroundTasks.framework/BackgroundTasks",
+        "/System/Library/Frameworks/Charts.framework/Charts",
+        "/System/Library/Frameworks/CloudKit.framework/CloudKit",
+        "/System/Library/Frameworks/Combine.framework/Combine",
+        "/System/Library/Frameworks/Contacts.framework/Contacts",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/System/Library/Frameworks/CoreLocation.framework/CoreLocation",
+        "/System/Library/Frameworks/CoreMedia.framework/CoreMedia",
+        "/System/Library/Frameworks/CoreSpotlight.framework/CoreSpotlight",
+        "/System/Library/Frameworks/CoreText.framework/CoreText",
+        "/System/Library/Frameworks/CoreTransferable.framework/CoreTransferable",
+        "/System/Library/Frameworks/CryptoKit.framework/CryptoKit",
+        "/System/Library/Frameworks/DeveloperToolsSupport.framework/DeveloperToolsSupport",
+        "/System/Library/Frameworks/EventKit.framework/EventKit",
+        "/System/Library/Frameworks/EventKitUI.framework/EventKitUI",
+        "/System/Library/Frameworks/FoundationModels.framework/FoundationModels",
+        "/System/Library/Frameworks/HealthKit.framework/HealthKit",
+        "/System/Library/Frameworks/HomeKit.framework/HomeKit",
+        "/System/Library/Frameworks/ImageIO.framework/ImageIO",
+        "/System/Library/Frameworks/LocalAuthentication.framework/LocalAuthentication",
+        "/System/Library/Frameworks/LockedCameraCapture.framework/LockedCameraCapture",
+        "/System/Library/Frameworks/MapKit.framework/MapKit",
+        "/System/Library/Frameworks/MediaPlayer.framework/MediaPlayer",
+        "/System/Library/Frameworks/NaturalLanguage.framework/NaturalLanguage",
+        "/System/Library/Frameworks/Network.framework/Network",
+        "/System/Library/Frameworks/PDFKit.framework/PDFKit",
+        "/System/Library/Frameworks/Photos.framework/Photos",
+        "/System/Library/Frameworks/PhotosUI.framework/PhotosUI",
+        "/System/Library/Frameworks/QuickLook.framework/QuickLook",
+        "/System/Library/Frameworks/SafariServices.framework/SafariServices",
+        "/System/Library/Frameworks/Speech.framework/Speech",
+        "/System/Library/Frameworks/SwiftData.framework/SwiftData",
+        "/System/Library/Frameworks/Symbols.framework/Symbols",
+        "/System/Library/Frameworks/Translation.framework/Translation",
+        "/System/Library/Frameworks/TranslationUIProvider.framework/TranslationUIProvider",
+        "/System/Library/Frameworks/UserNotifications.framework/UserNotifications",
+        "/System/Library/Frameworks/Vision.framework/Vision",
+        "/System/Library/Frameworks/WeatherKit.framework/WeatherKit",
+        "/System/Library/Frameworks/WebKit.framework/WebKit",
+        "/System/Library/Frameworks/_AVKit_SwiftUI.framework/_AVKit_SwiftUI",
+        "/System/Library/Frameworks/_AppIntents_SwiftUI.framework/_AppIntents_SwiftUI",
+        "/System/Library/Frameworks/_AppIntents_UIKit.framework/_AppIntents_UIKit",
+        "/System/Library/Frameworks/_LocationEssentials.framework/_LocationEssentials",
+        "/System/Library/Frameworks/_MapKit_SwiftUI.framework/_MapKit_SwiftUI",
+        "/System/Library/Frameworks/_QuickLook_SwiftUI.framework/_QuickLook_SwiftUI",
+        "/System/Library/Frameworks/_SwiftData_SwiftUI.framework/_SwiftData_SwiftUI",
+        "/System/Library/Frameworks/_Translation_SwiftUI.framework/_Translation_SwiftUI",
+        "/usr/lib/libcompression.dylib",
+        "/usr/lib/swift/libswiftAVFoundation.dylib",
+        "/usr/lib/swift/libswiftAccelerate.dylib",
+        "/usr/lib/swift/libswiftCompression.dylib",
+        "/usr/lib/swift/libswiftCore.dylib",
+        "/usr/lib/swift/libswiftCoreAudio.dylib",
+        "/usr/lib/swift/libswiftCoreFoundation.dylib",
+        "/usr/lib/swift/libswiftCoreImage.dylib",
+        "/usr/lib/swift/libswiftCoreLocation.dylib",
+        "/usr/lib/swift/libswiftCoreMIDI.dylib",
+        "/usr/lib/swift/libswiftDarwin.dylib",
+        "/usr/lib/swift/libswiftDispatch.dylib",
+        "/usr/lib/swift/libswiftIntents.dylib",
+        "/usr/lib/swift/libswiftMetal.dylib",
+        "/usr/lib/swift/libswiftNaturalLanguage.dylib",
+        "/usr/lib/swift/libswiftOSLog.dylib",
+        "/usr/lib/swift/libswiftObjectiveC.dylib",
+        "/usr/lib/swift/libswiftObservation.dylib",
+        "/usr/lib/swift/libswiftQuartzCore.dylib",
+        "/usr/lib/swift/libswiftRegexBuilder.dylib",
+        "/usr/lib/swift/libswiftSpatial.dylib",
+        "/usr/lib/swift/libswiftSynchronization.dylib",
+        "/usr/lib/swift/libswiftSystem.dylib",
+        "/usr/lib/swift/libswiftUniformTypeIdentifiers.dylib",
+        "/usr/lib/swift/libswiftXPC.dylib",
+        "/usr/lib/swift/libswift_Builtin_float.dylib",
+        "/usr/lib/swift/libswift_Concurrency.dylib",
+        "/usr/lib/swift/libswift_DarwinFoundation1.dylib",
+        "/usr/lib/swift/libswift_DarwinFoundation2.dylib",
+        "/usr/lib/swift/libswift_StringProcessing.dylib",
+        "/usr/lib/swift/libswiftos.dylib",
+        "/usr/lib/swift/libswiftsimd.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/ExpoAsset.framework/ExpoAsset",
+      "sha256": "9dc3147c9ef12e1b1fac7f198c5b5ba1e80da9d2fc39e1ffa2fa61b94cced884",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/ExpoBrownfield.framework/ExpoBrownfield",
+      "sha256": "fb08be09caafea6790641e3f5de1607834a0a5180f0cf56551a84053d40802ce",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "@rpath/hermesvm.framework/hermesvm",
+        "@rpath/React.framework/React",
+        "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies",
+        "@rpath/ExpoModulesCore.framework/ExpoModulesCore",
+        "@rpath/ExpoModulesJSI.framework/ExpoModulesJSI",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/Combine.framework/Combine",
+        "/usr/lib/swift/libswiftAVFoundation.dylib",
+        "/usr/lib/swift/libswiftCore.dylib",
+        "/usr/lib/swift/libswiftCoreAudio.dylib",
+        "/usr/lib/swift/libswiftCoreFoundation.dylib",
+        "/usr/lib/swift/libswiftCoreImage.dylib",
+        "/usr/lib/swift/libswiftCoreMIDI.dylib",
+        "/usr/lib/swift/libswiftCoreMedia.dylib",
+        "/usr/lib/swift/libswiftDarwin.dylib",
+        "/usr/lib/swift/libswiftDispatch.dylib",
+        "/usr/lib/swift/libswiftMetal.dylib",
+        "/usr/lib/swift/libswiftOSLog.dylib",
+        "/usr/lib/swift/libswiftObjectiveC.dylib",
+        "/usr/lib/swift/libswiftQuartzCore.dylib",
+        "/usr/lib/swift/libswiftSpatial.dylib",
+        "/usr/lib/swift/libswiftUniformTypeIdentifiers.dylib",
+        "/usr/lib/swift/libswiftXPC.dylib",
+        "/usr/lib/swift/libswiftos.dylib",
+        "/usr/lib/swift/libswiftsimd.dylib",
+        "/usr/lib/swift/libswiftUIKit.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/ExpoModulesCore.framework/ExpoModulesCore",
+      "sha256": "6f0125dd4d08a5ad1883d3cc85971aa42d5883251b481ff33589dd0fe72c886a",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x118085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libc++.1.dylib",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/System/Library/Frameworks/UserNotifications.framework/UserNotifications",
+        "/System/Library/Frameworks/AVKit.framework/AVKit",
+        "/System/Library/Frameworks/AVFoundation.framework/AVFoundation",
+        "/System/Library/Frameworks/UIKit.framework/UIKit",
+        "/System/Library/Frameworks/Combine.framework/Combine",
+        "/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics",
+        "/System/Library/Frameworks/CoreMedia.framework/CoreMedia",
+        "/System/Library/Frameworks/SwiftUI.framework/SwiftUI",
+        "@rpath/hermesvm.framework/hermesvm",
+        "@rpath/React.framework/React",
+        "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies",
+        "@rpath/ExpoModulesJSI.framework/ExpoModulesJSI",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/usr/lib/swift/libswiftAVFoundation.dylib",
+        "/usr/lib/swift/libswiftAccelerate.dylib",
+        "/usr/lib/swift/libswiftCore.dylib",
+        "/usr/lib/swift/libswiftCoreAudio.dylib",
+        "/usr/lib/swift/libswiftCoreFoundation.dylib",
+        "/usr/lib/swift/libswiftCoreImage.dylib",
+        "/usr/lib/swift/libswiftCoreMIDI.dylib",
+        "/usr/lib/swift/libswiftCoreMedia.dylib",
+        "/usr/lib/swift/libswiftDarwin.dylib",
+        "/usr/lib/swift/libswiftDispatch.dylib",
+        "/usr/lib/swift/libswiftMetal.dylib",
+        "/usr/lib/swift/libswiftOSLog.dylib",
+        "/usr/lib/swift/libswiftObjectiveC.dylib",
+        "/usr/lib/swift/libswiftQuartzCore.dylib",
+        "/usr/lib/swift/libswiftRegexBuilder.dylib",
+        "/usr/lib/swift/libswiftSpatial.dylib",
+        "/usr/lib/swift/libswiftUniformTypeIdentifiers.dylib",
+        "/usr/lib/swift/libswiftXPC.dylib",
+        "/usr/lib/swift/libswift_Concurrency.dylib",
+        "/usr/lib/swift/libswift_StringProcessing.dylib",
+        "/usr/lib/swift/libswiftos.dylib",
+        "/usr/lib/swift/libswiftsimd.dylib",
+        "/usr/lib/swift/libswiftCoreGraphics.dylib",
+        "/usr/lib/swift/libswiftUIKit.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/ExpoModulesJSI.framework/ExpoModulesJSI",
+      "sha256": "6d39079ed2bb336d43c552175132b15ef900d1c5dfe4e8575d490cde8089455b",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x918085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libc++.1.dylib",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/usr/lib/swift/libswiftCore.dylib",
+        "/usr/lib/swift/libswiftCoreFoundation.dylib",
+        "/usr/lib/swift/libswiftDarwin.dylib",
+        "/usr/lib/swift/libswiftDispatch.dylib",
+        "/usr/lib/swift/libswiftObjectiveC.dylib",
+        "/usr/lib/swift/libswiftXPC.dylib",
+        "/usr/lib/swift/libswift_Concurrency.dylib",
+        "/usr/lib/swift/libswift_StringProcessing.dylib",
+        "/usr/lib/swift/libswiftos.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+      "sha256": "f6e9c5e3829e41031e08ef466d3f6ec8199fa6aba03b4644f3cd937f5a1ffcf8",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libc++.1.dylib",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "@rpath/hermesvm.framework/hermesvm",
+        "@rpath/React.framework/React",
+        "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies",
+        "@rpath/ExpoModulesJSI.framework/ExpoModulesJSI",
+        "@rpath/ExpoModulesCore.framework/ExpoModulesCore",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/usr/lib/swift/libswiftAVFoundation.dylib",
+        "/usr/lib/swift/libswiftCore.dylib",
+        "/usr/lib/swift/libswiftCoreAudio.dylib",
+        "/usr/lib/swift/libswiftCoreFoundation.dylib",
+        "/usr/lib/swift/libswiftCoreImage.dylib",
+        "/usr/lib/swift/libswiftCoreMIDI.dylib",
+        "/usr/lib/swift/libswiftCoreMedia.dylib",
+        "/usr/lib/swift/libswiftDarwin.dylib",
+        "/usr/lib/swift/libswiftDispatch.dylib",
+        "/usr/lib/swift/libswiftMetal.dylib",
+        "/usr/lib/swift/libswiftOSLog.dylib",
+        "/usr/lib/swift/libswiftObjectiveC.dylib",
+        "/usr/lib/swift/libswiftQuartzCore.dylib",
+        "/usr/lib/swift/libswiftSpatial.dylib",
+        "/usr/lib/swift/libswiftUniformTypeIdentifiers.dylib",
+        "/usr/lib/swift/libswiftXPC.dylib",
+        "/usr/lib/swift/libswiftos.dylib",
+        "/usr/lib/swift/libswiftsimd.dylib",
+        "/usr/lib/swift/libswiftUIKit.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/ExpoUI.framework/ExpoUI",
+      "sha256": "8ceeb7a7326bf6def6d0df270154e49c20591c638b5d0530e9af912e934d9354",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/NSCWinterTC.framework/NSCWinterTC",
+      "sha256": "3eae0169d57e6606c550f6daa2f8a3bef59e6c9d7dee1c520ed82ed661104584",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/System/Library/Frameworks/Security.framework/Security"
+      ]
+    },
+    {
+      "file": "Frameworks/NativeScript.framework/NativeScript",
+      "sha256": "3af6388bb3b823c1dec5fd952d76ff39e75b35d9e9d5013ac4038abc52e84bd8",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x918085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/System/Library/Frameworks/UIKit.framework/UIKit",
+        "/System/Library/Frameworks/MobileCoreServices.framework/MobileCoreServices",
+        "/System/Library/Frameworks/QuartzCore.framework/QuartzCore",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/System/Library/Frameworks/CoreServices.framework/CoreServices"
+      ]
+    },
+    {
+      "file": "Frameworks/NodeMobile.framework/NodeMobile",
+      "sha256": "86492ee2e27c580f38747522a443094b5db02aa74b9460b3a593545f5bc2a23c",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x2910085",
+      "applicationExtensionSafe": true,
+      "dylibs": [
+        "/usr/lib/libc++.1.dylib",
+        "/System/Library/Frameworks/Security.framework/Security",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/Python.framework/Python",
+      "sha256": "bab15643505f43f9902515f48f8d198161e1a0207303c454860eed8337375df5",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x900085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/React.framework/React",
+      "sha256": "d08752c562e4751b97d9e0bc361a4a20c8e1714f502812a50b0ca1b6806ef259",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x918085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libc++.1.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/System/Library/Frameworks/CoreServices.framework/CoreServices",
+        "/System/Library/Frameworks/UIKit.framework/UIKit",
+        "/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics",
+        "/System/Library/Frameworks/Accelerate.framework/Accelerate",
+        "/System/Library/Frameworks/AudioToolbox.framework/AudioToolbox",
+        "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies",
+        "@rpath/hermesvm.framework/hermesvm",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CFNetwork.framework/CFNetwork",
+        "/System/Library/Frameworks/Combine.framework/Combine",
+        "/System/Library/Frameworks/CoreText.framework/CoreText",
+        "/System/Library/Frameworks/ImageIO.framework/ImageIO",
+        "/System/Library/Frameworks/QuartzCore.framework/QuartzCore",
+        "/System/Library/Frameworks/SwiftUI.framework/SwiftUI",
+        "/usr/lib/swift/libswiftCore.dylib",
+        "/usr/lib/swift/libswiftCoreFoundation.dylib",
+        "/usr/lib/swift/libswiftCoreImage.dylib",
+        "/usr/lib/swift/libswiftDarwin.dylib",
+        "/usr/lib/swift/libswiftDataDetection.dylib",
+        "/usr/lib/swift/libswiftDispatch.dylib",
+        "/usr/lib/swift/libswiftMetal.dylib",
+        "/usr/lib/swift/libswiftOSLog.dylib",
+        "/usr/lib/swift/libswiftObjectiveC.dylib",
+        "/usr/lib/swift/libswiftQuartzCore.dylib",
+        "/usr/lib/swift/libswiftSpatial.dylib",
+        "/usr/lib/swift/libswiftUniformTypeIdentifiers.dylib",
+        "/usr/lib/swift/libswiftXPC.dylib",
+        "/usr/lib/swift/libswift_Concurrency.dylib",
+        "/usr/lib/swift/libswiftos.dylib",
+        "/usr/lib/swift/libswiftsimd.dylib",
+        "/usr/lib/swift/libswiftFoundation.dylib",
+        "/usr/lib/swift/libswiftUIKit.dylib",
+        "/usr/lib/swift/libswiftCoreGraphics.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies",
+      "sha256": "5c612c23ad6904b9b771ccbab0b4221a0b74cda384c151235c8cf91a43fe2b91",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x918085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libc++abi.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CFNetwork.framework/CFNetwork",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/System/Library/Frameworks/Security.framework/Security",
+        "/usr/lib/libobjc.A.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/TKLiveSync.framework/TKLiveSync",
+      "sha256": "8a762ed26899ab23bc16777269ed72dd01e31e0f072aa595f3b16caca608997b",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x110085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libbz2.1.0.dylib",
+        "/usr/lib/libz.1.dylib",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation"
+      ]
+    },
+    {
+      "file": "Frameworks/TNSWidgets.framework/TNSWidgets",
+      "sha256": "1139ca728fd26962074bab0ef9be77cebfe267f57684228131a09b3b268e8c3d",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics",
+        "/System/Library/Frameworks/UIKit.framework/UIKit"
+      ]
+    },
+    {
+      "file": "Frameworks/_asyncio.framework/_asyncio",
+      "sha256": "0916a5c348f1891de578bc2d8fdd14a233257d896071d58cff8f16e45a61fe8d",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_bisect.framework/_bisect",
+      "sha256": "bf28f01b8d107f7b5dea01522d9747b64beaa8d690fdb1464f9d3ef1c64fbd3f",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_blake2.framework/_blake2",
+      "sha256": "66dbedb52a781733e25ea06d4d855153e4f03eef50cf9e9a423d1f4f92b0acae",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_bz2.framework/_bz2",
+      "sha256": "b17b7f501280dbf2e7757f0fc7282561ecff5834f650e0829cfbdb59bf7c63e4",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_codecs_cn.framework/_codecs_cn",
+      "sha256": "172c433de4220fa9aa9ac2ca274303b2392e1955814ce6699ab81ec3760b5b3b",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_codecs_hk.framework/_codecs_hk",
+      "sha256": "1d8f00e589ed04e545b5f6863533fab7229a880d608e439623aa43e19ba55823",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_codecs_iso2022.framework/_codecs_iso2022",
+      "sha256": "3812198fa1c7c02dd4d65314c16eac07d09cbb426f31bfad6837dc325c6ada62",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_codecs_jp.framework/_codecs_jp",
+      "sha256": "1dac4515019312cb8c2553d0ab60309c3ca4327af8717b2fba8d7712b8bd20ef",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_codecs_kr.framework/_codecs_kr",
+      "sha256": "d69d3c33f416cddc8db35694c6ea226d7b1e1f773503e89e119a9842b92f0bbd",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_codecs_tw.framework/_codecs_tw",
+      "sha256": "d907f21a3c7f66558ce27c8bc24c0b530986d6bf9f24f5691271fe90d0fb2286",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_csv.framework/_csv",
+      "sha256": "eafb9b572eb5651004361fb82bc2a31784ac06446d63918e4f0129d817b4303a",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_ctypes.framework/_ctypes",
+      "sha256": "ba5877a7fad0da9a16d60797f811a8cf27a33cee5547dd0dbad7827530d728aa",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_ctypes_test.framework/_ctypes_test",
+      "sha256": "2f4119cf99469582ef5195bbe5e497610da5e5c3e84f9a8e6bd4335094f3d551",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x900085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_dbm.framework/_dbm",
+      "sha256": "2952c4b9e29e80c684c946b87b5a9352087c1d58f0b38c2c2d35052b4ffb474f",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_decimal.framework/_decimal",
+      "sha256": "20028113d57d2b61849cd1c2defb50f5680c52fdb31fcea1f4babb2e1b531e97",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_elementtree.framework/_elementtree",
+      "sha256": "34d4cd339b55af13deed1ae53fef786e247115b8a43a87c9507fde1a34a22de6",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_hashlib.framework/_hashlib",
+      "sha256": "06139156dbe5e18879bdcc07fa0f2e020f7412a0a7c882aba106b007c55c5a71",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_heapq.framework/_heapq",
+      "sha256": "402bd8e5f16d343edf4fdef636e8d430e78fe089d4531f0dd9af7d96cf7340e7",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_hmac.framework/_hmac",
+      "sha256": "abee15bcd597d9a17b1765f9018f1ad838c729f47d2b14c37babc801a4636836",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_interpchannels.framework/_interpchannels",
+      "sha256": "bc6b3f0113b2a8b691479ca0ca36b022ff114a33b49aa3b6be2c42ffb315f00f",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_interpqueues.framework/_interpqueues",
+      "sha256": "dcafd6c1dcecbcaa2f79ff0d6768a676ef34de383d8796a48e46442144913e24",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_interpreters.framework/_interpreters",
+      "sha256": "30208d80a973848ddf242cdad6fdccb6afd392fce0e8036d4d3d247e45cc1fef",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_json.framework/_json",
+      "sha256": "9f4101c81b626de87a0cc9a77c4cd7eb631defdc33aa6b8d6e274aea3428920f",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_lsprof.framework/_lsprof",
+      "sha256": "ec132b22c3c780de84f932abf728ca06a36cce0d449bb5cc04b125804343c531",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_lzma.framework/_lzma",
+      "sha256": "cce768f8695a6202abebc141b67d9bafb765e4d46f92ff33dbca769c8971ac7c",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_md5.framework/_md5",
+      "sha256": "d9744d03885b72ccc760e3befe6823b36f5196f9097fc1369fc7a461039e8f73",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_multibytecodec.framework/_multibytecodec",
+      "sha256": "e05a56f62ad621bd1ab1d1f50b8b5a0a10eab8f5fd9d5bf0765da48d1d2395d5",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_pickle.framework/_pickle",
+      "sha256": "31ce58ea9db9481a0517776348132912a9bc39fb6a35ab2a500bf5b6c2e81f0b",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_queue.framework/_queue",
+      "sha256": "a4cfbdfd946bb09321afbb4bf0871fed65ad5f7683e948a3580353ee798f1ba2",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_random.framework/_random",
+      "sha256": "3f429325ba0c16a104302e01b6c6dd93fed4a5653babc50a2e7b518153ccc520",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_remote_debugging.framework/_remote_debugging",
+      "sha256": "79728ec8f2e077453650b38ddfc005ff5e2b8e2e31857b72ae307a932db75ea6",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_sha1.framework/_sha1",
+      "sha256": "0289013ef0450532fe6551475cfd1a8abf1f3182d4bd7c20d80954d04095e2fd",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_sha2.framework/_sha2",
+      "sha256": "73c1424201ab63da6e4c8f7085d93d68473f60c83cec030611efc53732550963",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_sha3.framework/_sha3",
+      "sha256": "da110bf42201edbd13dd0312f08d8bc267b2b91be37b298459c4218621757cf0",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_socket.framework/_socket",
+      "sha256": "5aade0d0439e2466d69e364bcb2462ece29f7887802b3cad3b2c183e03f55c7b",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_sqlite3.framework/_sqlite3",
+      "sha256": "6dc0490e51facbd2ebbf8cd4f995496d26ff1d7ab33e4871aceab74790220e92",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libsqlite3.dylib",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_ssl.framework/_ssl",
+      "sha256": "e20f5340b7e86443c861a23a34bcdd4548b9f81bd8eb13c766a7d642a12c44c9",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_statistics.framework/_statistics",
+      "sha256": "1ab897a4d9b1fd2490332731bff54737917725d1cea1ccfa51476ce88b7b9058",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_struct.framework/_struct",
+      "sha256": "4f16513a5f2b7ace32a2a7193580b5d623e374e0bdd0b65660d30d023532fdda",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_testbuffer.framework/_testbuffer",
+      "sha256": "d5710f78dacec0b6abb75f0b33c0275e5db36b1c383b8e2d3fa0aa14851a7626",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_testcapi.framework/_testcapi",
+      "sha256": "ffac56e844d9d7546d1e03cf377e42a9f943edc7e2b7576d639ae5f548ea16f5",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_testclinic.framework/_testclinic",
+      "sha256": "4419d303ab5fa1694a98f083f1fb12af26e1e1322dd03fd52190b9b073c9a2a9",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_testclinic_limited.framework/_testclinic_limited",
+      "sha256": "1f01ffe9e80f935be1d1fbf19eba069152aa330d27f2446629af44e09aa465b6",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_testimportmultiple.framework/_testimportmultiple",
+      "sha256": "416c09447b932a47f6b2be83591afd213711a9a601f9d93e648b653d7d1d146c",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_testinternalcapi.framework/_testinternalcapi",
+      "sha256": "0032a1b7e0d466cf3522c20c31f5cee55e2f7fed1e1a7b9fac70388658bd6787",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_testlimitedcapi.framework/_testlimitedcapi",
+      "sha256": "da96d4d04b741218a0cb764ddb4c83ea3d08a849d5a62b8847a5799b4d38878b",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_testmultiphase.framework/_testmultiphase",
+      "sha256": "a4c726d7e181d003bca5104720ce030132af65697b5c9c010c440b4f236dcfbf",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_testsinglephase.framework/_testsinglephase",
+      "sha256": "ec4684b169b7421628a77cdbbd19f466bbc0f06ff272ceaa2eebf4915a82ee8c",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_uuid.framework/_uuid",
+      "sha256": "ead352fcc639913d09a0bf70a7ffcdb0cb00fab14b7f035864f7bb5d4e2b8f3b",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_xxtestfuzz.framework/_xxtestfuzz",
+      "sha256": "84bd5add7868c18ebfa94bb95f272e6fe548aef14d4b47d0d99c5336b84cf0f0",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_zoneinfo.framework/_zoneinfo",
+      "sha256": "f356370ce843f595c250d15142e1269924c3105536042d557547c846daa10ee2",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/_zstd.framework/_zstd",
+      "sha256": "028b9cc27e883019f2c9b6774c0d00ae141100e213824eddbf6ed153742aa3d8",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/array.framework/array",
+      "sha256": "71ea3a1877e9f7001d19949858f2d0beef2f74a9afb36029dbd0fb9816c7b85c",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/awk.framework/awk",
+      "sha256": "a1c810f7ddd6fc5a4ff53866daeee23abf728770bf8fa3634117ef8970783a3b",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x900085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/ios_system.framework/ios_system",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/binascii.framework/binascii",
+      "sha256": "0dd6b2086d1a698dc6e1535ffabe2015a3cbf1820c49a45149b96c7f876a82a4",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libz.1.dylib",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/cmath.framework/cmath",
+      "sha256": "4fca57474ed2e7a7b98ffcd5c90dbd8dafa704db262b90f6ce7a2fad7bbc1faf",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/curl_ios.framework/curl_ios",
+      "sha256": "60bb69e1feba8b19b545d47b7f3361862d90ed5c23cde99c8634998329901c87",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x900085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/libssh2.framework/libssh2",
+        "@rpath/ios_system.framework/ios_system",
+        "@rpath/openssl.framework/openssl",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/usr/lib/libz.1.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/fcntl.framework/fcntl",
+      "sha256": "40a70910223a97496d18b33f28317216ddcf9fa5e5476eb7756a975c3ec85442",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/files.framework/files",
+      "sha256": "b7a33684d50734b72101a65a40d8b0ef40037fc1591ee5969c6f04d72abd77ae",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x900085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libncurses.5.4.dylib",
+        "/usr/lib/libbz2.1.0.dylib",
+        "@rpath/ios_system.framework/ios_system",
+        "/usr/lib/libSystem.B.dylib",
+        "/usr/lib/libz.1.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/hermesvm.framework/hermesvm",
+      "sha256": "b1476b4a43dabab8ed267283d279f3b67db5e72d1e5670b834bb3aedd662f136",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x918085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/usr/lib/libobjc.A.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/ios_system.framework/ios_system",
+      "sha256": "208535d1c504b54851bca9b40428a5ecfafc9d52292c1b4a6be3396f90e5a63e",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x900085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libncurses.5.4.dylib",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics",
+        "/System/Library/Frameworks/UIKit.framework/UIKit"
+      ]
+    },
+    {
+      "file": "Frameworks/libssh2.framework/libssh2",
+      "sha256": "21940aff1821e5021dc7856814c485c20a3491915cfc05599edec2b99154afe1",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x2100085",
+      "applicationExtensionSafe": true,
+      "dylibs": [
+        "/usr/lib/libSystem.B.dylib",
+        "/usr/lib/libz.1.dylib",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "@rpath/openssl.framework/openssl"
+      ]
+    },
+    {
+      "file": "Frameworks/llama.framework/llama",
+      "sha256": "59fb12721b8b6522e2e0cae22bd9ed988fa6f727a9a4d726bfb94da2a2575f2c",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x118085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/System/Library/Frameworks/Metal.framework/Metal",
+        "/System/Library/Frameworks/Accelerate.framework/Accelerate",
+        "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/usr/lib/libobjc.A.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/math.framework/math",
+      "sha256": "356a24cb1324ffae106f7c89864c807a94cdbfc82a2de5e7b100e4be520207f3",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/mmap.framework/mmap",
+      "sha256": "6fa5342298f0ec715eb9b73ac757343cf1356531f44f36836924532b551ab9fd",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/openssl.framework/openssl",
+      "sha256": "13e69d432c61e8e0d45e274a3745c6ea0172702d9b133d8d3d2fe0cc16799f85",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x2100085",
+      "applicationExtensionSafe": true,
+      "dylibs": [
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/pyexpat.framework/pyexpat",
+      "sha256": "ddd879a49298fe1f8d93bda2c0c92e474437ecdcb740e9ba825b51229dc5416f",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/resource.framework/resource",
+      "sha256": "7f7acbbb44b2038b97ff7d68d6fd97a38f653d5ce0fe352053e48fa4e32dbd8a",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/select.framework/select",
+      "sha256": "1d71140070c022f1cc8b25850219f28cc083e5c31ef092ae8b174aad93bc2686",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/tar.framework/tar",
+      "sha256": "c5e20dd637f59a1ecd6725fb9469c0353e52b2de5a43b97806f1f2a6c183af70",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x900085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libbz2.1.0.dylib",
+        "/usr/lib/libxml2.2.dylib",
+        "@rpath/ios_system.framework/ios_system",
+        "/usr/lib/libSystem.B.dylib",
+        "/usr/lib/libz.1.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/termios.framework/termios",
+      "sha256": "549dd44011394b2e9b2c3943e551d726ce06ca4cb6e1e419205480bc043801c7",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/text.framework/text",
+      "sha256": "75f713c0041f24b34b6640538bacce8f1ede59733f73c49b80100e5255334d74",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x900085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libbz2.1.0.dylib",
+        "@rpath/ios_system.framework/ios_system",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/AVFoundation.framework/AVFoundation",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/usr/lib/libz.1.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/unicodedata.framework/unicodedata",
+      "sha256": "32ffb06fd289103952a0e758e63778cacc0c5754be02a902bda983c92ec3d7e6",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/xxlimited.framework/xxlimited",
+      "sha256": "9d9ebe5bac8b8096dc127f9d0617c1e91895144c690b4eafc023d063871b7bda",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/xxlimited_35.framework/xxlimited_35",
+      "sha256": "1928be9e1a8a9fe0fad92d689c6c897a39ed71917d3ec214d427a35c183c5485",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/xxsubtype.framework/xxsubtype",
+      "sha256": "d45d30eb18ed9327da583dfa11fca5fc97390f9cfcac446dd03b6e416320eff1",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/zlib.framework/zlib",
+      "sha256": "d90593483753f130343c115dce3f686a1c3bb599a2d3162b2d0ef265cdf25911",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "@rpath/Python.framework/Python",
+        "/usr/lib/libz.1.dylib",
+        "/usr/lib/libSystem.B.dylib"
+      ]
+    },
+    {
+      "file": "PlugIns/HanlinScriptingWidgets.appex/HanlinScriptingWidgets",
+      "sha256": "85e6bcc80a7f414a49eaeb4b2ef7c896fa74a1cef24539f343bd76af7333cb61",
+      "inspectedArchitecture": "arm64",
+      "fileType": 2,
+      "flags": "0x218085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/System/Library/Frameworks/SwiftUI.framework/SwiftUI",
+        "/System/Library/Frameworks/UIKit.framework/UIKit",
+        "/System/Library/Frameworks/WidgetKit.framework/WidgetKit",
+        "/System/Library/Frameworks/ActivityKit.framework/ActivityKit",
+        "/System/Library/Frameworks/JavaScriptCore.framework/JavaScriptCore",
+        "@rpath/React.framework/React",
+        "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies",
+        "@rpath/hermesvm.framework/hermesvm",
+        "@rpath/ExpoModulesJSI.framework/ExpoModulesJSI",
+        "@rpath/ExpoModulesCore.framework/ExpoModulesCore",
+        "@rpath/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/AlarmKit.framework/AlarmKit",
+        "/System/Library/Frameworks/AppIntents.framework/AppIntents",
+        "/System/Library/Frameworks/Charts.framework/Charts",
+        "/System/Library/Frameworks/Combine.framework/Combine",
+        "/System/Library/Frameworks/Contacts.framework/Contacts",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics",
+        "/System/Library/Frameworks/CoreLocation.framework/CoreLocation",
+        "/System/Library/Frameworks/CoreText.framework/CoreText",
+        "/System/Library/Frameworks/CoreTransferable.framework/CoreTransferable",
+        "/System/Library/Frameworks/CryptoKit.framework/CryptoKit",
+        "/System/Library/Frameworks/DeveloperToolsSupport.framework/DeveloperToolsSupport",
+        "/System/Library/Frameworks/EventKit.framework/EventKit",
+        "/System/Library/Frameworks/HealthKit.framework/HealthKit",
+        "/System/Library/Frameworks/HomeKit.framework/HomeKit",
+        "/System/Library/Frameworks/ImageIO.framework/ImageIO",
+        "/System/Library/Frameworks/LocalAuthentication.framework/LocalAuthentication",
+        "/System/Library/Frameworks/MapKit.framework/MapKit",
+        "/System/Library/Frameworks/MediaPlayer.framework/MediaPlayer",
+        "/System/Library/Frameworks/Photos.framework/Photos",
+        "/System/Library/Frameworks/Security.framework/Security",
+        "/System/Library/Frameworks/Symbols.framework/Symbols",
+        "/System/Library/Frameworks/UserNotifications.framework/UserNotifications",
+        "/System/Library/Frameworks/WebKit.framework/WebKit",
+        "/System/Library/Frameworks/_AppIntents_SwiftUI.framework/_AppIntents_SwiftUI",
+        "/System/Library/Frameworks/_LocationEssentials.framework/_LocationEssentials",
+        "/usr/lib/libcompression.dylib",
+        "/usr/lib/libsqlite3.dylib",
+        "/usr/lib/libz.1.dylib",
+        "/usr/lib/swift/libswiftAVFoundation.dylib",
+        "/usr/lib/swift/libswiftCompression.dylib",
+        "/usr/lib/swift/libswiftCore.dylib",
+        "/usr/lib/swift/libswiftCoreAudio.dylib",
+        "/usr/lib/swift/libswiftCoreFoundation.dylib",
+        "/usr/lib/swift/libswiftCoreImage.dylib",
+        "/usr/lib/swift/libswiftCoreLocation.dylib",
+        "/usr/lib/swift/libswiftCoreMIDI.dylib",
+        "/usr/lib/swift/libswiftDarwin.dylib",
+        "/usr/lib/swift/libswiftDispatch.dylib",
+        "/usr/lib/swift/libswiftIntents.dylib",
+        "/usr/lib/swift/libswiftMetal.dylib",
+        "/usr/lib/swift/libswiftOSLog.dylib",
+        "/usr/lib/swift/libswiftObjectiveC.dylib",
+        "/usr/lib/swift/libswiftObservation.dylib",
+        "/usr/lib/swift/libswiftQuartzCore.dylib",
+        "/usr/lib/swift/libswiftRegexBuilder.dylib",
+        "/usr/lib/swift/libswiftSpatial.dylib",
+        "/usr/lib/swift/libswiftSynchronization.dylib",
+        "/usr/lib/swift/libswiftUniformTypeIdentifiers.dylib",
+        "/usr/lib/swift/libswiftXPC.dylib",
+        "/usr/lib/swift/libswift_Builtin_float.dylib",
+        "/usr/lib/swift/libswift_Concurrency.dylib",
+        "/usr/lib/swift/libswift_DarwinFoundation1.dylib",
+        "/usr/lib/swift/libswift_DarwinFoundation2.dylib",
+        "/usr/lib/swift/libswift_StringProcessing.dylib",
+        "/usr/lib/swift/libswiftos.dylib",
+        "/usr/lib/swift/libswiftsimd.dylib"
+      ]
+    }
+  ],
+  "reachableFiles": [
+    "PlugIns/HanlinScriptingWidgets.appex/HanlinScriptingWidgets",
+    "Frameworks/React.framework/React",
+    "Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies",
+    "Frameworks/hermesvm.framework/hermesvm",
+    "Frameworks/ExpoModulesJSI.framework/ExpoModulesJSI",
+    "Frameworks/ExpoModulesCore.framework/ExpoModulesCore",
+    "Frameworks/ExpoModulesWorklets.framework/ExpoModulesWorklets"
+  ],
+  "unsafeLibraries": [
+    {
+      "file": "Frameworks/React.framework/React",
+      "sha256": "d08752c562e4751b97d9e0bc361a4a20c8e1714f502812a50b0ca1b6806ef259",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x918085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libc++.1.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/System/Library/Frameworks/CoreServices.framework/CoreServices",
+        "/System/Library/Frameworks/UIKit.framework/UIKit",
+        "/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics",
+        "/System/Library/Frameworks/Accelerate.framework/Accelerate",
+        "/System/Library/Frameworks/AudioToolbox.framework/AudioToolbox",
+        "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies",
+        "@rpath/hermesvm.framework/hermesvm",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CFNetwork.framework/CFNetwork",
+        "/System/Library/Frameworks/Combine.framework/Combine",
+        "/System/Library/Frameworks/CoreText.framework/CoreText",
+        "/System/Library/Frameworks/ImageIO.framework/ImageIO",
+        "/System/Library/Frameworks/QuartzCore.framework/QuartzCore",
+        "/System/Library/Frameworks/SwiftUI.framework/SwiftUI",
+        "/usr/lib/swift/libswiftCore.dylib",
+        "/usr/lib/swift/libswiftCoreFoundation.dylib",
+        "/usr/lib/swift/libswiftCoreImage.dylib",
+        "/usr/lib/swift/libswiftDarwin.dylib",
+        "/usr/lib/swift/libswiftDataDetection.dylib",
+        "/usr/lib/swift/libswiftDispatch.dylib",
+        "/usr/lib/swift/libswiftMetal.dylib",
+        "/usr/lib/swift/libswiftOSLog.dylib",
+        "/usr/lib/swift/libswiftObjectiveC.dylib",
+        "/usr/lib/swift/libswiftQuartzCore.dylib",
+        "/usr/lib/swift/libswiftSpatial.dylib",
+        "/usr/lib/swift/libswiftUniformTypeIdentifiers.dylib",
+        "/usr/lib/swift/libswiftXPC.dylib",
+        "/usr/lib/swift/libswift_Concurrency.dylib",
+        "/usr/lib/swift/libswiftos.dylib",
+        "/usr/lib/swift/libswiftsimd.dylib",
+        "/usr/lib/swift/libswiftFoundation.dylib",
+        "/usr/lib/swift/libswiftUIKit.dylib",
+        "/usr/lib/swift/libswiftCoreGraphics.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/ReactNativeDependencies.framework/ReactNativeDependencies",
+      "sha256": "5c612c23ad6904b9b771ccbab0b4221a0b74cda384c151235c8cf91a43fe2b91",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x918085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libc++abi.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CFNetwork.framework/CFNetwork",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/System/Library/Frameworks/Security.framework/Security",
+        "/usr/lib/libobjc.A.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/hermesvm.framework/hermesvm",
+      "sha256": "b1476b4a43dabab8ed267283d279f3b67db5e72d1e5670b834bb3aedd662f136",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x918085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/usr/lib/libobjc.A.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/ExpoModulesJSI.framework/ExpoModulesJSI",
+      "sha256": "6d39079ed2bb336d43c552175132b15ef900d1c5dfe4e8575d490cde8089455b",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x918085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libc++.1.dylib",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/usr/lib/swift/libswiftCore.dylib",
+        "/usr/lib/swift/libswiftCoreFoundation.dylib",
+        "/usr/lib/swift/libswiftDarwin.dylib",
+        "/usr/lib/swift/libswiftDispatch.dylib",
+        "/usr/lib/swift/libswiftObjectiveC.dylib",
+        "/usr/lib/swift/libswiftXPC.dylib",
+        "/usr/lib/swift/libswift_Concurrency.dylib",
+        "/usr/lib/swift/libswift_StringProcessing.dylib",
+        "/usr/lib/swift/libswiftos.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/ExpoModulesCore.framework/ExpoModulesCore",
+      "sha256": "6f0125dd4d08a5ad1883d3cc85971aa42d5883251b481ff33589dd0fe72c886a",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x118085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libc++.1.dylib",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "/System/Library/Frameworks/UserNotifications.framework/UserNotifications",
+        "/System/Library/Frameworks/AVKit.framework/AVKit",
+        "/System/Library/Frameworks/AVFoundation.framework/AVFoundation",
+        "/System/Library/Frameworks/UIKit.framework/UIKit",
+        "/System/Library/Frameworks/Combine.framework/Combine",
+        "/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics",
+        "/System/Library/Frameworks/CoreMedia.framework/CoreMedia",
+        "/System/Library/Frameworks/SwiftUI.framework/SwiftUI",
+        "@rpath/hermesvm.framework/hermesvm",
+        "@rpath/React.framework/React",
+        "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies",
+        "@rpath/ExpoModulesJSI.framework/ExpoModulesJSI",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/usr/lib/swift/libswiftAVFoundation.dylib",
+        "/usr/lib/swift/libswiftAccelerate.dylib",
+        "/usr/lib/swift/libswiftCore.dylib",
+        "/usr/lib/swift/libswiftCoreAudio.dylib",
+        "/usr/lib/swift/libswiftCoreFoundation.dylib",
+        "/usr/lib/swift/libswiftCoreImage.dylib",
+        "/usr/lib/swift/libswiftCoreMIDI.dylib",
+        "/usr/lib/swift/libswiftCoreMedia.dylib",
+        "/usr/lib/swift/libswiftDarwin.dylib",
+        "/usr/lib/swift/libswiftDispatch.dylib",
+        "/usr/lib/swift/libswiftMetal.dylib",
+        "/usr/lib/swift/libswiftOSLog.dylib",
+        "/usr/lib/swift/libswiftObjectiveC.dylib",
+        "/usr/lib/swift/libswiftQuartzCore.dylib",
+        "/usr/lib/swift/libswiftRegexBuilder.dylib",
+        "/usr/lib/swift/libswiftSpatial.dylib",
+        "/usr/lib/swift/libswiftUniformTypeIdentifiers.dylib",
+        "/usr/lib/swift/libswiftXPC.dylib",
+        "/usr/lib/swift/libswift_Concurrency.dylib",
+        "/usr/lib/swift/libswift_StringProcessing.dylib",
+        "/usr/lib/swift/libswiftos.dylib",
+        "/usr/lib/swift/libswiftsimd.dylib",
+        "/usr/lib/swift/libswiftCoreGraphics.dylib",
+        "/usr/lib/swift/libswiftUIKit.dylib"
+      ]
+    },
+    {
+      "file": "Frameworks/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+      "sha256": "f6e9c5e3829e41031e08ef466d3f6ec8199fa6aba03b4644f3cd937f5a1ffcf8",
+      "inspectedArchitecture": "arm64",
+      "fileType": 6,
+      "flags": "0x100085",
+      "applicationExtensionSafe": false,
+      "dylibs": [
+        "/usr/lib/libc++.1.dylib",
+        "/System/Library/Frameworks/Foundation.framework/Foundation",
+        "@rpath/hermesvm.framework/hermesvm",
+        "@rpath/React.framework/React",
+        "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies",
+        "@rpath/ExpoModulesJSI.framework/ExpoModulesJSI",
+        "@rpath/ExpoModulesCore.framework/ExpoModulesCore",
+        "/usr/lib/libobjc.A.dylib",
+        "/usr/lib/libSystem.B.dylib",
+        "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+        "/usr/lib/swift/libswiftAVFoundation.dylib",
+        "/usr/lib/swift/libswiftCore.dylib",
+        "/usr/lib/swift/libswiftCoreAudio.dylib",
+        "/usr/lib/swift/libswiftCoreFoundation.dylib",
+        "/usr/lib/swift/libswiftCoreImage.dylib",
+        "/usr/lib/swift/libswiftCoreMIDI.dylib",
+        "/usr/lib/swift/libswiftCoreMedia.dylib",
+        "/usr/lib/swift/libswiftDarwin.dylib",
+        "/usr/lib/swift/libswiftDispatch.dylib",
+        "/usr/lib/swift/libswiftMetal.dylib",
+        "/usr/lib/swift/libswiftOSLog.dylib",
+        "/usr/lib/swift/libswiftObjectiveC.dylib",
+        "/usr/lib/swift/libswiftQuartzCore.dylib",
+        "/usr/lib/swift/libswiftSpatial.dylib",
+        "/usr/lib/swift/libswiftUniformTypeIdentifiers.dylib",
+        "/usr/lib/swift/libswiftXPC.dylib",
+        "/usr/lib/swift/libswiftos.dylib",
+        "/usr/lib/swift/libswiftsimd.dylib",
+        "/usr/lib/swift/libswiftUIKit.dylib"
+      ]
+    }
+  ],
+  "missingDependencies": [],
+  "forbiddenDependencies": [
+    {
+      "file": "PlugIns/HanlinScriptingWidgets.appex/HanlinScriptingWidgets",
+      "library": "@rpath/React.framework/React"
+    },
+    {
+      "file": "PlugIns/HanlinScriptingWidgets.appex/HanlinScriptingWidgets",
+      "library": "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies"
+    },
+    {
+      "file": "PlugIns/HanlinScriptingWidgets.appex/HanlinScriptingWidgets",
+      "library": "@rpath/hermesvm.framework/hermesvm"
+    },
+    {
+      "file": "Frameworks/React.framework/React",
+      "library": "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies"
+    },
+    {
+      "file": "Frameworks/React.framework/React",
+      "library": "@rpath/hermesvm.framework/hermesvm"
+    },
+    {
+      "file": "Frameworks/ExpoModulesCore.framework/ExpoModulesCore",
+      "library": "@rpath/hermesvm.framework/hermesvm"
+    },
+    {
+      "file": "Frameworks/ExpoModulesCore.framework/ExpoModulesCore",
+      "library": "@rpath/React.framework/React"
+    },
+    {
+      "file": "Frameworks/ExpoModulesCore.framework/ExpoModulesCore",
+      "library": "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies"
+    },
+    {
+      "file": "Frameworks/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+      "library": "@rpath/hermesvm.framework/hermesvm"
+    },
+    {
+      "file": "Frameworks/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+      "library": "@rpath/React.framework/React"
+    },
+    {
+      "file": "Frameworks/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+      "library": "@rpath/ReactNativeDependencies.framework/ReactNativeDependencies"
+    }
+  ]
+}

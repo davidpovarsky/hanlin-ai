@@ -1,0 +1,41 @@
+{
+  "all8TestAndHelperASTsUnchanged": true,
+  "argv": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/observer-expo-storage-3634078f/portable-import-r2/driver.py",
+    "/mnt/development/projects/worktrees/hanlin-observer-expo-storage-3634078f/Scripts/CI/Tests/test_installed_expo_observer_storage.py"
+  ],
+  "elapsedSeconds": 0.26797623094171286,
+  "exit": 0,
+  "files": {
+    "driver.py": {
+      "bytes": 961,
+      "sha256": "c69376444071602ab0a0b491f6770d7e47a9affb771daca4b3ecb00c8241bc68"
+    },
+    "stderr.log": {
+      "bytes": 1852,
+      "sha256": "4054f35c604c83ea41d588dd9e32c1700ab6174798b5b3d6814136f80f8e74f5"
+    },
+    "stdout.log": {
+      "bytes": 106,
+      "sha256": "f8e8e60d88bb2007dc6de678e5d3a353916156ecfd1ad92adab6b8a8c9fdac82"
+    }
+  },
+  "importState": {
+    "actualTests": 8,
+    "errors": 0,
+    "failures": 0,
+    "importModulesRestored": true,
+    "importPathRestored": true
+  },
+  "native": "NOT_RUN",
+  "prior102NotRepeated": true,
+  "r1SHA256": "8c71df979e5b2d4bc9aa977767ba5027fc0178e56e3eb30f93c2ac777c109ab0",
+  "schema": 1,
+  "status": "PASS",
+  "testSourceSHA256": "3588c25bd791b2b9c41ea3ba051b86f58a95a182592b3e5a4a1fe1b1336fdf19"
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "source_host": "109bcd84-6a7a-475f-9c53-0cf427912d04",
+  "source_directory": "/Users/m1/caches/DerivedData/hanlin-composer-sdk-ios/evidence-a3aae0b95",
+  "source_sha": "a3aae0b952b0518cb8c40ed4a511d4cffadab99f",
+  "job_id": "job_2ba935ae0db2",
+  "transport": "Oracle scaleway-mac alias with BatchMode=yes and StrictHostKeyChecking=yes",
+  "copied_original_json_count": 8,
+  "compressed_log": {
+    "path": "xcodebuild.log.gz",
+    "original_bytes": 1633403,
+    "original_sha256": "e6f652f8ca70a8d67e0dc71616f811dfd0205f9549c7e6bfbac5835b5227f61c",
+    "compression": "gzip level 9, mtime 0"
+  },
+  "source_xcresult_retained_at": "/Users/m1/caches/DerivedData/hanlin-composer-sdk-ios/evidence-a3aae0b95/ComposerSDK-attempt3.xcresult",
+  "files": [
+    {
+      "path": "lane-plan.json",
+      "bytes": 3720,
+      "sha256": "3fb0b5f8fdd4a6156805ac7dab258c05d8883453170a9bb40c0a7555e5c00569"
+    },
+    {
+      "path": "preflight.json",
+      "bytes": 610,
+      "sha256": "57ba3f5a490e7c3833084753cdec87aa2f72416e4088597ccd404ca01d798a92"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 5702,
+      "sha256": "a5143143bc9d6af8c0170aae8b4a17fc45d4257337dff5fc62d71c0b6c03c430"
+    },
+    {
+      "path": "source-input-sha256.json",
+      "bytes": 136000,
+      "sha256": "56c46f441a0218db0b0258481ba04c89991d9b07ce928b2d34e0038ad29ea4d0"
+    },
+    {
+      "path": "status.json",
+      "bytes": 725,
+      "sha256": "548694fe7586caa2b5b1d3533b5d8f751db04dd8941ac77580b983a1aafbf2b4"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 1064,
+      "sha256": "ac7802a32b4bc60e0c849842fddc793473d8bbd58659a5f08a1cfe3d45867c16"
+    },
+    {
+      "path": "tests.json",
+      "bytes": 9310,
+      "sha256": "cb581270d2f2427b6fec6c4929b93e3223be8e8b6a5ceffd26a1e81cf0c55a61"
+    },
+    {
+      "path": "xcodebuild.log.gz",
+      "bytes": 102234,
+      "sha256": "a002e2489e84bb947b6936855572b7d48e439c3e4fc08b4db0af514299a6e93f"
+    },
+    {
+      "path": "xcresult-sha256.json",
+      "bytes": 10616,
+      "sha256": "72e3958deef5c314de37f0c02befed5b1484e93f7ddcaee6f9b01ef6ffeb0e9a"
+    }
+  ]
+}

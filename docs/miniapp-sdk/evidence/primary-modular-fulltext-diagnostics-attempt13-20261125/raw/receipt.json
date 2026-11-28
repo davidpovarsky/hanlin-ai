@@ -1,0 +1,344 @@
+{
+  "schema": "hanlin-focused-terminal-packet-v1",
+  "capturedAt": "2026-11-25T04:20:26.008587+00:00",
+  "source": "42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+  "scope": "Original Modular selector only, original52 NOT_RUN",
+  "result": {
+    "result": "Failed",
+    "passedTests": 0,
+    "failedTests": 1,
+    "skippedTests": 0,
+    "totalTestCount": 1,
+    "testFailures": [
+      {
+        "failureText": "XCTUnwrap failed: expected non-nil value of type \"XCUIElement\" - Expanding the API response must render a nonempty full text, not only the search snippet or metadata",
+        "targetName": "HanlinMiniAppsUITests",
+        "testIdentifier": 1,
+        "testIdentifierString": "MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText()",
+        "testIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+        "testName": "testStandaloneModularSearchLoadsActualSefariaText()"
+      }
+    ]
+  },
+  "members": [
+    {
+      "path": "actual-import-job/e62141b7-87bf-4cfa-b2cc-8eab28f2e5da/job.json",
+      "bytes": 3825,
+      "sha256": "b5ec9435fa271518005159a11fff35f0417a0862089c9faa812923d0c496b467"
+    },
+    {
+      "path": "actual-import-job/e62141b7-87bf-4cfa-b2cc-8eab28f2e5da/main.mjs",
+      "bytes": 1315,
+      "sha256": "be4207a56896b872c3916e9aa36a4a6b7fc336c81fe3b1bc3423769a133c1809"
+    },
+    {
+      "path": "actual-import-job/e62141b7-87bf-4cfa-b2cc-8eab28f2e5da/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "actual-import-job/e62141b7-87bf-4cfa-b2cc-8eab28f2e5da/stdout.log",
+      "bytes": 1267,
+      "sha256": "66d6c4a25684ddb4ffcbf2f4c892cca80a4e100d84dea0fa0e19b89a83add46c"
+    },
+    {
+      "path": "attempt13-resource-basis.json",
+      "bytes": 1647,
+      "sha256": "b7a30d431d4898a596f25a97d95ee117b25b3d1c7c6df4d00df0b1eb703d2997"
+    },
+    {
+      "path": "diagnostic-observer-attempt13.py",
+      "bytes": 9924,
+      "sha256": "d36d818a02c5a9ddba660bf83e4827d96af75b38052f9eaa26bf3c7aab2a97e1"
+    },
+    {
+      "path": "first-packet-receipt.json",
+      "bytes": 9728,
+      "sha256": "58d3bc087263a29c1274f03d24112dee421b2ce36cb55f608fe1200dcaf2ce99"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/ModularFocusedDiagnostic-attachments/0CF48360-1711-455E-9CE1-123CCDCF124C.png",
+      "bytes": 274510,
+      "sha256": "b0b2d8351b98a43f2a7cc775324bead27fc5951b4107d081c0745c3043f1a292"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/ModularFocusedDiagnostic-attachments/1599FE0E-BBC7-4E85-8C40-258FE68BE1C0.png",
+      "bytes": 1155796,
+      "sha256": "cfd35f5e95f5b5588c42660a40828febcdfd34dfd15ae910466a27eefad57b3c"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/ModularFocusedDiagnostic-attachments/1B8B66AE-21A7-4B0A-9BB3-208C75466CA9.txt",
+      "bytes": 8755,
+      "sha256": "f52a8de15c81b1a5adba419f7c4f7431af4d4474a23659b1821f48feb76de9cf"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/ModularFocusedDiagnostic-attachments/2F1DBB27-6B97-4A37-85EB-58F57AE3FC53.png",
+      "bytes": 349650,
+      "sha256": "7d65c9d1ce532b3166c23fc10e596fc6d2f317fa49dc3002aaef24b6c5027412"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/ModularFocusedDiagnostic-attachments/82D9470E-E8F0-4B69-AE75-25C542F6165D.png",
+      "bytes": 426308,
+      "sha256": "3962a60d2bef1a391f31002462f57a3ba3433c9583586e60f93a9f202b7159f0"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/ModularFocusedDiagnostic-attachments/BCBA6A1E-74C7-45F7-8F09-7BA3C6BE20FD.txt",
+      "bytes": 33802,
+      "sha256": "9926907abc2eee11751996957106300a44819941a8c5a1ab0c6c01f9957942c4"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/ModularFocusedDiagnostic-attachments/E1DBEE7A-591E-413A-BDA6-F0132F1FF361.txt",
+      "bytes": 36975,
+      "sha256": "7bf9b621f68831ba2f873c923ef48ae3c1207e0c9a1cfcf26d7a2905da3be02f"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/ModularFocusedDiagnostic-attachments/F68C25DE-DC82-4BE5-87E7-5B58F4A1EE6C.txt",
+      "bytes": 30756,
+      "sha256": "7ededa419a1abc04a829bfdca1bd098197c8004a3375ed2334532873c3a569dd"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/ModularFocusedDiagnostic-attachments/manifest.json",
+      "bytes": 21300,
+      "sha256": "f38c0dc7dbc6e5947d1c5b5bae15a13191a7718898f738890132aefd42005649"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/container-observations.jsonl",
+      "bytes": 483,
+      "sha256": "bfab818739dd4e541a0808e5f63146b36f479a7ebd8bf77a8b2788478ca4dc2c"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/disk-observations.jsonl",
+      "bytes": 22696,
+      "sha256": "b0885d2259e464d88275506bd1fc6e32638ae9478d2adb2ef00bc501e33517c2"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/host-ready-observations.jsonl",
+      "bytes": 3005,
+      "sha256": "1c67fd9f7505ddbf5a9fd5d47857e3d7f6ec4592e448ac273972a940b82e3c14"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/inputs/HanlinMiniAppsUITests.original.swift",
+      "bytes": 78468,
+      "sha256": "84ede1a7dbafac2415c88cb276d2b04c0c0bce0a139f704b7737bcd307dd4ad8"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/installed-metadata-binding.json",
+      "bytes": 3018,
+      "sha256": "4499aca77ae2ad4b0fa3e26fe795f4ac248bc1648d4242d77c8ad1532e23877e"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/intercepted-original-command.json",
+      "bytes": 4290,
+      "sha256": "d5c1dfb5eeb05cddd8ee7f48a039cf988ca04df9f6eabe3f8c256b9589e36b86"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/node-job-observations.jsonl",
+      "bytes": 5404,
+      "sha256": "806afbeab454971b83a6ffe788f3303018f6bb36a707a787891ea0984fda947a"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/paired-prefix/ModularFocusedDiagnostic-attachments-export.log",
+      "bytes": 5762,
+      "sha256": "b2601ff42044474430de895ec29c2730b6aea4d494c1f910a589ba4ab4d2fb00"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/paired-prefix/ModularFocusedDiagnostic-nodes.json",
+      "bytes": 2627,
+      "sha256": "f096beba394a63e80c11fdf6f3d8a1088a17fbc7a69cef161a4dcf89e425d38b"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/paired-prefix/ModularFocusedDiagnostic-selected-tests.log",
+      "bytes": 57,
+      "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/paired-prefix/ModularFocusedDiagnostic-summary.json",
+      "bytes": 1823,
+      "sha256": "94a1c56f8c52a5103775fe29ebf1d68acb6ed9e208e662978feb8357862ceba3"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/paired-prefix/ModularFocusedDiagnostic.log",
+      "bytes": 56335,
+      "sha256": "b096d034368f3643a214f8294219a01faa32c27a4042d130276effb2bab858ca"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/paired-prefix/ModularTextSearch.hanlinExpo",
+      "bytes": 2203460,
+      "sha256": "121dc036e54564397bed0ad8394f1ac71189a8c74f74eef5874870f9ea44ad41"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/paired-prefix/active-command.json",
+      "bytes": 754,
+      "sha256": "d8536e8b4507155e4daa33027e7cb6c8465599caa9acd0fd037ae56e7e46b0ef"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/paired-prefix/ai-build.log.gz",
+      "bytes": 50124,
+      "sha256": "48c617455f8c34c1c474a2190cc1e14b0e6dcfb0e40d8eba2e9fe9afefc685fd"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/paired-prefix/authoring-fixture-provenance.json",
+      "bytes": 4147,
+      "sha256": "b4abc232549b4e699243b7e4769392a952419e40b864b623c08e2be7628489fe"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/paired-prefix/command-events.jsonl",
+      "bytes": 74630,
+      "sha256": "47c9b9b8dd351f7439836c6b9871e32be97b8d8a75c74aadc2454891a689a702"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/paired-prefix/commands.jsonl",
+      "bytes": 15110,
+      "sha256": "3e5ec9b84a9e02e0f4728b0b3204e773ec454878feedf835010761965f1033e4"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/paired-prefix/created-simulator.txt",
+      "bytes": 37,
+      "sha256": "c997b527a8c875f728b81391ef747be0a96960cb274bd1aea7c0a6f8309f22a6"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/paired-prefix/mini-build.log.gz",
+      "bytes": 66755,
+      "sha256": "3f0709dcff9c1d894d7bc049de0bf52c96ab74ad298d87b26812b5d3147b7042"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/paired-prefix/modular-search-build.json",
+      "bytes": 1615,
+      "sha256": "025a9a7e55b457b89f24400b6c17ae80890e10379a2e9fe10d0a8c0df2fbfbe8"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/paired-prefix/modular-search-build.log",
+      "bytes": 1615,
+      "sha256": "025a9a7e55b457b89f24400b6c17ae80890e10379a2e9fe10d0a8c0df2fbfbe8"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/paired-prefix/original-prefix-state.json",
+      "bytes": 19197,
+      "sha256": "3ad95b90b110a548afd67f3a18ecc8e053f2d0e27bbd1891f93a5f451e05d16b"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/paired-prefix/sample-package-hashes.json",
+      "bytes": 443,
+      "sha256": "bf574ca3d99fa659c34ab4a7ff2dd6b4fc838fd070ff79ca18b0b1bec038946f"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/paired-prefix/sdk-only-package-provenance.json",
+      "bytes": 2573,
+      "sha256": "9496134a105eb0cdfe32d0c56f3f6450dac83e2b22001133d6ba4bd5fb8fd55d"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/paired-prefix/source-sha.txt",
+      "bytes": 41,
+      "sha256": "61a78701435968aa356dad0ece43ed201b9327fb68af56d43c911e01c46ac390"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/runtime-logstream.jsonl.gz",
+      "bytes": 755843,
+      "sha256": "851f94d41117a7b5164d772e6129dc877f9da36f916817ceba01d32c0af59fdd"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/runtime-logstream.stderr",
+      "bytes": 91,
+      "sha256": "94fd1a5b55265199a9a6a67d888250b037e52f5788dd490d3721204d6132d8d0"
+    },
+    {
+      "path": "focused-diagnostics-attempt13/state.json",
+      "bytes": 8078,
+      "sha256": "b39416969043959f686be1718097b79399ea599c103f9103eb7669098a70c279"
+    },
+    {
+      "path": "focused-diagnostics-attempt13.py",
+      "bytes": 13086,
+      "sha256": "7438ab010cedebd87a3ac16b10617113b7d4c71a5b4e9d041d071f7897a68797"
+    },
+    {
+      "path": "focused-launch-attempt13.json",
+      "bytes": 3704,
+      "sha256": "02a43f4e6cf40a401bfeacd77eb04411a34f9c43ed0282cc74f4378ab9e97d78"
+    },
+    {
+      "path": "plan.json",
+      "bytes": 12984,
+      "sha256": "e9fbce54377376b806eb8e950d8145dcebf217c34d2da3b240c5a533914f9682"
+    },
+    {
+      "path": "run-focused-diagnostics-attempt13.py",
+      "bytes": 6576,
+      "sha256": "7988a2e41e4d3fdf4cdae47942cae0f0e4268acdbdab07f41b88663ae8b16a09"
+    },
+    {
+      "path": "state.json",
+      "bytes": 55919,
+      "sha256": "bda9f773686617d66d65cffaeb44ae3b6d12ea4c9ca78a209cb7290abec53df7"
+    },
+    {
+      "path": "supplement-observation.json",
+      "bytes": 16433,
+      "sha256": "beb4ad5bf27dc91c964ee79d8e694c05e6f0ea0022592e113fd025221fad177f"
+    }
+  ],
+  "budget": {
+    "accrued": 9861.598917747997,
+    "maximum": 12600,
+    "remaining": 2738.401082252003
+  },
+  "sourceBindings": [
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/App.tsx",
+      "bytes": 26038,
+      "sha256": "ac62c2f394dceedb422c0fbe05d4182afba07e1bf78fb15828d3f936d212ae8a"
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "bytes": 78468,
+      "sha256": "84ede1a7dbafac2415c88cb276d2b04c0c0bce0a139f704b7737bcd307dd4ad8"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 47460,
+      "sha256": "6e3abbb16c9b55b048b69c2391784510d8c143c7ed00e760a73ecb903cdbb61d"
+    },
+    {
+      "path": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+      "bytes": 7512,
+      "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "bytes": 50327,
+      "sha256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9"
+    },
+    {
+      "path": "AI_HLY/RuntimeHostResources.zip",
+      "bytes": 81813686,
+      "sha256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3"
+    }
+  ],
+  "compressed": [
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13/runtime-logstream.jsonl",
+      "path": "focused-diagnostics-attempt13/runtime-logstream.jsonl.gz",
+      "rawBytes": 7151138,
+      "rawSHA256": "d0be31395bb4ec6dd2e33d04d8abc62fe60f7933a95da8621833ae49d451b964",
+      "bytes": 755843,
+      "sha256": "851f94d41117a7b5164d772e6129dc877f9da36f916817ceba01d32c0af59fdd"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13/paired-prefix/mini-build.log",
+      "path": "focused-diagnostics-attempt13/paired-prefix/mini-build.log.gz",
+      "rawBytes": 981647,
+      "rawSHA256": "4cfc8febf69dd1529ad6e84e28da5e2bb6e7a1208ac1ab2467359f9e273f4b5b",
+      "bytes": 66755,
+      "sha256": "3f0709dcff9c1d894d7bc049de0bf52c96ab74ad298d87b26812b5d3147b7042"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13/paired-prefix/ai-build.log",
+      "path": "focused-diagnostics-attempt13/paired-prefix/ai-build.log.gz",
+      "rawBytes": 949088,
+      "rawSHA256": "d99c5e3894af0f403e742f353e2e4c568de70f95d99a2da25b817a0620f29791",
+      "bytes": 50124,
+      "sha256": "48c617455f8c34c1c474a2190cc1e14b0e6dcfb0e40d8eba2e9fe9afefc685fd"
+    }
+  ],
+  "firstPacketReceiptSHA256": "58d3bc087263a29c1274f03d24112dee421b2ce36cb55f608fe1200dcaf2ce99"
+}

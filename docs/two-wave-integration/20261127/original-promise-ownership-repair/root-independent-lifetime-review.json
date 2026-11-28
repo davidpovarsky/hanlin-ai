@@ -1,0 +1,28 @@
+{
+  "reviewer": "/root",
+  "atUTC": "2026-11-27T12:18:12.065750+00:00",
+  "decision": "APPROVED_CAUSE_SUPPORTED_SOURCE_FOR_ORIGINAL_UNINSTRUMENTED603",
+  "baseObservedSource": "778ed7e597a2fe19708e1dde5598350b56b25d6d",
+  "fullPatchSHA256": "96615634d62b4988375c3a4d43650d39ebbac73637ee9d9f92137ade08459c06",
+  "lifetimePatchSHA256": "1f2d7dd290652d6d04e458a4e3cc85ed5eda6634b4030daa83f47053df1941a6",
+  "actualRawChronologySHA256": "4274c49d0a97466a32f67a0c41ca7f2871dc274e5678e7611e8f520c0eea12cb",
+  "actualFinding": "2097152-byte native completion and current guard pass; delivery reads both managed continuations absent before original5s timeout. This is a real pending ownership defect, not late cleanup delivery.",
+  "canonicalEntriesIndependentlyVerified": 259,
+  "manifestOnlyChanges": "Exactly3 localSHA256 values at files148,160,168; all upstream pins and other fields unchanged.",
+  "designReview": [
+    "Strong pair scoped until settlement or cancellation; one-shot extraction under delivery lock.",
+    "Weak session registry does not root completed deliveries or consume native query quota.",
+    "Queue-enqueued delivery remains registered until actual extraction/cancellation.",
+    "No JS invocation/final JSValue release while delivery/session locks are held.",
+    "Guarded callback installation failure explicitly cancels and clears the pair.",
+    "Original finish/cancel/timeout/supersession callers retained and reviewed; final context disposal covered by unchanged original two controls."
+  ],
+  "teardownInventorySHA256": "1cc4f0782543253076f1dbfc2f0aebebb78282dcb4d79586ec9ec3e182fbfa0d",
+  "officialContract": "https://developer.apple.com/documentation/javascriptcore/jsvirtualmachine/addmanagedreference(_:withowner:).md",
+  "officialContractSummary": "Managed external ownership must itself be reachable from the JavaScript object graph; explicit temporary ownership requires its terminal release.",
+  "prediagnosticFetchSHA256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3",
+  "prediagnosticHTTPTestSHA256": "433703973e69d764686c6761ad1851c40d76f5e53afa4561d1720d873a5a1ae4",
+  "original603And5SecondBudgetPreserved": true,
+  "nativeCandidateResult": "NOT_RUN",
+  "nextGate": "One original full unfiltered603 on integrated candidate with no DEBUG instrumentation, exact original helpers/test budgets. Then source-qualified originaliOS79/Host188 and app gates."
+}

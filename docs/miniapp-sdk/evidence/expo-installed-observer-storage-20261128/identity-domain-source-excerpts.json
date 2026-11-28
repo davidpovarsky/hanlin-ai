@@ -1,0 +1,100 @@
+[
+  {
+    "source": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+    "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+    "bytes": 187644,
+    "sha256": "fef6a058c6b06838e64089933424803e66deeb30bbe9ecac1e7e24aca839fa95",
+    "excerpts": [
+      {
+        "firstLine": 1020,
+        "lastLine": 1052,
+        "text": "                let completeManifest = try bundler.writeInstallArtifact(\n                    compiled,\n                    packageRoot: stagedPackage.packageRoot,\n                    to: artifactRoot,\n                    preparedWidgetPrograms: try HanlinWidgetPackagePreparation.programs(packageRoot: stagedPackage.packageRoot, preview: preview)\n                )\n                let packageID = try Self.stablePackageID(for: preview.manifest ?? stagedPackage.manifest)\n                let installedID = try HanlinInstalledPackageID(validating: \"install-\\(packageID.rawValue)\")\n                let version = try HanlinPackageVersion(validating: stagedPackage.manifest.version)\n                let entrypoints = HanlinWidgetPackagePreparation.installedEntrypoints(preview: preview, artifactDigest: completeManifest.cacheFingerprint)\n                let plan = HanlinInstallPlan(\n                    installedPackageID: installedID,\n                    packageID: packageID,\n                    version: version,\n                    sourceDigest: preview.source.contentSHA256,\n                    entrypoints: entrypoints,\n                    requestedCapabilities: preview.requestedCapabilities,\n                    grantedCapabilities: grantedCapabilities,\n                    manifest: stagedPackage.manifest\n                )\n                if try await store.snapshots().contains(where: { $0.record.installedPackageID == installedID }) {\n                    try publicationStore?.invalidateWidgetActions(installedPackageID: installedID)\n                    return try await store.update(\n                        plan: plan,\n                        artifactDirectory: artifactRoot,\n                        artifactManifest: completeManifest\n                    )\n                }\n                return try await store.install(\n                    plan: plan,\n                    artifactDirectory: artifactRoot,\n                    artifactManifest: completeManifest\n                )\n"
+      },
+      {
+        "firstLine": 1582,
+        "lastLine": 1587,
+        "text": "        guard let package = installedPackages.first(where: {\n            ($0.manifest?.hanlinAppID == targetAppID.rawValue || $0.record.packageID.rawValue == targetAppID.rawValue)\n                && $0.enabled\n        }) else {\n            throw HanlinMiniAppRequestError.routeNotFound\n        }\n"
+      },
+      {
+        "firstLine": 2065,
+        "lastLine": 2072,
+        "text": "                for entrypoint in extensionEntrypoints {\n                    let identity = HanlinScriptExtensionIdentity(\n                        installedPackageID: package.record.installedPackageID,\n                        packageID: package.record.packageID,\n                        generation: package.record.activeGeneration,\n                        entrypointID: entrypoint.id,\n                        variantID: \"default\"\n                    )\n"
+      },
+      {
+        "firstLine": 2630,
+        "lastLine": 2637,
+        "text": "            let cleanActionName = actionName.components(separatedBy: \"::\").last ?? actionName\n            guard let targetID = (try? HanlinAppID(validating: package.manifest?.hanlinAppID ?? identity.packageID.rawValue))\n                    ?? (try? HanlinAppID(validating: identity.packageID.rawValue)),\n                  let actionID = try? HanlinActionID(validating: cleanActionName),\n                  let descriptor = try? package.appDescriptor(),\n                  let declaredAction = descriptor.actions.first(where: { $0.id == actionID }),\n                  let capability = declaredAction.capabilities.first ?? (try? HanlinCapabilityID(validating: \"inter-app.share\")) else {\n                throw HanlinInvocationDispatchError(.failed, .invalidTarget)\n"
+      },
+      {
+        "firstLine": 3472,
+        "lastLine": 3482,
+        "text": "    nonisolated static func stablePackageID(for manifest: HanlinScriptingManifest) throws -> HanlinPackageID {\n        if let explicitID = manifest.hanlinAppID {\n            return try HanlinPackageID(validating: explicitID)\n        }\n        if case let .string(explicitID)? = manifest.unknownFields[\"hanlinAppID\"] {\n            return try HanlinPackageID(validating: explicitID)\n        }\n        let digest = SHA256.hash(data: Data(manifest.name.precomposedStringWithCanonicalMapping.utf8))\n            .map { String(format: \"%02x\", $0) }.joined()\n        return try HanlinPackageID(validating: \"script-\\(digest.prefix(24))\")\n    }\n"
+      }
+    ]
+  },
+  {
+    "source": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift",
+    "bytes": 40516,
+    "sha256": "7402b0237d625ad1c0f920b2a2b1824d488ab99896eb3393a25b73ded11fe78d",
+    "excerpts": [
+      {
+        "firstLine": 588,
+        "lastLine": 625,
+        "text": "            generation: nextGeneration,\n            phase: .preparing\n        )\n        try persist(journal)\n        try faults.check(.journalPersisted)\n        try fileManager.copyItem(at: artifactDirectory, to: staged)\n        _ = try loadAndVerifyManifest(at: staged, expected: artifactManifest)\n        if let current = registry.packages[plan.installedPackageID.rawValue] {\n            try preserveGenerationMetadata(for: current)\n        }\n        try encoder.encode(GenerationMetadata(\n            packageID: plan.packageID,\n            version: plan.version,\n            sourceDigest: plan.sourceDigest,\n            artifactDigest: artifactManifest.cacheFingerprint,\n            entrypoints: plan.entrypoints,\n            manifest: plan.manifest\n        )).write(to: staged.appending(path: \"generation.json\"), options: .atomic)\n        try faults.check(.artifactStaged)\n        let destination = generationURL(plan.installedPackageID, generation: nextGeneration)\n        try fileManager.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true)\n        try fileManager.moveItem(at: staged, to: destination)\n        journal.phase = .generationPromoted\n        try persist(journal)\n        try faults.check(.generationPromoted)\n\n        let timestamp = now()\n        let record = HanlinInstalledPackageRecord(\n            installedPackageID: plan.installedPackageID,\n            packageID: plan.packageID,\n            version: plan.version,\n            sourceDigest: plan.sourceDigest,\n            artifactDigest: artifactManifest.cacheFingerprint,\n            activeGeneration: nextGeneration,\n            installedAt: installedAt,\n            updatedAt: timestamp\n        )\n        registry.packages[plan.installedPackageID.rawValue] = .init(\n"
+      }
+    ]
+  },
+  {
+    "source": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+    "path": "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift",
+    "bytes": 2614,
+    "sha256": "c833f3e47f2aa2b2079ffdd312d1237447fc5373788d9ca2ecdec10e16ebbf8a",
+    "excerpts": [
+      {
+        "firstLine": 16,
+        "lastLine": 47,
+        "text": "extension HanlinScriptingPlatform {\n    var shareActionTargets: [ChavrusaShareActionTarget] {\n        installedPackages.filter(\\.enabled).flatMap { package -> [ChavrusaShareActionTarget] in\n            guard let descriptor = try? package.appDescriptor() else { return [] }\n            let explicitShares = package.entrypoints.filter { $0.kind == .share }\n            let shareEntries = explicitShares.isEmpty\n                ? package.entrypoints.filter { $0.kind == .app } : explicitShares\n            return descriptor.actions.compactMap { action in\n                guard action.capabilities.contains(where: { $0.rawValue == \"inter-app.share\" }),\n                      let entry = shareEntries.first(where: {\n                          [.hanlinNativeScript, .hanlinExpo].contains($0.runtimeProfile)\n                              && $0.sourcePath == action.handler\n                              && ($0.exportedSymbol == nil || $0.exportedSymbol == action.id.rawValue)\n                      }) else { return nil }\n                return .init(identity: .init(installedPackageID: package.record.installedPackageID,\n                    packageID: package.record.packageID, generation: package.record.activeGeneration,\n                    entrypointID: entry.id), appID: package.appID, actionID: action.id,\n                    title: \"\\(descriptor.name.resolved(locale: .current)) — \\(action.title.resolved(locale: .current))\")\n            }\n        }.sorted { $0.title.localizedStandardCompare($1.title) == .orderedAscending }\n    }\n\n    func submitShareBatch(_ batchID: UUID, to target: ChavrusaShareActionTarget) async throws {\n        guard shareActionTargets.contains(target) else {\n            throw HanlinInvocationDispatchError(.stale, .invalidTarget)\n        }\n        let batch = try await ChavrusaShareInbox.shared.batch(batchID)\n        // The durable command binds this exact generation. Dispatch revalidates\n        // it after restore; installation changes cannot silently retarget it.\n        try submitResumeCommand(HanlinShareInvocation.command(batch: batch, identity: target.identity,\n            appID: target.appID, actionID: target.actionID))\n    }\n"
+      }
+    ]
+  },
+  {
+    "source": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionContracts.swift",
+    "bytes": 31677,
+    "sha256": "1298b4e420292a4e331cad7903f119861ae6df675a4fc90456fbde2bae24efd9",
+    "excerpts": [
+      {
+        "firstLine": 12,
+        "lastLine": 44,
+        "text": "public struct HanlinScriptExtensionIdentity: Codable, Hashable, Sendable {\n    public let installedPackageID: HanlinInstalledPackageID\n    public let packageID: HanlinPackageID\n    public let generation: UInt64\n    public let entrypointID: String\n    public let variantID: String\n\n    public init(\n        installedPackageID: HanlinInstalledPackageID,\n        packageID: HanlinPackageID,\n        generation: UInt64,\n        entrypointID: String,\n        variantID: String = \"default\"\n    ) {\n        self.installedPackageID = installedPackageID\n        self.packageID = packageID\n        self.generation = generation\n        self.entrypointID = entrypointID\n        self.variantID = variantID\n    }\n\n    private enum CodingKeys: String, CodingKey {\n        case installedPackageID, packageID, generation, entrypointID, variantID\n    }\n\n    public init(from decoder: Decoder) throws {\n        let container = try decoder.container(keyedBy: CodingKeys.self)\n        installedPackageID = try container.decode(HanlinInstalledPackageID.self, forKey: .installedPackageID)\n        packageID = try container.decode(HanlinPackageID.self, forKey: .packageID)\n        generation = try container.decode(UInt64.self, forKey: .generation)\n        entrypointID = try container.decode(String.self, forKey: .entrypointID)\n        variantID = try container.decodeIfPresent(String.self, forKey: .variantID) ?? \"default\"\n    }\n"
+      }
+    ]
+  },
+  {
+    "source": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+    "path": "Fixtures/HostActionSurfaces/expo/script.json",
+    "bytes": 1726,
+    "sha256": "68a345460b4af4cec4e2fecaa5a602b665ef5561f28d1edbb5ab9176f31a8fe7",
+    "excerpts": [
+      {
+        "firstLine": 1,
+        "lastLine": 75,
+        "text": "{\n  \"name\": \"Surface Expo\",\n  \"version\": \"1.0.0\",\n  \"description\": \"Dedicated real system-surface proof: current installed action, fresh private challenge/state, and complete real receipts from all five Host runtimes.\",\n  \"hanlinAppID\": \"hanlin.surface.expo\",\n  \"entry\": \"bundle.js\",\n  \"runInApp\": true,\n  \"hanlinRuntime\": \"hanlin-expo\",\n  \"widgetEngine\": \"expo\",\n  \"icon\": \"hand.tap\",\n  \"color\": \"#2455B2\",\n  \"capabilities\": [\n    \"storage\",\n    \"node\",\n    \"python\",\n    \"javascript\",\n    \"inter-app.share\",\n    \"live-activity\"\n  ],\n  \"actions\": [\n    {\n      \"id\": \"surface.run\",\n      \"title\": \"Run Surface Expo in all five runtimes\",\n      \"handler\": \"bundle.js\",\n      \"capability\": \"inter-app.share\"\n    }\n  ],\n  \"entrypoints\": [\n    {\n      \"id\": \"surface-intent\",\n      \"kind\": \"appIntent\",\n      \"sourcePath\": \"bundle.js\",\n      \"exportedSymbol\": \"surface.run\"\n    },\n    {\n      \"id\": \"surface-share\",\n      \"kind\": \"share\",\n      \"sourcePath\": \"bundle.js\",\n      \"exportedSymbol\": \"surface.run\"\n    },\n    {\n      \"id\": \"surface-translation\",\n      \"kind\": \"translationUI\",\n      \"sourcePath\": \"bundle.js\",\n      \"exportedSymbol\": \"surface.run\"\n    }\n  ],\n  \"intentInputTypes\": [\n    \"Text\",\n    \"URLs\"\n  ],\n  \"hanlinWidget\": {\n    \"abiVersion\": 1,\n    \"sourceFormat\": \"expo-layout\",\n    \"families\": [\n      \"systemSmall\",\n      \"systemMedium\",\n      \"systemLarge\"\n    ],\n    \"actions\": [\n      {\n        \"id\": \"surface-host-run\",\n        \"kind\": \"hostAction\",\n        \"hostAction\": {\n          \"entrypointID\": \"surface-intent\",\n          \"actionName\": \"surface.run\",\n          \"parameters\": {\n            \"surface\": \"widget\",\n            \"fixture\": \"hanlin.surface.expo\"\n          }\n        }\n      }\n    ]\n  }\n}\n"
+      }
+    ]
+  },
+  {
+    "source": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+    "path": "Fixtures/HostActionSurfaces/nativescript/script.json",
+    "bytes": 1856,
+    "sha256": "1169067328625b7475d527b0e2e8f454e0b31bc474157b182377d9aad15de07f",
+    "excerpts": [
+      {
+        "firstLine": 1,
+        "lastLine": 75,
+        "text": "{\n  \"name\": \"Surface NativeScript\",\n  \"version\": \"1.0.0\",\n  \"description\": \"Dedicated real system-surface proof: current installed action, fresh private challenge/state, and complete real receipts from all five Host runtimes.\",\n  \"hanlinAppID\": \"hanlin.surface.nativescript\",\n  \"entry\": \"nativescript/app/bundle.mjs\",\n  \"runInApp\": true,\n  \"hanlinRuntime\": \"hanlin-nativescript\",\n  \"widgetEngine\": \"scriptwidget\",\n  \"icon\": \"hand.tap\",\n  \"color\": \"#2455B2\",\n  \"capabilities\": [\n    \"storage\",\n    \"node\",\n    \"python\",\n    \"javascript\",\n    \"inter-app.share\",\n    \"live-activity\"\n  ],\n  \"actions\": [\n    {\n      \"id\": \"surface.run\",\n      \"title\": \"Run Surface NativeScript in all five runtimes\",\n      \"handler\": \"nativescript/app/bundle.mjs\",\n      \"capability\": \"inter-app.share\"\n    }\n  ],\n  \"entrypoints\": [\n    {\n      \"id\": \"surface-intent\",\n      \"kind\": \"appIntent\",\n      \"sourcePath\": \"nativescript/app/bundle.mjs\",\n      \"exportedSymbol\": \"surface.run\"\n    },\n    {\n      \"id\": \"surface-share\",\n      \"kind\": \"share\",\n      \"sourcePath\": \"nativescript/app/bundle.mjs\",\n      \"exportedSymbol\": \"surface.run\"\n    },\n    {\n      \"id\": \"surface-translation\",\n      \"kind\": \"translationUI\",\n      \"sourcePath\": \"nativescript/app/bundle.mjs\",\n      \"exportedSymbol\": \"surface.run\"\n    }\n  ],\n  \"intentInputTypes\": [\n    \"Text\",\n    \"URLs\"\n  ],\n  \"hanlinWidget\": {\n    \"abiVersion\": 1,\n    \"sourceFormat\": \"jsx\",\n    \"families\": [\n      \"systemSmall\",\n      \"systemMedium\",\n      \"systemLarge\"\n    ],\n    \"actions\": [\n      {\n        \"id\": \"surface-host-run\",\n        \"kind\": \"hostAction\",\n        \"hostAction\": {\n          \"entrypointID\": \"surface-intent\",\n          \"actionName\": \"surface.run\",\n          \"parameters\": {\n            \"surface\": \"widget\",\n            \"fixture\": \"hanlin.surface.nativescript\"\n          }\n        }\n      }\n    ]\n  }\n}\n"
+      }
+    ]
+  }
+]

@@ -1,0 +1,53 @@
+# Changelog and Upstream Touchpoints (Hardened)
+
+**Document Version:** 1.1.0  
+**Date:** 2026-10-21  
+**Target Repository:** `davidpovarsky/hanlin-ai`  
+**Working Branch:** `codex/classic-chat-native-composer-search`  
+
+---
+
+## 1. Overview of Hardened Changes
+
+This release delivers the complete **Hardened Automatic Web Search System** (`You.com Keyless` → `Tavily Keyless` → `Keenable Public`), with strict circuit breaking, structured concurrency hard deadlines, adversarial relevance filtering, and deterministic migration.
+
+In accordance with repository `AGENTS.md` ("Hanlin is an independent fork: maintainability and one authoritative implementation path matter more than preserving upstream touchpoints"):
+- All search coordination, adapters, relevance evaluation, DTOs, and migration are encapsulated in dedicated downstream files.
+- Following explicit owner approval on 2026-10-21 (*"מאשר, וכמובן שתבצע את הכל עם macos27 וsdk ios 27, שיהיה תואם לגירסה העדכנית"*), the frozen Chat UI files were thawed and updated: classic transcript visual language from `478cdd2c` was restored, and the SwiftChat Full Demo multiline Liquid Glass composer was implemented in `ChatViewBottom.swift`.
+
+---
+
+## 2. Inventory of Touchpoints
+
+### 2.1 Additive Downstream Files
+
+| File Path | Description | Lines | Status |
+| :--- | :--- | :--- | :--- |
+| `AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchResult.swift` | Canonical typed search result DTO, URL normalization, deduplication, and `ParsedSearchResult` synchronization. | 105 | **Hardened** |
+| `AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchRelevanceEvaluator.swift` | Topical relevance evaluator with English/Hebrew token scoring, intent mismatch detection, and hotel/card game spam defense. | 105 | **New** |
+| `AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchProviderProtocol.swift` | Provider protocol, `AutomaticSearchError` definitions, and `HTTPHeaderParser` (delta-seconds & HTTP-date). | 115 | **Hardened** |
+| `AI_HLY/Services/ChatServices/AutomaticSearch/YouKeylessSearchAdapter.swift` | REST client for `api.you.com/v1/agents/search` with HTTP 429/401/403 handling. | 150 | **Hardened** |
+| `AI_HLY/Services/ChatServices/AutomaticSearch/TavilyKeylessSearchAdapter.swift` | REST client for `api.tavily.com/search` keyless mode with HTTP 429/401/403 handling. | 125 | **Hardened** |
+| `AI_HLY/Services/ChatServices/AutomaticSearch/KeenablePublicSearchAdapter.swift` | REST client for `api.keenable.ai/v1/search/public` with HTTP 429/401/403 handling. | 125 | **Hardened** |
+| `AI_HLY/Services/ChatServices/AutomaticSearch/AutomaticWebSearchCoordinator.swift` | Actor-isolated coordinator: 3-tier fallback, strict cooldown enforcement, structured concurrency hard deadline race, canonical token cache, and clock injection. | 330 | **Hardened** |
+| `AI_HLY/Services/ChatServices/AutomaticSearch/AutomaticSearchMigration.swift` | Single authoritative bootstrap/migration: default auto activation, manual provider preservation, and deduplication. | 85 | **Hardened** |
+| `AI_HLYTests/AutomaticWebSearchTests.swift` | 12 comprehensive unit tests with thread-safe actor mocks, sanitized real JSON fixtures, adversarial relevance, fake clock cooldown, and migration. | 340 | **Hardened** |
+| `docs/hanlin-classic-chat-search/*` | 4 comprehensive documents (Baseline Matrix, Provider Contracts, Test Matrix, Changelog). | ~550 | **Hardened** |
+
+---
+
+### 2.2 Modified Existing Files
+
+| File Path | Exact Modification | Rationale |
+| :--- | :--- | :--- |
+| `AI_HLY/Services/ChatServices/WebSearchTool.swift` | Added `case AUTOMATIC_KEYLESS` to `SearchEngine`, routed in `searchTool`, added diagnostic test bypass in `testSearchAPI`. | Connects search tool and settings test to coordinator. |
+| `AI_HLY/Services/ChatServices/APIManager.swift` | Added `guard isSearchEnabled()` check and deterministic provider resolution in `getActiveSearchEngine()`. | Respects user's global search toggle (`UserInfo.useSearch`) and prevents ambiguous provider selection. |
+| `AI_HLY/Services/DataServices/InfoServices.swift` | Added `AUTOMATIC_SEARCH_KEY` with `isUsing: false` in template; added icon case. | Prevents template from overriding user choices on reload. |
+| `AI_HLY/Services/DataServices/PreLoad.swift` | Delegated reconciliation directly to `AutomaticSearchMigration.reconcileDefaultProvider`. | Establishes single authoritative migration path. |
+| `AI_HLY/SettingsView.swift` | Updated `noSearchKeys` to recognize that `AUTOMATIC_KEYLESS` requires no API key. | Eliminates false warning badge in settings. |
+| `AI_HLY/Views/Components/APISettingView.swift` | Prioritized automatic in list, added free badge, allowed toggle without key, removed misleading "set API key" header for automatic mode, and added honest diagnostic test display. | Clean, truthful settings UX. |
+| `AI_HLY/Resource/Localizable.xcstrings` | Added string units for `company_AUTOMATIC_KEYLESS`, `免费 (自动切换)`, and automatic service description in en, he, and zh-Hans. | Native multilingual support. |
+| `AI_HLY/ChatView.swift` | Adjusted `dynamicBottomPadding` (130pt base) and bottom gradient (120pt) for the compact floating Liquid Glass composer; preserved all agent coordinator hooks. | Visual and scroll parity with modern composer. |
+| `AI_HLY/Downstream/ChatPresentation/ChatUserMessageSurface.swift` | Restored classic Hanlin `478cdd2c` user bubble presentation: Hanlin Blue background (`Color.hlBlue`), white text, and `CustomCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5)`. | Restores classic user bubble identity. |
+| `AI_HLY/Downstream/ChatPresentation/ChatAssistantActionsView.swift` | Added `.sensoryFeedback(.success, trigger: isCopied)` on the copy button. | Restores classic sensory feedback on message action row. |
+| `AI_HLY/Views/Components/ChatViewBottom.swift` | Fully replaced legacy monolithic single-line input and two-tier action button strips with SwiftChat Full Demo-inspired native SwiftUI multiline Liquid Glass composer (`NativeMultilineTextEditor`, auto-grow 38-140pt, real placeholder, + attachment & contextual tools menu, mic, send/stop with attachments-only support, model capsule pill, active tool badges, and removed artificial 720pt cap). | Delivers Phase B composer modernization while preserving all 278-feature matrix input capabilities. |

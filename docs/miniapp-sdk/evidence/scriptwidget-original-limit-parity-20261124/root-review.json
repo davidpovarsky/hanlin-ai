@@ -1,0 +1,17 @@
+{
+  "atUTC": "2026-11-24T08:53:09.020182+00:00",
+  "reviewer": "/root",
+  "reviewedAuthorCommit": "7831fe0727138618104365d12f45c1df836a3ee4",
+  "integratedCommit": "10ad775f1074dd12771d29692567f3b00a96446c",
+  "status": "NO_CONCRETE_SOURCE_BLOCKER_APPLE_PENDING",
+  "sourceReview": [
+    "Compared private deadline callbacks, Babel callsites and native context binding; source search found only the patched production Swift caller and the two patched portable harnesses.",
+    "Read authenticated original compiler342-416 and root-resolution776-810 from the verbatim archive; same original constants, root-only/same-depth normalization and nonroot Fragment preservation.",
+    "Reviewed new actual JSC test: compiled typed dependency, original1000nodes/64depth, original excess and cycle rejection, multi/scalar/nonroot Fragments, per-region DynamicIsland roots."
+  ],
+  "portableProof": "Existing author receipt retains realBabel red1 to affected7green; not repeated.",
+  "nativeFilter": "HanlinDualWidgetEnginesTests/(rootFragmentsPreserveOriginalElementAllowances|scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas)",
+  "nativeCases": 2,
+  "nativeStatus": "NOT_RUN",
+  "originalSourceOrLegacyPolicyChanged": false
+}

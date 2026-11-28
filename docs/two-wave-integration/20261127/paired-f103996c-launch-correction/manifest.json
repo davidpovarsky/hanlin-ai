@@ -1,0 +1,22 @@
+{
+  "source": "f103996cc03d2cc5321c7e83b6cdf77c3b60e509",
+  "firstTransportAttempt": "NOT_RUN",
+  "subsequentLaunch": "ORIGINAL_PAIRED_BUILD_PHASE_RUNNING_AT_READBACK",
+  "files": [
+    {
+      "path": "paired-f103996c-transport-rejection-r1.json",
+      "bytes": 380,
+      "sha256": "68bc9772549f00356d55210ee9b1d370ee9609e2348b063ac30b8e6fb260d162"
+    },
+    {
+      "path": "paired-f103996c-detached-dispatch-r1.json",
+      "bytes": 1380,
+      "sha256": "d5c774580f22a4e271e6b9a1f7604de473b4485159a34e01ab88bb16669b0913"
+    },
+    {
+      "path": "paired-f103996c-launch-readback-r1.json",
+      "bytes": 2476,
+      "sha256": "ebad4353dd506ac2b05c1e06b4abb5ddf3a1ef88960cdaa0f6ce05bfa1f00f46"
+    }
+  ]
+}

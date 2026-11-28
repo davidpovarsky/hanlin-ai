@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-28T03:39:06.680793+00:00",
+  "base": "c9908a25ebeda3562170f16d2cf852ec4fd788b1",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-conversation-consent-20261128",
+  "branch": "codex/hanlin-conversation-consent-20261128",
+  "path": "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift",
+  "originalSHA256": "7648a6edb1406258290f98e69f4cf5dabace62c63f049254c6844831567b35ee",
+  "candidateSHA256": "3de65cab37c1bcc98f2f922e26428b7af393038fdcbbd6e34ef55d18d133950b",
+  "patchSHA256": "5a6f3badd141a1b583b61ff6e03c7301421d39bf9a256ef9cb66df12295b8fce",
+  "changedPaths": [
+    "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift"
+  ],
+  "wholeOriginalFileRecoveredByRemovingOnlyHelperAndHook": true,
+  "originalTestsAndAssertionsPreserved": true,
+  "productionSourceChanged": false,
+  "newNativeTestCount": 0,
+  "native": "NOT_RUN",
+  "status": "CANDIDATE_REQUIRES_SOURCE_REVIEW_AND_NATIVE_VALIDATION",
+  "sparsePattern": "/mnt/development/projects/git-mirrors/hanlin-ai.git/worktrees/hanlin-conversation-consent-20261128/info/sparse-checkout",
+  "sparsePatternIsWorktreeOwned": true,
+  "materializationRecovery": "First guard expected no sparse file; git worktree creation copied root patterns into THIS new worktree admin. Read and preserved exact inherited bytes, then changed only the owned new worktree pattern before materialization; no common/foreign pattern touched."
+}

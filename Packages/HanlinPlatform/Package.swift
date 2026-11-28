@@ -1,0 +1,291 @@
+// swift-tools-version: 6.2
+
+import PackageDescription
+
+let package = Package(
+    name: "HanlinPlatform",
+    platforms: [
+        .macOS(.v26),
+        .iOS("27.0")
+    ],
+    products: [
+        .library(name: "HanlinExtensionContracts", targets: ["HanlinExtensionContracts"]),
+        .library(
+            name: "HanlinPlatformContracts",
+            targets: ["HanlinPlatformContracts"]
+        ),
+        .library(
+            name: "HanlinMiniAppCore",
+            targets: ["HanlinMiniAppCore"]
+        ),
+        .library(
+            name: "HanlinScriptContracts",
+            targets: ["HanlinScriptContracts"]
+        ),
+        .library(
+            name: "HanlinScriptCompiler",
+            targets: ["HanlinScriptCompiler"]
+        ),
+        .library(
+            name: "HanlinScriptStore",
+            targets: ["HanlinScriptStore"]
+        ),
+        .library(
+            name: "HanlinScriptRuntime",
+            targets: ["HanlinScriptRuntime"]
+        ),
+        .library(
+            name: "HanlinScriptingSDK",
+            targets: ["HanlinScriptingSDK"]
+        ),
+        .library(
+            name: "HanlinScriptUI",
+            targets: ["HanlinScriptUI"]
+        ),
+        .library(
+            name: "HanlinScriptServices",
+            targets: ["HanlinScriptServices"]
+        ),
+        .library(
+            name: "HanlinScriptDeviceServices",
+            targets: ["HanlinScriptDeviceServices"]
+        ),
+        .library(
+            name: "HanlinScriptExtensions",
+            targets: ["HanlinScriptExtensions"]
+        ),
+        .library(
+            name: "HanlinChatCore",
+            targets: ["HanlinChatCore"]
+        ),
+        .library(
+            name: "HanlinScriptingApplicationRuntime",
+            targets: ["HanlinScriptingApplicationRuntime"]
+        )
+    ],
+    dependencies: [
+        .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", exact: "5.0.1"),
+        .package(url: "https://github.com/open-telemetry/opentelemetry-swift-core.git", exact: "2.6.0"),
+        .package(
+            url: "https://github.com/davidpovarsky/swift-ai-sdk.git",
+            revision: "abf0921c6e89e6521cc2b510ff11016b45a0ef08"
+        ),
+        .package(
+            url: "https://github.com/weichsel/ZIPFoundation.git",
+            .upToNextMinor(from: "0.9.19")
+        )
+    ],
+    targets: [
+        .target(name: "HanlinExtensionContracts"),
+        .target(
+            name: "HanlinPlatformContracts",
+            resources: [
+                .process("Resources")
+            ],
+            swiftSettings: [.unsafeFlags(["-application-extension"], .when(platforms: [.iOS]))],
+            linkerSettings: [.unsafeFlags(["-Xlinker", "-application_extension"], .when(platforms: [.iOS]))]
+        ),
+        .testTarget(
+            name: "HanlinPlatformContractsTests",
+            dependencies: ["HanlinPlatformContracts"]
+        ),
+        .target(
+            name: "HanlinMiniAppCore",
+            dependencies: ["HanlinPlatformContracts"]
+        ),
+        .testTarget(
+            name: "HanlinMiniAppCoreTests",
+            dependencies: ["HanlinMiniAppCore", "HanlinPlatformContracts"]
+        ),
+        .target(
+            name: "HanlinScriptContracts",
+            dependencies: ["HanlinPlatformContracts"],
+            resources: [.process("Resources")]
+        ),
+        .testTarget(
+            name: "HanlinScriptContractsTests",
+            dependencies: ["HanlinScriptContracts"]
+        ),
+        .target(
+            name: "HanlinWidgetCompiler",
+            dependencies: ["HanlinPlatformContracts", "HanlinScriptContracts", "HanlinScriptWidgetOriginal"],
+            resources: [.copy("Resources/core.js"), .copy("Resources/prepare-widget.js")],
+            linkerSettings: [.linkedFramework("JavaScriptCore", .when(platforms: [.iOS, .macOS]))]
+        ),
+        .target(
+            name: "HanlinScriptCompiler",
+            dependencies: [
+                "HanlinWidgetCompiler",
+                "HanlinPlatformContracts",
+                "HanlinScriptContracts",
+                .product(name: "ZIPFoundation", package: "ZIPFoundation")
+            ],
+            resources: [.process("Resources")]
+        ),
+        .testTarget(
+            name: "HanlinScriptCompilerTests",
+            dependencies: [
+                "HanlinScriptCompiler",
+                .product(name: "ZIPFoundation", package: "ZIPFoundation")
+            ]
+        ),
+        .target(
+            name: "HanlinScriptStore",
+            dependencies: [
+                "HanlinPlatformContracts",
+                "HanlinScriptContracts",
+                "HanlinMiniAppCore"
+            ]
+        ),
+        .testTarget(
+            name: "HanlinScriptStoreTests",
+            dependencies: ["HanlinScriptStore", "HanlinMiniAppCore"]
+        ),
+        .target(
+            name: "HanlinScriptRuntime",
+            dependencies: [
+                "HanlinPlatformContracts",
+                "HanlinScriptContracts"
+            ]
+        ),
+        .testTarget(
+            name: "HanlinScriptRuntimeTests",
+            dependencies: ["HanlinScriptRuntime"]
+        ),
+        .target(
+            name: "HanlinScriptingSDK",
+            dependencies: ["HanlinScriptContracts"],
+            resources: [.process("Resources")]
+        ),
+        .testTarget(
+            name: "HanlinScriptingSDKTests",
+            dependencies: ["HanlinScriptingSDK"]
+        ),
+        .target(
+            name: "HanlinScriptUI",
+            dependencies: [
+                "HanlinPlatformContracts",
+                "HanlinScriptContracts",
+                "HanlinChatCore"
+            ],
+            resources: [.process("Resources")]
+        ),
+        .testTarget(
+            name: "HanlinScriptUITests",
+            dependencies: ["HanlinScriptUI"]
+        ),
+        .target(
+            name: "HanlinScriptServices",
+            dependencies: [
+                "HanlinPlatformContracts",
+                "HanlinScriptContracts"
+            ]
+        ),
+        .testTarget(
+            name: "HanlinScriptServicesTests",
+            dependencies: ["HanlinScriptServices"]
+        ),
+        .target(
+            name: "HanlinScriptDeviceServices",
+            dependencies: [
+                "HanlinPlatformContracts",
+                "HanlinScriptServices"
+            ],
+            exclude: ["README.md"]
+        ),
+        .testTarget(
+            name: "HanlinScriptDeviceServicesTests",
+            dependencies: ["HanlinScriptDeviceServices"]
+        ),
+        .target(
+            name: "HanlinChatCore",
+            dependencies: [
+                .product(name: "OpenTelemetryApi", package: "opentelemetry-swift-core"),
+                .product(name: "OpenTelemetrySdk", package: "opentelemetry-swift-core"),
+                "HanlinPlatformContracts",
+                .product(name: "SwiftAISDK", package: "swift-ai-sdk"),
+                .product(name: "AISDKProvider", package: "swift-ai-sdk"),
+                .product(name: "AISDKProviderUtils", package: "swift-ai-sdk"),
+                .product(name: "OpenAIProvider", package: "swift-ai-sdk"),
+                .product(name: "AnthropicProvider", package: "swift-ai-sdk"),
+                .product(name: "GoogleProvider", package: "swift-ai-sdk"),
+                .product(name: "OpenAICompatibleProvider", package: "swift-ai-sdk")
+            ]
+        ),
+        .testTarget(
+            name: "HanlinChatCoreTests",
+            dependencies: [
+                .product(name: "OpenTelemetryApi", package: "opentelemetry-swift-core"),
+                .product(name: "OpenTelemetrySdk", package: "opentelemetry-swift-core"),
+                "HanlinChatCore",
+                .product(name: "SwiftAISDK", package: "swift-ai-sdk"),
+                .product(name: "AISDKProvider", package: "swift-ai-sdk"),
+                .product(name: "AISDKProviderUtils", package: "swift-ai-sdk"),
+                .product(name: "OpenAIProvider", package: "swift-ai-sdk"),
+                .product(name: "AnthropicProvider", package: "swift-ai-sdk"),
+                .product(name: "GoogleProvider", package: "swift-ai-sdk"),
+                .product(name: "OpenAICompatibleProvider", package: "swift-ai-sdk")
+            ]
+        ),
+        .target(
+            name: "HanlinScriptWidgetOriginal",
+            dependencies: [
+                "HanlinExtensionContracts",
+                .product(name: "ZIPFoundation", package: "ZIPFoundation")
+            ],
+            exclude: ["Original/LICENSE.txt", "Original/NOTICE.txt"],
+            resources: [.copy("Resources/support.bundle")],
+            swiftSettings: [.swiftLanguageMode(.v5)],
+            linkerSettings: [.linkedFramework("JavaScriptCore")]
+        ),
+        .target(
+            name: "HanlinScriptExtensions",
+            dependencies: [
+                "HanlinScriptWidgetOriginal",
+                "HanlinExtensionContracts",
+                .product(name: "SwiftyJSON", package: "SwiftyJSON"),
+                "HanlinPlatformContracts",
+                "HanlinScriptContracts",
+                "HanlinScriptStore",
+                "HanlinScriptUI",
+                "HanlinChatCore"
+            ],
+            exclude: ["ScriptWidget/Original/MIT-previous.txt", "ScriptWidget/Original/LICENSE.txt", "ScriptWidget/Original/NOTICE.txt", "ScriptWidget/Original/Component/Attributes/Animation/ClockHandKit-LICENSE.txt"],
+            resources: [
+                .copy("Resources/support.bundle"),
+                .copy("Resources/ExpoWidgets.bundle")
+            ],
+            linkerSettings: [
+                .linkedFramework("JavaScriptCore")
+            ]
+        ),
+        .testTarget(
+            name: "HanlinScriptExtensionsTests",
+            dependencies: ["HanlinScriptExtensions", "HanlinChatCore", "HanlinScriptCompiler", "HanlinScriptStore", "HanlinLegacyWidgetStoreFixture"]
+        ),
+        .target(name: "HanlinLegacyWidgetStoreFixture", dependencies: ["HanlinPlatformContracts", "HanlinScriptUI"],
+            path: "Tests/Fixtures/LegacyWidgetStore", exclude: ["PROVENANCE.txt"]),
+        .target(
+            name: "HanlinScriptingApplicationRuntime",
+            dependencies: [
+                "HanlinPlatformContracts",
+                "HanlinScriptUI",
+                "HanlinMiniAppCore"
+            ],
+            linkerSettings: [
+                .linkedFramework("JavaScriptCore"),
+                .linkedFramework("UniformTypeIdentifiers"),
+                .linkedLibrary("sqlite3")
+            ]
+        ),
+        .testTarget(
+            name: "HanlinScriptingApplicationRuntimeTests",
+            dependencies: [
+                "HanlinPlatformContracts",
+                "HanlinMiniAppCore",
+                "HanlinScriptingApplicationRuntime"
+            ]
+        )
+    ],
+    swiftLanguageModes: [.v6]
+)

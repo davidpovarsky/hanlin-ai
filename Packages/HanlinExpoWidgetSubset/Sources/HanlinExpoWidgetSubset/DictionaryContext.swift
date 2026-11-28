@@ -1,0 +1,354 @@
+import Foundation
+import CoreFoundation
+import SwiftUI
+import UIKit
+
+/// Dictionary-only widget adapter for the pinned ExpoUI source props. It has no
+/// React registry, JavaScript engine, hosting controller or module lifecycle.
+public final class AppContext {
+    public enum Properties: Equatable {
+        /// Existing prepared JSON widgets accept only verified resources and
+        /// their original declarative modifier vocabulary.
+        case preparedResources
+        /// Original Expo Widgets receives the original JSC JSON props. Native
+        /// file images and all original SwiftUI modifiers retain their behavior.
+        case originalWidgets
+    }
+    public let resources: [String: URL]
+    public let properties: Properties
+    public init(resources: [String: URL] = [:], properties: Properties = .preparedResources) {
+        self.resources = resources
+        self.properties = properties
+    }
+    static let preparedModifierTypes: Set<String> = [
+        "accessibilityAddTraits",
+        "accessibilityElement",
+        "accessibilityHidden",
+        "accessibilityHint",
+        "accessibilityIdentifier",
+        "accessibilityInputLabels",
+        "accessibilityLabel",
+        "accessibilityRemoveTraits",
+        "accessibilityValue",
+        "activityBackgroundTint",
+        "alignmentGuide",
+        "allowsTightening",
+        "animation",
+        "arrangementViewStyle",
+        "aspectRatio",
+        "background",
+        "backgroundOverlay",
+        "blur",
+        "bold",
+        "border",
+        "brightness",
+        "buttonBorderShape",
+        "buttonStyle",
+        "clipShape",
+        "clipped",
+        "colorInvert",
+        "containerBackground",
+        "containerRelativeFrame",
+        "containerShape",
+        "contentShape",
+        "contentTransition",
+        "contrast",
+        "controlSize",
+        "cornerRadius",
+        "disabled",
+        "dynamicTypeSize",
+        "environment",
+        "fixedSize",
+        "font",
+        "foregroundColor",
+        "foregroundStyle",
+        "frame",
+        "gaugeStyle",
+        "geometryGroup",
+        "grayscale",
+        "hidden",
+        "hueRotation",
+        "ignoreSafeArea",
+        "imageScale",
+        "invalidatableContent",
+        "italic",
+        "kerning",
+        "labelStyle",
+        "labelsHidden",
+        "layoutPriority",
+        "lineHeight",
+        "lineLimit",
+        "lineSpacing",
+        "luminanceToAlpha",
+        "mask",
+        "minimumScaleFactor",
+        "monospacedDigit",
+        "multilineTextAlignment",
+        "navigationBarTitleDisplayMode",
+        "offset",
+        "opacity",
+        "overlay",
+        "overlayArrangementEdge",
+        "padding",
+        "preferredColorScheme",
+        "presentationCornerRadius",
+        "privacySensitive",
+        "progressViewStyle",
+        "redacted",
+        "resizable",
+        "rotation3DEffect",
+        "rotationEffect",
+        "saturation",
+        "scaleEffect",
+        "scrollEdgeEffectStyle",
+        "searchToolbarBehavior",
+        "sectionIndexLabel",
+        "selectedSegmentTintColor",
+        "shadow",
+        "splitArrangementFixedLayoutSize",
+        "splitArrangementLayoutRatio",
+        "splitArrangementLayoutSize",
+        "strikethrough",
+        "strokeBorder",
+        "symbolEffect",
+        "textCase",
+        "textSelection",
+        "tint",
+        "toolbarTitleDisplayMode",
+        "truncationMode",
+        "underline",
+        "universalLayout",
+        "unredacted",
+        "widgetAccentedRenderingMode",
+        "widgetURL",
+        "zIndex",
+    ]
+}
+
+public protocol Convertible {
+    static func convert(from value: Any?, appContext: AppContext) throws -> Self
+}
+public protocol Enumerable: Convertible, RawRepresentable, CaseIterable {}
+public extension Enumerable {
+    static func convert(from value: Any?, appContext: AppContext) throws -> Self {
+        guard let raw = value as? RawValue, let result = Self(rawValue: raw) else { throw Conversions.ConvertingException<Self>(value) }
+        return result
+    }
+}
+open class GenericException<Param>: Error, LocalizedError, CustomStringConvertible, @unchecked Sendable {
+    public let param: Param
+    public init(_ param: Param) { self.param = param }
+    open var reason: String { "Invalid widget property: \(param)" }
+    public var description: String { reason }
+    public var errorDescription: String? { reason }
+}
+public enum Conversions {
+    public final class ConvertingException<Value>: GenericException<Any?>, @unchecked Sendable {}
+}
+
+public enum FieldOption: ExpressibleByStringLiteral {
+    case keyed(String), required
+    public init(stringLiteral value: String) { self = .keyed(value) }
+}
+private protocol DictionaryField: AnyObject {
+    var key: String? { get }
+    func set(_ value: Any, context: AppContext) throws
+}
+@propertyWrapper public final class Field<Type>: DictionaryField {
+    public var wrappedValue: Type
+    private let options: [FieldOption]
+    var key: String? { options.compactMap { if case let .keyed(key) = $0 { key } else { nil } }.first }
+    public init(wrappedValue: Type, _ options: FieldOption...) { self.wrappedValue = wrappedValue; self.options = options }
+    public init(wrappedValue: Type, _ options: [FieldOption]) { self.wrappedValue = wrappedValue; self.options = options }
+    public init(wrappedValue: Type = nil) where Type: ExpressibleByNilLiteral { self.wrappedValue = wrappedValue; options = [] }
+    public init(wrappedValue: Type = nil, _ options: FieldOption...) where Type: ExpressibleByNilLiteral { self.wrappedValue = wrappedValue; self.options = options }
+    func set(_ value: Any, context: AppContext) throws { wrappedValue = try dictionaryValue(value, context: context) }
+}
+
+private func dictionaryValue<T>(_ value: Any?, context: AppContext) throws -> T {
+    if let convertible = T.self as? any Convertible.Type,
+       let result = try convertible.convert(from: value, appContext: context) as? T { return result }
+    // Frozen Hanlin integers arrive as Swift Int64, while native Expo props
+    // use Double/CGFloat/Int. Normalize the numeric representation explicitly.
+    if let number = value as? NSNumber, CFGetTypeID(number) != CFBooleanGetTypeID() {
+        let scalar = number.doubleValue
+        guard scalar.isFinite else { throw Conversions.ConvertingException<T>(value) }
+        if T.self == Double.self { return scalar as! T }
+        if T.self == CGFloat.self { return CGFloat(scalar) as! T }
+        if T.self == Float.self, abs(scalar) <= Double(Float.greatestFiniteMagnitude) { return Float(scalar) as! T }
+        if T.self == Int.self, let integer = Int(exactly: scalar) { return integer as! T }
+    }
+    if let result = value as? T { return result }
+    throw Conversions.ConvertingException<T>(value)
+}
+extension Optional: Convertible {
+    public static func convert(from value: Any?, appContext: AppContext) throws -> Self {
+        if value == nil || value is NSNull { return nil }
+        let result: Wrapped = try widgetDictionaryValue(value, context: appContext)
+        return .some(result)
+    }
+}
+private func widgetDictionaryValue<T>(_ value: Any?, context: AppContext) throws -> T { try dictionaryValue(value, context: context) }
+extension Array: Convertible {
+    public static func convert(from value: Any?, appContext: AppContext) throws -> Self {
+        guard let array = value as? [Any] else { throw Conversions.ConvertingException<Self>(value) }
+        return try array.map { try dictionaryValue($0, context: appContext) as Element }
+    }
+}
+extension Dictionary: Convertible where Key == String {
+    public static func convert(from value: Any?, appContext: AppContext) throws -> Self {
+        guard let dict = value as? [String: Any] else { throw Conversions.ConvertingException<Self>(value) }
+        return try dict.mapValues { try dictionaryValue($0, context: appContext) as Value }
+    }
+}
+public struct Either<First, Second>: Convertible {
+    private let value: Any
+    public func get<T>() -> T? { value as? T }
+    public static func convert(from value: Any?, appContext: AppContext) throws -> Self {
+        if let first: First = try? dictionaryValue(value, context: appContext) { return .init(value: first) }
+        let second: Second = try dictionaryValue(value, context: appContext)
+        return .init(value: second)
+    }
+}
+public protocol Record: Convertible {
+    typealias Dict = [String: Any]
+    init()
+    init(from: Dict, appContext: AppContext) throws
+}
+private func updateFields(_ record: Any, props: [String: Any], context: AppContext) throws {
+    var mirror: Mirror? = Mirror(reflecting: record)
+    while let current = mirror {
+        for child in current.children {
+            if let field = child.value as? any DictionaryField, let label = child.label {
+                let key = field.key ?? String(label.dropFirst())
+                if let value = props[key] { try field.set(value, context: context) }
+            }
+        }
+        mirror = current.superclassMirror
+    }
+}
+public extension Record {
+    init(from props: Dict, appContext: AppContext) throws { self.init(); try updateFields(self, props: props, context: appContext) }
+    static func convert(from value: Any?, appContext: AppContext) throws -> Self {
+        guard let dict = value as? Dict else { throw Conversions.ConvertingException<Self>(value) }
+        return try Self(from: dict, appContext: appContext)
+    }
+}
+
+extension URL: Convertible {
+    public static func convert(from value: Any?, appContext: AppContext) throws -> URL {
+        if let url = value as? URL { return url }
+        guard let string = value as? String, let url = URL(string: string) else { throw Conversions.ConvertingException<Self>(value) }
+        return url
+    }
+}
+extension CGPoint: Convertible {
+    public static func convert(from value: Any?, appContext: AppContext) throws -> CGPoint {
+        if let array = value as? [Double], array.count == 2 { return CGPoint(x: array[0], y: array[1]) }
+        guard let dict = value as? [String: Double], let x = dict["x"], let y = dict["y"] else { throw Conversions.ConvertingException<Self>(value) }
+        return CGPoint(x: x, y: y)
+    }
+}
+extension Date: Convertible {
+    public static func convert(from value: Any?, appContext: AppContext) throws -> Date {
+        if let date = value as? Date { return date }
+        if let number = value as? NSNumber { return Date(timeIntervalSince1970: number.doubleValue / 1_000) }
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        guard let string = value as? String, let date = formatter.date(from: string) else { throw Conversions.ConvertingException<Self>(value) }
+        return date
+    }
+}
+
+/// Event dispatch into React is outside WidgetKit. Native Button actions are
+/// injected by Hanlin's verified intent builder. Unsupported gesture/event
+/// declarations are rejected by ViewProps rather than pretending to execute.
+public final class EventDispatcher {
+    public init(_ name: String? = nil) {}
+    public func callAsFunction(_ payload: Any? = nil) {}
+}
+/// Prepared presentations carry a frozen value; the original symbol-effect
+/// view reads it. Native modifier source retains its internal setter, while
+/// original Widgets JSON cannot manufacture a live app JSI SharedObject.
+public final class ObservableState: ObservableObject, Convertible {
+    public internal(set) var value: Any
+    private init(value: Any) { self.value = value }
+    public static func convert(from value: Any?, appContext: AppContext) throws -> ObservableState {
+        // The original Widgets renderer has no Expo JSI runtime or
+        // SharedObject registry. A JSON object is not a bound shared state.
+        guard appContext.properties == .preparedResources else {
+            throw Conversions.ConvertingException<ObservableState>(value)
+        }
+        guard let object = value as? [String: Any], let scalar = object["value"],
+              scalar is String || scalar is NSNumber else { throw Conversions.ConvertingException<ObservableState>(value) }
+        return .init(value: scalar)
+    }
+}
+extension ExpoSwiftUI {
+    open class ViewProps: ObservableObject, Record {
+        public var children: [any AnyChild]?
+        // This dictionary-only context owns no views, so a strong reference is
+        // cycle-free and preserves modifier/resource lifetime for prepared views.
+        public internal(set) var appContext: AppContext?
+        public let globalEventDispatcher = EventDispatcher()
+        public required init() {}
+        public required init(rawProps: [String: Any], context: AppContext) throws {
+            appContext = context
+            if context.properties == .originalWidgets {
+                // Match original ViewProps: update declared fields, leaving
+                // native image loading and modifier application to ExpoUI.
+                try updateFields(self, props: rawProps, context: context)
+                return
+            }
+            guard rawProps["useTapGesture"] as? Bool != true else { throw GenericException("Use a native widget Button for an action") }
+            if let modifiers = rawProps["modifiers"] as? [[String: Any]] {
+                for modifier in modifiers {
+                    guard let name = modifier["$type"] as? String,
+                          AppContext.preparedModifierTypes.contains(name),
+                          name == "resizable" || name == "widgetAccentedRenderingMode" || ViewModifierRegistry.shared.hasModifier(name) else {
+                        throw GenericException("Unsupported widget modifier: \(modifier["$type"] ?? "missing type")")
+                    }
+                }
+            }
+            var props = rawProps
+            if let name = props["assetName"] as? String, let url = context.resources[name] {
+                props["uiImage"] = url.absoluteString
+                props.removeValue(forKey: "assetName")
+            }
+            if let image = props["uiImage"] as? String {
+                if let resource = context.resources[image] { props["uiImage"] = resource.absoluteString }
+                else {
+                    guard let url = URL(string: image), url.isFileURL, context.resources.values.contains(url) else {
+                        throw GenericException("Image must reference a verified package resource or an SF Symbol")
+                    }
+                }
+            }
+            try updateFields(self, props: props, context: context)
+        }
+    }
+    public typealias View = ExpoSwiftUIView
+}
+@MainActor @preconcurrency
+public protocol ExpoSwiftUIView<Props>: SwiftUI.View, ExpoSwiftUI.AnyChild {
+    associatedtype Props: ExpoSwiftUI.ViewProps
+    var props: Props { get }
+    init(props: Props)
+}
+public extension ExpoSwiftUIView {
+    func Children() -> ForEach<[any ExpoSwiftUI.AnyChild], ExpoSwiftUI.ChildIdentity, AnyView> {
+        ForEach(props.children ?? [], id: \.childIdentity) { child in
+            let view: any SwiftUI.View = child.childView
+            AnyView(view)
+        }
+    }
+}
+struct WidgetSourceLogger { func warn(_ message: String) { NSLog("[HanlinExpoWidgetSubset] %@", message) } }
+let log = WidgetSourceLogger()
+
+extension View {
+    @ViewBuilder
+    func applyOnTapGesture(useTapGesture: Bool?, eventDispatcher: EventDispatcher) -> some View {
+        if useTapGesture == true { self.onTapGesture { eventDispatcher() } }
+        else { self }
+    }
+}

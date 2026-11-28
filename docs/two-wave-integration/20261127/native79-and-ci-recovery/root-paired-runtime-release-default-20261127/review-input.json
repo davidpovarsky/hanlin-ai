@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "sourceBase": "b41233a61a3dca0632b78c7ab7f92e5e620492c4",
+  "path": ".github/workflows/validate-app-split.yml",
+  "createdAtUTC": "2026-11-27T05:26:39.798085+00:00",
+  "originalSHA256": "062a32f28e96578c542e8244186174a810d60f1f7c787bababd738049c30d113",
+  "candidateSHA256": "9890a2c52bbcf3cc644f26b0987d178dd1ee7d211533b836143eccb1b0a02b2d",
+  "originalGitBlob": "44bd8550b790d76c39ead08c17bba29d0ff910dc",
+  "onlyChangedInputDefinitions": [
+    "on.workflow_call.inputs.runtime_bundle_artifact_run_id",
+    "on.workflow_dispatch.inputs.runtime_bundle_artifact_run_id"
+  ],
+  "allJobsStepsPermissionsSelectorsAndChecksIdentical": true,
+  "triggerCause": {
+    "originalFailedRun": 45939988710,
+    "emptyInputRetryRun": 45942933110,
+    "retryActualEnvRunID": "42926628418",
+    "originalArtifactFailure": "Expected one live Runtime bundle artifact",
+    "emptyDispatchInputWasDefaultedByGitHub": true
+  },
+  "behavior": "Empty/default input reaches existing prepare-runtime-core.sh locked release branch; explicit artifact run continues the original source validation. No RuntimeCore producer rebuild, bytes change, validator removal or native acceptance claim.",
+  "runtimeReleaseZIP_SHA256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+  "status": "PREPARED_REVIEW_PENDING_NOT_PUBLISHED"
+}

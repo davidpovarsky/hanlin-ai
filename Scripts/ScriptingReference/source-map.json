@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "selectionPolicy": "explicit-root-level-canonical-paths",
+  "requiredFiles": {
+    "scripting.d.ts": "dts/scripting.d.ts",
+    "global.d.ts": "dts/global.d.ts",
+    "node.d.ts": "dts/node.d.ts",
+    "web-fetch.d.ts": "dts/web-fetch.d.ts",
+    "safari-ext.d.ts": "dts/safari-ext.d.ts",
+    "tsconfig.json": "tsconfig.json",
+    "package.json": "package.json",
+    "package-lock.json": "package-lock.json"
+  },
+  "trees": {
+    "documentation": "docs",
+    "examples": "scripts"
+  },
+  "notes": [
+    "This mapping resolves duplicate backup copies by choosing only root-level canonical paths.",
+    "Source contents are never normalized or modified."
+  ]
+}

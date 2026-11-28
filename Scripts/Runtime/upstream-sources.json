@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "repository": "https://github.com/openclaw/openclaw",
+      "ref": "main",
+      "revision": "6341f93c9c565364ea86b417f21ffde4519b51b7",
+      "license": "MIT",
+      "purpose": "upstream tracking only; canonical extractor/package owned by its implementation task"
+    },
+    {
+      "repository": "https://github.com/tree-sitter/tree-sitter-bash",
+      "ref": "master",
+      "revision": "a06c2e4415e9bc0346c6b86d401879ffb44058f7",
+      "license": "MIT",
+      "purpose": "upstream tracking only; canonical extractor/package owned by its implementation task"
+    },
+    {
+      "repository": "https://github.com/tree-sitter/swift-tree-sitter",
+      "ref": "main",
+      "revision": "cbe31cb3601aa29c1f64b6e4328733511126d6d5",
+      "license": "BSD-3-Clause",
+      "purpose": "upstream tracking only; canonical extractor/package owned by its implementation task"
+    },
+    {
+      "repository": "https://github.com/jpsim/Yams",
+      "ref": "6.2.2",
+      "revision": "a27b21e0c81c5bf42049b897a62aaf387e80f279",
+      "license": "MIT",
+      "purpose": "Maintainer-verified Yams02 release pin; Swift manager handles tag upgrades when the owner package is integrated. Git-ref tracking detects retargets.",
+      "expectedConsumers": [
+        "Packages/HanlinSkillFormat/Package.swift"
+      ]
+    }
+  ]
+}

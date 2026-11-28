@@ -1,0 +1,871 @@
+import Foundation
+import HanlinPlatformContracts
+
+#if targetEnvironment(simulator)
+private actor MCPAcceptanceProgressRecorder {
+    private var terminalOperationIDs: Set<UUID> = []
+
+    func record(_ progress: MCPInstallProgress) {
+        if progress.terminalError != nil {
+            terminalOperationIDs.insert(progress.operationID)
+        }
+    }
+
+    func terminalErrorCount() -> Int { terminalOperationIDs.count }
+}
+
+private struct MCPHostDiagnostics: Decodable {
+    struct ServerLifecycle: Decodable {
+        let maximumSimultaneousWorkers: Int
+        let forcedTerminationCount: Int
+    }
+
+    struct Lifecycle: Decodable {
+        let byServer: [String: ServerLifecycle]
+    }
+
+    let lifecycle: Lifecycle
+}
+
+struct MCPRuntimeAcceptanceResult: Codable, Sendable {
+    let schemaVersion: Int
+    let generatedAt: Date
+    let passed: Bool
+    let nodeVersion: String?
+    let modulePolicyHooksAvailable: Bool
+    let packageName: String
+    let resolvedVersion: String?
+    let resolvedEntryPoint: String?
+    let reachableModuleCount: Int?
+    let resolvedModuleCount: Int?
+    let clientStdioLoaded: Bool
+    let crossSpawnLoaded: Bool
+    let childProcessResolved: Bool
+    let initializeSucceeded: Bool
+    let toolsListSucceeded: Bool
+    let toolCount: Int
+    let harmlessToolSucceeded: Bool
+    let workerStopped: Bool
+    let terminalInstallErrorCount: Int
+    let lazyStartSucceeded: Bool
+    let duplicateStartWasIdempotent: Bool
+    let duplicateStopWasIdempotent: Bool
+    let restartStressPassed: Bool
+    let backgroundStopPassed: Bool
+    let foregroundLazyRestartPassed: Bool
+    let registryPreserved: Bool
+    let maximumConcurrentWorkers: Int
+    let forcedTerminationCount: Int
+    let childProcessImportOnlyPassed: Bool
+    let subprocessExecutionBlocked: Bool
+    let healthCancellationPreserved: Bool
+    let oldRegistryDecoded: Bool
+    let backupRecoveryPassed: Bool
+    let pathMigrationPassed: Bool
+    let partialFailureIsolationPassed: Bool
+    let toolCallLazyRecoveryPassed: Bool
+    let multiServerCollectionPassed: Bool
+    let serverToolCounts: [String: Int]
+    let canonicalShadow: CanonicalShadowReport?
+    let failureMessage: String?
+}
+
+@MainActor
+enum MCPRuntimeAcceptance {
+    static let resultFileName = "mcp-acceptance.json"
+    private static let packageName = "@modelcontextprotocol/server-everything"
+    private static let packageVersion = "2026.7.4"
+
+    static func run(core: AppRuntimeCore = .shared, fileLayout: RuntimeFileLayout = .default) async {
+        let provider = MCPRuntimeProvider.shared
+        let service = MCPPackageInstallService(runtime: core.node)
+        let registry = MCPServerRegistryStore()
+        let controller = provider.controller
+        let progressRecorder = MCPAcceptanceProgressRecorder()
+        var installation: MCPPackageInstallation?
+        var descriptor: MCPServerDescriptor?
+        var toolCount = 0
+        var harmlessToolSucceeded = false
+        var initializeSucceeded = false
+        var toolsListSucceeded = false
+        var workerStopped = false
+        var lazyStartSucceeded = false
+        var duplicateStartWasIdempotent = false
+        var duplicateStopWasIdempotent = false
+        var restartStressPassed = false
+        var backgroundStopPassed = false
+        var foregroundLazyRestartPassed = false
+        var registryPreserved = false
+        var maximumConcurrentWorkers = 0
+        var forcedTerminationCount = 0
+        var childProcessImportOnlyPassed = false
+        var subprocessExecutionBlocked = false
+        var healthCancellationPreserved = false
+        var oldRegistryDecoded = false
+        var backupRecoveryPassed = false
+        var pathMigrationPassed = false
+        var partialFailureIsolationPassed = false
+        var toolCallLazyRecoveryPassed = false
+        var multiServerCollectionPassed = false
+        var serverToolCounts: [String: Int] = [:]
+        var observedTools: [MCPToolDescriptor]?
+        var failureMessage: String?
+
+        do {
+            try await core.prepareStorage()
+            try await MCPServerPathResolverAcceptance.run()
+            pathMigrationPassed = true
+            await provider.loadIfNeeded(startHost: false)
+            guard provider.persistentLoadState == .loaded else {
+                throw RuntimeCoreError.runtimeFailure(
+                    "MCP persistence did not load before acceptance."
+                )
+            }
+            _ = try await core.node.ensureRunning()
+            let spec = try MCPPackageSpec("\(packageName)@\(packageVersion)")
+            let installed = try await service.install(
+                spec,
+                entryPointOverride: "dist/index.js",
+                arguments: ["stdio"]
+            ) { progress in
+                await progressRecorder.record(progress)
+            }
+            installation = installed
+            descriptor = installed.descriptor
+            _ = try await registry.upsert(installed.descriptor)
+            await provider.update(installed.descriptor)
+            let registryBeforeLifecycle = try await registry.load()
+
+            // No explicit start: schema discovery is the first activation.
+            let tools = try await controller.toolDescriptors(serverIDs: [installed.descriptor.id])
+            observedTools = tools
+            lazyStartSucceeded = true
+            initializeSucceeded = true
+            toolsListSucceeded = true
+            toolCount = tools.count
+            guard let echo = tools.first(where: { $0.originalName == "echo" }) else {
+                throw RuntimeCoreError.runtimeFailure(
+                    "server-everything did not expose its harmless echo tool."
+                )
+            }
+            let output = try await controller.call(
+                serverID: echo.serverID,
+                toolName: echo.originalName,
+                argumentsJSON: #"{"message":"Hanlin RuntimeCore acceptance"}"#
+            )
+            guard !output.isError else {
+                throw RuntimeCoreError.runtimeFailure("server-everything echo returned an MCP error.")
+            }
+            harmlessToolSucceeded = true
+
+            var brokenSequential = installed.descriptor
+            brokenSequential.id = UUID()
+            brokenSequential.slug = "modelcontextprotocol_server_sequential_thinking"
+            brokenSequential.displayName = "@modelcontextprotocol/server-sequential-thinking"
+            brokenSequential.packageName = "@modelcontextprotocol/server-sequential-thinking"
+            brokenSequential.resolvedVersion = "2026.7.4"
+            brokenSequential.entryPointRelativePath = nil
+            brokenSequential.packageRoot = fileLayout.staging.appending(
+                path: "invalid-sequential/package",
+                directoryHint: .isDirectory
+            ).path
+            brokenSequential.entryPoint = fileLayout.staging.appending(
+                path: "invalid-sequential/package/dist/index.js"
+            ).path
+            _ = try await registry.upsert(brokenSequential)
+            let partialResult = await controller.resolveToolDescriptors(
+                serverIDs: [installed.descriptor.id, brokenSequential.id]
+            )
+            partialFailureIsolationPassed =
+                partialResult.descriptors.contains { $0.serverID == installed.descriptor.id }
+                && partialResult.failures.count == 1
+                && partialResult.failures.first?.serverID == brokenSequential.id
+            _ = try await registry.remove(id: brokenSequential.id)
+
+            await controller.stop(serverID: installed.descriptor.id)
+            let recoveredOutput = try await controller.call(
+                serverID: echo.serverID,
+                toolName: echo.originalName,
+                argumentsJSON: #"{"message":"Hanlin lazy tool recovery"}"#
+            )
+            toolCallLazyRecoveryPassed = !recoveredOutput.isError
+            await controller.stop(serverID: installed.descriptor.id)
+            let generationBeforeDuplicateStart = await controller.statuses()[installed.descriptor.id]?.generation
+            async let firstStart = controller.ensureRunning(
+                installed.descriptor,
+                reason: .diagnostics
+            )
+            async let secondStart = controller.ensureRunning(
+                installed.descriptor,
+                reason: .diagnostics
+            )
+            _ = try await (firstStart, secondStart)
+            let generationAfterDuplicateStart = await controller.statuses()[installed.descriptor.id]?.generation
+            duplicateStartWasIdempotent = generationAfterDuplicateStart
+                == generationBeforeDuplicateStart.map { $0 + 1 }
+
+            async let firstStop: Void = controller.stop(serverID: installed.descriptor.id)
+            async let secondStop: Void = controller.stop(serverID: installed.descriptor.id)
+            _ = await (firstStop, secondStop)
+            duplicateStopWasIdempotent =
+                await controller.statuses()[installed.descriptor.id]?.state == .stopped
+
+            _ = try await controller.ensureRunning(installed.descriptor, reason: .diagnostics)
+            async let firstRestart: Void = controller.restart(installed.descriptor)
+            async let secondRestart: Void = controller.restart(installed.descriptor)
+            _ = try await (firstRestart, secondRestart)
+
+            for _ in 0..<20 {
+                await controller.stop(serverID: installed.descriptor.id)
+                _ = try await controller.ensureRunning(installed.descriptor, reason: .diagnostics)
+                try await controller.restart(installed.descriptor)
+            }
+            restartStressPassed = true
+
+            await provider.handleScenePhase(.background)
+            backgroundStopPassed =
+                await controller.statuses()[installed.descriptor.id]?.state == .stopped
+            await provider.handleScenePhase(.active)
+            let remainedLazyAfterForeground =
+                await controller.statuses()[installed.descriptor.id]?.state == .stopped
+            _ = try await controller.toolDescriptors(serverIDs: [installed.descriptor.id])
+            let stateAfterLazyRestart =
+                await controller.statuses()[installed.descriptor.id]?.state
+            foregroundLazyRestartPassed =
+                remainedLazyAfterForeground
+                && stateAfterLazyRestart == .running
+
+            let policyResult = try await exerciseChildProcessPolicy(
+                controller: controller,
+                registry: registry
+            )
+            childProcessImportOnlyPassed = policyResult.importOnlyPassed
+            subprocessExecutionBlocked = policyResult.executionBlocked
+
+            let registryResult = try await exerciseRegistryRecovery(using: installed.descriptor)
+            oldRegistryDecoded = registryResult.oldDecoded
+            backupRecoveryPassed = registryResult.backupRecovered
+
+            let healthTask = Task { try await core.node.healthCheck() }
+            healthTask.cancel()
+            _ = try? await healthTask.value
+            healthCancellationPreserved =
+                await core.node.snapshot().state != .appRestartRequired
+
+            await controller.stopAll()
+            workerStopped = true
+            registryPreserved = try await registry.load() == registryBeforeLifecycle
+            let connection = try await core.node.currentConnection()
+            let diagnostics = try await connection.decode(
+                MCPHostDiagnostics.self,
+                path: "/v1/runtime"
+            )
+            let serverLifecycle = diagnostics.lifecycle.byServer[
+                installed.descriptor.id.uuidString.lowercased()
+            ]
+            maximumConcurrentWorkers = serverLifecycle?.maximumSimultaneousWorkers ?? .max
+            forcedTerminationCount = serverLifecycle?.forcedTerminationCount ?? .max
+            let multiServerResult = try await exercisePinnedMultiServerCollection(
+                primary: installed.descriptor,
+                service: service,
+                registry: registry,
+                controller: controller,
+                progressRecorder: progressRecorder
+            )
+            serverToolCounts = multiServerResult.counts
+            partialFailureIsolationPassed =
+                partialFailureIsolationPassed
+                && multiServerResult.partialFailurePassed
+            multiServerCollectionPassed = [
+                "@modelcontextprotocol/server-everything",
+                "@modelcontextprotocol/server-memory",
+                "@modelcontextprotocol/server-sequential-thinking"
+            ].allSatisfy { (serverToolCounts[$0] ?? 0) > 0 }
+            try await service.commit(installed)
+        } catch {
+            failureMessage = error.localizedDescription
+            if let installation {
+                await controller.stop(serverID: installation.descriptor.id)
+                do {
+                    try await service.rollback(installation)
+                } catch {
+                    failureMessage = [failureMessage, error.localizedDescription]
+                        .compactMap { $0 }
+                        .joined(separator: "\n")
+                }
+            }
+        }
+
+        let snapshot = await core.node.snapshot()
+        let report = descriptor?.compatibility
+        let edges = report?.moduleEdges ?? []
+        let terminalErrorCount = await progressRecorder.terminalErrorCount()
+        let clientStdioLoaded = edges.contains { edge in
+            edge.specifier == "@modelcontextprotocol/sdk/client/stdio.js"
+                || edge.resolvedPath?.contains("/client/stdio.js") == true
+        }
+        let crossSpawnLoaded = edges.contains { edge in
+            edge.specifier == "cross-spawn" || edge.resolvedPath?.contains("cross-spawn") == true
+        }
+        let childProcessResolved = edges.contains { edge in
+            ["child_process", "node:child_process"].contains(edge.specifier)
+                || edge.resolvedPath == "node:child_process"
+        }
+        let canonicalShadow = await canonicalShadowReport(
+            provider: provider,
+            descriptor: descriptor,
+            tools: observedTools,
+            runtimeSnapshot: snapshot
+        )
+        let passed = failureMessage == nil
+            && snapshot.version == NodeRuntimeService.expectedNodeVersion
+            && report?.runtimeProbePassed == true
+            && initializeSucceeded
+            && toolsListSucceeded
+            && toolCount > 0
+            && harmlessToolSucceeded
+            && workerStopped
+            && lazyStartSucceeded
+            && duplicateStartWasIdempotent
+            && duplicateStopWasIdempotent
+            && restartStressPassed
+            && backgroundStopPassed
+            && foregroundLazyRestartPassed
+            && registryPreserved
+            && maximumConcurrentWorkers <= 1
+            && forcedTerminationCount == 0
+            && childProcessImportOnlyPassed
+            && subprocessExecutionBlocked
+            && healthCancellationPreserved
+            && oldRegistryDecoded
+            && backupRecoveryPassed
+            && pathMigrationPassed
+            && partialFailureIsolationPassed
+            && toolCallLazyRecoveryPassed
+            && multiServerCollectionPassed
+            && !clientStdioLoaded
+            && !crossSpawnLoaded
+            && !childProcessResolved
+            && terminalErrorCount == 0
+
+        let result = MCPRuntimeAcceptanceResult(
+            schemaVersion: 3,
+            generatedAt: .now,
+            passed: passed,
+            nodeVersion: snapshot.version,
+            modulePolicyHooksAvailable: snapshot.version == NodeRuntimeService.expectedNodeVersion,
+            packageName: packageName,
+            resolvedVersion: descriptor?.resolvedVersion,
+            resolvedEntryPoint: report?.entryPoint,
+            reachableModuleCount: report?.reachableModuleCount,
+            resolvedModuleCount: report?.resolvedModuleCount,
+            clientStdioLoaded: clientStdioLoaded,
+            crossSpawnLoaded: crossSpawnLoaded,
+            childProcessResolved: childProcessResolved,
+            initializeSucceeded: initializeSucceeded,
+            toolsListSucceeded: toolsListSucceeded,
+            toolCount: toolCount,
+            harmlessToolSucceeded: harmlessToolSucceeded,
+            workerStopped: workerStopped,
+            terminalInstallErrorCount: terminalErrorCount,
+            lazyStartSucceeded: lazyStartSucceeded,
+            duplicateStartWasIdempotent: duplicateStartWasIdempotent,
+            duplicateStopWasIdempotent: duplicateStopWasIdempotent,
+            restartStressPassed: restartStressPassed,
+            backgroundStopPassed: backgroundStopPassed,
+            foregroundLazyRestartPassed: foregroundLazyRestartPassed,
+            registryPreserved: registryPreserved,
+            maximumConcurrentWorkers: maximumConcurrentWorkers,
+            forcedTerminationCount: forcedTerminationCount,
+            childProcessImportOnlyPassed: childProcessImportOnlyPassed,
+            subprocessExecutionBlocked: subprocessExecutionBlocked,
+            healthCancellationPreserved: healthCancellationPreserved,
+            oldRegistryDecoded: oldRegistryDecoded,
+            backupRecoveryPassed: backupRecoveryPassed,
+            pathMigrationPassed: pathMigrationPassed,
+            partialFailureIsolationPassed: partialFailureIsolationPassed,
+            toolCallLazyRecoveryPassed: toolCallLazyRecoveryPassed,
+            multiServerCollectionPassed: multiServerCollectionPassed,
+            serverToolCounts: serverToolCounts,
+            canonicalShadow: canonicalShadow,
+            failureMessage: failureMessage
+        )
+
+        do {
+            try fileLayout.prepareIfNeeded()
+            let encoder = JSONEncoder()
+            encoder.dateEncodingStrategy = .iso8601
+            encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+            try encoder.encode(result).write(
+                to: fileLayout.logs.appending(path: resultFileName),
+                options: .atomic
+            )
+        } catch {
+            preconditionFailure(
+                "Could not persist MCP acceptance result: \(error.localizedDescription)"
+            )
+        }
+
+        if !result.passed {
+            try? await Task.sleep(for: .seconds(5))
+            preconditionFailure(result.failureMessage ?? "MCP acceptance failed.")
+        }
+    }
+
+    private static func canonicalShadowReport(
+        provider: MCPRuntimeProvider,
+        descriptor: MCPServerDescriptor?,
+        tools: [MCPToolDescriptor]?,
+        runtimeSnapshot: RuntimeSnapshot
+    ) async -> CanonicalShadowReport? {
+        guard HanlinCanonicalShadowCoordinator.isEnabled,
+              let runtimeSessionID = try? HanlinRuntimeSessionID(
+                validating: "runtime.acceptance.node"
+              ),
+              let runtimeProviderID = try? HanlinProviderInstanceID(
+                validating: "runtime.node"
+              ),
+              let mcpSessionID = try? HanlinRuntimeSessionID(
+                validating: "runtime.acceptance.mcp"
+              ) else {
+            return nil
+        }
+        let observedAt = Date()
+        let mcpSource = descriptor.map { descriptor in
+            HanlinCanonicalShadowCoordinator.MCPSource(
+                servers: [descriptor],
+                tools: tools,
+                runtime: .init(
+                    snapshot: provider.runtimeSnapshot,
+                    sessionID: mcpSessionID,
+                    createdAt: observedAt,
+                    observedAt: observedAt
+                )
+            )
+        }
+        let nativeCatalog = NativeToolCatalog.shared
+        nativeCatalog.ensureBuiltinsRegistered()
+        let nativeTools = nativeCatalog.allEntries().compactMap { entry in
+            nativeCatalog.tool(named: entry.name, enabledOnly: false).map {
+                HanlinCanonicalShadowCoordinator.NativeToolSource(
+                    tool: $0,
+                    entry: entry
+                )
+            }
+        }
+        let exposedNativeTools = nativeTools.filter {
+            nativeCatalog.isEffectivelyEnabled($0.entry)
+        }
+        let combinedSource: HanlinCanonicalShadowCoordinator.CombinedToolSource?
+        if let tools, !tools.isEmpty,
+           let nativeSources = try? NativeToolBridge.canonicalSourcesForRequest(),
+           let authority = try? HanlinCanonicalToolAuthority.build(
+               nativeSources: nativeSources,
+               mcpTools: tools,
+               generatedAt: observedAt
+           ),
+           let repeatedAuthority = try? HanlinCanonicalToolAuthority.build(
+               nativeSources: nativeSources,
+               mcpTools: tools,
+               generatedAt: observedAt
+           ) {
+            let routes = authority.backendRoutes.map { entry in
+                let logicalID = entry.route.logicalToolID
+                let backend: HanlinCanonicalShadowCoordinator.ToolBackend
+                let targetExists: Bool
+                switch entry.backend {
+                case .native(let providerID, let toolName):
+                    backend = .native
+                    if let nativeEntry = nativeCatalog.entry(named: toolName),
+                       let actualProviderID = try? NativeToolCanonicalShadowAdapter
+                        .providerInstanceID(for: nativeEntry) {
+                        targetExists = providerID == actualProviderID
+                            && nativeCatalog.tool(
+                                named: toolName,
+                                enabledOnly: false
+                            ) != nil
+                    } else {
+                        targetExists = false
+                    }
+                case .mcp(let serverID, let toolName):
+                    backend = .mcp
+                    targetExists = tools.contains {
+                        $0.serverID == serverID && $0.originalName == toolName
+                    }
+                case .scripting:
+                    backend = .scripting
+                    targetExists = false
+                case .legacy:
+                    backend = .native
+                    targetExists = true
+                }
+                return HanlinCanonicalShadowCoordinator.ToolRouteSource(
+                    logicalIdentity: logicalIdentity(
+                        provider: logicalID.providerInstanceID.rawValue,
+                        local: logicalID.localToolID.rawValue
+                    ),
+                    alias: entry.route.alias,
+                    backend: backend,
+                    backendProviderIdentity: entry.backend.providerIdentity,
+                    targetExists: targetExists
+                )
+            }
+            combinedSource = .init(
+                nativeTools: exposedNativeTools,
+                mcpTools: tools,
+                scriptTools: [],
+                authoritativeCatalog: authority.catalog,
+                repeatedCatalog: repeatedAuthority.catalog,
+                routingTable: authority.routingTable,
+                repeatedRoutingTable: repeatedAuthority.routingTable,
+                routes: routes
+            )
+        } else {
+            combinedSource = nil
+        }
+        return HanlinCanonicalShadowCoordinator.runIfEnabled(
+            sources: .init(
+                nativeTools: nativeTools,
+                mcp: mcpSource,
+                combinedTools: combinedSource,
+                runtimeCore: [
+                    .init(
+                        snapshot: runtimeSnapshot,
+                        sessionID: runtimeSessionID,
+                        providerInstanceID: runtimeProviderID,
+                        createdAt: observedAt,
+                        observedAt: observedAt
+                    )
+                ]
+            )
+        )
+    }
+
+    private static func logicalIdentity(provider: String, local: String) -> String {
+        "\(provider)|\(local)"
+    }
+
+    private static func exerciseChildProcessPolicy(
+        controller: MCPRuntimeController,
+        registry: MCPServerRegistryStore
+    ) async throws -> (importOnlyPassed: Bool, executionBlocked: Bool) {
+        let layout = MCPFileLayout.default
+        let importDescriptor = try makePolicyFixture(
+            layout: layout,
+            source: """
+            import { spawn } from 'node:child_process';
+            import { createInterface } from 'node:readline';
+            void spawn;
+            createInterface({ input: process.stdin }).on('line', line => {
+              const request = JSON.parse(line);
+              if (request.method === 'initialize') respond(request.id, { protocolVersion: request.params.protocolVersion, capabilities: { tools: {} }, serverInfo: { name: 'import-only', version: '1' } });
+              if (request.method === 'tools/list') respond(request.id, { tools: [] });
+            });
+            function respond(id, result) { process.stdout.write(`${JSON.stringify({ jsonrpc: '2.0', id, result })}\\n`); }
+            """
+        )
+        let blockedDescriptor = try makePolicyFixture(
+            layout: layout,
+            source: """
+            import { spawn } from 'node:child_process';
+            spawn('blocked');
+            """
+        )
+        defer {
+            try? FileManager.default.removeItem(
+                at: layout.serverDirectory(id: importDescriptor.id)
+            )
+            try? FileManager.default.removeItem(
+                at: layout.serverDirectory(id: blockedDescriptor.id)
+            )
+        }
+        _ = try await registry.upsert(importDescriptor)
+        _ = try await controller.ensureRunning(importDescriptor, reason: .diagnostics)
+        await controller.stop(serverID: importDescriptor.id)
+        var executionBlocked = false
+        do {
+            _ = try await controller.ensureRunning(blockedDescriptor, reason: .diagnostics)
+            await controller.stop(serverID: blockedDescriptor.id)
+        } catch {
+            executionBlocked = error.localizedDescription.contains("external process")
+                || error.localizedDescription.contains("reachable_external_executable")
+        }
+        _ = try await registry.remove(id: importDescriptor.id)
+        _ = try await registry.remove(id: blockedDescriptor.id)
+        return (true, executionBlocked)
+    }
+
+    private static func exercisePinnedMultiServerCollection(
+        primary: MCPServerDescriptor,
+        service: MCPPackageInstallService,
+        registry: MCPServerRegistryStore,
+        controller: MCPRuntimeController,
+        progressRecorder: MCPAcceptanceProgressRecorder
+    ) async throws -> (counts: [String: Int], partialFailurePassed: Bool) {
+        let packageNames = [
+            "@modelcontextprotocol/server-memory",
+            "@modelcontextprotocol/server-sequential-thinking"
+        ]
+        var installations: [MCPPackageInstallation] = []
+        do {
+            for packageName in packageNames {
+                let spec = try MCPPackageSpec("\(packageName)@\(packageVersion)")
+                let installation = try await service.install(
+                    spec,
+                    entryPointOverride: "dist/index.js"
+                ) { progress in
+                    await progressRecorder.record(progress)
+                }
+                installations.append(installation)
+                _ = try await registry.upsert(installation.descriptor)
+            }
+
+            let descriptors = [primary] + installations.map(\.descriptor)
+            let result = await controller.resolveToolDescriptors(
+                serverIDs: Set(descriptors.map(\.id))
+            )
+            guard result.failures.isEmpty else {
+                let messages = result.failures.map {
+                    "\($0.packageName): \($0.errorCode): \($0.message)"
+                }
+                throw RuntimeCoreError.runtimeFailure(messages.joined(separator: "; "))
+            }
+            var counts: [String: Int] = [:]
+            for descriptor in descriptors {
+                counts[descriptor.packageName] = result.descriptors.filter {
+                    $0.serverID == descriptor.id
+                }.count
+            }
+            guard counts.values.allSatisfy({ $0 > 0 }) else {
+                throw RuntimeCoreError.runtimeFailure(
+                    "One or more pinned MCP servers returned no tools: \(counts)"
+                )
+            }
+
+            let serverA = primary
+            let serverB = installations[0].descriptor
+            var serverC = installations[1].descriptor
+            serverC.id = UUID()
+            serverC.displayName = "Invalid MCP fixture"
+            serverC.packageName = "invalid-mcp-fixture"
+            serverC.entryPointRelativePath = nil
+            serverC.packageRoot = MCPFileLayout.default.staging.appending(
+                path: "invalid-\(serverC.id.uuidString.lowercased())",
+                directoryHint: .isDirectory
+            ).path
+            serverC.entryPoint = URL(
+                fileURLWithPath: serverC.packageRoot,
+                isDirectory: true
+            ).appending(path: "dist/index.js").path
+            _ = try await registry.upsert(serverC)
+
+            let aOnly = await controller.resolveToolDescriptors(serverIDs: [serverA.id])
+            let bOnly = await controller.resolveToolDescriptors(serverIDs: [serverB.id])
+            let cOnly = await controller.resolveToolDescriptors(serverIDs: [serverC.id])
+            let aAndC = await controller.resolveToolDescriptors(
+                serverIDs: [serverA.id, serverC.id]
+            )
+            let allWithC = await controller.resolveToolDescriptors(
+                serverIDs: [serverA.id, serverB.id, serverC.id]
+            )
+            _ = try await registry.remove(id: serverC.id)
+
+            let partialFailurePassed =
+                aOnly.failures.isEmpty
+                && aOnly.descriptors.count == 13
+                && Set(aOnly.descriptors.map(\.serverID)) == [serverA.id]
+                && bOnly.failures.isEmpty
+                && !bOnly.descriptors.isEmpty
+                && Set(bOnly.descriptors.map(\.serverID)) == [serverB.id]
+                && cOnly.descriptors.isEmpty
+                && Set(cOnly.failures.map(\.serverID)) == [serverC.id]
+                && Set(aAndC.descriptors.map(\.serverID)) == [serverA.id]
+                && Set(aAndC.failures.map(\.serverID)) == [serverC.id]
+                && Set(allWithC.descriptors.map(\.serverID)) == [serverA.id, serverB.id]
+                && Set(allWithC.failures.map(\.serverID)) == [serverC.id]
+            guard partialFailurePassed else {
+                throw RuntimeCoreError.runtimeFailure(
+                    "The MCP partial-failure isolation matrix did not pass."
+                )
+            }
+
+            await controller.stop(serverID: installations[1].descriptor.id)
+            let sequentialSecondStart = await controller.resolveToolDescriptors(
+                serverIDs: [installations[1].descriptor.id]
+            )
+            guard sequentialSecondStart.failures.isEmpty,
+                  !sequentialSecondStart.descriptors.isEmpty else {
+                throw RuntimeCoreError.runtimeFailure(
+                    "Sequential Thinking did not return tools after a second start."
+                )
+            }
+            await controller.stopAll()
+            for installation in installations {
+                try await service.commit(installation)
+            }
+            return (counts, partialFailurePassed)
+        } catch {
+            await controller.stopAll()
+            for installation in installations.reversed() {
+                try? await service.rollback(installation)
+                _ = try? await registry.remove(id: installation.descriptor.id)
+            }
+            throw error
+        }
+    }
+
+    private static func makePolicyFixture(
+        layout: MCPFileLayout,
+        source: String
+    ) throws -> MCPServerDescriptor {
+        let id = UUID()
+        let packageRoot = layout.serverDirectory(id: id).appending(
+            path: "package",
+            directoryHint: .isDirectory
+        )
+        try FileManager.default.createDirectory(at: packageRoot, withIntermediateDirectories: true)
+        let entryPoint = packageRoot.appending(path: "server.mjs")
+        try Data(source.utf8).write(to: entryPoint, options: .atomic)
+        try Data(#"{"name":"policy-fixture","version":"1.0.0","type":"module","main":"server.mjs"}"#.utf8)
+            .write(to: packageRoot.appending(path: "package.json"), options: .atomic)
+        return MCPServerDescriptor(
+            id: id,
+            slug: "policy_fixture",
+            displayName: "Policy Fixture",
+            packageName: "policy-fixture",
+            resolvedVersion: "1.0.0",
+            entryPoint: entryPoint.path,
+            packageRoot: packageRoot.path,
+            compatibility: MCPCompatibilityReport(
+                verdict: .compatible,
+                findings: [],
+                runtimeProbePassed: true
+            )
+        )
+    }
+
+    private static func exerciseRegistryRecovery(
+        using descriptor: MCPServerDescriptor
+    ) async throws -> (oldDecoded: Bool, backupRecovered: Bool) {
+        let temporary = FileManager.default.temporaryDirectory.appending(
+            path: "hanlin-registry-acceptance-\(UUID().uuidString)",
+            directoryHint: .isDirectory
+        )
+        defer { try? FileManager.default.removeItem(at: temporary) }
+        let layout = MCPFileLayout(root: temporary)
+        try layout.prepareIfNeeded()
+        let store = MCPServerRegistryStore(fileLayout: layout)
+        let missingCopiesDecodedAsEmpty = try await store.load().isEmpty
+
+        var legacyWithAutoStart = descriptor
+        legacyWithAutoStart.autoStart = true
+        try JSONEncoder.mcp.encode([legacyWithAutoStart]).write(
+            to: layout.serverRegistry,
+            options: .atomic
+        )
+        let legacyAutoStartPreserved = try persistentlyEquivalent(
+            await store.load(),
+            [legacyWithAutoStart]
+        )
+
+        var legacyWithoutAutoStart = descriptor
+        legacyWithoutAutoStart.autoStart = false
+        legacyWithoutAutoStart.entryPointRelativePath = nil
+        let encodedLegacy = try JSONEncoder.mcp.encode([legacyWithoutAutoStart])
+        guard var legacyObjects = try JSONSerialization.jsonObject(
+            with: encodedLegacy
+        ) as? [[String: Any]],
+              !legacyObjects.isEmpty else {
+            throw RuntimeCoreError.runtimeFailure("Could not create legacy MCP registry fixture.")
+        }
+        legacyObjects[0].removeValue(forKey: "autoStart")
+        legacyObjects[0].removeValue(forKey: "entryPointRelativePath")
+        try JSONSerialization.data(withJSONObject: legacyObjects).write(
+            to: layout.serverRegistry,
+            options: .atomic
+        )
+        try? FileManager.default.removeItem(at: layout.serverRegistryBackup)
+        let legacyDefaultedSafely = try persistentlyEquivalent(
+            await store.load(),
+            [legacyWithoutAutoStart]
+        )
+
+        try await store.save([descriptor])
+        let validBackup = try Data(contentsOf: layout.serverRegistryBackup)
+        try Data("{corrupt".utf8).write(to: layout.serverRegistry, options: .atomic)
+        try validBackup.write(to: layout.serverRegistryBackup, options: .atomic)
+        let primaryRecovered = try persistentlyEquivalent(
+            await store.load(),
+            [descriptor]
+        )
+            && (try? JSONDecoder.mcp.decode(
+                MCPServerRegistryDocument.self,
+                from: Data(contentsOf: layout.serverRegistry)
+            )) != nil
+
+        try Data("{corrupt-primary".utf8).write(
+            to: layout.serverRegistry,
+            options: .atomic
+        )
+        try Data("corrupt-backup".utf8).write(
+            to: layout.serverRegistryBackup,
+            options: .atomic
+        )
+        let bothCorruptFailedClosed: Bool
+        do {
+            _ = try await store.load()
+            bothCorruptFailedClosed = false
+        } catch let error as MCPServerRegistryError {
+            if case .bothCopiesCorrupt = error {
+                bothCorruptFailedClosed = true
+            } else {
+                bothCorruptFailedClosed = false
+            }
+        }
+
+        let staleDocument = MCPServerRegistryDocument(
+            schemaVersion: MCPServerRegistryDocument.currentSchemaVersion,
+            generation: 9,
+            servers: [descriptor]
+        )
+        let uninstallDocument = MCPServerRegistryDocument(
+            schemaVersion: MCPServerRegistryDocument.currentSchemaVersion,
+            generation: 10,
+            servers: []
+        )
+        try JSONEncoder.mcp.encode(uninstallDocument).write(
+            to: layout.serverRegistry,
+            options: .atomic
+        )
+        try JSONEncoder.mcp.encode(staleDocument).write(
+            to: layout.serverRegistryBackup,
+            options: .atomic
+        )
+        let uninstallWasNotResurrected = try await store.load().isEmpty
+        let repairedBackup = try JSONDecoder.mcp.decode(
+            MCPServerRegistryDocument.self,
+            from: Data(contentsOf: layout.serverRegistryBackup)
+        )
+        let backupContainsIntentionalEmpty =
+            repairedBackup.generation == uninstallDocument.generation
+            && repairedBackup.servers.isEmpty
+
+        return (
+            missingCopiesDecodedAsEmpty
+                && legacyAutoStartPreserved
+                && legacyDefaultedSafely,
+            primaryRecovered
+                && bothCorruptFailedClosed
+                && uninstallWasNotResurrected
+                && backupContainsIntentionalEmpty
+        )
+    }
+
+    private static func persistentlyEquivalent(
+        _ lhs: [MCPServerDescriptor],
+        _ rhs: [MCPServerDescriptor]
+    ) throws -> Bool {
+        try JSONEncoder.mcp.encode(lhs) == JSONEncoder.mcp.encode(rhs)
+    }
+}
+#endif

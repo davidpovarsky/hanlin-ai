@@ -1,0 +1,267 @@
+{
+  "schema_version": 1,
+  "source_sha": "4458028a1b8f264963f1b96ffcea5faac1020dbc",
+  "run_id": "44250819961",
+  "timestamp": "2026-11-18T06:54:37.446916+00:00",
+  "scope": "Read-only resource metadata; no signing, installation, upload, distribution, account change or notification.",
+  "certificate": {
+    "status": "READY_RESOURCE",
+    "checks": {
+      "private_key_matches": true,
+      "valid_dates": true,
+      "team_matches": true,
+      "distribution_identity": true
+    },
+    "expiration": "2027-09-07T07:25:00+00:00",
+    "public_certificate_sha256": "5aefaf80b344410af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b"
+  },
+  "profiles": [
+    {
+      "role": "ai",
+      "bundle_id": "com.itorah.chavrusachat",
+      "secret_name": "APPLE_MAIN_PROVISIONING_PROFILE_B64",
+      "entitlements_path": "AI_HLY/AI_HLY.entitlements",
+      "entitlements_sha256": "54292b691e208ba5a53cfc4f6b4cd44dc39c237b87f06df0c2c287dac4b73c01",
+      "status": "BLOCKED",
+      "checks": {
+        "team_matches": true,
+        "bundle_matches": true,
+        "not_expired": true,
+        "distribution_profile": true,
+        "certificate_matches": true,
+        "required_entitlements_covered": false
+      },
+      "expiration": "2027-09-07T07:25:00+00:00",
+      "missing_or_mismatched_entitlement_keys": [
+        "com.apple.developer.kernel.extended-virtual-addressing"
+      ]
+    },
+    {
+      "role": "miniapps",
+      "bundle_id": "com.itorah.hanlinminiapps",
+      "secret_name": "APPLE_MINIAPPS_PROVISIONING_PROFILE_B64",
+      "entitlements_path": "HanlinMiniAppsApp/HanlinMiniApps.entitlements",
+      "entitlements_sha256": "8eeb1557fc21f6a664ed1b717f3e259362b3cb85d6c99c60a708c03df2b7e793",
+      "status": "MISSING"
+    },
+    {
+      "role": "share",
+      "bundle_id": "com.itorah.chavrusachat.share",
+      "secret_name": "APPLE_SHARE_PROVISIONING_PROFILE_B64",
+      "entitlements_path": "ChavrusaChatShare/ChavrusaChatShare.entitlements",
+      "entitlements_sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "status": "READY_RESOURCE",
+      "checks": {
+        "team_matches": true,
+        "bundle_matches": true,
+        "not_expired": true,
+        "distribution_profile": true,
+        "certificate_matches": true,
+        "required_entitlements_covered": true
+      },
+      "expiration": "2027-09-07T07:25:00+00:00",
+      "missing_or_mismatched_entitlement_keys": []
+    },
+    {
+      "role": "widgets",
+      "bundle_id": "com.itorah.chavrusachat.widgets",
+      "secret_name": "APPLE_WIDGETS_PROVISIONING_PROFILE_B64",
+      "entitlements_path": "HanlinScriptingWidgets/HanlinScriptingWidgets.entitlements",
+      "entitlements_sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "status": "READY_RESOURCE",
+      "checks": {
+        "team_matches": true,
+        "bundle_matches": true,
+        "not_expired": true,
+        "distribution_profile": true,
+        "certificate_matches": true,
+        "required_entitlements_covered": true
+      },
+      "expiration": "2027-09-07T07:25:00+00:00",
+      "missing_or_mismatched_entitlement_keys": []
+    },
+    {
+      "role": "translation",
+      "bundle_id": "com.itorah.chavrusachat.translation-provider",
+      "secret_name": "APPLE_TRANSLATION_PROVISIONING_PROFILE_B64",
+      "entitlements_path": "ChavrusaChatTranslationProvider/ChavrusaChatTranslationProvider.entitlements",
+      "entitlements_sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "status": "READY_RESOURCE",
+      "checks": {
+        "team_matches": true,
+        "bundle_matches": true,
+        "not_expired": true,
+        "distribution_profile": true,
+        "certificate_matches": true,
+        "required_entitlements_covered": true
+      },
+      "expiration": "2027-09-07T07:25:00+00:00",
+      "missing_or_mismatched_entitlement_keys": []
+    },
+    {
+      "role": "notification",
+      "bundle_id": "com.itorah.chavrusachat.notification-service",
+      "secret_name": "APPLE_NOTIFICATION_SERVICE_PROVISIONING_PROFILE_B64",
+      "entitlements_path": "ChavrusaChatNotificationService/ChavrusaChatNotificationService.entitlements",
+      "entitlements_sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "status": "READY_RESOURCE",
+      "checks": {
+        "team_matches": true,
+        "bundle_matches": true,
+        "not_expired": true,
+        "distribution_profile": true,
+        "certificate_matches": true,
+        "required_entitlements_covered": true
+      },
+      "expiration": "2027-09-07T07:25:00+00:00",
+      "missing_or_mismatched_entitlement_keys": []
+    }
+  ],
+  "apple": {
+    "status": "READ_ONLY_AUDIT_COMPLETE",
+    "products": [
+      {
+        "role": "ai",
+        "bundle_id": "com.itorah.chavrusachat",
+        "visible_app_store_record_count": 1,
+        "recent_builds": [
+          {
+            "version": "98201",
+            "expired": false,
+            "processingState": "VALID"
+          },
+          {
+            "version": "93401",
+            "expired": false,
+            "processingState": "VALID"
+          },
+          {
+            "version": "91801",
+            "expired": false,
+            "processingState": "VALID"
+          }
+        ],
+        "visible_registered_bundle_count": 1,
+        "identifier_filter_candidate_count": 10,
+        "bundle_list_complete": true,
+        "capability_types": [
+          "APP_GROUPS",
+          "DEFAULT_TRANSLATION_APP",
+          "HEALTHKIT",
+          "ICLOUD",
+          "IN_APP_PURCHASE",
+          "PUSH_NOTIFICATIONS",
+          "SIRIKIT",
+          "USERNOTIFICATIONS_TIMESENSITIVE",
+          "WEATHERKIT"
+        ],
+        "capability_list_complete": true,
+        "app_store_profiles": [
+          {
+            "profileState": "ACTIVE",
+            "profileType": "IOS_APP_STORE",
+            "expirationDate": "2027-09-07T07:25:00.000+00:00"
+          }
+        ],
+        "profile_list_complete": true,
+        "portal_profile_compatibility": {
+          "checked_profiles": [
+            {
+              "status": "BLOCKED",
+              "checks": {
+                "team_matches": true,
+                "bundle_matches": true,
+                "not_expired": true,
+                "distribution_profile": true,
+                "certificate_matches": true,
+                "required_entitlements_covered": false
+              },
+              "expiration": "2027-09-07T07:25:00+00:00",
+              "missing_or_mismatched_entitlement_keys": [
+                "com.apple.developer.kernel.extended-virtual-addressing"
+              ],
+              "profile_sha256": "a9286ad3b08ac32b08315a2ef4ce287e6fbf9173c02078b1ee6e108eead08d45"
+            }
+          ],
+          "compatible_profile_count": 0,
+          "complete": true
+        }
+      },
+      {
+        "role": "miniapps",
+        "bundle_id": "com.itorah.hanlinminiapps",
+        "visible_app_store_record_count": 0,
+        "visible_registered_bundle_count": 0,
+        "identifier_filter_candidate_count": 0,
+        "bundle_list_complete": true
+      }
+    ]
+  },
+  "device_inventory": {
+    "physical_tests": "NOT_RUN",
+    "simulator_runtimes": [
+      {
+        "name": "iOS 27.0",
+        "version": "27.0",
+        "available": true
+      },
+      {
+        "name": "iOS 27.1",
+        "version": "27.1",
+        "available": true
+      },
+      {
+        "name": "iOS 27.2",
+        "version": "27.2",
+        "available": true
+      },
+      {
+        "name": "iOS 27.2",
+        "version": "27.2",
+        "available": true
+      },
+      {
+        "name": "tvOS 27.0",
+        "version": "27.0",
+        "available": true
+      },
+      {
+        "name": "tvOS 27.2",
+        "version": "27.2",
+        "available": true
+      },
+      {
+        "name": "watchOS 27.0",
+        "version": "27.0",
+        "available": true
+      },
+      {
+        "name": "watchOS 27.2",
+        "version": "27.2",
+        "available": true
+      },
+      {
+        "name": "visionOS 27.0",
+        "version": "27.0",
+        "available": true
+      },
+      {
+        "name": "visionOS 27.2",
+        "version": "27.2",
+        "available": true
+      }
+    ],
+    "visible_device_count": 0,
+    "devices": []
+  },
+  "signing_inputs_ready": false,
+  "product_acceptance": "SEPARATE_NATIVE_GATES_REQUIRED",
+  "release_decision": "NO_GO",
+  "limitations": "Resource checks do not establish OS trust-chain validation, key revocation, a signed archive, physical-device acceptance or publication readiness.",
+  "artifact_provenance": {
+    "id": 14405846414,
+    "api_zip_sha256": "aaea48017ea355f56559fe498f6ad62bc30b0b4cd13c0a6d808c330aac497c83",
+    "entry_sha256": "5c762fd5f2affeb82559897951a47923933c61497f33cce230769a8c839702b1",
+    "full_zip_digest_recomputed": false
+  }
+}

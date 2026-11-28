@@ -1,5 +1,7 @@
 # Antigravity Project Instructions
 
+The current Hanlin two-wave execution is governed by root `AGENTS.md` and the dated execution note in `docs/ai-team/TEAM.md`: the owner explicitly requested ChatGPT built-in agents. Apply the actual platform API and invocation identifiers; preserve evidence-based acceptance and existing authorization.
+
 This repository is configured for the persistent named AI team across Antigravity and Codex:
 - **איתן (eitan)**: Architecture
 - **נועם (noam)**: Engineering

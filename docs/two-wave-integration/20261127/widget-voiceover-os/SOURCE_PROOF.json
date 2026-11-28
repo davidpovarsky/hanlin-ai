@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "status": "SOURCE_SEALED_NATIVE_NOT_RUN",
+  "sourceCommit": "a6b8b4d1739827b83f3e5267701578c703a46888",
+  "parent": "24fd1e20eb1af2ebab0f4d7dd7f617145217eded",
+  "sourceFiles": [
+    {
+      "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "bytes": 194206,
+      "sha256": "0ae41eadc0e30eb81ac25c5f1a82505eaa07cdf3ff57e1f176951753ead54f01",
+      "beforeSHA256": "7ba73f651fb9fa326f6a4787e5ac8f4739ca00922ce79f57967c4b309b8c27fd"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 94991,
+      "sha256": "64b1b87085e7d44b3a8289b571d6681b898238554ad12c77784074a7b3391d43",
+      "beforeSHA256": "77f339cb70b6294a94d8cc8162f2816fb8c4fb21c3f838c94978281707d6d0d1"
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "bytes": 64739,
+      "sha256": "a8dd6ad5cc2ab61e417db7843692c90678d82b34cb0751e29e8e6ea1a3418b7b",
+      "beforeSHA256": "d0c5304fe391893e17877f704956e9563f20b72358f25f00f661851bdd9ca6ab"
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_widget_voiceover.py",
+      "bytes": 25391,
+      "sha256": "bbf944a7f94953c35d4a0f2adc20dc902983a3b39ef5084ad9a705fd4f9df47b",
+      "beforeSHA256": null
+    },
+    {
+      "path": "Scripts/CI/Tests/test_widget_voiceover_observer.py",
+      "bytes": 20256,
+      "sha256": "e2fb41c662f0892e270505cc1f5b6c5453972f0f2041c5002ef92db2b20b3a54",
+      "beforeSHA256": null
+    }
+  ],
+  "scope": "miniapp_widget_voiceover_os",
+  "selector": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues",
+  "originalSelectorsPreserved": 32,
+  "newSelectors": 1,
+  "SDKProducerInputIntersection": [],
+  "SDKProducerInputCount": 396,
+  "portable": {
+    "r1": {
+      "tests": 13,
+      "failures": 0,
+      "errors": 0
+    },
+    "r2": {
+      "tests": 14,
+      "failures": 0,
+      "errors": 0
+    },
+    "r3": "REUSED_EXACT_UNCHANGED_PYTHON_INPUTS"
+  },
+  "nativeUI": "NOT_RUN",
+  "reviewReceiptsSHA256": {
+    "root-independent-review-r2.json": "9ef23d65d484d2f042fb2f49ae4d4aa0617eaf83886fac48a7c9c8e6fedecd18",
+    "root-independent-review-r3.json": "c0a1c13a6a8c456f6ec9b9b6f75efb6e94a74262cdf096960ab0f67a09d4916d",
+    "independent-w1-ui-review-r3.json": "251503ebf5627d80353575c7d0cae062aee688e5e2fd84802c5f9bd86f49ac15"
+  },
+  "originalSourceProofSHA256": "72ceff514a2722f4052d3ea50b5f40bb850f5e435b5dd945ced5b4940959ca42",
+  "fullSourcePatchSHA256": "a3e74f83888430dafe6ab62c9a0ba81290bb663d43a81e260d4e47a0814597cb",
+  "importOnlyDeltaSHA256": "2d86635ae8945eb6f4790909f92afa1607fcb98278f1764b507f11a07dbcd6f8",
+  "insertionBindingClarificationSHA256": "b9f0fd105a73057fa463aec68778f1bb9e58e8400b2f61b89fdeac8bdb911ac9",
+  "publicAPIAdmissionAndLimitationsSHA256": "cb3fc2c96feaff683528695717c87c9681ac1192be7eee6392f5f50ff0c26198",
+  "rawProofMembers": [
+    {
+      "path": "README.md",
+      "bytes": 2939,
+      "sha256": "09fa7333d677c8a7320995c421b0879508c196124b2142d0526126d0295558c3"
+    },
+    {
+      "path": "independent-w1-ui-review-r3.json",
+      "bytes": 3390,
+      "sha256": "251503ebf5627d80353575c7d0cae062aee688e5e2fd84802c5f9bd86f49ac15"
+    },
+    {
+      "path": "portable-r1/receipt.json",
+      "bytes": 1483,
+      "sha256": "a5411653259ce80fd8612538412f4e72dd56dbdf773cbb5d209f96ef8af69d42"
+    },
+    {
+      "path": "portable-r1/stderr.log",
+      "bytes": 2783,
+      "sha256": "1f0e2403242c6a76544c840deb2806d945cb72d183559546a16847082cb7b805"
+    },
+    {
+      "path": "portable-r1/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "portable-r2/receipt.json",
+      "bytes": 1654,
+      "sha256": "e783cd26cdd7ceda9cbd850b10fa6d5cb29bf592d69f3d8cf8c637eb375e8e6a"
+    },
+    {
+      "path": "portable-r2/stderr.log",
+      "bytes": 2985,
+      "sha256": "282faa444d520e0fea8b35c74717046bb8640b382a95f37a3cad881dcfea2150"
+    },
+    {
+      "path": "portable-r2/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "root-independent-review-r2.json",
+      "bytes": 3487,
+      "sha256": "9ef23d65d484d2f042fb2f49ae4d4aa0617eaf83886fac48a7c9c8e6fedecd18"
+    },
+    {
+      "path": "root-independent-review-r3.json",
+      "bytes": 905,
+      "sha256": "c0a1c13a6a8c456f6ec9b9b6f75efb6e94a74262cdf096960ab0f67a09d4916d"
+    },
+    {
+      "path": "source-validation-r3.json",
+      "bytes": 6206,
+      "sha256": "72ceff514a2722f4052d3ea50b5f40bb850f5e435b5dd945ced5b4940959ca42"
+    }
+  ]
+}

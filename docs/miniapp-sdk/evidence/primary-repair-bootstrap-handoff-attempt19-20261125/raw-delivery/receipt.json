@@ -1,0 +1,138 @@
+{
+  "capturedAt": "2026-11-25T15:45:35.773656+00:00",
+  "source": "dc53a6c8ff1bb68bfbc52a64667e14ce688055b0",
+  "afterEpoch": 1795621045.0,
+  "metadataFilesScanned": 235,
+  "identities": [
+    {
+      "label": "ai",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/90177CE6-8442-48DE-946F-5DF8C128C8B4",
+      "identifier": "com.itorah.chavrusachat"
+    },
+    {
+      "label": "mini",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/142799C5-C59B-4CBC-AC1D-A01EAECBC7E5",
+      "identifier": "com.itorah.hanlinminiapps"
+    },
+    {
+      "label": "shared",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428",
+      "identifier": "group.com.itorah.shared"
+    }
+  ],
+  "transfers": [
+    {
+      "id": "7810b729-bf90-4c3b-8848-641609ac71a7",
+      "request": {
+        "archiveSHA256": "9a2a14be4ad24565bad66a98fc53522229de903acfb8a41b3df18006e81b51c9",
+        "createdAt": 817313931.365785,
+        "id": "7810B729-BF90-4C3B-8848-641609AC71A7",
+        "originalFileName": "MiniAppTypeError.hanlinNativeScript",
+        "purpose": "repair",
+        "schemaVersion": 1
+      },
+      "receipt": {
+        "status": "queued",
+        "transferID": "7810B729-BF90-4C3B-8848-641609AC71A7",
+        "updatedAt": 817313931.369541
+      },
+      "AIWorkspaceExists": false,
+      "AIWorkspacePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/90177CE6-8442-48DE-946F-5DF8C128C8B4/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-7810b729-bf90-4c3b-8848-641609ac71a7",
+      "AIWorkspaceMembers": []
+    }
+  ],
+  "newDiagnostics": [],
+  "latestDiagnosticsIndex": [
+    {
+      "name": "agent-session-2026-11-25T14-43-02-d10787ff-stage-events.jsonl",
+      "bytes": 4217321,
+      "mtime": 1795618111.5656772
+    },
+    {
+      "name": "agent-session-2026-11-25T14-43-02-d10787ff.raw.enc",
+      "bytes": 7253135,
+      "mtime": 1795618111.5644562
+    },
+    {
+      "name": "agent-session-2026-11-25T14-43-02-d10787ff-manifest.json",
+      "bytes": 881,
+      "mtime": 1795618111.5166762
+    },
+    {
+      "name": "agent-session-2026-11-25T14-43-02-d10787ff-stage-snapshots.json",
+      "bytes": 5623,
+      "mtime": 1795618111.5149477
+    },
+    {
+      "name": "agent-session-2026-11-25T14-43-02-d10787ff.txt",
+      "bytes": 2427524,
+      "mtime": 1795618111.5055714
+    },
+    {
+      "name": "agent-session-2026-11-25T14-43-02-d10787ff.json",
+      "bytes": 2147887,
+      "mtime": 1795618111.1328003
+    },
+    {
+      "name": "agent-session-2026-11-25T14-06-07-2f2d5ad7.txt",
+      "bytes": 2079100,
+      "mtime": 1795615715.952247
+    },
+    {
+      "name": "agent-session-2026-11-25T14-06-07-2f2d5ad7.json",
+      "bytes": 1835805,
+      "mtime": 1795615715.4424925
+    }
+  ],
+  "members": [
+    {
+      "path": "ai-container-metadata.plist",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/90177CE6-8442-48DE-946F-5DF8C128C8B4/.com.apple.mobile_container_manager.metadata.plist",
+      "bytes": 600,
+      "mtimeNs": "1795605982528793590",
+      "sha256": "64d877dc1ce2f9d25c76f3f549a7ad4bf7028a34efeb289016b00ebd64eaa778"
+    },
+    {
+      "path": "mini-container-metadata.plist",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/142799C5-C59B-4CBC-AC1D-A01EAECBC7E5/.com.apple.mobile_container_manager.metadata.plist",
+      "bytes": 602,
+      "mtimeNs": "1795605989523343162",
+      "sha256": "cde9660338425f9d80813bfce0c335fca4780f4390b8e84b108c7f0b306ccf8f"
+    },
+    {
+      "path": "shared-container-metadata.plist",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/.com.apple.mobile_container_manager.metadata.plist",
+      "bytes": 600,
+      "mtimeNs": "1795605982605832081",
+      "sha256": "5d786796ff8cd0b5295885e3cbd155d9f4f80fb9662bf8ca18b50b978174d44f"
+    },
+    {
+      "path": "authoring-transfer/7810b729-bf90-4c3b-8848-641609ac71a7/MiniAppTypeError.hanlinNativeScript",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/7810b729-bf90-4c3b-8848-641609ac71a7/MiniAppTypeError.hanlinNativeScript",
+      "bytes": 4399,
+      "mtimeNs": "1795606009009589935",
+      "sha256": "9a2a14be4ad24565bad66a98fc53522229de903acfb8a41b3df18006e81b51c9"
+    },
+    {
+      "path": "authoring-transfer/7810b729-bf90-4c3b-8848-641609ac71a7/diagnostics.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/7810b729-bf90-4c3b-8848-641609ac71a7/diagnostics.json",
+      "bytes": 1973,
+      "mtimeNs": "1795621131367349532",
+      "sha256": "b3457264ee1b706fb72144574f919cb3bca028c99e0559507be593bb0ab0e290"
+    },
+    {
+      "path": "authoring-transfer/7810b729-bf90-4c3b-8848-641609ac71a7/receipt.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/7810b729-bf90-4c3b-8848-641609ac71a7/receipt.json",
+      "bytes": 100,
+      "mtimeNs": "1795621131371144980",
+      "sha256": "ad89c343f69f8f1c64d61d480ee3fb2fb9b0c5f845cd00db2c395656d16c7b60"
+    },
+    {
+      "path": "authoring-transfer/7810b729-bf90-4c3b-8848-641609ac71a7/request.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/7810b729-bf90-4c3b-8848-641609ac71a7/request.json",
+      "bytes": 251,
+      "mtimeNs": "1795621131369387443",
+      "sha256": "9c08601713d13b6df873c850a9cfca2d8c20eb1389f59335a6554c732f5d2e59"
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "status": "EXECUTED_PASS_ORIGINAL_FULL52_REPAIR_DURABLE_SUPPLEMENT",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "freshArchiveSHA256": "e301d403fc35f553a5b2a4edea97455d9ed6e7dd9912d45879eb3bc40c04ed84",
+  "newExecution": false,
+  "newUICapture": false,
+  "newProductMutation": false,
+  "includedDurableMembers": 15,
+  "originalDurableCaptureMembers": 16,
+  "excludedCaptureMembers": [
+    {
+      "path": "model/agent-session-2026-11-25T18-26-54-2bc696c7.raw.enc.gz",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/BD51193F-21BC-497C-A6B7-BEEE476D36F6/Documents/Diagnostics/agent-session-2026-11-25T18-26-54-2bc696c7.raw.enc",
+      "bytes": 8298516,
+      "sha256": "8c6bbbb3c2e901377fb453532556611ea3c7a39455fd2158bed92d0b98f9f0e8",
+      "storedBytes": 6214119,
+      "storedSHA256": "cb184852395e1369139865c4eea02bfff5c251efb5c96592e212a8d2d043b16d",
+      "compression": "gzip",
+      "mode": 420,
+      "mtimeNs": "1795631410654530948",
+      "reason": "Encrypted device-Keychain-bound raw capture retained at original capture location; readable completed model and durable install evidence are included."
+    }
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3231,
+      "sha256": "8db0a925cbbae1c92a7dbf0c5ac85c73e37f59eeb9f5fccd55c564810446843a",
+      "gitMode": "100644"
+    },
+    {
+      "path": "attachments/01C70670-F4BB-4B4D-9C2B-5750A14A9018.png",
+      "bytes": 779729,
+      "sha256": "4fb40c285ca83a504b1e5c33607527c9b4a62425b7c57383fae7b3bbd436e16a",
+      "gitMode": "100644"
+    },
+    {
+      "path": "attachments/44AE029D-E51F-4377-A1DD-D392335EA6D8.png",
+      "bytes": 2196171,
+      "sha256": "a71e636be2be982ad5eb22687ec7b5928b06ce967d16dacb88b30f170849d44f",
+      "gitMode": "100644"
+    },
+    {
+      "path": "attachments/630F42A1-7F1D-4D05-B802-56FCCBBCC8BA.png",
+      "bytes": 111172,
+      "sha256": "3a82e7ef190f4e94c03722f7615ba04f80a0c7821a24724d0cf201ec4951ba7a",
+      "gitMode": "100644"
+    },
+    {
+      "path": "attachments/7AB37F25-35FB-4B19-A6B8-7A5E75338714.txt",
+      "bytes": 27650,
+      "sha256": "b040fff25d68621cb4f14d776dda580716e560494f645f5d683b08d81a8f852e",
+      "gitMode": "100644"
+    },
+    {
+      "path": "attachments/receipt.json",
+      "bytes": 3452,
+      "sha256": "fb7ca72405802cac10e634ab4e5a76fe22b7363e9bdf515c006186e067d95286",
+      "gitMode": "100644"
+    },
+    {
+      "path": "durable/authoring/383287b3-e060-4b98-b06b-55765b26c1cc/MiniAppTypeError.hanlinNativeScript",
+      "bytes": 4399,
+      "sha256": "9a2a14be4ad24565bad66a98fc53522229de903acfb8a41b3df18006e81b51c9",
+      "gitMode": "100644"
+    },
+    {
+      "path": "durable/authoring/383287b3-e060-4b98-b06b-55765b26c1cc/diagnostics.json",
+      "bytes": 1973,
+      "sha256": "a89164513e4ed2a67e59927d6da003840a653e86ff6b9fd4aee3898715c6870a",
+      "gitMode": "100644"
+    },
+    {
+      "path": "durable/authoring/383287b3-e060-4b98-b06b-55765b26c1cc/receipt.json",
+      "bytes": 214,
+      "sha256": "418e219277e6f3bc7aac4b4a1bb0e2035247dc2a17cfcb100993feaed1387221",
+      "gitMode": "100644"
+    },
+    {
+      "path": "durable/authoring/383287b3-e060-4b98-b06b-55765b26c1cc/request.json",
+      "bytes": 251,
+      "sha256": "d015136805ffa69c1de3be09ce75d65a6dd405e9d74f31028de459b556bf937a",
+      "gitMode": "100644"
+    },
+    {
+      "path": "durable/authoring/4dd857a8-e830-49c5-9a88-2483ac3e92b1/MiniApp.hanlinNativeScript",
+      "bytes": 7247,
+      "sha256": "e301d403fc35f553a5b2a4edea97455d9ed6e7dd9912d45879eb3bc40c04ed84",
+      "gitMode": "100644"
+    },
+    {
+      "path": "durable/authoring/4dd857a8-e830-49c5-9a88-2483ac3e92b1/diagnostics.json",
+      "bytes": 2,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "gitMode": "100644"
+    },
+    {
+      "path": "durable/authoring/4dd857a8-e830-49c5-9a88-2483ac3e92b1/receipt.json",
+      "bytes": 166,
+      "sha256": "991c8b5c3e8813e64d7003e2968c6c1f0bdc6919207425886c656b95dcdbe0c6",
+      "gitMode": "100644"
+    },
+    {
+      "path": "durable/authoring/4dd857a8-e830-49c5-9a88-2483ac3e92b1/request.json",
+      "bytes": 243,
+      "sha256": "7decae34bec0ae873334100c8b13628a41879fe75447f2a0916037940f580231",
+      "gitMode": "100644"
+    },
+    {
+      "path": "durable/capture-receipt.json",
+      "bytes": 15490,
+      "sha256": "2f88caaf3f17a05cab0dde6ac26a6c588ad9dad5acbdc1174f6c93cb3a981e30",
+      "gitMode": "100644"
+    },
+    {
+      "path": "durable/metadata/ai-app-container.plist",
+      "bytes": 600,
+      "sha256": "64d877dc1ce2f9d25c76f3f549a7ad4bf7028a34efeb289016b00ebd64eaa778",
+      "gitMode": "100644"
+    },
+    {
+      "path": "durable/metadata/authoring-app-group.plist",
+      "bytes": 600,
+      "sha256": "5d786796ff8cd0b5295885e3cbd155d9f4f80fb9662bf8ca18b50b978174d44f",
+      "gitMode": "100644"
+    },
+    {
+      "path": "durable/model/agent-session-2026-11-25T18-26-54-2bc696c7-manifest.json",
+      "bytes": 881,
+      "sha256": "a611259f99a1c3f4fd4c15c11d01871db9b8101951681625671f976c378a0db0",
+      "gitMode": "100644"
+    },
+    {
+      "path": "durable/model/agent-session-2026-11-25T18-26-54-2bc696c7-stage-events.jsonl.gz",
+      "bytes": 1031953,
+      "sha256": "c088822c0e25efbe8d64cc8e49dfb169047ba79dee62ba9e917954689086ff10",
+      "gitMode": "100644"
+    },
+    {
+      "path": "durable/model/agent-session-2026-11-25T18-26-54-2bc696c7-stage-snapshots.json",
+      "bytes": 6108,
+      "sha256": "453edce8897f189b87671e9d7ea51c1f761ff7901b3676576efecbc488b065bc",
+      "gitMode": "100644"
+    },
+    {
+      "path": "durable/model/agent-session-2026-11-25T18-26-54-2bc696c7.json.gz",
+      "bytes": 525659,
+      "sha256": "260f9ff8d036b23613c16ecbc7fc3fdfa3909830ff130c682cbc9ff2f9e4dead",
+      "gitMode": "100644"
+    },
+    {
+      "path": "durable/model/agent-session-2026-11-25T18-26-54-2bc696c7.txt.gz",
+      "bytes": 515848,
+      "sha256": "2084a362313a2c46c5174d8275dce4783119993d73e6cb614b714dc273a12512",
+      "gitMode": "100644"
+    }
+  ]
+}

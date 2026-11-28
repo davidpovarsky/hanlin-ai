@@ -1,0 +1,27 @@
+{
+  "at": "2026-11-24T08:27:55.048076+00:00",
+  "sourceCommit": "25b14790e5c79b8ddd821984ed97d37e6af0bfa4",
+  "branch": "codex/hanlin-miniapps-sdk-completion-20261123",
+  "workflowID": 419196373,
+  "inputs": {
+    "paired_product_acceptance": "true",
+    "paired_test_scope": "miniapp_contracts",
+    "runtime_bundle_artifact_run_id": "42926628418"
+  },
+  "selectedCases": 8,
+  "previousRunID": 45354885323,
+  "previousResult": {
+    "passed": 7,
+    "failed": 1,
+    "skipped": 0
+  },
+  "concurrencySuffix": "paired-miniapp_contracts",
+  "dispatchExecuted": true,
+  "dispatchOutput": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45356338624\n",
+  "dispatchStderr": "",
+  "mainRunUnaffected": 45354940642,
+  "lifecyclePassReused": 45354891567,
+  "boundary": "Single test-message authority corrected; original production inputs unchanged. Require actual8pass0fail/skip rows; do not rerun passed store lifecycle.",
+  "newRunID": 45356338624,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45356338624"
+}

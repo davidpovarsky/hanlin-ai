@@ -1,0 +1,150 @@
+{
+  "recorded_at": "2026-11-18T17:28:36.269728+00:00",
+  "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+  "terminal_runs": [
+    {
+      "run": 44340805844,
+      "source_sha": "87cf107c350d3f9bf9ca380a59b9f9eeaadcdbef",
+      "status": "EXECUTED_PASS",
+      "scope": "Standalone MiniApps baseline: 20 storage + 7 UI, zero failures/skips",
+      "artifact_id": 14446748475,
+      "whole_zip_sha256": "59b71be313776ffe82f0b793ddfc5be46ad8fa5d7368667ab839733e00b2f22b",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44340805844",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "acceptance_claim": false
+    },
+    {
+      "run": 44343462395,
+      "source_sha": "cda167f4c9931d4246aba1ad88ef7b183569f8ad",
+      "status": "EXECUTED_PASS",
+      "scope": "Exact original Markdown native consumer: 10 methods. Main-app/Safari UI NOT_RUN",
+      "artifact_id": 14445789902,
+      "whole_zip_sha256": "0b3d51923f32be69860692e239d3be420e0a822c45aa3359661f67d63e4ba0b1",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44343462395",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "acceptance_claim": false
+    },
+    {
+      "run": 44342780366,
+      "source_sha": "87cf107c350d3f9bf9ca380a59b9f9eeaadcdbef",
+      "status": "BUILD_PASS_TESTS_NOT_RUN",
+      "scope": "Device-family guard correctly rejected mixed iPad/compact iPhone selectors",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44342780366",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "acceptance_claim": false
+    },
+    {
+      "run": 44342772767,
+      "source_sha": "87cf107c350d3f9bf9ca380a59b9f9eeaadcdbef",
+      "status": "BUILD_PASS_CANCELLED_TESTS_NOT_RUN",
+      "scope": "Original wide UI/EmbeddedResults run cancelled before preserved case events; cancellation cause not established",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44342772767",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "acceptance_claim": false
+    },
+    {
+      "run": 44345443838,
+      "source_sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
+      "status": "BUILD_PASS_RUNNER_PREPARATION_FAILED",
+      "scope": "Motion B/C not executed: XCTest runner stalled/crashed before a case; original failures remain open",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44345443838",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "acceptance_claim": false
+    },
+    {
+      "run": 44349634595,
+      "source_sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
+      "status": "CANCELLED_TESTS_NOT_RUN",
+      "scope": "Host/Editor/NativeA2UI iPad validation cancelled by shared manual validation concurrency",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44349634595",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "acceptance_claim": false
+    },
+    {
+      "run": 44356501045,
+      "source_sha": "fd4149acc5dea3f7953f093b1b5dd8ebdd975440",
+      "status": "PLANNER_FAILED_TESTS_NOT_RUN",
+      "scope": "New OpenClaw test path lacked routing; corrected at a9085987 without weakening test coverage",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44356501045",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "acceptance_claim": false
+    }
+  ],
+  "pending_runs": [
+    {
+      "run": 44349642458,
+      "source_sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
+      "scope": "Two original compact Composer iPhone UI methods",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44349642458",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "acceptance_claim": false,
+      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE"
+    },
+    {
+      "run": 44351078724,
+      "source_sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
+      "scope": "Standalone MiniApps original NativeScript/Expo UI2",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44351078724",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "acceptance_claim": false,
+      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE"
+    },
+    {
+      "run": 44358114755,
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+      "scope": "Original OpenClaw policy, affected Runtime05/catalog/SDK and Skill UI",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44358114755",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "acceptance_claim": false,
+      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE"
+    },
+    {
+      "run": 44358121911,
+      "source_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+      "scope": "Original Motion B/C with retained raw result and startup diagnostics",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44358121911",
+      "observed_at": "2026-11-18T17:28:36.269728+00:00",
+      "acceptance_claim": false,
+      "status": "DISPATCHED_AWAITING_TERMINAL_EVIDENCE"
+    }
+  ],
+  "mini_raw_hashes": {
+    "acceptance.json": "2e5bc2ad1082c5d9ad3122a4e496ea54d46eb18f2e591d1e69432ca50a3e7c0a",
+    "test-summary.json": "c7dc572338ee8b326d74495a7f576464d9ff1815d6b3c6f7f236e1b395856c5d",
+    "test-nodes.json": "6814c44c9860b88517789e5f98657bd83e2dd00362865a39bc58072af83169cb",
+    "storage-summary.json": "cfb08aa3926d1bea0e0f3c436e76f461b2a287b7d4312c2fdb4e2ca064b64973"
+  },
+  "markdown_raw_hashes": {
+    "tests.json": "78e8652ae5313b17074d107be1eb65269c3549b66b42bf346197d302e683cfd6",
+    "result-validation.json": "d27a72364ab6ad024a3ebcc9ce7aa06a0adb3a08502eddaea0bbbd70ebbacb0c",
+    "actual-checkouts-validation.json": "c1658412ef2adf5f0bcd327c209eaafb32ebf0d17b88ede34acee48a2417c738",
+    "closure-contract.json": "d8e8ce8d7bebebfaa7a09b811b76a3de2af54b7036ba67cd18dfe09323044a50"
+  },
+  "markdown_passed_methods": [
+    "CitationIconTests/testFormattingBuildersPreserveImagesCitationsAndSelection()",
+    "CitationIconTests/testHostSuppliedIconRendersInsideTheOriginalCitationAttachmentInBothDirections()",
+    "CitationIconTests/testOriginalCitationInitializerFunctionTypeRemainsCompatible()",
+    "CodeBlockConfigTests/testCustomTextFontsAreStoredForRendering()",
+    "CodeBlockConfigTests/testDefaultTextFontsPreserveBundledTypography()",
+    "CodeBlockConfigTests/testOriginalInitializerFunctionTypeRemainsSourceCompatible()",
+    "CodeBlockRendererTests/testDefaultRendererRemainsOptIn()",
+    "CodeBlockRendererTests/testParsedBlocksKeepLiteralSourceAndStableSelectionIdentity()",
+    "CodeBlockRendererTests/testViewHookReceivesTheExistingParsedBlock()",
+    "ParagraphLinkHostTests/testMountedParagraphUsesUpdatedHostLinkAction()"
+  ],
+  "scope": "Raw results apply to named source revisions. No aggregate current-HEAD/full-product acceptance or phase closure.",
+  "asana_verified": [
+    {
+      "task": "1220548022593831",
+      "comment": "1220676901646810"
+    },
+    {
+      "task": "1219605220179926",
+      "comment": "1220676998940363"
+    },
+    {
+      "task": "1220546571007976",
+      "comment": "1220678642595130"
+    }
+  ]
+}

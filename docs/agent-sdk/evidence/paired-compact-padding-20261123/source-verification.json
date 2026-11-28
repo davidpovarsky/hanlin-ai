@@ -1,0 +1,73 @@
+{
+  "parent_sha": "137370de890125c1b1231e096684ea8da6b12350",
+  "reviewed_native_source": "e59256e8325bcdb71c0e683f6b19e7641642aad8",
+  "source_file": "AI_HLY/ChatView.swift",
+  "before_sha256": "177acfddd851b5f90d539e4ace7e957bfbc39265da383d0f0ac5e7e5d47e65a6",
+  "after_sha256": "f2f2949c8c2f2f1dfb954be774cdcf02dc2587b394a0496ba93c36a4bb7a3f0f",
+  "one_line_inverse_restores_parent": true,
+  "protected_inputs": [
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift",
+      "sha256": "5f137f6d012179c29acf3b5e90141ede162139e0cb2c8697c6afc64a6b7a274f",
+      "unchanged_vs_parent": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinComposerSessionBridge.swift",
+      "sha256": "d8f6d849a69452c018e28a6a6b526d2b606bbfed51b46110dbef1dfab3da3d55",
+      "unchanged_vs_parent": true
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinConversationComposerView.swift",
+      "sha256": "e01944199210738b661f0ce0cd2a3546273a016249c0079c76d73bec5e88d7e5",
+      "unchanged_vs_parent": true
+    },
+    {
+      "path": "AI_HLYTests/ClassicChatRestorationTests.swift",
+      "sha256": "ea69488b7f6b03d119fc6072798791d4671762f92d1d379688b9e06c18536c77",
+      "unchanged_vs_parent": true
+    },
+    {
+      "path": "AI_HLYUITests/HanlinPairedProductUITests.swift",
+      "sha256": "eb8e4648b6459bd1832fa1e21603dc394c3474f9b8f7fcc0494a26779b0bde58",
+      "unchanged_vs_parent": true
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "sha256": "349db7657d2aa90b63ee1e824ec8937d30f904c8b6b1605d5942394583115d00",
+      "unchanged_vs_parent": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+      "sha256": "bb621c8312e153ac65a963da25ee845a35f46c40ccd13fe66540404f0ad626f2",
+      "unchanged_vs_parent": true
+    }
+  ],
+  "parser": {
+    "command": [
+      "/usr/local/bin/swiftc",
+      "-frontend",
+      "-parse",
+      "AI_HLY/ChatView.swift"
+    ],
+    "returncode": 0,
+    "scope": "Linux syntax parsing only; not SwiftUI typechecking or native runtime acceptance"
+  },
+  "native_acceptance": "NOT_RUN",
+  "observed_geometry": {
+    "review_button_y": -62.7,
+    "viewport_height": 334,
+    "cancellation_content_height": 641,
+    "return_content_height": 619,
+    "external_dock_height": 0,
+    "old_bottom_padding": 225
+  },
+  "predicted_geometry_only": {
+    "new_bottom_padding": 24,
+    "removed_excess": 201,
+    "review_button_y": 138.3,
+    "cancellation_content_height": 440,
+    "return_content_height": 418,
+    "cancellation_bottom_offset": 106,
+    "return_bottom_offset": 84
+  }
+}

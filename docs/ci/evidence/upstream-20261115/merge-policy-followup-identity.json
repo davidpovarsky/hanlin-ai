@@ -1,0 +1,16 @@
+{
+  "policySource": "2dec3a60aed3116b8865d337b687df99beea9e7d",
+  "candidateHead": "77a225a5af05de82335f387680c3e5d0b355aaeb",
+  "candidateBase": "8b25e148c1d789c56e7d91a9211d72f7b3748cee",
+  "originalProofRun": "43754712044",
+  "operation": "Read-only fresh GitHub settings/check snapshot and reauthentication of existing unchanged candidate receipt; no test/CI execution",
+  "exitCode": 1,
+  "validationPassed": true,
+  "mergeEligible": false,
+  "reportSHA256": "f89d801ad012d9cd12f821856f8fc3daea3765e217cb946d46de5530eec00432",
+  "rules": "Actual effective branch rules API returned empty array; protection404 remains unprotected",
+  "sourceIdentities": {
+    "Scripts/Runtime/dependency-update-policy.mjs": "13cbee395aa994b731485500cda56eafcc24ddaa41db018fbe7d1e2707f0d336",
+    "Scripts/Runtime/check-upstream-merge-gate.mjs": "f6fde6da4fb817925584ab89b1ba325b2b70d1b85f944303a7ee381b94fc32a2"
+  }
+}

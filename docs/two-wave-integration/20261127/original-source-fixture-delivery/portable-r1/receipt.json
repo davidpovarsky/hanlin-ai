@@ -1,0 +1,28 @@
+{
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_original_source_fixtures.py",
+    "-v"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-original-source-fixtures-20261127",
+  "startedAtUTC": "2026-11-27T15:14:12.934667+00:00",
+  "finishedAtUTC": "2026-11-27T15:14:13.179332+00:00",
+  "durationSeconds": 0.23736511543393135,
+  "exitCode": 1,
+  "interpreter": "Python 3.12.3",
+  "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSHA256": "e59102503694e7c42e89adfe632161a1baa91fd09eed17e3107126b34164c2b2",
+  "sourceTestSHA256": "58b31482de6e2d5532a014374e4b1e27d660e90f469fd429bea0aabf5e3ee744",
+  "status": "FAIL",
+  "nativeStatus": "NOT_RUN"
+}

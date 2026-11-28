@@ -1,0 +1,134 @@
+{
+  "base": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "bytes": 947087,
+  "count": 25,
+  "members": [
+    {
+      "bytes": 3171,
+      "path": "README.md",
+      "sha256": "505c4689d18bf3ae62b65d1206b407027985f4a5f331f1a14af47fac361e7363"
+    },
+    {
+      "bytes": 7909,
+      "path": "original-fixture-preservation.json",
+      "sha256": "ca480c10844ef838d18037c9297bc72fbd4e357a2541cf8e343a8683fab89cfa"
+    },
+    {
+      "bytes": 4702,
+      "path": "public-api-admission.json",
+      "sha256": "e6adae5306054946236ad6dc4757978ea11781835d5f17db7e78cc7f157e44e1"
+    },
+    {
+      "bytes": 2020,
+      "path": "qualification-plan.json",
+      "sha256": "b3607c0c2adc4435bfdf1c95f32c35abc2cb82c23bf7ef4801a8df52d23e4def"
+    },
+    {
+      "bytes": 26255,
+      "path": "retained-public-modifier-readback.json",
+      "sha256": "d839abbb7b698b9be0da86c966bb5eabbae1b819e1f31b64edc660e3afecc3b0"
+    },
+    {
+      "bytes": 294243,
+      "path": "source/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "sha256": "0242e3cd6074290011b8239626b1406009973ebe0a267b1082a12df7bfd2a2ed"
+    },
+    {
+      "bytes": 567,
+      "path": "source/Fixtures/WidgetComponents/script.json",
+      "sha256": "fbfc54b66d4c02d3c7ceaa4762d2d28fe762b247bc30a7a3f9788f96a8c4a58b"
+    },
+    {
+      "bytes": 1903,
+      "path": "source/Fixtures/WidgetComponents/widget.jsx",
+      "sha256": "81dcce5aefcab558b150605d23bdc8c5021e7c78ece6bbe83458d876e33e1005"
+    },
+    {
+      "bytes": 90765,
+      "path": "source/Scripts/CI/Tests/test_affected_validation.py",
+      "sha256": "f925db372a8a2e82941d5fbd29246ea3423598b3a09459c6df4af465996fef7f"
+    },
+    {
+      "bytes": 13690,
+      "path": "source/Scripts/CI/Tests/test_widget_components_observer.py",
+      "sha256": "ee1c83513932fb72e072d84096c2a69edc08ccbe8d18aac3ceebe8d9f806b334"
+    },
+    {
+      "bytes": 81306,
+      "path": "source/Scripts/CI/affected-validation-map.json",
+      "sha256": "d411b9de7096f9c0e210f81e86ac63a6732c3615d992754551def919fd6dfbc8"
+    },
+    {
+      "bytes": 68044,
+      "path": "source/Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "sha256": "7d001d486ad668fa4efd68bc244ce08daf943756cc344612542550c83cbc6380"
+    },
+    {
+      "bytes": 34243,
+      "path": "source/Scripts/ProductSplit/observe_widget_components.py",
+      "sha256": "49cb57bc123ca0e92170c730e6cca15b81efa47ba7fb62c35e7c24689d1998d9"
+    },
+    {
+      "bytes": 110066,
+      "path": "source/Scripts/ProductSplit/run_paired_acceptance.py",
+      "sha256": "7a386466c5df2caa8c1d72eaf9204eed36b6477ce21a15ed5521b5e6db4245aa"
+    },
+    {
+      "bytes": 4836,
+      "path": "source-authorities.json",
+      "sha256": "554b4567003fc1d65e4d9868a61969b29266d0d93b35ad72aa52e26b6ca925af"
+    },
+    {
+      "bytes": 1696,
+      "path": "source-impact.json",
+      "sha256": "09d5d4d52b398204f36df07de22893ca0b1a0b6fe6e35f23c7370db0f0dfcafd"
+    },
+    {
+      "bytes": 3981,
+      "path": "source-proposal.json",
+      "sha256": "fc799832865a4afb600e7997d51bebb1074c432f98eec8e064ae2f14ba05501a"
+    },
+    {
+      "bytes": 13334,
+      "path": "source-validation-script.py",
+      "sha256": "8ee97776419e672fe30f5e32aa26145714be33ee3889e159214f03d9b65e2365"
+    },
+    {
+      "bytes": 9992,
+      "path": "source-validation.json",
+      "sha256": "a0fdf675a864bff7a5e164d2885954c3004b0a10a0f94497ec41b28cf33def4e"
+    },
+    {
+      "bytes": 89553,
+      "path": "source.patch",
+      "sha256": "35713569efdd5a8e46822f81b220fc81b0dd7f857489c6e7996854108b2edd08"
+    },
+    {
+      "bytes": 20937,
+      "path": "source.patch.gz",
+      "sha256": "56356e9d637201d086c116a1cb11cb7668f0a4ad65557ac70b33f1607a076bc3"
+    },
+    {
+      "bytes": 22452,
+      "path": "ui-addition.swift",
+      "sha256": "f0bc6e89412c0e38f89264cb4664e65e38e24de9f436b37f8a142631c0c554d3"
+    },
+    {
+      "bytes": 36491,
+      "path": "workflow-candidate.yml",
+      "sha256": "eae8f665317f0d289148857518f0bb266719a514ff9e302ff7d1e5ce16cc1946"
+    },
+    {
+      "bytes": 4121,
+      "path": "workflow.patch",
+      "sha256": "856a4e8c22a1779c865aa29dfab3cc53ac06ecdacf1044b08d063e9d664942d6"
+    },
+    {
+      "bytes": 810,
+      "path": "workflow.patch.gz",
+      "sha256": "ff63e759cbde353b938fca35c7c03d3aa260d25f7320ac8dd4b7c611970e45d5"
+    }
+  ],
+  "schema": 1,
+  "status": "FROZEN_SOURCE_ONLY_NOT_EXECUTED"
+}

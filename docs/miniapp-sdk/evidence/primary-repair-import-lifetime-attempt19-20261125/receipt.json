@@ -1,0 +1,670 @@
+{
+  "schema": 1,
+  "kind": "ACTUAL_FAILED_UI_WITH_DURABLE_INSTALLED_REPAIR_AND_REVIEWED_LIFETIME_CORRECTION",
+  "source": "4cde88df07a2f3cd86cc99ad87786c79ae207390",
+  "correctionSource": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "createdAt": "2026-11-25T16:39:29.055268+00:00",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 5294,
+      "sha256": "f0242a0fa3023a8ad03f07da7ef24144da7d56645519bd4646ed613ab76eae81"
+    },
+    {
+      "path": "consumer-impact.json",
+      "bytes": 4445,
+      "sha256": "e086b1661f99277ccdb18e5d84dca93311a7f65fe55cb004f79ff5771910e380"
+    },
+    {
+      "path": "model-tool-timeline.json",
+      "bytes": 40127,
+      "sha256": "2c55ba23a34468888cd591a0fca287114261aeaeec66a7e1b40b130e05b62cea"
+    },
+    {
+      "path": "raw-built/built-input-bindings.json",
+      "bytes": 11931,
+      "sha256": "94c307dbe265089e62bbc10c8bf67b8acf05f4640ded3a6f2658d3982ec53c9e"
+    },
+    {
+      "path": "raw-built/commands.jsonl",
+      "bytes": 4913,
+      "sha256": "20b18945d3076dc35bee69e73403ec3115b69672e495f36b9aca9bb887ce8f17"
+    },
+    {
+      "path": "raw-built/original-prefix-state.json",
+      "bytes": 25360,
+      "sha256": "4801986291deaff7bb15e83eabbad48529c72729054cd021225e8a34b71069e0"
+    },
+    {
+      "path": "raw-built/receipt.json",
+      "bytes": 2230,
+      "sha256": "cd17c7096afdeeca1013eebb0ed43930c3419e5febd1c708e14170e09e080560"
+    },
+    {
+      "path": "raw-built/staged-inputs.json",
+      "bytes": 5833,
+      "sha256": "bdfb50639abf0a92cb97e9a20d01316452f171f4f7399d1c872106f5d51c7d7b"
+    },
+    {
+      "path": "raw-case/decision.json",
+      "bytes": 95397,
+      "sha256": "e5c4f55ab15c4b8360380bf2523847d073a1c47622fb06fce8b0c7bf83a7a01e"
+    },
+    {
+      "path": "raw-case/ledger.json",
+      "bytes": 8628,
+      "sha256": "6f87f56ae70751274ba77a623e88a40ee8e2febd39b64f7cfa98c4eb3e2ca855"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/02209D99-758F-42DF-86C6-DF63F44429B5.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/071D25D2-F96C-4343-B406-1EE09547E978.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/0FEDE8BA-C01F-428F-B913-F7E0E5D2572F.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/1018595F-67D6-49A1-9FEF-F497E58853C3.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/117C696A-3BCC-433F-B7E0-6849CDAC142D.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/15CD2438-CEA0-45A7-A192-629F4CC7D1E0.txt",
+      "bytes": 1642,
+      "sha256": "1556d7acd72e81966b97dc32d5f8942a562997536c96f9fff040acc0eed14533"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/15EF2350-807C-43B5-8F2F-5E6C4F3E5DB3.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/185361B0-41A1-4202-85EC-2523D33F0A1D.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/1ABA395E-2B8A-407A-97E2-791B353EC9C2.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/2052FE56-200F-4353-8833-CC57D78B92E3.txt",
+      "bytes": 1642,
+      "sha256": "9dfd216286b94b94901f1d1773e0f1023e84501f101b37a8f4af44376f99294e"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/24C368A9-1C93-41EF-932C-68010E966D35.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/28E38AD7-E044-40D6-A4A6-F98AB450D0D4.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/299498EF-1C84-46B5-BCB2-4A9E16973F97.txt",
+      "bytes": 1642,
+      "sha256": "8188d87b672eed6f5bef623909ff7c87fb19201cc17c4b7d8a4a32b626ed0c48"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/2A39C249-829B-467B-9319-39CC0DEB1615.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/2E68A2B1-F908-420D-9F61-927A3E1502D3.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/2FA44F15-D0A2-48A2-9B95-E93662149643.txt",
+      "bytes": 1642,
+      "sha256": "61eeb92260dcf50b0cae3a62546ea7408d7ccf2e8bf0471dd054f506e127d854"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/346ADC50-7512-4F52-9BEE-04763C92789C.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/3FFB5091-D75D-4C7A-A420-7798FF0177C2.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/45845B5E-5AC6-4E20-B107-DBD17B2CDC4B.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/466A67D2-9F89-4E7A-88E0-471CF96AC39C.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/471600B7-D7BC-4D24-8D07-52F985C71073.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/4AD87D13-9FC7-4FB3-A64F-BD6409B56FBE.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/51AB6099-82F1-45A1-AAC5-F924B645498E.txt",
+      "bytes": 1642,
+      "sha256": "809e6a1f0b3f07400b628ee9581855b9f4a2d642ab013723e51e5052fee23440"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/54D05B8B-C10F-4E95-8725-B40846D192EE.txt",
+      "bytes": 1642,
+      "sha256": "f6ab03435e25b05c40bd466433ef1bf9dcc2ffd154e24704f0b2d0a32e0f01ef"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/555E3C66-0101-42DB-A4D8-1E4D1CE5B4A4.txt",
+      "bytes": 1642,
+      "sha256": "e4e647d24114e4ad91745360dbc41079978db4f2a53b001efe745ddc2ae691ea"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/57DEF3CF-DFBD-4888-BB6D-E360F6D77A8F.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/57F7ED6B-7FFA-4EBF-9E7A-F8ED79B815A4.txt",
+      "bytes": 1642,
+      "sha256": "51ad90fc0e2f5a057b70a8fb407273df6b254fc6b5fee0813a605ca99a334f9a"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/5AA21678-8BED-494D-85C1-3043A61D638A.txt",
+      "bytes": 1642,
+      "sha256": "a74b601e8eae0115a2944d1fd5fcc3ee79e677b3ef8fa3890ded68a86033601d"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/5FAFCFE6-8D8C-4729-99BD-D73E53170D08.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/6237AA9F-290C-4A35-9FD6-3F1BD12217E1.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/629EEDA7-AD6E-4DD3-ADA0-D561A51E8D2B.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/6586AC54-1407-4F94-A56C-31CB1E79EA3C.txt",
+      "bytes": 1642,
+      "sha256": "a1f11e8a24ab0f12e9885af6b2f873a0b4596685e123e9a71c67586713f63f90"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/6599764A-6D47-4346-8257-39322E385E0E.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/65D4A61C-E998-4984-968F-FE6EA53EB863.txt",
+      "bytes": 1642,
+      "sha256": "375223d948d7e637b321a2240fea55131017f344937a3dc8a4ad7a0fbc064693"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/6B327789-B8CA-4872-B5A1-0FFF5C7A3B77.txt",
+      "bytes": 1642,
+      "sha256": "ff75e0353357c6794e6601c2e7c85efff1b16319e5756563e8998999067b36c6"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/6D711FFC-5A22-47BB-AF77-ABF9D2BDC2F8.txt",
+      "bytes": 26217,
+      "sha256": "529cbd702fa03e3a8fc1b5f640220395ba586618f28016e9a8a0ae542c7a6432"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/705D35BF-1F5C-4C07-8009-3933056909BA.txt",
+      "bytes": 1642,
+      "sha256": "158889b566a9790d4a7a64a5504601ed47d22fc953c37879f5a002e5560479ed"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/73DBA1A5-1379-4578-BE7D-C8065468CB67.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/76039FC2-6FC1-48A6-BBAD-3277AF6E7323.txt",
+      "bytes": 1127,
+      "sha256": "a033ab8e65294d62eb32d568c1b45ac8688cb7dbcd0290beb7c53fc212a26aa3"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/761BFC16-7BD6-4E89-9EA5-067C59E68ABC.txt",
+      "bytes": 1642,
+      "sha256": "7e4dc0f007f32cab314ec03b5e6a62e02075257e5982f0deeb85889f94acff02"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/76B94E7C-9FD8-41B4-8180-8299B0E822BD.txt",
+      "bytes": 1642,
+      "sha256": "927aec959d2920d41ff317bf99728d9504c35dab06dffa04a6221f34b8451ca7"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/7881F7D0-0AB8-4429-B480-5513236A27B2.txt",
+      "bytes": 1642,
+      "sha256": "502b90548f7dd412c6c35328a9c97c6dc65aa13ae8a6e284ba540f542045c940"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/7A129E15-DD94-4362-954E-A58F5D9A6334.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/7A2C4F2C-BD3B-410F-8F1C-4A77899D69B5.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/7EAD167F-107F-4932-B3C8-87BE714C97BE.txt",
+      "bytes": 1642,
+      "sha256": "983ca7847a258ea2a1106602a48b4b73f8115c11f950f85a016a65b1a4dc34e4"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/808ED5FE-526F-44AE-BC77-8390400B24D3.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/85E56695-C76A-4147-A3C8-48C8337E3CC3.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/8BF20FC3-2938-4249-A619-311F53ABBF62.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/8CEFE6C6-6B56-4E88-948B-39A8E200C74E.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/94698212-473E-4823-9C6C-E9E40B24E004.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/985B1DC7-4918-4B0A-A10A-A4D814DF7F0F.txt",
+      "bytes": 1642,
+      "sha256": "472a29875bc15bd44558926d3ef7d2ad173a0b16c8aa4e3f8328df49413f0b56"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/9DC5F868-28B2-47B9-B966-E83D44361C4F.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/A24542BC-5B2A-464D-8BF5-BE39169994E3.txt",
+      "bytes": 1642,
+      "sha256": "22a58fd3bf917dd2dc16645d4d9661a73ca5b4ec39f5b94a828abda97078d49f"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/AB1A44C3-ABDA-489C-8B2F-17422A5C344A.txt",
+      "bytes": 1642,
+      "sha256": "dc45fa9b44a69dd74899a941c1b1d6d4521877259df9f5164420cbac3f1f1166"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/AB8463C0-3167-4D53-BBDC-D417EF8CBAF4.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/AD2D10BB-C594-4C96-95F5-25D3D7CD46FF.txt",
+      "bytes": 1642,
+      "sha256": "d2a75edad6bcdc2b4b71fbdfe232ef454ed988be9cec7faaf5bfddc98c62c379"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/AD450FE7-27B3-4AC7-AAB1-60DAFDA54E66.txt",
+      "bytes": 1642,
+      "sha256": "6e7de025e8cce20bfc7f230e92671112992dfa9e547457ad1bbbc3b8db42af94"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/AF736F8B-5360-42AA-AD40-6BDC6452576C.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/B32A8CE5-E25B-4979-AEEB-4FDA83CCD2CC.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/B5FCC42F-7713-4CBB-9CAF-F5743CCAFC3F.txt",
+      "bytes": 1642,
+      "sha256": "7f3ea76fbee5d4c7248ee28be77eda164123a6018596a3a2e0928f2fb1b30e77"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/B8794C3A-3743-4DAC-8DDB-B64EB7E73B82.txt",
+      "bytes": 1642,
+      "sha256": "1ab4de328eb5fe1cc35dfd2ac5993da1b74a1fca038705e32fb45a5c9144514d"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/BA031664-F6CF-465A-8069-35A5792247A9.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/BE56DBD6-09AB-4A51-B509-A53B6F56F400.txt",
+      "bytes": 1642,
+      "sha256": "606a8f7481726161846216c3e612b89a5ac9240a5f90d71a48a8e0abea8cf543"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/BEB07DF3-D8DA-4A52-8C49-32B116B37BC5.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/C303C715-2F31-4322-88A7-ECB910D7A5E9.txt",
+      "bytes": 1642,
+      "sha256": "a7fd590d972e7091451daa032ae08ba0dee2d9558443c4d3a794d62a198c3018"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/C9F759D6-0B18-442B-8FC2-92A37149AC21.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/CBEDD06E-2EA2-47B3-A350-0DACCC46DC47.txt",
+      "bytes": 1642,
+      "sha256": "cff5abcb53c582c7125228638019cc2e5b95eabdbed983ee8421ba014d348ebd"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/CD4D054A-A47A-4C76-B8C1-76659C307DA2.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/CD8DA7FB-6579-4AAF-98D3-C62B7714D51C.png",
+      "bytes": 1348757,
+      "sha256": "9b27e6c130615626803f062c5af6be230d9213f102db291ebca5c9bbdec69a0c"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/D28E4C9D-7BF6-4A80-AB5D-3585DEBDD0BB.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/D29FD1D3-F51C-43FF-BCF2-2926ED6AF68A.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/D860FE1D-2039-4EE1-AA60-0310041C2106.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/D884243B-7D6C-4EC6-AF90-1CD464FAB9C2.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/DAFF73D9-CA37-40C2-B0AD-AA1BABA1523E.png",
+      "bytes": 1467592,
+      "sha256": "f364fd10bccc591e4ab3dfdeb4ac836abc48d0c284e8061f6c034228270d32ef"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/DB59DA98-AFC3-42E7-BEF5-B25F58A64759.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/DC6745E9-9CD1-43B6-B21D-53E7363CA744.txt",
+      "bytes": 1642,
+      "sha256": "318f270beb03fb47dbdba58ecfa6aa1186518081aefa97bf9c3401b7fe1d22f9"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/EB0A4E76-DEF1-4C6A-BE31-8049C7AB6C8A.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/EC2E7BBC-6694-4C3D-87A2-A458D9D18FD1.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/F2342F53-181E-41F7-8B2C-CE55C28EDE5A.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "raw-case/native-result/FocusedRepair1-attachments/manifest.json",
+      "bytes": 78373,
+      "sha256": "7d0d8594669dfc808a000e24af60b9668fc5552309ecb715b7ad085a9d9876c1"
+    },
+    {
+      "path": "raw-case/native-result/built-input-bindings.json",
+      "bytes": 11931,
+      "sha256": "94c307dbe265089e62bbc10c8bf67b8acf05f4640ded3a6f2658d3982ec53c9e"
+    },
+    {
+      "path": "raw-case/native-result/paired-prefix/FocusedRepair1-attachments-export.log",
+      "bytes": 23537,
+      "sha256": "bddf68febcde729e6bad570ef4244ea9ab787a80a9fc87a435fa3af58697d7e5"
+    },
+    {
+      "path": "raw-case/native-result/paired-prefix/FocusedRepair1-nodes.json",
+      "bytes": 2457,
+      "sha256": "68f52077d632f7cb6e4764864486e45080b894c560b5cf00210950c212078fde"
+    },
+    {
+      "path": "raw-case/native-result/paired-prefix/FocusedRepair1-selected-tests.log",
+      "bytes": 57,
+      "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96"
+    },
+    {
+      "path": "raw-case/native-result/paired-prefix/FocusedRepair1-summary.json",
+      "bytes": 2222,
+      "sha256": "0edf5d6a2127afd4179ea15b61a8fac245f55304ad010faf3b3bbb6bcfc9b4a9"
+    },
+    {
+      "path": "raw-case/native-result/paired-prefix/FocusedRepair1.log",
+      "bytes": 61127,
+      "sha256": "3fde44b7e85cb24b01201a678591c2345378ede68b31331c4f94c7f2788f00b9"
+    },
+    {
+      "path": "raw-case/native-result/paired-prefix/FocusedRepair1.xcresult/Info.plist",
+      "bytes": 776,
+      "sha256": "ed4c6b0a7de58576f7357782f3c3262678e5d40801df62daa889bf6510ce554e"
+    },
+    {
+      "path": "raw-case/native-result/paired-prefix/command-events.jsonl",
+      "bytes": 49507,
+      "sha256": "ec8e9a287612bd9b1201067f902413afa0aea54ab6645a1b5d95e02bd9a00a64"
+    },
+    {
+      "path": "raw-case/native-result/paired-prefix/commands.jsonl",
+      "bytes": 7856,
+      "sha256": "bb1ab5ae516c2eeb9ac5a85501376ffb043e0b15a12b7dae6b0cf5137b935e8e"
+    },
+    {
+      "path": "raw-case/native-result/staged-inputs.json",
+      "bytes": 5833,
+      "sha256": "bdfb50639abf0a92cb97e9a20d01316452f171f4f7399d1c872106f5d51c7d7b"
+    },
+    {
+      "path": "raw-case/native-result/state.json",
+      "bytes": 16650,
+      "sha256": "06e5aeeb03749df8b63b151b6cbac290040f95d6bbef9745928c91455754f703"
+    },
+    {
+      "path": "raw-case/primary-state.json",
+      "bytes": 121201,
+      "sha256": "aae0ecb46db6d3190cc45988d40b2a3f50bc1efa499d52e0ba4d72d0b87c3cc5"
+    },
+    {
+      "path": "raw-case/receipt.json",
+      "bytes": 71740,
+      "sha256": "ac6091d476084427b20c81bfb64117cff627d3085fa5654276170eb6efb89155"
+    },
+    {
+      "path": "raw-case/state.json",
+      "bytes": 11692,
+      "sha256": "dabb6291f9cf251526c229c42affed69b15cf6bae7702acb57bcff0a62bcee79"
+    },
+    {
+      "path": "raw-delivery/authoring/2607a055-adfd-45f2-8341-ef1a839868af/MiniApp.hanlinNativeScript",
+      "bytes": 7247,
+      "sha256": "99676ee0e05ed08969a99ce9fae62f1badc5e14b6e69ddc951bc14b52002cd7d"
+    },
+    {
+      "path": "raw-delivery/authoring/2607a055-adfd-45f2-8341-ef1a839868af/diagnostics.json",
+      "bytes": 2,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "path": "raw-delivery/authoring/2607a055-adfd-45f2-8341-ef1a839868af/receipt.json",
+      "bytes": 166,
+      "sha256": "d8d2b180ec2ebd841802bac60c01349986edc9667ac8832ea12246f0519897f0"
+    },
+    {
+      "path": "raw-delivery/authoring/2607a055-adfd-45f2-8341-ef1a839868af/request.json",
+      "bytes": 243,
+      "sha256": "66fdd72657b2c80b986c37ba758b0dd3abdf18e4cc6dde2f950ca4023dbdec5e"
+    },
+    {
+      "path": "raw-delivery/authoring/481496c9-4f80-44dc-aa23-99afa2f2a0e3/MiniAppTypeError.hanlinNativeScript",
+      "bytes": 4399,
+      "sha256": "9a2a14be4ad24565bad66a98fc53522229de903acfb8a41b3df18006e81b51c9"
+    },
+    {
+      "path": "raw-delivery/authoring/481496c9-4f80-44dc-aa23-99afa2f2a0e3/diagnostics.json",
+      "bytes": 1973,
+      "sha256": "fd1022bf75d9b06f0612d8e590c2fff95dddecbe4b4124ac7154dac564ba5328"
+    },
+    {
+      "path": "raw-delivery/authoring/481496c9-4f80-44dc-aa23-99afa2f2a0e3/receipt.json",
+      "bytes": 214,
+      "sha256": "cc9165b82844b4accd9eeb54a7562a96954e601365c25df413ed5973a722e0ed"
+    },
+    {
+      "path": "raw-delivery/authoring/481496c9-4f80-44dc-aa23-99afa2f2a0e3/request.json",
+      "bytes": 251,
+      "sha256": "34846266b1fdfab94316e02254ee6152ddec3aa0184a9ff22e6b7f6da29e4598"
+    },
+    {
+      "path": "raw-delivery/diagnostics/Hanlin-Chat-2026-11-25-172113.jsonl.gz",
+      "bytes": 12064,
+      "sha256": "338a22fb705a679aa1b5fd4c9bdec161830ab99cee8dd79d197475c38d738086"
+    },
+    {
+      "path": "raw-delivery/diagnostics/agent-session-2026-11-25T16-21-15-19269f43-manifest.json.gz",
+      "bytes": 505,
+      "sha256": "ea55ce4f780356f210e3250b05b4b0a32b6f2b38da7e1849e06621612e97e876"
+    },
+    {
+      "path": "raw-delivery/diagnostics/agent-session-2026-11-25T16-21-15-19269f43-stage-events.jsonl.gz",
+      "bytes": 1032582,
+      "sha256": "c83e6cfd8adecf1d4799ba51482af6cb6f62250759f99c53c38f635c717a4844"
+    },
+    {
+      "path": "raw-delivery/diagnostics/agent-session-2026-11-25T16-21-15-19269f43-stage-snapshots.json.gz",
+      "bytes": 1466,
+      "sha256": "64effba4fca4c00f71333181c0fc00ddbb8c2b0fc3023b602b13f5d7d0ce3b23"
+    },
+    {
+      "path": "raw-delivery/diagnostics/agent-session-2026-11-25T16-21-15-19269f43.json.gz",
+      "bytes": 525697,
+      "sha256": "dc979b6d24ca7a7dcc94ec5781cd3c648e8f2d971f35d266965f772d02665de0"
+    },
+    {
+      "path": "raw-delivery/diagnostics/agent-session-2026-11-25T16-21-15-19269f43.txt.gz",
+      "bytes": 515905,
+      "sha256": "955f900dd737f08ff0ffba8909b596ec5f4eb8ef95ffa0a7f05c3f9fbc7c2208"
+    },
+    {
+      "path": "raw-delivery/metadata/com.itorah.chavrusachat.plist",
+      "bytes": 600,
+      "sha256": "64d877dc1ce2f9d25c76f3f549a7ad4bf7028a34efeb289016b00ebd64eaa778"
+    },
+    {
+      "path": "raw-delivery/metadata/com.itorah.hanlinminiapps.plist",
+      "bytes": 602,
+      "sha256": "cde9660338425f9d80813bfce0c335fca4780f4390b8e84b108c7f0b306ccf8f"
+    },
+    {
+      "path": "raw-delivery/metadata/group.com.itorah.shared.plist",
+      "bytes": 600,
+      "sha256": "5d786796ff8cd0b5295885e3cbd155d9f4f80fb9662bf8ca18b50b978174d44f"
+    },
+    {
+      "path": "raw-delivery/receipt.json",
+      "bytes": 14130,
+      "sha256": "79d75b2def56ce30327ea7e6bcbac9682bc4f60107bdc158a6c935b44a770594"
+    },
+    {
+      "path": "raw-runtime/0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-5D47B2CD-46E6-4C92-8B2E-C7A3AC68D0CF-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-7D722BAF-C324-45C5-B39A-93F7337C63C0/Session-AI_HLYUITests-2026-11-25_171902-p5XxYC.log.gz",
+      "bytes": 1245934,
+      "sha256": "9c2b66bb5cf0c19e9f32654fea6e9e5137941c0550ccc70529dc301cfaf90729"
+    },
+    {
+      "path": "raw-runtime/0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-5D47B2CD-46E6-4C92-8B2E-C7A3AC68D0CF-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-7D722BAF-C324-45C5-B39A-93F7337C63C0/StandardOutputAndStandardError-com.itorah.chavrusachat.txt.gz",
+      "bytes": 41050,
+      "sha256": "e955484f87e462937e2d77486d5fe6d43bfa1c7949774ecf3bb9d1f8e090f136"
+    },
+    {
+      "path": "raw-runtime/0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-5D47B2CD-46E6-4C92-8B2E-C7A3AC68D0CF-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-7D722BAF-C324-45C5-B39A-93F7337C63C0/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt.gz",
+      "bytes": 4478919,
+      "sha256": "90f676b6db7553f237a01c9496246e5f28bc809e6b5f3ef576cd95a3c449773e"
+    },
+    {
+      "path": "raw-runtime/0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-5D47B2CD-46E6-4C92-8B2E-C7A3AC68D0CF-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-7D722BAF-C324-45C5-B39A-93F7337C63C0/StandardOutputAndStandardError.txt.gz",
+      "bytes": 5025,
+      "sha256": "dd8baaa7c8de4f4904157d196f05d8b9503b85dfa48aedb509665fdb1a49d18d"
+    },
+    {
+      "path": "raw-runtime/0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-5D47B2CD-46E6-4C92-8B2E-C7A3AC68D0CF-Configuration-Test Scheme Action-Iteration-1/scheduling.log.gz",
+      "bytes": 298,
+      "sha256": "8bd24af1207400eb970f0a63ba1e9c1cfbc453e9657aa03b2535324881065980"
+    },
+    {
+      "path": "raw-runtime/0_Test_HanlinPaired-local_Diagnostics/HanlinPaired-local_E742FBCD-8FF0-4130-B143-7F8328637138/testmanagerd.log.gz",
+      "bytes": 830,
+      "sha256": "d3bbce33d1aa29a1e2b1af89547392a23f4a1fdeb14b0caa1bfd08377aad9773"
+    },
+    {
+      "path": "raw-runtime/marker-excerpts.json",
+      "bytes": 18358,
+      "sha256": "5c58c9bdf6119c86b1c767de3452a48c1c9fb693e59c225c2f93b86318542bdb"
+    },
+    {
+      "path": "raw-runtime/receipt.json",
+      "bytes": 5666,
+      "sha256": "a1f4a178c6eeb6f5f0ba97504d4b19dbb12bf7024f1b28adb1e9016a2e73bb49"
+    },
+    {
+      "path": "source-bindings.json",
+      "bytes": 1036,
+      "sha256": "9a60ecfc4fc00585d1cc83a7ad7d38b65ac209cf4d5e5a6b8282903aac9e77d4"
+    },
+    {
+      "path": "source-correction.patch",
+      "bytes": 1370,
+      "sha256": "fc8a1b26923913019a90c929ef47174c8f0579985868642c06954e53a80ccb74"
+    }
+  ],
+  "boundary": "Historical V10 failure and actual partial success retained; corrected native acceptance not yet executed; no canonical source mutation by this preparation."
+}

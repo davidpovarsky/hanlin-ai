@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "runID": 45441138261,
+  "sourceCommit": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+  "segment": 1,
+  "startedAtUTC": "2026-11-24T16:47:54.216882+00:00",
+  "mechanism": "gh run watch --exit-status --compact --interval30",
+  "status": "WATCHING",
+  "nativeStatus": "UNKNOWN"
+}

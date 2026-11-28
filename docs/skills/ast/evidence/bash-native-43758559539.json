@@ -1,0 +1,249 @@
+{
+  "run": 43758559539,
+  "job": 132947957756,
+  "source_sha": "0a16e28628d1551d60a65abc986eaf7db47c9031",
+  "status": "EXECUTED_PASS",
+  "methods": 8,
+  "bash_fixtures": 20,
+  "iOS_simulator": "COMPILE_PASS",
+  "iOS_device": "UNSIGNED_COMPILE_PASS",
+  "iOS_runtime": "NOT_RUN",
+  "embedded_Python_TS_product": "NOT_RUN",
+  "scope": "original Bash parser only; Python/TS/product/readiness NOT_RUN",
+  "artifact": 14179426965,
+  "artifact_sha256": "3541de0da1c2e38170338b04da8e24161da6d5ebdad91047aa4103ecb437e3b0",
+  "artifact_digest_verification": "DOWNLOADED_ZIP_MATCHES_GITHUB_DIGEST",
+  "artifact_bytes": 158651,
+  "pins": {
+    "swift-tree-sitter": {
+      "version": "0.25.0",
+      "revision": "08ef81eb8620617b55b08868126707ad72bf754f"
+    },
+    "tree-sitter-bash": {
+      "version": "0.25.1",
+      "revision": "a06c2e4415e9bc0346c6b86d401879ffb44058f7"
+    },
+    "tree-sitter": {
+      "version": "0.25.10",
+      "revision": "da6fe9beb4f7f67beb75914ca8e0d48ae48d6406"
+    }
+  },
+  "source_inputs": [
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/Analysis/BashSkillSyntaxAnalyzer.swift",
+      "sha256": "fdbab4048bbb4c6d989de6ce3509073b866b867e553ae9360d37162a3d59fa6a"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/Analysis/SkillSyntaxFindings.swift",
+      "sha256": "a33f2ed89ce6eaeb660d651020c56cdf6d2aab67982fb33f8dd5d31855c40072"
+    },
+    {
+      "path": "docs/skills/ast/Tests/BashSyntaxTests.swift",
+      "sha256": "a920528a8b483473f8fffa1f2c18e9a0dc9a01434353a9eeae3ef1b631fd319e"
+    },
+    {
+      "path": "docs/skills/ast/Tests/Fixtures/bash.json",
+      "sha256": "678b14e273204643e358b753afc0c203f41eff7dca20ba867ba63b9453503b5f"
+    },
+    {
+      "path": "docs/skills/ast/Tests/Fixtures/mixed.json",
+      "sha256": "6707718c9dcc11d0274341fc1bc4f9923630b2e8f7a3885fd5a9ab8ea3914014"
+    },
+    {
+      "path": "docs/skills/ast/Tests/Fixtures/python-report-host.json",
+      "sha256": "91f0628edb13564ec7130a0569f7868b6f7fc30ffbd1f26f0fff46a033159917"
+    },
+    {
+      "path": "docs/skills/ast/Tests/Fixtures/typescript-report-host.json",
+      "sha256": "6ea6bc884ddcc66bbf9894f4f089de0b80413ecc358c32764f4bd901a06828dd"
+    },
+    {
+      "path": "docs/skills/ast/prepare_bash_proof.py",
+      "sha256": "c9e49227fb2d989812dfef864fc1643661a5c9ae73e9bae42524fdbc7faa3cb6"
+    },
+    {
+      "path": "docs/skills/ast/run_bash_proof.sh",
+      "sha256": "af16d94092ef02a90ddfcb356915e07fe4f2271efd01abfce956c3e7ac2f68c1"
+    }
+  ],
+  "cases": [
+    {
+      "duration": "0.004s",
+      "durationInSeconds": 0.0040400028228759766,
+      "name": "testActualPortableHelperJSONDecodesWithoutInventedBashProvenance()",
+      "nodeIdentifier": "BashSyntaxTests/testActualPortableHelperJSONDecodesWithoutInventedBashProvenance()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinSkillAnalysisProof/BashSyntaxTests/BashSyntaxTests/testActualPortableHelperJSONDecodesWithoutInventedBashProvenance",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0032s",
+      "durationInSeconds": 0.003236055374145508,
+      "name": "testInvalidUTF8AndCancelledAnalysisAreNotEmptySuccess()",
+      "nodeIdentifier": "BashSyntaxTests/testInvalidUTF8AndCancelledAnalysisAreNotEmptySuccess()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinSkillAnalysisProof/BashSyntaxTests/BashSyntaxTests/testInvalidUTF8AndCancelledAnalysisAreNotEmptySuccess",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0041s",
+      "durationInSeconds": 0.0040760040283203125,
+      "name": "testNonzeroDataSliceIsRebasedBeforeUTF8ParserAndSpanReads()",
+      "nodeIdentifier": "BashSyntaxTests/testNonzeroDataSliceIsRebasedBeforeUTF8ParserAndSpanReads()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinSkillAnalysisProof/BashSyntaxTests/BashSyntaxTests/testNonzeroDataSliceIsRebasedBeforeUTF8ParserAndSpanReads",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0087s",
+      "durationInSeconds": 0.00872802734375,
+      "name": "testSHACacheIncludesSourceAndFileAndHasBoundedEviction()",
+      "nodeIdentifier": "BashSyntaxTests/testSHACacheIncludesSourceAndFileAndHasBoundedEviction()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinSkillAnalysisProof/BashSyntaxTests/BashSyntaxTests/testSHACacheIncludesSourceAndFileAndHasBoundedEviction",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0038s",
+      "durationInSeconds": 0.0037779808044433594,
+      "name": "testSourceAndTraversalBudgetsRemainExplicitUnknown()",
+      "nodeIdentifier": "BashSyntaxTests/testSourceAndTraversalBudgetsRemainExplicitUnknown()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinSkillAnalysisProof/BashSyntaxTests/BashSyntaxTests/testSourceAndTraversalBudgetsRemainExplicitUnknown",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.031s",
+      "durationInSeconds": 0.03104698657989502,
+      "name": "testSourceReferenceCannotReadOrExecuteImportableFile()",
+      "nodeIdentifier": "BashSyntaxTests/testSourceReferenceCannotReadOrExecuteImportableFile()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinSkillAnalysisProof/BashSyntaxTests/BashSyntaxTests/testSourceReferenceCannotReadOrExecuteImportableFile",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.012s",
+      "durationInSeconds": 0.012086033821105957,
+      "name": "testTwentyOriginalGrammarFixtures()",
+      "nodeIdentifier": "BashSyntaxTests/testTwentyOriginalGrammarFixtures()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinSkillAnalysisProof/BashSyntaxTests/BashSyntaxTests/testTwentyOriginalGrammarFixtures",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0038s",
+      "durationInSeconds": 0.003751039505004883,
+      "name": "testUTF8LocationsDoNotUseUTF16Offsets()",
+      "nodeIdentifier": "BashSyntaxTests/testUTF8LocationsDoNotUseUTF16Offsets()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinSkillAnalysisProof/BashSyntaxTests/BashSyntaxTests/testUTF8LocationsDoNotUseUTF16Offsets",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    }
+  ],
+  "devices": [
+    {
+      "architecture": "arm64",
+      "deviceId": "a58daf11b1b3ad505e0ac45f2c3b82e3d7f5b1e6",
+      "deviceName": "My Mac",
+      "modelName": "Virtual Machine",
+      "osBuildNumber": "26A434",
+      "osVersion": "27.0.1",
+      "platform": "macOS"
+    }
+  ],
+  "toolchain": "Xcode 27.2\nBuild version 27B52\nApple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0\nDriverKit SDKs:\n\tDriverKit 27.2                \t-sdk driverkit27.2\n\niOS SDKs:\n\tiOS 27.2                      \t-sdk iphoneos27.2\n\niOS Simulator SDKs:\n\tSimulator - iOS 27.2          \t-sdk iphonesimulator27.2\n\nmacOS SDKs:\n\tmacOS 27.2                    \t-sdk macosx27.2\n\tmacOS 27.2                    \t-sdk macosx27.2\n\ntvOS SDKs:\n\ttvOS 27.2                     \t-sdk appletvos27.2\n\ntvOS Simulator SDKs:\n\tSimulator - tvOS 27.2         \t-sdk appletvsimulator27.2\n\nvisionOS SDKs:\n\tvisionOS 27.2                 \t-sdk xros27.2\n\nvisionOS Simulator SDKs:\n\tSimulator - visionOS 27.2     \t-sdk xrsimulator27.2\n\nwatchOS SDKs:\n\twatchOS 27.2                  \t-sdk watchos27.2\n\nwatchOS Simulator SDKs:\n\tSimulator - watchOS 27.2      \t-sdk watchsimulator27.2\n\nProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\narm64\n",
+  "phase_seconds": {
+    "complete": 0,
+    "device-compile": 11,
+    "mac-tests": 62,
+    "preflight": 15,
+    "resolution": 42,
+    "result-verification": 0,
+    "simulator-compile": 16
+  },
+  "raw_files_sha256": {
+    "ci-performance-report.json": "bdd7c534283ac66375696d783de6e31119a88a4b8300cb6f154b9c934ec7c6e8",
+    "complete-duration-seconds.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "device-compile-duration-seconds.txt": "25d4f2a86deb5e2574bb3210b67bb24fcc4afb19f93a7b65a057daa874a9d18e",
+    "device-compile.log": "27d47728f68a722a3751fe9b87c04056c6d0ffe117fa49de4f7f0a1545033107",
+    "mac-tests-duration-seconds.txt": "606b7d0891b4db74edb21c241c302f298bf6ca4a6158deca6b58c15c950ab5f2",
+    "mac-tests.log": "be73c2b19b9b86a37617f7fdb96140e9f588e4ea095dd6fa9d4733a0398f0cef",
+    "owned-sources.tar.gz": "abbc368ae3400b1ff9f1e79c5fcc188b864843ce852a7768868235c4e46cafaa",
+    "Package.resolved": "a22f5e0d36c2447106e70076cc6e88b280413c0a5af467231d6a9c9ba2d69464",
+    "Package.swift": "b015e8180ca5e7641c5cee6baa11871ee9acf48a355b4db2fc7cb7198bf42931",
+    "pin-validation.json": "ec2460e6e1831d29bc1ee213768198037d400f79be4eb0d1723a047e10479e78",
+    "preflight-duration-seconds.txt": "238903180cc104ec2c5d8b3f20c5bc61b389ec0a967df8cc208cdc7cd454174f",
+    "preflight.txt": "8e3257de49575e781696980941d13a1cc87ea42ada84d26382187c797f64efb4",
+    "preparation.json": "953be71b64f6e96c8c5fe6f8aea43bac0b1dadfc47a3338ef80a56ce849c4e0c",
+    "process-status.json": "a3521318a592ff97b8c0f8c1f5642e0ef852747d9d988f63ec7c64ad3bc23862",
+    "proof-inputs.json": "953be71b64f6e96c8c5fe6f8aea43bac0b1dadfc47a3338ef80a56ce849c4e0c",
+    "resolution-duration-seconds.txt": "084c799cd551dd1d8d5c5f9a5d593b2e931f5e36122ee5c793c1d08a19839cc0",
+    "resolve.log": "34004b528acae70d2fa95b037ec48752863fe96c9e187c32a6276531edad117a",
+    "resolved-before.json": "a22f5e0d36c2447106e70076cc6e88b280413c0a5af467231d6a9c9ba2d69464",
+    "result-validation.json": "f47ed30d477b17055130a63ad999126ad59a12d495ad92b3403ba16c9ba0465f",
+    "result-verification-duration-seconds.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "runtimes.json": "19a68b105d8f191bdebedd5a1b00e6fbf45a6ebffbdd7eb131fba18ebcb2425e",
+    "schemes.json": "c7160712e670cffd77ae9d66f22ceb54d701fcf5fbf4a8b0de74177cf1275f1d",
+    "selected-scheme.txt": "056f396ffd45ea63a0065959f3af6088a977ba423bfc02c0689350e994319497",
+    "simulator-compile-duration-seconds.txt": "e6c21e8d260fe71882debdb339d2402a2ca7648529bc2303f48649bce0380017",
+    "simulator-compile.log": "0766241e389b0162fe9512bba3fb8d89821a7a7704a2be5a5b06b2e3e7c26b4c",
+    "source-sha.txt": "ddd283089274ff7c31fb297cb235b7836ce8f9af88086e1a1ede4413246e86a6",
+    "tests.json": "73280bd107418bb1d4fc67700df552a7d54c3398fd1c64527a5176c948067521",
+    "upstream-source-audit.json": "55d88834af4a4acdbd3ec0e627f0ee8fb0f5b5d41d0718354e981598f81b832d",
+    "BashSyntax.xcresult/database.sqlite3": "7fc563969708b440844b28526f3c8905faeb9e4e2a8dadc4dc149287dff9cf2c",
+    "BashSyntax.xcresult/Info.plist": "28e51b0992230aa279a8f8e5cf4a086afa4704309ffb2c992789b81a74dfcf6e",
+    "BashSyntax.xcresult/Data/data.0~2QXbStMxhQf55-qY8Cuf3V6za7-nMJ4Vaz42Fc_FRdm_5rEg3l6sNOtXH1dhF15GpCnmWrQKEf9opm_vLOh_lw==": "1f9431139c14f7fa16055f029df64e690bef2775c82814d595bdffb27c60d1ea",
+    "BashSyntax.xcresult/Data/data.0~7kAjig-wbyn9V611aOM80uNHeai3HA8bZZ04N2Jc1y21U15JuBfpNELTHYipLIOpCvPqaEjs0KwHj07r_WFm3w==": "1d3c9419ec7bd0feb735ac5f3a126faeafd7114166ae26243e14cad969c25703",
+    "BashSyntax.xcresult/Data/data.0~C0Za9daNFpDCp8JQKXaXodEUC3c7JumHqahhKrcPJ_f5KdfaWM7ApvMVDDjJlPlCQA8Y0cJvZ8l-XvQKSkqCBQ==": "68dcdd3bd4e0e53b1d4d7436f5079a642d1239237a604df1704121ca3cfe0e85",
+    "BashSyntax.xcresult/Data/data.0~EuypNFbQOhEips9OdpbI1kEZoRw8UYnL1kFen2AxtEUnT89_KU7WpIuTJOkO2LBI5HGDeluLaJaEwKY6OgZ5Rw==": "c718b95038b5bca29c88c31d08c4371670d9d5fb1ab78262d365b3f4a9b30fbc",
+    "BashSyntax.xcresult/Data/data.0~gdOLsuGIfRAPgRFCffxLnCpx_DQ2lINBOwLSC0wMZK_SkFUtKgrOzl5ZaqprDvSNXYc7eOG3RS09akX8pMpMAw==": "90aa47ff1d8b7f67580191c507bc7b222676a5e49a7bc986047e0dc00c9b9b93",
+    "BashSyntax.xcresult/Data/data.0~hsANCX8ulyd6Et6HOv4l2TTGzE6vRjQWZZpyRaLi5tJo5mru_kSUX4mooO4_-TROsQwgLD6THEpCEWOdh-4emw==": "5bb3824cc5b3491023c1504321a1547ef07f039976b29d9752b10374438de1b6",
+    "BashSyntax.xcresult/Data/data.0~jJRVp4naE3h6l6HyZqn9bgueUQPCzm8H5xYeFClAqOWtGAvoenFCZJBzDI29CWH5QDly2wOo1KUzG8_midU3Nw==": "017b2a0359be15e244084536278c4369b380c761eca2cb4c3e0192f0af12d69d",
+    "BashSyntax.xcresult/Data/data.0~JlTHLhl8w2972GgibXMQKDQyPQ2G-f--P827ze6VIz1liQXrOUD6J_a8x1dtPiUv_MRGmf8m4bH1Zojb41JEkw==": "ef72019e0c81b92648141ffabf6abae93a088a590e6a019b2b95825d3e350a8a",
+    "BashSyntax.xcresult/Data/data.0~klth1b2HbSqntj_b8gr12ru7FFLyTTMWmoK07Qh8ajTcEG7HWb2eiYc1X5BUHt7g7eEU-Yqm41gDZjL-AEr1Og==": "0fc2e384a1117f82b758ac0462fe132c00cf45465e7d56f6a0690d930b265311",
+    "BashSyntax.xcresult/Data/data.0~kSnGgpxVJOMGXxOqW8dtLwRRWExNnhmd-trUIGPnZW27qOkohEDbOX5UDNAsc2yaK8_9Vx0l5S0U6KqTYYIZ2g==": "21e7cb2c814b2630b4050ae10410ab302b5d4043d68d951e84189780197a5d85",
+    "BashSyntax.xcresult/Data/data.0~LL0hRgOmyKpv8XOs4Fjm7jw_3wwqqwYK4K57TJEjaCQ24eUyNHXe-MpaxcZEbLb_1lTjWWij9MZP6PdCJseIAw==": "f9c4508f8cbfa87d266e32f967d6453aea704c6a7070120bdafbb7128a38fbf6",
+    "BashSyntax.xcresult/Data/data.0~M8wCtZfHOt4G5vTFXf1MV8eC1eztDV6BYBCKfQJoDo8nUczLrpNW1GV1sGcSRxDvUrJEnNE6kDfgUj7QDNcJ0Q==": "3260e8e5afeab0d0c239f4f32d98631f379baff687ea30dfd2a52b2209270ec9",
+    "BashSyntax.xcresult/Data/data.0~mChQvzgUPvjacfhDFH7tB7v7pkQxu_QXbUgd4bNaUPl3RO1AKQNtfZWdDrG6O42JghAMMWoCz5HW4LdCVaBVPw==": "684f6bfa3b05b411d76d8421bc100942d5e424fbd3330b448e281228790bdf6a",
+    "BashSyntax.xcresult/Data/data.0~mPU6a5tx_JS47KbKpBo_RYJ7NJ8UjDWiRgbtJB9bz-0rubF-S5HvgtrPmtCyCK4kfUlXX-a7ZAs5qYMFHKTi_w==": "c7b81409dab2beb1f7b852403eaf12f1f5824b018c15e95a489384d8cb366e9e",
+    "BashSyntax.xcresult/Data/data.0~muSHL_DX6KHVh5P0NDZhEI8HkS2d4z5mLzV8Acr_d7O64unfcZCq00MsNz3Alw98ype3ez-mwrpJUGPtTf8moQ==": "9148e1f047376c7b1fe24fe07c79a659b8ad02d95f10976c2f06baa432f591ae",
+    "BashSyntax.xcresult/Data/data.0~oRMi0sbQLktfDDDGUS-SqBKpdDiD6HCztVES_ShfGr0KVcYENoIq7y9oUSDWL5B_P2gkdtWG8JEsJLxPbdWOZA==": "75fb7c443d41c504b005c3117dbf9a0162852456d3601744b4d1c95c5a246e9c",
+    "BashSyntax.xcresult/Data/data.0~qJUj41-dJr3bgRUoywm2n97zjaDTTJ3PNtQkl9zBNJr3NsN_Ro7pcCDndn7eIqP8xgTBzh_yDxFzAP7T1UQ8WA==": "d8031f8af92ca66c761f31eedee3b39e4b3620d6eb9743f74bc9d618f967931f",
+    "BashSyntax.xcresult/Data/data.0~S49a6PJPvXp4kDogRvf07pLsd9JZBAmWACD-aQ1oV6YkK9ylg8MY0lvd8KLbMZRASD-ICemGaS8GBPa1mC8vnA==": "8fd486a74ba4f5e7f13e697dbe40b303600f319de24f3f5776a610db4232f157",
+    "BashSyntax.xcresult/Data/data.0~SAxwLnmVRCGVXelNCfQCoXUNDKsxTb7UE9ralGGij2UBApeDEU_CL8qTad5T5S-xojvqk5JwBbWsMNFPGeSK8A==": "c6734c8f2e683db7e43e46b1d0c7df5b7da705bb15c83ff1b119482849034e55",
+    "BashSyntax.xcresult/Data/data.0~SYnTW2zKZ6dmpYhqSqNjvjWYLkGyNt3RB-XVF0kQqK-9zEDpB3X2Rr9pcprNYDU5-9B_VRtLKKJg1w9g-cFT3A==": "a22744cb9a2b3f557f397f2a308f03acf9c3b9a49926064257dfac339d4687e8",
+    "BashSyntax.xcresult/Data/data.0~tixycd5Yh4pILqfJjYHTMHix5TxQLTD2-up2mEl78svqAHBufnEF6rNbH6_VRc0G_mR-iKgPWUc5PeEL-3pIAw==": "3136b37211c82f7d1b1f8c44bf4e6e93da10e1e18a5228cfeb24c8de3cd6bee7",
+    "BashSyntax.xcresult/Data/data.0~uwPrSa67Qw7w1BbSpMaUcpHL7ioE0kxFLyWXB6AaMUnm1puD5cjJprFsmI-ui_g8qo87xDltd0m9uVUD84wNww==": "4c3280ba49cf33c67787bda36a8b53cba9eb6d0f2580819f05fb5e1c7fb18a0b",
+    "BashSyntax.xcresult/Data/data.0~xdc5zRe1ttvEjkYyJuDviP1YKsf4-o-W93w4EKOlh6OtQvnc7SIralfKX35_ntZ7tl52VGIYix-zzreO5aU82w==": "71f94ab0b1a856a705d7523eead92727b30659cf617b3c7a8586046baef85a1a",
+    "BashSyntax.xcresult/Data/data.0~YPV8snHNYML9WOskpxP5jwPMrK_diHAkE4lbnXeA8Pl9IQUbbsbrtlzxnmjbOYhxwXnQ9tglr3Vc6UX1wKC6fw==": "038c7866a1b1532bce98334dfa00d63de3d7e60466932a97190f19f0c160cdbe",
+    "BashSyntax.xcresult/Data/data.0~ySnOc1ibnaYSjmXL7G59k5DpIwCdEaMHGvbXIFBD6AUPtyCMSCT3vpGdh7XO43v-bGHYkulSEL5cwwzxH6f46g==": "a9684215cf8395a37de4a889f9a5fb5f1f209ca42b63395ff783f93b51f17ffe",
+    "BashSyntax.xcresult/Data/data.0~Y_ClsQnuWeTak1SgDjNeCUTmFxNZWw4-0rz_vbf_4Wdth_pldN6TyyJFkpcn1FCoUKc9GEuRPUAEAsMtNom28Q==": "45f8e83e8fae1285df0c011be8cece98ad011f22b45dab4be9948998d698f3d1",
+    "BashSyntax.xcresult/Data/refs.0~2QXbStMxhQf55-qY8Cuf3V6za7-nMJ4Vaz42Fc_FRdm_5rEg3l6sNOtXH1dhF15GpCnmWrQKEf9opm_vLOh_lw==": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "BashSyntax.xcresult/Data/refs.0~7kAjig-wbyn9V611aOM80uNHeai3HA8bZZ04N2Jc1y21U15JuBfpNELTHYipLIOpCvPqaEjs0KwHj07r_WFm3w==": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "BashSyntax.xcresult/Data/refs.0~C0Za9daNFpDCp8JQKXaXodEUC3c7JumHqahhKrcPJ_f5KdfaWM7ApvMVDDjJlPlCQA8Y0cJvZ8l-XvQKSkqCBQ==": "c59d7e21a0bc0675dec6f6c5efcb3b0ce8332491d5d3156c42ac3966abd859bd",
+    "BashSyntax.xcresult/Data/refs.0~EuypNFbQOhEips9OdpbI1kEZoRw8UYnL1kFen2AxtEUnT89_KU7WpIuTJOkO2LBI5HGDeluLaJaEwKY6OgZ5Rw==": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "BashSyntax.xcresult/Data/refs.0~gdOLsuGIfRAPgRFCffxLnCpx_DQ2lINBOwLSC0wMZK_SkFUtKgrOzl5ZaqprDvSNXYc7eOG3RS09akX8pMpMAw==": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "BashSyntax.xcresult/Data/refs.0~hsANCX8ulyd6Et6HOv4l2TTGzE6vRjQWZZpyRaLi5tJo5mru_kSUX4mooO4_-TROsQwgLD6THEpCEWOdh-4emw==": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "BashSyntax.xcresult/Data/refs.0~jJRVp4naE3h6l6HyZqn9bgueUQPCzm8H5xYeFClAqOWtGAvoenFCZJBzDI29CWH5QDly2wOo1KUzG8_midU3Nw==": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "BashSyntax.xcresult/Data/refs.0~JlTHLhl8w2972GgibXMQKDQyPQ2G-f--P827ze6VIz1liQXrOUD6J_a8x1dtPiUv_MRGmf8m4bH1Zojb41JEkw==": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "BashSyntax.xcresult/Data/refs.0~klth1b2HbSqntj_b8gr12ru7FFLyTTMWmoK07Qh8ajTcEG7HWb2eiYc1X5BUHt7g7eEU-Yqm41gDZjL-AEr1Og==": "d5daf41426b3112c61c1767ba7e5f95e5624bcc8ff47001847dda29e0f4711b4",
+    "BashSyntax.xcresult/Data/refs.0~kSnGgpxVJOMGXxOqW8dtLwRRWExNnhmd-trUIGPnZW27qOkohEDbOX5UDNAsc2yaK8_9Vx0l5S0U6KqTYYIZ2g==": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "BashSyntax.xcresult/Data/refs.0~LL0hRgOmyKpv8XOs4Fjm7jw_3wwqqwYK4K57TJEjaCQ24eUyNHXe-MpaxcZEbLb_1lTjWWij9MZP6PdCJseIAw==": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "BashSyntax.xcresult/Data/refs.0~M8wCtZfHOt4G5vTFXf1MV8eC1eztDV6BYBCKfQJoDo8nUczLrpNW1GV1sGcSRxDvUrJEnNE6kDfgUj7QDNcJ0Q==": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "BashSyntax.xcresult/Data/refs.0~mChQvzgUPvjacfhDFH7tB7v7pkQxu_QXbUgd4bNaUPl3RO1AKQNtfZWdDrG6O42JghAMMWoCz5HW4LdCVaBVPw==": "cac8c2805ee646dc74f5f34f17dc0f23c0ee11ab43525f382376d277ae245dc4",
+    "BashSyntax.xcresult/Data/refs.0~mPU6a5tx_JS47KbKpBo_RYJ7NJ8UjDWiRgbtJB9bz-0rubF-S5HvgtrPmtCyCK4kfUlXX-a7ZAs5qYMFHKTi_w==": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "BashSyntax.xcresult/Data/refs.0~muSHL_DX6KHVh5P0NDZhEI8HkS2d4z5mLzV8Acr_d7O64unfcZCq00MsNz3Alw98ype3ez-mwrpJUGPtTf8moQ==": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "BashSyntax.xcresult/Data/refs.0~oRMi0sbQLktfDDDGUS-SqBKpdDiD6HCztVES_ShfGr0KVcYENoIq7y9oUSDWL5B_P2gkdtWG8JEsJLxPbdWOZA==": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "BashSyntax.xcresult/Data/refs.0~qJUj41-dJr3bgRUoywm2n97zjaDTTJ3PNtQkl9zBNJr3NsN_Ro7pcCDndn7eIqP8xgTBzh_yDxFzAP7T1UQ8WA==": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "BashSyntax.xcresult/Data/refs.0~S49a6PJPvXp4kDogRvf07pLsd9JZBAmWACD-aQ1oV6YkK9ylg8MY0lvd8KLbMZRASD-ICemGaS8GBPa1mC8vnA==": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "BashSyntax.xcresult/Data/refs.0~SAxwLnmVRCGVXelNCfQCoXUNDKsxTb7UE9ralGGij2UBApeDEU_CL8qTad5T5S-xojvqk5JwBbWsMNFPGeSK8A==": "dd18709782a0275a5906fdcd9f873cac94a1937733e085d3eba0dce28ea9ccab",
+    "BashSyntax.xcresult/Data/refs.0~SYnTW2zKZ6dmpYhqSqNjvjWYLkGyNt3RB-XVF0kQqK-9zEDpB3X2Rr9pcprNYDU5-9B_VRtLKKJg1w9g-cFT3A==": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "BashSyntax.xcresult/Data/refs.0~tixycd5Yh4pILqfJjYHTMHix5TxQLTD2-up2mEl78svqAHBufnEF6rNbH6_VRc0G_mR-iKgPWUc5PeEL-3pIAw==": "0367faf639af48d4857bc0970c8762e217899d78278f34db6eb0c01f290e0d91",
+    "BashSyntax.xcresult/Data/refs.0~uwPrSa67Qw7w1BbSpMaUcpHL7ioE0kxFLyWXB6AaMUnm1puD5cjJprFsmI-ui_g8qo87xDltd0m9uVUD84wNww==": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "BashSyntax.xcresult/Data/refs.0~xdc5zRe1ttvEjkYyJuDviP1YKsf4-o-W93w4EKOlh6OtQvnc7SIralfKX35_ntZ7tl52VGIYix-zzreO5aU82w==": "e2d0a5ec04ec2a37e07eb42654b6e42ea86a0d7dd20ce1c8813e6f2cbb3e13f5",
+    "BashSyntax.xcresult/Data/refs.0~YPV8snHNYML9WOskpxP5jwPMrK_diHAkE4lbnXeA8Pl9IQUbbsbrtlzxnmjbOYhxwXnQ9tglr3Vc6UX1wKC6fw==": "91c57ba50c80d9f0f358b115ee193dd84249e34d04f3dcd472b52564b8979441",
+    "BashSyntax.xcresult/Data/refs.0~ySnOc1ibnaYSjmXL7G59k5DpIwCdEaMHGvbXIFBD6AUPtyCMSCT3vpGdh7XO43v-bGHYkulSEL5cwwzxH6f46g==": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "BashSyntax.xcresult/Data/refs.0~Y_ClsQnuWeTak1SgDjNeCUTmFxNZWw4-0rz_vbf_4Wdth_pldN6TyyJFkpcn1FCoUKc9GEuRPUAEAsMtNom28Q==": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+  },
+  "full_ci_pass": false
+}

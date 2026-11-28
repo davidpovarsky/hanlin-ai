@@ -1,0 +1,56 @@
+{
+  "results": [
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "Scripts/MiniApps/miniapp.mjs",
+        "build",
+        "--sdk",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+        "--engine",
+        "expo",
+        "--project",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-examples-20261124/Scripts/MiniApps/Examples/expo-hello-world",
+        "--archive",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-examples-20261124/docs/miniapp-sdk/evidence/sdk-complete-examples-20261124/ExpoHelloWorld.hanlinExpo",
+        "--report",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-examples-20261124/docs/miniapp-sdk/evidence/sdk-complete-examples-20261124/expo-build.json"
+      ],
+      "exitCode": 0,
+      "seconds": 32.67223525047302,
+      "status": "EXECUTED_PASS",
+      "report": "expo-build.json",
+      "archive": "ExpoHelloWorld.hanlinExpo",
+      "archiveSHA256": "1bada72ffd3d1394232d52f593e5222c74d16eff383eba552d57af4a26eb73c6",
+      "archiveBytes": 1948120
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "Scripts/MiniApps/miniapp.mjs",
+        "build",
+        "--sdk",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+        "--engine",
+        "nativescript",
+        "--project",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-examples-20261124/Scripts/MiniApps/Examples/nativescript-hello-world",
+        "--archive",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-examples-20261124/docs/miniapp-sdk/evidence/sdk-complete-examples-20261124/NativeScriptHelloWorld.hanlinNativeScript",
+        "--report",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-examples-20261124/docs/miniapp-sdk/evidence/sdk-complete-examples-20261124/nativescript-build.json"
+      ],
+      "exitCode": 0,
+      "seconds": 18.9499089717865,
+      "status": "EXECUTED_PASS",
+      "report": "nativescript-build.json",
+      "archive": "NativeScriptHelloWorld.hanlinNativeScript",
+      "archiveSHA256": "740e812e6835a784e955691c941c99d7989c4c6dbd0f8aaf7a9c41fad30d1b08",
+      "archiveBytes": 5911
+    }
+  ],
+  "sdkManifestBeforeSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+  "sdkManifestAfterSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+  "sdkManifestUnchanged": true,
+  "nativeExecution": "NOT_RUN"
+}

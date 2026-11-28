@@ -1,0 +1,296 @@
+#import "HanlinNativeScriptCompatibility.h"
+#import <UIKit/UIKit.h>
+
+static Class _registeredProviderClass = nil;
+static id _sharedProvider = nil;
+static void (^_currentEventHandler)(NSDictionary *) = nil;
+static NSDictionary *_latestEvent = nil;
+static NSInteger _latestEventCount = 0;
+
+@implementation HanlinNativeScriptCompatibility
+
++ (NSString *)roundTripValue:(NSString *)value key:(NSString *)key {
+    if ([key isEqualToString:@"hostService.dataRoot"]) {
+        return [HanlinNativeServicesBridge dataRootDirectory] ?: @"";
+    }
+    if ([key isEqualToString:@"hostService.state"]) {
+        return [HanlinNativeServicesBridge stateDirectory] ?: @"";
+    }
+    if ([key isEqualToString:@"hostService.executeJavaScript"]) {
+        return [HanlinNativeServicesBridge executeJavaScriptSync:value] ?: @"";
+    }
+    if ([key isEqualToString:@"hostService.executeNode"]) {
+        return [HanlinNativeServicesBridge executeNodeSync:value] ?: @"";
+    }
+    if ([key isEqualToString:@"hostService.executePython"]) {
+        return [HanlinNativeServicesBridge executePythonSync:value] ?: @"";
+    }
+    if ([key isEqualToString:@"hostService.fetchURL"]) {
+        return [HanlinNativeServicesBridge fetchURLSync:value] ?: @"";
+    }
+    if ([key hasPrefix:@"hostService.sendRequest:"]) {
+        NSArray *parts = [key componentsSeparatedByString:@":"];
+        NSString *targetID = parts.count > 1 ? parts[1] : @"";
+        NSString *action = parts.count > 2 ? parts[2] : @"";
+        NSString *capability = parts.count > 3 ? parts[3] : @"";
+        return [HanlinNativeServicesBridge sendRequestSync:targetID
+                                                    action:action
+                                                capability:capability
+                                               payloadJSON:value] ?: @"";
+    }
+    if ([key isEqualToString:@"hostService.sendRequest"]) {
+        if (value.length > 0) {
+            NSData *data = [value dataUsingEncoding:NSUTF8StringEncoding];
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if ([dict isKindOfClass:[NSDictionary class]]) {
+                NSString *targetID = dict[@"targetID"] ?: @"";
+                NSString *action = dict[@"action"] ?: @"";
+                NSString *capability = dict[@"capability"] ?: @"";
+                id payload = dict[@"payload"] ?: dict[@"payloadJSON"] ?: @"";
+                NSString *payloadJSON = [payload isKindOfClass:[NSString class]] ? payload : @"";
+                if (![payload isKindOfClass:[NSString class]]) {
+                    NSData *pData = [NSJSONSerialization dataWithJSONObject:payload options:0 error:nil];
+                    if (pData) payloadJSON = [[NSString alloc] initWithData:pData encoding:NSUTF8StringEncoding];
+                }
+                return [HanlinNativeServicesBridge sendRequestSync:targetID
+                                                            action:action
+                                                        capability:capability
+                                                       payloadJSON:payloadJSON] ?: @"";
+            }
+        }
+    }
+    if ([key hasPrefix:@"hostService.registerAction:"]) {
+        NSString *capability = [key substringFromIndex:@"hostService.registerAction:".length];
+        [HanlinNativeServicesBridge registerAction:value capability:capability];
+        return @"registered";
+    }
+    NSString *scopedKey = [@"hanlin.nativescript.compatibility." stringByAppendingString:key];
+    NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
+    [defaults setObject:value forKey:scopedKey];
+    return [defaults stringForKey:scopedKey] ?: @"";
+}
+
++ (void)registerFixtureProviderClass:(Class)cls {
+    _registeredProviderClass = cls;
+}
+
++ (void)setSharedSwiftUIFixtureProvider:(id)provider {
+    _sharedProvider = provider;
+}
+
++ (nullable id)sharedSwiftUIFixtureProvider {
+    return _sharedProvider;
+}
+
++ (nullable id)createSwiftUIFixtureProvider {
+    Class klass = _registeredProviderClass;
+    if (!klass) {
+        klass = NSClassFromString(@"HanlinNativeScriptSwiftUIFixtureProvider");
+    }
+    if (!klass) {
+        klass = NSClassFromString(@"HanlinNativeScriptRuntime.HanlinNativeScriptSwiftUIFixtureProvider");
+    }
+    if (!klass && _sharedProvider) {
+        NSLog(@"[HanlinNativeScriptCompatibility] Using shared provider=%@", _sharedProvider);
+        return _sharedProvider;
+    }
+    if (!klass) {
+        NSLog(@"[HanlinNativeScriptCompatibility] Fatal: HanlinNativeScriptSwiftUIFixtureProvider class not found in Objective-C runtime.");
+        return nil;
+    }
+
+    __block id provider = nil;
+    void (^instantiateBlock)(void) = ^{
+        provider = [[klass alloc] init];
+        if (provider) {
+            if ([provider isKindOfClass:[UIViewController class]]) {
+                UIView *v = [(UIViewController *)provider view];
+                (void)v;
+            }
+        }
+    };
+
+    if ([NSThread isMainThread]) {
+        instantiateBlock();
+    } else {
+        dispatch_sync(dispatch_get_main_queue(), instantiateBlock);
+    }
+    int viewLoaded = [provider respondsToSelector:@selector(isViewLoaded)] ? (int)[(UIViewController *)provider isViewLoaded] : 0;
+    NSLog(@"[HanlinNativeScriptCompatibility] Created provider=%@ isViewLoaded=%d", provider, viewLoaded);
+    _latestEvent = nil;
+    _latestEventCount = 0;
+    return provider;
+}
+
++ (void)updateSwiftUIProvider:(id)provider data:(nullable NSDictionary *)data {
+    if (!provider) return;
+    SEL updateSelector = NSSelectorFromString(@"updateDataWithData:");
+    if ([provider respondsToSelector:updateSelector]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [provider performSelector:updateSelector withObject:data];
+#pragma clang diagnostic pop
+        return;
+    }
+    SEL fallbackSelector = NSSelectorFromString(@"updateData:");
+    if ([provider respondsToSelector:fallbackSelector]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [provider performSelector:fallbackSelector withObject:data];
+#pragma clang diagnostic pop
+    }
+}
+
++ (void)registerSwiftUIProvider:(id)provider eventHandler:(void (^)(NSDictionary *))handler {
+    if (handler) {
+        _currentEventHandler = [handler copy];
+    } else {
+        _currentEventHandler = nil;
+    }
+    if (!provider) return;
+    SEL registerSelector = NSSelectorFromString(@"registerEventHandler:");
+    if ([provider respondsToSelector:registerSelector] && _currentEventHandler) {
+        void (*func)(id, SEL, void (^)(NSDictionary *)) = (void (*)(id, SEL, void (^)(NSDictionary *)))[provider methodForSelector:registerSelector];
+        if (func) {
+            func(provider, registerSelector, _currentEventHandler);
+        }
+    }
+}
+
++ (void)sendEventToRegisteredHandler:(NSDictionary *)eventData {
+    void (^handlerCopy)(NSDictionary *) = _currentEventHandler;
+    if (handlerCopy && eventData) {
+        if ([NSThread isMainThread]) {
+            handlerCopy(eventData);
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                handlerCopy(eventData);
+            });
+        }
+    }
+}
+
++ (void)recordEvent:(NSDictionary *)payload {
+    if (!payload) return;
+    _latestEvent = [payload copy];
+    id countVal = payload[@"count"];
+    if ([countVal respondsToSelector:@selector(integerValue)]) {
+        _latestEventCount = [countVal integerValue];
+    }
+    NSLog(@"[HanlinNativeScriptCompatibility] Recorded event count=%ld payload=%@", (long)_latestEventCount, payload);
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"HanlinSwiftUIEventNotification" object:self userInfo:payload];
+}
+
++ (nullable NSNumber *)latestEventCount {
+    return @(_latestEventCount);
+}
+
++ (nullable NSDictionary *)latestEvent {
+    return _latestEvent;
+}
+
++ (nullable NSString *)currentDataRootDirectory {
+    return [HanlinNativeServicesBridge dataRootDirectory];
+}
+
++ (nullable NSString *)currentStateDirectory {
+    return [HanlinNativeServicesBridge stateDirectory];
+}
+
++ (nullable NSString *)hostServicePathForType:(NSString *)pathType {
+    if ([pathType isEqualToString:@"dataRoot"] || [pathType isEqualToString:@"data"]) {
+        return [HanlinNativeServicesBridge dataRootDirectory];
+    } else if ([pathType isEqualToString:@"state"]) {
+        return [HanlinNativeServicesBridge stateDirectory];
+    }
+    return nil;
+}
+
++ (nullable NSString *)executeJavaScriptSync:(NSString *)source {
+    return [HanlinNativeServicesBridge executeJavaScriptSync:source];
+}
+
++ (nullable NSString *)executeNodeSync:(NSString *)source {
+    return [HanlinNativeServicesBridge executeNodeSync:source];
+}
+
++ (nullable NSString *)executePythonSync:(NSString *)source {
+    return [HanlinNativeServicesBridge executePythonSync:source];
+}
+
++ (nullable NSString *)fetchURLSync:(NSString *)urlString {
+    return [HanlinNativeServicesBridge fetchURLSync:urlString];
+}
+
++ (nullable NSString *)sendRequestSync:(NSString *)targetID
+                                action:(NSString *)action
+                            capability:(NSString *)capability
+                           payloadJSON:(NSString *)payloadJSON {
+    return [HanlinNativeServicesBridge sendRequestSync:targetID
+                                                action:action
+                                            capability:capability
+                                           payloadJSON:payloadJSON];
+}
+
++ (void)registerAction:(NSString *)action capability:(NSString *)capability {
+    [HanlinNativeServicesBridge registerAction:action capability:capability];
+}
+
+static HanlinNativeScriptCompatibility *_sharedCompatInstance = nil;
+
++ (instancetype)sharedCompatibility {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedCompatInstance = [[HanlinNativeScriptCompatibility alloc] init];
+    });
+    return _sharedCompatInstance;
+}
+
+- (NSString *)roundTripValue:(NSString *)value key:(NSString *)key {
+    return [self.class roundTripValue:value key:key];
+}
+
+- (nullable NSString *)currentDataRootDirectory {
+    return [self.class currentDataRootDirectory];
+}
+
+- (nullable NSString *)currentStateDirectory {
+    return [self.class currentStateDirectory];
+}
+
+- (nullable NSString *)dataRootDirectory {
+    return [self.class currentDataRootDirectory];
+}
+
+- (nullable NSString *)stateDirectory {
+    return [self.class currentStateDirectory];
+}
+
+- (nullable NSString *)executeJavaScriptSync:(NSString *)source {
+    return [self.class executeJavaScriptSync:source];
+}
+
+- (nullable NSString *)executeNodeSync:(NSString *)source {
+    return [self.class executeNodeSync:source];
+}
+
+- (nullable NSString *)executePythonSync:(NSString *)source {
+    return [self.class executePythonSync:source];
+}
+
+- (nullable NSString *)fetchURLSync:(NSString *)urlString {
+    return [self.class fetchURLSync:urlString];
+}
+
+- (nullable NSString *)sendRequestSync:(NSString *)targetID
+                                action:(NSString *)action
+                            capability:(NSString *)capability
+                           payloadJSON:(NSString *)payloadJSON {
+    return [self.class sendRequestSync:targetID action:action capability:capability payloadJSON:payloadJSON];
+}
+
+- (void)registerAction:(NSString *)action capability:(NSString *)capability {
+    [self.class registerAction:action capability:capability];
+}
+
+@end

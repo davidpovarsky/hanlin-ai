@@ -1,0 +1,55 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "9DB610ED-23EB-451F-B74C-4C46438D25E8",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "modelName" : "iPad Pro 13-inch (M5)",
+        "osBuildNumber" : "24A434",
+        "osVersion" : "27.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 0,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "HanlinMiniApps · Built with macOS 27.0",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1795574243.73,
+  "passedTests" : 0,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    }
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1795574165.791,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "XCTAssertTrue failed - JavaScript execution did not return verified JSC output with nonce companion-4f673d96-d41b-448f-86da-e8bca94b21a5",
+      "targetName" : "HanlinMiniAppsUITests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch()",
+      "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+      "testName" : "testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch()"
+    }
+  ],
+  "title" : "Test - HanlinMiniApps",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 1
+}

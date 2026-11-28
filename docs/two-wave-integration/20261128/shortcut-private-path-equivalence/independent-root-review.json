@@ -1,0 +1,70 @@
+{
+  "at": "2026-11-28T09:15:37.800791+00:00",
+  "status": "APPROVED_SOURCE_ONLY_NATIVE_PENDING",
+  "packets": [
+    {
+      "directory": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-private-path-equivalence-5facdb20/candidate-r1",
+      "manifestSHA256": "ca6d45a852f567b68e58c054f83570566034a05d6f45c856ffb2965db5fc1848",
+      "payloadCount": 18
+    },
+    {
+      "directory": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w2-layout-concurrency-3634078f-terminal-r1/diagnosis-r1",
+      "manifestSHA256": "e321fdad65f08a10a7f23d0cc53eab619ac17d6027891e4210ed1b321be109b5",
+      "payloadCount": 10
+    }
+  ],
+  "rawOriginalMembersSHAAndCRCVerified": 58,
+  "sourceFiles": [
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_concurrency.py",
+      "preimageSHA256": "794e514726d39b836f65c9c2bce3fea74c17b09076137480b61212a6bb5c3f8a",
+      "candidateSHA256": "ade0b57d32fc718610017d845cfd27ea8762afffd5fa6827a3653e34397897bd"
+    },
+    {
+      "path": "Scripts/ProductSplit/Tests/test_shortcut_concurrency_observer.py",
+      "preimageSHA256": "69ff828b1f87da80bb406d74501ded01e17572f3c9f96039d6fd2f257565c4d2",
+      "candidateSHA256": "654730b33fc81195984d35dd3456eb7a8df669a55e91a7714fa5d56bc41bed7e"
+    }
+  ],
+  "patchSHA256": "31a1eb8dff8dd16c75c97a77c988bb7ac124b54a9885b067d257d46dfa822ca0",
+  "wholeFileInverses": 2,
+  "unchangedOriginalTestASTs": 17,
+  "newFocusedControls": 2,
+  "actualOriginalFocusedModule": {
+    "methods": 19,
+    "passed": 19,
+    "failed": 0,
+    "skipped": 0,
+    "receiptSHA256": "503e804faadfe9c0d2927c08019c1ebb23eacf1285c64e5149879ccb03000805"
+  },
+  "originalRequireMessages": 89,
+  "originalTimingHoldLeaseLinesEqual": true,
+  "changedFunctions": [
+    "collect",
+    "owner_completion",
+    "observe"
+  ],
+  "comparisonSites": 4,
+  "projections": [
+    {
+      "base": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+      "tree": "6961e04ea5bba5566a09463d9fd243ec2201bcfe",
+      "inverse": true
+    },
+    {
+      "base": "6061796ff67ec1619404a8320580a769923bcb47",
+      "tree": "b467e196e25df3aaed152d490127d2969f062416",
+      "inverse": true
+    }
+  ],
+  "semanticFindings": [
+    "Both sides retain actual previously validated canonical reader paths. Only raw observed interior repeated separators are collapsed for comparison.",
+    "Relative/double-root/trailing separator/NUL/dot/parent and foreign path components fail. No resolve(), alternate lookup, filesystem read, state write, case folding or Unicode normalization is added.",
+    "Actual owner/prepared reader paths still require strict equality. Raw request and journal evidence values remain unmodified.",
+    "Original container/no-symlink/generation/window/session/challenge/nonce/attached/headless/reverse/Stop guards remain; optional Expo journal branch remains unchanged.",
+    "The original two cases failed before identity acceptance. Private request/file bytes were not separately retained, so source and portable evidence do not establish sole cause or new native success."
+  ],
+  "reviewerReranTests": false,
+  "reviewerNativeRuns": 0,
+  "repeatedOriginalCI": false
+}

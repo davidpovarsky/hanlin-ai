@@ -1,0 +1,1 @@
+{"isScrollEnabled":true,"originalDelaysContentTouches":true,"canCancelContentTouches":true,"phase":"native-default","delaysContentTouches":true}

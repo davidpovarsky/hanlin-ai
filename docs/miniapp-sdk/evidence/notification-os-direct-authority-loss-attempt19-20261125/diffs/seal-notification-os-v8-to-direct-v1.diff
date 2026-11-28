@@ -1,0 +1,174 @@
+--- seal-notification-os-decision-v8.py
++++ seal-notification-os-direct-decision-v1.py
+@@ -32,10 +32,12 @@
+ NOTIFICATION_SHA = "4396672e8dd3fe2546d89d108c2e57eeb98a48f386171a93bee5e0322ee98999"
+ LEDGER = CTRL / "companion-native-v1/ledger.json"
+ ORIGINAL_LEDGER_SHA = "0601f21cbf3d2433dec7e5ce7fb66806555bcca6e4577e92b94f265c7a255068"
+-PRIOR_OS_RECORDS = json.loads(r'''{"terminal":{"path":"build/primary-control/notification-os-v1/state.json","bytes":5104,"sha256":"f2b15c99f3d9e131149722f3b6d4215eb4d9dcd07fa9440752fa120ee95415ea"},"ledger":{"path":"build/primary-control/notification-os-v1/ledger.json","bytes":839,"sha256":"1eb53a953ac2e06396dbe0766ed2c68c03fc5ec493c649c9a9a98d6171098bf5"},"decision":{"path":"build/primary-control/notification-os-v1/decision.json","bytes":158863,"sha256":"6c6daf1c44424cd0c7e68de78a6a46f8727cac01c392eda43c4ed97648109d88"},"containers":{"path":"build/primary-control/notification-os-v1/execution-containers.json","bytes":2350,"sha256":"b96b00ec8665a2489c7a021b40c386424a9016e501b79348971b9e72cc2b58ed"},"primaryBefore":{"path":"build/primary-control/notification-os-v1/primary-state-before.json","bytes":124965,"sha256":"783d3f71a3b6ac01271b68a22280e265062bc6642ba18de9bdd3dc4c4da78af2"},"currentContainers":{"path":"build/primary-control/notification-os-v1-current-container-inputs.json","bytes":7807,"sha256":"9964effd96c281c26f8487c0f0ac0c5978cd8fbb6d1165858a127b6891f70f82"},"latestTerminal":{"path":"build/primary-control/notification-os-v3/state.json","bytes":5166,"sha256":"5cd2fc85c3fb0c58e399f9aa5bbc33ab61e88bd48a4a5fd8b8fbc102b7023c17"},"latestLedger":{"path":"build/primary-control/notification-os-v3/ledger.json","bytes":1618,"sha256":"daf72502217aab831e6cf60a662c444990cd14634db8840d254671ed7b83ae44"},"latestDecision":{"path":"build/primary-control/notification-os-v3/decision.json","bytes":165910,"sha256":"0705ed2f72a5a17bcd82b9ce94e8eda8dc5e96eb368f921e438042a6b25716c8"},"latestContainers":{"path":"build/primary-control/notification-os-v3/execution-containers.json","bytes":2360,"sha256":"3e1d47f48333f0aa89fca330d9b2e7c9f1c2189583d458cd024d414aafd00bea"},"latestPrimaryBefore":{"path":"build/primary-control/notification-os-v3/primary-state-before.json","bytes":125648,"sha256":"1abe474150ca068f20234af7fd698cfd877173fcb65a22a7dd839ab3c02ca171"}}''')
++PRIOR_OS_RECORDS = json.loads(r'''{"terminal":{"path":"build/primary-control/notification-os-v1/state.json","bytes":5104,"sha256":"f2b15c99f3d9e131149722f3b6d4215eb4d9dcd07fa9440752fa120ee95415ea"},"ledger":{"path":"build/primary-control/notification-os-v1/ledger.json","bytes":839,"sha256":"1eb53a953ac2e06396dbe0766ed2c68c03fc5ec493c649c9a9a98d6171098bf5"},"decision":{"path":"build/primary-control/notification-os-v1/decision.json","bytes":158863,"sha256":"6c6daf1c44424cd0c7e68de78a6a46f8727cac01c392eda43c4ed97648109d88"},"containers":{"path":"build/primary-control/notification-os-v1/execution-containers.json","bytes":2350,"sha256":"b96b00ec8665a2489c7a021b40c386424a9016e501b79348971b9e72cc2b58ed"},"primaryBefore":{"path":"build/primary-control/notification-os-v1/primary-state-before.json","bytes":124965,"sha256":"783d3f71a3b6ac01271b68a22280e265062bc6642ba18de9bdd3dc4c4da78af2"},"currentContainers":{"path":"build/primary-control/notification-os-v1-current-container-inputs.json","bytes":7807,"sha256":"9964effd96c281c26f8487c0f0ac0c5978cd8fbb6d1165858a127b6891f70f82"},"latestTerminal":{"path":"build/primary-control/notification-os-v3/state.json","bytes":5166,"sha256":"5cd2fc85c3fb0c58e399f9aa5bbc33ab61e88bd48a4a5fd8b8fbc102b7023c17"},"latestLedger":{"path":"build/primary-control/notification-os-v3/ledger.json","bytes":1618,"sha256":"daf72502217aab831e6cf60a662c444990cd14634db8840d254671ed7b83ae44"},"latestDecision":{"path":"build/primary-control/notification-os-v3/decision.json","bytes":165910,"sha256":"0705ed2f72a5a17bcd82b9ce94e8eda8dc5e96eb368f921e438042a6b25716c8"},"latestContainers":{"path":"build/primary-control/notification-os-v3/execution-containers.json","bytes":2360,"sha256":"3e1d47f48333f0aa89fca330d9b2e7c9f1c2189583d458cd024d414aafd00bea"},"latestPrimaryBefore":{"path":"build/primary-control/notification-os-v3/primary-state-before.json","bytes":125648,"sha256":"1abe474150ca068f20234af7fd698cfd877173fcb65a22a7dd839ab3c02ca171"},"resolverTerminal":{"path":"build/primary-control/notification-os-v5/state.json","bytes":6435,"sha256":"ba83da13e54a4bc839d9d99a9a9dfc29c3e5896eb4416d8ae965bcbfa637760e"},"resolverLedger":{"path":"build/primary-control/notification-os-v5/ledger.json","bytes":2219,"sha256":"7b710d0bba8e359839a0f15cb61d4fc9509a3709234b7a52c8213358455dbaa4"},"resolverDecision":{"path":"build/primary-control/notification-os-v5/decision.json","bytes":172479,"sha256":"ce8d33c24728872dcab36cf20d643f9b5d2b1e94ae312b144513824237a48aa5"},"resolverContainers":{"path":"build/primary-control/notification-os-v5/execution-containers.json","bytes":2360,"sha256":"594a42c830e0ef45af08be817997066d8ccd6edc155dae0139d9c9bf45d603e8"},"resolverPrimaryBefore":{"path":"build/primary-control/notification-os-v5/primary-state-before.json","bytes":126205,"sha256":"73de5a617bfb057fe56e5767296ba847c1e56ff6756a647ff0569b06a815c255"},"resolverCleanup":{"path":"build/primary-control/notification-os-v5-post-terminal-group-observation.json","bytes":3930,"sha256":"479c32388bda3ad690e19444f4986c71ab68e2aef98e06c04ad69a373c1fd9e9"},"directXctestrunInspection":{"path":"build/primary-control/notification-os-v5-prebuilt-xctestrun-inspection.json","bytes":9165,"sha256":"5e17d5519f116fea9b2ccbbf9535523650ea0b0f000bcda765286a9f8ec41f17"}}''')
+ ORIGINAL_OS_CHARGE = 353.58866224999656
+ LATEST_OS_CHARGE = 12.940106750000268
+-PRIOR_OS_CHARGE = math.fsum([ORIGINAL_OS_CHARGE, LATEST_OS_CHARGE])
++RESOLVER_OS_CHARGE = 530.7739816670073
++PRIOR_OS_CHARGE = math.fsum([ORIGINAL_OS_CHARGE, LATEST_OS_CHARGE, RESOLVER_OS_CHARGE])
++DIRECT_OBSERVATION = json.loads(r'''{"kind":"UNCHANGED_PREBUILT_XCTESTRUN","authorizedBy":"/root","allowanceSeconds":900,"separateFromOriginalOS900":true,"scope":"Same original notification OS case using the exact already-built xctestrun","xctestrun":{"path":"/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun","bytes":16737,"sha256":"2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"},"identityObservation":{"path":"build/primary-control/notification-os-v5-prebuilt-xctestrun-inspection.json","bytes":9165,"sha256":"5e17d5519f116fea9b2ccbbf9535523650ea0b0f000bcda765286a9f8ec41f17"},"cleanupReconciliation":{"path":"build/primary-control/notification-os-v5-post-terminal-group-observation.json","bytes":3930,"sha256":"479c32388bda3ad690e19444f4986c71ab68e2aef98e06c04ad69a373c1fd9e9"}}''')
+ UNCHARGED_PREFLIGHT_RECORDS = json.loads(r'''[{"path":"build/primary-control/notification-os-v2-preflight-failure.json","bytes":2974,"sha256":"abb9904cbe5fa4c1437ade1a14f14e69fae677dd11064e28856d1efc2b180940"},{"path":"build/primary-control/notification-os-v2-launch.log","bytes":1608,"sha256":"431a5b6dc3c22744da430ee0d526fa317ebb07e640d900dbae17d84e29f277ce"},{"path":"build/primary-control/notification-os-v2-decision.json","sha256":"e6ecacf4375baa2dd59445bf9b05cb24a0bf94d0f034bc684d077d43b28b2fea"}]''')
+ RESOURCE_REJECTION_RECORDS = json.loads(r'''[{"path":"build/primary-control/notification-os-v4-resource-rejection.json","bytes":3221,"sha256":"6aa6c87b00c8c5154c21bd32ac7cea3ff53aaa9e021a3f59736d7eba3141ab6c"},{"path":"build/primary-control/notification-os-v4-seal-command.json","bytes":1138,"sha256":"c76a09d59048a8fa50fc288529bfed91f62d249e8adae459fa79cf4a78609c9f"}]''')
+ 
+@@ -308,8 +310,8 @@
+     seal_attempt = read(authenticate(RESOURCE_REJECTION_RECORDS[1]))
+     assert rejected["status"] == "SEAL_RESOURCE_REJECTED_UNCHARGED" and rejected["source"] == SOURCE
+     assert rejected["noNativeOutput"] is True and rejected["noDecision"] is True
+-    assert rejected["primary"]["sha256"] == primary_ref["sha256"]
+-    assert rejected["primary"]["activeElapsedSeconds"] == primary["activeElapsedSeconds"]
++    assert rejected["primary"]["sha256"] == PRIOR_OS_RECORDS["resolverPrimaryBefore"]["sha256"]
++    assert rejected["primary"]["activeElapsedSeconds"] == 24674.060430753034
+     assert seal_attempt["exitCode"] == 1
+     sample = {row["path"]: int(row["stdout"].split()[0]) * 1024
+               for row in rejected["allocations"] if row.get("exitCode") == 0}
+@@ -398,8 +400,10 @@
+         "productRows": len(decision["productFiles"]), "originalProductRows": 35, "stagedInputCount": 11,
+         "inputObservation": observation_ref, "activeBaselineSeconds": decision["activeBaselineSeconds"],
+         "allowanceSeconds": decision["allowanceSeconds"],
+-        "remainingAllowanceSeconds": decision["osContinuation"]["remainingAllowanceSeconds"],
+-        "priorOSChargedSeconds": decision["osContinuation"]["priorChargedSeconds"],
++        "remainingAllowanceSeconds": decision["directArtifactObservation"]["allowanceSeconds"],
++        "priorOSChargedSeconds": decision["osHistory"]["priorChargedSeconds"],
++        "originalOSRemainingAllowanceSeconds": decision["osHistory"]["remainingOriginalAllowanceSeconds"],
++        "separateFromOriginalOS900": True,
+         "actualPairedStatus": context["paired"]["status"],
+         "phaseExecution": "NOT_RUN", "SDKProducerSource": SDK_SOURCE,
+         "miniBuildProducerSource": MINI_BUILD_SOURCE, "aiBuildProducerSource": AI_BUILD_SOURCE}
+@@ -408,10 +412,10 @@
+     print(json.dumps(receipt))
+ 
+ CONFIG = json.loads(r'''{
+-  "id": "notification-os-v5",
++  "id": "notification-os-direct-v1",
+   "controller": {
+-    "path": "build/primary-control/notification-os-v10.py",
+-    "sha256": "8b93a1d5952436135015227e29f5af4c12b0aeaa4879a46135697c10f2c37b68"
++    "path": "build/primary-control/notification-os-direct-v1.py",
++    "sha256": "0f853aad3a103d5482086a6ee32cb24ebf8366c2626c170e97626852d107595c"
+   },
+   "originalController": {
+     "path": "build/primary-control/paired52-continuation-v3.py",
+@@ -459,16 +463,17 @@
+     "companionLedgerSHA256",
+     "resourceAssessment",
+     "originalNode",
+-    "osContinuation",
++    "osHistory",
++    "directArtifactObservation",
+     "stagedFiles"
+   ],
+   "fixedFields": {
+     "schema": 1,
+-    "id": "notification-os-v5",
++    "id": "notification-os-direct-v1",
+     "owner": "/root/native_execution",
+     "authorization": {
+       "by": "/root",
+-      "scope": "separate original notification OS probe"
++      "scope": "separate direct-artifact original notification OS observation"
+     },
+     "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines",
+     "expectedTests": 1,
+@@ -593,24 +598,89 @@
+         assert os_charge["id"] == terminal["id"] and os_charge["status"] == terminal["status"]
+         assert os_charge["source"] == SOURCE and os_charge["decisionSHA256"] == terminal["decisionSHA256"]
+         assert os_charge["elapsedSeconds"] == terminal["chargedSeconds"] == LATEST_OS_CHARGE
+-        assert os_ledger["activeElapsedSeconds"] == math.fsum(row["elapsedSeconds"] for row in os_ledger["charges"]) == PRIOR_OS_CHARGE
++        assert os_ledger["activeElapsedSeconds"] == math.fsum(row["elapsedSeconds"] for row in os_ledger["charges"]) == math.fsum([ORIGINAL_OS_CHARGE, LATEST_OS_CHARGE])
+         assert prior["latestPrimaryBefore"]["source"] == SOURCE and prior["latestPrimaryBefore"]["status"] == "FAIL"
+         assert prior["latestPrimaryBefore"]["osProbeCharges"] == original_ledger["charges"]
+         assert prior["latestPrimaryBefore"]["activeElapsedSeconds"] == terminal["activeBaselineSeconds"] == original_terminal["cumulativeActiveSeconds"]
+         assert prior["latestDecision"]["primaryStateSHA256"] == PRIOR_OS_RECORDS["latestPrimaryBefore"]["sha256"]
+         assert prior["latestContainers"]["source"] == SOURCE and prior["latestContainers"]["device"] == DEVICE
+         assert prior["latestContainers"]["decisionSHA256"] == terminal["decisionSHA256"]
+-        assert context["primary"]["activeElapsedSeconds"] == terminal["cumulativeActiveSeconds"] == 24674.060430753034
++        second_terminal, second_ledger = terminal, os_ledger
++        terminal, os_ledger = prior["resolverTerminal"], prior["resolverLedger"]
++        assert terminal["id"] == "notification-os-v5" and terminal["status"] == "CLEANUP_INCOMPLETE"
++        assert terminal["source"] == SOURCE and terminal["chargeCommitted"] is True
++        assert not terminal["sourceErrors"]
++        assert terminal["cleanupErrors"] == ["test group cleanup: [Errno 1] Operation not permitted"]
++        assert terminal["remainingOwnedProcessGroups"] == {"setup": []}
++        assert set(terminal["ownedProcessGroups"]) == {"setup", "test"}
++        assert terminal["ownedSimulatorCleanup"]["device"] == DEVICE
++        assert terminal["ownedSimulatorCleanup"]["observedState"] == "Shutdown"
++        assert terminal["decisionSHA256"] == PRIOR_OS_RECORDS["resolverDecision"]["sha256"]
++        assert prior["resolverDecision"]["source"] == SOURCE and prior["resolverDecision"]["sourceTree"] == TREE
++        assert prior["resolverDecision"]["allowanceSeconds"] == os_ledger["maximumActiveSeconds"] == 900
++        assert len(os_ledger["charges"]) == 3 and os_ledger["charges"][:-1] == second_ledger["charges"]
++        os_charge = os_ledger["charges"][-1]
++        assert os_charge["id"] == terminal["id"] and os_charge["status"] == terminal["status"]
++        assert os_charge["source"] == SOURCE and os_charge["decisionSHA256"] == terminal["decisionSHA256"]
++        assert os_charge["elapsedSeconds"] == terminal["chargedSeconds"] == RESOLVER_OS_CHARGE
++        assert os_ledger["activeElapsedSeconds"] == math.fsum(row["elapsedSeconds"] for row in os_ledger["charges"]) == PRIOR_OS_CHARGE
++        assert prior["resolverPrimaryBefore"]["source"] == SOURCE and prior["resolverPrimaryBefore"]["status"] == "FAIL"
++        assert prior["resolverPrimaryBefore"]["osProbeCharges"] == second_ledger["charges"]
++        assert prior["resolverPrimaryBefore"]["activeElapsedSeconds"] == terminal["activeBaselineSeconds"] == second_terminal["cumulativeActiveSeconds"]
++        assert prior["resolverDecision"]["primaryStateSHA256"] == PRIOR_OS_RECORDS["resolverPrimaryBefore"]["sha256"]
++        assert prior["resolverContainers"]["source"] == SOURCE and prior["resolverContainers"]["device"] == DEVICE
++        assert prior["resolverContainers"]["decisionSHA256"] == terminal["decisionSHA256"]
++        reconciliation = prior["resolverCleanup"]
++        assert reconciliation["source"] == SOURCE
++        assert reconciliation["terminal"]["sha256"] == PRIOR_OS_RECORDS["resolverTerminal"]["sha256"]
++        assert reconciliation["recordedCleanupErrors"] == terminal["cleanupErrors"]
++        assert reconciliation["pidLiveness"] == {"7320": "ABSENT", "7517": "ABSENT", "7530": "ABSENT"}
++        assert reconciliation["groupLiveness"] == "ABSENT" and reconciliation["signalsSent"] == []
++        assert reconciliation["groupCandidates"] == {"argv": ["/usr/bin/pgrep", "-g", "7517"], "exitCode": 1, "stdout": "", "stderr": ""}
++        assert terminal["ownedProcessGroups"]["test"]["pgid"] == 7517 and terminal["controllerPID"] == 7320
++        assert datetime.datetime.fromisoformat(reconciliation["observedAt"]) > datetime.datetime.fromisoformat(terminal["finishedAt"])
++        assert reconciliation["ledger"]["sha256"] == PRIOR_OS_RECORDS["resolverLedger"]["sha256"]
++        assert reconciliation["primary"]["sha256"] == decision["primaryStateSHA256"]
++        assert context["primary"]["activeElapsedSeconds"] == terminal["cumulativeActiveSeconds"] == 25204.83441242004
+         assert context["primary"]["osProbeCharges"] == os_ledger["charges"]
+-        assert context["primary"]["activeElapsedSeconds"] == math.fsum([terminal["activeBaselineSeconds"], LATEST_OS_CHARGE])
+-        assert decision["primaryStateSHA256"] == "73de5a617bfb057fe56e5767296ba847c1e56ff6756a647ff0569b06a815c255"
+-        for authority in ("decision", "latestDecision"):
++        assert not context["primary"].get("directArtifactOSCharges")
++        assert context["primary"]["activeElapsedSeconds"] == math.fsum([terminal["activeBaselineSeconds"], RESOLVER_OS_CHARGE])
++        assert decision["primaryStateSHA256"] == "009d98edeb4b2a7a4efd6640f91f1b6424b8151a79454e7508cc6753b1264108"
++        for authority in ("decision", "latestDecision", "resolverDecision"):
+             for row in prior[authority]["requiredFiles"]:
+                 add_required(context["required"], row)
+-        decision["osContinuation"] = {"records": PRIOR_OS_RECORDS,
++        artifact = DIRECT_OBSERVATION["xctestrun"]
++        artifact_row = next(row for row in decision["productFiles"] if row["role"] == "xctestrun")
++        assert all(artifact_row[key] == value for key, value in artifact.items())
++        xctestrun_path = current_product(artifact_row)
++        inspection = prior["directXctestrunInspection"]
++        assert inspection["source"] == SOURCE
++        assert all(inspection["xctestrun"][key] == value for key, value in artifact.items())
++        plist = plistlib.loads(xctestrun_path.read_bytes())
++        assert plist["__xctestrun_metadata__"]["FormatVersion"] == 1
++        target = plist["HanlinMiniAppsUITests"]
++        assert target["BlueprintName"] == target["ProductModuleName"] == "HanlinMiniAppsUITests"
++        assert target["TestHostBundleIdentifier"] == "com.itorah.hanlinminiapps.integration.uitests.xctrunner"
++        assert target["IsUITestBundle"] is True and target["DefaultTestExecutionTimeAllowance"] == 600
++        assert target["TestTimeoutsEnabled"] is False
++        host = Path(target["TestHostPath"].replace("__TESTROOT__", str(PRODUCTS))).resolve(strict=True)
++        bundle = Path(target["TestBundlePath"].replace("__TESTHOST__", str(host))).resolve(strict=True)
++        app = Path(target["UITargetAppPath"].replace("__TESTROOT__", str(PRODUCTS))).resolve(strict=True)
++        assert host == PRODUCTS / "Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app"
++        assert bundle == host / "PlugIns/HanlinMiniAppsUITests.xctest"
++        assert app == PRODUCTS / "Debug-iphonesimulator/HanlinMiniApps.app"
++        assert host / "Info.plist" == Path(context["metadataRoles"]["uiRunnerInfo"]["path"])
++        decision["osHistory"] = {"records": PRIOR_OS_RECORDS,
+             "originalAllowanceSeconds": 900, "priorChargedSeconds": PRIOR_OS_CHARGE,
+-            "remainingAllowanceSeconds": 900 - PRIOR_OS_CHARGE}
+-        context["observation"]["osContinuation"] = decision["osContinuation"]
++            "remainingOriginalAllowanceSeconds": 900 - PRIOR_OS_CHARGE}
++        decision["directArtifactObservation"] = DIRECT_OBSERVATION
++        context["observation"].update(osHistory=decision["osHistory"],
++            directArtifactObservation=DIRECT_OBSERVATION,
++            directArtifactIdentity={"testHostPath": str(host), "testBundlePath": str(bundle),
++                "uiTargetAppPath": str(app), "target": target["BlueprintName"],
++                "unchangedEnvironmentAuthority": DIRECT_OBSERVATION["identityObservation"],
++                "xctestrunSHA256": artifact["sha256"]},
++            postTerminalCleanupReconciliation=PRIOR_OS_RECORDS["resolverCleanup"])
+         rejected = read(authenticate(UNCHARGED_PREFLIGHT_RECORDS[0]))
+         assert rejected["source"] == SOURCE and rejected["status"] == "PRE_NATIVE_PREFLIGHT_REJECTED_UNCHARGED"
+         assert rejected["primaryUnchanged"] is True and rejected["nativeOutputExists"] is False

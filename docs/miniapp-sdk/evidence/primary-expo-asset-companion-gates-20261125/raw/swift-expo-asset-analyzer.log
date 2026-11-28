@@ -1,0 +1,592 @@
+Fetching https://github.com/davidpovarsky/swift-ai-sdk.git from cache
+Fetched https://github.com/davidpovarsky/swift-ai-sdk.git from cache (0.59s)
+Fetching https://github.com/apple/swift-argument-parser from cache
+Fetching https://github.com/weichsel/ZIPFoundation.git from cache
+Fetching https://github.com/SwiftyJSON/SwiftyJSON.git from cache
+Fetched https://github.com/weichsel/ZIPFoundation.git from cache (0.41s)
+Fetched https://github.com/apple/swift-argument-parser from cache (0.41s)
+Fetched https://github.com/SwiftyJSON/SwiftyJSON.git from cache (0.41s)
+Computing version for https://github.com/apple/swift-argument-parser
+Computed https://github.com/apple/swift-argument-parser at 1.8.2 (0.88s)
+Computing version for https://github.com/weichsel/ZIPFoundation.git
+warning: 'zipfoundation': /Package@swift-5.9.swift:23:61: warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+21 |     name: "ZIPFoundation",
+22 |     platforms: [
+23 |         .macOS(.v10_13), .iOS(.v12), .tvOS(.v12), .watchOS(.v4), .visionOS(.v1)
+   |                                                             `- warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+24 |     ],
+25 |     products: [
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+Computed https://github.com/weichsel/ZIPFoundation.git at 0.9.19 (0.54s)
+Computing version for https://github.com/SwiftyJSON/SwiftyJSON.git
+Computed https://github.com/SwiftyJSON/SwiftyJSON.git at 5.0.1 (0.67s)
+Creating working copy for https://github.com/apple/swift-argument-parser
+Working copy of https://github.com/apple/swift-argument-parser resolved at 1.8.2
+Creating working copy for https://github.com/weichsel/ZIPFoundation.git
+Working copy of https://github.com/weichsel/ZIPFoundation.git resolved at 0.9.19
+Creating working copy for https://github.com/davidpovarsky/swift-ai-sdk.git
+Working copy of https://github.com/davidpovarsky/swift-ai-sdk.git resolved at 07431abccbfb151ca2dab67bca6cf86fcb2bd3b8
+Creating working copy for https://github.com/SwiftyJSON/SwiftyJSON.git
+Working copy of https://github.com/SwiftyJSON/SwiftyJSON.git resolved at 5.0.1
+warning: 'zipfoundation': /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/.build/checkouts/ZIPFoundation/Package@swift-5.9.swift:23:61: warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+21 |     name: "ZIPFoundation",
+22 |     platforms: [
+23 |         .macOS(.v10_13), .iOS(.v12), .tvOS(.v12), .watchOS(.v4), .visionOS(.v1)
+   |                                                             `- warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+24 |     ],
+25 |     products: [
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+Building for debugging...
+[Computing dependencies]
+[Provisioning 1 / 76]
+[Pre-planning 1 / 1931]
+[Planning 687 / 1931]
+[Planning 1590 / 1931]
+[Planning deferred tasks]
+[Constructing 1 / 4256]
+[Constructing 3271 / 4256]
+[7 / 948] ZIPFoundation-product
+[131 / 948] HanlinScriptStore
+[269 / 948] HanlinPlatform_HanlinScriptContracts
+[376 / 948] AISDKProviderUtils
+[395 / 949] ZIPFoundation
+[406 / 996]
+[408 / 996]
+[410 / 996]
+[412 / 996]
+[414 / 996]
+[416 / 996]
+[418 / 996]
+[420 / 996]
+[422 / 996]
+[423 / 996]
+[425 / 996]
+[427 / 996]
+[429 / 996] ZIPFoundation_ZIPFoundation
+[433 / 996] HanlinPlatform_HanlinScriptingSDK
+[435 / 996]
+[436 / 996] HanlinPlatform_HanlinScriptWidgetOriginal
+[439 / 996]
+[440 / 996] HanlinPlatform_HanlinScriptUI
+[442 / 996] HanlinPlatform_HanlinScriptExtensions
+[444 / 996] HanlinPlatform_HanlinScriptContracts
+[446 / 996] HanlinPlatform_HanlinScriptCompiler
+[448 / 996] ZIPFoundation
+[451 / 996] ZIPFoundation
+[457 / 996] ZIPFoundation
+[458 / 996] ZIPFoundation
+[459 / 996] ZIPFoundation
+[460 / 996] ZIPFoundation
+[461 / 996] ZIPFoundation-product
+[462 / 996] ZIPFoundation-product
+[463 / 996] ZIPFoundation-product
+[468 / 997]
+[470 / 999] SwiftyJSON
+[471 / 999] SwiftyJSON
+[480 / 999]
+[494 / 999]
+[500 / 999]
+[510 / 999]
+[520 / 999]
+[524 / 1000] HanlinPlatform_HanlinPlatformContracts
+[527 / 1045]
+[529 / 1045]
+[531 / 1045]
+[532 / 1045]
+[533 / 1045]
+[534 / 1045]
+[535 / 1045]
+[537 / 1045]
+[540 / 1045]
+[542 / 1045]
+[543 / 1045] HanlinPlatform_HanlinScriptCompiler
+[544 / 1045] HanlinPlatform_HanlinScriptCompiler
+[546 / 1045]
+[548 / 1045]
+[549 / 1045]
+[551 / 1045]
+[553 / 1045]
+[554 / 1045]
+[555 / 1045]
+[556 / 1045]
+[557 / 1045]
+[559 / 1045] HanlinPlatform_HanlinScriptCompiler
+[560 / 1045]
+[562 / 1045] HanlinPlatform_HanlinScriptCompiler
+[565 / 1045] HanlinPlatformContracts
+[570 / 1045] HanlinPlatformContracts
+[571 / 1045] HanlinScriptContracts
+[572 / 1045] HanlinScriptContracts
+[574 / 1045] HanlinPlatformContracts
+[575 / 1045] HanlinPlatformContracts
+[576 / 1045] HanlinPlatformContracts
+[577 / 1045] HanlinPlatformContracts
+[578 / 1045] HanlinPlatformContracts
+[578 / 1045] HanlinMiniAppCore
+[581 / 1046] HanlinPlatformContractsTests-product
+[583 / 1048] HanlinPlatformContractsTests-product
+[590 / 1048] HanlinExtensionContracts
+[594 / 1049] HanlinPlatform_HanlinScriptCompiler
+[597 / 1060]
+[599 / 1061] HanlinScriptWidgetOriginal
+[600 / 1061] HanlinScriptContracts
+[602 / 1133] HanlinScriptContracts
+[609 / 1133]
+[610 / 1133]
+[612 / 1133]
+[613 / 1133]
+[615 / 1133]
+[616 / 1133]
+[617 / 1133]
+[618 / 1133]
+[619 / 1133]
+[620 / 1133]
+[621 / 1133]
+[622 / 1133]
+[623 / 1133]
+[626 / 1133]
+[628 / 1133]
+[630 / 1133]
+[631 / 1133]
+[633 / 1133]
+[634 / 1133]
+[635 / 1133]
+[636 / 1133]
+[637 / 1133]
+[639 / 1133]
+[640 / 1133]
+[641 / 1133]
+[642 / 1133]
+[643 / 1133]
+[644 / 1133]
+[645 / 1133]
+[646 / 1133]
+[647 / 1133]
+[648 / 1133]
+[649 / 1133]
+[650 / 1133]
+[651 / 1133]
+[652 / 1133]
+[653 / 1133]
+[654 / 1133] HanlinScriptContracts
+[656 / 1133] HanlinScriptContracts
+[658 / 1133]
+[659 / 1133]
+[660 / 1133]
+[661 / 1133]
+[663 / 1133]
+[664 / 1133]
+[665 / 1133] HanlinScriptContracts
+[668 / 1133]
+[669 / 1133] HanlinScriptContracts
+[670 / 1133] HanlinScriptContracts
+[671 / 1133] HanlinScriptingSDK
+[672 / 1133] HanlinScriptingSDK
+[673 / 1133] HanlinScriptWidgetOriginal
+[675 / 1133] HanlinScriptWidgetOriginal
+[681 / 1133] HanlinScriptWidgetOriginal
+[682 / 1133] HanlinWidgetCompiler
+[683 / 1133] HanlinWidgetCompiler
+[685 / 1133] HanlinScriptWidgetOriginal
+[687 / 1133] HanlinScriptWidgetOriginal
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMaps.swift:75:28: [1;33mwarning: [1;39m'CLGeocoder' was deprecated in macOS 26.0: Use MapKit[0;0m [#]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration\DeprecatedDeclaration]8;;\]
+ [0;36m73 |[0;0m                 return
+ [0;36m74 |[0;0m             }
+ [0;36m75 |[0;0m             let geocoder = CLGeocoder()
+    [0;36m|[0;0m                            `- [1;33mwarning: [1;39m'CLGeocoder' was deprecated in macOS 26.0: Use MapKit[0;0m [#]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration\DeprecatedDeclaration]8;;\]
+ [0;36m76 |[0;0m             let cancellation = ScriptWidgetQueryCancellation(session: context.state.executionSession)
+ [0;36m77 |[0;0m             guard cancellation.install({ geocoder.cancelGeocode() }) else { throw ScriptWidgetSystemServiceError.unavailable }
+
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMaps.swift:77:51: [1;33mwarning: [1;39m'cancelGeocode()' was deprecated in macOS 26.0: Use MKGeocodingRequest[0;0m [#]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration\DeprecatedDeclaration]8;;\]
+ [0;36m75 |[0;0m             let geocoder = CLGeocoder()
+ [0;36m76 |[0;0m             let cancellation = ScriptWidgetQueryCancellation(session: context.state.executionSession)
+ [0;36m77 |[0;0m             guard cancellation.install({ geocoder.cancelGeocode() }) else { throw ScriptWidgetSystemServiceError.unavailable }
+    [0;36m|[0;0m                                                   `- [1;33mwarning: [1;39m'cancelGeocode()' was deprecated in macOS 26.0: Use MKGeocodingRequest[0;0m [#]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration\DeprecatedDeclaration]8;;\]
+ [0;36m78 |[0;0m             geocoder.reverseGeocodeLocation(CLLocation(latitude: value.coordinate.latitude, longitude: value.coordinate.longitude)) { places, error in
+ [0;36m79 |[0;0m                 cancellation.complete()
+
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMaps.swift:78:22: [1;33mwarning: [1;39m'reverseGeocodeLocation(_:completionHandler:)' was deprecated in macOS 26.0: Use MKReverseGeocodingRequest[0;0m [#]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration\DeprecatedDeclaration]8;;\]
+ [0;36m76 |[0;0m             let cancellation = ScriptWidgetQueryCancellation(session: context.state.executionSession)
+ [0;36m77 |[0;0m             guard cancellation.install({ geocoder.cancelGeocode() }) else { throw ScriptWidgetSystemServiceError.unavailable }
+ [0;36m78 |[0;0m             geocoder.reverseGeocodeLocation(CLLocation(latitude: value.coordinate.latitude, longitude: value.coordinate.longitude)) { places, error in
+    [0;36m|[0;0m                      `- [1;33mwarning: [1;39m'reverseGeocodeLocation(_:completionHandler:)' was deprecated in macOS 26.0: Use MKReverseGeocodingRequest[0;0m [#]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration\DeprecatedDeclaration]8;;\]
+ [0;36m79 |[0;0m                 cancellation.complete()
+ [0;36m80 |[0;0m                 guard error == nil else { finish(.failure(ScriptWidgetSystemServiceError.unavailable)); return }
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+[688 / 1133] HanlinScriptWidgetOriginal
+[688 / 1133] HanlinScriptServices
+[689 / 1133] HanlinScriptContracts
+[691 / 1133]
+[694 / 1135] HanlinScriptingSDK
+[695 / 1198]
+[696 / 1201] HanlinScriptingSDK
+[697 / 1201]
+[700 / 1201] HanlinScriptingSDK
+[707 / 1201]
+[709 / 1201]
+[710 / 1201]
+[711 / 1201]
+[714 / 1201]
+[716 / 1201]
+[717 / 1201]
+[718 / 1201]
+[719 / 1201]
+[722 / 1201]
+[724 / 1201]
+[725 / 1201]
+[727 / 1201]
+[728 / 1201]
+[730 / 1201]
+[731 / 1201]
+[732 / 1201]
+[733 / 1201]
+[734 / 1201]
+[737 / 1201]
+[739 / 1201]
+[741 / 1201]
+[743 / 1201]
+[745 / 1201]
+[747 / 1201]
+[750 / 1201]
+[751 / 1201]
+[752 / 1201]
+[753 / 1201]
+[754 / 1201]
+[756 / 1201]
+[758 / 1201]
+[760 / 1201]
+[762 / 1201]
+[762 / 1201] HanlinScriptingSDKTests-product
+[763 / 1201]
+[764 / 1201] HanlinWidgetCompiler
+[765 / 1201] HanlinWidgetCompiler
+[768 / 1201] HanlinWidgetCompiler
+[780 / 1204] EventSourceParser
+[780 / 1208] EventSourceParser
+[782 / 1212] EventSourceParser
+[796 / 1212] HanlinScriptServices
+[797 / 1223] AISDKProvider
+[798 / 1223] HanlinScriptServices
+[801 / 1223] AISDKProvider
+[807 / 1223] HanlinScriptDeviceServices
+[808 / 1223] EventSourceParser
+[809 / 1223] EventSourceParser
+[810 / 1223] AISDKProvider
+[813 / 1223] AISDKProvider
+[814 / 1223] AISDKZodAdapter
+[815 / 1223] AISDKZodAdapter
+[816 / 1223] AISDKProvider-product
+[818 / 1223] AISDKProvider
+[819 / 1223] AISDKProvider
+[820 / 1223] AISDKProvider
+[820 / 1223]
+[823 / 1224] EventSourceParser
+[824 / 1226] HanlinScriptRuntime
+[834 / 1226] HanlinScriptRuntime
+[839 / 1228] HanlinMiniAppCore
+[840 / 1236] HanlinScriptDeviceServices
+[840 / 1247] HanlinScriptDeviceServices
+[843 / 1247] HanlinMiniAppCore
+[850 / 1247] HanlinScriptDeviceServices
+[856 / 1247] HanlinScriptDeviceServices
+[859 / 1247] HanlinScriptDeviceServices
+[860 / 1247] HanlinScriptDeviceServices
+[862 / 1247] HanlinMiniAppCore
+[864 / 1247] HanlinMiniAppCore
+[866 / 1247] HanlinMiniAppCore
+[867 / 1247] HanlinScriptStore
+[868 / 1247] HanlinScriptStore
+[870 / 1247] HanlinMiniAppCore
+[871 / 1247] HanlinMiniAppCore
+[871 / 1247]
+[874 / 1248] HanlinScriptDeviceServicesTests-product
+[876 / 1258] HanlinScriptCompiler
+[879 / 1258] HanlinScriptCompiler
+[885 / 1258] HanlinScriptCompiler
+[886 / 1258] HanlinScriptCompilerTests-product
+[887 / 1258] HanlinScriptCompiler
+[889 / 1258] HanlinScriptCompiler
+[890 / 1258] HanlinScriptCompiler
+[891 / 1258] HanlinScriptCompiler
+[892 / 1258] HanlinScriptCompiler
+[893 / 1258] HanlinMiniAppCoreTests-product
+[896 / 1259] HanlinScriptStore
+[899 / 1266] HanlinScriptStore
+[900 / 1266] HanlinScriptStore
+[902 / 1266] HanlinScriptStore
+[909 / 1266] HanlinScriptStore
+[910 / 1266] HanlinScriptStoreTests-product
+[911 / 1266] HanlinScriptStoreTests-product
+[921 / 1266] HanlinPlatformContracts-product
+[923 / 1268] HanlinPlatformContractsTests-product
+[925 / 1281]
+[925 / 1292]
+[926 / 1292] AISDKZodAdapter
+[929 / 1292] HanlinPlatformContractsTests-product
+[941 / 1292] HanlinPlatformContractsTests-product
+[942 / 1292] HanlinPlatformContractsTests-product
+[943 / 1292] HanlinPlatformContractsTests-product
+[944 / 1292] HanlinPlatformContractsTests-product
+[946 / 1292] HanlinPlatformContractsTests-product
+[947 / 1292] HanlinPlatformContractsTests-product
+[948 / 1292] HanlinPlatformContractsTests-product
+[949 / 1292] HanlinPlatformContractsTests-product
+[951 / 1292] AISDKZodAdapter
+[953 / 1292] AISDKZodAdapter
+[955 / 1292] AISDKZodAdapter
+[957 / 1292] AISDKZodAdapter
+[959 / 1292] AISDKZodAdapter
+[961 / 1292] AISDKZodAdapter
+[962 / 1292] AISDKZodAdapter
+[962 / 1292] AISDKProviderUtils
+[965 / 1292] HanlinExtensionContracts-product
+[972 / 1292]
+[974 / 1293] HanlinWidgetCompiler
+[977 / 1296] HanlinWidgetCompiler
+[979 / 1296] HanlinScriptContractsTests-product
+[980 / 1296] HanlinScriptContractsTests-product
+[988 / 1296] HanlinScriptContractsTests-product
+[992 / 1297] HanlinScriptingSDKTests-product
+[994 / 1300] HanlinScriptingSDKTests-product
+[996 / 1300] HanlinScriptingSDKTests-product
+[1004 / 1300] HanlinScriptingSDKTests-product
+[1007 / 1300]
+[1013 / 1300] HanlinScriptServices-product
+[1016 / 1301] HanlinScriptServicesTests-product
+[1018 / 1305] HanlinScriptServicesTests-product
+[1020 / 1305] HanlinScriptServicesTests-product
+[1027 / 1305] HanlinScriptRuntime
+[1029 / 1305] HanlinScriptServicesTests-product
+[1035 / 1306] HanlinScriptRuntimeTests-product
+[1037 / 1309] HanlinScriptRuntimeTests-product
+[1038 / 1309] HanlinScriptRuntimeTests-product
+[1044 / 1309] HanlinScriptRuntimeTests-product
+[1047 / 1309] HanlinScriptCompiler
+[1054 / 1309] HanlinScriptRuntime-product
+[1062 / 1310] HanlinScriptDeviceServices-product
+[1064 / 1321] AISDKProviderUtils
+[1065 / 1321] AISDKProviderUtils
+[1068 / 1321] AISDKProviderUtils
+[1074 / 1321] AISDKProviderUtils
+[1076 / 1321] AISDKProviderUtils
+[1077 / 1321] AISDKProviderUtils
+[1078 / 1321] OpenAIProvider
+[1079 / 1321] AISDKProviderUtils
+[1081 / 1321] AISDKProviderUtils
+[1081 / 1321] AISDKProvider-product
+[1083 / 1322] HanlinScriptDeviceServicesTests-product
+[1086 / 1326] HanlinScriptDeviceServicesTests-product
+[1089 / 1326] HanlinScriptDeviceServicesTests-product
+[1095 / 1326] AISDKProvider-product
+[1099 / 1327] HanlinMiniAppCoreTests-product
+[1099 / 1327] HanlinScriptStore
+[1102 / 1335] HanlinMiniAppCoreTests-product
+[1104 / 1335] HanlinMiniAppCoreTests-product
+[1110 / 1335] HanlinMiniAppCoreTests-product
+[1111 / 1335] HanlinMiniAppCoreTests-product
+[1112 / 1335] HanlinMiniAppCoreTests-product
+[1113 / 1335]
+[1116 / 1335] HanlinScriptDeviceServices-product
+[1121 / 1337] OpenAICompatibleProvider
+[1122 / 1348] OpenAIProvider
+[1123 / 1359] OpenAICompatibleProvider
+[1137 / 1359] OpenAIProvider
+[1139 / 1359] OpenAIProvider
+[1140 / 1359] OpenAIProvider
+[1141 / 1359] OpenAIProvider
+[1142 / 1359] OpenAIProvider-product
+[1143 / 1359] OpenAIProvider-product
+[1144 / 1359] OpenAIProvider-product
+[1146 / 1359] OpenAICompatibleProvider
+[1149 / 1359] OpenAICompatibleProvider
+[1150 / 1359] OpenAICompatibleProvider
+[1151 / 1359] OpenAICompatibleProvider
+[1152 / 1359] OpenAICompatibleProvider
+[1153 / 1359] OpenAICompatibleProvider-product
+[1154 / 1359] OpenAICompatibleProvider-product
+[1155 / 1359] OpenAICompatibleProvider-product
+[1156 / 1359] HanlinScriptDeviceServicesTests-product
+[1158 / 1360] HanlinScriptDeviceServicesTests-product
+[1161 / 1366] HanlinScriptCompilerTests-product
+[1172 / 1366] HanlinScriptCompilerTests-product
+[1175 / 1366] HanlinScriptCompilerTests-product
+[1176 / 1366] HanlinScriptCompilerTests-product
+[1176 / 1366]
+[1178 / 1369] GoogleProvider
+[1180 / 1380] GoogleProvider
+[1181 / 1380] GatewayProvider
+[1184 / 1391] GoogleProvider
+[1190 / 1402] AnthropicProvider
+[1203 / 1402] HanlinScriptCompiler-product
+[1205 / 1402] GoogleProvider
+[1206 / 1402] GoogleProvider
+[1207 / 1402] GoogleProvider
+[1208 / 1402] GoogleProvider-product
+[1209 / 1402] GoogleProvider-product
+[1210 / 1402] GoogleProvider-product
+[1212 / 1402] GoogleProvider
+[1213 / 1402] GatewayProvider
+[1216 / 1402] GatewayProvider
+[1217 / 1402] GatewayProvider
+[1219 / 1402] GatewayProvider
+[1221 / 1402] GatewayProvider
+[1222 / 1402] GatewayProvider
+[1223 / 1402] GatewayProvider
+[1224 / 1402] AnthropicProvider
+[1226 / 1402] AnthropicProvider
+[1227 / 1402] AnthropicProvider-product
+[1228 / 1402] AnthropicProvider
+[1229 / 1402] AnthropicProvider-product
+[1231 / 1402] AnthropicProvider
+[1232 / 1402] AnthropicProvider
+[1233 / 1402] AnthropicProvider
+[1234 / 1402] AnthropicProvider
+[1234 / 1402]
+[1236 / 1403] HanlinScriptStore
+[1238 / 1407] HanlinScriptStoreTests-product
+[1246 / 1407] AISDKJSONSchema
+[1248 / 1407] AISDKJSONSchema
+[1249 / 1407]
+[1253 / 1408] HanlinScriptStoreTests-product
+[1256 / 1414] HanlinScriptStoreTests-product
+[1258 / 1414] HanlinScriptStoreTests-product
+[1263 / 1414] HanlinScriptStoreTests-product
+[1266 / 1414] HanlinScriptStoreTests-product
+[1267 / 1414] HanlinScriptDeviceServicesTests-product
+[1269 / 1414] HanlinScriptCompilerTests-product
+[1271 / 1415] HanlinScriptStoreTests-product
+[1273 / 1426] SwiftAISDK
+[1276 / 1426] SwiftAISDK
+[1282 / 1426] SwiftAISDK
+[1283 / 1426] SwiftAISDK-product
+[1284 / 1426] SwiftAISDK-product
+[1285 / 1426] SwiftAISDK
+[1287 / 1426] SwiftAISDK
+[1288 / 1426] HanlinScriptStore-product
+[1294 / 1426] HanlinScriptCompilerTests-product
+[1301 / 1427]
+[1303 / 1438] HanlinChatCore
+[1306 / 1438] HanlinChatCore
+[1312 / 1438] HanlinScriptUI
+[1313 / 1438] HanlinScriptUI
+[1315 / 1438] HanlinChatCore
+[1316 / 1438] HanlinChatCore
+[1317 / 1438] HanlinChatCore
+[1318 / 1438] HanlinChatCore
+[1318 / 1438]
+[1322 / 1439]
+[1323 / 1447]
+[1325 / 1447] HanlinScriptUI
+[1328 / 1447] HanlinScriptUI
+[1333 / 1447] HanlinScriptUI
+[1334 / 1447] HanlinScriptingApplicationRuntime
+[1335 / 1447] HanlinScriptingApplicationRuntime
+[1336 / 1447] HanlinScriptUI
+[1343 / 1447] GoogleProvider
+[1346 / 1448]
+[1348 / 1454] HanlinScriptingApplicationRuntime
+[1349 / 1454] HanlinScriptingApplicationRuntime
+[1351 / 1454] HanlinScriptingApplicationRuntime
+[1356 / 1454] HanlinScriptingApplicationRuntime
+[1357 / 1454] HanlinScriptingApplicationRuntime
+[1358 / 1454] HanlinScriptingApplicationRuntime
+[1363 / 1456] HanlinLegacyWidgetStoreFixture
+[1364 / 1467] HanlinScriptExtensions
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Animation/ClockHandRotationEffect.swift:31:24: [1;33mwarning: [1;39mstatic property 'effectType' is not concurrency-safe because non-'Sendable' type '(any Decodable.Type)?' may have shared mutable state[0;0m [#]8;;https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable\MutableGlobalVariable]8;;\]
+ [0;36m29 |[0;0m     /// True in the widget extension, where WidgetKit draws the elements.
+ [0;36m30 |[0;0m     static let isWidgetExtension = Bundle.main.bundleURL.pathExtension == "appex"
+ [0;36m31 |[0;0m     private static let effectType: (any Decodable.Type)? = {
+    [0;36m|[0;0m                        |- [1;33mwarning: [1;39mstatic property 'effectType' is not concurrency-safe because non-'Sendable' type '(any Decodable.Type)?' may have shared mutable state[0;0m [#]8;;https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable\MutableGlobalVariable]8;;\]
+    [0;36m|[0;0m                        |- [1;39mnote: [1;39madd '@MainActor' to make static property 'effectType' part of global actor 'MainActor'[0;0m
+    [0;36m|[0;0m                        `- [1;39mnote: [1;39mdisable concurrency-safety checks if accesses are protected by an external synchronization mechanism[0;0m
+ [0;36m32 |[0;0m         guard isWidgetExtension else { return nil }
+ [0;36m33 |[0;0m         guard let type = _typeByName("9WidgetKit24_ClockHandRotationEffectV") as? any Decodable.Type else {
+
+[#MutableGlobalVariable]: <https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable>
+[1365 / 1470] HanlinLegacyWidgetStoreFixture
+[1379 / 1470] HanlinScriptExtensions
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift:226:16: [1;33mwarning: [1;39mvalue 'commit' was defined but never used; consider replacing with boolean test[0;0m [#]8;;https://docs.swift.org/compiler/documentation/diagnostics/no-usage\NoUsage]8;;\]
+ [0;36m224 |[0;0m         var summary = "Storage consistency verified."
+ [0;36m225 |[0;0m 
+ [0;36m226 |[0;0m         if let commit {
+     [0;36m|[0;0m                `- [1;33mwarning: [1;39mvalue 'commit' was defined but never used; consider replacing with boolean test[0;0m [#]8;;https://docs.swift.org/compiler/documentation/diagnostics/no-usage\NoUsage]8;;\]
+ [0;36m227 |[0;0m             if let actual = actualRevPrefix, let expected = commitSnapPrefix, actual != expected {
+ [0;36m228 |[0;0m                 failingStage = "checkedRevision"
+
+[#NoUsage]: <https://docs.swift.org/compiler/documentation/diagnostics/no-usage>
+[1380 / 1470] HanlinScriptExtensions
+[1381 / 1470] HanlinScriptExtensions-product
+[1382 / 1470] HanlinScriptExtensions
+[1383 / 1470] HanlinScriptExtensions
+[1385 / 1470] HanlinScriptExtensions
+[1386 / 1470] HanlinScriptExtensions
+[1387 / 1470] HanlinScriptExtensions
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Animation/ClockHandRotationEffect.swift:31:24: [1;33mwarning: [1;39mstatic property 'effectType' is not concurrency-safe because non-'Sendable' type '(any Decodable.Type)?' may have shared mutable state[0;0m [#]8;;https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable\MutableGlobalVariable]8;;\]
+ [0;36m29 |[0;0m     /// True in the widget extension, where WidgetKit draws the elements.
+ [0;36m30 |[0;0m     static let isWidgetExtension = Bundle.main.bundleURL.pathExtension == "appex"
+ [0;36m31 |[0;0m     private static let effectType: (any Decodable.Type)? = {
+    [0;36m|[0;0m                        |- [1;33mwarning: [1;39mstatic property 'effectType' is not concurrency-safe because non-'Sendable' type '(any Decodable.Type)?' may have shared mutable state[0;0m [#]8;;https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable\MutableGlobalVariable]8;;\]
+    [0;36m|[0;0m                        |- [1;39mnote: [1;39madd '@MainActor' to make static property 'effectType' part of global actor 'MainActor'[0;0m
+    [0;36m|[0;0m                        `- [1;39mnote: [1;39mdisable concurrency-safety checks if accesses are protected by an external synchronization mechanism[0;0m
+ [0;36m32 |[0;0m         guard isWidgetExtension else { return nil }
+ [0;36m33 |[0;0m         guard let type = _typeByName("9WidgetKit24_ClockHandRotationEffectV") as? any Decodable.Type else {
+
+[#MutableGlobalVariable]: <https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable>
+[1388 / 1470] HanlinLegacyWidgetStoreFixture
+[1390 / 1470] HanlinLegacyWidgetStoreFixture
+[1396 / 1470] HanlinScriptUI
+[1400 / 1471] HanlinScriptUI
+[1403 / 1482] HanlinChatCoreTests-product
+[1405 / 1482] HanlinChatCoreTests-product
+[1411 / 1482] HanlinChatCoreTests-product
+[1412 / 1482] HanlinChatCoreTests-product
+[1414 / 1482] HanlinChatCoreTests-product
+[1415 / 1482] HanlinChatCoreTests-product
+[1416 / 1482] HanlinChatCoreTests-product
+[1417 / 1482]
+[1419 / 1482] HanlinChatCore-product
+[1425 / 1482] HanlinLegacyWidgetStoreFixture
+[1427 / 1483] HanlinScriptUITests-product
+[1430 / 1487] HanlinScriptUITests-product
+[1433 / 1487] HanlinScriptUITests-product
+[1439 / 1487]
+[1441 / 1487] HanlinScriptingApplicationRuntime
+[1447 / 1487] HanlinChatCoreTests-product
+[1450 / 1488] HanlinScriptingApplicationRuntimeTests-product
+[1452 / 1495] HanlinScriptingApplicationRuntimeTests-product
+[1455 / 1495] HanlinScriptingApplicationRuntimeTests-product
+[1462 / 1495] HanlinScriptingApplicationRuntimeTests-product
+[1464 / 1495] HanlinScriptingApplicationRuntimeTests-product
+[1464 / 1495] HanlinChatCoreTests-product
+[1467 / 1495] HanlinScriptUI-product
+[1473 / 1495] HanlinScriptingApplicationRuntimeTests-product
+[1477 / 1496] HanlinScriptExtensionsTests-product
+[1481 / 1508] HanlinScriptExtensionsTests-product
+[1485 / 1508] HanlinScriptExtensionsTests-product
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift:1150:25: [1;33mwarning: [1;39m'#require(_:_:)' is redundant because 'NSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:])' never equals 'nil' (from macro 'require')[0;0m
+[0;36m1148 |[0;0m     let image = try #require(renderer.cgImage)
+[0;36m1149 |[0;0m     #expect(image.width == 360 && image.height == 320)
+[0;36m1150 |[0;0m     return try #require([4;39mNSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:])[0;0m)
+     [0;36m|[0;0m                         `- [1;33mwarning: [1;39m'#require(_:_:)' is redundant because 'NSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:])' never equals 'nil' (from macro 'require')[0;0m
+[0;36m1151 |[0;0m }
+[0;36m1152 |[0;0m #endif
+[1487 / 1508] HanlinScriptExtensionsTests-product
+[1493 / 1508] HanlinScriptExtensionsTests-product
+[1494 / 1508] HanlinScriptExtensionsTests-product
+[1495 / 1508] HanlinScriptExtensionsTests-product
+[1500 / 1508] HanlinScriptExtensionsTests-product
+[1502 / 1508] HanlinScriptExtensionsTests-product
+[1504 / 1508] HanlinScriptExtensions-product
+[1506 / 1508] HanlinScriptExtensionsTests-product
+Build complete! (297,32 secs)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Static Scripting analyzer" started.
+◇ Test "Prepared Expo packages preserve the embedded original asset version contract" started.
+✔ Test "Prepared Expo packages preserve the embedded original asset version contract" passed after 0.012 seconds.
+✔ Suite "Static Scripting analyzer" passed after 0.012 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.013 seconds.

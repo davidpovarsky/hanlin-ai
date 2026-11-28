@@ -1,0 +1,87 @@
+{
+  "base_head": "8a505675eca035fbca3877afd1f8776f00f629d0",
+  "reviewed_at": "2026-11-19T02:48:29.550670+00:00",
+  "files": [
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift",
+      "sha256": "78fa43d0ee72b9659db35608a4892e5c8a7b265236e48073a48e03d243977680",
+      "swift_parse": "PASS"
+    },
+    {
+      "path": "AI_HLY/Views/Components/ChatViewBottom.swift",
+      "sha256": "c4c6e9cdaf8d9ed28a5f7197a2098994a6c14872d45df3f98990652711f2b99c",
+      "swift_parse": "PASS"
+    },
+    {
+      "path": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "sha256": "bc4c8cb5fd24e91432c7615af18207f01817d5de7da4d6c98562f4ddc8ac5cd9",
+      "swift_parse": "PASS"
+    },
+    {
+      "path": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "sha256": "93df51118e7ca2f01ceb8f53395a82d56eccaeb3a3038758faff9c8518fd45f6",
+      "swift_parse": "PASS"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinCanvasRuntimeUITests.swift",
+      "sha256": "e0472eaa60b295c9c55372c50ae661ee843446805227829fe9051cc3ef9f03c8",
+      "swift_parse": "PASS"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinMorphComposerUITests.swift",
+      "sha256": "2b524ed2c39401f766aad0453f9948bc01f0710846451d1b90083dc2c284df22",
+      "swift_parse": "PASS"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinPairedProductUITests.swift",
+      "sha256": "c02251ad61497f894175e7581c3b4afc6ec2e05ff6cea9b4bf0d9f67df3b77f6",
+      "swift_parse": "PASS"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinShareInboxUITests.swift",
+      "sha256": "50eda48313899da36a86b98d83c1ee8d3f2f2285924cb0c4ec3346137183d7ea",
+      "swift_parse": "PASS"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/NativeMultilineTextEditor.swift",
+      "sha256": "e708636e028a11e3ced6c0802aa526e0d0013e165dfbe868a188c21f522ebc0c",
+      "swift_parse": "PASS"
+    }
+  ],
+  "source_change": "One original compact workspace overlap owner observes documented keyboard frames only for its exact registered existing native editor, key window and active scene. Existing input synchronization semantics retained.",
+  "editor_diagnostics": "Explicit opt-in, DEBUG or HANLIN_TESTING, at most512 metadata events per coordinator; no text, prompt, credentials or content hashes. Native original typeText equality asserted before downstream navigation/handoff.",
+  "canvas_test": "Original local calculation and remote disclosure retained; actual regular-width popover dismissed by measured noninteractive output point outside popover; all original cold-reopen assertions retained.",
+  "root_reviewed_actual_frame_sha256": "1402fc033a3e95c2e338988f7e008d40fad00bbc3976679ce1e4d0418e87a5c9",
+  "authenticated_run": "44428104345",
+  "authenticated_run_head": "d6cb7d0b704abf11d0296e77eea246700c390f5c",
+  "native_result": "4 passed (2 units, UI04, selection-save-preview), 2 failed (UI01 typed text, Canvas expected Cancel). Cold Canvas reopen not reached.",
+  "new_native": "NOT_RUN; exact per-device plans retained",
+  "portable_geometry": "Exact helper9cases PASS; not Apple UI",
+  "remaining": "Text corruption root cause, actual keyboard typed-message delivery/layout/animation, full original native selectors, signed products and physical-device acceptance remain open.",
+  "copied_evidence_line_endings": [
+    {
+      "path": "canvas-proposal-validation.json",
+      "original_crlf_sha256": "df73e514d0bfe6d9e3db1ebadac3f88b40c17f08a30002f81bb707ebc193c84c",
+      "repository_lf_sha256": "bc21775cee988c298596004478d6eede9ca3634b8302f989e1c50f2492603cc6",
+      "only_change": "CRLF to LF; original evidence retained externally"
+    },
+    {
+      "path": "keyboard-proposal-validation.json",
+      "original_crlf_sha256": "ecf7cbdd03b58cfbda698e704df576907150d66cddaa315e1a576265a6443450",
+      "repository_lf_sha256": "3adf01716c84d40ac4874930a6f6533088fbcf877ef0721d3833bd51ba786d77",
+      "only_change": "CRLF to LF; original evidence retained externally"
+    },
+    {
+      "path": "native-canvas-ax-excerpt.txt",
+      "original_crlf_sha256": "6bc97e1c3b7bc3a678b139094168eef148e48c3f241d5e798bde84f845280ea4",
+      "repository_lf_sha256": "6ad404247b3c1a6cce943c07a1cd16d5ccbc1b34413e9bf6f51c8c154271d6c9",
+      "only_change": "CRLF to LF; original evidence retained externally"
+    },
+    {
+      "path": "native-d6-results.json",
+      "original_crlf_sha256": "e7866abff915bb16cb2435c51a22f0a1400c357e65b2996febf6f10b7f629e28",
+      "repository_lf_sha256": "f452e4b046f5f09268b34b068797ddc634a6921064bc21fa514198751930838b",
+      "only_change": "CRLF to LF; original evidence retained externally"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "status": "BOUNDED_APP_EVIDENCE_RETAINED_REGENERABLE_SNAPSHOT_CACHE_REMOVED",
+  "startedAt": "2026-11-27T04:27:32.879888+00:00",
+  "controllerPID": 12963,
+  "scope": "Supersede the two full obsolete Simulator cache snapshots with verified retained app-data/shared-groups/preferences/log/device metadata. Original complete file inventories, original failure reports/raw xcresults/attachments/source and initial full-preservation receipts stay unchanged. Discarded remainder is regenerated OS data and compiled Simulator app bundles; no native acceptance evidence is removed.",
+  "items": [
+    {
+      "generation": 7,
+      "originalArchive": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-closed-simulator-preservation-20261127/generation-7/full-device-file-snapshot.tar.gz",
+      "originalArchiveSHA256": "9f612b264eda28304509d880090feac7bf630607c8eca7194d3a2be4dabf2f55",
+      "originalArchiveBytes": 1146612465,
+      "fullInventory": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-closed-simulator-preservation-20261127/generation-7/file-inventory.json",
+      "fullInventorySHA256": "94e0c49323350f371664e32dce69d6b8d2ad3c21b023b14ab9e223071471057f",
+      "retainedEntries": 72697,
+      "omittedRegenerableEntries": 22295,
+      "status": "FULL_OS_CACHE_SNAPSHOT_SUPERSEDED_BY_VERIFIED_BOUNDED_APP_EVIDENCE",
+      "retainedArchive": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-closed-simulator-preservation-20261127/bounded-retention/generation-7-app-data-and-logs.tar.gz",
+      "retainedArchiveBytes": 178077415,
+      "retainedArchiveSHA256": "b3fddd70f2e4640c4bd968ffaaf1c102adf94557677716748e95658a46173f94",
+      "retainedInventory": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-closed-simulator-preservation-20261127/bounded-retention/generation-7-retained-inventory.json",
+      "retainedInventorySHA256": "8af1bdedf76a2035129cc10422eeeaa7ba73475b5d39dea210ea9930e2cfafb3",
+      "allRetainedPayloadHashesVerified": true,
+      "finishedAt": "2026-11-27T04:27:54.530516+00:00",
+      "freeAfter": 7455035392
+    },
+    {
+      "generation": 13,
+      "originalArchive": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-closed-simulator-preservation-20261127/generation-13/full-device-file-snapshot.tar.gz",
+      "originalArchiveSHA256": "a3e06235bc1b34a8ef0db329f65411d84a2cb021da41e197c0e3e6f0b60b6a2f",
+      "originalArchiveBytes": 1091238073,
+      "fullInventory": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-closed-simulator-preservation-20261127/generation-13/file-inventory.json",
+      "fullInventorySHA256": "e6db467afceeb4edca8094e80c0167c46c66eeb56e077f332b1debad6388c217",
+      "retainedEntries": 48152,
+      "omittedRegenerableEntries": 22509,
+      "status": "FULL_OS_CACHE_SNAPSHOT_SUPERSEDED_BY_VERIFIED_BOUNDED_APP_EVIDENCE",
+      "retainedArchive": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-closed-simulator-preservation-20261127/bounded-retention/generation-13-app-data-and-logs.tar.gz",
+      "retainedArchiveBytes": 106072636,
+      "retainedArchiveSHA256": "0a3d3b786b98b10632f075181140d5c92d31dd9f220e101e1bb300080d99fb2d",
+      "retainedInventory": "/Users/m1/builds/hanlin-two-wave-root-20261126/obsolete-closed-simulator-preservation-20261127/bounded-retention/generation-13-retained-inventory.json",
+      "retainedInventorySHA256": "a0bd91be663e3626029be2f4f44017eb9b254e3363790de15e2b692952344fb8",
+      "allRetainedPayloadHashesVerified": true,
+      "finishedAt": "2026-11-27T04:28:10.518646+00:00",
+      "freeAfter": 8418967552
+    }
+  ],
+  "freeBefore": 6518108160,
+  "finishedAt": "2026-11-27T04:28:10.519121+00:00",
+  "freeAfter": 8418959360
+}

@@ -1,0 +1,69 @@
+{
+  "appliedAt": "2026-11-19T05:38:30.159312+00:00",
+  "parent": "6b5dc2c0f77817206cd756d45a586fe34d14b740",
+  "packets": [
+    {
+      "directory": "upstream-protection-credential-proposal",
+      "proposalSHA256": "1283042db98a5373710d986c388939e8e6f4aa337dab4f2b6bad867adf9e3bea",
+      "patchSHA256": "bcd786db1184d63759dca537f136001f399621d311822fb7c0cc6d7b1ca839dd",
+      "testLogSHA256": "f8a31b8415252e48c7a115ea78538c83e139139e55d0f268efac6cce5b1199a0",
+      "authenticatedPortableTests": 71,
+      "resultingFilesVerified": true
+    },
+    {
+      "directory": "upstream-automatic-handoff-proposal",
+      "proposalSHA256": "162bf845d6583edf6b84fa96b1b9eff52b9fcac61062b8cfe9a16f7ca0b05c29",
+      "patchSHA256": "8ac84dcaf96ae78a7efb482f8877bd041569f25ca4e8757fbc721d259736f6e2",
+      "testLogSHA256": "96b6a690c1f2b9d2e8fe131cb8ccd41d30412a54489ef8b53954e6c16cfdb95b",
+      "authenticatedPortableTests": 93,
+      "resultingFilesVerified": true
+    }
+  ],
+  "rootReview": "Full patches and main-workflow deltas read; exact source hashes and authenticated93-test result checked. Actual consumer timing14s after proposed handoff fits90s bounded wait, without an SLA claim.",
+  "native": "No new native execution",
+  "activation": "NOT_ACTIVATED: trusted-source variable stays884c41d0 until default-main attempt/env mapping and securely configured narrow credential exist",
+  "frozenBase": "d6e2e3f062633fe7a55c0f44b922c5b3321aaf4a",
+  "frozenPR15Head": "c80f620ba8ed28243922728e00acffcdd439cc12",
+  "actualCredential": "NOT_CONFIGURED; browser sign-in required",
+  "actualAutomaticHandoff": "NOT_RUN",
+  "remainingAcceptance": "Actual green, failure-demo, server merge refusal, later green, protected merge and real merged-diff rollback remain open",
+  "sourceFiles": [
+    {
+      "path": ".github/workflows/check-runtime-dependency-updates.yml",
+      "sha256": "98e0a82d986aa69149d8ef118260f3ce48c55a40ee38a3e450d407655843e05a"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/upstream-proof-handoff.test.mjs",
+      "sha256": "80e2568d6929ebe87c7c27966869ee0f43b68705c15c288a52f9b0356135df16"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/upstream-protection-access.test.mjs",
+      "sha256": "481b3c6de2253997b526b185cc67eb49e69ec4fa8242feebd55c1a7959086ba8"
+    },
+    {
+      "path": "Scripts/Runtime/check-upstream-merge-gate.mjs",
+      "sha256": "cfceff552f54a9f665d042a99a5d36a777ca2407a5d86484e4c921881a2cb468"
+    },
+    {
+      "path": "Scripts/Runtime/consume-upstream-run.mjs",
+      "sha256": "c366cb43d6ba20a1d654662fc38e61f7622c5c501f3efabd28085140f4dcb294"
+    },
+    {
+      "path": "Scripts/Runtime/dispatch-upstream-proof.mjs",
+      "sha256": "c2916034b47cef94e22846638d08baa5d572bfa725e68fb460c483aa8c5f9148"
+    },
+    {
+      "path": "Scripts/Runtime/upstream-proof-handoff.mjs",
+      "sha256": "2ab3bdcab83ad8891a78171b58eaf40b5facb3cdefc776c890451bd27b5efc89"
+    },
+    {
+      "path": "Scripts/Runtime/upstream-protection-access.mjs",
+      "sha256": "9b72e48be3b43610d9d8d06e1aaf550e939870f2032363da8df01bffc32a224e"
+    }
+  ],
+  "archive": {
+    "file": "reviewed-source-evidence.zip",
+    "sha256": "ce94b2fdb4a618ad38cdc959573b91b283d58a120848a6fb6cef7163c26be8fd",
+    "CRC": "PASS"
+  }
+}

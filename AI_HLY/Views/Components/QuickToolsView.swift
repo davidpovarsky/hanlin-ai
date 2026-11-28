@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  QuickToolsView.swift
 //  AI_HLY
@@ -13,6 +14,10 @@ import Foundation
 
 //MARK: 翻译工具
 struct TranslationView: View {
+    init(initialText: String = "") {
+        _inputText = State(initialValue: initialText)
+    }
+
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
     
@@ -66,15 +71,15 @@ struct TranslationView: View {
             VStack(spacing: 10) {
                 
                 HStack {
-                    Image("translate")
+                    Image(hanlinAsset: "translate")
                         .renderingMode(.template)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 30, height: 30)
-                        .foregroundColor(.hlBluefont)
-                    Text("即时翻译")
-                        .font(.system(size: 28, weight: .bold))
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
+                    Text(String(localized: "即时翻译", bundle: HanlinLocalization.bundle))
+                        .font(HanlinTypography.fixed(size: 28, weight: .bold))
+                        .foregroundColor(.hanlinHLBluefont)
                     Spacer()
                 }
                 .padding(.horizontal, 6)
@@ -83,7 +88,7 @@ struct TranslationView: View {
                 VStack(spacing: 10) {
                     // 选择原文本语言
                     HStack {
-                        Picker(" 现有文本", selection: $sourceLanguage) {
+                        Picker(String(localized: " 现有文本", bundle: HanlinLocalization.bundle), selection: $sourceLanguage) {
                             ForEach(isChinese ? languageOptions : languageOptions_en, id: \.self) { language in
                                 Text(language)
                             }
@@ -94,6 +99,7 @@ struct TranslationView: View {
                     
                     // 输入框
                     TextEditor(text: $inputText)
+                        .accessibilityIdentifier("hanlin-writing-tool-input")
                         .padding(10)
                         .frame(height: 100)
                         .background(Color(.systemBackground))
@@ -122,10 +128,10 @@ struct TranslationView: View {
                                                 scrollViewProxy.scrollTo(model.id, anchor: .center)
                                             }
                                         }) {
-                                            toolModelButton(for: model, isSelected: selectedModel?.id == model.id, color: .hlBluefont)
+                                            toolModelButton(for: model, isSelected: selectedModel?.id == model.id, color: .hanlinHLBluefont)
                                         }
                                         .padding(.trailing, model.id == visibleModels.last?.id ? nil : 0)
-                                        .sensoryFeedback(.selection, trigger: isSelect)
+                                        .hanlinFeedback(.selection, trigger: isSelect)
                                     }
                                 }
                             }
@@ -145,19 +151,19 @@ struct TranslationView: View {
                                 Image(systemName: "arrowtriangle.down.circle.fill")
                                     .resizable()
                                     .frame(width: 32, height: 32)
-                                    .foregroundColor(Color(.hlBluefont))
+                                    .foregroundColor(Color(.hanlinHLBluefont))
                                     .padding(8)
                             }
                         }
-                        .background(Color(.hlBluefont).opacity(0.1))
+                        .background(Color(.hanlinHLBluefont).opacity(0.1))
                         .clipShape(Circle())
                         .buttonStyle(.plain)
-                        .sensoryFeedback(.impact, trigger: isFeedBack)
+                        .hanlinFeedback(.impact, trigger: isFeedBack)
                     }
                     
                     // 选择目标语言
                     HStack {
-                        Picker(" 目标文本", selection: $targetLanguage) {
+                        Picker(String(localized: " 目标文本", bundle: HanlinLocalization.bundle), selection: $targetLanguage) {
                             ForEach(isChinese ? languageOptions : languageOptions_en, id: \.self) { language in
                                 Text(language)
                             }
@@ -182,8 +188,8 @@ struct TranslationView: View {
                     
                     // 翻译提供方 & 选择、复制、朗读按钮
                     HStack (spacing: 10) {
-                        Text("由 \(selectedModel?.displayName ?? "未知模型") 提供翻译")
-                            .font(.caption)
+                        Text(String(format: String(localized: "由 %@ 提供翻译", bundle: HanlinLocalization.bundle), selectedModel?.displayName ?? String(localized: "未知模型", bundle: HanlinLocalization.bundle)))
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.gray)
                         
                         Spacer()
@@ -193,7 +199,7 @@ struct TranslationView: View {
                             isTextSelectionSheetPresented = true
                         }) {
                             Image(systemName: "text.redaction")
-                                .font(.system(size: 14, weight: .medium))
+                                .font(HanlinTypography.fixed(size: 14, weight: .medium))
                                 .frame(width: 24, height: 24)
                                 .foregroundColor(.secondary)
                                 .clipShape(Circle())
@@ -219,7 +225,7 @@ struct TranslationView: View {
                                     .clipShape(Circle())
                             } else {
                                 Image(systemName: tts.isSpeaking ? "pause.circle" : "waveform")
-                                    .font(.system(size: 16, weight: .medium))
+                                    .font(HanlinTypography.fixed(size: 16, weight: .medium))
                                     .frame(width: 24, height: 24)
                                     .foregroundColor(tts.isSpeaking ? Color(.systemRed) : .secondary)
                                     .clipShape(Circle())
@@ -233,7 +239,7 @@ struct TranslationView: View {
                         // 复制按钮
                         Button(action: copyToClipboard) {
                             Image(systemName: isCopy ? "checkmark.circle" : "square.on.square")
-                                .font(.system(size: 14, weight: .medium))
+                                .font(HanlinTypography.fixed(size: 14, weight: .medium))
                                 .foregroundColor(isCopy ? Color(.systemGreen) : .secondary)
                                 .frame(width: 24, height: 24)
                                 .clipShape(Circle())
@@ -242,7 +248,7 @@ struct TranslationView: View {
                         }
                         .buttonStyle(.plain)
                         .disabled(translatedText.isEmpty)
-                        .sensoryFeedback(.success, trigger: isSuccess)
+                        .hanlinFeedback(.success, trigger: isSuccess)
                     }
                     .contentShape(Rectangle())
                     .allowsHitTesting(true)
@@ -252,21 +258,21 @@ struct TranslationView: View {
                 .background(
                     BlurView(style: .systemUltraThinMaterial) // 毛玻璃背景
                         .clipShape(RoundedRectangle(cornerRadius: 20))
-                        .shadow(color: .hlBluefont, radius: 1)
+                        .shadow(color: .hanlinHLBluefont, radius: 1)
                 )
                 
                 Button(action: {
                     // 打开 TranslationDicView
                     isShowTranslationDicView = true // 可替换为你自己的呈现逻辑
                 }) {
-                    Label("翻译词典", systemImage: "character.book.closed")
+                    Label(String(localized: "翻译词典", bundle: HanlinLocalization.bundle), systemImage: "character.book.closed")
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .background(
                             BlurView(style: .systemUltraThinMaterial)
                                 .clipShape(RoundedRectangle(cornerRadius: 20))
-                                .shadow(color: .hlBlue, radius: 1)
+                                .shadow(color: .hanlinHLBlue, radius: 1)
                         )
                 }
                 .buttonStyle(.plain)
@@ -276,8 +282,8 @@ struct TranslationView: View {
                 
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("温馨提示：即时功能不会保存你的数据，重要数据请及时备份！")
-                            .font(.caption)
+                        Text(String(localized: "温馨提示：即时功能不会保存你的数据，重要数据请及时备份！", bundle: HanlinLocalization.bundle))
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.gray)
                         Spacer()
                     }
@@ -353,7 +359,7 @@ struct TranslationView: View {
                     modelInfo: selectedModel,
                     targetLanguage: targetLanguage,
                     translationMatters: translationMatters,
-                    apiKey: apiInfo.key ?? "Unknown",
+                    apiKey: try HanlinAppProviderCredentials.shared.resolve(apiInfo) ?? "Unknown",
                     requestURL: apiInfo.requestURL ?? "Unknown"
                 )
                 
@@ -437,6 +443,10 @@ struct TranslationView: View {
 
 //MARK: 润色工具
 struct PolishView: View {
+    init(initialText: String = "") {
+        _inputText = State(initialValue: initialText)
+    }
+
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
     
@@ -468,7 +478,7 @@ struct PolishView: View {
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         let languageKey = currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"
         
-        guard let url = Bundle.main.url(forResource: "Refinement", withExtension: "json") else {
+        guard let url = HanlinApplicationResources.bundle.url(forResource: "Refinement", withExtension: "json") else {
             print("Refinement.json 文件未找到")
             return []
         }
@@ -492,10 +502,10 @@ struct PolishView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 30, height: 30)
-                        .foregroundColor(.hlGreen)
-                    Text("即时润色")
-                        .font(.system(size: 28, weight: .bold))
-                        .foregroundColor(.hlGreen)
+                        .foregroundColor(.hanlinHLGreen)
+                    Text(String(localized: "即时润色", bundle: HanlinLocalization.bundle))
+                        .font(HanlinTypography.fixed(size: 28, weight: .bold))
+                        .foregroundColor(.hanlinHLGreen)
                     Spacer()
                 }
                 .padding(.horizontal, 6)
@@ -504,13 +514,14 @@ struct PolishView: View {
                 VStack(spacing: 10) {
                     // 选择原文本
                     HStack {
-                        Text("现有文本")
+                        Text(String(localized: "现有文本", bundle: HanlinLocalization.bundle))
                         Spacer()
                     }
                     .padding(.top)
                     
                     // 输入框
                     TextEditor(text: $inputText)
+                        .accessibilityIdentifier("hanlin-writing-tool-input")
                         .padding(10)
                         .frame(height: 100)
                         .background(Color(.systemBackground))
@@ -518,39 +529,39 @@ struct PolishView: View {
                         .focused($isInputActive)
                     
                     HStack {
-                        Text("润色要求")
+                        Text(String(localized: "润色要求", bundle: HanlinLocalization.bundle))
                             .padding(.top, 5)
                         Spacer()
                     }
                     // 内容选择区
-                    Section(header: Text("内容风格")
+                    Section(header: Text(String(localized: "内容风格", bundle: HanlinLocalization.bundle))
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                     ) {
                         selectionGrid(for: "content")
                     }
 
                     // 格式选择区
-                    Section(header: Text("格式规范")
+                    Section(header: Text(String(localized: "格式规范", bundle: HanlinLocalization.bundle))
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                     ) {
                         selectionGrid(for: "format")
                     }
 
                     // 长度选择区
-                    Section(header: Text("内容长度")
+                    Section(header: Text(String(localized: "内容长度", bundle: HanlinLocalization.bundle))
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                     ) {
                         selectionGrid(for: "length")
                     }
                     
-                    Section(header: Text("特别要求")
+                    Section(header: Text(String(localized: "特别要求", bundle: HanlinLocalization.bundle))
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                     ) {
-                        TextField("要求描述...", text: $formatText)
+                        TextField(String(localized: "要求描述...", bundle: HanlinLocalization.bundle), text: $formatText)
                             .focused($isFormatActive)
                             .disabled(isPolish)
                             .padding()
@@ -560,9 +571,9 @@ struct PolishView: View {
                     }
                     
                     // 模型选择 & 润色按钮
-                    Section(header: Text("模型选择")
+                    Section(header: Text(String(localized: "模型选择", bundle: HanlinLocalization.bundle))
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                     ) {
                         HStack {
                             ScrollViewReader { scrollViewProxy in
@@ -577,10 +588,10 @@ struct PolishView: View {
                                                     scrollViewProxy.scrollTo(model.id, anchor: .center)
                                                 }
                                             }) {
-                                                toolModelButton(for: model, isSelected: selectedModel?.id == model.id, color: .hlGreen)
+                                                toolModelButton(for: model, isSelected: selectedModel?.id == model.id, color: .hanlinHLGreen)
                                             }
                                             .padding(.trailing, model.id == visibleModels.last?.id ? nil : 0)
-                                            .sensoryFeedback(.selection, trigger: isSelect)
+                                            .hanlinFeedback(.selection, trigger: isSelect)
                                         }
                                     }
                                 }
@@ -600,20 +611,20 @@ struct PolishView: View {
                                     Image(systemName: "arrowtriangle.down.circle.fill")
                                         .resizable()
                                         .frame(width: 32, height: 32)
-                                        .foregroundColor(Color(.hlGreen))
+                                        .foregroundColor(Color(.hanlinHLGreen))
                                         .padding(8)
                                 }
                             }
-                            .background(Color(.hlGreen).opacity(0.1))
+                            .background(Color(.hanlinHLGreen).opacity(0.1))
                             .clipShape(Circle())
                             .buttonStyle(.plain)
-                            .sensoryFeedback(.impact, trigger: isFeedBack)
+                            .hanlinFeedback(.impact, trigger: isFeedBack)
                         }
                     }
                     
                     // 润色文本
                     HStack {
-                        Text("润色文本")
+                        Text(String(localized: "润色文本", bundle: HanlinLocalization.bundle))
                         Spacer()
                     }
                     
@@ -633,15 +644,15 @@ struct PolishView: View {
                     
                     // 选择 & 朗读 & 复制
                     HStack (spacing: 10) {
-                        Text("由 \(selectedModel?.displayName ?? "未知模型") 提供润色")
-                            .font(.caption)
+                        Text(String(format: String(localized: "由 %@ 提供润色", bundle: HanlinLocalization.bundle), selectedModel?.displayName ?? String(localized: "未知模型", bundle: HanlinLocalization.bundle)))
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.gray)
                         Spacer()
                         Button(action: {
                             isTextSelectionSheetPresented = true
                         }) {
                             Image(systemName: "text.redaction")
-                                .font(.system(size: 14, weight: .medium))
+                                .font(HanlinTypography.fixed(size: 14, weight: .medium))
                                 .frame(width: 24, height: 24)
                                 .foregroundColor(.secondary)
                                 .clipShape(Circle())
@@ -665,7 +676,7 @@ struct PolishView: View {
                                     .clipShape(Circle())
                             } else {
                                 Image(systemName: tts.isSpeaking ? "pause.circle" : "waveform")
-                                    .font(.system(size: 16, weight: .medium))
+                                    .font(HanlinTypography.fixed(size: 16, weight: .medium))
                                     .frame(width: 24, height: 24)
                                     .foregroundColor(tts.isSpeaking ? Color(.systemRed) : .secondary)
                                     .clipShape(Circle())
@@ -678,7 +689,7 @@ struct PolishView: View {
                         
                         Button(action: copyToClipboard) {
                             Image(systemName: isCopy ? "checkmark.circle" : "square.on.square")
-                                .font(.system(size: 14, weight: .medium))
+                                .font(HanlinTypography.fixed(size: 14, weight: .medium))
                                 .foregroundColor(isCopy ? Color(.systemGreen) : .secondary)
                                 .frame(width: 24, height: 24)
                                 .clipShape(Circle())
@@ -687,7 +698,7 @@ struct PolishView: View {
                         }
                         .buttonStyle(.plain)
                         .disabled(polishedText.isEmpty)
-                        .sensoryFeedback(.success, trigger: isSuccess)
+                        .hanlinFeedback(.success, trigger: isSuccess)
                     }
                     .contentShape(Rectangle())
                     .allowsHitTesting(true)
@@ -697,13 +708,13 @@ struct PolishView: View {
                 .background(
                     BlurView(style: .systemUltraThinMaterial) // 毛玻璃背景
                         .clipShape(RoundedRectangle(cornerRadius: 20))
-                        .shadow(color: .hlGreen, radius: 1)
+                        .shadow(color: .hanlinHLGreen, radius: 1)
                 )
                 
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("温馨提示：即时功能不会保存你的数据，重要数据请及时备份！")
-                            .font(.caption)
+                        Text(String(localized: "温馨提示：即时功能不会保存你的数据，重要数据请及时备份！", bundle: HanlinLocalization.bundle))
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.gray)
                         Spacer()
                     }
@@ -711,7 +722,7 @@ struct PolishView: View {
                 }
             }
             .padding()
-            .tint(.hlGreen)
+            .tint(.hanlinHLGreen)
         }
         .onAppear {
             polishOptions = loadPolishOptions()
@@ -750,7 +761,7 @@ struct PolishView: View {
                     input: inputText,
                     modelInfo: selectedModel,
                     prompts: selectedPrompts,
-                    apiKey: apiInfo.key ?? "",
+                    apiKey: try HanlinAppProviderCredentials.shared.resolve(apiInfo) ?? "",
                     requestURL: apiInfo.requestURL ?? "Unknown"
                 )
                 
@@ -784,13 +795,13 @@ struct PolishView: View {
                     Text(option["name"]!)
                         .padding(.vertical)
                         .frame(maxWidth: .infinity, minHeight: 40) // 统一高度
-                        .background(isSelected(option) ? Color(.hlGreen).opacity(0.1) : Color(.systemGray).opacity(0.1))
-                        .foregroundColor(isSelected(option) ? Color.hlGreen : .gray)
+                        .background(isSelected(option) ? Color(.hanlinHLGreen).opacity(0.1) : Color(.systemGray).opacity(0.1))
+                        .foregroundColor(isSelected(option) ? Color.hanlinHLGreen : .gray)
                         .cornerRadius(20)
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                 }
                 .buttonStyle(.plain)
-                .sensoryFeedback(.selection, trigger: isSelect)
+                .hanlinFeedback(.selection, trigger: isSelect)
             }
         }
     }
@@ -833,6 +844,10 @@ struct PolishView: View {
 
 //MARK: 摘要工具
 struct SummaryView: View {
+    init(initialText: String = "") {
+        _inputText = State(initialValue: initialText)
+    }
+
     @Environment(\.dismiss) var dismiss
     @Environment(\.modelContext) private var modelContext
     
@@ -867,10 +882,10 @@ struct SummaryView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 30, height: 30)
-                        .foregroundColor(.hlCyanite)
-                    Text("即时摘要")
-                        .font(.system(size: 28, weight: .bold))
-                        .foregroundColor(.hlCyanite)
+                        .foregroundColor(.hanlinHLCyanite)
+                    Text(String(localized: "即时摘要", bundle: HanlinLocalization.bundle))
+                        .font(HanlinTypography.fixed(size: 28, weight: .bold))
+                        .foregroundColor(.hanlinHLCyanite)
                     Spacer()
                 }
                 .padding(.horizontal, 6)
@@ -879,13 +894,14 @@ struct SummaryView: View {
                 VStack(spacing: 10) {
                     // 选择原文本语言
                     HStack {
-                        Text("现有文本或网页链接")
+                        Text(String(localized: "现有文本或网页链接", bundle: HanlinLocalization.bundle))
                         Spacer()
                     }
                     .padding(.top)
                     
                     // 输入框
                     TextEditor(text: $inputText)
+                        .accessibilityIdentifier("hanlin-writing-tool-input")
                         .padding(10)
                         .frame(height: 100)
                         .background(Color(.systemBackground))
@@ -906,10 +922,10 @@ struct SummaryView: View {
                                     ForEach(selectedURLs, id: \.self) { url in
                                         HStack {
                                             Image(systemName: "link")
-                                                .foregroundColor(.hlCyanite)
-                                                .font(.footnote)
+                                                .foregroundColor(.hanlinHLCyanite)
+                                                .font(HanlinTypography.footnote)
                                             Text(url)
-                                                .font(.footnote)
+                                                .font(HanlinTypography.footnote)
                                                 .foregroundColor(.primary)
                                                 .lineLimit(1)
                                                 .truncationMode(.middle)
@@ -919,7 +935,7 @@ struct SummaryView: View {
                                                 removeURL(url)
                                             }) {
                                                 Image(systemName: "xmark.circle.fill")
-                                                    .foregroundColor(.hlRed)
+                                                    .foregroundColor(.hanlinHLRed)
                                             }
                                         }
                                         .padding(6)
@@ -948,10 +964,10 @@ struct SummaryView: View {
                                                 scrollViewProxy.scrollTo(model.id, anchor: .center)
                                             }
                                         }) {
-                                            toolModelButton(for: model, isSelected: selectedModel?.id == model.id, color: .hlCyanite)
+                                            toolModelButton(for: model, isSelected: selectedModel?.id == model.id, color: .hanlinHLCyanite)
                                         }
                                         .padding(.trailing, model.id == visibleModels.last?.id ? nil : 0)
-                                        .sensoryFeedback(.selection, trigger: isSelect)
+                                        .hanlinFeedback(.selection, trigger: isSelect)
                                     }
                                 }
                             }
@@ -971,19 +987,19 @@ struct SummaryView: View {
                                 Image(systemName: "arrowtriangle.down.circle.fill")
                                     .resizable()
                                     .frame(width: 32, height: 32)
-                                    .foregroundColor(Color(.hlCyanite))
+                                    .foregroundColor(Color(.hanlinHLCyanite))
                                     .padding(8)
                             }
                         }
-                        .background(Color(.hlCyanite).opacity(0.1))
+                        .background(Color(.hanlinHLCyanite).opacity(0.1))
                         .clipShape(Circle())
                         .buttonStyle(.plain)
-                        .sensoryFeedback(.impact, trigger: isFeedBack)
+                        .hanlinFeedback(.impact, trigger: isFeedBack)
                     }
                     
                     // 摘要文本
                     HStack {
-                        Text("摘要文本")
+                        Text(String(localized: "摘要文本", bundle: HanlinLocalization.bundle))
                         Spacer()
                     }
                     
@@ -1003,8 +1019,8 @@ struct SummaryView: View {
                     
                     // 选择、朗读、复制按钮
                     HStack (spacing: 10) {
-                        Text("由 \(selectedModel?.displayName ?? "未知模型") 进行摘要")
-                            .font(.caption)
+                        Text(String(format: String(localized: "由 %@ 进行摘要", bundle: HanlinLocalization.bundle), selectedModel?.displayName ?? String(localized: "未知模型", bundle: HanlinLocalization.bundle)))
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.gray)
                         Spacer()
                         // 文本选择
@@ -1012,7 +1028,7 @@ struct SummaryView: View {
                             isTextSelectionSheetPresented = true
                         }) {
                             Image(systemName: "text.redaction")
-                                .font(.system(size: 14, weight: .medium))
+                                .font(HanlinTypography.fixed(size: 14, weight: .medium))
                                 .frame(width: 24, height: 24)
                                 .foregroundColor(.secondary)
                                 .clipShape(Circle())
@@ -1037,7 +1053,7 @@ struct SummaryView: View {
                                     .clipShape(Circle())
                             } else {
                                 Image(systemName: tts.isSpeaking ? "pause.circle" : "waveform")
-                                    .font(.system(size: 16, weight: .medium))
+                                    .font(HanlinTypography.fixed(size: 16, weight: .medium))
                                     .frame(width: 24, height: 24)
                                     .foregroundColor(tts.isSpeaking ? Color(.systemRed) : .secondary)
                                     .clipShape(Circle())
@@ -1050,7 +1066,7 @@ struct SummaryView: View {
                         // 复制按钮
                         Button(action: copyToClipboard) {
                             Image(systemName: isCopy ? "checkmark.circle" : "square.on.square")
-                                .font(.system(size: 14, weight: .medium))
+                                .font(HanlinTypography.fixed(size: 14, weight: .medium))
                                 .foregroundColor(isCopy ? Color(.systemGreen) : .secondary)
                                 .frame(width: 24, height: 24)
                                 .clipShape(Circle())
@@ -1059,7 +1075,7 @@ struct SummaryView: View {
                         }
                         .buttonStyle(.plain)
                         .disabled(summaryText.isEmpty)
-                        .sensoryFeedback(.success, trigger: isSuccess)
+                        .hanlinFeedback(.success, trigger: isSuccess)
                     }
                     .contentShape(Rectangle())
                     .allowsHitTesting(true)
@@ -1069,13 +1085,13 @@ struct SummaryView: View {
                 .background(
                     BlurView(style: .systemUltraThinMaterial) // 毛玻璃背景
                         .clipShape(RoundedRectangle(cornerRadius: 20))
-                        .shadow(color: .hlCyanite, radius: 1)
+                        .shadow(color: .hanlinHLCyanite, radius: 1)
                 )
                 
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("温馨提示：即时功能不会保存你的数据，重要数据请及时备份！")
-                            .font(.caption)
+                        Text(String(localized: "温馨提示：即时功能不会保存你的数据，重要数据请及时备份！", bundle: HanlinLocalization.bundle))
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.gray)
                         Spacer()
                     }
@@ -1083,7 +1099,7 @@ struct SummaryView: View {
                 }
             }
             .padding()
-            .tint(.hlCyanite)
+            .tint(.hanlinHLCyanite)
         }
         .onAppear {
             if selectedModel == nil, let firstModel = filteredModels.first {
@@ -1159,7 +1175,7 @@ struct SummaryView: View {
                 let stream = try await generateSummaryAPI(
                     input: combinedInput,
                     modelInfo: selectedModel,
-                    apiKey: apiInfo.key ?? "",
+                    apiKey: try HanlinAppProviderCredentials.shared.resolve(apiInfo) ?? "",
                     requestURL: apiInfo.requestURL ?? "Unknown"
                 )
                 
@@ -1193,12 +1209,13 @@ struct SummaryView: View {
 }
 
 // 模型按钮
+@MainActor
 func toolModelButton(for model: AllModels, isSelected: Bool, color: Color) -> some View {
     HStack(spacing: 8) {
         if isSelected {
             // 激活状态，使用原图颜色
             if model.identity == "model" {
-                Image(getCompanyIcon(for: model.company ?? "Unknown"))
+                Image(hanlinAsset: getCompanyIcon(for: model.company ?? "Unknown"))
                     .renderingMode(.original)
                     .resizable()
                     .scaledToFit()
@@ -1228,7 +1245,7 @@ func toolModelButton(for model: AllModels, isSelected: Bool, color: Color) -> so
         } else {
             if model.identity == "model" {
                 // 非激活状态，使用模板模式配合 foregroundColor 上色
-                Image(getCompanyIcon(for: model.company ?? "Unknown"))
+                Image(hanlinAsset: getCompanyIcon(for: model.company ?? "Unknown"))
                     .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
@@ -1250,36 +1267,36 @@ func toolModelButton(for model: AllModels, isSelected: Bool, color: Color) -> so
 
         if isSelected {
             Text(model.displayName ?? "Unknown")
-                .font(.caption)
+                .font(HanlinTypography.caption)
                 .foregroundColor(color)
                 .transition(.opacity.combined(with: .move(edge: .leading)))
             if model.supportsReasoning {
-                Text("思考")
-                    .font(.caption)
+                Text(String(localized: "思考", bundle: HanlinLocalization.bundle))
+                    .font(HanlinTypography.caption)
                     .foregroundColor(Color(.systemPurple))
                     .transition(.opacity)
             }
             if model.supportsImageGen {
-                Text("生图")
-                    .font(.caption)
+                Text(String(localized: "生图", bundle: HanlinLocalization.bundle))
+                    .font(HanlinTypography.caption)
                     .foregroundColor(.green)
                     .transition(.opacity)
             }
             if model.supportsVoiceGen {
-                Text("音频")
-                    .font(.caption)
+                Text(String(localized: "音频", bundle: HanlinLocalization.bundle))
+                    .font(HanlinTypography.caption)
                     .foregroundColor(.pink)
                     .transition(.opacity)
             }
             if model.price == 0 {
-                Text("免费")
-                    .font(.caption)
+                Text(String(localized: "免费", bundle: HanlinLocalization.bundle))
+                    .font(HanlinTypography.caption)
                     .foregroundColor(Color(.systemGreen))
                     .transition(.opacity)
             }
             if model.company?.uppercased() == "LOCAL" {
-                Text("本地")
-                    .font(.caption)
+                Text(String(localized: "本地", bundle: HanlinLocalization.bundle))
+                    .font(HanlinTypography.caption)
                     .foregroundColor(Color(.systemOrange))
                     .transition(.opacity)
             }
@@ -1298,26 +1315,26 @@ private func background(for model: AllModels, isSelected: Bool) -> some View {
     if let special {
         LinearGradient(
             colors: [
-                (isSelected ? Color(.hlBluefont) : Color(.systemGray)).opacity(0.1),
+                (isSelected ? Color(.hanlinHLBluefont) : Color(.systemGray)).opacity(0.1),
                 special.opacity(0.1)
             ],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )
     } else {
-        (isSelected ? Color(.hlBluefont) : Color(.systemGray)).opacity(0.1)
+        (isSelected ? Color(.hanlinHLBluefont) : Color(.systemGray)).opacity(0.1)
     }
 }
 
 private func specialColor(for model: AllModels) -> Color? {
     if model.company?.uppercased() == "LOCAL" {
-        return .hlOrange
+        return .hanlinHLOrange
     } else if model.supportsReasoning {
-        return .hlPurple
+        return .hanlinHLPurple
     } else if model.supportsMultimodal {
         return .teal
     } else if model.supportsImageGen {
-        return Color.hlGreen
+        return Color.hanlinHLGreen
     } else if model.supportsVoiceGen {
         return .pink
     } else if model.price == 0 {

@@ -1,0 +1,209 @@
+{
+  "schema": 1,
+  "status": "SOURCE_ONLY_NOT_COMPILED_OR_EXECUTED",
+  "task": "/root/w2_source_resume",
+  "baseCommit": "4d6809376bcdd65666c1410aa2c35ddc1f27e86b",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-catalog-spotlight-readiness-20261128",
+  "source": [
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
+      "originalSHA256": "411e14d15044a86e6313b2c75bce1a1b29a24b0601db4938d05b57fa2a2a3bc4",
+      "candidateSHA256": "1de0f3645c522a9ebe38fd94dbba7f4705ae39d368ab5a47c400768821b973ed",
+      "originalBytes": 13148,
+      "candidateBytes": 17522,
+      "wholeFileInverse": true,
+      "transformationOffsets": [
+        {
+          "label": "owned-worker-and-dependencies",
+          "offset": 697,
+          "oldBytes": 68,
+          "newBytes": 1956
+        },
+        {
+          "label": "projection-call-boundary",
+          "offset": 4262,
+          "oldBytes": 103,
+          "newBytes": 342
+        },
+        {
+          "label": "synchronous-publication-and-index-request",
+          "offset": 4942,
+          "oldBytes": 240,
+          "newBytes": 324
+        },
+        {
+          "label": "remove-only-index-wait-from-capture-caller",
+          "offset": 6583,
+          "oldBytes": 979,
+          "newBytes": 0
+        },
+        {
+          "label": "preserve-awaited-capture-via-default-dependency",
+          "offset": 6777,
+          "oldBytes": 92,
+          "newBytes": 51
+        },
+        {
+          "label": "single-coalescing-index-worker",
+          "offset": 7436,
+          "oldBytes": 45,
+          "newBytes": 2069
+        },
+        {
+          "label": "explicit-reindex-admission",
+          "offset": 10093,
+          "oldBytes": 201,
+          "newBytes": 318
+        },
+        {
+          "label": "explicit-latest-generation-acknowledgment",
+          "offset": 10490,
+          "oldBytes": 55,
+          "newBytes": 338
+        },
+        {
+          "label": "active-write-ownership",
+          "offset": 11008,
+          "oldBytes": 88,
+          "newBytes": 248
+        },
+        {
+          "label": "real-operation-seam-and-serialized-success-commit",
+          "offset": 13196,
+          "oldBytes": 1178,
+          "newBytes": 2016
+        },
+        {
+          "label": "remove-late-caller-cache-commit",
+          "offset": 16004,
+          "oldBytes": 239,
+          "newBytes": 0
+        }
+      ]
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "originalSHA256": "bfdd4be6c3e5bb28a15c43be589cb87c9ee58ce80daa794ef8fd4adf478c7b50",
+      "candidateSHA256": "fef6a058c6b06838e64089933424803e66deeb30bbe9ecac1e7e24aca839fa95",
+      "originalBytes": 187575,
+      "candidateBytes": 187644,
+      "wholeFileInverse": true,
+      "transformationOffsets": [
+        {
+          "label": "transfer-quiescence-includes-owned-index-work",
+          "offset": 19292,
+          "oldBytes": 76,
+          "newBytes": 145
+        }
+      ]
+    },
+    {
+      "path": "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests.swift",
+      "originalSHA256": "1fab9f68f93dc039eac8056ece59c324c6be50b00cdd462a3f569e557707bec2",
+      "candidateSHA256": "92eeb439bd1682a607cb45ebfbffd89e43d3b8bc70ef6dbb4d7e3d8feec35f89",
+      "originalBytes": 23843,
+      "candidateBytes": 38617,
+      "wholeFileInverse": true,
+      "transformationOffsets": []
+    }
+  ],
+  "patchSHA256": "70222bef183169c8b91d4ec8f5e0f65c4bd93ab01210079078cff0318a809d7a",
+  "patchGzipSHA256": "e8805c712ac6dbb0555982fad492a30287fd8d6c610f3ed210471353d6ec9bf6",
+  "unchangedAuthorities": [
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift",
+      "bytes": 15879,
+      "sha256": "b5c85cdbef728883979b16785fac3b1acce0c839966046f352ef0d6cb22cc5c7",
+      "unchangedFromC990": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
+      "bytes": 10013,
+      "sha256": "416b7a39e1a2ccd11c2761639ace808d731edd5ec25b6725e69ed1cd9ce3bd67",
+      "unchangedFromC990": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+      "bytes": 8150,
+      "sha256": "30c9f16a73a7a485ec6dffbb5fc4eaebb62182ba0c84ac09eee8473d64d47028",
+      "unchangedFromC990": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift",
+      "bytes": 10883,
+      "sha256": "c1a226e995240acf6c200faf15d10cbcb391c0b702f6bc3e77bc25842494a83b",
+      "unchangedFromC990": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemCatalog.swift",
+      "bytes": 5208,
+      "sha256": "2d98c0ad4f27a1da489a2a4ea295e42450e3c083b8e07bb5a617ed5d9da0290a",
+      "unchangedFromC990": true
+    }
+  ],
+  "nativeSourceEvidence": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-spotlight-catalog-readiness-boundary-c9908a25/source-diagnosis-and-proposal.json",
+      "sha256": "7127f675993e678364dd0851c45854afb0dfeaf120527c0d01d8ab17d08bfb5e",
+      "bytes": 7963
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-editor-state-9a76309c-selected-r1/catalog-source-binding.json",
+      "sha256": "cdb63f48ceef92d4b7621d4f24011d492435cb0dd1388400839cc5eca26f6508",
+      "bytes": 11592
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-editor-state-9a76309c-selected-r1/case-owned-catalog-phase-bindings.json",
+      "sha256": "1155934380310212d7bb678289d563c479a4c13e2129107225809452e9f9960b",
+      "bytes": 269597
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-gallery-recovery-9a76309c-selected-r1/case-owned-catalog-phase-bindings.json",
+      "sha256": "b70ab3902cf2937809908e982cd3e52d96114e3ee577f45dbf2adbcecd667398",
+      "bytes": 554345
+    }
+  ],
+  "measuredSDKSourceInputs": 396,
+  "sdkManifest": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/final-sdk-700664fd-pass/sdk/current-miniapp-sdk.json",
+    "sha256": "4819de6f518a2b9ea1c6e3c80a3567dbf46ef0ec886e883be162bb77766be480"
+  },
+  "sdkChangedInputs": [
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
+      "manifestSHA256": "411e14d15044a86e6313b2c75bce1a1b29a24b0601db4938d05b57fa2a2a3bc4",
+      "candidateSHA256": "1de0f3645c522a9ebe38fd94dbba7f4705ae39d368ab5a47c400768821b973ed"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "manifestSHA256": "bfdd4be6c3e5bb28a15c43be589cb87c9ee58ce80daa794ef8fd4adf478c7b50",
+      "candidateSHA256": "fef6a058c6b06838e64089933424803e66deeb30bbe9ecac1e7e24aca839fa95"
+    }
+  ],
+  "packagesTree": "6ca9aa6021c09a89387acf990b2a89f206796c24",
+  "originalMethods": 9,
+  "addedMethods": 6,
+  "totalMethods": 15,
+  "originalTestsWholeFileRecovered": true,
+  "diffCheck": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "reversePatchCheck": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "nativeExecuted": false,
+  "portableTestsExecuted": false,
+  "productionCaptureFileChanged": false,
+  "originalReadinessAwaitBodies": "Entire Platform inverse is one transfer guard insertion; original durable snapshot/LiveActivity/System/Capture/config calls remain. System moves only index work to its worker.",
+  "limitations": [
+    "Real Apple compilation and all 15 XCTest methods remain NOT_RUN on this candidate.",
+    "No native UI/OS/SDK pass is inferred.",
+    "Conditional OS callback cycle remains unproven and is not claimed repaired.",
+    "Capture and other original readiness awaits remain; coalesced Capture callers preserve their original fast return.",
+    "An actually pending index operation keeps transfer busy; no fabricated completion or timeout was added."
+  ]
+}

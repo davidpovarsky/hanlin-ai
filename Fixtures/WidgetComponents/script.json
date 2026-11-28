@@ -1,0 +1,28 @@
+{
+  "name": "Widget Components Pilot",
+  "version": "1.0.0",
+  "entry": "widget.jsx",
+  "kind": "widget",
+  "widgetEngine": "expo",
+  "hanlinRuntime": "hanlin-expo",
+  "hanlinWidget": {
+    "abiVersion": 1,
+    "sourceFormat": "jsx",
+    "families": [
+      "systemSmall",
+      "systemMedium",
+      "systemLarge",
+      "systemExtraLarge",
+      "systemExtraLargePortrait",
+      "accessoryCircular",
+      "accessoryRectangular",
+      "accessoryInline"
+    ],
+    "actions": [
+      {
+        "id": "increment",
+        "kind": "expoCallback"
+      }
+    ]
+  }
+}

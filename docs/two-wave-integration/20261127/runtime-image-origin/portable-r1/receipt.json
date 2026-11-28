@@ -1,0 +1,47 @@
+{
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_runtime_image_origin.py",
+    "-v"
+  ],
+  "cwd": "/workspace/scratch/d49eec8920ef/w2-image-origin/candidate",
+  "exitCode": 0,
+  "finishedEpoch": 1795785912.8748622,
+  "inputs": {
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": {
+      "bytes": 97358,
+      "sha256": "3a989ba8a8dad3d76441ef206d8b41d91c1202672f5141054215fd2c94e77607"
+    },
+    "Scripts/CI/Tests/test_runtime_image_origin.py": {
+      "bytes": 17801,
+      "sha256": "1eb6d11cb8b54314dae14c12e1e75608fd68bd313b789736ad6794edf9af9cc6"
+    },
+    "Scripts/ProductSplit/observe_runtime_image_origin.py": {
+      "bytes": 42789,
+      "sha256": "4d9832562f68643cbefa307e423f094f41ba51ba1e1ce2275cef2058a6f23be1"
+    },
+    "Scripts/ProductSplit/run_native_acceptance.py": {
+      "bytes": 64064,
+      "sha256": "ad292cae96fe84b8c7672c21b83d790b97b12d3f73ec344466993e595db8f7b3"
+    }
+  },
+  "kind": "CONTROLLED_READER_AND_PROTOCOL_TESTS_NOT_NATIVE_EXECUTION",
+  "outputs": {
+    "stderr.log": {
+      "bytes": 3015,
+      "sha256": "13b296ec8853ca10f163eff95dffab8d3661d628fc6cb168db716a6a73c55984"
+    },
+    "stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "python": "3.12.14",
+  "startedEpoch": 1795785912.635623
+}

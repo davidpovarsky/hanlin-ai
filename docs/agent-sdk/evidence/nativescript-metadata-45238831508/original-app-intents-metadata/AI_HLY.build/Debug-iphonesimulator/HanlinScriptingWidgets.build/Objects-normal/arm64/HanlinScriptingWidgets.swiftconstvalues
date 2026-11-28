@@ -1,0 +1,50 @@
+[
+  {
+    "typeName": "HanlinScriptingWidgetsHost.HanlinScriptingWidgetIntents",
+    "mangledTypeName": "26HanlinScriptingWidgetsHost0aB13WidgetIntentsV",
+    "kind": "struct",
+    "file": "/Users/runner/work/hanlin-ai/hanlin-ai/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+    "line": 15,
+    "conformances": [
+      "AppIntents.AppIntentsPackage",
+      "Swift.Sendable",
+      "Swift.BitwiseCopyable"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "AppIntents.AppIntentsPackage",
+        "conformanceDefiningModule": "HanlinScriptingWidgetsHost"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "HanlinScriptingWidgetsHost"
+      },
+      {
+        "protocolName": "Swift.BitwiseCopyable",
+        "conformanceDefiningModule": "HanlinScriptingWidgetsHost"
+      }
+    ],
+    "associatedTypeAliases": [],
+    "properties": [
+      {
+        "label": "includedPackages",
+        "type": "Swift.Array<any AppIntents.AppIntentsPackage.Type>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "true",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "line": 16,
+        "valueKind": "Array",
+        "value": [
+          {
+            "valueKind": "Type",
+            "value": {
+              "type": "HanlinScriptingWidgets.HanlinWidgetIntentsPackage",
+              "mangledName": "22HanlinScriptingWidgets0A20WidgetIntentsPackageV"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,35 @@
+{
+  "sourceCommit": "08a6e52a6f03ac3223de1f0e9e35e59936ddf318",
+  "parent": "3ab83672440fa6f588611fe91db5d746099b038c",
+  "clean": true,
+  "paths": [
+    {
+      "path": "Scripts/ProductSplit/capture_swift_module_provenance.py",
+      "afterSHA256": "dd2c3ba670a5b74f139b4a57e29d9c6dce72ae9ef529d3fbfc68fcbe88ee7b06",
+      "bytes": 14031
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "afterSHA256": "d26555b15ba50e8890ffe4a3a83e56ec9f8cdaec91a6ae6137ed0c9068d34320",
+      "bytes": 97454,
+      "beforeSHA256": "38b7c4e8a3cc3051018497f5eb5edcbb94bb73ba41953eb0cc0562fab71337a7"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_native_acceptance.py",
+      "afterSHA256": "f9982e58d166f780781f7181692877592b60d3b15cd7374dbaa458de37331a3f",
+      "bytes": 64540,
+      "beforeSHA256": "ad292cae96fe84b8c7672c21b83d790b97b12d3f73ec344466993e595db8f7b3"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_swift_module_provenance.py",
+      "afterSHA256": "72bb3d2b40fd7c5ed18ca3bd25dbbf0d541564b8a8c2c0721d3ddd1d9dc52e4d",
+      "bytes": 17618
+    }
+  ],
+  "patchSHA256": "da163ca1e8da3594bd630d58fec7014a3a528df5916cf219ace15201737b8995",
+  "independentMacReviewSHA256": "39f5438807041409addda51dc2c097ab932af77b3a701e1a9696214f0a2cd9de",
+  "rootApproval": "Root approved unchanged four-path source/deadline/scope after independent Mac review.",
+  "portableTests": 15,
+  "portableExit": 0,
+  "native": "NOT_RUN"
+}

@@ -1,0 +1,52 @@
+{
+  "at": "2026-11-28T13:14:32.789436+00:00",
+  "status": "FROZEN_SOURCE_ONLY_REVIEW_TYPECHECK_AND_NATIVE_PENDING",
+  "sourceBase": "1ea6ab198151169236f473ab906993ff18d0c74c",
+  "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "beforeSHA256": "94287f72d62edf8e15a77a01cc6b7869d46b591575f811886e0c5fe3661eeb93",
+  "afterSHA256": "463f118a38c6945eac42ed0d66037d9a6f4925092897f5eb4983e64f0ba88a6c",
+  "beforeBytes": 294721,
+  "afterBytes": 298143,
+  "patchSHA256": "6f33bc0f4767b41678a5091899a728a9ea2ef8a49c6a5b13008ccf51dad9cee1",
+  "observedFailure": {
+    "run": 46137555932,
+    "source": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+    "originalCaseAllowanceSeconds": 420,
+    "originalLog": "169.56 icon long press; 171.92-231.96 animation wait, 233.05-293.08 Options prewait,294.23-354.27 Options postwait,355.10-415.14 Edit Home Screen prewait; Edit control exists417.62. No provider before original420 deadline.",
+    "laterThreeCases": "Observer correctly rejected unfinished prior family; no independent later placement."
+  },
+  "actualEvidence": {
+    "terminalReceiptSHA256": "1ca608be9c19c46ad670fae1ff14f6091e618c640cca8a6a439d6beb48b83183",
+    "axPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-shortcuts-families-terminal-r1/attachments-r1/families/artifact-selected-members/paired-product/paired-attachments/1B8D78CE-3ABD-41C9-A11A-6CE69970608E.txt",
+    "axSHA256": "f3d3eb45eab6f8149de25b0dd72eddd38b3f7c14709ce6f8f31e770668d22e28",
+    "pngPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-shortcuts-families-terminal-r1/attachments-r1/families/artifact-selected-members/paired-product/paired-attachments/C21E7F2A-7EC5-40DC-AE63-D9EF47B5FA6B.png",
+    "pngSHA256": "abbabe7c9992b01c54f77e464e1b609b6ea20ded6758cc340bca504e73c87c93",
+    "rootVisuallyInspectedPNG": true,
+    "visual": "Actual portrait Home Screen page2, installed Hanlin MiniApps icon and empty central/lower background, no placed Matrix/placeholder."
+  },
+  "publicAPIAuthorities": [
+    "https://support.apple.com/guide/ipad/customize-apps-and-widgets-on-the-home-screen-ipad1b2665da/ipados",
+    "https://developer.apple.com/documentation/xcuiautomation/xcuielementsnapshotproviding",
+    "https://developer.apple.com/documentation/xcuiautomation/xcuielementsnapshot",
+    "https://developer.apple.com/documentation/xcuiautomation/xcuielementattributes/frame"
+  ],
+  "semantics": "Use the documented background hold on one live unique Home screen icons snapshot. Require the observed unique unnamed full-screen background leaf, finite bounded geometry, and a point with16point clearance from all other leaf/icon frames. Keep actual MiniApps-page identity/empty-placement checks. Require and tap unique actual Edit, then original Add Widget/provider/family flow.",
+  "unchanged": [
+    "All47 original test identities and methods",
+    "Existing gallery exact provider/kind/family selector repair",
+    "All original placement/configuration/state/nonce/rotation/cleanup assertions",
+    "420case and35gallery allowances",
+    "System quiescence settings, animation settings, XCTest selector set, fixtures, runtime and SDK"
+  ],
+  "wholeOriginalInverse": true,
+  "forwardAndReverseProjection": true,
+  "testsRun": 0,
+  "typecheckRun": 0,
+  "nativeRun": 0,
+  "limitations": "This is a source repair for a concrete context-menu wait path. No prediction of native timing or successful placement; original full native case must establish the outcome.",
+  "previousCandidateManifestSHA256": "52827dd333116c25c933b40eabeaa496ab88e7008e4be62a05b548de80516e0b",
+  "r2ReviewCorrection": "Require exact query counts of1 for Home screen icons and the actual Edit button in the new helper only. Existing geometric uniqueness helper and all original methods remain unchanged from R1.",
+  "r1ToR2WholeInverse": true,
+  "r1ToR2PatchSHA256": "c0a711548a15cebb32172f2b55fe249a1b0dc06fefb1352188a2c257786fe323",
+  "sourceOnly": true
+}

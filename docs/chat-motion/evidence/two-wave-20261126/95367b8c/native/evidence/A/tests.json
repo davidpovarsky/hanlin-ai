@@ -1,0 +1,59 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+      "deviceName" : "Hanlin-Phase2-Motion-local-motion-dacb4ca5-20261126-1",
+      "modelName" : "iPad Pro 13-inch (M5)",
+      "osBuildNumber" : "24B8117",
+      "osVersion" : "27.2",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "5m 41s",
+                  "durationInSeconds" : 341.67755794525146,
+                  "name" : "testAAllFivePresetsTwentyCompleteCyclesEach()",
+                  "nodeIdentifier" : "MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests/MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "MotionUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests/MotionUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "ChatMotionProofUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "ChatMotionProof",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

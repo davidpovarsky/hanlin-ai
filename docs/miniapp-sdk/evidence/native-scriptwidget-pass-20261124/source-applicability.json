@@ -1,0 +1,200 @@
+{
+  "schemaVersion": 1,
+  "executedSource": "71d176315dea14e4db524f9da642bfdca5a46618",
+  "targetSource": "6d9a59bfc1bd1830a8d56e694c42b19c6bd7d468",
+  "targetStatus": "REUSED_VERIFIED_PASS",
+  "caseCount": 2,
+  "reason": "The complete commit range changes only the separate paired-product Python runner/test and excluded evidence. The isolated workflow directly invokes swift test on Packages/HanlinPlatform. Both selected test sources/assertions, the full Packages tree (including implementation, fixtures, resources and local dependency manifests), MiniApps producer tree and workflow tree are byte-identical. No new execution at the target source is claimed.",
+  "comparisonMethod": [
+    "git diff --name-status 71d176315dea14e4db524f9da642bfdca5a46618 6d9a59bfc1bd1830a8d56e694c42b19c6bd7d468",
+    "git rev-parse <commit>:<subtree>",
+    "git show <commit>:<source> with SHA256 of exact bytes"
+  ],
+  "changedPaths": [
+    "Scripts/ProductSplit/run_paired_acceptance.py",
+    "Scripts/ProductSplit/test_run_paired_acceptance.py",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/README.md",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/SHA256SUMS",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_build_phase_aggregation_requires_both_builds_and_ignores_cleanup/active-command.json",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_build_phase_aggregation_requires_both_builds_and_ignores_cleanup/ai-build.log",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_build_phase_aggregation_requires_both_builds_and_ignores_cleanup/cleanup.log",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_build_phase_aggregation_requires_both_builds_and_ignores_cleanup/command-events.jsonl",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_build_phase_aggregation_requires_both_builds_and_ignores_cleanup/commands.jsonl",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_build_phase_aggregation_requires_both_builds_and_ignores_cleanup/mini-build.log",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup/active-command.json",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup/cleanup.log",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup/command-events.jsonl",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup/commands.jsonl",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup/driver.log",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup/interruption-observation.json",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup/unfinished.log",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_failed_minibuild_records_execution_without_starting_ai_or_ui/acceptance/acceptance.json",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_failed_minibuild_records_execution_without_starting_ai_or_ui/acceptance/active-command.json",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_failed_minibuild_records_execution_without_starting_ai_or_ui/acceptance/command-events.jsonl",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_failed_minibuild_records_execution_without_starting_ai_or_ui/acceptance/commands.jsonl",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_failed_minibuild_records_execution_without_starting_ai_or_ui/acceptance/mini-build.log",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt/active-command.json",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt/child-cleanup.json",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt/command-events.jsonl",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt/driver.log",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt/interrupted.log",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_launch_failure_is_not_reported_as_an_executed_build/active-command.json",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_launch_failure_is_not_reported_as_an_executed_build/command-events.jsonl",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_launch_failure_is_not_reported_as_an_executed_build/mini-build.log",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_nonzero_and_signal_exit_keep_failure_policy_without_inventing_timeout/active-command.json",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_nonzero_and_signal_exit_keep_failure_policy_without_inventing_timeout/allowed.log",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_nonzero_and_signal_exit_keep_failure_policy_without_inventing_timeout/command-events.jsonl",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_nonzero_and_signal_exit_keep_failure_policy_without_inventing_timeout/commands.jsonl",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_nonzero_and_signal_exit_keep_failure_policy_without_inventing_timeout/failed.log",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_nonzero_and_signal_exit_keep_failure_policy_without_inventing_timeout/signal.log",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_success_keeps_streamed_output_environment_and_completed_contract/active-command.json",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_success_keeps_streamed_output_environment_and_completed_contract/command-events.jsonl",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_success_keeps_streamed_output_environment_and_completed_contract/commands.jsonl",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_success_keeps_streamed_output_environment_and_completed_contract/success.log",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_timeout_retains_partial_output_kills_child_and_preserves_minus_one/active-command.json",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_timeout_retains_partial_output_kills_child_and_preserves_minus_one/command-events.jsonl",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_timeout_retains_partial_output_kills_child_and_preserves_minus_one/commands.jsonl",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_timeout_retains_partial_output_kills_child_and_preserves_minus_one/timeout-error.log",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/green-command-evidence/test_timeout_retains_partial_output_kills_child_and_preserves_minus_one/timeout.log",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/minibuild-reporting-red.command.json",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/minibuild-reporting-red.stderr.txt",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/minibuild-reporting-red.stdout.txt",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/phase-reporting-green.command.json",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/phase-reporting-green.stderr.txt",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/phase-reporting-green.stdout.txt",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/real-run10-reconciliation.json",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/receipt.json",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/red-command-evidence/test_failed_minibuild_records_execution_without_starting_ai_or_ui/acceptance/acceptance.json",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/red-command-evidence/test_failed_minibuild_records_execution_without_starting_ai_or_ui/acceptance/active-command.json",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/red-command-evidence/test_failed_minibuild_records_execution_without_starting_ai_or_ui/acceptance/command-events.jsonl",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/red-command-evidence/test_failed_minibuild_records_execution_without_starting_ai_or_ui/acceptance/commands.jsonl",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/red-command-evidence/test_failed_minibuild_records_execution_without_starting_ai_or_ui/acceptance/mini-build.log",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/source-changes.patch.gz",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/source-contract-comparison.json",
+    "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/source-whitespace.json"
+  ],
+  "treeIdentities": [
+    {
+      "path": "Packages",
+      "executedGitTree": "deba5025ff3a6a5ef4cf132f0135be7d939dcd1b",
+      "targetGitTree": "deba5025ff3a6a5ef4cf132f0135be7d939dcd1b",
+      "identical": true
+    },
+    {
+      "path": "Scripts/MiniApps",
+      "executedGitTree": "1d5d544f9fdaf325d1563bf176504d8cbb905a77",
+      "targetGitTree": "1d5d544f9fdaf325d1563bf176504d8cbb905a77",
+      "identical": true
+    },
+    {
+      "path": ".github/workflows",
+      "executedGitTree": "1de48e2171d0390515f1f37423bca34679ca306e",
+      "targetGitTree": "1de48e2171d0390515f1f37423bca34679ca306e",
+      "identical": true
+    }
+  ],
+  "fileIdentities": [
+    {
+      "path": "Package.swift",
+      "bytes": 83299,
+      "executedSHA256": "dcc55c511a8d1238b0dd9f8d6189351cf9311a8923e151fc5eee73464a02afdd",
+      "targetSHA256": "dcc55c511a8d1238b0dd9f8d6189351cf9311a8923e151fc5eee73464a02afdd",
+      "byteIdentical": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Package.swift",
+      "bytes": 10347,
+      "executedSHA256": "864210a4e3d3a77c375c3211095467e876f41352e5f25bcf72730353d77d6981",
+      "targetSHA256": "864210a4e3d3a77c375c3211095467e876f41352e5f25bcf72730353d77d6981",
+      "byteIdentical": true
+    },
+    {
+      "path": ".github/workflows/validate-scripting-runtime.yml",
+      "bytes": 10010,
+      "executedSHA256": "395ea6430af04b1ca8c66386af45073a1b0abc4d0c6ed20a1c46b30854fe0016",
+      "targetSHA256": "395ea6430af04b1ca8c66386af45073a1b0abc4d0c6ed20a1c46b30854fe0016",
+      "byteIdentical": true
+    },
+    {
+      "path": ".github/workflows/validate-app-split.yml",
+      "bytes": 31358,
+      "executedSHA256": "4e61939d1c7af7940ec5b72afedacef04b9f4e73d183b42b8eb9fc0073d9c185",
+      "targetSHA256": "4e61939d1c7af7940ec5b72afedacef04b9f4e73d183b42b8eb9fc0073d9c185",
+      "byteIdentical": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+      "bytes": 79563,
+      "executedSHA256": "f79bb40cbfff82eb8631275fd70f99e2f527c5ee497b4cbb168602b6fbf81658",
+      "targetSHA256": "f79bb40cbfff82eb8631275fd70f99e2f527c5ee497b4cbb168602b6fbf81658",
+      "byteIdentical": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptWidgetOriginalLimitParityTests.swift",
+      "bytes": 5431,
+      "executedSHA256": "1bb84b5decffcd17ddf54d9283f6871e85f4dd83a4fc67fa95dcaa3ef00bf148",
+      "targetSHA256": "1bb84b5decffcd17ddf54d9283f6871e85f4dd83a4fc67fa95dcaa3ef00bf148",
+      "byteIdentical": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
+      "bytes": 23944,
+      "executedSHA256": "d3735e19e7e2603d17449acd0c57c22bc676ee022bfe3152a20d2d846dd58afd",
+      "targetSHA256": "d3735e19e7e2603d17449acd0c57c22bc676ee022bfe3152a20d2d846dd58afd",
+      "byteIdentical": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
+      "bytes": 10164,
+      "executedSHA256": "d33e755c68ea9440fc68c9d42cd695cc3815ede7b9873e010200375c8b38293f",
+      "targetSHA256": "d33e755c68ea9440fc68c9d42cd695cc3815ede7b9873e010200375c8b38293f",
+      "byteIdentical": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/prepare-widget.js",
+      "bytes": 11782,
+      "executedSHA256": "5053e0587036008a1ae85d24b4d469271d5f6c880e1a1244e752ec436b32813c",
+      "targetSHA256": "5053e0587036008a1ae85d24b4d469271d5f6c880e1a1244e752ec436b32813c",
+      "byteIdentical": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetSession.swift",
+      "bytes": 13303,
+      "executedSHA256": "aaba22894ddd8bf7863a5ddd4e1e61cece90081b579bb8ce7b2a084f751f8f9b",
+      "targetSHA256": "aaba22894ddd8bf7863a5ddd4e1e61cece90081b579bb8ce7b2a084f751f8f9b",
+      "byteIdentical": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptMetadata.swift",
+      "bytes": 24769,
+      "executedSHA256": "f1b202b4caef78877cad69700ff698350066066c12f7fcc5bf557810aa1234f9",
+      "targetSHA256": "f1b202b4caef78877cad69700ff698350066066c12f7fcc5bf557810aa1234f9",
+      "byteIdentical": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+      "bytes": 17207,
+      "executedSHA256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3",
+      "targetSHA256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3",
+      "byteIdentical": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntime.swift",
+      "bytes": 69622,
+      "executedSHA256": "15a60ffc1a6171dde86fa442a7a51764fd073eee4f615e329b6593dc5cf9b34a",
+      "targetSHA256": "15a60ffc1a6171dde86fa442a7a51764fd073eee4f615e329b6593dc5cf9b34a",
+      "byteIdentical": true
+    },
+    {
+      "path": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
+      "bytes": 210998,
+      "executedSHA256": "63aa2132a1463552c274c328d63fd4b76b45046de28a8420e5a278257905bb5c",
+      "targetSHA256": "63aa2132a1463552c274c328d63fd4b76b45046de28a8420e5a278257905bb5c",
+      "byteIdentical": true
+    }
+  ],
+  "nativeTestSourcesUnchangedFromInitialFailure": "74ba980dbb91f3a38d4531f043801f5e742c283a",
+  "environmentApplicability": "The evidence retains the original runner/toolchain. This is source applicability of an authentic prior native pass, not a claim of a fresh run on another platform or environment.",
+  "excludedInputs": "The changed ProductSplit runner is not invoked by the selected reusable isolated SwiftPM job; evidence directory contents are not Package target resources.",
+  "unknownOrChangedRelevantInputs": []
+}

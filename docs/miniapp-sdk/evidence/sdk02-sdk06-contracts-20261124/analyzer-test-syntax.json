@@ -1,0 +1,17 @@
+{
+  "status": "SYNTAX_PASS",
+  "command": [
+    "swiftc",
+    "-frontend",
+    "-parse",
+    "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift"
+  ],
+  "exit": 0,
+  "sourceSHA256": "e13b930558bc268c319cd28c5a7678e88571554a430476812847bff3b946ff55",
+  "rawLog": "analyzer-test-syntax.txt",
+  "notEstablished": [
+    "Apple typechecking",
+    "Analyzer execution",
+    "native import result"
+  ]
+}

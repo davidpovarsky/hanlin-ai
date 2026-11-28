@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "measuredAt": "2026-08-26",
+  "baselineID": "scripting-compat-2026-08-26-a91e6672cb47",
+  "compilerVersion": "7.0.2",
+  "environment": "Windows local static and Node-hosted bootstrap tests plus GitHub Actions runs 32939382620 and 32939692642 on Xcode 26.6: Swift 6 contracts/tests, downstream JSC tests, generic iOS Simulator/device compilation, and full arm64 iPad Simulator app build and launch",
+  "projects": [
+    {
+      "id": "filemanager-2",
+      "typecheck": {"status": "source-project-issue", "errorCount": 5, "evidence": "Internal hook/configuration and localization-interface inconsistencies reproduce against the untouched authoritative declarations."},
+      "compileBundle": {"status": "passed-for-smoke-profile", "emittedModuleCount": 36, "importedScriptingRuntimeSymbolCount": 33},
+      "runtimeLaunch": {"status": "passed-node-hosted-bootstrap", "presented": true, "rootKind": "vStack", "intentEntrypoint": "passed-with-typed-native-input-context"},
+      "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 26, "evidence": "The untouched 35-module FileManager source graph launched through the exact application bootstrap with native-broker-shaped filesystem responses."},
+      "interaction": {"status": "shared-runtime-verified", "passed": ["observable navigation path push/back synchronization", "dynamic NavigationDestination building", "Picker selection rerender", "Dialog alert/confirm/prompt/actionSheet native results"], "notExercised": ["real-project control automation on Simulator"]},
+      "nativeServices": {"status": "partial", "passed": ["FileManager native VFS sync/async binding", "Path runtime semantics", "binary Data bridge", "local SVG loading through the bounded /scripts mount", "Pasteboard.setString native system bridge", "DocumentPicker multi-file and directory selection with package-scoped security access", "QuickLook package-file URL, selectable text and UIImage presentation", "UIImage.fromFile encoded-image bridge", "EditorController editable/read-only presentation and content lifecycle", "intent.tsx typed shortcut/share input and Script.exit result bridge", "capability denial and lifecycle tests"], "blockers": ["inline and advanced editor controls", "DocumentPicker bookmarks/export"]},
+      "remainingBlockers": ["Five independent source errors", "real-project Simulator interaction and visual validation", "advanced editor services", "advanced DocumentPicker bookmark/export operations"]
+    },
+    {
+      "id": "sefaria-multi-engine",
+      "typecheck": {"status": "source-and-authoritative-api-usage-issues", "errorCount": 4, "evidence": "Picker callback narrowing, a missing project field, widened shape literals, and an incompatible composed callback."},
+      "compileBundle": {"status": "passed-for-smoke-profile", "emittedModuleCount": 70, "importedScriptingRuntimeSymbolCount": 33},
+      "runtimeLaunch": {"status": "passed-node-hosted-bootstrap", "presented": true, "rootKind": "navigationSplitView"},
+      "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 29, "evidence": "The untouched 62-module project reaches its initial split-navigation UI through the exact application bootstrap while starting its library-index cache flow."},
+      "interaction": {"status": "shared-runtime-verified", "passed": ["NavigationSplitView visibility and preferred-column bindings", "ScrollViewReader scrollTo target and anchor propagation", "DisclosureGroup and Slider rerender", "Observable subscribe/unsubscribe"], "notExercised": ["real-project control automation on Simulator"]},
+      "nativeServices": {"status": "partial", "passed": ["private Storage JSON/Data namespace", "FileManager/Path bounded VFS", "buffered fetch/Headers/Request/Response with cancellation"], "blockers": ["Spotlight entrypoint and indexing", "real-project Simulator launch"]},
+      "remainingBlockers": ["Four source/API-usage errors", "Spotlight/native entrypoint coverage", "real-project Simulator interaction and visual validation"]
+    },
+    {
+      "id": "nativ-ai-9",
+      "typecheck": {"status": "source-and-authoritative-api-usage-issues", "errorCount": 45, "evidence": "Errors reproduce against the untouched declarations and include invalid literals, missing imports, undeclared props, and project model mismatches."},
+      "compileBundle": {"status": "passed-for-smoke-profile", "emittedModuleCount": 98, "importedScriptingRuntimeSymbolCount": 45},
+      "runtimeLaunch": {"status": "passed-node-hosted-bootstrap", "presented": true, "rootKind": "navigationSplitView"},
+      "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 15, "evidence": "The untouched package reaches its initial split-navigation UI after registering its real Live Activity builder; async state hydration completes without a reentrant render loop."},
+      "interaction": {"status": "shared-runtime-verified", "passed": ["LiveActivity register/start/update/end instance lifecycle", "Live Activity update listeners", "coalesced reentrant rendering and same-value state suppression", "Dialog alert/confirm/prompt/actionSheet native results"], "notExercised": ["real-project control automation on Simulator", "Dynamic Island visual validation"]},
+      "nativeServices": {"status": "partial", "passed": ["FileManager/Path bounded VFS", "buffered fetch/Web primitives", "Storage", "package-confined SQLite execute/fetch with positional and named bindings", "Assistant requestStreaming/requestStructuredData bridge with ordered chunks, structured JSON and cancellation", "configured OpenAI-compatible Assistant provider/model/credential adapter", "Location requestCurrent/setAccuracy plus modern MapKit forward/reverse geocoding", "Pasteboard.setString system bridge", "Safari.openURL system bridge", "EventKit Reminder creation with title, notes, priority, DateComponents and native identifier", "Photos.pickPhotos ordered image selection", "Photos.takePhoto system camera capture", "UIImage/Data.fromJPEG native encoding", "ActivityKit start/update/end adapter with typed Lock Screen and Dynamic Island regions"], "blockers": ["live credential/provider acceptance probe", "provider-native Assistant protocols and conversation UI", "continuous Location/heading and map-picker APIs", "Reminder queries/edit/delete and advanced recurrence/alarm support", "advanced Photos asset/query/save APIs", "physical-device camera and Live Activity validation"]},
+      "remainingBlockers": ["45 source/API-usage errors", "provider-native Assistant protocols and remaining native-service adapters", "continuous Location/heading coverage", "remaining Reminder and advanced Photos operations", "physical-device camera/Live Activity validation and broad ScriptUI semantics"]
+    },
+    {
+      "id": "new-agent-21",
+      "typecheck": {"status": "source-project-issue", "errorCount": 4, "evidence": "Three optional/required card-prop mismatches and a missing WeatherWind.speed field reproduce against the declarations."},
+      "compileBundle": {"status": "passed-for-smoke-profile", "emittedModuleCount": 77, "importedScriptingRuntimeSymbolCount": 29},
+      "runtimeLaunch": {"status": "passed-node-hosted-bootstrap", "presented": true, "rootKind": "navigationSplitView"},
+      "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 40, "evidence": "The untouched package launches after resolving its CommonJS JSON tool descriptors through the same module shape used by the native compiler."},
+      "interaction": {"status": "shared-runtime-verified", "passed": ["useReducer dispatch and rerender", "native Link URL retention", "NavigationSplitView bindings", "Picker interaction"], "notExercised": ["real-project control automation on Simulator"]},
+      "nativeServices": {"status": "partial", "passed": ["AssistantTool execute registration/invocation/cancellation/state lifecycle", "Assistant requestStreaming/requestStructuredData bridge with ordered chunks, structured JSON and cancellation", "configured OpenAI-compatible Assistant provider/model/credential adapter", "FileManager/Path bounded VFS", "buffered fetch/Web primitives", "Storage", "Location requestCurrent/setAccuracy plus modern MapKit forward/reverse geocoding"], "blockers": ["live credential/provider acceptance probe", "provider-native Assistant protocols", "approval/tool UI", "continuous Location/heading APIs", "Widget execution"]},
+      "remainingBlockers": ["Four source errors", "provider-native Assistant protocols and approval/UI flows", "native-service execution and real-project Simulator validation"]
+    },
+    {
+      "id": "smart-eating-updated-7",
+      "priority": "regression-critical",
+      "typecheck": {"status": "passed", "errorCount": 0},
+      "compileBundle": {"status": "passed-for-smoke-profile", "emittedModuleCount": 50, "importedScriptingRuntimeSymbolCount": 31},
+      "runtimeLaunch": {"status": "passed-node-hosted-bootstrap", "presented": true, "rootKind": "tabView"},
+      "uiRender": {"status": "passed-structural-smoke", "renderedNodeCount": 382, "limitation": "The async-hydrated initial tree was structurally rendered after coalescing reentrant updates; Xcode/Simulator validated the shared app and runtime tests but did not visually launch this archived project."},
+      "interaction": {"status": "partial", "evidence": "The untouched widget entrypoint executed for systemSmall, systemMedium, and systemLarge and materialized its real interactive App Intent descriptors; foreground app controls still require real-project Simulator automation."},
+      "nativeServices": {"status": "partial", "passed": ["package-isolated Storage binding during launch", "Health statistics/activity-summary/workout runtime and HealthKit adapter", "recurring Notification serialization and UserNotifications adapter", "untouched Widget entrypoint execution for three families (27/70/77 nodes)", "untouched App Intent registration for CompleteStationIntent and OpenStationIntent", "typed widget-button parameter transport, foreground action execution, Storage mutation path, snapshot regeneration and WidgetKit reload"], "notExercised": ["Assistant with a live configured provider", "physical widget-button invocation"]},
+      "remainingBlockers": ["foreground real-project interaction automation", "visual widget/foreground Simulator evidence", "live Assistant provider probe", "physical widget-button and notification delivery validation"]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "sourceBase": "a729bc6380fe08807d67d83f916b9bfda9cc1051",
+  "startedAt": "2026-11-27T08:30:45.765604+00:00",
+  "status": "PASS",
+  "nativeStatus": "NOT_RUN",
+  "steps": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/SDK/tests",
+        "-p",
+        "test_widget_cxx_imports.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 2.975,
+      "stdout": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-expo-extension-boundary-a729bc63/focused-sdk-controls-r1/test_widget_cxx_imports.py.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-expo-extension-boundary-a729bc63/focused-sdk-controls-r1/test_widget_cxx_imports.py.stderr",
+        "bytes": 722,
+        "sha256": "7ff1a604eed874775d6743f6afefe527655f152b80dd016d94cfcb20c828b863"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/SDK/tests",
+        "-p",
+        "test_host_link_ownership.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 5.642,
+      "stdout": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-expo-extension-boundary-a729bc63/focused-sdk-controls-r1/test_host_link_ownership.py.stdout",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-expo-extension-boundary-a729bc63/focused-sdk-controls-r1/test_host_link_ownership.py.stderr",
+        "bytes": 1334,
+        "sha256": "eb6eac3989114f7da3a04dda229893cb0c7182d93acda7c53457a9528d69f58c"
+      }
+    }
+  ],
+  "completedAt": "2026-11-27T08:30:54.383736+00:00"
+}

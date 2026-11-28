@@ -1,0 +1,22 @@
+{
+  "cwd": "/mnt/development/projects/worktrees/hanlin-scriptwidget-host-validation-20261124",
+  "argv": [
+    "/usr/local/bin/swift",
+    "-module-cache-path",
+    "/tmp/hanlin-host-policy-5cnrl8yv/ModuleCache",
+    "/mnt/development/projects/worktrees/hanlin-scriptwidget-host-validation-20261124/docs/miniapp-sdk/evidence/scriptwidget-host-validation-20261124/InstalledNetworkPolicy.swift"
+  ],
+  "exitCode": 0,
+  "durationSeconds": 2.1801,
+  "outputs": {
+    "swift-installed-policy.stdout.txt": {
+      "bytes": 124,
+      "sha256": "d3aa545f95b659f76a7213faada4b1d4ab4e0d6a28cda31f16798360c3483d77"
+    },
+    "swift-installed-policy.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "temporaryModuleCacheRemoved": true
+}

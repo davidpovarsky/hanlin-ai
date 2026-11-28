@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-11-27T04:36:49.269024+00:00",
+  "head": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "branch": "codex/hanlin-two-wave-integration-20261126",
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "target": "project_packaging",
+  "requestSHA256": "4400c4994448dcbc028b488ee73a5f61e35d554bd8c807d8dd963a894f92d89b",
+  "scope": "Existing original arm64 Release device build + unsigned IPA packaging, original link-closure/resource validators and prerequisites",
+  "testflightUpload": false,
+  "signedReleaseArchives": false,
+  "fullValidationOverride": false,
+  "defaultPlanSHA256": "c8dd57044c1e8dec1fb13a9601acaca66da079a04d8ab8aefc06cdd9640f89c6",
+  "concurrency": "Existing project_packaging group distinct from exact90, validation and standalone paired54",
+  "beforeRunIDs": [
+    45940810415,
+    45939727401,
+    45927192346,
+    45881659486,
+    45871800987,
+    45870248837,
+    45855765676,
+    45852418888
+  ],
+  "finishedAt": "2026-11-27T04:36:50.749066+00:00",
+  "returncode": 0,
+  "dispatchAccepted": true,
+  "testsStatus": "NOT_RUN_UNTIL_GITHUB_RUN_OBSERVED",
+  "stderrTail": ""
+}

@@ -1,0 +1,6 @@
+// Original shared implementation is owned by the SDK.
+import HanlinAgentActivityCore
+
+typealias AgentDisplayActivityKind = HanlinAgentActivityCore.AgentDisplayActivityKind
+typealias AgentDisplayActivity = HanlinAgentActivityCore.AgentDisplayActivity
+typealias AgentDisplayTimeline = HanlinAgentActivityCore.AgentDisplayTimeline

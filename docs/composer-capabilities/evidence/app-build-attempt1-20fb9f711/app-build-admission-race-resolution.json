@@ -1,0 +1,9 @@
+{
+  "atUTC": "2026-11-25T01:07:18.520738+00:00",
+  "activeBuildPID": 98062,
+  "activeBuildOwnerPID": 96346,
+  "stoppedOnlyDuplicateWaitingAdmissionPIDs": [
+    99298
+  ],
+  "reason": "Original build admitted before scheduling adjustment; keep its sole running compiler and discard unneeded waiting admission"
+}

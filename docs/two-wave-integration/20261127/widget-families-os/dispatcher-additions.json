@@ -1,0 +1,4 @@
+{
+  "dispatch": "            if request.get(\"surface\") == \"widgetFamilies\":\n                from observe_widget_families import observe_case\n                observe_case(args, request, directory, evidence, seen, widget_fixture)\n                last_error = None\n                time.sleep(0.25)\n                continue\n",
+  "arg": "    parser.add_argument(\"--widget-families-inputs\", type=Path,\n                        help=\"Original source/product attempt manifest for four real Home Screen family and rotation cases\")\n"
+}

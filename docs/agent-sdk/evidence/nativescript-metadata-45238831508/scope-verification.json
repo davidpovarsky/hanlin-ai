@@ -1,0 +1,116 @@
+{
+  "metadataScope": "HOST_BASELINE_ONLY",
+  "metadataStatus": "PASS",
+  "clangErrors": 0,
+  "requiredStrings": 10,
+  "frameworkInventory": {
+    "rows": 130,
+    "statuses": {
+      "SELECTED": 107,
+      "DEDUPLICATED_IDENTICAL": 23
+    },
+    "manifestHashesVerified": 130,
+    "equivalentDuplicateRowsVerified": 23
+  },
+  "constFilesVerified": 10,
+  "sdkConstFiles": [
+    {
+      "path": "HanlinSDK.build/Debug-iphonesimulator/AI_Hanlin-t.build/Objects-normal/arm64/ChavrusaSystemIntegrations.swiftconstvalues",
+      "sha256": "6b11b3b4230fd3a1a0046d2282d105f9f286461378b28a75b46e55a8ba1d1ed2",
+      "sameAsPreviousArtifact": true
+    },
+    {
+      "path": "HanlinSDK.build/Debug-iphonesimulator/AI_Hanlin-t.build/Objects-normal/arm64/VisionIntent.swiftconstvalues",
+      "sha256": "65e21925abdc1ecac37d5fff5a066de5a309848b206207e57b4ab10b46c859f7",
+      "sameAsPreviousArtifact": true
+    },
+    {
+      "path": "HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingAppIntents.swiftconstvalues",
+      "sha256": "eda0ac185be7fd354f90142b5a9aa12ca5e28804fbfd028dd2f3480bf1cb8a3b",
+      "sameAsPreviousArtifact": true
+    },
+    {
+      "path": "HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingWidgets.swiftconstvalues",
+      "sha256": "88ac098af2184b6c0756bdebed5d56eaf99112f0a1d74b9d4e22a80be69d0916",
+      "sameAsPreviousArtifact": true
+    }
+  ],
+  "nativeJob": {
+    "id": 137917939932,
+    "status": "completed",
+    "conclusion": "failure",
+    "selectedSteps": [
+      {
+        "name": "Prepare declaration-only metadata tool",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-23T18:30:27Z",
+        "completed_at": "2026-11-23T18:30:30Z"
+      },
+      {
+        "name": "Export original prepared Hanlin SDK native artifacts",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-23T18:38:35Z",
+        "completed_at": "2026-11-23T18:39:13Z"
+      },
+      {
+        "name": "Restore unchanged simulator build input metadata",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-23T18:40:28Z",
+        "completed_at": "2026-11-23T18:40:29Z"
+      },
+      {
+        "name": "Capture simulator build input metadata",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-23T18:40:29Z",
+        "completed_at": "2026-11-23T18:40:48Z"
+      },
+      {
+        "name": "Retain prior unit manifests before the current test build",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-23T18:41:24Z",
+        "completed_at": "2026-11-23T18:41:24Z"
+      },
+      {
+        "name": "Build full arm64 simulator app",
+        "status": "completed",
+        "conclusion": "failure",
+        "started_at": "2026-11-23T18:41:24Z",
+        "completed_at": "2026-11-23T18:58:21Z"
+      },
+      {
+        "name": "Validate the current build-for-testing unit products",
+        "status": "completed",
+        "conclusion": "skipped",
+        "started_at": "2026-11-23T18:58:21Z",
+        "completed_at": "2026-11-23T18:58:21Z"
+      },
+      {
+        "name": "Run simulator test suite",
+        "status": "completed",
+        "conclusion": "skipped",
+        "started_at": "2026-11-23T18:58:22Z",
+        "completed_at": "2026-11-23T18:58:22Z"
+      },
+      {
+        "name": "Launch full app and verify runtime acceptance",
+        "status": "completed",
+        "conclusion": "skipped",
+        "started_at": "2026-11-23T18:58:23Z",
+        "completed_at": "2026-11-23T18:58:23Z"
+      }
+    ]
+  },
+  "unitReceiptStatus": "PREPARED",
+  "testExecution": "NOT_RUN",
+  "expectedInvocationsNotRun": 342,
+  "preparedNativeArtifact": {
+    "id": 14850817502,
+    "eligible": false,
+    "downloaded": false
+  }
+}

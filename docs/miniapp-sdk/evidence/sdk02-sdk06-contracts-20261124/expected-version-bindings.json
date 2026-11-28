@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "scope": "Only three installed-version substrings/exact-message assertions; no fixture, finding selection or installability change.",
+  "path": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
+  "beforeSHA256": "13cf0e61296723121e5e1b987c861bc71afa1c36685f072b6a33655b21df80b2",
+  "afterSHA256": "628ae9c8d04e0953ec633a464affb0961a414afe5410ebeddd729edc614ff18e",
+  "changes": [
+    {
+      "before": "$0.message.contains(\"supported by embedded runtime 9.1.0\")",
+      "after": "$0.message.contains(\"supported by embedded runtime \\(HanlinMiniAppHostVersions.nativeScriptCoreVersion)\")"
+    },
+    {
+      "before": "$0.message == \"This Hanlin build supports @nativescript/core 9.1.0, but the package requires ^10.0.0.\"",
+      "after": "$0.message == \"This Hanlin build supports @nativescript/core \\(HanlinMiniAppHostVersions.nativeScriptCoreVersion), but the package requires ^10.0.0.\""
+    },
+    {
+      "before": "$0.message.contains(\"supports @expo/ui 58.0.3\")",
+      "after": "$0.message.contains(\"supports @expo/ui \\(HanlinMiniAppHostVersions.expoUIVersion)\")"
+    }
+  ],
+  "authority": {
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+    "sha256": "a31357ce803c24ba80aed6f4c81b7e31f82abde1ec6c2ef00c6ee4a57c272717",
+    "nativeScriptCoreVersion": "9.1.4",
+    "expoUIVersion": "58.0.29"
+  },
+  "assertionCountUnchanged": true,
+  "productionChanged": false,
+  "fixtureDataChanged": false,
+  "appleExecution": "NOT_RUN; root owns any dispatch after source/preparation review",
+  "rawDiff": "expected-version-bindings.diff"
+}

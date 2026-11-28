@@ -1,0 +1,36 @@
+{
+  "package": "https://github.com/ordo-one/equatable",
+  "version": "1.4.1",
+  "expected_revision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+  "resolved_revision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+  "headless_flags": [
+    "-skipPackagePluginValidation",
+    "-skipMacroValidation"
+  ],
+  "existing_routes": [
+    {
+      "path": ".github/workflows/testflight.yml",
+      "sha256": "6d11af69940ca0633c683db2adc31787ce9cb0b3bbbf5c3479060296040a5a15",
+      "matching_lines": [
+        {
+          "line": 378,
+          "source": "-skipPackagePluginValidation -skipMacroValidation; then"
+        },
+        {
+          "line": 490,
+          "source": "-skipPackagePluginValidation -skipMacroValidation \\"
+        }
+      ]
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/run_presentation_sdk.sh",
+      "sha256": "ebf07c945174020b858e3a0f39c5c884413d406d8599fb1c1b994e89445dae94",
+      "matching_lines": [
+        {
+          "line": 27,
+          "source": "-skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=NO) > \"$evidence/ios-build.log\" 2>&1"
+        }
+      ]
+    }
+  ]
+}

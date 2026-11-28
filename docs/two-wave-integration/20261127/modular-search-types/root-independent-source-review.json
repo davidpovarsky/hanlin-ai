@@ -1,0 +1,24 @@
+{
+  "reviewer": "/root",
+  "at": "2026-11-27T20:46:52.490059+00:00",
+  "decision": "APPROVED_MINIMAL_SOURCE_PENDING_ORIGINAL_CLI_QUALIFICATION",
+  "base": "39006ce6586c1be056f53de9483bfd907cea6cbd",
+  "path": "Scripts/Expo/miniapps/modular-text-search/assistant-tool.ts",
+  "beforeSHA256": "035eeb0e7e7eff4e316d0b93431999cbb87b54585375aeb42cc6e03a8800789b",
+  "afterSHA256": "6152a4e57babe9cfaca5ab6d43ccf495cc9d1fa8ebd8426c9ce810c861185748",
+  "patchSHA256": "ab98cf5ba3014b19f253877da4b9c223c32514781fda204963792be6caaeabc6",
+  "existingEngineExportPath": "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/client.js",
+  "existingEngineSHA256": "8d2b61f6eaf6cadf286ea3f97379b009c344badcbea52c06d5a6fc437cb6ba85",
+  "wholeFileInverseExact": true,
+  "runtimeBehaviorChange": false,
+  "findings": [
+    "Type-only import reuses the actual existing normalization function return shape.",
+    "Original normalizeSearchResponse maps every returned hit through that exact normalizeHit function.",
+    "Removing only the type import and callback annotation restores the complete original assistant-tool file byte for byte.",
+    "No explicit any, assertion removal, compiler-option relaxation, engine change, version/pin change, or runtime function replacement."
+  ],
+  "sdk396Intersection": [],
+  "newTestsExecuted": 0,
+  "nativeAcceptance": "NOT_RUN",
+  "originalStrictCLI": "W1 running separately; await actual receipt"
+}

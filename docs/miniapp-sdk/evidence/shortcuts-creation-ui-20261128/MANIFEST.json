@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "sourceCommit": "373dc4ff7c63efb920922c028a9fdc97b0791e6e",
+  "native": "NOT_RUN",
+  "members": [
+    {
+      "path": "CAUSAL_EVIDENCE.json",
+      "bytes": 4984,
+      "sha256": "8a1561b4f05e93c11006d15a1a5c896695394b1c8fb55cf1d53487200b587e58"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2021,
+      "sha256": "c7bd989afab75c16d17f12d69c6080a7efc13d3b9479d96d163d4b4e1ec362bc"
+    },
+    {
+      "path": "ROOT_REVIEW.json",
+      "bytes": 3115,
+      "sha256": "4a1f68e5cc2320850a2ddc1b067830e376cc0a893b92dbdf465326f2a3f1c18e"
+    },
+    {
+      "path": "SOURCE_PROOF.json",
+      "bytes": 4205,
+      "sha256": "03d91a7713d9ae7f1da4466b3baad7b8603a0d96c36c42624bbf577e357b33ea"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 733,
+      "sha256": "cdd598ad36b22f83eab6327ad69d9f4b06615b38f75024444f19d4a4bae78fb1"
+    }
+  ],
+  "compressedPayload": {
+    "path": "source.patch.gz",
+    "encoding": "gzip",
+    "rawBytes": 1973,
+    "rawSHA256": "0ac50ad7171688b5fed1727474defeb944554da456495619903e65826285d991"
+  }
+}

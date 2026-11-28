@@ -1,0 +1,48 @@
+{
+  "baseline": "ca6310219ca104d5db44c7fbbb64766eb6d78c19",
+  "owner": "ChatGPT /root/calendar",
+  "operations": 24,
+  "source_sha256": {
+    "Packages/HanlinPlatform/Sources/HanlinScriptDeviceServices/HanlinCalendarRequest.swift": "807a93fdb8f73bc0c15fab5f0a82267950933fe6ce71d5fbe3b6c86b4d0b0cbe",
+    "Packages/HanlinPlatform/Sources/HanlinScriptDeviceServices/HanlinCalendarOperationRequest.swift": "518006f80ab5bceb130c10f9c75515fa27bf6830e437ff20d2a627ba1b5ff883",
+    "Packages/HanlinPlatform/Sources/HanlinScriptDeviceServices/HanlinCalendarCallbackOperation.swift": "d47aa7eddd43e1298cb450c19d31ea4666b7a3ba59af31c7609be6cfbbf15a08",
+    "Packages/HanlinPlatform/Sources/HanlinScriptDeviceServices/HanlinAppleCalendarService.swift": "38dbcc2f07150bb2d249051a5e31306dca9ee6c63b9c834d12b38299033cc534",
+    "Packages/HanlinPlatform/Sources/HanlinScriptDeviceServices/HanlinAppleCalendarOperations.swift": "701c2c4c361896656159ffae07ec9d90d7728b4ca9031677e957d9d2a3e250a3",
+    "Packages/HanlinPlatform/Sources/HanlinScriptDeviceServices/HanlinAppleServiceContracts.swift": "b7354a9c30c29a52476e6e5366b8d99730e0ccb41264374ad80440d786371534",
+    "Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests/HanlinCalendarRequestTests.swift": "1bcc1fff0a6ecf4d50a34f216cb6e611924233a3b6dfd44fd4697fa88360cb0f"
+  },
+  "results": {
+    "portable": {
+      "status": "EXECUTED_PASS",
+      "reported_tests": 20,
+      "suites": 3,
+      "note": "Swift Testing executed the callback suite as well as both selected request suites; all actual execution is retained.",
+      "reuse_after_metadata_nil_checks": "Exact request/callback implementation and tests unchanged; final iOS-only changes add optional calendar/source access during snapshots."
+    },
+    "eventkit_typecheck": {
+      "status": "EXECUTED_PASS",
+      "target": "arm64-apple-ios27.0",
+      "swift_mode": 6,
+      "warnings": 0,
+      "final_receipt": "typecheck-r3-receipt.json"
+    },
+    "app_frontend_parse": {
+      "status": "EXECUTED_PASS",
+      "scope": "syntax only"
+    },
+    "app_dispatcher_tests": "NOT_RUN_BY_THIS_LANE",
+    "real_eventkit_mutation_tests": "NOT_RUN_BY_THIS_LANE",
+    "physical_device": "NOT_OBSERVED"
+  },
+  "logs_sha256": {
+    "typecheck-r2.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "typecheck-r2-receipt.json": "3f6aec463da32fa993d4d8e39281045df66ccf63f19e277c6a1b3b14f955fe25",
+    "portable-r2.log": "560dee1682c89dfde5461dcb31f2070ae2876be7addbfc149559680d2534a93d",
+    "portable-r2-receipt.json": "f99555769e5bd46deb87df9c3db566793b693690b06b678b07d34a513099b60a",
+    "app-parse.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app-parse-receipt.json": "098c7d052808d8061c58c47bd768c5bc13876118f65ae899a41d8b5fe3578a86",
+    "typecheck-r3.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "typecheck-r3-receipt.json": "6c68b9b235f9fda239073ac368cc68a26e1c3d7da771217acb79461c68041f2d"
+  },
+  "next_owner": "/root integration and TestFlight"
+}

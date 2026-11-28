@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1754D994-C2A6-46F6-BAF4-4F67B8455518",
+        "deviceName" : "Hanlin-Phase2-Motion-45248270552",
+        "exportedFileName" : "6AD458A1-A5B1-4048-BDF8-0E171DBEF10B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "completed-closed-portrait_0_FD800758-FF26-4C86-9C47-16F83C811EE6.png",
+        "timestamp" : 1795463304.873
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1754D994-C2A6-46F6-BAF4-4F67B8455518",
+        "deviceName" : "Hanlin-Phase2-Motion-45248270552",
+        "exportedFileName" : "D8A914AE-4367-44B0-856F-0D27A27DA28B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "long-rtl-accessibility-type-landscape-full-screen_0_AF38A421-F4B2-4188-A25B-7E7D829CAA78.png",
+        "timestamp" : 1795463298.251
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1754D994-C2A6-46F6-BAF4-4F67B8455518",
+        "deviceName" : "Hanlin-Phase2-Motion-45248270552",
+        "exportedFileName" : "6D65CE60-9522-4163-BEDB-EC546F19BC63.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "long-rtl-accessibility-type-landscape_0_A452A262-3FE3-4790-B596-699D75188D3E.png",
+        "timestamp" : 1795463297.901
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1754D994-C2A6-46F6-BAF4-4F67B8455518",
+        "deviceName" : "Hanlin-Phase2-Motion-45248270552",
+        "exportedFileName" : "CFEA7A96-2182-421F-8213-59AD02572787.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "long-rtl-accessibility-type-portrait_0_87110E99-96F4-4404-91ED-CB38E74DC893.png",
+        "timestamp" : 1795463292.885
+      }
+    ],
+    "testIdentifier" : "MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion()",
+    "testIdentifierURL" : "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests/MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion"
+  }
+]

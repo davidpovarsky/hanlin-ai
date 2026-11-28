@@ -1,0 +1,34 @@
+{
+  "parent": "1b2d8e2c3022be4b6bb97312bfdec0676d7eb76e",
+  "patches": [
+    {
+      "path": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\signing-profile-admission-diagnostics\\native-cms-boolean-proposal\\native-cms-boolean.UNAPPLIED.patch",
+      "sha256": "edd97c3f048dd06daac4f8d0422f15ba82f475d53f825162b4b59858127afe39"
+    },
+    {
+      "path": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\signing-profile-admission-diagnostics\\owned-build-settings-proposal\\owned-settings-on-failure.UNAPPLIED.patch",
+      "sha256": "be4e8204211d9b55e65cb4317c213b267c4ead90c7dc22c28aa303b73d6a40df"
+    }
+  ],
+  "source_sha256": {
+    "Scripts/ProductSplit/signing_profile_preflight.py": "f95644defe938dca4c72c376f21356ab06d759dc2988b84174008554bd8f4624",
+    "Scripts/ProductSplit/test_signing_profiles.py": "69945200529692c20be0c910202286e4082cc9df43c6afa783a69c9dcea07b10"
+  },
+  "proposed_crlf_source_sha256": {
+    "Scripts/ProductSplit/signing_profile_preflight.py": "0c93b2c330e8e6072c6542aa5a3b85e18ed36b77ed8e7ea1f2c060f74eccfab0",
+    "Scripts/ProductSplit/test_signing_profiles.py": "978d57c94fb1508019f912787e6a6020f2cc1f179b37f842bac468934a09d886"
+  },
+  "source_normalization": "Only CRLF to LF; normalized byte content identical",
+  "test_exit": 0,
+  "test_tail": [
+    "",
+    "----------------------------------------------------------------------",
+    "Ran 28 tests in 0.230s",
+    "",
+    "OK"
+  ],
+  "raw_test_sha256": "19b660530cbb5aab3a5524732784dc548b4e0e8b2982b1060cbe36ec93909a07",
+  "actual_previous_native_run": 44431826560,
+  "actual_previous_native_result": "tiny archive failed profile lookup; basicX509 CMS valid; original exports NOT_RUN",
+  "native_current": "NOT_RUN"
+}

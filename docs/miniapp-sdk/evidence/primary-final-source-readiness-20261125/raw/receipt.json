@@ -1,0 +1,20 @@
+{
+  "scope": "Bounded read-only exact Mac state/free space/simulator and physical-device route observations before final source handoff; no native run or source advance.",
+  "files": [
+    {
+      "path": "mac-readiness-045730.json",
+      "bytes": 3784,
+      "sha256": "13fd8da4cec692930b8d3d60547a0446a1f8a94826220831c126b564e83dbd5b"
+    },
+    {
+      "path": "physical-route-observation.json",
+      "bytes": 453,
+      "sha256": "3fcf78769cb7760d591e8912e8613a09e6917ea73736b85ed05a14e3f9d90041"
+    },
+    {
+      "path": "xcdevice-list-050015.json",
+      "bytes": 27002,
+      "sha256": "f74ce64c4b72346f70685d8486f8b6606c9ffda3c774789e966b3501f2c695a6"
+    }
+  ]
+}

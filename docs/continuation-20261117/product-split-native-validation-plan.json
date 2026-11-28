@@ -1,0 +1,43 @@
+{
+  "scope": "Current production MiniApps target with original provider/bootstrap and preserved transport/storage",
+  "source_delivery": "226330c70cd8691219c0d192f147c0bf03bb55f7",
+  "origin_delivery": "71ba9d73941c27c582ebb71e05bee36ec02dd8a7",
+  "runtime_artifact_run": 42926628418,
+  "host_proof_requested": 43726905638,
+  "source_check": "verify_targets.py validates 63 current shared files and 21 real products, original AI/SDK boundaries, no automatic signature/account change",
+  "native_obligations": {
+    "portable_foreground_cases": 42,
+    "hosted_storage_mailbox": 17,
+    "bootstrap_cases": 3,
+    "ui_cases": 7
+  },
+  "two_process_return": "separate combined proof, PENDING",
+  "ios": "27 only",
+  "signing": "unsigned simulator build; existing entitlement declarations only",
+  "testflight": false,
+  "release": false,
+  "superseded_runs": [
+    {
+      "run": 44201259540,
+      "reason": "Stopped before acceptance after source review found generic project serialization could double-escape original shell programs; replaced by object-span edits preserving every original script byte"
+    },
+    {
+      "run": 44201263974,
+      "reason": "Stopped before acceptance after source review found generic project serialization could double-escape original shell programs; replaced by object-span edits preserving every original script byte"
+    }
+  ],
+  "latest_actual_attempt": {
+    "run": 44201478169,
+    "sha": "bc64e50ffaee10166bd8ff1125f6c4a432f87227",
+    "result": "BUILD_FAILED; 20 hosted and 7 UI NOT_RUN",
+    "artifact_id": 14381522783,
+    "artifact_sha256": "8fb39b042b90e7fb2e0f082fa9da49ed624893d142e25da3b99c24db81dfcbb0",
+    "cause": "Existing copied MiniApps PBX shellScript literals double-escaped newline characters. Native metadata shell failed before app source compile.",
+    "correction": "Only the two MiniApps script literal values now exactly match the original AI phases; verify_targets validates executable serialized forms rather than graph normalization alone."
+  },
+  "foreground_followup": {
+    "implemented": "A successfully persisted cancellation wakes original AI through the same opaque return URL; both cancel and return retain the destination until OS handoff succeeds.",
+    "not_implemented": "Automatic approval review rejected the combined patch that included removing the Swift Parity model caller guard. That guard remains unchanged. Model.activate currently overwrites the existing Host fallback share.value route with a script-only caller check; installed-app success requires an explicit consistent route ownership/authorization decision.",
+    "claim": "No live two-app roundtrip, signed-group or migration acceptance."
+  }
+}

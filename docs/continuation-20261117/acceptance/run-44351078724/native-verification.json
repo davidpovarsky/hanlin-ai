@@ -1,0 +1,170 @@
+{
+  "document": "MINIAPPS_STANDALONE_PRODUCTION_RUNTIME_VERIFICATION_20261118",
+  "recorded_at": "2026-11-18T19:33:57.611Z",
+  "scope": "Authenticated original standalone MiniApps NativeScript and Expo runtime acceptance; separate from paired-product, distribution signing, physical-device and release acceptance",
+  "status": "EXECUTED_PASS",
+  "repository": "davidpovarsky/hanlin-ai",
+  "branch": "codex/hanlin-product-completion-20261117",
+  "run": {
+    "id": 44351078724,
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44351078724",
+    "head_sha": "0c8229028e48e695faba3c242f0f6fd78a04b66e",
+    "attempt": 1,
+    "workflow": ".github/workflows/validate-app-split.yml",
+    "status": "completed",
+    "conclusion": "success",
+    "job_id": 134966552855
+  },
+  "artifact": {
+    "id": 14454531510,
+    "name": "app-split-44351078724",
+    "size_bytes": 58049831,
+    "github_sha256": "8ebe0c0ec78b94ce960206551f474205a091cf8dabf24432a12773496aaa328d",
+    "full_zip_sha256_verified": true,
+    "local_archive": "build/continuation-evidence/44351078724/app-split-44351078724.zip",
+    "raw_member_sha256": {
+      "app-split-evidence/acceptance.json": "e7b2ac6cb767c4d89d9153ca4d57c6fc86fb69d44a9ecd9e5c4941a05225d336",
+      "app-split-evidence/test-summary.json": "0b6104a0b6d124ba09dc696ca8a0a1ad295af1bf34f473f79a72c724df108e73",
+      "app-split-evidence/test-nodes.json": "9a7a3367104b818664e99c33e4bf582ad350a31be1dc6b9ae551cb4fecc4e9d6",
+      "app-split-evidence/source-inputs.json": "72572a7e168db066453c43073487be5d30d8b66d2db513dc69edd1b4ecc9b4ce",
+      "app-split-evidence/runtime-fixtures.json": "3875c64d88534b153e1284654de1bf414822e9b9fa956276190240947d757619",
+      "app-split-evidence/xcodebuild.log": "7cffb87fed2ad17e8ff54e17c7f7e13a7f0ef3d0ac3504545a1f19cc15604ba1"
+    }
+  },
+  "environment": {
+    "macos": "27.0.1",
+    "macos_build": "26A434",
+    "xcode": "27.2",
+    "xcode_build": "27B52",
+    "device": "iPad mini (A20 Pro)",
+    "platform": "iOS Simulator",
+    "os_version": "27.2",
+    "os_build": "24B8117",
+    "architecture": "arm64"
+  },
+  "result": {
+    "build": "EXECUTED_PASS",
+    "ui": "EXECUTED_PASS",
+    "test_scope": "production_runtimes",
+    "total": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "cases": [
+      {
+        "identifier": "MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents()",
+        "result": "Passed",
+        "duration_seconds": 174.32080495357513
+      },
+      {
+        "identifier": "MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch()",
+        "result": "Passed",
+        "duration_seconds": 166.11812102794647
+      }
+    ]
+  },
+  "source_provenance": {
+    "test_source": {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "sha256": "4790a8b691bfa101b715be89e7c7a69ab5c3ac97bbe1bfb633f33c8d1462c2bf",
+      "matches_recorded_run": true
+    },
+    "fixtures": [
+      {
+        "source": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+        "sha256": "2c31e104d2b8e7a8c7356e3d2a15c2537e79266a1df1a8de7846deeddc923cc3",
+        "matches_git_blob": true,
+        "bytes": 7396
+      },
+      {
+        "source": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+        "sha256": "f0b314cfb4d150b0451241e5d21a40d2ae4fcdbb10b2ae52976092dca05820ae",
+        "matches_git_blob": true,
+        "bytes": 319850
+      }
+    ]
+  },
+  "actual_asserted_behavior": {
+    "native_script": [
+      "Original companion import/install flow and existing consent control",
+      "Nonce-bound JSC, Node and CPython output plus successful HTTPS status",
+      "Canonical private storage marker",
+      "Installed package survives companion termination/relaunch and runtime reopens",
+      "Runtime close returns to the same companion package detail"
+    ],
+    "expo": [
+      "Original package import/install and native SwiftUI sidebar/detail controls",
+      "Native toolbar React event changes action count from 0 to 1",
+      "Native settings sheet opens and actual toggle changes Nikkud state from ON to OFF",
+      "Native settings sheet closes; runtime closes and reopens cleanly"
+    ]
+  },
+  "bootstrap": {
+    "standalone_first_launch": "EXECUTED_PASS",
+    "app_groups": "OS_CONTAINERS_VERIFIED",
+    "group_ids": [
+      "group.com.itorah.chavrusachat",
+      "group.com.itorah.shared"
+    ],
+    "simulator_signing": "ORIGINAL_ENTITLEMENTS_VERIFIED_AD_HOC_NOT_DISTRIBUTION_SIGNING",
+    "executable_sha256": "3b35d5b76f076aa8229d94854aa3cfca7f081ec3a55dd4bb144dfa41f9150c4c",
+    "source_entitlements_sha256": "8eeb1557fc21f6a664ed1b717f3e259362b3cb85d6c99c60a708c03df2b7e793",
+    "required_framework_runpaths": [
+      "@executable_path/Frameworks",
+      "@loader_path/Frameworks"
+    ]
+  },
+  "host_prerequisites": {
+    "status": "EXECUTED_PASS",
+    "fresh_execution": true,
+    "focused": {
+      "total": 7,
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0
+    },
+    "complete": {
+      "total": 153,
+      "passed": 152,
+      "failed": 0,
+      "skipped": 1
+    },
+    "single_skipped_test": "actual Node job crosses 300 seconds with no hidden deadline",
+    "metadata": {
+      "nodeVersion": "v24.5.0",
+      "archiveSha256": "1f33573abadf30c2d0bf3f8aef321eebe0402123fad78210216a09dd01abfa6c",
+      "sourceInputsHash": "33989c019212b08b6eb7080044a7f5652d32b3dde3ed10432f96efb2154aa585",
+      "jitlessArchiveSmoke": "passed",
+      "npmInstall": "npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund",
+      "tests": "passed"
+    }
+  },
+  "runtime_warnings": [
+    {
+      "issueType": "Runtime Warning",
+      "message": "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType": "Runtime Warning",
+      "message": "Update the Info.plist: Support for all orientations will soon be required."
+    }
+  ],
+  "explicit_limits": [
+    "The 20 storage tests and seven baseline UI tests were not selected again; their previous evidence remains separately identified",
+    "Paired-product request/return/cancellation/transfer and shared ingress were skipped in this workflow",
+    "Simulator ad-hoc entitlement verification is not distribution signing or physical-device evidence",
+    "The optional Exodus navigation branch is not an asserted acceptance guarantee",
+    "This evidence is EXECUTED_PASS at its original source SHA; no blanket current-HEAD product reuse is claimed",
+    "Phase 2, Phase 3 and overall release remain open"
+  ],
+  "next_gate": {
+    "standalone_runtime_prerequisite": "SATISFIED_AT_RECORDED_SHA",
+    "workflow": "validate-app-split.yml",
+    "paired_product_acceptance": true,
+    "paired_test_scope": "product_and_share",
+    "runtime_bundle_artifact_run_id": "42926628418",
+    "host_proof_candidate": "44351078724",
+    "host_proof_reuse_limitation": "Existing guard expects 150/149 instead of authenticated 153/152. See host-proof-reuse-audit.json; retained platform/input/archive checks must pass on the actual Mac."
+  }
+}

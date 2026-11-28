@@ -1,0 +1,17 @@
+{
+  "run": 46137570379,
+  "attempt": 1,
+  "source": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/46137570379",
+  "terminalManifestSHA256": "2940fad12764bf40f7c766869d8f6740dc7d17b53fe78bd263473662329ddce7",
+  "reconciliationSHA256": "9c5fd5556d484c5c661754f17bd150745aa1f89b2bcb6aac7417ae577dc5c6c1",
+  "status": "FAILED",
+  "caseSeconds": 405.385,
+  "bothBuildsPassed": true,
+  "failure": "The bounded actual gallery traversal did not offer this named family.",
+  "actualObservedLabel": "Hanlin MiniApps, Hanlin Script",
+  "actualObservedValue": "Widget, Medium",
+  "originalGalleryAllowanceSeconds": 35,
+  "originalCaseAllowanceSeconds": 420,
+  "budgetsUnchanged": true
+}

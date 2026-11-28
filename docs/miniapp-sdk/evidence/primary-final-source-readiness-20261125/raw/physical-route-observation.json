@@ -1,0 +1,23 @@
+{
+  "observedAt": "2026-11-25T05:00:15.976606+00:00",
+  "argv": [
+    "xcrun",
+    "xcdevice",
+    "list",
+    "--timeout",
+    "5"
+  ],
+  "exitCode": 0,
+  "stderr": "",
+  "rawSHA256": "f74ce64c4b72346f70685d8486f8b6606c9ffda3c774789e966b3501f2c695a6",
+  "rawBytes": 27002,
+  "physicalIOS": [],
+  "simulatorEntries": 57,
+  "physicalMac": [
+    {
+      "name": "My Mac",
+      "platform": "com.apple.platform.macosx",
+      "available": true
+    }
+  ]
+}

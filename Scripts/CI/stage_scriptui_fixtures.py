@@ -1,0 +1,206 @@
+#!/usr/bin/env python3
+"""Stage ScriptUI test fixtures into iPad Simulator app and Files container Documents directories.
+
+This script ensures that the clean iPad Simulator app container has the necessary
+.scripting package fixtures in its Documents/ directory before running
+HanlinScriptUIProductionE2ETests.
+
+Workflow:
+1. Verifies / deterministically creates the .scripting archives in AI_HLYUITests/Fixtures.
+2. Installs the tested app onto the booted simulator.
+3. Obtains the tested app's data container using `xcrun simctl get_app_container`.
+4. Creates `<APP_CONTAINER>/Documents` and copies the three .scripting fixtures there.
+5. Optionally copies into `com.apple.DocumentsApp/Documents` if the Files container is present.
+6. Writes sha256 hashes and verification logs.
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+from pathlib import Path
+import shutil
+import sys
+from typing import List, Optional
+
+try:
+    from Scripts.CI.stage_simulator_fixtures import APP_CONTAINER_TIMEOUT_SECONDS, INSTALL_TIMEOUT_SECONDS, run_bounded
+except ModuleNotFoundError:
+    from stage_simulator_fixtures import APP_CONTAINER_TIMEOUT_SECONDS, INSTALL_TIMEOUT_SECONDS, run_bounded
+
+try:
+    from .create_scriptui_fixtures import create_fixtures, FIXTURE_NAMES
+except (ImportError, ValueError):
+    try:
+        from create_scriptui_fixtures import create_fixtures, FIXTURE_NAMES
+    except ImportError:
+        import importlib.util
+        _helper = Path(__file__).resolve().parent / "create_scriptui_fixtures.py"
+        _spec = importlib.util.spec_from_file_location("create_scriptui_fixtures", _helper)
+        if _spec and _spec.loader:
+            _mod = importlib.util.module_from_spec(_spec)
+            _spec.loader.exec_module(_mod)
+            create_fixtures = _mod.create_fixtures
+            FIXTURE_NAMES = _mod.FIXTURE_NAMES
+        else:
+            raise
+
+
+def compute_sha256(path: Path) -> str:
+    h = hashlib.sha256()
+    h.update(path.read_bytes())
+    return h.hexdigest()
+
+
+def stage_fixtures(
+    simulator_udid: str,
+    app_path: Optional[Path] = None,
+    bundle_id: str = "com.davidpovarsky.AI-HLY",
+    fixtures_dir: Optional[Path] = None,
+    log_file: Optional[Path] = None,
+    dry_run: bool = False,
+    runner=run_bounded,
+) -> dict:
+    root = Path(__file__).resolve().parents[2]
+    repo_fixtures_dir = root / "AI_HLYUITests" / "Fixtures"
+    fix_dir = fixtures_dir or repo_fixtures_dir
+
+    # 1. Ensure fixtures exist and are deterministic
+    generated = list(create_fixtures(fix_dir))
+    if fix_dir != repo_fixtures_dir and repo_fixtures_dir.exists():
+        for pattern in ("*.hanlinExpo", "*.scripting"):
+            for source in sorted(repo_fixtures_dir.glob(pattern)):
+                if source.name not in generated:
+                    shutil.copy2(source, fix_dir / source.name)
+    for pattern in ("*.hanlinExpo", "*.scripting"):
+        for fixture in sorted(fix_dir.glob(pattern)):
+            if fixture.name not in generated:
+                generated.append(fixture.name)
+
+    logs: List[str] = [
+        f"Staging ScriptUI and Expo fixtures for simulator: {simulator_udid}",
+        f"Fixtures directory: {fix_dir}",
+    ]
+
+    def failure(status: str, message: str) -> dict:
+        logs.append(message)
+        if log_file:
+            log_file.parent.mkdir(parents=True, exist_ok=True)
+            log_file.write_text("\n".join(logs) + "\n", encoding="utf-8")
+        return {"staged": False, "status": status, "error": message, "logs": logs}
+
+    for fname in generated:
+        fpath = fix_dir / fname
+        logs.append(f"Fixture {fname} sha256={compute_sha256(fpath)}")
+
+    if not generated:
+        return failure("FIXTURES_MISSING", "No ScriptUI or Expo fixtures were generated.")
+
+    if dry_run:
+        logs.append("Dry run enabled - skipping simctl commands")
+        res = {"staged": True, "dry_run": True, "logs": logs}
+        if log_file:
+            log_file.parent.mkdir(parents=True, exist_ok=True)
+            log_file.write_text("\n".join(logs) + "\n", encoding="utf-8")
+        return res
+
+    # 2. Install tested app if app_path is provided
+    if app_path:
+        if not app_path.is_dir():
+            return failure("INSTALL_FAILED", f"App bundle is missing: {app_path}")
+        logs.append(f"Installing app: {app_path}")
+        install_res = runner(
+            ["xcrun", "simctl", "install", simulator_udid, str(app_path)],
+            timeout_seconds=INSTALL_TIMEOUT_SECONDS,
+        )
+        if install_res.returncode != 0:
+            return failure("INSTALL_FAILED", f"simctl install returned {install_res.returncode}: {install_res.stderr.strip()}")
+        else:
+            logs.append("App installed successfully")
+
+    # 3. Get app data container
+    container_cmd = ["xcrun", "simctl", "get_app_container", simulator_udid, bundle_id, "data"]
+    c_res = runner(container_cmd, timeout_seconds=APP_CONTAINER_TIMEOUT_SECONDS)
+    app_container: Optional[Path] = None
+    if c_res.returncode == 0 and c_res.stdout.strip():
+        app_container = Path(c_res.stdout.strip())
+        logs.append(f"App data container: {app_container}")
+    else:
+        return failure("CONTAINER_NOT_FOUND", f"Could not get app container for {bundle_id}: {c_res.stderr.strip()}")
+    if not app_container.is_dir():
+        return failure("CONTAINER_NOT_FOUND", f"App data container is missing: {app_container}")
+
+    # Copy fixtures into app container Documents/
+    staged_targets = []
+    if app_container:
+        app_docs = app_container / "Documents"
+        app_docs.mkdir(parents=True, exist_ok=True)
+        for fname in generated:
+            src = fix_dir / fname
+            dst = app_docs / fname
+            shutil.copy2(src, dst)
+            logs.append(f"Staged {fname} -> {dst} (sha256={compute_sha256(dst)})")
+            staged_targets.append(str(dst))
+
+    # 4. Also stage into com.apple.DocumentsApp if available
+    files_cmd = ["xcrun", "simctl", "get_app_container", simulator_udid, "com.apple.DocumentsApp", "data"]
+    f_res = runner(files_cmd, timeout_seconds=5.0)
+    if f_res.returncode == 0 and f_res.stdout.strip() and Path(f_res.stdout.strip()).is_dir():
+        files_container = Path(f_res.stdout.strip())
+        files_docs = files_container / "Documents"
+        files_docs.mkdir(parents=True, exist_ok=True)
+        logs.append(f"Files data container: {files_container}")
+        for fname in generated:
+            src = fix_dir / fname
+            dst = files_docs / fname
+            shutil.copy2(src, dst)
+            logs.append(f"Staged to Files {fname} -> {dst}")
+            staged_targets.append(str(dst))
+    else:
+        logs.append("Files container unavailable or timed out (optional); app fixtures are staged.")
+
+    if log_file:
+        log_file.parent.mkdir(parents=True, exist_ok=True)
+        log_file.write_text("\n".join(logs) + "\n", encoding="utf-8")
+
+    return {
+        "staged": True,
+        "status": "SUCCESS",
+        "app_container": str(app_container) if app_container else None,
+        "staged_targets": staged_targets,
+        "logs": logs,
+    }
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Stage ScriptUI fixtures into simulator app container")
+    parser.add_argument("--simulator-udid", required=True, help="Target simulator UDID")
+    parser.add_argument("--app-path", help="Path to tested .app bundle")
+    parser.add_argument("--bundle-id", default="com.davidpovarsky.AI-HLY", help="Bundle identifier of the tested app")
+    parser.add_argument("--fixtures-dir", help="Path to fixtures directory")
+    parser.add_argument("--log-file", help="Path to write log output")
+    parser.add_argument("--dry-run", action="store_true", help="Perform dry run without invoking simctl")
+
+    args = parser.parse_args()
+
+    app_p = Path(args.app_path).resolve() if args.app_path else None
+    fix_p = Path(args.fixtures_dir).resolve() if args.fixtures_dir else None
+    log_p = Path(args.log_file).resolve() if args.log_file else None
+
+    res = stage_fixtures(
+        simulator_udid=args.simulator_udid,
+        app_path=app_p,
+        bundle_id=args.bundle_id,
+        fixtures_dir=fix_p,
+        log_file=log_p,
+        dry_run=args.dry_run,
+    )
+
+    for line in res["logs"]:
+        print(line)
+
+    return 0 if res["staged"] else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,50 @@
+{
+  "patch": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\python-module-facts\\python-module-facts-v2.diff",
+  "sha256": "a5d886150c64d9a50e73ed5c1a5a0ed1d312305efd9377253caf6c509aefb79b",
+  "bytes": 52493,
+  "changed_files": [
+    "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_python_ast.py",
+    "Scripts/Runtime/Tests/test_python_skill_module_facts.py",
+    "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeService.swift",
+    "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillRuntimeFactsProvider.swift",
+    "AI_HLYTests/MaintainedSkillCorpusTests.swift"
+  ],
+  "git_apply_check_exit": 0,
+  "git_apply_check_output": "",
+  "swift_syntax": [
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeService.swift",
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillRuntimeFactsProvider.swift",
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "path": "AI_HLYTests/MaintainedSkillCorpusTests.swift",
+      "exit": 0,
+      "stderr": ""
+    }
+  ],
+  "portable_test_exit": 0,
+  "portable_test_output": "PYTHON_MODULE_FACTS_ISOLATED\ntest_budgets_and_invalid_names_remain_unknown_and_restore_cache (__main__.PythonSkillModuleFactsTests.test_budgets_and_invalid_names_remain_unknown_and_restore_cache) ... ok\ntest_custom_meta_path_path_hook_and_cached_finder_are_not_called (__main__.PythonSkillModuleFactsTests.test_custom_meta_path_path_hook_and_cached_finder_are_not_called) ... ok\ntest_equality_traps_and_missing_bootstrap_dependencies_execute_no_custom_code (__main__.PythonSkillModuleFactsTests.test_equality_traps_and_missing_bootstrap_dependencies_execute_no_custom_code) ... ok\ntest_native_extension_and_namespace_do_not_become_false_ready (__main__.PythonSkillModuleFactsTests.test_native_extension_and_namespace_do_not_become_false_ready) ... ok\ntest_original_job_runner_uses_identical_paths_for_inspection_and_actual_skill_id (__main__.PythonSkillModuleFactsTests.test_original_job_runner_uses_identical_paths_for_inspection_and_actual_skill_id) ... ok\ntest_original_zip_finder_binds_to_the_actual_archive_without_import (__main__.PythonSkillModuleFactsTests.test_original_zip_finder_binds_to_the_actual_archive_without_import) ... ok\ntest_real_package_and_parent_code_are_never_executed (__main__.PythonSkillModuleFactsTests.test_real_package_and_parent_code_are_never_executed) ... ok\ntest_source_change_and_deletion_cannot_keep_the_old_identity (__main__.PythonSkillModuleFactsTests.test_source_change_and_deletion_cannot_keep_the_old_identity) ... ok\ntest_stdlib_submodules_resolve_without_importing_their_parent (__main__.PythonSkillModuleFactsTests.test_stdlib_submodules_resolve_without_importing_their_parent) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 0.099s\n\nOK\n\ntest_original_interpreter_resolution_contract (test_python_skill_module_facts.IsolatedPythonSkillModuleFactsTests.test_original_interpreter_resolution_contract) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.335s\n\nOK\n",
+  "native_typecheck": "NOT_RUN",
+  "native_acceptance": "NOT_RUN",
+  "canonical_edited": false,
+  "native_regression_swift_parse_exit": 0,
+  "native_regression_swift_parse_output": "",
+  "base_commit": "7e934579d1bc272720df43a4023b1c63709c60fc",
+  "roundtrip": {
+    "exit": 0,
+    "files": 5,
+    "mismatches": [],
+    "stderr": "",
+    "path": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\python-module-facts\\roundtrip-v2-db040d29"
+  },
+  "revision": 2,
+  "portable_test_methods": 9,
+  "no_security_boundary_claim": true,
+  "inspection_dependency_imports": 0
+}

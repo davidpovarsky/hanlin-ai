@@ -1,0 +1,5 @@
+swift-driver version: 1.168.6 Traceback (most recent call last):
+  File "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/24bc34c6/run-native.py", line 133, in <module>
+    if not okay:raise RuntimeError('Original Motion '+letter+' acceptance failed; original results retained; later cases remain NOT_RUN')
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Original Motion B acceptance failed; original results retained; later cases remain NOT_RUN

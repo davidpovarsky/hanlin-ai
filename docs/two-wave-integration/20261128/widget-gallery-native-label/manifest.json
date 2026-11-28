@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 1276,
+      "sha256": "fd1028896ad56c03b300344544d95eaa2d523d72f6af9f97b9f5f43d12cf2399"
+    },
+    {
+      "path": "candidate-manifest.json",
+      "bytes": 1665,
+      "sha256": "c47768164925c7e445ed8db5c4a9a77be5a614240322ed260a0000109aedbc23"
+    },
+    {
+      "path": "edit-recipe.json",
+      "bytes": 4862,
+      "sha256": "0d15e46adc598247dee0838dc364d63ad152496344a0f14d276738e175d828fb"
+    },
+    {
+      "path": "independent-manifest.json",
+      "bytes": 178,
+      "sha256": "f0ac99416125fefd84bed53599ca4d81e1f7be5063d1b0a4f6c1ebcd11489ebb"
+    },
+    {
+      "path": "independent-review.json",
+      "bytes": 4299,
+      "sha256": "89f804c964b99ce1aae7408d84448be741fa1cb5f45b87bbb0e0ac94a9b9307b"
+    },
+    {
+      "path": "native-layout-reference.json",
+      "bytes": 739,
+      "sha256": "27ec3968ad114c9a58d06125721ddee94912d76e0e09e1b52ad75bf71759d2d5"
+    },
+    {
+      "path": "proof-preparation.json",
+      "bytes": 1192,
+      "sha256": "7e9fe71337983ad7eb91838cd3394361b4e2efeec8d87ecae5bcb26ed9d35598"
+    },
+    {
+      "path": "source-integration.json",
+      "bytes": 1203,
+      "sha256": "23946e6faf485dee0bd8c2b65af98f23b341695d08d31027264a26ba8831807c"
+    },
+    {
+      "path": "source-qualification.json",
+      "bytes": 2478,
+      "sha256": "1c4978f0a083dbbbc81eb2a33ed3f5280267f16cd83354a1fc29cecd13334789"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 1813,
+      "sha256": "8cd78be72ae6d79df7ce8b76b65ab43bb663a95b4cb0151e275122d097281e2c"
+    },
+    {
+      "path": "visual-review.json",
+      "bytes": 922,
+      "sha256": "354b49bceedaeedf918689d279967b57a776541ce45cb13f963e2e9a0553486c"
+    }
+  ]
+}

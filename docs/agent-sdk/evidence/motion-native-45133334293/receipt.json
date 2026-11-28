@@ -1,0 +1,433 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-23T09:19:21.419471+00:00",
+  "run_id": 45133334293,
+  "job_id": 137553665724,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45133334293",
+  "source": "6772dce6304fc6761a2200314f7d2020dc782e47",
+  "workflow_conclusion": "failure",
+  "acceptance": "OPEN",
+  "native_test_build": "EXECUTED_PASS",
+  "tests": [
+    {
+      "selector": "MotionUITests/testBRapidReversalPresetSwitchAndPersistence",
+      "status": "FAILED",
+      "duration_seconds": 40.122581005096436,
+      "assertion_line": 160,
+      "failure": "Rapid reversal must observe at least one later burst action at intermediate geometry",
+      "exact_receipt": "actions=5;expanded=true;natural=100.0;visible=106.0;gaps=2.2300,2.1837,0.0569,0.0592;intermediate=false,false,false,false;scrollY=0.0;orientation=portrait;actionVisible=0.0,106.0,0.0,0.0,0.0",
+      "later_B_subcases": "NOT_RUN: intermediate geometry assertion stops the case before preset switching, nested retention, drag cancellation, persistence, or Reduce Motion assertions"
+    },
+    {
+      "selector": "MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion",
+      "status": "EXECUTED_PASS",
+      "duration_seconds": 33.58587396144867,
+      "visual_acceptance": "Portrait expanded RTL/large type and finished collapsed captures reviewed. The landscape app.screenshot capture contains a black/clipped region; clean landscape visual acceptance is NOT established."
+    },
+    {
+      "selector": "MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach",
+      "status": "NOT_RUN"
+    },
+    {
+      "selector": "MotionUITests/testDRapidInputDiagnosticOnly",
+      "status": "NOT_RUN"
+    }
+  ],
+  "native_environment": {
+    "xcode": "27.2",
+    "xcode_build": "27B52",
+    "swift": "6.4.2",
+    "macos": "27.0.1 (26A434)",
+    "device": {
+      "architecture": "arm64",
+      "deviceId": "28C09969-2D46-42DF-839B-65460F4CC288",
+      "deviceName": "Hanlin-Phase2-Motion-45133334293",
+      "modelName": "iPad Pro 13-inch (M5)",
+      "osBuildNumber": "24B8117",
+      "osVersion": "27.2",
+      "platform": "iOS Simulator"
+    }
+  },
+  "durations_seconds": {
+    "build": 270,
+    "test": 256,
+    "results": 11
+  },
+  "artifact": {
+    "id": 14802375245,
+    "name": "chat-motion-ui-45133334293",
+    "bytes": 83126367,
+    "sha256": "26ef10cd19762ac227cca61964abbce4e2c7af24f55372d4c42060faffb909b4",
+    "full_download_digest_and_size_verified": true,
+    "raw_xcresult_sha256": "c0c0f2c57b7340fa4323a0f89469fdddb27ca02eb8a12a105c1254b9510612b7",
+    "raw_xcresult_status": "FINALIZED_READABLE_ARCHIVED"
+  },
+  "source_binding": {
+    "fixture_matches_recorded_revision": true,
+    "source_resource_files": 363,
+    "source_resource_sha256": "cc2f9cdd3a4918a4aed1c1c109bfd5a76a345381a142b6f41a209a25ad593db0",
+    "generated_manifest_sha256": "67bd5ca5a9e9c368886949f8fd178d11d502f858f5fe411b11540f8df238d2f4",
+    "generated_inventory_sha256": "41eeb2e6c87be6dee04f652afcff1be839c5a4dce0f412aa72ff172eb11191ff",
+    "resolved_lock_sha256": "651a9d193aabcd1876cc8c2cf1e2febb75e6e2e1505d6fed3b4d8c8f18d0c013",
+    "resolved_dependency_count": 8,
+    "packaged_resource_bundle_instances": 6,
+    "resource_bundle_paths": [
+      "HanlinSDK_HanlinChatUI.bundle",
+      "HanlinSDK_HanlinLocalization.bundle",
+      "HanlinSDK_HanlinRichUI.bundle",
+      "HighlightSwift_HighlightSwift.bundle",
+      "SwiftStreamingMarkdown_SwiftStreamingMarkdown.bundle",
+      "iosMath_iosMath.bundle"
+    ],
+    "complete_dependency_and_bundle_hashes": "sdk-resolved-inputs.json",
+    "relevant_sources": [
+      {
+        "path": "docs/chat-motion/MotionUI/App.swift",
+        "sha256": "0c1491dfa227b98332b446e15f3c84de1346f2daf71a9247c6d8e7f6cf2103c2",
+        "bytes": 25774
+      },
+      {
+        "path": "docs/chat-motion/MotionUI/MotionUITests.swift",
+        "sha256": "6423119354bf568cd80194126a4d29ff48388ab276152dc151cc3981f1ce775b",
+        "bytes": 23971
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+        "sha256": "91d60f960fd1ca1dea34b1ce34a6a5e99b4e60c2a030be78ac9f996a2533d084",
+        "bytes": 7156
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinOriginalActivityControls.swift",
+        "sha256": "1a88b02132e48ba6fece0e9227943951e1c0b6a379abda5591e4537241833e71",
+        "bytes": 2927
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift",
+        "sha256": "d8ff25aa0ba06895108f09edf00709db04efe4f7467d1b8302adf1bae1785577",
+        "bytes": 3312
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionPreferences.swift",
+        "sha256": "709f948ac85ac042d15fb8c258383f1bbb06f5336c0904dc170e04b46f143791",
+        "bytes": 4392
+      }
+    ]
+  },
+  "macro_admission": {
+    "before_build": "EXACT_ORIGINAL_MACRO_INPUT_ADMITTED",
+    "after_build": "EXACT_ORIGINAL_MACRO_INPUT_ADMITTED",
+    "equatable_version": "1.4.1",
+    "revision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+    "automatic_resolution_during_build_and_test": false
+  },
+  "visual_diagnosis": {
+    "source_video_bytes": 27197640,
+    "source_video_sha256": "a27cffe65c9a8fcf0f0fd8a240bb56c317cb6382c2794bea19eea4de0227c6f7",
+    "native_video_duration_seconds": 83.97,
+    "timer_recording_limit_seconds": 120,
+    "actual_effective_motion": "v1.relaxed;shimmer=true;numeric=true",
+    "reduce_motion_in_this_actual_B": "False, inferred from the original effective-motion mapping and directly visible flags; B itself does not assert this precondition before the burst",
+    "warm_open_and_close": "Multiple intermediate footer positions observed in actual video; see native-footer-pixel-trace.json. That trace is resampled at 30fps and is not used to time native actions.",
+    "burst_observations": [
+      {
+        "native_frame_index": 0,
+        "video_pts_seconds": 16.125,
+        "footer_top_pixel_y": 627,
+        "mismatch_pixels": 6,
+        "visually_reviewed_counter": 2,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 1,
+        "video_pts_seconds": 16.175,
+        "footer_top_pixel_y": 627,
+        "mismatch_pixels": 7,
+        "visually_reviewed_counter": 2,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 2,
+        "video_pts_seconds": 16.208333,
+        "footer_top_pixel_y": 627,
+        "mismatch_pixels": 6,
+        "visually_reviewed_counter": 2,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 3,
+        "video_pts_seconds": 16.235,
+        "footer_top_pixel_y": 627,
+        "mismatch_pixels": 6,
+        "visually_reviewed_counter": 2,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 4,
+        "video_pts_seconds": 16.276667,
+        "footer_top_pixel_y": 627,
+        "mismatch_pixels": 6,
+        "visually_reviewed_counter": 2,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 5,
+        "video_pts_seconds": 16.34,
+        "footer_top_pixel_y": 627,
+        "mismatch_pixels": 6,
+        "visually_reviewed_counter": 3,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 6,
+        "video_pts_seconds": 16.361667,
+        "footer_top_pixel_y": 627,
+        "mismatch_pixels": 6,
+        "visually_reviewed_counter": 4,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 7,
+        "video_pts_seconds": 16.368333,
+        "footer_top_pixel_y": 627,
+        "mismatch_pixels": 7,
+        "visually_reviewed_counter": 4,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 8,
+        "video_pts_seconds": 16.39,
+        "footer_top_pixel_y": 627,
+        "mismatch_pixels": 7,
+        "visually_reviewed_counter": 4,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 9,
+        "video_pts_seconds": 16.418333,
+        "footer_top_pixel_y": 628,
+        "mismatch_pixels": 6,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 10,
+        "video_pts_seconds": 16.431667,
+        "footer_top_pixel_y": 630,
+        "mismatch_pixels": 8,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 11,
+        "video_pts_seconds": 16.446667,
+        "footer_top_pixel_y": 636,
+        "mismatch_pixels": 8,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 12,
+        "video_pts_seconds": 16.463333,
+        "footer_top_pixel_y": 643,
+        "mismatch_pixels": 8,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 13,
+        "video_pts_seconds": 16.48,
+        "footer_top_pixel_y": 653,
+        "mismatch_pixels": 10,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 14,
+        "video_pts_seconds": 16.498333,
+        "footer_top_pixel_y": 663,
+        "mismatch_pixels": 8,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 15,
+        "video_pts_seconds": 16.515,
+        "footer_top_pixel_y": 674,
+        "mismatch_pixels": 8,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 16,
+        "video_pts_seconds": 16.528333,
+        "footer_top_pixel_y": 686,
+        "mismatch_pixels": 8,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 17,
+        "video_pts_seconds": 16.543333,
+        "footer_top_pixel_y": 697,
+        "mismatch_pixels": 8,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 18,
+        "video_pts_seconds": 16.56,
+        "footer_top_pixel_y": 707,
+        "mismatch_pixels": 3,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 19,
+        "video_pts_seconds": 16.581667,
+        "footer_top_pixel_y": 718,
+        "mismatch_pixels": 8,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 20,
+        "video_pts_seconds": 16.6,
+        "footer_top_pixel_y": 728,
+        "mismatch_pixels": 8,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 21,
+        "video_pts_seconds": 16.613333,
+        "footer_top_pixel_y": 738,
+        "mismatch_pixels": 7,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 22,
+        "video_pts_seconds": 16.628333,
+        "footer_top_pixel_y": 749,
+        "mismatch_pixels": 11,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 23,
+        "video_pts_seconds": 16.645,
+        "footer_top_pixel_y": 761,
+        "mismatch_pixels": 10,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 24,
+        "video_pts_seconds": 16.661667,
+        "footer_top_pixel_y": 773,
+        "mismatch_pixels": 11,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 25,
+        "video_pts_seconds": 16.688333,
+        "footer_top_pixel_y": 785,
+        "mismatch_pixels": 11,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 26,
+        "video_pts_seconds": 16.705,
+        "footer_top_pixel_y": 797,
+        "mismatch_pixels": 11,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 27,
+        "video_pts_seconds": 16.728333,
+        "footer_top_pixel_y": 816,
+        "mismatch_pixels": 11,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 28,
+        "video_pts_seconds": 16.74,
+        "footer_top_pixel_y": 816,
+        "mismatch_pixels": 11,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 29,
+        "video_pts_seconds": 16.75,
+        "footer_top_pixel_y": 824,
+        "mismatch_pixels": 14,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 30,
+        "video_pts_seconds": 16.771667,
+        "footer_top_pixel_y": 830,
+        "mismatch_pixels": 11,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 31,
+        "video_pts_seconds": 16.788333,
+        "footer_top_pixel_y": 834,
+        "mismatch_pixels": 10,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 32,
+        "video_pts_seconds": 16.82,
+        "footer_top_pixel_y": 837,
+        "mismatch_pixels": 10,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 33,
+        "video_pts_seconds": 16.838333,
+        "footer_top_pixel_y": 839,
+        "mismatch_pixels": 10,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 34,
+        "video_pts_seconds": 16.881667,
+        "footer_top_pixel_y": 839,
+        "mismatch_pixels": 10,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      },
+      {
+        "native_frame_index": 35,
+        "video_pts_seconds": 16.886667,
+        "footer_top_pixel_y": 839,
+        "mismatch_pixels": 11,
+        "visually_reviewed_counter": 5,
+        "observation_source": "burst-native-counter-16p1.png; direct visual reading of each native frame"
+      }
+    ],
+    "burst_result": "Native recorded frames with counters3 and4 retain the fully collapsed footer y627px. The first counter5 frame has y628px, then the footer opens to839px. This recorded burst does not show a reversal at intermediate disclosure height before the third action.",
+    "causality_limit": "The recording is not a complete presentation-layer trace and video PTS is not application uptime. These observations do not identify SwiftUI internal scheduling as a product defect or prove that no unrecorded frame existed.",
+    "source_review": "No explicit delayed start, unguarded collapse completion, wrong burst slicing, missing callback, or Reduce Motion activation demonstrated. No basis to modify the original animation or weaken assertions.",
+    "landscape_capture": "Native image6aa76d91593c0923c377.png has IHDR2752x2064, EXIF Orientation8, and a visible black/clipped region after applying orientation. The original test uses app.screenshot(); the actual cause of the capture defect remains unproven."
+  },
+  "code_changes_this_receipt": {
+    "production": false,
+    "fixture": false,
+    "assertions": false,
+    "timing": false
+  },
+  "remaining": "B remains FAILED, later B obligations NOT_RUN; A remains pending; original D only as a coordinated input diagnostic if needed; clean landscape visual capture still needed. No new CI dispatched by this analysis."
+}

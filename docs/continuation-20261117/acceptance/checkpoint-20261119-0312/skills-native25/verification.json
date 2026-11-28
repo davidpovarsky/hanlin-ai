@@ -1,0 +1,140 @@
+{
+  "artifact": {
+    "all_zip_crcs_verified": true,
+    "bytes": 2592144,
+    "id": 14494480413,
+    "members": 144,
+    "name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+    "official_digest_matches": true,
+    "sha256": "a1a893e852f679288f523de367bd2ae1b33b664656ca7847e71b0748d9a653e1",
+    "uncompressed_bytes": 17191368
+  },
+  "device": {
+    "architecture": "arm64",
+    "deviceId": "029B78CA-2FF2-4992-8CCC-2F3B338E1532",
+    "deviceName": "Hanlin-Phase2-44429654565-1",
+    "modelName": "iPad Pro 13-inch (M5)",
+    "osBuildNumber": "24B8117",
+    "osVersion": "27.2",
+    "platform": "iOS Simulator"
+  },
+  "exact_22_argument_names_match": true,
+  "exact_selectors_match": true,
+  "expanded_cases": 25,
+  "failed": 0,
+  "method_groups": 4,
+  "native_contract_cases": 11,
+  "offline_policy_original_assertions": 64,
+  "offline_policy_original_cases": 28,
+  "passed": 25,
+  "raw_files": [
+    {
+      "bytes": 963,
+      "path": "raw/simulator-logs/01-environment.log",
+      "sha256": "3b668dcda21f7e87d5347b8dc8e7c8df185996680caf8451bf4ded423cab9b26"
+    },
+    {
+      "bytes": 1125,
+      "path": "raw/simulator-logs/02-prepare-runtime-core.log",
+      "sha256": "aba6326a9492f9a08a3f6b9bd07853fe2647611edc92d454077ef173b50ae634"
+    },
+    {
+      "bytes": 103,
+      "path": "raw/simulator-logs/05-cache-input-capture.log",
+      "sha256": "85c00b8809ea80cbd38f8e5efebbafa9f6d4cc2cbc001af0eea3583da6dee7b1"
+    },
+    {
+      "bytes": 224,
+      "path": "raw/simulator-logs/05-cache-input-restore.log",
+      "sha256": "a5bf995d21a9e06858d48a1ec228f9fdac6356a1dd62df88f713fb5043323127"
+    },
+    {
+      "bytes": 6966,
+      "path": "raw/simulator-logs/06-diagnostics-build-provenance.json",
+      "sha256": "15af5ed3bbad85e448058ce846869c4726938415b5f2587e34044c35ad88e15f"
+    },
+    {
+      "bytes": 15131,
+      "path": "raw/simulator-logs/08-downstream-unit-test-results.json",
+      "sha256": "b39bb46aea8b4aba3176026fa4dfb0152541d97a96f5f59a54a5a4ed5d62cb58"
+    },
+    {
+      "bytes": 4,
+      "path": "raw/simulator-logs/08-downstream-unit-tests-duration-seconds.txt",
+      "sha256": "78f135d64d5e1307cac651608256a4181a0c5e0795521cf6680b75966df4911d"
+    },
+    {
+      "bytes": 40667,
+      "path": "raw/simulator-logs/08-downstream-unit-tests.log",
+      "sha256": "d2742b71b3987de5e54165bea0640073cb10a7818f4b23d35eef2cede46eb87b"
+    },
+    {
+      "bytes": 2567,
+      "path": "raw/simulator-logs/openclaw-original-policy-parity.log",
+      "sha256": "fe661b2f892ad9f8fdb11ee50db09a32ac645b72c09ce3f7a912387f563894e2"
+    },
+    {
+      "bytes": 10451,
+      "path": "raw/simulator-logs/Resolved-Package.resolved",
+      "sha256": "aabb429fa9f62273e681917748c5d4528fbac58596245216dec36f4bc27d224a"
+    },
+    {
+      "bytes": 28,
+      "path": "raw/simulator-logs/validation-profile.txt",
+      "sha256": "cffee7641abdb8b4a93cb55524477c34b40985d60ed98f6d364da8ab906b7043"
+    },
+    {
+      "bytes": 81337,
+      "path": "raw/simulator-logs/verified-simulator-environment.json",
+      "sha256": "fc3ae8d3add2309d9f1e717507e1f5808c9c8ff247ff72b047a01c6241bd3ef1"
+    }
+  ],
+  "run": {
+    "conclusion": "success",
+    "head_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+    "id": 44429654565,
+    "status": "completed",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44429654565"
+  },
+  "runtime_producer_run_id": "42926628418",
+  "scope": [
+    "Actual iPad Simulator native unit/product execution, not physical iPad acceptance.",
+    "22 generated ZIP regression fixtures are not 22 maintained real Skills.",
+    "The policy boundary observes only the original policy probe; it is not whole-app airplane-mode acceptance.",
+    "Policy probe internal milliseconds and shared process RSS are not isolated app startup or peak-memory benchmarks.",
+    "The newer Python module facts/local wheel and 23 maintained Skill corpus belong to run 44440354095 and are not proven here.",
+    "The separate npm install/update/failed-transaction/uninstall lifecycle belongs to run 44429680236 and is not proven here.",
+    "No canonical source changes, CI dispatch, cancellation or native rerun performed during this verification."
+  ],
+  "source_provenance": {
+    "note": "The authenticated build records trackedWorkspaceModified=true. Runtime preparation logs record a generated RuntimeManifest and updated Host source modules with unchanged locked dependencies. An exhaustive tracked diff is not retained, so this is not described as a clean-tree binary. The exact original policy artifact/declaration closure is independently authenticated by the native witness. Evidence applies to this recorded run, not newer source commits.",
+    "packageResolvedSHA256": "aabb429fa9f62273e681917748c5d4528fbac58596245216dec36f4bc27d224a",
+    "resolved_pin_states_match_committed_lock": true,
+    "sourceCommit": "3a87634b8b478833ddd90c896fe494bd4becda82",
+    "trackedWorkspaceModified": true
+  },
+  "source_snapshots": [
+    {
+      "git_object_matches": true,
+      "path": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_native_probe.mjs",
+      "sha256": "8097f6302ed346434d5404d929c6fec4a10e50cc8e32bb8616f07d2594048f59"
+    },
+    {
+      "git_object_matches": true,
+      "path": "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_provenance.json",
+      "sha256": "f4c6176d00e4e0a6a2c86cd66039e56e135f60d09a14e5a31344fbc872c6c2cb"
+    },
+    {
+      "git_object_matches": true,
+      "path": "AI_HLYTests/SkillOpenClawPolicyTests.swift",
+      "sha256": "fed5ad40f59184120508d1be60fd9b0c722353bb6db3c6abff29c5ea810726e1"
+    },
+    {
+      "git_object_matches": true,
+      "path": "AI_HLYTests/SkillRuntimeProductTests.swift",
+      "sha256": "06471d3f79c83ac8aa95feeeabcdd071be0c96dc8bfe2da92d47bf4850087714"
+    }
+  ],
+  "status": "VERIFIED_NATIVE_SUBSET_PASS",
+  "verified_at_utc": "2026-11-19T03:01:05.660789+00:00"
+}

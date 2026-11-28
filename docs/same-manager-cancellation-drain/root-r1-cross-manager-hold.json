@@ -1,0 +1,8 @@
+{
+  "at": "2026-11-28T11:53:12.026055+00:00",
+  "priorReviewSHA256": "c6e176ef2931cddb928af71085bb5500c3ebb75a6352b2ba14374937565ebf35",
+  "disposition": "HOLD_PENDING_CROSS_MANAGER_ORDERING_FIX",
+  "finding": "Mac independent review found delayed manager M1 request B can pass local admission after later manager M2 request C starts, then mutate global beginRun and cancel C. Local epoch and post-begin checks cannot prevent this mutation. No single-manager invariant established.",
+  "next": "W1 proposes minimal existing-global-Coordinator reservation before first await, checked before beginRun mutates; freeze reviewed replacement and meaningful control. R1 remains immutable, not integrated or executed.",
+  "testsRun": 0
+}

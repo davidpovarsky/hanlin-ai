@@ -1,0 +1,45 @@
+[
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "--write"
+    ],
+    "exit": 0,
+    "stdout": "1.stdout.log",
+    "stderr": "1.stderr.log",
+    "scope": "Source reconciliation only; native execution not inferred."
+  },
+  {
+    "command": [
+      "python3",
+      "Scripts/Audit/audit_miniapp_reachability.py"
+    ],
+    "exit": 0,
+    "stdout": "2.stdout.log",
+    "stderr": "2.stderr.log",
+    "scope": "Source reconciliation only; native execution not inferred."
+  },
+  {
+    "command": [
+      "/usr/local/bin/node",
+      "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "--check"
+    ],
+    "exit": 0,
+    "stdout": "3.stdout.log",
+    "stderr": "3.stderr.log",
+    "scope": "Source reconciliation only; native execution not inferred."
+  },
+  {
+    "command": [
+      "python3",
+      "Scripts/Audit/audit_miniapp_reachability.py",
+      "--check"
+    ],
+    "exit": 0,
+    "stdout": "4.stdout.log",
+    "stderr": "4.stderr.log",
+    "scope": "Source reconciliation only; native execution not inferred."
+  }
+]

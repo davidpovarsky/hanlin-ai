@@ -1,0 +1,191 @@
+{
+  "path": "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+  "committedSHA256": "28fb383e35bd875dd91b124ad02ca4210da7771c53daf4c6c6d28c1e2a55e529",
+  "observedSHA256": "6634fc599022b6cee5d3c1a5b6f6395f2aba9ab5cd565cde4b0f0712bdaf4b0e",
+  "sameRevisionCount": 39,
+  "changedRevisionCount": 0,
+  "originHashBefore": "9e0a5f5d0e16840db5c06b9e338ebb8edd1a4506e21c194a2d64120c7d67c8cc",
+  "originHashAfter": "956fb14986181a8788a40060ac8ceacc44f2eaa8b9c809f70cc7643f2525f214",
+  "metadataChanges": [
+    {
+      "identity": "corexlsx",
+      "before": {
+        "identity": "corexlsx",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/CoreOffice/CoreXLSX.git",
+        "state": {
+          "revision": "1391f3832ea2eeee5186ea8abb81ea49ed0609cc",
+          "version": "0.14.2"
+        }
+      },
+      "after": {
+        "identity": "corexlsx",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/CoreOffice/CoreXLSX",
+        "state": {
+          "revision": "1391f3832ea2eeee5186ea8abb81ea49ed0609cc"
+        }
+      }
+    },
+    {
+      "identity": "latexswiftui",
+      "before": {
+        "identity": "latexswiftui",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/colinc86/LaTeXSwiftUI",
+        "state": {
+          "revision": "c45e0fd45f64923c49c5904a9f9626bc8939f05f",
+          "version": "1.5.0"
+        }
+      },
+      "after": {
+        "identity": "latexswiftui",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/colinc86/LaTeXSwiftUI",
+        "state": {
+          "revision": "c45e0fd45f64923c49c5904a9f9626bc8939f05f"
+        }
+      }
+    },
+    {
+      "identity": "llm.swift",
+      "before": {
+        "identity": "llm.swift",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/eastriverlee/LLM.swift/",
+        "state": {
+          "revision": "4b2517839f24498bea0695bae8967b359b9a35c4",
+          "version": "1.8.0"
+        }
+      },
+      "after": {
+        "identity": "llm.swift",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/eastriverlee/LLM.swift/",
+        "state": {
+          "revision": "4b2517839f24498bea0695bae8967b359b9a35c4"
+        }
+      }
+    },
+    {
+      "identity": "markdownui",
+      "before": {
+        "identity": "markdownui",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/gonzalezreal/MarkdownUI.git",
+        "state": {
+          "revision": "5f613358148239d0292c0cef674a3c2314737f9e",
+          "version": "2.4.1"
+        }
+      },
+      "after": {
+        "identity": "markdownui",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/gonzalezreal/MarkdownUI.git",
+        "state": {
+          "revision": "5f613358148239d0292c0cef674a3c2314737f9e"
+        }
+      }
+    },
+    {
+      "identity": "richtextkit",
+      "before": {
+        "identity": "richtextkit",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/danielsaidi/RichTextKit.git",
+        "state": {
+          "revision": "8aa44cfa645404ad84e52e3ab7723ecf4b82f92b",
+          "version": "1.2.0"
+        }
+      },
+      "after": {
+        "identity": "richtextkit",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/danielsaidi/RichTextKit.git",
+        "state": {
+          "revision": "8aa44cfa645404ad84e52e3ab7723ecf4b82f92b"
+        }
+      }
+    },
+    {
+      "identity": "swcompression",
+      "before": {
+        "identity": "swcompression",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/tsolomko/SWCompression.git",
+        "state": {
+          "revision": "c729f0baa49e91bafef3921fea663db2b75acc46",
+          "version": "4.9.0"
+        }
+      },
+      "after": {
+        "identity": "swcompression",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/tsolomko/SWCompression.git",
+        "state": {
+          "revision": "c729f0baa49e91bafef3921fea663db2b75acc46"
+        }
+      }
+    },
+    {
+      "identity": "swift-log",
+      "before": {
+        "identity": "swift-log",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/apple/swift-log.git",
+        "state": {
+          "revision": "96a2f8a0fa41e9e09af4585e2724c4e825410b91",
+          "version": "1.6.2"
+        }
+      },
+      "after": {
+        "identity": "swift-log",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/apple/swift-log.git",
+        "state": {
+          "revision": "96a2f8a0fa41e9e09af4585e2724c4e825410b91"
+        }
+      }
+    },
+    {
+      "identity": "swift-sdk",
+      "before": {
+        "identity": "swift-sdk",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/modelcontextprotocol/swift-sdk.git",
+        "state": {
+          "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605",
+          "version": "0.12.1"
+        }
+      },
+      "after": {
+        "identity": "swift-sdk",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/modelcontextprotocol/swift-sdk.git",
+        "state": {
+          "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605"
+        }
+      }
+    },
+    {
+      "identity": "swiftsoup",
+      "before": {
+        "identity": "swiftsoup",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/scinfu/SwiftSoup.git",
+        "state": {
+          "revision": "bba848db50462894e7fc0891d018dfecad4ef11e",
+          "version": "2.8.7"
+        }
+      },
+      "after": {
+        "identity": "swiftsoup",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/scinfu/SwiftSoup",
+        "state": {
+          "revision": "bba848db50462894e7fc0891d018dfecad4ef11e"
+        }
+      }
+    }
+  ]
+}

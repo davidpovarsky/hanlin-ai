@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "baseSHA": "173ef0e22b64b1982bf389064867e17100b92587",
+  "createdAt": "2026-11-24T05:26:27.843666+00:00",
+  "branch": "codex/hanlin-miniapps-version-audit-20261124",
+  "scope": "Bind NativeScript runtime/Core/SwiftUI to the same resolved originals; audit canonical component values and exact grouped/delegated Expo operation sources.",
+  "versionMappings": {
+    "source": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+    "versions": {
+      "nativeScriptRuntimeVersion": "9.1.1",
+      "nativeScriptCoreVersion": "9.1.4",
+      "nativeScriptSwiftUIVersion": "4.0.2",
+      "expoSDKVersion": "58.0.26",
+      "expoUIVersion": "58.0.29",
+      "expoUIBridgeVersion": "3.0.0"
+    },
+    "versionSources": {
+      "HanlinScriptAnalyzer": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "HanlinMiniAppHostVersions": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+      "HanlinNativeScriptSession": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
+      "HanlinNativeScriptHostVersions": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptHostVersions.swift",
+      "HanlinExpoSession": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
+      "HanlinExpoHostVersions": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift",
+      "HanlinExpoBridgeMetadata": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoBridgeMetadata.swift",
+      "HanlinGeneratedBridgeMetadata": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift"
+    },
+    "nativeSession": {
+      "runtimeVersion": "9.1.1",
+      "coreVersion": "9.1.4",
+      "swiftUIVersion": "4.0.2"
+    },
+    "expoSession": {
+      "sdkVersion": "58.0.26",
+      "uiVersion": "58.0.29",
+      "runtimeVersion": "58.0.29",
+      "bridgeVersion": "3.0.0"
+    },
+    "bridgeGenerationBaseline": {
+      "source": "Tools/SwiftUIBridge/configuration.json",
+      "runtimeVersion": "58.0.3",
+      "expoUIVersion": "58.0.3",
+      "generatedRuntimeVersion": "58.0.3"
+    },
+    "minimumVersionSource": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
+    "policy": "Released three-component semantic versions; historical ^/~ /=/v prefix expresses minimum metadata, not npm resolution. Core/Expo require the installed major and no newer version. NativeScript prepared runtime requires the installed iOS major/minor and no newer patch; Core and iOS versions are independent. Widget runtime/plugin exact pins remain authoritative. The Expo bridge-generation baseline is separate from installed original Expo versions.",
+    "stableDiagnosticCodes": [
+      "MINIAPP_BRIDGE_VERSION_INVALID",
+      "MINIAPP_BRIDGE_VERSION_MISMATCH",
+      "MINIAPP_CORE_VERSION_MISMATCH",
+      "MINIAPP_DEPENDENCY_VERSION_INVALID",
+      "MINIAPP_ENTRYPOINT_DECLARATION_INVALID",
+      "MINIAPP_ENTRYPOINT_INVALID",
+      "MINIAPP_EXPO_VERSION_MISMATCH",
+      "MINIAPP_NATIVE_PRESENTATION_INVALID"
+    ],
+    "status": "shared importer/direct-session minimum policy; numeric build precedence ignores build labels. Source pin consistency checked; full schemas and installed Host acceptance remain separate gates"
+  },
+  "validation": {
+    "originalStaleExtraction": "EXPECTED_RED_RETAINED",
+    "afterVersionReconciliation": "NEXT_STALE_OPERATION_EXTRACTION_FAILURE_RETAINED",
+    "fullSourceAudit": "EXECUTED_PASS",
+    "versionCases": {
+      "executed": 4,
+      "passed": 4,
+      "rerunForOperationChange": false
+    },
+    "operationCases": {
+      "executed": 2,
+      "passed": 2
+    },
+    "swiftSyntaxFiles": 3,
+    "sourceCount": 72,
+    "publicExportCount": 173,
+    "appleTypecheck": "NOT_RUN",
+    "nativeRuntime": "NOT_RUN",
+    "CI": "NOT_RUN",
+    "fullUpstreamResolutionOrSDKPreparation": "NOT_RUN"
+  },
+  "impact": "Original compatibility functions and version locks are unchanged. Native source changes are the generated version constants and their consumers. Source audit checks include both actual generated namespaces and each independent component lock.",
+  "futureFixture": {
+    "iOS": "9.2.1",
+    "Core": "9.2.7",
+    "SwiftUI": "4.1.0",
+    "meaning": "Controlled input to the real version rendering functions, not a claim of published upstream versions or native execution."
+  },
+  "generatedInventory": {
+    "writtenOnlyInIsolatedWorktree": true,
+    "sha256": "bc2f3699afa51d600d5ce0d12f34d104d3aa5baf251e4c7301874e106f716f08",
+    "restoredToBaseBeforeCommit": true,
+    "finalInventoryOwner": "root"
+  },
+  "sourceSHA256": {
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptHostVersions.swift": "caee618f90412968d0390d1cee3c9938417de019fa64a372f70a3ac2682e8d78",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift": "6ef3c5c17c41a513484a1341edd31bad3dfcc4a3b9c72f2157e3f3d6112244d3",
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
+    "Scripts/MiniApps/resolve-upstreams.mjs": "9d1e19f0da2274b72523274f0745e98513e6f66b32a81634ee72b5fab9e820ee",
+    "Scripts/Audit/audit-miniapp-sdk.mjs": "1fe1bb53cc215559c5d110037b7342c7747d2544a1ae93870763b90e467d6198",
+    "Scripts/Audit/miniapp-runtime-contract.mjs": "8c3fe7f93fa9d77913ccef5c69e83fd3a205da411770d67a40be4d24677d202b",
+    "Scripts/Audit/miniapp-expo-operations.mjs": "3315918d0d91b5fd4d8bb77549f3c4553ae82a7796a1a0d1b5bcfd5ba507cb5e",
+    "Scripts/Audit/Tests/runtime-version-contract.test.mjs": "3e16a456bcb5314452f92222641cd6ac26faf269d1cae7dd3f70349ffbe72ded",
+    "Scripts/Audit/Tests/expo-operation-contract.test.mjs": "60843cdf95792b72097f7029c58c117bd66b16c3ff9524937bbb8a87c0fe0c54"
+  },
+  "unchangedSourceSHA256": {
+    "Scripts/NativeScript/dependency-lock.json": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5",
+    "Scripts/NativeScript/package.json": "db255f51de179afb603cffa5d42830a27fcf0e2650d3401364f7338f94a328b5",
+    "Scripts/NativeScript/package-lock.json": "e05c5bddd7d242d1b28fd7ad6c7ec23fcf9fdaf50dad668df4389f2b7771ca58",
+    "Scripts/Expo/dependency-lock.json": "549d100eca28b6b5f59b0cc6bb55d64c27e7bb88f02fd58eb8f1b2f6097be64f",
+    "Scripts/Expo/package.json": "db6fd60dbc8f2b15eac5fee7029781cf14834ffbad53f0c8948fc4c2945c1e91",
+    "Scripts/Expo/package-lock.json": "e3da3f23bf663dd927d1db5f34750053c611603cc968f200f51c309f3f8ccf60",
+    "Tools/SwiftUIBridge/configuration.json": "678d09bd72df34c3a09711aff689ad92daf6a58b5eb0f397026117da332ef2c6",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift": "e7e6dcb882b853a086c8ea33023de3a3f6889eefd6ed7c7075ba26d1ba511134",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift": "014a9f0d5d078b84cda43d805e8b95b89203cabd834254f4e30030805e8dad0f",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "8369a7d3068a712e770b98d8cf34450b8b6bfbd50b31e69094a2289294c63fd6"
+  },
+  "producerSemantics": {
+    "source": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+    "preparedRuntimeVersion": "SDK @nativescript/ios; existing older Core fallback is retained. Current staging requires both original packages.",
+    "sourceOfCoreVersion": "@nativescript/core dependency/lock, independent of the iOS runtime.",
+    "bridgeBaseline": "The existing generated Apple bridge58.0.3 baseline remains separate from original Expo58.0.26/UI58.0.29."
+  },
+  "remainingMetadataFollowup": [
+    "HanlinScriptingPlatform.nativeScriptSourceBundle has old9.1.0 fingerprint/compiler labels.",
+    "HanlinScriptContractSupport.multiRuntime runtime descriptors retain old NativeScript9.1.0 / Expo58.0.3 identities. Parent authorized a separate producer-consumer trace and narrow follow-up."
+  ],
+  "olderOriginalResources": "The tracked shared Core9.1.0 snapshot was not relabelled. prepare-ios-dependencies verifies installed original versions and stages the actual complete Core tree before host build. Older9.1.0 fixture requirements are intentionally preserved."
+}

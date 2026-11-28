@@ -1,0 +1,14 @@
+{
+  "sourceCommit": "716ab4d0e99c68f4d8988db8eafad9ff21237ebd",
+  "base": "7dd86a3ab1e170a649ea126c1685b3250b6240eb",
+  "changedPaths": [
+    "Scripts/CI/Tests/test_affected_validation.py",
+    "Scripts/CI/affected-validation-map.json"
+  ],
+  "sourceSHA256": {
+    "Scripts/CI/affected-validation-map.json": "368d9e6a896bea2ec5e2a2e095f9e7b4397255333a1192014b1b08456a39c44a",
+    "Scripts/CI/Tests/test_affected_validation.py": "102745b59e722c1e9dc951ed6b464aac549718f67fc21a80c1e1557dc5db0151"
+  },
+  "externalOSGate": "Original run_paired_acceptance.py PAIRED_TEST_SCOPE=miniapp_shortcuts_os; required separately, not represented as CI90 success",
+  "originalPlannerFailure": "ci-default-plan-7dd86a3a"
+}

@@ -1,0 +1,28 @@
+{
+  "atUTC": "2026-11-27T07:55:16.822466+00:00",
+  "action": "Retire only our duplicated handoff log/diff cache after byte-for-byte verification against published lossless Git evidence",
+  "beforeFreeBytes": 104833024,
+  "afterFreeBytes": 144330752,
+  "rawCacheBytesRetired": 39486878,
+  "files": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-45949456866-paired-failure/original-job.log",
+      "bytes": 5199009,
+      "sha256": "40d34812381ceb85709a7546927c523b87cd11480fb81c3fc1ee9d7ba384cd72",
+      "exactPublishedLosslessCopy": "551a8717d62ce7b7665af54d963733fe3b4764aa:docs/two-wave-integration/20261127/revalidated-source-a82452bc/ci-45949456866-paired-failure/original-job.log.gz"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-45949456866-paired-failure/selected/app-split-evidence/paired-product/mini-build.log",
+      "bytes": 12908193,
+      "sha256": "afeaad542c92e3c4e356b191e4066eab066ff9c4426b6588c24df58a4d9a7f85",
+      "exactPublishedLosslessCopy": "551a8717d62ce7b7665af54d963733fe3b4764aa:docs/two-wave-integration/20261127/revalidated-source-a82452bc/ci-45949456866-paired-failure/selected/app-split-evidence/paired-product/mini-build.log.gz"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-platform-device-866-terminal-diagnostics/device-original-job.log",
+      "bytes": 21379676,
+      "sha256": "6987b09419c2bfc3853f8ee7c1d5e317d53eb158cd20a9dc4588808689a8fcbd",
+      "exactPublishedLosslessCopy": "551a8717d62ce7b7665af54d963733fe3b4764aa:docs/two-wave-integration/20261127/revalidated-source-a82452bc/root-platform-device-866-terminal-diagnostics/device-original-job.log.gz"
+    }
+  ],
+  "sourceSigningArchivesXcresultsAndLargeOriginalArtifactUntouched": true
+}

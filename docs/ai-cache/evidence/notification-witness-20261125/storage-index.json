@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "original": "receipt.json",
+      "originalSHA256": "aa6df4cf212fd782e94e6cb869ff82238ae8bfa24e768cf429997d636f04d837",
+      "stored": "receipt.json",
+      "storedSHA256": "aa6df4cf212fd782e94e6cb869ff82238ae8bfa24e768cf429997d636f04d837"
+    },
+    {
+      "original": "repair.patch",
+      "originalSHA256": "91beb433d1bc40e05bac1771c8de0bcbc2248207ffe203a756213a51701dca63",
+      "stored": "repair.patch.gz",
+      "storedSHA256": "961e2d9c8706e8853089c8339c2b2a9e7ea3c20e9aa1b7a9539f47b146f4e34e"
+    }
+  ]
+}

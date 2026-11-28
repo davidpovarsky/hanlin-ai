@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "ChatGPT built-in agent /root/w1_review_resume",
+  "candidate": "d7d10dff56e9b19b87ee6058ac491987f00b48e6",
+  "base": "0456adbe395cde2fb986cf058c4a9497c38d1d21",
+  "status": "APPROVED_BOUNDED_SOURCE_CORRECTION_FOR_ORIGINAL_NATIVE_RETRY",
+  "evidence": "Reviewer independently read exact two-file Git diff and actual retained compiler diagnostic JSON SHA256 d23388c3298f7dececeda034123f4a796b5d5bf2dc1faa5f7a8559cca9366df2.",
+  "findings": [
+    "Already MainActor-isolated controller receives explicit MainActor protocol conformance exactly recommended by compiler.",
+    "All methods, imports, callback, queue and receipt behavior unchanged.",
+    "Exact reachability anchor preserves same path and all other checks.",
+    "No preconcurrency conformance, unsafe nonisolated method, Task/GCD, test, pin or settings change."
+  ],
+  "verificationBoundary": "No tests or native jobs executed by reviewer; original native retry required, no compiler pass claimed.",
+  "recordedBy": "/root/w2_source_resume",
+  "recordedAtUTC": "2026-11-27T01:46:02.493581+00:00",
+  "provenance": "Exact review assessment delivered by /root/w1_review_resume in collaboration message during this task. Reviewer attempted file save returned tool internal error; this record retains the actual independently authored assessment."
+}

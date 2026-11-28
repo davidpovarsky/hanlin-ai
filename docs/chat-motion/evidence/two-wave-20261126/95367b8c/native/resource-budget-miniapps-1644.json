@@ -1,0 +1,14 @@
+{
+  "previous": {
+    "concurrentHostRemainingBytes": 0,
+    "systemMarginBytes": 1073741824,
+    "authority": "Mac owner16:33UTC: Host terminalPASS including finalSDK verification; no MiniApps heavybuild admitted yet",
+    "at": "2026-11-26T16:33:55.842031+00:00"
+  },
+  "current": {
+    "concurrentHostRemainingBytes": 4430000000,
+    "systemMarginBytes": 1073741824,
+    "authority": "Macowner16:44UTC: MiniApps08ed compile running, pairedwarmgrowth4.43GB; Host0; shared1GiB",
+    "at": "2026-11-26T16:46:10.525273+00:00"
+  }
+}

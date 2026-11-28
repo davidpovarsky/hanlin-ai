@@ -1,0 +1,114 @@
+{
+  "sourceCommit": "0ce921b1a35d4813dda690dd353b7a87e65206b4",
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.CI.Tests.test_runtime_memory_entitlements",
+    "-v"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-ci-router-20261127",
+  "startedAt": "2026-11-27T03:25:56.222404+00:00",
+  "finishedAt": "2026-11-27T03:25:56.452270+00:00",
+  "durationSeconds": 0.22986413165926933,
+  "exitCode": 0,
+  "coverage": [
+    {
+      "role": "ai",
+      "owner": "ai",
+      "path": "AI_HLY/AI_HLY.entitlements",
+      "sha256": "e720f17906a84c20a40e48714726ca17a307be5d27ac80c24f40bb017c537481"
+    },
+    {
+      "role": "miniapps",
+      "owner": "miniapps",
+      "path": "HanlinMiniAppsApp/HanlinMiniApps.entitlements",
+      "sha256": "6458e58ace4b853a4e291986962c305e54b948173752e98a2932d5d553c8d4ba"
+    },
+    {
+      "role": "share",
+      "owner": "ai",
+      "path": "ChavrusaChatShare/ChavrusaChatShare.entitlements",
+      "sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc"
+    },
+    {
+      "role": "widgets",
+      "owner": "ai",
+      "path": "HanlinScriptingWidgets/HanlinScriptingWidgets.entitlements",
+      "sha256": "5807753b697d0374d2f57178032398287039878ce24c03409ed87b044dfdb57c"
+    },
+    {
+      "role": "translation",
+      "owner": "ai",
+      "path": "ChavrusaChatTranslationProvider/ChavrusaChatTranslationProvider.entitlements",
+      "sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc"
+    },
+    {
+      "role": "notification",
+      "owner": "ai",
+      "path": "ChavrusaChatNotificationService/ChavrusaChatNotificationService.entitlements",
+      "sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc"
+    },
+    {
+      "role": "miniapps_widgets",
+      "owner": "miniapps",
+      "path": "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.entitlements",
+      "sha256": "0da89872d45b5e9b990de71c4f9c0855f1117f81cb1867a07aa3bfb8b6106254"
+    },
+    {
+      "role": "miniapps_share",
+      "owner": "miniapps",
+      "path": "HanlinMiniAppsExtensions/Share/HanlinMiniAppsShare.entitlements",
+      "sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc"
+    },
+    {
+      "role": "miniapps_translation_provider",
+      "owner": "miniapps",
+      "path": "HanlinMiniAppsExtensions/Translation/HanlinMiniAppsTranslationProvider.entitlements",
+      "sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc"
+    },
+    {
+      "role": "miniapps_notification_service",
+      "owner": "miniapps",
+      "path": "HanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements",
+      "sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc"
+    },
+    {
+      "role": "miniapps_keyboard",
+      "owner": "miniapps",
+      "path": "HanlinMiniAppsExtensions/Keyboard/HanlinMiniAppsKeyboard.entitlements",
+      "sha256": "6d7c2663c6e543380d18eccc7fc96cd1b0bfd3e1dae524aa59f9688abb49f8dd"
+    },
+    {
+      "role": "miniapps_notification_content",
+      "owner": "miniapps",
+      "path": "HanlinMiniAppsExtensions/NotificationContent/HanlinMiniAppsNotificationContent.entitlements",
+      "sha256": "6d7c2663c6e543380d18eccc7fc96cd1b0bfd3e1dae524aa59f9688abb49f8dd"
+    },
+    {
+      "role": "miniapps_camera_capture",
+      "owner": "miniapps",
+      "path": "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.entitlements",
+      "sha256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c"
+    }
+  ],
+  "files": {
+    "stdout.log": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "source.patch": {
+      "size": 1515,
+      "sha256": "9e2311a5a39539565295b532d7b30646b879e3b3ed3ed2763fc89486025527db"
+    },
+    "stderr.log": {
+      "size": 1299,
+      "sha256": "c52cda291eb23d02ad6f8a37ef677d92c4645efdf43164005da34197074e7df4"
+    }
+  },
+  "statusAfter": ""
+}

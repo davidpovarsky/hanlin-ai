@@ -1,0 +1,249 @@
+{
+  "verifiedAtUTC": "2026-11-22T06:47:56.323351+00:00",
+  "workflowRunID": "44989992516",
+  "workflowRunURL": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44989992516",
+  "appSourceSHA": "de9ccac5d38c44f597b2a057701de4757587d6a8",
+  "rendererSourceSHA": "ebbbf889276098f3642448e5439ad049c3cd2d6c",
+  "appleReadiness": {
+    "appID": "6811910017",
+    "buildID": "1e9aa944-86e5-4e03-9a02-989cc93585f8",
+    "buildNumber": "145801",
+    "processingState": "VALID",
+    "internalBuildState": "IN_BETA_TESTING",
+    "externalBuildState": "READY_FOR_BETA_SUBMISSION",
+    "verificationSHA": "de9ccac5d38c44f597b2a057701de4757587d6a8",
+    "audienceSourceBuild": "143801",
+    "internalBetaGroupIDs": [
+      "14fdc6a7-062e-40f6-8f11-45cbd30c6ddb"
+    ]
+  },
+  "runtimeDistribution": {
+    "sourceSHA": "de9ccac5d38c44f597b2a057701de4757587d6a8",
+    "runtimeBundleArtifactRunID": "42926628418",
+    "runtimeBundleSha256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+    "nodeXCFrameworkSha256": "21c404e94c38e7d91ec446ce0ca07d7fed9120ec3e42b80cc8352052dd1db207",
+    "nodeImageUUIDs": [
+      "DF9F9A4D-4842-31DE-A906-BA1B61891ED5 (arm64)"
+    ],
+    "runtimeHostArchiveSha256": "90eea3cceba98ebab415331b4d5a358d8e7fb5ae47b87823be516f1d5d375a6b",
+    "packagedManifestMatches": true
+  },
+  "signedMemoryEntitlements": {
+    "extendedVirtualAddressingRequired": true,
+    "physicalAllocationVerified": false,
+    "pointerCompressionConfigured": true,
+    "profileAuthorizesExtendedVA": true,
+    "signedExtendedVA": true
+  },
+  "sourceReceiptSHA256": {
+    "testflight-readiness.json": "5816a36e79947f2a5219b9e39a71cf7b1f919416e6602a35c495843adf5aba73",
+    "runtime-distribution.json": "bb21f27e360ca27374dd6508102cace1e9e2a6807a45f787e713725257b624df",
+    "runtime-memory-entitlements.json": "21133f0f6fde2a47c2d67ce9c314e6cc57149ee9593d853e619fb41b978472d3"
+  },
+  "packagedApp": {
+    "CFBundleVersion": "145801",
+    "CFBundleShortVersionString": "0.7.3",
+    "CFBundleIdentifier": "com.itorah.chavrusachat",
+    "CFBundleDisplayName": "Hanlin AI"
+  },
+  "ipaSHA256": "02858c65f0be03caa71c214a3f80c427ed4f1e464927f3b6e6526ebeea16badc",
+  "packagedManifest": {
+    "schemaVersion": 1,
+    "runtimeBundle": {
+      "formatVersion": 1,
+      "releaseRepository": "davidpovarsky/hanlin-ai",
+      "releaseTagPrefix": "runtime-core-v1-",
+      "sha256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+      "verificationStatus": "verified",
+      "artifactDependencyHash": "2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+      "nativeInputSHA256": "d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5",
+      "sourceCommit": "4784dd99c3e5892ef726e7a3cce6587eb7847997"
+    },
+    "runtimes": [
+      {
+        "id": "node",
+        "sourceProject": "https://github.com/heylogin/nodejs-mobile",
+        "version": "24.5.0",
+        "revision": "4768489cd0cfa3bb0c27786e958c6446c004f1bd",
+        "license": "MIT with bundled third-party notices",
+        "bundleHash": "21c404e94c38e7d91ec446ce0ca07d7fed9120ec3e42b80cc8352052dd1db207",
+        "verificationStatus": "verified"
+      },
+      {
+        "id": "python",
+        "sourceProject": "https://github.com/beeware/Python-Apple-support",
+        "version": "3.14.6",
+        "revision": "3.14-b10",
+        "license": "MIT; Python and bundled libraries retain their upstream licenses",
+        "bundleHash": "200ef60eb67be0483ceb638daa9048f84f41a9a952707a5ad4c3198037c7b583",
+        "verificationStatus": "archive-verified"
+      },
+      {
+        "id": "typescript",
+        "sourceProject": "https://github.com/microsoft/TypeScript",
+        "version": "6.0.3",
+        "revision": "6.0.3",
+        "license": "Apache-2.0",
+        "bundleHash": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+        "verificationStatus": "package-integrity-verified"
+      },
+      {
+        "id": "ios-system",
+        "sourceProject": "https://github.com/holzschu/ios_system",
+        "version": "v3.0.5",
+        "revision": "7658fcf551935b42d6bb5bedc9315d8f53f760c4",
+        "license": "BSD-3-Clause; included command components retain the licenses documented by ios_system",
+        "bundleHash": null,
+        "componentHashes": {
+          "ios_system": "d429e68102926f58bedd8e8b7105dcd169478cd6da1cef494a5f468482d1c8f5",
+          "files": "b0ee1f58c65ba306f178cd559fd6bce79ec8f275280526908c2a992bfcafedd5",
+          "text": "6fed763c6e941817b2a2af2051871bdfb8a1af4177fad1ab7837f72023dffb79",
+          "tar": "207ab260f8dfb3101938c9e2a949cfd7b76f0e90a000637bbfd6aff47b014a68",
+          "curl_ios": "d7e2f05c9f2689d103db32f83ab045bfb6ab28ce84e3017e0c23e4b4db7ab169",
+          "awk": "283f368df6c44ed9d49d15651ca4281706cdd86eb2b6ddb81808c8a3b18a4f7d"
+        },
+        "linkDependencyHashes": {
+          "libssh2": "cacfe1789b197b727119f7e32f561eaf9acc27bf38cd19975b74fce107f868a6",
+          "openssl": "329e8317cf9bee8e138da5d032330a7a1bd2473cf44c9c083cb2f0636abb8b80"
+        },
+        "linkDependencies": [
+          {
+            "name": "libssh2",
+            "role": "application-link-dependency",
+            "sourceRepository": "https://github.com/holzschu/libssh2-apple",
+            "release": "v1.11.0",
+            "archiveHash": "cacfe1789b197b727119f7e32f561eaf9acc27bf38cd19975b74fce107f868a6",
+            "license": "BSD-3-Clause (libssh2 1.11.0 COPYING)",
+            "distribution": "resolved-and-embedded-during-application-build"
+          },
+          {
+            "name": "openssl",
+            "role": "application-link-dependency",
+            "sourceRepository": "https://github.com/holzschu/openssl-apple",
+            "release": "v1.1.1w",
+            "archiveHash": "329e8317cf9bee8e138da5d032330a7a1bd2473cf44c9c083cb2f0636abb8b80",
+            "license": "OpenSSL License and original SSLeay License (OpenSSL 1.1.1w)",
+            "distribution": "resolved-and-embedded-during-application-build"
+          }
+        ],
+        "verificationStatus": "release-assets-verified"
+      }
+    ]
+  },
+  "sourceAndPackagedNodeUUIDMatch": true,
+  "physicalIPadAcceptance": "NOT_RUN",
+  "followupVerification": {
+    "baseVerifierSHA256": "34c62fcd39870809e5cbe283ecb08ab06e4bea94b647af7d2540191428f07a99",
+    "runtimeProducer": "42926628418",
+    "fullFrozenManifestMatches": true,
+    "canonicalPackagedManifestSHA256": "11252a6891e24f64d005f20c3f4e46be9ab1413a3837452252fa952160f1151f",
+    "packagedBackgroundModes": [
+      "remote-notification",
+      "processing"
+    ],
+    "packagedBGTaskSchedulerPermittedIdentifiers": [
+      "com.itorah.chavrusachat.runtime.*"
+    ],
+    "exactInternalBetaGroupIDs": [
+      "14fdc6a7-062e-40f6-8f11-45cbd30c6ddb"
+    ],
+    "audienceSourceBuild": "143801",
+    "packagedRuntimeHostEntry": "Payload/AI_Hanlin.app/RuntimeHostResources.zip",
+    "actualPackagedRuntimeHostSHA256": "90eea3cceba98ebab415331b4d5a358d8e7fb5ae47b87823be516f1d5d375a6b",
+    "hostPayloadAndTimestampProof": {
+      "baselineIPASHA256": "751cf593dca2905344186db778b04fa7ceddfd5e60ca7aba6343b5a7c91dcf55",
+      "baselineHostZIPBytes": 13084832,
+      "currentHostZIPBytes": 13084832,
+      "baselineHostZIPSHA256": "f6346b53c32bae70a040278b2290ce6b6a3526d699eea8530eb4ec95253bfa21",
+      "currentHostZIPSHA256": "90eea3cceba98ebab415331b4d5a358d8e7fb5ae47b87823be516f1d5d375a6b",
+      "entriesVerified": 3101,
+      "payloadBytesVerified": 57173137,
+      "addedEntries": 0,
+      "removedEntries": 0,
+      "changedPayloadEntries": 0,
+      "sameEntryOrder": true,
+      "canonicalPayloadSHA256": "d4b02c781c1a07e59f96363c15af1279a404cda103cdb8c05e08072634f7dd8f",
+      "canonicalPayloadEncoding": "SHA-256 of UTF-8 compact sorted-key JSON array in ZIP order: path, bytes, sha256, unixMode",
+      "metadataFieldsCompared": [
+        "orig_filename",
+        "compress_type",
+        "comment",
+        "extra",
+        "create_system",
+        "create_version",
+        "extract_version",
+        "reserved",
+        "flag_bits",
+        "volume",
+        "internal_attr",
+        "external_attr",
+        "CRC",
+        "compress_size",
+        "file_size",
+        "header_offset"
+      ],
+      "changedDateTimeEntries": 3101,
+      "changedLocalDOSTimestampFields": 3101,
+      "changedCentralDOSTimestampFields": 3101,
+      "permittedByteDifferences": "Only each local header[10:14] and central header[12:16]",
+      "normalizedCurrentZIPSHA256": "f6346b53c32bae70a040278b2290ce6b6a3526d699eea8530eb4ec95253bfa21",
+      "normalizedCurrentBytesExactlyMatchBaseline": true
+    },
+    "packagedNodeEntry": "Payload/AI_Hanlin.app/Frameworks/NodeMobile.framework/NodeMobile",
+    "actualPackagedNodeLCUUID": "DF9F9A4D-4842-31DE-A906-BA1B61891ED5",
+    "nodeArchitecture": "arm64",
+    "nodeImageFormat": "Mach-O 64-bit little-endian dylib",
+    "simulatorExecution": {
+      "simulatorJobID": 137108757508,
+      "simulatorJobName": "Launch full app on iPad Simulator",
+      "simulatorJobConclusion": "skipped",
+      "releaseJobID": 137108734208,
+      "releaseJobName": "upload-chavrusachat-to-testflight / build-sign-and-upload",
+      "releaseJobConclusion": "success",
+      "fastPreviewStep": {
+        "name": "Record explicit fast TestFlight device preview",
+        "number": 12,
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-22T05:35:09Z",
+        "completed_at": "2026-11-22T05:35:09Z"
+      },
+      "skippedUISteps": [
+        {
+          "name": "Freeze required actual app UI contract before release work",
+          "number": 11,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Execute mandatory actual iPhone and iPad 27 Release UI acceptance",
+          "number": 26,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Retain UI execution immediately before archive or upload work",
+          "number": 27,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Enforce UI proof bound to the exact signed candidate before upload",
+          "number": 36,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Bind the uploaded App Store build identity to its UI proof",
+          "number": 43,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Retain mandatory app UI proof including blocked or failed execution",
+          "number": 44,
+          "conclusion": "skipped"
+        }
+      ],
+      "workflowRunID": "44989992516",
+      "sourceSHA": "de9ccac5d38c44f597b2a057701de4757587d6a8",
+      "metadataFile": "C:\\Users\\DAVID\\Code\\hanlin-testflight-followup-20261122\\jobs-44989992516-final.json",
+      "metadataSHA256": "5e6c6764f95b8239bf8f74f7fa96a349910232e1b5df40e36516dde3055c2abe"
+    }
+  }
+}

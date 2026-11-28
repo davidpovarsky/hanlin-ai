@@ -1,0 +1,76 @@
+[
+  {
+    "argv": [
+      "git",
+      "apply",
+      "--whitespace=error",
+      "-"
+    ],
+    "patchSHA256": "afa7e61df8aec6475401902dab263c45b37b446b90d38c7117c3e61cc7393ed2",
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "apply",
+      "--whitespace=error",
+      "--reverse",
+      "-"
+    ],
+    "patchSHA256": "afa7e61df8aec6475401902dab263c45b37b446b90d38c7117c3e61cc7393ed2",
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "apply",
+      "--whitespace=error",
+      "-"
+    ],
+    "patchSHA256": "474c82434a70d04ed5c4de17dd5229b5aa349c96bbb785af40502a289b84cc2b",
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "apply",
+      "--whitespace=error",
+      "--reverse",
+      "-"
+    ],
+    "patchSHA256": "474c82434a70d04ed5c4de17dd5229b5aa349c96bbb785af40502a289b84cc2b",
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "apply",
+      "--whitespace=error",
+      "-"
+    ],
+    "patchSHA256": "afa7e61df8aec6475401902dab263c45b37b446b90d38c7117c3e61cc7393ed2",
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "apply",
+      "--whitespace=error",
+      "-"
+    ],
+    "patchSHA256": "02cf3d37eac9b109f4cae67d451a6901942a1fa41e34856072dcfe5043424250",
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "manifestSHA256": "e7aa424015d509dc7d99b3158b85f6dbcbcc72fc17b3671d247382331e87e649",
+  "inputCount": 392,
+  "inputFingerprint": "0a9d3ca8f320af72485cab3d998be4861c1d858fe758c5f79e7b15d555937c50",
+  "changedPaths": [
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityTitleBuilder.swift",
+    "AI_HLYTests/ChatCanonicalPresentationSurvivalTests.swift"
+  ],
+  "intersection": [],
+  "nativeStatus": "NOT_RUN"
+}

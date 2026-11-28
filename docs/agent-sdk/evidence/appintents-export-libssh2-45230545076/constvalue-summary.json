@@ -1,0 +1,292 @@
+[
+  {
+    "file": "AI_HLY.build/Debug-iphonesimulator/HanlinScriptingWidgets.build/Objects-normal/arm64/HanlinScriptingAppIntents.swiftconstvalues",
+    "records": 0,
+    "localizedResources": []
+  },
+  {
+    "file": "AI_HLY.build/Debug-iphonesimulator/HanlinScriptingWidgets.build/Objects-normal/arm64/HanlinScriptingWidgets.swiftconstvalues",
+    "records": 1,
+    "localizedResources": []
+  },
+  {
+    "file": "HanlinSDK.build/Debug-iphonesimulator/AI_Hanlin-t.build/Objects-normal/arm64/VisionIntent.swiftconstvalues",
+    "records": 1,
+    "localizedResources": [
+      {
+        "jsonPath": "/0/properties/1/value",
+        "key": "Open Hanlin Camera",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/0/properties/2/value/arguments/0/value",
+        "key": "Opens Hanlin\u2019s camera and visual analysis.",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      }
+    ]
+  },
+  {
+    "file": "HanlinSDK.build/Debug-iphonesimulator/AI_Hanlin-t.build/Objects-normal/arm64/ChavrusaSystemIntegrations.swiftconstvalues",
+    "records": 4,
+    "localizedResources": [
+      {
+        "jsonPath": "/0/properties/0/value",
+        "key": "Enable Hanlin Notifications",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/0/properties/1/value/arguments/0/value",
+        "key": "Enables notifications for Hanlin after you grant system permission.",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/1/properties/0/value/arguments/0/value",
+        "key": "Hour",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/1/properties/1/value/arguments/0/value",
+        "key": "Minute",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/1/properties/2/value/arguments/0/value",
+        "key": "Title",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/1/properties/3/value",
+        "key": "Schedule an Alarm with Hanlin",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/1/properties/4/value/arguments/0/value",
+        "key": "Schedules a system alarm at the time you choose.",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/1/properties/6/value/arguments/0/value",
+        "key": "Hour",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/1/properties/6/propertyWrappers/0/arguments/0/value",
+        "key": "Hour",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/1/properties/8/value/arguments/0/value",
+        "key": "Minute",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/1/properties/8/propertyWrappers/0/arguments/0/value",
+        "key": "Minute",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/1/properties/10/value/arguments/0/value",
+        "key": "Title",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/1/properties/10/propertyWrappers/0/arguments/0/value",
+        "key": "Title",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/2/properties/0/value/members/0/element/value/arguments/2/value",
+        "key": "Schedule Alarm",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/2/properties/0/value/members/1/element/value/arguments/2/value",
+        "key": "Enable Notifications",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      }
+    ]
+  },
+  {
+    "file": "HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingAppIntents.swiftconstvalues",
+    "records": 3,
+    "localizedResources": [
+      {
+        "jsonPath": "/0/properties/4/value/arguments/0/value",
+        "key": "Script Action",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/2/properties/0/value/arguments/0/value",
+        "key": "Action",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/2/properties/1/value/arguments/0/value",
+        "key": "Input",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/2/properties/2/value",
+        "key": "Run Script Action",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/2/properties/3/value/arguments/0/value",
+        "key": "Runs an action from an installed Hanlin Script package.",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/2/properties/5/value/arguments/0/value",
+        "key": "Action",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/2/properties/5/propertyWrappers/0/arguments/0/value",
+        "key": "Action",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/2/properties/7/value/arguments/0/value",
+        "key": "Input",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/2/properties/7/propertyWrappers/0/arguments/0/value",
+        "key": "Input",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      }
+    ]
+  },
+  {
+    "file": "HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingWidgets.swiftconstvalues",
+    "records": 3,
+    "localizedResources": [
+      {
+        "jsonPath": "/0/properties/3/value/arguments/0/value",
+        "key": "Widget instance",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/2/properties/0/value/arguments/0/value",
+        "key": "Widget instance",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/2/properties/1/value",
+        "key": "Widget instance",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/2/properties/2/value/arguments/0/value",
+        "key": "Choose an installed instance. Placements using the same instance share state.",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/2/properties/3/value/arguments/0/value",
+        "key": "Widget instance",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      },
+      {
+        "jsonPath": "/2/properties/3/propertyWrappers/0/arguments/0/value",
+        "key": "Widget instance",
+        "table": "HanlinAppIntents",
+        "bundleType": "Foundation.LocalizedStringResource.BundleDescription",
+        "bundleValueKind": "Runtime",
+        "bundleValue": null
+      }
+    ]
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "baseSourceSHA": "6f4ab9ce7c46b6307068ba06a72702d8b95a84b0",
+  "status": "SOURCE_REVIEW_AND_SYNTAX_PASS",
+  "source": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+  "sourceSHA256": "7444cd9fb26481b8fa52a167f7a942790c4e7d19c7bdd74666fc8c5efe6e70b7",
+  "change": "One new-case branch in the existing user-facing safeMessage mapper; no error-system rewrite.",
+  "message": "This saved version is missing its launch metadata. Import that version's package again to restore it.",
+  "exhaustiveHandlingReview": "All existing Swift references to HanlinAtomicScriptStoreError are its declaration, throws and typed test expectations. No exhaustive switch over this enum was found in repository source.",
+  "referenceEvidence": "existing-error-references.txt",
+  "command": [
+    "swiftc",
+    "-frontend",
+    "-parse",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift"
+  ],
+  "exit": 0,
+  "notEstablished": [
+    "Apple application typechecking",
+    "UI screenshot execution"
+  ],
+  "noReruns": [
+    "Store portable lifecycle proof",
+    "CI"
+  ]
+}

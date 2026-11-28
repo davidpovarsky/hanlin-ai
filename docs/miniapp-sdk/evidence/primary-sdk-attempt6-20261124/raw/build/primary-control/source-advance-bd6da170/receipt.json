@@ -1,0 +1,1910 @@
+{
+  "status": "SOURCE_READY_HEAVY_RESUME_NOT_STARTED",
+  "utc": "2026-11-24T20:58:57.963601+00:00",
+  "sourceBase": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+  "target": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+  "targetTree": "c363e0ba72f34025e6cc01e5fe830682fa94defa",
+  "packSHA256": "502723e1aa2229193bf39d45285be741d29665675127a32b0c48b024a46b5b22",
+  "workingFiles": [
+    {
+      "path": "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "kind": "file",
+      "oldHEADSHA256": "6ee77ab65ebd4bcfdbc4d865ddfbbae551a8297d4fe75d84d4b81311512fc3b4",
+      "workingSHA256": "08fe8608ac946c2759a05389b69c5601039cff61f41ad24fa55cee8d222cc2c2",
+      "newHEADSHA256": "08fe8608ac946c2759a05389b69c5601039cff61f41ad24fa55cee8d222cc2c2",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIMalformed.hanlinExpo",
+      "kind": "file",
+      "oldHEADSHA256": "955d91b9f21d3ae36398fa39d5d94b2e49a0d859c219b3da2dc2de928ef14af5",
+      "workingSHA256": "6061e8c26fdbcbbfe20fa7d8abc2a6a8ee63d0f665046583b96fcefd5d6ad301",
+      "newHEADSHA256": "6061e8c26fdbcbbfe20fa7d8abc2a6a8ee63d0f665046583b96fcefd5d6ad301",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeA.hanlinExpo",
+      "kind": "file",
+      "oldHEADSHA256": "bcff17071af52e06f579537bc08a864ba2ceaa0a0a6d21faad20e18aaff83e83",
+      "workingSHA256": "f065d0fffd837c9346caac0326d3e19620a25a6516ba175cb4ae8d3360d879ba",
+      "newHEADSHA256": "f065d0fffd837c9346caac0326d3e19620a25a6516ba175cb4ae8d3360d879ba",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeB.hanlinExpo",
+      "kind": "file",
+      "oldHEADSHA256": "d99d62c64af1d195c67ebb04ec570d02fce5921a4f4387305de9f4b9096d83bd",
+      "workingSHA256": "e0a8612e4d08bb198f5b48ea3e0fd5355c73e9f9a32215e7481f0d64dce6a7b3",
+      "newHEADSHA256": "e0a8612e4d08bb198f5b48ea3e0fd5355c73e9f9a32215e7481f0d64dce6a7b3",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+      "kind": "file",
+      "oldHEADSHA256": "f7f6ce5eb43e25c6c9579d7e9af7d9686e9405d41fb6a4312e3d6f225d6f4c59",
+      "workingSHA256": "39fa0b492bb18ef50a774ccb5a7c5a5501f240a3a7b4053f9d4531f843236b1b",
+      "newHEADSHA256": "39fa0b492bb18ef50a774ccb5a7c5a5501f240a3a7b4053f9d4531f843236b1b",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+      "kind": "file",
+      "oldHEADSHA256": "c0c6221ec7773a718a2d274d7bcd35ada484c0c98e043f04ebef468a4798038d",
+      "workingSHA256": "5b5ef66c91204f4268b07ce2e3864922cc203acd3d0ad2fe5df3b80f2071fe38",
+      "newHEADSHA256": "5b5ef66c91204f4268b07ce2e3864922cc203acd3d0ad2fe5df3b80f2071fe38",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+      "kind": "file",
+      "oldHEADSHA256": "f0b314cfb4d150b0451241e5d21a40d2ae4fcdbb10b2ae52976092dca05820ae",
+      "workingSHA256": "e9b662011c5ef37c2cf4491f4c6516b86886a1d0e93104cec534745395f8076a",
+      "newHEADSHA256": "e9b662011c5ef37c2cf4491f4c6516b86886a1d0e93104cec534745395f8076a",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "kind": "file",
+      "oldHEADSHA256": "f0b314cfb4d150b0451241e5d21a40d2ae4fcdbb10b2ae52976092dca05820ae",
+      "workingSHA256": "e9b662011c5ef37c2cf4491f4c6516b86886a1d0e93104cec534745395f8076a",
+      "newHEADSHA256": "e9b662011c5ef37c2cf4491f4c6516b86886a1d0e93104cec534745395f8076a",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+      "kind": "file",
+      "oldHEADSHA256": "5dfc9a504008ab100fc1159f86f791da3c3643711357073106a168de944b0d90",
+      "workingSHA256": "843b3147f81c4022759e01e29264f93273fbad47daad4ba45a5d1fc425d164da",
+      "newHEADSHA256": "843b3147f81c4022759e01e29264f93273fbad47daad4ba45a5d1fc425d164da",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIMalformed.hanlinExpo",
+      "kind": "file",
+      "oldHEADSHA256": "955d91b9f21d3ae36398fa39d5d94b2e49a0d859c219b3da2dc2de928ef14af5",
+      "workingSHA256": "6061e8c26fdbcbbfe20fa7d8abc2a6a8ee63d0f665046583b96fcefd5d6ad301",
+      "newHEADSHA256": "6061e8c26fdbcbbfe20fa7d8abc2a6a8ee63d0f665046583b96fcefd5d6ad301",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeA.hanlinExpo",
+      "kind": "file",
+      "oldHEADSHA256": "bcff17071af52e06f579537bc08a864ba2ceaa0a0a6d21faad20e18aaff83e83",
+      "workingSHA256": "f065d0fffd837c9346caac0326d3e19620a25a6516ba175cb4ae8d3360d879ba",
+      "newHEADSHA256": "f065d0fffd837c9346caac0326d3e19620a25a6516ba175cb4ae8d3360d879ba",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeB.hanlinExpo",
+      "kind": "file",
+      "oldHEADSHA256": "d99d62c64af1d195c67ebb04ec570d02fce5921a4f4387305de9f4b9096d83bd",
+      "workingSHA256": "e0a8612e4d08bb198f5b48ea3e0fd5355c73e9f9a32215e7481f0d64dce6a7b3",
+      "newHEADSHA256": "e0a8612e4d08bb198f5b48ea3e0fd5355c73e9f9a32215e7481f0d64dce6a7b3",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+      "kind": "file",
+      "oldHEADSHA256": "f7f6ce5eb43e25c6c9579d7e9af7d9686e9405d41fb6a4312e3d6f225d6f4c59",
+      "workingSHA256": "39fa0b492bb18ef50a774ccb5a7c5a5501f240a3a7b4053f9d4531f843236b1b",
+      "newHEADSHA256": "39fa0b492bb18ef50a774ccb5a7c5a5501f240a3a7b4053f9d4531f843236b1b",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+      "kind": "file",
+      "oldHEADSHA256": "c0c6221ec7773a718a2d274d7bcd35ada484c0c98e043f04ebef468a4798038d",
+      "workingSHA256": "5b5ef66c91204f4268b07ce2e3864922cc203acd3d0ad2fe5df3b80f2071fe38",
+      "newHEADSHA256": "5b5ef66c91204f4268b07ce2e3864922cc203acd3d0ad2fe5df3b80f2071fe38",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+      "kind": "file",
+      "oldHEADSHA256": "f0b314cfb4d150b0451241e5d21a40d2ae4fcdbb10b2ae52976092dca05820ae",
+      "workingSHA256": "e9b662011c5ef37c2cf4491f4c6516b86886a1d0e93104cec534745395f8076a",
+      "newHEADSHA256": "e9b662011c5ef37c2cf4491f4c6516b86886a1d0e93104cec534745395f8076a",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+      "kind": "file",
+      "oldHEADSHA256": "f0b314cfb4d150b0451241e5d21a40d2ae4fcdbb10b2ae52976092dca05820ae",
+      "workingSHA256": "e9b662011c5ef37c2cf4491f4c6516b86886a1d0e93104cec534745395f8076a",
+      "newHEADSHA256": "e9b662011c5ef37c2cf4491f4c6516b86886a1d0e93104cec534745395f8076a",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+      "kind": "file",
+      "oldHEADSHA256": "5dfc9a504008ab100fc1159f86f791da3c3643711357073106a168de944b0d90",
+      "workingSHA256": "843b3147f81c4022759e01e29264f93273fbad47daad4ba45a5d1fc425d164da",
+      "newHEADSHA256": "843b3147f81c4022759e01e29264f93273fbad47daad4ba45a5d1fc425d164da",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "kind": "file",
+      "oldHEADSHA256": "11bce470854088208234f0143dbf4c713a2eadb0968a9a5bfcc350933db205e9",
+      "workingSHA256": "f7ad6d7bf5841f5a0be2f722a1b2735620aa06dcf4801cb73210688a7a135e64",
+      "newHEADSHA256": "f7ad6d7bf5841f5a0be2f722a1b2735620aa06dcf4801cb73210688a7a135e64",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@csstools/color-helpers/package.json",
+      "kind": "file",
+      "oldHEADSHA256": "4cb2e14af3d5296ab12311440ea76aea5617d07d7a715fe8e6911657ed217a34",
+      "workingSHA256": "ed0659c5bac8547eb6ce5bf4c0f7ea77f43835095e4460e3956ecd63143c0cfd",
+      "newHEADSHA256": "ed0659c5bac8547eb6ce5bf4c0f7ea77f43835095e4460e3956ecd63143c0cfd",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@csstools/css-calc/package.json",
+      "kind": "file",
+      "oldHEADSHA256": "9ee8e109cd65fcc5422630a71a57f4dd185dd65818008211ef1f47abe47f3526",
+      "workingSHA256": "963c23fedd6df9a4428f87819c8cbbe6bbd7e16169cfdb5e832f462f8d65eefa",
+      "newHEADSHA256": "963c23fedd6df9a4428f87819c8cbbe6bbd7e16169cfdb5e832f462f8d65eefa",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@csstools/css-color-parser/package.json",
+      "kind": "file",
+      "oldHEADSHA256": "ab1ef71b83eb7ae578fb9e2e1423a421bbed93909fc2edf154f105e5ca43b4b3",
+      "workingSHA256": "294fd9dacab143694b97ac81d21f45a78e683655f37c718c330a3494530dcb60",
+      "newHEADSHA256": "294fd9dacab143694b97ac81d21f45a78e683655f37c718c330a3494530dcb60",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@csstools/css-parser-algorithms/package.json",
+      "kind": "file",
+      "oldHEADSHA256": "854711f2b10e99127f83d241df4e30738988db0c538967a9a415c71989a8985a",
+      "workingSHA256": "2ede4a8a1bafd777c50af276310c5bb4b5274585ebf079059663a3c43a185742",
+      "newHEADSHA256": "2ede4a8a1bafd777c50af276310c5bb4b5274585ebf079059663a3c43a185742",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@csstools/css-tokenizer/package.json",
+      "kind": "file",
+      "oldHEADSHA256": "a15ce5a1b9f0ff3142e72483e019e386879694b618c9e222d43b98cb5e08dac4",
+      "workingSHA256": "304f952c40d6a6070d5a00b26fe84ff594f0b450a7a9d8496c0d87fe49c9a753",
+      "newHEADSHA256": "304f952c40d6a6070d5a00b26fe84ff594f0b450a7a9d8496c0d87fe49c9a753",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/application/application-common.js",
+      "kind": "file",
+      "oldHEADSHA256": "b9a929205548a390210dc8abab7c9df1c1451fd75810a737ef45db47fcc24852",
+      "workingSHA256": "fe0209812581cd1328366fa0424376424dc90fabf5cf945b790b09ea5e20531d",
+      "newHEADSHA256": "fe0209812581cd1328366fa0424376424dc90fabf5cf945b790b09ea5e20531d",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/application/application-common.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "b9a929205548a390210dc8abab7c9df1c1451fd75810a737ef45db47fcc24852",
+      "workingSHA256": "fe0209812581cd1328366fa0424376424dc90fabf5cf945b790b09ea5e20531d",
+      "newHEADSHA256": "fe0209812581cd1328366fa0424376424dc90fabf5cf945b790b09ea5e20531d",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/application/application.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "ace78fc5e9ca8050ed679b20f793978f5bb3d6c01da24d3fcd163c0c10d5f8f4",
+      "workingSHA256": "9b2bb02b53398f1326247a61383acc7667d5ad24bbe74f37dd95b739e76c42fd",
+      "newHEADSHA256": "9b2bb02b53398f1326247a61383acc7667d5ad24bbe74f37dd95b739e76c42fd",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/application/application.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "ace78fc5e9ca8050ed679b20f793978f5bb3d6c01da24d3fcd163c0c10d5f8f4",
+      "workingSHA256": "9b2bb02b53398f1326247a61383acc7667d5ad24bbe74f37dd95b739e76c42fd",
+      "newHEADSHA256": "9b2bb02b53398f1326247a61383acc7667d5ad24bbe74f37dd95b739e76c42fd",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/application/application.js",
+      "kind": "file",
+      "oldHEADSHA256": "ace78fc5e9ca8050ed679b20f793978f5bb3d6c01da24d3fcd163c0c10d5f8f4",
+      "workingSHA256": "9b2bb02b53398f1326247a61383acc7667d5ad24bbe74f37dd95b739e76c42fd",
+      "newHEADSHA256": "9b2bb02b53398f1326247a61383acc7667d5ad24bbe74f37dd95b739e76c42fd",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/application/application.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "ace78fc5e9ca8050ed679b20f793978f5bb3d6c01da24d3fcd163c0c10d5f8f4",
+      "workingSHA256": "9b2bb02b53398f1326247a61383acc7667d5ad24bbe74f37dd95b739e76c42fd",
+      "newHEADSHA256": "9b2bb02b53398f1326247a61383acc7667d5ad24bbe74f37dd95b739e76c42fd",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/application/scene-delegate-bridge.js",
+      "kind": "file",
+      "oldHEADSHA256": "291beb1972d6337349e1f066a62cd7c2649b849089715a20aa5fea3f5708a931",
+      "workingSHA256": "870d6a1a8bc30c1db43e98fbb81c3d0fb462ce664954e8084c662a82eed14c11",
+      "newHEADSHA256": "870d6a1a8bc30c1db43e98fbb81c3d0fb462ce664954e8084c662a82eed14c11",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/application/scene-delegate-bridge.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "291beb1972d6337349e1f066a62cd7c2649b849089715a20aa5fea3f5708a931",
+      "workingSHA256": "870d6a1a8bc30c1db43e98fbb81c3d0fb462ce664954e8084c662a82eed14c11",
+      "newHEADSHA256": "870d6a1a8bc30c1db43e98fbb81c3d0fb462ce664954e8084c662a82eed14c11",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/color/color-common.js",
+      "kind": "file",
+      "oldHEADSHA256": "12b0347582da176bcf7b57d35cb33d88b6cfaf0fd8630c730e361e760d57367e",
+      "workingSHA256": "b4d417d154ae97c49b84547efca9b2916d965ca5140ef9361f5909cb372fd1f0",
+      "newHEADSHA256": "b4d417d154ae97c49b84547efca9b2916d965ca5140ef9361f5909cb372fd1f0",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/color/color-common.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "12b0347582da176bcf7b57d35cb33d88b6cfaf0fd8630c730e361e760d57367e",
+      "workingSHA256": "b4d417d154ae97c49b84547efca9b2916d965ca5140ef9361f5909cb372fd1f0",
+      "newHEADSHA256": "b4d417d154ae97c49b84547efca9b2916d965ca5140ef9361f5909cb372fd1f0",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/color/color-utils.js",
+      "kind": "file",
+      "oldHEADSHA256": "a2dafec41bbcf4e887bd10f0ec5f395642e9d74f81e2f9691e7cf6cf32f6ac2a",
+      "workingSHA256": "3b9dd9150cae2db9502864cd94240e9290382fed54941d95f50f6ac7df79064e",
+      "newHEADSHA256": "3b9dd9150cae2db9502864cd94240e9290382fed54941d95f50f6ac7df79064e",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/color/color-utils.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "a2dafec41bbcf4e887bd10f0ec5f395642e9d74f81e2f9691e7cf6cf32f6ac2a",
+      "workingSHA256": "3b9dd9150cae2db9502864cd94240e9290382fed54941d95f50f6ac7df79064e",
+      "newHEADSHA256": "3b9dd9150cae2db9502864cd94240e9290382fed54941d95f50f6ac7df79064e",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/core-types/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "ba9cb1ba1e41c7bf8fddfa769aba7b95ae96b9a2df4144818456d7e37599fc75",
+      "workingSHA256": "dd35e191b4a3d13c8707dac1ea28020c165085dff8eeb87acd7eb4a6850a5dec",
+      "newHEADSHA256": "dd35e191b4a3d13c8707dac1ea28020c165085dff8eeb87acd7eb4a6850a5dec",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/core-types/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "ba9cb1ba1e41c7bf8fddfa769aba7b95ae96b9a2df4144818456d7e37599fc75",
+      "workingSHA256": "dd35e191b4a3d13c8707dac1ea28020c165085dff8eeb87acd7eb4a6850a5dec",
+      "newHEADSHA256": "dd35e191b4a3d13c8707dac1ea28020c165085dff8eeb87acd7eb4a6850a5dec",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/css-mediaquery/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "903edd88b7ee3b5ccb10c9da524864cc8b38157fcef0caa08b218c206d3cf54d",
+      "workingSHA256": "3e29904e107bfa90f9af5ce6350087e072843767c1ca4ac62341bec7707e959b",
+      "newHEADSHA256": "3e29904e107bfa90f9af5ce6350087e072843767c1ca4ac62341bec7707e959b",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/css-mediaquery/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "903edd88b7ee3b5ccb10c9da524864cc8b38157fcef0caa08b218c206d3cf54d",
+      "workingSHA256": "3e29904e107bfa90f9af5ce6350087e072843767c1ca4ac62341bec7707e959b",
+      "newHEADSHA256": "3e29904e107bfa90f9af5ce6350087e072843767c1ca4ac62341bec7707e959b",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/css/css-tree-parser.js",
+      "kind": "file",
+      "oldHEADSHA256": "6e4f9f47e3b1b688499bfe81879bc7bf01b858bd62fad374fbe50a97f457f7e4",
+      "workingSHA256": "d359941f7fa1d0f2c13e726967acfb5737991d324456c811c28b91c486f94f47",
+      "newHEADSHA256": "d359941f7fa1d0f2c13e726967acfb5737991d324456c811c28b91c486f94f47",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/css/css-tree-parser.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "6e4f9f47e3b1b688499bfe81879bc7bf01b858bd62fad374fbe50a97f457f7e4",
+      "workingSHA256": "d359941f7fa1d0f2c13e726967acfb5737991d324456c811c28b91c486f94f47",
+      "newHEADSHA256": "d359941f7fa1d0f2c13e726967acfb5737991d324456c811c28b91c486f94f47",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/css/lib/parse/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "27f74d85e4a8fbb109ef4f52f51d9371f530bbdc73c4c52d8179d32735b157ec",
+      "workingSHA256": "8f3634728e2517c3aa42a99559f62100c4f688b797c44cd442729f37cad1cbb3",
+      "newHEADSHA256": "8f3634728e2517c3aa42a99559f62100c4f688b797c44cd442729f37cad1cbb3",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/css/lib/parse/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "27f74d85e4a8fbb109ef4f52f51d9371f530bbdc73c4c52d8179d32735b157ec",
+      "workingSHA256": "8f3634728e2517c3aa42a99559f62100c4f688b797c44cd442729f37cad1cbb3",
+      "newHEADSHA256": "8f3634728e2517c3aa42a99559f62100c4f688b797c44cd442729f37cad1cbb3",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/css/parser.js",
+      "kind": "file",
+      "oldHEADSHA256": "d7a9170c99cb69a360130ba030e45ea6378d536e60245bf06a72c6433cd3893b",
+      "workingSHA256": "09ac385d502ab47911215e11d4ed9840d9ed2bf8ddaa34c2480a14a01d5d8d60",
+      "newHEADSHA256": "09ac385d502ab47911215e11d4ed9840d9ed2bf8ddaa34c2480a14a01d5d8d60",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/css/parser.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "d7a9170c99cb69a360130ba030e45ea6378d536e60245bf06a72c6433cd3893b",
+      "workingSHA256": "09ac385d502ab47911215e11d4ed9840d9ed2bf8ddaa34c2480a14a01d5d8d60",
+      "newHEADSHA256": "09ac385d502ab47911215e11d4ed9840d9ed2bf8ddaa34c2480a14a01d5d8d60",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/http/http-request-internal/http-request-internal-common.js",
+      "kind": "file",
+      "oldHEADSHA256": "c22102627b733d4a29aabbcf36f728e542c65f8c17a19b1b0f521b79855f08f0",
+      "workingSHA256": "8bbc53be5bb515724c641f2af99ce3c2eb2043de3a783f4796d8a2e5f7303bca",
+      "newHEADSHA256": "8bbc53be5bb515724c641f2af99ce3c2eb2043de3a783f4796d8a2e5f7303bca",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/http/http-request-internal/http-request-internal-common.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "c22102627b733d4a29aabbcf36f728e542c65f8c17a19b1b0f521b79855f08f0",
+      "workingSHA256": "8bbc53be5bb515724c641f2af99ce3c2eb2043de3a783f4796d8a2e5f7303bca",
+      "newHEADSHA256": "8bbc53be5bb515724c641f2af99ce3c2eb2043de3a783f4796d8a2e5f7303bca",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/http/http-request-internal/index.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "97d01d410756bdab64fcf691acc41999960b3ea56e10de2d4352e8490eafcb29",
+      "workingSHA256": "3d9cf66c848d60781a9282ff04ac7bb222005b3741d71c6bfb4fb395ed8bef51",
+      "newHEADSHA256": "3d9cf66c848d60781a9282ff04ac7bb222005b3741d71c6bfb4fb395ed8bef51",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/http/http-request-internal/index.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "97d01d410756bdab64fcf691acc41999960b3ea56e10de2d4352e8490eafcb29",
+      "workingSHA256": "3d9cf66c848d60781a9282ff04ac7bb222005b3741d71c6bfb4fb395ed8bef51",
+      "newHEADSHA256": "3d9cf66c848d60781a9282ff04ac7bb222005b3741d71c6bfb4fb395ed8bef51",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/http/http-request-internal/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "97d01d410756bdab64fcf691acc41999960b3ea56e10de2d4352e8490eafcb29",
+      "workingSHA256": "3d9cf66c848d60781a9282ff04ac7bb222005b3741d71c6bfb4fb395ed8bef51",
+      "newHEADSHA256": "3d9cf66c848d60781a9282ff04ac7bb222005b3741d71c6bfb4fb395ed8bef51",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/http/http-request-internal/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "97d01d410756bdab64fcf691acc41999960b3ea56e10de2d4352e8490eafcb29",
+      "workingSHA256": "3d9cf66c848d60781a9282ff04ac7bb222005b3741d71c6bfb4fb395ed8bef51",
+      "newHEADSHA256": "3d9cf66c848d60781a9282ff04ac7bb222005b3741d71c6bfb4fb395ed8bef51",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/native-window/native-window-common.js",
+      "kind": "file",
+      "oldHEADSHA256": "88ae3526b835e6fe7fa5124709c1a652c10d7e739274035da220674959d9f05c",
+      "workingSHA256": "ea06d789d3962d4cb58e2493ad0fc1773a558a673a6f02ab67320d86666ac7bb",
+      "newHEADSHA256": "ea06d789d3962d4cb58e2493ad0fc1773a558a673a6f02ab67320d86666ac7bb",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/native-window/native-window-common.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "88ae3526b835e6fe7fa5124709c1a652c10d7e739274035da220674959d9f05c",
+      "workingSHA256": "ea06d789d3962d4cb58e2493ad0fc1773a558a673a6f02ab67320d86666ac7bb",
+      "newHEADSHA256": "ea06d789d3962d4cb58e2493ad0fc1773a558a673a6f02ab67320d86666ac7bb",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/native-window/native-window.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "75b4ecb07ce2ebc72361554c3dda3440745d03073fb76e051a57d35b67bb0445",
+      "workingSHA256": "63062593e1b52720982b534b2984ac9634e126d91f6bc280d8ebbaa35917f472",
+      "newHEADSHA256": "63062593e1b52720982b534b2984ac9634e126d91f6bc280d8ebbaa35917f472",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/native-window/native-window.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "75b4ecb07ce2ebc72361554c3dda3440745d03073fb76e051a57d35b67bb0445",
+      "workingSHA256": "63062593e1b52720982b534b2984ac9634e126d91f6bc280d8ebbaa35917f472",
+      "newHEADSHA256": "63062593e1b52720982b534b2984ac9634e126d91f6bc280d8ebbaa35917f472",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/native-window/native-window.js",
+      "kind": "file",
+      "oldHEADSHA256": "75b4ecb07ce2ebc72361554c3dda3440745d03073fb76e051a57d35b67bb0445",
+      "workingSHA256": "63062593e1b52720982b534b2984ac9634e126d91f6bc280d8ebbaa35917f472",
+      "newHEADSHA256": "63062593e1b52720982b534b2984ac9634e126d91f6bc280d8ebbaa35917f472",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/native-window/native-window.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "75b4ecb07ce2ebc72361554c3dda3440745d03073fb76e051a57d35b67bb0445",
+      "workingSHA256": "63062593e1b52720982b534b2984ac9634e126d91f6bc280d8ebbaa35917f472",
+      "newHEADSHA256": "63062593e1b52720982b534b2984ac9634e126d91f6bc280d8ebbaa35917f472",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/native-window/window-base.js",
+      "kind": "file",
+      "oldHEADSHA256": "95257feb3d0735e6a216f7a08541fcbe75fd4e658a7d67c2fc5bad24cf20f453",
+      "workingSHA256": "2c595a6cc1a1afed4b14d3e334f52a7674ee68693c087848d6ae946af009d618",
+      "newHEADSHA256": "2c595a6cc1a1afed4b14d3e334f52a7674ee68693c087848d6ae946af009d618",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/native-window/window-base.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "95257feb3d0735e6a216f7a08541fcbe75fd4e658a7d67c2fc5bad24cf20f453",
+      "workingSHA256": "2c595a6cc1a1afed4b14d3e334f52a7674ee68693c087848d6ae946af009d618",
+      "newHEADSHA256": "2c595a6cc1a1afed4b14d3e334f52a7674ee68693c087848d6ae946af009d618",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/package.json",
+      "kind": "file",
+      "oldHEADSHA256": "c308ba5ea1433a44265cf7c3a5521f841268cb92a60ecdc9194258ae0244d74d",
+      "workingSHA256": "c9ee2195d3902aa8ab891d672e24140ffc01e1cb17d7be971e8938182fc5211b",
+      "newHEADSHA256": "c9ee2195d3902aa8ab891d672e24140ffc01e1cb17d7be971e8938182fc5211b",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/platform/screen/index.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "f5852a312f9e63686a4af91bc1df6972be370dd1a2ae1ea7c33c93d2e7cfd52d",
+      "workingSHA256": "6228be99f3b3fae7ddd51563066419f54a06322261619e0fb4e44860d80bbecf",
+      "newHEADSHA256": "6228be99f3b3fae7ddd51563066419f54a06322261619e0fb4e44860d80bbecf",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/platform/screen/index.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "f5852a312f9e63686a4af91bc1df6972be370dd1a2ae1ea7c33c93d2e7cfd52d",
+      "workingSHA256": "6228be99f3b3fae7ddd51563066419f54a06322261619e0fb4e44860d80bbecf",
+      "newHEADSHA256": "6228be99f3b3fae7ddd51563066419f54a06322261619e0fb4e44860d80bbecf",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/platform/screen/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "f5852a312f9e63686a4af91bc1df6972be370dd1a2ae1ea7c33c93d2e7cfd52d",
+      "workingSHA256": "6228be99f3b3fae7ddd51563066419f54a06322261619e0fb4e44860d80bbecf",
+      "newHEADSHA256": "6228be99f3b3fae7ddd51563066419f54a06322261619e0fb4e44860d80bbecf",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/platform/screen/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "f5852a312f9e63686a4af91bc1df6972be370dd1a2ae1ea7c33c93d2e7cfd52d",
+      "workingSHA256": "6228be99f3b3fae7ddd51563066419f54a06322261619e0fb4e44860d80bbecf",
+      "newHEADSHA256": "6228be99f3b3fae7ddd51563066419f54a06322261619e0fb4e44860d80bbecf",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/text/text-common.js",
+      "kind": "file",
+      "oldHEADSHA256": "a50f8c1936d2e9e50fb299bf24225c76dcc97661bd1d2b133edd486a5039bf05",
+      "workingSHA256": "a825a528070f7921767103f9edd2801cc9fa11c035baf40f850b991387fecc35",
+      "newHEADSHA256": "a825a528070f7921767103f9edd2801cc9fa11c035baf40f850b991387fecc35",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/text/text-common.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "a50f8c1936d2e9e50fb299bf24225c76dcc97661bd1d2b133edd486a5039bf05",
+      "workingSHA256": "a825a528070f7921767103f9edd2801cc9fa11c035baf40f850b991387fecc35",
+      "newHEADSHA256": "a825a528070f7921767103f9edd2801cc9fa11c035baf40f850b991387fecc35",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/action-bar/index.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "ee96dc5abceed8813aeb9b556a55dfd68c7ed8c69985b82523423b8111d4485f",
+      "workingSHA256": "ee5827e3c00bb2e3b4f2ffa7b2969df60bac7cc8e43b25b4f7a4cdb340a6e85d",
+      "newHEADSHA256": "ee5827e3c00bb2e3b4f2ffa7b2969df60bac7cc8e43b25b4f7a4cdb340a6e85d",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/action-bar/index.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "ee96dc5abceed8813aeb9b556a55dfd68c7ed8c69985b82523423b8111d4485f",
+      "workingSHA256": "ee5827e3c00bb2e3b4f2ffa7b2969df60bac7cc8e43b25b4f7a4cdb340a6e85d",
+      "newHEADSHA256": "ee5827e3c00bb2e3b4f2ffa7b2969df60bac7cc8e43b25b4f7a4cdb340a6e85d",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/action-bar/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "ee96dc5abceed8813aeb9b556a55dfd68c7ed8c69985b82523423b8111d4485f",
+      "workingSHA256": "ee5827e3c00bb2e3b4f2ffa7b2969df60bac7cc8e43b25b4f7a4cdb340a6e85d",
+      "newHEADSHA256": "ee5827e3c00bb2e3b4f2ffa7b2969df60bac7cc8e43b25b4f7a4cdb340a6e85d",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/action-bar/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "ee96dc5abceed8813aeb9b556a55dfd68c7ed8c69985b82523423b8111d4485f",
+      "workingSHA256": "ee5827e3c00bb2e3b4f2ffa7b2969df60bac7cc8e43b25b4f7a4cdb340a6e85d",
+      "newHEADSHA256": "ee5827e3c00bb2e3b4f2ffa7b2969df60bac7cc8e43b25b4f7a4cdb340a6e85d",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/animation/keyframe-animation.js",
+      "kind": "file",
+      "oldHEADSHA256": "830305cc61a1e54207c731e1fd0af42581f813b521bb2a1a9398b8b89916619b",
+      "workingSHA256": "cca9e0b39a98c5af3999ec0db8d616d931efedf8b77a7ce275f05eb2662c484c",
+      "newHEADSHA256": "cca9e0b39a98c5af3999ec0db8d616d931efedf8b77a7ce275f05eb2662c484c",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/animation/keyframe-animation.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "830305cc61a1e54207c731e1fd0af42581f813b521bb2a1a9398b8b89916619b",
+      "workingSHA256": "cca9e0b39a98c5af3999ec0db8d616d931efedf8b77a7ce275f05eb2662c484c",
+      "newHEADSHA256": "cca9e0b39a98c5af3999ec0db8d616d931efedf8b77a7ce275f05eb2662c484c",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/button/index.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "c3464dc813751f6c33052e2c2ae854de63e9096e1d70030a7b1c2b2af8c62c39",
+      "workingSHA256": "5bd07fd0667b0326b392815acf283b112561f10e78db1b3c5fedc047607301b8",
+      "newHEADSHA256": "5bd07fd0667b0326b392815acf283b112561f10e78db1b3c5fedc047607301b8",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/button/index.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "c3464dc813751f6c33052e2c2ae854de63e9096e1d70030a7b1c2b2af8c62c39",
+      "workingSHA256": "5bd07fd0667b0326b392815acf283b112561f10e78db1b3c5fedc047607301b8",
+      "newHEADSHA256": "5bd07fd0667b0326b392815acf283b112561f10e78db1b3c5fedc047607301b8",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/button/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "c3464dc813751f6c33052e2c2ae854de63e9096e1d70030a7b1c2b2af8c62c39",
+      "workingSHA256": "5bd07fd0667b0326b392815acf283b112561f10e78db1b3c5fedc047607301b8",
+      "newHEADSHA256": "5bd07fd0667b0326b392815acf283b112561f10e78db1b3c5fedc047607301b8",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/button/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "c3464dc813751f6c33052e2c2ae854de63e9096e1d70030a7b1c2b2af8c62c39",
+      "workingSHA256": "5bd07fd0667b0326b392815acf283b112561f10e78db1b3c5fedc047607301b8",
+      "newHEADSHA256": "5bd07fd0667b0326b392815acf283b112561f10e78db1b3c5fedc047607301b8",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/properties/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "8c64a8a5711edfe119cf9c22e05259701e47abc644035cb16a9d536823073619",
+      "workingSHA256": "365acc7c537f6f49e93759b243fcc70ba108fc4b22cac8c9472319796dfde6fa",
+      "newHEADSHA256": "365acc7c537f6f49e93759b243fcc70ba108fc4b22cac8c9472319796dfde6fa",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/properties/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "8c64a8a5711edfe119cf9c22e05259701e47abc644035cb16a9d536823073619",
+      "workingSHA256": "365acc7c537f6f49e93759b243fcc70ba108fc4b22cac8c9472319796dfde6fa",
+      "newHEADSHA256": "365acc7c537f6f49e93759b243fcc70ba108fc4b22cac8c9472319796dfde6fa",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/view-base/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "61cbb28171209493bba38793e6eaccd5f674f26ef34902964002a673aeb7c004",
+      "workingSHA256": "f973595a3278f9ad6fd806dd7f07a69fe5796c4f3327b11bb643c59b0ff0170a",
+      "newHEADSHA256": "f973595a3278f9ad6fd806dd7f07a69fe5796c4f3327b11bb643c59b0ff0170a",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/view-base/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "61cbb28171209493bba38793e6eaccd5f674f26ef34902964002a673aeb7c004",
+      "workingSHA256": "f973595a3278f9ad6fd806dd7f07a69fe5796c4f3327b11bb643c59b0ff0170a",
+      "newHEADSHA256": "f973595a3278f9ad6fd806dd7f07a69fe5796c4f3327b11bb643c59b0ff0170a",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/view/index.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "ca77a0057fa5481f6d6e922aa7d906315a93a11356e46b08c1fe64c34a7bd64e",
+      "workingSHA256": "b1cf94c17536617c66ca6a39766105f9df5157c10c661852779a40553189a338",
+      "newHEADSHA256": "b1cf94c17536617c66ca6a39766105f9df5157c10c661852779a40553189a338",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/view/index.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "ca77a0057fa5481f6d6e922aa7d906315a93a11356e46b08c1fe64c34a7bd64e",
+      "workingSHA256": "b1cf94c17536617c66ca6a39766105f9df5157c10c661852779a40553189a338",
+      "newHEADSHA256": "b1cf94c17536617c66ca6a39766105f9df5157c10c661852779a40553189a338",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/view/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "ca77a0057fa5481f6d6e922aa7d906315a93a11356e46b08c1fe64c34a7bd64e",
+      "workingSHA256": "b1cf94c17536617c66ca6a39766105f9df5157c10c661852779a40553189a338",
+      "newHEADSHA256": "b1cf94c17536617c66ca6a39766105f9df5157c10c661852779a40553189a338",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/view/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "ca77a0057fa5481f6d6e922aa7d906315a93a11356e46b08c1fe64c34a7bd64e",
+      "workingSHA256": "b1cf94c17536617c66ca6a39766105f9df5157c10c661852779a40553189a338",
+      "newHEADSHA256": "b1cf94c17536617c66ca6a39766105f9df5157c10c661852779a40553189a338",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/view/view-helper/index.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "c7fdd67c2effa799d449d035267735272f4cc4b6c2ccaa7f6c069bbd18546f43",
+      "workingSHA256": "110eed47d13db868b753341cc9df2b9317758863844459613934f737885710a8",
+      "newHEADSHA256": "110eed47d13db868b753341cc9df2b9317758863844459613934f737885710a8",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/view/view-helper/index.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "c7fdd67c2effa799d449d035267735272f4cc4b6c2ccaa7f6c069bbd18546f43",
+      "workingSHA256": "110eed47d13db868b753341cc9df2b9317758863844459613934f737885710a8",
+      "newHEADSHA256": "110eed47d13db868b753341cc9df2b9317758863844459613934f737885710a8",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/view/view-helper/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "c7fdd67c2effa799d449d035267735272f4cc4b6c2ccaa7f6c069bbd18546f43",
+      "workingSHA256": "110eed47d13db868b753341cc9df2b9317758863844459613934f737885710a8",
+      "newHEADSHA256": "110eed47d13db868b753341cc9df2b9317758863844459613934f737885710a8",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/view/view-helper/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "c7fdd67c2effa799d449d035267735272f4cc4b6c2ccaa7f6c069bbd18546f43",
+      "workingSHA256": "110eed47d13db868b753341cc9df2b9317758863844459613934f737885710a8",
+      "newHEADSHA256": "110eed47d13db868b753341cc9df2b9317758863844459613934f737885710a8",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/frame/frame-common.js",
+      "kind": "file",
+      "oldHEADSHA256": "691461015fe59d17bf061466d47e9d377df9b571f529ecedda2bb4dfb320b1fb",
+      "workingSHA256": "7e90702bc3809493da59bf0b3acdaec888607f9960486446dce4118303425615",
+      "newHEADSHA256": "7e90702bc3809493da59bf0b3acdaec888607f9960486446dce4118303425615",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/frame/frame-common.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "691461015fe59d17bf061466d47e9d377df9b571f529ecedda2bb4dfb320b1fb",
+      "workingSHA256": "7e90702bc3809493da59bf0b3acdaec888607f9960486446dce4118303425615",
+      "newHEADSHA256": "7e90702bc3809493da59bf0b3acdaec888607f9960486446dce4118303425615",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/frame/frame-stack.js",
+      "kind": "file",
+      "oldHEADSHA256": "d1ade48791a86705bbf4574564aaacc37144c8f5b8686b750736d555086f945b",
+      "workingSHA256": "9d5fc068b52d59c0209ab0b34c96dbd0cf321e86dec0e21c1d9d66520d0adfe6",
+      "newHEADSHA256": "9d5fc068b52d59c0209ab0b34c96dbd0cf321e86dec0e21c1d9d66520d0adfe6",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/frame/frame-stack.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "d1ade48791a86705bbf4574564aaacc37144c8f5b8686b750736d555086f945b",
+      "workingSHA256": "9d5fc068b52d59c0209ab0b34c96dbd0cf321e86dec0e21c1d9d66520d0adfe6",
+      "newHEADSHA256": "9d5fc068b52d59c0209ab0b34c96dbd0cf321e86dec0e21c1d9d66520d0adfe6",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/frame/index.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "7296d253cbaa4916c8cb72c6425d337cb02a233c25bb20884a16cd586dabc686",
+      "workingSHA256": "b627a2f5195824bf3c91c559988b05661ffd574cf44b2bee8a3c765271f87e4b",
+      "newHEADSHA256": "b627a2f5195824bf3c91c559988b05661ffd574cf44b2bee8a3c765271f87e4b",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/frame/index.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "7296d253cbaa4916c8cb72c6425d337cb02a233c25bb20884a16cd586dabc686",
+      "workingSHA256": "b627a2f5195824bf3c91c559988b05661ffd574cf44b2bee8a3c765271f87e4b",
+      "newHEADSHA256": "b627a2f5195824bf3c91c559988b05661ffd574cf44b2bee8a3c765271f87e4b",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/frame/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "7296d253cbaa4916c8cb72c6425d337cb02a233c25bb20884a16cd586dabc686",
+      "workingSHA256": "b627a2f5195824bf3c91c559988b05661ffd574cf44b2bee8a3c765271f87e4b",
+      "newHEADSHA256": "b627a2f5195824bf3c91c559988b05661ffd574cf44b2bee8a3c765271f87e4b",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/frame/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "7296d253cbaa4916c8cb72c6425d337cb02a233c25bb20884a16cd586dabc686",
+      "workingSHA256": "b627a2f5195824bf3c91c559988b05661ffd574cf44b2bee8a3c765271f87e4b",
+      "newHEADSHA256": "b627a2f5195824bf3c91c559988b05661ffd574cf44b2bee8a3c765271f87e4b",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/gestures/index.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "e2af7fd84903ac8fa9e376e03350a6076e2c09c847256488907e8b079d354ee0",
+      "workingSHA256": "518e54fd5948c2d1347a033314dce78e470f58fc09a6250cab2a1e59f297311a",
+      "newHEADSHA256": "518e54fd5948c2d1347a033314dce78e470f58fc09a6250cab2a1e59f297311a",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/gestures/index.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "e2af7fd84903ac8fa9e376e03350a6076e2c09c847256488907e8b079d354ee0",
+      "workingSHA256": "518e54fd5948c2d1347a033314dce78e470f58fc09a6250cab2a1e59f297311a",
+      "newHEADSHA256": "518e54fd5948c2d1347a033314dce78e470f58fc09a6250cab2a1e59f297311a",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/gestures/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "e2af7fd84903ac8fa9e376e03350a6076e2c09c847256488907e8b079d354ee0",
+      "workingSHA256": "518e54fd5948c2d1347a033314dce78e470f58fc09a6250cab2a1e59f297311a",
+      "newHEADSHA256": "518e54fd5948c2d1347a033314dce78e470f58fc09a6250cab2a1e59f297311a",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/gestures/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "e2af7fd84903ac8fa9e376e03350a6076e2c09c847256488907e8b079d354ee0",
+      "workingSHA256": "518e54fd5948c2d1347a033314dce78e470f58fc09a6250cab2a1e59f297311a",
+      "newHEADSHA256": "518e54fd5948c2d1347a033314dce78e470f58fc09a6250cab2a1e59f297311a",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/label/index.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "6c022a56432fa883e9599149c9dbd920f213a5242658ac437d22c64a06b5e597",
+      "workingSHA256": "08d96ea42bed26b6cc1238534ba27448e06128fe6afbff66b6125ca2fb87bf35",
+      "newHEADSHA256": "08d96ea42bed26b6cc1238534ba27448e06128fe6afbff66b6125ca2fb87bf35",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/label/index.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "6c022a56432fa883e9599149c9dbd920f213a5242658ac437d22c64a06b5e597",
+      "workingSHA256": "08d96ea42bed26b6cc1238534ba27448e06128fe6afbff66b6125ca2fb87bf35",
+      "newHEADSHA256": "08d96ea42bed26b6cc1238534ba27448e06128fe6afbff66b6125ca2fb87bf35",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/label/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "6c022a56432fa883e9599149c9dbd920f213a5242658ac437d22c64a06b5e597",
+      "workingSHA256": "08d96ea42bed26b6cc1238534ba27448e06128fe6afbff66b6125ca2fb87bf35",
+      "newHEADSHA256": "08d96ea42bed26b6cc1238534ba27448e06128fe6afbff66b6125ca2fb87bf35",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/label/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "6c022a56432fa883e9599149c9dbd920f213a5242658ac437d22c64a06b5e597",
+      "workingSHA256": "08d96ea42bed26b6cc1238534ba27448e06128fe6afbff66b6125ca2fb87bf35",
+      "newHEADSHA256": "08d96ea42bed26b6cc1238534ba27448e06128fe6afbff66b6125ca2fb87bf35",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/flexbox-layout/index.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "079cc8a380e02877d307e48cf3bf8d6de203cb871e1d939e3e7ee6393f2389ef",
+      "workingSHA256": "05eacec4588ad08356d37b1f9d44012ac0e2b144ab2db6296e70e6ee57bb27a3",
+      "newHEADSHA256": "05eacec4588ad08356d37b1f9d44012ac0e2b144ab2db6296e70e6ee57bb27a3",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/flexbox-layout/index.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "079cc8a380e02877d307e48cf3bf8d6de203cb871e1d939e3e7ee6393f2389ef",
+      "workingSHA256": "05eacec4588ad08356d37b1f9d44012ac0e2b144ab2db6296e70e6ee57bb27a3",
+      "newHEADSHA256": "05eacec4588ad08356d37b1f9d44012ac0e2b144ab2db6296e70e6ee57bb27a3",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/flexbox-layout/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "079cc8a380e02877d307e48cf3bf8d6de203cb871e1d939e3e7ee6393f2389ef",
+      "workingSHA256": "05eacec4588ad08356d37b1f9d44012ac0e2b144ab2db6296e70e6ee57bb27a3",
+      "newHEADSHA256": "05eacec4588ad08356d37b1f9d44012ac0e2b144ab2db6296e70e6ee57bb27a3",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/flexbox-layout/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "079cc8a380e02877d307e48cf3bf8d6de203cb871e1d939e3e7ee6393f2389ef",
+      "workingSHA256": "05eacec4588ad08356d37b1f9d44012ac0e2b144ab2db6296e70e6ee57bb27a3",
+      "newHEADSHA256": "05eacec4588ad08356d37b1f9d44012ac0e2b144ab2db6296e70e6ee57bb27a3",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/layout-base-common.js",
+      "kind": "file",
+      "oldHEADSHA256": "2a8f91a8794872d6b88a0df1ad96cf66cba4fe0a33a5980a80a3aa504899eddd",
+      "workingSHA256": "712809c9a215b3e1b5afd8caacd62c214bceebaf0a4a6feb1fb3309601e9c473",
+      "newHEADSHA256": "712809c9a215b3e1b5afd8caacd62c214bceebaf0a4a6feb1fb3309601e9c473",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/layout-base-common.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "2a8f91a8794872d6b88a0df1ad96cf66cba4fe0a33a5980a80a3aa504899eddd",
+      "workingSHA256": "712809c9a215b3e1b5afd8caacd62c214bceebaf0a4a6feb1fb3309601e9c473",
+      "newHEADSHA256": "712809c9a215b3e1b5afd8caacd62c214bceebaf0a4a6feb1fb3309601e9c473",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/liquid-glass-container/index.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "8f733c01f1bf55c4572cd4d604d1a9aee6737fcab607eb4d499461c582f8f550",
+      "workingSHA256": "1de9c7ff2406e9e301bb3f67b4ac4e54b167e7684780ebde71ce54e86c4b878c",
+      "newHEADSHA256": "1de9c7ff2406e9e301bb3f67b4ac4e54b167e7684780ebde71ce54e86c4b878c",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/liquid-glass-container/index.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "8f733c01f1bf55c4572cd4d604d1a9aee6737fcab607eb4d499461c582f8f550",
+      "workingSHA256": "1de9c7ff2406e9e301bb3f67b4ac4e54b167e7684780ebde71ce54e86c4b878c",
+      "newHEADSHA256": "1de9c7ff2406e9e301bb3f67b4ac4e54b167e7684780ebde71ce54e86c4b878c",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/liquid-glass-container/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "8f733c01f1bf55c4572cd4d604d1a9aee6737fcab607eb4d499461c582f8f550",
+      "workingSHA256": "1de9c7ff2406e9e301bb3f67b4ac4e54b167e7684780ebde71ce54e86c4b878c",
+      "newHEADSHA256": "1de9c7ff2406e9e301bb3f67b4ac4e54b167e7684780ebde71ce54e86c4b878c",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/liquid-glass-container/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "8f733c01f1bf55c4572cd4d604d1a9aee6737fcab607eb4d499461c582f8f550",
+      "workingSHA256": "1de9c7ff2406e9e301bb3f67b4ac4e54b167e7684780ebde71ce54e86c4b878c",
+      "newHEADSHA256": "1de9c7ff2406e9e301bb3f67b4ac4e54b167e7684780ebde71ce54e86c4b878c",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/liquid-glass/index.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "df7a98f8e7c5151c26c793d19a30c865a1b4f3aab4bc6026164258a5d1371e02",
+      "workingSHA256": "f6868b083370ec1d5d9cc06fec31ceb04de4b8d23f4ea332d4c76438a7c564fd",
+      "newHEADSHA256": "f6868b083370ec1d5d9cc06fec31ceb04de4b8d23f4ea332d4c76438a7c564fd",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/liquid-glass/index.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "df7a98f8e7c5151c26c793d19a30c865a1b4f3aab4bc6026164258a5d1371e02",
+      "workingSHA256": "f6868b083370ec1d5d9cc06fec31ceb04de4b8d23f4ea332d4c76438a7c564fd",
+      "newHEADSHA256": "f6868b083370ec1d5d9cc06fec31ceb04de4b8d23f4ea332d4c76438a7c564fd",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/liquid-glass/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "df7a98f8e7c5151c26c793d19a30c865a1b4f3aab4bc6026164258a5d1371e02",
+      "workingSHA256": "f6868b083370ec1d5d9cc06fec31ceb04de4b8d23f4ea332d4c76438a7c564fd",
+      "newHEADSHA256": "f6868b083370ec1d5d9cc06fec31ceb04de4b8d23f4ea332d4c76438a7c564fd",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/liquid-glass/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "df7a98f8e7c5151c26c793d19a30c865a1b4f3aab4bc6026164258a5d1371e02",
+      "workingSHA256": "f6868b083370ec1d5d9cc06fec31ceb04de4b8d23f4ea332d4c76438a7c564fd",
+      "newHEADSHA256": "f6868b083370ec1d5d9cc06fec31ceb04de4b8d23f4ea332d4c76438a7c564fd",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/list-view/index.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "6bc9da3943199c27deca1885e800b96ddd6905978bd316a398180eb187516a1a",
+      "workingSHA256": "ad447c15af84b63586fe48844ce38a2936f0f7a77b35714b4843b0fa24ecb18f",
+      "newHEADSHA256": "ad447c15af84b63586fe48844ce38a2936f0f7a77b35714b4843b0fa24ecb18f",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/list-view/index.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "6bc9da3943199c27deca1885e800b96ddd6905978bd316a398180eb187516a1a",
+      "workingSHA256": "ad447c15af84b63586fe48844ce38a2936f0f7a77b35714b4843b0fa24ecb18f",
+      "newHEADSHA256": "ad447c15af84b63586fe48844ce38a2936f0f7a77b35714b4843b0fa24ecb18f",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/list-view/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "6bc9da3943199c27deca1885e800b96ddd6905978bd316a398180eb187516a1a",
+      "workingSHA256": "ad447c15af84b63586fe48844ce38a2936f0f7a77b35714b4843b0fa24ecb18f",
+      "newHEADSHA256": "ad447c15af84b63586fe48844ce38a2936f0f7a77b35714b4843b0fa24ecb18f",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/list-view/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "6bc9da3943199c27deca1885e800b96ddd6905978bd316a398180eb187516a1a",
+      "workingSHA256": "ad447c15af84b63586fe48844ce38a2936f0f7a77b35714b4843b0fa24ecb18f",
+      "newHEADSHA256": "ad447c15af84b63586fe48844ce38a2936f0f7a77b35714b4843b0fa24ecb18f",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/list-view/list-view-common.js",
+      "kind": "file",
+      "oldHEADSHA256": "6a965b276579c784899455d800931424eb8a4866356fe8acb6b3ce27136f3333",
+      "workingSHA256": "5766dcc7e42a15e4c2a03abcc1443c4b412f8aad0efdaa3cefeb451c67c6ec8b",
+      "newHEADSHA256": "5766dcc7e42a15e4c2a03abcc1443c4b412f8aad0efdaa3cefeb451c67c6ec8b",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/list-view/list-view-common.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "6a965b276579c784899455d800931424eb8a4866356fe8acb6b3ce27136f3333",
+      "workingSHA256": "5766dcc7e42a15e4c2a03abcc1443c4b412f8aad0efdaa3cefeb451c67c6ec8b",
+      "newHEADSHA256": "5766dcc7e42a15e4c2a03abcc1443c4b412f8aad0efdaa3cefeb451c67c6ec8b",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/page/index.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "338ecf3bff606e6adb4338cef94beb8770f342b320c12b9d3746b81023b38ebe",
+      "workingSHA256": "e07c47f6b8a8588a28e12294fa7d909cdf7f9270e072920b14afd81a31cd351f",
+      "newHEADSHA256": "e07c47f6b8a8588a28e12294fa7d909cdf7f9270e072920b14afd81a31cd351f",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/page/index.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "338ecf3bff606e6adb4338cef94beb8770f342b320c12b9d3746b81023b38ebe",
+      "workingSHA256": "e07c47f6b8a8588a28e12294fa7d909cdf7f9270e072920b14afd81a31cd351f",
+      "newHEADSHA256": "e07c47f6b8a8588a28e12294fa7d909cdf7f9270e072920b14afd81a31cd351f",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/page/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "338ecf3bff606e6adb4338cef94beb8770f342b320c12b9d3746b81023b38ebe",
+      "workingSHA256": "e07c47f6b8a8588a28e12294fa7d909cdf7f9270e072920b14afd81a31cd351f",
+      "newHEADSHA256": "e07c47f6b8a8588a28e12294fa7d909cdf7f9270e072920b14afd81a31cd351f",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/page/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "338ecf3bff606e6adb4338cef94beb8770f342b320c12b9d3746b81023b38ebe",
+      "workingSHA256": "e07c47f6b8a8588a28e12294fa7d909cdf7f9270e072920b14afd81a31cd351f",
+      "newHEADSHA256": "e07c47f6b8a8588a28e12294fa7d909cdf7f9270e072920b14afd81a31cd351f",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/scroll-view/index.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "a7af8ca1c18934d171410ec00968f767965e093a3666acfddbae97b035ba50fc",
+      "workingSHA256": "5d16d1c77be432015bab549c6bbacac1f1e80c917e67767dd1c9561d8335fdd3",
+      "newHEADSHA256": "5d16d1c77be432015bab549c6bbacac1f1e80c917e67767dd1c9561d8335fdd3",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/scroll-view/index.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "a7af8ca1c18934d171410ec00968f767965e093a3666acfddbae97b035ba50fc",
+      "workingSHA256": "5d16d1c77be432015bab549c6bbacac1f1e80c917e67767dd1c9561d8335fdd3",
+      "newHEADSHA256": "5d16d1c77be432015bab549c6bbacac1f1e80c917e67767dd1c9561d8335fdd3",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/scroll-view/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "a7af8ca1c18934d171410ec00968f767965e093a3666acfddbae97b035ba50fc",
+      "workingSHA256": "5d16d1c77be432015bab549c6bbacac1f1e80c917e67767dd1c9561d8335fdd3",
+      "newHEADSHA256": "5d16d1c77be432015bab549c6bbacac1f1e80c917e67767dd1c9561d8335fdd3",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/scroll-view/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "a7af8ca1c18934d171410ec00968f767965e093a3666acfddbae97b035ba50fc",
+      "workingSHA256": "5d16d1c77be432015bab549c6bbacac1f1e80c917e67767dd1c9561d8335fdd3",
+      "newHEADSHA256": "5d16d1c77be432015bab549c6bbacac1f1e80c917e67767dd1c9561d8335fdd3",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/scroll-view/scroll-view-common.js",
+      "kind": "file",
+      "oldHEADSHA256": "0e229a37168f1c2043110b834a9242b1ec1193a582e7ada1d54748d981d76491",
+      "workingSHA256": "fb2ebc4789900fbc1ee226c043d7e214be5ef0b6726903e3c342efd14162ad8a",
+      "newHEADSHA256": "fb2ebc4789900fbc1ee226c043d7e214be5ef0b6726903e3c342efd14162ad8a",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/scroll-view/scroll-view-common.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "0e229a37168f1c2043110b834a9242b1ec1193a582e7ada1d54748d981d76491",
+      "workingSHA256": "fb2ebc4789900fbc1ee226c043d7e214be5ef0b6726903e3c342efd14162ad8a",
+      "newHEADSHA256": "fb2ebc4789900fbc1ee226c043d7e214be5ef0b6726903e3c342efd14162ad8a",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/background.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "d351190e71a9ab437b534fe0696da6f0b8bc553733bbd7a4dfa8083d5c7180e4",
+      "workingSHA256": "7c0bb6b87aeda9ab4b01f34a63a56006f5a0b4c028bf346f501936536af47441",
+      "newHEADSHA256": "7c0bb6b87aeda9ab4b01f34a63a56006f5a0b4c028bf346f501936536af47441",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/background.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "d351190e71a9ab437b534fe0696da6f0b8bc553733bbd7a4dfa8083d5c7180e4",
+      "workingSHA256": "7c0bb6b87aeda9ab4b01f34a63a56006f5a0b4c028bf346f501936536af47441",
+      "newHEADSHA256": "7c0bb6b87aeda9ab4b01f34a63a56006f5a0b4c028bf346f501936536af47441",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/background.js",
+      "kind": "file",
+      "oldHEADSHA256": "d351190e71a9ab437b534fe0696da6f0b8bc553733bbd7a4dfa8083d5c7180e4",
+      "workingSHA256": "7c0bb6b87aeda9ab4b01f34a63a56006f5a0b4c028bf346f501936536af47441",
+      "newHEADSHA256": "7c0bb6b87aeda9ab4b01f34a63a56006f5a0b4c028bf346f501936536af47441",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/background.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "d351190e71a9ab437b534fe0696da6f0b8bc553733bbd7a4dfa8083d5c7180e4",
+      "workingSHA256": "7c0bb6b87aeda9ab4b01f34a63a56006f5a0b4c028bf346f501936536af47441",
+      "newHEADSHA256": "7c0bb6b87aeda9ab4b01f34a63a56006f5a0b4c028bf346f501936536af47441",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/css-selector.js",
+      "kind": "file",
+      "oldHEADSHA256": "a5fc08b29228870647f7ac7ad3032224caf0dfdf2b819c36b4fe5c53053d17bf",
+      "workingSHA256": "cfebe5c90fcfd072d01face6b7a22eac8b7a09dfb5d23be338b488570fd9adc5",
+      "newHEADSHA256": "cfebe5c90fcfd072d01face6b7a22eac8b7a09dfb5d23be338b488570fd9adc5",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/css-selector.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "a5fc08b29228870647f7ac7ad3032224caf0dfdf2b819c36b4fe5c53053d17bf",
+      "workingSHA256": "cfebe5c90fcfd072d01face6b7a22eac8b7a09dfb5d23be338b488570fd9adc5",
+      "newHEADSHA256": "cfebe5c90fcfd072d01face6b7a22eac8b7a09dfb5d23be338b488570fd9adc5",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/length-shared.js",
+      "kind": "file",
+      "oldHEADSHA256": "966ca2b6d52ecbcc7c93587cd5fbdb7ac6095f1dbae477e50e5b5c949b69697b",
+      "workingSHA256": "880cbc7665e2305dea119e2767751fc3655c530ea0856c9b42ba2315b902bb20",
+      "newHEADSHA256": "880cbc7665e2305dea119e2767751fc3655c530ea0856c9b42ba2315b902bb20",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/length-shared.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "966ca2b6d52ecbcc7c93587cd5fbdb7ac6095f1dbae477e50e5b5c949b69697b",
+      "workingSHA256": "880cbc7665e2305dea119e2767751fc3655c530ea0856c9b42ba2315b902bb20",
+      "newHEADSHA256": "880cbc7665e2305dea119e2767751fc3655c530ea0856c9b42ba2315b902bb20",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/style-properties.js",
+      "kind": "file",
+      "oldHEADSHA256": "297bd6517e31c9af2a019fe52d8e2b6f7f076d956cbf6847f982ca8a1e972e60",
+      "workingSHA256": "405e62786b74a47dcc6b245d3469a8cf9da2f358a34a69baf6007a7f1c783572",
+      "newHEADSHA256": "405e62786b74a47dcc6b245d3469a8cf9da2f358a34a69baf6007a7f1c783572",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/style-properties.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "297bd6517e31c9af2a019fe52d8e2b6f7f076d956cbf6847f982ca8a1e972e60",
+      "workingSHA256": "405e62786b74a47dcc6b245d3469a8cf9da2f358a34a69baf6007a7f1c783572",
+      "newHEADSHA256": "405e62786b74a47dcc6b245d3469a8cf9da2f358a34a69baf6007a7f1c783572",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/style-scope.js",
+      "kind": "file",
+      "oldHEADSHA256": "0da315a73feec25d03c596e06598a302de4ca3a4427fe2983c571945bd0981f2",
+      "workingSHA256": "4cd70f34bd1c313da17c8d31d2c1a1c7df034ff5835afed4d84f3a6957a46497",
+      "newHEADSHA256": "4cd70f34bd1c313da17c8d31d2c1a1c7df034ff5835afed4d84f3a6957a46497",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/style-scope.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "4142ce51a22405ecd98c26b76b2895051d10e19b99f2cc051c05dbca936736df",
+      "workingSHA256": "d16ced0c61d0142c4c432f73f4ddbaeff428fbe0b058a3cfd3d756c8d84f9a37",
+      "newHEADSHA256": "d16ced0c61d0142c4c432f73f4ddbaeff428fbe0b058a3cfd3d756c8d84f9a37",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/style/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "ed2c7b906249c84a6fcb3e8aee6cbef58b2746eb6488ef60e56349939041d2fd",
+      "workingSHA256": "5090b6fecaa6e2d18d98bf5b6c09266711439699e305539c4bd49f37dc176c2f",
+      "newHEADSHA256": "5090b6fecaa6e2d18d98bf5b6c09266711439699e305539c4bd49f37dc176c2f",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/style/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "ed2c7b906249c84a6fcb3e8aee6cbef58b2746eb6488ef60e56349939041d2fd",
+      "workingSHA256": "5090b6fecaa6e2d18d98bf5b6c09266711439699e305539c4bd49f37dc176c2f",
+      "newHEADSHA256": "5090b6fecaa6e2d18d98bf5b6c09266711439699e305539c4bd49f37dc176c2f",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/switch/index.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "c9b4c201c12d401c02c41ca4313daca2ea885d5a746b5223578c80590d7ed7e1",
+      "workingSHA256": "dd615dd858e0bbe438f68229e4c5cbc1fb1dc3f5955a360ae4223a2f761c4f58",
+      "newHEADSHA256": "dd615dd858e0bbe438f68229e4c5cbc1fb1dc3f5955a360ae4223a2f761c4f58",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/switch/index.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "c9b4c201c12d401c02c41ca4313daca2ea885d5a746b5223578c80590d7ed7e1",
+      "workingSHA256": "dd615dd858e0bbe438f68229e4c5cbc1fb1dc3f5955a360ae4223a2f761c4f58",
+      "newHEADSHA256": "dd615dd858e0bbe438f68229e4c5cbc1fb1dc3f5955a360ae4223a2f761c4f58",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/switch/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "c9b4c201c12d401c02c41ca4313daca2ea885d5a746b5223578c80590d7ed7e1",
+      "workingSHA256": "dd615dd858e0bbe438f68229e4c5cbc1fb1dc3f5955a360ae4223a2f761c4f58",
+      "newHEADSHA256": "dd615dd858e0bbe438f68229e4c5cbc1fb1dc3f5955a360ae4223a2f761c4f58",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/switch/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "c9b4c201c12d401c02c41ca4313daca2ea885d5a746b5223578c80590d7ed7e1",
+      "workingSHA256": "dd615dd858e0bbe438f68229e4c5cbc1fb1dc3f5955a360ae4223a2f761c4f58",
+      "newHEADSHA256": "dd615dd858e0bbe438f68229e4c5cbc1fb1dc3f5955a360ae4223a2f761c4f58",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/tab-view/index.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "770df55c43d1354bfd27bde0f3af9caedada6b03df1ed13642bffef08df7725c",
+      "workingSHA256": "7209b985663cf8a20ccd64eea975713ce6ca47f1a0044df2317f4aae3cd0097e",
+      "newHEADSHA256": "7209b985663cf8a20ccd64eea975713ce6ca47f1a0044df2317f4aae3cd0097e",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/tab-view/index.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "770df55c43d1354bfd27bde0f3af9caedada6b03df1ed13642bffef08df7725c",
+      "workingSHA256": "7209b985663cf8a20ccd64eea975713ce6ca47f1a0044df2317f4aae3cd0097e",
+      "newHEADSHA256": "7209b985663cf8a20ccd64eea975713ce6ca47f1a0044df2317f4aae3cd0097e",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/tab-view/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "770df55c43d1354bfd27bde0f3af9caedada6b03df1ed13642bffef08df7725c",
+      "workingSHA256": "7209b985663cf8a20ccd64eea975713ce6ca47f1a0044df2317f4aae3cd0097e",
+      "newHEADSHA256": "7209b985663cf8a20ccd64eea975713ce6ca47f1a0044df2317f4aae3cd0097e",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/tab-view/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "770df55c43d1354bfd27bde0f3af9caedada6b03df1ed13642bffef08df7725c",
+      "workingSHA256": "7209b985663cf8a20ccd64eea975713ce6ca47f1a0044df2317f4aae3cd0097e",
+      "newHEADSHA256": "7209b985663cf8a20ccd64eea975713ce6ca47f1a0044df2317f4aae3cd0097e",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/tab-view/tab-view-common.js",
+      "kind": "file",
+      "oldHEADSHA256": "e8d7b4c71672751f990693baef23305845ce68fdd05d78948a68011b15f35b1f",
+      "workingSHA256": "2d1a175c13a1ece8155f334b4151a8662d06a6b5642da98f8cbcb2da48d83b1c",
+      "newHEADSHA256": "2d1a175c13a1ece8155f334b4151a8662d06a6b5642da98f8cbcb2da48d83b1c",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/tab-view/tab-view-common.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "e8d7b4c71672751f990693baef23305845ce68fdd05d78948a68011b15f35b1f",
+      "workingSHA256": "2d1a175c13a1ece8155f334b4151a8662d06a6b5642da98f8cbcb2da48d83b1c",
+      "newHEADSHA256": "2d1a175c13a1ece8155f334b4151a8662d06a6b5642da98f8cbcb2da48d83b1c",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-base/index.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "faa4585b3f44217b949798cd946ddb3cd1c85b8e63c823127551963883a0dcc9",
+      "workingSHA256": "5f16cdc53d6dd2474ad659ec387aca4aba80afba0da83c46d945763eb23aba3c",
+      "newHEADSHA256": "5f16cdc53d6dd2474ad659ec387aca4aba80afba0da83c46d945763eb23aba3c",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-base/index.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "faa4585b3f44217b949798cd946ddb3cd1c85b8e63c823127551963883a0dcc9",
+      "workingSHA256": "5f16cdc53d6dd2474ad659ec387aca4aba80afba0da83c46d945763eb23aba3c",
+      "newHEADSHA256": "5f16cdc53d6dd2474ad659ec387aca4aba80afba0da83c46d945763eb23aba3c",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-base/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "faa4585b3f44217b949798cd946ddb3cd1c85b8e63c823127551963883a0dcc9",
+      "workingSHA256": "5f16cdc53d6dd2474ad659ec387aca4aba80afba0da83c46d945763eb23aba3c",
+      "newHEADSHA256": "5f16cdc53d6dd2474ad659ec387aca4aba80afba0da83c46d945763eb23aba3c",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-base/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "faa4585b3f44217b949798cd946ddb3cd1c85b8e63c823127551963883a0dcc9",
+      "workingSHA256": "5f16cdc53d6dd2474ad659ec387aca4aba80afba0da83c46d945763eb23aba3c",
+      "newHEADSHA256": "5f16cdc53d6dd2474ad659ec387aca4aba80afba0da83c46d945763eb23aba3c",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-field/index.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "0db333dabe13702a002e3b3df728035d45d7c96550653ace10848e5d64fa0501",
+      "workingSHA256": "56925380bec1c1e54eaaba8c2b80b1f2e959dccdfc85b4d3a3afaf3bbc59eb18",
+      "newHEADSHA256": "56925380bec1c1e54eaaba8c2b80b1f2e959dccdfc85b4d3a3afaf3bbc59eb18",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-field/index.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "0db333dabe13702a002e3b3df728035d45d7c96550653ace10848e5d64fa0501",
+      "workingSHA256": "56925380bec1c1e54eaaba8c2b80b1f2e959dccdfc85b4d3a3afaf3bbc59eb18",
+      "newHEADSHA256": "56925380bec1c1e54eaaba8c2b80b1f2e959dccdfc85b4d3a3afaf3bbc59eb18",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-field/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "0db333dabe13702a002e3b3df728035d45d7c96550653ace10848e5d64fa0501",
+      "workingSHA256": "56925380bec1c1e54eaaba8c2b80b1f2e959dccdfc85b4d3a3afaf3bbc59eb18",
+      "newHEADSHA256": "56925380bec1c1e54eaaba8c2b80b1f2e959dccdfc85b4d3a3afaf3bbc59eb18",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-field/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "0db333dabe13702a002e3b3df728035d45d7c96550653ace10848e5d64fa0501",
+      "workingSHA256": "56925380bec1c1e54eaaba8c2b80b1f2e959dccdfc85b4d3a3afaf3bbc59eb18",
+      "newHEADSHA256": "56925380bec1c1e54eaaba8c2b80b1f2e959dccdfc85b4d3a3afaf3bbc59eb18",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-view/index.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "977fd95dd12dff2210317728d6c3feb24b444e1f270672097ec06ab7c16faf93",
+      "workingSHA256": "e9b3e97d60ecb291d5f2945f2ae2b72b1a3d5fce1645d9cdb2d82ab5bd5bf514",
+      "newHEADSHA256": "e9b3e97d60ecb291d5f2945f2ae2b72b1a3d5fce1645d9cdb2d82ab5bd5bf514",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-view/index.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "977fd95dd12dff2210317728d6c3feb24b444e1f270672097ec06ab7c16faf93",
+      "workingSHA256": "e9b3e97d60ecb291d5f2945f2ae2b72b1a3d5fce1645d9cdb2d82ab5bd5bf514",
+      "newHEADSHA256": "e9b3e97d60ecb291d5f2945f2ae2b72b1a3d5fce1645d9cdb2d82ab5bd5bf514",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-view/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "977fd95dd12dff2210317728d6c3feb24b444e1f270672097ec06ab7c16faf93",
+      "workingSHA256": "e9b3e97d60ecb291d5f2945f2ae2b72b1a3d5fce1645d9cdb2d82ab5bd5bf514",
+      "newHEADSHA256": "e9b3e97d60ecb291d5f2945f2ae2b72b1a3d5fce1645d9cdb2d82ab5bd5bf514",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-view/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "977fd95dd12dff2210317728d6c3feb24b444e1f270672097ec06ab7c16faf93",
+      "workingSHA256": "e9b3e97d60ecb291d5f2945f2ae2b72b1a3d5fce1645d9cdb2d82ab5bd5bf514",
+      "newHEADSHA256": "e9b3e97d60ecb291d5f2945f2ae2b72b1a3d5fce1645d9cdb2d82ab5bd5bf514",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/utils/native-helper-for-android.js",
+      "kind": "file",
+      "oldHEADSHA256": "9778d2d7016a314eba18dde2da15bd7b248da7639ed57aaae1b83d1ccbc45911",
+      "workingSHA256": "c8145477b1696a89e3d9bc52a0f89c18198d6ed3fa27b3a16b96ac59d9f94b02",
+      "newHEADSHA256": "c8145477b1696a89e3d9bc52a0f89c18198d6ed3fa27b3a16b96ac59d9f94b02",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/utils/native-helper-for-android.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "9778d2d7016a314eba18dde2da15bd7b248da7639ed57aaae1b83d1ccbc45911",
+      "workingSHA256": "c8145477b1696a89e3d9bc52a0f89c18198d6ed3fa27b3a16b96ac59d9f94b02",
+      "newHEADSHA256": "c8145477b1696a89e3d9bc52a0f89c18198d6ed3fa27b3a16b96ac59d9f94b02",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/utils/native-helper.ios.js",
+      "kind": "file",
+      "oldHEADSHA256": "518de67dd42cd1c907814d24fcb7568a4d50fa34a4d135c2d3a510e55cb52402",
+      "workingSHA256": "9d74e352cd8a57a2c1f7a1664a186f1adf38ed2b86be46fbc77b5cb77eb99113",
+      "newHEADSHA256": "9d74e352cd8a57a2c1f7a1664a186f1adf38ed2b86be46fbc77b5cb77eb99113",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/utils/native-helper.ios.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "518de67dd42cd1c907814d24fcb7568a4d50fa34a4d135c2d3a510e55cb52402",
+      "workingSHA256": "9d74e352cd8a57a2c1f7a1664a186f1adf38ed2b86be46fbc77b5cb77eb99113",
+      "newHEADSHA256": "9d74e352cd8a57a2c1f7a1664a186f1adf38ed2b86be46fbc77b5cb77eb99113",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/utils/native-helper.js",
+      "kind": "file",
+      "oldHEADSHA256": "518de67dd42cd1c907814d24fcb7568a4d50fa34a4d135c2d3a510e55cb52402",
+      "workingSHA256": "9d74e352cd8a57a2c1f7a1664a186f1adf38ed2b86be46fbc77b5cb77eb99113",
+      "newHEADSHA256": "9d74e352cd8a57a2c1f7a1664a186f1adf38ed2b86be46fbc77b5cb77eb99113",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/utils/native-helper.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "518de67dd42cd1c907814d24fcb7568a4d50fa34a4d135c2d3a510e55cb52402",
+      "workingSHA256": "9d74e352cd8a57a2c1f7a1664a186f1adf38ed2b86be46fbc77b5cb77eb99113",
+      "newHEADSHA256": "9d74e352cd8a57a2c1f7a1664a186f1adf38ed2b86be46fbc77b5cb77eb99113",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/wgc/crypto/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "ed3ac04b6fde91160df8bccd5dad684f9017ea158b493f36843e3774d6ccdda9",
+      "workingSHA256": "f6a4107db55505587a2e9c2ab30ac9ba98bbff6372b0be5471b2299998fd588b",
+      "newHEADSHA256": "f6a4107db55505587a2e9c2ab30ac9ba98bbff6372b0be5471b2299998fd588b",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/wgc/crypto/index.mjs",
+      "kind": "file",
+      "oldHEADSHA256": "ed3ac04b6fde91160df8bccd5dad684f9017ea158b493f36843e3774d6ccdda9",
+      "workingSHA256": "f6a4107db55505587a2e9c2ab30ac9ba98bbff6372b0be5471b2299998fd588b",
+      "newHEADSHA256": "f6a4107db55505587a2e9c2ab30ac9ba98bbff6372b0be5471b2299998fd588b",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/css-tree/lib/data.js",
+      "kind": "file",
+      "oldHEADSHA256": "a6490e312753740b82517580f7fbb0b1c62b30ff8b72518f25b7e74e9ae31975",
+      "workingSHA256": "a6490e312753740b82517580f7fbb0b1c62b30ff8b72518f25b7e74e9ae31975",
+      "newHEADSHA256": "a6490e312753740b82517580f7fbb0b1c62b30ff8b72518f25b7e74e9ae31975",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33261
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/css-tree/package.json",
+      "kind": "file",
+      "oldHEADSHA256": "55540a15026970b09f0e4db831e54f2b7dfdda471741d54e3f49b6b7069a1d77",
+      "workingSHA256": "bd734f2de92e7a254bd05970fa83b30f8be9ed73e33577065a1529e59843cfd4",
+      "newHEADSHA256": "bd734f2de92e7a254bd05970fa83b30f8be9ed73e33577065a1529e59843cfd4",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/css-what/package.json",
+      "kind": "file",
+      "oldHEADSHA256": "f50f17f67404ab5feea17f6e7b2156ce882ea6bfc8777d9011aa1845934b834b",
+      "workingSHA256": "84e94951ab88b87e519f27e080acd5173e05810662503589726d709451876b61",
+      "newHEADSHA256": "84e94951ab88b87e519f27e080acd5173e05810662503589726d709451876b61",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/tslib/modules/index.js",
+      "kind": "file",
+      "oldHEADSHA256": "0b2e098d44c3f7eae206022a32f4600063c807bc1b97486bca1a12914f2c3906",
+      "workingSHA256": "b3a4765da2bc019c79f2c2c12b36f860e946119d976897f1ce945caf227d0468",
+      "newHEADSHA256": "b3a4765da2bc019c79f2c2c12b36f860e946119d976897f1ce945caf227d0468",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/tslib/modules/package.json",
+      "kind": "file",
+      "oldHEADSHA256": "3ca9d4afd21425087cf31893b8f9f63c81b0b8408db5e343ca76e5f8aa26ab9a",
+      "workingSHA256": "f2a77d1fa2e7ee710b2835b2933d75d9c7f5dad4f1bab69e1679876e32b5e9eb",
+      "newHEADSHA256": "f2a77d1fa2e7ee710b2835b2933d75d9c7f5dad4f1bab69e1679876e32b5e9eb",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/tslib/tslib.es6.js",
+      "kind": "file",
+      "oldHEADSHA256": "944658bcef6786108a55ea4d56214086365ea34ffcea50215c0f3708bd7d386c",
+      "workingSHA256": "480042d65f5abdacdcf9d9ade38f9d484455be82aa34bd472bf6ab87ea0e3620",
+      "newHEADSHA256": "480042d65f5abdacdcf9d9ade38f9d484455be82aa34bd472bf6ab87ea0e3620",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/tslib/tslib.js",
+      "kind": "file",
+      "oldHEADSHA256": "5b1e566051b18c117f2c8554197163ce9307a69d841dccd39e315e1c173cb21c",
+      "workingSHA256": "8855865a058bc0a6df8f5db45347be041a2d6bbe1654216c51a805648c1b6e8a",
+      "newHEADSHA256": "8855865a058bc0a6df8f5db45347be041a2d6bbe1654216c51a805648c1b6e8a",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "kind": "file",
+      "oldHEADSHA256": "aee09df416947602e5bf99071c7456888a53bd266b7dbfa1b8a0dd2e440a150c",
+      "workingSHA256": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29",
+      "newHEADSHA256": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "kind": "file",
+      "oldHEADSHA256": "680afe2b7259f95123a510bd75d6cd359dde6a989f44a3635952032a1a51ba9f",
+      "workingSHA256": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1",
+      "newHEADSHA256": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "kind": "file",
+      "oldHEADSHA256": "0ade0e7aa04d6177fbb31e5007c173c080c4ea41c1ab795ca2c04f7380efa173",
+      "workingSHA256": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef",
+      "newHEADSHA256": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": true,
+      "workingMode": 33188
+    }
+  ],
+  "workingArchiveSHA256": "595f5c588a2307ba3fbfcf8e8d340abfff87b4583a7188494f118563fc8ab966",
+  "sourceHashes": {
+    "Scripts/Expo/prepare-ios-dependencies.mjs": "072c3432d299e4081d11d052b4bfe74d195e5775ace19362aaaea25652137dbb",
+    "Scripts/NativeScript/prepare-ios-dependencies.mjs": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9",
+    "Scripts/Runtime/prepare-runtime-core.sh": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540",
+    "Scripts/Runtime/prepare-runtime-host.sh": "af0fda26d53a6b72b495a73e104835af176dccfc39cda2d5bcfffa3f7a04cbd6",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "b27ca38423d3d0eb179f2b8bb7f25568d8ee9a7a70a36da7dd9e57e243ca004c",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e",
+    "docs/miniapp-sdk/source-inventory.json": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef",
+    "docs/miniapp-sdk/extension-reachability.json": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29",
+    "docs/miniapp-sdk/extension-reachability.md": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1"
+  },
+  "toolchain": "Xcode 27.0\nBuild version 27A266a",
+  "reusedCompletedPhaseBoundary": "Published source materializes exact prior prepared bytes plus the reviewed Expo header-map correction and its already-executed regression. Prior platform, original resolved graph, foreground53, Host lifecycle/CLI and metadata-tool component inputs require their recorded closure verification; native preparation/export/input capture and paired acceptance execute anew. The normal final Host provenance hook remains active.",
+  "runtimeCoreArtifactRunID": "42926628418",
+  "runtimeCoreLocalArchive": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-inputs/runtime-core/hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip",
+  "newPlanSHA256": "faa11b1ee2abb6f66cb0096ff2c9d0c9195f94c8b08f3ac88291fe81381763df",
+  "controllerAttempt6SHA256": "f663b70b55718f392b647c324d4d82869374f11b64c22175f4f61442fa7b0805",
+  "controllerChange": "Owned attempt6 logs; existing verified local RuntimeCore input, run ID, all phase bodies, selectors and budgets retained. Inactive attempt metadata set to6; native preparation/export/inputs and failed paired phase invalidated.",
+  "nativeStarted": false
+}

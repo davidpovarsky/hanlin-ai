@@ -1,0 +1,619 @@
+{
+  "base": "cfbe07d6cc4c5b8bc16f3e0fe477d0b8bf394b10",
+  "scope": "Canonical extraction of original share, notification, translation, widget and Live Activity extension implementations",
+  "source_preservation": {
+    "base": "cfbe07d6cc4c5b8bc16f3e0fe477d0b8bf394b10",
+    "scope": "Original function/computed-property bodies; access/constructors are separate public seams.",
+    "normalizations": [
+      "Canonical localization bundle and exact original control forwarding helpers",
+      "Host-selected App Group and notification category",
+      "Injected original snapshot-store loader"
+    ],
+    "source_provenance": [
+      {
+        "original": "ChavrusaChatShare/ShareViewController.swift",
+        "canonical": "Packages/HanlinAppExtensionsSDK/Sources/HanlinShareExtensionUI/HanlinShareViewController.swift",
+        "original_sha256": "6b71a2df3b98c8257e2d5663b0818c5c6f0d0d6eaedf5e56c4b4b628cad610bb",
+        "canonical_sha256": "35a91f0bdbcd8ded978b6e174a24bd717cb4f0b42377e35d0c667b5d79723ef3"
+      },
+      {
+        "original": "ChavrusaChatNotificationService/NotificationService.swift",
+        "canonical": "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationExtension/HanlinNotificationService.swift",
+        "original_sha256": "7c8af3c09d78f7276a681198eb44646a40ab134ca1f9a440fff575c9e42a7f8e",
+        "canonical_sha256": "c0d9dfb00212b2da93cc74dc44340e7fd439b587ca643c3097c0a9324243b716"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "canonical": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "original_sha256": "82cd32bf4bb35b4b4ee17be6d977f31ba30e178ce394c2f906685a302f6b2858",
+        "canonical_sha256": "b4cee19890319adb77ac6d1ff418a6f5df8376f98653c28357329b921fc64b5e"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingAppIntents.swift",
+        "canonical": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift",
+        "original_sha256": "7219f31cfb5c8b7fcc83201893c9cc43f9256a7c297e296d80f4160e5a484a99",
+        "canonical_sha256": "c05a4b077ec880edb95c0549a6a22f9d676cf477e39e7ea30891594e61921b00"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderSession.swift",
+        "canonical": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/TranslationProviderSession.swift",
+        "original_sha256": "0aaab396361e8cad0202b82ae02f953f68d14cf077e669a4dea125565a4b797c",
+        "canonical_sha256": "973567195bc625acba6da6743999ff8ff557eb8d7deb2b7eb45dc1eb7d98c7e9"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderRootView.swift",
+        "canonical": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/TranslationProviderRootView.swift",
+        "original_sha256": "e10249b84dd9a760263849b8708f3213c70896a524285f2eba107f979b2733c2",
+        "canonical_sha256": "33a28af1156b8c9b3eb53900e715daf9190ceb2db264ecc08edce1efc3496760"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationRoute.swift",
+        "canonical": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/TranslationRoute.swift",
+        "original_sha256": "0406ed7965d46f4125cbd3eb9ee3835d5e90f70f0dc062da67c4971acb0d3585",
+        "canonical_sha256": "6fdaaccd557c3349c244d3dcbac31da9e8b539bd80099c2c759727be59ea1047"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderHomeView.swift",
+        "canonical": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/TranslationProviderHomeView.swift",
+        "original_sha256": "49cff82091f948a7d55f6b63c641e167a6df0f8b2bacf239a6ec292318054f1a",
+        "canonical_sha256": "b62f1716ed0dae5651e53c62241da48c6db67b1fd9d78e12ba4f53130e21dc7d"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderAppsView.swift",
+        "canonical": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/TranslationProviderAppsView.swift",
+        "original_sha256": "6f3ca9de35ef35ec3943b94f4e4cea7c8e8dfc7c1e7ea6bcc19961c07b8bbbec",
+        "canonical_sha256": "f70f9bf0d05ea2e5b4f48ce4fd62430f3a6eae56474e4c41d0913bb52ce2a582"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderMiniChatView.swift",
+        "canonical": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/TranslationProviderMiniChatView.swift",
+        "original_sha256": "4e5c181a436f2e354a6cb2e6b457922b9139efbcd9d199b7bfe051dc94938321",
+        "canonical_sha256": "7af76f96f11c4598ec10cf8a8502d39ea4bafa5ef0d0247e167b6d86daab1db5"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderMiniAppView.swift",
+        "canonical": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/TranslationProviderMiniAppView.swift",
+        "original_sha256": "b532d1b08457f24370bcefd2ffcb881e22ec3911c4039287b22914d8d4e5cbfa",
+        "canonical_sha256": "a4162c54d20c38084474b4ccbd480be2b31b388081806c3249f01df97510296c"
+      }
+    ],
+    "checks": [
+      {
+        "original": "ChavrusaChatShare/ShareViewController.swift",
+        "member": "ShareViewController.viewDidLoad()",
+        "pass": true,
+        "normalized_tokens_sha256": "04ee6baec56fabe085c72732c0150528a27ffb195319f2e4b3cb7a396fea3860"
+      },
+      {
+        "original": "ChavrusaChatShare/ShareViewController.swift",
+        "member": "ShareViewController.viewDidAppear(_:)",
+        "pass": true,
+        "normalized_tokens_sha256": "da7b2979990e16e8e46d75556823417a94c9d62ebe74ff1f7c5f2bcb8a4e46b4"
+      },
+      {
+        "original": "ChavrusaChatShare/ShareViewController.swift",
+        "member": "ShareViewController.importItems()",
+        "pass": true,
+        "normalized_tokens_sha256": "7afb6f4ac35f8797f3e09affe2d68ed57e1ec76ecb27bcf65d1303b8fb33bf00"
+      },
+      {
+        "original": "ChavrusaChatShare/ShareViewController.swift",
+        "member": "ShareViewController.load(_:store:batchID:ordinal:)",
+        "pass": true,
+        "normalized_tokens_sha256": "b6854585cfd8fa335add5536793adc2897bb812817f72124533f5de0cf9de4dd"
+      },
+      {
+        "original": "ChavrusaChatShare/ShareViewController.swift",
+        "member": "ShareViewController.finish()",
+        "pass": true,
+        "normalized_tokens_sha256": "23a0dd534d00830e72dc43c94d01dffb87a9a62f89bf69b6b0be45042385141a"
+      },
+      {
+        "original": "ChavrusaChatShare/ShareViewController.swift",
+        "member": "ShareViewController.cancelImport()",
+        "pass": true,
+        "normalized_tokens_sha256": "1b64249151154019a46a4e3a519fc902af678ad92d50b0eaafb28fd4b4a4f3fa"
+      },
+      {
+        "original": "ChavrusaChatShare/ShareViewController.swift",
+        "member": "ShareViewController.discardStaging()",
+        "pass": true,
+        "normalized_tokens_sha256": "dabd69cadf16e8f6f01a76d5e31b32a509317456e99a520ca3ad31d5ed561acb"
+      },
+      {
+        "original": "ChavrusaChatNotificationService/NotificationService.swift",
+        "member": "NotificationService.didReceive(_:withContentHandler:)",
+        "pass": true,
+        "normalized_tokens_sha256": "66bb7883031c745e6c27465d8c835f045a345753579bb05ac1f2c4414046d943"
+      },
+      {
+        "original": "ChavrusaChatNotificationService/NotificationService.swift",
+        "member": "NotificationService.serviceExtensionTimeWillExpire()",
+        "pass": true,
+        "normalized_tokens_sha256": "5b6eefae06e36942772940149f9fbe3b1004bedc948b724520119f9ec2814be2"
+      },
+      {
+        "original": "ChavrusaChatNotificationService/NotificationService.swift",
+        "member": "NotificationService.attachment(from:)",
+        "pass": true,
+        "normalized_tokens_sha256": "30c0db8323be13e58ff99262a8f015755eafee5004119003ec1ab5317a038a56"
+      },
+      {
+        "original": "ChavrusaChatNotificationService/NotificationService.swift",
+        "member": "NotificationService.deliverBestAttempt()",
+        "pass": true,
+        "normalized_tokens_sha256": "5c84c6578e4a5b7a35d608627ea54227a41cb034a0f058ef9c94948df0c429e3"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "member": "HanlinScriptPackageEntity.displayRepresentation",
+        "pass": true,
+        "normalized_tokens_sha256": "072375301dbbb704ff0a8535d5156853048aa63a1aa994bbf57927c53a638546"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "member": "HanlinScriptPackageEntityQuery.entities(for:)",
+        "pass": true,
+        "normalized_tokens_sha256": "14e5c8fba914e1ea251f802f7a3b2d3917e4fb3e9cdcfbe69684b68f5b1dae3a"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "member": "HanlinScriptPackageEntityQuery.suggestedEntities()",
+        "pass": true,
+        "normalized_tokens_sha256": "33a8b163ec03825e229ff47f3465f08122001f876a383084dd29b717224256d0"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "member": "HanlinScriptPackageEntityQuery.allEntities()",
+        "pass": true,
+        "normalized_tokens_sha256": "8777d601e2d3b976cccf16dd12fb2766577bc4e6a08de04a5fb1fc54e69d0d78"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "member": "HanlinScriptPackageEntityQuery.entities(matching:)",
+        "pass": true,
+        "normalized_tokens_sha256": "6f743eb2413592440c802ac9eca034fffe4708cf10d603c6d8c42a8695100ba3"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "member": "HanlinWidgetTimelineProvider.placeholder(in:)",
+        "pass": true,
+        "normalized_tokens_sha256": "987a8745e718482a472852c42ef847bc2d198a8d6e8753eae1d7012affdd8e8e"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "member": "HanlinWidgetTimelineProvider.snapshot(for:in:)",
+        "pass": true,
+        "normalized_tokens_sha256": "fd702f199e2a5eab6b9551c9a6e23eb0b48633eb1aebeea7c1564d57f747894b"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "member": "HanlinWidgetTimelineProvider.timeline(for:in:)",
+        "pass": true,
+        "normalized_tokens_sha256": "34a68081e2b69d8e239f74556924e533319b8f0cdc5800daffc8346b0d39b72c"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "member": "HanlinWidgetTimelineProvider.prepare(_:family:)",
+        "pass": true,
+        "normalized_tokens_sha256": "9f2f0909e03eab30513360ee30eccb29dbea1d8f74ae2835299bd38a96d7c049"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "member": "HanlinScriptingWidget.body",
+        "pass": true,
+        "normalized_tokens_sha256": "5381d971dea0727a63fba96252b4bad7b6d4a95179d9fcf1961e5d325d351c79"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "member": "PassiveLegacyWidgetURL.body(content:)",
+        "pass": true,
+        "normalized_tokens_sha256": "35dbeb88773970a31b9460655c2ca89f2472669dbf2846a8079242a784dec5a2"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "member": "HanlinScriptingLiveActivityWidget.body",
+        "pass": true,
+        "normalized_tokens_sha256": "543def3d6abf35d3a0c1ab5ac655bcaf3e70b912fafde62790cb150092d224f3"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "member": "HanlinLiveActivityLockScreenView.body",
+        "pass": true,
+        "normalized_tokens_sha256": "09b3a9bbbee71375a5d18cb4d00f19a5c776ba90f87d1a7a0eb9b3d878808560"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "member": "HanlinLiveActivityRegionView.body",
+        "pass": true,
+        "normalized_tokens_sha256": "7092e85294cb31d34cbe911607ffcca823e9ea26d8abd2fdd95c10b5d706161a"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "member": "HanlinLiveActivityRegionView.node(in:)",
+        "pass": true,
+        "normalized_tokens_sha256": "eb1e3a550cdcbe26bba544e2d0ca2bbc894e426318814f1c6eab0f4d011ed176"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "member": "HanlinExtensionSnapshotView.body",
+        "pass": true,
+        "normalized_tokens_sha256": "e8419274c61b2eec33464ac2350cd5151c68aed0736bb46357d4375eeabbaf8a"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "member": "HanlinPreparedExpoNativeView.body",
+        "pass": true,
+        "normalized_tokens_sha256": "0c26cc78136f9022fe81ce8f5af7d3ba3dc6083460cd42190c3b49ffe64e74d2"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingAppIntents.swift",
+        "member": "HanlinScriptActionEntity.displayRepresentation",
+        "pass": true,
+        "normalized_tokens_sha256": "9dc7ac86a2070f1c8dbe0474cd5a98f76fa22c8dd81ddf2bfeb1501f8d8dc356"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingAppIntents.swift",
+        "member": "HanlinScriptActionEntityQuery.entities(for:)",
+        "pass": true,
+        "normalized_tokens_sha256": "3cda6af382799f3996cc3de33cc3061479ca8a02ad23629329fe635ede98bd03"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingAppIntents.swift",
+        "member": "HanlinScriptActionEntityQuery.suggestedEntities()",
+        "pass": true,
+        "normalized_tokens_sha256": "032a6a3b8284c190c1927f44b4276562c51ef029bd7fb34ff4a01d312eabd33b"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingAppIntents.swift",
+        "member": "HanlinScriptActionEntityQuery.records()",
+        "pass": true,
+        "normalized_tokens_sha256": "2ba59b477a321c71af8e9616daa4d23563442c42ae288f4c28c2584074fbea45"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingAppIntents.swift",
+        "member": "HanlinRunScriptActionIntent.parameterSummary",
+        "pass": true,
+        "normalized_tokens_sha256": "63def07a928d27ddafd9d627cd64050bea68a9126892b5a2f2810a01e478bb0c"
+      },
+      {
+        "original": "HanlinScriptingWidgets/HanlinScriptingAppIntents.swift",
+        "member": "HanlinRunScriptActionIntent.perform()",
+        "pass": true,
+        "normalized_tokens_sha256": "aa630a4fed8494caae4a6ca4cdb138c2f7006eb3ca8d081af21dc2b173ae6e95"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderSession.swift",
+        "member": "TranslationProviderSession.sourceText",
+        "pass": true,
+        "normalized_tokens_sha256": "728b2b356220f86ceac4bdb5ff6e3d27ea504372d5e78ebd47b77a92294b93c4"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderSession.swift",
+        "member": "TranslationProviderSession.updateSourceTextIfNeeded(_:)",
+        "pass": true,
+        "normalized_tokens_sha256": "b212f7e635dfb193a0d8072f19f20afbdda9ed7ac0d23ad81b0f17321e4d7c64"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderSession.swift",
+        "member": "TranslationProviderSession.sessionContext",
+        "pass": true,
+        "normalized_tokens_sha256": "84ab82491156110fe51ed5a0b754ec4d8125633208ac4b680e03c8ce1730b139"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderSession.swift",
+        "member": "TranslationProviderSession.finish(with:)",
+        "pass": true,
+        "normalized_tokens_sha256": "b3c27ab32637421e1558be9f550cd5f6526a2f0b44ec3117d928f62b286e7ea1"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderSession.swift",
+        "member": "TranslationProviderSession.sendChatMessage(_:)",
+        "pass": true,
+        "normalized_tokens_sha256": "d01eaeaa84db9920f737a74be8a44d5e705831159a8b9a7707503f5803030a0e"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderRootView.swift",
+        "member": "TranslationProviderRootView.currentSourceText",
+        "pass": true,
+        "normalized_tokens_sha256": "9721bd7101cae5b7d788c67b6dd2780a4adcc17d2210da44890834f03c2c9872"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderRootView.swift",
+        "member": "TranslationProviderRootView.body",
+        "pass": true,
+        "normalized_tokens_sha256": "ca5c96a9bc13454348eeed6e90cdfc3960ab36ba93c183edf3eff03d66d99a59"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderHomeView.swift",
+        "member": "TranslationProviderHomeView.body",
+        "pass": true,
+        "normalized_tokens_sha256": "34b8096a7172c1dbaad0f29029ed0f974712567ca7cdcde4e144cb4ad9e684b7"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderHomeView.swift",
+        "member": "TranslationProviderHomeView.submitQuickQuery()",
+        "pass": true,
+        "normalized_tokens_sha256": "dd246176b19960731d4e70295665d9ad71813563b6de2e9078c4eb7fef98a111"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderAppsView.swift",
+        "member": "TranslationProviderAppsView.body",
+        "pass": true,
+        "normalized_tokens_sha256": "40e9bdfd27fcc74824beeb67a2c47084200f769188f3293d9a0b1a9388103d57"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderAppsView.swift",
+        "member": "TranslationProviderAppsView.loadApps()",
+        "pass": true,
+        "normalized_tokens_sha256": "b79af869cd88b24c727d1ae4ac1e2fc33e0e405d63e51b709178307d0bbfb2f9"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderMiniChatView.swift",
+        "member": "TranslationProviderMiniChatView.body",
+        "pass": true,
+        "normalized_tokens_sha256": "cef7533b6e4d03fde82ea7a96cba23d212b67f2ef728da19a15dbf1c058e8ef5"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderMiniChatView.swift",
+        "member": "TranslationProviderMiniChatView.canSend",
+        "pass": true,
+        "normalized_tokens_sha256": "9e5f1d4fe790b1c24216a65a3a81ce00d6b29c5992a1a170b71cde5c4bf2c496"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderMiniChatView.swift",
+        "member": "TranslationProviderMiniChatView.send()",
+        "pass": true,
+        "normalized_tokens_sha256": "477cbc53bd30fc12b573e4120c5e29276d783af18f79e667d7ed99409ce76562"
+      },
+      {
+        "original": "ChavrusaChatTranslationProvider/TranslationProviderMiniAppView.swift",
+        "member": "TranslationProviderMiniAppView.body",
+        "pass": true,
+        "normalized_tokens_sha256": "42d075fabc149b92ca6b1ac0d622d55c615229b0975944d72646884a89744b68"
+      }
+    ],
+    "passed": 49,
+    "total": 49,
+    "apple_compilation": "Not performed by this source-preservation check",
+    "device_acceptance": "Not claimed"
+  },
+  "swift_parse": {
+    "toolchain": "Swift 6.4.3 (Linux); syntax only",
+    "passed": 35,
+    "total": 35,
+    "files": [
+      {
+        "path": "Packages/HanlinAppExtensionsSDK/Package.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationExtension/HanlinNotificationService.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinAppExtensionsSDK/Sources/HanlinShareExtensionUI/HanlinShareViewController.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinTranslationHostServices.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/TranslationProviderAppsView.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/TranslationProviderHomeView.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/TranslationProviderMiniAppView.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/TranslationProviderMiniChatView.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/TranslationProviderRootView.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/TranslationProviderSession.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/TranslationRoute.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinWidgetSDK/Package.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinWidgetIntentsPackage.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinExtensionContracts/HanlinExtensionHostConfiguration.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "ChavrusaChatShare/ShareViewController.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "ChavrusaChatNotificationService/NotificationService.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "ChavrusaChatTranslationProvider/ChavrusaChatTranslationProvider.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "ChavrusaChatTranslationProvider/TranslationProviderAppsView.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "ChavrusaChatTranslationProvider/TranslationProviderHomeView.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "ChavrusaChatTranslationProvider/TranslationProviderMiniAppView.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "ChavrusaChatTranslationProvider/TranslationProviderMiniChatView.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "ChavrusaChatTranslationProvider/TranslationProviderRootView.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "ChavrusaChatTranslationProvider/TranslationProviderSession.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "ChavrusaChatTranslationProvider/TranslationRoute.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "HanlinScriptingWidgets/HanlinScriptingAppIntents.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinPlatform/Package.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinCompactAgentContracts.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinGenericWidgetActionIntent.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptAppIntentBridge.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetActionExecutor.swift",
+        "exit_code": 0,
+        "stderr": ""
+      },
+      {
+        "path": "Packages/HanlinWidgetSDK/Sources/HanlinWidgetUI/Exports.swift",
+        "exit_code": 0,
+        "stderr": ""
+      }
+    ]
+  },
+  "canonical_resources": [
+    {
+      "removed": "HanlinScriptingWidgets/Resources/ExpoWidgets.bundle",
+      "canonical": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/Resources/ExpoWidgets.bundle",
+      "bytes": 102063,
+      "sha256": "cad96de7b40d7ae2a5234af49fecdb06e30eb44da062e5ae32dc68bd751e7a00"
+    },
+    {
+      "removed": "HanlinScriptingWidgets/Resources/support.bundle/util.js",
+      "canonical": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/Resources/support.bundle/util.js",
+      "bytes": 1025,
+      "sha256": "08f291ad3d1ddcc0a9c7637bef13506a978b7d2f47da1a69e8adaaf1618ba642"
+    },
+    {
+      "removed": "HanlinScriptingWidgets/Resources/support.bundle/moment.min.js",
+      "canonical": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/Resources/support.bundle/moment.min.js",
+      "bytes": 58862,
+      "sha256": "73de4254959530e4d1d9bec586379184f96b4953dacf9cd5e5e2bdd7bfeceef7"
+    }
+  ],
+  "localization": {
+    "initial_syntax_edits": 23,
+    "edited_files": 5,
+    "idempotency": {
+      "applied": false,
+      "changedFiles": [],
+      "excludedFiles": [],
+      "scannedFiles": 13,
+      "sourceLiteralPreservation": "All original Swift string segments retained in original order; callback structure and unrelated source bytes preserved. Only the recorded bundle, label-initializer and color-reference edits are applied.",
+      "unresolved": []
+    },
+    "note": "Widget source directory subsequently renamed without modifying implementation bytes; one import-only facade added.",
+    "explicit_widget_metadata_routing": "WidgetConfiguration Text overloads and IntentDialog(LocalizedStringResource), supported by Apple API documentation"
+  },
+  "identity": {
+    "original_module": "HanlinScriptingWidgets",
+    "canonical_module": "HanlinScriptingWidgets",
+    "public_facade_module": "HanlinWidgetUI",
+    "required_os_entry_module": "HanlinScriptingWidgetsHost",
+    "retained": "Original AppIntent/AppEntity type names, parameter names, scoped identity/unique legacy ID migration, widget kind, bundle identifier and App Group in explicit Hanlin configuration"
+  },
+  "host_isolation": {
+    "configuration": "Immutable HanlinExtensionHostConfiguration, current-executable dictionary, no implicit Hanlin fallback",
+    "unconfigured_chat_hosts": "Requirements agent read-only audit found no store/client initialization in actual Lorvex/Maktabah source or their selected chat product closure; no host Info.plist or entitlement change required for existing chat integration."
+  },
+  "remaining_native_gates": [
+    "Apple compile and App Intents metadata indexing for app plus all original extension entry targets",
+    "Original principal class instantiation and selected-text translation launch",
+    "Saved widget configuration/action continuity across original module-preserving extraction",
+    "Original widget/Live Activity/share/translation UI acceptance on supported Apple environment"
+  ],
+  "not_claimed": [
+    "Apple compilation",
+    "Device acceptance",
+    "Eligible-device FoundationModels tools"
+  ]
+}

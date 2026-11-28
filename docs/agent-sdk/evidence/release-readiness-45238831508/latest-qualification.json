@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "previousProducer": {
+    "run": 45238831508,
+    "source": "39a10b1cbf4645b629f556ea312e2576a4e566db",
+    "status": "FAIL",
+    "nativeJob": 137917939932,
+    "failure": "Test compilation: missing inner try in #require expression.",
+    "preparedNativeArtifact": 14850817502,
+    "preparedNativeEligible": false
+  },
+  "currentContinuation": {
+    "run": 45246711373,
+    "source": "36d3c51bdba93ada2c2722ed0e9b99109d84a616",
+    "status": "FAIL",
+    "soleWatcher": "/root",
+    "independentlyPolled": false,
+    "selectedScopes": 32,
+    "authoredExpectedInvocations": 342,
+    "executedInvocations": "NOT_RUN",
+    "nativeJob": 137945550349,
+    "failure": "Resource scanner rejects two SwiftPM AI_Hanlin bundle locations after successful app/test build and sealed current-products validation.",
+    "preparedNativeArtifact": 14855355631,
+    "preparedNativeEligible": false
+  },
+  "qualifiedProgress": {
+    "nativeScriptHostBaselineMetadata": "PASS",
+    "clangErrors": 0,
+    "requiredVisibleNames": 10,
+    "selectedFrameworks": 107,
+    "identicalFrameworkDuplicates": 23,
+    "appIntentsOriginalExports": 7,
+    "finalMainAppBuild": "PASS",
+    "tests": "NOT_RUN",
+    "currentBuildForTestingUnitProducts": "PASS",
+    "runtimeCopySignature": "PASS",
+    "resourceScan": "FAIL"
+  },
+  "forwardSourceReview": {
+    "base": "4c7c89c45587e26c76110e2d59688d38c66f3aa3",
+    "head": "36d3c51bdba93ada2c2722ed0e9b99109d84a616",
+    "changedNonEvidencePaths": [
+      "AI_HLYTests/HanlinApplicationEmbeddingTests.swift"
+    ],
+    "change": "Inner try in existing test assertion only.",
+    "selectedHostSourceRecordsUnchanged": 1627,
+    "declaredPreparationInputsUnchanged": 11,
+    "metadataHelperUnchanged": true,
+    "method": "Read-only changed-path inspection; prior complete source comparison reused without rerunning tests/installers."
+  },
+  "independentSDK06": {
+    "run": 45237901921,
+    "source": "1a09867d88f475fd2b3192fabc4dd803986e5281",
+    "status": "FAIL_BEFORE_SIMULATOR_AND_COMPILATION",
+    "sourceSDK": "116cc6be0654a5d11bc56ba00e0310031107ee36",
+    "ownerLatestComment": "1220828267827775",
+    "ownerCommentTime": "2026-11-23T19:05:25Z",
+    "ownerReportedFix": "c099e7ebb968cd4c646a372b1632db4e9a0a6668",
+    "ownerReportedFixScope": "Moves one manifest JSON entry to canonical order; actual-loader control NOT_RUN at this notification.",
+    "actualLoaderControl": "NOT_RUN_AT_OWNER_NOTIFICATION",
+    "methods23Cases32": "NOT_RUN",
+    "ack7": "NOT_RUN",
+    "laneTakeover": false
+  },
+  "sourceReadiness": "PASS_WITH_HISTORICAL_EVIDENCE_SCOPE",
+  "publication": "BLOCKED",
+  "hostPins": "UNCHANGED_32da9e314e22bbf22391fcf8902302acfbb281e2",
+  "finalHostInstallations": "NOT_RUN",
+  "nativeArtifactAcquisition": 0,
+  "recordedAt": "2026-11-23T20:06:32.005381+00:00",
+  "latestEvidence": "../app-resource-scan-45246711373/README.md"
+}

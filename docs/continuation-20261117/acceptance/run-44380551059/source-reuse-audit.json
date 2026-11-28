@@ -1,0 +1,90 @@
+{
+  "changed_paths": [
+    ".github/workflows/build-ios26-unsigned-ipa.yml",
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift",
+    "Scripts/ProductSplit/prepare_signed_products.py",
+    "Scripts/ProductSplit/resolve_signing_profiles.py",
+    "Scripts/ProductSplit/restore_host_proof.py",
+    "Scripts/ProductSplit/test_signing_profiles.py",
+    "docs/chat-motion/MotionUI/App.swift",
+    "docs/chat-motion/MotionUI/MotionUITests.swift",
+    "docs/chat-motion/run_motion_ui.sh",
+    "docs/continuation-20261117/acceptance/SIGNING_MANUAL_PREPARATION_20261118.json",
+    "docs/continuation-20261117/acceptance/run-44351078724/host-proof-reuse-audit.json",
+    "docs/continuation-20261117/acceptance/run-44351078724/native-verification.json"
+  ],
+  "ci_workspace_caveat": {
+    "limit": "Artifact does not enumerate the full dirty-worktree diff. Do not describe this as a byte-pristine checkout or claim an independently enumerated list of all generated modifications.",
+    "observed_prebuild_generation": "The official prepare log records RuntimeManifest.json regeneration and current Host modules packaged with unchanged locked dependencies; RuntimeManifest.json is tracked. The workflow runs this preparation before writing provenance.",
+    "trackedWorkspaceModified": true
+  },
+  "comparison": "git diff executed SHA..reviewed HEAD plus matching git objects of protected source/test/dependency trees",
+  "conclusion": "Eligible for bounded reuse of these 8 Runtime/Skill/SDK test methods at the reviewed HEAD: test, runtime, Skill/SDK package and dependency closure sources are unchanged. Later workspace UI/Motion/signing/workflow edits are not acceptance evidence for those other paths.",
+  "executed_source_sha": "3fcdedbdf980c000fabf484ee4568b7c253d766e",
+  "resolved_lock_matches_executed_source_bytes": true,
+  "resolved_lock_sha256": "aabb429fa9f62273e681917748c5d4528fbac58596245216dec36f4bc27d224a",
+  "resolved_pin_count": 39,
+  "reviewed_head_sha": "282b6d7cd8525aac7cf54859f31c13af434c27c0",
+  "unchanged_objects": [
+    {
+      "git_object_at_executed_sha": "8641615ee7570353087be85e74354803772be477",
+      "git_object_at_review_head": "8641615ee7570353087be85e74354803772be477",
+      "path": "AI_HLYTests",
+      "unchanged": true
+    },
+    {
+      "git_object_at_executed_sha": "c36c3fdc4f385835b210c2299b2862ca921cfbf6",
+      "git_object_at_review_head": "c36c3fdc4f385835b210c2299b2862ca921cfbf6",
+      "path": "AI_HLY/Downstream/RuntimeCore",
+      "unchanged": true
+    },
+    {
+      "git_object_at_executed_sha": "b20dba0e1c1155cf48daa6c243cd5733e2efd67a",
+      "git_object_at_review_head": "b20dba0e1c1155cf48daa6c243cd5733e2efd67a",
+      "path": "Packages/HanlinAgentSDK",
+      "unchanged": true
+    },
+    {
+      "git_object_at_executed_sha": "d534a57398bc41c05d900bbf75bddf22da48a07f",
+      "git_object_at_review_head": "d534a57398bc41c05d900bbf75bddf22da48a07f",
+      "path": "Packages/HanlinPlatform",
+      "unchanged": true
+    },
+    {
+      "git_object_at_executed_sha": "cfbfb968f758b407e8a8a86dfaa552c8b51e28f8",
+      "git_object_at_review_head": "cfbfb968f758b407e8a8a86dfaa552c8b51e28f8",
+      "path": "Packages/HanlinSkillFormat",
+      "unchanged": true
+    },
+    {
+      "git_object_at_executed_sha": "7ba5300125a5456d678dedb7413a4d84f5287752",
+      "git_object_at_review_head": "7ba5300125a5456d678dedb7413a4d84f5287752",
+      "path": "Scripts/Runtime",
+      "unchanged": true
+    },
+    {
+      "git_object_at_executed_sha": "9f46da5ff3809ab2317181adc9900ef845a81abf",
+      "git_object_at_review_head": "9f46da5ff3809ab2317181adc9900ef845a81abf",
+      "path": "Scripts/Skills",
+      "unchanged": true
+    },
+    {
+      "git_object_at_executed_sha": "914e8d51b58a8a4c79cdbb5977d26ef5e55f6f88",
+      "git_object_at_review_head": "914e8d51b58a8a4c79cdbb5977d26ef5e55f6f88",
+      "path": "RuntimeDependencies.lock.json",
+      "unchanged": true
+    },
+    {
+      "git_object_at_executed_sha": "f43f4add572d7bb0faf132f09d1f5551d964f1cf",
+      "git_object_at_review_head": "f43f4add572d7bb0faf132f09d1f5551d964f1cf",
+      "path": "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "unchanged": true
+    },
+    {
+      "git_object_at_executed_sha": "c1de3ac2c83dbdf0bfbed2e808d2c75f06b14869",
+      "git_object_at_review_head": "c1de3ac2c83dbdf0bfbed2e808d2c75f06b14869",
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "unchanged": true
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "artifact_id": 14840461376,
+  "bytes": 30558,
+  "sha256": "a3f2e6ce198af824b98db2b7b109f09f4dab0786ef84247d2d2e125a7292f3b0",
+  "crc": "PASS",
+  "members": [
+    {
+      "name": "simulator-logs/01-environment.log",
+      "bytes": 963,
+      "sha256": "3b668dcda21f7e87d5347b8dc8e7c8df185996680caf8451bf4ded423cab9b26"
+    },
+    {
+      "name": "simulator-logs/03-package-runtime-host.log",
+      "bytes": 16464,
+      "sha256": "18cb92a9d45b6fa35c5f8caa5768bd2e5a41360f5cc6fb9bef73df7523296aab"
+    },
+    {
+      "name": "simulator-logs/02-prepare-runtime-core.log",
+      "bytes": 1125,
+      "sha256": "712be8c938b16773adcacc74f52a8802143ac1ea0c624cee808ef15d7d750862"
+    },
+    {
+      "name": "simulator-logs/01-cache-mode.log",
+      "bytes": 240,
+      "sha256": "f0d639c249409279df9dff0e861f19f934e22989486f7d342a18a44b7cc47569"
+    },
+    {
+      "name": "simulator-logs/04-runtime-preflight.log",
+      "bytes": 875,
+      "sha256": "2f9bbd9fe5f209b6723609f91bf9f69c2462af5549bfdfcdf35608ba3f039dc6"
+    },
+    {
+      "name": "simulator-logs/09-host-resources.log",
+      "bytes": 73415,
+      "sha256": "b8ec808a1fbdf84402023b1674b14050fe8f614617e3541ed2e05a3d103431a3"
+    },
+    {
+      "name": "simulator-logs/foundation-models-interface/receipt.json",
+      "bytes": 1221,
+      "sha256": "d7d19e0e2875a90026aa4289503297daf8d4db100fc44bb46405b0846f7f8789"
+    },
+    {
+      "name": "simulator-logs/foundation-models-interface/declarations.txt",
+      "bytes": 60798,
+      "sha256": "812d8f15063b0e8fa2573568ee84eee86344d17a3c81c2383a35dd26df27938c"
+    },
+    {
+      "name": "simulator-logs/performance-summary.json",
+      "bytes": 107,
+      "sha256": "c9dbceeea60dc1d2ebb3fe380f7501e2bca63527717f50bfc6f70a34f3108162"
+    },
+    {
+      "name": "simulator-logs/performance-summary.md",
+      "bytes": 3472,
+      "sha256": "bf90988f2e273b943b60e5a13de1384051a8fb3d99732936c2089dd6a6d5953a"
+    }
+  ]
+}

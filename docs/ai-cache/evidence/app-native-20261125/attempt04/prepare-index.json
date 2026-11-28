@@ -1,0 +1,323 @@
+{
+  "status": "PREPARED",
+  "source": "1710bc6119983799f7d22cb723659ac274fe96b1",
+  "archive": "/mnt/development/projects/artifacts/hanlin-ai-cache-app-final-20261125/app04-prepare.tar.gz",
+  "archiveSHA256": "fe238a663e4a29da3002ffcb991ba8b14cfe7fe740d3dd38d50f01c3d28879bb",
+  "files": [
+    {
+      "original": "prepare/01-xcode-version.log",
+      "retained": "prepare/01-xcode-version.log.gz",
+      "bytes": 33,
+      "sha256": "694b44731d0b415c5b11d844151e466d7f5e200a95627efda377f232f1a6ab77",
+      "storedSHA256": "0d8ae8f99ad37887e8c643e6aa54eb419bdcccbeac5d985530d01ecd43b5bf28"
+    },
+    {
+      "original": "prepare/04-manifest-check.log",
+      "retained": "prepare/04-manifest-check.log.gz",
+      "bytes": 3605,
+      "sha256": "6a3adc34271cba4ee688071b7aec9eb7f0ee9731bedf3e215a77efb8648947f0",
+      "storedSHA256": "f77dbe6799f3751a9b9008f100a73ff659101fc4d3170a8d455119c96b40c095"
+    },
+    {
+      "original": "prepare/04-manifest-check.stderr.log",
+      "retained": "prepare/04-manifest-check.stderr.log.gz",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "prepare/02-swift-version.stderr.log",
+      "retained": "prepare/02-swift-version.stderr.log.gz",
+      "bytes": 30,
+      "sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "storedSHA256": "12919eb3b241936fe8b140e777c7e67f606c0c293f0d89edb13a52cd5e1e85be"
+    },
+    {
+      "original": "prepare/03-node-version.log",
+      "retained": "prepare/03-node-version.log.gz",
+      "bytes": 8,
+      "sha256": "2f30156cd7f9137514ea68d53554f583cf6541fd107dbc8ae8a19253379a735a",
+      "storedSHA256": "84683bc4dd861c26440317460b1453e607e0becfc0eb60fbe9e9badf4d557e3d"
+    },
+    {
+      "original": "prepare/06-resolve-packages.log",
+      "retained": "prepare/06-resolve-packages.log.gz",
+      "bytes": 3881,
+      "sha256": "0528bb91d7f78af9190a638ef7494a0f698bba3d1e089e0601cf965ab0c1793f",
+      "storedSHA256": "1aa5d48c856efc3bc3159a36d43c501e2497deb5568c606624bc868ea0a6ae51"
+    },
+    {
+      "original": "prepare/03-node-version.stderr.log",
+      "retained": "prepare/03-node-version.stderr.log.gz",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "prepare/before-sources.json",
+      "retained": "prepare/before-sources.json",
+      "bytes": 2325557,
+      "sha256": "346d5e41a72cd8411b2f096524f38fee2da1f70e312c899ff82814b2f7ff1d80",
+      "storedSHA256": "346d5e41a72cd8411b2f096524f38fee2da1f70e312c899ff82814b2f7ff1d80"
+    },
+    {
+      "original": "prepare/05-project-check.log",
+      "retained": "prepare/05-project-check.log.gz",
+      "bytes": 88,
+      "sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+      "storedSHA256": "b44fe6e0a9fe538f4926f1682de104830f83fafbeb7a206b936ee8e8d9e48210"
+    },
+    {
+      "original": "prepare/08-a2ui-schemas.log",
+      "retained": "prepare/08-a2ui-schemas.log.gz",
+      "bytes": 2608,
+      "sha256": "ac11eeb411bbb762d1e9846e2f15d679cf47d546e574e1ef0c8028046973d416",
+      "storedSHA256": "7f212f61e662d7df360999f028f45a1c43597e0c44d56a662402303c31109a95"
+    },
+    {
+      "original": "prepare/05-project-check.stderr.log",
+      "retained": "prepare/05-project-check.stderr.log.gz",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "prepare/after-sources.json",
+      "retained": "prepare/after-sources.json",
+      "bytes": 2325557,
+      "sha256": "346d5e41a72cd8411b2f096524f38fee2da1f70e312c899ff82814b2f7ff1d80",
+      "storedSHA256": "346d5e41a72cd8411b2f096524f38fee2da1f70e312c899ff82814b2f7ff1d80"
+    },
+    {
+      "original": "prepare/06-resolve-packages.stderr.log",
+      "retained": "prepare/06-resolve-packages.stderr.log.gz",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "prepare/07-modular-headers.stderr.log",
+      "retained": "prepare/07-modular-headers.stderr.log.gz",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "prepare/01-xcode-version.stderr.log",
+      "retained": "prepare/01-xcode-version.stderr.log.gz",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "prepare/02-swift-version.log",
+      "retained": "prepare/02-swift-version.log.gz",
+      "bytes": 98,
+      "sha256": "04630ab8fa201f57c63c59730e638135e32584a97e16e004a417eb8ed283dc83",
+      "storedSHA256": "0934835c29031c4d993fb5c03c679104e862d89d770e67dcc336593d9d2cd8ce"
+    },
+    {
+      "original": "prepare/08-a2ui-schemas.stderr.log",
+      "retained": "prepare/08-a2ui-schemas.stderr.log.gz",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "prepare/07-modular-headers.log",
+      "retained": "prepare/07-modular-headers.log.gz",
+      "bytes": 101,
+      "sha256": "95ebbe2d5eb415915ec167e0e852f8e4af77c2a66dde56f88d3d1870d36a577e",
+      "storedSHA256": "4195c2d3085ebcf9e014b003b044b64d7809c0483475517833eb9e2a773bd2fd"
+    },
+    {
+      "original": "prepare/expected-test-inventory.json",
+      "retained": "prepare/expected-test-inventory.json",
+      "bytes": 13535,
+      "sha256": "8c802009caa08d9001db3765eb2d5d8d594d0f3fb117ad8cc1d8e8b16ba1cd27",
+      "storedSHA256": "8c802009caa08d9001db3765eb2d5d8d594d0f3fb117ad8cc1d8e8b16ba1cd27"
+    },
+    {
+      "original": "prepare/receipt.json",
+      "retained": "prepare/receipt.json",
+      "bytes": 7691,
+      "sha256": "85aedb38c5c9deab484a1a915608cf69bb9881d197ca52dd95f84123469c771e",
+      "storedSHA256": "85aedb38c5c9deab484a1a915608cf69bb9881d197ca52dd95f84123469c771e"
+    },
+    {
+      "original": "prepare/before-locks/Packages/HanlinPlatform/Package.resolved",
+      "retained": "prepare/before-locks/Packages/HanlinPlatform/Package.resolved",
+      "bytes": 1198,
+      "sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "storedSHA256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b"
+    },
+    {
+      "original": "prepare/before-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "retained": "prepare/before-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "bytes": 1198,
+      "sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "storedSHA256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde"
+    },
+    {
+      "original": "prepare/before-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "retained": "prepare/before-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "bytes": 1198,
+      "sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "storedSHA256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f"
+    },
+    {
+      "original": "prepare/before-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "retained": "prepare/before-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "bytes": 374,
+      "sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "storedSHA256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a"
+    },
+    {
+      "original": "prepare/before-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "retained": "prepare/before-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "bytes": 1198,
+      "sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "storedSHA256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094"
+    },
+    {
+      "original": "prepare/before-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "retained": "prepare/before-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "bytes": 1198,
+      "sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "storedSHA256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210"
+    },
+    {
+      "original": "prepare/before-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "retained": "prepare/before-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "bytes": 396,
+      "sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "storedSHA256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953"
+    },
+    {
+      "original": "prepare/before-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "retained": "prepare/before-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "bytes": 1198,
+      "sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "storedSHA256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c"
+    },
+    {
+      "original": "prepare/before-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "retained": "prepare/before-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "bytes": 10750,
+      "sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "storedSHA256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037"
+    },
+    {
+      "original": "prepare/after-locks/Packages/HanlinPlatform/Package.resolved",
+      "retained": "prepare/after-locks/Packages/HanlinPlatform/Package.resolved",
+      "bytes": 1198,
+      "sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "storedSHA256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b"
+    },
+    {
+      "original": "prepare/after-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "retained": "prepare/after-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "bytes": 1198,
+      "sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "storedSHA256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde"
+    },
+    {
+      "original": "prepare/after-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "retained": "prepare/after-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "bytes": 1198,
+      "sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "storedSHA256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f"
+    },
+    {
+      "original": "prepare/after-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "retained": "prepare/after-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "bytes": 374,
+      "sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "storedSHA256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a"
+    },
+    {
+      "original": "prepare/after-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "retained": "prepare/after-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "bytes": 1198,
+      "sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "storedSHA256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094"
+    },
+    {
+      "original": "prepare/after-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "retained": "prepare/after-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "bytes": 1198,
+      "sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "storedSHA256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210"
+    },
+    {
+      "original": "prepare/after-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "retained": "prepare/after-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "bytes": 396,
+      "sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "storedSHA256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953"
+    },
+    {
+      "original": "prepare/after-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "retained": "prepare/after-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "bytes": 1198,
+      "sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "storedSHA256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c"
+    },
+    {
+      "original": "prepare/after-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "retained": "prepare/after-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "bytes": 10750,
+      "sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "storedSHA256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037"
+    },
+    {
+      "original": "prepare/a2ui-generation/compiler.log",
+      "retained": "prepare/a2ui-generation/compiler.log.gz",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "prepare/a2ui-generation/result.json",
+      "retained": "prepare/a2ui-generation/result.json",
+      "bytes": 2607,
+      "sha256": "3f1a3c4ded54f0e59b9e7204021911bab02be795dc497e3ec625bf758114da1f",
+      "storedSHA256": "3f1a3c4ded54f0e59b9e7204021911bab02be795dc497e3ec625bf758114da1f"
+    },
+    {
+      "original": "preflight.json",
+      "retained": "preflight.json",
+      "bytes": 3949,
+      "sha256": "090536972ee5aebc95069d8f962df23163b729f9abd50b7f73b1b56429d16559",
+      "storedSHA256": "090536972ee5aebc95069d8f962df23163b729f9abd50b7f73b1b56429d16559"
+    },
+    {
+      "original": "preparation-command-01.log",
+      "retained": "preparation-command-01.log.gz",
+      "bytes": 76,
+      "sha256": "f9392dbc1f4415decb9bc390be9f49d5b7e6f3fbd636c72710ef278e45b31783",
+      "storedSHA256": "7aac6ed8ba7e7e1b0a273eb68d16a808909f0589331f1a6269766eba71632c92"
+    },
+    {
+      "original": "preparation-command-02.log",
+      "retained": "preparation-command-02.log.gz",
+      "bytes": 72,
+      "sha256": "bc234237931951c0e0e70dc212b9f47da2f6c76a61109e41c235f0f7f0eabcef",
+      "storedSHA256": "3bbc94444f21908ebdd99795b981608c78639a31e284ca504be9e7be3d666f95"
+    },
+    {
+      "original": "preparation-command-03.log",
+      "retained": "preparation-command-03.log.gz",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "preparation-command-04.log",
+      "retained": "preparation-command-04.log.gz",
+      "bytes": 1618,
+      "sha256": "abfc7804784d0b7bfbb8059ebf06462ddcefc4eec34c9706d651016e6d446fb4",
+      "storedSHA256": "460c533d8023b1a8b41c721e64303b88f1e2012ae2ff010f1358300059a9fd67"
+    }
+  ]
+}

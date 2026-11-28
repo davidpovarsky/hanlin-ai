@@ -1,0 +1,6 @@
+{
+  "reviewer": "/root/entrypoints",
+  "mode": "read-only",
+  "sourceSHA256": "ce2b136f95d1eccfd27fc876e10307133602d673fd42d860816559510b5a5960",
+  "conclusion": "No concrete blocker. Array(props) supplies the exact public uniqueMembers tuple element type; the outer try covers construction and validation. UTF-8 keys/values, unbounded validation and all transaction/state/receipt code are unchanged. No compiler/test/CI was rerun by the reviewer."
+}

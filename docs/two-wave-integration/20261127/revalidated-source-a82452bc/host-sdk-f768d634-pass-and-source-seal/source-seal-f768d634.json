@@ -1,0 +1,94 @@
+{
+  "status": "EXACT_ORIGINAL_PRODUCER_DOCS_SEALED_NATIVE_REUSE_AND_HOST_CLOSURES_VERIFIED",
+  "source": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "base": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "at": "2026-11-27T06:33:57.563515+00:00",
+  "nativeProofSHA256": "e99daf1bb7bb98c14d98d33b153d88531e7e016c7e295bc964a1e4f10af2bf64",
+  "native79ActualExecutionSource": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "native79ReuseReviewSHA256": "da8f54f596b6e9e7bbda8d55679d49c50953b3a5339a9e7846298b7d9fad4e34",
+  "hostReceiptSHA256": "4e21fb52599c9986a1e589a4f8305f0d8d31e1159bed6f5a1942b94657eb40c5",
+  "sourceBeforeOriginalProducerRefresh": {
+    "inputSHA256": "6ce921767e712c0490e9159b9965fdaa3d95fd40e361116311524a1dc24ad550",
+    "files": 392,
+    "method": "Every current SDK input read directly from immutable Git f768 blob; same original JSON.stringify array ordering/hash algorithm. Reconstruction from source objects, not a claim of an earlier executed fingerprint command."
+  },
+  "packagedAndExecutedHostSDK": {
+    "inputSHA256": "4b75c9122e17ff24464a8dfb757b1b3c72d2817d55472b4c0be035e7c71b55cc",
+    "files": 392,
+    "manifestSHA256": "f6603fc7f62b91a80cef33eb72a77e93711504b3b2f0a1851ead62f49c787a7a"
+  },
+  "onlyChangedSDKInputs": [
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "gitF768SHA256": "74fe499951d43c2b25f1058e5394623ec9e33fcd53f06582977d7951c0f1e6c8",
+      "packagedSHA256": "339dd1ab82a364bf0270071bd3b7e571f312a79f8c75085835b0eef9db7d9b3a"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "gitF768SHA256": "c2fca073871bd66f246ca836e540530304d4eaca071bc6166653b3568f726e9a",
+      "packagedSHA256": "f85b9e79f6b7345525d86150259abbe4e8eff4c08c820f10a2b0481a8bcb1402"
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "gitF768SHA256": "908580f26ebce959055c08e1595b63b02b048ef39e8e42246b8911cdb1dca914",
+      "packagedSHA256": "76cf7f3f967731fcad4b7f3058d50d9c19e675afd7524ff691e759400adb71c8"
+    }
+  ],
+  "explanation": "Original prepare-runtime-host pretest phase refreshes its tracked source audit outputs. These three changes record current f768 base SHA and the reviewed App Intents entity source hash. The entire current392 input set is reconstructed from Git and compared; no product, test, fixture, pin, producer selection rule or other SDK input changed during Host preparation. Actual native79 remains866 with root-qualified32/33 broad inputs and all4 exact package trees; this seal changes only producer-generated docs outside that original map. Fresh188 executed onf768 with exactly the packaged input bytes retained here.",
+  "package79Qualification": {
+    "status": "REUSED_VERIFIED_PASS",
+    "actualExecutionSource": "866d2d3c60525e32eae27564869e6dba024e625c",
+    "qualifiedSourceBase": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+    "totalBroadInputs": 33,
+    "matchedBroadInputCount": 32,
+    "changedBroadInputs": [
+      {
+        "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+        "recorded866SHA256": "872a7f6e7f786e2d578a54e3107bbe00e42a8dd2238e23f10fd656a63d9ab3f7",
+        "currentSHA256": "efb9738edeafd21868ce232343a2db4634e370d47d267d160c86f927847a8836"
+      }
+    ],
+    "generatedDocsInOriginalMap": 0,
+    "unchangedPackageTrees": {
+      "Packages/HanlinPlatform/Sources": "1586a7e95b6a3245bf0bb0ea60600c9b5086bc63",
+      "Packages/HanlinPlatform/Tests": "c4683795c1a192855ca2de769546ee2ccf4f948d",
+      "Packages/HanlinPlatform": "ee3dceff23aa4298982869933382bbed06ff6124",
+      "Fixtures/Widgets": "a0b7b0b1cb9e1ce756ccff40593a325ffffa73d6"
+    }
+  },
+  "archive": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host-f768d634-original-phases-r1/RuntimeHostResources.zip",
+    "canonicalPath": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81901081,
+    "sha256": "fae9778f1b6548a069f6bd16bef3e2f22c710445a84d1fb025f4e90a5d1e1718"
+  },
+  "generatedDocsDiffSHA256": "3f0b6bf94b3e132dcee1e32c1a1a6e7ad693f784cb858aa448a9b10230f2d929",
+  "changedPaths": [
+    "docs/miniapp-sdk/extension-reachability.json",
+    "docs/miniapp-sdk/extension-reachability.md",
+    "docs/miniapp-sdk/source-inventory.json"
+  ],
+  "generatedDocs": [
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "sha256": "339dd1ab82a364bf0270071bd3b7e571f312a79f8c75085835b0eef9db7d9b3a"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "sha256": "f85b9e79f6b7345525d86150259abbe4e8eff4c08c820f10a2b0481a8bcb1402"
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "sha256": "76cf7f3f967731fcad4b7f3058d50d9c19e675afd7524ff691e759400adb71c8"
+    }
+  ],
+  "sealedSource": "d2902ba9a4b18d5dba92662430e7eda355744b0c",
+  "head": "d2902ba9a4b18d5dba92662430e7eda355744b0c",
+  "finishedAt": "2026-11-27T06:33:58.016456+00:00",
+  "bundle": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source-seal-d2902ba9-from-f768d634.bundle",
+    "bytes": 1044,
+    "sha256": "32ce83a9b0708a605fa68cc086cd7051d685220c23c702abfb96f2814d360c09"
+  },
+  "workingTreeClean": true
+}

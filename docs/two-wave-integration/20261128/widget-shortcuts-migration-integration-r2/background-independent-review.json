@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-28T13:16:14.683221+00:00",
+  "status": "APPROVED_SOURCE_ONLY_COMPOSED_TYPECHECK_AND_NATIVE_PENDING",
+  "candidate": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-widget-home-background-1ea6ab19-candidate-r2",
+  "candidateManifestSHA256": "696769332d2cc3e17e6d6c7cb99e71e4e46b5b411acff3ad866a9a406a6fcd72",
+  "candidateSHA256": "463f118a38c6945eac42ed0d66037d9a6f4925092897f5eb4983e64f0ba88a6c",
+  "verifiedPayloads": 6,
+  "verifiedBytes": 625899,
+  "previousHeldReview": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/mac-independent-widget-home-background-review-r1/independent-review.json",
+    "sha256": "299e5411d9d5dbb2708f35586da5528de066b97a2b983450c8cf32141332bf85"
+  },
+  "wholeR1InverseExact": true,
+  "wholeOriginalBaseInverseExact": true,
+  "resolution": "New helper independently requires exactly one Home container query match and exactly one Edit button; no global geometric helper changes.",
+  "preserved": [
+    "All47 original test method bodies and identities",
+    "Existing public page/icon admission and empty-placement guards",
+    "All original family labels/provider/gallery/placement/configuration/nonce/rotation/cleanup assertions",
+    "Original420 case,35 gallery and shared bounded waits",
+    "Quiescence and animation settings",
+    "R1 snapshot/finite geometry/unique observed background/12 points/16-point clearance and record fields"
+  ],
+  "evidenceReadback": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/mac-independent-widget-home-background-review-r1/mechanical-and-evidence-readback.json",
+  "actualEvidence": {
+    "ownAXSHA256": "f3d3eb45eab6f8149de25b0dd72eddd38b3f7c14709ce6f8f31e770668d22e28",
+    "ownPNGSHA256": "abbabe7c9992b01c54f77e464e1b609b6ea20ded6758cc340bca504e73c87c93",
+    "reviewerActuallyViewedPNG": true,
+    "originalNativeLogSHA256": "f0237fa7e41742c9c1776023988061491e5983d92a1e7e687c5dae84b6fe813b"
+  },
+  "publicContract": "Apple public snapshot() and children declarations read directly; Apple iPad guide supports holding Home Screen background before Edit. Actual native navigation timing and widget placement remain unobserved for this source.",
+  "nativeRun": 0,
+  "typecheckRun": 0,
+  "sourceEdits": 0,
+  "nextGate": "One separately admitted whole composed UI typecheck, then original native case; no duplicate current-only typecheck."
+}

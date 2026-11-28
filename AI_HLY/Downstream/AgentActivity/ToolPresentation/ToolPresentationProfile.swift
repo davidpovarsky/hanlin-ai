@@ -1,0 +1,10 @@
+// Original shared implementation is owned by the SDK.
+import HanlinAgentActivityCore
+
+typealias ToolActivityPresentationKind = HanlinAgentActivityCore.ToolActivityPresentationKind
+typealias ToolActivityPresentationDescriptor = HanlinAgentActivityCore.ToolActivityPresentationDescriptor
+typealias ToolResultRendererKind = HanlinAgentActivityCore.ToolResultRendererKind
+typealias ToolResultPresentationDescriptor = HanlinAgentActivityCore.ToolResultPresentationDescriptor
+typealias ToolResultDisplayPolicy = HanlinAgentActivityCore.ToolResultDisplayPolicy
+typealias ToolResultPresentationRequest = HanlinAgentActivityCore.ToolResultPresentationRequest
+typealias ToolPresentationProfile = HanlinAgentActivityCore.ToolPresentationProfile

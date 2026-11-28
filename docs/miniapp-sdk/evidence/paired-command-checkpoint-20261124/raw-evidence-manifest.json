@@ -1,0 +1,154 @@
+{
+  "assertion-correction.json": {
+    "bytes": 3126,
+    "sha256": "4661a1d27857853eaf1aed479b077b3d590ed55291e8a983f3c88e1fdc6f2aac"
+  },
+  "focused-tests.log": {
+    "bytes": 4388,
+    "sha256": "21d27437e18b5c8bfd33ee0f92a4ebda991fe76309d3181195365312b9048a5b"
+  },
+  "observations/test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup/active-command.json": {
+    "bytes": 401,
+    "sha256": "1b29f61bb1aa1766f8073c8520bf7ae2185fd21be66f6213808afaf12340996c"
+  },
+  "observations/test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup/cleanup.log": {
+    "bytes": 8,
+    "sha256": "dc3b1813dd4f72a77bda5d401811815b49da242c3fe9a0b72e7f136fbf7b6d7d"
+  },
+  "observations/test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup/command-events.jsonl": {
+    "bytes": 3868,
+    "sha256": "beaa81d1c10a655dbac4ddfb25c880eee89dc8289852fa5265f045c86f9fd0f8"
+  },
+  "observations/test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup/commands.jsonl": {
+    "bytes": 213,
+    "sha256": "5be6cbe3deecc4f1e5372c7dc041404a8eabdf249301532d99e02152a7cfa752"
+  },
+  "observations/test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup/driver.log": {
+    "bytes": 296,
+    "sha256": "315d8ec2285f0bb7171f5791dfb9a488e57fd9469c6a5b9088cfc0403bf026a1"
+  },
+  "observations/test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup/interruption-observation.json": {
+    "bytes": 261,
+    "sha256": "328c1bae980f3fd72ec4afea48a90abe5c2ce7b9a552e27265e4291417ed07ab"
+  },
+  "observations/test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup/unfinished.log": {
+    "bytes": 20,
+    "sha256": "0912d578990ab4b6957bebfb5fba2f376e32b9ed487d5725494c6778fc71468d"
+  },
+  "observations/test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt/active-command.json": {
+    "bytes": 499,
+    "sha256": "aa9fd73c7150199b06accff16df802a89da8f0527e5a7f4dee4d23c5b00acae9"
+  },
+  "observations/test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt/command-events.jsonl": {
+    "bytes": 3498,
+    "sha256": "82afb90816ecbf5521c66ee89ee55bfb040cb51d8e1fb35e804fdae5fb67d27f"
+  },
+  "observations/test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt/driver.log": {
+    "bytes": 1647,
+    "sha256": "cc2ff8475cf82f3c9a85a48b819d5ad10779f7ee3a1f708a64a1f5eb4bf706d6"
+  },
+  "observations/test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt/interrupted.log": {
+    "bytes": 17,
+    "sha256": "539d6636eb839f669f5296694db90958df831dbbbf9d3c69da66cd68b0a5f92e"
+  },
+  "observations/test_nonzero_and_signal_exit_keep_failure_policy_without_inventing_timeout/active-command.json": {
+    "bytes": 426,
+    "sha256": "cc2929981c1cad0dcc60783a0dba4a8cd0f1d0dcaa7175ed1d4f80bd475d6c9a"
+  },
+  "observations/test_nonzero_and_signal_exit_keep_failure_policy_without_inventing_timeout/allowed.log": {
+    "bytes": 7,
+    "sha256": "6da5b18878e110928643ebcc38dbb7552cf3a296eea56493e23edc2b93eecff8"
+  },
+  "observations/test_nonzero_and_signal_exit_keep_failure_policy_without_inventing_timeout/command-events.jsonl": {
+    "bytes": 3681,
+    "sha256": "cdfe376083f028bb60f7cbba70d53030ebad42762ac0b991b47c45693db19db5"
+  },
+  "observations/test_nonzero_and_signal_exit_keep_failure_policy_without_inventing_timeout/commands.jsonl": {
+    "bytes": 709,
+    "sha256": "0b2fd2fd0b21ffedcb162fcc9ee6d31238d0206926891cf1a01919dc678f8b33"
+  },
+  "observations/test_nonzero_and_signal_exit_keep_failure_policy_without_inventing_timeout/failed.log": {
+    "bytes": 7,
+    "sha256": "6da5b18878e110928643ebcc38dbb7552cf3a296eea56493e23edc2b93eecff8"
+  },
+  "observations/test_nonzero_and_signal_exit_keep_failure_policy_without_inventing_timeout/signal.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "observations/test_success_keeps_streamed_output_environment_and_completed_contract/active-command.json": {
+    "bytes": 531,
+    "sha256": "754a217e178208c4a42b6dd45cf37d9dc567f658b4b12dea7a4118c1449e0b2c"
+  },
+  "observations/test_success_keeps_streamed_output_environment_and_completed_contract/command-events.jsonl": {
+    "bytes": 1545,
+    "sha256": "6890911fed557a86b8d656f0086d1709bd148fd1bb1b012e6086b7e38304efc0"
+  },
+  "observations/test_success_keeps_streamed_output_environment_and_completed_contract/commands.jsonl": {
+    "bytes": 342,
+    "sha256": "57100d0756ae5bb70d4a92068bb32c4cfc3b9189f9653cd7aaffc7b5c33d1c6b"
+  },
+  "observations/test_success_keeps_streamed_output_environment_and_completed_contract/success.log": {
+    "bytes": 102,
+    "sha256": "e6760388466d9248ba8ea887f4a56199c2dade865ec91696ce1785f9caf46a66"
+  },
+  "observations/test_timeout_retains_partial_output_kills_child_and_preserves_minus_one/active-command.json": {
+    "bytes": 445,
+    "sha256": "721c97cbcc271ec9cfbe8eae080fb4e72b033c338e90144c4fcba69f19fb9dd7"
+  },
+  "observations/test_timeout_retains_partial_output_kills_child_and_preserves_minus_one/command-events.jsonl": {
+    "bytes": 5145,
+    "sha256": "ce2e9e1e8759eae49a5839669ca9880f55a1b1be6cff839a647bcb3b395c5eba"
+  },
+  "observations/test_timeout_retains_partial_output_kills_child_and_preserves_minus_one/commands.jsonl": {
+    "bytes": 502,
+    "sha256": "a4d28c2c9f118c49680f875c8b3b03601063e58c0b06ee0df7f593e6df4e22a7"
+  },
+  "observations/test_timeout_retains_partial_output_kills_child_and_preserves_minus_one/timeout-error.log": {
+    "bytes": 15,
+    "sha256": "a1e72e84ed3e2b0b8448096dd075ca1231356866e8f3f0005988c05ac2403394"
+  },
+  "observations/test_timeout_retains_partial_output_kills_child_and_preserves_minus_one/timeout.log": {
+    "bytes": 15,
+    "sha256": "a1e72e84ed3e2b0b8448096dd075ca1231356866e8f3f0005988c05ac2403394"
+  },
+  "receipt.json": {
+    "bytes": 1542,
+    "sha256": "d3d216239e3a054eb4e1345f770217cbefdf9625c00d74597a1b96fe05fb50ce"
+  },
+  "sigint-recheck/focused-test.log": {
+    "bytes": 276,
+    "sha256": "ae0dbc15f41f894f0a49a6714a5968c0a1e97cd31f002d9f587222d5c0fb02e6"
+  },
+  "sigint-recheck/observations/test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt/active-command.json": {
+    "bytes": 502,
+    "sha256": "a99f090deb9e504e81459077040dd347052c487ae8eaf8fb3ca2bce2e93bc8db"
+  },
+  "sigint-recheck/observations/test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt/child-cleanup.json": {
+    "bytes": 21,
+    "sha256": "e465032b6dbae63949e8eda1da7a78a07279bd617d88e853039458de6175c1f1"
+  },
+  "sigint-recheck/observations/test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt/command-events.jsonl": {
+    "bytes": 3508,
+    "sha256": "286542e15734209b55de01dec1d2432fe78ace8e7649a3984fb1a8977fcf9353"
+  },
+  "sigint-recheck/observations/test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt/driver.log": {
+    "bytes": 1647,
+    "sha256": "0d809dedcb5c6ad09be263f0678f6dca8fbbb3c73a5ebb9717089b316a380076"
+  },
+  "sigint-recheck/observations/test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt/interrupted.log": {
+    "bytes": 17,
+    "sha256": "539d6636eb839f669f5296694db90958df831dbbbf9d3c69da66cd68b0a5f92e"
+  },
+  "sigint-recheck/receipt.json": {
+    "bytes": 706,
+    "sha256": "8c7a11ae6822ab58cc3c6814c6836ea54108403e7ef6d7701750309354c359ed"
+  },
+  "summary.json": {
+    "bytes": 1314,
+    "sha256": "19b2f37cd8dfa4a9530e142697a40095e075be7dfdd8d36d2e524dce6d20447d"
+  },
+  "unchanged-native-command-comparison.json": {
+    "bytes": 1961,
+    "sha256": "eac90f90520fe1050d63e02c22eaea2fb777fc09253a69de3afd1c507416cf6c"
+  }
+}

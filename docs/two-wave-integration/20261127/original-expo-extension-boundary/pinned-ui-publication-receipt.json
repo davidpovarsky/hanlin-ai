@@ -1,0 +1,277 @@
+{
+  "schema": 1,
+  "url": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+  "bytes": 3022138,
+  "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+  "source": "literal official pinned publication",
+  "members": [
+    {
+      "path": "ios/Modifiers/AnimationConfig.swift",
+      "sha256": "51ca337823d341173744afb8544f5fe34f887b6adcc8a9f2e6d592b4204c1fef"
+    },
+    {
+      "path": "ios/Modifiers/ArrangementModifiers.swift",
+      "sha256": "7a9b811792402a4130010f8fc3d3dc81de0e3549e2caafdb5b675270a77c277a"
+    },
+    {
+      "path": "ios/Modifiers/BackgroundModifier.swift",
+      "sha256": "01c8f55458d56e77ba347af4a9d3e1d4d15a258c78f8930f77cea8f34f5a31e8"
+    },
+    {
+      "path": "ios/Modifiers/ButtonBorderShapeModifier.swift",
+      "sha256": "b422e9d2fb213858bff7c848361c5ee70ee50c568340cedc40eaa4f3fc7602dc"
+    },
+    {
+      "path": "ios/Modifiers/ContainerBackgroundModifier.swift",
+      "sha256": "d8bba0d76b1c030a9bb6c7df23704326ae78aafa30981bf3938daa2598a737a2"
+    },
+    {
+      "path": "ios/Modifiers/ContainerRelativeFrameModifier.swift",
+      "sha256": "e4200beee9ecbc091f42c74dd586c37313feacae92ee8a2e712777c8257f9004"
+    },
+    {
+      "path": "ios/Modifiers/ContainerShapeModifier.swift",
+      "sha256": "e1b2099d14c2666e76848f4db680ca66626b451e3c02e8c2395c06ec1dd3a239"
+    },
+    {
+      "path": "ios/Modifiers/ContentShapeModifier.swift",
+      "sha256": "3f587da6648be117579cd17a4a5ac90e21858768ba3d0dc1aaead8c8a56b9c88"
+    },
+    {
+      "path": "ios/Modifiers/ContentTransitionModifier.swift",
+      "sha256": "f6a95e4bf2cc942ff1f3f4b2e8d2a8fa712230ffd228e458cc59e81b06c249aa"
+    },
+    {
+      "path": "ios/Modifiers/ControlSizeModifier.swift",
+      "sha256": "9d84810e29b10c337dd693e9a70ac70ae1794498ce2382aeaca48703967e829e"
+    },
+    {
+      "path": "ios/Modifiers/DatePickerStyleModifier.swift",
+      "sha256": "654ce5c6d6108c3ab294606b1735735368bba785a78b24a0abf7cd0e6506cdbe"
+    },
+    {
+      "path": "ios/Modifiers/DefaultScrollAnchorForRoleModifier.swift",
+      "sha256": "6b44897095573c35f0fc3d1690728a9af2c72ff8027fd0b8d54c405ca856e2b4"
+    },
+    {
+      "path": "ios/Modifiers/DefaultScrollAnchorModifier.swift",
+      "sha256": "d9d0ed641d2062a6acb021ecfa27b44aeed0764c0349e2e6b36b6a710fa8e531"
+    },
+    {
+      "path": "ios/Modifiers/DynamicTypeSizeModifier.swift",
+      "sha256": "8db159a92819f545d738f350b84cc246d1d1a7a7b41615eee1efbe514e167e3c"
+    },
+    {
+      "path": "ios/Modifiers/EnvironmentModifier.swift",
+      "sha256": "8d56d68032201c9b2f34d12c4b4aa296d593994581c8b2f94b15c322a09402db"
+    },
+    {
+      "path": "ios/Modifiers/FontModifier.swift",
+      "sha256": "c4c163de5cf934fd2d4960fb5d23052aaf86be709b821e14636334b298233a49"
+    },
+    {
+      "path": "ios/Modifiers/ForegroundStyleModifier.swift",
+      "sha256": "47fc728b592198fb32f2db987954f63ebc3aac85125ba7f24d26fbddbbd5116f"
+    },
+    {
+      "path": "ios/Modifiers/GaugeStyleModifier.swift",
+      "sha256": "98f14ff7a5996139119e9f78b6240da08ded1791a1443f817007275ba102c810"
+    },
+    {
+      "path": "ios/Modifiers/GlassEffectModifier.swift",
+      "sha256": "81febe84feb69967de856f737919ac666cfcbe0ecc3ce9b25c8bce8f2e8d5934"
+    },
+    {
+      "path": "ios/Modifiers/HingeObservationModifiers.swift",
+      "sha256": "ed39b754fc61b6be78bb55e6ed3d66d3a64c4834712cbea31d2f1a51d713f44a"
+    },
+    {
+      "path": "ios/Modifiers/IDModifier.swift",
+      "sha256": "c8c2f9aa2deb27c09f9c9873a3de3cdc024d1dac4387c0f79267ea1e74955a62"
+    },
+    {
+      "path": "ios/Modifiers/ImageScaleModifier.swift",
+      "sha256": "13838f5d9f4860f7d00f819fc3ad9d77d1d4895b0dc88a3bd7c1626256d36435"
+    },
+    {
+      "path": "ios/Modifiers/IndexViewStyleModifier.swift",
+      "sha256": "a107c3493de6363e9c171e4e620410d33a780491ade221436656fe9afbe078f9"
+    },
+    {
+      "path": "ios/Modifiers/KeyboardTypeModifier.swift",
+      "sha256": "c8fc4a80e3ff21dd1d5f0a4e05131e738d2dba08adbe19554500d2626fe4d0a6"
+    },
+    {
+      "path": "ios/Modifiers/LabelStyleModifier.swift",
+      "sha256": "0a748f6122f3ec779cff1cd91eca40f018072e7ba7bda093dc80b8c9d2d81ee5"
+    },
+    {
+      "path": "ios/Modifiers/LineLimitModifier.swift",
+      "sha256": "8511be43f7642539ecb777f117cc9079bf60e9bd912397c7f92d4c96f8f42a90"
+    },
+    {
+      "path": "ios/Modifiers/ListItemModifier.swift",
+      "sha256": "efc2c39a9064726abfbb57f1e4366f8e0d0d1dcf4c744304af46128534d6ce10"
+    },
+    {
+      "path": "ios/Modifiers/ListStyleModifier.swift",
+      "sha256": "4a69991867cc9f421d6d73c6918a6e7aecb7d8ae27abfc13b67c0485b886a015"
+    },
+    {
+      "path": "ios/Modifiers/MenuIndicatorModifier.swift",
+      "sha256": "3c90c5896c0895ea70d4af5bd35dd2bc8f20ebafc0d8b03cd61baf2d1c01792e"
+    },
+    {
+      "path": "ios/Modifiers/MenuOrderModifier.swift",
+      "sha256": "3b55c61f4a4b1506df6d5709e4f08b7c3cb79b4f222545c43bae4fb670dc85ff"
+    },
+    {
+      "path": "ios/Modifiers/MenuStyleModifier.swift",
+      "sha256": "0c7e5fd12a30983239081964112d99d697f8ea37211bebb78e06dcbc921ffe3a"
+    },
+    {
+      "path": "ios/Modifiers/NavigationModifiers.swift",
+      "sha256": "082da72124f9c28873a025cf8abb8d381dd9a3b31273631f84ca6fbdbd9bae66"
+    },
+    {
+      "path": "ios/Modifiers/OnGeometryChangeModifier.swift",
+      "sha256": "fbabe271aa5baab8f3be56cacd3ec93ecaf36eb64ef097465d5f390b87d41b97"
+    },
+    {
+      "path": "ios/Modifiers/OnSubmitModifier.swift",
+      "sha256": "e6da55003fb7a04b86bbbacdb0438a0024777059a6f0e9eae3477de86c553875"
+    },
+    {
+      "path": "ios/Modifiers/PickerStyleModifier.swift",
+      "sha256": "07f59c1f3217af7fe7f4bc6e7434fa3c831dd81673977d4ddad0b1a17c33563d"
+    },
+    {
+      "path": "ios/Modifiers/PreferredColorSchemeModifier.swift",
+      "sha256": "1fb4fdc2942fea5b57d49f46dcff26d6f1a4e89aa61306317f2753e794fcfbe3"
+    },
+    {
+      "path": "ios/Modifiers/PresentationModifiers.swift",
+      "sha256": "c4ae4d055cfc865815be3b0bc12a0caaf39f01e3e485c9825b4d0f1cc5d1b746"
+    },
+    {
+      "path": "ios/Modifiers/ProgressViewStyleModifier.swift",
+      "sha256": "99e72c587086d1527a46b04f2c1cdbad3005949550f44d20bd8a8e272c95503f"
+    },
+    {
+      "path": "ios/Modifiers/RefreshableModifier.swift",
+      "sha256": "b57180b31a2ad05301096de94435ff046b575676c910da60cbfb01ce9f77008d"
+    },
+    {
+      "path": "ios/Modifiers/ResizableModifier.swift",
+      "sha256": "857bfbe4b0d8f87b48a9a9336b6bdcee539de60f314a3f5b6ca6df6a2d7f8d10"
+    },
+    {
+      "path": "ios/Modifiers/Rotation3DEffectModifier.swift",
+      "sha256": "07e87eb425a01f1e733a2c7d9b57a340fc6cfeb9fa627bfdba1057589fda7637"
+    },
+    {
+      "path": "ios/Modifiers/ScrollClipDisabledModifier.swift",
+      "sha256": "052832f80cb5434597dd9b0b66d76c7a032dfe3096ae56c56b818f8cafd37c28"
+    },
+    {
+      "path": "ios/Modifiers/ScrollDisabledModifier.swift",
+      "sha256": "14d7f26caeed1973d96bd6d835125cf5e45997c368f2fada49c10a2f94b6e132"
+    },
+    {
+      "path": "ios/Modifiers/ScrollEdgeEffectStyleModifier.swift",
+      "sha256": "c927d8beab56cc801f74f994e74b5d82648ef8935faa20cae461efa744f4d039"
+    },
+    {
+      "path": "ios/Modifiers/ScrollIndicatorsModifier.swift",
+      "sha256": "40528d4445677307f3cf4ef7dcf9b8196b9b21631004b98300d0e45070195502"
+    },
+    {
+      "path": "ios/Modifiers/ScrollObservationModifiers.swift",
+      "sha256": "17690ce1a4911b923a931d9c0b864856cccbf104eca6eebe1683a077cf0a91fc"
+    },
+    {
+      "path": "ios/Modifiers/ScrollPositionModifier.swift",
+      "sha256": "60ccb05c378e29cd26e5ee4e67c039047ed524338c0a294fc6fb671127deb000"
+    },
+    {
+      "path": "ios/Modifiers/ScrollTargetBehaviorModifier.swift",
+      "sha256": "c5e37402d36b007a989c9ea424dadc6161eabbe3b364101c1a5757ad9e3eb29f"
+    },
+    {
+      "path": "ios/Modifiers/ScrollTargetLayoutModifier.swift",
+      "sha256": "578022f512fb9ccaad89f344022d940a94d6f81319447c5c2f52d1477fe16a47"
+    },
+    {
+      "path": "ios/Modifiers/SearchToolbarBehaviorModifier.swift",
+      "sha256": "826a7bbce43151537b5049e66dab34094da4712a03da455fa8b639c1d7c33a3a"
+    },
+    {
+      "path": "ios/Modifiers/SearchableModifier.swift",
+      "sha256": "a3d49428d10c934fb75ac15947988d403bba10848d1e0314fd5b756d8b8cc3d4"
+    },
+    {
+      "path": "ios/Modifiers/SectionIndexLabelModifier.swift",
+      "sha256": "2f3d55b9fb3e6df58176350abc5ee1a48822d4da95ea5b8b4623ee797e4a1981"
+    },
+    {
+      "path": "ios/Modifiers/SelectedSegmentTintColorModifier.swift",
+      "sha256": "858963925d8f45c3fad287c0001db7423b98872a5ebf23c4a015b2932311e0a1"
+    },
+    {
+      "path": "ios/Modifiers/ShapeTypes.swift",
+      "sha256": "a03646b0b8040d13460616fd2acc5be3772dd3775339bce1a7e8b28bbe0c660d"
+    },
+    {
+      "path": "ios/Modifiers/SubmitLabelModifier.swift",
+      "sha256": "72d41223fcb000d6ed590e3fb05a6a1edad612ba9cdeba0f1d8dd3579f1083d9"
+    },
+    {
+      "path": "ios/Modifiers/SwipeActionsModifier.swift",
+      "sha256": "25d2b8f9363c93192930608973203180ddfcba497095dd05fcf76261170cf4e5"
+    },
+    {
+      "path": "ios/Modifiers/SymbolEffectModifier.swift",
+      "sha256": "fa2033a939ba01480a81d5e8ca42ef298f8be2ea2d2f15059b6970a9ce3cc443"
+    },
+    {
+      "path": "ios/Modifiers/TabViewStyleModifier.swift",
+      "sha256": "178f5570b0146ee4ecd5abaa800bf98f8d978d3a72ca347265630ece4c0c3da1"
+    },
+    {
+      "path": "ios/Modifiers/TagModifier.swift",
+      "sha256": "d8274d5296508a5ba0ab37d5794ece298f32393ce6691f437f7c045dffa60a52"
+    },
+    {
+      "path": "ios/Modifiers/TextContentTypeModifier.swift",
+      "sha256": "c40af962a90e25f5599ec5925be09ea13b000907027923a184503a24815cb1df"
+    },
+    {
+      "path": "ios/Modifiers/TextInputAutocapitalizationModifier.swift",
+      "sha256": "82a744a4208fd467f16c4e6b43078e10e98a0c84f7f08e2985b956a379038a02"
+    },
+    {
+      "path": "ios/Modifiers/ToggleStyleModifier.swift",
+      "sha256": "a7eef84598fb1ba712b42ea3b988b646e82615775949dbbab046bcaf9cbaa4f3"
+    },
+    {
+      "path": "ios/Modifiers/View+AccessibilityModifiers.swift",
+      "sha256": "482f5e43c90f5749ce38551827ae7dea0f4be15d56d07a1623098ec1d4c1796a"
+    },
+    {
+      "path": "ios/Modifiers/View+GestureModifiers.swift",
+      "sha256": "d14b28bbd0eef594d5ece37b940b8a6b6014ddf042c7e04726ff3f90d193d276"
+    },
+    {
+      "path": "ios/Modifiers/View+ModifierArray.swift",
+      "sha256": "0711381951e6ffb436bb4e2f4c5c39f7aa2ed22ab355fb4dc5b389acf58c892e"
+    },
+    {
+      "path": "ios/Modifiers/ViewModifierRegistry.swift",
+      "sha256": "4cb49138695127b562e79727299068b0652172ba50d0752e35e281a6a4cd914b"
+    },
+    {
+      "path": "ios/Modifiers/WidgetKitModifiers.swift",
+      "sha256": "c031b99d25a8db38bd9f5b92c6e525998e3570fd30b585e8f5496ed0f66d89cf"
+    }
+  ]
+}

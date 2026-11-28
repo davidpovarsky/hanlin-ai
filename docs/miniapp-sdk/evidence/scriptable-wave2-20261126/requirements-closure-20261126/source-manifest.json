@@ -1,0 +1,965 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "628dbe083a5ceffc28b026e5701cd8c71c8734ff",
+  "productRevision": "2491a58b79f534b986b2ea1c0050d35b8dd818f3",
+  "mappingBaseline": "b80f897a5b890fb2ade8e272ffefbb25ec601844",
+  "files": {
+    "AI_HLY/Downstream/HostServices/System/HanlinSystemServicesBroker.swift": {
+      "gitBlob": "bf2182a7f50fd82fd9963d38a1f20bb6757b0cee",
+      "bytes": 11262,
+      "sha256": "575951b9056255d1708c414959464c24d2947b973426a5edd5005825fa5fd316"
+    },
+    "AI_HLY/Downstream/RuntimeCore/Core/MiniAppAuthoringService.swift": {
+      "gitBlob": "390ea69f83a5539130e4f2d50770b69b6f1a2bda",
+      "bytes": 5148,
+      "sha256": "89af851f29f0f8511b55df581c767460ffaf52b587dc9fc71c681d33ac6fdcdd"
+    },
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs": {
+      "gitBlob": "fb2057587517d1a1ad444a245f75b802f1cbd108",
+      "bytes": 66861,
+      "sha256": "cea114769522eaaaceee804b89b26549c2335b3ebca16037a64f97724f2e92fc"
+    },
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift": {
+      "gitBlob": "736985e8a0d42509c2d189de7ecdd1f88dd2c2d2",
+      "bytes": 4200,
+      "sha256": "40ace8e3c451e344576f2187bb961bac73ced97e8a504a8e85d7395db28eaab7"
+    },
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift": {
+      "gitBlob": "0dd5be8fa90dfc57d59e9d83fe1bee601bb8ee06",
+      "bytes": 14498,
+      "sha256": "8a4772d47f4e62a654d32b39b1671e8c4d6826620a5d7b0fda9f05dcfa6eac88"
+    },
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureInbox.swift": {
+      "gitBlob": "e51224ec69c70daef76da20982275d17b0bdd5b8",
+      "bytes": 8317,
+      "sha256": "d79d5b5c8762d4b9cb509a4eaabf25aa2563157b940c5c57bfc8a8a90e1e4e16"
+    },
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift": {
+      "gitBlob": "61872b8ef436689dc9e4e994bfed668d97ff4556",
+      "bytes": 5402,
+      "sha256": "d3fd4f9fad95573332cc436d8704ae4f3651ba6c83f7d4d3cb8093bde15874ac"
+    },
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemCatalog.swift": {
+      "gitBlob": "315d2a294c835a2931283722902719da9170601a",
+      "bytes": 5208,
+      "sha256": "2d98c0ad4f27a1da489a2a4ea295e42450e3c083b8e07bb5a617ed5d9da0290a"
+    },
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift": {
+      "gitBlob": "a08a9a77c57e9ce36bc8d88c407dc73448ce2d4a",
+      "bytes": 10883,
+      "sha256": "c1a226e995240acf6c200faf15d10cbcb391c0b702f6bc3e77bc25842494a83b"
+    },
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift": {
+      "gitBlob": "1e5dd5bfb7db504cb7b0d48cf6fe5f208507cdae",
+      "bytes": 183247,
+      "sha256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65"
+    },
+    "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift": {
+      "gitBlob": "312704bfecdcbefb0d061b1879a8bf4427835dbc",
+      "bytes": 28350,
+      "sha256": "b35644d9aa1abd6002f1d00e4c6c009d80ad63eb0b445cd002c96c49f91a6207"
+    },
+    "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests.swift": {
+      "gitBlob": "3e355ee983d9e9f64b71fa6c3b3c2a8f96367921",
+      "bytes": 23843,
+      "sha256": "1fab9f68f93dc039eac8056ece59c324c6be50b00cdd462a3f569e557707bec2"
+    },
+    "AI_HLYTests/HanlinNativePresentationTests.swift": {
+      "gitBlob": "6b019d695ddf634ab1a19f8f10268a2718472af6",
+      "bytes": 14928,
+      "sha256": "200e2c5b9e02b38b2bebbdb91e222893d4622ee3fcaf06186a09c6eda33be182"
+    },
+    "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift": {
+      "gitBlob": "2cf36fd6055835c90a8245b79bb49ba316b693a7",
+      "bytes": 20077,
+      "sha256": "9e80175151ded1703d912155ad74e749239ebcbb46ed9c0ca6fcf837cb0f6c35"
+    },
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift": {
+      "gitBlob": "8903395df9044c2be8c5420527e668926cb1c147",
+      "bytes": 14014,
+      "sha256": "ac03a18a83324a72c9e1a3044640232a5f2e78192617c220100e5575ddbbe9aa"
+    },
+    "HanlinMiniAppsApp/HanlinMiniApps.entitlements": {
+      "gitBlob": "437d16085884d21733ca48e086d63516aa4316cd",
+      "bytes": 1118,
+      "sha256": "6458e58ace4b853a4e291986962c305e54b948173752e98a2932d5d553c8d4ba"
+    },
+    "HanlinMiniAppsApp/HanlinMiniAppsApp.swift": {
+      "gitBlob": "c8a267c561e1ced5b99d973642b9564380f05706",
+      "bytes": 13188,
+      "sha256": "65792c17c4dd40c9893b441f746fd13bcd4c471c7c49dabdde1f7e5f7adf6e3b"
+    },
+    "HanlinMiniAppsApp/Info.plist": {
+      "gitBlob": "298f50c1a2ea7cd0c6c3a7fe548601605b7c4df1",
+      "bytes": 5439,
+      "sha256": "c3889b212bf4eddcea4da3a5761782971d954e7dfc61a0276465088f5be1b46a"
+    },
+    "HanlinMiniAppsApp/MiniAppsDeveloperStudio.swift": {
+      "gitBlob": "7ad1981f45de8a9f5c787237959642db464426c3",
+      "bytes": 34284,
+      "sha256": "1951bbf6033476518a48cf7298a30bb93ee5d8cfd6af7a5b603146448250ed39"
+    },
+    "HanlinMiniAppsApp/MiniAppsDeveloperWorkspace.swift": {
+      "gitBlob": "c8e473a8b9342c77e071c81186e113026f570e44",
+      "bytes": 14078,
+      "sha256": "0dd7f82fc9f8bc3e10a1dfcfaf77a4addaed26cb8844a0a7665048c5033ddb2a"
+    },
+    "HanlinMiniAppsApp/MiniAppsLibrary.swift": {
+      "gitBlob": "527c3694ca767d4846884c819d4111922efe13aa",
+      "bytes": 119,
+      "sha256": "17eab9c1023689e4a247f79c669b437a61bab85c432c3d40e866229cb0e7aa66"
+    },
+    "HanlinMiniAppsApp/MiniAppsServices.swift": {
+      "gitBlob": "8981c894d877f916a4c05393efdd52009476d5d5",
+      "bytes": 153,
+      "sha256": "1364b29c08db993caa6a13d7d2134534ba293af30d8698ff4e80caca0486f428"
+    },
+    "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift": {
+      "gitBlob": "cd078d0812a567ec10d81dcb27d9df21ce5bf6db",
+      "bytes": 13476,
+      "sha256": "b1ed3e326e5fe968671a15900c18cffb3606641674aafa9c47dd36fd49b6b5bd"
+    },
+    "HanlinMiniAppsApp/MiniAppsStudioDraft.swift": {
+      "gitBlob": "c48a1d094af881b098e8c886fa2f44c4f38f6be6",
+      "bytes": 5080,
+      "sha256": "ab8d4a48894e7ca5ba05cc4fdce5a21dbed24aceab4ebd4225fa9a6e3a12387a"
+    },
+    "HanlinMiniAppsApp/MiniAppsStudioProject.swift": {
+      "gitBlob": "a466fdff23e040a028c3edaca991d7444eb80569",
+      "bytes": 11164,
+      "sha256": "849851553729e4bbcedd623441a5e75c5320d76bdf0a0f48130c9bfe6ff20df1"
+    },
+    "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.entitlements": {
+      "gitBlob": "0c67376ebacb410fd873cac1d8d8dd431b262c02",
+      "bytes": 181,
+      "sha256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c"
+    },
+    "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift": {
+      "gitBlob": "14948c6b8043f1dcdfdb0675fe163b56030ba8c1",
+      "bytes": 526,
+      "sha256": "ee8a54ba3150ca5cdabc99f55f245e64c5b68087d8e7559a149575fba65cf448"
+    },
+    "HanlinMiniAppsExtensions/CameraCapture/Info.plist": {
+      "gitBlob": "bf6edb1913155a62362a1b62ad68f201418e3e40",
+      "bytes": 528,
+      "sha256": "00cd0f32a7c53877e49d41e713f9dfec85137dc0043ad5934d531ccfe6657de5"
+    },
+    "HanlinMiniAppsExtensions/Keyboard/HanlinMiniAppsKeyboard.entitlements": {
+      "gitBlob": "2b0b331857cf7d42cbdcf4bb26428a7542a275fa",
+      "bytes": 306,
+      "sha256": "6d7c2663c6e543380d18eccc7fc96cd1b0bfd3e1dae524aa59f9688abb49f8dd"
+    },
+    "HanlinMiniAppsExtensions/Keyboard/HanlinMiniAppsKeyboard.swift": {
+      "gitBlob": "fe70847f37920729ec450329f9a60eee98355706",
+      "bytes": 225,
+      "sha256": "785a18d619de3f670797241ff1f6dc0eefcc758febf55e5756b65734bdd20d0f"
+    },
+    "HanlinMiniAppsExtensions/Keyboard/Info.plist": {
+      "gitBlob": "da2617207759a5fe7be03221051a3c9db7adfa25",
+      "bytes": 1081,
+      "sha256": "6238b81f0e6593356d1461b8c9842b3cec6759b4fe559e664f73db811d3da01c"
+    },
+    "HanlinMiniAppsExtensions/NotificationContent/HanlinMiniAppsNotificationContent.entitlements": {
+      "gitBlob": "2b0b331857cf7d42cbdcf4bb26428a7542a275fa",
+      "bytes": 306,
+      "sha256": "6d7c2663c6e543380d18eccc7fc96cd1b0bfd3e1dae524aa59f9688abb49f8dd"
+    },
+    "HanlinMiniAppsExtensions/NotificationContent/HanlinMiniAppsNotificationContent.swift": {
+      "gitBlob": "95ec32586c3d6891bbe814c8f394d23749cd936d",
+      "bytes": 253,
+      "sha256": "bf1dd8c97116fdbeda96d873c785a6b31bfc66be4de6828960e845882dbfecf5"
+    },
+    "HanlinMiniAppsExtensions/NotificationContent/Info.plist": {
+      "gitBlob": "558fe6014bf6f321b8a36642267092b83ba1df77",
+      "bytes": 1237,
+      "sha256": "2f2277bb73d958bec242022227077ace6fa6b6ea2fd77c56a73d18e6b0222fbb"
+    },
+    "HanlinMiniAppsTests/MiniAppsDeveloperWorkspaceTests.swift": {
+      "gitBlob": "b9d49b2714e87b958e0ffd0726eaad6e6b56d3a8",
+      "bytes": 9689,
+      "sha256": "200c2783b7da02fd6c9647326bc1ee81f16b9f37e53418cdeaf46625f245edac"
+    },
+    "HanlinMiniAppsTests/MiniAppsShortcutIntentTests.swift": {
+      "gitBlob": "b0b69947da6ab99396020d3b18c573b2492787d0",
+      "bytes": 7022,
+      "sha256": "7924240896003356d83cf65d484087719ad01f217e6eb9d90fee28131d652f7e"
+    },
+    "HanlinMiniAppsTests/MiniAppsStudioProjectTests.swift": {
+      "gitBlob": "3e16116bd59d7620a949a2c6272b0917bd43bc38",
+      "bytes": 6047,
+      "sha256": "8516fd58d9f408bd9f270fbed163c158bf9b2c305f0ec342be8bf24066925ca3"
+    },
+    "HanlinMiniAppsTests/NativeScriptShortcutConcurrencyTests.swift": {
+      "gitBlob": "242f81f55a6de3fb4db56571138a883a012e5382",
+      "bytes": 37376,
+      "sha256": "235493a3b33d2a796da655f71c84a6cace6852e9046def2d7562bb162dc4a0f2"
+    },
+    "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests.swift": {
+      "gitBlob": "ea5eedd0df210d11ccab669b39fbc22e382c88dd",
+      "bytes": 5244,
+      "sha256": "fdb3f0d3a54e8c25e437ce97faeb728d1f6b904ad9f73516dd5118a15eac1396"
+    },
+    "Packages/HanlinAppExtensionsSDK/Package.swift": {
+      "gitBlob": "ff5b710bca4d92dc87ac623abeff0a7847e7d4b5",
+      "bytes": 3120,
+      "sha256": "55a32b484dfecced9c96546063ce5f207c186add846fbc47711b2fb93d77cd86"
+    },
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureContracts.swift": {
+      "gitBlob": "048155748e9edcbfcaeb9b811654a682aa79d2a6",
+      "bytes": 7593,
+      "sha256": "0de62f77431bc29a0b1aecfa74d6d5b3f51d4b4fb6bbed60c3dd9c31406a56f4"
+    },
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureIntent.swift": {
+      "gitBlob": "68ec3fcbf60ca46205428719ad77c73cfe3da54d",
+      "bytes": 1838,
+      "sha256": "42ac215d241c6b93ebe970b94f5e838d75a23039d230cc71e0cc6d5ad2437807"
+    },
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureView.swift": {
+      "gitBlob": "d7d95835e14cf013cffae696961a090e75fa4df0",
+      "bytes": 11696,
+      "sha256": "2608463d056209a00e9968ef840bf020762f4c8e26a884a80d6c5a8cf1e4830e"
+    },
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraPreviewSource.swift": {
+      "gitBlob": "953eb4c5880e3bea54230c5b6f0cfbd28b423ecd",
+      "bytes": 902,
+      "sha256": "159ec974b4442c5a0722d92af51cdbe76f8391934ee7f556eabd9f2acade3c5e"
+    },
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraService.swift": {
+      "gitBlob": "ba13aa20b8a77204012f43114791e5dc81d73361",
+      "bytes": 6079,
+      "sha256": "e02e5dce12f16369a0a02aea81ce9e9c0e8e386b85c637505a0bc6def2bc1fed"
+    },
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinKeyboardUI/HanlinKeyboardInputViewController.swift": {
+      "gitBlob": "501b726b1c3ca2ca00204b7544a425a870593b4e",
+      "bytes": 10831,
+      "sha256": "06f183c4ae06064e310c8eec1947526651ff1f672b533448ff4e7db00aea9b7c"
+    },
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationContentUI/HanlinNotificationContentViewController.swift": {
+      "gitBlob": "c134c30d38f8a1722826852ab5033e39053b50d0",
+      "bytes": 9029,
+      "sha256": "82c29170477e865e4ce610ecaa1381058e2e4f22bd4c8db2f501b238fd179a88"
+    },
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetState.swift": {
+      "gitBlob": "ba8616fda39ec31395a6b427a022821937fe8b34",
+      "bytes": 13164,
+      "sha256": "9c32f6b659dd953d501409166e8d570a4d0f98f8e0122fe06b80e42610efe791"
+    },
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinWidgetToggle.swift": {
+      "gitBlob": "d9d06c43bcae13a62ed2ac3d155f3ede5d765e6a",
+      "bytes": 2504,
+      "sha256": "e263dac82965baa2914d0dd025e7cbbceabb20324263f71a4f5c1af7264e2b4a"
+    },
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/ViewRenderer.swift": {
+      "gitBlob": "b2c9fe3f275e0af2ed35b285670a75bb51a443bc",
+      "bytes": 7460,
+      "sha256": "316bec95c2c1d2bb00b67df0fb77e053aeab0b79f1583ea3c747a8bd8b61f192"
+    },
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetsJSRuntime.swift": {
+      "gitBlob": "2b17eed904e01b664b437872b8e6d17e031658b2",
+      "bytes": 5458,
+      "sha256": "0c24483ac4856576058996de042acdac1122957d9bf2bb27455351c50d7e578b"
+    },
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/ViewRenderer.swift": {
+      "gitBlob": "9bd82688d8d7e9ee34359e26f6c4f8102553e72f",
+      "bytes": 6749,
+      "sha256": "3060507b885276d669029357bedbbc58595e3892d7b5d9192329ad051b19d543"
+    },
+    "Packages/HanlinExpoUI/src/host-services.ts": {
+      "gitBlob": "cf693002b714d4b3cac492805e4fde793778524c",
+      "bytes": 9777,
+      "sha256": "bb4a8d65fdeb6fe5b0780e856d126360e49f8bdbfc2cc61b6a101ad92653d518"
+    },
+    "Packages/HanlinExpoUI/src/system-surfaces.ts": {
+      "gitBlob": "389c4fe3d2c0ba6eaa987f60cf3c3b9b72ea3b8d",
+      "bytes": 3491,
+      "sha256": "7a0ff824ab5bb6c3a4cae705022bf0103d15caa17ed72500aeb5a28cd117c432"
+    },
+    "Packages/HanlinExpoUI/src/widget-types.ts": {
+      "gitBlob": "479254f235a30f905eed979c06b39aa43cfc7b44",
+      "bytes": 1439,
+      "sha256": "d319693684e39548153e7c09deebda20101c2b6c924d574a3204b5edc9bcc2b6"
+    },
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowSession.swift": {
+      "gitBlob": "ed2d606d7eac301362779123298b0c5fc5083bd7",
+      "bytes": 8707,
+      "sha256": "de1329ae3359e51f0c101083f76733712076a7689a059ea60241f51516c91f8e"
+    },
+    "Packages/HanlinPlatform/Package.swift": {
+      "gitBlob": "2d4e529c825939fbc302539852da52cdf7cbbaf9",
+      "bytes": 10823,
+      "sha256": "78d7081d0e197c3e99746e5b3e476b41280fc5b32110035fab31a3e949cb4dab"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppActionCompletion.swift": {
+      "gitBlob": "11839a18d607fc31fbd4af41666ac4e348c932a0",
+      "bytes": 1566,
+      "sha256": "523105b13b0b56a8d87cf190945c6c770eb5f11689e35abfa1822dbe331d87cd"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinShortcutProgress.swift": {
+      "gitBlob": "0e0128cfb0fa21dcce9385af20c5937a280336a8",
+      "bytes": 881,
+      "sha256": "da618582dbed4d29b36fe512fe566c1dfc3382156ba4e2f5e88076dc77f90d00"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinShortcutValueCodec.swift": {
+      "gitBlob": "d7e7c20b98b692ff7570ba9dcb2d2de76d712a37",
+      "bytes": 1443,
+      "sha256": "3c3aee14c37a5835c6cc85a4ebb86271ff63b5fc3f60e1a62158bc5281eb332c"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinWidgetProgram.swift": {
+      "gitBlob": "2ab1d53c777cb238d419106db46dabcf29b83c25",
+      "bytes": 5834,
+      "sha256": "1553704463c32e72e07fc6b6c1464df286e01d65c003fd6cb9bdb5e6170cb77a"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ExpoWidgets/HanlinExpoWidgetsViewRenderer.swift": {
+      "gitBlob": "380561c42d2bd9b91058b38df7c781ef6cb62b19",
+      "bytes": 1664,
+      "sha256": "fb03a5fe6484c8d2edce4c062a118c975300b191a4d8e9344e4a5db37cc2a123"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationExecutor.swift": {
+      "gitBlob": "082db9886501385bfe7070598e7646a005023d62",
+      "bytes": 5180,
+      "sha256": "450f3a5e0308c5cca03b07d863d71f2c96f04f9ec381fab9f49cc0201a08dcd3"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift": {
+      "gitBlob": "2cc62f5c94175f3a74156096557ebd325dbbda2d",
+      "bytes": 18267,
+      "sha256": "a39e7d674cd4ecba7c95a0162dfd97f4aba7ce9f05af64f194ec2002277e922c"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinLiveActivityOperationQueue.swift": {
+      "gitBlob": "5a116877f6b186992fa67c5a9648fad5634ec7d9",
+      "bytes": 1341,
+      "sha256": "a60d498fa2674563f99d87d5fb60a75c13732723d997e1c672edb0a9b96b342a"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionContracts.swift": {
+      "gitBlob": "56a1e10a0fcad9a6f35b16736946e1f0db36dc76",
+      "bytes": 31677,
+      "sha256": "1298b4e420292a4e331cad7903f119861ae6df675a4fc90456fbde2bae24efd9"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptWidgetLiveActivity.swift": {
+      "gitBlob": "6197e96b0a40d6e03f114b73082ef092d567c679",
+      "bytes": 18821,
+      "sha256": "da02231a6919954cfd98af515cd9589b49954c5c0d84014878df747160f4d6cc"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetInstance.swift": {
+      "gitBlob": "61b29dd8b94edbb4377d1837b5ab212e2c56dbf8",
+      "bytes": 17614,
+      "sha256": "55483e2e8500c1be80fd0d6c8a1c034be4cfab2014dfaf2160fe8f4fcaa4cd1c"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetLastSuccessfulRender.swift": {
+      "gitBlob": "e23de4909d0b48589f4f806fa17cd0740dc58c3f",
+      "bytes": 4838,
+      "sha256": "60f21b8917461d7b1b4db94034644d08f11c433bb1b4c1f774388adc0b267787"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Effect/ScriptWidgetAttributeRotationEffectModifier.swift": {
+      "gitBlob": "693e4a1b0ecc0adb0442e9568e4848d94298d4f2",
+      "bytes": 725,
+      "sha256": "0fcbb02e023eafae89323e31db6ea41d7e385126d1ca9031e127262149e09ec3"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/General/ScriptWidgetAttributeBackgroundModifier.swift": {
+      "gitBlob": "bd312d48c9a5870c361e9de059bc248e12837453",
+      "bytes": 5711,
+      "sha256": "f960547f57144faa6b7c607e80bc231a769076256e3376ec7beaa05f0435cd7e"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Image/ScriptWidgetAttributeImageModifier.swift": {
+      "gitBlob": "b52980894322169dc8b8390beec8a7c223e4747a",
+      "bytes": 1137,
+      "sha256": "e56758652d71ab08cec689c82320af4bea8612fc7417618a2a19702db165098d"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagButton.swift": {
+      "gitBlob": "4bb071766220ddf8b8017182eb9ac6ed6d50191e",
+      "bytes": 3326,
+      "sha256": "56cebddb8dd3177b2671b41812a7860bc45ce2d28d49edab3560bfb99d9f0dbf"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagChart.swift": {
+      "gitBlob": "1a3e4d93c0109edfa616f8af8ae95541efb0802e",
+      "bytes": 27457,
+      "sha256": "9b77de749cc363bcb7147375730313b9278ea4f10a375b7fd8e541bcfccf961f"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagGauge.swift": {
+      "gitBlob": "0b68e0188ca44b06863f7898c443efb9cd777949",
+      "bytes": 8351,
+      "sha256": "f6b9151db2099ee7e17a32155a6c96402144ed6a6c09929d6e0ce62fb65107d8"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagImage.swift": {
+      "gitBlob": "4f713dccc0c298f47041bbbfec7e6e361d7c899b",
+      "bytes": 13572,
+      "sha256": "d075f2e5e2776f859695160b1482fa99600589234aaf340ef03ae38b8fb5f0e3"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagToggle.swift": {
+      "gitBlob": "326f22e1604be7dbfb3d95f948878081f54753da",
+      "bytes": 2475,
+      "sha256": "3917c9cc44009b788c8ecbfe7096e3b49e9483d9fb8ad1b61778e2cc45f29027"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptMetadata.swift": {
+      "gitBlob": "15f63ae5fc77f48bed625c07964edd2aca9c68ea",
+      "bytes": 24769,
+      "sha256": "f1b202b4caef78877cad69700ff698350066066c12f7fcc5bf557810aa1234f9"
+    },
+    "Packages/HanlinPlatform/Tests/HanlinMiniAppCoreTests/HanlinMiniAppActionCompletionTests.swift": {
+      "gitBlob": "8253a3beb18efff6fc8df7d923be55ea27dcecd7",
+      "bytes": 1433,
+      "sha256": "9d38b90083c8d352f166a2f9a910e7047ffa8f9d55097df9557eaa83d8c3c931"
+    },
+    "Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/HanlinShortcutValueCodecTests.swift": {
+      "gitBlob": "2846c7135fca18e8c609c3df4352c1236026b523",
+      "bytes": 2294,
+      "sha256": "6659534680b3404010eefa45146a07aa3ae1cdf5d53273bfd3f756a2be5c2055"
+    },
+    "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift": {
+      "gitBlob": "c5790a6b2ce7ef0b6cbaffc160f7768a82d4def2",
+      "bytes": 54565,
+      "sha256": "686d302cc7a5cb3c365f884cadb4f41cec4ca7769ce9d089a55e4d5d3014ba58"
+    },
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinInvocationQueueTests.swift": {
+      "gitBlob": "357df717b03320b2ebb47c642970fe2b14e9ef0e",
+      "bytes": 25391,
+      "sha256": "23e451c2f4367a12b1a2f1a5cd94a23882ebd51535403b49450a1e213881f4a6"
+    },
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests.swift": {
+      "gitBlob": "940a9c0052fd35661bac950a2e46491991ae25f7",
+      "bytes": 15489,
+      "sha256": "6100a9d5412b22cf5542abcd1872e56f5ac6d23e996380947e896d77a97b3d91"
+    },
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinLiveActivityOperationQueueTests.swift": {
+      "gitBlob": "a40a7a6c46e01153e59c96b3918248e73917f2a9",
+      "bytes": 3993,
+      "sha256": "ef98466a38c9ac8798caa755309b8cfd1027dec2ee8a991ab3399d87f3923dce"
+    },
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests.swift": {
+      "gitBlob": "4ad3319c15cd1ca98a165b8e931dd5a8f0947a2d",
+      "bytes": 6764,
+      "sha256": "2f956189f3ee14b7dab4991ac9feb9a9e0b27e21fbf8ecf6fc9cb450ce241a1b"
+    },
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests.swift": {
+      "gitBlob": "680dc34151599ab61946a97926a46104dd2ed0c7",
+      "bytes": 10198,
+      "sha256": "258a9c3d7a27b5795f4f84bb4109863613faf49bc41ddc072e13d2f94b83c50b"
+    },
+    "Packages/HanlinWidgetSDK/Package.swift": {
+      "gitBlob": "81dbd88186acec8af49d09f1e4e5d9c352a6d488",
+      "bytes": 3891,
+      "sha256": "970610b13278a21fad358fa9c6f19b15789c6c7cb219fc2984f2aa92298502e6"
+    },
+    "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidget.swift": {
+      "gitBlob": "cee6fbd6abb49f4b07f161fb30105dc01c633fac",
+      "bytes": 7818,
+      "sha256": "e103056e846e54c6cde439b5eba5b193b8261ac25b081cbf93ddcc2d0ff7b3b7"
+    },
+    "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift": {
+      "gitBlob": "15efd4f895c0aa21caf2b57d0f4a1e043c83dadb",
+      "bytes": 4301,
+      "sha256": "01cc756189febdb6287eeb73c7c4349b8e211da95e49c4e23b42f6271a024cba"
+    },
+    "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift": {
+      "gitBlob": "1c34337f8ee63f3225a5a344be986c1292f316ff",
+      "bytes": 19768,
+      "sha256": "facb857818b43586c678573f296c2770725f4efcbf4f6f663a11817dd70eecdc"
+    },
+    "Scripts/CI/IntegrationValidation/project_graph.py": {
+      "gitBlob": "b55c8ad18015700b6b866657938219c67203ba49",
+      "bytes": 25273,
+      "sha256": "b55b15a969fb438d32f78db491e65ea51d755019d3f2d563e61e1cffe9f9afbd"
+    },
+    "Scripts/Expo/dependency-lock.json": {
+      "gitBlob": "dc939d165152f098e06f9950e90f227dda9c6ea2",
+      "bytes": 5375,
+      "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65"
+    },
+    "Scripts/MiniApps/Examples/expo-hello-world/App.tsx": {
+      "gitBlob": "baa9c7fd7d0f56f329168ab12f0454433340b605",
+      "bytes": 478,
+      "sha256": "e0ec9b33bbe972668b0be87b6f8263faff0977e5bfea7654334c7f7f68b95531"
+    },
+    "Scripts/MiniApps/Examples/expo-hello-world/README.md": {
+      "gitBlob": "5cb9936cfc9b853db8ccce471a75403e6fab5945",
+      "bytes": 831,
+      "sha256": "367e2b77ec0d06230ed8b7a3756cc5ef6bd2b4328c2405977e383f8ecc52b403"
+    },
+    "Scripts/MiniApps/Examples/expo-hello-world/hanlin.authoring.json": {
+      "gitBlob": "d8d0098be9b8d15ae32bf468f4317db710e1f565",
+      "bytes": 99,
+      "sha256": "23628daa17919961823da4ebc9a4166ab9e1d7a9b3ec2ff47fdc70d7b444bf94"
+    },
+    "Scripts/MiniApps/Examples/expo-hello-world/index.ts": {
+      "gitBlob": "effeb00373d4472e8c26dd3a9ccabd842b679142",
+      "bytes": 120,
+      "sha256": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19"
+    },
+    "Scripts/MiniApps/Examples/expo-hello-world/notification-event.ts": {
+      "gitBlob": "4e4d7211db7159b8d486b89a056a27493af857aa",
+      "bytes": 650,
+      "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de"
+    },
+    "Scripts/MiniApps/Examples/expo-hello-world/package.json": {
+      "gitBlob": "f67c7abba3c4d314ad591579bf6d5497a14d0971",
+      "bytes": 223,
+      "sha256": "ce6b14d9dd58a68d245000b2d9997086754acba6b3213087e9531b59701cd9bc"
+    },
+    "Scripts/MiniApps/Examples/expo-hello-world/script.json": {
+      "gitBlob": "e26674cd6d987644dd34450b74a9e9f021889411",
+      "bytes": 264,
+      "sha256": "308768a8274c3f58254c4f6daafa7b16a07f0c68dc519f17d3e5feae895dcafb"
+    },
+    "Scripts/MiniApps/Examples/expo-hello-world/tsconfig.json": {
+      "gitBlob": "9103acc6b1c856bf4d5592bb61484fa6981c668a",
+      "bytes": 82,
+      "sha256": "989df0a97a5ac05cb6b26df1d7f2d18896e2627da8ac72d4d35e66a60da84b19"
+    },
+    "Scripts/MiniApps/Examples/index.json": {
+      "gitBlob": "9ac63f986a65d2036cc9d3905ca214db845a89a9",
+      "bytes": 1001,
+      "sha256": "6eda46c41c3abdf43706f53299bf706a87c9eea731b5ef17cd59bef0a6b064e0"
+    },
+    "Scripts/MiniApps/Examples/nativescript-hello-world/README.md": {
+      "gitBlob": "4caf0838d133edb1e8401e5a65f345f759cb4fb0",
+      "bytes": 914,
+      "sha256": "aae06c1b3c963f8a6cf246ea52642d73f5e6ec237cfb19fc4737dd4072570e6a"
+    },
+    "Scripts/MiniApps/Examples/nativescript-hello-world/hanlin.authoring.json": {
+      "gitBlob": "821a6c61937b33d0572433a36cf5505d59ff1b79",
+      "bytes": 107,
+      "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094"
+    },
+    "Scripts/MiniApps/Examples/nativescript-hello-world/index.ts": {
+      "gitBlob": "c37bf5a59cd8b48092b142bdbb9ca2b099710bac",
+      "bytes": 991,
+      "sha256": "bfb34d9b7ac0f50488468a5cf8200d55cefbb9d0d345d080bb652323a1df9bf6"
+    },
+    "Scripts/MiniApps/Examples/nativescript-hello-world/notification-event.ts": {
+      "gitBlob": "4e4d7211db7159b8d486b89a056a27493af857aa",
+      "bytes": 650,
+      "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de"
+    },
+    "Scripts/MiniApps/Examples/nativescript-hello-world/package.json": {
+      "gitBlob": "e6ffb7f4602a5fd21fe5f0b798beb3769d91f1af",
+      "bytes": 225,
+      "sha256": "ab65e0e388ac19daf337b29965fd030e6196faf90cee439c786de9e1c3f49cb6"
+    },
+    "Scripts/MiniApps/Examples/nativescript-hello-world/script.json": {
+      "gitBlob": "07277ede1d1ae5a9dceeb962857dd04bd3dd909b",
+      "bytes": 320,
+      "sha256": "521f9d8332544a7858dca222d635cf8530e13d72cfb4e2e62d4196acc3a249cb"
+    },
+    "Scripts/MiniApps/Examples/nativescript-hello-world/tsconfig.json": {
+      "gitBlob": "fedc9d16175664eec9efe21e965bf873a93b1aa3",
+      "bytes": 67,
+      "sha256": "089155f616dd73ff0bebb1469f21fda41c51ad93c7b7db83d2745fa5e88ce0e5"
+    },
+    "Scripts/MiniApps/Examples/nativescript-image-drawing/README.md": {
+      "gitBlob": "2a89943d9576a4e66a84595623bc20ae6d3a9b13",
+      "bytes": 1684,
+      "sha256": "8ca0e337f0868d03629632b1d8fbe58132e242a68f26c387a26c5e5c29370448"
+    },
+    "Scripts/MiniApps/Examples/nativescript-image-drawing/drawing.ts": {
+      "gitBlob": "c3053e2d77d87cf0448e2007d505793827f10188",
+      "bytes": 4027,
+      "sha256": "0d6b26a7908444c8cab5e7e2e777e3d8b134e2dbf1075c52c9dea14e79a89a52"
+    },
+    "Scripts/MiniApps/Examples/nativescript-image-drawing/hanlin.authoring.json": {
+      "gitBlob": "821a6c61937b33d0572433a36cf5505d59ff1b79",
+      "bytes": 107,
+      "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094"
+    },
+    "Scripts/MiniApps/Examples/nativescript-image-drawing/index.ts": {
+      "gitBlob": "645e3d77591b16fff7d3cf29dd16e6a73d328aa1",
+      "bytes": 1912,
+      "sha256": "210384ff649d97f1c1cbe6e70093ad99c7438e6d4eef180b50190ddf92e22246"
+    },
+    "Scripts/MiniApps/Examples/nativescript-image-drawing/package.json": {
+      "gitBlob": "cf756351a81f6afd0770226b3dcb6a0d5a61fd5b",
+      "bytes": 227,
+      "sha256": "6b5cb639de493f2750a4974f4ed51a1dbdf1825b93b69137ed8e357841fe119d"
+    },
+    "Scripts/MiniApps/Examples/nativescript-image-drawing/script.json": {
+      "gitBlob": "56680ff959befe2b923434c36176b21a6f8e3e93",
+      "bytes": 340,
+      "sha256": "32038032f3bd0f085fb6c0de6647162f2afa1534ca31cbc0363e7cafb2d52773"
+    },
+    "Scripts/MiniApps/Examples/nativescript-image-drawing/tsconfig.json": {
+      "gitBlob": "fe71048ce47ba58d9ae2efb3eb8b20eb97e9afb5",
+      "bytes": 56,
+      "sha256": "e69f73e9b1a787fe882d0732dadde3dccd3277d44dbde3bf91948486ff3cdbb7"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-departure-budget/App.tsx": {
+      "gitBlob": "9f0d31c1161579ef4c1812dec1c565c9bbd6acae",
+      "bytes": 4556,
+      "sha256": "b2cdbefb1cdfc9c392294692e0c2d4aec7f79176505f3fd4714585716920e0f6"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-departure-budget/README.md": {
+      "gitBlob": "85f502d93e32beb8366ac8a6e85253c075dc22ae",
+      "bytes": 636,
+      "sha256": "2e14a982ddb34ee47eeba68605d938f580c0706333d58756544037f05a32f192"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-departure-budget/hanlin.authoring.json": {
+      "gitBlob": "d8d0098be9b8d15ae32bf468f4317db710e1f565",
+      "bytes": 99,
+      "sha256": "23628daa17919961823da4ebc9a4166ab9e1d7a9b3ec2ff47fdc70d7b444bf94"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-departure-budget/index.ts": {
+      "gitBlob": "effeb00373d4472e8c26dd3a9ccabd842b679142",
+      "bytes": 120,
+      "sha256": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-departure-budget/model.ts": {
+      "gitBlob": "1141751ad540e3cf77e193e2fc86a741d84cdd7f",
+      "bytes": 809,
+      "sha256": "b1b7c165ad8bce614aaf59657750eb508ce867f2e03dedf76119cf76270e05eb"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-departure-budget/package.json": {
+      "gitBlob": "a2ccd33776cc298417bb0eb3f821ea57e90199db",
+      "bytes": 223,
+      "sha256": "eaca3101f64376e4a2f23475839757d2215fc565b8be582d5e40e0542c89734b"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-departure-budget/script.json": {
+      "gitBlob": "15dd8359a50772c68b8f4d945a93f284f1274d75",
+      "bytes": 268,
+      "sha256": "fce829f1ede25e2a95377b3d270c36b974a342c61dd9d8038ae8682d26361a60"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-departure-budget/tsconfig.json": {
+      "gitBlob": "93d88f0a805307f88fac7b7cadabc4a93429fecc",
+      "bytes": 69,
+      "sha256": "48dc261d79c7417b5e10c2ab83bdce581d8be8f16b70e867789ae7b3f5c9eb59"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-table-share/README.md": {
+      "gitBlob": "a32f118aaf1118e8195cd35801a9612cae0a9bfe",
+      "bytes": 773,
+      "sha256": "2ca21af20c04538813dc2799b29d7b2e44525cd4c92b77ce985361b509a6951f"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-table-share/hanlin.authoring.json": {
+      "gitBlob": "821a6c61937b33d0572433a36cf5505d59ff1b79",
+      "bytes": 107,
+      "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-table-share/index.ts": {
+      "gitBlob": "610035cd98042a56dac1a90f76aa61df40098f4c",
+      "bytes": 4782,
+      "sha256": "afbfe5116695db1f0a2641a19e474493c3559f5c9f6e470bf0b72d500c9c461c"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-table-share/model.ts": {
+      "gitBlob": "1b0bbbef3efd70cf51b644c989bb31633c106447",
+      "bytes": 1491,
+      "sha256": "f9fbaa39afdd00df325ada8177d0bb8213557672a9af7c54fc98936f00d95e9e"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-table-share/package.json": {
+      "gitBlob": "3de6d69f5191c1035fa19648c1a2b692a6480991",
+      "bytes": 212,
+      "sha256": "1341e9a334dcd928fcdee84456d6069e5476a54440395e1bf1732c271836bccb"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-table-share/script.json": {
+      "gitBlob": "b0c259801c32dbcf3e73246129a6b28b8f49d180",
+      "bytes": 306,
+      "sha256": "1cd5129c60227b1ab53e2752e27b3acc29b73d8161de9495d46b2470393653f1"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-table-share/tsconfig.json": {
+      "gitBlob": "6d7977fbd2a73ce7986ef5bcb7b9a225faaaac17",
+      "bytes": 54,
+      "sha256": "b70b632b881af38c566610fa375116ee8172fc20ed495f58b0d0261f0226ac0f"
+    },
+    "Scripts/MiniApps/generate-scriptwidget-service-types.mjs": {
+      "gitBlob": "28dfae8dfe4bb1badfe0c3154f19156d20dec49a",
+      "bytes": 14586,
+      "sha256": "b964f54c355f4ac37f45a4e9a96c5308b8677f451a3217e83be20925f95acf6d"
+    },
+    "Scripts/MiniApps/native-presentations.d.ts": {
+      "gitBlob": "93d9fb768b70e3b3dd990d90980aaa39246aa00b",
+      "bytes": 6577,
+      "sha256": "815624960e98b6f1c53754f5b5ebaebcdb9addf80a4162e4bfd42c6649917e82"
+    },
+    "Scripts/MiniApps/scriptwidget/components.d.ts": {
+      "gitBlob": "da341551b8e60ff9e8bbcc42c6f277e7c64ad595",
+      "bytes": 5240,
+      "sha256": "6a58b4510a4f6ed0b4fb35ced943f25d9748bcd4d9f290af021ee4cad3263651"
+    },
+    "Scripts/MiniApps/scriptwidget/host-globals.d.ts": {
+      "gitBlob": "357e2a8801701cd7a9673c147c16f4b451075bed",
+      "bytes": 2528,
+      "sha256": "603148dada2fd81794f8bd2953e6da8aa3f4aaf8bed1176d50435c31b1136c7a"
+    },
+    "Scripts/MiniApps/scriptwidget/original-api.d.ts": {
+      "gitBlob": "fb1805eace0ae57e3f32d68ff27bb47c50c62f60",
+      "bytes": 21160,
+      "sha256": "a934caa95793a2411f7504c38663b08ae3f92b6588c39dc97f95fdbbcb19a03d"
+    },
+    "Scripts/MiniApps/scriptwidget/service-shapes.mjs": {
+      "gitBlob": "3b5a426176d7c9d579c7fcb69a8ce5fb58e0c3d5",
+      "bytes": 3988,
+      "sha256": "eed9da2be6229161f5781c29ee47c2535383b36bfa1c09556a67008ea073a57d"
+    },
+    "Scripts/MiniApps/scriptwidget/service-types.d.ts": {
+      "gitBlob": "3ab3ff7848240f561f0a87d94a7d4886b8e1b579",
+      "bytes": 6885,
+      "sha256": "3707e0789f902ca0f6d73a441bfc198a83860f6be8e2675ce7cb38eca2ec6c02"
+    },
+    "Scripts/MiniApps/scriptwidget/widget-manifest.d.ts": {
+      "gitBlob": "8059edc4a9617fb8e4177954e66b4aac02efb3f6",
+      "bytes": 2052,
+      "sha256": "6d9d086bb8d8289390f5b3454b17a435aea0f148724f897c9befb62bf31d5e8f"
+    },
+    "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json": {
+      "gitBlob": "579e27a36a70dcb8ec082df0dbc19079d78c6847",
+      "bytes": 13230,
+      "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2"
+    },
+    "Scripts/MiniApps/upstream-resolution.json": {
+      "gitBlob": "6a9440bd9ceb0d531da6210b08df08e53b5c7fbe",
+      "bytes": 15092,
+      "sha256": "a2491cd97db234c8a88e9e21b34538862a76c5e28f13b17678c4e8870968e1ad"
+    },
+    "Scripts/NativeScript/host-services.ts": {
+      "gitBlob": "2a903c8b09f23539fac3c2afa7ec0dd027ce01c7",
+      "bytes": 10514,
+      "sha256": "2c57e67d57ec7d77cfcfce39e2448497e3f998bdfbb39eacc7013ace0759936d"
+    },
+    "Scripts/NativeScript/package-lock.json": {
+      "gitBlob": "f9650197589599783843b63c93ccad4b7b42e3d6",
+      "bytes": 111524,
+      "sha256": "fccc5039c760759c5a5751b2056300cd23204f897e5d1ce26408c4a108e4de78"
+    },
+    "Scripts/NativeScript/package.json": {
+      "gitBlob": "aba15c8760c59aa95e438620612d36df11f267dc",
+      "bytes": 851,
+      "sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b"
+    },
+    "Scripts/ProductSplit/extension_inventory.py": {
+      "gitBlob": "c9d999f03373778da87bf19f28df5ca5428f2426",
+      "bytes": 4263,
+      "sha256": "969011d17099fada7c7010528579ec8b3a256b8c7bb25fcfd609789e800068a8"
+    },
+    "Scripts/ProductSplit/miniapps_extensions.py": {
+      "gitBlob": "63c48092ca2792b7a68180466115c59c52e83371",
+      "bytes": 8789,
+      "sha256": "c1221938e89b5a4d3ae944c2678046dcf022d24c5693c11ab5d39f2660004a9b"
+    },
+    "Scripts/SDK/update_project.py": {
+      "gitBlob": "80e5ecfa8fae6ab90a2e332d327b7fcce55df29b",
+      "bytes": 28460,
+      "sha256": "b1df865c3e7f9a58822552902fa9cdfce4a0082069d7377bec7cbcfd986efcd6"
+    },
+    "docs/miniapp-sdk/extension-reachability.json": {
+      "gitBlob": "1166d1960fa8f7bfcc83f255e55e0b1382148762",
+      "bytes": 213318,
+      "sha256": "e10d24062fd7e96e712224733122c555d2bf578468e954f5b53c6aba90e821f2"
+    },
+    "docs/miniapp-sdk/source-inventory.json": {
+      "gitBlob": "08b91b010f29fd1724a7abddfbab315399915266",
+      "bytes": 569313,
+      "sha256": "6eff7cc0c77a44660a839d226a165cb18fba9b12ecf31b20bbd79afce9c11a2a"
+    }
+  },
+  "groups": {
+    "S01": {
+      "label": "Standalone Shortcuts and public typed input/progress",
+      "paths": [
+        "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift",
+        "Packages/HanlinExpoUI/src/host-services.ts",
+        "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinShortcutProgress.swift",
+        "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinShortcutValueCodec.swift",
+        "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift",
+        "Scripts/NativeScript/host-services.ts"
+      ]
+    },
+    "S02": {
+      "label": "Original engine execution, cancellation, window ownership and generation admission",
+      "paths": [
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+        "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowSession.swift",
+        "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppActionCompletion.swift"
+      ]
+    },
+    "S03": {
+      "label": "Original Expo and ScriptWidget widgets, families, controls and manifests",
+      "paths": [
+        "Packages/HanlinExpoUI/src/system-surfaces.ts",
+        "Packages/HanlinExpoUI/src/widget-types.ts",
+        "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinWidgetProgram.swift",
+        "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ExpoWidgets/HanlinExpoWidgetsViewRenderer.swift",
+        "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagButton.swift",
+        "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagChart.swift",
+        "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagGauge.swift",
+        "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagToggle.swift",
+        "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptMetadata.swift",
+        "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidget.swift",
+        "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "Scripts/MiniApps/native-presentations.d.ts",
+        "Scripts/MiniApps/scriptwidget/components.d.ts",
+        "Scripts/MiniApps/scriptwidget/host-globals.d.ts",
+        "Scripts/MiniApps/scriptwidget/original-api.d.ts",
+        "Scripts/MiniApps/scriptwidget/widget-manifest.d.ts",
+        "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json"
+      ]
+    },
+    "S04": {
+      "label": "System container background and accessibility-aware authored material",
+      "paths": [
+        "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/General/ScriptWidgetAttributeBackgroundModifier.swift",
+        "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidget.swift",
+        "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift"
+      ]
+    },
+    "S05": {
+      "label": "Last successful prepared widget render with identity validation",
+      "paths": [
+        "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionContracts.swift",
+        "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetInstance.swift",
+        "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetLastSuccessfulRender.swift"
+      ]
+    },
+    "S06": {
+      "label": "Live Activities and Dynamic Island through the original renderers",
+      "paths": [
+        "Packages/HanlinExpoUI/src/system-surfaces.ts",
+        "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinLiveActivityOperationQueue.swift",
+        "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptWidgetLiveActivity.swift"
+      ]
+    },
+    "S07": {
+      "label": "Standalone Developer Studio, library, drafts and coordinated workspace",
+      "paths": [
+        "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
+        "HanlinMiniAppsApp/MiniAppsDeveloperStudio.swift",
+        "HanlinMiniAppsApp/MiniAppsDeveloperWorkspace.swift",
+        "HanlinMiniAppsApp/MiniAppsLibrary.swift",
+        "HanlinMiniAppsApp/MiniAppsServices.swift",
+        "HanlinMiniAppsApp/MiniAppsStudioDraft.swift",
+        "HanlinMiniAppsApp/MiniAppsStudioProject.swift"
+      ]
+    },
+    "S08": {
+      "label": "Canonical authoring service, real TypeScript editor and gallery",
+      "paths": [
+        "AI_HLY/Downstream/RuntimeCore/Core/MiniAppAuthoringService.swift",
+        "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+        "Scripts/MiniApps/Examples/expo-hello-world/App.tsx",
+        "Scripts/MiniApps/Examples/expo-hello-world/README.md",
+        "Scripts/MiniApps/Examples/expo-hello-world/hanlin.authoring.json",
+        "Scripts/MiniApps/Examples/expo-hello-world/index.ts",
+        "Scripts/MiniApps/Examples/expo-hello-world/notification-event.ts",
+        "Scripts/MiniApps/Examples/expo-hello-world/package.json",
+        "Scripts/MiniApps/Examples/expo-hello-world/script.json",
+        "Scripts/MiniApps/Examples/expo-hello-world/tsconfig.json",
+        "Scripts/MiniApps/Examples/index.json",
+        "Scripts/MiniApps/Examples/nativescript-hello-world/README.md",
+        "Scripts/MiniApps/Examples/nativescript-hello-world/hanlin.authoring.json",
+        "Scripts/MiniApps/Examples/nativescript-hello-world/index.ts",
+        "Scripts/MiniApps/Examples/nativescript-hello-world/notification-event.ts",
+        "Scripts/MiniApps/Examples/nativescript-hello-world/package.json",
+        "Scripts/MiniApps/Examples/nativescript-hello-world/script.json",
+        "Scripts/MiniApps/Examples/nativescript-hello-world/tsconfig.json",
+        "Scripts/MiniApps/Examples/nativescript-image-drawing/README.md",
+        "Scripts/MiniApps/Examples/nativescript-image-drawing/drawing.ts",
+        "Scripts/MiniApps/Examples/nativescript-image-drawing/hanlin.authoring.json",
+        "Scripts/MiniApps/Examples/nativescript-image-drawing/index.ts",
+        "Scripts/MiniApps/Examples/nativescript-image-drawing/package.json",
+        "Scripts/MiniApps/Examples/nativescript-image-drawing/script.json",
+        "Scripts/MiniApps/Examples/nativescript-image-drawing/tsconfig.json",
+        "Scripts/MiniApps/Examples/sdk-only-departure-budget/App.tsx",
+        "Scripts/MiniApps/Examples/sdk-only-departure-budget/README.md",
+        "Scripts/MiniApps/Examples/sdk-only-departure-budget/hanlin.authoring.json",
+        "Scripts/MiniApps/Examples/sdk-only-departure-budget/index.ts",
+        "Scripts/MiniApps/Examples/sdk-only-departure-budget/model.ts",
+        "Scripts/MiniApps/Examples/sdk-only-departure-budget/package.json",
+        "Scripts/MiniApps/Examples/sdk-only-departure-budget/script.json",
+        "Scripts/MiniApps/Examples/sdk-only-departure-budget/tsconfig.json",
+        "Scripts/MiniApps/Examples/sdk-only-table-share/README.md",
+        "Scripts/MiniApps/Examples/sdk-only-table-share/hanlin.authoring.json",
+        "Scripts/MiniApps/Examples/sdk-only-table-share/index.ts",
+        "Scripts/MiniApps/Examples/sdk-only-table-share/model.ts",
+        "Scripts/MiniApps/Examples/sdk-only-table-share/package.json",
+        "Scripts/MiniApps/Examples/sdk-only-table-share/script.json",
+        "Scripts/MiniApps/Examples/sdk-only-table-share/tsconfig.json"
+      ]
+    },
+    "S09": {
+      "label": "Original image rendering and NativeScript UIKit drawing example",
+      "paths": [
+        "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Effect/ScriptWidgetAttributeRotationEffectModifier.swift",
+        "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Image/ScriptWidgetAttributeImageModifier.swift",
+        "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagImage.swift",
+        "Scripts/MiniApps/Examples/nativescript-image-drawing/drawing.ts",
+        "Scripts/MiniApps/Examples/nativescript-image-drawing/index.ts"
+      ]
+    },
+    "S10": {
+      "label": "MiniApps-only system publication with shared extension SDK",
+      "paths": [
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureInbox.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemCatalog.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift",
+        "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.entitlements",
+        "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift",
+        "HanlinMiniAppsExtensions/CameraCapture/Info.plist",
+        "HanlinMiniAppsExtensions/Keyboard/HanlinMiniAppsKeyboard.entitlements",
+        "HanlinMiniAppsExtensions/Keyboard/HanlinMiniAppsKeyboard.swift",
+        "HanlinMiniAppsExtensions/Keyboard/Info.plist",
+        "HanlinMiniAppsExtensions/NotificationContent/HanlinMiniAppsNotificationContent.entitlements",
+        "HanlinMiniAppsExtensions/NotificationContent/HanlinMiniAppsNotificationContent.swift",
+        "HanlinMiniAppsExtensions/NotificationContent/Info.plist",
+        "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureContracts.swift",
+        "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureIntent.swift",
+        "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureView.swift",
+        "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraPreviewSource.swift",
+        "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraService.swift",
+        "Packages/HanlinAppExtensionsSDK/Sources/HanlinKeyboardUI/HanlinKeyboardInputViewController.swift",
+        "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationContentUI/HanlinNotificationContentViewController.swift"
+      ]
+    },
+    "S11": {
+      "label": "Unbound generic system broker versus separate original public service APIs",
+      "paths": [
+        "AI_HLY/Downstream/HostServices/System/HanlinSystemServicesBroker.swift",
+        "Scripts/MiniApps/generate-scriptwidget-service-types.mjs",
+        "Scripts/MiniApps/scriptwidget/service-shapes.mjs",
+        "Scripts/MiniApps/scriptwidget/service-types.d.ts"
+      ]
+    },
+    "S12": {
+      "label": "Canonical dependency, target, generation and reachability authorities",
+      "paths": [
+        "Packages/HanlinAppExtensionsSDK/Package.swift",
+        "Packages/HanlinPlatform/Package.swift",
+        "Packages/HanlinWidgetSDK/Package.swift",
+        "Scripts/CI/IntegrationValidation/project_graph.py",
+        "Scripts/Expo/dependency-lock.json",
+        "Scripts/MiniApps/upstream-resolution.json",
+        "Scripts/NativeScript/package-lock.json",
+        "Scripts/NativeScript/package.json",
+        "Scripts/ProductSplit/extension_inventory.py",
+        "Scripts/ProductSplit/miniapps_extensions.py",
+        "Scripts/SDK/update_project.py",
+        "docs/miniapp-sdk/extension-reachability.json",
+        "docs/miniapp-sdk/source-inventory.json"
+      ]
+    }
+  },
+  "addedDirectImplementationAndOwnerPaths": [
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetState.swift",
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinWidgetToggle.swift",
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/ViewRenderer.swift",
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetsJSRuntime.swift",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/ViewRenderer.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationExecutor.swift",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinInvocationQueueTests.swift",
+    "HanlinMiniAppsTests/MiniAppsShortcutIntentTests.swift",
+    "HanlinMiniAppsApp/HanlinMiniApps.entitlements",
+    "HanlinMiniAppsApp/Info.plist"
+  ],
+  "changedMappedFilesSinceMappingBaseline": [
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift",
+    "HanlinMiniAppsApp/MiniAppsDeveloperStudio.swift",
+    "HanlinMiniAppsApp/MiniAppsDeveloperWorkspace.swift",
+    "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift",
+    "HanlinMiniAppsTests/MiniAppsDeveloperWorkspaceTests.swift",
+    "HanlinMiniAppsTests/NativeScriptShortcutConcurrencyTests.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetLastSuccessfulRender.swift",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests.swift",
+    "docs/miniapp-sdk/extension-reachability.json",
+    "docs/miniapp-sdk/source-inventory.json"
+  ],
+  "qualification": "Exact source binding for this review, not a full transitive native input closure or executed acceptance receipt."
+}

@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "startedAtUTC": "2026-11-27T17:09:29.762943+00:00",
+  "finishedAtUTC": "2026-11-27T17:09:29.982240+00:00",
+  "elapsedSeconds": 0.21928467508405447,
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "-v",
+    "Scripts.CI.Tests.test_affected_validation.AffectedValidationPlannerTests.test_original_source_fixture_helper_selects_its_existing_consumers"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-original-source-fixture-routing-20261127",
+  "exitCode": 0,
+  "stderrSHA256": "ed8baa3b3df28e55903e416fbba0622415c7bec78d7cbd7932f30cf2d17fb533",
+  "reason": "Final new ownership assertion matches actual owner-to-reason dictionary including original directly-modified prefix. Both earlier assertion-shape failures retained; source route unchanged."
+}

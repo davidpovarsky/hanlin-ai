@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "scope": "Navigation semantics only; actual AX identifiers and frames come from the two retained own-case artifacts.",
+  "sources": [
+    {
+      "url": "https://support.apple.com/en-ie/guide/ipad/ipad9d0fc0d4/27/ipados/27",
+      "title": "Find and use your apps in App Library on iPad",
+      "retrieval": "Official Apple page text returned by search; direct open returned HTTP 429 and was not retried.",
+      "supports": "App Library is reached by swiping left beyond the Home pages. Its categories can include apps removed from Home. The candidate does not move apps or change page visibility."
+    },
+    {
+      "url": "https://support.apple.com/en-euro/guide/ipad/ipad997d9e62/27/ipados/27",
+      "title": "Open an app on iPad",
+      "retrieval": "Official Apple page opened successfully.",
+      "supports": "Left/right swipes browse actual Home pages."
+    },
+    {
+      "url": "https://support.apple.com/en-tm/guide/ipad/ipadf6ea1ce5/27/ipados/27",
+      "title": "Move apps and widgets on the iPad Home Screen",
+      "retrieval": "Official Apple page text returned by search.",
+      "supports": "The page dots represent the available pages and selected page."
+    }
+  ],
+  "limits": "No Apple documentation is asserted to specify these private implementation AX identifier strings. They are observed identifiers queried through public XCTest element APIs, not private APIs; fresh native acceptance remains required."
+}

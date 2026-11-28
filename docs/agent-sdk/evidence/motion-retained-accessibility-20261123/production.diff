@@ -1,0 +1,13 @@
+diff --git a/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift b/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift
+index 4eae8887..71d26dd3 100644
+--- a/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift
++++ b/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift
+@@ -45,6 +45,8 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
+         ChatDisclosureLayout(progress: progress, spacing: spacing) {
+             if mounted {
+                 VStack(alignment: .leading, spacing: 6, content: content)
++                    .accessibilityElement(children: isExpanded ? .contain : .ignore)
++                    .accessibilityHidden(!isExpanded)
+                     .transition(.identity)
+             }
+         }

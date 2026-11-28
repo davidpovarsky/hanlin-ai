@@ -1,0 +1,13 @@
+{
+  "source_hashes": {
+    "AI_HLY/Downstream/ChatInput/HanlinComposerPopupCoordinator.swift": "be66d1f0970ea1d12b1d307090378628e7060a68a9eb7da1270f2160f005c5c6",
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinOrganizerDockState.swift": "71ab11538c1711ef9250367ea338a5e08aecc12a82ea08e1a8dea9afeadc4859",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinMorphComposer.swift": "e85600200c553e54e65c88d9d59149ff8b92e962b64c58c393e285c406d8b306",
+    "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/HanlinDesignCatalog.swift": "da560f3d5dc81e69bbe3a8ba5c35dbc3a181243d7ee302386880b3722770f100"
+  },
+  "validation": "Portable domain logic only; SwiftUI transaction/binding stand-ins, no Apple UI/runtime verification",
+  "compile_returncode": 0,
+  "compile_output": "   Creating library C:\\Users\\DAVID\\AppData\\Local\\Temp\\hanlin-composer-check-20261122\\ComposerChecks.lib and object C:\\Users\\DAVID\\AppData\\Local\\Temp\\hanlin-composer-check-20261122\\ComposerChecks.exp\n\n",
+  "run_returncode": 0,
+  "output": "COMPOSER_PORTABLE_DOMAIN_PASS checks=148\n"
+}

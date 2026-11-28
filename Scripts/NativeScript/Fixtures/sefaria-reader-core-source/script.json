@@ -1,0 +1,10 @@
+{
+  "name": "Sefaria Library & Texts (Core)",
+  "version": "1.0.0-core-test",
+  "description": "אותה מיני-אפליקציית Sefaria, בנויה דרך @nativescript/core לצורך השוואה מול גרסת UIKit הישירה.",
+  "entry": "nativescript/app/bundle.mjs",
+  "runInApp": true,
+  "hanlinRuntime": "hanlin-nativescript",
+  "icon": "books.vertical.fill",
+  "color": "#1E3A8A"
+}

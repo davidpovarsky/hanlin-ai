@@ -1,0 +1,162 @@
+{
+  "observedAtUTC": "2026-11-27T05:16:04.794835+00:00",
+  "recoveryRuns": [
+    {
+      "id": 45942938352,
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "created_at": "2026-11-27T04:57:46Z",
+      "status": "in_progress",
+      "conclusion": null,
+      "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45942938352"
+    },
+    {
+      "id": 45942933110,
+      "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "created_at": "2026-11-27T04:57:42Z",
+      "status": "completed",
+      "conclusion": "failure",
+      "path": ".github/workflows/validate-app-split.yml",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45942933110"
+    }
+  ],
+  "original90": {
+    "job": 140311440445,
+    "log": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-ci-readback-20261127-0516/original90-app-build.log",
+    "bytes": 23281498,
+    "sha256": "b15a8de8d0e74ba7c3102f722e2227e18ed9564462db38dd1ea05bc6eb14940e",
+    "errorMatches": 20,
+    "diagnostics": [
+      {
+        "line": 419,
+        "text": "2026-11-27T04:26:38.4900410Z \u001b[36;1msim_major=\"$(echo \"$(xcrun --sdk iphonesimulator --show-sdk-version)\" | cut -d. -f1)\"\u001b[0m\n2026-11-27T04:26:38.4900980Z \u001b[36;1mif [ -n \"$xcode_major\" ] && [ \"$xcode_major\" -lt 27 ]; then\u001b[0m\n2026-11-27T04:26:38.4901590Z \u001b[36;1m  echo \"ERROR: Xcode major version ($xcode_major) is less than 27. iOS 27 builds require Xcode 27+.\" >&2\u001b[0m\n2026-11-27T04:26:38.4902100Z \u001b[36;1m  exit 1\u001b[0m\n2026-11-27T04:26:38.4902790Z \u001b[36;1mfi\u001b[0m\n2026-11-27T04:26:38.4903060Z \u001b[36;1mif [ -n \"$sim_major\" ] && [ \"$sim_major\" -lt 27 ]; then\u001b[0m"
+      },
+      {
+        "line": 423,
+        "text": "2026-11-27T04:26:38.4902790Z \u001b[36;1mfi\u001b[0m\n2026-11-27T04:26:38.4903060Z \u001b[36;1mif [ -n \"$sim_major\" ] && [ \"$sim_major\" -lt 27 ]; then\u001b[0m\n2026-11-27T04:26:38.4903760Z \u001b[36;1m  echo \"ERROR: Simulator SDK major version ($sim_major) is less than 27. iOS 27 builds require iOS SDK 27+.\" >&2\u001b[0m\n2026-11-27T04:26:38.4904220Z \u001b[36;1m  exit 1\u001b[0m\n2026-11-27T04:26:38.4904530Z \u001b[36;1mfi\u001b[0m\n2026-11-27T04:26:38.4968700Z shell: /bin/bash -e {0}"
+      },
+      {
+        "line": 32489,
+        "text": "2026-11-27T04:51:36.3137420Z Path: <DVTFilePath:0x755c8eebe0:'/Users/runner/work/hanlin-ai/hanlin-ai/build/miniapp-upstreams/expo-native-source/node_modules/expo-modules-jsi/apple/.swiftpm/xcode'> \n2026-11-27T04:51:36.3138400Z Dt: <DVTDeclaredPrimitiveFileDataType:0x754fc0dc80:37:'public.folder':'Folder'> \n2026-11-27T04:51:36.3139110Z   0   +[IDEContainerCore retainedContainerCoreAtFilePath:ofType:error:] (in IDEFoundation)\n2026-11-27T04:51:36.3139930Z   1   +[IDEContainer _retainedContainerAtFilePath:fileDataType:workspace:options:error:] (in IDEFoundation)\n2026-11-27T04:51:36.3140650Z   2   -[IDEFileReference _recalculateReferencedContainer] (in IDEFoundation)\n2026-11-27T04:51:36.3141230Z   3   -[IDEFileReference referencedContainer] (in IDEFoundation)"
+      },
+      {
+        "line": 32490,
+        "text": "2026-11-27T04:51:36.3138400Z Dt: <DVTDeclaredPrimitiveFileDataType:0x754fc0dc80:37:'public.folder':'Folder'> \n2026-11-27T04:51:36.3139110Z   0   +[IDEContainerCore retainedContainerCoreAtFilePath:ofType:error:] (in IDEFoundation)\n2026-11-27T04:51:36.3139930Z   1   +[IDEContainer _retainedContainerAtFilePath:fileDataType:workspace:options:error:] (in IDEFoundation)\n2026-11-27T04:51:36.3140650Z   2   -[IDEFileReference _recalculateReferencedContainer] (in IDEFoundation)\n2026-11-27T04:51:36.3141230Z   3   -[IDEFileReference referencedContainer] (in IDEFoundation)\n2026-11-27T04:51:36.3141850Z   4   __38-[IDEWorkspace _setupContainerQueries]_block_invoke (in IDEFoundation)"
+      },
+      {
+        "line": 32521,
+        "text": "2026-11-27T04:51:36.3160940Z  30   _CFRunLoopRunSpecificWithOptions (in CoreFoundation)\n2026-11-27T04:51:36.3161450Z  31   CFRunLoopRun (in CoreFoundation)\n2026-11-27T04:51:36.3162260Z  32   -[Xcode3CommandLineBuildTool waitForBuildWithBuildLog:buildActionTimingSection:executionEnvironment:title:operationToEnqueue:error:] (in Xcode3Core)\n2026-11-27T04:51:36.3163290Z  33   -[Xcode3CommandLineBuildTool doBuildForBuildAction:timingSection:colorize:colorizeFailure:error:] (in Xcode3Core)\n2026-11-27T04:51:36.3164040Z  34   -[Xcode3CommandLineBuildTool _buildWithTimingSection:] (in Xcode3Core)\n2026-11-27T04:51:36.3164600Z  35   -[Xcode3CommandLineBuildTool run] (in Xcode3Core)"
+      },
+      {
+        "line": 32522,
+        "text": "2026-11-27T04:51:36.3161450Z  31   CFRunLoopRun (in CoreFoundation)\n2026-11-27T04:51:36.3162260Z  32   -[Xcode3CommandLineBuildTool waitForBuildWithBuildLog:buildActionTimingSection:executionEnvironment:title:operationToEnqueue:error:] (in Xcode3Core)\n2026-11-27T04:51:36.3163290Z  33   -[Xcode3CommandLineBuildTool doBuildForBuildAction:timingSection:colorize:colorizeFailure:error:] (in Xcode3Core)\n2026-11-27T04:51:36.3164040Z  34   -[Xcode3CommandLineBuildTool _buildWithTimingSection:] (in Xcode3Core)\n2026-11-27T04:51:36.3164600Z  35   -[Xcode3CommandLineBuildTool run] (in Xcode3Core)\n2026-11-27T04:51:36.3165160Z  36   XcodeBuildMain (in libxcodebuildLoader.dylib)"
+      },
+      {
+        "line": 32532,
+        "text": "2026-11-27T04:51:36.3212080Z )\n2026-11-27T04:51:36.3212400Z Object:   <IDEContainerCore>\n2026-11-27T04:51:36.3212870Z Method:   +retainedContainerCoreAtFilePath:ofType:error:\n2026-11-27T04:51:36.3213410Z Thread:   <_NSMainThread: 0x100db8d90>{number = 1, name = main}\n2026-11-27T04:51:36.3214250Z Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.\n2026-11-27T04:51:36.3315210Z 2026-11-27 04:51:36.330 xcodebuild[80332:198259] [MT] IDEFileReferenceDebug: [Load] <IDEFolderFileReference, 0x75449235c0: name:xcode path:group:xcode> Failed to load container at path: /Users/runner/work/hanlin-ai/hanlin-ai/build/miniapp-upstreams/expo-native-source/node_modules/expo-modules-jsi/apple/.swiftpm/xcode, Error: Error Domain=com.apple.DVTKit.generic Code=-1 \"The project \u201cxcode\u201d does not contain a project definition file.\" UserInfo={PBXIsMissingProjectFileError=true, NSLocalizedDescription=The project \u201cxcode\u201d does not contain a project definition file., NSLocalizedRecoverySuggestion=One of \u201cxcode/project.xcproj\u201d or \u201cxcode/project.pbxproj\u201d should exist."
+      },
+      {
+        "line": 32535,
+        "text": "2026-11-27T04:51:36.3213410Z Thread:   <_NSMainThread: 0x100db8d90>{number = 1, name = main}\n2026-11-27T04:51:36.3214250Z Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.\n2026-11-27T04:51:36.3315210Z 2026-11-27 04:51:36.330 xcodebuild[80332:198259] [MT] IDEFileReferenceDebug: [Load] <IDEFolderFileReference, 0x75449235c0: name:xcode path:group:xcode> Failed to load container at path: /Users/runner/work/hanlin-ai/hanlin-ai/build/miniapp-upstreams/expo-native-source/node_modules/expo-modules-jsi/apple/.swiftpm/xcode, Error: Error Domain=com.apple.DVTKit.generic Code=-1 \"The project \u201cxcode\u201d does not contain a project definition file.\" UserInfo={PBXIsMissingProjectFileError=true, NSLocalizedDescription=The project \u201cxcode\u201d does not contain a project definition file., NSLocalizedRecoverySuggestion=One of \u201cxcode/project.xcproj\u201d or \u201cxcode/project.pbxproj\u201d should exist.\n2026-11-27T04:51:36.3317890Z \n2026-11-27T04:51:36.3318210Z If possible, restore one of the files from version control.}\n2026-11-27T04:51:44.2383920Z "
+      },
+      {
+        "line": 46111,
+        "text": "2026-11-27T04:57:41.2835630Z 136 |         }\n2026-11-27T04:57:41.2937000Z 137 |     }\n2026-11-27T04:57:41.2967320Z 138 |     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {\n2026-11-27T04:57:41.3073430Z     |          |- note: main actor-isolated instance method 'locationManager(_:didFailWithError:)' cannot satisfy nonisolated requirement\n2026-11-27T04:57:41.3096950Z     |          `- note: mark instance method 'locationManager(_:didFailWithError:)' 'nonisolated'\n2026-11-27T04:57:41.3187560Z 139 |         status = error.localizedDescription"
+      },
+      {
+        "line": 46112,
+        "text": "2026-11-27T04:57:41.2937000Z 137 |     }\n2026-11-27T04:57:41.2967320Z 138 |     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {\n2026-11-27T04:57:41.3073430Z     |          |- note: main actor-isolated instance method 'locationManager(_:didFailWithError:)' cannot satisfy nonisolated requirement\n2026-11-27T04:57:41.3096950Z     |          `- note: mark instance method 'locationManager(_:didFailWithError:)' 'nonisolated'\n2026-11-27T04:57:41.3187560Z 139 |         status = error.localizedDescription\n2026-11-27T04:57:41.3189830Z 140 |     }"
+      },
+      {
+        "line": 46113,
+        "text": "2026-11-27T04:57:41.2967320Z 138 |     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {\n2026-11-27T04:57:41.3073430Z     |          |- note: main actor-isolated instance method 'locationManager(_:didFailWithError:)' cannot satisfy nonisolated requirement\n2026-11-27T04:57:41.3096950Z     |          `- note: mark instance method 'locationManager(_:didFailWithError:)' 'nonisolated'\n2026-11-27T04:57:41.3187560Z 139 |         status = error.localizedDescription\n2026-11-27T04:57:41.3189830Z 140 |     }\n2026-11-27T04:57:41.3190250Z "
+      },
+      {
+        "line": 136572,
+        "text": "2026-11-27T05:03:24.9019450Z     |                                    `- warning: string interpolation produces a debug description for an optional value; did you mean to make this explicit?\n2026-11-27T05:03:24.9020280Z 135 |                     - Output: \\(probe.stdout.isEmpty ? \"(none)\" : probe.stdout)\n2026-11-27T05:03:24.9021140Z 136 |                     - Error: \\(probe.stderr.isEmpty ? \"(none)\" : probe.stderr)\n2026-11-27T05:03:24.9021480Z \n2026-11-27T05:03:24.9022730Z /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/RuntimeCore/Tools/ManageRuntimePackagesTool.swift:212:36: warning: string interpolation produces a debug description for an optional value; did you mean to make this explicit?\n2026-11-27T05:03:24.9025540Z 210 |                     Probe result for Node package '\\(record.name)':"
+      },
+      {
+        "line": 136583,
+        "text": "2026-11-27T05:03:24.9030050Z     |                                    `- warning: string interpolation produces a debug description for an optional value; did you mean to make this explicit?\n2026-11-27T05:03:24.9031430Z 213 |                     - Output: \\(probe.stdout.isEmpty ? \"(none)\" : probe.stdout)\n2026-11-27T05:03:24.9032550Z 214 |                     - Error: \\(probe.stderr.isEmpty ? \"(none)\" : probe.stderr)\n2026-11-27T05:03:24.9032900Z \n2026-11-27T05:03:24.9033890Z /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/RuntimeCore/UI/RuntimeCenterView.swift:41:72: warning: string interpolation produces a debug description for an optional value; did you mean to make this explicit?\n2026-11-27T05:03:24.9035090Z  39 |                 let result = try await self.core.shell.execute(command: \"ls\", workspace: workspace, environment: [:], allowNetwork: false)"
+      },
+      {
+        "line": 137286,
+        "text": "2026-11-27T05:12:34.1811460Z     /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v27.2.47.0.Gay2y5/Metal.xctoolchain --module-name AI_Hanlin --sdk-root /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk --xcode-version 27B52 --platform-family iOS --deployment-target 27.0 --bundle-identifier hanlin-ai.AI-Hanlin --output /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/AI_Hanlin.appintents --target-triple arm64-apple-ios27.0-simulator --binary-file /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Release-iphonesimulator/AI_Hanlin.o --dependency-file /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Release-iphonesimulator/AI_Hanlin-t.build/Objects-normal/arm64/AI_Hanlin_dependency_info.dat --stringsdata-file /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Release-iphonesimulator/AI_Hanlin-t.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Release-iphonesimulator/AI_Hanlin-t.build/Objects-normal/arm64/AI_Hanlin.SwiftFileList --metadata-file-list /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Release-iphonesimulator/AI_Hanlin-t.build/AI_Hanlin.DependencyMetadataFileList --static-metadata-file-list /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Release-iphonesimulator/AI_Hanlin-t.build/AI_Hanlin.DependencyStaticMetadataFileList --swift-const-vals-list /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Release-iphonesimulator/AI_Hanlin-t.build/Objects-normal/arm64/AI_Hanlin.SwiftConstValuesFileList --force --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization\n2026-11-27T05:12:34.6018380Z 2026-11-27 05:12:34.448 appintentsmetadataprocessor[40537:338012] Starting App Intents metadata extraction\n2026-11-27T05:12:34.6020160Z 2026-11-27 05:12:34.599 appintentsmetadataprocessor[40537:338012] error: At least one halting error was produced during export, so no AppIntents metadata have been exported and this target is not usable with AppIntents until errors are resolved\n2026-11-27T05:12:34.6022010Z /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift:115: error: Only 1 'AppIntents.AppIntentsPackage' conformance is allowed, but found: 'AI_Hanlin.HanlinApplicationIntentsPackage'\n2026-11-27T05:12:34.6024070Z /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift:106: error: Only 1 'AppIntents.AppIntentsPackage' conformance is allowed, but found: 'AI_Hanlin.HanlinMiniAppSystemIntentsPackage'\n2026-11-27T05:12:34.6025870Z error: Each target must have only one symbol conforming to 'AppIntentsPackage', but found 'AI_Hanlin.HanlinApplicationIntentsPackage' and 'AI_Hanlin.HanlinMiniAppSystemIntentsPackage'"
+      },
+      {
+        "line": 137287,
+        "text": "2026-11-27T05:12:34.6018380Z 2026-11-27 05:12:34.448 appintentsmetadataprocessor[40537:338012] Starting App Intents metadata extraction\n2026-11-27T05:12:34.6020160Z 2026-11-27 05:12:34.599 appintentsmetadataprocessor[40537:338012] error: At least one halting error was produced during export, so no AppIntents metadata have been exported and this target is not usable with AppIntents until errors are resolved\n2026-11-27T05:12:34.6022010Z /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift:115: error: Only 1 'AppIntents.AppIntentsPackage' conformance is allowed, but found: 'AI_Hanlin.HanlinApplicationIntentsPackage'\n2026-11-27T05:12:34.6024070Z /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift:106: error: Only 1 'AppIntents.AppIntentsPackage' conformance is allowed, but found: 'AI_Hanlin.HanlinMiniAppSystemIntentsPackage'\n2026-11-27T05:12:34.6025870Z error: Each target must have only one symbol conforming to 'AppIntentsPackage', but found 'AI_Hanlin.HanlinApplicationIntentsPackage' and 'AI_Hanlin.HanlinMiniAppSystemIntentsPackage'\n2026-11-27T05:12:34.6050890Z "
+      },
+      {
+        "line": 137288,
+        "text": "2026-11-27T05:12:34.6020160Z 2026-11-27 05:12:34.599 appintentsmetadataprocessor[40537:338012] error: At least one halting error was produced during export, so no AppIntents metadata have been exported and this target is not usable with AppIntents until errors are resolved\n2026-11-27T05:12:34.6022010Z /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift:115: error: Only 1 'AppIntents.AppIntentsPackage' conformance is allowed, but found: 'AI_Hanlin.HanlinApplicationIntentsPackage'\n2026-11-27T05:12:34.6024070Z /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift:106: error: Only 1 'AppIntents.AppIntentsPackage' conformance is allowed, but found: 'AI_Hanlin.HanlinMiniAppSystemIntentsPackage'\n2026-11-27T05:12:34.6025870Z error: Each target must have only one symbol conforming to 'AppIntentsPackage', but found 'AI_Hanlin.HanlinApplicationIntentsPackage' and 'AI_Hanlin.HanlinMiniAppSystemIntentsPackage'\n2026-11-27T05:12:34.6050890Z \n2026-11-27T05:12:34.7660470Z GenerateClangModulesReport"
+      },
+      {
+        "line": 137289,
+        "text": "2026-11-27T05:12:34.6022010Z /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift:115: error: Only 1 'AppIntents.AppIntentsPackage' conformance is allowed, but found: 'AI_Hanlin.HanlinApplicationIntentsPackage'\n2026-11-27T05:12:34.6024070Z /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift:106: error: Only 1 'AppIntents.AppIntentsPackage' conformance is allowed, but found: 'AI_Hanlin.HanlinMiniAppSystemIntentsPackage'\n2026-11-27T05:12:34.6025870Z error: Each target must have only one symbol conforming to 'AppIntentsPackage', but found 'AI_Hanlin.HanlinApplicationIntentsPackage' and 'AI_Hanlin.HanlinMiniAppSystemIntentsPackage'\n2026-11-27T05:12:34.6050890Z \n2026-11-27T05:12:34.7660470Z GenerateClangModulesReport\n2026-11-27T05:12:34.8575240Z CFNetwork: 2 variants"
+      },
+      {
+        "line": 137587,
+        "text": "2026-11-27T05:12:37.0670860Z \t/Users/runner/work/hanlin-ai/hanlin-ai/simulator-logs/SimulatorBuildResult.xcresult\n2026-11-27T05:12:37.0671210Z \n2026-11-27T05:12:37.0671510Z ** TEST BUILD FAILED **\n2026-11-27T05:12:37.0671640Z \n2026-11-27T05:12:37.0671650Z \n2026-11-27T05:12:37.0671800Z The following build commands failed:"
+      },
+      {
+        "line": 137832,
+        "text": "2026-11-27T05:12:40.6387780Z \u001b[36;1m    owner = verify_owned_simulator_creation(\u001b[0m\n2026-11-27T05:12:40.6388200Z \u001b[36;1m        log, os.environ.get(\"GITHUB_RUN_ID\"), os.environ.get(\"GITHUB_RUN_ATTEMPT\"))\u001b[0m\n2026-11-27T05:12:40.6388750Z \u001b[36;1mexcept (OSError, ValueError, RuntimeError, KeyError, TypeError) as error:\u001b[0m\n2026-11-27T05:12:40.6389240Z \u001b[36;1m    receipt[\"error\"] = str(error)\u001b[0m\n2026-11-27T05:12:40.6389680Z \u001b[36;1m    path.write_text(json.dumps(receipt, indent=2) + \"\\n\", encoding=\"utf-8\")\u001b[0m\n2026-11-27T05:12:40.6390230Z \u001b[36;1m    raise SystemExit(\"Compact simulator cleanup refused: creation ownership is not verified\")\u001b[0m"
+      },
+      {
+        "line": 137845,
+        "text": "2026-11-27T05:12:40.6393550Z \u001b[36;1m        output.write_text(result.stdout + result.stderr, encoding=\"utf-8\")\u001b[0m\n2026-11-27T05:12:40.6393950Z \u001b[36;1m        exit_code = result.returncode\u001b[0m\n2026-11-27T05:12:40.6394260Z \u001b[36;1m    except OSError as error:\u001b[0m\n2026-11-27T05:12:40.6394650Z \u001b[36;1m        output.write_text(str(error) + \"\\n\", encoding=\"utf-8\")\u001b[0m\n2026-11-27T05:12:40.6395070Z \u001b[36;1m        exit_code = 127\u001b[0m\n2026-11-27T05:12:40.6395480Z \u001b[36;1m    receipt[\"commands\"].append({\"command\": command, \"exit_code\": exit_code,\u001b[0m"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 15174310833,
+        "name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+        "size_in_bytes": 1882623,
+        "expired": false
+      },
+      {
+        "id": 15173658498,
+        "name": "ci-performance-report",
+        "size_in_bytes": 2736,
+        "expired": false
+      },
+      {
+        "id": 15173618943,
+        "name": "provider-conformance-summary",
+        "size_in_bytes": 2277,
+        "expired": false
+      },
+      {
+        "id": 15173476457,
+        "name": "hanlin-sdk-native-prepared",
+        "size_in_bytes": 261715847,
+        "expired": false
+      },
+      {
+        "id": 15172720338,
+        "name": "miniapp-upstream-inputs-full-app-simulator-smoke-45939727401",
+        "size_in_bytes": 33915,
+        "expired": false
+      },
+      {
+        "id": 15172366259,
+        "name": "ci-validation-plan",
+        "size_in_bytes": 53954,
+        "expired": false
+      },
+      {
+        "id": 15172302744,
+        "name": "phase1-validation-866d2d3c60525e32eae27564869e6dba024e625c",
+        "size_in_bytes": 44654,
+        "expired": false
+      },
+      {
+        "id": 15172133066,
+        "name": "hanlin-foundation-models-interface",
+        "size_in_bytes": 29949,
+        "expired": false
+      }
+    ]
+  }
+}

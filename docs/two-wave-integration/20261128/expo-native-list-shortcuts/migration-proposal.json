@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "at": "2026-11-28T09:50:04.106356+00:00",
+  "status": "PROPOSED_SEPARATE_GENUINE_MIGRATION_NOT_EXECUTED",
+  "oldSource": {
+    "commit": "445e2cb514012110cd865bdd33a3dbb8e6b8143d",
+    "path": "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift",
+    "sha256": "b1ed3e326e5fe968671a15900c18cffb3606641674aafa9c47dd36fd49b6b5bd",
+    "originalParameters": [
+      "action",
+      "inputType",
+      "input",
+      "jsonFile",
+      "allowLongRunning"
+    ],
+    "compiledProductRetained": false
+  },
+  "currentSource": {
+    "commit": "04e33c45acedd3f372f836b06f17b805bc91293d",
+    "path": "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift",
+    "sha256": "88eaefa67a733beb153d2c0d3310de2e23ae85c80bf854f22b161c0b9e49ebeb"
+  },
+  "actualNewProductAuthority": {
+    "root": "handoff/typed-list-a195a6ed-built-metadata",
+    "review": "independent-w1-built-metadata-review.json",
+    "reviewSHA256": "17cb61ded8b3c65b66848c85487b526a1ae5478ecc1d3ba397f4672a19747bfa",
+    "receiptSHA256": "bcb3e8768970b33bb3ccbaa3cd1a685f12e344a71449565bd527bf8b4fb76d36",
+    "actualExtractSHA256": "af021fda98731b8485f7f2f4468a0b18585e7253af0ee40a8337a19782b78660",
+    "scope": "Actual a195 compiled nine-parameter metadata. The five-parameter comparison is source only."
+  },
+  "availability": {
+    "basis": "Mac owner existing-evidence answer in this session; no new lookup/build",
+    "oldStandaloneProduct": "No known retained old five-parameter HanlinMiniApps.app. First retained owned standalone product is a195.",
+    "otherProducts": "b723/24fd AI_Hanlin Release is a different product and cannot stand in for the old standalone action."
+  },
+  "baselineBuildPrerequisites": [
+    "Root/Mac admit the exact old standalone product source and original build route, toolchain, dependency/SDK input closure and original phase caps; no new build is authorized by this document.",
+    "Build real HanlinMiniApps.app with original five-parameter intent; retain actual extract.actionsdata and verify exactly those five identities/defaults before baseline UI.",
+    "Use an actually supported fixture/archive contract for each old/current engine. Do not overwrite runtime versions, pins or metadata to manufacture compatibility.",
+    "Bind the baseline XCTest target/installation to the real old app; a current test-without-building product must not silently reinstall the new app during baseline."
+  ],
+  "proposedSequence": [
+    "Create a fresh owned Simulator once. Install the actual old five-parameter standalone app and a verified per-engine echo fixture through the original UI.",
+    "In real Shortcuts, choose the current installed entity once, choose original JSON input mode, save a uniquely named Shortcut with a concrete array and Get Text from Input -> Show Result chain. Save, reopen and run it; retain actual parameters, original command/result, app/source/metadata and Shortcut UI evidence.",
+    "Replace the old app with the reviewed current app on the same Simulator without uninstall/reset/container deletion/fixture reimport. Bind the same device, container, installed-package ID/generation, action entity and saved Shortcut name across replacement.",
+    "Reopen and run that same saved Shortcut without recreating it or reselecting its action. Compare actual persisted input mode/value and real command/output-chain results, while verifying the new nine-parameter metadata.",
+    "Keep NativeScript and Expo migration outcomes separately attributed. Preserve all failed intermediate evidence and fail on identity/data discontinuity."
+  ],
+  "coverage": "A genuine original JSON-array action migration per engine, if executed. It would not establish every old Text/IntentFile mode, all rich nested input, Home Screen/snippet/RTL, or all Task05 acceptance.",
+  "notEvidence": [
+    "Current source default/parameter equality alone",
+    "The a195 metadata comparison alone",
+    "A newly saved current action",
+    "A handwritten .shortcut/private Shortcuts database",
+    "A different AI_Hanlin app product"
+  ],
+  "nativeRuns": 0
+}

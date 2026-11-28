@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "baseline": {
+    "owner": "root",
+    "originalGroups": [
+      25,
+      27
+    ],
+    "instruction": "Preserve original baseline; do not replace it with this added/affected inventory."
+  },
+  "nativeGroups": [
+    {
+      "target": "HanlinPlatformContractsTests",
+      "file": "HanlinShortcutValueCodecTests.swift",
+      "definitions": 4,
+      "cases": 12,
+      "status": "PORTABLE_EXECUTED_PASS",
+      "selectors": [
+        "shortcutDictionaryAndListRetainStructureAndExactNumbers",
+        "shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding",
+        "shortcutJSONRejectsMalformedOrLossyInput",
+        "shortcutTextRemainsTextAndBinaryOutputRequiresAFile"
+      ],
+      "counts": [
+        1,
+        5,
+        5,
+        1
+      ]
+    },
+    {
+      "target": "HanlinMiniAppCoreTests",
+      "file": "HanlinMiniAppActionCompletionTests.swift",
+      "definitions": 3,
+      "cases": 3,
+      "status": "PORTABLE_EXECUTED_PASS",
+      "selectors": [
+        "cancelledNativeActionDoesNotStartOrAcceptALateSuccess",
+        "nativeActionIgnoresDuplicateCallbacksAndLateCancellation",
+        "waitingNativeActionResolvesOnCancellation"
+      ],
+      "counts": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "target": "HanlinScriptExtensionsTests",
+      "suite": "HanlinWidgetLastSuccessfulRenderTests",
+      "definitions": 4,
+      "cases": 11,
+      "status": "APPLE_NOT_RUN",
+      "selectors": [
+        "failedRefreshRetainsVerifiedRenderAndDoesNotCommitStagedState",
+        "fallbackNeverRestoresRevokedOrMismatchedContent",
+        "corruptRenderBytesAreRejectedAndUninstallDropsCacheReferences",
+        "precedingSnapshotWithoutRenderMetadataDecodesAndCopiesPreserveMetadata"
+      ],
+      "counts": [
+        2,
+        7,
+        1,
+        1
+      ]
+    },
+    {
+      "target": "HanlinScriptExtensionsTests",
+      "suite": "HanlinLiveActivityOperationQueueTests",
+      "definitions": 3,
+      "cases": 3,
+      "status": "PORTABLE_EXECUTED_PASS",
+      "selectors": [
+        "sameActivityNeverOverlapsAndFailureDoesNotBlockLaterWork",
+        "differentActivityCanCompleteWhileFirstActivityIsSuspended",
+        "canceledWaiterDoesNotRunOrCancelThePrecedingMutation"
+      ],
+      "counts": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "target": "AI_HLYTests",
+      "suite": "HanlinOriginalScriptWidgetLiveActivityTests",
+      "definitions": 3,
+      "cases": 3,
+      "newCases": 0,
+      "changedExistingCases": 1,
+      "status": "APPLE_EXTENDED_CASE_NOT_RUN",
+      "selectors": [
+        "originalRegionsPersistOutsideActivityContentAndActionsProduceFreshSnapshots",
+        "inactiveWidgetCannotProduceOrLoadALiveActivitySnapshot",
+        "actualActivityKitStartsUpdatesAndEndsTheOriginalProgram"
+      ],
+      "counts": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "target": "HanlinMiniAppsTests",
+      "suite": "MiniAppsDeveloperWorkspaceTests",
+      "definitions": 4,
+      "cases": 4,
+      "status": "PORTABLE_EXECUTED_PASS",
+      "selectors": [
+        "savingRejectsAnotherWritersChangesAndRetainsBothDrafts",
+        "nestedMovesPreserveSourceAndFolderAppearanceWithoutReplacingDestination",
+        "boundariesAndExistingFilesCannotBeOverwrittenThroughCreation",
+        "exampleCopyKeepsOriginalAndIndependentVersions"
+      ],
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "target": "HanlinMiniAppsTests",
+      "suite": "MiniAppsStudioProjectTests",
+      "definitions": 4,
+      "cases": 6,
+      "status": "APPLE_NOT_RUN",
+      "selectors": [
+        "renamingTheOpenFileRebindsLaterEditsAndSaves",
+        "outerDescriptorRemainsAvailableWhenSourceRootHasNoCompleteDescriptor",
+        "malformedRecoveryDoesNotHideOrAlterAnotherWindowsDraft",
+        "changedRevisionCannotPublishAnOriginalAuthoringResult"
+      ],
+      "counts": [
+        1,
+        2,
+        1,
+        2
+      ]
+    },
+    {
+      "target": "HanlinScriptExtensionsTests",
+      "suite": "HanlinOriginalScriptWidgetImageTests",
+      "definitions": 4,
+      "cases": 9,
+      "status": "APPLE_NOT_RUN",
+      "selectors": [
+        "imageRotationKeepsTheOriginalSwiftUICenter",
+        "invalidImageDimensionsAndTransformsNeverReachSwiftUI",
+        "largeValidImagesUseTheOriginalBoundedDownsampler",
+        "oversizedAndMalformedImagesAreRejectedBeforeDisplay"
+      ],
+      "counts": [
+        4,
+        3,
+        1,
+        1
+      ]
+    }
+  ],
+  "systemAcceptance": {
+    "LongRunningAppIntent": "NOT_RUN: actual Shortcuts foreground/background, opt-in extension, cancel, timeout and JSON IntentFile scenarios required.",
+    "StudioUI": "NOT_RUN: native UI, gallery install/run, Files/iCloud coordinated conflict and real device.",
+    "NativeDrawingGallery": "NOT_RUN: actual original NativeScript UIKit launch, eight invalid checks plus four screenshot angles."
+  }
+}

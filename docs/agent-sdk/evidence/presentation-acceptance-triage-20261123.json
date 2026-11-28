@@ -1,0 +1,484 @@
+{
+  "schema_version": 1,
+  "observed_at_utc": "2026-11-23T03:38:55.861280+00:00",
+  "scope": "Historical original presentation acceptance diagnosis and current shared-localization API audit",
+  "failed_run": {
+    "run_id": 44447126258,
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447126258",
+    "job_id": 135301948614,
+    "recorded_source_commit": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+    "tracked_workspace_modified_reported_by_producer": true,
+    "artifact_id": 14499342449,
+    "artifact_name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+    "artifact_zip_bytes": 544059595,
+    "full_job_log_bytes": 10942425,
+    "full_job_log_sha256": "659c7637b86a2b1a6ab20e72be19116a6d0acecbabded513ac2f37bb3f29e404"
+  },
+  "retrieval": {
+    "method": "Bounded HTTP ranges for ZIP directory and named members; read-only SQLite maps test attachments to original payload IDs; zstd decodes only selected text attachments. No whole artifact, video, simulator, or new native run.",
+    "raw_evidence_directory": "/mnt/development/projects/evidence/hanlin-sdk-ui-20261123/MixedOpenUI",
+    "member_receipts": [
+      {
+        "name": "simulator-logs/06-diagnostics-build-provenance.json",
+        "bytes": 6966,
+        "compressed_bytes": 1731,
+        "sha256": "d1a5c5ec240d7adea01d7e1509b01a8e558d3e7bbbbeb7a9d622eb69487b47a5"
+      },
+      {
+        "name": "simulator-logs/08-nativescript-production-ui-test-results.json",
+        "bytes": 51758,
+        "compressed_bytes": 6820,
+        "sha256": "143bdee25ab521d7a68c7f6399dfbeea2e5486eb9dc8ea826b284e038ace2e2b"
+      },
+      {
+        "name": "simulator-logs/08-nativescript-production-ui-tests.log",
+        "bytes": 361117,
+        "compressed_bytes": 33940,
+        "sha256": "b6f1fce868012bc5beb0f4aab8aeea0fa3435bfd9e0e7659fd88318361e1667e"
+      },
+      {
+        "name": "simulator-logs/08-nativescript-production.log",
+        "bytes": 37336864,
+        "compressed_bytes": 1884782,
+        "sha256": "be20ec85228ca23c7e5d25664456ce7baf5800164a18cc1049e7661217a9c289"
+      },
+      {
+        "name": "simulator-logs/NativeScriptProductionE2EResult.xcresult/Info.plist",
+        "bytes": 776,
+        "compressed_bytes": 432,
+        "sha256": "e31da9f1f16258baea5d7ae5981e0ae448034bd2bed96e4a5048d17b4ff5900d"
+      },
+      {
+        "name": "simulator-logs/NativeScriptProductionE2EResult.xcresult/database.sqlite3",
+        "bytes": 1421312,
+        "compressed_bytes": 355415,
+        "sha256": "bf8e8426876a4aef8bd74668d0845823ff8044f0b4fd25f30ae16532424748f4"
+      },
+      {
+        "name": "simulator-logs/NativeScriptProductionE2EResult.xcresult/Data/data.0~yRUY5qesBDjhWT5B1aI5QvUA5PxdsdtFYb3NvouArGzCPCrcB5-bw2gtKyZ0TjFcACAeMO2t5rzsoJM9g-ksVQ==",
+        "bytes": 3793,
+        "compressed_bytes": 3798,
+        "sha256": "d7e773f3b867443a2681775f716c43d9a55201e0ecefa8ef858758a15542561c"
+      },
+      {
+        "name": "simulator-logs/NativeScriptProductionE2EResult.xcresult/Data/data.0~AQJzc-IO7nKh0Ugn_8lgX64N4X50HvOVEXexqXC8uJm-I2gmfoxNozIBzXm9uRMbtQg5_KLkAYrzMQ8DlgbSWA==",
+        "bytes": 3758,
+        "compressed_bytes": 3763,
+        "sha256": "24a7905b14f61dc94a34cf5710c7ba89990fda7a521159c9a919b23a8e4ebcc5"
+      },
+      {
+        "name": "simulator-logs/NativeScriptProductionE2EResult.xcresult/Data/data.0~OzCK-nO63KM7mRcyb1N80fGAuw-taDvb7-ojGx9RONdYOWUdJ2DE_2az_5yTEzr1lxOEXnLN3pA1bIXcbV_TzQ==",
+        "bytes": 3820,
+        "compressed_bytes": 3825,
+        "sha256": "fd90ed6654ef785f0400055cacd8263ce727583ab660b9ce8389812e7ce377bf"
+      },
+      {
+        "name": "simulator-logs/NativeScriptProductionE2EResult.xcresult/Data/data.0~C74ummqoz8xSLP1F-TdGRYeqBA_imrfrGC0ZSVyXCB4zAVc1BXUe-p0mkveHjlKtRPnMpwUNlhTm2x8eU-z74w==",
+        "bytes": 3821,
+        "compressed_bytes": 3826,
+        "sha256": "6f7c0d6b0c342f4289e8a12bee97cd40a8bdb4390d928b98dec6cca75d399353"
+      },
+      {
+        "name": "simulator-logs/NativeScriptProductionE2EResult.xcresult/Data/data.0~hVXwgUmDJA474rvY4It4pw8O0jJD5xQ9BCpknwEkwvzK4WNxbKck0mJ-xQ4I7BgAUxB_G7FDo8sRqP3ZLiOuVw==",
+        "bytes": 3806,
+        "compressed_bytes": 3811,
+        "sha256": "6a08775feb926bce5f01fe0915f47e5d3e814f0750a1c555a60b92b0a60bb31c"
+      },
+      {
+        "name": "simulator-logs/NativeScriptProductionE2EResult.xcresult/Data/data.0~LT6wU6RWmB1rGA71-exiBsaHDEgAXNwYf_bkWsqrHcn7GSZvc3tK0_3GvJ5sZV2_4QdFKAypFmRZgBT7-kQsOA==",
+        "bytes": 3807,
+        "compressed_bytes": 3812,
+        "sha256": "8774d99a0bf59c14978f17655624c7220601d8359166fa0c40bf98040c8bec58"
+      },
+      {
+        "name": "simulator-logs/NativeScriptProductionE2EResult.xcresult/Data/data.0~Ng5IWoEFPezX127PqdxcCNDyuoiYEHYMEHxQ0AUdaG3i7I39_EMm4Xt4ynQK7SLmS1rjOnGX0ijU5pe0tCXLdA==",
+        "bytes": 3800,
+        "compressed_bytes": 3805,
+        "sha256": "c757a2365a29c4eb131c3fd8497c807f17df24be5dee1318c9caaee596068a37"
+      }
+    ]
+  },
+  "finding": {
+    "status": "HISTORICAL_UPSTREAM_INPUT_FAILURE_CONFIRMED",
+    "expected_prompt": "NATIVE_A2UI_FIRST",
+    "observed_prompt_in_all_seven_cases": "ATIVE_A2UI_FIRSTN",
+    "request_count": 1,
+    "fixture_failure": "wrongInput",
+    "session_state": "idle",
+    "cause": "Every original final AX tree shows the corrupted user prompt and the original request error bubble. The unchanged strict HTTP fixture cannot admit this prompt, so no renderer payload is returned. The missing native control assertion does not establish an OpenUI/A2UI rendering failure.",
+    "current_source_status": "The subsequent draft-owner, focus-order, pending-echo and measurement fixes are already present in both baseline603576fa and compared root29d09073. Historical logs do not establish current native correctness.",
+    "product_code_change": "None. No speculative renderer change or reapplication of an existing Composer fix."
+  },
+  "original_attachment_observations": [
+    {
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest",
+      "source_attachment_id": 247,
+      "payload_ref_id": "0~OzCK-nO63KM7mRcyb1N80fGAuw-taDvb7-ojGx9RONdYOWUdJ2DE_2az_5yTEzr1lxOEXnLN3pA1bIXcbV_TzQ==",
+      "decoded_sha256": "406cbacb090f364a81b4d7bcedf737c937b2f97941279d869e8435bde184d268",
+      "path": "/mnt/development/projects/evidence/hanlin-sdk-ui-20261123/MixedOpenUI/testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest-AX.txt",
+      "observations": [
+        "StaticText, 0x115f9c280, {{336.8, 86.0}, {5.5, 13.5}}, identifier: 'hanlin-native-a2ui-request-count', label: '1'",
+        "StaticText, 0x115f9d040, {{350.2, 86.0}, {59.5, 13.5}}, identifier: 'hanlin-native-a2ui-request-failure', label: 'wrongInput'",
+        "StaticText, 0x115f9cf00, {{417.8, 86.0}, {19.0, 13.5}}, identifier: 'hanlin-native-a2ui-state', label: 'idle'",
+        "StaticText, 0x115f7c780, {{838.0, 217.3}, {178.0, 40.5}}, identifier: 'hanlin-user-bubble', label: 'ATIVE_A2UI_FIRSTN'",
+        "StaticText, 0x115f7c500, {{32.0, 285.8}, {941.5, 14.5}}, label: '⚠️ Response error: The operation couldn’t be completed. (AI_Hanlin.(unknown context at $1102bf9cc).HanlinNativeA2UIAcceptanceURLProtocol.FixtureError error 4.)'"
+      ]
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testNewConversationWorksWithoutOptimizationModel",
+      "source_attachment_id": 302,
+      "payload_ref_id": "0~C74ummqoz8xSLP1F-TdGRYeqBA_imrfrGC0ZSVyXCB4zAVc1BXUe-p0mkveHjlKtRPnMpwUNlhTm2x8eU-z74w==",
+      "decoded_sha256": "487018780750ec81641269068f88f1f066e0fca5e3f9b95c601faf824a18bede",
+      "path": "/mnt/development/projects/evidence/hanlin-sdk-ui-20261123/MixedOpenUI/testNewConversationWorksWithoutOptimizationModel-AX.txt",
+      "observations": [
+        "StaticText, 0x115f9d540, {{338.2, 86.0}, {5.5, 13.5}}, identifier: 'hanlin-native-a2ui-request-count', label: '1'",
+        "StaticText, 0x115f9e300, {{351.8, 86.0}, {59.5, 13.5}}, identifier: 'hanlin-native-a2ui-request-failure', label: 'wrongInput'",
+        "StaticText, 0x115f9e1c0, {{419.2, 86.0}, {19.0, 13.5}}, identifier: 'hanlin-native-a2ui-state', label: 'idle'",
+        "StaticText, 0x115f7c8c0, {{838.0, 243.8}, {178.0, 40.5}}, identifier: 'hanlin-user-bubble', label: 'ATIVE_A2UI_FIRSTN'",
+        "StaticText, 0x115f7f200, {{32.0, 312.3}, {943.0, 14.5}}, label: '⚠️ Response error: The operation couldn’t be completed. (AI_Hanlin.(unknown context at $110a779cc).HanlinNativeA2UIAcceptanceURLProtocol.FixtureError error 4.)'"
+      ]
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft",
+      "source_attachment_id": 359,
+      "payload_ref_id": "0~yRUY5qesBDjhWT5B1aI5QvUA5PxdsdtFYb3NvouArGzCPCrcB5-bw2gtKyZ0TjFcACAeMO2t5rzsoJM9g-ksVQ==",
+      "decoded_sha256": "d4942f73cf9ce3c84ef52a625f881934d32ab1e21dc672827c737c88d834f536",
+      "path": "/mnt/development/projects/evidence/hanlin-sdk-ui-20261123/MixedOpenUI/form-AX.txt",
+      "observations": [
+        "StaticText, 0x1161b0640, {{341.5, 86.0}, {5.5, 13.5}}, identifier: 'hanlin-native-a2ui-request-count', label: '1'",
+        "StaticText, 0x1161b1400, {{355.0, 86.0}, {59.5, 13.5}}, identifier: 'hanlin-native-a2ui-request-failure', label: 'wrongInput'",
+        "StaticText, 0x1161b12c0, {{422.5, 86.0}, {19.0, 13.5}}, identifier: 'hanlin-native-a2ui-state', label: 'idle'",
+        "StaticText, 0x1165d3980, {{838.0, 217.3}, {178.0, 40.5}}, identifier: 'hanlin-user-bubble', label: 'ATIVE_A2UI_FIRSTN'",
+        "StaticText, 0x1165d3840, {{32.0, 285.8}, {940.5, 14.5}}, label: '⚠️ Response error: The operation couldn’t be completed. (AI_Hanlin.(unknown context at $112a2f9cc).HanlinNativeA2UIAcceptanceURLProtocol.FixtureError error 4.)'"
+      ]
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory",
+      "source_attachment_id": 414,
+      "payload_ref_id": "0~hVXwgUmDJA474rvY4It4pw8O0jJD5xQ9BCpknwEkwvzK4WNxbKck0mJ-xQ4I7BgAUxB_G7FDo8sRqP3ZLiOuVw==",
+      "decoded_sha256": "04f58c7e5fdf22905be99164841ac716b3b60d3fb95d00c872f9c48d9c0ce7b7",
+      "path": "/mnt/development/projects/evidence/hanlin-sdk-ui-20261123/MixedOpenUI/testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory-AX.txt",
+      "observations": [
+        "StaticText, 0x1161b4780, {{345.0, 86.0}, {5.5, 13.5}}, identifier: 'hanlin-native-a2ui-request-count', label: '1'",
+        "StaticText, 0x1161b5540, {{358.5, 86.0}, {59.5, 13.5}}, identifier: 'hanlin-native-a2ui-request-failure', label: 'wrongInput'",
+        "StaticText, 0x1161b5400, {{426.0, 86.0}, {19.0, 13.5}}, identifier: 'hanlin-native-a2ui-state', label: 'idle'",
+        "StaticText, 0x1165d3980, {{838.0, 217.3}, {178.0, 40.5}}, identifier: 'hanlin-user-bubble', label: 'ATIVE_A2UI_FIRSTN'",
+        "StaticText, 0x1161dc000, {{32.0, 285.8}, {942.5, 14.5}}, label: '⚠️ Response error: The operation couldn’t be completed. (AI_Hanlin.(unknown context at $111dbb9cc).HanlinNativeA2UIAcceptanceURLProtocol.FixtureError error 4.)'"
+      ]
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft",
+      "source_attachment_id": 463,
+      "payload_ref_id": "0~AQJzc-IO7nKh0Ugn_8lgX64N4X50HvOVEXexqXC8uJm-I2gmfoxNozIBzXm9uRMbtQg5_KLkAYrzMQ8DlgbSWA==",
+      "decoded_sha256": "2050a9ac9ffd8354c42787f15ffb5eb68c23a701ae332c71835a0a9242b98812",
+      "path": "/mnt/development/projects/evidence/hanlin-sdk-ui-20261123/MixedOpenUI/mixed-AX.txt",
+      "observations": [
+        "StaticText, 0x1161b30c0, {{338.0, 86.0}, {5.5, 13.5}}, identifier: 'hanlin-native-a2ui-request-count', label: '1'",
+        "StaticText, 0x1161b3200, {{351.5, 86.0}, {59.5, 13.5}}, identifier: 'hanlin-native-a2ui-request-failure', label: 'wrongInput'",
+        "StaticText, 0x1161b3340, {{419.0, 86.0}, {19.0, 13.5}}, identifier: 'hanlin-native-a2ui-state', label: 'idle'",
+        "StaticText, 0x115f90000, {{838.0, 217.3}, {178.0, 40.5}}, identifier: 'hanlin-user-bubble', label: 'ATIVE_A2UI_FIRSTN'",
+        "StaticText, 0x115f90280, {{32.0, 285.8}, {946.5, 14.5}}, label: '⚠️ Response error: The operation couldn’t be completed. (AI_Hanlin.(unknown context at $10eb339cc).HanlinNativeA2UIAcceptanceURLProtocol.FixtureError error 4.)'"
+      ]
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest",
+      "source_attachment_id": 519,
+      "payload_ref_id": "0~LT6wU6RWmB1rGA71-exiBsaHDEgAXNwYf_bkWsqrHcn7GSZvc3tK0_3GvJ5sZV2_4QdFKAypFmRZgBT7-kQsOA==",
+      "decoded_sha256": "3ece7a8d3cd2f1cc4f90f9d4a27e3d15e446ac324bbd16e7ea4223971c01f11c",
+      "path": "/mnt/development/projects/evidence/hanlin-sdk-ui-20261123/MixedOpenUI/testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest-AX.txt",
+      "observations": [
+        "StaticText, 0x115f96300, {{341.8, 86.0}, {5.5, 13.5}}, identifier: 'hanlin-native-a2ui-request-count', label: '1'",
+        "StaticText, 0x115f94640, {{355.2, 86.0}, {59.5, 13.5}}, identifier: 'hanlin-native-a2ui-request-failure', label: 'wrongInput'",
+        "StaticText, 0x115f94500, {{422.8, 86.0}, {19.0, 13.5}}, identifier: 'hanlin-native-a2ui-state', label: 'idle'",
+        "StaticText, 0x1161df5c0, {{838.0, 217.3}, {178.0, 40.5}}, identifier: 'hanlin-user-bubble', label: 'ATIVE_A2UI_FIRSTN'",
+        "StaticText, 0x1161dee40, {{32.0, 285.8}, {944.0, 14.5}}, label: '⚠️ Response error: The operation couldn’t be completed. (AI_Hanlin.(unknown context at $10e9179cc).HanlinNativeA2UIAcceptanceURLProtocol.FixtureError error 4.)'"
+      ]
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow",
+      "source_attachment_id": 567,
+      "payload_ref_id": "0~Ng5IWoEFPezX127PqdxcCNDyuoiYEHYMEHxQ0AUdaG3i7I39_EMm4Xt4ynQK7SLmS1rjOnGX0ijU5pe0tCXLdA==",
+      "decoded_sha256": "259d8c1113ecddc5043a6833fdb75b3fa81388fc507ef979af27b56f0b039a00",
+      "path": "/mnt/development/projects/evidence/hanlin-sdk-ui-20261123/MixedOpenUI/testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow-AX.txt",
+      "observations": [
+        "StaticText, 0x1166be300, {{340.8, 86.0}, {5.5, 13.5}}, identifier: 'hanlin-native-a2ui-request-count', label: '1'",
+        "StaticText, 0x1166bc780, {{354.2, 86.0}, {59.5, 13.5}}, identifier: 'hanlin-native-a2ui-request-failure', label: 'wrongInput'",
+        "StaticText, 0x1166bc640, {{421.8, 86.0}, {19.0, 13.5}}, identifier: 'hanlin-native-a2ui-state', label: 'idle'",
+        "StaticText, 0x1161dea80, {{838.0, 217.3}, {178.0, 40.5}}, identifier: 'hanlin-user-bubble', label: 'ATIVE_A2UI_FIRSTN'",
+        "StaticText, 0x1161df980, {{32.0, 285.8}, {943.5, 14.5}}, label: '⚠️ Response error: The operation couldn’t be completed. (AI_Hanlin.(unknown context at $10e93f9cc).HanlinNativeA2UIAcceptanceURLProtocol.FixtureError error 4.)'"
+      ]
+    }
+  ],
+  "compared_root": "29d09073ddaef889b0abd856509a044ae2fe430b",
+  "source_provenance": [
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinNativeA2UIAcceptanceProvider.swift",
+      "failed_source_sha256": "31ece3b1f5c1f60f3a076d2096072f4c554ac421262a7bd37c79ffcac7e67589",
+      "compared_current_sha256": "31ece3b1f5c1f60f3a076d2096072f4c554ac421262a7bd37c79ffcac7e67589"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "failed_source_sha256": "bd7753aaecf63456a38601678dd81430f92b8794112d8f784e82de2f89a74b69",
+      "compared_current_sha256": "11b3cb74033aa95a3a37521ee013a1e05245b4a01a0e974bb147a0e259e70edc"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/NativeMultilineTextEditor.swift",
+      "failed_source_sha256": "e708636e028a11e3ced6c0802aa526e0d0013e165dfbe868a188c21f522ebc0c",
+      "compared_current_sha256": "a65249e7f297817a1961d9275545f13710b7ab614bddcf71310d0d44495fee38"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinComposerSessionBridge.swift",
+      "failed_source_sha256": "55c2cf70194de76d92d3d6f0b820f2cf9972b92822bcb78c6f4aeccc1210da25",
+      "compared_current_sha256": "7181a07b111d0f1b1bffe0d3234ed454abbc7560df1d5a144f1c3029407f7b99"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift",
+      "failed_source_sha256": "78fa43d0ee72b9659db35608a4892e5c8a7b265236e48073a48e03d243977680",
+      "compared_current_sha256": "5f137f6d012179c29acf3b5e90141ede162139e0cb2c8697c6afc64a6b7a274f"
+    },
+    {
+      "path": "AI_HLY/Views/Components/ChatViewBottom.swift",
+      "failed_source_sha256": "c4c6e9cdaf8d9ed28a5f7197a2098994a6c14872d45df3f98990652711f2b99c",
+      "compared_current_sha256": "22a1b2ac6957e7ab639f03dfca3a62d09e801b6b26e5277c7077ec7057859361"
+    },
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "failed_source_sha256": "e328ce86d07d9a17e4f3d5e3d30895912604b65a452b1f3adc6bdd886fc684bd",
+      "compared_current_sha256": "5084df089f7dd300a6af9217741ea4397c46f3a4770cccab46178f54303f21a2"
+    }
+  ],
+  "existing_repairs": [
+    {
+      "commit": "6d62957852ffcb428810b065b4252e5384f1374b",
+      "change": "Read the current draft owner/revision, publish exact native bytes and scope late delegate events.",
+      "present_in_baseline_603576fa": true,
+      "present_in_compared_root_29d09073": true
+    },
+    {
+      "commit": "e42d420cd0f83097f7634713b67f528492392511",
+      "change": "Clear the placeholder before focus callbacks and avoid redundant scrolling changes.",
+      "present_in_baseline_603576fa": true,
+      "present_in_compared_root_29d09073": true
+    },
+    {
+      "commit": "d3e765c06a6a4ff165a158b565296649718759d3",
+      "change": "Keep pending native edits until the same draft revision acknowledges the write.",
+      "present_in_baseline_603576fa": true,
+      "present_in_compared_root_29d09073": true
+    },
+    {
+      "commit": "c94e6fcf5167464383d23e5bcf8048081f4254db",
+      "change": "Scope cached text measurements and deferred height writes to the live native editor.",
+      "present_in_baseline_603576fa": true,
+      "present_in_compared_root_29d09073": true
+    }
+  ],
+  "fixture_preservation": {
+    "source_identical_failed_to_current": true,
+    "path": "AI_HLY/Downstream/ChatCore/HanlinNativeA2UIAcceptanceProvider.swift",
+    "sha256": "31ece3b1f5c1f60f3a076d2096072f4c554ac421262a7bd37c79ffcac7e67589",
+    "strict_request_validation_unchanged": true
+  },
+  "localization_signature_audit": {
+    "status": "DOCUMENTED_API_REVIEW_WITH_MENU_TEST_AND_SHAPESTYLE_LOOKUP_CORRECTIONS",
+    "file": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/HanlinLocalizedControls.swift",
+    "source_sha256": "b7a48118d691376e71e6032c59dfb80831491ee01851e752d63ab0fee996c9f1",
+    "test_correction": {
+      "path": "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift",
+      "before": "Menu<Text, Label<Text, Image>>",
+      "after": "Menu<Label<Text, Image>, Text>",
+      "reason": "SwiftUI Menu declares Label before Content; the image-menu native type assertion had these reversed. Production forwarding initializer already uses the named Label and Content parameters correctly.",
+      "after_sha256": "c10c51f0eb9f4d9fb2d5cae9289f33e7d6d6a25718e3265fd79b2d9bde1875f7",
+      "swift_6_4_3_syntax_parse": "PASS",
+      "apple_typecheck": "NOT_RUN_BY_THIS_AGENT"
+    },
+    "sources": [
+      {
+        "api": "Label",
+        "finding": "Title = Text, Icon = Image; title/icon native builder delegation.",
+        "primary_source": "https://developer.apple.com/documentation/swiftui/label/init(title:icon:).md"
+      },
+      {
+        "api": "Button",
+        "finding": "The role/action/label initializer accepts an escaping MainActor action.",
+        "primary_source": "https://developer.apple.com/documentation/swiftui/button/init(role:action:label:).md"
+      },
+      {
+        "api": "Toggle",
+        "finding": "The isOn/label initializer preserves the supplied Bool binding.",
+        "primary_source": "https://developer.apple.com/documentation/swiftui/toggle/init(ison:label:).md"
+      },
+      {
+        "api": "Picker",
+        "finding": "Generic order is Label, SelectionValue, Content. SelectionValue is Hashable.",
+        "primary_source": "https://developer.apple.com/documentation/swiftui/picker.md"
+      },
+      {
+        "api": "Picker initializer",
+        "finding": "The selection/content/label ordering matches the forwarding call.",
+        "primary_source": "https://developer.apple.com/documentation/swiftui/picker/init(selection:content:label:).md"
+      },
+      {
+        "api": "Menu",
+        "finding": "Generic order is Label, Content; corrected the image-menu test type.",
+        "primary_source": "https://developer.apple.com/documentation/swiftui/menu.md"
+      },
+      {
+        "api": "Menu initializer",
+        "finding": "The content/label ordering matches the forwarding call.",
+        "primary_source": "https://developer.apple.com/documentation/swiftui/menu/init(content:label:).md"
+      },
+      {
+        "api": "Section",
+        "finding": "Generic order is Parent, Content, Footer; Text header and EmptyView footer are preserved.",
+        "primary_source": "https://developer.apple.com/documentation/swiftui/section.md"
+      },
+      {
+        "api": "Section initializer",
+        "finding": "The content/header builder ordering matches the forwarding call.",
+        "primary_source": "https://developer.apple.com/documentation/swiftui/section/init(content:header:).md"
+      },
+      {
+        "api": "LabeledContent",
+        "finding": "The content/label native builder preserves the original StringProtocol value.",
+        "primary_source": "https://developer.apple.com/documentation/swiftui/labeledcontent/init(content:label:).md"
+      },
+      {
+        "api": "Link",
+        "finding": "The destination/label native initializer is MainActor; the forwarding helper is MainActor.",
+        "primary_source": "https://developer.apple.com/documentation/swiftui/link/init(destination:label:).md"
+      },
+      {
+        "api": "ProgressView",
+        "finding": "The label-only native initializer uses EmptyView for CurrentValueLabel.",
+        "primary_source": "https://developer.apple.com/documentation/swiftui/progressview/init(label:).md"
+      },
+      {
+        "api": "TextField",
+        "finding": "The text/prompt/label initializer has a nil prompt default; label-only forwarding is valid.",
+        "primary_source": "https://developer.apple.com/documentation/swiftui/textfield/init(text:prompt:label:).md"
+      },
+      {
+        "api": "DatePicker",
+        "finding": "Unbounded selection/displayedComponents/label delegation preserves the binding.",
+        "primary_source": "https://developer.apple.com/documentation/swiftui/datepicker/init(selection:displayedcomponents:label:).md"
+      },
+      {
+        "api": "DatePicker bounded",
+        "finding": "The lower-bounded native overload explicitly accepts PartialRangeFrom<Date>.",
+        "primary_source": "https://developer.apple.com/documentation/swiftui/datepicker/init(selection:in:displayedcomponents:label:)-1a3lp.md"
+      },
+      {
+        "api": "DatePicker components",
+        "finding": "Components is an alias for DatePickerComponents.",
+        "primary_source": "https://developer.apple.com/documentation/swiftui/datepicker/components.md"
+      },
+      {
+        "api": "ContentUnavailableView",
+        "finding": "Original title/systemImage form has Label<Text,Image>, Text?, EmptyView generic types.",
+        "primary_source": "https://developer.apple.com/documentation/swiftui/contentunavailableview/init(_:systemimage:description:)-4490a.md"
+      },
+      {
+        "api": "ContentUnavailableView delegation",
+        "finding": "The label/description/actions native builders accept those original concrete generic types.",
+        "primary_source": "https://developer.apple.com/documentation/swiftui/contentunavailableview/init(label:description:actions:).md"
+      }
+    ],
+    "implicit_shape_style_lookup": {
+      "actual_implicit_calls": [
+        "AI_HLY/KnowledgeListView.swift:234:            .tint(.hanlinHLRed)",
+        "AI_HLY/KnowledgeListView.swift:242:            .tint(.hanlinHLBlue)",
+        "AI_HLY/KnowledgeListView.swift:253:            .tint(.hanlinHLGreen)",
+        "AI_HLY/ModelsView.swift:477:            .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/TranslationDicView.swift:103:                            .tint(.hanlinHLGreen)",
+        "AI_HLY/Views/Components/TranslationDicView.swift:113:                            .tint(.hanlinHLRed)",
+        "AI_HLY/Views/Components/ChatViewComponents.swift:1707:                        .tint(.hanlinHLBluefont)",
+        "AI_HLY/Views/Components/ChatViewComponents.swift:1737:                        .tint(.hanlinHLBluefont)",
+        "AI_HLY/Views/Components/ChatViewComponents.swift:2793:                        .background(.hanlinHLOrange)",
+        "AI_HLY/Views/Components/ChatViewComponents.swift:5671:            .tint(.hanlinHLBluefont)",
+        "AI_HLY/Views/Components/ChatViewComponents.swift:5739:            .tint(.hanlinHLBluefont)",
+        "AI_HLY/Views/Components/ChatViewComponents.swift:5804:            .tint(.hanlinHLBluefont)",
+        "AI_HLY/Views/Components/ChatViewComponents.swift:5875:            .tint(.hanlinHLBluefont)",
+        "AI_HLY/Views/Components/ModelsViewComponents.swift:177:                .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/ModelsViewComponents.swift:916:                .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/ModelsViewComponents.swift:1182:                    .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/APISettingView.swift:128:                        .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/APISettingView.swift:827:                .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/APISettingView.swift:838:                    .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/APISettingView.swift:905:                            .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/APISettingView.swift:1252:                .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/APISettingView.swift:1364:                .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/APISettingView.swift:1408:                            .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/APISettingView.swift:1632:                .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/APISettingView.swift:1708:                .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/APISettingView.swift:1782:                .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/APISettingView.swift:1858:                .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/APISettingView.swift:1953:                .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/APISettingView.swift:1988:                            .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/ModelManagementView.swift:142:                        .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/ModelManagementView.swift:156:                            .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/ModelManagementView.swift:255:                                        .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/ModelManagementView.swift:543:            .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/MemoryArchiveView.swift:137:                            .background(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/MemoryArchiveView.swift:188:                            .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/QuickToolsView.swift:725:            .tint(.hanlinHLGreen)",
+        "AI_HLY/Views/Components/QuickToolsView.swift:1102:            .tint(.hanlinHLCyanite)",
+        "AI_HLY/Views/Components/SettingsViewComponents.swift:129:                .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/SettingsViewComponents.swift:319:                            .tint(.hanlinHLBlue)",
+        "AI_HLY/Views/Components/SettingsViewComponents.swift:456:                            .tint(.hanlinHLBlue)",
+        "AI_HLY/VisionView.swift:448:                    .background(.hanlinHLOrange)",
+        "AI_HLY/ListView.swift:528:            .tint(.hanlinHLGreen)",
+        "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactConversationLibrary.swift:157:            .tint(.hanlinHLGreen)",
+        "AI_HLY/Downstream/ChatInput/HanlinComposerPopupView.swift:310:                            .foregroundStyle(.hanlinHLOrange)",
+        "AI_HLY/Downstream/ChatInput/HanlinComposerPopupView.swift:1439:                    .tint(.hanlinHLBrown)",
+        "AI_HLY/Downstream/ChatInput/HanlinComposerPopupView.swift:1717:                    .tint(.hanlinHLTeal)",
+        "AI_HLY/Downstream/ChatInput/HanlinComposerPopupView.swift:1780:                                .tint(.hanlinHLTeal)"
+      ],
+      "swiftui_accessors": 18,
+      "uikit_accessors": 18,
+      "swiftui_declaration": "public extension ShapeStyle where Self == Color",
+      "asset_load_bodies_identical": true,
+      "UIKit_load_bodies_identical": true,
+      "changed_files_syntax_parse": "PASS",
+      "native_typecheck": "NOT_RUN_BY_THIS_AGENT",
+      "actual_implicit_call_count": 47,
+      "primary_source": "https://developer.apple.com/documentation/swiftui/shapestyle/clear",
+      "primary_source_finding": "Apple exposes standard ShapeStyle color members when Self is Color, matching the public constrained extension used here.",
+      "source_sha256": "6dbb7d739601f7c2a50043483690a74e72ad98993add119f0ceccf57218b6291"
+    },
+    "xcode_27_builder_guidance": "https://developer.apple.com/documentation/technotes/tn3211-resolving-swiftui-source-incompatibilities-for-state-and-contentbuilder"
+  },
+  "native_acceptance_still_required": {
+    "original_UI_selectors": [
+      "AI_HLYUITests/HanlinNativeA2UIChatUITests/testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest",
+      "AI_HLYUITests/HanlinNativeA2UIChatUITests/testNewConversationWorksWithoutOptimizationModel",
+      "AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft",
+      "AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory",
+      "AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft",
+      "AI_HLYUITests/HanlinNativeA2UIChatUITests/testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest",
+      "AI_HLYUITests/HanlinNativeA2UIChatUITests/testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow"
+    ],
+    "composer_existing_suite": "AI_HLYTests/NativeComposerLineSizingTests",
+    "focused_composer_methods": [
+      "retainedRenderSnapshotPreservesNativeDraftAndCursor(_:)",
+      "liveOwnerClearAndReplacementBeforeRenderAcknowledgement()",
+      "equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped()",
+      "canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText()",
+      "sameValueClearPrecedesLateNativeDelegate(_:)",
+      "markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)"
+    ],
+    "localization_suites": [
+      "HanlinLocalizedControlTests",
+      "HanlinLocalizationTests",
+      "HanlinOriginalAssetTests"
+    ],
+    "additional_bundle_gate": "Xcode actool must follow the existing app applogo asset symlink and compile all original catalogs into the shared HanlinLocalization resource bundle.",
+    "dispatch_owner": "root",
+    "new_native_runs_by_this_agent": 0
+  },
+  "limitations": [
+    "Producer build provenance marks the historical tracked workspace modified; sourceCommit is its recorded Git identity, not a claim of a pristine checkout.",
+    "All seven observations establish a sufficient upstream input/fixture failure. They do not establish that every downstream renderer path would otherwise pass.",
+    "Current Apple compilation, UIKit behavior, original UI acceptance and visual parity remain native gates. Existing portable renderer, A2UI and translation tests were not rerun."
+  ]
+}

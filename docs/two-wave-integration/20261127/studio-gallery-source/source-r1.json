@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "base": "ff20af0d965cf005751932b56dbec4912bdc326e",
+  "sourceHashes": {
+    "Scripts/ProductSplit/run_paired_acceptance.py": "68875c48e4a53d2ab1c6bf6884ee7504a74a97fd731bb11e5326f683a3362fc4",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "5b7aa667a201117b5ffd62861ba4b39e13613373d4c030b0a1ffb0c3ee706d92",
+    "Scripts/ProductSplit/observe_studio_gallery.py": "c64e13a04d86e628742e0472fc7c2776ba036ff72b9ecb14480b59c5587f78e8",
+    "Scripts/ProductSplit/Tests/test_studio_gallery_observer.py": "f901da7e28e5863a70cc7586b9eb9ac549f697d75f2cfb8ae816077ad6089ba2",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "07feb9084acb645511dcc221f89a813c262e1ca8a58d5d9d317f0b5f439eea73"
+  },
+  "patchSHA256": "1302c048df982d5908d4fdd5eca160361366c23b9a19ae21fd0491a83e593d95",
+  "originalObserverHelpersASTEqual": 37,
+  "originalPlansASTEqual": 6,
+  "originalWholeUIRecoveredAfterRemovingOnlyAddition": true,
+  "original17TestBodiesUnchanged": true,
+  "newGallerySelectors": 5,
+  "native": "NOT_RUN",
+  "portableProof": "portable-r1/receipt.json"
+}

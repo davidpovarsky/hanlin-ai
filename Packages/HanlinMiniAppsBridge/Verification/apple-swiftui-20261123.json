@@ -1,0 +1,54 @@
+{
+  "verification": "Actual Apple SwiftUI and Foundation package compilation",
+  "source_commit": "3d0c6d1d35d4c04a79036eb9caceedd8fa303364",
+  "workflow_repository": "davidpovarsky/apple-devtools",
+  "workflow": ".github/workflows/apple-authority.yml",
+  "run": {
+    "conclusion": "success",
+    "createdAt": "2026-11-23T21:17:14Z",
+    "databaseId": 45268107140,
+    "headSha": "76652c014888cc49aa76fb1c3354f9322e351aa0",
+    "status": "completed",
+    "updatedAt": "2026-11-23T21:18:56Z",
+    "url": "https://github.com/davidpovarsky/apple-devtools/actions/runs/45268107140"
+  },
+  "job_id": 138020328534,
+  "inputs": {
+    "operation": "build",
+    "repository": "davidpovarsky/hanlin-ai",
+    "ref": "codex/hanlin-miniapps-bridge-core-20261123",
+    "runs_on": [
+      "xcode-27"
+    ],
+    "xcode": "stable",
+    "sdk": "iphonesimulator",
+    "path": "Packages/HanlinMiniAppsBridge/Verification/AppleCompilation/BridgeCompilation.xcodeproj",
+    "scheme": "HanlinMiniAppsBridgeCompilation",
+    "destination": "generic/platform=iOS Simulator"
+  },
+  "result": "BUILD SUCCEEDED",
+  "scope": [
+    "HanlinMiniAppsBridge",
+    "HanlinMiniAppsPicker",
+    "Compile-only consumer framework probe"
+  ],
+  "test_execution": false,
+  "notes": [
+    "Portable Swift Testing 11/11 was already passed and was not repeated.",
+    "The toolkit showBuildSettings command omits destination and logs the default SDK; its actual build passes the configured generic iOS Simulator destination.",
+    "Toolkit upload-artifact omitted include-hidden-files and did not upload .apple-devtools-logs. Actions job log retains source SHA, input environment, and BUILD SUCCEEDED.",
+    "This focused gate does not validate host application integration, entitlements on a signed device, or multiple running NativeScript VMs."
+  ],
+  "sha256": {
+    "Packages/HanlinMiniAppsBridge/Package.swift": "579cdb6febf974d7f463aee0cd6592cdf0cfd5a4c8e53840009ff170e52b6e2e",
+    "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge/MiniAppBridgeStore.swift": "a50fcd574c1716c62440ec46ed58e4576d0906c3084b9a7a0e1b3ddad97a1048",
+    "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge/MiniAppContracts.swift": "f3834e432bf48097d065234c0222ca96d0bbe025c36a9491af483a9b16e39bec",
+    "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge/MiniAppPreferences.swift": "8a359491aac0f7602cd5347395f7c36755e5450b16edea2388818d3aa46357d4",
+    "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsPicker/MiniAppPicker.swift": "123a2645b9252224796c18f9ab8e288d0a5cf06bfdf12712e4237700359d18aa",
+    "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsPicker/Resources/en.lproj/Localizable.strings": "73058d63d2152f61bb2928d31baa9674e132ec0729aaf7408790ae4f0779c5c3",
+    "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsPicker/Resources/he.lproj/Localizable.strings": "e9b13d513690a6470e66f1f14b8fc3423dd3a4cd43da222e8f54b50f6b86e3f4",
+    "Packages/HanlinMiniAppsBridge/Verification/AppleCompilation/BridgeCompilation.xcodeproj/project.pbxproj": "c5ba64f0c889c5dfacca3e32c841e6f397a23e394cdeac570947104715c0a2e8",
+    "Packages/HanlinMiniAppsBridge/Verification/AppleCompilation/BridgeCompilation.xcodeproj/xcshareddata/xcschemes/HanlinMiniAppsBridgeCompilation.xcscheme": "c86649c7b6be80d5a89451fb1e8395bd0c029ecf9bed88c8608560318bb3e42c",
+    "Packages/HanlinMiniAppsBridge/Verification/AppleCompilation/CompilationProbe.swift": "7c460732e7972e3194387de304bafa343f81249325a44826cfb65a4c9aafb10a"
+  }
+}

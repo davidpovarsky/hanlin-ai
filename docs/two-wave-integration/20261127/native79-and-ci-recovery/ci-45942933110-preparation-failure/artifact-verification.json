@@ -1,0 +1,189 @@
+{
+  "artifactID": 15173937145,
+  "runID": 45942933110,
+  "zipSHA256": "e9ca708a98f8ff723abb866efaa0e99a7f1357abe76f26fa58693df620b5b0e8",
+  "zipBytes": 500353,
+  "originalMembers": [
+    {
+      "path": "app-split-evidence/acceptance.json",
+      "bytes": 737,
+      "sha256": "1c733977d94df2f5ad01e8210532b3108bd3777baf1b133bf3981974d8687f60"
+    },
+    {
+      "path": "app-split-evidence/ci-performance-report.json",
+      "bytes": 2236,
+      "sha256": "0c84b6a6d1f0d95f9ec67be74b97af3adf31440331836e70810cc7a8efeb6e79"
+    },
+    {
+      "path": "app-split-evidence/foreground/foreground-results.json",
+      "bytes": 24690,
+      "sha256": "fc2b04a5bcf778c970207c10067aae4ddf1c18bdf5debfa14e0a23b65574ecdf"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/commands.jsonl",
+      "bytes": 20853,
+      "sha256": "72d5914d71402638698d6f300ce302b0d2db5afed6fda6be33499e21b383edfa"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/contracts-provenance.json",
+      "bytes": 19451,
+      "sha256": "5647db7f4b0460442d90178467ff22c232248dbc93e8521a1c8c5819abffbbf7"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/core-provenance.json",
+      "bytes": 6349,
+      "sha256": "0be47c99e453cbb1e05f51332a95820e9143d060c0bcb326a5327c8bc0bc6e8f"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/foreground-binary-provenance.json",
+      "bytes": 8609,
+      "sha256": "5c539566586aadd9539ed801185ad9da08d93471217fc7ce858396c82fc3b411"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/manifest.json",
+      "bytes": 5118,
+      "sha256": "e5f8d6f36b6a38fe1c57af0f4db2d306d1a06a6ea5708a9f75b697cf1d6220a8"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-001-toolchain.stdout.log",
+      "bytes": 98,
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-001-toolchain.stderr.log",
+      "bytes": 30,
+      "sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-002-compile-contracts.stderr.log",
+      "bytes": 98,
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-002-compile-contracts.stdout.log",
+      "bytes": 165165,
+      "sha256": "b41fed3dd1ef7679346567c458abc9c96cd8ff0390b7b2b60b4351d00b9969c1"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-003-compile-core.stderr.log",
+      "bytes": 98,
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-003-compile-core.stdout.log",
+      "bytes": 7585,
+      "sha256": "649e7f1a108eb89be9afd8e6aa6b8b0223c72081a2c561cc15b96a016b9906d8"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-004-link-foreground.stderr.log",
+      "bytes": 98,
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-004-link-foreground.stdout.log",
+      "bytes": 46335,
+      "sha256": "94e639178a500ddc0bc77efedb92adade95e0e7729b80a6fabd908ed1a86a5c0"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-005-tests-foreground.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-005-tests-foreground.stdout.log",
+      "bytes": 2090,
+      "sha256": "c617624f4096a37fa8807b3c145449ce20cff0eeae45d1d760bfda13b3bae810"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-006-commit-base.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-006-commit-base.stdout.log",
+      "bytes": 41,
+      "sha256": "6498b2c40f12c911d924d3a23c6616dbb3efaa53e9987b0a38a8b56562c075ba"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-007-working-tree.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-007-working-tree.stdout.log",
+      "bytes": 1269,
+      "sha256": "18c1bbd6ef35393f50ac746595a719f9e8d598d1afce699d339c33866b982013"
+    },
+    {
+      "path": "app-split-evidence/foreground-reuse.json",
+      "bytes": 83,
+      "sha256": "98f9b73dee20aa724bbd6bc2deb82ceb09d2dc18a1ad374630dc66a052a437f9"
+    },
+    {
+      "path": "app-split-evidence/foreground.log",
+      "bytes": 200,
+      "sha256": "74d6240de0028fccfa242eb978cf5963c49338eabf46f15265f5b36ebaad3e0b"
+    },
+    {
+      "path": "app-split-evidence/host-reuse.json",
+      "bytes": 70,
+      "sha256": "5e22daf5ec19232fe3906c437666b1d7a8f1c5a59ba9cb9fbb9f5ee304ee2289"
+    },
+    {
+      "path": "app-split-evidence/miniapp-cli-relocation.log",
+      "bytes": 223,
+      "sha256": "e801ba73ec7939ee490289312e66d5dc3ac8700fee653494e0367c0f6092196f"
+    },
+    {
+      "path": "app-split-evidence/native-dependencies-duration-seconds.txt",
+      "bytes": 4,
+      "sha256": "0a89b7b23893a92fab7b7389613e298c06681ccfcd9253bc6517c671892f2589"
+    },
+    {
+      "path": "app-split-evidence/native-dependencies.log",
+      "bytes": 4003241,
+      "sha256": "e173bd0a2e61b38ca7033514b978e61020dfc3d0871a997d75fd97ccb357d27c"
+    },
+    {
+      "path": "app-split-evidence/package-lifecycle-duration-seconds.txt",
+      "bytes": 2,
+      "sha256": "aa67a169b0bba217aa0aa88a65346920c84c42447c36ba5f7ea65f422c1fe5d8"
+    },
+    {
+      "path": "app-split-evidence/package-lifecycle.log",
+      "bytes": 1412,
+      "sha256": "fd4061f37793794d147b4c24da741114ef06f6a604232895554d89c9b8d4add2"
+    },
+    {
+      "path": "app-split-evidence/preflight-duration-seconds.txt",
+      "bytes": 3,
+      "sha256": "25d4f2a86deb5e2574bb3210b67bb24fcc4afb19f93a7b65a057daa874a9d18e"
+    },
+    {
+      "path": "app-split-evidence/preflight.log",
+      "bytes": 128111,
+      "sha256": "d91b57aa8cacaa46cf3c03ddd9cda33fb985a1e35ea8734d94ad92eb5f0c23f3"
+    },
+    {
+      "path": "app-split-evidence/skill-health.txt",
+      "bytes": 84,
+      "sha256": "484ea42b543c850d718181e5c283d1b8ff4da076c7ed5b59cc2f38d179f15ee1"
+    },
+    {
+      "path": "app-split-evidence/upstream-inputs.patch",
+      "bytes": 162919,
+      "sha256": "4dab76167653db5bb79f9d3ca7aad05980626875785c8856ac811b9b6e1c5ef0"
+    },
+    {
+      "path": "app-split-evidence/upstream-resolution.json",
+      "bytes": 20829,
+      "sha256": "964ebe554868734037f4209ce127d3e768f279b0733f3513c67ba62866585a64"
+    },
+    {
+      "path": "app-split-evidence/upstream-resolution.log",
+      "bytes": 7973,
+      "sha256": "d4dcbb2350327d0b8f22a750e965062f14fc40bc362c9b8f7260f096d46a3710"
+    }
+  ],
+  "claim": "INFRA_ERROR before any original54 app tests; immutable original artifact retained."
+}

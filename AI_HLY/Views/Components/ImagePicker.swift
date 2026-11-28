@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PhotosUI
+import UniformTypeIdentifiers
 
 // 输入框中的图片获取结构体
 struct ImagePicker: UIViewControllerRepresentable {
@@ -42,7 +43,8 @@ struct ImagePicker: UIViewControllerRepresentable {
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 
-    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, PHPickerViewControllerDelegate {
+    @MainActor
+    final class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, PHPickerViewControllerDelegate {
         let parent: ImagePicker
 
         init(_ parent: ImagePicker) {
@@ -54,12 +56,11 @@ struct ImagePicker: UIViewControllerRepresentable {
             picker.dismiss(animated: true)
             
             for result in results {
-                if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
-                    result.itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-                        DispatchQueue.main.async {
-                            if let image = image as? UIImage {
-                                self.parent.selectedImages.append(image)
-                            }
+                if result.itemProvider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
+                    result.itemProvider.loadDataRepresentation(forTypeIdentifier: UTType.image.identifier) { data, _ in
+                        guard let data else { return }
+                        Task { @MainActor [weak self] in
+                            if let image = UIImage(data: data) { self?.parent.selectedImages.append(image) }
                         }
                     }
                 }
@@ -111,7 +112,8 @@ struct OCRImagePicker: UIViewControllerRepresentable {
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 
-    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, PHPickerViewControllerDelegate {
+    @MainActor
+    final class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate, PHPickerViewControllerDelegate {
         let parent: OCRImagePicker
 
         init(_ parent: OCRImagePicker) {
@@ -122,12 +124,12 @@ struct OCRImagePicker: UIViewControllerRepresentable {
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
             picker.dismiss(animated: true)
             
-            if let result = results.first, result.itemProvider.canLoadObject(ofClass: UIImage.self) {
-                result.itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-                    DispatchQueue.main.async {
-                        if let image = image as? UIImage {
-                            self.parent.ocrImage = image
-                        }
+            if let provider = results.first?.itemProvider,
+               provider.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
+                provider.loadDataRepresentation(forTypeIdentifier: UTType.image.identifier) { data, _ in
+                    guard let data else { return }
+                    Task { @MainActor [weak self] in
+                        if let image = UIImage(data: data) { self?.parent.ocrImage = image }
                     }
                 }
             }

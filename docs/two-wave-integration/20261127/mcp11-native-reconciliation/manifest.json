@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "sourceCommit": "8905ee559c0ed8c8d8c86f3f86a5995864108dc9",
+  "sourceBase": "fe0001ac868339d0825d1cc3d07f8383341d163d",
+  "actualNativeSource": "fe0001ac868339d0825d1cc3d07f8383341d163d",
+  "actualNativeResult": "11 methods passed; separate retrospective qualification",
+  "historicalWorkflowConclusion": "failure",
+  "nativeReruns": 0,
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 3941,
+      "sha256": "b61df8e105d7daaaf0d74e9470ab9b72f43027d52d7184197d7cf1baf88a3a2f"
+    },
+    {
+      "path": "artifact-verification.json",
+      "bytes": 1757,
+      "sha256": "f391a17e7b03a2ab20ec8aed09742b5d937f80f9c10973681204e5010346046b"
+    },
+    {
+      "path": "corrected-parser-controls.stderr.gz",
+      "bytes": 335,
+      "sha256": "e5951ac2fd47be1e6b52b34b900048c097babe3a7f0cf9fa47ffce21d57d57c4"
+    },
+    {
+      "path": "corrected-parser-controls.stdout.gz",
+      "bytes": 20,
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "encoding-map.json",
+      "bytes": 1599,
+      "sha256": "0a7c408dd2f03580c85f209d3afa1e18e7f5ab43ec901f0b8002aced40a24fc5"
+    },
+    {
+      "path": "original-mcp11-artifact.zip",
+      "bytes": 10102,
+      "sha256": "3d2382109befb78471a8e8e4c42350cd8c66f5ef69c91ad6e0d805af2d772dde"
+    },
+    {
+      "path": "original-parser-positive-control.stderr.gz",
+      "bytes": 352,
+      "sha256": "89739b3d17d1ec3bac161bfc98701706ce299117484176dbcfcb1f50b7218b84"
+    },
+    {
+      "path": "original-parser-positive-control.stdout.gz",
+      "bytes": 20,
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "original-workflow-outcome.json",
+      "bytes": 614,
+      "sha256": "d358c07150a9a59db3711e1f39adf1b6dd5af3dbb2533df1b6cbfa4d16c9d630"
+    },
+    {
+      "path": "portable-receipt.json",
+      "bytes": 1905,
+      "sha256": "37004238f8806b69bab844deb14b8358b02cebb28d377687e2f3aa19323f8068"
+    },
+    {
+      "path": "retrospective-native-reconciliation.json",
+      "bytes": 6305,
+      "sha256": "c98f085b115ec682f4d0d12802670abb9045325a36435aaae256990979787f17"
+    },
+    {
+      "path": "root-review-attribution.json",
+      "bytes": 755,
+      "sha256": "2df9d1d7bb5430d56b6b909f3b349c4547c5974d4165a20797c9d230bb64ed93"
+    },
+    {
+      "path": "source-validation.json",
+      "bytes": 1650,
+      "sha256": "6135d7274fb46bd371814ab35c957f06cd8ebbb7ee89e86896f4e3bdb9712b26"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 3508,
+      "sha256": "21b8350bc38218f9fba39b67d911c9d337c9018e07d418ca6e97884f061d0581"
+    }
+  ]
+}

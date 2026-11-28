@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  VisionView.swift
 //  AI_HLY
@@ -6,10 +7,12 @@
 //
 
 import SwiftUI
-import AVFoundation
+@preconcurrency import AVFoundation
+@preconcurrency import Dispatch
 import MarkdownUI
 import SwiftData
 import PhotosUI
+import UniformTypeIdentifiers
 
 struct VisionView: View {
     @Binding var selectedTab: Int
@@ -74,8 +77,8 @@ struct VisionView: View {
         ZStack {
             
             if showSaveToast {
-                Text("✅ 图片已保存")
-                    .font(.body)
+                Text(String(localized: "✅ 图片已保存", bundle: HanlinLocalization.bundle))
+                    .font(HanlinTypography.body)
                     .padding()
                     .background(Color.black.opacity(0.6))
                     .foregroundColor(.white)
@@ -161,12 +164,12 @@ struct VisionView: View {
                 }
             }
         )
-        .alert("无法使用视觉功能", isPresented: $showNoModelAlert) {
-            Button("返回", role: .cancel) {
+        .alert(String(localized: "无法使用视觉功能", bundle: HanlinLocalization.bundle), isPresented: $showNoModelAlert) {
+            Button(String(localized: "返回", bundle: HanlinLocalization.bundle), role: .cancel) {
                 selectedTab = 0
             }
         } message: {
-            Text("暂无启用的多模态模型，请前往“设置-模型-模型管理”添加并启用支持视觉的模型。")
+            Text(String(localized: "暂无启用的多模态模型，请前往“设置-模型-模型管理”添加并启用支持视觉的模型。", bundle: HanlinLocalization.bundle))
         }
     }
 }
@@ -195,7 +198,9 @@ extension VisionView {
                             .shadow(color: Color(.systemBackground), radius: 1)
                     )
             }
-            
+            .accessibilityIdentifier("hanlin-vision-close")
+            .accessibilityLabel(String(localized: "完成", bundle: HanlinLocalization.bundle))
+
             Spacer()
             
             // 关闭按钮
@@ -210,15 +215,15 @@ extension VisionView {
                             .scaledToFit()
                             .frame(width: 30, height: 30)
                             .padding(3)
-                            .foregroundColor(showSaveToast ? .hlGreen : Color(.systemBackground))
+                            .foregroundColor(showSaveToast ? .hanlinHLGreen : Color(.systemBackground))
                             .opacity(0.6)
                             .background(
                                 GlassView(style: .systemUltraThinMaterial)
                                     .clipShape(Circle())
-                                    .shadow(color: showSaveToast ? .hlGreen : Color(.systemBackground), radius: 1)
+                                    .shadow(color: showSaveToast ? .hanlinHLGreen : Color(.systemBackground), radius: 1)
                             )
                     }
-                    .sensoryFeedback(.success, trigger: isFeedBack) // 振动反馈
+                    .hanlinFeedback(.success, trigger: isFeedBack) // 振动反馈
                     
                     Button(action: {
                         isFeedBack.toggle()
@@ -230,15 +235,15 @@ extension VisionView {
                             .scaledToFit()
                             .frame(width: 30, height: 30)
                             .padding(3)
-                            .foregroundColor(.hlRed)
+                            .foregroundColor(.hanlinHLRed)
                             .opacity(0.6)
                             .background(
                                 GlassView(style: .systemUltraThinMaterial)
                                     .clipShape(Circle())
-                                    .shadow(color: .hlRed, radius: 1)
+                                    .shadow(color: .hanlinHLRed, radius: 1)
                             )
                     }
-                    .sensoryFeedback(.impact, trigger: isFeedBack)
+                    .hanlinFeedback(.impact, trigger: isFeedBack)
                 }
             } else {
                 HStack (spacing: 10) {
@@ -251,15 +256,15 @@ extension VisionView {
                             .scaledToFit()
                             .frame(width: 30, height: 30)
                             .padding(3)
-                            .foregroundColor(isFlashOn ? .hlOrange : Color(.systemBackground))
+                            .foregroundColor(isFlashOn ? .hanlinHLOrange : Color(.systemBackground))
                             .opacity(0.6)
                             .background(
                                 GlassView(style: .systemUltraThinMaterial)
                                     .clipShape(Circle())
-                                    .shadow(color: isFlashOn ? .hlOrange : Color(.systemBackground), radius: 1)
+                                    .shadow(color: isFlashOn ? .hanlinHLOrange : Color(.systemBackground), radius: 1)
                             )
                     }
-                    .sensoryFeedback(.impact, trigger: isFeedBack)
+                    .hanlinFeedback(.impact, trigger: isFeedBack)
                     
                     // 显示焦距按钮
                     Button(action: {
@@ -268,10 +273,10 @@ extension VisionView {
                     }) {
                         HStack {
                             Text(String(format: "%.1fx", cameraManager.zoomFactor))
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                         }
                         .frame(width: 40, height: 30)
-                        .font(.system(size: 30))
+                        .font(HanlinTypography.fixed(size: 30))
                         .padding(3)
                         .foregroundColor(.primary)
                         .opacity(0.6)
@@ -281,7 +286,7 @@ extension VisionView {
                                 .shadow(color: Color(.systemBackground), radius: 1)
                         )
                     }
-                    .sensoryFeedback(.selection, trigger: isSelect)
+                    .hanlinFeedback(.selection, trigger: isSelect)
                 }
             }
         }
@@ -369,8 +374,8 @@ extension VisionView {
                     withAnimation { isReasoningExpanded.toggle() }
                 }) {
                     HStack {
-                        Text(String(localized: "reasoning_chain"))
-                            .font(.caption)
+                        Text(String(localized: "reasoning_chain", bundle: HanlinLocalization.bundle))
+                            .font(HanlinTypography.caption)
                             .foregroundColor(Color(.systemGray))
                         Spacer()
                         Image(systemName: "chevron.down")
@@ -384,7 +389,7 @@ extension VisionView {
                 if isReasoningExpanded {
                     // 展开：显示完整推理内容
                     Text(reasoning)
-                        .font(.footnote)
+                        .font(HanlinTypography.footnote)
                         .foregroundColor(.secondary)
                         .padding(.horizontal, 8)
                         .transition(.opacity.combined(with: .scale))
@@ -397,10 +402,10 @@ extension VisionView {
                             ForEach(Array(displayReasoningLines.enumerated()), id: \.offset) { idx, line in
                                 Text(line)
                                     .id(String(line.prefix(1)))
-                                    .font(.system(size: idx == 2 ? 10 : (idx == 1 ? 9 : 8)))
+                                    .font(HanlinTypography.fixed(size: idx == 2 ? 10 : (idx == 1 ? 9 : 8)))
                                     .lineLimit(1)
                                     .truncationMode(.head)
-                                    .foregroundColor(idx == 2 ? .hlBluefont : .gray)
+                                    .foregroundColor(idx == 2 ? .hanlinHLBluefont : .gray)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .opacity(idx == 0 ? 0.4 : idx == 1 ? 0.7 : 1.0)
                                     .blur(radius: idx == 0 ? 1 : 0)
@@ -428,30 +433,30 @@ extension VisionView {
     private var visionErrorView: some View {
         return VStack(alignment: .leading) {
             Text(visionErrorMessage ?? "")
-                .font(.caption)
-                .foregroundColor(.hlOrange)
+                .font(HanlinTypography.caption)
+                .foregroundColor(.hanlinHLOrange)
                 .multilineTextAlignment(.leading)
 
             Button(action: {
                 isFeedBack.toggle()
                 retryLastRequest()
             }) {
-                Text("重新请求")
-                    .font(.caption)
+                Text(String(localized: "重新请求", bundle: HanlinLocalization.bundle))
+                    .font(HanlinTypography.caption)
                     .frame(maxWidth: .infinity)
                     .padding(6)
-                    .background(.hlOrange)
+                    .background(.hanlinHLOrange)
                     .foregroundColor(.white)
                     .cornerRadius(20)
             }
-            .sensoryFeedback(.impact, trigger: isFeedBack)
+            .hanlinFeedback(.impact, trigger: isFeedBack)
         }
         .frame(maxWidth: .infinity)
         .padding()
-        .background(Color.hlOrange.opacity(0.1))
+        .background(Color.hanlinHLOrange.opacity(0.1))
         .overlay(
             RoundedRectangle(cornerRadius: 20)
-                .stroke(Color.hlOrange.opacity(0.3), lineWidth: 1)
+                .stroke(Color.hanlinHLOrange.opacity(0.3), lineWidth: 1)
         )
         .cornerRadius(20)
     }
@@ -471,7 +476,7 @@ extension VisionView {
                                 Text(currentAsk)
                                 Spacer()
                             }
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(Color(.systemGray))
                             .multilineTextAlignment(.leading)
                             .padding(.bottom, 5)
@@ -488,7 +493,7 @@ extension VisionView {
                                 Text(currentAsk)
                                 Spacer()
                             }
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(Color(.systemGray))
                             .multilineTextAlignment(.leading)
                         }
@@ -511,14 +516,14 @@ extension VisionView {
                                         }
                                     )
                             } else {
-                                Image(getCompanyIcon(for: currentModelCompany))
+                                Image(hanlinAsset: getCompanyIcon(for: currentModelCompany))
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 20, height: 20)
                             }
                             
-                            Text("\(currentModelName)")
-                                .font(.body)
+                            Text("\(currentModelName)", bundle: HanlinLocalization.bundle)
+                                .font(HanlinTypography.body)
                             ProgressView()
                                 .frame(width: 20, height: 20)
                         }
@@ -536,7 +541,7 @@ extension VisionView {
                                 Text(currentAsk)
                                 Spacer()
                             }
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(Color(.systemGray))
                             .multilineTextAlignment(.leading)
                             .padding(.bottom, 5)
@@ -548,18 +553,18 @@ extension VisionView {
                         // 正文内容区域
                         if let analysis = photoAnalysis, !analysis.isEmpty {
                             Markdown(analysis)
-                                .font(.body)
+                                .font(HanlinTypography.body)
                                 .multilineTextAlignment(.leading) // 文本左对齐
                                 .fixedSize(horizontal: false, vertical: true) // 允许文本高度自适应
-                                .sensoryFeedback(.increase, trigger: isOutPut)
+                                .hanlinFeedback(.increase, trigger: isOutPut)
                         } else if isProcessing && !reasoning.isEmpty {
                             // 正在思考中，还没有正文内容
                             HStack {
                                 Image(systemName: "sparkle")
-                                    .foregroundColor(.hlBluefont)
+                                    .foregroundColor(.hanlinHLBluefont)
                                     .symbolEffect(.breathe.pulse.byLayer, options: .repeat(.continuous))
-                                Text(String(localized: "thinking"))
-                                    .font(.caption)
+                                Text(String(localized: "thinking", bundle: HanlinLocalization.bundle))
+                                    .font(HanlinTypography.caption)
                                     .foregroundColor(.secondary)
                             }
                             .padding(.top, 5)
@@ -584,13 +589,13 @@ extension VisionView {
                                                     )
                                             }
                                         )
-                                    Text("内容由代理“\(currentModelName)”生成")
+                                    Text("内容由代理“\(currentModelName)”生成", bundle: HanlinLocalization.bundle)
                                 } else {
-                                    Image(getCompanyIcon(for: currentModelCompany))
+                                    Image(hanlinAsset: getCompanyIcon(for: currentModelCompany))
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 20, height: 20)
-                                    Text("内容由AI模型“\(currentModelName)”生成")
+                                    Text("内容由AI模型“\(currentModelName)”生成", bundle: HanlinLocalization.bundle)
                                 }
                                 
                                 Spacer()
@@ -610,7 +615,7 @@ extension VisionView {
                                 }
                                 .buttonStyle(.plain)
                                 .sheet(isPresented: $isTextSelectionSheetPresented) {
-                                    TextSelectionView(text: photoAnalysis ?? "无文本")
+            TextSelectionView(text: photoAnalysis ?? String(localized: "无文本", bundle: HanlinLocalization.bundle))
                                 }
                                 
                                 // 复制按钮
@@ -631,7 +636,7 @@ extension VisionView {
                                         .clipShape(Circle())
                                         .foregroundColor(isCopied ? .green : .primary)
                                 }
-                                .sensoryFeedback(.success, trigger: isSuccess)
+                                .hanlinFeedback(.success, trigger: isSuccess)
                                 
                                 // 继续对话按钮
                                 Button(action: {
@@ -646,11 +651,11 @@ extension VisionView {
                                         .padding(4)
                                         .background(Color(.systemGray5))
                                         .clipShape(Circle())
-                                        .foregroundColor(isInputActive ? .green : .hlBluefont)
+                                        .foregroundColor(isInputActive ? .green : .hanlinHLBluefont)
                                 }
-                                .sensoryFeedback(.selection, trigger: isSelect)
+                                .hanlinFeedback(.selection, trigger: isSelect)
                             }
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(Color(.systemGray))
                             .multilineTextAlignment(.leading)
                         }
@@ -720,7 +725,7 @@ extension VisionView {
         HStack {
             if showInput {
                 HStack {
-                    TextField("消息", text: $followAsk)
+                    TextField(String(localized: "消息", bundle: HanlinLocalization.bundle), text: $followAsk)
                         .padding(.leading, 12)
                         .frame(height: 44)
                         .focused($isInputActive) // 绑定焦点状态
@@ -761,7 +766,7 @@ extension VisionView {
                     .padding(.vertical, 6)
                     .padding(.trailing, 6)
                     .opacity(0.7)
-                    .sensoryFeedback(.impact, trigger: isFeedBack)
+                    .hanlinFeedback(.impact, trigger: isFeedBack)
                 }
                 .background(
                     GlassView(style: .systemUltraThinMaterial) // 毛玻璃背景
@@ -803,7 +808,7 @@ extension VisionView {
                         VisionImagePicker(selectedImage: $capturedImage, showModelSelection: $showModelSelection)
                             .ignoresSafeArea()
                     }
-                    .sensoryFeedback(.impact, trigger: isFeedBack)
+                    .hanlinFeedback(.impact, trigger: isFeedBack)
                     Spacer()
                 }
                 
@@ -861,7 +866,7 @@ extension VisionView {
                         }
                 }
                 .animation(.spring(response: 0.5, dampingFraction: 0.7), value: capturedImage)
-                .sensoryFeedback(.impact, trigger: isFeedBack)
+                .hanlinFeedback(.impact, trigger: isFeedBack)
                 
                 Spacer()
                 
@@ -887,7 +892,7 @@ extension VisionView {
                             )
                     }
                     .animation(.easeInOut(duration: 0.3), value: capturedImage)
-                    .sensoryFeedback(.impact, trigger: isFeedBack)
+                    .hanlinFeedback(.impact, trigger: isFeedBack)
                     
                     Spacer()
                 }
@@ -906,7 +911,7 @@ extension VisionView {
         // 边界检查：确保有可用的多模态模型
         guard !multimodalModels.isEmpty, selectedModelIndex < multimodalModels.count else {
             print("没有可用的多模态模型")
-            photoAnalysis = "⚠️ 没有可用的多模态模型，请先在设置中添加支持视觉的模型。"
+            photoAnalysis = String(localized: "⚠️ 没有可用的多模态模型，请先在设置中添加支持视觉的模型。", bundle: HanlinLocalization.bundle)
             return
         }
         
@@ -995,7 +1000,7 @@ extension VisionView {
                 await MainActor.run {
                     let isZh = Locale.preferredLanguages.first?.hasPrefix("zh") ?? true
                     let message = error.localizedDescription
-                    visionErrorMessage = isZh ? "⚠️ 识别失败：\(message)" : "⚠️ Vision request failed: \(message)"
+            visionErrorMessage = String(format: String(localized: "⚠️ 识别失败：%@", bundle: HanlinLocalization.bundle), message)
                     photoAnalysis = nil
                     isProcessing = false
                 }
@@ -1018,7 +1023,7 @@ extension VisionView {
                     modelItem(for: index)
                         .tag(index)
                         .padding(6)
-                        .sensoryFeedback(.selection, trigger: isSelect) // 触发轻微振动
+                        .hanlinFeedback(.selection, trigger: isSelect) // 触发轻微振动
                 }
             }
             .frame(width: 180, height: 80)
@@ -1042,14 +1047,14 @@ extension VisionView {
         let opacityFactor: Double = index == selectedModelIndex ? 1.0 : 0.4
         
         // 边界检查
-        let model = index < multimodalModels.count ? multimodalModels[index] : (name: "未知", company: "", identity: "model", icon: "circle.dotted.circle")
+        let model = index < multimodalModels.count ? multimodalModels[index] : (name: String(localized: "未知", bundle: HanlinLocalization.bundle), company: "", identity: "model", icon: "circle.dotted.circle")
         
         return VStack {
             Spacer()
             HStack {
                 Spacer()
                 if model.identity == "model" {
-                    Image(getCompanyIcon(for: model.company))
+                    Image(hanlinAsset: getCompanyIcon(for: model.company))
                         .resizable()
                         .scaledToFit()
                         .frame(width: 25 * scaleFactor, height: 25 * scaleFactor)
@@ -1076,8 +1081,8 @@ extension VisionView {
                         .animation(.easeInOut(duration: 0.3), value: selectedModelIndex)
                 }
                 Text(model.name)
-                    .font(.caption)
-                    .foregroundColor(index == selectedModelIndex ? .hlBluefont : Color(.systemGray))
+                    .font(HanlinTypography.caption)
+                    .foregroundColor(index == selectedModelIndex ? .hanlinHLBluefont : Color(.systemGray))
                     .opacity(opacityFactor)
                     .animation(.easeInOut(duration: 0.3), value: selectedModelIndex)
                 Spacer()
@@ -1091,12 +1096,12 @@ extension VisionView {
 }
 
 // 负责管理相机的类
-class CameraManager: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
+final class CameraManager: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
     let session = AVCaptureSession()
     private let output = AVCapturePhotoOutput()
     private let queue = DispatchQueue(label: "cameraQueue", qos: .userInitiated)
     private var isConfigured = false
-    private var completionHandler: ((UIImage?) -> Void)?
+    private var completionHandler: (@MainActor (UIImage?) -> Void)?
     
     @Published var zoomFactor: CGFloat = 1.0
     private var minZoomFactor: CGFloat = 1.0
@@ -1167,6 +1172,7 @@ class CameraManager: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
     }
     
     /// **平滑设置变焦 (0.5x - 15x)**
+    @MainActor
     func setZoomFactor(_ factor: CGFloat) {
         guard let device = currentDevice else { return }
         
@@ -1238,9 +1244,7 @@ class CameraManager: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
             
             self.session.commitConfiguration()
             
-            DispatchQueue.main.async {
-                self.isConfigured = true
-            }
+            self.isConfigured = true
         }
     }
     
@@ -1250,9 +1254,11 @@ class CameraManager: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
     
     /// **开始摄像头**
     func startSession() {
+        let session = session
+        let shouldStart = isConfigured
         queue.async {
-            if self.isConfigured, !self.session.isRunning {
-                self.session.startRunning()
+            if shouldStart, !session.isRunning {
+                session.startRunning()
             } else {
                 return
             }
@@ -1261,9 +1267,10 @@ class CameraManager: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
     
     /// **停止摄像头**
     func stopSession() {
+        let session = session
         queue.async {
-            if self.session.isRunning {
-                self.session.stopRunning()
+            if session.isRunning {
+                session.stopRunning()
             } else {
                 return
             }
@@ -1271,7 +1278,7 @@ class CameraManager: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
     }
     
     /// **拍照**
-    func capturePhoto(completion: @escaping (UIImage?) -> Void) {
+    func capturePhoto(completion: @escaping @MainActor (UIImage?) -> Void) {
         // 检查相机会话是否正在运行
         guard session.isRunning else {
             print("相机会话未运行，无法拍照")
@@ -1294,19 +1301,19 @@ class CameraManager: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate {
     
     /// **处理照片**
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        let imageData = photo.fileDataRepresentation()
+        let completion = completionHandler
+        completionHandler = nil
         // 确保在主线程回调
-        DispatchQueue.main.async { [weak self] in
-            guard let imageData = photo.fileDataRepresentation(),
-                  let image = UIImage(data: imageData) else {
+        DispatchQueue.main.async {
+            guard let imageData, let image = UIImage(data: imageData) else {
                 print("无法获取照片")
-                self?.completionHandler?(nil)
-                self?.completionHandler = nil
+                completion?(nil)
                 return
             }
-            self?.completionHandler?(image)
-            self?.completionHandler = nil
-            self?.stopSession()
+            completion?(image)
         }
+        stopSession()
     }
     
     /// **手电筒模式**
@@ -1406,7 +1413,8 @@ struct VisionImagePicker: UIViewControllerRepresentable {
         Coordinator(self)
     }
 
-    class Coordinator: NSObject, PHPickerViewControllerDelegate {
+    @MainActor
+    final class Coordinator: NSObject, PHPickerViewControllerDelegate {
         let parent: VisionImagePicker
 
         init(_ parent: VisionImagePicker) {
@@ -1415,14 +1423,15 @@ struct VisionImagePicker: UIViewControllerRepresentable {
 
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
             picker.dismiss(animated: true)
-            guard let provider = results.first?.itemProvider, provider.canLoadObject(ofClass: UIImage.self) else { return }
+            guard let provider = results.first?.itemProvider,
+                  provider.hasItemConformingToTypeIdentifier(UTType.image.identifier) else { return }
             
-            provider.loadObject(ofClass: UIImage.self) { image, _ in
-                DispatchQueue.main.async {
-                    if let uiImage = image as? UIImage {
-                        self.parent.selectedImage = uiImage
-                        self.parent.showModelSelection = true
-                    }
+            provider.loadDataRepresentation(forTypeIdentifier: UTType.image.identifier) { data, _ in
+                guard let data else { return }
+                Task { @MainActor [weak self] in
+                    guard let self, let image = UIImage(data: data) else { return }
+                    self.parent.selectedImage = image
+                    self.parent.showModelSelection = true
                 }
             }
         }

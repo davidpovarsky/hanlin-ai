@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "atUTC": "2026-11-27T07:20:45.311824+00:00",
+  "base": "0c5df7c68b4a2abdf520232b0efb5bb6f0ba05cd",
+  "compileCommit": "58cbc24e1",
+  "httpSourceCommit": "42e1aa4ff9adf7ab2c7c899efcf7fd4ce319a7c6",
+  "integratedHead": "bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb",
+  "sparseCheckoutMaterialization": "Existing materialized file exactly equaled owned pre-cherry-pick0c source; restored exact merged HEAD blob",
+  "httpMethodByteEqualToReviewedCandidate": true,
+  "rootLoaderMethodByteEqualToAcceptedRootCorrection": true,
+  "httpNativeAPIsReviewSHA256": "4e354bee856c5e3aff0ccaf0349a27b1e76e913733d9e4562916947299ec8c66",
+  "native": "NOT_RUN",
+  "productionChanged": false,
+  "gitClean": true
+}

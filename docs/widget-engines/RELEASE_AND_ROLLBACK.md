@@ -1,0 +1,35 @@
+# Pass 3 state publication and rollback
+
+Code checkout is not a data migration procedure. Do not overwrite a dirty worktree to recover App Group data.
+
+The store writes immutable SHA-named revision envelopes under Revisions/. A pending journal records the candidate and preceding v1 shadow. It writes the compatible v1 shadow before atomically replacing commit.json. Both new host and extension readers/writers hold a bounded POSIX cross-process lock. A journal whose candidate was not committed restores the exact preceding shadow; a committed candidate only needs journal cleanup. Corrupt committed bytes throw an integrity error and cannot silently select v1.
+
+The v1 shadow contains only historical wire fields, no engine/payload/variant/registry fields, and only default-variant widget records. The actual unmodified reader/encoder from 37ba73ba876fad72a3156052751c1b6a89bf825c is compiled in a test-only module to test both directions. Native engines intentionally degrade to their informational legacy root in that old binary. New v2-only state remains in immutable revisions. If the old binary writes a new verified v1 shadow, the new reader reports legacyWriterDetected, honors its legacy collections and retains the last committed native registry/state metadata.
+
+An explicit new-store v1 save publishes a new commit pointing to that revision; stale snapshot-v2.json cannot win. Historical unmarked v2 stores migrate only after checksum/schema validation. Tests simulate interrupted shadow/pointer publication using real committed revision bytes and exercise actual legacy APIs. Apple execution status is recorded in CI_AND_DEVICE_RESULTS.md; test source presence is not a pass.
+
+Package generation rollback uses HanlinAtomicScriptStore.rollback. The host invalidates action authority first and republishes the selected installed generation transactionally. Variant IDs remain configured; state belongs to each exact generation. On mutation failure a package can remain inactive until successful re-publication, preserving fail-closed behavior.
+
+Release remains gated on native build/link tests, simulator WidgetKit behavior and signed physical iPadOS 27 acceptance. No main merge, TestFlight/App Store/public release or signing changes are authorized here. Asana remains read-only.
+
+## Owner override — 2026-11-01
+
+The owner explicitly authorizes upload of the current version to TestFlight and will perform iPad acceptance there. This supersedes only the earlier TestFlight prohibition and the prerequisite for physical testing before that upload. No additional optional tests are requested. Public App Store release and main merge remain outside this authorization. Asana remains read-only.
+
+Owner-authorized TestFlight delivery completed: version 0.7.3 (87401), Apple VALID, workflow 41310977352 SUCCESS. [Exact source and signed artifact record](TESTFLIGHT_87401_DELIVERY.md). Public release/main merge were not performed.
+
+## Pass 4 non-destructive App Group recovery & consistency — 2026-11-03
+
+When upgrading from TestFlight `0.7.3 (87401)` (`279f0ead777b961728ed91386c136e7e33659c36`) to `0.7.3 (88001)` (`bac84e3a3968daba9768c6525ffd21be52f45d28`) on physical iPadOS, previously installed packages in `HanlinAtomicScriptStore` (Application Support) remain intact at their active generation without requiring re-import or wiping App Group containers. On first launch or when opening **Package Information** (`ScriptingInstalledPackageDetailView`), `HanlinScriptingPlatform` canonicalizes the App Group container URL (`/private/var/mobile/...`) consistently with `HanlinScriptExtensionStore`, and if an enabled native-widget package has no published `Default` instance in `HanlinScriptExtensionStore`, automatically runs one idempotent `republishWidgets(for:)` pass (or allows manual `Retry Widget Publication` in the UI) while preserving all existing `liveActivities`, `translationApps`, `intentEntities`, and other packages' widget instances/states.
+
+At the owner's explicit 2026-11-03 request, signed TestFlight build `0.7.3 (88001)` was uploaded and verified `VALID` in Apple processing via workflow [41568291224](https://github.com/davidpovarsky/hanlin-ai/actions/runs/41568291224): see [TestFlight 88001 delivery record](TESTFLIGHT_88001_DELIVERY.md). Public App Store release and `main` merge were not performed.
+
+## Pass 5 unified integration, non-destructive upgrade, and rollback — 2026-11-03
+
+### In-Place Upgrade Over 88001
+- **Installed Packages & Generations Intact:** When upgrading over 88001, existing packages in `HanlinAtomicScriptStore` and App Group snapshot schema v2 remain untouched. No packages are deleted, no generation numbers are reset, and no re-import is required.
+- **Idempotent Default & Variant Restoration:** `publishWidgetTemplates` guarantees that `Default` is restored for any active package with templates, without duplicating `Default` or losing user-configured `A1`/`A2` instances, settings, or generation migration chains.
+- **Chat V3.3 Recovery from 87901:** Restores all 11 owner-approved Chat/OrganizerDock source and test files from `fix/hanlin-organizerdock-v33-final-repair-20261101` (`35b9782b`), while preserving protected classic files (`ChatViewComponents.swift`, `ChatandFile.swift`, `APIManager.swift`) byte-identical to `279f0ead`.
+- **System Entity Query Parity:** `HanlinScriptPackageEntityQuery` conforms to `EnumerableEntityQuery` and `EntityStringQuery`, backed by the shared typed projection `selectableWidgetEntities()`.
+- **Durable Cross-Process Diagnostics:** Query failures in the extension process are written to `latest-query-diagnostic.json` under the shared App Group for visibility in host Package Information without leaking private paths.
+- **Rollback Safety:** If rolling back to an older generation or preceding build, immutable revisions and schema v1 downgrade compatibility are preserved. No release or merge to `main` is executed without explicit owner approval.

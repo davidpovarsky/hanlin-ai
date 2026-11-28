@@ -1,0 +1,15 @@
+/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift:45:51: error: cannot use optional chaining on non-optional value of type 'Optional<HanlinOriginalExpoWidgetEntity>.UnwrappedType' (aka 'HanlinOriginalExpoWidgetEntity')
+ 43 | 
+ 44 |     public func allEntities() async throws -> [HanlinOriginalExpoWidgetOptionEntity] {
+ 45 |         guard let widgetID = configuration?.widget?.id else { return [] }
+    |                                                   `- error: cannot use optional chaining on non-optional value of type 'Optional<HanlinOriginalExpoWidgetEntity>.UnwrappedType' (aka 'HanlinOriginalExpoWidgetEntity')
+ 46 |         return HanlinOriginalExpoWidgetOptions.options(widgetID: widgetID)
+ 47 |     }
+
+/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift:129:16: error: cannot convert return expression of type 'HanlinObject<HanlinValue>' to return type '[String : HanlinValue]'
+127 |             values[current.parameter] = .string(current.value)
+128 |         }
+129 |         return values
+    |                `- error: cannot convert return expression of type 'HanlinObject<HanlinValue>' to return type '[String : HanlinValue]'
+130 |     }
+131 | }

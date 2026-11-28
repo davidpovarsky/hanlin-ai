@@ -1,0 +1,366 @@
+{
+  "schema": 1,
+  "source": "6aa3da405bf555863f81d24c45f1392081dd94ec",
+  "files": [
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/README.md",
+      "storedPath": "README.md",
+      "rawBytes": 3214,
+      "rawSHA256": "9ca9a369b39b127d56befca99ec6a3f6ee3d8c802d8c0b12dba331e2be696d33",
+      "compression": null,
+      "storedBytes": 3214,
+      "storedSHA256": "9ca9a369b39b127d56befca99ec6a3f6ee3d8c802d8c0b12dba331e2be696d33"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/current-runs-summary.json",
+      "storedPath": "current-runs-summary.json",
+      "rawBytes": 8881,
+      "rawSHA256": "f986ab7ca540a01b3a6e0b37065467a83473fa8fcc2f3248b75d4d463c85a74a",
+      "compression": null,
+      "storedBytes": 8881,
+      "storedSHA256": "f986ab7ca540a01b3a6e0b37065467a83473fa8fcc2f3248b75d4d463c85a74a"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/current-runs.json",
+      "storedPath": "current-runs.json.gz",
+      "rawBytes": 216120,
+      "rawSHA256": "d86dfbce5bd37e14ab6ce61f1f5caac286ae21b15670b57f06cedde48d0b493b",
+      "compression": "gzip",
+      "storedBytes": 6195,
+      "storedSHA256": "acd0561d26ceaf5ce74a86cead9e38ec32b6a02a882f139994fde08624769223"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/current-runs.stderr",
+      "storedPath": "current-runs.stderr.gz",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "gzip",
+      "storedBytes": 20,
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/default-plan-qualification.json",
+      "storedPath": "default-plan-qualification.json",
+      "rawBytes": 2866,
+      "rawSHA256": "04dedf530da385fa5f4fd0fd46d9aa063d88551a4f4b95bf092a01b0f2729fcc",
+      "compression": null,
+      "storedBytes": 2866,
+      "storedSHA256": "04dedf530da385fa5f4fd0fd46d9aa063d88551a4f4b95bf092a01b0f2729fcc"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/dispatch-preparation.json",
+      "storedPath": "dispatch-preparation.json",
+      "rawBytes": 14949,
+      "rawSHA256": "2697670bc8df1eee309c616d1c9a1052d1c9c59d07423f7a18c5aee15ba8497b",
+      "compression": null,
+      "storedBytes": 14949,
+      "storedSHA256": "2697670bc8df1eee309c616d1c9a1052d1c9c59d07423f7a18c5aee15ba8497b"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/original-gate-source-steps.json",
+      "storedPath": "original-gate-source-steps.json",
+      "rawBytes": 31017,
+      "rawSHA256": "c6baf8fcbc3536d9aa2efd284ea795db6d6a0e0b9cb262aceefe8a2726a3a2e6",
+      "compression": null,
+      "storedBytes": 31017,
+      "storedSHA256": "c6baf8fcbc3536d9aa2efd284ea795db6d6a0e0b9cb262aceefe8a2726a3a2e6"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/original-selected-tests-semantics.json",
+      "storedPath": "original-selected-tests-semantics.json",
+      "rawBytes": 5411,
+      "rawSHA256": "cdae85b367e9dd1db9aef814b56fdc0948079c18fb27b3824f402deec1fc6b1d",
+      "compression": null,
+      "storedBytes": 5411,
+      "storedSHA256": "cdae85b367e9dd1db9aef814b56fdc0948079c18fb27b3824f402deec1fc6b1d"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/paired-dispatch-qualification.json",
+      "storedPath": "paired-dispatch-qualification.json",
+      "rawBytes": 5872,
+      "rawSHA256": "9b801eef07858f9422d93d34b607237d7e7fd5439f01633d22c88dad7b626c7f",
+      "compression": null,
+      "storedBytes": 5872,
+      "storedSHA256": "9b801eef07858f9422d93d34b607237d7e7fd5439f01633d22c88dad7b626c7f"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/paired-plan-source-excerpts.json",
+      "storedPath": "paired-plan-source-excerpts.json",
+      "rawBytes": 37280,
+      "rawSHA256": "5f7c1e45e5667a65793cb930fa5835f9c143f129b7b3e93a46710ee19544e1ba",
+      "compression": null,
+      "storedBytes": 37280,
+      "storedSHA256": "5f7c1e45e5667a65793cb930fa5835f9c143f129b7b3e93a46710ee19544e1ba"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/planner-admission-r1.json",
+      "storedPath": "planner-admission-r1.json",
+      "rawBytes": 1645,
+      "rawSHA256": "f1f288332e0c63528b68b9f0b1dd5f437b0232b66ed57b22fd7f37a962789b2d",
+      "compression": null,
+      "storedBytes": 1645,
+      "storedSHA256": "f1f288332e0c63528b68b9f0b1dd5f437b0232b66ed57b22fd7f37a962789b2d"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/planner-receipt.json",
+      "storedPath": "planner-receipt.json",
+      "rawBytes": 2313,
+      "rawSHA256": "ea2d1ef4f5a831c04996974648f057d987a7610dbdb693ca1e4f5894cb12316d",
+      "compression": null,
+      "storedBytes": 2313,
+      "storedSHA256": "ea2d1ef4f5a831c04996974648f057d987a7610dbdb693ca1e4f5894cb12316d"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/planner.stderr",
+      "storedPath": "planner.stderr.gz",
+      "rawBytes": 4184,
+      "rawSHA256": "40d435149eb7a426d7e69ea4e5b7268982d6e14dee47e54aa78632ca6630de2a",
+      "compression": "gzip",
+      "storedBytes": 542,
+      "storedSHA256": "4487321e5200895e416f5384ef53ff4d29deca76abe275f6b027050d508a91d6"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/planner.stdout",
+      "storedPath": "planner.stdout.gz",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "gzip",
+      "storedBytes": 20,
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/producer-admission-source.json",
+      "storedPath": "producer-admission-source.json",
+      "rawBytes": 41624,
+      "rawSHA256": "1a8a6f0a742b8d36d7662a69e588703f444c0a83657094e8d07291821e19883f",
+      "compression": null,
+      "storedBytes": 41624,
+      "storedSHA256": "1a8a6f0a742b8d36d7662a69e588703f444c0a83657094e8d07291821e19883f"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/remaining-original-gates.json",
+      "storedPath": "remaining-original-gates.json",
+      "rawBytes": 7091,
+      "rawSHA256": "c7acb76911b764212eed6e75bfd499fd0bee18f278abe5bcd0d697cb7cf3cced",
+      "compression": null,
+      "storedBytes": 7091,
+      "storedSHA256": "c7acb76911b764212eed6e75bfd499fd0bee18f278abe5bcd0d697cb7cf3cced"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/requests/device.json",
+      "storedPath": "requests/device.json",
+      "rawBytes": 407,
+      "rawSHA256": "b9ba20867616c59d7572d7de0aadf4b2cac9293d87eee18bb968ae8ce668b1c0",
+      "compression": null,
+      "storedBytes": 407,
+      "storedSHA256": "b9ba20867616c59d7572d7de0aadf4b2cac9293d87eee18bb968ae8ce668b1c0"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/requests/original54.json",
+      "storedPath": "requests/original54.json",
+      "rawBytes": 470,
+      "rawSHA256": "6e5bc11662f4a85f84a825ae3affde0c421852c36e086fb5ee76c244ecae1c9c",
+      "compression": null,
+      "storedBytes": 470,
+      "storedSHA256": "6e5bc11662f4a85f84a825ae3affde0c421852c36e086fb5ee76c244ecae1c9c"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/requests/original90.json",
+      "storedPath": "requests/original90.json",
+      "rawBytes": 4291,
+      "rawSHA256": "9d8b2f79587165581d5408ba4738fef011fb73f55bc6878a8d6e4d24678b867c",
+      "compression": null,
+      "storedBytes": 4291,
+      "storedSHA256": "9d8b2f79587165581d5408ba4738fef011fb73f55bc6878a8d6e4d24678b867c"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/affected-validation-map.json.before",
+      "storedPath": "routing-repair/affected-validation-map.json.before.gz",
+      "rawBytes": 78141,
+      "rawSHA256": "368d9e6a896bea2ec5e2a2e095f9e7b4397255333a1192014b1b08456a39c44a",
+      "compression": "gzip",
+      "storedBytes": 11391,
+      "storedSHA256": "931e65f0d221b4f8b2d495ee382b6d2219780a473c85227a9350602948813bbf"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/focused-final3-receipt.json",
+      "storedPath": "routing-repair/focused-final3-receipt.json",
+      "rawBytes": 1410,
+      "rawSHA256": "77c8a4b5c69ec11e6baea098501604873e9239f7382784c2918e7a2fc6ce75dc",
+      "compression": null,
+      "storedBytes": 1410,
+      "storedSHA256": "77c8a4b5c69ec11e6baea098501604873e9239f7382784c2918e7a2fc6ce75dc"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/focused-final3.stderr",
+      "storedPath": "routing-repair/focused-final3.stderr.gz",
+      "rawBytes": 668,
+      "rawSHA256": "07d01082383c90d0c5ae30362d77ed73b6ed1b81882fab72e85c87bcaeecdc42",
+      "compression": "gzip",
+      "storedBytes": 251,
+      "storedSHA256": "a4c85b607986789d37b2f27067c5fbfb9e40fade781ebff4d4ad2031c677bb44"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/focused-final3.stdout",
+      "storedPath": "routing-repair/focused-final3.stdout.gz",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "gzip",
+      "storedBytes": 20,
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/focused-loader-failure/focused-receipt.json",
+      "storedPath": "routing-repair/focused-loader-failure/focused-receipt.json",
+      "rawBytes": 951,
+      "rawSHA256": "ebadbed58042d18dae02c0e65d8527c76173362747c9e7fadc9f9adffab9afae",
+      "compression": null,
+      "storedBytes": 951,
+      "storedSHA256": "ebadbed58042d18dae02c0e65d8527c76173362747c9e7fadc9f9adffab9afae"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/focused-loader-failure/focused.stderr",
+      "storedPath": "routing-repair/focused-loader-failure/focused.stderr.gz",
+      "rawBytes": 1379,
+      "rawSHA256": "4956b6a5cf9f54afe92ac8c7639dcb56fc96ee2a4f37c9cb6ab859d068bec34c",
+      "compression": "gzip",
+      "storedBytes": 498,
+      "storedSHA256": "b75e1be98b3ca5eda74ef44c8f4f935c70e69a2019725632206a68ab029b6a8a"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/focused-loader-failure/focused.stdout",
+      "storedPath": "routing-repair/focused-loader-failure/focused.stdout.gz",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "gzip",
+      "storedBytes": 20,
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/focused-original103-r1/focused-receipt.json",
+      "storedPath": "routing-repair/focused-original103-r1/focused-receipt.json",
+      "rawBytes": 855,
+      "rawSHA256": "c5411d28462f19e7701841fdfb15ce275da74cb290161b53811f1b9c573dad37",
+      "compression": null,
+      "storedBytes": 855,
+      "storedSHA256": "c5411d28462f19e7701841fdfb15ce275da74cb290161b53811f1b9c573dad37"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/focused-original103-r1/focused.stderr",
+      "storedPath": "routing-repair/focused-original103-r1/focused.stderr.gz",
+      "rawBytes": 23049,
+      "rawSHA256": "ba0d54d5968d13dc302e4bf1ec76bce68961f36012b415c0a37393b6362e8867",
+      "compression": "gzip",
+      "storedBytes": 3575,
+      "storedSHA256": "b8eed0fbb7ba9f93fab7f3673588ce5e4512fef8149d924d6b4578ee45c645c7"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/focused-original103-r1/focused.stdout",
+      "storedPath": "routing-repair/focused-original103-r1/focused.stdout.gz",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "gzip",
+      "storedBytes": 20,
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/root-source-review.json",
+      "storedPath": "routing-repair/root-source-review.json",
+      "rawBytes": 1719,
+      "rawSHA256": "481908d1e072d06fd555bad6e84641b3d6bde568e023c71d6bad8e25bb9c1b07",
+      "compression": null,
+      "storedBytes": 1719,
+      "storedSHA256": "481908d1e072d06fd555bad6e84641b3d6bde568e023c71d6bad8e25bb9c1b07"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/source-commit.json",
+      "storedPath": "routing-repair/source-commit.json",
+      "rawBytes": 286,
+      "rawSHA256": "840ab0c76bcbe0a47fc04e7e4426b7db501f7eef9ba0212d19317491cc1a9cce",
+      "compression": null,
+      "storedBytes": 286,
+      "storedSHA256": "840ab0c76bcbe0a47fc04e7e4426b7db501f7eef9ba0212d19317491cc1a9cce"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/source.json",
+      "storedPath": "routing-repair/source.json",
+      "rawBytes": 782,
+      "rawSHA256": "1d07d3072cc05d9e2f8ac4a07b166b71f20c8f50d1be27a9676307672243e700",
+      "compression": null,
+      "storedBytes": 782,
+      "storedSHA256": "1d07d3072cc05d9e2f8ac4a07b166b71f20c8f50d1be27a9676307672243e700"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/source.patch",
+      "storedPath": "routing-repair/source.patch.gz",
+      "rawBytes": 5730,
+      "rawSHA256": "f19735cd4b623435b2a9988fd8765d09d2cc06495b9e5a48e07d627275d5b7c1",
+      "compression": "gzip",
+      "storedBytes": 1709,
+      "storedSHA256": "6ced650ec25f7644d2c7cb1b89b776db9a493b023fe8d15b272ea84023afb1dd"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/sparse-input-restoration.json",
+      "storedPath": "routing-repair/sparse-input-restoration.json",
+      "rawBytes": 8222,
+      "rawSHA256": "550f9685664694db6c576450aa864f078a4048044ed93c34d3adfd201bfb2714",
+      "compression": null,
+      "storedBytes": 8222,
+      "storedSHA256": "550f9685664694db6c576450aa864f078a4048044ed93c34d3adfd201bfb2714"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/test_affected_validation.py.before",
+      "storedPath": "routing-repair/test_affected_validation.py.before.gz",
+      "rawBytes": 77491,
+      "rawSHA256": "102745b59e722c1e9dc951ed6b464aac549718f67fc21a80c1e1557dc5db0151",
+      "compression": "gzip",
+      "storedBytes": 11778,
+      "storedSHA256": "b74f8523edbedce52e07583638eeb4a58c155e184c2ec24e14046fdfe52bd51a"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/unforced-plan/plan.json",
+      "storedPath": "routing-repair/unforced-plan/plan.json.gz",
+      "rawBytes": 1581026,
+      "rawSHA256": "8f1131d89e36c4d8001283850b5a9c8f28849f952010c4a51261fe66fb1776c9",
+      "compression": "gzip",
+      "storedBytes": 78919,
+      "storedSHA256": "730815d3e7d55e320fdf98374be2b484cde2c204f82b7827b8b53fad96023eb8"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/unforced-plan/planner-receipt.json",
+      "storedPath": "routing-repair/unforced-plan/planner-receipt.json",
+      "rawBytes": 2475,
+      "rawSHA256": "81a8d29a81072ec5678028a5393f5a30efeb2526d05dabf7cefd23e08a60c433",
+      "compression": null,
+      "storedBytes": 2475,
+      "storedSHA256": "81a8d29a81072ec5678028a5393f5a30efeb2526d05dabf7cefd23e08a60c433"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/unforced-plan/planner.stderr",
+      "storedPath": "routing-repair/unforced-plan/planner.stderr.gz",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "gzip",
+      "storedBytes": 20,
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/unforced-plan/planner.stdout",
+      "storedPath": "routing-repair/unforced-plan/planner.stdout.gz",
+      "rawBytes": 30633,
+      "rawSHA256": "0346a2183af7c958c941226ab8d6473ea0f879c262f8242ca1f5575cad06d286",
+      "compression": "gzip",
+      "storedBytes": 4767,
+      "storedSHA256": "8888afd6fb59312f2569ec4545c1e3daf9e5be385c04d81673e7b73b7ac4805b"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/workflow-source-map.json",
+      "storedPath": "workflow-source-map.json.gz",
+      "rawBytes": 330398,
+      "rawSHA256": "8fc09e2c97a4c0024fdf11b0732a3c6a8eb989f85a7a2f272578673b24d7f668",
+      "compression": "gzip",
+      "storedBytes": 48485,
+      "storedSHA256": "1ddd577fca51ca557165a640d5a637bb6d25646b4eaa572e027a3b71992ce1d4"
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+[
+  {
+    "file": "AI_HLY/Downstream/ChatCore/HanlinDefaultChatPolicy.swift",
+    "base_sha256": "d00c79860e63f50872c4793b70c755b400d9668186c44592e2f097202d964aa2",
+    "proposed_sha256": "3e25ec5b2da0b62e2eb1edb747e3af4f5c3a700a31ed04e03715344258488207",
+    "bytes": 3515
+  },
+  {
+    "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingAssistantProviderAdapter.swift",
+    "base_sha256": "99d2af81b51cf51d6634febe7560bf750bea7106f8f7ee2cac65bea82380e736",
+    "proposed_sha256": "25c466798af05b806e85204726f603c2b22a04a69c75b661ec7b916a2131709c",
+    "bytes": 19576
+  },
+  {
+    "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatformAIIntegration.swift",
+    "base_sha256": "7a367b9a8c5b469521dcc313b0fff67830b30780c53fee4f58c8795155f61e71",
+    "proposed_sha256": "3a4127c27347c5c679c223cba93cf3d0cbb83bd626f4ae6767392605da929b85",
+    "bytes": 4507
+  },
+  {
+    "file": "AI_HLY/ModelsView.swift",
+    "base_sha256": "6f2e4cde2824d0ab588e638257117c23fb28471d432b40c3ea0b69b6a78fb3f5",
+    "proposed_sha256": "ddff45feef110a6d539545f79e661a2d5fd8931bef58d9012cb67a59e6e79df5",
+    "bytes": 19883
+  },
+  {
+    "file": "AI_HLY/Services/APIServices/ModelRefreshService.swift",
+    "base_sha256": "1ca261befaf2ae14d8872fe5389a08b9f0fae2a2778c048ed0f1a52cb742f3af",
+    "proposed_sha256": "9256f7d74af35b8e1460e065f594f6456441b7a508b760d4e362b86e6aa4f969",
+    "bytes": 62083
+  },
+  {
+    "file": "AI_HLY/Services/ChatServices/APIManager.swift",
+    "base_sha256": "792823155e9ee5964bdc286ff09672a209dbad405c4e4d07159e8332ad0a0aeb",
+    "proposed_sha256": "86c5c6d55d3a355609e5440baecc6b77a9ea0d31f668fd4d018eadbf3fa8dffb",
+    "bytes": 212315
+  },
+  {
+    "file": "AI_HLY/Services/ChatServices/AutomaticSearch/AutomaticSearchMigration.swift",
+    "base_sha256": "27746f847881408336abb773099eb55195be1d760cc9b297a9f6ee93009f41a6",
+    "proposed_sha256": "3101c3ea76352d842b1060da2bd23919e74aa9b980fb273da22ef32eb3bf2281",
+    "bytes": 4353
+  },
+  {
+    "file": "AI_HLY/Services/ChatServices/SystemOptimizer.swift",
+    "base_sha256": "d88ebc215c3e74d3c839cc124753b1cbea3f8925676b1435744ae08832b8f8ae",
+    "proposed_sha256": "49b517d77cf55748a6e644e273688c10b368093b026d66c79ebac43a4dbc6212",
+    "bytes": 66096
+  },
+  {
+    "file": "AI_HLY/Services/ChatServices/TextToSpeech.swift",
+    "base_sha256": "f53503774959fc82f4614f1ffcd6ace020c166081b798ba8b75ecbf335a1d1bc",
+    "proposed_sha256": "a778f22b91add4d6e42405859e47ebbe7ae60022bcfc0cd82908a577a743a63c",
+    "bytes": 17389
+  },
+  {
+    "file": "AI_HLY/Services/DataServices/HanlinAppProviderCredentials.swift",
+    "base_sha256": null,
+    "proposed_sha256": "0144d2e941ed4882661afd43b3c74faba869fb6a50dc3087d5e0964f37d5e9a1",
+    "bytes": 14033
+  },
+  {
+    "file": "AI_HLY/Services/VisionServices/VisionAPI.swift",
+    "base_sha256": "9d9f897c4228e54f570ba0b7e974605a0f18a8ff0ae49d844022e049fe24f0ea",
+    "proposed_sha256": "6c212ec0f2ed86cd9666d5492f63af05a8c04f8363abb3a25a3e5d57d5451373",
+    "bytes": 25177
+  },
+  {
+    "file": "AI_HLY/SettingsView.swift",
+    "base_sha256": "144a846f2b40414c01cead10ce09324f59a479294f9d7ae544f8099d7d96bcad",
+    "proposed_sha256": "06acf2d045a8f1450198a18fac038f0b32c0e8a1cb6226cfad2a6f59d3c66b6e",
+    "bytes": 16098
+  },
+  {
+    "file": "AI_HLY/Views/Components/APISettingView.swift",
+    "base_sha256": "62654f964efe6b0990f1cfa0cbb588a34b0953d02223dc4f10b0f3998c08df92",
+    "proposed_sha256": "9564ed5bc0b9efde1743c58ba00487f66da061106121854ac82614b4847a888b",
+    "bytes": 89577
+  },
+  {
+    "file": "AI_HLY/Views/Components/ChatViewComponents.swift",
+    "base_sha256": "132e8a34f732f3182fef9e6ba44db3ce386490474ef4eef8fd33904c5a17e9f2",
+    "proposed_sha256": "18f0bc45d50edc28f989adc4cf90be0c0a87fd7aee8167d1ec58705fa4415601",
+    "bytes": 254939
+  },
+  {
+    "file": "AI_HLY/Views/Components/KnowledgeWritingView.swift",
+    "base_sha256": "0b9368248f03d6cee6cebe7929f8d2283bff4c9d99c91aea915568c1578bead9",
+    "proposed_sha256": "1d91c6c21696814881eb8a57c74e4ea887cf642ead3b96f663d7840b4105bfff",
+    "bytes": 46431
+  },
+  {
+    "file": "AI_HLY/Views/Components/ModelManagementView.swift",
+    "base_sha256": "93c38b6457ea7044d82c52e69e144beb841dcb0560d0407915aedb770a49a62c",
+    "proposed_sha256": "f98375b7dc6a98c57fec21bd9ccb60ba774c2cf156e7c83b770caa08ffe122d5",
+    "bytes": 24171
+  },
+  {
+    "file": "AI_HLY/Views/Components/QuickToolsView.swift",
+    "base_sha256": "799136132ff64fa4bb012c5fd5704e5ce8b225e3491bdf0fd0de32a04417fafd",
+    "proposed_sha256": "cb454453e1ab5c36faab46f862597f5fcaf0393b60de0fa3081e18b192e862ae",
+    "bytes": 60859
+  },
+  {
+    "file": "AI_HLY/Views/Components/SettingsViewComponents.swift",
+    "base_sha256": "ec516643013ea3ae9dff2f355f523c77d2e2080ffccd8e5e28f6f2b961be9839",
+    "proposed_sha256": "6d133227de9e1fc04faa666fed8070762ca088bda86f5ff69e84956f7c4c43fc",
+    "bytes": 33443
+  },
+  {
+    "file": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+    "base_sha256": "bd3c545b0605488adc795583b07dc0fc7ce2dcac89eca976befd6b1e70600764",
+    "proposed_sha256": "bbb954b00d1e6ed28d91225f808f94487227923fd7ae2b5be4fe355f24603877",
+    "bytes": 111989
+  },
+  {
+    "file": "ChavrusaChatTranslationProvider/TranslationProviderSession.swift",
+    "base_sha256": "132cf187e25abb0fd794947210aba5604f3ed7778687bfc828ab73addc15eab6",
+    "proposed_sha256": "0aaab396361e8cad0202b82ae02f953f68d14cf077e669a4dea125565a4b797c",
+    "bytes": 3864
+  },
+  {
+    "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinCompactAgentContracts.swift",
+    "base_sha256": "6b017f405864a7086f33df0f5a248df59dfcf4e647d423847adb518972a8f70f",
+    "proposed_sha256": "495e94d2541e2aa09cea0c2f9ece06b16f44e4f940908102304adaf08a51026a",
+    "bytes": 12254
+  },
+  {
+    "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinKeychainCredentialStore.swift",
+    "base_sha256": null,
+    "proposed_sha256": "b570d0cd074bc3429f02ad37ac9392fddbf520fa64b45880e39e0607b815e597",
+    "bytes": 6353
+  }
+]

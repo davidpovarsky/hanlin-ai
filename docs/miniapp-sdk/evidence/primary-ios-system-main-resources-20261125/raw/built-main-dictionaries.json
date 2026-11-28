@@ -1,0 +1,29 @@
+{
+  "observedAt": "2026-11-25T08:04:28.629607+00:00",
+  "files": [
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/commandDictionary.plist",
+      "exists": true,
+      "size": 3560,
+      "sha256": "bc70ee9fce71b624c9f80c55be93d8a7c7d67bd06d48902ebe9fef32a906173b"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/extraCommandsDictionary.plist",
+      "exists": true,
+      "size": 181,
+      "sha256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/commandDictionary.plist",
+      "exists": false,
+      "size": null,
+      "sha256": null
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/extraCommandsDictionary.plist",
+      "exists": false,
+      "size": null,
+      "sha256": null
+    }
+  ]
+}

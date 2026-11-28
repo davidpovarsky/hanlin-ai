@@ -1,0 +1,63 @@
+{
+  "schema": 2,
+  "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+  "producerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "priorConsumerSource": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+  "sourceHashes": {
+    "AI_HLY/ChatView.swift": "d21659cdaa7d3e6141d4677d10ccaee067e7238ba8c4ccc2f689b63db4c41ffe",
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift": "ea6c76e33bb4594931bb118ab713e2de2d85e561f0e40eb21d64d154c45f9c90",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "da0fa21f26b677f4d18f8e1972208b39e30401a127e9dd2a9643e0fe8d7ad17c",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift": "3ad8217ce87005fab1fe3dc256e7d7680ced7c330f7cd9dc5561f1a5e5905e09",
+    "Packages/HanlinExpoUI/src/manual-components.tsx": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+    "Scripts/ProductSplit/test_run_paired_acceptance.py": "3791b4178c5cc49b64c38ead6f913284f29fc990c7223953aa74f2075f3771f1",
+    "Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx": "c93a882be209437f388c5d67a9af6ef98ca5371db4aef084aaf7cd464ce42d57",
+    "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift": "ac5c259fb195d09e641213f7fc33311db658bb3a52a58ee81e89ce6e7aa2a806",
+    "AI_HLYUITests/MiniAppAuthoringUITests.swift": "f60502af88a5e4b1166146cf5834e5d54eaa0451159b11f95ff26207f210fd72",
+    "Scripts/Expo/build-probe.mjs": "cdead47d9914543725e0e3160a14a13d91b31b2d584b737f0eb95c1b5539618c"
+  },
+  "priorTerminal": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/state.json",
+    "sha256": "9e199031a41095f66c101962da3c1c4ad330e748a9ac2afc267aac71384c2a21"
+  },
+  "priorChild": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/state.json",
+    "sha256": "5a0005645e789fc4979ff7515faf2c7ed28a589ff1f5aacdaa35cfdb388a3339"
+  },
+  "miniProductObservation": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-mini-reuse-observation.json",
+    "sha256": "81dbdacfebf83dd80c2e5c108c3e8284e041f396ec7c8358e533fb5e564ef3da"
+  },
+  "reuseObservation": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v3-reuse-observation.json",
+    "sha256": "e46e61d307f6b5fe4186e9bddf9faa83bd126b6d3e914d0cbb57feaaaeda1956"
+  },
+  "miniSourceImpact": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v3-inputs/mini-source-impact.json",
+    "sha256": "f9df39312b04c98f20d33982c6bf8fe0874377b294b286ebc6e48c54807e93f3"
+  },
+  "sourceAdvance": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/source-advance-6c006c94/receipt.json",
+    "sha256": "46bec03fc6828c1807d3ed1a07d28d1c4f617aab5ab6e89120ba201ac5e6cfc1"
+  },
+  "priorPrefixState": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/original-prefix-state.json",
+    "bytes": 25360,
+    "sha256": "4801986291deaff7bb15e83eabbad48529c72729054cd021225e8a34b71069e0"
+  },
+  "originalCommands": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/commands.jsonl",
+    "bytes": 19538,
+    "sha256": "287977f7fcbf5ec63c4abac2c90a64ef499340eb582e79f47be56277f37886ca"
+  },
+  "originalTestCommand": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/intercepted-original-command.json",
+    "bytes": 5534,
+    "sha256": "0761e032f202f92ec87e5413ade1890e23d4aa0b22b4aa858f024cb8085a13b9"
+  },
+  "priorBuiltBindings": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/built-input-bindings.json",
+    "bytes": 15177,
+    "sha256": "f63dc050246a3887ab4d64a632235e88db94f618748d336eeb8aa0ec90b12faf"
+  }
+}

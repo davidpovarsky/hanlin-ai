@@ -1,0 +1,50 @@
+{
+  "completed": true,
+  "run": 45238831508,
+  "source": "39a10b1cbf4645b629f556ea312e2576a4e566db",
+  "conclusion": "failure",
+  "logBytes": 26337432,
+  "logSHA256": "774daaa290455ac86b3f8a6f6faf4b8ec84f2063df894c291116a0c4a86cdab0",
+  "diagnostics": [
+    "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8085760Z macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled",
+    "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:18.5833540Z ** TEST BUILD FAILED **"
+  ],
+  "artifacts": [
+    {
+      "id": 14852958104,
+      "name": "provider-conformance-summary",
+      "size": 2284,
+      "digest": "sha256:3f6fafb557eeb63682affd238cb3285372ddab95cdfd72e8fdb1d940a2652205"
+    },
+    {
+      "id": 14852014263,
+      "name": "ci-performance-report",
+      "size": 2006,
+      "digest": "sha256:f84417e0cef4bfff2d7e291044fbc18f3d6e0fc6fc18d80cc9c99dded608b8ea"
+    },
+    {
+      "id": 14851982748,
+      "name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+      "size": 3623566,
+      "digest": "sha256:b182d1ebf821eaed35bc1f67365260080f2f11b5ead2873067f97d6926b61c6b"
+    },
+    {
+      "id": 14851195498,
+      "name": "ci-validation-plan",
+      "size": 24693,
+      "digest": "sha256:627277f647cef57e2c53cc0ece89a95e08083b83f8142cc5637ddba9537c314c"
+    },
+    {
+      "id": 14850817502,
+      "name": "hanlin-sdk-native-prepared",
+      "size": 184427540,
+      "digest": "sha256:3b39cf29cf2433e87ffcedf27704ab6578fcc5c6c39817f5d980f14bf0e43a15"
+    },
+    {
+      "id": 14850099687,
+      "name": "hanlin-foundation-models-interface",
+      "size": 29951,
+      "digest": "sha256:bb4cad92480b0f15c534a41892c8bf8fff4c6361fb3629f4e7cb214688ad723e"
+    }
+  ]
+}

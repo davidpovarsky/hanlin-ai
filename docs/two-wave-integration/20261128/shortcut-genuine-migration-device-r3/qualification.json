@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "status": "SOURCE_ONLY_R3_DEVICE_FAMILY_CORRECTION_PENDING_REVIEW",
+  "baseSourceCommit": "54b7d81c736ccc9e4c1081296ceafc525fe506f0",
+  "baseProofCommit": "e3b07c577d6424f355a360d4b2f668645e6e3bd5",
+  "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+  "before": {
+    "bytes": 114033,
+    "sha256": "f1fe4b512f88dc083ad0ff483f7497c385cc8af450766a7cb35be94bd28222e0"
+  },
+  "after": {
+    "bytes": 114067,
+    "sha256": "bbaaf97bb38c1e473770b21608848309d183e21ff87340032e5481555b709f5a"
+  },
+  "cause": "Both newly declared migration scopes were absent from the pre-existing iPad branch and would select the original iPhone fallback, contrary to the reviewed fresh-iPad migration contract.",
+  "change": "Only extend the iPad condition to the two exact MIGRATION_SCOPES. Original set, all other scopes, selectors, caps, products, install strategy and callbacks remain byte-exact.",
+  "wholeR2Inverse": true,
+  "checks": [
+    {
+      "argv": [
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "apply",
+        "--reverse",
+        "--check",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-genuine-migration-064b7b58/candidate-r3-device/r2-to-r3.patch"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "testsExecuted": 0,
+  "nativeInvocations": 0
+}

@@ -1,0 +1,149 @@
+{
+  "status": "EXACT_REVIEWED_SOURCE_STAGED_ALL_392_SDK_INPUTS_MATCH_HOST_PRESERVED",
+  "source": "bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb",
+  "before": "d2902ba9a4b18d5dba92662430e7eda355744b0c",
+  "startedAt": "2026-11-27T07:27:35.110828+00:00",
+  "nativeCommandsStarted": 0,
+  "priorAttempt": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source-stage-bd4c83ba.json",
+    "sha256": "fde8e602e21f52782b49d4c034fee9262fa4b1307cdd47488f08587b2a2c39fc",
+    "disposition": "Preserved ff-only ancestry rejection; no source mutation or native phase occurred."
+  },
+  "rootReview": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/import-bd4c83ba/root-package-and-miniapps-compile-integration.json",
+    "sha256": "31cdb37657e355eae15f90a6df75ea06925e290ce7719b5daebbc4e4ffad7165",
+    "contents": {
+      "schema": 1,
+      "atUTC": "2026-11-27T07:20:45.311824+00:00",
+      "base": "0c5df7c68b4a2abdf520232b0efb5bb6f0ba05cd",
+      "compileCommit": "58cbc24e1",
+      "httpSourceCommit": "42e1aa4ff9adf7ab2c7c899efcf7fd4ce319a7c6",
+      "integratedHead": "bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb",
+      "sparseCheckoutMaterialization": "Existing materialized file exactly equaled owned pre-cherry-pick0c source; restored exact merged HEAD blob",
+      "httpMethodByteEqualToReviewedCandidate": true,
+      "rootLoaderMethodByteEqualToAcceptedRootCorrection": true,
+      "httpNativeAPIsReviewSHA256": "4e354bee856c5e3aff0ccaf0349a27b1e76e913733d9e4562916947299ec8c66",
+      "native": "NOT_RUN",
+      "productionChanged": false,
+      "gitClean": true
+    }
+  },
+  "bundle": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/import-bd4c83ba/root-package-and-miniapps-tests-from-f768.bundle",
+    "bytes": 160650,
+    "sha256": "91047d36e5190ee9e102688a7739887b964fe6219005063ced4381536c3fa881",
+    "prerequisite": "f768d634bfa8a102cf63b32c7ab9d129cafc671d"
+  },
+  "retainedBeforeRef": {
+    "ref": "refs/heads/codex/mac-retained-seal-d2902ba9",
+    "sha": "d2902ba9a4b18d5dba92662430e7eda355744b0c"
+  },
+  "changedPaths": [
+    "Fixtures/HostActionSurfaces/nativescript/index.ts",
+    "Fixtures/HostActionSurfaces/nativescript/proof.ts",
+    "HanlinMiniAppsTests/NativeScriptShortcutConcurrencyTests.swift",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests.swift",
+    "Packages/HanlinPlatform/Tests/HanlinScriptingSDKTests/HanlinScriptingSDKTests.swift",
+    "Scripts/ProductSplit/Tests/test_share_input_fixture.mjs",
+    "Scripts/ProductSplit/Tests/test_share_translation_surface_observer.py",
+    "Scripts/ProductSplit/Tests/test_system_surface_input_producer.py",
+    "Scripts/ProductSplit/Tests/test_widget_action_surface_observer.py",
+    "Scripts/ProductSplit/observe_share_translation_surfaces.py",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+    "Scripts/ProductSplit/observe_widget_action_surfaces.py",
+    "Scripts/ProductSplit/run_paired_acceptance.py",
+    "docs/two-wave-integration/20261127/miniapps-concurrency-compiler-fix/candidate.json",
+    "docs/two-wave-integration/20261127/miniapps-concurrency-compiler-fix/independent-w2-source-review.json",
+    "docs/two-wave-integration/20261127/miniapps-concurrency-compiler-fix/original-source.patch.gz",
+    "docs/two-wave-integration/20261127/original-system-surfaces-source/independent-w2-share-dependency-review.json",
+    "docs/two-wave-integration/20261127/original-system-surfaces-source/input-producer-controls-r1/receipt.json",
+    "docs/two-wave-integration/20261127/original-system-surfaces-source/input-producer-controls-r1/stderr.log",
+    "docs/two-wave-integration/20261127/original-system-surfaces-source/input-producer-controls-r1/stdout.log",
+    "docs/two-wave-integration/20261127/original-system-surfaces-source/root-original10-runner-independent-review.json",
+    "docs/two-wave-integration/20261127/original-system-surfaces-source/source-preservation.json",
+    "docs/two-wave-integration/20261127/original-system-surfaces-source/source-r2.json",
+    "docs/two-wave-integration/20261127/original-system-surfaces-source/source-r2.patch.gz",
+    "docs/two-wave-integration/20261127/original-system-surfaces-source/validation.json",
+    "docs/two-wave-integration/20261127/original-system-surfaces-source/w1-widget-activity-independent-review.json",
+    "docs/two-wave-integration/20261127/original-system-surfaces-source/widget-activity-controls-r1/receipt.json",
+    "docs/two-wave-integration/20261127/original-system-surfaces-source/widget-activity-controls-r1/stderr.log",
+    "docs/two-wave-integration/20261127/original-system-surfaces-source/widget-activity-controls-r1/stdout.log",
+    "docs/two-wave-integration/20261127/original-system-surfaces-source/widget-activity-controls-r2/receipt.json",
+    "docs/two-wave-integration/20261127/original-system-surfaces-source/widget-activity-controls-r2/stderr.log",
+    "docs/two-wave-integration/20261127/original-system-surfaces-source/widget-activity-controls-r2/stdout.log",
+    "docs/two-wave-integration/20261127/package-persistence-test-controls/independent-source-review.json",
+    "docs/two-wave-integration/20261127/package-persistence-test-controls/source-validation.json",
+    "docs/two-wave-integration/20261127/package-persistence-test-controls/source.patch.gz",
+    "docs/two-wave-integration/20261127/sdk-resource-test-controls/source-validation.json",
+    "docs/two-wave-integration/20261127/sdk-resource-test-controls/source.patch.gz",
+    "docs/two-wave-integration/20261127/share-translation-source-validation.json",
+    "docs/two-wave-integration/20261127/share-translation-source/authoritative-source-chain.json",
+    "docs/two-wave-integration/20261127/share-translation-source/portable-r1/node7.stderr",
+    "docs/two-wave-integration/20261127/share-translation-source/portable-r1/node7.stdout",
+    "docs/two-wave-integration/20261127/share-translation-source/portable-r1/python14.stderr",
+    "docs/two-wave-integration/20261127/share-translation-source/portable-r1/python14.stdout",
+    "docs/two-wave-integration/20261127/share-translation-source/portable-r1/receipt.json",
+    "docs/two-wave-integration/20261127/share-translation-source/portable-r2/python15.stderr",
+    "docs/two-wave-integration/20261127/share-translation-source/portable-r2/python15.stdout",
+    "docs/two-wave-integration/20261127/share-translation-source/portable-r2/receipt.json",
+    "docs/two-wave-integration/20261127/share-translation-source/portable-r3/python2.stderr",
+    "docs/two-wave-integration/20261127/share-translation-source/portable-r3/python2.stdout",
+    "docs/two-wave-integration/20261127/share-translation-source/portable-r3/receipt.json",
+    "docs/two-wave-integration/20261127/share-translation-source/source-final.patch",
+    "docs/two-wave-integration/20261127/share-translation-source/source-preservation.json",
+    "docs/two-wave-integration/20261127/share-translation-source/source-r1.json",
+    "docs/two-wave-integration/20261127/share-translation-source/source-r1.patch",
+    "docs/two-wave-integration/20261127/share-translation-source/source-r2-bounded.diff.gz",
+    "docs/two-wave-integration/20261127/share-translation-source/source-r2.json",
+    "docs/two-wave-integration/20261127/share-translation-source/source-r3-bounded.diff.gz",
+    "docs/two-wave-integration/20261127/widget-http-test-controls/check_fixture_wire.py",
+    "docs/two-wave-integration/20261127/widget-http-test-controls/installed-macos27-session-proxy-declarations.json",
+    "docs/two-wave-integration/20261127/widget-http-test-controls/portable-fixture-evidence/extracted-proxy.py",
+    "docs/two-wave-integration/20261127/widget-http-test-controls/portable-fixture-evidence/port",
+    "docs/two-wave-integration/20261127/widget-http-test-controls/portable-fixture-evidence/receipt.json",
+    "docs/two-wave-integration/20261127/widget-http-test-controls/portable-fixture-evidence/server.stderr",
+    "docs/two-wave-integration/20261127/widget-http-test-controls/portable-fixture-evidence/wire.jsonl",
+    "docs/two-wave-integration/20261127/widget-http-test-controls/source-validation.json",
+    "docs/two-wave-integration/20261127/widget-http-test-controls/source.patch.gz"
+  ],
+  "checkoutOutput": "",
+  "packageTrees": {
+    "Packages/HanlinPlatform": "e7aefdeaff2434b3c6ab8c0e42bb6c3d26b3ac6f",
+    "Packages/HanlinPlatform/Sources": "1586a7e95b6a3245bf0bb0ea60600c9b5086bc63",
+    "Packages/HanlinPlatform/Tests": "c88f6823845d9f6dc6aa93beb3a3bd0af6b1270a",
+    "Fixtures/Widgets": "a0b7b0b1cb9e1ce756ccff40593a325ffffa73d6"
+  },
+  "lockfiles": {
+    "Packages/HanlinPlatform/Package.resolved": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d",
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "56d19a4b8c677831fb91e1f8155a68e411b42fd4807ad618d6f169569e1bb5a4"
+  },
+  "sdk392Qualification": {
+    "sdkManifest": "/Users/m1/builds/hanlin-two-wave-root-20261126/fresh-sdk-f768d634-original-phases-r1/MiniAppSDK/miniapp-sdk.json",
+    "manifestSHA256": "f6603fc7f62b91a80cef33eb72a77e93711504b3b2f0a1851ead62f49c787a7a",
+    "inputSHA256": "4b75c9122e17ff24464a8dfb757b1b3c72d2817d55472b4c0be035e7c71b55cc",
+    "matched": 392,
+    "mismatches": [],
+    "changedSourceIntersection": []
+  },
+  "hostArchive": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/AI_HLY/RuntimeHostResources.zip",
+    "sha256": "fae9778f1b6548a069f6bd16bef3e2f22c710445a84d1fb025f4e90a5d1e1718",
+    "preparedSource": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+    "hostReceiptSHA256": "4e21fb52599c9986a1e589a4f8305f0d8d31e1159bed6f5a1942b94657eb40c5",
+    "currentSource": "bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb"
+  },
+  "warmBuildsPreserved": {
+    "swiftPM": {
+      "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/.build",
+      "sameDirectoryInode": true
+    },
+    "appDerivedData": {
+      "path": "/Users/m1/caches/DerivedData/hanlin-two-wave-root-20261126",
+      "sameDirectoryInode": true
+    }
+  },
+  "sourceClean": true,
+  "finishedAt": "2026-11-27T07:27:36.047416+00:00",
+  "freeBytes": 2743504896
+}

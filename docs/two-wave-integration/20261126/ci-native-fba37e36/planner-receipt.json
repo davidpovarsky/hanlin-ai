@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "fba37e3636da21f897d6a86298b52f2149b462dd",
+  "argv": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "Scripts/CI/plan_affected_validation.py",
+    "--repository",
+    "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126",
+    "--event-name",
+    "workflow_dispatch",
+    "--base-sha",
+    "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+    "--head-sha",
+    "fba37e3636da21f897d6a86298b52f2149b462dd",
+    "--json-output",
+    "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/build/affected-routing-fba37e36/plan.json"
+  ],
+  "exitCode": 0,
+  "durationSeconds": 62.77296728733927,
+  "resultPath": "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/build/affected-routing-fba37e36",
+  "observedAtUTC": "2026-11-26T19:08:13.015880+00:00"
+}

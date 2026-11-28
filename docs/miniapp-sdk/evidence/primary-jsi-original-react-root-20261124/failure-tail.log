@@ -1,0 +1,80 @@
+ift: ExpoModulesJSI-product: ld: warning: -undefined dynamic_lookup is deprecated on iOS-simulator
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/node_modules/expo-modules-jsi/apple/Package.swift: ExpoModulesJSI-product: ld: warning: -undefined dynamic_lookup is deprecated on iOS-simulator
+note: Using codesigning identity override: 
+[ExpoModulesJSI] Built xcframework successfully in 73s (ios-arm64, ios-arm64_x86_64-maccatalyst, ios-arm64_x86_64-simulator, macos-arm64_x86_64, tvos-arm64, tvos-arm64_x86_64-simulator)
+[HanlinExpo] ExpoModulesJSI.xcframework built and staged successfully.
+[HanlinExpo] Normalized, signed, and verified ExpoUI.xcframework
+[HanlinExpo] Normalized, signed, and verified ExpoModulesJSI.xcframework
+[HanlinExpo] Normalized, signed, and verified ExpoModulesCore.xcframework
+[HanlinExpo] Normalized, signed, and verified ExpoModulesWorklets.xcframework
+[HanlinExpo] Normalized, signed, and verified ExpoBrownfield.xcframework
+[HanlinExpo] Normalized, signed, and verified React.xcframework
+[HanlinExpo] Normalized, signed, and verified ReactNativeDependencies.xcframework
+[HanlinExpo] Normalized, signed, and verified hermesvm.xcframework
+[HanlinExpo] Normalized, signed, and verified ReactNativeHeaders.xcframework
+Starting Metro Bundler
+
+iOS Bundled 3501ms node_modules/expo-widgets/bundle/index.ts (125 modules)
+Writing bundle output to: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle.staging-73498/ExpoWidgets.bundle
+Done writing bundle output
+[HanlinExpo] Built original Widgets JavaScript runtime 58.0.29: 6ec4f91b442f8c387f2ea339f503b5a39082878811806cb58179236d06323aed
+[HanlinExpoNativeAPI] Preparing NativeScript RN and Worklets iOS dependencies...
+[HanlinExpoNativeAPI] Downloading @nativescript/react-native@9.1.2...
+[HanlinExpoNativeAPI] Verified NativeScript RN tarball SHA256: 906f2106215426e6211c27f37fe2e874b9d91d174efbabb1d8b512fcdb2d4798
+[HanlinExpoNativeAPI] Downloading react-native-worklets@0.13.0...
+[HanlinExpoNativeAPI] Verified Worklets tarball SHA256: 5894c90a9bf3abaf81b5a92587884d757e0328dd3450a9cffe0e56e35b0a43a4
+[HanlinExpoNativeAPI] Staged metadata .nsmd files into Artifacts/metadata and Sources/HanlinExpoNativeAPI/Resources/metadata
+[HanlinExpoNativeAPI] Verified Libffi.xcframework static libraries (arm64 + sim).
+[HanlinExpoNativeAPI] Applied session/runtime/view-scoped native integration
+[HanlinExpoNativeAPI] Generating NativeScriptNativeApiSpec into: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/generated
+[HanlinExpoNativeAPI] Generating rnworklets into: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/generated
+[HanlinExpoNativeAPI] NativeScript codegen schema SHA256: 3da4813f9bc64360b35b12fdb1720b1e47b3cdb9563a43ebd56ba3cfd22e16d1
+[HanlinExpoNativeAPI] Codegen artifacts generated successfully (iOS-only targets).
+[HanlinExpoNativeAPI] Verifying NativeScript metadata files in: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Artifacts/metadata
+[HanlinExpoNativeAPI] Verified metadata.ios.arm64.nsmd (4561622 bytes, SHA256: 50aabcb10723560a74500001cc2d64a034c05a5c755de35127fcc7601a7909f3)
+[HanlinExpoNativeAPI] Verified metadata.ios-sim.arm64.nsmd (4493790 bytes, SHA256: 33296faebf7f32db36d70304aef5fe27dfc1a283df6487c53d8a0a5931e4e73c)
+[HanlinExpoNativeAPI] Verified metadata.ios-sim.x86_64.nsmd (4500328 bytes, SHA256: c811940bcb2202189473f52a2ccc368b34f3124a7d7f677e6702af61b0112d66)
+[HanlinExpoNativeAPI] All NativeScript metadata files verified successfully.
+=== Hanlin Expo Native API Artifacts Audit ===
+[PASS] Libffi.xcframework exists with valid Info.plist and static lib slices (arm64 + sim)
+[PASS] No duplicate React or Hermes binaries in HanlinExpoNativeAPI/Artifacts
+[PASS] All metadata .nsmd files present and non-empty in Artifacts and target Resources
+[HanlinExpoNativeAPI] Artifacts verification PASSED.
+[HanlinExpoNativeAPI] All Native API dependencies prepared and verified successfully.
+PASS: five exact pinned declaration-file corrections; no skipLibCheck or runtime changes.
+[HanlinExpo] Running semantic TypeScript project check before Metro...
+PASS: five exact pinned declaration-file corrections; no skipLibCheck or runtime changes.
+PASS: TypeScript6.0.3 strict UI declarations, zero valid diagnostics and 5 exact negative diagnostics.
+PASS: five exact pinned declaration-file corrections; no skipLibCheck or runtime changes.
+PASS: TypeScript6.0.3 strict original Widgets declarations, zero valid diagnostics and 3 exact negative diagnostics.
+Warning: Assets destination folder is not set, skipping...
+[HanlinExpo] Original public Widgets API probe staged: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeA.hanlinExpo
+Warning: Assets destination folder is not set, skipping...
+[HanlinExpo] Original public Widgets API probe staged: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeB.hanlinExpo
+[HanlinExpo] Building Expo SwiftUI Probe Variant A with Metro...
+Warning: Assets destination folder is not set, skipping...
+[HanlinExpo] Created probe package: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo
+[HanlinExpo] Building Expo SwiftUI Probe Variant B with Metro...
+Warning: Assets destination folder is not set, skipping...
+[HanlinExpo] Created probe package: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo
+[HanlinExpo] Building Malformed Expo Probe...
+[HanlinExpo] Staged malformed probe package: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIMalformed.hanlinExpo
+[HanlinExpo] Default probe package staged at: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo
+[HanlinExpo] Test fixtures staged into: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLYUITests/Fixtures
+[HanlinExpoNativeAPI] Building deterministic Native API probe packages...
+[HanlinExpoNativeAPI] Bundling Variant A...
+Warning: Assets destination folder is not set, skipping...
+[HanlinExpoNativeAPI] Staged: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeA.hanlinExpo (SHA256: f065d0fffd837c9346caac0326d3e19620a25a6516ba175cb4ae8d3360d879ba)
+[HanlinExpoNativeAPI] Bundling Variant B...
+Warning: Assets destination folder is not set, skipping...
+[HanlinExpoNativeAPI] Staged: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeB.hanlinExpo (SHA256: e0a8612e4d08bb198f5b48ea3e0fd5355c73e9f9a32215e7481f0d64dce6a7b3)
+[HanlinExpoNativeAPI] Building Missing Grant negative probe...
+[HanlinExpoNativeAPI] Staged: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeMissingGrant.hanlinExpo (SHA256: 5b5ef66c91204f4268b07ce2e3864922cc203acd3d0ad2fe5df3b80f2071fe38)
+[HanlinExpoNativeAPI] Building Incompatible Version negative probe...
+[HanlinExpoNativeAPI] Staged: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeIncompatible.hanlinExpo (SHA256: 39fa0b492bb18ef50a774ccb5a7c5a5501f240a3a7b4053f9d4531f843236b1b)
+[HanlinExpoNativeAPI] Building Malformed negative probe...
+[HanlinExpoNativeAPI] Staged: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIMalformed.hanlinExpo (SHA256: 6061e8c26fdbcbbfe20fa7d8abc2a6a8ee63d0f665046583b96fcefd5d6ad301)
+[HanlinExpoNativeAPI] All test probe packages created and staged successfully.
+Validated /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/RuntimeDependencies.lock.json.
+d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5
+release not found

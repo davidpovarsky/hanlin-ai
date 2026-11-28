@@ -1,0 +1,214 @@
+{
+  "artifactID": 15173212148,
+  "zipBytes": 500410,
+  "zipSHA256": "34ae5b723004fbb99f665011c163801c9d522c59c52c8b3e6653aa434e513639",
+  "members": [
+    {
+      "path": "app-split-evidence/acceptance.json",
+      "bytes": 737,
+      "sha256": "1c733977d94df2f5ad01e8210532b3108bd3777baf1b133bf3981974d8687f60"
+    },
+    {
+      "path": "app-split-evidence/ci-performance-report.json",
+      "bytes": 2237,
+      "sha256": "4c851bcc474afb164bd0986aa0baed51336ca2688fb189c212328c9c80b6edd0"
+    },
+    {
+      "path": "app-split-evidence/foreground/foreground-results.json",
+      "bytes": 24690,
+      "sha256": "d595f3463b718d11a561802433c88fdd1182a79ff9ae7d99f2638c03accd7198"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/commands.jsonl",
+      "bytes": 20853,
+      "sha256": "7239ba9c87e7db018ce80818003d505f9924a135b36917f336a08bac24543278"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/contracts-provenance.json",
+      "bytes": 19451,
+      "sha256": "afed8a2dad291442a6e53499dcbfe21576d076348f7b463fcdc255d383662a9a"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/core-provenance.json",
+      "bytes": 6349,
+      "sha256": "fa8a7ca939c0d34b29ea21183f224e8c9d188a809516be1cf04895b565c5ca64"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/foreground-binary-provenance.json",
+      "bytes": 8609,
+      "sha256": "aec25693a8483441971edacb2f437dfd46a1e078e5305edc792bde1c80f65f43"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/manifest.json",
+      "bytes": 5118,
+      "sha256": "7f143a43aee0913467f0538281adf16befac3b86393006bc90054ea13b425b89"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-001-toolchain.stderr.log",
+      "bytes": 30,
+      "sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-002-compile-contracts.stderr.log",
+      "bytes": 98,
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-002-compile-contracts.stdout.log",
+      "bytes": 165165,
+      "sha256": "c91130596781c99a9528081f9b1389f69f8e75ba0b0c223d4df5e1d7132b8577"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-001-toolchain.stdout.log",
+      "bytes": 98,
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-003-compile-core.stderr.log",
+      "bytes": 98,
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-004-link-foreground.stdout.log",
+      "bytes": 46335,
+      "sha256": "7205c433b63988b16ed4aa0adead5d91c686b34d051facf2b9cfcf1bedf2521e"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-004-link-foreground.stderr.log",
+      "bytes": 98,
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-003-compile-core.stdout.log",
+      "bytes": 7585,
+      "sha256": "f8093eb2cdd9d6a974e76435e783643cdfc64cb483710a576a9fd4618fc856bd"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-005-tests-foreground.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-005-tests-foreground.stdout.log",
+      "bytes": 2090,
+      "sha256": "c617624f4096a37fa8807b3c145449ce20cff0eeae45d1d760bfda13b3bae810"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-006-commit-base.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-006-commit-base.stdout.log",
+      "bytes": 41,
+      "sha256": "6498b2c40f12c911d924d3a23c6616dbb3efaa53e9987b0a38a8b56562c075ba"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-007-working-tree.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-007-working-tree.stdout.log",
+      "bytes": 1269,
+      "sha256": "a43832f90d87937a233da1d943c357799610bfe8b179580c6afaa13979ff6df9"
+    },
+    {
+      "path": "app-split-evidence/foreground-reuse.json",
+      "bytes": 83,
+      "sha256": "98f9b73dee20aa724bbd6bc2deb82ceb09d2dc18a1ad374630dc66a052a437f9"
+    },
+    {
+      "path": "app-split-evidence/foreground.log",
+      "bytes": 200,
+      "sha256": "74d6240de0028fccfa242eb978cf5963c49338eabf46f15265f5b36ebaad3e0b"
+    },
+    {
+      "path": "app-split-evidence/host-reuse.json",
+      "bytes": 70,
+      "sha256": "5e22daf5ec19232fe3906c437666b1d7a8f1c5a59ba9cb9fbb9f5ee304ee2289"
+    },
+    {
+      "path": "app-split-evidence/miniapp-cli-relocation.log",
+      "bytes": 223,
+      "sha256": "a0551f1b947651afc82330585d6e12ea1b1523e3156a68267133fac85eb54b1f"
+    },
+    {
+      "path": "app-split-evidence/native-dependencies-duration-seconds.txt",
+      "bytes": 4,
+      "sha256": "292f9b09674069091f3cd5b7e1e36cb1322fcb6fa16595a5edb88f38edcd1c28"
+    },
+    {
+      "path": "app-split-evidence/native-dependencies.log",
+      "bytes": 4003159,
+      "sha256": "3259c4485baecc12f450febd417f18581956f659879814be41d9830389e0d6c9"
+    },
+    {
+      "path": "app-split-evidence/package-lifecycle.log",
+      "bytes": 1407,
+      "sha256": "43e1ea85a49aee830706b09e48bbb58b4c1b2c8122e1735c59b694d90dbbef65"
+    },
+    {
+      "path": "app-split-evidence/package-lifecycle-duration-seconds.txt",
+      "bytes": 2,
+      "sha256": "aa67a169b0bba217aa0aa88a65346920c84c42447c36ba5f7ea65f422c1fe5d8"
+    },
+    {
+      "path": "app-split-evidence/preflight-duration-seconds.txt",
+      "bytes": 3,
+      "sha256": "238903180cc104ec2c5d8b3f20c5bc61b389ec0a967df8cc208cdc7cd454174f"
+    },
+    {
+      "path": "app-split-evidence/preflight.log",
+      "bytes": 128111,
+      "sha256": "9ad398a332db95c45030d0770c609b27578f127e81dffa2268c37929a42be497"
+    },
+    {
+      "path": "app-split-evidence/skill-health.txt",
+      "bytes": 84,
+      "sha256": "484ea42b543c850d718181e5c283d1b8ff4da076c7ed5b59cc2f38d179f15ee1"
+    },
+    {
+      "path": "app-split-evidence/upstream-inputs.patch",
+      "bytes": 162919,
+      "sha256": "4dab76167653db5bb79f9d3ca7aad05980626875785c8856ac811b9b6e1c5ef0"
+    },
+    {
+      "path": "app-split-evidence/upstream-resolution.json",
+      "bytes": 20829,
+      "sha256": "6df1a6d2d3f5962062cda1971856136014668f5d7571df7137cb58430aaf8302"
+    },
+    {
+      "path": "app-split-evidence/upstream-resolution.log",
+      "bytes": 7973,
+      "sha256": "6cd78aa85a90a7e051717e4eb808adb72d04051d0badc1b63d5efb3f32ad24df"
+    }
+  ],
+  "reports": {
+    "app-split-evidence/acceptance.json": {
+      "status": "INFRA_ERROR",
+      "ui": "NOT_VERIFIED",
+      "report_source": "workflow_fallback",
+      "xcresult": "NOT_FOUND_IN_EVIDENCE",
+      "result_bundles": [],
+      "step_outcomes": {
+        "platform": "success",
+        "upstreams": "success",
+        "host_proof": "success",
+        "foreground": "success",
+        "host_lifecycle": "success",
+        "metadata": "success",
+        "native_preparation": "failure",
+        "native_artifacts": "skipped",
+        "standalone_acceptance": "skipped",
+        "paired_acceptance": "skipped",
+        "signing_dependencies": "skipped",
+        "signed_archives": "skipped"
+      },
+      "sha": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "reason": "No final native acceptance report was retained; inspect step_outcomes and original job logs."
+    }
+  },
+  "scope": "Original unmodified failure evidence; native preparation failure before app tests",
+  "verifiedAt": "2026-11-27T05:04:04.638081+00:00"
+}

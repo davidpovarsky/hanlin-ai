@@ -7,10 +7,20 @@
 
 ---
 
+## Recorded completion authorization — 2026-11-18
+
+The current owner's direct authorization is recorded in ../../docs/continuation-20261117/OWNER_AUTHORIZATION_20261118.md. These old assignments are historical; one developer completes both phases without a new phase-start or frozen-file confirmation.
+
+## Current Hanlin execution — 2026-11-26
+
+Read the standing authorization and current two-wave execution in root `AGENTS.md`. The owner explicitly requested parallel work using ChatGPT's built-in agents and Asana milestone updates. The earlier November 18 single-developer continuation and historical requirements to start a particular external named team do not describe this run.
+
+The NORMAL/TEAM distinction below remains useful for truthful attribution. For this ChatGPT task, `invoke_subagent` denotes the available built-in `collaboration.spawn_agent` capability, not an external AI CLI; record its real agent/task identifier instead of inventing a conversation ID. The coordinating agent publishes Asana milestone updates from the agents' exact evidence. Existing owner authorization is applied without repeated confirmation; actual access controls, secret protection and all unfulfilled acceptance requirements remain in force.
+
 ## 1. Project Scope & Technical Boundaries
-- **FROZEN CHAT UI (WX-14):** `AI_HLY/ChatView.swift`, `ChatViewBottom.swift`, `ChatViewComponents.swift`, and `ChatandFile.swift` are strictly FROZEN. Do not touch or modify without explicit owner approval.
+- **Chat UI integration:** The owner has approved necessary changes to `AI_HLY/ChatView.swift`, `ChatViewBottom.swift`, `ChatViewComponents.swift`, and `ChatandFile.swift` for the current completion. Preserve the original components and verify affected behavior.
 - Widgets, MiniApps, Skill execution isolation, NativeScript runtime, and TorahLibraryKit integration.
-- Future Classic Chat UI work remains in FUTURE BACKLOG until the current 23 tasks are completed and authorized.
+- The current Phase 2/3 Chat and split work is authorized; historical backlog sequencing does not stop it.
 
 ---
 
@@ -31,9 +41,9 @@
 
 ---
 
-## 3. Two-Tier Execution Policy & Approval Gates
-- **מדיניות ביצוע (NORMAL מול TEAM):** ברירת המחדל היא ביצוע ישיר בסשן הראשי (`[MAIN_SESSION]`) תוך טעינת הוראות התפקיד מ-`.agents/roles/<role>.md` ו-`PROJECT_ASSIGNMENTS.md`. הפעלת סוכני משנה (`invoke_subagent` / `[SUBAGENT]`) מתבצעת אך ורק לפי בקשה מפורשת של המשתמש ("עבוד במצב צוות" / "הפעל סוכני משנה").
-- **Chat UI Freeze:** Modifying the 4 frozen Chat UI files is strictly prohibited without explicit owner permission.
-- **Release & Merges:** PR merges to `main`, TestFlight, or unsigned IPA distribution require owner approval.
+## 3. Execution Attribution and Approval Gates
+- **Execution mode:** Distinguish `[MAIN_SESSION]` from actual `[SUBAGENT]` work and retain the real invocation identifier; apply the current explicit built-in ChatGPT team request from root `AGENTS.md`.
+- **Chat UI:** Necessary current-scope edits have explicit owner approval; visual and behavioral acceptance still require real evidence.
+- **Release & Merges:** Apply the current owner authorization and actual acceptance results; do not treat historical approval requests as a new stop after authorization has been granted.
 - **Physical Device:** Tasks with physical iPad requirements remain open until verified on hardware.
 - **Asana Policy:** Autonomous updates and verified completion are authorized per `docs/ai-team/ASANA_POLICY.md`.

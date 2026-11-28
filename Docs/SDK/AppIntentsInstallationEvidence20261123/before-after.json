@@ -1,0 +1,12 @@
+{
+  "before": {
+    "exit": 1,
+    "source_sha256": "e449630d2c861c338f5406cbc659dec904a30b2200d9674d0162231c3e7ae9d2",
+    "log_sha256": "b1cadec29b389bdf2966f7dfa49d9f453d0b5abe76fa15d30bf83b6d5e25abcc"
+  },
+  "after": {
+    "exit": 0,
+    "source_sha256": "4cf99955317a83e3d882834fe0235f505af41e335fd1e84e475524081d301677",
+    "log_sha256": "a497994c868802e98ccfbad1d47bceddce3dfda469b5cef7dc4fa3df6e7798c5"
+  }
+}

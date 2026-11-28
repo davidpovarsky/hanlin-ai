@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "status": "REUSED_VERIFIED",
+  "currentSource": "ce8965429942901b54e43f9e1efd2c9ae1f73b3e",
+  "currentArchiveSHA256": "a088d98b8f85ae1e1ad767fca92132c03f0155d5ddd379d57b8cc98c38f19383",
+  "currentSDKInputSHA256": "9e397ad525cf254598f8b35256816d1519ae2adfb02f3e5692fc91c21a1a3ab1",
+  "original188": {
+    "status": "REUSED_VERIFIED",
+    "actualExecutionSource": "b5475156e7b0253b24c0a4385236b60da21f6f7e",
+    "actualExecutionReceipt": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-preparation-b5475156-original-phases-r1.json",
+    "actualExecutionReceiptSHA256": "ae96e1b3f5cbeafed5645fd26bbd3edfd1a74fd264c5a5dda4837fb1990d43a9",
+    "originalTestSummary": {
+      "tests": 188,
+      "pass": 188,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "actualLongJobProof": {
+      "proof": "actual-node-job-over-300-seconds",
+      "elapsedMilliseconds": 305044.987583,
+      "executionID": "432c5399-ce28-4670-826e-4336fc28dd24"
+    },
+    "testClosureSHA256": "3a48396dfcf27155074296d19b56ebd03eaebe5387e56f4eb76e1c34865bf96c",
+    "testInvocationsThisAttempt": 0,
+    "acceptedPayloadFiles": 28810,
+    "changedPayloadFiles": [
+      "MiniAppSDK/docs/miniapp-sdk/extension-reachability.json",
+      "MiniAppSDK/docs/miniapp-sdk/extension-reachability.md",
+      "MiniAppSDK/miniapp-sdk.json"
+    ],
+    "allOtherPayloadBytesAndModesEqual": true,
+    "newArchiveNotYetAccepted": false
+  },
+  "stagedClosure": {
+    "sha256": "6baf656394e5c40054fc3c31901258f000907564e5d359fd9a6ff4f7dccf7ad1",
+    "files": 28810,
+    "deltaSHA256": "9e86f6bbbf834f78dcb14ba331a828ab4fdb5fe0ff0bb1c48f4cd76fcc714f38"
+  },
+  "newHostTestInvocations": 0,
+  "freshOriginalTwelvePhasePassClaimed": false,
+  "note": "host-metadata.json retains the unchanged producer schema tests=passed. Its test proof is the exact historical b547 original188 execution qualified here; JITless and packed checks were freshly executed."
+}

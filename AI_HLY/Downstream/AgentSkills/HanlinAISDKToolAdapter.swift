@@ -1,0 +1,1047 @@
+import Foundation
+import SwiftData
+import HanlinPlatformContracts
+import HanlinChatCore
+import HanlinAgentCore
+
+/// Adapts canonical Hanlin tools into SDK `HanlinAISDKToolDefinition`s,
+/// routing execution through `AssistantToolBridge.PreparedTools`, meta-tools (`LoadSkillTool`,
+/// `ToolSearchTool`, `ReadToolResultTool`), and preserving large tool results, UI blocks,
+/// diagnostics, and presentation decisions.
+@MainActor
+final class HanlinAISDKToolAdapter {
+    struct Callbacks {
+        var onStreamData: ((StreamData) -> Void)?
+        var onAgentEvent: ((AgentEvent) -> Void)?
+        var onProgressMessage: ((AgentProgressMessage) -> Void)?
+        var currentReasoningSummary: (() -> String?)?
+
+        init(
+            onStreamData: ((StreamData) -> Void)? = nil,
+            onAgentEvent: ((AgentEvent) -> Void)? = nil,
+            onProgressMessage: ((AgentProgressMessage) -> Void)? = nil,
+            currentReasoningSummary: (() -> String?)? = nil
+        ) {
+            self.onStreamData = onStreamData
+            self.onAgentEvent = onAgentEvent
+            self.onProgressMessage = onProgressMessage
+            self.currentReasoningSummary = currentReasoningSummary
+        }
+    }
+
+    let session: AssistantCapabilitySession
+    var preparedTools: AssistantToolBridge.PreparedTools {
+        didSet {
+            cachedToolDefinitions = nil
+            catalogGeneration = UUID()
+        }
+    }
+    /// PreparedTools owns an immutable authority. Only replacement can change its routes or schemas.
+    private(set) var catalogGeneration = UUID()
+    private var cachedToolDefinitions: [HanlinAISDKToolDefinition]?
+    let catalog: HanlinSkillCatalog
+    let skillStore: SkillStore
+    let modelContext: ModelContext?
+    let currentLanguage: String
+    let progressSummaryRequired: Bool
+    let supportsReportProgress: Bool
+    var callbacks: Callbacks
+    var reportProgressController: ReportProgressController
+    var latestToolProgressSummary: String?
+    var diagnosticsRecorder: AgentDiagnosticsRecorder?
+    var currentRoundID: UUID?
+    /// Prepared producer receipts stay keyed to their immutable SDK step until
+    /// the consumer receives stepStarted. This is not a completed-round history.
+    private var preparedRoundIDs: [Int: UUID] = [:]
+
+    func takePreparedRoundID(forStep step: Int) -> UUID? {
+        preparedRoundIDs.removeValue(forKey: step)
+    }
+
+    func finishPreparedRound(forStep step: Int, roundID: UUID) {
+        if preparedRoundIDs[step] == roundID { preparedRoundIDs.removeValue(forKey: step) }
+        // A buffered step N completion must not clear producer step N+1.
+        guard currentStepIndex == step, currentRoundID == roundID else { return }
+        currentRoundID = nil
+    }
+    /// Installed only by the original Session owner with its authentic HostSession.
+    var sdkAttachmentResolver: (@MainActor @Sendable (String) async throws -> Data)?
+    var currentStepIndex: Int = 0
+    var completedCallIDs: Set<String> = []
+    /// Transient observers on the existing execution path. They never execute a tool.
+    var sdkProgressHandlers: [String: @MainActor @Sendable (String) -> Void] = [:]
+    var sdkPreDispatchHandlers: [String: @MainActor @Sendable (String) throws -> Void] = [:]
+    var sdkOutcomeHandlers: [String: @MainActor @Sendable (NativeToolExecutionOutcome) -> Void] = [:]
+    var maxActiveStepSchemaBytes: Int? = nil
+
+    static func buildUnknownToolErrorMessage(
+        alias: String,
+        catalog: HanlinSkillCatalog,
+        preparedTools: AssistantToolBridge.PreparedTools,
+        currentLanguage: String
+    ) -> String {
+        let isZh = currentLanguage.hasPrefix("zh")
+        if let skill = catalog.resolve(rawID: alias) {
+            let toolsList = skill.preferredToolIDs.joined(separator: ", ")
+            if isZh {
+                return "Error: '\(alias)' 是技能 ID (skill_id)，不是可直接调用的工具名称。请先调用 load_skill(skill_id: \"\(skill.id.rawValue)\") 激活该技能，或直接调用其关联工具：\(toolsList)。"
+            } else {
+                return "Error: '\(alias)' is a skill_id, not a callable tool name. Call load_skill(skill_id: \"\(skill.id.rawValue)\") to activate it, or call one of its tools directly: \(toolsList)."
+            }
+        }
+        let matches = preparedTools.search(query: alias, limit: 5).map(\.alias)
+        if !matches.isEmpty {
+            let suggestion = matches.joined(separator: ", ")
+            return isZh
+                ? "Error: 工具 '\(alias)' 不存在。您是否想调用：\(suggestion)？也可使用 tool_search 搜索可用工具。"
+                : "Error: Tool '\(alias)' does not exist. Did you mean: \(suggestion)? You can also call tool_search to discover available tools."
+        }
+        return isZh
+            ? "Error: 工具 '\(alias)' 不存在。请使用 tool_search 搜索可用工具，或使用 load_skill 加载技能。"
+            : "Error: Tool '\(alias)' does not exist. Use tool_search to discover callable tools or load_skill to activate a skill."
+    }
+
+    func resolveRoundID() async -> UUID? {
+        if let currentRoundID { return currentRoundID }
+        if let recorder = diagnosticsRecorder {
+            if let existingID = await recorder.roundID(forIndex: currentStepIndex) {
+                currentRoundID = existingID
+                return existingID
+            }
+            let prep = prepareStep()
+            let targetIndex = currentStepIndex
+            let stepID = await recorder.beginRound(
+                index: targetIndex,
+                trigger: targetIndex == 0 ? "initialUserRequest" : "continueAfterToolResult",
+                requestData: Data(),
+                loadedSkillIDs: prep.loadedSkillIDs,
+                modelVisibleToolAliases: prep.activeToolAliases,
+                modelVisibleToolCount: prep.activeToolAliases.count,
+                modelVisibleSchemaBytes: prep.visibleSchemaBytes
+            )
+            currentRoundID = stepID
+            return stepID
+        }
+        return nil
+    }
+
+    init(
+        session: AssistantCapabilitySession,
+        preparedTools: AssistantToolBridge.PreparedTools,
+        catalog: HanlinSkillCatalog = .shared,
+        modelContext: ModelContext? = nil,
+        currentLanguage: String = "en",
+        progressSummaryRequired: Bool = false,
+        supportsReportProgress: Bool = false,
+        callbacks: Callbacks = Callbacks(),
+        reportProgressController: ReportProgressController = ReportProgressController(),
+        diagnosticsRecorder: AgentDiagnosticsRecorder? = nil,
+        currentRoundID: UUID? = nil,
+        skillStore: SkillStore = .shared
+    ) {
+        self.session = session
+        self.preparedTools = preparedTools
+        self.catalog = catalog
+        self.skillStore = skillStore
+        self.modelContext = modelContext
+        self.currentLanguage = currentLanguage
+        self.progressSummaryRequired = progressSummaryRequired
+        self.supportsReportProgress = supportsReportProgress
+        self.callbacks = callbacks
+        self.reportProgressController = reportProgressController
+        self.diagnosticsRecorder = diagnosticsRecorder
+        self.currentRoundID = currentRoundID
+        if !preparedTools.mcpAliases.isEmpty {
+            session.exposeTools(aliases: preparedTools.mcpAliases)
+        }
+        if session.onRefreshCatalog == nil {
+            session.onRefreshCatalog = { [weak self] in
+                await self?.refreshPreparedTools()
+            }
+        }
+    }
+
+    func refreshPreparedTools() async {
+        let chatUUID = session.chatID.flatMap(UUID.init(uuidString:))
+        let originalScope = await MCPRuntimeProvider.shared.requestScope(
+            chatID: chatUUID,
+            temporary: session.isTemporaryChat
+        )
+        guard let scope = try? HanlinComposerCapabilities.scope(originalScope, attachments: session.capabilityAttachments) else { return }
+        if let refreshed = try? await preparedTools.refreshingMCPTools(scope: scope) {
+            self.preparedTools = refreshed
+            session.syncMCPTools(activeMCPAliases: refreshed.mcpAliases)
+        }
+    }
+
+    /// Evaluates currently active tool aliases for model exposure in the next step,
+    /// enforcing a per-step active schema byte budget so prompt token overhead stays bounded.
+    func currentActiveToolAliases() -> [String] {
+        var aliases: [String] = [
+            LoadSkillTool.toolName,
+            ReadSkillResourceTool.toolName,
+            ToolSearchTool.toolName,
+            ReadToolResultTool.toolName
+        ]
+        if supportsReportProgress {
+            aliases.append(ToolSchemaDecorator.reportProgressName)
+        }
+
+        let sizes = preparedTools.schemaSizes()
+        var currentBytes = aliases.reduce(0) { $0 + (sizes[$1] ?? 350) }
+
+        // Priority order for exposed tools:
+        // 1. Capabilities explicitly attached to this request
+        // 2. Active MCP server tools (mcp__*)
+        // 3. Most recently discovered tools via tool_search (reversed)
+        // 4. Active skill preferred tool hints and remaining exposed tools
+        var prioritizedCandidates: [String] = []
+        prioritizedCandidates.append(contentsOf: session.explicitlySelectedToolAliases.sorted())
+        for alias in preparedTools.mcpAliases.sorted() where session.exposedToolAliases.contains(alias) {
+            if !prioritizedCandidates.contains(alias) {
+                prioritizedCandidates.append(alias)
+            }
+        }
+        for alias in session.discoveredToolAliases.reversed() where session.exposedToolAliases.contains(alias) {
+            if !prioritizedCandidates.contains(alias) {
+                prioritizedCandidates.append(alias)
+            }
+        }
+        for alias in session.activeSkillToolHints.sorted() where session.exposedToolAliases.contains(alias) {
+            if !prioritizedCandidates.contains(alias) {
+                prioritizedCandidates.append(alias)
+            }
+        }
+        for alias in session.exposedToolAliases.sorted() {
+            if !prioritizedCandidates.contains(alias) {
+                prioritizedCandidates.append(alias)
+            }
+        }
+
+        for alias in prioritizedCandidates {
+            guard preparedTools.authority.schemasByAlias[alias] != nil,
+                  !aliases.contains(alias) else {
+                continue
+            }
+            let toolBytes = sizes[alias] ?? 400
+            if let budget = maxActiveStepSchemaBytes, currentBytes + toolBytes > budget && aliases.count > 6,
+               !session.explicitlySelectedToolAliases.contains(alias) {
+                continue
+            }
+            aliases.append(alias)
+            currentBytes += toolBytes
+        }
+        return aliases
+    }
+
+    /// Generates step preparation metadata for `HanlinAISDKAgentEngine` and binds diagnostics round.
+    func prepareStep(stepNumber: Int) async -> HanlinAISDKStepPreparation {
+        currentStepIndex = stepNumber
+        let visibleSkills = await catalog.modelVisibleSkills(store: skillStore)
+        await session.retainCurrentlyEligibleSkills(modelSkills: visibleSkills, catalog: catalog, store: skillStore)
+        let active = currentActiveToolAliases()
+        let sizes = preparedTools.schemaSizes()
+        let visibleBytes = active.reduce(0) { $0 + (sizes[$1] ?? 400) }
+        let prep = HanlinAISDKStepPreparation(
+            activeToolAliases: active,
+            loadedSkillIDs: session.loadedSkillIDs.map(\.rawValue).sorted(),
+            loadedSkillInstructions: session.stepInstructions,
+            visibleSchemaBytes: visibleBytes
+        )
+        if let existing = preparedRoundIDs[stepNumber] {
+            currentRoundID = existing
+        } else if let recorder = diagnosticsRecorder {
+            let stepID = await recorder.beginRound(
+                index: stepNumber,
+                trigger: stepNumber == 0 ? "initialUserRequest" : "continueAfterToolResult",
+                requestData: Data(),
+                loadedSkillIDs: prep.loadedSkillIDs,
+                modelVisibleToolAliases: prep.activeToolAliases,
+                modelVisibleToolCount: prep.activeToolAliases.count,
+                modelVisibleSchemaBytes: prep.visibleSchemaBytes
+            )
+            currentRoundID = stepID
+        } else {
+            currentRoundID = UUID()
+        }
+        if let currentRoundID { preparedRoundIDs[stepNumber] = currentRoundID }
+        return prep
+    }
+
+    /// Generates step preparation metadata for `HanlinAISDKAgentEngine`.
+    func prepareStep() -> HanlinAISDKStepPreparation {
+        let active = currentActiveToolAliases()
+        let sizes = preparedTools.schemaSizes()
+        let visibleBytes = active.reduce(0) { $0 + (sizes[$1] ?? 400) }
+        return HanlinAISDKStepPreparation(
+            activeToolAliases: active,
+            loadedSkillIDs: session.loadedSkillIDs.map(\.rawValue).sorted(),
+            loadedSkillInstructions: session.stepInstructions,
+            visibleSchemaBytes: visibleBytes
+        )
+    }
+
+    /// Builds all available tool definitions for the SDK engine.
+    /// Dynamic visibility is managed per step via `prepareStep()`.
+    func allToolDefinitions() throws -> [HanlinAISDKToolDefinition] {
+        if let cachedToolDefinitions { return cachedToolDefinitions }
+        var definitions: [HanlinAISDKToolDefinition] = []
+
+        // 1. load_skill
+        definitions.append(try makeLoadSkillDefinition())
+
+        // 2. read_skill_resource
+        definitions.append(try makeReadSkillResourceDefinition())
+
+        // 3. tool_search
+        definitions.append(try makeToolSearchDefinition())
+
+        // 4. read_tool_result
+        definitions.append(try makeReadToolResultDefinition())
+
+        // 5. report_progress
+        if supportsReportProgress {
+            definitions.append(try makeReportProgressDefinition())
+        }
+
+        // 6. Canonical tools (guarantee uniqueness and prevent collision with meta tools)
+        var seenNames = Set(definitions.map(\.name))
+        for (alias, rawSchema) in preparedTools.authority.schemasByAlias {
+            guard !seenNames.contains(alias) else {
+                continue
+            }
+            seenNames.insert(alias)
+            let profile = preparedTools.presentationProfile(for: alias) ?? ToolPresentationProfileRegistry.resolve(toolName: alias)
+            let decoratedSchema = ToolSchemaDecorator.decorate(
+                schema: rawSchema,
+                profile: profile,
+                progressSummaryRequired: progressSummaryRequired
+            )
+            definitions.append(try makeCanonicalDefinition(alias: alias, schema: decoratedSchema, profile: profile))
+        }
+
+        // Schema decoration and exact MCP projection are bounded but expensive. Keep the
+        // validated definitions until their immutable authority is replaced, never per token/call.
+        cachedToolDefinitions = definitions
+        return definitions
+    }
+
+    private func makeLoadSkillDefinition() throws -> HanlinAISDKToolDefinition {
+        let schema = LoadSkillTool.schema
+        let parameters = (schema["function"] as? [String: Any])?["parameters"] as? [String: Any] ?? [:]
+        let description = (schema["function"] as? [String: Any])?["description"] as? String ?? ""
+        let inputSchemaData = try JSONSerialization.data(withJSONObject: parameters, options: [.sortedKeys])
+
+        return HanlinAISDKToolDefinition(
+            name: LoadSkillTool.toolName,
+            description: description,
+            inputSchemaData: inputSchemaData,
+            execute: { [weak self] argumentsJSON, callID in
+                guard let self else {
+                    return HanlinAISDKToolExecutionOutput(modelText: "Tool adapter deallocated", isError: true)
+                }
+                let profile = ToolPresentationProfileRegistry.resolve(toolName: LoadSkillTool.toolName)
+                let parsedCall = AgentToolCall.parse(id: callID, name: LoadSkillTool.toolName, argumentsJSON: argumentsJSON, presentationProfile: profile)
+                let roundID = await self.resolveRoundID()
+                if let recorder = self.diagnosticsRecorder, let roundID {
+                    await recorder.recordToolCall(roundID: roundID, call: parsedCall)
+                }
+                let executionID = "\(callID):execution"
+                let executionStart = Date()
+                self.callbacks.onAgentEvent?(.toolCallStarted(parsedCall))
+                self.callbacks.onAgentEvent?(.toolCallCompleted(parsedCall))
+                self.callbacks.onAgentEvent?(.toolExecutionStarted(AgentToolExecution(
+                    id: executionID,
+                    callID: callID,
+                    name: LoadSkillTool.toolName,
+                    startedAt: executionStart
+                )))
+                let isZh = self.currentLanguage.hasPrefix("zh")
+                self.callbacks.onStreamData?(StreamData(operationalState: isZh ? "加载技能..." : "Loading skill..."))
+                let availableAliases = Set(self.preparedTools.authority.schemasByAlias.keys)
+                let result = await LoadSkillTool.execute(
+                    argumentsJSON: argumentsJSON,
+                    session: self.session,
+                    catalog: self.catalog,
+                    schemaSizes: self.preparedTools.schemaSizes(),
+                    availableAliases: availableAliases,
+                    store: self.skillStore
+                )
+                let duration = Date().timeIntervalSince(executionStart)
+                let isError = result.hasPrefix("Error:")
+                let userSummary = LoadSkillTool.userFacingSummary(
+                    argumentsJSON: argumentsJSON,
+                    result: result,
+                    catalog: self.catalog,
+                    language: self.currentLanguage
+                )
+                self.callbacks.onAgentEvent?(.toolExecutionCompleted(
+                    id: executionID,
+                    result: AgentToolResult(
+                        modelText: result,
+                        userText: userSummary,
+                        richResultBlocks: [],
+                        evidenceItems: [],
+                        hasLegacyPresentationPayload: false,
+                        isError: isError,
+                        semanticOutcome: isError ? .invalidArguments : .succeeded,
+                        duration: duration,
+                        embeddedResultPayload: nil
+                    )
+                ))
+                self.callbacks.onStreamData?(StreamData(
+                    toolContent: userSummary,
+                    toolName: LoadSkillTool.toolName,
+                    operationalDescription: userSummary
+                ))
+                if let recorder = self.diagnosticsRecorder, let roundID {
+                    await recorder.completeToolCall(
+                        roundID: roundID,
+                        callID: callID,
+                        resultForModel: result,
+                        resultForUser: userSummary,
+                        duration: duration,
+                        outcome: isError ? .invalidArguments : .succeeded,
+                        error: isError ? result : nil
+                    )
+                }
+                self.completedCallIDs.insert(callID)
+                return HanlinAISDKToolExecutionOutput(modelText: result, isError: isError)
+            }
+        )
+    }
+
+    private func makeReadSkillResourceDefinition() throws -> HanlinAISDKToolDefinition {
+        let schema = ReadSkillResourceTool.schema
+        let parameters = (schema["function"] as? [String: Any])?["parameters"] as? [String: Any] ?? [:]
+        let description = (schema["function"] as? [String: Any])?["description"] as? String ?? ""
+        let inputSchemaData = try JSONSerialization.data(withJSONObject: parameters, options: [.sortedKeys])
+
+        return HanlinAISDKToolDefinition(
+            name: ReadSkillResourceTool.toolName,
+            description: description,
+            inputSchemaData: inputSchemaData,
+            execute: { [weak self] argumentsJSON, callID in
+                guard let self else {
+                    return HanlinAISDKToolExecutionOutput(modelText: "Tool adapter deallocated", isError: true)
+                }
+                let profile = ToolPresentationProfileRegistry.resolve(toolName: ReadSkillResourceTool.toolName)
+                let parsedCall = AgentToolCall.parse(id: callID, name: ReadSkillResourceTool.toolName, argumentsJSON: argumentsJSON, presentationProfile: profile)
+                let roundID = await self.resolveRoundID()
+                if let recorder = self.diagnosticsRecorder, let roundID {
+                    await recorder.recordToolCall(roundID: roundID, call: parsedCall)
+                }
+                let executionID = "\(callID):execution"
+                let executionStart = Date()
+                self.callbacks.onAgentEvent?(.toolCallStarted(parsedCall))
+                self.callbacks.onAgentEvent?(.toolCallCompleted(parsedCall))
+                self.callbacks.onAgentEvent?(.toolExecutionStarted(AgentToolExecution(
+                    id: executionID,
+                    callID: callID,
+                    name: ReadSkillResourceTool.toolName,
+                    startedAt: executionStart
+                )))
+                let isZh = self.currentLanguage.hasPrefix("zh")
+                self.callbacks.onStreamData?(StreamData(operationalState: isZh ? "读取技能资源..." : "Reading skill resource..."))
+                let result = await ReadSkillResourceTool.execute(
+                    argumentsJSON: argumentsJSON,
+                    session: self.session,
+                    catalog: self.catalog,
+                    store: self.skillStore
+                )
+                let duration = Date().timeIntervalSince(executionStart)
+                let isError = result.hasPrefix("Error:")
+                let userSummary = ReadSkillResourceTool.userFacingSummary(
+                    argumentsJSON: argumentsJSON,
+                    result: result,
+                    language: self.currentLanguage
+                )
+                self.callbacks.onAgentEvent?(.toolExecutionCompleted(
+                    id: executionID,
+                    result: AgentToolResult(
+                        modelText: result,
+                        userText: userSummary,
+                        richResultBlocks: [],
+                        evidenceItems: [],
+                        hasLegacyPresentationPayload: false,
+                        isError: isError,
+                        semanticOutcome: isError ? .invalidArguments : .succeeded,
+                        duration: duration,
+                        embeddedResultPayload: nil
+                    )
+                ))
+                self.callbacks.onStreamData?(StreamData(
+                    toolContent: userSummary,
+                    toolName: ReadSkillResourceTool.toolName,
+                    operationalDescription: userSummary
+                ))
+                if let recorder = self.diagnosticsRecorder, let roundID {
+                    await recorder.completeToolCall(
+                        roundID: roundID,
+                        callID: callID,
+                        resultForModel: result,
+                        resultForUser: userSummary,
+                        duration: duration,
+                        outcome: isError ? .invalidArguments : .succeeded,
+                        error: isError ? result : nil
+                    )
+                }
+                self.completedCallIDs.insert(callID)
+                return HanlinAISDKToolExecutionOutput(modelText: result, isError: isError)
+            }
+        )
+    }
+
+    private func makeToolSearchDefinition() throws -> HanlinAISDKToolDefinition {
+        let schema = ToolSearchTool.schema
+        let parameters = (schema["function"] as? [String: Any])?["parameters"] as? [String: Any] ?? [:]
+        let description = (schema["function"] as? [String: Any])?["description"] as? String ?? ""
+        let inputSchemaData = try JSONSerialization.data(withJSONObject: parameters, options: [.sortedKeys])
+
+        return HanlinAISDKToolDefinition(
+            name: ToolSearchTool.toolName,
+            description: description,
+            inputSchemaData: inputSchemaData,
+            execute: { [weak self] argumentsJSON, callID in
+                guard let self else {
+                    return HanlinAISDKToolExecutionOutput(modelText: "Tool adapter deallocated", isError: true)
+                }
+                let profile = ToolPresentationProfileRegistry.resolve(toolName: ToolSearchTool.toolName)
+                let parsedCall = AgentToolCall.parse(id: callID, name: ToolSearchTool.toolName, argumentsJSON: argumentsJSON, presentationProfile: profile)
+                let roundID = await self.resolveRoundID()
+                if let recorder = self.diagnosticsRecorder, let roundID {
+                    await recorder.recordToolCall(roundID: roundID, call: parsedCall)
+                }
+                let executionID = "\(callID):execution"
+                let executionStart = Date()
+                self.callbacks.onAgentEvent?(.toolCallStarted(parsedCall))
+                self.callbacks.onAgentEvent?(.toolCallCompleted(parsedCall))
+                self.callbacks.onAgentEvent?(.toolExecutionStarted(AgentToolExecution(
+                    id: executionID,
+                    callID: callID,
+                    name: ToolSearchTool.toolName,
+                    startedAt: executionStart
+                )))
+                let isZh = self.currentLanguage.hasPrefix("zh")
+                self.callbacks.onStreamData?(StreamData(operationalState: isZh ? "搜索工具..." : "Searching tools..."))
+                let result = ToolSearchTool.execute(
+                    argumentsJSON: argumentsJSON,
+                    session: self.session,
+                    searchProvider: { [weak self] q, l, o, _ in
+                        guard let self else { return [] }
+                        return self.preparedTools.search(query: q, limit: l, offset: o, preferredAliases: self.session.activeSkillToolHints)
+                    }
+                )
+                let duration = Date().timeIntervalSince(executionStart)
+                let isError = result.hasPrefix("Error:")
+                let userSummary = ToolSearchTool.userFacingSummary(
+                    argumentsJSON: argumentsJSON,
+                    result: result,
+                    language: self.currentLanguage
+                )
+                self.callbacks.onAgentEvent?(.toolExecutionCompleted(
+                    id: executionID,
+                    result: AgentToolResult(
+                        modelText: result,
+                        userText: userSummary,
+                        richResultBlocks: [],
+                        evidenceItems: [],
+                        hasLegacyPresentationPayload: false,
+                        isError: isError,
+                        semanticOutcome: isError ? .invalidArguments : .succeeded,
+                        duration: duration,
+                        embeddedResultPayload: nil
+                    )
+                ))
+                self.callbacks.onStreamData?(StreamData(
+                    toolContent: userSummary,
+                    toolName: ToolSearchTool.toolName,
+                    operationalDescription: userSummary
+                ))
+                if let recorder = self.diagnosticsRecorder, let roundID = await self.resolveRoundID() {
+                    await recorder.completeToolCall(
+                        roundID: roundID,
+                        callID: callID,
+                        resultForModel: result,
+                        resultForUser: userSummary,
+                        duration: duration,
+                        outcome: isError ? .invalidArguments : .succeeded,
+                        error: isError ? result : nil
+                    )
+                }
+                self.completedCallIDs.insert(callID)
+                return HanlinAISDKToolExecutionOutput(modelText: result, isError: isError)
+            }
+        )
+    }
+
+    private func makeReadToolResultDefinition() throws -> HanlinAISDKToolDefinition {
+        let schema = ReadToolResultTool.schema
+        let parameters = (schema["function"] as? [String: Any])?["parameters"] as? [String: Any] ?? [:]
+        let description = (schema["function"] as? [String: Any])?["description"] as? String ?? ""
+        let inputSchemaData = try JSONSerialization.data(withJSONObject: parameters, options: [.sortedKeys])
+
+        return HanlinAISDKToolDefinition(
+            name: ReadToolResultTool.toolName,
+            description: description,
+            inputSchemaData: inputSchemaData,
+            execute: { [weak self] argumentsJSON, callID in
+                guard let self else {
+                    return HanlinAISDKToolExecutionOutput(modelText: "Tool adapter deallocated", isError: true)
+                }
+                let profile = ToolPresentationProfileRegistry.resolve(toolName: ReadToolResultTool.toolName)
+                let parsedCall = AgentToolCall.parse(id: callID, name: ReadToolResultTool.toolName, argumentsJSON: argumentsJSON, presentationProfile: profile)
+                let roundID = await self.resolveRoundID()
+                if let recorder = self.diagnosticsRecorder, let roundID {
+                    await recorder.recordToolCall(roundID: roundID, call: parsedCall)
+                }
+                let executionID = "\(callID):execution"
+                let executionStart = Date()
+                self.callbacks.onAgentEvent?(.toolCallStarted(parsedCall))
+                self.callbacks.onAgentEvent?(.toolCallCompleted(parsedCall))
+                self.callbacks.onAgentEvent?(.toolExecutionStarted(AgentToolExecution(
+                    id: executionID,
+                    callID: callID,
+                    name: ReadToolResultTool.toolName,
+                    startedAt: executionStart
+                )))
+                let isZh = self.currentLanguage.hasPrefix("zh")
+                self.callbacks.onStreamData?(StreamData(operationalState: isZh ? "读取结果..." : "Reading tool result..."))
+                let result = ReadToolResultTool.execute(
+                    argumentsJSON: argumentsJSON,
+                    session: self.session
+                )
+                let duration = Date().timeIntervalSince(executionStart)
+                let isError = result.hasPrefix("Error:")
+                let userSummary = ReadToolResultTool.userFacingSummary(
+                    argumentsJSON: argumentsJSON,
+                    result: result,
+                    language: self.currentLanguage
+                )
+                self.callbacks.onAgentEvent?(.toolExecutionCompleted(
+                    id: executionID,
+                    result: AgentToolResult(
+                        modelText: result,
+                        userText: userSummary,
+                        richResultBlocks: [],
+                        evidenceItems: [],
+                        hasLegacyPresentationPayload: false,
+                        isError: isError,
+                        semanticOutcome: isError ? .invalidArguments : .succeeded,
+                        duration: duration,
+                        embeddedResultPayload: nil
+                    )
+                ))
+                self.callbacks.onStreamData?(StreamData(
+                    toolContent: userSummary,
+                    toolName: ReadToolResultTool.toolName,
+                    operationalDescription: userSummary
+                ))
+                if let recorder = self.diagnosticsRecorder, let roundID = await self.resolveRoundID() {
+                    await recorder.completeToolCall(
+                        roundID: roundID,
+                        callID: callID,
+                        resultForModel: result,
+                        resultForUser: userSummary,
+                        duration: duration,
+                        outcome: isError ? .invalidArguments : .succeeded,
+                        error: isError ? result : nil
+                    )
+                }
+                self.completedCallIDs.insert(callID)
+                return HanlinAISDKToolExecutionOutput(modelText: result, isError: isError)
+            }
+        )
+    }
+
+    private func makeReportProgressDefinition() throws -> HanlinAISDKToolDefinition {
+        let schema = ToolSchemaDecorator.reportProgressSchema()
+        let parameters = (schema["function"] as? [String: Any])?["parameters"] as? [String: Any] ?? [:]
+        let description = (schema["function"] as? [String: Any])?["description"] as? String ?? ""
+        let inputSchemaData = try JSONSerialization.data(withJSONObject: parameters, options: [.sortedKeys])
+
+        return HanlinAISDKToolDefinition(
+            name: ToolSchemaDecorator.reportProgressName,
+            description: description,
+            inputSchemaData: inputSchemaData,
+            execute: { [weak self] argumentsJSON, callID in
+                guard let self else {
+                    return HanlinAISDKToolExecutionOutput(modelText: "Progress update delivered.")
+                }
+                let profile = ToolPresentationProfileRegistry.resolve(toolName: ToolSchemaDecorator.reportProgressName)
+                let parsedCall = AgentToolCall.parse(id: callID, name: ToolSchemaDecorator.reportProgressName, argumentsJSON: argumentsJSON, presentationProfile: profile)
+                let roundID = await self.resolveRoundID()
+                if let recorder = self.diagnosticsRecorder, let roundID {
+                    await recorder.recordToolCall(roundID: roundID, call: parsedCall)
+                }
+                let candidate = ToolProgressSummary.reportProgressMessage(from: argumentsJSON)
+                if let message = self.reportProgressController.accept(
+                    candidate,
+                    latestToolSummary: self.latestToolProgressSummary
+                ) {
+                    let progressMsg = AgentProgressMessage(
+                        id: "progress:\(callID)",
+                        message: message,
+                        source: .model,
+                        timestamp: Date()
+                    )
+                    self.callbacks.onProgressMessage?(progressMsg)
+                    self.callbacks.onAgentEvent?(.progressMessage(progressMsg))
+                    self.sdkProgressHandlers[callID]?(message)
+                }
+                let result = "Progress update delivered."
+                if let recorder = self.diagnosticsRecorder, let roundID = await self.resolveRoundID() {
+                    await recorder.completeToolCall(
+                        roundID: roundID,
+                        callID: callID,
+                        resultForModel: result,
+                        resultForUser: nil,
+                        duration: 0,
+                        outcome: .succeeded
+                    )
+                }
+                self.completedCallIDs.insert(callID)
+                return HanlinAISDKToolExecutionOutput(modelText: result)
+            }
+        )
+    }
+
+    private func makeCanonicalDefinition(
+        alias: String,
+        schema: [String: Any],
+        profile: ToolPresentationProfile
+    ) throws -> HanlinAISDKToolDefinition {
+        let function = schema["function"] as? [String: Any]
+        let description = function?["description"] as? String ?? schema["description"] as? String ?? ""
+        let parameters = function?["parameters"] as? [String: Any] ?? schema["parameters"] as? [String: Any] ?? ["type": "object", "properties": [:]]
+        let inputSchemaData: Data
+        if let original = preparedTools.authority.originalInputSchemasByAlias[alias] {
+            // Host metadata is appended at the existing decorator boundary. The original
+            // business schema must survive that projection exactly before it can execute.
+            try HanlinHostSchemaValidation.requireSameValue(originalJSON: original,
+                projectedJSON: JSONSerialization.data(withJSONObject: (preparedTools.authority.schemasByAlias[alias]?["function"] as? [String: Any])?["parameters"] ?? parameters, options: [.sortedKeys]))
+            inputSchemaData = try JSONSerialization.data(withJSONObject: parameters, options: [.sortedKeys])
+        } else { inputSchemaData = try JSONSerialization.data(withJSONObject: parameters, options: [.sortedKeys]) }
+
+        return HanlinAISDKToolDefinition(
+            name: alias,
+            description: description,
+            inputSchemaData: inputSchemaData,
+            execute: { [weak self] argumentsJSON, callID in
+                guard let self else {
+                    return HanlinAISDKToolExecutionOutput(modelText: "Tool adapter deallocated", isError: true)
+                }
+                return await self.executeCanonicalTool(
+                    alias: alias,
+                    callID: callID,
+                    argumentsJSON: argumentsJSON,
+                    profile: profile
+                )
+            }
+        )
+    }
+
+    private func executeCanonicalTool(
+        alias: String,
+        callID: String,
+        argumentsJSON: String,
+        profile: ToolPresentationProfile
+    ) async -> HanlinAISDKToolExecutionOutput {
+        self.session.exposeTools(aliases: [alias])
+        var parsedCall = AgentToolCall.parse(
+            id: callID,
+            name: alias,
+            argumentsJSON: argumentsJSON,
+            presentationProfile: profile
+        )
+        if parsedCall.progressSummary == nil,
+           let reasoning = callbacks.currentReasoningSummary?(),
+           let providerSummary = ProgressSummarySanitizer.sanitizeProviderReasoningSummary(reasoning) {
+            parsedCall.progressSummary = providerSummary
+            parsedCall.progressSummarySource = .providerReasoningSummary
+        }
+
+        let roundID = await resolveRoundID()
+        if let recorder = diagnosticsRecorder, let roundID {
+            await recorder.recordToolCall(roundID: roundID, call: parsedCall)
+        }
+
+        self.latestToolProgressSummary = parsedCall.progressSummary
+        let executionID = "\(callID):execution"
+        let executionStart = Date()
+
+        callbacks.onAgentEvent?(.toolCallStarted(parsedCall))
+        callbacks.onAgentEvent?(.toolCallCompleted(parsedCall))
+        callbacks.onAgentEvent?(.toolExecutionStarted(AgentToolExecution(
+            id: executionID,
+            callID: callID,
+            name: alias,
+            startedAt: executionStart
+        )))
+
+        let sessionChatID = session.chatID ?? session.id.uuidString
+        let roundReqID = currentRoundID?.uuidString ?? callID
+        let boundAttachmentResolver = sdkAttachmentResolver
+        let nativeContext = NativeToolExecutionContext(
+            localeIdentifier: currentLanguage,
+            modelContext: modelContext,
+            toolCallID: callID,
+            chatID: sessionChatID,
+            isTemporaryChat: session.isTemporaryChat,
+            requestID: roundReqID,
+            capabilitySession: session,
+            attachmentResolver: { handle in
+                if let boundAttachmentResolver { return try await boundAttachmentResolver(handle) }
+                return try await AuthorizedAttachmentRegistry.shared.resolve(
+                    handle: handle,
+                    chatID: sessionChatID,
+                    requestID: roundReqID
+                )
+            }
+        )
+
+        // The SDK Host verifies exact business input and original context after the preceding
+        // diagnostics/round awaits and immediately before the existing prepared executor.
+        do { try sdkPreDispatchHandlers[callID]?(parsedCall.sanitizedArgumentsJSON) }
+        catch {
+            let message = "Operation input or context could not be verified before dispatch."
+            sdkOutcomeHandlers[callID]?(.invalidArguments)
+            callbacks.onAgentEvent?(.toolExecutionFailed(
+                id: executionID,
+                error: AgentSafeError(message: message)
+            ))
+            completedCallIDs.insert(callID)
+            return HanlinAISDKToolExecutionOutput(modelText: message, isError: true)
+        }
+
+        let nativeResult = await RuntimeJobProgress.$reporter.withValue({ [weak self] job in
+            guard let self, !self.completedCallIDs.contains(callID) else { return }
+            let message = "Job \(job.executionID.uuidString.prefix(8)) · \(job.state.rawValue) · stdout \(job.stdoutBytes) B · stderr \(job.stderrBytes) B"
+            self.callbacks.onAgentEvent?(.toolExecutionProgress(id: "\(callID):execution", message: message))
+            self.sdkProgressHandlers[callID]?(message)
+        }) {
+            await preparedTools.execute(alias: alias, argumentsJSON: parsedCall.sanitizedArgumentsJSON, context: nativeContext)
+        }
+
+        if alias == "manage_mcp_servers" || alias == "list_tools" {
+            await self.refreshPreparedTools()
+        }
+
+        let executionDuration = Date().timeIntervalSince(executionStart)
+
+        guard let result = nativeResult else {
+            let errorText = Self.buildUnknownToolErrorMessage(
+                alias: alias,
+                catalog: self.catalog,
+                preparedTools: self.preparedTools,
+                currentLanguage: self.currentLanguage
+            )
+            callbacks.onAgentEvent?(.toolExecutionFailed(
+                id: executionID,
+                error: AgentSafeError(message: errorText)
+            ))
+            callbacks.onStreamData?(StreamData(
+                toolContent: errorText,
+                toolName: alias,
+                operationalDescription: errorText
+            ))
+            if let recorder = diagnosticsRecorder, let roundID = await resolveRoundID() {
+                await recorder.completeToolCall(
+                    roundID: roundID,
+                    callID: callID,
+                    resultForModel: errorText,
+                    resultForUser: errorText,
+                    duration: executionDuration,
+                    outcome: .invalidArguments,
+                    error: errorText
+                )
+            }
+            self.completedCallIDs.insert(callID)
+            return HanlinAISDKToolExecutionOutput(modelText: errorText, isError: true)
+        }
+
+        sdkOutcomeHandlers[callID]?(result.outcome)
+
+        var modelText = result.modelText
+        let userText = result.userText ?? result.modelText
+        var resultRef: String? = nil
+        var embeddedPayload = result.embeddedPayload
+
+        // Large result store handling
+        let shouldStore = result.fullResultPayload != nil
+            || (result.isStoreEligible && result.modelText.utf8.count > 1024)
+        if shouldStore {
+            let payloadToStore = result.fullResultPayload ?? result.modelText
+            let mimeType = result.fullResultMIMEType ?? "text/plain"
+            if let ref = session.resultStore.store(payloadToStore, mimeType: mimeType) {
+                resultRef = ref
+                if let currentPayload = embeddedPayload {
+                    embeddedPayload = HanlinEmbeddedResultPayload(
+                        payload: currentPayload.payload,
+                        resultReference: ref,
+                        title: currentPayload.title,
+                        metadata: currentPayload.metadata,
+                        ownerID: currentPayload.ownerID,
+                        actions: currentPayload.actions
+                    )
+                }
+                modelText = """
+                [Large result stored behind reference: \(ref) (\(payloadToStore.utf8.count) bytes)]
+                Summary: \(String(result.modelText.prefix(200)))
+                To inspect or paginate this result, call `read_tool_result(reference: "\(ref)", offset: 0, limit: 4096)`.
+                """
+            } else {
+                // A storage resource error must not silently replace the full result with a summary.
+                modelText = "[Full result could not be persisted: \(session.resultStore.lastStorageError ?? "explicit storage budget exceeded")]\n" + payloadToStore
+            }
+        }
+
+        var effectiveUIBlocks = result.uiBlocks
+        let isSuccess = result.outcome.isSuccess
+        if !isSuccess && effectiveUIBlocks.isEmpty && !userText.isEmpty {
+            effectiveUIBlocks.append(
+                NativeUIBlock(
+                    type: .error,
+                    title: profile.activity.failedTitle ?? alias,
+                    body: userText,
+                    systemImage: "exclamationmark.triangle"
+                )
+            )
+        }
+
+        let hasPayload = !effectiveUIBlocks.isEmpty
+            || embeddedPayload != nil
+            || result.hasLegacyPresentationPayload
+            || !result.evidenceItems.isEmpty
+        let hasModelText = !modelText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+
+        let presentationDecision = ToolResultPresentationCoordinator.decide(
+            call: parsedCall,
+            profile: parsedCall.presentationProfile,
+            hasPayload: hasPayload,
+            hasModelText: hasModelText,
+            isError: !isSuccess
+        )
+
+        if isSuccess || presentationDecision.shouldPresent {
+            callbacks.onAgentEvent?(.toolExecutionCompleted(
+                id: executionID,
+                result: AgentToolResult(
+                    modelText: modelText,
+                    userText: userText,
+                    richResultBlocks: effectiveUIBlocks,
+                    evidenceItems: result.evidenceItems,
+                    hasLegacyPresentationPayload: result.hasLegacyPresentationPayload
+                        || (presentationDecision.shouldPresent
+                            && presentationDecision.rendererKind == .legacyExisting),
+                    isError: !isSuccess,
+                    semanticOutcome: result.outcome,
+                    duration: executionDuration,
+                    embeddedResultPayload: embeddedPayload
+                )
+            ))
+        } else {
+            callbacks.onAgentEvent?(.toolExecutionFailed(
+                id: executionID,
+                error: AgentSafeError(message: userText)
+            ))
+        }
+
+        let rawArgs = (try? JSONSerialization.jsonObject(with: Data(argumentsJSON.utf8))) as? [String: Any]
+        var streamData = StreamData(
+            toolContent: userText,
+            toolName: alias,
+            operationalDescription: userText
+        )
+
+        if alias == "search_online"
+            || alias == "read_web_page"
+            || alias == "web_search"
+            || alias == "search_arxiv_papers"
+            || alias == "search_knowledge_bag"
+            || alias == "extract_remote_file_content" {
+            let urlArg = (rawArgs?["url"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            let queryArg = (rawArgs?["query"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            streamData.search_text = userText.isEmpty ? modelText : userText
+            if !queryArg.isEmpty {
+                streamData.searchQueries = [queryArg]
+            } else if !urlArg.isEmpty {
+                streamData.searchQueries = [urlArg]
+            }
+            if streamData.searchEngine == nil || streamData.searchEngine?.isEmpty == true {
+                switch alias {
+                case "search_arxiv_papers":
+                    streamData.searchEngine = "ARXIV"
+                case "search_knowledge_bag":
+                    streamData.searchEngine = "HANLINBAG"
+                case "read_web_page", "extract_remote_file_content":
+                    streamData.searchEngine = "HANLINWEB"
+                default:
+                    streamData.searchEngine = result.evidenceItems.first?.sourceName ?? "Web"
+                }
+            }
+            var mappedResources: [Resource] = result.evidenceItems.compactMap { item in
+                guard let link = item.url?.trimmingCharacters(in: .whitespacesAndNewlines),
+                      !link.isEmpty,
+                      let parsed = URL(string: link),
+                      let scheme = parsed.scheme?.lowercased(),
+                      (scheme == "http" || scheme == "https"),
+                      parsed.host()?.lowercased() != "search.local" else {
+                    return nil
+                }
+                return Resource(icon: link, title: item.title, link: link)
+            }
+            if mappedResources.isEmpty,
+               !urlArg.isEmpty,
+               let parsed = URL(string: urlArg),
+               let scheme = parsed.scheme?.lowercased(),
+               (scheme == "http" || scheme == "https"),
+               parsed.host()?.lowercased() != "search.local" {
+                mappedResources.append(Resource(icon: urlArg, title: urlArg, link: urlArg))
+            }
+            if !mappedResources.isEmpty {
+                streamData.resources = mappedResources
+            }
+        } else if alias == "execute_python_code" || alias == "execute_local_python_code" || alias == "execute_javascript_code" {
+            let codeSource = (rawArgs?["code"] as? String) ?? (rawArgs?["source"] as? String) ?? ""
+            let codeType = alias.contains("javascript") ? "javascript" : "python"
+            streamData.code_info = [
+                CodeBlock(
+                    codeType: codeType,
+                    code: codeSource,
+                    output: userText.isEmpty ? modelText : userText,
+                    isRunning: false,
+                    hasError: !isSuccess,
+                    isExpanded: true
+                )
+            ]
+        } else if alias == "create_web_view" {
+            if let htmlCode = (rawArgs?["code"] as? String) ?? (rawArgs?["html"] as? String), !htmlCode.isEmpty {
+                streamData.htmlContent = htmlCode
+            }
+        }
+
+        callbacks.onStreamData?(streamData)
+
+        if let recorder = diagnosticsRecorder, let roundID = await resolveRoundID() {
+            await recorder.completeToolCall(
+                roundID: roundID,
+                callID: callID,
+                resultForModel: modelText,
+                resultForUser: userText,
+                duration: executionDuration,
+                outcome: result.outcome,
+                diagnostics: result.diagnostics,
+                error: isSuccess ? nil : userText,
+                presentationDecision: presentationDecision
+            )
+        }
+        self.completedCallIDs.insert(callID)
+
+        return HanlinAISDKToolExecutionOutput(
+            modelText: modelText,
+            resultReference: resultRef,
+            isError: !isSuccess
+        )
+    }
+}

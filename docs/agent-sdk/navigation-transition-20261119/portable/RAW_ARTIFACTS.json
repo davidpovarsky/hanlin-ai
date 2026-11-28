@@ -1,0 +1,27 @@
+{
+  "archive_sha256": "0d3d686382751b787a1fbae18fade399812294d48baa4b8dfd861133deb4d8e1",
+  "archive": "raw-proof.zip",
+  "raw_files": {
+    "RESULT.json": {
+      "sha256": "9973d783a6eff6c087c77a99688657d865e4ec5f5062809efa47c698c7da16c1",
+      "bytes": 7900
+    },
+    "inputs.json": {
+      "sha256": "8ecdb839a9422c2ba21088180992858262cdff910d3e5bfad7d9d8f29db8b293",
+      "bytes": 8421
+    },
+    "tests-swift-testing.xml": {
+      "sha256": "b404cd2b157b9890c02e83baa35109cea9f4f93ffaa49d6c9551c8e5878db133",
+      "bytes": 4461
+    },
+    "swift-test.log": {
+      "sha256": "d993727350bcb4d82de5d0d76baf755dd9ca07a5f031bcc72381042d317866ed",
+      "bytes": 8982
+    },
+    "toolchain.txt": {
+      "sha256": "9600bf857094eaac9dec810fc48c01b03ef419bac47bf816273a919a214c75bc",
+      "bytes": 107
+    }
+  },
+  "text_copies": "RESULT.json and inputs.json are LF-normalized readable copies; the archive preserves original bytes and all 30 compiled source/resource inputs."
+}

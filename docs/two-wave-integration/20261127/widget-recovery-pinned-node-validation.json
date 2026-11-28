@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "agent": "/root/w2_source_resume",
+  "reason": "Qualify the unchanged fb1e1599 producer and all10 original cases with canonical Node24.5.0 after initial Oracle Node24.22.0 run.",
+  "receipt": {
+    "source": "fb1e15992eaddfde42c88b20738ae8d543d48ba0",
+    "node": "v24.5.0",
+    "nodeBinary": "/mnt/development/projects/toolchains/node-v24.5.0-linux-arm64/bin/node",
+    "steps": [
+      {
+        "name": "original-producer",
+        "argv": [
+          "/mnt/development/projects/toolchains/node-v24.5.0-linux-arm64/bin/node",
+          "Scripts/Widgets/build-sample-packages.mjs"
+        ],
+        "exitCode": 0,
+        "seconds": 0.4498748779296875,
+        "stdoutSHA256": "ab79bd965569147bdbc83175125f6fdcb2c87f05493823518cbae9ec646bcdd1",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "original-interactive-toggle",
+        "argv": [
+          "/mnt/development/projects/toolchains/node-v24.5.0-linux-arm64/bin/node",
+          "--test",
+          "Scripts/Widgets/Tests/interactive-toggle.test.mjs"
+        ],
+        "exitCode": 0,
+        "seconds": 2.9704740047454834,
+        "stdoutSHA256": "53707c4a98e6f8e77807ae772f47cc17afc7963deb5909550e83d815c1d50a26",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "all24ArchivesMatchSealedCommit": true,
+    "archives": {
+      "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo": "a52c828cdb87f115c668b7cba544781ce89c023b14a65551844ee7985faa3d9d",
+      "Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo": "4532c361e91e32580a7dca5c120e1131bb2d9f07138b2b4103bdab138f588368",
+      "Fixtures/Widgets/Hanlin-ScriptWidget-Dashboard.scripting": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace",
+      "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+      "Fixtures/Widgets/Hanlin-Mixed-Native-Widget.hanlinExpo": "2121ea971faa158e891b8222372e2250062286b813ad8a889971cc351a8c75d7",
+      "Fixtures/Widgets/Hanlin-Widget-Legacy-Regression.scripting": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f",
+      "Fixtures/Widgets/Hanlin-Widget-Invalid-Cases.hanlinExpo": "a86f47a41f684ecbb1dcce23552798b88cc7ab6622a8c316f2b721b44daf52c5",
+      "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995",
+      "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Counter.hanlinExpo": "a52c828cdb87f115c668b7cba544781ce89c023b14a65551844ee7985faa3d9d",
+      "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Visuals.hanlinExpo": "4532c361e91e32580a7dca5c120e1131bb2d9f07138b2b4103bdab138f588368",
+      "AI_HLYUITests/Fixtures/Hanlin-ScriptWidget-Dashboard.scripting": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace",
+      "AI_HLYUITests/Fixtures/Hanlin-ScriptWidget-Actions.scripting": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+      "AI_HLYUITests/Fixtures/Hanlin-Mixed-Native-Widget.hanlinExpo": "2121ea971faa158e891b8222372e2250062286b813ad8a889971cc351a8c75d7",
+      "AI_HLYUITests/Fixtures/Hanlin-Widget-Legacy-Regression.scripting": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f",
+      "AI_HLYUITests/Fixtures/Hanlin-Widget-Invalid-Cases.hanlinExpo": "a86f47a41f684ecbb1dcce23552798b88cc7ab6622a8c316f2b721b44daf52c5",
+      "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995",
+      "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Counter.hanlinExpo": "a52c828cdb87f115c668b7cba544781ce89c023b14a65551844ee7985faa3d9d",
+      "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Visuals.hanlinExpo": "4532c361e91e32580a7dca5c120e1131bb2d9f07138b2b4103bdab138f588368",
+      "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-ScriptWidget-Dashboard.scripting": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace",
+      "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-ScriptWidget-Actions.scripting": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+      "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Mixed-Native-Widget.hanlinExpo": "2121ea971faa158e891b8222372e2250062286b813ad8a889971cc351a8c75d7",
+      "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Widget-Legacy-Regression.scripting": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f",
+      "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Widget-Invalid-Cases.hanlinExpo": "a86f47a41f684ecbb1dcce23552798b88cc7ab6622a8c316f2b721b44daf52c5",
+      "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995"
+    },
+    "gitStatus": "",
+    "native": "NOT_RUN",
+    "OS": "NOT_RUN"
+  },
+  "producerStdout": "Hanlin-Expo-Widget-Counter.hanlinExpo: 1149 bytes; IMPORT_AND_NATIVE_TEST_REQUIRED\nHanlin-Expo-Widget-Visuals.hanlinExpo: 1283 bytes; IMPORT_AND_NATIVE_TEST_REQUIRED\nHanlin-ScriptWidget-Dashboard.scripting: 968 bytes; IMPORT_AND_NATIVE_TEST_REQUIRED\nHanlin-ScriptWidget-Actions.scripting: 825 bytes; IMPORT_AND_NATIVE_TEST_REQUIRED\nHanlin-Mixed-Native-Widget.hanlinExpo: 1000 bytes; DEFERRED_OPTIONAL\nHanlin-Widget-Legacy-Regression.scripting: 444 bytes; IMPORT_AND_NATIVE_TEST_REQUIRED\nHanlin-Widget-Invalid-Cases.hanlinExpo: 949 bytes; REJECT_IMPORT\nHanlin-Expo-Widget-Interactive-Matrix.hanlinExpo: 1953 bytes; IMPORT_AND_NATIVE_TEST_REQUIRED\nArchives generated. Import, installation, native rendering and interaction require separate executed tests.\n",
+  "testStdout": "\u2714 original: SDK matrix renders all eight families with authored clear background and native component nodes (605.639444ms)\n\u2714 original: actual original Toggle wrapper returns props; intended values survive repeat requests (86.167576ms)\n\u2714 original: original Button callback is unchanged alongside Toggle and source instances stay isolated (227.156946ms)\n\u2714 original: callback failures, promises and malformed values cannot become committed state (222.360439ms)\n\u2714 original: duplicate targets and disabled modifiers fail before invoking a Toggle callback (153.424682ms)\n\u2714 prepared: SDK matrix renders all eight families with authored clear background and native component nodes (249.000192ms)\n\u2714 prepared: actual original Toggle wrapper returns props; intended values survive repeat requests (81.407068ms)\n\u2714 prepared: original Button callback is unchanged alongside Toggle and source instances stay isolated (239.98758ms)\n\u2714 prepared: callback failures, promises and malformed values cannot become committed state (158.471272ms)\n\u2714 prepared: duplicate targets and disabled modifiers fail before invoking a Toggle callback (73.02522ms)\n\u2139 tests 10\n\u2139 suites 0\n\u2139 pass 10\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 2807.317671\n",
+  "native": "NOT_RUN",
+  "osWidgetKit": "NOT_RUN"
+}

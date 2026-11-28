@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "packages": [
+    {
+      "fileName": "FileManager 2.zip",
+      "sha256": "f47b0f07ad4da57c03aebfb797a4e6426ed7cb9edcf95de10f5df65914c12548",
+      "requiredFamilies": ["Script", "FileManager", "Dialog", "Navigation", "Location"]
+    },
+    {
+      "fileName": "טקסטים ספריא רב מנועי .scripting",
+      "sha256": "bb4c9ff48cebf6a13a3322324bf3150ea86890808d7e2ba608ef7332095ee5a0",
+      "requiredFamilies": ["ScriptUI", "Storage", "FileManager", "Navigation", "fetch"]
+    },
+    {
+      "fileName": "nativ ai 9.zip",
+      "sha256": "e5712c0fb098bd3bc037bd4861a5abf7a49a789bb3738b1104c97e296369750a",
+      "requiredFamilies": ["ScriptUI", "Assistant", "Storage", "Location", "FileManager", "Navigation", "Widget", "LiveActivity", "fetch"]
+    },
+    {
+      "fileName": "סוכן חדש 21.scripting",
+      "sha256": "b6dc61e6ca8fd736fdbef55b62e5d48bcf8e452c72d0d36b153d107ad1a94b9a",
+      "requiredFamilies": ["AssistantTool", "ScriptUI", "Storage", "Assistant", "Location", "fetch", "FileManager", "Navigation", "Widget"]
+    },
+    {
+      "fileName": "אכילה חכמה מעודכן 7.zip",
+      "sha256": "6846c3eff7f40740c79116f8845389bfdfc48a0b1457bdf3c46531f112f87356",
+      "requiredFamilies": ["ScriptUI", "Storage", "Assistant", "Health", "Notification", "Widget", "AppIntent"]
+    },
+    {
+      "fileName": "זמני היום ולוח לימוד יומי 3.zip",
+      "sha256": null,
+      "requiredFamilies": ["ScriptUI", "Widget", "AppIntent", "Storage", "Location", "FileManager", "WebView"]
+    }
+  ],
+  "requiredStages": [
+    "import-analyzer",
+    "compile-diagnostics",
+    "install-relaunch-catalog",
+    "launch-render-events",
+    "permission-allow-deny-revoke",
+    "entrypoint-contexts",
+    "update-rollback-uninstall"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "base": "46663fe6228c0edcb7b9dacb3e8aa5403a80c473",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-shortcut-concurrency-os-20261127",
+  "files": {
+    "Scripts/ProductSplit/observe_share_translation_surfaces.py": {
+      "sha256": "6fe7ceca1744d7190482ef440377062f278d1d7090071d68d8598d925c103e72",
+      "bytes": 38123
+    },
+    "Scripts/ProductSplit/Tests/test_share_translation_surface_observer.py": {
+      "sha256": "90c6db0c546c3f2ea243ff44a78416b1492b86b4b3e39ff68984315b9f791f2c",
+      "bytes": 24164
+    },
+    "Scripts/ProductSplit/Tests/test_share_input_fixture.mjs": {
+      "sha256": "81eeeb88553f68878b7553276ba6f56066bbbfeb4cc7155bab6a209c4c5f7c8e",
+      "bytes": 7690
+    },
+    "Fixtures/HostActionSurfaces/nativescript/proof.ts": {
+      "sha256": "19925e21c3f63170e4cf1284702fd675130b5674ffd2289ab36da6e6640b9d28",
+      "bytes": 19076
+    },
+    "Fixtures/HostActionSurfaces/nativescript/index.ts": {
+      "sha256": "22312e186a363920e470437571e8bdddef2b753372758b66f9a363bfef637a2e",
+      "bytes": 6421
+    }
+  },
+  "sourcePatchSHA256": "0186cb655d4b12627daca50d56987db6895198b1609a7be91af63f4298e1d21f"
+}

@@ -1,0 +1,8 @@
+{
+  "status": "NOT_RUN_TRANSPORT_REJECTED",
+  "hubRequestID": "hreq_bd785bb8af354b0d",
+  "requestedTransportTimeout": 750,
+  "reportedTransportMaximum": 600,
+  "nativeCommandsStarted": 0,
+  "boundary": "Transport validation rejected before controller invocation. Original controller and native budgets unchanged."
+}

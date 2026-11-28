@@ -1,0 +1,95 @@
+ORIGINAL JOB LOG LINES 72995-73005
+2026-11-23T03:35:13.6294820Z /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinPendingFirstTurn.swift:19:32: error: conformance of 'HanlinPendingFirstTurn' to protocol 'Identifiable' crosses into main actor-isolated code and can cause data races [#ConformanceIsolation]
+2026-11-23T03:35:13.6395140Z 17 |
+2026-11-23T03:35:13.6498970Z 18 | @MainActor
+2026-11-23T03:35:13.6602070Z 19 | struct HanlinPendingFirstTurn: Identifiable, Sendable {
+2026-11-23T03:35:13.6701480Z    |                                |- error: conformance of 'HanlinPendingFirstTurn' to protocol 'Identifiable' crosses into main actor-isolated code and can cause data races [#ConformanceIsolation]
+2026-11-23T03:35:13.6821180Z    |                                |- note: isolate this conformance to the main actor with '@MainActor'
+2026-11-23T03:35:13.6922560Z    |                                `- note: turn data races into runtime errors with '@preconcurrency'
+2026-11-23T03:35:13.7024780Z 20 |     enum Status: Equatable, Sendable {
+2026-11-23T03:35:13.7126840Z 21 |         case created
+2026-11-23T03:35:13.7229800Z    :
+2026-11-23T03:35:13.7331510Z 51 |     var acceptedUserMessageID: UUID? = nil
+
+ORIGINAL JOB LOG LINES 73053-73067
+2026-11-23T03:35:21.1453290Z macro expansion @State:2:33: error: type 'Color' has no member 'hlBlue'
+2026-11-23T03:35:21.1457580Z `- /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/KnowledgeListView.swift:25:53: note: expanded code originates here
+2026-11-23T03:35:21.1458640Z  23 |     @State private var editingRecord: KnowledgeRecords? = nil
+2026-11-23T03:35:21.1459600Z  24 |     @State private var editingIcon: String = "document.circle"
+2026-11-23T03:35:21.1462260Z  25 |     @State private var editingColor: Color = .hlBlue
+2026-11-23T03:35:21.1463150Z     |     `- note: in expansion of macro 'State' on property 'editingColor' here
+2026-11-23T03:35:21.1464380Z     +--- macro expansion @State ----------------------------------------
+2026-11-23T03:35:21.1465070Z     | 1 | private var __editingColor = SwiftUICore.State._makeStorage(({
+2026-11-23T03:35:21.1465890Z     | 2 |             let value: Color = .hlBlue
+2026-11-23T03:35:21.1467680Z     |   |                                 `- error: type 'Color' has no member 'hlBlue'
+2026-11-23T03:35:21.1468370Z     | 3 |             return value
+2026-11-23T03:35:21.1468850Z     | 4 |         }))
+2026-11-23T03:35:21.1469410Z     +-------------------------------------------------------------------
+2026-11-23T03:35:21.1470020Z  26 |     @State private var editingTitle: String = "Title"
+2026-11-23T03:35:21.1474630Z  27 |
+
+ORIGINAL JOB LOG LINES 73086-73105
+2026-11-23T03:35:21.1543860Z /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/KnowledgeListView.swift:25:47: error: type 'Color' has no member 'hlBlue'
+2026-11-23T03:35:21.1545050Z  23 |     @State private var editingRecord: KnowledgeRecords? = nil
+2026-11-23T03:35:21.1545800Z  24 |     @State private var editingIcon: String = "document.circle"
+2026-11-23T03:35:21.1546580Z  25 |     @State private var editingColor: Color = .hlBlue
+2026-11-23T03:35:21.1549930Z     |                                               `- error: type 'Color' has no member 'hlBlue'
+2026-11-23T03:35:21.1550670Z  26 |     @State private var editingTitle: String = "Title"
+2026-11-23T03:35:21.1551470Z  27 |
+2026-11-23T03:35:21.1551670Z
+2026-11-23T03:35:21.1552140Z macro expansion @State:12:69: error: type 'Color' has no member 'hlBlue'
+2026-11-23T03:35:21.1553140Z `- /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/KnowledgeListView.swift:25:53: note: expanded code originates here
+2026-11-23T03:35:21.1554120Z  23 |     @State private var editingRecord: KnowledgeRecords? = nil
+2026-11-23T03:35:21.1556310Z  24 |     @State private var editingIcon: String = "document.circle"
+2026-11-23T03:35:21.1557150Z  25 |     @State private var editingColor: Color = .hlBlue
+2026-11-23T03:35:21.1558070Z     |     `- note: in expansion of macro 'State' on property 'editingColor' here
+2026-11-23T03:35:21.1558940Z     +--- macro expansion @State ----------------------------------------
+2026-11-23T03:35:21.1559450Z     |10 |
+2026-11-23T03:35:21.1560380Z     |11 | @SwiftUICore._StateProjectedValue
+2026-11-23T03:35:21.1561410Z     |12 | private var $editingColor = SwiftUICore.State<Color>(initialValue: .hlBlue).projectedValue
+2026-11-23T03:35:21.1573040Z     |   |                                                                     `- error: type 'Color' has no member 'hlBlue'
+2026-11-23T03:35:21.1576310Z     |13 |
+
+ORIGINAL JOB LOG LINES 73128-73140
+2026-11-23T03:35:21.1798900Z /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/ListView.swift:37:47: error: type 'Color' has no member 'hlBlue'
+2026-11-23T03:35:21.1799870Z  35 |     @State private var editingRecord: ChatRecords? = nil
+2026-11-23T03:35:21.1801350Z  36 |     @State private var editingIcon: String = "bubble.left.circle"
+2026-11-23T03:35:21.1810530Z  37 |     @State private var editingColor: Color = .hlBlue
+2026-11-23T03:35:21.1841410Z     |                                               `- error: type 'Color' has no member 'hlBlue'
+2026-11-23T03:35:21.1842600Z  38 |     @State private var editingTitle: String = "title"
+2026-11-23T03:35:21.1843240Z  39 |
+2026-11-23T03:35:21.1843580Z
+2026-11-23T03:35:21.1844120Z macro expansion @State:2:33: error: type 'Color' has no member 'hlBlue'
+2026-11-23T03:35:21.1845120Z `- /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/ListView.swift:37:53: note: expanded code originates here
+2026-11-23T03:35:21.1846090Z  35 |     @State private var editingRecord: ChatRecords? = nil
+2026-11-23T03:35:21.1868430Z  36 |     @State private var editingIcon: String = "bubble.left.circle"
+2026-11-23T03:35:21.1869180Z  37 |     @State private var editingColor: Color = .hlBlue
+
+ORIGINAL JOB LOG LINES 73251-73277
+2026-11-23T03:35:44.8935400Z /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Views/Components/ChatViewComponents.swift:2172:52: error: conformance of 'ChatBubbleView.AgentActivityContentView' to protocol 'Equatable' crosses into main actor-isolated code and can cause data races [#ConformanceIsolation]
+2026-11-23T03:35:44.9038910Z 2170 |     }
+2026-11-23T03:35:44.9140000Z 2171 |
+2026-11-23T03:35:44.9243220Z 2172 |     private struct AgentActivityContentView: View, Equatable {
+2026-11-23T03:35:44.9347640Z      |                                                    |- error: conformance of 'ChatBubbleView.AgentActivityContentView' to protocol 'Equatable' crosses into main actor-isolated code and can cause data races [#ConformanceIsolation]
+2026-11-23T03:35:44.9452810Z      |                                                    |- note: isolate this conformance to the main actor with '@MainActor'
+2026-11-23T03:35:44.9556330Z      |                                                    `- note: turn data races into runtime errors with '@preconcurrency'
+2026-11-23T03:35:44.9659240Z 2173 |         let run: AgentRun?
+2026-11-23T03:35:44.9765580Z 2174 |         let reasoning: String
+2026-11-23T03:35:44.9866990Z      :
+2026-11-23T03:35:44.9969570Z 2185 |         @State private var legacyDetailsExpanded = false
+2026-11-23T03:35:45.0078490Z 2186 |
+2026-11-23T03:35:45.0182320Z 2187 |         static func == (lhs: Self, rhs: Self) -> Bool {
+2026-11-23T03:35:45.0236930Z      |                     |- note: main actor-isolated operator function '==' cannot satisfy nonisolated requirement
+2026-11-23T03:35:45.0265290Z      |                     `- note: mark operator function '==' 'nonisolated'
+2026-11-23T03:35:45.0362750Z 2188 |             lhs.run == rhs.run && lhs.reasoning == rhs.reasoning
+2026-11-23T03:35:45.0466080Z 2189 |                 && lhs.reasoningTime == rhs.reasoningTime
+2026-11-23T03:35:45.0511480Z
+2026-11-23T03:35:45.0614150Z /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Views/Components/ChatViewComponents.swift:6276:35: error: type 'Color' has no member 'hlBluefont'
+2026-11-23T03:35:45.0630090Z 6274 |         // 样式
+2026-11-23T03:35:45.0635350Z 6275 |         let barSpacing: CGFloat = 2
+2026-11-23T03:35:45.0637520Z 6276 |         let playedColor: Color = .hlBluefont
+2026-11-23T03:35:45.0639090Z      |                                   `- error: type 'Color' has no member 'hlBluefont'
+2026-11-23T03:35:45.0645280Z 6277 |         let unplayedColor: Color = Color.gray.opacity(0.3)
+2026-11-23T03:35:45.0646540Z 6278 |
+2026-11-23T03:35:45.0646900Z
+2026-11-23T03:35:45.0649880Z /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Views/Components/VoiceInputView.swift:15:46: warning: cannot use class 'ModelContext' in a property declaration member of a type not marked '@_implementationOnly'; 'SwiftData' was not imported by this file

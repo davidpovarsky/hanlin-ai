@@ -1,0 +1,69 @@
+{
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2488,
+      "sha256": "10ff0a14fedbbcf4064c2ed781314d33c5d1c3e329a2c82228136386819aac63"
+    },
+    {
+      "path": "concurrency-admission.json",
+      "bytes": 1456,
+      "sha256": "511cb8746ac1be93304e81692325b85dea763a7f063f5548560024a35384e7a6"
+    },
+    {
+      "path": "dispatch-ack.json",
+      "bytes": 121,
+      "sha256": "a63bfabad7b7ff2922fcb12b9a1f9d45c1dff9d164415d6ffb33a0a95e05793f"
+    },
+    {
+      "path": "dispatch-intent.json",
+      "bytes": 1224,
+      "sha256": "484dafd225d709659e48c5594540fecf55f64605b3aab72f5e002333af68f778"
+    },
+    {
+      "path": "dispatch-receipt.json",
+      "bytes": 556,
+      "sha256": "3e6b655c103efc03cb063c634279e3665c4ef3b984e2d84fa0576c9b2dc3e35f"
+    },
+    {
+      "path": "native-check-annotations.json",
+      "bytes": 413,
+      "sha256": "296325656754cc2194ef47573d288b09daa79bf0c5d460a09b74c4e740118311"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 2287,
+      "sha256": "76f90481875bfb4cbc9f7b986b6c117f5e3d0aa0502edf6bdcd88af5e7e1da05"
+    },
+    {
+      "path": "terminal-artifacts.json",
+      "bytes": 42,
+      "sha256": "f7417e1fb877d3f5934f143cc38ad9e2905476e8f5ac6776507d09441efcd6f6"
+    },
+    {
+      "path": "terminal-jobs.json",
+      "bytes": 31109,
+      "sha256": "45dc73d71700ca793a0b5d21dbf223bc525c64dc14d39b367d44a0c36982e4bb"
+    },
+    {
+      "path": "terminal-run.json",
+      "bytes": 16315,
+      "sha256": "4f21dfb5a0597814bbf303afead0f18f38372745dd2f9e2610e4561f961405f6"
+    },
+    {
+      "path": "watch-ended.json",
+      "bytes": 201,
+      "sha256": "b937fafdc259637617140130a6b2665b5a3566b7be8eb44b92caecf21a182d78"
+    },
+    {
+      "path": "watch-start.json",
+      "bytes": 499,
+      "sha256": "b1f59343631762ac0f5ad11de27b25cf19f2a37fd6ffaa1b2e76da165da91231"
+    },
+    {
+      "path": "watcher-job.json",
+      "bytes": 178,
+      "sha256": "ba957114f9d79cea206d6dc0d4bf3b40c49948d8877b0ffd119a46c1666693b2"
+    }
+  ]
+}

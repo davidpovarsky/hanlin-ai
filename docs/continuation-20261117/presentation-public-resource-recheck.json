@@ -1,0 +1,8 @@
+{
+  "parentSHA": "25729ca41871ca061ddff88ef0c6adb81ec35555",
+  "basis": "44190539298 Agent SDK Apple tests passed; Presentation iOS compile failed because default argument referenced an internal symbol. Expose only the bundle resource locator.",
+  "changedFileSHA256": "ddf1517e261f41de43aa11a7addada6df435a3c181fc95108f85ed6e89b4c224",
+  "target": "agent_sdk_session_only_proof",
+  "selector": "HanlinPresentationSDK",
+  "excluded": "unchanged Agent SDK suite; original app tests are independent"
+}

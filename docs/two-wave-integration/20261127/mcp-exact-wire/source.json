@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "base": "95c12227097f73d5755a6ff20ced43c9e2691c45",
+  "sourceRows": [
+    {
+      "path": "AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift",
+      "beforeSHA256": "3496fc24615db8e482aa6b62fc210d916c0b6b3ad28056875df50f9d96ec0bd9",
+      "afterSHA256": "3b331e200237598147def7fed0875b3b5ae62a5581ba85da09a4d6c4b058fc13",
+      "bytes": 7251
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostSchemaValidation.swift",
+      "beforeSHA256": "0b8d1e3ff747b156d73a7bb67e80f95fc348ae9269f8dd3ae40a702d9da57432",
+      "afterSHA256": "622c7380bb066002a48bb46e6c76a6f919c41060392d891ac17c34f411b1a040",
+      "bytes": 12292
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HostMCPWireComparisonTests.swift",
+      "beforeSHA256": null,
+      "afterSHA256": "bbcae5565bdcbc7eba72c7d5c272eac5227af9106f00c50589901013f22830c7",
+      "bytes": 9813
+    }
+  ],
+  "patchSHA256": "0437b690eae2e20ed1bea8862ffdc0ca585d767e2e50050e663a5d7a200a47ee",
+  "existingHostValidationFileExactByAdditiveInverse": true,
+  "MCPCallerExactBySingleNameInverse": true,
+  "newSwiftTestSelectors": [
+    "largeOriginalUTF8SurvivesOrderAndEscapeProjection",
+    "largeOriginalUTF8RejectsAMutationAtTheTextTail",
+    "metadataIsPartOfTheExactWireValue",
+    "exactDecimalsAndJSONKindsSurviveWithoutBinary64Rounding",
+    "scalarKeysAndStringsDoNotUseSwiftCanonicalEquivalence",
+    "strictSyntaxAndDuplicateDecodedKeysStillFail",
+    "depthKeyAndNumericLimitsRemainTheOriginalPolicy",
+    "cancellationProducesNoComparisonVerdict",
+    "existingSchemaConsentAndProjectionAdmissionRemainBounded",
+    "finitePoliciesChangeOnlyTheirDeclaredByteAndWorkMetrics",
+    "checkedPolicyArithmeticRejectsUnrepresentableBudgetsWithoutAllocation"
+  ],
+  "nativeStatus": "NOT_RUN",
+  "portableSourceStatus": "EXACT_INVERSES_VERIFIED",
+  "nativeCommand": [
+    "swift",
+    "test",
+    "--package-path",
+    "Packages/HanlinAgentSDK",
+    "--filter",
+    "HostMCPWireComparisonTests"
+  ],
+  "nativeExecutionOwner": "/root/mac_build_resume",
+  "originalAcceptance": "RuntimeAutonomyV3Tests.actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore; original two-minute limit and input unchanged"
+}

@@ -1,0 +1,28 @@
+{
+  "source_before": "3e7cab778fd397fb50a8153ddf16a25cfc90bc84",
+  "runner_path": "Scripts/ProductSplit/run_paired_acceptance.py",
+  "runner_sha256": "d1cc722f9fcbd712377df67afd4f9f85e353a73644cc843bd24d275391495cab",
+  "scope": "Exact production helper executed in Python against controlled runtime descriptors; actual simctl/OS execution remains native gate",
+  "helper_checks": [
+    "default retains SDK-matching runtime",
+    "explicit27.2 remains distinct from buildSDK27.0",
+    "missing rejected",
+    "unavailable rejected",
+    "internal rejected",
+    "ambiguous rejected",
+    "non-ios rejected"
+  ],
+  "expected_count_change": {
+    "miniapp_authoring": {
+      "old": 25,
+      "new": 27
+    },
+    "miniapp_complete": {
+      "old": 27,
+      "new": 29
+    },
+    "reason": "Two added methods in the existing selected HanlinOriginalExpoWidgetTests; original selectors/assertions unchanged",
+    "inventory": "docs/composer-capabilities/evidence/wave1-integrated-20261126/paired-and-wave1-inventory-33f0eb31.json"
+  },
+  "native_test_execution": "NOT_RUN"
+}

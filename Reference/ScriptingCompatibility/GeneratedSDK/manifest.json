@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "baselineID": "scripting-compat-2026-08-26-a91e6672cb47",
+  "files": {
+    "scripting-foundation.d.ts": "0290b74d18975ac699a5fe260b8704c2d5a5686fb7d1d248864ce9db2afebb77",
+    "runtime-registration.json": "2166811a882ef8f935a0a51a32b82fd6d68e9be77ade446c7053b7480f8b5b0e",
+    "global.d.ts": "d5ed4b23de93d9f5c93fcf372736f8288e436e117fa008cdd9ac69a2656a949c",
+    "node.d.ts": "05be426cfb2493524d8ef5a167f9e30128257457289b6c14a87a14c23d5f0602",
+    "safari-ext.d.ts": "b86c4909673f425deb596e67c328cacad2f43022aa12ece1a03aee0e464815ae",
+    "scripting.d.ts": "92155306822de8d1b3c9c31acd604ab562f46c69f0fa70a4cdced63c4a7a5259",
+    "web-fetch.d.ts": "d93cf87b1e46c33c6e672d3fc451f9cfa35f7bae490065b9a7f26b0b08d16938",
+    "miniapps.d.ts": "62382db4f324a3a6791db7ebe263a93bf2cc25a44f53ef8ddea52e442988a160"
+  }
+}

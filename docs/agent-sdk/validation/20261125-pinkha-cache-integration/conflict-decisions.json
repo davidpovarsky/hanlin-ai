@@ -1,0 +1,108 @@
+[
+  {
+    "path": "AI_HLY.xcodeproj/project.pbxproj",
+    "choice": "union disjoint source IDs/board entry"
+  },
+  {
+    "path": "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+    "choice": "incoming actual SwiftPM lock; all unrelated pins identical",
+    "changed": [
+      "swift-ai-sdk",
+      "swift-atomics"
+    ],
+    "added": [
+      "lrucache",
+      "opentelemetry-swift-core"
+    ]
+  },
+  {
+    "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+    "choice": "ours; exact original callback codegen fix/case-sensitive ID behavior retained"
+  },
+  {
+    "path": "PROJECT_BOARD.md",
+    "choice": "union disjoint source IDs/board entry"
+  },
+  {
+    "path": "Package.swift",
+    "choice": "incoming qualified SwiftAIabf; unioned generated application source list preserves524 current paths; auto-merged compatible ZIP range retained"
+  },
+  {
+    "path": "Packages/HanlinAgentSDK/Package.resolved",
+    "choice": "incoming actual SwiftPM lock; all unrelated pins identical",
+    "changed": [
+      "swift-ai-sdk"
+    ],
+    "added": [
+      "opentelemetry-swift-core",
+      "swift-atomics"
+    ]
+  },
+  {
+    "path": "Packages/HanlinAgentSDK/Package.swift",
+    "choice": "incoming qualified SwiftAIabf; unioned generated application source list preserves524 current paths; auto-merged compatible ZIP range retained"
+  },
+  {
+    "path": "Packages/HanlinParityMiniApp/Package.resolved",
+    "choice": "incoming actual SwiftPM lock; all unrelated pins identical",
+    "changed": [
+      "swift-ai-sdk"
+    ],
+    "added": [
+      "opentelemetry-swift-core",
+      "swift-atomics"
+    ]
+  },
+  {
+    "path": "Packages/HanlinPlatform/Package.resolved",
+    "choice": "incoming actual SwiftPM lock; all unrelated pins identical",
+    "changed": [
+      "swift-ai-sdk"
+    ],
+    "added": [
+      "opentelemetry-swift-core",
+      "swift-atomics"
+    ]
+  },
+  {
+    "path": "Packages/HanlinPlatform/Package.swift",
+    "choice": "incoming qualified SwiftAIabf; unioned generated application source list preserves524 current paths; auto-merged compatible ZIP range retained"
+  },
+  {
+    "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift",
+    "choice": "ours; exact original callback codegen fix/case-sensitive ID behavior retained"
+  },
+  {
+    "path": "Packages/HanlinSefariaMiniApp/Package.resolved",
+    "choice": "incoming actual SwiftPM lock; all unrelated pins identical",
+    "changed": [
+      "swift-ai-sdk"
+    ],
+    "added": [
+      "opentelemetry-swift-core",
+      "swift-atomics"
+    ]
+  },
+  {
+    "path": "Packages/HanlinTextStudioMiniApp/Package.resolved",
+    "choice": "incoming actual SwiftPM lock; all unrelated pins identical",
+    "changed": [
+      "swift-ai-sdk"
+    ],
+    "added": [
+      "opentelemetry-swift-core",
+      "swift-atomics"
+    ]
+  },
+  {
+    "path": "Packages/HanlinWikipediaMiniApp/Package.resolved",
+    "choice": "incoming actual SwiftPM lock; all unrelated pins identical",
+    "changed": [
+      "swift-ai-sdk"
+    ],
+    "added": [
+      "opentelemetry-swift-core",
+      "swift-atomics"
+    ]
+  }
+]

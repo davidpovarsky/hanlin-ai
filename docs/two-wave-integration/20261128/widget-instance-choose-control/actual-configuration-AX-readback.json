@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "sourceSHA256": "9182a8c39409cfe4cb5fb900a6cb1221c2078dc11d81fed81ef29b3cf0ec2975",
+  "finalExcerpts": [
+    {
+      "startLine": 1,
+      "endLine": 7,
+      "text": "Attributes: Application, 0x113b47840, pid: 91935, label: ' '\nElement subtree:\n \u2192Application, 0x113b47840, pid: 91935, label: ' '\n    Window, 0x113b46d00, {{0.0, 0.0}, {756.0, 1158.0}}\n      Other, 0x113b46bc0, {{0.0, 0.0}, {756.0, 1158.0}}\n        Other, 0x113b46940, {{0.0, 0.0}, {756.0, 1158.0}}\n          Image, 0x113b46a80, {{0.0, 0.0}, {450.0, 75.0}}, identifier: 'StatusBarLegibilityShadow'"
+    },
+    {
+      "startLine": 45,
+      "endLine": 53,
+      "text": "                                              Other, 0x11211af80, {{101.5, 357.0}, {274.0, 52.0}}\n                                                Other, 0x11211b5c0, {{101.5, 361.0}, {274.0, 44.0}}\n                                                  StaticText, 0x11211ae40, {{120.5, 372.8}, {123.5, 20.5}}, label: 'Widget instance'\n                                                  Other, 0x11211b0c0, {{298.0, 373.0}, {58.5, 20.5}}\n                                                  Button, 0x11211b200, {{298.0, 373.0}, {58.5, 20.5}}, label: 'Choose'\n                                            Other, 0x11211a440, {{101.5, 357.0}, {273.5, 53.0}}\n                                            Other, 0x11211b480, {{101.5, 409.0}, {273.5, 1.0}}\n                                        StaticText, 0x11211bd40, {{111.5, 307.0}, {253.5, 34.0}}, label: 'Native widgets from installed packages. Create independent instances in Hanlin.'\n                  Other, 0x112119a40, {{0.0, 0.0}, {756.0, 1158.0}}"
+    },
+    {
+      "startLine": 240,
+      "endLine": 246,
+      "text": "                          Image, 0x113b512c0, {{491.4, 463.3}, {151.7, 79.2}}\n                          Image, 0x113b51400, {{520.7, 494.4}, {92.2, 18.0}}\n              PageIndicator, 0x113b51540, {{351.9, 925.5}, {52.2, 40.5}}, identifier: 'Page control', value: Page 2 of 2\n        Other, 0x113b51680, {{0.0, 0.0}, {756.0, 1158.0}}\n    Window, 0x113b517c0, {{0.0, 0.0}, {756.0, 1158.0}}\n      Other, 0x113b51900, {{0.0, 0.0}, {756.0, 1158.0}}\n        Other, 0x113b51a40, {{0.0, 0.0}, {756.0, 1158.0}}"
+    },
+    {
+      "startLine": 283,
+      "endLine": 290,
+      "text": "            RemotePlaceholder, 0x1139248c0, pid: 54261, {{inf, inf}, {0.0, 0.0}}\nPath to element:\n \u2192Application, 0x113b47840, pid: 91935, label: ' '\nQuery chain:\n \u2192Find: Application 'com.apple.springboard'\n  Output: {\n    Application, 0x113924a00, pid: 91935, label: ' '\n  }"
+    }
+  ],
+  "createdSourceSHA256": "c2922802aa5ea94835adb8af0a588597396d8bd1882b5acff7469c53323db88d",
+  "createdExcerpts": [
+    {
+      "startLine": 1,
+      "endLine": 5,
+      "text": "Attributes: Application, 0x104e3fac0, pid: 49783, label: 'Hanlin MiniApps'\nElement subtree:\n \u2192Application, 0x104e3fac0, pid: 49783, label: 'Hanlin MiniApps'\n    Window (Main), 0x104e3d400, {{0.0, 0.0}, {756.0, 1158.0}}\n      Other, 0x104e3fd40, {{0.0, 0.0}, {756.0, 1158.0}}"
+    },
+    {
+      "startLine": 255,
+      "endLine": 259,
+      "text": "                                  Other, 0x1097488c0, {{104.0, 405.5}, {548.0, 52.0}}\n                                    StaticText, 0x109748a00, {{104.0, 405.5}, {548.0, 52.0}}, label: 'Recovery-c43c625a-c764-423f-95d9-f93270b3d450, expo'\n                                    StaticText, 0x109748b40, {{124.0, 421.2}, {418.5, 20.5}}, label: 'Recovery-c43c625a-c764-423f-95d9-f93270b3d450'\n                            Other, 0x109748c80, {{124.0, 404.5}, {508.0, 1.0}}\n                            Cell, 0x109748dc0, {{104.0, 457.5}, {548.0, 52.0}}"
+    },
+    {
+      "startLine": 382,
+      "endLine": 388,
+      "text": "Path to element:\n \u2192Application, 0x104e3fac0, pid: 49783, label: 'Hanlin MiniApps'\nQuery chain:\n \u2192Find: Application 'com.itorah.hanlinminiapps'\n  Output: {\n    Application, 0x112116800, pid: 49783, label: 'Hanlin MiniApps'\n  }"
+    }
+  ]
+}

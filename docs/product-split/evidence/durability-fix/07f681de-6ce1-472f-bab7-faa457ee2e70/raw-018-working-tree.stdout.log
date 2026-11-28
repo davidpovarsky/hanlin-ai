@@ -1,0 +1,11 @@
+M  Packages/HanlinProductSplit/Sources/HanlinProductSplit/DurableMigration.swift
+M  Packages/HanlinProductSplit/Sources/HanlinProductSplit/DurableReceiver.swift
+M  Packages/HanlinProductSplit/Sources/HanlinProductSplit/SplitFixtureStore.swift
+M  Packages/HanlinProductSplit/Sources/HanlinProductSplit/SplitMigrationFixturePersistence.swift
+A  Packages/HanlinProductSplit/Tests/DurabilityCorrectionTests.swift
+A  Scripts/ProductSplit/provenance.py
+M  Scripts/ProductSplit/run_portable.py
+M  docs/product-split/.gitattributes
+?? docs/product-split/DURABILITY_QA_FIX_W1_006.md
+?? docs/product-split/durable-correction-results.json
+?? docs/product-split/evidence/

@@ -1,0 +1,51 @@
+{
+  "observedAt": "2026-11-25T10:54:19.564311+00:00",
+  "status": "SDK_SOURCE_ARCHIVE_IDENTITY_PASS",
+  "source": "a2c8a1b1be746461272ba77254603304567c309d",
+  "retainedFiles": 43,
+  "retainedBytes": 83215745,
+  "trackedDeltas": 25,
+  "trackedPayloadBytes": 14676062,
+  "hostBytes": 81824721,
+  "hostSHA256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+  "manifestBytes": 5224120,
+  "manifestSHA256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+  "inputSHA256": "ba8f3f1f09054887eed62532fa1d5ca2ac3bd60e6aa99a98ab1035c7653882a2",
+  "sourceInputs": 235,
+  "fileRows": 25669,
+  "sdkZipMembers": 25670,
+  "manifestFileBytes": 294418625,
+  "sourceInputChanges": 4,
+  "packagedFileChanges": 4,
+  "documentationSummary": {
+    "status": "EXECUTED_PASS",
+    "sdk": {
+      "manifestSHA256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+      "inputSHA256": "ba8f3f1f09054887eed62532fa1d5ca2ac3bd60e6aa99a98ab1035c7653882a2"
+    },
+    "projects": [
+      {
+        "name": "expo-guide",
+        "succeeded": true,
+        "diagnosticCount": 0
+      },
+      {
+        "name": "nativescript-guide",
+        "succeeded": true,
+        "diagnosticCount": 0
+      },
+      {
+        "name": "scriptwidget-guide",
+        "succeeded": true,
+        "diagnosticCount": 0
+      },
+      {
+        "name": "scriptwidget-controls",
+        "succeeded": true,
+        "diagnosticCount": 0
+      }
+    ]
+  },
+  "generationSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "consumerFocusedAnd52": "No consumer/focused/full52 success inferred by this source/SDK verification."
+}

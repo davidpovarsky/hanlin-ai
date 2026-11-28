@@ -1,0 +1,296 @@
+{
+  "status": "READY_FOR_PEER_REVIEW_NOT_DISPATCHED",
+  "prepared_at": "2026-11-23T22:47:07.475676+00:00",
+  "source": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+  "expected_methods": 33,
+  "expected_unit_invocations": 26,
+  "expected_ui_invocations": 11,
+  "expected_total_invocations": 37,
+  "prior_failures": 7,
+  "previously_not_run": 12,
+  "affected_prior_passes": 18,
+  "retained_prior_passes_without_replay": 305,
+  "not_reselected_native_configuration": 2,
+  "reason": "Native configuration source is unchanged here. Independent package Bridge5 runs elsewhere; its later integration is not implied. Only original duplicate image ownership, host target collision, persisted MCP representation and compact composer clearance are under this frozen app acceptance. AppIntent metadata/resource packaging is requalified after redundant product link removal.",
+  "selected_methods": [
+    {
+      "selector": "AI_HLYTests/CalendarToolTests/reversedDatesDoNotDispatchAndNextSearchCanComplete()",
+      "source": "AI_HLYTests/CalendarToolTests.swift",
+      "source_method": "reversedDatesDoNotDispatchAndNextSearchCanComplete()",
+      "count": 1,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+      "source": "AI_HLYTests/CalendarToolTests.swift",
+      "source_method": "failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+      "count": 3,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/CalendarToolTests/malformedWriteIsRejectedBeforeExecutorAndCommittedWriteIsRetained()",
+      "source": "AI_HLYTests/CalendarToolTests.swift",
+      "source_method": "malformedWriteIsRejectedBeforeExecutorAndCommittedWriteIsRetained()",
+      "count": 1,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/CalendarToolTests/failedWriteIsNeverReportedAsCommitted()",
+      "source": "AI_HLYTests/CalendarToolTests.swift",
+      "source_method": "failedWriteIsNeverReportedAsCommitted()",
+      "count": 1,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinAppAgentSessionOwnerTests/actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow()",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "source_method": "actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow()",
+      "count": 1,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalCredentialHandlesFailClosedAndPreserveCurrentRequestAuthority()",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "source_method": "originalCredentialHandlesFailClosedAndPreserveCurrentRequestAuthority()",
+      "count": 1,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinApplicationSystemIntegrationTests/widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)",
+      "source": "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift",
+      "source_method": "widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)",
+      "count": 3,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests/conversationSelectionKeepsOriginalDefaultsExplicitEmptyAndOtherChats()",
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "source_method": "conversationSelectionKeepsOriginalDefaultsExplicitEmptyAndOtherChats()",
+      "count": 1,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests/failedSelectionReadCannotRestoreDefaultMCPAuthority()",
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "source_method": "failedSelectionReadCannotRestoreDefaultMCPAuthority()",
+      "count": 1,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests/failedFeatureCommitDoesNotPublishSuccessOrStartRuntime()",
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "source_method": "failedFeatureCommitDoesNotPublishSuccessOrStartRuntime()",
+      "count": 1,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests/staleEditableSettingsPreserveCurrentEnvironmentAndPackageIdentity()",
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "source_method": "staleEditableSettingsPreserveCurrentEnvironmentAndPackageIdentity()",
+      "count": 1,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests/disabledRuntimeOperationsReturnTheirOwnFailure()",
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "source_method": "disabledRuntimeOperationsReturnTheirOwnFailure()",
+      "count": 1,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests/selectionAcknowledgementRejectsAConversationDeletedDuringCommit()",
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "source_method": "selectionAcknowledgementRejectsAConversationDeletedDuringCommit()",
+      "count": 1,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests/overlappingAdministrationCannotReplaceCredentialsOrDisableAnAdmittedOperation()",
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "source_method": "overlappingAdministrationCannotReplaceCredentialsOrDisableAnAdmittedOperation()",
+      "count": 1,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests/cancellationBeforeInstallerProgressDoesNotStartRuntimeAndReleasesOnlyItsLease()",
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "source_method": "cancellationBeforeInstallerProgressDoesNotStartRuntimeAndReleasesOnlyItsLease()",
+      "count": 1,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests/duplicateEnvironmentNamesFailBeforePersistenceAndCannotCrashRuntimeAssembly()",
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "source_method": "duplicateEnvironmentNamesFailBeforePersistenceAndCannotCrashRuntimeAssembly()",
+      "count": 1,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests/duplicatePersistentIdentitiesProduceErrorsInsteadOfTrapsOrAmbiguousRows()",
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "source_method": "duplicatePersistentIdentitiesProduceErrorsInsteadOfTrapsOrAmbiguousRows()",
+      "count": 1,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore()",
+      "source": "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+      "source_method": "actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore()",
+      "count": 1,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/ShareInboxHostIntegrationTests/mixedBatchBecomesNamedVerifiedChatAttachmentsWithoutConsumingTheInbox()",
+      "source": "AI_HLYTests/ShareInboxHostIntegrationTests.swift",
+      "source_method": "mixedBatchBecomesNamedVerifiedChatAttachmentsWithoutConsumingTheInbox()",
+      "count": 1,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/ShareInboxHostIntegrationTests/invalidCapacityRejectedItemsAndTamperedBytesCannotChangeTheSourceBatch()",
+      "source": "AI_HLYTests/ShareInboxHostIntegrationTests.swift",
+      "source_method": "invalidCapacityRejectedItemsAndTamperedBytesCannotChangeTheSourceBatch()",
+      "count": 1,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/ShareInboxHostIntegrationTests/cancelledDraftPreparationKeepsTheOriginalFile()",
+      "source": "AI_HLYTests/ShareInboxHostIntegrationTests.swift",
+      "source_method": "cancelledDraftPreparationKeepsTheOriginalFile()",
+      "count": 1,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYTests/ShareInboxHostIntegrationTests/providerBatchSurvivesSourceDeletionAndIsReadByTheRealHostInbox()",
+      "source": "AI_HLYTests/ShareInboxHostIntegrationTests.swift",
+      "source_method": "providerBatchSurvivesSourceDeletionAndIsReadByTheRealHostInbox()",
+      "count": 1,
+      "type": "unit"
+    },
+    {
+      "selector": "AI_HLYUITests/AgentRuntimeConversationUITests/testOriginalChatActivitySurvivesKeyboardRotationAndConversationReattachment",
+      "source": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "source_method": "testOriginalChatActivitySurvivesKeyboardRotationAndConversationReattachment()",
+      "count": 1,
+      "type": "UI"
+    },
+    {
+      "selector": "AI_HLYUITests/AgentRuntimeConversationUITests/testUI03SearchMessageAndDeduplicatedCitations",
+      "source": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "source_method": "testUI03SearchMessageAndDeduplicatedCitations()",
+      "count": 1,
+      "type": "UI"
+    },
+    {
+      "selector": "AI_HLYUITests/AgentRuntimeConversationUITests/testUI03HebrewRTLSearchMessageAndDeduplicatedCitations",
+      "source": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "source_method": "testUI03HebrewRTLSearchMessageAndDeduplicatedCitations()",
+      "count": 1,
+      "type": "UI"
+    },
+    {
+      "selector": "AI_HLYUITests/AgentRuntimeConversationUITests/testUI06ComposerMultilineAttachmentsModelSelectorNoOverlap",
+      "source": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "source_method": "testUI06ComposerMultilineAttachmentsModelSelectorNoOverlap()",
+      "count": 1,
+      "type": "UI"
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft",
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "source_method": "testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft()",
+      "count": 1,
+      "type": "UI"
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest",
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "source_method": "testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest()",
+      "count": 1,
+      "type": "UI"
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest",
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "source_method": "testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest()",
+      "count": 1,
+      "type": "UI"
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory",
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "source_method": "testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory()",
+      "count": 1,
+      "type": "UI"
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow",
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "source_method": "testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow()",
+      "count": 1,
+      "type": "UI"
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft",
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "source_method": "testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft()",
+      "count": 1,
+      "type": "UI"
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testNewConversationWorksWithoutOptimizationModel",
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "source_method": "testNewConversationWorksWithoutOptimizationModel()",
+      "count": 1,
+      "type": "UI"
+    }
+  ],
+  "recent_own_branch_runs": [
+    {
+      "conclusion": "failure",
+      "createdAt": "2026-11-23T20:59:49Z",
+      "databaseId": 45265065184,
+      "headSha": "ade2f626e37102abde83050c94d524d19e0726bb",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "createdAt": "2026-11-23T20:12:32Z",
+      "databaseId": 45256955142,
+      "headSha": "0b40a021c6d28e4d1c47ed87060d063c8456ba9f",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "createdAt": "2026-11-23T19:13:41Z",
+      "databaseId": 45246711373,
+      "headSha": "36d3c51bdba93ada2c2722ed0e9b99109d84a616",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "createdAt": "2026-11-23T18:28:49Z",
+      "databaseId": 45238831508,
+      "headSha": "39a10b1cbf4645b629f556ea312e2576a4e566db",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "createdAt": "2026-11-23T17:42:26Z",
+      "databaseId": 45230545076,
+      "headSha": "7523f45cf8ea180a8e30f511ff0fbd3bb5ccae6d",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "createdAt": "2026-11-23T17:09:47Z",
+      "databaseId": 45224582718,
+      "headSha": "8429dbb6cb66e266504b8d055586829ba7aa61f7",
+      "status": "completed"
+    }
+  ],
+  "request_sha256": "c6461528b7bb0799e9dc4047afc09d4d886045c8c9ec782eb0739a53f093eea7",
+  "plan_sha256": "b910fe3db8de3392ff8c001ccfef0371aaf2e60f73cf939ea6da377a0b691d0d",
+  "planner_run_reused_without_reexecution": true,
+  "initial_metadata_count_error": "Count reconciliation initially omitted four XCTest UI source-method parentheses; request and successful planner input unchanged. Corrected only metadata normalization, no test or second planning run."
+}

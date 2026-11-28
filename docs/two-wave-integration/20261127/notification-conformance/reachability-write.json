@@ -1,0 +1,12 @@
+{
+  "name": "reachability-write",
+  "argv": [
+    "python3",
+    "Scripts/Audit/audit_miniapp_reachability.py"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-miniapps-notification-conformance-20261127",
+  "exitCode": 0,
+  "durationSeconds": 14.001,
+  "stdout": "Wrote 100 canonical Host-runtime reachability cells plus separate original-library and local-presentation records; no physical/E2E pass inferred.\n",
+  "stderr": ""
+}

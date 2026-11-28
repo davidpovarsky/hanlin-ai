@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-miniapps-intent-wiring-20261124/Scripts/ProductSplit/verify_targets.py", line 159, in <module>
+    main()
+  File "/mnt/development/projects/worktrees/hanlin-miniapps-intent-wiring-20261124/Scripts/ProductSplit/verify_targets.py", line 91, in main
+    runtime_lock = json.loads((ROOT / "RuntimeDependencies.lock.json").read_text())
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1029, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/development/projects/worktrees/hanlin-miniapps-intent-wiring-20261124/RuntimeDependencies.lock.json'

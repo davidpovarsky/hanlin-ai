@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "kind": "REVIEWED_TYPED_LIST_SOURCE_AND_RESOURCE_PROJECTION",
+  "sourceCommit": "42d690ba3879e70c5475d28c2e82faf54cc9e37a",
+  "sourceParent": "445e2cb514012110cd865bdd33a3dbb8e6b8143d",
+  "scope": "four optional homogeneous native lists on the existing MiniApp action",
+  "sourcePatchSHA256": "e9fa58c7514d05e450256186a6d7ec3215c9c423f23577261300fb6b107c1a22",
+  "r1ToR2PatchSHA256": "262d0d506279e7139261f4bbd53476868ae7d7854b2cd3cad5754d9f215dad5d",
+  "allFiveR1SourceFilesReusedExactly": true,
+  "sourcePreservationGroups": 7,
+  "originalGeneratorAndCheckExitCodes": [
+    0,
+    0
+  ],
+  "sourceReviewR1SHA256": "70db6919586a19502875d0e578de879bb4a5f0ef7aeddb1cea0e4896f255eb6b",
+  "sourceReviewR2SHA256": "8f043d408e077a9102bebbeb9690f4769ff7d801892357633e5b3a9ca51ee700",
+  "staticSDKInputIntersection": [],
+  "unchangedCollectorSourceSHA256": "60b6b9496330d4605f60f56587170b06c7eced31a6b3d79ef04aa8faa548022c",
+  "sdkStageOrCollectorExecutedInThisLane": false,
+  "shippingSwiftCompilerAtSourceReview": "NOT_RUN",
+  "swiftCodecTestsAtSourceReview": "NOT_RUN",
+  "nativeAppMetadataAndShortcutOSAtSourceReview": "NOT_RUN",
+  "declarationProbeScope": "Evidence-only optional-array and conditional-summary admission; String substitutes for the existing entity; all later native results retained separately",
+  "oldCodecMethodsPreserved": 4,
+  "newCodecMethodsUnexecutedAtSourceReview": 6,
+  "oldAppTestMethodsPreserved": 4,
+  "newAppTestMethodsUnexecutedAtSourceReview": 4,
+  "oldCanonicalRecordsPreserved": 1294,
+  "oldHostRecordsPreserved": 60,
+  "newTranslatedLabels": 4,
+  "locales": [
+    "en",
+    "he",
+    "zh-Hans"
+  ],
+  "richFallback": "Existing JSON/JSON-file for mixed, nested, dictionary and null values; direct Dictionary/Any/union support not claimed",
+  "proofPackaging": {
+    "initialDiffCheckExit": 2,
+    "observedError": "NativeListParameterAdmission.swift:95: new blank line at EOF.",
+    "correction": "Store exact admitted source as lossless gzip; no byte trimming or test rerun",
+    "rawProbeSHA256": "53dd5e99224395d2e44613c02a6ef665436c0abf75e0801bf45a3016b8df7a4b",
+    "originalFailureReadbackSHA256": "8b7b27f6078199b68c3c31a889a88462a66852e67d6ac427a4febfaa2809b52d"
+  }
+}

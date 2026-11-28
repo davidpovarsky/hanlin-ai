@@ -1,0 +1,79 @@
+{
+  "kind": "LOSSLESS_ORIGINAL_PACKET_PLUS_ROOT_REVIEW",
+  "sourcePacket": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-router-final-source-20261127",
+  "members": [
+    {
+      "path": "controller-602b29e3.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "controller-602b29e3.stdout",
+      "bytes": 1201,
+      "sha256": "b13f04b7d6cd8395a6cc6073817d820f717fd84e3b50bae68c2fadbb3b5b9ab8"
+    },
+    {
+      "path": "discovery-602b29e3-r1/receipt.json",
+      "bytes": 2321,
+      "sha256": "3e92cbed613062227069aa98dab7c0a496178cb1e5c80d162be88759194c5119"
+    },
+    {
+      "path": "discovery-602b29e3-r1/source-inputs.json",
+      "bytes": 5038297,
+      "sha256": "b2d9cc5c4cb73a893698aa01fd4911bb283bdcf049199da67c4bc990422116a0"
+    },
+    {
+      "path": "discovery-602b29e3-r1/start.json",
+      "bytes": 845,
+      "sha256": "6d3a8bee836f47538c3b4db71fedcf44181676ea76592f8f71046a9b59e86600"
+    },
+    {
+      "path": "discovery-602b29e3-r1/stderr.log",
+      "bytes": 92343,
+      "sha256": "7f6262a43378acfb71800230a952250013a7263e4ae9a970cd739e48f3482aec"
+    },
+    {
+      "path": "discovery-602b29e3-r1/stderr.log.gz",
+      "bytes": 14960,
+      "sha256": "56e3f0d25c83a482bbf63af3e57ba5ee736409608faa45d6e662ad7622702521"
+    },
+    {
+      "path": "discovery-602b29e3-r1/stdout.log",
+      "bytes": 4882,
+      "sha256": "27b9d9eb8d193c47524c18567d7aa0095c14351f4debcd0108ca3cbbdd684e69"
+    },
+    {
+      "path": "discovery-602b29e3-r1/stdout.log.gz",
+      "bytes": 915,
+      "sha256": "acf9e2706423b4825bbb0e88017bd1e8e9eab42c77a0c441486a8e12893aede9"
+    },
+    {
+      "path": "disk-observations-602b29e3.jsonl",
+      "bytes": 134,
+      "sha256": "cb2ce25e0eff208f75ce7d9f863ea832287b9d0407b7b4d62fbc96344e47f4e5"
+    },
+    {
+      "path": "launch-602b29e3.json",
+      "bytes": 666,
+      "sha256": "c38aca2ed5e9abb2b53f2dbde90bf8ee580abf6621990f8b2ec8c08295974b46"
+    },
+    {
+      "path": "materialization-602b29e3.json",
+      "bytes": 565,
+      "sha256": "316057b7bac900e095202a0eb40bd06616b8590d61e707de6c5f58c0fd7afb30"
+    },
+    {
+      "path": "run-original-discovery.py",
+      "bytes": 5817,
+      "sha256": "2664765f1ca1593087760259a77389ba4c54152b5667f6f77edcbe1bae65ceae"
+    },
+    {
+      "path": "sparse-restoration-602b29e3.json",
+      "bytes": 572,
+      "sha256": "ad5a6fb69d0548db3bf14512901e18d2d7cede2c6c441bc739f39cc04a9c8328"
+    }
+  ],
+  "archiveBytes": 843878,
+  "archiveSHA256": "6945acb2a874f004b99ba8f1fd00089f562f31a5e3fa4828516ef6d85e8ef8d1",
+  "rootReviewSHA256": "3814417b49d983bae6549163eba9129f5023e25d9a088a3e054b00621239be55"
+}

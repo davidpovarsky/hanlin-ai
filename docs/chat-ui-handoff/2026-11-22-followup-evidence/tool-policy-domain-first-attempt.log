@@ -1,0 +1,199 @@
+Test Suite 'All tests' started at 2026-11-22 04:53:55.610
+Test Suite 'debug.xctest' started at 2026-11-22 04:53:55.710
+Test Suite 'debug.xctest' passed at 2026-11-22 04:53:55.710
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'All tests' passed at 2026-11-22 04:53:55.711
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+◊ Test run started.
+→ Testing Library Version: 6.3.3 (48d727cc1cf4eda)
+→ Target Platform: x86_64-unknown-windows-msvc
+◊ Suite HanlinToolApprovalStoreTests started.
+◊ Suite ToolApprovalAndPresentationTests started.
+◊ Suite HostInputIntegrityRegressionTests started.
+◊ Test accountProviderToolManifestAndPermissionChangesDoNotBorrowGrants() started.
+◊ Test corruptOrUnknownStorageVersionDoesNotGrant() started.
+◊ Test firstGrantIsAvailableToAnotherConversationOwnerAndReload() started.
+◊ Test explicitMetadataRoundTripsAndOverridesFamilyAnimation() started.
+◊ Test nonSensitiveReadDoesNotRequireBlanketConsent() started.
+◊ Test historicalAllowOnceNeverBecomesPersistentConsent() started.
+◊ Test mixedManifestExemptsOnlyExactDeclaredReadActions() started.
+◊ Test optionalPolicyFieldsDecodeSafely() started.
+◊ Test missingPresentationMetadataUsesGenericToolsAndCommonAnimation() started.
+◊ Test schemaStillChecksExactNumbersBeforeDispatch() started.
+◊ Test routeWithoutMetadataKeepsOriginalBytesIncludingNestedHighPrecisionCoordinates() started.
+◊ Test unknownAnimationCannotInjectCustomExecutableContent() started.
+◊ Test strippingTopLevelMetadataPreservesAllNestedValuesAndScalarKeys() started.
+◊ Test forgedPortableDTOAndChangedActualDispatchBothFail() started.
+◊ Test revocationImmediatelyAffectsExistingOwners() started.
+◊ Test metadataTypesAndNestedFieldsCannotEraseBusinessArguments() started.
+◊ Test scopeFieldsAreExactStringsAndDoNotIncludeOtherPayload() started.
+√ Test nonSensitiveReadDoesNotRequireBlanketConsent() passed after 0.006 seconds.
+√ Test optionalPolicyFieldsDecodeSafely() passed after 0.008 seconds.
+√ Test mixedManifestExemptsOnlyExactDeclaredReadActions() passed after 0.011 seconds.
+√ Test missingPresentationMetadataUsesGenericToolsAndCommonAnimation() passed after 0.025 seconds.
+√ Test explicitMetadataRoundTripsAndOverridesFamilyAnimation() passed after 0.026 seconds.
+√ Test scopeFieldsAreExactStringsAndDoNotIncludeOtherPayload() passed after 0.045 seconds.
+√ Test metadataTypesAndNestedFieldsCannotEraseBusinessArguments() passed after 0.098 seconds.
+√ Test unknownAnimationCannotInjectCustomExecutableContent() passed after 0.106 seconds.
+× Test schemaStillChecksExactNumbersBeforeDispatch() recorded an issue at HostInputIntegrityRegressionTests.swift:50:6: Caught error: JSONSchemaCompilationFailure(category: HanlinExactJSONSchema.JSONSchemaCompilationFailure.Category.metaSchema, location: nil)
+√ Suite ToolApprovalAndPresentationTests passed after 0.115 seconds.
+× Test schemaStillChecksExactNumbersBeforeDispatch() failed after 0.108 seconds with 1 issue.
+√ Test routeWithoutMetadataKeepsOriginalBytesIncludingNestedHighPrecisionCoordinates() passed after 0.111 seconds.
+√ Test forgedPortableDTOAndChangedActualDispatchBothFail() passed after 0.117 seconds.
+√ Test strippingTopLevelMetadataPreservesAllNestedValuesAndScalarKeys() passed after 0.157 seconds.
+× Suite HostInputIntegrityRegressionTests failed after 0.165 seconds with 1 issue.
+√ Test accountProviderToolManifestAndPermissionChangesDoNotBorrowGrants() passed after 0.180 seconds.
+√ Test firstGrantIsAvailableToAnotherConversationOwnerAndReload() passed after 0.263 seconds.
+√ Test corruptOrUnknownStorageVersionDoesNotGrant() passed after 0.263 seconds.
+√ Test historicalAllowOnceNeverBecomesPersistentConsent() passed after 0.262 seconds.
+√ Test revocationImmediatelyAffectsExistingOwners() passed after 0.260 seconds.
+√ Suite HanlinToolApprovalStoreTests passed after 0.267 seconds.
+× Test run with 17 tests in 3 suites failed after 0.271 seconds with 1 issue.
+Building for debugging...
+[0/27] Write sources
+[3/27] Copying HanlinAppManifest.schema.json
+[4/27] Copying Draft2020-12
+[5/27] Write sources
+[10/27] Write swift-version-2807070033DA82CF.txt
+[12/59] Compiling JSON JSONLexer.swift
+[13/59] Compiling HanlinPlatformContracts HanlinChatStructuredPart.swift
+[14/59] Compiling JSON JSONParsingOptions.swift
+[15/59] Compiling JSON JSONTokenMachine.swift
+[16/59] Compiling JSON JSONWriter.swift
+[17/59] Compiling JSON JSONWritingOptions.swift
+[18/59] Compiling JSON JSONBase64.swift
+[19/59] Compiling JSON JSONCodableBridge.swift
+[20/59] Compiling JSON JSONCodablePayload.swift
+[21/59] Compiling JSON JSONCodingStrategies.swift
+[22/59] Emitting module JSON
+[26/59] Compiling JSON JSONDecodingContainers.swift
+[31/59] Compiling JSON JSONEncodingContainers.swift
+[33/59] Emitting module HanlinPlatformContracts
+[38/59] Compiling JSON JSONValueConveniences.swift
+[39/59] Compiling JSON JSONValueDecoder.swift
+[40/59] Compiling JSON JSONValueEncoder.swift
+[41/59] Compiling JSON JSONArrayAccumulator.swift
+[42/59] Compiling JSON JSONConstruction.swift
+[43/59] Compiling JSON JSONObjectAccumulator.swift
+[44/106] Compiling JSON JSONDiagnostic.swift
+[45/106] Compiling JSON JSONOperationReport.swift
+[46/106] Compiling JSON JSONOperationStatistics.swift
+[47/106] Compiling JSON JSONPreview.swift
+[48/106] Compiling JSON JSONRedaction.swift
+[49/106] Compiling JSON JSONSourceLocation.swift
+[50/106] Compiling JSON JSONDocument.swift
+[51/106] Compiling JSON JSONSourceMap.swift
+[52/106] Compiling JSON JSONAccessFailure.swift
+[53/106] Compiling JSON JSONFailure.swift
+[54/106] Compiling JSON JSONResourceViolation.swift
+[55/106] Compiling JSON JSONHashMeter.swift
+[56/106] Compiling JSON JSONSHA256Core.swift
+[57/106] Compiling JSON JSONCompositionScope.swift
+[58/106] Compiling JSON JSONLimits.swift
+[59/106] Compiling JSON JSONOperationContext.swift
+[60/106] Compiling JSON JSONWorkMeter.swift
+[61/106] Compiling JSON DecimalComponents.swift
+[62/106] Compiling HanlinPlatformContracts HanlinToolContracts.swift
+[63/106] Compiling HanlinPlatformContracts HanlinValue.swift
+[64/106] Compiling HanlinPlatformContracts HanlinVersions.swift
+[65/106] Compiling HanlinPlatformContracts HanlinWireProtocol.swift
+[66/106] Compiling HanlinPlatformContracts resource_bundle_accessor.swift
+[67/106] Compiling JSON JSONReadCursor.swift
+[68/106] Compiling JSON JSONReadPreparation.swift
+[69/106] Compiling JSON JSONReadScope.swift
+[70/106] Compiling JSON JSON.swift
+[71/106] Compiling JSON JSONAccessors.swift
+[72/106] Compiling JSON JSONComparison.swift
+[73/106] Compiling JSON JSONEntryPoints.swift
+[74/106] Compiling JSON JSONExactKeyIndex.swift
+[75/106] Compiling JSON JSONFingerprint.swift
+[76/106] Compiling JSON JSONKey.swift
+[77/106] Compiling JSON JSONMember.swift
+[78/106] Compiling JSON JSONObject.swift
+[79/106] Compiling JSON JSONPresence.swift
+[81/109] Compiling AI_Hanlin HanlinToolApprovalStore.swift
+[82/109] Emitting module AI_Hanlin
+[84/110] Compiling HanlinPlatformContracts HanlinRuntimeProfiles.swift
+[85/110] Compiling HanlinPlatformContracts HanlinScriptContracts.swift
+[86/110] Compiling HanlinPlatformContracts HanlinSessionContracts.swift
+[87/110] Compiling HanlinPlatformContracts HanlinSkillContracts.swift
+[88/110] Compiling HanlinPlatformContracts HanlinStoreFileAccess.swift
+[89/110] Compiling HanlinPlatformContracts HanlinToolApprovalDescriptor.swift
+[94/111] Wrapping AST for JSON for debugging
+[96/111] Wrapping AST for AI_Hanlin for debugging
+[98/117] Compiling AISDKProvider JSONValue.swift
+[99/117] Emitting module AISDKProvider
+[100/118] Wrapping AST for HanlinPlatformContracts for debugging
+[101/118] Wrapping AST for AISDKProvider for debugging
+[103/118] Compiling JSONRegexRuntime RegexBudget.swift
+[104/118] Compiling JSONRegexRuntime RegexCompiler.swift
+[105/118] Compiling JSONRegexRuntime RegexParser.swift
+[106/121] Emitting module JSONRegexRuntime
+[107/121] Compiling JSONRegexRuntime RegexProgram.swift
+[108/121] Compiling JSONRegexRuntime RegexUnicodeTables.swift
+[109/121] Compiling JSONRegexRuntime RegexVM.swift
+[110/122] Wrapping AST for JSONRegexRuntime for debugging
+[112/143] Emitting module HanlinExactJSONSchema
+[113/143] Compiling HanlinExactJSONSchema CompiledJSONSchema.swift
+[114/143] Compiling HanlinExactJSONSchema JSONSchemaCompilationFailure.swift
+[115/143] Compiling HanlinExactJSONSchema JSONSchemaCompiler.swift
+[116/143] Compiling HanlinExactJSONSchema JSONSchemaPlan.swift
+[117/143] Compiling HanlinExactJSONSchema JSONSchemaQualifiedNode.swift
+[118/143] Compiling HanlinExactJSONSchema JSONSchemaShape.swift
+[119/143] Compiling HanlinExactJSONSchema JSONSchemaVocabulary.swift
+[120/143] Compiling HanlinExactJSONSchema JSONSchemaBuilder.swift
+[121/143] Compiling HanlinExactJSONSchema JSONCompositionScope+URI.swift
+[122/143] Compiling HanlinExactJSONSchema JSONSchemaBuiltins.swift
+[123/143] Compiling HanlinExactJSONSchema JSONSchemaDocument.swift
+[124/143] Compiling HanlinExactJSONSchema JSONSchemaRegistry.swift
+[125/143] Compiling HanlinExactJSONSchema JSONSchemaURI.swift
+[126/143] Compiling HanlinExactJSONSchema JSONSchemaURINormalization.swift
+[127/143] Compiling HanlinExactJSONSchema JSONAnnotationState.swift
+[128/143] Compiling HanlinExactJSONSchema JSONEvaluationFrame.swift
+[129/143] Compiling HanlinExactJSONSchema JSONSchemaAssertions.swift
+[130/143] Compiling HanlinExactJSONSchema JSONSchemaEvaluation.swift
+[131/143] Compiling HanlinExactJSONSchema JSONSchemaEvaluationFailure.swift
+[132/143] Compiling HanlinExactJSONSchema JSONSchemaValidator.swift
+[133/163] Compiling HanlinExactJSONSchema JSONIDNA.swift
+[134/163] Compiling HanlinExactJSONSchema JSONIDNAData.swift
+[135/163] Compiling HanlinExactJSONSchema JSONIDNAMapping.swift
+[136/163] Compiling HanlinExactJSONSchema JSONIDNAUnicode.swift
+[137/163] Compiling HanlinExactJSONSchema JSONPunycode.swift
+[138/163] Compiling HanlinExactJSONSchema JSONSchemaFormats.swift
+[139/163] Compiling HanlinExactJSONSchema JSONSchemaIdentifierFormats.swift
+[140/163] Compiling HanlinExactJSONSchema JSONSchemaMailboxFormats.swift
+[141/163] Compiling HanlinExactJSONSchema JSONDeclaredAnnotations.swift
+[142/163] Compiling HanlinExactJSONSchema JSONSchemaNodeView.swift
+[143/163] Compiling HanlinExactJSONSchema JSONSchemaReferenceTarget.swift
+[144/163] Compiling HanlinExactJSONSchema JSONSchemaOptions.swift
+[145/163] Compiling HanlinExactJSONSchema JSONValidationIssue.swift
+[146/163] Compiling HanlinExactJSONSchema JSONValidationOutput.swift
+[147/163] Compiling HanlinExactJSONSchema JSONValidationOutputAdapter.swift
+[148/163] Compiling HanlinExactJSONSchema JSONValidationResult.swift
+[149/163] Compiling HanlinExactJSONSchema JSONSchemaProviderInspection.swift
+[150/163] Compiling HanlinExactJSONSchema JSONSchemaProviderProfile.swift
+[151/163] Compiling HanlinExactJSONSchema OpenAIJSONSchemaBridge.swift
+[152/163] Compiling HanlinExactJSONSchema resource_bundle_accessor.swift
+[153/164] Wrapping AST for HanlinExactJSONSchema for debugging
+[155/166] Emitting module HanlinAgentCore
+[156/166] Compiling HanlinAgentCore HanlinHostSchemaValidation.swift
+[157/167] Wrapping AST for HanlinAgentCore for debugging
+[159/170] Emitting module ToolPolicyChecks
+[160/171] Compiling ToolPolicyChecks HanlinToolApprovalStoreTests.swift
+[161/171] Compiling ToolPolicyChecks HostInputIntegrityRegressionTests.swift
+[162/171] Compiling ToolPolicyChecks ToolApprovalAndPresentationTests.swift
+[163/172] C:\Users\DAVID\Code\hanlin-tool-policy-check-20261122\.build\x86_64-unknown-windows-msvc\debug\HanlinToolPolicyChecksPackageDiscoveredTests.derived\all-discovered-tests.swift
+[164/172] Write sources
+[165/172] Wrapping AST for ToolPolicyChecks for debugging
+[167/174] Emitting module HanlinToolPolicyChecksPackageDiscoveredTests
+[168/175] Compiling HanlinToolPolicyChecksPackageDiscoveredTests ToolPolicyChecks.swift
+[169/175] Compiling HanlinToolPolicyChecksPackageDiscoveredTests all-discovered-tests.swift
+[170/176] C:\Users\DAVID\Code\hanlin-tool-policy-check-20261122\.build\x86_64-unknown-windows-msvc\debug\HanlinToolPolicyChecksPackageTests.derived\runner.swift
+[171/176] Write sources
+[172/176] Wrapping AST for HanlinToolPolicyChecksPackageDiscoveredTests for debugging
+[174/178] Compiling HanlinToolPolicyChecksPackageTests runner.swift
+[175/178] Emitting module HanlinToolPolicyChecksPackageTests
+[176/179] Wrapping AST for HanlinToolPolicyChecksPackageTests for debugging
+[177/179] Write Objects.LinkFileList
+[178/179] Linking HanlinToolPolicyChecksPackageTests.xctest
+Build complete! (1162.62s)

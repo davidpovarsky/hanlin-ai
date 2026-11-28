@@ -1,0 +1,272 @@
+{
+  "all47OriginalMethodsAndAllHelpersByteExact": true,
+  "appleCompilation": "NOT_RUN",
+  "base": "f350a0f12c54121d0b3afb4217472ae8143fc83a",
+  "controlsExecution": "NOT_RUN",
+  "fixture12GitBindings": {
+    "Fixtures/LiveActivityLifecycle/expo/App.tsx": {
+      "actualGitSHA256": "a6f1bd6e9255262fea6f2c9b7d0dedd477969750efc44beba3c4db96d4acd74e",
+      "bytes": 12938,
+      "retainedAuthority": {
+        "bytes": 12938,
+        "gitBlob": "b8022e8318bf62b36fcd59522ba6ffc49e1eb90e",
+        "sha256": "a6f1bd6e9255262fea6f2c9b7d0dedd477969750efc44beba3c4db96d4acd74e"
+      }
+    },
+    "Fixtures/LiveActivityLifecycle/expo/hanlin.authoring.json": {
+      "actualGitSHA256": "57239928efb0bd0e6760bf64443e70bf021eb963f074908332de3f5b7959a5a3",
+      "bytes": 118,
+      "retainedAuthority": {
+        "bytes": 118,
+        "gitBlob": "c894586a4146012ad1e7d2c4666877f5f5857f3d",
+        "sha256": "57239928efb0bd0e6760bf64443e70bf021eb963f074908332de3f5b7959a5a3"
+      }
+    },
+    "Fixtures/LiveActivityLifecycle/expo/index.ts": {
+      "actualGitSHA256": "e6ff990a5f73c39cebfecc539611b23872e530f1287c6b0d0d8447fbc9a832ee",
+      "bytes": 117,
+      "retainedAuthority": {
+        "bytes": 117,
+        "gitBlob": "3a07b1fa2536a70032db56a4772cbac9e8d3f8e4",
+        "sha256": "e6ff990a5f73c39cebfecc539611b23872e530f1287c6b0d0d8447fbc9a832ee"
+      }
+    },
+    "Fixtures/LiveActivityLifecycle/expo/package.json": {
+      "actualGitSHA256": "a886a091cc90947b1bd64d5a123af9dbde523cd35dabd7d5dea0384fe98fd61f",
+      "bytes": 334,
+      "retainedAuthority": {
+        "bytes": 334,
+        "gitBlob": "164ab9bcbfad3b4545ebf3d59017830d18c9890d",
+        "sha256": "a886a091cc90947b1bd64d5a123af9dbde523cd35dabd7d5dea0384fe98fd61f"
+      }
+    },
+    "Fixtures/LiveActivityLifecycle/expo/script.json": {
+      "actualGitSHA256": "e6c6dcae32b51de961b7342b8c399f7df8469f67c0f58b11934c5c354521ff62",
+      "bytes": 487,
+      "retainedAuthority": {
+        "bytes": 487,
+        "gitBlob": "8b670e823874e53771d36678ccd7b86d112c1d68",
+        "sha256": "e6c6dcae32b51de961b7342b8c399f7df8469f67c0f58b11934c5c354521ff62"
+      }
+    },
+    "Fixtures/LiveActivityLifecycle/expo/tsconfig.json": {
+      "actualGitSHA256": "02e14c4b983c0f436d32ce0eb2f96309512a7d69774ed0c7d39ffa4175ccf7df",
+      "bytes": 53,
+      "retainedAuthority": {
+        "bytes": 53,
+        "gitBlob": "50ce14b0741a2008a63f2d14922457baf11372ff",
+        "sha256": "02e14c4b983c0f436d32ce0eb2f96309512a7d69774ed0c7d39ffa4175ccf7df"
+      }
+    },
+    "Fixtures/LiveActivityLifecycle/nativescript/hanlin.authoring.json": {
+      "actualGitSHA256": "228cd8d7c2d312b4f5c1ef2ba89a4c4a2e02f9b750a82411346c0da9885971c5",
+      "bytes": 146,
+      "retainedAuthority": {
+        "bytes": 146,
+        "gitBlob": "8e30f558b5306f01fbe60708c62dc5bfa3f1aebd",
+        "sha256": "228cd8d7c2d312b4f5c1ef2ba89a4c4a2e02f9b750a82411346c0da9885971c5"
+      }
+    },
+    "Fixtures/LiveActivityLifecycle/nativescript/index.ts": {
+      "actualGitSHA256": "c99e8b36bf5e155340f29ff26f549532910c890095a549afd21708e372f2483c",
+      "bytes": 11271,
+      "retainedAuthority": {
+        "bytes": 11271,
+        "gitBlob": "d54b063eac57070d39a60a0411fadb20b11ea65f",
+        "sha256": "c99e8b36bf5e155340f29ff26f549532910c890095a549afd21708e372f2483c"
+      }
+    },
+    "Fixtures/LiveActivityLifecycle/nativescript/package.json": {
+      "actualGitSHA256": "67c8ebb3dc9a091eb9484f0f2a7122cd82cc43567480964cfed04a074790ec9d",
+      "bytes": 293,
+      "retainedAuthority": {
+        "bytes": 293,
+        "gitBlob": "7459788828007abbe42ae1978b50a359acc93bfb",
+        "sha256": "67c8ebb3dc9a091eb9484f0f2a7122cd82cc43567480964cfed04a074790ec9d"
+      }
+    },
+    "Fixtures/LiveActivityLifecycle/nativescript/script.json": {
+      "actualGitSHA256": "bb4dbd0fa034e6f9e29bf39d76f00146f5a7e5e770fa38265ac7c60f37a22885",
+      "bytes": 700,
+      "retainedAuthority": {
+        "bytes": 700,
+        "gitBlob": "0a3fab0d7ee957203b3a93601bceb700bc9cdd34",
+        "sha256": "bb4dbd0fa034e6f9e29bf39d76f00146f5a7e5e770fa38265ac7c60f37a22885"
+      }
+    },
+    "Fixtures/LiveActivityLifecycle/nativescript/tsconfig.json": {
+      "actualGitSHA256": "4148cad60e1db19b1159ba84bd5e8b9749bf9c90ed607de6fbeeaa942cf2097d",
+      "bytes": 75,
+      "retainedAuthority": {
+        "bytes": 75,
+        "gitBlob": "c6de81ff4b1e06c5bd415e9ecee9d87fdbcac44a",
+        "sha256": "4148cad60e1db19b1159ba84bd5e8b9749bf9c90ed607de6fbeeaa942cf2097d"
+      }
+    },
+    "Fixtures/LiveActivityLifecycle/nativescript/widget.jsx": {
+      "actualGitSHA256": "1b61cc1b750e82415cac38a9b6af78fc63154ec98d0f7a4dfcddddf2ccf2bc90",
+      "bytes": 923,
+      "retainedAuthority": {
+        "bytes": 923,
+        "gitBlob": "6040842189927df4f0875cc66817d9678eab9f01",
+        "sha256": "1b61cc1b750e82415cac38a9b6af78fc63154ec98d0f7a4dfcddddf2ccf2bc90"
+      }
+    }
+  },
+  "gitDiffCheckExit": 0,
+  "hostDirectPathIntersection": {
+    "authority": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/post-icu-bundle-closure-main04e33c45-readonly-r1/git-input-and-tree-qualification.json",
+    "changed": [],
+    "count": 99,
+    "sha256": "6500ffeb0d0368072ab2d060b4cde26cf3531c5882857a344839ea0514024879"
+  },
+  "nativeExecution": "NOT_RUN",
+  "newControls": [
+    "test_native_owner_reads_canonical_default_without_computed_json_fields",
+    "test_native_owner_rejects_wrong_instance_template_and_changed_continuity",
+    "test_actual_authored_call_shapes_keep_two_ids_and_isolated_update_end",
+    "test_private_identity_and_immutable_native_prefix_are_required",
+    "test_reused_id_cross_slot_update_and_rejected_call_are_not_success",
+    "test_end_return_does_not_rewrite_list_or_accept_a_foreign_id",
+    "test_seven_capture_contracts_admit_actual_type_values_without_assuming_types",
+    "test_system_evidence_rejects_wrong_window_time_bounds_missing_region_and_empty_context",
+    "test_exact_installed_iphone_runtime_and_distinct_build_profiles_are_required",
+    "test_actual_window_path_accepts_double_separator_and_rejects_foreign_or_escape"
+  ],
+  "newMethods": [
+    "testExpoLiveActivityLifecycleKeepsTwoActualIDsAndSystemViewsIndependent",
+    "testNativeScriptLiveActivityLifecycleKeepsTwoActualIDsAndSystemViewsIndependent"
+  ],
+  "newScopeBounds": {
+    "caseSeconds": 420,
+    "observerAndNativeSeconds": 2100,
+    "originalBuildSeconds": 600,
+    "originalValidateSeconds": 300
+  },
+  "originalMethods": [
+    "testExpoPlacedWidgetInvokesAllFiveRuntimes",
+    "testNativeScriptPlacedWidgetInvokesAllFiveRuntimes",
+    "testExpoLiveActivityInvokesAllFiveRuntimes",
+    "testNativeScriptLiveActivityInvokesAllFiveRuntimes",
+    "testExpoShortcutInvokesAllFiveRuntimes",
+    "testNativeScriptShortcutInvokesAllFiveRuntimes",
+    "testExpoSystemShareInvokesAllFiveRuntimes",
+    "testNativeScriptSystemShareInvokesAllFiveRuntimes",
+    "testExpoSystemTranslationInvokesAllFiveRuntimes",
+    "testNativeScriptSystemTranslationInvokesAllFiveRuntimes",
+    "testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult",
+    "testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult",
+    "testExpoRunMiniAppActionSavedForegroundReturnsTypedResult",
+    "testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult",
+    "testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers",
+    "testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState",
+    "testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues",
+    "testMiniAppsLargeWidgetComponentsTrackActualNativeState",
+    "testMiniAppsMediumWidgetNativeControlsStayVisibleAcrossStateAndRotation",
+    "testMiniAppsSmallWidgetRetainsFamilyAndInstanceAcrossRotation",
+    "testMiniAppsMediumWidgetRetainsFamilyAndInstanceAcrossRotation",
+    "testMiniAppsLargeWidgetRetainsFamilyAndInstanceAcrossRotation",
+    "testMiniAppsExtraLargeWidgetRetainsFamilyAndInstanceAcrossRotation",
+    "testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+    "testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts",
+    "testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+    "testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+    "testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+    "testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+    "testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns",
+    "testStudioExpoCreatesMovesStylesAndReopensSource",
+    "testStudioNativeScriptCreatesMovesStylesAndReopensSource",
+    "testStudioOriginalTypeScriptHelpPreferencesAndLiveLogExport",
+    "testStudioImportsActualFilesSourceAndReopensIndependentEdit",
+    "testStudioTwoRealWindowsConflictReloadAndRecoverSeparateCopy",
+    "testExpoSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds",
+    "testNativeScriptSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds",
+    "testExpoSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds",
+    "testNativeScriptSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds",
+    "testNativeScriptSavedTextListReopensThenClearsToEmpty",
+    "testNativeScriptSavedIntegerListReopensThenClearsToEmpty",
+    "testNativeScriptSavedNumberListReopensThenClearsToEmpty",
+    "testNativeScriptSavedBooleanListReopensThenClearsToEmpty",
+    "testExpoSavedTextListReopensThenClearsToEmpty",
+    "testExpoSavedIntegerListReopensThenClearsToEmpty",
+    "testExpoSavedNumberListReopensThenClearsToEmpty",
+    "testExpoSavedBooleanListReopensThenClearsToEmpty"
+  ],
+  "originalSystem10SelectorsAndIPad5400": "Recovered byte-exact by whole inverse",
+  "priorFrozenManifestSHA256": "24955ee29e293b3669eeedd43b6a2c3bc505a20b9cdca7da5c0e9561815eb73c",
+  "priorFrozenSourcePatchSHA256": "7e03f2b4775f4227724ba4dc935b63ac0586c795db24f309cc15448fc270a881",
+  "productionEdits": 0,
+  "r2ChangeScope": {
+    "canonicalDefaultBinding": "Variant identity plus Default name; no computed fields assumed in raw JSON",
+    "continuity": "Exact raw instance fields and original program identity remain stable",
+    "newControlMethods": 2,
+    "originalControlMethodsPreserved": 8,
+    "packageTitleBinding": "Installed archive name unchanged and template name equals exact fixture title plus canonical Default suffix",
+    "productionEdits": 0,
+    "sourcePaths": [
+      "Scripts/ProductSplit/observe_liveactivity_lifecycle.py",
+      "Scripts/CI/Tests/test_liveactivity_lifecycle.py"
+    ]
+  },
+  "r2DeltaSHA256": "fbf22f3e0aaaaa081bfebee4c7ac5e82cfa43cb1cc551ca44aaad8a258e60275",
+  "r2OriginalEightControlsASTExact": true,
+  "r2OtherThreeCandidateFilesByteExact": true,
+  "r2WholeControlInverse": true,
+  "r2WholeLeafInverse": true,
+  "revision": "R2",
+  "schema": 1,
+  "scopeLimitation": "Path intersection only; no current SDK/native qualification inferred",
+  "sdkDirectPathIntersection": {
+    "authority": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/full-icu-original-hosted-live-d4d1b5e1-r2/completed-host-sdk-qualification-r1/MiniAppSDK-miniapp-sdk.json",
+    "changed": [],
+    "count": 396,
+    "sha256": "6ac6a79cf1242eff21a3e8a558590f780135b7e28e47ff1180c9b6d8ba250683"
+  },
+  "sourceFiles": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": {
+      "baseSHA256": "94287f72d62edf8e15a77a01cc6b7869d46b591575f811886e0c5fe3661eeb93",
+      "bytes": 318538,
+      "mode": "0o644",
+      "sha256": "1f840761f6db719e0c6e1099cc8d80bb4d063b46544441c1f0a44a4757d5a2c4"
+    },
+    "Scripts/CI/Tests/test_liveactivity_lifecycle.py": {
+      "baseSHA256": null,
+      "bytes": 20867,
+      "mode": "0o644",
+      "sha256": "e1f3bf4e6a9be9b1f4e1a35cc1eca601c9bb79191f0a95f0ebb95ced81d6cbaf"
+    },
+    "Scripts/ProductSplit/observe_liveactivity_lifecycle.py": {
+      "baseSHA256": null,
+      "bytes": 48746,
+      "mode": "0o644",
+      "sha256": "d68b34b421d210894c9d3fbab26b043d36bab12741f7aaf3613f5c5b9e071410"
+    },
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": {
+      "baseSHA256": "7d001d486ad668fa4efd68bc244ce08daf943756cc344612542550c83cbc6380",
+      "bytes": 68550,
+      "mode": "0o644",
+      "sha256": "685b3c01fb1ad3f3b078d2a3a6422be9f7787b0acf642543571c0663c08ec943"
+    },
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "baseSHA256": "7a386466c5df2caa8c1d72eaf9204eed36b6477ce21a15ed5521b5e6db4245aa",
+      "bytes": 118023,
+      "mode": "0o644",
+      "sha256": "ec246337c8e8952aa23b1a3ea14e7542e7eeb084a2a71431daad89e2141f0015"
+    }
+  },
+  "sourcePatchSHA256": "3ae8192dc7127eae1016a9e59050e033813ac4fcaeca14d845f92878be95edcc",
+  "status": "FROZEN_SOURCE_ONLY_FOR_REVIEW",
+  "uiInsertionSHA256": "48c9eb2c20558b01a373f86af9f5f44e05a1c47bee45a3c8c506015ded81dc16",
+  "wholeDispatcherInverse": true,
+  "wholeRunnerInverse": true,
+  "wholeUIInverse": true,
+  "workflow": {
+    "baseSHA256": "65f761168a3274a3f5e2215e4c8e1edadd3f7f9f9782999de13c874aaf5692e5",
+    "candidateSHA256": "da4c101b2e88e227e8ef0f26cc83ca22d503c6e35a75a8850ede2b22e7f7e278",
+    "newChoices": 2,
+    "newUploadPredicates": 2,
+    "patchSHA256": "89313947d9a937aedcb76945002143c771b87c45910faba585a1dc4b126a27cf",
+    "publication": "ROOT_ONLY_NOT_POSTED",
+    "wholeInverse": true
+  }
+}

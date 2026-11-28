@@ -1,0 +1,48 @@
+{
+  "classification": "ROOT_SOURCE_REVIEW_APPROVED_FOR_ORIGINAL_NATIVE_GREEN",
+  "at": "2026-11-28T00:11:53.804135+00:00",
+  "rootAtReview": "fb655a90be510f4215620c61550329ed7ebe9643",
+  "candidateBase": "34dc92c16b37c7e14453e86f25f14d8e5063556a",
+  "candidateManifestSHA256": "5748d4ccc60c237e0e088efef79ae0b30418be35bae57dff5f8e5bfbe7dd1567",
+  "candidatePatchSHA256": "3b2ea44985b0ca72b89778db495c307a93c3f582fd294fa4236c96c54d01e753",
+  "files": {
+    "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift": {
+      "bytes": 32842,
+      "sha256": "84f13725a823e11c473b97c62a807858c6acb5fb03370ecb750f8bcab3a72dd2"
+    },
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests.swift": {
+      "bytes": 16869,
+      "sha256": "35f2f46958ede390460b2811220a4ec0c1fdff3a80a57d6c937e53093c4e85c3"
+    }
+  },
+  "r1InsertionAndAllTestsReviewed": true,
+  "r2ProducerCompatibilityAndDeltaReviewed": true,
+  "wholeOriginalCompilerRecovered": true,
+  "publicSHA256HelperDeclarationVerified": true,
+  "peerReviewSHA256": "13cc23fe2e56060d0ec36316ec5b6d56bbd5b8778c50bc68a35183b8538a5485",
+  "preserved": [
+    "original private compiler/execution body",
+    "original Runtime/adapter/writer/3MiB",
+    "two frozen retained native tests and archives",
+    "complete installed source copy",
+    "dynamic import/helper/resource alias semantics",
+    "all original engine/version pins"
+  ],
+  "native": {
+    "originalREDs": 2,
+    "green": "NOT_RUN",
+    "scopeMethods": 10,
+    "newMethods": 8,
+    "expectedFullPackageMethods": 619,
+    "originalParameterRows": 316
+  },
+  "sdkInputImpact": {
+    "currentCount": 396,
+    "changedExistingPaths": [
+      "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift"
+    ],
+    "oldSDKQualification": "HISTORICAL_NOT_CURRENT_ONCE_COMPILER_CHANGED",
+    "next": "Source-bound original Swift package GREEN then final affected original producer before shipping acceptance"
+  },
+  "limits": "Source review is not a compiler/native/OS result. Inventory integrity is not publisher authentication."
+}

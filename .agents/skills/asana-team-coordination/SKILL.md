@@ -8,6 +8,8 @@ description: "Task coordination, evidence-based status updates, and verified com
 ## Purpose
 Enables persistent named roles (Eitan, Noam, Maya, Roni, Tomer, Yael, Dana) to coordinate project management actions directly and truthfully in Asana, following `docs/ai-team/ASANA_POLICY.md`.
 
+Apply the current authorization and platform-specific execution note in root `AGENTS.md` and `docs/ai-team/TEAM.md`. Use the real native agent/task identifier for delegated work; do not invent a conversation ID or restart an external historical team.
+
 ## Lifecycle & Procedures
 1. **Task Start / Claim**:
    - Read the existing task, notes, comments, and linked PR.
@@ -23,7 +25,7 @@ Enables persistent named roles (Eitan, Noam, Maya, Roni, Tomer, Yael, Dana) to c
      `[<Role> | <Action> -> <NextRole> | <NextAction>] <STATUS>; Mode: MAIN_SESSION | SUBAGENT; <PR / Branch / SHA>; Subagent: <conversation-id or NONE>; tests: <summary>; known risks: <risks>; next steps: <instructions>`
 
 4. **Task Completion Criteria (`completed=true`)**:
-   - Only set `completed=true` when that exact task's defined acceptance criteria have been verified with concrete evidence.
+   - **MANDATORY**: Only set `completed=true` when that exact task's defined acceptance criteria have been verified with concrete evidence.
    - Evidence must include: repository, branch, exact commit SHA, executed tests/run IDs, logs/screenshots, execution mode (`[MAIN_SESSION]` or `[SUBAGENT]`), and verification scope.
    - **Hardware Rule**: Tasks requiring physical iPad hardware must remain open (`BLOCKED_DEVICE`) until verified on physical hardware. Simulator or build-only passes are not hardware acceptance.
    - **Owner Gates**: Releases, main branch merges, signing keys, and destructive migrations still require explicit owner approval.

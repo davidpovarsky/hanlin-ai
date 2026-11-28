@@ -1,0 +1,41 @@
+{
+  "status": "SOURCE_REVIEWED_AND_SEALED_NATIVE_NOT_RUN",
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "path": "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+  "candidateSHA256": "02015ecd575ff3c445d56c555636a3db7715da5668e0ee564b5d4d637b9a470b",
+  "patchSHA256": "2da570ed625d81a2bca943d708e868d81e48bbbbf6d2ad2242ef3eff82eea891",
+  "methodCountChange": 0,
+  "originalTestAnnotations": 43,
+  "originalAssertionLines": 294,
+  "wholeFileInverse": true,
+  "oldActual31_100Seconds": "Observed whole-method elapsed time, not an execution deadline.",
+  "diagnosticLimits": {
+    "jobs": 2,
+    "firstUnexpectedUUIDs": 1,
+    "unexpectedCountCap": 1000,
+    "diagnostics": 16,
+    "diagnosticMessageInputUTF8PrefixBytes": 512,
+    "identifierInputUTF8PrefixBytes": 128,
+    "emittedUTF8LineBytesIncludingPrefixNewline": 16384
+  },
+  "boundedStringQualification": "UTF-8 prefix decoding can replace a split scalar; original lengths/prefix lengths/truncation flags are explicit and the final encoded line cap includes that replacement. Detail reduction/encoding failures are reported as such.",
+  "callbackQualification": "Stored progress is a last observed callback, not a fresh or atomic engine snapshot. Existing task-local observers are forwarded. Observation can perturb timing; no wait budget is widened.",
+  "resultQualification": "Only the already-returned result or error is summarized. No task join/read, engine stop/retry, extra polling, filesystem walk or stdout/stderr content read is added by the observer.",
+  "privacy": "Generated JavaScript/source maps and error descriptions are represented only by lengths/SHA256; no source, environment, token or complete output is printed. Bounded compiler diagnostic messages belong to the fixed original synthetic test source.",
+  "native": "NOT_RUN",
+  "testsRun": [],
+  "sdkInputsChanged": 0,
+  "hostInputsChanged": 0,
+  "productFilesChanged": [],
+  "revision": "R2",
+  "optionalExitCode": "For a present execution result, emit exitCodePresent explicitly and only serialize an unwrapped Int exitCode when present; never coerce Optional to Any or pass it to String(_:).",
+  "sourceCommit": "ed88f17bc4248f882ed11fb1865c2d05a2c61b77",
+  "sourceTree": "a2f4f87ea62ae63a5405f6f3f7ffbfc5ae0d8e84",
+  "frozenPacketManifestSHA256": "14a7c28f0a499d88eb0de1a0ee31187b8e49aa111b7eacddb1118cd005349f19",
+  "reviews": {
+    "independent-mac-review-r1.json": "f0e09a31db1c3f801e431fbae9e45c362bd06cec9eddd6a251375700e109831d",
+    "independent-mac-review-r2.json": "850151c17a32630d27db60b9e510c165a09f17a135d32f00a80bdfc4b2c424d7",
+    "independent-root-source-review-r2.json": "4e43f38765c453fc76bffb1c152b0f3cf1b28e1811e0658efdce690db0fe85db"
+  },
+  "originalFailurePreserved": true
+}

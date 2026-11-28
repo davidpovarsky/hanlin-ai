@@ -1,0 +1,37 @@
+{
+  "recorded_at": "2026-11-18T16:17:03.263681+00:00",
+  "original_run": 44264360254,
+  "original_source": "3542cc20e2ad842edc38af13d92805943febb6dd",
+  "original_result": "B_FAILED_C_FAILED",
+  "evidence": [
+    {
+      "file": "build/continuation-evidence/44264360254/motion-inspection/3.txt",
+      "sha256": "4cb7e1114bd2f7965eeda4d616f6f66954c13d0905e2dfc6bb743ac1f59c5099"
+    },
+    {
+      "file": "build/continuation-evidence/44264360254/motion-inspection/5.txt",
+      "sha256": "ac63c356f87e5bc48d7effc402ba3a2711ca001ad7cc8c7fb3b742115d89011e"
+    },
+    {
+      "file": "build/continuation-evidence/44264360254/motion-inspection/6.txt",
+      "sha256": "57622907e87e3da36d4545790aa294e3952f03ad5fe1424860e8c65e22f49332"
+    }
+  ],
+  "observations": [
+    "B retained AX: proof-geometry-state label collapsed after the original three-tap call. The old fixture did not count binding writes; lost input versus layout failure is unresolved.",
+    "C runner stack remained inside XCUIApplication launch. Both 10:20 and 10:29 stackshots contain the same original ChatMotionProof PID22213 on the main run loop, first62s then600s after fork. This is not evidence of an absent app process.",
+    "The previous combined job used a simulator after the large original-app UI run. The isolated diagnostic uses one newly owned matching iOS27 simulator, retained original native sources and verified cleanup."
+  ],
+  "changes": [
+    "Observe the binding writes made by the unmodified original ToggleButton; retain actual geometry and action count. Require exactly three original rapid actions and the existing expanded geometry.",
+    "Preserve both original B/C test identities and all persistence, preset, Reduce Motion, RTL, type and orientation obligations. Terminate only the test-owned app in teardown.",
+    "Use iOS27 in the disposable proof target and a fresh owned simulator for the separate native diagnostic. Retain and validate results before deleting only that exact owned device."
+  ],
+  "production_motion_source_changed": false,
+  "local_validation": [
+    "Swift frontend parse2 files on Windows PASS; not native compilation",
+    "Existing source extraction and hashes generated",
+    "bash -n and git diff --check PASS"
+  ],
+  "native_status": "NOT_RUN_AT_CANDIDATE"
+}

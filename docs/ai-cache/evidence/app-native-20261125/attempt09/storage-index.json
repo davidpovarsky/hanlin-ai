@@ -1,0 +1,714 @@
+{
+  "privateCompleteArchive": {
+    "file": "app09-complete-v2.tar.gz",
+    "bytes": 3194487,
+    "sha256": "8b20b0ef519b9967f67f65ef9c8006e5ef369387fdf9edb32f47ce0878ebcdb7"
+  },
+  "scope": "Complete original attempt09 privately retained. Listed raw text losslessly gzipped. Binary xcresult retained privately with public manifest. Original Host09 proof is separately committed.",
+  "files": [
+    {
+      "original": "build-xcresult-manifest.json",
+      "originalBytes": 1480,
+      "originalSHA256": "246e35b93598c0de27f9dc7161a8c28c5826ef5bf26d75c74f0c9d0e22e9fc9f",
+      "stored": "build-xcresult-manifest.json",
+      "storedBytes": 1480,
+      "storedSHA256": "246e35b93598c0de27f9dc7161a8c28c5826ef5bf26d75c74f0c9d0e22e9fc9f"
+    },
+    {
+      "original": "native-acceptance-summary.json",
+      "originalBytes": 2123,
+      "originalSHA256": "2d2e5db30d44b2df21c0e1cd8a662a72b69977db69d55fee2b299abcf10829fe",
+      "stored": "native-acceptance-summary.json",
+      "storedBytes": 2123,
+      "storedSHA256": "2d2e5db30d44b2df21c0e1cd8a662a72b69977db69d55fee2b299abcf10829fe"
+    },
+    {
+      "original": "preflight/01-check.log",
+      "originalBytes": 76,
+      "originalSHA256": "f9392dbc1f4415decb9bc390be9f49d5b7e6f3fbd636c72710ef278e45b31783",
+      "stored": "preflight/01-check.log.gz",
+      "storedBytes": 91,
+      "storedSHA256": "7aac6ed8ba7e7e1b0a273eb68d16a808909f0589331f1a6269766eba71632c92"
+    },
+    {
+      "original": "preflight/02-check.log",
+      "originalBytes": 72,
+      "originalSHA256": "bc234237931951c0e0e70dc212b9f47da2f6c76a61109e41c235f0f7f0eabcef",
+      "stored": "preflight/02-check.log.gz",
+      "storedBytes": 92,
+      "storedSHA256": "3bbc94444f21908ebdd99795b981608c78639a31e284ca504be9e7be3d666f95"
+    },
+    {
+      "original": "preflight/03-check.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored": "preflight/03-check.log.gz",
+      "storedBytes": 20,
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "preflight/current-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "originalBytes": 10750,
+      "originalSHA256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "stored": "preflight/current-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "storedBytes": 10750,
+      "storedSHA256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037"
+    },
+    {
+      "original": "preflight/current-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "543da4b8e9fe589c8d071fa3599d30034cb39bd57e839ba6130f754cdad701ca",
+      "stored": "preflight/current-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "543da4b8e9fe589c8d071fa3599d30034cb39bd57e839ba6130f754cdad701ca"
+    },
+    {
+      "original": "preflight/current-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "12bab0ef874ee4bc8a1ca62b982a912be3c6b70077ff4eb13cc9e8e9c294f711",
+      "stored": "preflight/current-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "12bab0ef874ee4bc8a1ca62b982a912be3c6b70077ff4eb13cc9e8e9c294f711"
+    },
+    {
+      "original": "preflight/current-locks/Packages/HanlinPlatform/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d",
+      "stored": "preflight/current-locks/Packages/HanlinPlatform/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d"
+    },
+    {
+      "original": "preflight/current-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "826482079b436a8eb7fd2cbabe1f47976f1fb049e7461fe2da2a6dfbb0f0c643",
+      "stored": "preflight/current-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "826482079b436a8eb7fd2cbabe1f47976f1fb049e7461fe2da2a6dfbb0f0c643"
+    },
+    {
+      "original": "preflight/current-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "originalBytes": 374,
+      "originalSHA256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "stored": "preflight/current-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "storedBytes": 374,
+      "storedSHA256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a"
+    },
+    {
+      "original": "preflight/current-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "originalBytes": 396,
+      "originalSHA256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "stored": "preflight/current-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "storedBytes": 396,
+      "storedSHA256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953"
+    },
+    {
+      "original": "preflight/current-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "4f501a5aee7c6bc060b8e0edc92735f713c2633d5dc4f6b71718b0c73636b097",
+      "stored": "preflight/current-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "4f501a5aee7c6bc060b8e0edc92735f713c2633d5dc4f6b71718b0c73636b097"
+    },
+    {
+      "original": "preflight/current-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "6c0486d70cbf33a29a3b62bb9bda998fde0163b90295098a694a0d0ac5b8f23f",
+      "stored": "preflight/current-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "6c0486d70cbf33a29a3b62bb9bda998fde0163b90295098a694a0d0ac5b8f23f"
+    },
+    {
+      "original": "preflight/current-sources.json",
+      "originalBytes": 2507835,
+      "originalSHA256": "accffac012e30998585ff9906e01ebffac93017426b309dc0860fa8ce38b128b",
+      "stored": "preflight/current-sources.json.gz",
+      "storedBytes": 534545,
+      "storedSHA256": "710d1690ad31f1284bb9967613d5ad53b1f66e2a63f6e3c0950609088b1ae62c"
+    },
+    {
+      "original": "preflight/receipt.json",
+      "originalBytes": 1464,
+      "originalSHA256": "c06296d596d86e50a6fbc9516e7d2ad94cf216ad7e109fdf4d8defcdfc6db868",
+      "stored": "preflight/receipt.json",
+      "storedBytes": 1464,
+      "storedSHA256": "c06296d596d86e50a6fbc9516e7d2ad94cf216ad7e109fdf4d8defcdfc6db868"
+    },
+    {
+      "original": "preparation-reuse.json",
+      "originalBytes": 8241,
+      "originalSHA256": "481fe5c043c53e5857ccf584568e3790c50bf5ca005e50cbed34ac27a2092233",
+      "stored": "preparation-reuse.json",
+      "storedBytes": 8241,
+      "storedSHA256": "481fe5c043c53e5857ccf584568e3790c50bf5ca005e50cbed34ac27a2092233"
+    },
+    {
+      "original": "prepare/01-xcode-version.log",
+      "originalBytes": 33,
+      "originalSHA256": "694b44731d0b415c5b11d844151e466d7f5e200a95627efda377f232f1a6ab77",
+      "stored": "prepare/01-xcode-version.log.gz",
+      "storedBytes": 52,
+      "storedSHA256": "0d8ae8f99ad37887e8c643e6aa54eb419bdcccbeac5d985530d01ecd43b5bf28"
+    },
+    {
+      "original": "prepare/01-xcode-version.stderr.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored": "prepare/01-xcode-version.stderr.log.gz",
+      "storedBytes": 20,
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "prepare/02-swift-version.log",
+      "originalBytes": 98,
+      "originalSHA256": "04630ab8fa201f57c63c59730e638135e32584a97e16e004a417eb8ed283dc83",
+      "stored": "prepare/02-swift-version.log.gz",
+      "storedBytes": 104,
+      "storedSHA256": "0934835c29031c4d993fb5c03c679104e862d89d770e67dcc336593d9d2cd8ce"
+    },
+    {
+      "original": "prepare/02-swift-version.stderr.log",
+      "originalBytes": 30,
+      "originalSHA256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "stored": "prepare/02-swift-version.stderr.log.gz",
+      "storedBytes": 48,
+      "storedSHA256": "12919eb3b241936fe8b140e777c7e67f606c0c293f0d89edb13a52cd5e1e85be"
+    },
+    {
+      "original": "prepare/03-node-version.log",
+      "originalBytes": 8,
+      "originalSHA256": "2f30156cd7f9137514ea68d53554f583cf6541fd107dbc8ae8a19253379a735a",
+      "stored": "prepare/03-node-version.log.gz",
+      "storedBytes": 28,
+      "storedSHA256": "84683bc4dd861c26440317460b1453e607e0becfc0eb60fbe9e9badf4d557e3d"
+    },
+    {
+      "original": "prepare/03-node-version.stderr.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored": "prepare/03-node-version.stderr.log.gz",
+      "storedBytes": 20,
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "prepare/04-manifest-check.log",
+      "originalBytes": 3605,
+      "originalSHA256": "ef1d5f337d63832d7b11fad2f23da38bf3cdee83bd82bfecfddc56df7dcefdc5",
+      "stored": "prepare/04-manifest-check.log.gz",
+      "storedBytes": 1525,
+      "storedSHA256": "6c242e8ba71be1cd8f40dbed430411bc34e59457f771239ae128631ba187e3bd"
+    },
+    {
+      "original": "prepare/04-manifest-check.stderr.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored": "prepare/04-manifest-check.stderr.log.gz",
+      "storedBytes": 20,
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "prepare/05-project-check.log",
+      "originalBytes": 88,
+      "originalSHA256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+      "stored": "prepare/05-project-check.log.gz",
+      "storedBytes": 103,
+      "storedSHA256": "b44fe6e0a9fe538f4926f1682de104830f83fafbeb7a206b936ee8e8d9e48210"
+    },
+    {
+      "original": "prepare/05-project-check.stderr.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored": "prepare/05-project-check.stderr.log.gz",
+      "storedBytes": 20,
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "prepare/06-resolve-packages.log",
+      "originalBytes": 3881,
+      "originalSHA256": "0e6d86f0fcde86e769674edd4c7f6c88e9a76e488c3ca1c09e625deb47d5c94a",
+      "stored": "prepare/06-resolve-packages.log.gz",
+      "storedBytes": 1352,
+      "storedSHA256": "3572936bc9a84060fd98e268a98aeec3a00a1123f99a9bfdba230926c419250e"
+    },
+    {
+      "original": "prepare/06-resolve-packages.stderr.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored": "prepare/06-resolve-packages.stderr.log.gz",
+      "storedBytes": 20,
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "prepare/07-modular-headers.log",
+      "originalBytes": 101,
+      "originalSHA256": "e347fb9cb86ef7b0cd63ab6e8f108ad58f1fbc65cc20badf8d3be0abc286d34c",
+      "stored": "prepare/07-modular-headers.log.gz",
+      "storedBytes": 117,
+      "storedSHA256": "69ea275a89f3a7b2f70d6d663850ad50987c28c36879880ddd26c3e2c7dde3bd"
+    },
+    {
+      "original": "prepare/07-modular-headers.stderr.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored": "prepare/07-modular-headers.stderr.log.gz",
+      "storedBytes": 20,
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "prepare/08-a2ui-schemas.log",
+      "originalBytes": 2609,
+      "originalSHA256": "1207041b43008d3fdfbdd57ab5f43f7a63153f7b2460d3b2696468f52c0968dd",
+      "stored": "prepare/08-a2ui-schemas.log.gz",
+      "storedBytes": 1203,
+      "storedSHA256": "e4569c4f2896affa4938e3f9962599c00fb8befb4aeb165909fa332dfec40ed4"
+    },
+    {
+      "original": "prepare/08-a2ui-schemas.stderr.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored": "prepare/08-a2ui-schemas.stderr.log.gz",
+      "storedBytes": 20,
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "prepare/a2ui-generation/compiler.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored": "prepare/a2ui-generation/compiler.log.gz",
+      "storedBytes": 20,
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "prepare/a2ui-generation/result.json",
+      "originalBytes": 2608,
+      "originalSHA256": "8405f8ecc2d86976ab79af32b5f0bb17f650190998b5f136784516e3a8be9dca",
+      "stored": "prepare/a2ui-generation/result.json",
+      "storedBytes": 2608,
+      "storedSHA256": "8405f8ecc2d86976ab79af32b5f0bb17f650190998b5f136784516e3a8be9dca"
+    },
+    {
+      "original": "prepare/after-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "originalBytes": 10750,
+      "originalSHA256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "stored": "prepare/after-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "storedBytes": 10750,
+      "storedSHA256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037"
+    },
+    {
+      "original": "prepare/after-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "543da4b8e9fe589c8d071fa3599d30034cb39bd57e839ba6130f754cdad701ca",
+      "stored": "prepare/after-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "543da4b8e9fe589c8d071fa3599d30034cb39bd57e839ba6130f754cdad701ca"
+    },
+    {
+      "original": "prepare/after-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "12bab0ef874ee4bc8a1ca62b982a912be3c6b70077ff4eb13cc9e8e9c294f711",
+      "stored": "prepare/after-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "12bab0ef874ee4bc8a1ca62b982a912be3c6b70077ff4eb13cc9e8e9c294f711"
+    },
+    {
+      "original": "prepare/after-locks/Packages/HanlinPlatform/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d",
+      "stored": "prepare/after-locks/Packages/HanlinPlatform/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d"
+    },
+    {
+      "original": "prepare/after-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "826482079b436a8eb7fd2cbabe1f47976f1fb049e7461fe2da2a6dfbb0f0c643",
+      "stored": "prepare/after-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "826482079b436a8eb7fd2cbabe1f47976f1fb049e7461fe2da2a6dfbb0f0c643"
+    },
+    {
+      "original": "prepare/after-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "originalBytes": 374,
+      "originalSHA256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "stored": "prepare/after-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "storedBytes": 374,
+      "storedSHA256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a"
+    },
+    {
+      "original": "prepare/after-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "originalBytes": 396,
+      "originalSHA256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "stored": "prepare/after-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "storedBytes": 396,
+      "storedSHA256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953"
+    },
+    {
+      "original": "prepare/after-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "4f501a5aee7c6bc060b8e0edc92735f713c2633d5dc4f6b71718b0c73636b097",
+      "stored": "prepare/after-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "4f501a5aee7c6bc060b8e0edc92735f713c2633d5dc4f6b71718b0c73636b097"
+    },
+    {
+      "original": "prepare/after-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "6c0486d70cbf33a29a3b62bb9bda998fde0163b90295098a694a0d0ac5b8f23f",
+      "stored": "prepare/after-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "6c0486d70cbf33a29a3b62bb9bda998fde0163b90295098a694a0d0ac5b8f23f"
+    },
+    {
+      "original": "prepare/after-sources.json",
+      "originalBytes": 2492339,
+      "originalSHA256": "1bc1d432a5ccda33c8892ea2e9d86a3aae5c71087f50634a603e7ce49280d2a8",
+      "stored": "prepare/after-sources.json.gz",
+      "storedBytes": 532998,
+      "storedSHA256": "9c0be3f872ac72f66b3b36f45f1efb483ba44e1b09c47f50e01344244c547c49"
+    },
+    {
+      "original": "prepare/before-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "originalBytes": 10750,
+      "originalSHA256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "stored": "prepare/before-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "storedBytes": 10750,
+      "storedSHA256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037"
+    },
+    {
+      "original": "prepare/before-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "543da4b8e9fe589c8d071fa3599d30034cb39bd57e839ba6130f754cdad701ca",
+      "stored": "prepare/before-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "543da4b8e9fe589c8d071fa3599d30034cb39bd57e839ba6130f754cdad701ca"
+    },
+    {
+      "original": "prepare/before-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "12bab0ef874ee4bc8a1ca62b982a912be3c6b70077ff4eb13cc9e8e9c294f711",
+      "stored": "prepare/before-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "12bab0ef874ee4bc8a1ca62b982a912be3c6b70077ff4eb13cc9e8e9c294f711"
+    },
+    {
+      "original": "prepare/before-locks/Packages/HanlinPlatform/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d",
+      "stored": "prepare/before-locks/Packages/HanlinPlatform/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d"
+    },
+    {
+      "original": "prepare/before-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "826482079b436a8eb7fd2cbabe1f47976f1fb049e7461fe2da2a6dfbb0f0c643",
+      "stored": "prepare/before-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "826482079b436a8eb7fd2cbabe1f47976f1fb049e7461fe2da2a6dfbb0f0c643"
+    },
+    {
+      "original": "prepare/before-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "originalBytes": 374,
+      "originalSHA256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "stored": "prepare/before-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "storedBytes": 374,
+      "storedSHA256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a"
+    },
+    {
+      "original": "prepare/before-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "originalBytes": 396,
+      "originalSHA256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "stored": "prepare/before-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "storedBytes": 396,
+      "storedSHA256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953"
+    },
+    {
+      "original": "prepare/before-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "4f501a5aee7c6bc060b8e0edc92735f713c2633d5dc4f6b71718b0c73636b097",
+      "stored": "prepare/before-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "4f501a5aee7c6bc060b8e0edc92735f713c2633d5dc4f6b71718b0c73636b097"
+    },
+    {
+      "original": "prepare/before-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "6c0486d70cbf33a29a3b62bb9bda998fde0163b90295098a694a0d0ac5b8f23f",
+      "stored": "prepare/before-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "6c0486d70cbf33a29a3b62bb9bda998fde0163b90295098a694a0d0ac5b8f23f"
+    },
+    {
+      "original": "prepare/before-sources.json",
+      "originalBytes": 2492339,
+      "originalSHA256": "1bc1d432a5ccda33c8892ea2e9d86a3aae5c71087f50634a603e7ce49280d2a8",
+      "stored": "prepare/before-sources.json.gz",
+      "storedBytes": 532998,
+      "storedSHA256": "9c0be3f872ac72f66b3b36f45f1efb483ba44e1b09c47f50e01344244c547c49"
+    },
+    {
+      "original": "prepare/expected-test-inventory.json",
+      "originalBytes": 13535,
+      "originalSHA256": "beeec6c308cf24ec9c6c1ad6d7d35e4b06a4a38e81e79a80dbbef416b1dff190",
+      "stored": "prepare/expected-test-inventory.json",
+      "storedBytes": 13535,
+      "storedSHA256": "beeec6c308cf24ec9c6c1ad6d7d35e4b06a4a38e81e79a80dbbef416b1dff190"
+    },
+    {
+      "original": "prepare/receipt.json",
+      "originalBytes": 7691,
+      "originalSHA256": "78b77f924e18ce3187c9d8fc1b4ccd73f1ab99e6d64fd3f10476e6053520ea6c",
+      "stored": "prepare/receipt.json",
+      "storedBytes": 7691,
+      "storedSHA256": "78b77f924e18ce3187c9d8fc1b4ccd73f1ab99e6d64fd3f10476e6053520ea6c"
+    },
+    {
+      "original": "test/01-xcode-version.log",
+      "originalBytes": 33,
+      "originalSHA256": "694b44731d0b415c5b11d844151e466d7f5e200a95627efda377f232f1a6ab77",
+      "stored": "test/01-xcode-version.log.gz",
+      "storedBytes": 52,
+      "storedSHA256": "0d8ae8f99ad37887e8c643e6aa54eb419bdcccbeac5d985530d01ecd43b5bf28"
+    },
+    {
+      "original": "test/01-xcode-version.stderr.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored": "test/01-xcode-version.stderr.log.gz",
+      "storedBytes": 20,
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "test/02-swift-version.log",
+      "originalBytes": 98,
+      "originalSHA256": "04630ab8fa201f57c63c59730e638135e32584a97e16e004a417eb8ed283dc83",
+      "stored": "test/02-swift-version.log.gz",
+      "storedBytes": 104,
+      "storedSHA256": "0934835c29031c4d993fb5c03c679104e862d89d770e67dcc336593d9d2cd8ce"
+    },
+    {
+      "original": "test/02-swift-version.stderr.log",
+      "originalBytes": 30,
+      "originalSHA256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "stored": "test/02-swift-version.stderr.log.gz",
+      "storedBytes": 48,
+      "storedSHA256": "12919eb3b241936fe8b140e777c7e67f606c0c293f0d89edb13a52cd5e1e85be"
+    },
+    {
+      "original": "test/03-node-version.log",
+      "originalBytes": 8,
+      "originalSHA256": "2f30156cd7f9137514ea68d53554f583cf6541fd107dbc8ae8a19253379a735a",
+      "stored": "test/03-node-version.log.gz",
+      "storedBytes": 28,
+      "storedSHA256": "84683bc4dd861c26440317460b1453e607e0becfc0eb60fbe9e9badf4d557e3d"
+    },
+    {
+      "original": "test/03-node-version.stderr.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored": "test/03-node-version.stderr.log.gz",
+      "storedBytes": 20,
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "test/04-build-for-testing.log",
+      "originalBytes": 678550,
+      "originalSHA256": "82922b730b7c33c14224bc6ea7d160bac25d6e6e962175528431d2183c233211",
+      "stored": "test/04-build-for-testing.log.gz",
+      "storedBytes": 55219,
+      "storedSHA256": "0aabed2153088343da95b1018cce7f126092029624df4b17e88a70bce328d501"
+    },
+    {
+      "original": "test/04-build-for-testing.stderr.log",
+      "originalBytes": 4104,
+      "originalSHA256": "8d434418694b8bb19991976347a11f126b27afa734f643da9963abd8a303cbd6",
+      "stored": "test/04-build-for-testing.stderr.log.gz",
+      "storedBytes": 678,
+      "storedSHA256": "9fc8adfd14294162ebc2acea1678d94ad2107258df350c244df2598e06852c52"
+    },
+    {
+      "original": "test/after-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "originalBytes": 10750,
+      "originalSHA256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "stored": "test/after-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "storedBytes": 10750,
+      "storedSHA256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037"
+    },
+    {
+      "original": "test/after-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "543da4b8e9fe589c8d071fa3599d30034cb39bd57e839ba6130f754cdad701ca",
+      "stored": "test/after-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "543da4b8e9fe589c8d071fa3599d30034cb39bd57e839ba6130f754cdad701ca"
+    },
+    {
+      "original": "test/after-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "12bab0ef874ee4bc8a1ca62b982a912be3c6b70077ff4eb13cc9e8e9c294f711",
+      "stored": "test/after-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "12bab0ef874ee4bc8a1ca62b982a912be3c6b70077ff4eb13cc9e8e9c294f711"
+    },
+    {
+      "original": "test/after-locks/Packages/HanlinPlatform/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d",
+      "stored": "test/after-locks/Packages/HanlinPlatform/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d"
+    },
+    {
+      "original": "test/after-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "826482079b436a8eb7fd2cbabe1f47976f1fb049e7461fe2da2a6dfbb0f0c643",
+      "stored": "test/after-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "826482079b436a8eb7fd2cbabe1f47976f1fb049e7461fe2da2a6dfbb0f0c643"
+    },
+    {
+      "original": "test/after-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "originalBytes": 374,
+      "originalSHA256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "stored": "test/after-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "storedBytes": 374,
+      "storedSHA256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a"
+    },
+    {
+      "original": "test/after-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "originalBytes": 396,
+      "originalSHA256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "stored": "test/after-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "storedBytes": 396,
+      "storedSHA256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953"
+    },
+    {
+      "original": "test/after-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "4f501a5aee7c6bc060b8e0edc92735f713c2633d5dc4f6b71718b0c73636b097",
+      "stored": "test/after-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "4f501a5aee7c6bc060b8e0edc92735f713c2633d5dc4f6b71718b0c73636b097"
+    },
+    {
+      "original": "test/after-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "6c0486d70cbf33a29a3b62bb9bda998fde0163b90295098a694a0d0ac5b8f23f",
+      "stored": "test/after-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "6c0486d70cbf33a29a3b62bb9bda998fde0163b90295098a694a0d0ac5b8f23f"
+    },
+    {
+      "original": "test/after-sources.json",
+      "originalBytes": 2507835,
+      "originalSHA256": "accffac012e30998585ff9906e01ebffac93017426b309dc0860fa8ce38b128b",
+      "stored": "test/after-sources.json.gz",
+      "storedBytes": 534545,
+      "storedSHA256": "710d1690ad31f1284bb9967613d5ad53b1f66e2a63f6e3c0950609088b1ae62c"
+    },
+    {
+      "original": "test/before-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "originalBytes": 10750,
+      "originalSHA256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "stored": "test/before-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "storedBytes": 10750,
+      "storedSHA256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037"
+    },
+    {
+      "original": "test/before-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "543da4b8e9fe589c8d071fa3599d30034cb39bd57e839ba6130f754cdad701ca",
+      "stored": "test/before-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "543da4b8e9fe589c8d071fa3599d30034cb39bd57e839ba6130f754cdad701ca"
+    },
+    {
+      "original": "test/before-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "12bab0ef874ee4bc8a1ca62b982a912be3c6b70077ff4eb13cc9e8e9c294f711",
+      "stored": "test/before-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "12bab0ef874ee4bc8a1ca62b982a912be3c6b70077ff4eb13cc9e8e9c294f711"
+    },
+    {
+      "original": "test/before-locks/Packages/HanlinPlatform/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d",
+      "stored": "test/before-locks/Packages/HanlinPlatform/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d"
+    },
+    {
+      "original": "test/before-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "826482079b436a8eb7fd2cbabe1f47976f1fb049e7461fe2da2a6dfbb0f0c643",
+      "stored": "test/before-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "826482079b436a8eb7fd2cbabe1f47976f1fb049e7461fe2da2a6dfbb0f0c643"
+    },
+    {
+      "original": "test/before-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "originalBytes": 374,
+      "originalSHA256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "stored": "test/before-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "storedBytes": 374,
+      "storedSHA256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a"
+    },
+    {
+      "original": "test/before-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "originalBytes": 396,
+      "originalSHA256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "stored": "test/before-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "storedBytes": 396,
+      "storedSHA256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953"
+    },
+    {
+      "original": "test/before-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "4f501a5aee7c6bc060b8e0edc92735f713c2633d5dc4f6b71718b0c73636b097",
+      "stored": "test/before-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "4f501a5aee7c6bc060b8e0edc92735f713c2633d5dc4f6b71718b0c73636b097"
+    },
+    {
+      "original": "test/before-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "originalBytes": 1771,
+      "originalSHA256": "6c0486d70cbf33a29a3b62bb9bda998fde0163b90295098a694a0d0ac5b8f23f",
+      "stored": "test/before-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "storedBytes": 1771,
+      "storedSHA256": "6c0486d70cbf33a29a3b62bb9bda998fde0163b90295098a694a0d0ac5b8f23f"
+    },
+    {
+      "original": "test/before-sources.json",
+      "originalBytes": 2507835,
+      "originalSHA256": "accffac012e30998585ff9906e01ebffac93017426b309dc0860fa8ce38b128b",
+      "stored": "test/before-sources.json.gz",
+      "storedBytes": 534545,
+      "storedSHA256": "710d1690ad31f1284bb9967613d5ad53b1f66e2a63f6e3c0950609088b1ae62c"
+    },
+    {
+      "original": "test/expected-test-inventory.json",
+      "originalBytes": 13535,
+      "originalSHA256": "beeec6c308cf24ec9c6c1ad6d7d35e4b06a4a38e81e79a80dbbef416b1dff190",
+      "stored": "test/expected-test-inventory.json",
+      "storedBytes": 13535,
+      "storedSHA256": "beeec6c308cf24ec9c6c1ad6d7d35e4b06a4a38e81e79a80dbbef416b1dff190"
+    },
+    {
+      "original": "test/receipt.json",
+      "originalBytes": 8664,
+      "originalSHA256": "57b67235af0ea53bfa92183c6da892dfb09536063630f8d89f2847eccd3d4b49",
+      "stored": "test/receipt.json",
+      "storedBytes": 8664,
+      "storedSHA256": "57b67235af0ea53bfa92183c6da892dfb09536063630f8d89f2847eccd3d4b49"
+    },
+    {
+      "original": "test-driver.log",
+      "originalBytes": 4529,
+      "originalSHA256": "804fa6ce536ee415440b292db479cca80ff8e5f64e4fbb8d93e74ad4ffd2e726",
+      "stored": "test-driver.log.gz",
+      "storedBytes": 1056,
+      "storedSHA256": "dfeeec855225566d86fa66854c664eb2b710d7d44135cdbc268a4f89b79c76fd"
+    }
+  ]
+}

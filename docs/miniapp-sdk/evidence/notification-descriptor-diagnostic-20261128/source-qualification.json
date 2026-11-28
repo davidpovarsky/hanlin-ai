@@ -1,0 +1,16 @@
+{
+  "source": "04e33c45acedd3f372f836b06f17b805bc91293d",
+  "paths": [
+    "Scripts/ProductSplit/run_native_acceptance.py",
+    "Scripts/CI/Tests/test_notification_os_scope.py"
+  ],
+  "originalControlCount": 23,
+  "newControlCount": 2,
+  "allOldControlASTsExact": true,
+  "allOriginalRunnerASTExactAfterRemovingDiagnosticHook": true,
+  "wholeFileAndControlsInverse": true,
+  "newReadScope": "at most64 candidate lstat rows and6 fixed expected-product paths; parent directory gate; no descriptor reads/recursive walk/native subprocess/wait",
+  "output": "exclusive x-mode single attempt-owned JSON; failures preserve original guard exception",
+  "actualNativeOutcome": "NOT_RUN",
+  "reason": "Actual original notification46128022331 rejected missing-or-ambiguous descriptor; candidate count/names were not retained."
+}

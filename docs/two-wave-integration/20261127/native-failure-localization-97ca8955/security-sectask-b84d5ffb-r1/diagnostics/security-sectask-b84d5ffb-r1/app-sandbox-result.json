@@ -1,0 +1,12 @@
+{
+  "boundary" : "Read only for this native Swift CLI process; no entitlement, signing, app or test source changes.",
+  "entitlement" : "com.apple.security.app-sandbox",
+  "entitlementAbsentWithoutError" : true,
+  "errorPresent" : false,
+  "osVersion" : "Version 27.0 (Build 26A428)",
+  "processID" : 29253,
+  "sourceContext" : "b84d5ffb1c52361ac884a967f13e5500efe3d232",
+  "status" : "PUBLIC_SECTASK_READ_ONLY_DIAGNOSTIC",
+  "taskCreated" : true,
+  "valuePresent" : false
+}

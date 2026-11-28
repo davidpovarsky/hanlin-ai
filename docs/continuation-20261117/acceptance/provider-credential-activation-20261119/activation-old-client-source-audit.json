@@ -1,0 +1,243 @@
+{
+  "source_commit": "ce2fb04e8a266759f6c9eed70fd2dda02029720d",
+  "scope": "Read-only actual pre-phase1 original source, not native execution or an emulated old reader.",
+  "files": [
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "sha256": "792823155e9ee5964bdc286ff09672a209dbad405c4e4d07159e8332ad0a0aeb",
+      "excerpts": [
+        {
+          "line": 194,
+          "text": "    func credential(for model: HanlinModelReference, namespace: HanlinConversationNamespace) throws -> String {"
+        },
+        {
+          "line": 195,
+          "text": "        _ = try requireDataAccess(namespace: namespace)"
+        },
+        {
+          "line": 196,
+          "text": "        guard model == dataModel else { throw HanlinHostError.staleContext }"
+        },
+        {
+          "line": 197,
+          "text": "        // This is the original provider configuration owner. Keychain migration and CloudKit"
+        },
+        {
+          "line": 198,
+          "text": "        // account fencing remain separate work; this port does not claim either has happened."
+        },
+        {
+          "line": 199,
+          "text": "        guard let key = getAPIConfiguration(for: model.provider)?.key, !key.isEmpty else {"
+        },
+        {
+          "line": 200,
+          "text": "            throw HanlinHostError.denied"
+        },
+        {
+          "line": 201,
+          "text": "        }"
+        },
+        {
+          "line": 202,
+          "text": "        return key"
+        },
+        {
+          "line": 203,
+          "text": "    }"
+        },
+        {
+          "line": 204,
+          "text": ""
+        },
+        {
+          "line": 205,
+          "text": "    func requireMemoryAccess(crossSession: Bool,"
+        },
+        {
+          "line": 1045,
+          "text": "    func findUseMap() -> (company: String, apiKey: String)? {"
+        },
+        {
+          "line": 1046,
+          "text": "        let fetchRequest = FetchDescriptor<ToolKeys>(predicate: #Predicate {"
+        },
+        {
+          "line": 1047,
+          "text": "            $0.toolClass == \"map\" && $0.isUsing == true"
+        },
+        {
+          "line": 1048,
+          "text": "        })"
+        },
+        {
+          "line": 1049,
+          "text": "        do {"
+        },
+        {
+          "line": 1050,
+          "text": "            let mapKeys = try context.fetch(fetchRequest)"
+        },
+        {
+          "line": 1051,
+          "text": "            if let activeMap = mapKeys.first {"
+        },
+        {
+          "line": 1052,
+          "text": "                return (activeMap.company, activeMap.key)"
+        },
+        {
+          "line": 1053,
+          "text": "            }"
+        },
+        {
+          "line": 1054,
+          "text": "        } catch {"
+        },
+        {
+          "line": 1055,
+          "text": "            print(\"获取地图服务失败\")"
+        },
+        {
+          "line": 1056,
+          "text": "        }"
+        },
+        {
+          "line": 1057,
+          "text": "        return nil"
+        },
+        {
+          "line": 1058,
+          "text": "    }"
+        },
+        {
+          "line": 1059,
+          "text": "    "
+        },
+        {
+          "line": 1060,
+          "text": "    // 检查使用的天气"
+        },
+        {
+          "line": 1061,
+          "text": "    func findUseWeather() -> (company: String, apiKey: String, requestURL: String)? {"
+        },
+        {
+          "line": 1062,
+          "text": "        let fetchRequest = FetchDescriptor<ToolKeys>(predicate: #Predicate {"
+        },
+        {
+          "line": 1063,
+          "text": "            $0.toolClass == \"weather\" && $0.isUsing == true"
+        },
+        {
+          "line": 1064,
+          "text": "        })"
+        },
+        {
+          "line": 1065,
+          "text": "        do {"
+        },
+        {
+          "line": 1066,
+          "text": "            let mapKeys = try context.fetch(fetchRequest)"
+        },
+        {
+          "line": 1067,
+          "text": "            if let activeMap = mapKeys.first {"
+        },
+        {
+          "line": 1068,
+          "text": "                return (activeMap.company, activeMap.key, activeMap.requestURL)"
+        },
+        {
+          "line": 1069,
+          "text": "            }"
+        },
+        {
+          "line": 1070,
+          "text": "        } catch {"
+        },
+        {
+          "line": 1071,
+          "text": "            print(\"获取天气服务失败\")"
+        }
+      ]
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatformAIIntegration.swift",
+      "sha256": "7a367b9a8c5b469521dcc313b0fff67830b30780c53fee4f58c8795155f61e71",
+      "excerpts": [
+        {
+          "line": 25,
+          "text": ""
+        },
+        {
+          "line": 26,
+          "text": "        let validKeys = keys.filter { key in"
+        },
+        {
+          "line": 27,
+          "text": "            guard let k = key.key, !k.isEmpty, k.uppercased() != \"LOCAL\","
+        },
+        {
+          "line": 28,
+          "text": "                  let company = key.company, !company.isEmpty, company.uppercased() != \"LOCAL\","
+        },
+        {
+          "line": 29,
+          "text": "                  let urlStr = key.requestURL, !urlStr.isEmpty, URL(string: urlStr) != nil else {"
+        },
+        {
+          "line": 59,
+          "text": "        guard let selectedModel = HanlinDefaultChatPolicy.defaultModel(in: eligibleModels),"
+        },
+        {
+          "line": 60,
+          "text": "              let selectedKey = keyByCompany[selectedModel.company ?? \"\"],"
+        },
+        {
+          "line": 61,
+          "text": "              let apiKey = selectedKey.key,"
+        },
+        {
+          "line": 62,
+          "text": "              let endpointStr = selectedKey.requestURL,"
+        },
+        {
+          "line": 63,
+          "text": "              let endpoint = URL(string: endpointStr) else {"
+        },
+        {
+          "line": 67,
+          "text": "        }"
+        },
+        {
+          "line": 68,
+          "text": ""
+        },
+        {
+          "line": 69,
+          "text": "        let config = HanlinCompactAgentConfiguration("
+        },
+        {
+          "line": 70,
+          "text": "            endpoint: endpoint,"
+        },
+        {
+          "line": 71,
+          "text": "            apiKey: apiKey,"
+        },
+        {
+          "line": 72,
+          "text": "            modelID: selectedModel.name ?? \"gpt-4o-mini\","
+        },
+        {
+          "line": 73,
+          "text": "            company: selectedKey.company,"
+        }
+      ]
+    }
+  ],
+  "finding": "Original full host returns stored .key without recognizing an opaque reference. It is unsupported for migrated/replaced records. Phase1-or-newer consumers are required; no all-device-upgrade or synchronization claim is made."
+}

@@ -1,0 +1,38 @@
+{
+  "status": "SOURCE_APPROVED_NATIVE_AND_FRESH_SDK_NOT_RUN",
+  "sourceCommit": "f633fcdc6e7de46a3a3d7263ed9a934014f10d77",
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "sourceTree": "b593e1192cd523918379553bee659038daeecf29",
+  "productionPath": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+  "preimageSHA256": "fef6a058c6b06838e64089933424803e66deeb30bbe9ecac1e7e24aca839fa95",
+  "candidateSHA256": "dadde747dfad34c4ac8efdd8199253624376146956204babe52d90701404b950",
+  "frozenCandidateManifestSHA256": "d5dea48a254da25abc1d758fc33b434aeefb3813d60149705106867dfd56273f",
+  "patchSHA256": "8cdd8654ae2c2727bc46bb108de7bd4ab6dfe5021614bd1a632f4ec974fcc5b7",
+  "sourceSealSHA256": "f3e804dc90b214ea20dae8c3066d58659b889e2ec8be1078705454311924e057",
+  "independentReviewSHA256": "8cb62d1ecd6691bdd001fa74d6bb9a0033555872137ce0cb1708bad435530439",
+  "sourceValidation": "Whole-file single-condition inverse and diff-check; exact committed source blob verified.",
+  "sourceImpact": {
+    "sdkInputsChanged": 1,
+    "sdkInputsTotal": 396,
+    "hostDirectInputsChanged": 0,
+    "hostDirectInputsTotal": 99,
+    "packageTreeUnchanged": true
+  },
+  "testExecution": [],
+  "native": "NOT_RUN",
+  "sdkProducer": "NOT_RUN",
+  "originalTestUnchanged": {
+    "path": "AI_HLYTests/NativeScriptShareDeliveryTests.swift",
+    "sha256": "50f7cfb15e8c7fde04b26840ca0aa6687c6bc34b53ff6a9565f53718db463519",
+    "iterations": 2,
+    "runtimeCallsPerIteration": 5,
+    "terminalWaitSeconds": 120,
+    "pollMilliseconds": 25
+  },
+  "limitations": [
+    "The historical native failure remains a failure; this source correction does not retroactively qualify it.",
+    "The original failure-only state read was sequential and is not an atomic VM-ownership snapshot.",
+    "The root-coordinated original native retry and a fresh SDK qualification on the integrated source remain required.",
+    "No engine, Share envelope, payload, generation/replay/cancellation guard, test assertion or budget changed."
+  ]
+}

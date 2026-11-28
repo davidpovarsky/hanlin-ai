@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T08:29:38.394978+00:00",
+  "reviewedRootSHAAtStart": "c0e33300da596cc3f42b00a79f2c7ec1eed9e0aa",
+  "snapshotRootSHA": "25b14790e5c79b8ddd821984ed97d37e6af0bfa4",
+  "originalRetrievalReceipt": "receipt.json",
+  "originalRetrievalReceiptSHA256": "9a03b4fdecf72805a7dd2c544522efbe7c6fda80dc6db0d0a81d930a1483b4a6",
+  "inputs": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntime.swift",
+      "snapshot": "ScriptWidgetRuntime.local.swift",
+      "bytes": 69622,
+      "sha256": "15a60ffc1a6171dde86fa442a7a51764fd073eee4f615e329b6593dc5cf9b34a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetSession.swift",
+      "snapshot": "HanlinOriginalScriptWidgetSession.swift",
+      "bytes": 13303,
+      "sha256": "aaba22894ddd8bf7863a5ddd4e1e61cece90081b579bb8ce7b2a084f751f8f9b"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
+      "snapshot": "HanlinWidgetCompiler.swift",
+      "bytes": 9418,
+      "sha256": "3864dc8b4e4de02d55e2227643451ec74befed4b5eb9ca65cada5c6fc4fc392b"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/prepare-widget.js",
+      "snapshot": "prepare-widget.js",
+      "bytes": 11255,
+      "sha256": "53fd68b18417eebab3cf85d3e03d403809d5ef3033867cffd4f934b346331124"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
+      "snapshot": "HanlinScriptWidgetRuntime.swift",
+      "bytes": 22400,
+      "sha256": "425396c929e63ec2dd766189bf77bf8a057e6e42fbaf02f45c7736b30cd1c4c4"
+    },
+    {
+      "path": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
+      "snapshot": "UPSTREAM_SOURCE_MANIFEST.json",
+      "bytes": 210669,
+      "sha256": "7388e4668e52a89219c4822e1080e3f3af6596d24bfad8e8283d520b4a0e6881"
+    }
+  ],
+  "classification": "All seven literal declarations are upstream and unchanged. The Hanlin adapters are not byte-identical upstream and have the two enforcement-scope differences below.",
+  "findings": [
+    {
+      "id": "compile-budget-scope",
+      "status": "SOURCE_CONFIRMED_NOT_EXECUTED",
+      "summary": "A single original 10-second value is applied across multiple Hanlin prepared source compilations.",
+      "upstream": "ScriptWidgetCompiler.compile creates deadline inside each invocation, original lines 342\u2013350 and 407\u2013416; original $import invokes transform again at 922\u2013945.",
+      "host": "HanlinWidgetCompiler.swift 80\u2013108 creates one immutable deadline before entry and reuses it for every import. prepare-widget.js 48\u201374 likewise shares that callback across module transforms.",
+      "minimalProposal": "Retain the original compileTimeout authority and cooperative guard, but scope the deadline to each original compiler/source operation rather than a whole Hanlin package preparation. Do not introduce a replacement package-wide timeout."
+    },
+    {
+      "id": "root-fragment-counting",
+      "status": "SOURCE_CONFIRMED_NOT_EXECUTED",
+      "summary": "A single-element root Fragment is counted as an additional Hanlin element and level, while upstream unwraps it first at unchanged depth.",
+      "upstream": "Original resolveWidgetElementTree 776\u2013810 unwraps only a root single-element Fragment (including nested child arrays) at unchanged depth, then validateElementTree 123\u2013156 counts the normalized tree.",
+      "host": "HanlinScriptWidgetRuntime.swift 288\u2013322 increments the budget before normalization and always freezes the Fragment child at depth + 1; there is no equivalent root unwrapping.",
+      "sourceReasonedBoundaryCase": "A single-element root Fragment wrapping a tree of 1,000 elements or depth 64 stays within the original limits after normalization, but the host counts 1,001 or depth 65. This case was not executed.",
+      "minimalProposal": "Mirror original single-root-Fragment normalization at each rendered/region root before charging the node budget or incrementing depth. Keep nested non-root Fragment behavior, component/array cycle errors and all seven original authority values."
+    }
+  ],
+  "boundary": {
+    "sourceEdited": false,
+    "testsRun": false,
+    "buildsRun": false,
+    "ciQueriedOrDispatched": false,
+    "legacyScriptingOrScriptUIReviewed": false,
+    "frozenSDKOnlyProofChanged": false
+  }
+}

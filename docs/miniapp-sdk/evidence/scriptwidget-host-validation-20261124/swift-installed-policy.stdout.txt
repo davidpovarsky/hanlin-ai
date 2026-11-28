@@ -1,0 +1,1 @@
+PASS: exact installed Swift helper; 4 valid declarations, 9 malformed declarations rejected, 7 existing host-matching cases

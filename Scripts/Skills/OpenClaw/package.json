@@ -1,0 +1,20 @@
+{
+  "name": "@hanlin/openclaw-skill-probe",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fetch": "node fetch-upstream.mjs",
+    "build": "node build.mjs",
+    "test": "node --test Tests/*.test.mjs",
+    "fetch:policy": "node fetch-upstream.mjs --policy",
+    "build:policy": "node extract-policy.cjs && node build-policy.mjs && node build-policy-tests.mjs && node stage-policy-resources.mjs",
+    "test:policy": "node --test Tests/policy.test.mjs Tests/policy-probe.test.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "typescript": "6.0.3",
+    "json5": "2.2.3",
+    "semver": "7.8.5"
+  }
+}

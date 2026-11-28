@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-19T01:28:32.733649+00:00",
+  "sourceParent": "7e934579d1bc272720df43a4023b1c63709c60fc",
+  "sourcePatchSHA256": "21b085cf8795bcb26404eb2966ac9d663e2ee8ff4fce330bbd081e3fc18a5192",
+  "files": [
+    {
+      "path": ".github/workflows/check-runtime-dependency-updates.yml",
+      "beforeSHA256": "479b404a6125b2f55f4fb294b62667207e830e49607e88e178dec6880ed0d33f",
+      "afterSHA256": "4994babcd88bfcfe2fa49e36a035bce44bab837241350e93158937cf77a1578d",
+      "bytes": 22332
+    },
+    {
+      "path": "Scripts/Runtime/check-upstream-merge-gate.mjs",
+      "beforeSHA256": "58017209b064e6b7828e4ab945bbc1ed955e7f17a4ae716340094b81f7b4d64f",
+      "afterSHA256": "038785ffce3289dfae75812571c220b4b54d45ff86f2ef09335a768b05d31d60",
+      "bytes": 5832
+    },
+    {
+      "path": "Scripts/Runtime/consume-upstream-run.mjs",
+      "beforeSHA256": null,
+      "afterSHA256": "9da7dbdb29606362f1b3d4c5f3ac0165c69215f288ed340949e0d303627a08c7",
+      "bytes": 9466
+    },
+    {
+      "path": "Scripts/Runtime/run-upstream-bot.mjs",
+      "beforeSHA256": "2d25d573cc0f672f057c92cdb48b24ee323ae0777008f3eada7664506bdd2fce",
+      "afterSHA256": "59cb0e427cf85ff6c1012f5ad1c26826b2d9fb975aa9d944e2c0e8c2631b4155",
+      "bytes": 5252
+    },
+    {
+      "path": "Scripts/Runtime/Tests/upstream-check-lineage.test.mjs",
+      "beforeSHA256": null,
+      "afterSHA256": "cd9804ae9f3a7f1e094e98319e1390c5fbfb5c824a139881f2677a8d4436f20f",
+      "bytes": 7899
+    },
+    {
+      "path": "Scripts/Runtime/Tests/upstream-run-consumer.test.mjs",
+      "beforeSHA256": null,
+      "afterSHA256": "bd01fc23822ebfa74b0b971900770782b612c104535417efb6878a2d916d8f9c",
+      "bytes": 5773
+    },
+    {
+      "path": "Scripts/Runtime/upstream-check-lineage.mjs",
+      "beforeSHA256": null,
+      "afterSHA256": "78e520c4c4483e6f1854bfe79488131ab9610ae3c632ea8d1f3542cc68d9b1fa",
+      "bytes": 5339
+    },
+    {
+      "path": "Scripts/Runtime/upstream-run-consumer-policy.mjs",
+      "beforeSHA256": null,
+      "afterSHA256": "e2b79bb5d9434e97544502d07f5c81f7c5b932d87f210964e747f8740ce46df9",
+      "bytes": 3145
+    }
+  ],
+  "validation": {
+    "nodeVersion": "24.22.1",
+    "nodeTests": {
+      "total": 87,
+      "passed": 87,
+      "failed": 0,
+      "skipped": 0
+    },
+    "pythonProofReader": {
+      "total": 7,
+      "passed": 7
+    },
+    "ciRouting": {
+      "total": 97,
+      "passed": 97
+    },
+    "diffCheck": "PASS"
+  },
+  "retainedAttempts": [
+    {
+      "log": "root-validation-0.txt",
+      "outcome": "48 passed; dependency test file did not load because exact semver was not installed in this worktree; corrected using original producer package with equal lockfiles and original SRI-verified54files"
+    },
+    {
+      "log": "root-validation-2.txt",
+      "outcome": "Incorrect discovery pattern found zero tests; corrected original router97test invocation"
+    }
+  ],
+  "scope": "Original updater source and portable validation only. GitHub activation, independent native schema2 candidate proof, automatic merge and rollback acceptance are still pending. No iOS product acceptance is implied.",
+  "logs": [
+    {
+      "file": "root-validation-0.txt",
+      "sha256": "d88f8a301a47ee610acc389077d5af1ba994f01f18a968cc30d1e1f9748ddb16",
+      "bytes": 11424
+    },
+    {
+      "file": "root-validation-1.txt",
+      "sha256": "9b3bbbccdab18775b59436e142dfb6b2013c9b3010418da82e288454cdf3cef7",
+      "bytes": 110
+    },
+    {
+      "file": "root-validation-2.txt",
+      "sha256": "b0281afc5a8f851fedc2bba09c88d720f4dcc47a2a487e40928c779cb967ff8c",
+      "bytes": 113
+    },
+    {
+      "file": "root-validation-3.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "file": "root-validation-node-deps-restored.txt",
+      "sha256": "78dbc030512e2863da1bb80ebfc010a21683d2f37204f5a6799e3c941fbcdf1a",
+      "bytes": 16987
+    },
+    {
+      "file": "root-validation-node-24.22.1.txt",
+      "sha256": "89b627454156e6817661ba28905c94c39cb2e5a72803f8c92e05c46f7e967671",
+      "bytes": 6729
+    },
+    {
+      "file": "root-validation-router.txt",
+      "sha256": "ad1f14f405fbaaa26efb7c294e927942c27a064070d91fb081ad7a61ef7ece5f",
+      "bytes": 201
+    }
+  ]
+}

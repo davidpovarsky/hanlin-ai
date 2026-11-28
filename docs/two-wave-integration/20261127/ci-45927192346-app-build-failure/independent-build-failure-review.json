@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/w1_review_resume",
+  "classification": "KNOWN_SPOTLIGHT_NON_SENDABLE_PROTOCOL_WITNESS_COMPILE_FAILURE",
+  "source": "3c3bbb955bc79733607e90c719fc95a454d6b387",
+  "runID": 45927192346,
+  "jobID": 140271518782,
+  "artifactID": 15168798295,
+  "artifactSHA256": "391d39658c0e4d7939187f94f3f28e4bbc5c5270f7c75853705a882732ca47cc",
+  "artifactFilesRetained": 57,
+  "originalFullBuildLog": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-45927192346-app-build-failure/original/simulator-logs/06-xcodebuild-simulator.log",
+    "bytes": 14893408,
+    "sha256": "4a42f5728452a27c9ccebf22ca9999994a2aa9ad88e3e328cad7c7aed01f1ae0",
+    "lineCount": 105130
+  },
+  "actualCompilerErrors": [
+    {
+      "logLine": 104177,
+      "diagnostic": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift:66:17: error: non-Sendable parameter type 'CSSearchableIndexDescription' cannot be sent from caller of protocol requirement 'reindexEntities(for:indexDescription:)' into main actor-isolated implementation [#NonSendableInAsyncConformanceOrOverride]",
+      "context": [
+        " 43 |         }",
+        "",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift:66:17: error: non-Sendable parameter type 'CSSearchableIndexDescription' cannot be sent from caller of protocol requirement 'reindexEntities(for:indexDescription:)' into main actor-isolated implementation [#NonSendableInAsyncConformanceOrOverride]",
+        " 64 | ",
+        " 65 |     @MainActor",
+        " 66 |     public func reindexEntities(for identifiers: [String], indexDescription: CSSearchableIndexDescription) async throws {",
+        "    |                 `- error: non-Sendable parameter type 'CSSearchableIndexDescription' cannot be sent from caller of protocol requirement 'reindexEntities(for:indexDescription:)' into main actor-isolated implementation [#NonSendableInAsyncConformanceOrOverride]",
+        " 67 |         // A complete reconciliation also removes entities that were disabled or",
+        " 68 |         // uninstalled while Spotlight retained an older identifier.",
+        "",
+        "/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/System/Library/Frameworks/CoreSpotlight.framework/Headers/CSSearchableIndexDescription.h:14:12: note: class 'CSSearchableIndexDescription' does not conform to the 'Sendable' protocol",
+        "12 | API_AVAILABLE(macos(27.0), ios(27.0), visionos(27.0))",
+        "13 | API_UNAVAILABLE(tvos, watchos)",
+        "14 | @interface CSSearchableIndexDescription : NSObject <NSSecureCoding, NSCopying>",
+        "   |            `- note: class 'CSSearchableIndexDescription' does not conform to the 'Sendable' protocol",
+        "15 | "
+      ]
+    },
+    {
+      "logLine": 104193,
+      "diagnostic": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift:74:17: error: non-Sendable parameter type 'CSSearchableIndexDescription' cannot be sent from caller of protocol requirement 'reindexAllEntities(indexDescription:)' into main actor-isolated implementation [#NonSendableInAsyncConformanceOrOverride]",
+      "context": [
+        "16 | @property (nonatomic, readonly, nullable) NSFileProtectionType protectionClass;",
+        "",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift:74:17: error: non-Sendable parameter type 'CSSearchableIndexDescription' cannot be sent from caller of protocol requirement 'reindexAllEntities(indexDescription:)' into main actor-isolated implementation [#NonSendableInAsyncConformanceOrOverride]",
+        " 72 | ",
+        " 73 |     @MainActor",
+        " 74 |     public func reindexAllEntities(indexDescription: CSSearchableIndexDescription) async throws {",
+        "    |                 `- error: non-Sendable parameter type 'CSSearchableIndexDescription' cannot be sent from caller of protocol requirement 'reindexAllEntities(indexDescription:)' into main actor-isolated implementation [#NonSendableInAsyncConformanceOrOverride]",
+        " 75 |         _ = await currentRecords()",
+        " 76 |         try await HanlinMiniAppSystemEntrypoints.shared.reindexSpotlight()",
+        "",
+        "/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/System/Library/Frameworks/CoreSpotlight.framework/Headers/CSSearchableIndexDescription.h:14:12: note: class 'CSSearchableIndexDescription' does not conform to the 'Sendable' protocol",
+        "12 | API_AVAILABLE(macos(27.0), ios(27.0), visionos(27.0))",
+        "13 | API_UNAVAILABLE(tvos, watchos)",
+        "14 | @interface CSSearchableIndexDescription : NSObject <NSSecureCoding, NSCopying>",
+        "   |            `- note: class 'CSSearchableIndexDescription' does not conform to the 'Sendable' protocol",
+        "15 | "
+      ]
+    }
+  ],
+  "terminalBuildMarkers": [
+    {
+      "logLine": 105122,
+      "text": "** TEST BUILD FAILED **"
+    },
+    {
+      "logLine": 105129,
+      "text": "(3 failures)"
+    }
+  ],
+  "originalSource": {
+    "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+    "sha256": "40ace8e3c451e344576f2187bb961bac73ced97e8a504a8e85d7395db28eaab7"
+  },
+  "currentIntegratedSource": {
+    "head": "9d1a27133fd0bb56fa76a029561b34d35b946994",
+    "lastPathChange": "2a0b19b79f3da0fef092ca8b0762b9b0e7001caa Keep Spotlight reindex witnesses on the SDK caller executor",
+    "sha256": "114cdb71d067a0cf3139fe373af2b25617e275fa5aa040a0be71a0801e1283f8",
+    "witnessLines": [
+      "public nonisolated func reindexEntities(for identifiers: [String], indexDescription: CSSearchableIndexDescription) async throws {",
+      "public nonisolated func reindexAllEntities(indexDescription: CSSearchableIndexDescription) async throws {",
+      "private func reconcileSpotlight() async throws {"
+    ]
+  },
+  "observedEnvironment": "+ sw_vers\nProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\n+ xcode-select -p\n/Applications/Xcode_27.2.app/Contents/Developer\n+ xcodebuild -version\nXcode 27.2\nBuild version 27B52\n+ xcodebuild -showsdks\nDriverKit SDKs:\n\tDriverKit 27.2                \t-sdk driverkit27.2\n\niOS SDKs:\n\tiOS 27.2                      \t-sdk iphoneos27.2\n\niOS Simulator SDKs:\n\tSimulator - iOS 27.2          \t-sdk iphonesimulator27.2\n\nmacOS SDKs:\n\tmacOS 27.2                    \t-sdk macosx27.2\n\tmacOS 27.2                    \t-sdk macosx27.2\n\ntvOS SDKs:\n\ttvOS 27.2                     \t-sdk appletvos27.2\n\ntvOS Simulator SDKs:\n\tSimulator - tvOS 27.2         \t-sdk appletvsimulator27.2\n\nvisionOS SDKs:\n\tvisionOS 27.2                 \t-sdk xros27.2\n\nvisionOS Simulator SDKs:\n\tSimulator - visionOS 27.2     \t-sdk xrsimulator27.2\n\nwatchOS SDKs:\n\twatchOS 27.2                  \t-sdk watchos27.2\n\nwatchOS Simulator SDKs:\n\tSimulator - watchOS 27.2      \t-sdk watchsimulator27.2\n\n",
+  "findings": [
+    "The two actual source diagnostics are reindexEntities(for:indexDescription:) and reindexAllEntities(indexDescription:) at lines66 and74. Their CSSearchableIndexDescription argument is not Sendable and the source3c3 witnesses are @MainActor.",
+    "The failure is the same previously reviewed Spotlight boundary defect seen by the original Mac build; current root already carries explicitly nonisolated witnesses and the shared MainActor reconciliation helper.",
+    "No other source compiler error occurs in the retained original build log. No DeveloperStudio catch error occurs in this Hanlin app build log.",
+    "The original 90 acceptance selections did not execute in this failed build; the successful planner, NativeScript component baseline and retained preparation evidence have separate scopes.",
+    "The GitHub decoded job-log endpoint returned Transport closed once. This review instead retained the complete original uploaded build-log artifact and unchanged xcresult bytes, hash-verified against fresh GitHub artifact metadata."
+  ],
+  "reviewActions": "Read-only artifact/source review; no build, test, CI dispatch or source change."
+}

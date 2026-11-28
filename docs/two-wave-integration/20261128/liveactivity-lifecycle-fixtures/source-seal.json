@@ -1,0 +1,107 @@
+{
+  "CLI": "NOT_RUN",
+  "base": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "bundle": {
+    "bytes": 9192,
+    "listHeads": "22927d8046af57c2f387b54e6a6e283c02e67fb9 HEAD\n",
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/liveactivity-lifecycle-fixtures-fc5ce1ba/seal-r1/liveactivity-fixtures-source.bundle",
+    "sha256": "2461560baacb592885b17c906db966d9eee404a37a1b66b3bf1e8e7e62125ef9",
+    "verifyStdout": "The bundle contains this ref:\n22927d8046af57c2f387b54e6a6e283c02e67fb9 HEAD\nThe bundle requires this ref:\nfc5ce1bacffbf8b3cd206b83debfac406c0044ed \nThe bundle uses this hash algorithm: sha1\n"
+  },
+  "candidateManifestSHA256": "4c6087413cccca1603bb07e17235470a9cab41a597ff8caa4c80a5d2b900426f",
+  "clean": true,
+  "diffCheck": "PASS",
+  "native": "NOT_RUN",
+  "plannerControl": "NOT_RUN",
+  "proofCommit": "PENDING_ACTUAL_ORIGINAL_CLI_RESULT",
+  "rootReviewSHA256": "524c3f8efb42be56dba2947cee4fc9a5d09aaee8b242589250e8bec883dc50a7",
+  "sourceCommit": "22927d8046af57c2f387b54e6a6e283c02e67fb9",
+  "sourcePaths": [
+    {
+      "bytes": 12938,
+      "gitBlob": "b8022e8318bf62b36fcd59522ba6ffc49e1eb90e",
+      "path": "Fixtures/LiveActivityLifecycle/expo/App.tsx",
+      "sha256": "a6f1bd6e9255262fea6f2c9b7d0dedd477969750efc44beba3c4db96d4acd74e"
+    },
+    {
+      "bytes": 118,
+      "gitBlob": "c894586a4146012ad1e7d2c4666877f5f5857f3d",
+      "path": "Fixtures/LiveActivityLifecycle/expo/hanlin.authoring.json",
+      "sha256": "57239928efb0bd0e6760bf64443e70bf021eb963f074908332de3f5b7959a5a3"
+    },
+    {
+      "bytes": 117,
+      "gitBlob": "3a07b1fa2536a70032db56a4772cbac9e8d3f8e4",
+      "path": "Fixtures/LiveActivityLifecycle/expo/index.ts",
+      "sha256": "e6ff990a5f73c39cebfecc539611b23872e530f1287c6b0d0d8447fbc9a832ee"
+    },
+    {
+      "bytes": 334,
+      "gitBlob": "164ab9bcbfad3b4545ebf3d59017830d18c9890d",
+      "path": "Fixtures/LiveActivityLifecycle/expo/package.json",
+      "sha256": "a886a091cc90947b1bd64d5a123af9dbde523cd35dabd7d5dea0384fe98fd61f"
+    },
+    {
+      "bytes": 487,
+      "gitBlob": "8b670e823874e53771d36678ccd7b86d112c1d68",
+      "path": "Fixtures/LiveActivityLifecycle/expo/script.json",
+      "sha256": "e6c6dcae32b51de961b7342b8c399f7df8469f67c0f58b11934c5c354521ff62"
+    },
+    {
+      "bytes": 53,
+      "gitBlob": "50ce14b0741a2008a63f2d14922457baf11372ff",
+      "path": "Fixtures/LiveActivityLifecycle/expo/tsconfig.json",
+      "sha256": "02e14c4b983c0f436d32ce0eb2f96309512a7d69774ed0c7d39ffa4175ccf7df"
+    },
+    {
+      "bytes": 146,
+      "gitBlob": "8e30f558b5306f01fbe60708c62dc5bfa3f1aebd",
+      "path": "Fixtures/LiveActivityLifecycle/nativescript/hanlin.authoring.json",
+      "sha256": "228cd8d7c2d312b4f5c1ef2ba89a4c4a2e02f9b750a82411346c0da9885971c5"
+    },
+    {
+      "bytes": 11271,
+      "gitBlob": "d54b063eac57070d39a60a0411fadb20b11ea65f",
+      "path": "Fixtures/LiveActivityLifecycle/nativescript/index.ts",
+      "sha256": "c99e8b36bf5e155340f29ff26f549532910c890095a549afd21708e372f2483c"
+    },
+    {
+      "bytes": 293,
+      "gitBlob": "7459788828007abbe42ae1978b50a359acc93bfb",
+      "path": "Fixtures/LiveActivityLifecycle/nativescript/package.json",
+      "sha256": "67c8ebb3dc9a091eb9484f0f2a7122cd82cc43567480964cfed04a074790ec9d"
+    },
+    {
+      "bytes": 700,
+      "gitBlob": "0a3fab0d7ee957203b3a93601bceb700bc9cdd34",
+      "path": "Fixtures/LiveActivityLifecycle/nativescript/script.json",
+      "sha256": "bb4dbd0fa034e6f9e29bf39d76f00146f5a7e5e770fa38265ac7c60f37a22885"
+    },
+    {
+      "bytes": 75,
+      "gitBlob": "c6de81ff4b1e06c5bd415e9ecee9d87fdbcac44a",
+      "path": "Fixtures/LiveActivityLifecycle/nativescript/tsconfig.json",
+      "sha256": "4148cad60e1db19b1159ba84bd5e8b9749bf9c90ed607de6fbeeaa942cf2097d"
+    },
+    {
+      "bytes": 923,
+      "gitBlob": "6040842189927df4f0875cc66817d9678eab9f01",
+      "path": "Fixtures/LiveActivityLifecycle/nativescript/widget.jsx",
+      "sha256": "1b61cc1b750e82415cac38a9b6af78fc63154ec98d0f7a4dfcddddf2ccf2bc90"
+    },
+    {
+      "bytes": 81980,
+      "gitBlob": "317255e5fa76b1090f93230325ec5ce58b29daac",
+      "path": "Scripts/CI/affected-validation-map.json",
+      "sha256": "51ad4d5855f310f7c1ec515c43c247e2e2a5515ee07a278d0093b70b548b70a7"
+    },
+    {
+      "bytes": 91957,
+      "gitBlob": "0288eebcc43580c5451367515823fcfc52deba2c",
+      "path": "Scripts/CI/Tests/test_affected_validation.py",
+      "sha256": "27ced2643b5953d6cd8a308cfb8b73c5e6e56e11b86d67109b66b5b63ce8517b"
+    }
+  ],
+  "stdout": "[codex/hanlin-liveactivity-lifecycle-fc5-20261128 22927d804] test(activity): add original local lifecycle authoring fixtures\n 14 files changed, 636 insertions(+)\n create mode 100644 Fixtures/LiveActivityLifecycle/expo/App.tsx\n create mode 100644 Fixtures/LiveActivityLifecycle/expo/hanlin.authoring.json\n create mode 100644 Fixtures/LiveActivityLifecycle/expo/index.ts\n create mode 100644 Fixtures/LiveActivityLifecycle/expo/package.json\n create mode 100644 Fixtures/LiveActivityLifecycle/expo/script.json\n create mode 100644 Fixtures/LiveActivityLifecycle/expo/tsconfig.json\n create mode 100644 Fixtures/LiveActivityLifecycle/nativescript/hanlin.authoring.json\n create mode 100644 Fixtures/LiveActivityLifecycle/nativescript/index.ts\n create mode 100644 Fixtures/LiveActivityLifecycle/nativescript/package.json\n create mode 100644 Fixtures/LiveActivityLifecycle/nativescript/script.json\n create mode 100644 Fixtures/LiveActivityLifecycle/nativescript/tsconfig.json\n create mode 100644 Fixtures/LiveActivityLifecycle/nativescript/widget.jsx\n",
+  "tree": "86ea6455618a3e029b14e817720548546b71cb20"
+}

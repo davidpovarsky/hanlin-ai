@@ -1,0 +1,16 @@
+{
+  "baseSource": "8f26449ca98911fb197fc332606794c263e68a51",
+  "files": {
+    "Scripts/Runtime/upstream-host-accounting.mjs": "551e3ae5855346f630f4878e3635dd79dfe52855d50f10f729ccf4a4b44d28fa",
+    "Scripts/Runtime/local-mac-host-accounting.mjs": "d5888106170a4404d116d9112d8c54d32c36f49e7cd857b61741583a3020e576",
+    "Scripts/Runtime/record-local-mac-host-receipt.mjs": "06d58965a8e736a827c3039c96929b8cd1d4f360c89904d95818144c20f76f61",
+    "Scripts/Runtime/Tests/local-mac-host-accounting.test.mjs": "30db2b5a6a243106d5181d3bcb83d2c467f5eef1f7b3fe04656818d4bc36b17a",
+    "docs/ci/LOCAL_MAC_HOST_ACCOUNTING.md": "d4c52269bb58e43f622cb402a25187d6fcdd7fe78ac43fbefdf131ac39803797"
+  },
+  "portableTestEvidence": "portable-test-receipt.json",
+  "authenticMacCLIEvidence": "verification-result.json",
+  "consumerEvidence": "actual-consumer-recheck.json",
+  "originalHostCasesReexecuted": 0,
+  "nativeBuildsOrTests": 0,
+  "catalogPublished": false
+}

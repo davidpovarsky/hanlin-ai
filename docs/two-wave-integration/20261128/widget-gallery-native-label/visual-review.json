@@ -1,0 +1,16 @@
+{
+  "reviewer": "root",
+  "reviewedAt": "2026-11-28T12:34:08.354231+00:00",
+  "method": "Actual image content returned by Sentinel sentinel_read_media, visually inspected by root.",
+  "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-layout-terminal-r1/attachments-r1/layout/artifact-selected-members/paired-product/paired-attachments/673BAB7B-F1C8-44F5-A0E4-31C6E426C3E9.png",
+  "sha256": "cd976c1bbf9b15eef6edb0ca326813295f743de443fa0c506de587b7a9292cb1",
+  "bytes": 1255401,
+  "visible": [
+    "Hanlin Script gallery title",
+    "Hanlin MiniApps provider row selected",
+    "Horizontal medium preview with Hanlin Widget / Choose a widget instance placeholder",
+    "Second page dot of eight",
+    "Add Widget control"
+  ],
+  "limits": "Unconfigured gallery preview only. No placed widget, Matrix rendering, native state action, rotation or accessibility acceptance inferred."
+}

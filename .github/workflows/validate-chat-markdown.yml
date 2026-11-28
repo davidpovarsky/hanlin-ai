@@ -1,0 +1,109 @@
+name: Validate pinned chat Markdown renderer
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  code-block-renderer:
+    runs-on: xcode-27
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - name: Read the app's exact renderer revision
+        id: renderer
+        shell: bash
+        run: |
+          set -euo pipefail
+          revision="$(python3 - <<'PY'
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, 'Scripts/CI')
+          from write_diagnostics_build_provenance import requested_revision_pins
+          revision = requested_revision_pins(Path('.')).get('github.com/davidpovarsky/hanlin-streaming-markdown')
+          if revision is None:
+              raise SystemExit('The app must pin an exact renderer revision')
+          print(revision)
+          PY
+          )"
+          echo "revision=$revision" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v7.0.1
+        with:
+          repository: davidpovarsky/hanlin-streaming-markdown
+          ref: ${{ steps.renderer.outputs.revision }}
+          path: build/MarkdownRenderer
+          persist-credentials: false
+      - name: Prepare the authenticated app runtime pin closure in the isolated consumer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p build/markdown-evidence
+          date +%s > build/markdown-evidence/preflight-start-epoch.txt
+          git rev-parse HEAD > build/markdown-evidence/source-sha.txt
+          git -C build/MarkdownRenderer rev-parse HEAD > build/markdown-evidence/renderer-sha.txt
+          python3 Scripts/CI/prepare_markdown_consumer_closure.py --renderer build/MarkdownRenderer --evidence build/markdown-evidence
+      - name: Select the installed stable Xcode and iPhone runtime
+        id: toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode*.app' ! -name '*_beta*' -print | sort -V | tail -1)"
+          test -n "$selected_xcode"
+          echo "DEVELOPER_DIR=$selected_xcode/Contents/Developer" >> "$GITHUB_ENV"
+          export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
+          {
+            xcodebuild -version
+            xcrun swift --version
+            xcodebuild -showsdks
+            sw_vers
+            uname -m
+          } > build/markdown-evidence/preflight.txt
+          xcrun simctl list runtimes -j > build/markdown-evidence/runtimes.json
+          echo "build=$(xcodebuild -version | sed -n '2s/^Build version //p')" >> "$GITHUB_OUTPUT"
+          device="$(python3 Scripts/CI/select_installed_simulator.py --family iPhone --output build/markdown-evidence/owned-simulator.json --create-owned "Hanlin-Phase2-Markdown-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}")"
+          xcrun simctl list devices available -j > build/markdown-devices.json
+          echo "device=$device" >> "$GITHUB_OUTPUT"
+          cp build/markdown-devices.json build/markdown-evidence/devices.json
+          echo "$device" > build/markdown-evidence/selected-device.txt
+          printf '%s\n' "$(($(date +%s)-$(cat build/markdown-evidence/preflight-start-epoch.txt)))" > build/markdown-evidence/preflight-duration-seconds.txt
+      - uses: actions/cache/restore@v6.1.0
+        id: packages
+        with:
+          path: build/MarkdownSourcePackages
+          key: chat-markdown-spm-v2-${{ runner.arch }}-${{ steps.toolchain.outputs.build }}-${{ hashFiles('build/MarkdownRenderer/Package.swift', 'build/MarkdownRenderer/Package.resolved') }}
+      - name: Compile the real package and execute citation, code-block and retained host-link tests
+        timeout-minutes: 16
+        shell: bash
+        env:
+          MARKDOWN_DEVICE: ${{ steps.toolchain.outputs.device }}
+        run: bash Scripts/CI/IntegrationValidation/run_chat_markdown_consumer.sh
+      - name: Remove this run's owned simulator after retaining results
+        if: always()
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+          p = Path('build/markdown-evidence/owned-simulator.json')
+          if p.exists():
+              device = json.loads(p.read_text())['device']
+              expected = f"Hanlin-Phase2-Markdown-{os.environ['GITHUB_RUN_ID']}-{os.environ['GITHUB_RUN_ATTEMPT']}"
+              assert device['name'] == expected
+              subprocess.run(['xcrun','simctl','shutdown',device['udid']], check=False)
+              subprocess.run(['xcrun','simctl','delete',device['udid']], check=True)
+          PY
+      - uses: actions/cache/save@v6.1.0
+        if: ${{ success() && steps.packages.outputs.cache-hit != 'true' }}
+        with:
+          path: build/MarkdownSourcePackages
+          key: ${{ steps.packages.outputs.cache-primary-key }}
+      - uses: actions/upload-artifact@v7.0.0
+        if: always()
+        with:
+          name: chat-markdown-renderer-evidence
+          path: build/markdown-evidence
+          retention-days: 30

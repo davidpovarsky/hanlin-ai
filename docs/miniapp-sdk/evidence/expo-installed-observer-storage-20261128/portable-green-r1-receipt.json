@@ -1,0 +1,69 @@
+{
+  "argv": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "-m",
+    "unittest",
+    "-v",
+    "Scripts.CI.Tests.test_installed_expo_observer_storage",
+    "Scripts.ProductSplit.Tests.test_system_surface_input_producer",
+    "Scripts.ProductSplit.Tests.test_share_translation_surface_observer",
+    "Scripts.ProductSplit.Tests.test_shortcut_surface_observer",
+    "Scripts.ProductSplit.Tests.test_shortcut_concurrency_observer",
+    "Scripts.CI.Tests.test_shortcut_long_running_observer",
+    "Scripts.ProductSplit.Tests.test_widget_action_surface_observer"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-observer-expo-storage-3634078f",
+  "elapsedSeconds": 0.9190366771072149,
+  "exit": 0,
+  "logs": {
+    "stderr.log": {
+      "bytes": 23422,
+      "sha256": "079007f637f90cf1266dd2093e14fe3631c1c1a1953f39bd53e7259de61fa34e"
+    },
+    "stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "native": "NOT_RUN",
+  "originalAffectedModulesAndNewControls": [
+    "Scripts.CI.Tests.test_installed_expo_observer_storage",
+    "Scripts.ProductSplit.Tests.test_system_surface_input_producer",
+    "Scripts.ProductSplit.Tests.test_share_translation_surface_observer",
+    "Scripts.ProductSplit.Tests.test_shortcut_surface_observer",
+    "Scripts.ProductSplit.Tests.test_shortcut_concurrency_observer",
+    "Scripts.CI.Tests.test_shortcut_long_running_observer",
+    "Scripts.ProductSplit.Tests.test_widget_action_surface_observer"
+  ],
+  "schema": 1,
+  "scope": "Actual bounded portable filesystem/producer and unchanged original observer controls only",
+  "sourceAfter": {
+    "Scripts/CI/Tests/test_installed_expo_observer_storage.py": "8c71df979e5b2d4bc9aa977767ba5027fc0178e56e3eb30f93c2ac777c109ab0",
+    "Scripts/ProductSplit/Tests/test_share_translation_surface_observer.py": "bfe2d444901c3caeb4f7fe40859358252340b505fcdc8c16f24bda74eed25207",
+    "Scripts/ProductSplit/Tests/test_system_surface_input_producer.py": "483fc33d56e33614e5f73dfca297922be61192489a97424869144295d84a9c18",
+    "Scripts/ProductSplit/observe_share_translation_surfaces.py": "f59353b1906429e323d9315edaa472c2f10582650f6244844d31a2f042ef4901",
+    "Scripts/ProductSplit/observe_shortcut_concurrency.py": "794e514726d39b836f65c9c2bce3fea74c17b09076137480b61212a6bb5c3f8a",
+    "Scripts/ProductSplit/observe_shortcut_long_running.py": "8d4296b354401a2fd79544792066886cab7a05a3c42b441483475c54994424de",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "107fc49607d5700d6b6519c6abc71d6cfce03a374eb574a8e0ef1c3f3e84ae23",
+    "Scripts/ProductSplit/observe_widget_action_surfaces.py": "3cb0d827bd1d29518f01c6e3ccf96aaf8ac077e01bf19c4ef6a60b53e20ba4a9",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "2e9a6f74e10fa08320c282ecf2f43384c9e74d0d62ef67b26e5ded4279eccea6"
+  },
+  "sourceBefore": {
+    "Scripts/CI/Tests/test_installed_expo_observer_storage.py": "8c71df979e5b2d4bc9aa977767ba5027fc0178e56e3eb30f93c2ac777c109ab0",
+    "Scripts/ProductSplit/Tests/test_share_translation_surface_observer.py": "bfe2d444901c3caeb4f7fe40859358252340b505fcdc8c16f24bda74eed25207",
+    "Scripts/ProductSplit/Tests/test_system_surface_input_producer.py": "483fc33d56e33614e5f73dfca297922be61192489a97424869144295d84a9c18",
+    "Scripts/ProductSplit/observe_share_translation_surfaces.py": "f59353b1906429e323d9315edaa472c2f10582650f6244844d31a2f042ef4901",
+    "Scripts/ProductSplit/observe_shortcut_concurrency.py": "794e514726d39b836f65c9c2bce3fea74c17b09076137480b61212a6bb5c3f8a",
+    "Scripts/ProductSplit/observe_shortcut_long_running.py": "8d4296b354401a2fd79544792066886cab7a05a3c42b441483475c54994424de",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "107fc49607d5700d6b6519c6abc71d6cfce03a374eb574a8e0ef1c3f3e84ae23",
+    "Scripts/ProductSplit/observe_widget_action_surfaces.py": "3cb0d827bd1d29518f01c6e3ccf96aaf8ac077e01bf19c4ef6a60b53e20ba4a9",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "2e9a6f74e10fa08320c282ecf2f43384c9e74d0d62ef67b26e5ded4279eccea6"
+  },
+  "sourceUnchanged": true,
+  "startedAt": "2026-11-28T06:51:38.289495+00:00",
+  "status": "PASS"
+}

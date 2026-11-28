@@ -1,0 +1,44 @@
+{
+  "files": {
+    "README.md": {
+      "bytes": 1599,
+      "sha256": "30332159e92b71d519ff84ea28dfb11fa4ed8b8494b9c76204a7cdbc0f49ab5c"
+    },
+    "evidence-parser-correction.json": {
+      "bytes": 444,
+      "sha256": "5de8dd555f2ae58897ba4402694ae6eef02f6f96766ba6d8f915a65038ae625c"
+    },
+    "mac-job-138310132062.txt": {
+      "bytes": 154013,
+      "sha256": "46e0faf1bf7a621e28efcaf008f1848f24e9d7ea02b7844c367fe1e783f4d466"
+    },
+    "native-result.json": {
+      "bytes": 1792,
+      "sha256": "7f5cfb0c2e60225ae7cfeea6260788ebf023cabf548e60fffe1c274786ae77ff"
+    },
+    "receipt.json": {
+      "bytes": 1446,
+      "sha256": "6a035428db30e7194bd2a9289bd929a83198b409b0014a20ebf60ac93a9a0c85"
+    },
+    "source-corroboration.json": {
+      "bytes": 3132,
+      "sha256": "2eb7f431d01d727d00a34b23e61464961d2d6d8f47ff014a52b26c667805b7d4"
+    },
+    "source-diff-check.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "swift-parse.json": {
+      "bytes": 358,
+      "sha256": "f4ac6a8999ca5ac78a40a389e8b8b6863963a2b4e4ff41362bfe1522ffe2d060"
+    },
+    "swift-parse.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "test-correction.diff": {
+      "bytes": 1130,
+      "sha256": "9611b64e99b369ade68520e9ccb401b11f692e70e9ebcb29cc3ce568c5d6d0e1"
+    }
+  }
+}

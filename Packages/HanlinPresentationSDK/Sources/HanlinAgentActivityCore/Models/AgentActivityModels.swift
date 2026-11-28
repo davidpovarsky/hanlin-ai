@@ -1,0 +1,330 @@
+import HanlinLocalization
+//
+//  AgentActivityModels.swift
+//  AI_HLY
+//
+//  Provider-neutral persisted activity models for one assistant run.
+//
+
+import Foundation
+
+import HanlinPlatformContracts
+
+public enum AgentActivityStatus: String, Codable, Hashable, Sendable {
+  case pending
+  case running
+  case completed
+  case failed
+  case cancelled
+}
+public enum AgentActivityKind: String, Codable, Hashable, Sendable {
+  case reasoning
+  case progress
+  case planning
+  case toolCall
+  case toolExecution
+  case webSearch
+  case sourceRead
+  case documentRead
+  case codeExecution
+  case map
+  case calendar
+  case health
+  case nativeApp
+  case result
+  case error
+  case cancellation
+}
+public enum ProgressSummarySource: String, Codable, Hashable, Sendable {
+  case model
+  case providerReasoningSummary
+  case applicationGenerated
+}
+public struct AgentActivitySource: Codable, Hashable, Identifiable, Sendable {
+  public var id: String
+  public var title: String
+  public var url: String?
+  public var domain: String?
+  public var reference: String?
+
+  public init(
+    id: String = UUID().uuidString,
+    title: String,
+    url: String? = nil,
+    domain: String? = nil,
+    reference: String? = nil
+  ) {
+    self.id = id
+    self.title = title
+    self.url = url
+    self.domain = domain ?? url.flatMap(URL.init(string:))?.host()
+    self.reference = reference
+  }
+
+  public var displayTitle: String {
+    let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+    if !trimmedTitle.isEmpty { return trimmedTitle }
+    if let domain, !domain.isEmpty { return domain }
+    if let reference, !reference.isEmpty { return reference }
+    return String(localized: "Source", bundle: HanlinLocalization.bundle)
+  }
+
+  private enum CodingKeys: String, CodingKey {
+    case id, title, url, domain, reference
+  }
+
+  public init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    id = try container.decodeIfPresent(String.self, forKey: .id) ?? UUID().uuidString
+    title = try container.decodeIfPresent(String.self, forKey: .title) ?? ""
+    url = try container.decodeIfPresent(String.self, forKey: .url)
+    domain =
+      try container.decodeIfPresent(String.self, forKey: .domain)
+      ?? url.flatMap(URL.init(string:))?.host()
+    reference = try container.decodeIfPresent(String.self, forKey: .reference)
+  }
+}
+public struct AgentActivityStep: Codable, Hashable, Identifiable {
+  public var id: UUID
+  public var externalID: String?
+  public var sequence: Int
+  public var kind: AgentActivityKind
+  public var presentationProfile: ToolPresentationProfile?
+  public var resultPresentationRequest: ToolResultPresentationRequest?
+  public var title: String
+  public var subtitle: String?
+  public var userFacingSummary: String?
+  public var summarySource: ProgressSummarySource?
+  public var status: AgentActivityStatus
+  public var startedAt: Date
+  public var completedAt: Date?
+  public var input: String?
+  public var output: String?
+  public var queryItems: [String]
+  public var searchProviderName: String?
+  public var sourceItems: [AgentActivitySource]
+  public var richResultBlocks: [NativeUIBlock]
+  public var errorDescription: String?
+  public var canonicalExecutionPresentation: HanlinToolExecutionPresentationDescriptor?
+  public var canonicalEmbeddedPresentation: HanlinEmbeddedPresentationDescriptor?
+
+  /// Presentation kind (code/search/document/etc.) is independent of the call's
+  /// lifecycle identity. Strip only our transport prefixes/suffix, never IDs
+  /// embedded in the middle of a provider's actual call ID.
+  public var toolCallID: String? {
+    guard var value = externalID else { return nil }
+    if value.hasPrefix("call:") { return String(value.dropFirst(5)) }
+    if value.hasPrefix("execution:") {
+      value.removeFirst("execution:".count)
+      if value.hasSuffix(":execution") { value.removeLast(":execution".count) }
+      return value
+    }
+    if kind == .toolExecution, value.hasSuffix(":execution") {
+      return String(value.dropLast(":execution".count))
+    }
+    return [.toolCall, .toolExecution, .webSearch].contains(kind) ? value : nil
+  }
+
+  public var isExecutionLifecycleStep: Bool {
+    kind == .toolExecution || externalID?.hasPrefix("execution:") == true
+  }
+
+  public init(
+    id: UUID = UUID(),
+    externalID: String? = nil,
+    sequence: Int,
+    kind: AgentActivityKind,
+    presentationProfile: ToolPresentationProfile? = nil,
+    resultPresentationRequest: ToolResultPresentationRequest? = nil,
+    title: String,
+    subtitle: String? = nil,
+    userFacingSummary: String? = nil,
+    summarySource: ProgressSummarySource? = nil,
+    status: AgentActivityStatus = .running,
+    startedAt: Date = Date(),
+    completedAt: Date? = nil,
+    input: String? = nil,
+    output: String? = nil,
+    queryItems: [String] = [],
+    searchProviderName: String? = nil,
+    sourceItems: [AgentActivitySource] = [],
+    richResultBlocks: [NativeUIBlock] = [],
+    errorDescription: String? = nil,
+    canonicalExecutionPresentation: HanlinToolExecutionPresentationDescriptor? = nil,
+    canonicalEmbeddedPresentation: HanlinEmbeddedPresentationDescriptor? = nil
+  ) {
+    self.id = id
+    self.externalID = externalID
+    self.sequence = sequence
+    self.kind = kind
+    self.presentationProfile = presentationProfile
+    self.resultPresentationRequest = resultPresentationRequest
+    self.title = title
+    self.subtitle = subtitle
+    self.userFacingSummary = userFacingSummary
+    self.summarySource = summarySource
+    self.status = status
+    self.startedAt = startedAt
+    self.completedAt = completedAt
+    self.input = input
+    self.output = output
+    self.queryItems = queryItems
+    self.searchProviderName = searchProviderName
+    self.sourceItems = sourceItems
+    self.richResultBlocks = richResultBlocks
+    self.errorDescription = errorDescription
+    self.canonicalExecutionPresentation =
+      canonicalExecutionPresentation ?? presentationProfile?.canonicalExecutionPresentation
+    self.canonicalEmbeddedPresentation =
+      canonicalEmbeddedPresentation ?? presentationProfile?.canonicalEmbeddedPresentation
+  }
+
+  private enum CodingKeys: String, CodingKey {
+    case id, externalID, sequence, kind, presentationProfile, resultPresentationRequest
+    case title, subtitle, userFacingSummary, summarySource
+    case status, startedAt, completedAt, input, output, queryItems, searchProviderName, sourceItems
+    case richResultBlocks, errorDescription
+    case canonicalExecutionPresentation, canonicalEmbeddedPresentation
+  }
+
+  public init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    id = try container.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
+    externalID = try container.decodeIfPresent(String.self, forKey: .externalID)
+    sequence = try container.decodeIfPresent(Int.self, forKey: .sequence) ?? 0
+    kind = try container.decodeIfPresent(AgentActivityKind.self, forKey: .kind) ?? .progress
+    presentationProfile = try container.decodeIfPresent(
+      ToolPresentationProfile.self, forKey: .presentationProfile)
+    resultPresentationRequest = try container.decodeIfPresent(
+      ToolResultPresentationRequest.self, forKey: .resultPresentationRequest)
+    title = try container.decodeIfPresent(String.self, forKey: .title) ?? ""
+    subtitle = try container.decodeIfPresent(String.self, forKey: .subtitle)
+    userFacingSummary = try container.decodeIfPresent(String.self, forKey: .userFacingSummary)
+    summarySource = try container.decodeIfPresent(
+      ProgressSummarySource.self, forKey: .summarySource)
+    status = try container.decodeIfPresent(AgentActivityStatus.self, forKey: .status) ?? .completed
+    startedAt = try container.decodeIfPresent(Date.self, forKey: .startedAt) ?? Date()
+    completedAt = try container.decodeIfPresent(Date.self, forKey: .completedAt)
+    input = try container.decodeIfPresent(String.self, forKey: .input)
+    output = try container.decodeIfPresent(String.self, forKey: .output)
+    queryItems = try container.decodeIfPresent([String].self, forKey: .queryItems) ?? []
+    searchProviderName = try container.decodeIfPresent(String.self, forKey: .searchProviderName)
+    sourceItems =
+      try container.decodeIfPresent([AgentActivitySource].self, forKey: .sourceItems) ?? []
+    richResultBlocks =
+      try container.decodeIfPresent([NativeUIBlock].self, forKey: .richResultBlocks) ?? []
+    errorDescription = try container.decodeIfPresent(String.self, forKey: .errorDescription)
+    canonicalExecutionPresentation =
+      try container.decodeIfPresent(
+        HanlinToolExecutionPresentationDescriptor.self, forKey: .canonicalExecutionPresentation)
+      ?? presentationProfile?.canonicalExecutionPresentation
+    canonicalEmbeddedPresentation =
+      try container.decodeIfPresent(
+        HanlinEmbeddedPresentationDescriptor.self, forKey: .canonicalEmbeddedPresentation)
+      ?? presentationProfile?.canonicalEmbeddedPresentation
+  }
+}
+public struct AgentRun: Codable, Hashable, Identifiable {
+  public static let currentSchemaVersion = 4
+
+  public var schemaVersion: Int
+  public var id: UUID
+  public var groupID: UUID
+  public var providerID: String?
+  public var modelID: String?
+  public var startedAt: Date
+  public var completedAt: Date?
+  public var status: AgentActivityStatus
+  public var steps: [AgentActivityStep]
+  public var transcriptItems: [AgentTranscriptItem]
+  public var evidenceItems: [AgentEvidenceItem]
+  public var finalAnswer: String?
+  /// The actual start of text subsequently confirmed as the final answer.
+  /// Kept separately so activity snapshots can omit every answer delta.
+  public var finalAnswerStartedAt: Date? = nil
+  public var approvals: [AgentToolApproval] = []
+  /// Receipt of a currently dispatched model request, cleared by its first semantic output.
+  /// Optional for older persisted runs; presentation also requires current live-run ownership.
+  public var pendingModelRequestID: String? = nil
+
+  public init(
+    schemaVersion: Int = currentSchemaVersion,
+    id: UUID = UUID(),
+    groupID: UUID,
+    providerID: String? = nil,
+    modelID: String? = nil,
+    startedAt: Date = Date(),
+    completedAt: Date? = nil,
+    status: AgentActivityStatus = .running,
+    steps: [AgentActivityStep] = [],
+    transcriptItems: [AgentTranscriptItem] = [],
+    evidenceItems: [AgentEvidenceItem] = [],
+    finalAnswer: String? = nil
+  ) {
+    self.schemaVersion = schemaVersion
+    self.id = id
+    self.groupID = groupID
+    self.providerID = providerID
+    self.modelID = modelID
+    self.startedAt = startedAt
+    self.completedAt = completedAt
+    self.status = status
+    self.steps = steps
+    self.transcriptItems = transcriptItems
+    self.evidenceItems = evidenceItems
+    self.finalAnswer = finalAnswer
+  }
+
+  public var activityCompletedAt: Date? {
+    finalAnswerStartedAt ?? completedAt
+  }
+
+  public var elapsedTime: TimeInterval {
+    max(0, (completedAt ?? Date()).timeIntervalSince(startedAt))
+  }
+
+  private enum CodingKeys: String, CodingKey {
+    case schemaVersion, id, groupID, providerID, modelID, startedAt, completedAt
+    case status, steps, transcriptItems, evidenceItems, finalAnswer, finalAnswerStartedAt, approvals, pendingModelRequestID
+  }
+
+  public init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    schemaVersion = try container.decodeIfPresent(Int.self, forKey: .schemaVersion) ?? 1
+    id = try container.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
+    groupID = try container.decodeIfPresent(UUID.self, forKey: .groupID) ?? UUID()
+    providerID = try container.decodeIfPresent(String.self, forKey: .providerID)
+    modelID = try container.decodeIfPresent(String.self, forKey: .modelID)
+    startedAt = try container.decodeIfPresent(Date.self, forKey: .startedAt) ?? Date()
+    completedAt = try container.decodeIfPresent(Date.self, forKey: .completedAt)
+    status = try container.decodeIfPresent(AgentActivityStatus.self, forKey: .status) ?? .completed
+    steps = try container.decodeIfPresent([AgentActivityStep].self, forKey: .steps) ?? []
+    let decodedTranscript =
+      try container.decodeIfPresent(
+        [AgentTranscriptItem].self,
+        forKey: .transcriptItems
+      ) ?? []
+    transcriptItems = AgentTranscriptValidation.normalized(
+      decodedTranscript,
+      promotingFinalAnswerForCompletedRun: status == .completed
+    )
+    evidenceItems =
+      try container.decodeIfPresent([AgentEvidenceItem].self, forKey: .evidenceItems) ?? []
+    approvals = try container.decodeIfPresent([AgentToolApproval].self, forKey: .approvals) ?? []
+    pendingModelRequestID = try container.decodeIfPresent(String.self, forKey: .pendingModelRequestID)
+    if status != .running && status != .pending { pendingModelRequestID = nil }
+    finalAnswerStartedAt = try container.decodeIfPresent(Date.self, forKey: .finalAnswerStartedAt)
+    if finalAnswerStartedAt == nil, status != .running && status != .pending {
+      finalAnswerStartedAt = transcriptItems.last(where: {
+        $0.kind == .assistantText && $0.textRole == .final
+          && $0.text?.contains(where: { !$0.isWhitespace }) == true
+      })?.startedAt
+    }
+    let transcriptFinalAnswer = AgentTranscriptValidation.finalAnswer(in: transcriptItems)
+    let persistedFinalAnswer = try container.decodeIfPresent(String.self, forKey: .finalAnswer)
+    finalAnswer =
+      schemaVersion >= 2
+      ? transcriptFinalAnswer
+      : transcriptFinalAnswer ?? persistedFinalAnswer
+  }
+}

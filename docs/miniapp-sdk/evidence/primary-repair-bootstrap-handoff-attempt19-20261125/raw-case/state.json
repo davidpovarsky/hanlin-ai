@@ -1,0 +1,239 @@
+{
+  "schema": 1,
+  "id": "focused19-v9",
+  "owner": "/root/native_execution",
+  "source": "dc53a6c8ff1bb68bfbc52a64667e14ce688055b0",
+  "sourceTree": "fa7fdb2a1d05414b772329acd107721cd82bba46",
+  "status": "FOCUSED_FAILED",
+  "expectedGroups": {
+    "FocusedRepair1": {
+      "expected": 1,
+      "selectors": [
+        "AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport"
+      ]
+    }
+  },
+  "expectedTotal": 1,
+  "producerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "originalFocusedAllowanceSeconds": 3600,
+  "priorFocusedChargeSeconds": 3820.004503627002,
+  "priorFocusRecords": [
+    {
+      "path": "build/primary-control/focused19-v1/state.json",
+      "sha256": "a7ae2d21b27503b71939ff72670333a7e05736e47e999801f52e6ee6c1520dd6"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/ledger.json",
+      "sha256": "c7835bb97d3017d305628e76ce25b35cfb415433780c4a43f806d0d56fbf708f"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/decision.json",
+      "sha256": "77eef76303d4df1ac274a6cbf3db71b8f7efc4ee7f4e9b623334d565dd3297a3"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/native-result/state.json",
+      "sha256": "f8f7fd1284b984d77237a2e487961eab0782ba079fadfe43f3805d68148fc24e"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/state.json",
+      "sha256": "9e199031a41095f66c101962da3c1c4ad330e748a9ac2afc267aac71384c2a21"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/ledger.json",
+      "sha256": "ec1d8b41595201d0a64b86d714a0fbd049cfbc9339b8a494fff25875cf6d6898"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/decision.json",
+      "sha256": "72608e39bc0987c619ea24b0eeea53b18cd5cca6f86c4a3dab688699580a315c"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/native-result/state.json",
+      "sha256": "5a0005645e789fc4979ff7515faf2c7ed28a589ff1f5aacdaa35cfdb388a3339"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/state.json",
+      "sha256": "fc722c1417dfcb5029336df1b27f06fd1ec636ae2bc5bcfc82a2258d4f894d25"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/ledger.json",
+      "sha256": "c69a3001ec612c74afeaeafcbdf3e8fc2b0ea59fbb96bf18488a2ff641e76ebf"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/decision.json",
+      "sha256": "e5317f244c6cf6cecb4b9a9c1b3043b1921fbe646d922f332d7bdcd103fea86a"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/native-result/state.json",
+      "sha256": "627355b9bb7c970106c2c5dee504937235d6d55e5782b2129b7427e3f1024e48"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/state.json",
+      "sha256": "a4cfa1c2803d9bd6df5353e0818ec412d51d4d6ae138385842341a9eeb574186"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/ledger.json",
+      "sha256": "fd8a062065a7b7124f68a7a58251238a503aa54797ce8d911b8e857a268fa5a6"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/decision.json",
+      "sha256": "288fff0babef0edb6cf02f392285a194d9707a79af6214fe4d1e1396a3dff51b"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/native-result/state.json",
+      "sha256": "7cb9bda65b2cad09de873402d449aee0999fa88ad6b47d713514149afaea8d23"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/state.json",
+      "sha256": "4ddca9a8b8bc061dc32e288a392b8ea1e36171617d120342106a7fe0cf8bb5a4"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/ledger.json",
+      "sha256": "1e48202497a91db193cfe656222d27fe8dafe75ddd886a8296f2975c91a59004"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/decision.json",
+      "sha256": "39b1aad0ac110ac97a638b08ec1d9c22b3efa4723cce1378e87a7028a056ce4f"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/native-result/state.json",
+      "sha256": "68715beec45e143bbf7cc46615aae1704348e6dba213760c970f47ffc8cd36c5"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/state.json",
+      "sha256": "b5910e3c415ba2fd73dac642483dc10314fc9d6c798d66049e4353013d89c971"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/ledger.json",
+      "sha256": "1af45eba7e832d63fea413326cdb232f4dba879771181669ad3bc8b324871685"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/decision.json",
+      "sha256": "51e5f719fc302d9e55dc5da77069b03cd33f1e2eae9def2c59a7c48a819abbb6"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/native-result/state.json",
+      "sha256": "38b0f5cf3b0c256050fc5e90c374ab2768592e67321cfc04007f2a7c8a7c9886"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/state.json",
+      "sha256": "67b563ebb5623d62b12970225a3644a81af55a8667090296de5fdc0db37541cc"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/ledger.json",
+      "sha256": "b6a1ca5c24d248c8f249e5e05f65b515bfd542c2716ebbf74e28bbc3853196a0"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/decision.json",
+      "sha256": "7c16a01c08f9ebfe7ac34844afcf1008e8be97975449c7424c3640bbeeab640f"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/native-result/state.json",
+      "sha256": "a99bebccbfe4f0edcbe1d319ac954b82be1264584cdf0194cd330ee533b5af5e"
+    }
+  ],
+  "originalAllowanceSeconds": 3600,
+  "priorContinuationGrants": [
+    {
+      "authority": {
+        "path": "build/primary-control/focused19-v8/decision.json",
+        "sha256": "7c16a01c08f9ebfe7ac34844afcf1008e8be97975449c7424c3640bbeeab640f"
+      },
+      "grant": {
+        "by": "/root",
+        "additionalSeconds": 400,
+        "basis": "The user explicitly authorized completing the remaining implementation without repeated permission. Preserve the original3600 and all six actual charges; add400 for the measured receiver-synchronization continuation.",
+        "plannedNextPhaseSeconds": 900,
+        "components": {
+          "affectedAIBuild": 180,
+          "originalCase": 600,
+          "setupResultCleanup": 120
+        },
+        "otherGrantsUnchanged": true
+      }
+    }
+  ],
+  "continuationGrant": {
+    "by": "/root",
+    "additionalSeconds": 750,
+    "basis": "The user explicitly authorized completing the remaining implementation without repeated permission. Preserve the original3600, prior explicit400 grant and all seven actual charges; add750 for the measured MiniApps receiver-presentation continuation.",
+    "plannedNextPhaseSeconds": 900,
+    "components": {
+      "affectedMiniBuild": 180,
+      "originalCase": 600,
+      "setupResultCleanup": 120
+    },
+    "otherGrantsUnchanged": true
+  },
+  "supplementalContinuationGrant": {
+    "by": "/root",
+    "additionalSeconds": 200,
+    "basis": "The user explicitly authorized completing the remaining implementation without repeated permission. Preserve the original3600, prior400, separate750 and all seven actual charges; add200 after the actual V8 transcript established pending receiver status before installation, requiring the provider correction and both original builds.",
+    "plannedNextPhaseSeconds": 1080,
+    "components": {
+      "affectedMiniBuild": 180,
+      "affectedAIBuild": 180,
+      "originalCase": 600,
+      "setupResultCleanup": 120
+    },
+    "otherGrantsUnchanged": true
+  },
+  "totalFocusedAllowanceSeconds": 4950,
+  "controllerPID": 97669,
+  "activeBaselineSeconds": 19292.91627621104,
+  "allowanceSeconds": 1129.9954963729979,
+  "decisionSHA256": "dd38954a1f5db85b02c65c02566053e7c2dea660500ccb08c8220f34d5e7c6f9",
+  "original52": "UNCHANGED_BY_FOCUSED_RUN",
+  "nativeResult": "FAILED_OR_INCOMPLETE",
+  "resourceObservationAtLaunch": {
+    "observedAt": "2026-11-25T15:31:42.087354+00:00",
+    "freeBytes": 55068012544,
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 381989732  53777356    88% 5007453 537773560    1%   /System/Volumes/Data"
+  },
+  "originalNode": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+    "sha256": "336b5b3ebc5deb86df842102b20b6e4761605b7a667823e68dda7761b91a161b",
+    "version": "24.5.0",
+    "observedIdentity": {
+      "node": "24.5.0",
+      "platform": "darwin",
+      "architecture": "arm64"
+    }
+  },
+  "startedAt": "2026-11-25T15:31:42.243836+00:00",
+  "argv": [
+    "/opt/homebrew/opt/python@3.12/bin/python3.12",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-native-child-v9.py",
+    "--source",
+    "dc53a6c8ff1bb68bfbc52a64667e14ce688055b0",
+    "--output",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v9/native-result"
+  ],
+  "phasePID": 97692,
+  "elapsedSeconds": 493.8438168749999,
+  "logBytes": 13243,
+  "error": "AssertionError: ",
+  "exitCode": 1,
+  "ownedProcessGroupAtCleanup": [],
+  "remainingOwnedProcessGroup": [],
+  "observedPhaseExitCode": 1,
+  "ownedSimulatorCleanup": {
+    "device": "E742FBCD-8FF0-4130-B143-7F8328637138",
+    "ownership": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v9/native-result/paired-prefix/created-simulator.txt",
+    "ownershipSHA256": "df333300ba32a39a07bcd88aed5fc6bb5f0b51f738c521f6a0949dc54456a37e",
+    "exitCode": 149,
+    "stdout": "",
+    "stderr": "An error was encountered processing the command (domain=com.apple.CoreSimulator.SimError, code=405):\nUnable to shutdown device in current state: Shutdown\n",
+    "observedState": "Shutdown",
+    "observedAt": "2026-11-25T15:39:55.854394+00:00"
+  },
+  "cleanupErrors": [],
+  "sourceErrors": [],
+  "finishedAt": "2026-11-25T15:39:56.086370+00:00",
+  "chargedSeconds": 493.8438168749999,
+  "cumulativeActiveSeconds": 19786.76009308604,
+  "cumulativeFocusedSeconds": 4313.848320502002,
+  "allowanceExceededDuringCleanup": false,
+  "logSHA256": "fd51fbc5487d09cd0c33e2d94ad6387b710d4d3d9eb73f041f38f60068578d5c",
+  "chargeCommitted": true,
+  "focusedLedgerSHA256": "553df5216f223f237f7ede78e997ca21ebd6c8ad63ee591417b585bc9b2aa082"
+}

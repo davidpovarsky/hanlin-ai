@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "base": "fe0001ac868339d0825d1cc3d07f8383341d163d",
+  "source": [
+    {
+      "path": "Scripts/CI/IntegrationValidation/run_host_mcp_wire_comparison.py",
+      "bytes": 25958,
+      "sha256": "d115db15fa37dc776c593b11ec105e42040a6022275eb7fe6f65c1bd9f746196"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_mcp_wire_reconciliation.py",
+      "bytes": 7512,
+      "sha256": "26007a0c484e8fec54e1036bc8aa347340d3b3790f083c90e83f33f34e28356c"
+    },
+    {
+      "path": "Scripts/CI/Tests/fixtures/mcp-wire-swift-testing-6.4.2.txt",
+      "bytes": 2046,
+      "sha256": "90d8588a16606e1f5af988edad6154c90f4b0410706d5d51dcc93c47bef5b3fd"
+    }
+  ],
+  "patchSHA256": "f8a46ad32350e4156c17985afbb0390395be9ca2ca0f7211cbf2318b73404531",
+  "wholeControllerRecoveredByTwoRegexLiteralInverses": true,
+  "originalSupervisorControlsByteUnchanged": true,
+  "portableReceiptSHA256": "37004238f8806b69bab844deb14b8358b02cebb28d377687e2f3aa19323f8068",
+  "actualNativeFullLogSHA256": "b96460920bd1acc4cc8c0d6572af89a7f382ce091e7163c73660905599ec09df",
+  "actualNativeTail": {
+    "offset": 13026,
+    "bytes": 2046,
+    "sha256": "90d8588a16606e1f5af988edad6154c90f4b0410706d5d51dcc93c47bef5b3fd"
+  },
+  "retrospectiveReconciliationSHA256": "c98f085b115ec682f4d0d12802670abb9045325a36435aaae256990979787f17",
+  "originalWorkflowReceiptUnmodified": true,
+  "noNativeRerun": true,
+  "acceptedSDKImpact": {
+    "manifestSHA256": "e343105966824d478319096d673c9801b39dca4d753624252903c970ad6ba61d",
+    "inputSHA256": "7af6ecb6a4041d98d37bd71cf65fa9520ec93978e09ea8f7c9cfe4f1e0cad986",
+    "inputCount": 396,
+    "changedSourceIntersection": []
+  }
+}

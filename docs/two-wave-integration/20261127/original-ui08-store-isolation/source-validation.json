@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "sourceCommit": "ec7b9df9fe0caa1c9c873d1eb5563bca4b4800ac",
+  "parent": "e2049a5aff1a91585685ec0901c77b276910508c",
+  "path": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+  "beforeSHA256": "9bddd2f00fcb3d08004a22e80efac41e86690eff8447e096acd7b50c25db41c3",
+  "afterSHA256": "292f128977eab0810790afe0b27b05dffd1c8dfb2515ee91db2bf6d5865a5435",
+  "patchSHA256": "43817f808b144ae69fa1446dc9423523edada2cf88c5a63a1db6456077e83c7a",
+  "checks": {
+    "entireFileInverse": true,
+    "allXCTCallsIdentical": true,
+    "testSelectorsIdentical": true,
+    "sameAppTwoTurns": true,
+    "helperDefaultUnchanged": true,
+    "productionUnchanged": true
+  },
+  "nativeStatus": "NOT_RUN",
+  "scope": "One original UI08 fixture setup argument; no changed action, assertion, selector, deadline, consent, helper default or production guard",
+  "review": {
+    "reviewer": "/root",
+    "decision": "APPROVED_FOR_ORIGINAL_NATIVE_RETRY",
+    "basis": "Exact one-call argument patch and inverse preservation checked; no cold-reopen or downstream MCP/consent success claim."
+  },
+  "sourceContract": [
+    "The existing isolatedStore option assigns one fresh HANLIN_PHASE2_STORE_ID to the XCUIApplication before launch.",
+    "Both original conversational turns reuse that same XCUIApplication and environment.",
+    "The existing owned-store preparation initializes acceptance rows before normal preload and retains nonempty owned rows.",
+    "The original method does not perform a cold reopen; no reopen acceptance is claimed."
+  ]
+}

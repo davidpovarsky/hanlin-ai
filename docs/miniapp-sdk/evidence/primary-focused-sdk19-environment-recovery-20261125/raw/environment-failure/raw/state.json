@@ -1,0 +1,2322 @@
+{
+  "owner": "/root/native_execution",
+  "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+  "planSHA256": "fc62dbae1d1a85c03fe99faa188bded24aa70008accdf455c293702d2433e1af",
+  "scope": "miniapp_complete",
+  "expectedCases": 52,
+  "createdAt": "2026-11-24T17:39:59.414763+00:00",
+  "phases": {
+    "split-metadata": {
+      "status": "PASS",
+      "startedAt": "2026-11-24T17:53:12.063627+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-metadata.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs/split-metadata.log",
+      "scriptSHA256": "242b75c7edfb94f90ab0cd5d2032af9e2bfda15141c8d98743074d999b10fc14",
+      "pid": 55108,
+      "elapsedSeconds": 70.18161112500093,
+      "logBytes": 4627,
+      "exitCode": 0,
+      "finishedAt": "2026-11-24T17:54:22.245478+00:00",
+      "logSHA256": "e2f24a4284083b36e865bdde2c35e4f992b7e2588b6b3de1281a4f935e278b90",
+      "sourceBaseAtExecution": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+      "reusedAfterSourceAdvance": "Private notification forwarding now uses original callback overloads proven to emit object code under the actual Swift6/C++ SDK. Existing canonical project parser is reused by the reachability audit and added to explicit SDK inputs (235). Refresh normal audit/Host/SDK/docs/native catalog and input capture. Original native producer/framework/toolchain inputs and project generator inputs are unchanged, so preserve their exact caches and generation provenance. Preserve all original52 selectors and both failed charges; only remaining4171.486529540984 of4500 is authorized. Existing notification package8-function proof remains unchanged."
+    },
+    "split-platform": {
+      "status": "PASS",
+      "startedAt": "2026-11-25T00:15:01.442483+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-platform.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt8/split-platform.log",
+      "scriptSHA256": "7f1edd791bb43546b753d6834c0cd7b85f558f57883312892364110ad2cbfa4c",
+      "pid": 67354,
+      "exitCode": 0,
+      "elapsedSeconds": 1.5759940839998308,
+      "finishedAt": "2026-11-25T00:15:03.019247+00:00",
+      "logBytes": 113139,
+      "logSHA256": "723da4fd4b36cb9702f3bc5b45cee61e6ca621562596b293081e2895ae0d1c4f",
+      "reusedAfterSourceAdvance": "Private notification forwarding now uses original callback overloads proven to emit object code under the actual Swift6/C++ SDK. Existing canonical project parser is reused by the reachability audit and added to explicit SDK inputs (235). Refresh normal audit/Host/SDK/docs/native catalog and input capture. Original native producer/framework/toolchain inputs and project generator inputs are unchanged, so preserve their exact caches and generation provenance. Preserve all original52 selectors and both failed charges; only remaining4171.486529540984 of4500 is authorized. Existing notification package8-function proof remains unchanged.",
+      "projectComponentRefresh": {
+        "source": "a2c8a1b1be746461272ba77254603304567c309d",
+        "projectSHA256": "a80e2947b4dedf0ce95b326cf44b0efac613b7b044058e3afc3fccb870cb0087",
+        "verificationSteps": [
+          {
+            "id": "verify-targets",
+            "argv": [
+              "python3",
+              "Scripts/ProductSplit/verify_targets.py"
+            ],
+            "status": "PASS",
+            "startedAt": "2026-11-25T10:40:05.347475+00:00",
+            "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/verify-targets.log",
+            "pid": 73704,
+            "exitCode": 0,
+            "elapsedSeconds": 0.1608807910088217,
+            "finishedAt": "2026-11-25T10:40:05.509913+00:00",
+            "logBytes": 1438,
+            "logSHA256": "4f49124a3b6c18a0b8c4540cb46c33b31c436deed0ad97c4084e189157ed9c8e"
+          },
+          {
+            "id": "lint-generated-project",
+            "argv": [
+              "plutil",
+              "-lint",
+              "AI_HLY.xcodeproj/project.pbxproj",
+              "HanlinMiniAppsExtensions/Notification/Info.plist",
+              "HanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements"
+            ],
+            "status": "PASS",
+            "startedAt": "2026-11-25T10:40:05.512335+00:00",
+            "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/lint-generated-project.log",
+            "pid": 73722,
+            "exitCode": 0,
+            "elapsedSeconds": 0.03640599999926053,
+            "finishedAt": "2026-11-25T10:40:05.550199+00:00",
+            "logBytes": 179,
+            "logSHA256": "b019c7e18b5b8a4825f382e7c3a04552e29a406d658592b9f6105fe88a6fe18a"
+          }
+        ]
+      }
+    },
+    "host-proof": {
+      "status": "PASS",
+      "startedAt": "2026-11-25T00:15:22.974245+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/host-proof.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt8/host-proof.log",
+      "scriptSHA256": "f0f0bbd389a9307dd721135a391b23a20cd9d640f149838fb19fa1cf9daa8bcc",
+      "pid": 68684,
+      "exitCode": 0,
+      "elapsedSeconds": 0.04890562500077067,
+      "finishedAt": "2026-11-25T00:15:23.023887+00:00",
+      "logBytes": 141,
+      "logSHA256": "c04bbd4cd72764bb17f216c8909ee4043ea458d33686fb3f919aca213be801ed",
+      "reusedAfterSourceAdvance": "Private notification forwarding now uses original callback overloads proven to emit object code under the actual Swift6/C++ SDK. Existing canonical project parser is reused by the reachability audit and added to explicit SDK inputs (235). Refresh normal audit/Host/SDK/docs/native catalog and input capture. Original native producer/framework/toolchain inputs and project generator inputs are unchanged, so preserve their exact caches and generation provenance. Preserve all original52 selectors and both failed charges; only remaining4171.486529540984 of4500 is authorized. Existing notification package8-function proof remains unchanged."
+    },
+    "split-foreground": {
+      "status": "PASS",
+      "startedAt": "2026-11-25T05:18:31.576235+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-foreground.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt14/split-foreground.log",
+      "scriptSHA256": "29e26e4ab82898091d69fadeae7245be79fe86294416919cb1ebb5bbee9ffc43",
+      "pid": 85111,
+      "exitCode": 0,
+      "elapsedSeconds": 3.190156291995663,
+      "finishedAt": "2026-11-25T05:18:34.767544+00:00",
+      "logBytes": 214,
+      "logSHA256": "b9188ca35253124a0fd4bc95bf590cf6b68509f64c16a74203036a2ccc43d374",
+      "reusedAfterSourceAdvance": "Private notification forwarding now uses original callback overloads proven to emit object code under the actual Swift6/C++ SDK. Existing canonical project parser is reused by the reachability audit and added to explicit SDK inputs (235). Refresh normal audit/Host/SDK/docs/native catalog and input capture. Original native producer/framework/toolchain inputs and project generator inputs are unchanged, so preserve their exact caches and generation provenance. Preserve all original52 selectors and both failed charges; only remaining4171.486529540984 of4500 is authorized. Existing notification package8-function proof remains unchanged."
+    },
+    "split-host-lifecycle": {
+      "status": "PASS",
+      "startedAt": "2026-11-25T05:18:34.769103+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-host-lifecycle.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt14/split-host-lifecycle.log",
+      "scriptSHA256": "956541d15f45f12b7777b8ebeb800fe14e1686db5fc7ceae397835547953d7bc",
+      "pid": 85173,
+      "exitCode": 0,
+      "elapsedSeconds": 10.690437166995252,
+      "finishedAt": "2026-11-25T05:18:45.460570+00:00",
+      "logBytes": 2341,
+      "logSHA256": "7106614e2ff560b03d3941b9eaa0dd06d410d8917bea9d8322c5910af6210b59",
+      "reusedAfterSourceAdvance": "Private notification forwarding now uses original callback overloads proven to emit object code under the actual Swift6/C++ SDK. Existing canonical project parser is reused by the reachability audit and added to explicit SDK inputs (235). Refresh normal audit/Host/SDK/docs/native catalog and input capture. Original native producer/framework/toolchain inputs and project generator inputs are unchanged, so preserve their exact caches and generation provenance. Preserve all original52 selectors and both failed charges; only remaining4171.486529540984 of4500 is authorized. Existing notification package8-function proof remains unchanged."
+    },
+    "split-upstreams": {
+      "id": "split-upstreams",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-upstreams.sh"
+      ],
+      "originalPhase": true,
+      "status": "PASS",
+      "startedAt": "2026-11-25T10:39:36.372177+00:00",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/split-upstreams.log",
+      "scriptSHA256": "890c8ac2b02ff5a5909c71789e639e333cbc78c687797f2a060a7dd2591cfa84",
+      "pid": 70226,
+      "exitCode": 0,
+      "elapsedSeconds": 20.89406125000096,
+      "finishedAt": "2026-11-25T10:39:57.268053+00:00",
+      "logBytes": 7885,
+      "logSHA256": "43993649d747df00eeb0b3f2bf05cb8bdb13d7ae4f573b0abe2a86bcd6678926"
+    },
+    "split-native-preparation": {
+      "id": "split-native-preparation",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+      ],
+      "originalPhase": true,
+      "status": "PASS",
+      "startedAt": "2026-11-25T10:40:05.816091+00:00",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/split-native-preparation.log",
+      "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+      "pid": 73757,
+      "exitCode": 0,
+      "elapsedSeconds": 195.76897170800657,
+      "finishedAt": "2026-11-25T10:43:21.585804+00:00",
+      "logBytes": 38262,
+      "logSHA256": "b7a699f14667d006d93345379234556e6f8bbb3ad70fdda6bda18511121e8d5f"
+    },
+    "split-native-artifacts": {
+      "id": "split-native-artifacts",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-artifacts.sh"
+      ],
+      "originalPhase": true,
+      "status": "PASS",
+      "startedAt": "2026-11-25T10:43:21.589440+00:00",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/split-native-artifacts.log",
+      "scriptSHA256": "eb0405f89f5da3d48e1591650d42e2f7a8ff8f86eebac9b82ded2e5c70cefebd",
+      "pid": 78548,
+      "exitCode": 0,
+      "elapsedSeconds": 27.39674404200923,
+      "finishedAt": "2026-11-25T10:43:48.987670+00:00",
+      "logBytes": 1604,
+      "logSHA256": "736937ecf81b8293d1d6d17d08fd19212953607020486c7034153d749199a522"
+    },
+    "split-restore-inputs": {
+      "id": "split-restore-inputs",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-restore-inputs.sh"
+      ],
+      "originalPhase": true,
+      "status": "PASS",
+      "startedAt": "2026-11-25T10:43:48.990292+00:00",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/split-restore-inputs.log",
+      "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a",
+      "pid": 79190,
+      "exitCode": 0,
+      "elapsedSeconds": 8.788124500002596,
+      "finishedAt": "2026-11-25T10:43:57.779940+00:00",
+      "logBytes": 224,
+      "logSHA256": "2a0bfe76e52be5805e095ed49021cce782a2911cdfbd88bba65098496a2007fb"
+    },
+    "split-inputs": {
+      "id": "split-inputs",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-inputs.sh"
+      ],
+      "originalPhase": true,
+      "status": "PASS",
+      "startedAt": "2026-11-25T10:43:57.782471+00:00",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/split-inputs.log",
+      "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc",
+      "pid": 79331,
+      "exitCode": 0,
+      "elapsedSeconds": 5.392157916998258,
+      "finishedAt": "2026-11-25T10:44:03.176269+00:00",
+      "logBytes": 103,
+      "logSHA256": "afa15e936d420b2974b90d41c9bc2cebdb838d13acba28d377e23cff8ce1ba74"
+    }
+  },
+  "activeElapsedSeconds": 16856.44515633505,
+  "status": "PAUSED_AFTER_PHASE",
+  "resumedAt": "2026-11-25T07:12:19.112955+00:00",
+  "attemptHistory": [
+    {
+      "attempt": 1,
+      "sourceBase": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+      "state": "source-advance-36a044c3/state.json",
+      "failedPhase": {
+        "status": "FAIL",
+        "startedAt": "2026-11-24T17:54:22.246566+00:00",
+        "argv": [
+          "/bin/bash",
+          "-e",
+          "-o",
+          "pipefail",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+        ],
+        "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs/split-native-preparation.log",
+        "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+        "pid": 55571,
+        "exitCode": 1,
+        "elapsedSeconds": 6.569998500002839,
+        "finishedAt": "2026-11-24T17:54:28.817016+00:00",
+        "logBytes": 67105,
+        "logSHA256": "281d8ee1cfb371167c205d01d38493ca2c7f73c095d68ac79ba6ffedcb80cd1c"
+      }
+    },
+    {
+      "attempt": 2,
+      "sourceBase": "36a044c3c147eda2baa4fbe99e0fe698dcd0c13e",
+      "state": "source-advance-312472e9/state.json",
+      "failedPhase": {
+        "status": "FAIL",
+        "startedAt": "2026-11-24T18:20:47.376479+00:00",
+        "argv": [
+          "/bin/bash",
+          "-e",
+          "-o",
+          "pipefail",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+        ],
+        "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt2/split-native-preparation.log",
+        "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+        "pid": 71850,
+        "elapsedSeconds": 487.76627216699853,
+        "logBytes": 2905603,
+        "exitCode": 1,
+        "finishedAt": "2026-11-24T18:28:55.141926+00:00",
+        "logSHA256": "cf69787b7c9c8057bf3317915ba243b7b65db40de0a8e1fda141ec433f3d8efc"
+      }
+    },
+    {
+      "attempt": 3,
+      "sourceBase": "312472e91c05a7d32bbef4e936c001d713409370",
+      "state": "source-advance-7de3a280/state.json",
+      "failedPhase": {
+        "status": "FAIL",
+        "startedAt": "2026-11-24T18:46:36.744097+00:00",
+        "argv": [
+          "/bin/bash",
+          "-e",
+          "-o",
+          "pipefail",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+        ],
+        "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt3/split-native-preparation.log",
+        "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+        "pid": 97123,
+        "exitCode": 1,
+        "elapsedSeconds": 5.539317124999798,
+        "finishedAt": "2026-11-24T18:46:42.284434+00:00",
+        "logBytes": 1815,
+        "logSHA256": "45c293b1ef521d92eb66257c20f9019f3b68883848da93c3b12b685a73c3aefe"
+      }
+    },
+    {
+      "attempt": 4,
+      "sourceBase": "7de3a280bcd4e6202b7246735e5a9204e6a1d186",
+      "state": "source-advance-340018dd/state.json",
+      "failedPhase": {
+        "status": "FAIL",
+        "startedAt": "2026-11-24T19:30:04.935524+00:00",
+        "argv": [
+          "/bin/bash",
+          "-e",
+          "-o",
+          "pipefail",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+        ],
+        "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt4/split-native-preparation.log",
+        "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+        "pid": 23844,
+        "elapsedSeconds": 66.8095447079977,
+        "logBytes": 12801,
+        "exitCode": 1,
+        "finishedAt": "2026-11-24T19:31:11.745430+00:00",
+        "logSHA256": "8fef5f53d38578167740c2a446aeb1498a06704700b016df4fd4b5aa0aaf5839"
+      }
+    },
+    {
+      "attempt": 5,
+      "sourceBase": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+      "state": "source-advance-bd6da170/state.json",
+      "invalidatedPhases": {
+        "split-native-preparation": {
+          "status": "PASS",
+          "startedAt": "2026-11-24T19:59:47.518522+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt5/split-native-preparation.log",
+          "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+          "pid": 36135,
+          "elapsedSeconds": 257.2639884579985,
+          "logBytes": 31023,
+          "exitCode": 0,
+          "finishedAt": "2026-11-24T20:04:04.781086+00:00",
+          "logSHA256": "935c498bc535025d0857e3851bc85d19a20e63de0b7c25a927f26baea66aa7d1"
+        },
+        "split-native-artifacts": {
+          "status": "PASS",
+          "startedAt": "2026-11-24T20:04:04.783629+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-artifacts.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt5/split-native-artifacts.log",
+          "scriptSHA256": "eb0405f89f5da3d48e1591650d42e2f7a8ff8f86eebac9b82ded2e5c70cefebd",
+          "pid": 39040,
+          "elapsedSeconds": 40.79924879199825,
+          "logBytes": 1504,
+          "exitCode": 0,
+          "finishedAt": "2026-11-24T20:04:45.583599+00:00",
+          "logSHA256": "620451222f385a197c57758b6ac4021f2c7419c27929669129a3f544ce1397bc"
+        },
+        "split-restore-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-24T20:04:45.588000+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-restore-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt5/split-restore-inputs.log",
+          "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a",
+          "pid": 39219,
+          "exitCode": 0,
+          "elapsedSeconds": 0.17616395799996099,
+          "finishedAt": "2026-11-24T20:04:45.765987+00:00",
+          "logBytes": 46,
+          "logSHA256": "11083745170de91dcbe17fa5b4e18d24f0cbc6923d8d241af153c25d718f94ef"
+        },
+        "split-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-24T20:04:45.767199+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt5/split-inputs.log",
+          "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc",
+          "pid": 39222,
+          "exitCode": 0,
+          "elapsedSeconds": 14.627761415998975,
+          "finishedAt": "2026-11-24T20:05:00.395903+00:00",
+          "logBytes": 102,
+          "logSHA256": "b50c1306238bc3c0c7478af8920b02a639345930b2beb42a995d637405ceb510"
+        },
+        "split-paired-acceptance": {
+          "status": "FAIL",
+          "startedAt": "2026-11-24T20:05:00.399345+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-paired-acceptance.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt5/split-paired-acceptance.log",
+          "scriptSHA256": "f271e6f1b95bb261417cee5fc13104e41df44f8ec35d2ab565b1f6135191c0c8",
+          "pid": 39396,
+          "elapsedSeconds": 250.79286124999635,
+          "logBytes": 5978,
+          "exitCode": 1,
+          "finishedAt": "2026-11-24T20:09:11.196051+00:00",
+          "logSHA256": "20f25477745cd222966740bcc27001b4ce3d24d28233e320c917f5125b50d77a"
+        }
+      },
+      "reason": "Original header-map projection and native-artifact input changed; failed MiniApps build and unexecuted AI/52 must execute after fresh preparation."
+    },
+    {
+      "attempt": 6,
+      "sourceBase": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+      "state": "source-advance-fd81d602/state.json",
+      "invalidatedPhases": {
+        "split-host-lifecycle": {
+          "status": "PASS",
+          "startedAt": "2026-11-24T17:53:07.097594+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-host-lifecycle.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs/split-host-lifecycle.log",
+          "scriptSHA256": "956541d15f45f12b7777b8ebeb800fe14e1686db5fc7ceae397835547953d7bc",
+          "pid": 55043,
+          "exitCode": 0,
+          "elapsedSeconds": 4.964822207999532,
+          "finishedAt": "2026-11-24T17:53:12.062727+00:00",
+          "logBytes": 2336,
+          "logSHA256": "c4a13793987b1c28240de2e4d356b1f52c04748666294e4ec5a89323734cf9c1",
+          "sourceBaseAtExecution": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+          "reusedAfterSourceAdvance": "Actual inputs unchanged; see source-advance-36a044c3/receipt.json"
+        },
+        "split-native-preparation": {
+          "status": "PASS",
+          "startedAt": "2026-11-24T21:08:27.172170+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt6/split-native-preparation.log",
+          "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+          "pid": 75931,
+          "elapsedSeconds": 285.0631742080004,
+          "logBytes": 148850,
+          "exitCode": 0,
+          "finishedAt": "2026-11-24T21:13:12.235688+00:00",
+          "logSHA256": "adb6bebdcab390679b28d869a67fdd5b5aa80834dfe55ed921ebe4a3e3e9b166"
+        },
+        "split-native-artifacts": {
+          "status": "PASS",
+          "startedAt": "2026-11-24T21:13:12.237451+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-artifacts.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt6/split-native-artifacts.log",
+          "scriptSHA256": "eb0405f89f5da3d48e1591650d42e2f7a8ff8f86eebac9b82ded2e5c70cefebd",
+          "pid": 78652,
+          "exitCode": 0,
+          "elapsedSeconds": 22.799720041999535,
+          "finishedAt": "2026-11-24T21:13:35.037697+00:00",
+          "logBytes": 1504,
+          "logSHA256": "4bcb3412ad77315881450fb4bb11693e9f50b3fb27967b3e228c4d62c82727ae"
+        },
+        "split-restore-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-24T21:13:35.038802+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-restore-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt6/split-restore-inputs.log",
+          "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a",
+          "pid": 78885,
+          "exitCode": 0,
+          "elapsedSeconds": 5.2822129580017645,
+          "finishedAt": "2026-11-24T21:13:40.321532+00:00",
+          "logBytes": 223,
+          "logSHA256": "b0f593922181fae11d66f775da1af9cf3181d0b190bcc00dca439c0f4962c822"
+        },
+        "split-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-24T21:13:40.327632+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt6/split-inputs.log",
+          "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc",
+          "pid": 78954,
+          "exitCode": 0,
+          "elapsedSeconds": 5.655423959004111,
+          "finishedAt": "2026-11-24T21:13:45.983666+00:00",
+          "logBytes": 103,
+          "logSHA256": "d1c46cf367b4c3b22d48c73d13d5f672289212e6b7f1310d5627fc59e2547390"
+        },
+        "split-paired-acceptance": {
+          "status": "FAIL",
+          "startedAt": "2026-11-24T21:13:45.984801+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-paired-acceptance.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt6/split-paired-acceptance.log",
+          "scriptSHA256": "f271e6f1b95bb261417cee5fc13104e41df44f8ec35d2ab565b1f6135191c0c8",
+          "pid": 79103,
+          "elapsedSeconds": 729.9409283749992,
+          "logBytes": 12913,
+          "exitCode": 1,
+          "finishedAt": "2026-11-24T21:25:55.923854+00:00",
+          "logSHA256": "ad5834f439bad59678020192ce22dabd548f97cc0dc418f86a7e6cbc5acfbfa0"
+        }
+      },
+      "reason": "Authoring Host module changed. Original relocated CLI/lifecycle and Host/SDK preparation, app archive embedding, catalog/input capture and paired52 route must execute on the corrected installed graph."
+    },
+    {
+      "attempt": 7,
+      "sourceBase": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+      "state": "source-advance-2b327182/state.json",
+      "invalidatedPhases": {
+        "split-platform": {
+          "status": "PASS",
+          "startedAt": "2026-11-24T17:39:59.547921+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-platform.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs/split-platform.log",
+          "scriptSHA256": "7f1edd791bb43546b753d6834c0cd7b85f558f57883312892364110ad2cbfa4c",
+          "pid": 48694,
+          "exitCode": 0,
+          "elapsedSeconds": 2.2259874580013275,
+          "finishedAt": "2026-11-24T17:40:01.774386+00:00",
+          "logBytes": 113139,
+          "logSHA256": "6c3a558b135c82c30985a2655a25c93807e7aa46f9a7d5149d4e57738fd479fa",
+          "sourceBaseAtExecution": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+          "reusedAfterSourceAdvance": "Actual inputs unchanged; see source-advance-36a044c3/receipt.json"
+        },
+        "split-upstreams": {
+          "status": "PASS",
+          "startedAt": "2026-11-24T17:40:01.775168+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-upstreams.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs/split-upstreams.log",
+          "scriptSHA256": "890c8ac2b02ff5a5909c71789e639e333cbc78c687797f2a060a7dd2591cfa84",
+          "pid": 48790,
+          "elapsedSeconds": 61.71374833400114,
+          "logBytes": 7880,
+          "exitCode": 0,
+          "finishedAt": "2026-11-24T17:41:03.489066+00:00",
+          "logSHA256": "6a508d26d367241f8533f09e5edbbab150f2d1a6af13c9693e0ba89f953c2cce",
+          "sourceBaseAtExecution": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+          "reusedAfterSourceAdvance": "Actual inputs unchanged; see source-advance-36a044c3/receipt.json"
+        },
+        "host-proof": {
+          "status": "PASS",
+          "startedAt": "2026-11-24T17:41:03.490682+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/host-proof.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs/host-proof.log",
+          "scriptSHA256": "f0f0bbd389a9307dd721135a391b23a20cd9d640f149838fb19fa1cf9daa8bcc",
+          "pid": 50867,
+          "exitCode": 0,
+          "elapsedSeconds": 0.09112233300038497,
+          "finishedAt": "2026-11-24T17:41:03.582322+00:00",
+          "logBytes": 141,
+          "logSHA256": "c04bbd4cd72764bb17f216c8909ee4043ea458d33686fb3f919aca213be801ed",
+          "sourceBaseAtExecution": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+          "reusedAfterSourceAdvance": "Actual inputs unchanged; see source-advance-36a044c3/receipt.json"
+        },
+        "split-foreground": {
+          "status": "PASS",
+          "startedAt": "2026-11-24T17:52:55.631943+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-foreground.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs/split-foreground.log",
+          "scriptSHA256": "29e26e4ab82898091d69fadeae7245be79fe86294416919cb1ebb5bbee9ffc43",
+          "pid": 54971,
+          "exitCode": 0,
+          "elapsedSeconds": 11.464441334002913,
+          "finishedAt": "2026-11-24T17:53:07.096711+00:00",
+          "logBytes": 214,
+          "logSHA256": "b9188ca35253124a0fd4bc95bf590cf6b68509f64c16a74203036a2ccc43d374",
+          "sourceBaseAtExecution": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+          "reusedAfterSourceAdvance": "Actual inputs unchanged; see source-advance-36a044c3/receipt.json"
+        },
+        "split-host-lifecycle": {
+          "status": "PASS",
+          "startedAt": "2026-11-24T22:14:11.174688+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-host-lifecycle.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt7/split-host-lifecycle.log",
+          "scriptSHA256": "956541d15f45f12b7777b8ebeb800fe14e1686db5fc7ceae397835547953d7bc",
+          "pid": 9364,
+          "exitCode": 0,
+          "elapsedSeconds": 7.998473999999987,
+          "finishedAt": "2026-11-24T22:14:19.174056+00:00",
+          "logBytes": 2345,
+          "logSHA256": "4685988e182745ba00a11ed63a51dc8277d01ead7ab96c24f4960af9aea2c155"
+        },
+        "split-native-preparation": {
+          "status": "PASS",
+          "startedAt": "2026-11-24T22:22:35.324575+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt7/split-native-preparation.log",
+          "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+          "pid": 12403,
+          "elapsedSeconds": 131.9982550420027,
+          "logBytes": 32324,
+          "exitCode": 0,
+          "finishedAt": "2026-11-24T22:24:47.323201+00:00",
+          "logSHA256": "89de966b4bd071efec1bb3fcab4a69421d82a6874d1d6f9853fb2e41c56bfb9e"
+        },
+        "split-native-artifacts": {
+          "status": "PASS",
+          "startedAt": "2026-11-24T22:24:47.326572+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-artifacts.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt7/split-native-artifacts.log",
+          "scriptSHA256": "eb0405f89f5da3d48e1591650d42e2f7a8ff8f86eebac9b82ded2e5c70cefebd",
+          "pid": 13304,
+          "exitCode": 0,
+          "elapsedSeconds": 20.907183957999223,
+          "finishedAt": "2026-11-24T22:25:08.234358+00:00",
+          "logBytes": 1504,
+          "logSHA256": "4bcb3412ad77315881450fb4bb11693e9f50b3fb27967b3e228c4d62c82727ae"
+        },
+        "split-restore-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-24T22:25:08.235451+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-restore-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt7/split-restore-inputs.log",
+          "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a",
+          "pid": 13336,
+          "exitCode": 0,
+          "elapsedSeconds": 5.731358541997906,
+          "finishedAt": "2026-11-24T22:25:13.967371+00:00",
+          "logBytes": 224,
+          "logSHA256": "edec507a8f0e7a4cd33d91dc1ac21170247eff3dc3a089c5d00525a782bad14e"
+        },
+        "split-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-24T22:25:13.969851+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt7/split-inputs.log",
+          "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc",
+          "pid": 13360,
+          "exitCode": 0,
+          "elapsedSeconds": 4.831666166996001,
+          "finishedAt": "2026-11-24T22:25:18.802229+00:00",
+          "logBytes": 103,
+          "logSHA256": "d48fac1570f401cbbb7b00ec5e27ff27068863ecd767d71eacd7962580a278c8"
+        },
+        "split-paired-acceptance": {
+          "status": "FAIL",
+          "startedAt": "2026-11-24T22:25:18.803467+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-paired-acceptance.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt7/split-paired-acceptance.log",
+          "scriptSHA256": "f271e6f1b95bb261417cee5fc13104e41df44f8ec35d2ab565b1f6135191c0c8",
+          "pid": 13365,
+          "elapsedSeconds": 1455.7249233339971,
+          "logBytes": 17455,
+          "exitCode": 1,
+          "finishedAt": "2026-11-24T22:49:34.523307+00:00",
+          "logSHA256": "dcadc961387ecbd4bba2a50de3114b8801ed2db13ef1b048ba6c99bd1199db0c"
+        }
+      },
+      "reason": "Current upstream resolver/ExpoAsset graph, contract identifier/foreground, Host authoring and native callback source changed. Original applicable phases rerun; metadata tool alone reuses exact unchanged producer."
+    },
+    {
+      "attempt": 8,
+      "sourceBase": "2b3271824e0338f0d7f5239e3b3a14c2b8c9f3b0",
+      "state": "source-advance-1812bff5/state.json",
+      "invalidatedPhases": {
+        "split-native-preparation": {
+          "status": "FAIL",
+          "startedAt": "2026-11-25T00:15:39.815271+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt8/split-native-preparation.log",
+          "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+          "pid": 68778,
+          "elapsedSeconds": 213.77175374999933,
+          "logBytes": 4019345,
+          "exitCode": 1,
+          "finishedAt": "2026-11-25T00:19:13.587171+00:00",
+          "logSHA256": "9451f196a79ec7de542b05d86d75ecb75825ee993f02c60a92ff3876a157dbbc"
+        }
+      },
+      "reason": "Only the missing ExpoAsset manifest documentation row changed; normal Host/native preparation, export and input capture rerun. Original successfully produced native artifacts reuse their unchanged input fingerprint."
+    },
+    {
+      "attempt": 9,
+      "sourceBase": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+      "state": "source-advance-fda6948c/state.json",
+      "invalidatedPhases": {
+        "split-native-preparation": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T00:32:14.426385+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt9/split-native-preparation.log",
+          "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+          "pid": 77592,
+          "elapsedSeconds": 238.3270928330021,
+          "logBytes": 32702,
+          "exitCode": 0,
+          "finishedAt": "2026-11-25T00:36:12.754085+00:00",
+          "logSHA256": "c991c2be959c41940445dc2bad2123f2782793ab4f6c8b56f862b2e7c70d5658"
+        },
+        "split-native-artifacts": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T00:36:12.756147+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-artifacts.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt9/split-native-artifacts.log",
+          "scriptSHA256": "eb0405f89f5da3d48e1591650d42e2f7a8ff8f86eebac9b82ded2e5c70cefebd",
+          "pid": 80944,
+          "exitCode": 0,
+          "elapsedSeconds": 22.142236125000636,
+          "finishedAt": "2026-11-25T00:36:34.899130+00:00",
+          "logBytes": 1604,
+          "logSHA256": "6ba90756cd5ae1a7ee915af12e22160528b0ceb7d8065409f71ea5d5ffa96f27"
+        },
+        "split-restore-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T00:36:34.900350+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-restore-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt9/split-restore-inputs.log",
+          "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a",
+          "pid": 81127,
+          "exitCode": 0,
+          "elapsedSeconds": 6.195798290995299,
+          "finishedAt": "2026-11-25T00:36:41.096849+00:00",
+          "logBytes": 225,
+          "logSHA256": "69bdc356d82183e90913a5d081ff14a3b28fd52d2b34ab0fcb683d3c88daf257"
+        },
+        "split-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T00:36:41.098140+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt9/split-inputs.log",
+          "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc",
+          "pid": 81140,
+          "exitCode": 0,
+          "elapsedSeconds": 4.891545667000173,
+          "finishedAt": "2026-11-25T00:36:45.990397+00:00",
+          "logBytes": 103,
+          "logSHA256": "3644838426d0c6cbbd0e6a18fe2ce14d6019983ebcb3bb8f0a21420cd9667d2f"
+        }
+      },
+      "reason": "Metadata wrapper is a declared native artifact and SDK inventory input. Original preparation refreshes inventory, Host/SDK, catalog and cache input identities; unchanged original frameworks/tool producers may reuse their fingerprint. UI and runner changes require fresh test products. Platform/upstream/foreground/Host lifecycle/tool-producer input closures are unchanged.",
+      "focusedState": "source-advance-fda6948c/focused-diagnostics-attempt9/state.json"
+    },
+    {
+      "attempt": 10,
+      "sourceBase": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+      "state": "source-advance-318b251b/state.json",
+      "invalidatedPhases": {
+        "split-restore-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T02:24:10.675124+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-restore-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt10/split-restore-inputs.log",
+          "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a",
+          "pid": 51014,
+          "exitCode": 0,
+          "elapsedSeconds": 7.440325707997545,
+          "finishedAt": "2026-11-25T02:24:18.116296+00:00",
+          "logBytes": 223,
+          "logSHA256": "c40b416cd0105c9a2be993082e7439110468ef9fc69292667c32f0c8cf767995"
+        },
+        "split-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T02:24:18.117882+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt10/split-inputs.log",
+          "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc",
+          "pid": 51032,
+          "exitCode": 0,
+          "elapsedSeconds": 5.3877318750019185,
+          "finishedAt": "2026-11-25T02:24:23.506611+00:00",
+          "logBytes": 103,
+          "logSHA256": "32f7fee63ff0070613d40b5771077ba0d634a6999305392b585690ed08722438"
+        }
+      },
+      "reason": "Only the shipped parity fixture/archive, UI acceptance source and portable fixture checks changed. These paths are outside the sealed SDK10/Host/native-artifact input closure. Preserve exact prepared SDK10 and native products; refresh original timestamp/input capture and rebuild the changed UI test bundle. Original 52 remains independently required.",
+      "focusedState": "source-advance-318b251b/focused-diagnostics-attempt10/state.json"
+    },
+    {
+      "attempt": 11,
+      "sourceBase": "318b251b11a4816eb9cc3c1337c7bfe287f4a890",
+      "state": "source-advance-1a611764/state.json",
+      "invalidatedPhases": {
+        "split-restore-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T03:04:03.018935+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-restore-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt11/split-restore-inputs.log",
+          "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a",
+          "pid": 85796,
+          "exitCode": 0,
+          "elapsedSeconds": 11.644163749995641,
+          "finishedAt": "2026-11-25T03:04:14.664310+00:00",
+          "logBytes": 223,
+          "logSHA256": "0dc21381f9a1aa6787fca3aac233cc71eb1716cf6c352a07fe9dcfa0b64073ad"
+        },
+        "split-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T03:04:14.667245+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt11/split-inputs.log",
+          "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc",
+          "pid": 85873,
+          "exitCode": 0,
+          "elapsedSeconds": 7.75954549999733,
+          "finishedAt": "2026-11-25T03:04:22.428640+00:00",
+          "logBytes": 103,
+          "logSHA256": "054cab2b2db2b14af8608429df51a85f00b61fff6e127cdcea1db48fc46ffe83"
+        }
+      },
+      "reason": "Only current Modular fixture/App and UI acceptance source change actual working bytes. Nine previously prepared SDK10 outputs are promoted to identical tracked Git bytes and modes. Modular paths are outside the sealed SDK10/Host/native-artifact closure. Preserve exact SDK10 and native products; refresh original timestamp/input capture and rebuild changed UI tests. Original 52 remains independently required.",
+      "focusedState": "source-advance-1a611764/focused-diagnostics-attempt11/state.json"
+    },
+    {
+      "attempt": 12,
+      "sourceBase": "1a611764779b0a57cc57d71b26d2cd6449895d8d",
+      "state": "source-advance-42e34eff/state.json",
+      "invalidatedPhases": {
+        "split-restore-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T03:22:19.348640+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-restore-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt12/split-restore-inputs.log",
+          "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a",
+          "pid": 6160,
+          "exitCode": 0,
+          "elapsedSeconds": 18.937286207998113,
+          "finishedAt": "2026-11-25T03:22:38.289155+00:00",
+          "logBytes": 223,
+          "logSHA256": "4be9065915186858aa9fc9e1f6aefc8aa5e6a7673d704959249a9524f8c144ea"
+        },
+        "split-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T03:22:38.294929+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt12/split-inputs.log",
+          "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc",
+          "pid": 6553,
+          "exitCode": 0,
+          "elapsedSeconds": 16.054171916002815,
+          "finishedAt": "2026-11-25T03:22:54.351365+00:00",
+          "logBytes": 103,
+          "logSHA256": "78dd4940a1d96945bfb275412e2542a8a9a2f65386aeb0dd51711a57b5058a15"
+        }
+      },
+      "reason": "Only Modular fixture labels and the original UI oracle changed. These paths are outside the sealed SDK10/Host/native-artifact input closure. The nine materialized prepared paths remain exact. Preserve SDK10 and native products; refresh original timestamp/input capture and rebuild changed UI tests. Original52 remains independently required.",
+      "focusedState": "source-advance-42e34eff/focused-diagnostics-attempt12/state.json"
+    },
+    {
+      "attempt": 13,
+      "sourceBase": "42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+      "state": "source-advance-b0cf26a6/state.json",
+      "invalidatedPhases": {
+        "split-foreground": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T00:15:23.024859+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-foreground.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt8/split-foreground.log",
+          "scriptSHA256": "29e26e4ab82898091d69fadeae7245be79fe86294416919cb1ebb5bbee9ffc43",
+          "pid": 68686,
+          "exitCode": 0,
+          "elapsedSeconds": 11.72754179200274,
+          "finishedAt": "2026-11-25T00:15:34.753006+00:00",
+          "logBytes": 214,
+          "logSHA256": "b9188ca35253124a0fd4bc95bf590cf6b68509f64c16a74203036a2ccc43d374",
+          "reusedAfterSourceAdvance": "Only Modular fixture labels and the original UI oracle changed. These paths are outside the sealed SDK10/Host/native-artifact input closure. The nine materialized prepared paths remain exact. Preserve SDK10 and native products; refresh original timestamp/input capture and rebuild changed UI tests. Original52 remains independently required."
+        },
+        "split-host-lifecycle": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T00:15:34.754856+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-host-lifecycle.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt8/split-host-lifecycle.log",
+          "scriptSHA256": "956541d15f45f12b7777b8ebeb800fe14e1686db5fc7ceae397835547953d7bc",
+          "pid": 68751,
+          "exitCode": 0,
+          "elapsedSeconds": 5.057574375001423,
+          "finishedAt": "2026-11-25T00:15:39.813081+00:00",
+          "logBytes": 2340,
+          "logSHA256": "e66440f84f6eed352cf4d938479fc365a17c54ff8f76036952ae123a3da9de8e",
+          "reusedAfterSourceAdvance": "Only Modular fixture labels and the original UI oracle changed. These paths are outside the sealed SDK10/Host/native-artifact input closure. The nine materialized prepared paths remain exact. Preserve SDK10 and native products; refresh original timestamp/input capture and rebuild changed UI tests. Original52 remains independently required."
+        },
+        "split-native-preparation": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T02:19:37.626468+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt10/split-native-preparation.log",
+          "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+          "pid": 48270,
+          "elapsedSeconds": 249.80130991699843,
+          "logBytes": 32759,
+          "exitCode": 0,
+          "finishedAt": "2026-11-25T02:23:47.430000+00:00",
+          "logSHA256": "705a7914142f86d7912d3ad0e349975e0d311e15f3168a3cb9eb3a293cae5968",
+          "reusedAfterSourceAdvance": "Only Modular fixture labels and the original UI oracle changed. These paths are outside the sealed SDK10/Host/native-artifact input closure. The nine materialized prepared paths remain exact. Preserve SDK10 and native products; refresh original timestamp/input capture and rebuild changed UI tests. Original52 remains independently required."
+        },
+        "split-native-artifacts": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T02:23:47.432188+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-artifacts.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt10/split-native-artifacts.log",
+          "scriptSHA256": "eb0405f89f5da3d48e1591650d42e2f7a8ff8f86eebac9b82ded2e5c70cefebd",
+          "pid": 50744,
+          "exitCode": 0,
+          "elapsedSeconds": 23.24067391599965,
+          "finishedAt": "2026-11-25T02:24:10.673745+00:00",
+          "logBytes": 1604,
+          "logSHA256": "6ba90756cd5ae1a7ee915af12e22160528b0ceb7d8065409f71ea5d5ffa96f27",
+          "reusedAfterSourceAdvance": "Only Modular fixture labels and the original UI oracle changed. These paths are outside the sealed SDK10/Host/native-artifact input closure. The nine materialized prepared paths remain exact. Preserve SDK10 and native products; refresh original timestamp/input capture and rebuild changed UI tests. Original52 remains independently required."
+        },
+        "split-restore-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T03:59:02.028745+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-restore-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt13/split-restore-inputs.log",
+          "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a",
+          "pid": 42773,
+          "exitCode": 0,
+          "elapsedSeconds": 17.528713333005726,
+          "finishedAt": "2026-11-25T03:59:19.558785+00:00",
+          "logBytes": 223,
+          "logSHA256": "d167d5158bb68b74f2605a6307f8faea47a85421859ab08e84e335dbbbdbeeaf"
+        },
+        "split-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T03:59:19.561420+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt13/split-inputs.log",
+          "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc",
+          "pid": 42894,
+          "exitCode": 0,
+          "elapsedSeconds": 17.578778082999634,
+          "finishedAt": "2026-11-25T03:59:37.141745+00:00",
+          "logBytes": 103,
+          "logSHA256": "f1a5ddb97ead3adb05f3dad2c9051ac7b3e2285c3d959e5458ebd0a82af8294d"
+        }
+      },
+      "reason": "Final notification source changes shared application entry/lifecycle/queue and SDK wire types/export/docs; Expo acceptance fixture now exercises all five real backends. Regenerate original unified manifest/project before preparation. Refresh foreground, Host lifecycle, normal native/Host/SDK preparation, native catalog and input capture; preserve exact original native tool/framework caches through their original fingerprints. Platform/toolchain/upstream resolution inputs are unchanged; generated target verification is renewed separately. Original52 and separate NS5/notification suite remain required.",
+      "focusedState": "source-advance-b0cf26a6/focused-diagnostics-attempt13/state.json"
+    },
+    {
+      "attempt": 14,
+      "sourceBase": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+      "state": "source-advance-c259b722/state.json",
+      "invalidatedPhases": {
+        "split-native-preparation": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T05:18:45.462658+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt14/split-native-preparation.log",
+          "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+          "pid": 85372,
+          "elapsedSeconds": 269.77495000000636,
+          "logBytes": 32767,
+          "exitCode": 0,
+          "finishedAt": "2026-11-25T05:23:15.238144+00:00",
+          "logSHA256": "13d9ccdfe7d72c607225d6d788d9252777272dab6cfb50a236079f0bb7e1bace"
+        },
+        "split-native-artifacts": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T05:23:15.243702+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-artifacts.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt14/split-native-artifacts.log",
+          "scriptSHA256": "eb0405f89f5da3d48e1591650d42e2f7a8ff8f86eebac9b82ded2e5c70cefebd",
+          "pid": 89245,
+          "elapsedSeconds": 36.58919570800208,
+          "logBytes": 1604,
+          "exitCode": 0,
+          "finishedAt": "2026-11-25T05:23:51.835550+00:00",
+          "logSHA256": "6ba90756cd5ae1a7ee915af12e22160528b0ceb7d8065409f71ea5d5ffa96f27"
+        },
+        "split-restore-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T05:23:51.839707+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-restore-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt14/split-restore-inputs.log",
+          "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a",
+          "pid": 90314,
+          "exitCode": 0,
+          "elapsedSeconds": 15.678933709001285,
+          "finishedAt": "2026-11-25T05:24:07.521744+00:00",
+          "logBytes": 225,
+          "logSHA256": "ed29ba9622f754b5d25d098fd735c52e9651e39c0daeedca4bab12fda5463ee0"
+        },
+        "split-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T05:24:07.525528+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt14/split-inputs.log",
+          "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc",
+          "pid": 90709,
+          "exitCode": 0,
+          "elapsedSeconds": 15.048706499990658,
+          "finishedAt": "2026-11-25T05:24:22.575717+00:00",
+          "logBytes": 103,
+          "logSHA256": "f3f13669b14d53e8c724df513cedb18b5a44565aa1688500bce1139f88bdcd23"
+        },
+        "split-paired-acceptance": {
+          "status": "FAIL",
+          "startedAt": "2026-11-25T05:38:08.131829+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-paired-acceptance.sh"
+          ],
+          "scriptSHA256": "f271e6f1b95bb261417cee5fc13104e41df44f8ec35d2ab565b1f6135191c0c8",
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v1/original-paired-phase.log",
+          "continuationID": "paired52-continuation-v1",
+          "pid": 98972,
+          "finishedAt": "2026-11-25T05:40:26.563460+00:00",
+          "exitCode": 1,
+          "elapsedSeconds": 138.4319897920068,
+          "logBytes": 5545,
+          "logSHA256": "5afec25e92b759c6d806fdecef582337a4654e6ac84b7ddd76ff4787c2e88cf1",
+          "continuationDecisionSHA256": "492f9c7b75e7776d7a48a34ce2531f140c0c0f9585c437d42922e8308582a734"
+        }
+      },
+      "reason": "Only original optional notification delegate async return/fallback matches actual installed SDK. Shared queue package, upstream/toolchain and original native producer inputs are unchanged. Delegate is a canonical SDK source input, so refresh normal Host/SDK/docs/catalog/input preparation and both consumers. Preserve failedpaired138.431989792 charge; resume original52 with remaining4361.568010208 of authorized4500. Notification package actual8-function proof remains unchanged.",
+      "pairedTerminal": "source-advance-c259b722/paired52-continuation-v1/state.json"
+    },
+    {
+      "attempt": 15,
+      "sourceBase": "c259b72243ccb62188f24e551648544bc57cc7c1",
+      "state": "source-advance-46225e5a/state.json",
+      "invalidatedPhases": {
+        "split-restore-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T06:02:57.493167+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-restore-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt15/split-restore-inputs.log",
+          "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a",
+          "pid": 18345,
+          "exitCode": 0,
+          "elapsedSeconds": 11.76561687499634,
+          "finishedAt": "2026-11-25T06:03:09.260245+00:00",
+          "logBytes": 223,
+          "logSHA256": "d20f75324df78ded5b2a42f150e68f6ea42b02437c1e09e41d73153a606a84b8"
+        },
+        "split-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T06:03:09.266622+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt15/split-inputs.log",
+          "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc",
+          "pid": 18867,
+          "exitCode": 0,
+          "elapsedSeconds": 9.784883707994595,
+          "finishedAt": "2026-11-25T06:03:19.052727+00:00",
+          "logBytes": 103,
+          "logSHA256": "c7628fadbd1b4707a3820e52910a17e800bc84c4e04f6829af4a3abb75a36bc2"
+        }
+      },
+      "reason": "Only an append-only optional OS UI test and its separate observer/evidence changed. Every original UI source byte and original52 selector remains unchanged. All234SDK source inputs and prepared13 outputs match SDK15 producer c259; preserve original native/Host/docs/catalog proofs and refresh only original timestamp/input capture before consumer test build. No SDK regeneration is required.",
+      "pairedTerminal": "source-advance-46225e5a/paired52-continuation-v1/state.json"
+    },
+    {
+      "attempt": 16,
+      "sourceBase": "46225e5af9aa253c8aa3b7d0d6ce2f282c88e7ad",
+      "state": "source-advance-cffe7f75/state.json",
+      "invalidatedPhases": {
+        "split-native-preparation": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T05:58:47.364669+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt15/split-native-preparation.log",
+          "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+          "pid": 13938,
+          "elapsedSeconds": 213.83840770900133,
+          "logBytes": 32771,
+          "exitCode": 0,
+          "finishedAt": "2026-11-25T06:02:21.204904+00:00",
+          "logSHA256": "c92f1ff53d2c581896c4d8689c42e86cc11f0b94c8e58820e42f752ccae55c3a",
+          "reusedAfterSourceAdvance": "Only an append-only optional OS UI test and its separate observer/evidence changed. Every original UI source byte and original52 selector remains unchanged. All234SDK source inputs and prepared13 outputs match SDK15 producer c259; preserve original native/Host/docs/catalog proofs and refresh only original timestamp/input capture before consumer test build. No SDK regeneration is required."
+        },
+        "split-native-artifacts": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T06:02:21.209014+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-artifacts.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt15/split-native-artifacts.log",
+          "scriptSHA256": "eb0405f89f5da3d48e1591650d42e2f7a8ff8f86eebac9b82ded2e5c70cefebd",
+          "pid": 16906,
+          "elapsedSeconds": 36.27510795899434,
+          "logBytes": 1604,
+          "exitCode": 0,
+          "finishedAt": "2026-11-25T06:02:57.488822+00:00",
+          "logSHA256": "6ba90756cd5ae1a7ee915af12e22160528b0ceb7d8065409f71ea5d5ffa96f27",
+          "reusedAfterSourceAdvance": "Only an append-only optional OS UI test and its separate observer/evidence changed. Every original UI source byte and original52 selector remains unchanged. All234SDK source inputs and prepared13 outputs match SDK15 producer c259; preserve original native/Host/docs/catalog proofs and refresh only original timestamp/input capture before consumer test build. No SDK regeneration is required."
+        },
+        "split-restore-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T06:13:49.647181+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-restore-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt16/split-restore-inputs.log",
+          "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a",
+          "pid": 28127,
+          "exitCode": 0,
+          "elapsedSeconds": 20.958071957997163,
+          "finishedAt": "2026-11-25T06:14:10.608335+00:00",
+          "logBytes": 223,
+          "logSHA256": "dac426aedd7defb224d60c65922498535062fc018c61e19adcd3dc63ae1e5cbf"
+        },
+        "split-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T06:14:10.611278+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt16/split-inputs.log",
+          "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc",
+          "pid": 28205,
+          "exitCode": 0,
+          "elapsedSeconds": 13.545698665999225,
+          "finishedAt": "2026-11-25T06:14:24.158312+00:00",
+          "logBytes": 103,
+          "logSHA256": "aca6edca5e7c2571463377067d901c3227c82d56b282bd80aa50d3d4f48310fb"
+        },
+        "split-paired-acceptance": {
+          "status": "FAIL",
+          "startedAt": "2026-11-25T06:30:40.371092+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-paired-acceptance.sh"
+          ],
+          "scriptSHA256": "f271e6f1b95bb261417cee5fc13104e41df44f8ec35d2ab565b1f6135191c0c8",
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v2/original-paired-phase.log",
+          "continuationID": "paired52-continuation-v2",
+          "pid": 39405,
+          "finishedAt": "2026-11-25T06:33:50.450142+00:00",
+          "exitCode": 1,
+          "elapsedSeconds": 190.0814806670096,
+          "logBytes": 5772,
+          "logSHA256": "20b46b53701f3f90feaeaa2d452e714ed28d9cbc5a593daaa2b10aff26acbbe9",
+          "continuationDecisionSHA256": "23fe291c3b673d415c51849a6371c5cdb8ebf374eabad5806a42fc8b6663488d"
+        }
+      },
+      "reason": "Private notification forwarding now uses original callback overloads proven to emit object code under the actual Swift6/C++ SDK. Existing canonical project parser is reused by the reachability audit and added to explicit SDK inputs (235). Refresh normal audit/Host/SDK/docs/native catalog and input capture. Original native producer/framework/toolchain inputs and project generator inputs are unchanged, so preserve their exact caches and generation provenance. Preserve all original52 selectors and both failed charges; only remaining4171.486529540984 of4500 is authorized. Existing notification package8-function proof remains unchanged.",
+      "pairedTerminal": "source-advance-cffe7f75/paired52-continuation-v2/state.json"
+    },
+    {
+      "attempt": 17,
+      "sourceBase": "cffe7f75436aa2e37ec5d82891937965c0407d2d",
+      "state": "source-advance-1d5e5986/state.json",
+      "invalidatedPhases": {
+        "split-upstreams": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T00:15:03.020798+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-upstreams.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt8/split-upstreams.log",
+          "scriptSHA256": "890c8ac2b02ff5a5909c71789e639e333cbc78c687797f2a060a7dd2591cfa84",
+          "pid": 67394,
+          "exitCode": 0,
+          "elapsedSeconds": 19.95143087500037,
+          "finishedAt": "2026-11-25T00:15:22.972904+00:00",
+          "logBytes": 7885,
+          "logSHA256": "f92b47b1bfbdbec4b902995030435bb03a4bd248e7775ea8815bf0db7c09234d",
+          "reusedAfterSourceAdvance": "Private notification forwarding now uses original callback overloads proven to emit object code under the actual Swift6/C++ SDK. Existing canonical project parser is reused by the reachability audit and added to explicit SDK inputs (235). Refresh normal audit/Host/SDK/docs/native catalog and input capture. Original native producer/framework/toolchain inputs and project generator inputs are unchanged, so preserve their exact caches and generation provenance. Preserve all original52 selectors and both failed charges; only remaining4171.486529540984 of4500 is authorized. Existing notification package8-function proof remains unchanged."
+        },
+        "split-native-preparation": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T06:56:20.061040+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt17/split-native-preparation.log",
+          "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+          "pid": 53838,
+          "elapsedSeconds": 148.33925204200204,
+          "logBytes": 32738,
+          "exitCode": 0,
+          "finishedAt": "2026-11-25T06:58:48.401127+00:00",
+          "logSHA256": "736f93184addc310b3e2918118ce075e0e6391dfffd969bdd58dd2472b25b13a"
+        },
+        "split-native-artifacts": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T07:12:19.115480+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-artifacts.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt17-export-recovery/split-native-artifacts.log",
+          "scriptSHA256": "eb0405f89f5da3d48e1591650d42e2f7a8ff8f86eebac9b82ded2e5c70cefebd",
+          "pid": 68327,
+          "exitCode": 0,
+          "elapsedSeconds": 21.744382667005993,
+          "finishedAt": "2026-11-25T07:12:40.861402+00:00",
+          "logBytes": 1604,
+          "logSHA256": "6ba90756cd5ae1a7ee915af12e22160528b0ceb7d8065409f71ea5d5ffa96f27"
+        },
+        "split-restore-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T07:12:40.863415+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-restore-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt17-export-recovery/split-restore-inputs.log",
+          "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a",
+          "pid": 68371,
+          "exitCode": 0,
+          "elapsedSeconds": 6.746599457997945,
+          "finishedAt": "2026-11-25T07:12:47.611610+00:00",
+          "logBytes": 223,
+          "logSHA256": "a1962acd7a4eb1e805d0523cdd8a28142c0718f7b4c256b96c0a4366a1ba0e34"
+        },
+        "split-inputs": {
+          "status": "PASS",
+          "startedAt": "2026-11-25T07:12:47.613723+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-inputs.sh"
+          ],
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt17-export-recovery/split-inputs.log",
+          "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc",
+          "pid": 68386,
+          "exitCode": 0,
+          "elapsedSeconds": 4.892271582997637,
+          "finishedAt": "2026-11-25T07:12:52.507601+00:00",
+          "logBytes": 103,
+          "logSHA256": "4f19d09e6ab4697caf9f64dcb04119572bee09982bd0ec3c3e81c5802ee2b859"
+        },
+        "split-paired-acceptance": {
+          "status": "FAIL",
+          "startedAt": "2026-11-25T07:26:45.226761+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-paired-acceptance.sh"
+          ],
+          "scriptSHA256": "f271e6f1b95bb261417cee5fc13104e41df44f8ec35d2ab565b1f6135191c0c8",
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v3/original-paired-phase.log",
+          "continuationID": "paired52-continuation-v3",
+          "pid": 75120,
+          "finishedAt": "2026-11-25T07:56:26.432531+00:00",
+          "exitCode": 1,
+          "elapsedSeconds": 1781.210410041007,
+          "logBytes": 19403,
+          "logSHA256": "2116b6ebb4919001c02f37cc89f2eb446e4ab7a49c059924527636d4c178b79e",
+          "continuationDecisionSHA256": "c271a5662b7f31e66e4bb9acac84f0f105c26bb3d956c8b0e41df9e02b1030a9"
+        }
+      },
+      "reason": "Reviewed original library slot unwrapping/generated mirror, exact input/interaction corrections, original ios_system main resources, scoped complete25 command allowance, and original Worklets bare resolved version. Run the original resolver, manifest/project generators, eight version-contract tests, normal original native preparation/Host+SDK/docs, native15 export and input restore/capture. Preserve unaffected original platform/toolchain, foreground53, host lifecycle and NativeScript metadata closures; refreshed project lint/target checks bind the changed platform component. Historical v3 and every charge remain unchanged; original paired52, NS5 and OS probe are still pending.",
+      "pairedTerminal": "source-advance-1d5e5986/paired52-continuation-v3/state.json"
+    },
+    {
+      "attempt": 18,
+      "sourceBase": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "state": "source-advance-a2c8a1b1/state.json",
+      "invalidatedPhases": {
+        "split-upstreams": {
+          "id": "split-upstreams",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-upstreams.sh"
+          ],
+          "originalPhase": true,
+          "status": "PASS",
+          "startedAt": "2026-11-25T08:52:38.526665+00:00",
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt18/logs/split-upstreams.log",
+          "scriptSHA256": "890c8ac2b02ff5a5909c71789e639e333cbc78c687797f2a060a7dd2591cfa84",
+          "pid": 27435,
+          "exitCode": 0,
+          "elapsedSeconds": 22.97102941699268,
+          "finishedAt": "2026-11-25T08:53:01.499022+00:00",
+          "logBytes": 7885,
+          "logSHA256": "0bd3d45fd013bc4cd51cbd54b10f71add41aff73fd97a974d7c11211b3564d26"
+        },
+        "split-native-preparation": {
+          "id": "split-native-preparation",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+          ],
+          "originalPhase": true,
+          "status": "PASS",
+          "startedAt": "2026-11-25T09:07:03.084920+00:00",
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt18-recovery/logs/split-native-preparation.log",
+          "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+          "pid": 34942,
+          "exitCode": 0,
+          "elapsedSeconds": 377.12588833400514,
+          "finishedAt": "2026-11-25T09:13:20.211738+00:00",
+          "logBytes": 4039196,
+          "logSHA256": "78738dc52c7f5cd23049ef24fb5f80c30dcf869afe7aed36e388b703591c471c"
+        },
+        "split-native-artifacts": {
+          "id": "split-native-artifacts",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-artifacts.sh"
+          ],
+          "originalPhase": true,
+          "status": "PASS",
+          "startedAt": "2026-11-25T09:13:20.216764+00:00",
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt18-recovery/logs/split-native-artifacts.log",
+          "scriptSHA256": "eb0405f89f5da3d48e1591650d42e2f7a8ff8f86eebac9b82ded2e5c70cefebd",
+          "pid": 40083,
+          "exitCode": 0,
+          "elapsedSeconds": 23.138615292002214,
+          "finishedAt": "2026-11-25T09:13:43.356616+00:00",
+          "logBytes": 1604,
+          "logSHA256": "736937ecf81b8293d1d6d17d08fd19212953607020486c7034153d749199a522"
+        },
+        "split-restore-inputs": {
+          "id": "split-restore-inputs",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-restore-inputs.sh"
+          ],
+          "originalPhase": true,
+          "status": "PASS",
+          "startedAt": "2026-11-25T09:13:43.359055+00:00",
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt18-recovery/logs/split-restore-inputs.log",
+          "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a",
+          "pid": 40202,
+          "exitCode": 0,
+          "elapsedSeconds": 6.723788040995714,
+          "finishedAt": "2026-11-25T09:13:50.084363+00:00",
+          "logBytes": 224,
+          "logSHA256": "119411481f8936b7ea61d7610bc31267a540dc9876ccb29f693cfc4d4f2a7876"
+        },
+        "split-inputs": {
+          "id": "split-inputs",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-inputs.sh"
+          ],
+          "originalPhase": true,
+          "status": "PASS",
+          "startedAt": "2026-11-25T09:13:50.086458+00:00",
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt18-recovery/logs/split-inputs.log",
+          "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc",
+          "pid": 40242,
+          "exitCode": 0,
+          "elapsedSeconds": 5.103158332989551,
+          "finishedAt": "2026-11-25T09:13:55.190877+00:00",
+          "logBytes": 103,
+          "logSHA256": "0967030e2084cc0d374d577c0eaac13cd4ce4a24ba272ad72cc86606940ff564"
+        },
+        "split-paired-acceptance": {
+          "status": "FAIL",
+          "startedAt": "2026-11-25T09:22:33.222287+00:00",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-paired-acceptance.sh"
+          ],
+          "scriptSHA256": "f271e6f1b95bb261417cee5fc13104e41df44f8ec35d2ab565b1f6135191c0c8",
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/original-paired-phase.log",
+          "continuationID": "paired52-continuation-v4",
+          "pid": 41945,
+          "finishedAt": "2026-11-25T09:50:23.121500+00:00",
+          "exitCode": 1,
+          "elapsedSeconds": 1669.903415416993,
+          "logBytes": 20023,
+          "logSHA256": "c569debbe1cf287825daacc4334d5c0d799b8559a04631bcbfe25504bfa098f2",
+          "continuationDecisionSHA256": "62177d808a5c0101dd87548307ece8c3d6c542a8bc56d6c0c93d3fdc4ade7e1d"
+        }
+      },
+      "reason": "Reviewed TextEditor mounted state and private stale-echo acknowledgement, exact native EditButton confirmation locator, wide composer first-turn endpoint lifecycle, ActivityKit publication observation, and six exact original Swift Testing selector identities. The JS wrapper changes the actual SDK dependency closure. Run normal original upstream resolver, manifest/project generation, strict target/resource/version checks, native preparation including fixture rebuild and Host/SDK/four documentation checks, native export and restored/captured input metadata. Retain unchanged platform/toolchain, foreground53, Host lifecycle and NativeScript metadata closures; none of their actual source inputs intersects these seven changed source paths. Every old terminal/result/charge is retained.",
+      "pairedTerminal": "source-advance-a2c8a1b1/paired52-continuation-v4/state.json",
+      "diagnosticTerminal": "source-advance-a2c8a1b1/ai27-diagnostic-v1/state.json",
+      "previousGeneration": {
+        "status": "PASS",
+        "source": "1d5e598614f2bc7c689f34f5d7b364f67e1d5ae1",
+        "consumerSource": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+        "prefixState": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt18-recovery/state.json",
+        "originalGenerationPrefixStateSHA256": "03d3bad3d8306b42e539de5606001fc44cc1d3366bb80068a239dbe66c328d1b",
+        "steps": [
+          {
+            "id": "generate-manifest",
+            "argv": [
+              "python3",
+              "Scripts/SDK/generate_manifest.py"
+            ],
+            "status": "PASS",
+            "startedAt": "2026-11-25T08:53:01.501313+00:00",
+            "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt18/logs/generate-manifest.log",
+            "pid": 28742,
+            "exitCode": 0,
+            "elapsedSeconds": 6.662224416999379,
+            "finishedAt": "2026-11-25T08:53:08.164982+00:00",
+            "logBytes": 3605,
+            "logSHA256": "11ffb997c112dd4c5954bd29a572fb89d05c9048e373d844133bf0580cca034c"
+          },
+          {
+            "id": "generate-project",
+            "argv": [
+              "python3",
+              "Scripts/SDK/update_project.py"
+            ],
+            "status": "PASS",
+            "startedAt": "2026-11-25T08:53:08.167187+00:00",
+            "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt18/logs/generate-project.log",
+            "pid": 29156,
+            "exitCode": 0,
+            "elapsedSeconds": 1.8725974169938127,
+            "finishedAt": "2026-11-25T08:53:10.041090+00:00",
+            "logBytes": 88,
+            "logSHA256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+          },
+          {
+            "id": "verify-targets",
+            "argv": [
+              "python3",
+              "Scripts/ProductSplit/verify_targets.py"
+            ],
+            "status": "PASS",
+            "startedAt": "2026-11-25T09:07:02.610742+00:00",
+            "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt18-recovery/logs/verify-targets.log",
+            "pid": 34935,
+            "exitCode": 0,
+            "elapsedSeconds": 0.1822095000097761,
+            "finishedAt": "2026-11-25T09:07:02.794225+00:00",
+            "logBytes": 1438,
+            "logSHA256": "4f49124a3b6c18a0b8c4540cb46c33b31c436deed0ad97c4084e189157ed9c8e"
+          },
+          {
+            "id": "lint-generated-project",
+            "argv": [
+              "plutil",
+              "-lint",
+              "AI_HLY.xcodeproj/project.pbxproj",
+              "HanlinMiniAppsExtensions/Notification/Info.plist",
+              "HanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements"
+            ],
+            "status": "PASS",
+            "startedAt": "2026-11-25T09:07:02.796306+00:00",
+            "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt18-recovery/logs/lint-generated-project.log",
+            "pid": 34937,
+            "exitCode": 0,
+            "elapsedSeconds": 0.04467054099950474,
+            "finishedAt": "2026-11-25T09:07:02.842245+00:00",
+            "logBytes": 179,
+            "logSHA256": "b019c7e18b5b8a4825f382e7c3a04552e29a406d658592b9f6105fe88a6fe18a"
+          },
+          {
+            "id": "runtime-version-contract8",
+            "argv": [
+              "node",
+              "--test",
+              "Scripts/Audit/Tests/runtime-version-contract.test.mjs"
+            ],
+            "status": "PASS",
+            "startedAt": "2026-11-25T09:07:02.844298+00:00",
+            "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt18-recovery/logs/runtime-version-contract8.log",
+            "pid": 34939,
+            "exitCode": 0,
+            "elapsedSeconds": 0.23699816600128543,
+            "finishedAt": "2026-11-25T09:07:03.082558+00:00",
+            "logBytes": 979,
+            "logSHA256": "84aff727a6ad9dd99f88c61271a4f1de75ca44b3e20e05311f4cfef30d0ee2fb"
+          }
+        ]
+      }
+    }
+  ],
+  "attempt": 19,
+  "sourceAdvance": "source-advance-6c006c94/receipt.json",
+  "sourceAdvancedAt": "2026-11-25T12:05:43.589918+00:00",
+  "additionalRequiredProofs": [
+    {
+      "name": "node-manifest-upstream",
+      "argv": [
+        "node",
+        "--test",
+        "Scripts/Audit/Tests/manifest-contracts.test.mjs",
+        "Scripts/MiniApps/Tests/upstream-resolution.test.mjs"
+      ],
+      "startedAt": "2026-11-25T00:46:54.044069+00:00",
+      "status": "PASS",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-gates-attempt9/node-manifest-upstream.log",
+      "timeout": 90,
+      "pid": 86737,
+      "exitCode": 0,
+      "finishedAt": "2026-11-25T00:46:54.238079+00:00",
+      "elapsedSeconds": 0.19376079200446839,
+      "logBytes": 5944,
+      "logSHA256": "b99faf1f46d7725b0e0ab08914b77f9ea5c46bf704f45667c3a2592b4bd5a37f",
+      "source": "1812bff50571c9907d15cd8b4bfbe4874be24756"
+    },
+    {
+      "name": "swift-expo-asset-analyzer",
+      "argv": [
+        "xcrun",
+        "swift",
+        "test",
+        "--package-path",
+        "Packages/HanlinPlatform",
+        "--jobs",
+        "1",
+        "--filter",
+        "HanlinScriptAnalyzerTests/expoAssetPluginRequiresItsActualEmbeddedVersion"
+      ],
+      "startedAt": "2026-11-25T00:46:54.241103+00:00",
+      "status": "PASS",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-gates-attempt9/swift-expo-asset-analyzer.log",
+      "timeout": 1200,
+      "pid": 86749,
+      "elapsedSeconds": 318.16765787499753,
+      "logBytes": 29188,
+      "exitCode": 0,
+      "finishedAt": "2026-11-25T00:52:12.408266+00:00",
+      "logSHA256": "8a83d834e1416aa086dc61cb65837878e7fc17e1051627cd436d8f1913a675ee",
+      "source": "1812bff50571c9907d15cd8b4bfbe4874be24756"
+    },
+    {
+      "name": "focused-native-diagnostic",
+      "source": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9.py",
+        "--source",
+        "1812bff50571c9907d15cd8b4bfbe4874be24756",
+        "--output",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9"
+      ],
+      "startedAt": "2026-11-25T00:58:20.760291+00:00",
+      "finishedAt": "2026-11-25T00:58:20.866833+00:00",
+      "exitCode": 1,
+      "elapsedSeconds": 0.10635558299691183,
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9.log",
+      "logBytes": 450,
+      "logSHA256": "4904824dfb1cef56018214cd097a4751b02b6dff7b21ff19204028a90f62bc79",
+      "original52": "NOT_RUN"
+    },
+    {
+      "name": "focused-native-diagnostic",
+      "source": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9.py",
+        "--source",
+        "1812bff50571c9907d15cd8b4bfbe4874be24756",
+        "--output",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9"
+      ],
+      "startedAt": "2026-11-25T01:13:47.992596+00:00",
+      "finishedAt": "2026-11-25T01:51:25.521662+00:00",
+      "exitCode": 1,
+      "elapsedSeconds": 2257.5345174579998,
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9.log",
+      "logBytes": 31723,
+      "logSHA256": "f3dda98a983a9d6c9c54cfcca1cbb584a226883c738a98506e225081d4328a05",
+      "original52": "NOT_RUN"
+    },
+    {
+      "name": "focused-native-diagnostic",
+      "source": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10.py",
+        "--source",
+        "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+        "--output",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10"
+      ],
+      "startedAt": "2026-11-25T02:28:56.782705+00:00",
+      "finishedAt": "2026-11-25T02:44:47.760634+00:00",
+      "exitCode": 1,
+      "elapsedSeconds": 950.9807370830022,
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10.log",
+      "logBytes": 26973,
+      "logSHA256": "724b9d44d55279d24fb54f87b97bcdd053baaedfb3dae167abf38a682d9f5fed",
+      "original52": "NOT_RUN"
+    },
+    {
+      "name": "focused-native-diagnostic",
+      "source": "318b251b11a4816eb9cc3c1337c7bfe287f4a890",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt11.py",
+        "--source",
+        "318b251b11a4816eb9cc3c1337c7bfe287f4a890",
+        "--output",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt11"
+      ],
+      "startedAt": "2026-11-25T03:04:45.137796+00:00",
+      "finishedAt": "2026-11-25T03:12:47.559343+00:00",
+      "exitCode": 0,
+      "elapsedSeconds": 482.422176125001,
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt11.log",
+      "logBytes": 22080,
+      "logSHA256": "c7c1a882b0aa7d9cdd382a612355b0a955ab7b62921479d5b1889277fdc3cfe1",
+      "original52": "NOT_RUN"
+    },
+    {
+      "name": "focused-native-diagnostic",
+      "source": "1a611764779b0a57cc57d71b26d2cd6449895d8d",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12.py",
+        "--source",
+        "1a611764779b0a57cc57d71b26d2cd6449895d8d",
+        "--output",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12"
+      ],
+      "startedAt": "2026-11-25T03:32:34.086834+00:00",
+      "finishedAt": "2026-11-25T03:42:15.680244+00:00",
+      "exitCode": 1,
+      "elapsedSeconds": 581.5945308750015,
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12.log",
+      "logBytes": 22432,
+      "logSHA256": "174a46f255d2fd8bb34af8bdd0f8322ea7c749d812612d0c419c30c10499d5cd",
+      "original52": "NOT_RUN"
+    },
+    {
+      "name": "focused-native-diagnostic",
+      "source": "42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13.py",
+        "--source",
+        "42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+        "--output",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13"
+      ],
+      "startedAt": "2026-11-25T04:07:44.043993+00:00",
+      "finishedAt": "2026-11-25T04:14:38.659758+00:00",
+      "exitCode": 1,
+      "elapsedSeconds": 414.61639858299895,
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13.log",
+      "logBytes": 21922,
+      "logSHA256": "897f1877431bd8bab8aa35df6322ab15cf9adecd16e543ef59003f967a1894a3",
+      "original52": "NOT_RUN"
+    },
+    {
+      "id": "notification-signature-proof-attempt14",
+      "source": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+      "status": "EXECUTED_PASS",
+      "elapsedSeconds": 6.732447667003726,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-signature-proof-attempt14/state.json",
+      "stateSHA256": "60ad08225143eb65fde91917223f2de9b6d839d37d68d02a2f2746e52fdfa87d",
+      "chargedTo": "original cumulative ledger, not paired4500 or companion1200"
+    },
+    {
+      "id": "notification-sil-proof-attempt16",
+      "source": "46225e5af9aa253c8aa3b7d0d6ce2f282c88e7ad",
+      "status": "EXECUTED_PASS_FINAL_OBJECT_EMISSION",
+      "elapsedSeconds": 1.3208997070178157,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-sil-proof-attempt16/candidate-both-callbacks-state.json",
+      "stateSHA256": "3972e5af722baa79d2bd9b3cc1e941e78bf321d4689cf2615313068639570787",
+      "chargedTo": "original cumulative ledger, not paired4500 or companion1200"
+    }
+  ],
+  "companionCharges": [
+    {
+      "id": "companion-native-v1-notification-package",
+      "source": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+      "status": "PROCESS_PASS_REQUIRES_EXACT_TEST_REVIEW",
+      "argv": [
+        "swift",
+        "test",
+        "--package-path",
+        "Packages/HanlinPlatform",
+        "--filter",
+        "HanlinNotificationInvocationTests"
+      ],
+      "elapsedSeconds": 26.137203625010443,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1/notification-package/state.json",
+      "logSHA256": "3e8a1217f04fe6f439d0adf25f691f1af33123b6a9b5a045ffc5ee4b58b941fe",
+      "exitCode": 0
+    }
+  ],
+  "companionResults": [
+    {
+      "scope": "HanlinNotificationInvocationTests",
+      "status": "EXECUTED_PASS",
+      "reviewPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1/notification-package/result-review.json",
+      "reviewSHA256": "4396672e8dd3fe2546d89d108c2e57eeb98a48f386171a93bee5e0322ee98999"
+    }
+  ],
+  "continuationCharges": [
+    {
+      "id": "paired52-continuation-v1",
+      "source": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+      "baselineSeconds": 10248.266329833004,
+      "chargedSeconds": 138.4319897920068,
+      "cumulativeSeconds": 10386.698319625011,
+      "allowanceSeconds": 4500,
+      "status": "FAILED",
+      "decisionSHA256": "492f9c7b75e7776d7a48a34ce2531f140c0c0f9585c437d42922e8308582a734"
+    },
+    {
+      "id": "paired52-continuation-v2",
+      "source": "46225e5af9aa253c8aa3b7d0d6ce2f282c88e7ad",
+      "baselineSeconds": 10699.598554166998,
+      "chargedSeconds": 190.0814806670096,
+      "cumulativeSeconds": 10889.680034834008,
+      "allowanceSeconds": 4361.568010207993,
+      "status": "FAILED",
+      "decisionSHA256": "23fe291c3b673d415c51849a6371c5cdb8ebf374eabad5806a42fc8b6663488d"
+    },
+    {
+      "id": "paired52-continuation-v3",
+      "source": "cffe7f75436aa2e37ec5d82891937965c0407d2d",
+      "baselineSeconds": 11094.68089716604,
+      "chargedSeconds": 1781.210410041007,
+      "cumulativeSeconds": 12875.891307207046,
+      "allowanceSeconds": 4171.486529540984,
+      "status": "FAILED",
+      "decisionSHA256": "c271a5662b7f31e66e4bb9acac84f0f105c26bb3d956c8b0e41df9e02b1030a9"
+    },
+    {
+      "id": "paired52-continuation-v4",
+      "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "baselineSeconds": 13320.133330125045,
+      "chargedSeconds": 1669.903415416993,
+      "cumulativeSeconds": 14990.036745542038,
+      "allowanceSeconds": 5390.276119499977,
+      "status": "FAILED",
+      "decisionSHA256": "62177d808a5c0101dd87548307ece8c3d6c542a8bc56d6c0c93d3fdc4ade7e1d"
+    }
+  ],
+  "operationalRecoveries": [
+    {
+      "receipt": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/export-recovery-attempt17/receipt.json",
+      "receiptSHA256": "1dd03b4d7db916b032995e2344ce8e47301c9b2dcc922f6d32ef44b6ca675342",
+      "priorFailurePreserved": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/export-recovery-attempt17/state.json"
+    },
+    {
+      "sourceBase": "1d5e598614f2bc7c689f34f5d7b364f67e1d5ae1",
+      "consumerSource": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "priorPrefixStateSHA256": "03d3bad3d8306b42e539de5606001fc44cc1d3366bb80068a239dbe66c328d1b",
+      "preservedCompletedSteps": [
+        {
+          "id": "split-upstreams",
+          "argv": [
+            "/bin/bash",
+            "-e",
+            "-o",
+            "pipefail",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-upstreams.sh"
+          ],
+          "originalPhase": true,
+          "status": "PASS",
+          "startedAt": "2026-11-25T08:52:38.526665+00:00",
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt18/logs/split-upstreams.log",
+          "scriptSHA256": "890c8ac2b02ff5a5909c71789e639e333cbc78c687797f2a060a7dd2591cfa84",
+          "pid": 27435,
+          "exitCode": 0,
+          "elapsedSeconds": 22.97102941699268,
+          "finishedAt": "2026-11-25T08:53:01.499022+00:00",
+          "logBytes": 7885,
+          "logSHA256": "0bd3d45fd013bc4cd51cbd54b10f71add41aff73fd97a974d7c11211b3564d26"
+        },
+        {
+          "id": "generate-manifest",
+          "argv": [
+            "python3",
+            "Scripts/SDK/generate_manifest.py"
+          ],
+          "status": "PASS",
+          "startedAt": "2026-11-25T08:53:01.501313+00:00",
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt18/logs/generate-manifest.log",
+          "pid": 28742,
+          "exitCode": 0,
+          "elapsedSeconds": 6.662224416999379,
+          "finishedAt": "2026-11-25T08:53:08.164982+00:00",
+          "logBytes": 3605,
+          "logSHA256": "11ffb997c112dd4c5954bd29a572fb89d05c9048e373d844133bf0580cca034c"
+        },
+        {
+          "id": "generate-project",
+          "argv": [
+            "python3",
+            "Scripts/SDK/update_project.py"
+          ],
+          "status": "PASS",
+          "startedAt": "2026-11-25T08:53:08.167187+00:00",
+          "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt18/logs/generate-project.log",
+          "pid": 29156,
+          "exitCode": 0,
+          "elapsedSeconds": 1.8725974169938127,
+          "finishedAt": "2026-11-25T08:53:10.041090+00:00",
+          "logBytes": 88,
+          "logSHA256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+        }
+      ],
+      "remainingPrefixSeconds": 568.354392291003,
+      "receipt": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/source-advance-f33a0d41/receipt.json"
+    }
+  ],
+  "controllerPID": null,
+  "preparationContinuationCharges": [
+    {
+      "id": "final-prefix-continuation-attempt18",
+      "source": "1d5e598614f2bc7c689f34f5d7b364f67e1d5ae1",
+      "baselineSeconds": 12875.891307207046,
+      "chargedSeconds": 31.645607708996977,
+      "cumulativeSeconds": 12907.536914916043,
+      "allowanceSeconds": 600,
+      "decisionSHA256": "b5a5615a3e962ae8034421d7ab55e2ead27639eca87fba2251c47524d90706ec",
+      "status": "FAILED"
+    },
+    {
+      "id": "final-prefix-continuation-attempt18-recovery",
+      "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "baselineSeconds": 12907.536914916043,
+      "chargedSeconds": 412.59641520900186,
+      "cumulativeSeconds": 13320.133330125045,
+      "allowanceSeconds": 568.354392291003,
+      "decisionSHA256": "2a2c2a4eccbd557dcd1f1a03705c0eccfbc7d00f1f21c5d3ccca23ace96cf0e6",
+      "status": "PASS"
+    },
+    {
+      "id": "final-prefix-continuation-attempt19",
+      "source": "a2c8a1b1be746461272ba77254603304567c309d",
+      "baselineSeconds": 15206.084556709033,
+      "chargedSeconds": 266.8272158750042,
+      "cumulativeSeconds": 15472.911772584037,
+      "allowanceSeconds": 600,
+      "decisionSHA256": "8c23c59be78a089501ee4bbc336147d997c1fde98230b452f09fc1c8424be280",
+      "status": "PASS"
+    }
+  ],
+  "diagnosticCharges": [
+    {
+      "id": "ai27-diagnostic-v1",
+      "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "status": "FAILED",
+      "elapsedSeconds": 216.0478111669945,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/state.json",
+      "decisionSHA256": "15f6ca053ae5470e96a68dc0a874a16d34551e65831ddffdd58d61ce83654d86",
+      "logSHA256": "9ef540f6bede8121ebde737bf1184a2f3d3b1ea19689229b0120e919fad73561",
+      "exitCode": 1,
+      "expectedTests": 27
+    }
+  ],
+  "activeBudget": {
+    "id": "final-prefix-continuation-attempt19",
+    "baselineSeconds": 15206.084556709033,
+    "allowanceSeconds": 600,
+    "originalPlanMaximumActiveSeconds": 12600
+  },
+  "phase": "split-inputs",
+  "finishedAt": "2026-11-25T12:23:01.973504+00:00",
+  "generation": {
+    "status": "PASS",
+    "source": "a2c8a1b1be746461272ba77254603304567c309d",
+    "prefixState": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/state.json",
+    "steps": [
+      {
+        "id": "generate-manifest",
+        "argv": [
+          "python3",
+          "Scripts/SDK/generate_manifest.py"
+        ],
+        "status": "PASS",
+        "startedAt": "2026-11-25T10:39:57.270599+00:00",
+        "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/generate-manifest.log",
+        "pid": 72848,
+        "exitCode": 0,
+        "elapsedSeconds": 6.252866415990866,
+        "finishedAt": "2026-11-25T10:40:03.524908+00:00",
+        "logBytes": 3605,
+        "logSHA256": "11ffb997c112dd4c5954bd29a572fb89d05c9048e373d844133bf0580cca034c"
+      },
+      {
+        "id": "generate-project",
+        "argv": [
+          "python3",
+          "Scripts/SDK/update_project.py"
+        ],
+        "status": "PASS",
+        "startedAt": "2026-11-25T10:40:03.527266+00:00",
+        "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/generate-project.log",
+        "pid": 73600,
+        "exitCode": 0,
+        "elapsedSeconds": 1.8162275000067893,
+        "finishedAt": "2026-11-25T10:40:05.344982+00:00",
+        "logBytes": 88,
+        "logSHA256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+      },
+      {
+        "id": "verify-targets",
+        "argv": [
+          "python3",
+          "Scripts/ProductSplit/verify_targets.py"
+        ],
+        "status": "PASS",
+        "startedAt": "2026-11-25T10:40:05.347475+00:00",
+        "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/verify-targets.log",
+        "pid": 73704,
+        "exitCode": 0,
+        "elapsedSeconds": 0.1608807910088217,
+        "finishedAt": "2026-11-25T10:40:05.509913+00:00",
+        "logBytes": 1438,
+        "logSHA256": "4f49124a3b6c18a0b8c4540cb46c33b31c436deed0ad97c4084e189157ed9c8e"
+      },
+      {
+        "id": "lint-generated-project",
+        "argv": [
+          "plutil",
+          "-lint",
+          "AI_HLY.xcodeproj/project.pbxproj",
+          "HanlinMiniAppsExtensions/Notification/Info.plist",
+          "HanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements"
+        ],
+        "status": "PASS",
+        "startedAt": "2026-11-25T10:40:05.512335+00:00",
+        "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/lint-generated-project.log",
+        "pid": 73722,
+        "exitCode": 0,
+        "elapsedSeconds": 0.03640599999926053,
+        "finishedAt": "2026-11-25T10:40:05.550199+00:00",
+        "logBytes": 179,
+        "logSHA256": "b019c7e18b5b8a4825f382e7c3a04552e29a406d658592b9f6105fe88a6fe18a"
+      },
+      {
+        "id": "runtime-version-contract8",
+        "argv": [
+          "node",
+          "--test",
+          "Scripts/Audit/Tests/runtime-version-contract.test.mjs"
+        ],
+        "status": "PASS",
+        "startedAt": "2026-11-25T10:40:05.552475+00:00",
+        "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/runtime-version-contract8.log",
+        "pid": 73728,
+        "exitCode": 0,
+        "elapsedSeconds": 0.25974308399599977,
+        "finishedAt": "2026-11-25T10:40:05.813655+00:00",
+        "logBytes": 978,
+        "logSHA256": "9e8ae55d89816de935b976e6b4ee2dfc61a8420b63da4ee36527bdd1f1c05ea7"
+      }
+    ]
+  },
+  "focusedCharges": [
+    {
+      "id": "focused19-v1",
+      "source": "a2c8a1b1be746461272ba77254603304567c309d",
+      "status": "FOCUSED_FAILED",
+      "elapsedSeconds": 366.7222996670025,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v1/state.json",
+      "decisionSHA256": "77eef76303d4df1ac274a6cbf3db71b8f7efc4ee7f4e9b623334d565dd3297a3",
+      "logSHA256": "50e1e8e69dc605e6e1b848865df43258820bffe759fce30baafddb4f1e1466aa",
+      "exitCode": 1,
+      "expectedGroups": {
+        "FocusedMini3": 3,
+        "FocusedAI8": 8
+      }
+    },
+    {
+      "id": "focused19-v2",
+      "source": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+      "status": "FOCUSED_FAILED",
+      "elapsedSeconds": 977.134837125006,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/state.json",
+      "decisionSHA256": "72608e39bc0987c619ea24b0eeea53b18cd5cca6f86c4a3dab688699580a315c",
+      "logSHA256": "342ef196929155502518e95854d07595b7d804ae635c8393e0800a028e6a97e4",
+      "exitCode": 1,
+      "expectedGroups": {
+        "FocusedMini3": 3,
+        "FocusedAI8": 8
+      }
+    },
+    {
+      "id": "focused19-v3",
+      "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+      "status": "FOCUSED_FAILED",
+      "elapsedSeconds": 39.67624695900304,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v3/state.json",
+      "decisionSHA256": "e5317f244c6cf6cecb4b9a9c1b3043b1921fbe646d922f332d7bdcd103fea86a",
+      "logSHA256": "5c3085ba2ea41118eae72f8f33666d910d72dc64ca42f8a873f24b23ed8e755a",
+      "exitCode": 1,
+      "expectedGroups": {
+        "FocusedManual1": 1,
+        "FocusedRepair1": 1
+      }
+    }
+  ],
+  "sourceAdvanceHistory": [
+    {
+      "from": "a2c8a1b1be746461272ba77254603304567c309d",
+      "to": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+      "at": "2026-11-25T11:17:47.348911+00:00",
+      "receipt": "source-advance-62dfff9a/receipt.json",
+      "preparationProducer": "a2c8a1b1be746461272ba77254603304567c309d",
+      "priorFocusTerminal": "focused19-v1/state.json",
+      "reason": "Compile-safe actor-local ActivityKit observation; no production or SDK source-input change."
+    },
+    {
+      "from": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+      "to": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+      "at": "2026-11-25T12:05:43.589918+00:00",
+      "receipt": "source-advance-6c006c94/receipt.json",
+      "preparationProducer": "a2c8a1b1be746461272ba77254603304567c309d",
+      "priorFocusTerminal": "focused19-v2/state.json",
+      "reason": "Original tool-result reference paging in controlled model fixture and native image accessibility identifier; no SDK source-input change."
+    }
+  ]
+}

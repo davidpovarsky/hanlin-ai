@@ -1,0 +1,27 @@
+{
+  "id": 137605591076,
+  "run_id": 45146657017,
+  "workflow_name": "Build iOS 26 Unsigned IPA",
+  "head_branch": "codex/hanlin-motion-d-20261123",
+  "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45146657017",
+  "run_attempt": 2,
+  "node_id": "CR_kwDOTTRem88AAAAgCe6wJA",
+  "head_sha": "6772dce6304fc6761a2200314f7d2020dc782e47",
+  "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/137605591076",
+  "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45146657017/job/137605591076",
+  "status": "completed",
+  "conclusion": "cancelled",
+  "created_at": "2026-11-23T09:39:51Z",
+  "started_at": "2026-11-23T09:39:51Z",
+  "completed_at": "2026-11-23T09:54:52Z",
+  "name": "Original Motion input diagnostic (D)",
+  "steps": [],
+  "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/137605591076",
+  "labels": [
+    "xcode-27"
+  ],
+  "runner_id": 0,
+  "runner_name": "",
+  "runner_group_id": 0,
+  "runner_group_name": ""
+}

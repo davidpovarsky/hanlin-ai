@@ -1,5 +1,7 @@
 # AI Team Validation & Smoke-Test Procedures
 
+The current Hanlin two-wave execution is governed by root `AGENTS.md` and the dated execution note in `docs/ai-team/TEAM.md`: the owner explicitly requested ChatGPT built-in agents. Apply the actual platform API and invocation identifiers; preserve evidence-based acceptance and existing authorization.
+
 This document outlines the automated and manual verification procedures for the named AI team configuration.
 
 ## 1. Static Validation

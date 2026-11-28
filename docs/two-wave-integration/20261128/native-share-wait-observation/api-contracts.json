@@ -1,0 +1,104 @@
+{
+  "source": "1aef1ec13b980454b5aba43f0a4787cd5301a748",
+  "authorities": [
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "sha256": "bfdd4be6c3e5bb28a15c43be589cb87c9ee58ce80daa794ef8fd4adf478c7b50",
+      "bytes": 187575,
+      "lineSpans": [
+        [
+          135,
+          155
+        ],
+        [
+          804,
+          820
+        ]
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
+      "sha256": "669bf8cd0d83fd17e8c9b6a07fdb4723d8c506ba1f6c5c8466d7796c24681c76",
+      "bytes": 12281,
+      "lineSpans": [
+        [
+          1,
+          19
+        ]
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowSession.swift",
+      "sha256": "de1329ae3359e51f0c101083f76733712076a7689a059ea60241f51516c91f8e",
+      "bytes": 8707,
+      "lineSpans": [
+        [
+          1,
+          25
+        ]
+      ]
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift",
+      "sha256": "1556c903faaa930c34b657e494763f726f210dab39a7026ae77136b843e146be",
+      "bytes": 4806,
+      "lineSpans": [
+        [
+          1,
+          67
+        ]
+      ]
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
+      "sha256": "a39e7d674cd4ecba7c95a0162dfd97f4aba7ce9f05af64f194ec2002277e922c",
+      "bytes": 18267,
+      "lineSpans": [
+        [
+          88,
+          110
+        ]
+      ]
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift",
+      "sha256": "0085600e6e48bb8e40565a85e081403854639279e82f2bc72664cf7f56e69248",
+      "bytes": 57913,
+      "lineSpans": [
+        [
+          1160,
+          1215
+        ]
+      ]
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift",
+      "sha256": "b811c01bb354a8c8bf9e1dbe1a354bf2dd08cd822f82438661286cc5872b08e6",
+      "bytes": 17756,
+      "lineSpans": [
+        [
+          361,
+          380
+        ]
+      ]
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionContracts.swift",
+      "sha256": "1298b4e420292a4e331cad7903f119861ae6df675a4fc90456fbde2bae24efd9",
+      "bytes": 31677,
+      "lineSpans": [
+        [
+          1,
+          75
+        ]
+      ]
+    }
+  ],
+  "conclusions": [
+    "Existing platform state is readable through the test target's existing @testable import.",
+    "Both NativeScript session identifier getters are public MainActor String getters; no private session field is exposed.",
+    "The original per-ID receipt API and its existing lock policy remain unchanged.",
+    "Installed generation is UInt64 and is printed as an exact decimal string.",
+    "The same target already imports HanlinNativeScriptRuntime in seven existing files."
+  ]
+}

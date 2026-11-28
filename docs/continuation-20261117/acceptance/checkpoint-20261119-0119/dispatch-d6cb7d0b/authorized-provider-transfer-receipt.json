@@ -1,0 +1,14 @@
+{
+  "repository": "davidpovarsky/hanlin-ai",
+  "secret_name": "HANLIN_ACCEPTANCE_GEMINI_API_KEY",
+  "preexisting": false,
+  "credential_value_recorded": false,
+  "transport": "Encrypted GitHub Actions repository secret through gh stdin",
+  "cleanup": "DELETED_AND_ABSENCE_VERIFIED",
+  "source_sha": "d6cb7d0b704abf11d0296e77eea246700c390f5c",
+  "metadata_staged": true,
+  "run": "44428114202",
+  "run_head_verified": true,
+  "absent_after_cleanup": true,
+  "recorded_at": "2026-11-19T00:19:50.175778+00:00"
+}

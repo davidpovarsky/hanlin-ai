@@ -1,0 +1,10 @@
+{
+  "status": "EXECUTED_COVERAGE",
+  "failed_cases": [],
+  "cohort_missing": {},
+  "union_missing": [],
+  "requested_selectors": [
+    "AI_HLYUITests/HanlinContextualTextToolsUITests/testOriginalTextToolsReceiveTheMessageWithoutReplacingTheConversation"
+  ],
+  "qualification": "Execution membership only; xcodebuild retains every native failure"
+}

@@ -1,0 +1,8 @@
+{
+  "published_at": "2026-11-19T04:32:57.329771+00:00",
+  "head": "25c28ae8981eceba18a2beb648da5d1a7660ac63",
+  "base": "ffc876fd04fbac61abfb4d4538e75ccb39055c48",
+  "remote_match": true,
+  "source_plan": "Debug; complete19selectors/28plannedcases; no device/IPA",
+  "inputs_sha256": "e693c7d70367d74b0b947bc3882336f2b483cefe34989ac948a305ce828b7244"
+}

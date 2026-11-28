@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T08:36:20.195306+00:00",
+  "newNativeExecution": false,
+  "files": [
+    {
+      "name": "common-cpp-args.resp",
+      "source": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoWorklets-t.build/Objects-normal/arm64/af3fcb34312c57c0f52879cdce924b91-common-args.resp",
+      "size": 3124,
+      "sha256": "586b640a9b521898a8622a6e698810cf0d99ed94f70bdf8a0f1a5a3383462c16",
+      "retained": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-native-binding-attempt17/raw/common-cpp-args.resp"
+    },
+    {
+      "name": "common-objc-args.resp",
+      "source": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoWorklets-t.build/Objects-normal/arm64/82b82416624d2658e5098eb0a28c15c5-common-args.resp",
+      "size": 3032,
+      "sha256": "0e6985f5ee6bb74bff5cc6a6fa6002cad3ee2dd62a32fd132a1a0227ad4f7013",
+      "retained": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-native-binding-attempt17/raw/common-objc-args.resp"
+    },
+    {
+      "name": "WorkletsVersion.o",
+      "source": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoWorklets-t.build/Objects-normal/arm64/WorkletsVersion.o",
+      "size": 199424,
+      "sha256": "858156d8df38aa4c6def868ac563da18ff6b2aa76484b8e4558aef75d60ebe97",
+      "retained": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-native-binding-attempt17/raw/WorkletsVersion.o"
+    },
+    {
+      "name": "WorkletsVersion.d",
+      "source": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoWorklets-t.build/Objects-normal/arm64/WorkletsVersion.d",
+      "size": 1612,
+      "sha256": "d4d26a02620ccf9f329e6dda8819664531b2e3036830c9d4462563508d191e61",
+      "retained": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-native-binding-attempt17/raw/WorkletsVersion.d"
+    },
+    {
+      "name": "WorkletsVersion.cpp",
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/Common/cpp/worklets/Tools/WorkletsVersion.cpp",
+      "size": 1364,
+      "sha256": "239ac8f50ec7ce0f37fc3c897a76c97af6886130926bb8d985893099c3bbd2fa",
+      "retained": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-native-binding-attempt17/raw/WorkletsVersion.cpp"
+    },
+    {
+      "name": "jsVersion.ts",
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/node_modules/react-native-worklets/src/debug/jsVersion.ts",
+      "size": 279,
+      "sha256": "0d690a1518ee03b82322ed4d7d651fba3c2ea6da95ac42c465d984a2cf6b14bc",
+      "retained": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-native-binding-attempt17/raw/jsVersion.ts"
+    },
+    {
+      "name": "worklets-package.json",
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/node_modules/react-native-worklets/package.json",
+      "size": 7265,
+      "sha256": "aa8f3e796568bedf9b72b8cac0b1935a2356a5cd5ba5bd7735e75e1bad7e9ead",
+      "retained": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-native-binding-attempt17/raw/worklets-package.json"
+    },
+    {
+      "name": "worklets-compiled-flag-attempt17.json",
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/worklets-compiled-flag-attempt17.json",
+      "size": 3350,
+      "sha256": "9c79f8f249a533c952f2e416883f88366ef883cf0cf705c0c2c6a94edcc3697f",
+      "retained": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-native-binding-attempt17/raw/worklets-compiled-flag-attempt17.json"
+    },
+    {
+      "name": "storage-owned-cache-cleanup-attempt18.json",
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/storage-owned-cache-cleanup-attempt18.json",
+      "size": 7244,
+      "sha256": "994a58755ccff7954adb7c9f1f6977e9fd1ae3cefed268d0b3b4518e7db44b1b",
+      "retained": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/storage-archive-attempt18/storage-owned-cache-cleanup-attempt18.json"
+    },
+    {
+      "name": "storage-diagnostics-export-retirement-attempt18.json",
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/storage-diagnostics-export-retirement-attempt18.json",
+      "size": 1888,
+      "sha256": "bf8437e00b72192ca731d955400b3839f4522fcf522fb9ea1c7f6499a62e66d6",
+      "retained": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/storage-archive-attempt18/storage-diagnostics-export-retirement-attempt18.json"
+    },
+    {
+      "name": "storage-v3-simulator-retirement-attempt18.json",
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/storage-v3-simulator-retirement-attempt18.json",
+      "size": 2871,
+      "sha256": "6663291641de01a86ead0a7d6cbcedd514af89aaf818c8e24a657ef77f6bf327",
+      "retained": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/storage-archive-attempt18/storage-v3-simulator-retirement-attempt18.json"
+    }
+  ]
+}

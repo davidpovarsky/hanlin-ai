@@ -1,0 +1,45 @@
+{
+  "total_count": 2,
+  "artifacts": [
+    {
+      "id": 15172692252,
+      "node_id": "MDg6QXJ0aWZhY3QxNTE3MjY5MjI1Mg==",
+      "name": "ci-validation-plan",
+      "size_in_bytes": 67837,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15172692252",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15172692252/zip",
+      "expired": false,
+      "digest": "sha256:6bc7beeb69c9a24638de39e8114f9ac7a1102d6517d81d71694dd541a27c5480",
+      "created_at": "2026-11-27T04:37:52Z",
+      "updated_at": "2026-11-27T04:37:52Z",
+      "expires_at": "2026-12-11T04:37:50Z",
+      "workflow_run": {
+        "id": 45940969885,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/hanlin-two-wave-integration-20261126",
+        "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c"
+      }
+    },
+    {
+      "id": 15172422380,
+      "node_id": "MDg6QXJ0aWZhY3QxNTE3MjQyMjM4MA==",
+      "name": "miniapp-upstream-inputs-build-ios26-unsigned-ipa-45940969885",
+      "size_in_bytes": 33892,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15172422380",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15172422380/zip",
+      "expired": false,
+      "digest": "sha256:284695bdbb86138a83251b8466e67ab0e9205995c55045612a5bb07862d5bbd8",
+      "created_at": "2026-11-27T04:40:19Z",
+      "updated_at": "2026-11-27T04:40:19Z",
+      "expires_at": "2026-12-27T04:40:17Z",
+      "workflow_run": {
+        "id": 45940969885,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/hanlin-two-wave-integration-20261126",
+        "head_sha": "866d2d3c60525e32eae27564869e6dba024e625c"
+      }
+    }
+  ]
+}

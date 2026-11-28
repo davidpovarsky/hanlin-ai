@@ -1,0 +1,32 @@
+{
+  "prepared_at": "2026-11-23T22:17:27.647533+00:00",
+  "source_parent": "4968a88d39cb9e5fccf408bdac832be7df483801",
+  "original_run": 45265065184,
+  "original_run_source": "ade2f626e37102abde83050c94d524d19e0726bb",
+  "method": "AI_HLYTests/HanlinMCPEmbeddingTests/staleEditableSettingsPreserveCurrentEnvironmentAndPackageIdentity()",
+  "original_status": "FAIL",
+  "original_log_sha256": "27deecde27e809b2337454a1ebfb8ddd7bfda51c37e595de62084b295b11de5a",
+  "original_failure_lines": [
+    {
+      "line": 2236,
+      "text": "✘ Test staleEditableSettingsPreserveCurrentEnvironmentAndPackageIdentity() recorded an issue at HanlinMCPEmbeddingTests.swift:94:9: Expectation failed: disk.first(where: { $0.id == server.id }) == saved"
+    },
+    {
+      "line": 2319,
+      "text": "✘ Test staleEditableSettingsPreserveCurrentEnvironmentAndPackageIdentity() recorded an issue at HanlinMCPEmbeddingTests.swift:105:9: Expectation failed: retained.first(where: { $0.id == server.id }) == replaced"
+    }
+  ],
+  "observed_disk_updatedAt_reference_seconds": 817163174.0,
+  "observed_returned_updatedAt_reference_seconds": 817163174.904253,
+  "changed_source": "AI_HLY/Downstream/MCP/Persistence/MCPServerRegistryStore.swift",
+  "before_sha256": "e58262520495f5ef13662dfdf01acd03eecf23eadd20ec6e5fa91e783fed0973",
+  "after_sha256": "ce1321dc295cd84c63eff8802162c11ed63668bced2e0ea026c27b667bc811be",
+  "original_test_unchanged": true,
+  "serialized_format_unchanged": true,
+  "native_after_fix": "NOT_RUN",
+  "scope": "Return verified committed descriptor representation from save and all four mutators; no timestamp codec, schema, stale-installation guard, environment policy or assertion changes.",
+  "linux_syntax_parse": {
+    "exit_code": 0,
+    "qualification": "Syntax only; not Apple typecheck or runtime acceptance"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "base": "08ef8741ff58241a081c908536a3b4d3917cc0e8",
+  "changes": {
+    "HanlinAISDKAgentEngine.swift": "Preserve sticky dynamic tool reload decisions through stream finalization and check cancellation before creating another provider task.",
+    "HanlinStoredPackageSnapshot+MiniAppRegistration.swift": "Coalesce only equivalent appIntent bridges. Preserve other duplicate entrypoints for the existing canonical validator to reject.",
+    "Package.swift": "Retain the already reviewed compatible ZIPFoundation 0.9.19..<0.10 bound; do not restore the original branch's conflicting exact 0.9.19 constraint."
+  },
+  "files": [
+    {
+      "bytes": 41008,
+      "original_git_blob": "bc2de58b83b01321fee50d644d60ff87be599174",
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+      "sha256": "09c1fbabe06b05d6a794cb60035273a92cd6eb0a2cfa323b82c9eda7d3f1eb47"
+    },
+    {
+      "bytes": 18023,
+      "original_git_blob": "9cc1f05ddfc8fcb84b2f01c9620a6169df19904c",
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
+      "sha256": "1c2b29edd1829a74bc5bb35ded4c235dbdffde2b282c4a63ee7f3d2c90479dbf"
+    },
+    {
+      "bytes": 4657,
+      "original_git_blob": "ba286d9b36874987a3778cebe1bce91fd8008725",
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinCatalogReloadCancellationTests.swift",
+      "sha256": "187084c5b97cd02c0e490f92b5238289d04deff0ffe1a16c81843ff7a7dc0ccc"
+    },
+    {
+      "bytes": 5676,
+      "original_git_blob": "364e358d3ba69f248a242ea96b27091a63f5dfca",
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinTransientToolCatalogTests.swift",
+      "sha256": "1f5f18df56420a7b9b41acfb67f9995d8c4596cc42609c75337f542fcf1de65a"
+    }
+  ],
+  "frozen_engines": "No Scripting-JSC/ScriptUI or .scripting engine development; no runtime engine replacement.",
+  "historical_sdk_qualification": "e79192e5ad2b879ca4a45e46a3f6b504a1094155 / QUALIFICATION SHA3969a82729fa8252d73390c512f7ee942ece157a90b61f7c5aad407bde9d0cf9 stays scoped to its original Platform source. Corrected final framework requires actual dependency-impact qualification.",
+  "new_mac_tests": "NOT_RUN",
+  "original_source": "44bcebf687206a37893cb584cf72c6aafbc5ca48",
+  "original_tests_preserved": [
+    "HanlinCatalogReloadCancellationTests",
+    "HanlinTransientToolCatalogTests"
+  ],
+  "schema": 1,
+  "status": "REVIEWED_SHARED_SOURCE_INTEGRATION_NOT_NEW_RUNTIME_ACCEPTANCE",
+  "utc": "2026-11-25T08:56:13.832738+00:00"
+}

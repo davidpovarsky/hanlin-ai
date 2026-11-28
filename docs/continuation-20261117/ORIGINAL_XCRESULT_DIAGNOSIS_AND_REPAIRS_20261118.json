@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-18T07:33:37.635490+00:00",
+  "original_run": 44243185407,
+  "original_sha": "00a932d63db76549dff0a228a6b75711fcad8a22",
+  "original_artifact": {
+    "id": 14404598006,
+    "api_zip_sha256": "80afc909d7c7f78f45f03665288d8aaab0f3fdc229807e09a5e83475c235afb8",
+    "full_zip_digest_recomputed": false
+  },
+  "decoding": {
+    "database": "Xcode original SQLite opened read-only; attachment references resolved through actual Activities/TestCaseRuns",
+    "payloads": "Original Zstandard payloads decoded with isolated zstandard 0.25.0; ZIP entry CRC and SHA verified",
+    "reran_any_original_test_for_diagnosis": false,
+    "full_zip_digest_recomputed": false,
+    "proofs": [
+      {
+        "path": "build/continuation-evidence/44243185407/decoded-original-attachments/case-00.ips",
+        "bytes": 108007,
+        "sha256": "e6021f405bdf77476760435425aa05d7da1c1381e5549994571c68b82c14c9a7"
+      },
+      {
+        "path": "build/continuation-evidence/44243185407/decoded-original-attachments/case-04.txt",
+        "bytes": 36111,
+        "sha256": "732ceebabc1ed2ea31bdc1508a01b6fb81d54a3239dcb007e23f916ac1a0bb8e"
+      },
+      {
+        "path": "build/continuation-evidence/44243185407/decoded-original-attachments/case-10.txt",
+        "bytes": 77437,
+        "sha256": "5129fb2ab85acd7f5700ed6ce643471478c892f7bb79d973227187c1dadcd7be"
+      },
+      {
+        "path": "build/continuation-evidence/44243185407/decoded-original-attachments/case-14.txt",
+        "bytes": 54633,
+        "sha256": "3e3e7a89441b0ec0813b34fd011d0556c2cf0e2e2e36c455a1d141ef263d7192"
+      },
+      {
+        "path": "build/continuation-evidence/44243185407/decoded-original-attachments/case-18.txt",
+        "bytes": 42794,
+        "sha256": "c25a87deebc55d497e9bb161a50400b3e302b52152837b66efba20654d6726ec"
+      },
+      {
+        "path": "build/continuation-evidence/44243185407/decoded-original-attachments/help-original.mp4",
+        "bytes": 7371748,
+        "sha256": "1d96fa1e2f38300cd2ebd9bf4bfe9e67c5db8b354cce6815a82440ee9ad842e7"
+      },
+      {
+        "path": "build/continuation-evidence/44243185407/decoded-original-attachments/help-last-frame-small.png",
+        "bytes": 112750,
+        "sha256": "00d8e74f9fc87950352a85017b08d34ba0df0b7d74a1797f9d0b42214a861446"
+      },
+      {
+        "path": "build/continuation-evidence/44243185407/decoded-original-attachments/runner-log-0",
+        "bytes": 141284,
+        "sha256": "a0ee5079d6b58f828d8566fdb41ce0cc19c9fcb1c9bb02e7f0b29f8ede59d4bf"
+      },
+      {
+        "path": "build/continuation-evidence/44243185407/decoded-original-attachments/runner-log-2",
+        "bytes": 58662,
+        "sha256": "ff3551d8bb783e0c462e11c9f623a8f16b2ffe0b886446dd18c67304c0b88033"
+      },
+      {
+        "path": "build/continuation-evidence/44243185407/decoded-original-attachments/manifest.json",
+        "bytes": 16382,
+        "sha256": "1e733946d2cdf0bf087ef8a30c8145c9fc50aab84c89a2b3d5a48bf23fbf8b89"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "area": "primary navigation",
+      "observed": "Original iPad AX shows Other with two direct Button children (home/library), each with nested duplicate Button wrapper. No TabBar.",
+      "change": "Use original stable button IDs. Whole-app test finds the actual shared parent and still requires exactly two direct buttons and exactly the approved ID set.",
+      "acceptance": "PENDING_NATIVE"
+    },
+    {
+      "area": "Skill negative consent",
+      "observed": "Native approval Popover frame (368,252,288,205), Allow once frame (384,380,256,48). Test tapped underlying navigation bar center (516,395), inside Allow once. Actual activities record this tap.",
+      "change": "Require the real confirmation; use Cancel if exposed, otherwise choose a measured point inside app and outside popup plus 16-point exclusion. Preserve no-output assertion and add no-receipt assertion.",
+      "acceptance": "PENDING_NATIVE"
+    },
+    {
+      "area": "Skill import/resources",
+      "observed": "Import preview/detail are original native CollectionViews with correct IDs and two pages. Install/Add Resource are not materialized in initial visible AX snapshot.",
+      "change": "Reveal those controls in the explicit foreground list before existence/tap assertions; bounded bidirectional search also finds earlier resource rows. Preserve real Python/Node execution, cancellation, persistence and CRUD requirements.",
+      "acceptance": "PENDING_NATIVE"
+    },
+    {
+      "area": "Help",
+      "observed": "Original final video frame shows Software Guide and Cost fully visible, while stable-ID query remains unreachable after ten swipes. Section has an unused parent accessibility identifier applied after child identifiers.",
+      "inference": "Parent Section identifier propagation may hide the distinct child identities; original test did not attach a text AX snapshot, so exact identity propagation is not asserted as observed.",
+      "change": "Remove only the unused Section identifier, retain distinct child IDs and all original native UI. Attach full test AX if unreachable again.",
+      "acceptance": "PENDING_NATIVE"
+    },
+    {
+      "area": "SwiftData crash",
+      "observed": "Original crash is main-thread EXC_BREAKPOINT in SwiftData fetch, called by requireOriginalConversation -> load -> save -> asynchronous HanlinAgentSession.persist. Log shows deletion test returned before next case began; cancellation leaves asynchronous persistence work.",
+      "inference": "A store retaining only ModelContext can outlive creator-owned ModelContainer. Container lifetime is the focused suspected cause; no fatal-error reason was present in original console.",
+      "change": "Store retains exactly context.container and extends its lifetime through fetch. No replacement database, no cancellation of durable receipt persistence, no weakened deletion/CAS/context guards.",
+      "regression": "originalStoreKeepsItsContainerAliveAcrossDeferredPersistenceAfterCreatorReturns(): creator returns, weak reference must remain valid, deferred Task saves original record, same identity/draft retained, deletion still fails stale and never recreates a row.",
+      "acceptance": "PENDING_NATIVE"
+    }
+  ],
+  "apple_api_references": [
+    "https://developer.apple.com/documentation/swiftdata/modelcontainer",
+    "https://developer.apple.com/documentation/swiftdata/modelcontext"
+  ],
+  "affected_native_scope": {
+    "unit_suites": [
+      "AI_HLYTests/HanlinAppAgentSessionOwnerTests",
+      "AI_HLYTests/HanlinAppSplitOriginTests"
+    ],
+    "expected_unit_invocations": 24,
+    "failed_original_ui_selectors": [
+      "AI_HLYUITests/AgentRuntimeConversationUITests/testPhase2ActualPythonToolApprovalAndColdConversationRestoration",
+      "AI_HLYUITests/AgentRuntimeConversationUITests/testPhase2OfficialToolSurfaceContinuesThroughTheSameOriginalChat",
+      "AI_HLYUITests/HanlinCanvasRuntimeUITests/testOriginalCanvasRunsEmbeddedPythonAndRetainsSourceAfterRelaunch",
+      "AI_HLYUITests/HanlinContextualTextToolsUITests/testOriginalTextToolsReceiveTheMessageWithoutReplacingTheConversation",
+      "AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoSwiftUIProbeEndToEnd",
+      "AI_HLYUITests/HanlinHelpUITests/testOfflineGuideCostsAndSupportReturnToTheOriginalProfile",
+      "AI_HLYUITests/HanlinMorphComposerUITests/testWideNavigationKeepsDraft",
+      "AI_HLYUITests/HanlinNativeA2UIChatUITests/testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest",
+      "AI_HLYUITests/HanlinNativeA2UIChatUITests/testNewConversationWorksWithoutOptimizationModel",
+      "AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft",
+      "AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory",
+      "AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft",
+      "AI_HLYUITests/HanlinNativeA2UIChatUITests/testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest",
+      "AI_HLYUITests/HanlinNativeA2UIChatUITests/testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow",
+      "AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime",
+      "AI_HLYUITests/HanlinPrimaryNavigationSmokeUITests/testWholeAppPrimaryNavigationSmoke",
+      "AI_HLYUITests/HanlinSkillCenterUITests/testCancelActuallyRunningImportedNodeSkillRetainsPartialOutput",
+      "AI_HLYUITests/HanlinSkillCenterUITests/testImportedSkillExecutionRequiresApprovalAndPersistsAfterColdLaunch",
+      "AI_HLYUITests/HanlinSkillCenterUITests/testSkillResourceAddImportEditDelete"
+    ],
+    "expected_ui_cases": 19,
+    "configuration": "Release with HANLIN_TESTING, as selected by original NativeScript/Expo suite scope",
+    "fixture_guard_fix": "16684ada431805218fca77fe7bff4fd690574d0e"
+  },
+  "local_checks": {
+    "swift_frontend_parse_changed_files": "PASS (syntax only, not Apple SDK typecheck)",
+    "git_diff_check": "PASS"
+  },
+  "overall": "CHANGES_PREPARED_NATIVE_VERIFICATION_REQUIRED",
+  "phase2": "IN_PROGRESS",
+  "phase3": "IN_PROGRESS",
+  "release": "NO_GO",
+  "repair_sha": "0b06c98e45c6757676f956aea49cba0d80ab2127",
+  "native_revalidation": {
+    "run": 44259931987,
+    "sha": "0b06c98e45c6757676f956aea49cba0d80ab2127",
+    "status": "DISPATCHED_RESULTS_PENDING",
+    "expected_unit_invocations": 24,
+    "expected_ui_cases": 19
+  },
+  "paired_revalidation": {
+    "run": 44259936836,
+    "sha": "0b06c98e45c6757676f956aea49cba0d80ab2127",
+    "status": "DISPATCHED_RESULTS_PENDING",
+    "expected_cases": 8,
+    "scope": "product_and_share"
+  }
+}

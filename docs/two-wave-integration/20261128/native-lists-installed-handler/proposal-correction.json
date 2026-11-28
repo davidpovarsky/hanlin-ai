@@ -1,0 +1,11 @@
+{
+  "previousProposal": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/mac-nativescript-lists-installed-identity-diagnosis-fc5-r1/minimal-reader-proposal.json",
+    "bytes": 1567,
+    "sha256": "97c09454a6ce0b28e0ccea0f3283e8ae7f7fee0342bcc7e15570b1420507b079"
+  },
+  "status": "SUPERSEDED_SOURCE_PROPOSAL_ONLY",
+  "correction": "Keep both archive-relative ENGINE_CONTRACTS handler values unchanged. Prefix source/ only at the installed action comparison, exactly as the original installer does. Reject the unprefixed form; do not accept both.",
+  "previousEvidencePreserved": true,
+  "testsAndNativeRuns": 0
+}

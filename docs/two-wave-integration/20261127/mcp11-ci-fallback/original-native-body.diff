@@ -1,0 +1,29 @@
+--- approved-882d-original-native-body
++++ existing-GitHub-route-native-body
+@@ -1,5 +1,5 @@
+-native=open("/Users/m1/caches/hanlin-two-wave-native-app.lock","a+")
+-maintenance=open("/Users/m1/caches/.scaleway-cache-maintenance.lock","a+")
++native=open(LOCKS/"hanlin-two-wave-native-app.lock","a+")
++maintenance=open(LOCKS/".scaleway-cache-maintenance.lock","a+")
+ process=None
+ log_path=EVIDENCE/"original-swift-test.log"
+ try:
+@@ -7,10 +7,8 @@
+     fcntl.flock(maintenance,fcntl.LOCK_SH|fcntl.LOCK_NB)
+     data["coordinationLocks"]={"native":"exclusive","maintenance":"shared"}
+     assert git("rev-parse","HEAD")==SOURCE and not git("status","--porcelain=v1")
+-    assert git("merge-base",BINDING["reviewedSource"],SOURCE)==BINDING["reviewedSource"]
+     for rel,sha in BINDING["packageTrees"].items():
+         assert git("rev-parse","HEAD:"+rel)==sha
+-        assert git("rev-parse",BINDING["reviewedSource"]+":"+rel)==sha
+     for rel,sha in BINDING["sourceAndPinHashes"].items():
+         assert digest(ROOT/rel)==sha,rel
+     test_path=ROOT/"Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HostMCPWireComparisonTests.swift"
+@@ -30,7 +28,6 @@
+         result=subprocess.run(args,cwd=ROOT,capture_output=True,text=True,timeout=15,check=True)
+         data["toolchain"][name]=result.stdout.strip()
+     env=os.environ.copy()
+-    env["PATH"]=str(STAGE/"tool-bin")+":/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin"
+     assert not env.get("SWIFT_EXEC") and not env.get("SWIFTPM_BUILD_DIR")
+     data["commandStartedAt"]=now()
+     save()

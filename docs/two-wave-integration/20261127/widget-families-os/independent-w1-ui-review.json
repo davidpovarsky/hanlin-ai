@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w1_review_resume",
+  "status": "APPROVED_UI_SOURCE_ONLY_NATIVE_NOT_RUN",
+  "uiSHA256": "07dab2303533a16e0a1e0dc36f0ebfa9f8689e1ec6f5ea203347c3170bcfd7ed",
+  "standaloneInsertionSHA256": "5586a986b1c12295b7e55603ac2e32cffb0d440402e735deed9036af5b7efb3d",
+  "insertionLines": 323,
+  "originalWholeFileSHA256": "0ae41eadc0e30eb81ac25c5f1a82505eaa07cdf3ff57e1f176951753ead54f01",
+  "wholeFileInverse": {
+    "precedingSeparatorAndInsertionSHA256": "8d7b4e301ba2227cbb21567c975464bc7f2c525ad29b8fea5a51a5de80e1bbaf",
+    "insertionAndFollowingSeparatorSHA256": "f66738f42b3df01ba192bf16651afc7cc5fc543af9cf5d2d6e5a1f1ae92fda14",
+    "bothExactlyRecoverOriginal": true,
+    "oldSelectors": 33,
+    "newSelectors": 4,
+    "allSelectors": 37
+  },
+  "reviewed": [
+    "All four added selectors and the full observation, gallery, configuration, rotation, cleanup and restoration helpers",
+    "Existing unchanged require/wait/bounded/tap/checkpoint/response/capture contracts",
+    "Public existing XCTest XCUIDevice orientation, application state, frame, screenshot and normal element interactions; no private focus or rendering API"
+  ],
+  "findings": [
+    "A new UUID-named instance is prepared through the shipping importer before the read-only observer admits identity; no observer or UI writes installed state directly.",
+    "Gallery evidence requires the actual Hanlin Script name and explicit requested size text, with finite traversal and repeated-page rejection. Swipe position alone cannot satisfy selection.",
+    "The page must initially have no visible Matrix or placeholder. Observation requires one visible zero-count Matrix and the actual required controls in a finite container, with exact named configuration reread at every orientation.",
+    "MiniApps must remain terminated during family observations. Portrait-landscapeLeft-portrait assignments require both reported device orientation and matching foreground SpringBoard geometry.",
+    "Removal reopens the currently visible widget configuration and verifies this case's fresh name before the real Remove Widget confirmation. An unbound placement is retained as failed evidence rather than removed speculatively.",
+    "Success requires observed cleanup and restoration before completion. Failure attempts bounded cleanup/restoration and retains their errors; the global 420-second case deadline remains active.",
+    "The ordinary original33 UI methods and all pre-existing helpers recover byte-exact after removal of one added block plus its separator."
+  ],
+  "limitations": [
+    "Source review is not Swift compiler, gallery-label, WidgetKit-family or orientation execution proof.",
+    "Unknown native gallery/control shapes fail closed; no successful existing placement was inferred from historical failed gallery evidence.",
+    "The four source methods do not by themselves establish additional iPhone, appearance, concurrency or VoiceOver acceptance.",
+    "Observer/native source-generation/family/cache admission and runner review are separately owned by root."
+  ],
+  "portableControlsRunByReviewer": 0,
+  "nativeCommandsRunByReviewer": 0,
+  "sourceEditsByReviewer": 0,
+  "recordedAtUTC": "2026-11-27T20:52:35.587107+00:00"
+}

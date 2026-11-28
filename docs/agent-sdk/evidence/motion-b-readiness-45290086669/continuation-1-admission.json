@@ -1,0 +1,21 @@
+{
+  "time": "2026-11-24T00:32:33.887081+00:00",
+  "run": 45290086669,
+  "source": "51f56b49fe7add4eafa1d8b2443f1adf3b82157f",
+  "prior_sentinel_job": "job_08bfa2a90b34",
+  "prior_sentinel_finished_at": "2026-11-24T00:32:00.615903+00:00",
+  "prior_observer_end": {
+    "time": "2026-11-24T00:32:00.207695+00:00",
+    "watch_exit_code": -15,
+    "timed_out": true,
+    "elapsed_seconds": 3300.008
+  },
+  "exact_observers": [],
+  "collector_already_started": false,
+  "watch_seconds": 2400,
+  "collector_seconds": 180,
+  "outer_seconds": 2700,
+  "reason": "Original hosted job acquired a runner only after53minqueue; continue read-only observation of the same native attempt after the previous observer fully ended. Native35min/test600\u2013720budgets unchanged.",
+  "destination_device": 2064,
+  "free_bytes": 2246295552
+}

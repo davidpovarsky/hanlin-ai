@@ -1,0 +1,140 @@
+{
+  "JSONAndPythonSyntax": "PASS_SOURCE_PARSE_ONLY",
+  "base": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "currentRoot": "064b7b58c923af0beff84a1852af84071f4409d8",
+  "currentRootComposition": {
+    "mapSHA256": "e252a56cce546b1dd90ad134df40e31973a59f2c38d3a9f27af5589a857f8dc9",
+    "plannerSHA256": "545602524c520b8ba88e8dcb9aa37a5726ff6ed686d2800b331e80998b18b7a4",
+    "rootComponentAdditionPreserved": true,
+    "wholeOriginalCurrentRootInverse": true
+  },
+  "execution": {
+    "AppleCompile": 0,
+    "CLIBuild": 0,
+    "CLIValidate": 0,
+    "dispatches": 0,
+    "nativeCases": 0,
+    "plannerControl": 0,
+    "portableTests": 0
+  },
+  "gitDiffCheck": {
+    "exit": 0,
+    "stderr": "",
+    "stdout": ""
+  },
+  "gitReverseApplyCheck": {
+    "exit": 0,
+    "stderr": "",
+    "stdout": ""
+  },
+  "nativeObligations": "Authored region inventory and real API-return observations do not establish native rendering, actual disappearance, restore, APNs, or iPhone admission.",
+  "newPlannerMethods": 1,
+  "originalMapWholeByteInverse": true,
+  "originalPlannerASTSHA256": "28a410f3c5e541bb538ef26882610075281115a247fa76f65905a05da59741b3",
+  "originalPlannerWholeByteInverse": true,
+  "projectedPlannerASTSHA256": "28a410f3c5e541bb538ef26882610075281115a247fa76f65905a05da59741b3",
+  "recordedAt": "2026-11-28T11:52:01.546203+00:00",
+  "rows": [
+    {
+      "candidateBytes": 12938,
+      "candidateSHA256": "a6f1bd6e9255262fea6f2c9b7d0dedd477969750efc44beba3c4db96d4acd74e",
+      "new": true,
+      "path": "Fixtures/LiveActivityLifecycle/expo/App.tsx"
+    },
+    {
+      "candidateBytes": 118,
+      "candidateSHA256": "57239928efb0bd0e6760bf64443e70bf021eb963f074908332de3f5b7959a5a3",
+      "new": true,
+      "path": "Fixtures/LiveActivityLifecycle/expo/hanlin.authoring.json"
+    },
+    {
+      "candidateBytes": 117,
+      "candidateSHA256": "e6ff990a5f73c39cebfecc539611b23872e530f1287c6b0d0d8447fbc9a832ee",
+      "new": true,
+      "path": "Fixtures/LiveActivityLifecycle/expo/index.ts"
+    },
+    {
+      "candidateBytes": 334,
+      "candidateSHA256": "a886a091cc90947b1bd64d5a123af9dbde523cd35dabd7d5dea0384fe98fd61f",
+      "new": true,
+      "path": "Fixtures/LiveActivityLifecycle/expo/package.json"
+    },
+    {
+      "candidateBytes": 487,
+      "candidateSHA256": "e6c6dcae32b51de961b7342b8c399f7df8469f67c0f58b11934c5c354521ff62",
+      "new": true,
+      "path": "Fixtures/LiveActivityLifecycle/expo/script.json"
+    },
+    {
+      "candidateBytes": 53,
+      "candidateSHA256": "02e14c4b983c0f436d32ce0eb2f96309512a7d69774ed0c7d39ffa4175ccf7df",
+      "new": true,
+      "path": "Fixtures/LiveActivityLifecycle/expo/tsconfig.json"
+    },
+    {
+      "candidateBytes": 146,
+      "candidateSHA256": "228cd8d7c2d312b4f5c1ef2ba89a4c4a2e02f9b750a82411346c0da9885971c5",
+      "new": true,
+      "path": "Fixtures/LiveActivityLifecycle/nativescript/hanlin.authoring.json"
+    },
+    {
+      "candidateBytes": 11271,
+      "candidateSHA256": "c99e8b36bf5e155340f29ff26f549532910c890095a549afd21708e372f2483c",
+      "new": true,
+      "path": "Fixtures/LiveActivityLifecycle/nativescript/index.ts"
+    },
+    {
+      "candidateBytes": 293,
+      "candidateSHA256": "67c8ebb3dc9a091eb9484f0f2a7122cd82cc43567480964cfed04a074790ec9d",
+      "new": true,
+      "path": "Fixtures/LiveActivityLifecycle/nativescript/package.json"
+    },
+    {
+      "candidateBytes": 700,
+      "candidateSHA256": "bb4dbd0fa034e6f9e29bf39d76f00146f5a7e5e770fa38265ac7c60f37a22885",
+      "new": true,
+      "path": "Fixtures/LiveActivityLifecycle/nativescript/script.json"
+    },
+    {
+      "candidateBytes": 75,
+      "candidateSHA256": "4148cad60e1db19b1159ba84bd5e8b9749bf9c90ed607de6fbeeaa942cf2097d",
+      "new": true,
+      "path": "Fixtures/LiveActivityLifecycle/nativescript/tsconfig.json"
+    },
+    {
+      "candidateBytes": 923,
+      "candidateSHA256": "1b61cc1b750e82415cac38a9b6af78fc63154ec98d0f7a4dfcddddf2ccf2bc90",
+      "new": true,
+      "path": "Fixtures/LiveActivityLifecycle/nativescript/widget.jsx"
+    },
+    {
+      "candidateBytes": 81980,
+      "candidateSHA256": "51ad4d5855f310f7c1ec515c43c247e2e2a5515ee07a278d0093b70b548b70a7",
+      "new": false,
+      "path": "Scripts/CI/affected-validation-map.json",
+      "preimageBytes": 81209,
+      "preimageGitBlob": "c43425bec3bf296bac9d6ffcbedad521fa309409",
+      "preimageSHA256": "804ef959062859f3933a38a71521b42ffbb4a9f86399a3cfe9d0a6c908c8b8d1"
+    },
+    {
+      "candidateBytes": 91957,
+      "candidateSHA256": "27ced2643b5953d6cd8a308cfb8b73c5e6e56e11b86d67109b66b5b63ce8517b",
+      "new": false,
+      "path": "Scripts/CI/Tests/test_affected_validation.py",
+      "preimageBytes": 89542,
+      "preimageGitBlob": "69857b8fad26299cf33ae2027815dc5919c229d7",
+      "preimageSHA256": "2258992f08bf4168fae41ec2e746fc02d4f455368638557f6386b5dc90ed6ff3"
+    }
+  ],
+  "schema": 1,
+  "sourcePatchGzipSHA256": "593d76879671a8118128486fd613a14aae5c105e0865fc1128a64ffed4d13af9",
+  "sourcePatchSHA256": "f5162164efa953241c7dcccc9c8c9fdc1ab5ac4405f76c241dde35e9bf34ca9a",
+  "status": "FROZEN_SOURCE_CANDIDATE_NOT_EXECUTED",
+  "unchangedScope": [
+    "All existing fixture bytes",
+    "All existing UI test methods and helpers",
+    "Original System10 iPad route and per-case budgets",
+    "All production APIs and engines",
+    "All workflow and native dispatch code"
+  ]
+}

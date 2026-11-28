@@ -1,0 +1,88 @@
+{
+  "base": "b8c4573dc797d39ee7bddc0937faa9d8edcda82d",
+  "status": "SOURCE_AND_PORTABLE_CONTROLS_ONLY_NOT_NATIVE_EXECUTED",
+  "files": {
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "bytes": 86443,
+      "sha256": "8f626ecbac93eee4da4785d59b6c24718010bd243c4b7c8ace93d1f493dc9244"
+    },
+    "Scripts/ProductSplit/paired_extra26.py": {
+      "bytes": 33979,
+      "sha256": "b3ec17758b36e12fe329ce47cb08e483d906134c4185f7a64ae4a910a393835a"
+    },
+    "Scripts/ProductSplit/Tests/test_paired_extra26.py": {
+      "bytes": 16208,
+      "sha256": "147b38495d685e35ccc6e0f0cac721169d5df9b77aa9b95651cd3eeeabadb485"
+    }
+  },
+  "patchSHA256": "8fae150fb5e415f0657e118e96ef2db99e685e2720a6781ddd5c3ec15643e86b",
+  "originalRunnerSHA256": "eb7ea591a8e26b4b3b5fad83387d7539353eacabf8361f5804167a088572423a",
+  "allOriginalHelperNamesPreserved": [
+    "select_paired_runtime",
+    "command",
+    "command_phase_status",
+    "record_build_phases",
+    "capture_app_intents_metadata",
+    "fixture_archive",
+    "authoring_fixtures",
+    "verify_native_result",
+    "start_native_adapter_assets",
+    "widget_recovery_fixture",
+    "shortcut_surface_fixtures",
+    "system_surface_inputs",
+    "stage_system_surface_share_input",
+    "start_system_surface_input_producer",
+    "finish_system_surface_input_producer",
+    "start_shortcut_observer",
+    "finish_shortcut_observer",
+    "main"
+  ],
+  "originalHelperBodiesUnchanged": [
+    "select_paired_runtime",
+    "command_phase_status",
+    "record_build_phases",
+    "capture_app_intents_metadata",
+    "fixture_archive",
+    "authoring_fixtures",
+    "verify_native_result",
+    "start_native_adapter_assets",
+    "widget_recovery_fixture",
+    "shortcut_surface_fixtures",
+    "system_surface_inputs",
+    "stage_system_surface_share_input",
+    "start_system_surface_input_producer",
+    "finish_system_surface_input_producer",
+    "start_shortcut_observer",
+    "finish_shortcut_observer"
+  ],
+  "onlyCommandAndMainContainScopedHooks": true,
+  "commandAndMainASTRecoverOriginalAfterRemovingOnlyExplicitCompositeHooks": true,
+  "allOriginalPlanAssignmentsAndSDK04SelectorsUnchanged": 9,
+  "original54PerPhaseBudgetsUnchangedAndOnlyCappedByOriginal210MinuteJobDeadline": true,
+  "originalExtra26ControllerSHA256": "4a69a7a0a3bd5760f32096f5db022c2b96d387a2f4dd17d829332cb52bf7f275",
+  "inventorySHA256": "f6ab65b8a897238f52cecefa2cdfe43f38bf359bbd82bbf0251fc7a7f34d3f5e",
+  "originalScopes": {
+    "paired": {
+      "miniapps": 25,
+      "hanlin": 29
+    },
+    "continuation": {
+      "selectors": 6,
+      "definitions": 22,
+      "invocations": 26,
+      "parameterizedDefinitions": 3,
+      "parameterInvocations": 7,
+      "deadlineSeconds": 2400
+    }
+  },
+  "nativeTestsChanged": [],
+  "productSourceChanged": [],
+  "workflowOwnedBy": "/root",
+  "portableReceipt": "portable-r1/receipt.json",
+  "nativeStatus": "NOT_RUN",
+  "scopeExclusions": [
+    "No OS27 cases repeated or accepted",
+    "No physical-device, APNs, account-backed iCloud or signing credit",
+    "No remote prebuilt reuse"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "owner": "/root/control_authoring",
+  "baseCommit": "ce2eceeb20b4f38031264f161ac9829b3745275a",
+  "changedSource": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift",
+  "changedSourceSHA256": "ce2b136f95d1eccfd27fc876e10307133602d673fd42d860816559510b5a5960",
+  "obligation": "Resolve actual MAIN13 Dictionary to HanlinObject type mismatch; prove real construction and canonical JSON validation only.",
+  "priorFailure": {
+    "runID": 45389020875,
+    "logSHA256": "29c01baf62168b4ebcfbcaa79e33c7e0e0e998f52ab67707e29960eeb16d16c6"
+  },
+  "execution": "One focused real Swift value-construction/compiler probe on primary Mac. No app build, simulator, package suite, signing or CI.",
+  "reusedPasses": [],
+  "pending": "Full Xcode27.2 app/gate acceptance remains root-owned."
+}

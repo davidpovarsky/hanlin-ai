@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-28T12:35:04.333690+00:00",
+  "sourceCommitAlreadyCompleted": "a7790e94e71a6a41ecc0c988b3a514320bb46aa4",
+  "proofCommitNotYetCreated": true,
+  "originalDiffCheckExit": 2,
+  "originalDiffCheckOutput": "docs/two-wave-integration/20261128/widget-gallery-native-label/source.patch:36: trailing whitespace.\n+ \ndocs/two-wave-integration/20261128/widget-gallery-native-label/source.patch:41: trailing whitespace.\n+ \ndocs/two-wave-integration/20261128/widget-gallery-native-label/source.patch:42: trailing whitespace.\n+ \n",
+  "resolution": "Store the exact frozen unified patch as lossless gzip so Git does not treat its blank context lines as new source whitespace. Original source and patch bytes unchanged.",
+  "originalPatchSHA256": "8bbac8334e6638ee0ea5286c91af63e3275eb1c435474852728119a983b8292a",
+  "gzipSHA256": "8cd78be72ae6d79df7ce8b76b65ab43bb663a95b4cb0151e275122d097281e2c",
+  "decompressedExact": true,
+  "testsExecuted": 0,
+  "nativeExecuted": 0,
+  "gzipStagingStop": "Original ignore rules exclude new gzip files; the first explicit add stopped for source.patch.gz. Only this exact owned proof gzip is explicitly force-added, with ignore rules unchanged."
+}

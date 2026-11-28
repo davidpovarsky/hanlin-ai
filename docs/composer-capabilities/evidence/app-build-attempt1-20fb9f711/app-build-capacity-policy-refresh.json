@@ -1,0 +1,27 @@
+{
+  "atUTC": "2026-11-25T01:22:34.736310+00:00",
+  "reason": "Current build-runner-router mandates measured memory/disk constraints, no fixed CPU-idle/job-count gate.",
+  "matchedRunner": [
+    "5958  5955 /opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python build/composer-evidence/run_app_build.py --scheme AI_HLY --attempt 2 --source 20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91"
+  ],
+  "status": "WAITING_ADMISSION_STOPPED_NO_COMPILER",
+  "memoryPressure": {
+    "code": 0,
+    "output": "1",
+    "error": ""
+  },
+  "swap": {
+    "code": 0,
+    "output": "vm.swapusage: total = 1024.00M  used = 212.38M  free = 811.62M  (encrypted)",
+    "error": ""
+  },
+  "freeDisk": {
+    "code": 0,
+    "output": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 396944360  41968516    91% 5072846 419685160    1%   /System/Volumes/Data",
+    "error": ""
+  },
+  "moduleCacheBackupBytes": 1182623502,
+  "pid": 5958,
+  "children": [],
+  "stoppedAtUTC": "2026-11-25T01:22:50.977696+00:00"
+}

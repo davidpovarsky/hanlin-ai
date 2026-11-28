@@ -1,0 +1,99 @@
+{
+  "unmodifiedProductionContractSHA256": "07479b91a7ce77a8fdf5d53f3cb16939d9d46b0287efbd50b8b20b446c8ea2fa",
+  "fixtureSourceSHA256": "76eaf34e7655793a10214f80f95ba443cadc51ae6f9b15256b91fc5a96eea6b7",
+  "compileExit": 0,
+  "executionExit": 0,
+  "scope": "Only extracted actual fixture generator with original canonical envelope/order contract. No app/renderer/provider benchmark executed.",
+  "fixtures": [
+    {
+      "name": "nodes1-chars10000-events20-owners5.json",
+      "bytes": 76490,
+      "sha256": "94850e8c79c3158440933cf9ec2fd107b2a82a7113a652726ee8de5545be1e91"
+    },
+    {
+      "name": "nodes1-chars10000-events5-owners5.json",
+      "bytes": 76490,
+      "sha256": "94850e8c79c3158440933cf9ec2fd107b2a82a7113a652726ee8de5545be1e91"
+    },
+    {
+      "name": "nodes1-chars10000-events60-owners5.json",
+      "bytes": 76490,
+      "sha256": "94850e8c79c3158440933cf9ec2fd107b2a82a7113a652726ee8de5545be1e91"
+    },
+    {
+      "name": "nodes1-chars50000-events20-owners5.json",
+      "bytes": 116490,
+      "sha256": "bdc8cd719258cd0da4e25c719eeb99edea8dba7b30e23cde9b2580f76f4bd0df"
+    },
+    {
+      "name": "nodes1-chars50000-events5-owners5.json",
+      "bytes": 116490,
+      "sha256": "bdc8cd719258cd0da4e25c719eeb99edea8dba7b30e23cde9b2580f76f4bd0df"
+    },
+    {
+      "name": "nodes1-chars50000-events60-owners5.json",
+      "bytes": 116490,
+      "sha256": "bdc8cd719258cd0da4e25c719eeb99edea8dba7b30e23cde9b2580f76f4bd0df"
+    },
+    {
+      "name": "nodes10-chars10000-events20-owners5.json",
+      "bytes": 79755,
+      "sha256": "6b27873bbeb1764edab639c05c4170ec4ca1d319a1f7e2128c0f0a81f9239367"
+    },
+    {
+      "name": "nodes10-chars10000-events5-owners5.json",
+      "bytes": 79755,
+      "sha256": "6b27873bbeb1764edab639c05c4170ec4ca1d319a1f7e2128c0f0a81f9239367"
+    },
+    {
+      "name": "nodes10-chars10000-events60-owners5.json",
+      "bytes": 79755,
+      "sha256": "6b27873bbeb1764edab639c05c4170ec4ca1d319a1f7e2128c0f0a81f9239367"
+    },
+    {
+      "name": "nodes10-chars50000-events20-owners5.json",
+      "bytes": 119755,
+      "sha256": "c2caad5fe47c255a8a5dcb7351ae6f3c22a61b2aa28976420df4544498c60440"
+    },
+    {
+      "name": "nodes10-chars50000-events5-owners5.json",
+      "bytes": 119755,
+      "sha256": "c2caad5fe47c255a8a5dcb7351ae6f3c22a61b2aa28976420df4544498c60440"
+    },
+    {
+      "name": "nodes10-chars50000-events60-owners5.json",
+      "bytes": 119755,
+      "sha256": "c2caad5fe47c255a8a5dcb7351ae6f3c22a61b2aa28976420df4544498c60440"
+    },
+    {
+      "name": "nodes100-chars10000-events20-owners5.json",
+      "bytes": 113505,
+      "sha256": "51a23aea37e437cc673ff678deb514072c2c66e391093f9e1b4707b1b9d336fe"
+    },
+    {
+      "name": "nodes100-chars10000-events5-owners5.json",
+      "bytes": 113505,
+      "sha256": "51a23aea37e437cc673ff678deb514072c2c66e391093f9e1b4707b1b9d336fe"
+    },
+    {
+      "name": "nodes100-chars10000-events60-owners5.json",
+      "bytes": 113505,
+      "sha256": "51a23aea37e437cc673ff678deb514072c2c66e391093f9e1b4707b1b9d336fe"
+    },
+    {
+      "name": "nodes100-chars50000-events20-owners5.json",
+      "bytes": 153505,
+      "sha256": "f5478903390c5bcb7fa1f84309335d4344f55b3c66287885b9244f43bc6d3fb6"
+    },
+    {
+      "name": "nodes100-chars50000-events5-owners5.json",
+      "bytes": 153505,
+      "sha256": "f5478903390c5bcb7fa1f84309335d4344f55b3c66287885b9244f43bc6d3fb6"
+    },
+    {
+      "name": "nodes100-chars50000-events60-owners5.json",
+      "bytes": 153505,
+      "sha256": "f5478903390c5bcb7fa1f84309335d4344f55b3c66287885b9244f43bc6d3fb6"
+    }
+  ]
+}

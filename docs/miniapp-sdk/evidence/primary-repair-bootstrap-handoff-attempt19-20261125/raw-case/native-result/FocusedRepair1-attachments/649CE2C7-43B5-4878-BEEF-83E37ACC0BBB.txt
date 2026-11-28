@@ -1,0 +1,5 @@
+Query chain:
+ →Find: Application 'com.itorah.hanlinminiapps'
+  ↪︎Find: Descendants matching type Any
+    ↪︎Find: Elements matching predicate '"hanlin-import-diagnostics-sheet" IN identifiers'
+      ↪︎Find: First Match

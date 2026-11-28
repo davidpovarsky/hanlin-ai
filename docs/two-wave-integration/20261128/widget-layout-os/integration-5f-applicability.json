@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "scope": "Actual git apply/check against a new owned file projection of exact5f Git blobs, not root worktree mutation or native testing",
+  "target": "5f827bac46543271991668a089830650893cd72d",
+  "patchSHA256": "946e9f43b59586f9cc0eace43e9e42dd48dbb90999c7c9cd8a954d89db736a76",
+  "preimages": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "a04e44dd1dfb6b7eb6e56a540f951453152a510b47fed29f97731bcb1ad43278",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "d26555b15ba50e8890ffe4a3a83e56ec9f8cdaec91a6ae6137ed0c9068d34320",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "5f15f5ffb4fcdaf63ef9ad396a650fce32b7b0b04eee8ba7690b013c6e8f8600"
+  },
+  "projectedAfter": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "00480bcd3ee5c59672752b9863c3a82234a2e6245e936716fb3e376abbfd7321",
+    "Scripts/ProductSplit/observe_widget_layout.py": "f33202df502e6d0b67be2d15cfdc293da5f704300f871823d14ad42b37659eee",
+    "Scripts/CI/Tests/test_widget_layout_observer.py": "00b0ac00cf4fe2caee4044b2975d1b94e6c96cb12167124646464a5239d74e04",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "b7908f40c21edf1f82489b700254b16cd25991469918518bbdfe53b83035a335",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "f3ef025d4f8de4012b409ff343f2c28d319bb7607585d7e534ec61c1d66f36cd"
+  },
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/widget-layout-os-9ee23af8/source.patch"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/widget-layout-os-9ee23af8/source.patch"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "wholeCurrent5fUIRecoveredByRemovingOnlyAddition": true,
+  "rootShortcutsHelperAndAllOtherCurrent5fUIBytesPreserved": true,
+  "rootWorktreeTouched": false,
+  "native": "NOT_RUN"
+}

@@ -1,0 +1,65 @@
+{
+  "base": "b41233a61a3dca0632b78c7ab7f92e5e620492c4",
+  "canonicalManifestSHA256": "fb08c64bd016c1d5f2c3d4c6665f5911d4d888b5486ab73479f6e35940c591bc",
+  "canonicalProjectSHA256": "52bd71e97d08c1982fe0547d2b0c80374c373533d9abcaf885591adab87dccdb",
+  "originalParserSHA256": "b55b15a969fb438d32f78db491e65ea51d755019d3f2d563e61e1cffe9f9afbd",
+  "modules": [
+    {
+      "module": "AI_Hanlin",
+      "actualSourceCount": 532,
+      "before": [
+        {
+          "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+          "symbol": "HanlinMiniAppSystemIntentsPackage"
+        },
+        {
+          "path": "AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+          "symbol": "HanlinApplicationIntentsPackage"
+        }
+      ],
+      "after": [
+        {
+          "path": "AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+          "symbol": "HanlinApplicationIntentsPackage"
+        }
+      ]
+    },
+    {
+      "module": "HanlinApp",
+      "actualSourceCount": 1,
+      "before": [
+        {
+          "path": "AI_HLY/AI_HLY.swift",
+          "symbol": "HanlinAppIntents"
+        }
+      ],
+      "after": [
+        {
+          "path": "AI_HLY/AI_HLY.swift",
+          "symbol": "HanlinAppIntents"
+        }
+      ]
+    },
+    {
+      "module": "HanlinMiniApps",
+      "actualSourceCount": 93,
+      "before": [
+        {
+          "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+          "symbol": "HanlinMiniAppSystemIntentsPackage"
+        },
+        {
+          "path": "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
+          "symbol": "HanlinMiniAppsIntents"
+        }
+      ],
+      "after": [
+        {
+          "path": "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
+          "symbol": "HanlinMiniAppsIntents"
+        }
+      ]
+    }
+  ],
+  "boundary": "Portable enumeration of tracked actual module sources with current modified bytes; not Apple metadata extraction."
+}

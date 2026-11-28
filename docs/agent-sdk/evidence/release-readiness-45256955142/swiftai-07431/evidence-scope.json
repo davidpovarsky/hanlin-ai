@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "independentlyReviewedHere": {
+    "gitAncestryAndProductionDiff": true,
+    "actualCanonicalCallPath": true,
+    "GitHubCompletedSuccessExact07431": true,
+    "artifactAPIIdentitySizeDigest": true,
+    "originalSourceGate": true,
+    "rawXMLDecoded": false,
+    "artifactDownloaded": false
+  },
+  "existingOwnerReportedAuthenticatedEvidence": {
+    "fullRun": 45246940299,
+    "fullSource": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+    "fullMethods": 4185,
+    "failed": 0,
+    "skipped": 0,
+    "fullXMLSHA256": "44056144bf8017a8d41b08eb7ae338acb57c1c123a5475e915d83f45b664c93e",
+    "artifact": 14854169874,
+    "artifactBytes": 941711,
+    "artifactSHA256": "da9e526111151bdf15fd910a4e57a3679a1a2df23b235f4009dfbdb2cb81125d",
+    "focusedScenarioInvocations": 6,
+    "focusedLogicalMethods": 5,
+    "focusedGreenReusedFrom": 45240893434,
+    "authenticRedReusedFrom": 45236601864,
+    "originalRedMethodsFailed": 2,
+    "originalRedExpectationFailures": 7,
+    "toolchain": "Xcode26.6/17F113, AppleSwift6.3.3, x86_64 macOS26; no arm64iOS27 claim."
+  },
+  "sourceGateReviewed": {
+    "path": "scripts/otzaria-stream-continuation-evidence.py",
+    "requires4185IdentitiesEqualOriginalInventory": true,
+    "rejectsFailuresSkipsErrors": true,
+    "requiresBothExactToolArgumentInvocations": true,
+    "redAndFocusedGreenAuthenticatedAndReused": true,
+    "originalRuntimeAssertionsNotReplayedHere": true
+  },
+  "originalOwnerDocuments": [
+    {
+      "path": "docs/hq-integration/hanlin-stream-continuation-20261123/CORE_APPLE_VALIDATION.json",
+      "sha256": "eb66eacd21e1fe694281d9856073dc7adfce5c5c8af53dc08adab92cfed08ff7",
+      "retainedAs": "swiftai-07431/owner-evidence/CORE_APPLE_VALIDATION.json"
+    },
+    {
+      "path": "docs/hq-integration/hanlin-stream-continuation-20261123/DEPENDENCY_ADOPTION.json",
+      "sha256": "84717bec8dfbb7e306483954ba889d9221082543e21826dc4ef6cb1b429d4bdb",
+      "retainedAs": "swiftai-07431/owner-evidence/DEPENDENCY_ADOPTION.json"
+    },
+    {
+      "path": "docs/hq-integration/hanlin-stream-continuation-20261123/HOST_LOCK_ADOPTION.json",
+      "sha256": "4fad1c4cfaf0ca5919c3ded60195555e392658d250d680a8384c18241e4e8da5",
+      "retainedAs": "swiftai-07431/owner-evidence/HOST_LOCK_ADOPTION.json"
+    },
+    {
+      "path": "docs/hq-integration/hanlin-stream-continuation-20261123/LIVE_STREAM_SOURCE_ADMISSION.json",
+      "sha256": "0894017ad748ac4f74611864d428ab16348920b359d52ea7d1cca50fa6b1b318",
+      "retainedAs": "swiftai-07431/owner-evidence/LIVE_STREAM_SOURCE_ADMISSION.json"
+    },
+    {
+      "path": "docs/hq-integration/hanlin-stream-continuation-20261123/CI_PREPARATION.md",
+      "sha256": "f1d65a10dfc918a85f6785ae8339a1147837ad09d50a7ed611bf98d4f85da0da",
+      "retainedAs": "swiftai-07431/owner-evidence/CI_PREPARATION.md"
+    }
+  ],
+  "rawXMLAvailability": "Not found in the two existing Oracle owner worktrees inspected. No acquisition requested merely to restate the existing source-enforced successful gate."
+}

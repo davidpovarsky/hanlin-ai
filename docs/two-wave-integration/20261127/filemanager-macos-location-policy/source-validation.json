@@ -1,0 +1,17 @@
+{
+  "atUTC": "2026-11-27T08:37:07.830241+00:00",
+  "base": "3be9acbd9b1cef949076688a51208f7e559f3c2e",
+  "path": "Packages/HanlinPlatform/Sources/HanlinScriptingApplicationRuntime/HanlinScriptingRuntimeServices.swift",
+  "originalSHA256": "029b82b26c7bd188d5b97326cabd98a95aa9ec126678baa460501d9e37b8eb2f",
+  "candidateSHA256": "a1ead7e7e54c6d4e578fd9f3b7b6696f966ab1050540908c4e9d70ba75493cf3",
+  "patchSHA256": "7ea522260db990aad3e330a533e5dc1c48f6641be6d76e1a2c63c8d3171102ca",
+  "policy": "macOS self-declared app-sandbox true/error/unknown => original explicit scopes, no fallback; absent/false => ordinary location persistence subject to current and inherited OS rights, not persistent restoration of lost OS grants. This is not a sandbox detector. iOS/Catalyst branch behavior, original URL/capability/path/lifetime/registry checks and all tests unchanged.",
+  "supersedes": "cf69 candidate was not integrated: misleading verified-unsandboxed classification and loose Bool bridge rejected.",
+  "primarySources": [
+    "https://developer.apple.com/documentation/security/sectaskcopyvalueforentitlement(_:_:_:).md",
+    "https://developer.apple.com/documentation/security/accessing-files-from-the-macos-app-sandbox.md",
+    "https://developer.apple.com/forums/thread/747499",
+    "https://developer.apple.com/forums/thread/679940"
+  ],
+  "native": "NOT_RUN"
+}

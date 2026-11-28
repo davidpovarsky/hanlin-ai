@@ -1,0 +1,38 @@
+{
+  "name": "Long Running NativeScript",
+  "version": "1.0.0",
+  "description": "Finite paced Shortcuts acceptance workload: 35 real runtime calls, with progress only for verified receipts.",
+  "hanlinAppID": "hanlin.longrunning.nativescript",
+  "entry": "nativescript/app/bundle.mjs",
+  "runInApp": true,
+  "hanlinRuntime": "hanlin-nativescript",
+  "icon": "hand.tap",
+  "color": "#2455B2",
+  "capabilities": [
+    "storage",
+    "node",
+    "python",
+    "javascript",
+    "inter-app.share"
+  ],
+  "actions": [
+    {
+      "id": "surface.run",
+      "title": "Run Long Running NativeScript paced workload",
+      "handler": "nativescript/app/bundle.mjs",
+      "capability": "inter-app.share"
+    }
+  ],
+  "entrypoints": [
+    {
+      "id": "surface-intent",
+      "kind": "appIntent",
+      "sourcePath": "nativescript/app/bundle.mjs",
+      "exportedSymbol": "surface.run"
+    }
+  ],
+  "intentInputTypes": [
+    "Text",
+    "URLs"
+  ]
+}

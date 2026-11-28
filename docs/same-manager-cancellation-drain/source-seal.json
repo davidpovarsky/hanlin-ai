@@ -1,0 +1,55 @@
+{
+  "recordedAt": "2026-11-28T12:24:01.675114+00:00",
+  "base": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "sourceCommit": "c48140a7d00d0c5de1ec0933e15738acf930e7e9",
+  "candidateManifestSHA256": "865332058e33702f9a99f914b12fee119320415d8a977387b2ec518e381914f3",
+  "sourcePatchSHA256": "afa7e61df8aec6475401902dab263c45b37b446b90d38c7117c3e61cc7393ed2",
+  "sourceFilesVerifiedFromActualGit": [
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/AgentRunLifecycleCoordinator.swift",
+      "bytes": 5960,
+      "sha256": "4d02db2ff447c049de237dc26b8296b2d4fc0ff485809b23c7617659ea9b9caa"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "bytes": 47301,
+      "sha256": "5796e44564f289b8c71e7911c18a2aae303a57d6c36c50edcf14102acb83ebf1"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "bytes": 230472,
+      "sha256": "34458e752f6dc96742904c5fc6d9fcc769e698921c3b3b037bb5d7925f07582f"
+    },
+    {
+      "path": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "bytes": 50957,
+      "sha256": "86ba4ec861fa6010c24847f0b98e55b527f493759edc8e5058c951d46f7ca6ac"
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "bytes": 206198,
+      "sha256": "4d0f94e20044abcf438097af6abde6b77c8cfb6fef397b1f454b1a3dda663982"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+      "bytes": 39414,
+      "sha256": "0f33a5a924f267c7d797f49c1cfaec010c63e09ecb408b1988044e7c6c00df69"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostDispatcher.swift",
+      "bytes": 17622,
+      "sha256": "e5d6d0fb7d9f6d71408497bd68e3140c80ac5956aeb218460beffc7ac58207d0"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift",
+      "bytes": 89008,
+      "sha256": "5c495c2035906be7498e582a2e65c589a3eb8e7a59275e40f5949397fd4e1fdf"
+    }
+  ],
+  "gitStatus": "",
+  "commitStdout": "[codex/w1-same-manager-drain-fc5ce1ba-20261128 c48140a7d] fix(agent): drain retired work before admitting replacements\n 8 files changed, 1010 insertions(+), 62 deletions(-)\n",
+  "commitStderr": "",
+  "testsRun": 0,
+  "nativeCommands": 0,
+  "proofCommitPending": true
+}

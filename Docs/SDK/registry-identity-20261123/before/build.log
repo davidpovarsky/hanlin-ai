@@ -1,0 +1,17 @@
+Building for debugging...
+[Provisioning 2 / 5]
+[Pre-planning 109 / 152]
+[Planning deferred tasks]
+[33 / 57]
+[42 / 61] HanlinPlatformContracts
+[44 / 61] HanlinPlatformContracts
+[51 / 65] HanlinScriptContracts
+[52 / 66] HanlinScriptContracts
+[53 / 66] HanlinScriptContracts
+[60 / 66] HanlinScriptContracts
+[63 / 70] RegistryBoundaryProbe-product
+[64 / 70] RegistryBoundaryProbe-product
+[65 / 71] HanlinScriptContracts
+[68 / 71] RegistryBoundaryProbe-product
+[72 / 72] RegistryBoundaryProbe-product
+Build complete! (20.36 secs)

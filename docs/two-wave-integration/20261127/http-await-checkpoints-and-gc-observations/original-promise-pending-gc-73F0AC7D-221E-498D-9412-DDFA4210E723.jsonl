@@ -1,0 +1,6 @@
+{"at":1795771994.3926768,"guardedRejectPresent":true,"guardedResolvePresent":true,"phase":"native-operation-pending","pid":51105}
+{"at":1795771994.39273,"capturedContinuationPresent":true,"executionActive":true,"phase":"pending-after-gc","pid":51105}
+{"at":1795771994.3949251,"phase":"after-resolution","pid":51105,"settlements":["original:delivered"]}
+{"at":1795771994.394984,"phase":"after-duplicate-callbacks","pid":51105,"settlements":["original:delivered"]}
+{"at":1795771994.394995,"capturedContinuationPresent":true,"executionActive":true,"phase":"settled-after-gc","pid":51105}
+{"at":1795771994.3966861,"disposed":true,"phase":"context-disposed","pid":51105}

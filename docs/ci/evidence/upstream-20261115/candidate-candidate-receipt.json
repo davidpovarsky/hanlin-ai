@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "repository": "davidpovarsky/hanlin-ai",
+  "pullRequest": 6,
+  "head": "77a225a5af05de82335f387680c3e5d0b355aaeb",
+  "base": "8b25e148c1d789c56e7d91a9211d72f7b3748cee",
+  "changedPaths": [
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/package.json",
+    "RuntimeDependencies.lock.json"
+  ],
+  "impact": "runtime-host",
+  "updateType": "patch",
+  "updates": [
+    {
+      "name": "semver",
+      "previous": "7.8.5",
+      "version": "7.8.6",
+      "updateType": "patch",
+      "integrity": "sha512-9lpSSU4Mly3mrtruwLs1eLK6+gzbzqeBFwRNjIjE+9LuDpWdYctrQlQ3ej1Ilgi7gknpsTRnPoLP8DpCHqHIJw==",
+      "license": "ISC",
+      "licenseReview": "UNCHANGED_FROM_PARENT_LOCK",
+      "sourceRepository": "npm/node-semver",
+      "upstreamCommit": "b37b033b585ad5e575afeccadb426ea41bc6cea4",
+      "tarball": "https://registry.npmjs.org/semver/-/semver-7.8.6.tgz"
+    }
+  ],
+  "nativeArtifact": "Unchanged exact native identity must also pass the existing authenticated consumer before Host tests",
+  "rollback": {
+    "commit": "77a225a5af05de82335f387680c3e5d0b355aaeb",
+    "parent": "8b25e148c1d789c56e7d91a9211d72f7b3748cee",
+    "strategy": "Revert the isolated dependency candidate; preserve original binary pins and regenerate the original Host archive"
+  },
+  "status": "EXECUTED_PASS",
+  "sourceIntegrity": true,
+  "licensesReviewed": true,
+  "executed": {
+    "platform": "darwin",
+    "node": "v24.5.0",
+    "hostArchiveSHA256": "de786941c6340de0ab9c6771181051954cb5120beb5af75e789a8ce61bba4b5a",
+    "sourceInputsHash": "dc880b2f53eb8326d073f53911db217590dd3ac546d390f8e1ba6765b432b58b",
+    "scope": "Existing full Host tests and packed JITless smoke; no iOS UI/native binary rebuild claim"
+  },
+  "hostMetadata": {
+    "nodeVersion": "v24.5.0",
+    "archiveSha256": "de786941c6340de0ab9c6771181051954cb5120beb5af75e789a8ce61bba4b5a",
+    "sourceInputsHash": "dc880b2f53eb8326d073f53911db217590dd3ac546d390f8e1ba6765b432b58b",
+    "jitlessArchiveSmoke": "passed",
+    "npmInstall": "npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund",
+    "tests": "passed"
+  }
+}

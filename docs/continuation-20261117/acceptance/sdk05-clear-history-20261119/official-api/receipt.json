@@ -1,0 +1,222 @@
+[
+  {
+    "name": "readonly-configuration",
+    "url": "https://developer.apple.com/tutorials/data/documentation/swiftdata/modelconfiguration/init(_:schema:url:allowssave:cloudkitdatabase:).json",
+    "status": 200,
+    "bytes": 17108,
+    "sha256": "5cdd3c48ba6228d3cb23f880ccb2f2d93b7cad88a64486a3023912176177ff0b",
+    "declarations": [
+      "init(_ name: String? = nil, schema: Schema? = nil, url: URL, allowsSave: Bool = true, cloudKitDatabase: ModelConfiguration.CloudKitDatabase = .automatic)"
+    ],
+    "platforms": [
+      {
+        "introducedAt": "17.0",
+        "name": "iOS"
+      },
+      {
+        "introducedAt": "17.0",
+        "name": "iPadOS"
+      },
+      {
+        "introducedAt": "17.0",
+        "name": "Mac Catalyst"
+      },
+      {
+        "introducedAt": "14.0",
+        "name": "macOS"
+      },
+      {
+        "introducedAt": "17.0",
+        "name": "tvOS"
+      },
+      {
+        "introducedAt": "1.0",
+        "name": "visionOS"
+      },
+      {
+        "introducedAt": "10.0",
+        "name": "watchOS"
+      },
+      {
+        "introducedAt": "5.9",
+        "name": "Swift"
+      }
+    ]
+  },
+  {
+    "name": "rollback",
+    "url": "https://developer.apple.com/tutorials/data/documentation/swiftdata/modelcontext/rollback().json",
+    "status": 200,
+    "bytes": 7183,
+    "sha256": "5468de74d0b058492fec7f90b7db303603101502fa3957b0349da7b06532615f",
+    "declarations": [
+      "func rollback()"
+    ],
+    "platforms": [
+      {
+        "introducedAt": "17.0",
+        "name": "iOS"
+      },
+      {
+        "introducedAt": "17.0",
+        "name": "iPadOS"
+      },
+      {
+        "introducedAt": "17.0",
+        "name": "Mac Catalyst"
+      },
+      {
+        "introducedAt": "14.0",
+        "name": "macOS"
+      },
+      {
+        "introducedAt": "17.0",
+        "name": "tvOS"
+      },
+      {
+        "introducedAt": "1.0",
+        "name": "visionOS"
+      },
+      {
+        "introducedAt": "10.0",
+        "name": "watchOS"
+      },
+      {
+        "introducedAt": "5.9",
+        "name": "Swift"
+      }
+    ]
+  },
+  {
+    "name": "model-context",
+    "url": "https://developer.apple.com/tutorials/data/documentation/swiftdata/persistentmodel/modelcontext.json",
+    "status": 200,
+    "bytes": 6815,
+    "sha256": "ad7a162d415126fc459ff70b8579831db8db6b257baa8d4ac38647f971d196c2",
+    "declarations": [
+      "var modelContext: ModelContext? { get }"
+    ],
+    "platforms": [
+      {
+        "introducedAt": "17.0",
+        "name": "iOS"
+      },
+      {
+        "introducedAt": "17.0",
+        "name": "iPadOS"
+      },
+      {
+        "introducedAt": "17.0",
+        "name": "Mac Catalyst"
+      },
+      {
+        "introducedAt": "14.0",
+        "name": "macOS"
+      },
+      {
+        "introducedAt": "17.0",
+        "name": "tvOS"
+      },
+      {
+        "introducedAt": "1.0",
+        "name": "visionOS"
+      },
+      {
+        "introducedAt": "10.0",
+        "name": "watchOS"
+      },
+      {
+        "introducedAt": "5.9",
+        "name": "Swift"
+      }
+    ]
+  },
+  {
+    "name": "default-configuration",
+    "url": "https://developer.apple.com/tutorials/data/documentation/swiftdata/modelconfiguration/init(_:schema:isstoredinmemoryonly:allowssave:groupcontainer:cloudkitdatabase:).json",
+    "status": 200,
+    "bytes": 18884,
+    "sha256": "912e166784ed14181cc1fd0012cfa1ce739f6d971a6fd76427efbe84e8ceb69a",
+    "declarations": [
+      "init(_ name: String? = nil, schema: Schema? = nil, isStoredInMemoryOnly: Bool = false, allowsSave: Bool = true, groupContainer: ModelConfiguration.GroupContainer = .automatic, cloudKitDatabase: ModelConfiguration.CloudKitDatabase = .automatic)"
+    ],
+    "platforms": [
+      {
+        "introducedAt": "17.0",
+        "name": "iOS"
+      },
+      {
+        "introducedAt": "17.0",
+        "name": "iPadOS"
+      },
+      {
+        "introducedAt": "17.0",
+        "name": "Mac Catalyst"
+      },
+      {
+        "introducedAt": "14.0",
+        "name": "macOS"
+      },
+      {
+        "introducedAt": "17.0",
+        "name": "tvOS"
+      },
+      {
+        "introducedAt": "1.0",
+        "name": "visionOS"
+      },
+      {
+        "introducedAt": "10.0",
+        "name": "watchOS"
+      },
+      {
+        "introducedAt": "5.9",
+        "name": "Swift"
+      }
+    ]
+  },
+  {
+    "name": "automatic-group",
+    "url": "https://developer.apple.com/tutorials/data/documentation/swiftdata/modelconfiguration/groupcontainer-swift.struct/automatic.json",
+    "status": 200,
+    "bytes": 9285,
+    "sha256": "0d4ea62264110c05a1bbf5142897b97ea3934623dd78b23b3093c6a772bae59f",
+    "declarations": [
+      "static var automatic: ModelConfiguration.GroupContainer { get }"
+    ],
+    "platforms": [
+      {
+        "introducedAt": "17.0",
+        "name": "iOS"
+      },
+      {
+        "introducedAt": "17.0",
+        "name": "iPadOS"
+      },
+      {
+        "introducedAt": "17.0",
+        "name": "Mac Catalyst"
+      },
+      {
+        "introducedAt": "14.0",
+        "name": "macOS"
+      },
+      {
+        "introducedAt": "17.0",
+        "name": "tvOS"
+      },
+      {
+        "introducedAt": "1.0",
+        "name": "visionOS"
+      },
+      {
+        "introducedAt": "10.0",
+        "name": "watchOS"
+      },
+      {
+        "introducedAt": "5.9",
+        "name": "Swift"
+      }
+    ]
+  }
+]

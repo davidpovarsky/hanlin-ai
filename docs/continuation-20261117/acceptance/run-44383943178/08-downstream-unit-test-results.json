@@ -1,0 +1,374 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "E0129B56-A0CB-4BE5-8EF0-6212E8DE401A",
+      "deviceName" : "Hanlin-Phase2-44383943178-1",
+      "modelName" : "iPad Pro 13-inch (M5)",
+      "osBuildNumber" : "24B8117",
+      "osVersion" : "27.2",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "0.18s",
+                  "durationInSeconds" : 0.17723989486694336,
+                  "name" : "originalConsentExpiresRevokesAndRejectsStaleSheetAnswers()",
+                  "nodeIdentifier" : "HanlinAppAgentSessionOwnerTests/originalConsentExpiresRevokesAndRejectsStaleSheetAnswers()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalConsentExpiresRevokesAndRejectsStaleSheetAnswers()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.37s",
+                  "durationInSeconds" : 0.3747401237487793,
+                  "name" : "existingSwiftDataRowPreservesLegacyFieldsAndRejectsConflictForeignScopeAndDeletion()",
+                  "nodeIdentifier" : "HanlinAppAgentSessionOwnerTests/existingSwiftDataRowPreservesLegacyFieldsAndRejectsConflictForeignScopeAndDeletion()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/existingSwiftDataRowPreservesLegacyFieldsAndRejectsConflictForeignScopeAndDeletion()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.053s",
+                  "durationInSeconds" : 0.05252718925476074,
+                  "name" : "originalStoreKeepsItsContainerAliveAcrossDeferredPersistenceAfterCreatorReturns()",
+                  "nodeIdentifier" : "HanlinAppAgentSessionOwnerTests/originalStoreKeepsItsContainerAliveAcrossDeferredPersistenceAfterCreatorReturns()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalStoreKeepsItsContainerAliveAcrossDeferredPersistenceAfterCreatorReturns()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "1s",
+                  "durationInSeconds" : 1.3092238903045654,
+                  "name" : "identicalContentAndPartIDsKeepExactRowRunBindingAndOriginalReplaySession()",
+                  "nodeIdentifier" : "HanlinAppAgentSessionOwnerTests/identicalContentAndPartIDsKeepExactRowRunBindingAndOriginalReplaySession()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/identicalContentAndPartIDsKeepExactRowRunBindingAndOriginalReplaySession()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.19s",
+                  "durationInSeconds" : 0.18858003616333008,
+                  "name" : "originalHostActionContinuesThroughTheSameOwnerEngineAndCanonicalStore()",
+                  "nodeIdentifier" : "HanlinAppAgentSessionOwnerTests/originalHostActionContinuesThroughTheSameOwnerEngineAndCanonicalStore()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalHostActionContinuesThroughTheSameOwnerEngineAndCanonicalStore()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.56s",
+                  "durationInSeconds" : 0.5584471225738525,
+                  "name" : "temporaryCanonicalMetadataSurvivesCancellationWithoutDatabaseWrite()",
+                  "nodeIdentifier" : "HanlinAppAgentSessionOwnerTests/temporaryCanonicalMetadataSurvivesCancellationWithoutDatabaseWrite()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/temporaryCanonicalMetadataSurvivesCancellationWithoutDatabaseWrite()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.06s",
+                  "durationInSeconds" : 0.06008291244506836,
+                  "name" : "historyOpenRejectsDeletedForeignAndCancelledOriginsWithoutCreatingSession()",
+                  "nodeIdentifier" : "HanlinAppAgentSessionOwnerTests/historyOpenRejectsDeletedForeignAndCancelledOriginsWithoutCreatingSession()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/historyOpenRejectsDeletedForeignAndCancelledOriginsWithoutCreatingSession()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.17s",
+                  "durationInSeconds" : 0.1724376678466797,
+                  "name" : "historicalReceiptDedupRejectsChangedLargeIntegerOutcomeAndPreservesBytes()",
+                  "nodeIdentifier" : "HanlinAppAgentSessionOwnerTests/historicalReceiptDedupRejectsChangedLargeIntegerOutcomeAndPreservesBytes()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/historicalReceiptDedupRejectsChangedLargeIntegerOutcomeAndPreservesBytes()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.59s",
+                  "durationInSeconds" : 0.5944328308105469,
+                  "name" : "liveSettledAndProvisionalReceiptsHaveDistinctReconciliationRules()",
+                  "nodeIdentifier" : "HanlinAppAgentSessionOwnerTests/liveSettledAndProvisionalReceiptsHaveDistinctReconciliationRules()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/liveSettledAndProvisionalReceiptsHaveDistinctReconciliationRules()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.077s",
+                  "durationInSeconds" : 0.07726001739501953,
+                  "name" : "acceptedOriginAcknowledgementCannotClearAnotherWindowOrNewerDelivery()",
+                  "nodeIdentifier" : "HanlinAppAgentSessionOwnerTests/acceptedOriginAcknowledgementCannotClearAnotherWindowOrNewerDelivery()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/acceptedOriginAcknowledgementCannotClearAnotherWindowOrNewerDelivery()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "3s",
+                  "durationInSeconds" : 3.9283571243286133,
+                  "name" : "actualNativeBoundaryRejectsLossyOrInvalidInputAndChangedContextBeforeEffects()",
+                  "nodeIdentifier" : "HanlinAppAgentSessionOwnerTests/actualNativeBoundaryRejectsLossyOrInvalidInputAndChangedContextBeforeEffects()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/actualNativeBoundaryRejectsLossyOrInvalidInputAndChangedContextBeforeEffects()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.55s",
+                  "durationInSeconds" : 0.5465030670166016,
+                  "name" : "officialToolPayloadUsesOriginalRendererAndPersistsExactBytesWithoutInferringArbitraryJSON()",
+                  "nodeIdentifier" : "HanlinAppAgentSessionOwnerTests/officialToolPayloadUsesOriginalRendererAndPersistsExactBytesWithoutInferringArbitraryJSON()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/officialToolPayloadUsesOriginalRendererAndPersistsExactBytesWithoutInferringArbitraryJSON()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "3s",
+                  "durationInSeconds" : 3.7364249229431152,
+                  "name" : "appHostInvokesOriginalExecutorOnceAndUsesExplicitNativeOutcome()",
+                  "nodeIdentifier" : "HanlinAppAgentSessionOwnerTests/appHostInvokesOriginalExecutorOnceAndUsesExplicitNativeOutcome()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/appHostInvokesOriginalExecutorOnceAndUsesExplicitNativeOutcome()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "HanlinAppAgentSessionOwnerTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0.035s",
+                  "durationInSeconds" : 0.034657955169677734,
+                  "name" : "canonicalSharingSurvivesViewRegistrationAndReadsActualPrivateState()",
+                  "nodeIdentifier" : "HanlinAppSplitOriginTests/canonicalSharingSurvivesViewRegistrationAndReadsActualPrivateState()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppSplitOriginTests/canonicalSharingSurvivesViewRegistrationAndReadsActualPrivateState()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.017s",
+                  "durationInSeconds" : 0.01652693748474121,
+                  "name" : "canonicalSharingStillRejectsUnrelatedCallerAndWrongCapability()",
+                  "nodeIdentifier" : "HanlinAppSplitOriginTests/canonicalSharingStillRejectsUnrelatedCallerAndWrongCapability()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppSplitOriginTests/canonicalSharingStillRejectsUnrelatedCallerAndWrongCapability()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0022s",
+                  "durationInSeconds" : 0.002209901809692383,
+                  "name" : "canonicalSharingDoesNotBypassTheHostAuthorizer()",
+                  "nodeIdentifier" : "HanlinAppSplitOriginTests/canonicalSharingDoesNotBypassTheHostAuthorizer()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppSplitOriginTests/canonicalSharingDoesNotBypassTheHostAuthorizer()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.031s",
+                  "durationInSeconds" : 0.031289100646972656,
+                  "name" : "canonicalSharingNeverRecastsCorruptPersistedStateAsAnEmptySuccess()",
+                  "nodeIdentifier" : "HanlinAppSplitOriginTests/canonicalSharingNeverRecastsCorruptPersistedStateAsAnEmptySuccess()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppSplitOriginTests/canonicalSharingNeverRecastsCorruptPersistedStateAsAnEmptySuccess()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.92s",
+                  "durationInSeconds" : 0.9191279411315918,
+                  "name" : "actualSessionDispatchSavesBeforeOpenAndReceiptBeforeOneTimeAccept()",
+                  "nodeIdentifier" : "HanlinAppSplitOriginTests/actualSessionDispatchSavesBeforeOpenAndReceiptBeforeOneTimeAccept()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppSplitOriginTests/actualSessionDispatchSavesBeforeOpenAndReceiptBeforeOneTimeAccept()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.6s",
+                  "durationInSeconds" : 0.5981729030609131,
+                  "name" : "cancellationWhileOSOpenAwaitsCannotLeaveAnUnresumableHostWaiter()",
+                  "nodeIdentifier" : "HanlinAppSplitOriginTests/cancellationWhileOSOpenAwaitsCannotLeaveAnUnresumableHostWaiter()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppSplitOriginTests/cancellationWhileOSOpenAwaitsCannotLeaveAnUnresumableHostWaiter()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.78s",
+                  "durationInSeconds" : 0.7820699214935303,
+                  "name" : "cancellationAfterReceiverStartKeepsOutcomeUnknownAndNeverNavigates()",
+                  "nodeIdentifier" : "HanlinAppSplitOriginTests/cancellationAfterReceiverStartKeepsOutcomeUnknownAndNeverNavigates()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppSplitOriginTests/cancellationAfterReceiverStartKeepsOutcomeUnknownAndNeverNavigates()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.66s",
+                  "durationInSeconds" : 0.6591477394104004,
+                  "name" : "deletedOriginalCannotSaveAcceptNavigateOrRecreateAConversation()",
+                  "nodeIdentifier" : "HanlinAppSplitOriginTests/deletedOriginalCannotSaveAcceptNavigateOrRecreateAConversation()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppSplitOriginTests/deletedOriginalCannotSaveAcceptNavigateOrRecreateAConversation()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.58s",
+                  "durationInSeconds" : 0.5845921039581299,
+                  "name" : "deletedOriginalAssistantRowCannotRetargetAnExistingConversation()",
+                  "nodeIdentifier" : "HanlinAppSplitOriginTests/deletedOriginalAssistantRowCannotRetargetAnExistingConversation()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppSplitOriginTests/deletedOriginalAssistantRowCannotRetargetAnExistingConversation()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.56s",
+                  "durationInSeconds" : 0.5566470623016357,
+                  "name" : "anotherIdleOrFailedOwnerCannotHideTheOriginalActiveCanonicalWriter()",
+                  "nodeIdentifier" : "HanlinAppSplitOriginTests/anotherIdleOrFailedOwnerCannotHideTheOriginalActiveCanonicalWriter()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppSplitOriginTests/anotherIdleOrFailedOwnerCannotHideTheOriginalActiveCanonicalWriter()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0087s",
+                  "durationInSeconds" : 0.008744001388549805,
+                  "name" : "receptionClaimRequiresAnExplicitWindowAndRejectsDuplicatesBeforeAwait()",
+                  "nodeIdentifier" : "HanlinAppSplitOriginTests/receptionClaimRequiresAnExplicitWindowAndRejectsDuplicatesBeforeAwait()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppSplitOriginTests/receptionClaimRequiresAnExplicitWindowAndRejectsDuplicatesBeforeAwait()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0026s",
+                  "durationInSeconds" : 0.002634763717651367,
+                  "name" : "expiredOriginalFailsBeforeAnyTargetAuthorityOrStoreLookup()",
+                  "nodeIdentifier" : "HanlinAppSplitOriginTests/expiredOriginalFailsBeforeAnyTargetAuthorityOrStoreLookup()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppSplitOriginTests/expiredOriginalFailsBeforeAnyTargetAuthorityOrStoreLookup()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "HanlinAppSplitOriginTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppSplitOriginTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0.2s",
+                  "durationInSeconds" : 0.1970231533050537,
+                  "name" : "Editing and focus loss preserve pasted text, selection and whitespace drafts",
+                  "nodeIdentifier" : "NativeComposerLineSizingTests/editingKeepsDraftAndSelection()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/editingKeepsDraftAndSelection()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "duration" : "0.022s",
+                      "durationInSeconds" : 0.022383689880371094,
+                      "name" : "\"Model picker keeps this draft\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/layoutDuringNativeEditPreservesCharactersAndCursor(_:)?args=2250c66955992669e86939c6b31e196d9cd490466c1e711dd047f673f50376c8",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "1s",
+                      "durationInSeconds" : 1.1320338249206543,
+                      "name" : "\"Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessi",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/layoutDuringNativeEditPreservesCharactersAndCursor(_:)?args=776e902447d68c1f18df72fe4eedba1363511ff53451722f9150e950e929e873",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0.058s",
+                      "durationInSeconds" : 0.057641029357910156,
+                      "name" : "\"שלום 👋 טיוטה ארוכה\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/layoutDuringNativeEditPreservesCharactersAndCursor(_:)?args=b55c61da84bb14f77dbc16cff384453f09ae822d5c971f85595b2f55df0a80aa",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    }
+                  ],
+                  "duration" : "0.4s",
+                  "durationInSeconds" : 0.4040195147196452,
+                  "name" : "A layout update cannot replace a native edit before its delegate publishes the binding",
+                  "nodeIdentifier" : "NativeComposerLineSizingTests/layoutDuringNativeEditPreservesCharactersAndCursor(_:)",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/layoutDuringNativeEditPreservesCharactersAndCursor(_:)",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.027s",
+                  "durationInSeconds" : 0.027131080627441406,
+                  "name" : "Sending clears an editing UIKit draft and restored text keeps a valid cursor",
+                  "nodeIdentifier" : "NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.2s",
+                  "durationInSeconds" : 0.19829869270324707,
+                  "name" : "Wrapped text grows through six lines and scrolls at seven, including RTL",
+                  "nodeIdentifier" : "NativeComposerLineSizingTests/wrappedLinesAndScrolling()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/wrappedLinesAndScrolling()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.093s",
+                  "durationInSeconds" : 0.09319901466369629,
+                  "name" : "TextKit 2 retains its layout manager while wrapped six and seven lines are measured",
+                  "nodeIdentifier" : "NativeComposerLineSizingTests/textKit2WrappedLinesKeepNativeLayout()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/textKit2WrappedLinesKeepNativeLayout()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.006s",
+                  "durationInSeconds" : 0.005966901779174805,
+                  "name" : "TextKit 2 paragraph and trailing empty line coverage rejects an omitted fragment",
+                  "nodeIdentifier" : "NativeComposerLineSizingTests/textKit2ParagraphCoverageAndConservativeFallback()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/textKit2ParagraphCoverageAndConservativeFallback()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0047s",
+                  "durationInSeconds" : 0.004747152328491211,
+                  "name" : "Empty, accessibility font, and constrained viewport use current font metrics",
+                  "nodeIdentifier" : "NativeComposerLineSizingTests/fontAndViewport()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/fontAndViewport()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "Native composer automatic line sizing",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "AI_HLYTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "AI_HLY",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

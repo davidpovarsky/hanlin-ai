@@ -1,0 +1,72 @@
+{
+  "source": "33d949fa8d91d238ba93a9ef09373c5eafe58b84",
+  "firstNativeStage": {
+    "at": 1795769403.339602,
+    "executionTimeout": 5,
+    "isMainThread": false,
+    "label": "test",
+    "phase": "started",
+    "pid": 38762
+  },
+  "nativeLimitsStages": [
+    {
+      "at": 1795769404.9868531,
+      "isMainThread": false,
+      "label": "limits",
+      "phase": "preparing",
+      "pid": 38762
+    },
+    {
+      "at": 1795769405.154331,
+      "isMainThread": false,
+      "label": "limits",
+      "phase": "evaluating",
+      "pid": 38762
+    },
+    {
+      "at": 1795769405.155421,
+      "isMainThread": false,
+      "label": "limits",
+      "phase": "javascript",
+      "pid": 38762,
+      "requests": 0,
+      "stage": "within-limit"
+    },
+    {
+      "at": 1795769410.307342,
+      "executionTimeout": 5,
+      "isMainThread": false,
+      "label": "limits",
+      "phase": "timeout",
+      "pid": 38762
+    }
+  ],
+  "allNativeIsMainThreadValues": [
+    false
+  ],
+  "actualWireRequests": 36,
+  "actualWireResponseRecords": 36,
+  "withinLimitRequest": {
+    "at": 253219.936805958,
+    "authority": "transport.hanlin.invalid:80",
+    "body": "",
+    "header": null,
+    "host": "transport.hanlin.invalid",
+    "method": "GET",
+    "path": "/limits/within-limit",
+    "phase": "request",
+    "type": null
+  },
+  "withinLimitResponse": {
+    "at": 253219.938991041,
+    "bytes": 2097152,
+    "path": "/limits/within-limit",
+    "phase": "response"
+  },
+  "withinLimitServerWriteSeconds": 0.0021850830235052854,
+  "limitsEvaluationToTimeoutSeconds": 5.153011083602905,
+  "nativeStagesSHA256": "bfd37a09171aa030debae60d71b6eb2333c1adedb984c46941e02771e67e458d",
+  "wireSHA256": "7f0ff6939ad7466f8edd6ae2d3e0d37737b47ede23b02994ee11530cf8a50766",
+  "clockBoundary": "Native at fields use wall time; server wire at fields use monotonic time. Intervals are calculated only within a given stream, never by subtracting unlike clocks.",
+  "scope": "Observed within-limit stage timed out after actual server write. No causal hypothesis, deadline change or repeated native run."
+}

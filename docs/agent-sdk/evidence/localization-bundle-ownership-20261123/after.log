@@ -1,0 +1,11 @@
+test_changed_non_table_entry_in_extension_fails (Scripts.CI.Tests.test_chat_localization_bundles.PackagedLocalizationOwnershipTests.test_changed_non_table_entry_in_extension_fails) ... ok
+test_direct_resource_bundle_input_is_preserved (Scripts.CI.Tests.test_chat_localization_bundles.PackagedLocalizationOwnershipTests.test_direct_resource_bundle_input_is_preserved) ... ok
+test_equal_copies_with_wrong_canonical_translation_still_fail (Scripts.CI.Tests.test_chat_localization_bundles.PackagedLocalizationOwnershipTests.test_equal_copies_with_wrong_canonical_translation_still_fail) ... ok
+test_same_original_bundle_in_app_framework_and_extensions_is_accepted (Scripts.CI.Tests.test_chat_localization_bundles.PackagedLocalizationOwnershipTests.test_same_original_bundle_in_app_framework_and_extensions_is_accepted) ... ok
+test_stale_translation_in_extension_fails (Scripts.CI.Tests.test_chat_localization_bundles.PackagedLocalizationOwnershipTests.test_stale_translation_in_extension_fails) ... ok
+test_two_different_sdk_bundle_identities_remain_ambiguous (Scripts.CI.Tests.test_chat_localization_bundles.PackagedLocalizationOwnershipTests.test_two_different_sdk_bundle_identities_remain_ambiguous) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.777s
+
+OK

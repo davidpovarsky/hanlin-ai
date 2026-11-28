@@ -1,0 +1,21 @@
+{
+  "sdkSourceInputs": 235,
+  "all235CurrentCanonicalHashesMatchFrozenSDK20": true,
+  "changedPathsAmongSDKSourceInputs": [],
+  "publicBridgeHeaderUnchanged": {
+    "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h",
+    "bytes": 8837,
+    "sha256": "c2e8a138628dfd568a30dcaf0b2fd899347b6065354c86350db7d3f36f4c0b19"
+  },
+  "originalNativeTestMethodsByteIdenticalAfterRemovingOnlyNewMethodAndImport": true,
+  "projectFileChanged": false,
+  "typesOrGeneratedSourcesChanged": false,
+  "nativeConsumers": [
+    "HanlinMiniApps",
+    "AI_Hanlin"
+  ],
+  "testTarget": "AI_HLYTests",
+  "implementationTarget": "HanlinNativeScriptCoreSupport",
+  "dependencyPath": "HanlinNativeScriptCoreSupport -> HanlinNativeScriptRuntime -> both application products",
+  "nativeBuildOrTestExecution": "NOT_RUN"
+}

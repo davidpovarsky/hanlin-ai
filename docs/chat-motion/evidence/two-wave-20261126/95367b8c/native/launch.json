@@ -1,0 +1,8 @@
+{
+  "pid": 43740,
+  "startedUTC": "2026-11-26T16:13:42.296796+00:00",
+  "freeBytes": 5507911680,
+  "controllerSHA256": "57624575057005b15c6ad4e495f7cf516507682450bf025521cffd70a5c4ea4f",
+  "sourceSHA": "95367b8c06b166873dfab2143a8323a869085af2",
+  "scope": "Original B-A-C, original recorder/assertions/test flags; only current production scope restored"
+}

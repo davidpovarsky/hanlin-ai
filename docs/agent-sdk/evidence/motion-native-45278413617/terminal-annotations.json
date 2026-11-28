@@ -1,0 +1,14 @@
+[
+  {
+    "path": ".github",
+    "blob_href": "https://github.com/davidpovarsky/hanlin-ai/blob/d8e4327f6d4097ac5a206f2acf2bf654a7ee9c13/.github",
+    "start_line": 4996,
+    "start_column": null,
+    "end_line": 4996,
+    "end_column": null,
+    "annotation_level": "failure",
+    "title": "",
+    "message": "Process completed with exit code 65.",
+    "raw_details": ""
+  }
+]

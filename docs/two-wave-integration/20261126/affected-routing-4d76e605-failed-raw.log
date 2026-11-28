@@ -1,0 +1,9 @@
+================================================================================
+ROUTING ERROR: Affected-test routing is incomplete.
+
+Unmapped changed paths:
+  - tools/ai-team/ensure-team.ps1
+
+Add an explicit routing rule in Scripts/CI/affected-validation-map.json before validation can continue.
+DO NOT RUN FULL VALIDATION AS A FALLBACK.
+================================================================================

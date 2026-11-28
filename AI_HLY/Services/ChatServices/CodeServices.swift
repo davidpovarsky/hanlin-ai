@@ -37,6 +37,11 @@ class PistonExecutor {
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
 
+            if let http = response as? HTTPURLResponse, [401, 403].contains(http.statusCode) {
+                return CodeBlock(codeType: "python", code: code,
+                    output: RuntimeL10n.string("Piston requires provider authorization. No execution result was returned. You can run Python on this device instead."),
+                    hasError: true)
+            }
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                 return CodeBlock(codeType: "python", code: code, output: "网络请求失败（状态码错误）", hasError: true)
             }

@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-18",
+  "base_sha": "aed23e36cb214f88295df9c81345b5b6db737899",
+  "authorization": "OWNER_AUTHORIZATION_20261118.md",
+  "decision": "Implement the approved two-destination navigation without replacing the original Composer or transcript",
+  "changed_sources": [
+    ".github/workflows/validate-app-split.yml",
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift",
+    "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
+    "AI_HLY/KnowledgeListView.swift",
+    "AI_HLY/ListView.swift",
+    "AI_HLY/MainTabView.swift",
+    "AI_HLY/ModelsView.swift",
+    "AI_HLY/Resource/Localizable.xcstrings",
+    "AI_HLY/SettingsView.swift",
+    "AI_HLY/Views/Components/MemoryArchiveView.swift",
+    "AI_HLY/Views/Components/PromptRepoView.swift",
+    "AI_HLY/VisionView.swift",
+    "AI_HLYTests/HanlinAppSplitOriginTests.swift",
+    "AI_HLYUITests/HanlinMorphComposerUITests.swift",
+    "AI_HLYUITests/HanlinPrimaryNavigationSmokeUITests.swift",
+    "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
+    "Packages/HanlinParityMiniApp/Sources/HanlinParityMiniApp/SwiftParityMiniApp.swift",
+    "Packages/HanlinProductSplit/Sources/HanlinProductSplit/SplitForegroundRoute.swift",
+    "Packages/HanlinProductSplit/Tests/ForegroundSchemeTests.swift",
+    "AI_HLY/Downstream/ChatPresentation/HanlinPersonalLibraryView.swift"
+  ],
+  "coverage_preserved": [
+    "Original knowledge, memory, prompt, model, settings, Vision and saved-message screens remain reachable",
+    "Canvas catalog opens the original conversation/message identity",
+    "NativeScript and Expo original engine probes remain explicit Debug-only component routes, not product navigation evidence",
+    "Original 42 foreground route cases retained; 11 non-executing catalog-wake cases added",
+    "Canonical sharing checks caller identity and original broker authorization; Host fallback and view use one registration"
+  ],
+  "test_contract_amendment": {
+    "reason": "Owner approved relocation of Apps/Vision/Models/Settings from permanent tabs. The old six-tab navigation expectation is replaced with the approved product flow while all former feature destinations remain covered.",
+    "primary_selector": "AI_HLYUITests/HanlinPrimaryNavigationSmokeUITests/testWholeAppPrimaryNavigationSmoke",
+    "new_checks": [
+      "Exactly two permanent tabs",
+      "Library sections",
+      "Profile and model configuration",
+      "Missing companion preserves workspace",
+      "Contextual Vision returns to originating workspace"
+    ],
+    "composer_selectors": [
+      "testCompactNavigationKeepsDraft",
+      "testCompactLargeTextWithAttachment",
+      "testWideNavigationKeepsDraft"
+    ],
+    "composer_added_checks": "Close History and visit Library/Profile without losing draft or attachment",
+    "portable_foreground_expected_count": 53
+  },
+  "native_obligations": [
+    {
+      "group": "compact",
+      "family": "iPhone",
+      "selectors": [
+        "AI_HLYUITests/HanlinMorphComposerUITests/testCompactNavigationKeepsDraft",
+        "AI_HLYUITests/HanlinMorphComposerUITests/testCompactLargeTextWithAttachment"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "group": "original-full-app",
+      "family": "iPad",
+      "selectors": [
+        "AI_HLYUITests/HanlinPrimaryNavigationSmokeUITests/testWholeAppPrimaryNavigationSmoke",
+        "AI_HLYUITests/HanlinMorphComposerUITests/testWideNavigationKeepsDraft",
+        "AI_HLYTests/HanlinAppSplitOriginTests"
+      ],
+      "status": "NOT_RUN",
+      "note": "Additional missing Phase2 engine/SDK/Skills/A2UI selectors remain required; no prior unexecuted case is promoted to pass"
+    }
+  ],
+  "prior_failed_or_missing": [
+    {
+      "run": 44204049982,
+      "artifact": 14383534041,
+      "artifact_sha256": "61b46d9b7d5ce40be188a206d9ac4459345eb4be8ba1d1eb7434ba64e6b23a43",
+      "build": "EXECUTED_PASS",
+      "tests": "NOT_RUN",
+      "cause": "Invalid mixture of compact-only selectors with other UI selectors; separate device-family dispatches are required"
+    }
+  ],
+  "checks_now": [
+    "Swift 6 syntax parse only on Windows; not Apple typechecking",
+    "git diff --check"
+  ],
+  "acceptance": "NEEDS_NATIVE_EXECUTION"
+}

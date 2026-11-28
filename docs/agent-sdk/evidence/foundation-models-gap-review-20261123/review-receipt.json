@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "reviewedAtUTC": "2026-11-23T17:16:08.053164+00:00",
+  "sourceCommit": "8429dbb6cb66e266504b8d055586829ba7aa61f7",
+  "taskID": "1220542419128390",
+  "sourceReview": "PASS",
+  "nativeToolImplementation": "BLOCKED",
+  "nativeModelExecution": "NOT_RUN",
+  "nativeAvailability": "NOT_QUERIED",
+  "captureCommit": "8373e095126f9815df131aa0bcd19c694c8e63ed",
+  "sources": [
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleOnDeviceProvider.swift",
+      "gitBlob": "1762ce03bcbdd6533d5d8411979853876964b7df",
+      "sha256": "e9cce91de6ae2ad7b93d86efe81d3ee8c550c504fe167c0a6bc17098f7ded22f",
+      "bytes": 7773
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleTextDelta.swift",
+      "gitBlob": "dab00fd9a4b16c3a9989b01ad61337a1192b7a0c",
+      "sha256": "c40a267b83f68e803c515ae43846d6b9d98d58b3c89007065f0909adb3477c7a",
+      "bytes": 1616
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+      "gitBlob": "2f93f21a4b49c9205ba1da60779626cebebf7512",
+      "sha256": "179e222f04e185d941c0f42416f6df6d391cf308bd79b63af341093c460d1e1b",
+      "bytes": 35047
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinModelToolInputGuard.swift",
+      "gitBlob": "b60eb62a5f8af327813516c1dc598265684d48da",
+      "sha256": "003693d1f14d1a19839f878e1dcfb93a80fa66bd3f6cfd1c9dd1b6e491a04746",
+      "bytes": 4778
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift",
+      "gitBlob": "61be72ea58eddc736b843cf5a84228f16c719ce7",
+      "sha256": "48fb93718f2eb30a0b947aceabb37f2b2b4f0ffaa79bb75c77cafa400401fcc9",
+      "bytes": 12427
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+      "gitBlob": "d8b353bc455addd30e850a7324127314ae935bf0",
+      "sha256": "aaf8ae687d478710c2b4388f19350164a606facd02b70375743c808629cbe524",
+      "bytes": 35975
+    },
+    {
+      "path": "AI_HLY/Model/HanlinAppleModelCatalogAdapter.swift",
+      "gitBlob": "6e0142c3715cebd91cd854a538f9c53d17f7daa9",
+      "sha256": "b6241c2e58835f8ea6c65ae130bc12e8f90521a65e5680503921339a2b4fd8aa",
+      "bytes": 4656
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/HanlinModelPickerPopover.swift",
+      "gitBlob": "84ccb9716244b5a3f535d00c81f8c1691f024357",
+      "sha256": "d73cdb6939dbe9844c3f2b2f767e8cb8ba61d90b7dab8d0e0b9678ced7b6bf0c",
+      "bytes": 18297
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinDefaultChatPolicy.swift",
+      "gitBlob": "b89fcde2da8b2370cbb23496e80ddf3c08df19ed",
+      "sha256": "3e25ec5b2da0b62e2eb1edb747e3af4f5c3a700a31ed04e03715344258488207",
+      "bytes": 3515
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "gitBlob": "d25d2dc088ccb5aeeead532ff780a3b7d95f83de",
+      "sha256": "2bd0f123e11de9ca01834789d8f7e6af1f8ac6e2bf74152b5e58fc766836a30a",
+      "bytes": 223094
+    },
+    {
+      "path": "AI_HLY/Downstream/Compatibility/AppleFoundationModelsProvider.swift",
+      "gitBlob": "149365ccd4a03e2fa04a17ca22877b3e773a04c0",
+      "sha256": "4500056f2c4248dd5cf21baebeeca15fbe38eaa42ec02d9ec3a14f8bbf7ec5bd",
+      "bytes": 6285
+    }
+  ],
+  "artifact": {
+    "runID": 45218713371,
+    "artifactID": 14839273585,
+    "name": "hanlin-foundation-models-interface",
+    "sha256": "00dec5b2773b6e7c063c35e695b9c8063974a192eb1f3effdf6ba80d57f68e04",
+    "crcStatus": "PASS"
+  },
+  "evidenceFiles": {
+    "README.md": "aecb4efa65e87711507d7a19fafd2c471c59d6271c41819174698fca86ebd58e",
+    "installed-interface-receipt.json": "d7d19e0e2875a90026aa4289503297daf8d4db100fc44bb46405b0846f7f8789"
+  }
+}

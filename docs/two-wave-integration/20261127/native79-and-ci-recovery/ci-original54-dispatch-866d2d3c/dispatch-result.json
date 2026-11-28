@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-11-27T04:26:52.988116+00:00",
+  "head": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "branch": "codex/hanlin-two-wave-integration-20261126",
+  "workflow": "validate-app-split.yml",
+  "workflowSHA256": "062a32f28e96578c542e8244186174a810d60f1f7c787bababd738049c30d113",
+  "pairedRunnerSHA256": "872a7f6e7f786e2d578a54e3107bbe00e42a8dd2238e23f10fd656a63d9ab3f7",
+  "requestSHA256": "a309f2ea1185e7e0767106bafca2b578e81d57ce31ecc55bb98bce8b8b716b89",
+  "scope": "miniapp_complete",
+  "originalSelectorCounts": {
+    "MiniApps": 25,
+    "Hanlin": 29,
+    "total": 54
+  },
+  "route": "Existing original workflow fresh preparation; no Host proof reuse asserted",
+  "localMacOwnership": "mac_build_resume holds local54; owns fresh79 and188. Historical GitHub xcode-27 runners distinct from pinkha-scaleway-mac.",
+  "beforeRunIDs": [],
+  "finishedAt": "2026-11-27T04:26:54.506505+00:00",
+  "returncode": 0,
+  "dispatchAccepted": true,
+  "testsStatus": "NOT_RUN_UNTIL_GITHUB_RUN_OBSERVED",
+  "stderrTail": ""
+}

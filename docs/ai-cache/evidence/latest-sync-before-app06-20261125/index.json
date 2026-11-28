@@ -1,0 +1,102 @@
+{
+  "recordedAtUTC": "2026-11-25T04:35:48.977286+00:00",
+  "combinedSHA": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa",
+  "tree": "d0dc201253ea9a57a4837c9a47cf4049004185fb",
+  "baseSHA": "bc28e07e1e76d83e1b4f9a4638f1792b1ec2874c",
+  "workingTreeClean": true,
+  "allRequestedHeadsAreAncestors": true,
+  "generatedSourceOutputsRewritten": false,
+  "testsOrNativeBuilds": "NOT_RUN",
+  "files": [
+    {
+      "path": "01-app-intents-check.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "01-app-intents-check.stdout.log",
+      "bytes": 93,
+      "sha256": "dee7c7cc1ea4e0689e5f02b0dc6fc6ccf217e0f7a744f91bd9a91e7053b641cf"
+    },
+    {
+      "path": "01-merge-composer.json",
+      "bytes": 649,
+      "sha256": "bed21f349321543b7b073f77c66941f14ac32a4fc6c17726dba0a3781455209e"
+    },
+    {
+      "path": "02-manifest-check.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "02-manifest-check.stdout.log",
+      "bytes": 3605,
+      "sha256": "6a3adc34271cba4ee688071b7aec9eb7f0ee9731bedf3e215a77efb8648947f0"
+    },
+    {
+      "path": "02-merge-minisdk.json",
+      "bytes": 282,
+      "sha256": "85aaa1042dccb7a51a90541257b471a0249098b1117f1199eb231bc5bc9f0bf4"
+    },
+    {
+      "path": "03-merge-wave.json",
+      "bytes": 447,
+      "sha256": "148f1217b727dbaa89123ad81e792f233abf34b15592ed31282e2f7345b64348"
+    },
+    {
+      "path": "03-project-check.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "03-project-check.stdout.log",
+      "bytes": 88,
+      "sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+    },
+    {
+      "path": "04-miniapp-sdk-audit-check.stderr.log",
+      "bytes": 580,
+      "sha256": "867e3dd813f3c62b70df06e63053424a5dde63111e033f7ab41197d5f723d2ef"
+    },
+    {
+      "path": "04-miniapp-sdk-audit-check.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "05-miniapp-reachability-check.stderr.log",
+      "bytes": 743,
+      "sha256": "201a9034bcc8adda84daa3e1f8e7b0de9e9eae2f2fa05eae20d055b32535ef97"
+    },
+    {
+      "path": "05-miniapp-reachability-check.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "check-controller.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "check-controller.py",
+      "bytes": 2750,
+      "sha256": "77e84e5f206d38cce95a538e6e051276f6825fe250c6afebf4794b7eb9220c5e"
+    },
+    {
+      "path": "checks-receipt.json",
+      "bytes": 3864,
+      "sha256": "bb03831b9a8dd5a268ccf0b6c82414f59d910ac5f15a7dabd1c18239af769f40"
+    },
+    {
+      "path": "merge-preservation-receipt.json",
+      "bytes": 3305,
+      "sha256": "f1ccd2dde5a771e09d57eadd41236ebe3904e193d66ff7c98782ce2051eb456f"
+    },
+    {
+      "path": "selected-test-inventory.json",
+      "bytes": 13535,
+      "sha256": "557e716eba15309a68f1f980a1d9795827fee89b99a09cac2622445fd5d3de26"
+    }
+  ]
+}

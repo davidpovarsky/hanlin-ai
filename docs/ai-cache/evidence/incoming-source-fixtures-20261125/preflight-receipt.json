@@ -1,0 +1,33 @@
+{
+  "id": "preflight",
+  "sourceSHA": "1710bc6119983799f7d22cb723659ac274fe96b1",
+  "argv": [
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "Scripts/NativeScript/Tests/app-binary-preflight.test.mjs"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-ai-cache-incoming-fixtures-20261125",
+  "startedAt": "2026-11-25T03:43:40.376818+00:00",
+  "finishedAt": "2026-11-25T03:43:40.592169+00:00",
+  "durationSeconds": 0.21581762097775936,
+  "exitCode": 0,
+  "summary": {
+    "tests": 9,
+    "pass": 9,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "stdout": {
+    "path": "preflight.stdout.log",
+    "bytes": 1904,
+    "sha256": "1f84cdfe62e4942ee3b6de719f9829ad97ccd80db34a4512598564be0d03cf0e"
+  },
+  "stderr": {
+    "path": "preflight.stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

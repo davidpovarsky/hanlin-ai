@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/usr/bin/swift",
+    "/Users/m1/builds/hanlin-two-wave-root-20261126/diagnostics/security-sectask-b84d5ffb-r1/read-app-sandbox.swift",
+    "/Users/m1/builds/hanlin-two-wave-root-20261126/diagnostics/security-sectask-b84d5ffb-r1/app-sandbox-result.json"
+  ],
+  "sourceSHA256": "9fe8efc31b0f6ea3d706ca1c8c1a56f72ad6dc4a03073b9bf959de0811a3735f",
+  "pid": 29253,
+  "pgid": 29253,
+  "exitCode": 0,
+  "elapsedSeconds": 1.2182255,
+  "freeBefore": 2449838080,
+  "freeAfter": 2449797120,
+  "budgetComponentsBytes": {
+    "compile": 67108864,
+    "concurrentGrowth": 268435456,
+    "osMargin": 536870912
+  },
+  "scope": "Public read-only native SecTask app-sandbox entitlement for this Swift CLI process only",
+  "at": "2026-11-27T08:21:48.361490+00:00"
+}

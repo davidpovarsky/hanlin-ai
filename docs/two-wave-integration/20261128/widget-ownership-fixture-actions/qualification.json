@@ -1,0 +1,52 @@
+{
+  "classification": "TEST_FIXTURE_REQUIRED_FIELD_CORRECTION_SOURCE_ONLY",
+  "base": "1aef1ec13b980454b5aba43f0a4787cd5301a748",
+  "changedPath": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests.swift",
+  "originalSHA256": "35f2f46958ede390460b2811220a4ec0c1fdff3a80a57d6c937e53093c4e85c3",
+  "candidateSHA256": "b2b27092a2b4157d7e4a73858fd7bb70c274d53f43f10d0fc7f3b8eb188ce3cd",
+  "patchSHA256": "5d077f82fd49ad6c9fa095fe5075438a35e25689f5976f3e5d5df15c584e642b",
+  "change": "Add only \"actions\": [] to the new shared fixture hanlinWidget metadata.",
+  "requiredContract": {
+    "type": "HanlinWidgetPackageMetadata",
+    "codableFields": [
+      "abiVersion",
+      "sourceFormat",
+      "actions",
+      "families"
+    ],
+    "otherThreeAlreadyPresent": true,
+    "initializerDefaultIsNotDecoderDefault": true
+  },
+  "preservation": {
+    "wholeFileExactInverse": true,
+    "allEightTestBodiesByteIdentical": true,
+    "allAssertionsAndIssueCallsByteIdentical": true,
+    "originalTwoOraclesAndFixturesUnchanged": true,
+    "productionUnchanged": true,
+    "sdk396Intersection": [],
+    "noMethodOrParameterCountChange": true
+  },
+  "actualPriorOutcome": {
+    "source": "ed4a620799785a3c93c1e041bb2a88b0c97ea017",
+    "packet": "retained-import-ed4a6207-two-pass-eight-fixture-fail",
+    "manifestSHA256": "e4a9872d548010d4fa151b56f6afeb4a0fa10e970e6d31b112a62c343f5f8951",
+    "verifiedMembers": 23,
+    "passed": 2,
+    "failed": 8,
+    "nativeExitCode": 1,
+    "stopReason": null,
+    "failure": "Eight new controls threw missing actions before their intended semantic checks; original two retained import oracles passed.",
+    "rawLogSHA256": "b796abe084922c8affd157261d36ff775504357da7880645522a1a688abb0682",
+    "rawLogBytes": 30084,
+    "retainedLogEncoding": "gzip lossless, mtime=0"
+  },
+  "newExecution": {
+    "native": "NOT_RUN at source seal; later execution must be separately qualified.",
+    "swiftCompile": "NOT_RUN",
+    "portableTest": "NOT_RUN",
+    "mechanicalChecks": "exact inverse, unchanged test-body prefix, assertion lines, declared SDK-input membership"
+  },
+  "gitPatchSHA256": "6d2aa862cc78bfde03082a42ae897c1511cf8f43da6a3b80c1992770acb97c4f",
+  "diffCheckExit": 0,
+  "sourceCommit": "85f9d2ccab1611eccadd64ff2cdd03ccb8720615"
+}

@@ -1,0 +1,25 @@
+{
+  "artifact": {
+    "id": 14499850688,
+    "node_id": "MDg6QXJ0aWZhY3QxNDQ5OTg1MDY4OA==",
+    "name": "original-live-provider-acceptance-44447388017",
+    "size_in_bytes": 1328,
+    "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14499850688",
+    "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14499850688/zip",
+    "expired": false,
+    "digest": "sha256:f1ab3e84efa016ced44693117637d80728dd81f9f52a52b9d4c81e111fd20330",
+    "created_at": "2026-11-19T04:39:23Z",
+    "updated_at": "2026-11-19T04:39:23Z",
+    "expires_at": "2026-12-03T04:39:22Z",
+    "workflow_run": {
+      "id": 44447388017,
+      "repository_id": 1295277723,
+      "head_repository_id": 1295277723,
+      "head_branch": "codex/hanlin-product-completion-20261117",
+      "head_sha": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc"
+    }
+  },
+  "sha256": "f1ab3e84efa016ced44693117637d80728dd81f9f52a52b9d4c81e111fd20330",
+  "all_crc_pass": true,
+  "size_match": true
+}

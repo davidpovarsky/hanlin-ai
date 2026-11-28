@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "kind": "PORTABLE_EVIDENCE_CONTROLS_ONLY",
+  "sourceBase": "24fd1e20eb1af2ebab0f4d7dd7f617145217eded",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_widget_voiceover_observer.py",
+    "-v"
+  ],
+  "cwd": "/workspace/scratch/d49eec8920ef/w2-widget-voiceover/candidate",
+  "startedAtEpoch": 1795808731.351567,
+  "durationSeconds": 0.23269230900041293,
+  "exitCode": 0,
+  "python": "3.12.14",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "sourceSHA256": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "9cc9a4683da1038f0e441c2f3fe4979f9a846282a2301f4dc4e9eb6ae1b11230",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "64b1b87085e7d44b3a8289b571d6681b898238554ad12c77784074a7b3391d43",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "a8dd6ad5cc2ab61e417db7843692c90678d82b34cb0751e29e8e6ea1a3418b7b",
+    "Scripts/ProductSplit/observe_widget_voiceover.py": "7faa2680c13b7d5c1fcf248cb0fd69d38a64360545f8e579a98eba9df5f53fd4",
+    "Scripts/CI/Tests/test_widget_voiceover_observer.py": "20ce12cac6917f19ba4945fbc9b794f1a43a2b27ecb5b94065b42fe45f214902"
+  },
+  "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSHA256": "1f0e2403242c6a76544c840deb2806d945cb72d183559546a16847082cb7b805",
+  "nativeAndVoiceOverExecution": "NOT_RUN"
+}

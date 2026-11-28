@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "capturedBy": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-draft/capture-current-products-v2.py",
+    "bytes": 5356,
+    "sha256": "9788343db29eb14c8d735cb90089540d1b614780201e713da807352457bd6014"
+  },
+  "transferredAt": "2026-11-25T23:47:27.974266+00:00",
+  "captureAt": "2026-11-25T23:47:27.796963+00:00",
+  "builtInputBindings": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/product-capture/built-input-bindings.json",
+    "bytes": 13999,
+    "sha256": "799f464fcd5edae6e7218be4e0d461bbc9a899e1bb07516e298097b1d32bdc47"
+  },
+  "metadata": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/product-capture/remaining-native-product-metadata.json",
+    "bytes": 12497,
+    "sha256": "7222a7f3d589d2484a7b7b0eb709b5fc65afce35ddd85a8a2ba8f56afa48ccff"
+  },
+  "files": [
+    {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-built-inputs/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+      "bytes": 10920,
+      "sha256": "b2cc79f4b3780daec837e119cc5e4a07d5ecccd618ab793b88bb0b80dbfa2062"
+    },
+    {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-built-inputs/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "bytes": 16737,
+      "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"
+    },
+    {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-built-inputs/built-input-bindings.json",
+      "bytes": 13999,
+      "sha256": "799f464fcd5edae6e7218be4e0d461bbc9a899e1bb07516e298097b1d32bdc47"
+    },
+    {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-built-inputs/remaining-native-product-metadata.json",
+      "bytes": 12497,
+      "sha256": "7222a7f3d589d2484a7b7b0eb709b5fc65afce35ddd85a8a2ba8f56afa48ccff"
+    },
+    {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-built-inputs/build-commands-through-capture.jsonl",
+      "bytes": 12972,
+      "sha256": "c14b358bbe943fb9e7cb00aad9be35c2ab4d540f618a1a65a631d0228b747043"
+    },
+    {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-built-inputs/hosted-fixture-built-check.json",
+      "bytes": 1418,
+      "sha256": "072304963e1427286dee6365c4541496729de186116f5469405d157423bf1a4f"
+    }
+  ],
+  "boundary": "Read-only existing finalized original product identities and hosted-resource proof. No build, test, staging or simulator operation."
+}

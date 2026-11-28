@@ -1,0 +1,147 @@
+{
+  "observedAt": "2026-11-25T02:37:45.162598+00:00",
+  "catalogSHA256": "d13aed210768d84475c28201a973e3d59645c3e27f69e7069a30fb9b685e91dc",
+  "scope": "Read-only retained ZIP byte qualification; no build, extraction, installation or test",
+  "archives": [
+    {
+      "target": "ReactNativeHeaders",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/ReactNativeHeaders.xcframework.zip",
+      "bytes": 2219846,
+      "sha256": "2caf25a408560b400c00eca977a96f5bdcbed6eb520e742ac1175649a4e51a23",
+      "status": "MATCHES_ORIGINAL_CATALOG"
+    },
+    {
+      "target": "React",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/React.xcframework.zip",
+      "bytes": 21787924,
+      "sha256": "6162481ee94054c8e03a9e4559aa6381a5a631ecc8f78bb7203b6e221b5efe01",
+      "status": "MATCHES_ORIGINAL_CATALOG"
+    },
+    {
+      "target": "ReactNativeDependencies",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/ReactNativeDependencies.xcframework.zip",
+      "bytes": 4839174,
+      "sha256": "39f90b4a8875af5b817e6383f54a8d1ed0557e0e77022222f329e117bfca12d8",
+      "status": "MATCHES_ORIGINAL_CATALOG"
+    },
+    {
+      "target": "hermesvm",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/hermesvm.xcframework.zip",
+      "bytes": 5310852,
+      "sha256": "f11b12dbb34160d16398787089c77a1b66e6e4c66fd8524f555bd6c7d71a4bd3",
+      "status": "MATCHES_ORIGINAL_CATALOG"
+    },
+    {
+      "target": "ExpoModulesJSI",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/ExpoModulesJSI.xcframework.zip",
+      "bytes": 7971900,
+      "sha256": "c0e285370bb368969124df20377d8f931b632cc5b43a1591fbdf4ce8b1cc30f6",
+      "status": "MATCHES_ORIGINAL_CATALOG"
+    },
+    {
+      "target": "ExpoModulesCore",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/ExpoModulesCore.xcframework.zip",
+      "bytes": 14697097,
+      "sha256": "b3a6f07a8100094076f06d6bb1f0e25b8381d01915eac4b9174eb77ded04ce4a",
+      "status": "MATCHES_ORIGINAL_CATALOG"
+    },
+    {
+      "target": "ExpoModulesWorklets",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/ExpoModulesWorklets.xcframework.zip",
+      "bytes": 1060981,
+      "sha256": "c4dbb6691c248dd652a9028c3cbb24fb1a9d2c41831750a619b0df50a9e5abbd",
+      "status": "MATCHES_ORIGINAL_CATALOG"
+    },
+    {
+      "target": "ExpoUI",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/ExpoUI.xcframework.zip",
+      "bytes": 19903079,
+      "sha256": "a5d7beda06fcb5ca893d4c17d5d89384c4dcca395c0b6efdabb4433c4e190a22",
+      "status": "MATCHES_ORIGINAL_CATALOG"
+    },
+    {
+      "target": "ExpoAsset",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/ExpoAsset.xcframework.zip",
+      "bytes": 236835,
+      "sha256": "5786adf1e037e948ec74cc722bb4eb4f59089aad839e7abc8c254196c143d53e",
+      "status": "MATCHES_ORIGINAL_CATALOG"
+    },
+    {
+      "target": "ExpoBrownfield",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/ExpoBrownfield.xcframework.zip",
+      "bytes": 1177320,
+      "sha256": "5624ddbeb566108b83416538d69ed405e3502bd40d416d751bb43d9ce1a1fa70",
+      "status": "MATCHES_ORIGINAL_CATALOG"
+    },
+    {
+      "target": "Libffi",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/Libffi.xcframework.zip",
+      "bytes": 52120,
+      "sha256": "6a50e1bc7fb52c15372278b54e721e4f22887a50ba7bdd9bf93bb6c3507795cf",
+      "status": "MATCHES_ORIGINAL_CATALOG"
+    },
+    {
+      "target": "TNSWidgets",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/TNSWidgets.xcframework.zip",
+      "bytes": 5898178,
+      "sha256": "861178adca25cb37cbc9372566da3ab7bbb09ee81a552a667c78025b257f214e",
+      "status": "MATCHES_ORIGINAL_CATALOG"
+    },
+    {
+      "target": "NSCWinterTC",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/NSCWinterTC.xcframework.zip",
+      "bytes": 2843711,
+      "sha256": "2399fcd150e44cf6fff99beb2d3ddc483c6c527830d176293852f44378e83190",
+      "status": "MATCHES_ORIGINAL_CATALOG"
+    },
+    {
+      "target": "NodeMobile",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/NodeMobile.xcframework.zip",
+      "bytes": 35086561,
+      "sha256": "755769361a77d53ac930ff0b28526a6a9085619f15dc7bd169fcadcc3ee290fc",
+      "status": "MATCHES_ORIGINAL_CATALOG"
+    },
+    {
+      "target": "Python",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/Python.xcframework.zip",
+      "bytes": 38395469,
+      "sha256": "cd0978e95d2b68ac234cf2bad7d8ac83e4ed3afd6266bee402141e3ed9eb2d13",
+      "status": "MATCHES_ORIGINAL_CATALOG"
+    },
+    {
+      "target": "HanlinExpoHeaderSupport",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/HanlinExpoHeaderSupport.zip",
+      "bytes": 10675681,
+      "sha256": "90b3af259a3347adffb021f56e66ff82e926ea1e8668d5774b1d384650394c45",
+      "status": "MATCHES_ORIGINAL_CATALOG"
+    },
+    {
+      "target": "HanlinExpoWidgetRuntimeSupport",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/HanlinExpoWidgetRuntimeSupport.zip",
+      "bytes": 40471,
+      "sha256": "e81c064305804bb14fc5df401ac2c914d22e4172c4ddcd4fae3f7aa5b61b4dac",
+      "status": "MATCHES_ORIGINAL_CATALOG"
+    },
+    {
+      "target": "HanlinNativeScriptHostSupport",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/HanlinNativeScriptHostSupport.zip",
+      "bytes": 12837746,
+      "sha256": "ad834de0754731a8dfa1b13177189ce7a1abe83215786065c95ccc6621304be7",
+      "status": "MATCHES_ORIGINAL_CATALOG"
+    },
+    {
+      "target": "HanlinNodeHostSupport",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/HanlinNodeHostSupport.zip",
+      "bytes": 76269179,
+      "sha256": "b0960b3549d39482f425abaec88cb66f784a141cf0395438f5dd25c8f34a9e8b",
+      "status": "MATCHES_ORIGINAL_CATALOG"
+    },
+    {
+      "target": "HanlinPythonHostSupport",
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/HanlinPythonHostSupport.zip",
+      "bytes": 360,
+      "sha256": "9a69b3ab8a633dfa68df54bc94a780593372eec8305ca6df6962d4ff0aae89a8",
+      "status": "MATCHES_ORIGINAL_CATALOG"
+    }
+  ]
+}

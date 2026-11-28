@@ -1,0 +1,762 @@
+warning: failed to retrieve search paths with pkg-config; maybe pkg-config is not installed
+warning: couldn't find pc file for zlib
+warning: couldn't find pc file for zlib
+warning: 'zipfoundation': found 1 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Resources\PrivacyInfo.xcprivacy
+[0/1] Planning build
+[1/1] Compiling plugin GenerateManual
+[2/2] Compiling plugin GenerateDoccReference
+Building for debugging...
+[2/5] Write sources
+[4/5] Write swift-version-2807070033DA82CF.txt
+[6/171] Compiling ZIPFoundation FileManager+ZIPDeprecated.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[7/172] Compiling AISDKProvider LanguageModelV3.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[8/172] Compiling AISDKProvider LanguageModelV3CallOptions.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[9/172] Compiling ZIPFoundation URL+ZIP.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+error: emit-module command failed with exit code 1 (use -v to see invocation)
+[10/172] Emitting module ZIPFoundation
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[11/172] Compiling AISDKProvider EmbeddingModelV2.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[12/172] Compiling AISDKProvider EmbeddingModelV2Embedding.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[13/172] Compiling AISDKProvider EmbeddingModelV3.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[14/172] Compiling AISDKProvider EmbeddingModelV3Embedding.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[15/172] Compiling AISDKProvider EmptyResponseBodyError.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[16/172] Compiling AISDKProvider GetErrorMessage.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[17/172] Compiling AISDKProvider AISDKError.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[18/172] Compiling AISDKProvider APICallError.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[19/172] Compiling AISDKProvider InvalidArgumentError.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[20/172] Compiling AISDKProvider InvalidPromptError.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[21/172] Compiling AISDKProvider EmbeddingModelV4.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[22/172] Compiling AISDKProvider EmbeddingModelV4Middleware.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[23/172] Compiling ZIPFoundation FileManager+ZIP.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[24/172] Compiling AISDKProvider LanguageModelV2ToolChoice.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[25/172] Compiling AISDKProvider LanguageModelV2ToolResult.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[26/172] Compiling AISDKProvider LanguageModelV3Content.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[27/172] Compiling AISDKProvider LanguageModelV3CustomContent.swift
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:14:2: error: #import of type library is an unsupported Microsoft feature
+12 | #define zlib_shim_h
+13 | 
+14 | #import <stdio.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+15 | #import <zlib.h>
+16 | 
+
+<module-includes>:1:10: note: in file included from <module-includes>:1:
+1 | #include "shim.h"
+  |          `- note: in file included from <module-includes>:1:
+2 | 
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\CZLib\shim.h:15:2: error: #import of type library is an unsupported Microsoft feature
+13 | 
+14 | #import <stdio.h>
+15 | #import <zlib.h>
+   |  `- error: #import of type library is an unsupported Microsoft feature
+16 | 
+17 | // [zlib] provide 64-bit offset functions if _LARGEFILE64_SOURCE defined
+
+C:\Users\DAVID\Code\hanlin-agent-skills-embedded-results\Packages\HanlinPlatform\.build\checkouts\ZIPFoundation\Sources\ZIPFoundation\Data+Compression.swift:166:8: error: could not build C module 'CZlib'
+164 | 
+165 | #else
+166 | import CZlib
+    |        `- error: could not build C module 'CZlib'
+167 | 
+168 | extension Data {
+[28/172] Emitting module EventSourceParser
+[29/172] Compiling EventSourceParser Stream.swift

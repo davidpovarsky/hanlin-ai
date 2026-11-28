@@ -1,0 +1,18 @@
+{
+  "source": "6265dd26948fe671f9b73904529b3bd6d871c9a4",
+  "parent": "04e33c45acedd3f372f836b06f17b805bc91293d",
+  "tree": "73c7b995c6169bfa25751042c38b688c8cd91bae",
+  "paths": {
+    "Scripts/ProductSplit/run_native_acceptance.py": {
+      "bytes": 77566,
+      "sha256": "da9546c9e60cfa17e1ea3689916ee632cf0fe92bac49e8365b30d8b397da82ba"
+    },
+    "Scripts/CI/Tests/test_notification_os_scope.py": {
+      "bytes": 46168,
+      "sha256": "2b00160304759b6cd41f326f32b6f380b978963a1bb4a1885fe46850d0d33dff"
+    }
+  },
+  "candidateManifestSHA256": "2714ddc079ba3d580d9a3119e45496b0b1ec14c6ad57e14d0acf1bacc27b05f9",
+  "independentMacReviewSHA256": "3bd6dd8b67caa4e47bad1b2c263742647de1b4c75e6a050da9338f75e359a8fa",
+  "native": "NOT_RUN"
+}

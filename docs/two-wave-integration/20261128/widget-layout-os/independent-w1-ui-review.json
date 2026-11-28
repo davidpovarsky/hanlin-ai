@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "at": "2026-11-28T05:48:47.121Z",
+  "reviewer": "W1 independent source review",
+  "verdict": "APPROVED_UI_SOURCE_ONLY",
+  "scope": "New layout Swift UI/helper insertion, physical identity, public AX and lifecycle only. Root owns reader/runner/control review.",
+  "base": "9ee23af8c3556502ba6da8ba7fccd05a8c35adb1",
+  "candidateManifestSHA256": "64a5e56dace2c478f7b087694e7a63f8642c3703254b00b26bfaac8692189db0",
+  "candidateUI": {
+    "bytes": 239403,
+    "sha256": "12d0f93c0f4a6d5e7ee2d0311ba7a5cf9120e8cfc33838d562cd60d6e76447cd"
+  },
+  "insertion": {
+    "bytes": 20143,
+    "sha256": "b27093192adf50477d3c3c89193c87ea6dc3bef9f9f24b3805ef70dfe3fabdac"
+  },
+  "preservation": {
+    "wholeOriginalFileByteInverse": true,
+    "originalFile": {
+      "bytes": 219260,
+      "sha256": "7c5e0a0c64e7bd46444cf71d01439a7738900f278805cead17e153237147f6a4"
+    },
+    "original37MethodsAndAllHelpersByteExact": true,
+    "newSelector": "testMiniAppsMediumWidgetNativeControlsStayVisibleAcrossStateAndRotation",
+    "runMiniAppShortcut": {
+      "bytes": 4677,
+      "sha256": "95af5e536aef318a4ae19a5ea8dcaa46899ac4854e4e9d5fac25afd2a4710bfa",
+      "exactOriginal": true
+    },
+    "helpers": [
+      {
+        "name": "openWidgetFamilyGallery",
+        "sha256": "a04d1422f04281df540c2f4030c3b1b5337c7746ab2af1221622e8f8da4e339a",
+        "unchanged": true
+      },
+      {
+        "name": "widgetStateControls",
+        "sha256": "073b0a9f0cc90c6dfefb2c247becedfd690c297a407d24cc6811f83a50af8492",
+        "unchanged": true
+      },
+      {
+        "name": "prepareWidgetFamilyInitialOrientation",
+        "sha256": "67d1e572c4d1a636e618b76bc429f3546228596a013ebacd30b8dcd1ba21de99",
+        "unchanged": true
+      },
+      {
+        "name": "setWidgetFamilyOrientation",
+        "sha256": "6526fe9cf9e3e738a62e2a239ed88ad2d709f180e220b09dd31cebb06d86cd1c",
+        "unchanged": true
+      },
+      {
+        "name": "widgetFamilyVisible",
+        "sha256": "272107e09662da14b5b50bf754d67bf14dc4b586e9d5d9d7764762cc00610863",
+        "unchanged": true
+      },
+      {
+        "name": "wait",
+        "sha256": "513b2aaa65dbe0e114c7717904d0bed023bae1e9c47d53a988dd40c5ed9cf26a",
+        "unchanged": true
+      },
+      {
+        "name": "bounded",
+        "sha256": "9b145e81643c66b7f85694f45aaea2c8dfee884779eeaade749eb69be4132a33",
+        "unchanged": true
+      },
+      {
+        "name": "tap",
+        "sha256": "717f3f2f071171c9b383c5bdaa41c59b0409506077ac4fa1dcf7dbf8fa3a0368",
+        "unchanged": true
+      }
+    ],
+    "integrationNote": "Candidate preserves the base9ee Shortcuts helper. Root must combine the separately reviewed5f creation-helper change through the disjoint integration."
+  },
+  "findings": [
+    "Actual named Hanlin Script/Medium gallery labels and one newly absent-to-present placeholder precede configuration; swipe count is not family proof.",
+    "The fresh UUID name is re-read in Edit Widget against the physical container before admission, before each action, after actions and rotation, and before removal.",
+    "Original grouped Toggle/Add/Refresh controls and one Matrix marker bind one visible real SpringBoard window with positive on-screen frames. No synthetic geometry is supplied.",
+    "Each tap is enclosed by wall-clock and monotonic observations; the original tap helper requires visible enabled hittable UI. Native revision and nonce acceptance remain separate observer obligations.",
+    "Known orientation is preserved. An unknown initial enum invokes the existing bounded preparation, retaining rawunknown and verifying public enum plus Home geometry. Rotation and final restoration require those same observations.",
+    "Cleanup removes only the uniquely reverified case-owned named widget through actual Remove Widget and confirmation. Unbound placement remains failed; catch/defer retain cleanup and restoration errors.",
+    "The new420-second case uses original deadline-capped waits. Success requires native observer completion after actual cleanup and restoration."
+  ],
+  "limitations": [
+    "No Swift typecheck, Simulator execution, native placement, successful locator or UI pass is claimed.",
+    "One Medium/iPad acceptance contract only; other families, appearance, accessibility and physical devices are not qualified.",
+    "AX and frame reads are sequential observations, not an atomic OS snapshot; source/native-state/nonce correlation remains the observer's responsibility."
+  ],
+  "testsRunByReviewer": 0,
+  "sourceEditsByReviewer": 0
+}

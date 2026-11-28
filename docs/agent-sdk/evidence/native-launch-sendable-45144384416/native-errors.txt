@@ -1,0 +1,2 @@
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift:30:7: error: stored property 'legacyLaunchRequest' of 'Sendable'-conforming struct 'ChatResolvedExpansion' contains non-Sendable type 'NativeAppLaunchRequest'
+    |       `- error: stored property 'legacyLaunchRequest' of 'Sendable'-conforming struct 'ChatResolvedExpansion' contains non-Sendable type 'NativeAppLaunchRequest'

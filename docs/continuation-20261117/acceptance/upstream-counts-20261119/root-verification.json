@@ -1,0 +1,23 @@
+{
+  "source_base": "589420f3da0db240df8aa5a466bba9303a6bf4c5",
+  "patch_sha256": "1b5a5e12e51642a602e7d6a870edf1387c8b2bbf95955fc16756e9a031c4e780",
+  "checks": [
+    {
+      "name": "upstream-all",
+      "exit": 0,
+      "sha256": "94b077cb634c9b6246121f3ece471356d0ed6f914817f1f781d5e8125f8d3750"
+    },
+    {
+      "name": "proof-reader",
+      "exit": 0,
+      "sha256": "2cb0d3f7d0a2359e5a5cdb4eb4835ae1ccb223fbae8e75514cf42d82916c8131"
+    },
+    {
+      "name": "diff-check",
+      "exit": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "scope": "Portable accounting/consumer/lineage validation; not native candidate acceptance",
+  "observed_at": "2026-11-19T01:55:09.358606+00:00"
+}

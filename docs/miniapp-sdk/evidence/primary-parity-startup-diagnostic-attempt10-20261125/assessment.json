@@ -1,0 +1,202 @@
+{
+  "source": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+  "packetCapturedAt": "2026-11-25T02:41:44.708402+00:00",
+  "case": {
+    "status": "FAIL",
+    "startedAt": "2026-11-25T02:35:38.194829+00:00",
+    "selectors": [
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch"
+    ],
+    "originalUI": true,
+    "exitCode": 65,
+    "finishedAt": "2026-11-25T02:37:23.844820+00:00",
+    "resultFinalized": true,
+    "error": "Original runtime acceptance did not execute every selected case: ParityStartupDiagnostic",
+    "log": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/ParityStartupDiagnostic.log",
+      "bytes": 23199,
+      "sha256": "9f94424d82da711ead9656c445e34bc0dba6d17c81fd634c76a261c960dc58e6"
+    }
+  },
+  "actualCase": {
+    "executed": 1,
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "testDurationSeconds": 68.975,
+    "resultFinalized": true,
+    "rawCollectorErrorPreserved": "Original runtime acceptance did not execute every selected case: ParityStartupDiagnostic"
+  },
+  "original52": "NOT_RUN",
+  "actualSample": {
+    "sha256": "665ce904e621bec6564098cb4aef3e8a24475aab276f172e1f933105d8726f8f",
+    "mainThreadObserved": "runMainApplication -> executeNodeSync -> HanlinExecuteSyncWithTimeout",
+    "workerObserved": "launchHost -> prepareHostRuntime -> ZIPFoundation.unzipItem",
+    "frames": [
+      "+                                                                 328 +[HanlinNativeServicesBridge executeNodeSync:]  (in HanlinMiniApps.debug.dylib) + 220  [0x10a0f6794]  HanlinNativeServicesBridge.m:601",
+      "+                                                                   328 HanlinExecuteSyncWithTimeout  (in HanlinMiniApps.debug.dylib) + 1096  [0x10a0f63a0]  HanlinNativeServicesBridge.m:305",
+      "+       328 NodeRuntimeService.launchHost(debug:)  (in HanlinMiniApps.debug.dylib) + 116  [0x109434c6c]  NodeRuntimeService.swift:683",
+      "+         328 NodeRuntimeService.prepareHostRuntime()  (in HanlinMiniApps.debug.dylib) + 3344  [0x10943e464]  NodeRuntimeService.swift:879",
+      "+           311 NSFileManager.unzipItem(at:to:skipCRC32:allowUncontainedSymlinks:progress:pathEncoding:)  (in ZIPFoundation_-14A6248D789D2CE9_PackageProduct) + 2164  [0x101cc8764]  FileManager+ZIP.swift:123",
+      "+           6 NSFileManager.unzipItem(at:to:skipCRC32:allowUncontainedSymlinks:progress:pathEncoding:)  (in ZIPFoundation_-14A6248D789D2CE9_PackageProduct) + 1100  [0x101cc833c]  FileManager+ZIP.swift:0",
+      "+           5 NSFileManager.unzipItem(at:to:skipCRC32:allowUncontainedSymlinks:progress:pathEncoding:)  (in ZIPFoundation_-14A6248D789D2CE9_PackageProduct) + 1776  [0x101cc85e0]  FileManager+ZIP.swift:110",
+      "+           5 NSFileManager.unzipItem(at:to:skipCRC32:allowUncontainedSymlinks:progress:pathEncoding:)  (in ZIPFoundation_-14A6248D789D2CE9_PackageProduct) + 1788  [0x101cc85ec]  FileManager+ZIP.swift:111",
+      "+           1 NSFileManager.unzipItem(at:to:skipCRC32:allowUncontainedSymlinks:progress:pathEncoding:)  (in ZIPFoundation_-14A6248D789D2CE9_PackageProduct) + 1744  [0x101cc85c0]  FileManager+ZIP.swift:0"
+    ],
+    "scope": "3-second configured process sample; 328 main-thread samples. Header app-launch age is not unzip duration. The sample begins approximately0.48s after RUN_MAIN_BEGIN."
+  },
+  "jobs": {
+    "jsc": {
+      "observedAt": "2026-11-25T02:36:51.351489+00:00",
+      "container": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/D7CB83B8-1D6F-472C-B081-B4F0049FFCB3",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/D7CB83B8-1D6F-472C-B081-B4F0049FFCB3/Library/Application Support/HanlinRuntime/v1/jobs/javaScriptCore/67393782-58fd-4ab6-83d4-5a2532ef0baa/job.json",
+      "sha256": "b4c6c48ab139b6341121a344ca6ff229a9c312a24b5fd37801c071270645870b",
+      "bytes": 1307,
+      "activeCase": "ParityStartupDiagnostic",
+      "job": {
+        "cancellationRequested": false,
+        "completedAt": 1795574211258.522,
+        "executionID": "67393782-58FD-4AB6-83D4-5A2532EF0BAA",
+        "stdoutBytes": 0,
+        "stderrBytes": 0,
+        "startedAt": 1795574211246.5361,
+        "result": {
+          "stderr": "",
+          "wasCancelled": false,
+          "outputWasTruncated": false,
+          "stdout": "",
+          "value": "{\"runtime\":\"JSC\",\"nonce\":\"companion-4f673d96-d41b-448f-86da-e8bca94b21a5\",\"calc\":1932}",
+          "exitCode": 0,
+          "executionID": "67393782-58FD-4AB6-83D4-5A2532EF0BAA",
+          "outputFiles": {
+            "stdout": {
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/D7CB83B8-1D6F-472C-B081-B4F0049FFCB3/Library/Application Support/HanlinRuntime/v1/jobs/javaScriptCore/67393782-58fd-4ab6-83d4-5a2532ef0baa/stdout.log"
+            },
+            "stderr": {
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0,
+              "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/D7CB83B8-1D6F-472C-B081-B4F0049FFCB3/Library/Application Support/HanlinRuntime/v1/jobs/javaScriptCore/67393782-58fd-4ab6-83d4-5a2532ef0baa/stderr.log"
+            }
+          },
+          "durationMilliseconds": 8,
+          "didTimeOut": false
+        },
+        "state": "completed"
+      }
+    },
+    "python": {
+      "observedAt": "2026-11-25T02:37:12.372770+00:00",
+      "container": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/D7CB83B8-1D6F-472C-B081-B4F0049FFCB3",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/D7CB83B8-1D6F-472C-B081-B4F0049FFCB3/Library/Application Support/HanlinRuntime/v1/jobs/localPython/5746ca95-c46c-4d2d-ab42-217e35f89305/job.json",
+      "sha256": "25908275a6ab065f3e2470c34a023348b54196149d528b1f5110e393a736019f",
+      "bytes": 1331,
+      "activeCase": "ParityStartupDiagnostic",
+      "job": {
+        "startedAt": 1795574231337.916,
+        "stdoutBytes": 118,
+        "cancellationRequested": false,
+        "stderrBytes": 0,
+        "result": {
+          "stdout": "{\"runtime\": \"CPython\", \"version\": \"3.14.6\", \"nonce\": \"companion-4f673d96-d41b-448f-86da-e8bca94b21a5\", \"calc\": 10467}\n",
+          "outputWasTruncated": false,
+          "durationMilliseconds": 231,
+          "executionID": "5746CA95-C46C-4D2D-AB42-217E35F89305",
+          "didTimeOut": false,
+          "outputFiles": {
+            "stderr": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/D7CB83B8-1D6F-472C-B081-B4F0049FFCB3/Library/Application Support/HanlinRuntime/v1/jobs/localPython/5746ca95-c46c-4d2d-ab42-217e35f89305/stderr.log"
+            },
+            "stdout": {
+              "bytes": 118,
+              "sha256": "979552b6ffbacbb654139143eba87e31f61ee4beb314694ba1d83b37be0e917c",
+              "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/D7CB83B8-1D6F-472C-B081-B4F0049FFCB3/Library/Application Support/HanlinRuntime/v1/jobs/localPython/5746ca95-c46c-4d2d-ab42-217e35f89305/stdout.log"
+            }
+          },
+          "stderr": "",
+          "exitCode": 0,
+          "wasCancelled": false
+        },
+        "executionID": "5746CA95-C46C-4D2D-AB42-217E35F89305",
+        "completedAt": 1795574231571.33,
+        "state": "completed"
+      }
+    },
+    "jscCompletionToPythonStartSeconds": 20.079394,
+    "nodeJob": "NOT_OBSERVED_IN_FROZEN_PARITY_PACKET"
+  },
+  "readyObservations": [
+    {
+      "observedAt": "2026-11-25T02:35:38.356293+00:00",
+      "container": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/CF8B4D6A-3C0C-4662-91D8-B9AAF9474D44",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/CF8B4D6A-3C0C-4662-91D8-B9AAF9474D44/Library/Application Support/HanlinRuntime/v1/runtime/node/host-86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3/.ready",
+      "activeCase": "ParityStartupDiagnostic",
+      "exists": false,
+      "hostSHA256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3"
+    },
+    {
+      "observedAt": "2026-11-25T02:36:21.203059+00:00",
+      "container": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/D7CB83B8-1D6F-472C-B081-B4F0049FFCB3",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/D7CB83B8-1D6F-472C-B081-B4F0049FFCB3/Library/Application Support/HanlinRuntime/v1/runtime/node/host-86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3/.ready",
+      "activeCase": "ParityStartupDiagnostic",
+      "exists": false,
+      "hostSHA256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3"
+    }
+  ],
+  "visualInspections": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "9DB610ED-23EB-451F-B74C-4C46438D25E8",
+      "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+      "exportedFileName": "59D0C29C-1A5E-4152-86E1-31437227745A.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "companion-runtime-failure_0_F9BF5792-B495-4699-9FA1-37CF0F9AEFCF.png",
+      "timestamp": 1795574241.542,
+      "sha256": "33b2ee5c3e208827f3de79f8ac05b64444f53391bf1394238e3983060b96b944",
+      "visuallyInspected": true,
+      "finding": "Apps catalog remains visible with the HanlinScript Parity card; no presented parity runtime view, nonce labels or error sheet."
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "9DB610ED-23EB-451F-B74C-4C46438D25E8",
+      "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+      "exportedFileName": "6982D1E1-BBF8-435C-B900-292C9C87448A.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Parity-App-Launched_0_210A150A-435B-4789-A4DF-D02410985E16.png",
+      "timestamp": 1795574215.112,
+      "sha256": "519c82c735ee1da829eeee7671602cff884f4aba10386aed2ac02aa4296603a3",
+      "visuallyInspected": true,
+      "finding": "Apps catalog remains visible with the HanlinScript Parity card; no presented parity runtime view, nonce labels or error sheet."
+    }
+  ],
+  "remainingColdReadinessQuestion": "The packet does not contain a completed cold Node startup duration or readiness event. It does not establish that the independent25s Node nonce assertion will pass after async scheduling.",
+  "asyncContractReview": {
+    "provider": "executeNode Task awaits original broker and directly completes; no local compatibility timer.",
+    "broker": "ensureStarted runs before request; default RuntimeExecutionLimits.timeout is nil.",
+    "startup": "Unzip occurs before NodeRuntimeBridge.start and before the separate20s ready handshake.",
+    "compatibility": "The20s synchronous bridge deadline is separate and blocks module evaluation; using the existing async selector avoids this main-thread wait.",
+    "title": "Current OR label predicate can match catalog card; exact hanlin-script-parity-title identifier is a justified stronger presentation assertion.",
+    "budget": "Keep case420s, real nonce/error/runtime/storage/relaunch assertions; no speculative timeout enlargement is validated here."
+  },
+  "candidatePeerReview": {
+    "bundleSHA256": "5f21796994e3880ba5d5c9f0e6d23b3fa12a667ff6082183f604d214a61284b1",
+    "archiveSHA256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199",
+    "archiveBytes": 7512,
+    "readOnlyReview": "Member call preserves receiver; accepted Objective-C void returns true and each helper exits without fallback or duplicate execution. Existing sync error conversion/selectors, original callbacks/payloads and nonce computations remain intact.",
+    "actualNewNativePass": "NOT_ESTABLISHED_BY_THIS_REVIEW",
+    "sourceEditedByThisLane": false
+  },
+  "scope": "This finalized one-case diagnostic is separate from the concurrently continuing three-case command and any later correction execution. No other result is inferred.",
+  "laterCorrectionScopeReportedByRoot": {
+    "origin": "Parent root message after the read-only review; separate from this frozen execution.",
+    "exactRuntimeTitleIdentifier": true,
+    "nodeReadinessWaitSeconds": 180,
+    "caseBudgetSeconds": 420,
+    "reason": "The old cold startup had not completed during the original25-second assertion window; no completed cold-start duration was claimed.",
+    "providerAndRuntimeContractsChanged": false,
+    "correctedNativeResult": "PENDING"
+  }
+}

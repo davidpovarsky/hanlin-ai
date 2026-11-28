@@ -1,0 +1,39 @@
+{
+  "status": "DELETED",
+  "owner": "/root/native_execution",
+  "authorization": "Root explicitly authorized obsolete attempt12/13 simulator retirement only if measured next-phase need; exact12 selected first.",
+  "attempt": 12,
+  "udid": "4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25",
+  "sourceStateSHA256": "6a4c11e60a7e8aff1130d274774f1ea12885937ffbe4c6019884de7b340836a3",
+  "createdMarker": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/created-simulator.txt",
+  "deviceState": "Shutdown",
+  "noMatchingProcesses": true,
+  "noOpenFiles": true,
+  "retainedRawXCResults": [
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/AIBuild.xcresult",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic.xcresult",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/MiniBuild.xcresult"
+  ],
+  "retainedSealedEvidence": "Root b0 includes independently verified attempt12 full packet; original external control/results remain at the retained paths.",
+  "before": {
+    "at": "2026-11-25T05:23:00.078765+00:00",
+    "bytes": 6351364096,
+    "raw": "Filesystem   1024-blocks      Used Available Capacity iused    ifree %iused  Mounted on\n/dev/disk3s5   482797652 432710372   6202504    99% 6139854 62025040    9%   /System/Volumes/Data\n"
+  },
+  "reason": "Current free storage is below conservative 8.5GB incremental build/fresh simulator/result/OS allowance for upcoming paired52. This is scoped maintenance, no fixed global free-space goal or assumed full logical-size reclaim.",
+  "command": [
+    "xcrun",
+    "simctl",
+    "delete",
+    "4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "after": {
+    "at": "2026-11-25T05:23:00.813983+00:00",
+    "bytes": 6324903936,
+    "raw": "Filesystem   1024-blocks      Used Available Capacity iused    ifree %iused  Mounted on\n/dev/disk3s5   482797652 432736212   6176664    99% 6140889 61766640    9%   /System/Volumes/Data\n"
+  },
+  "deviceDirectoryStillExists": false
+}

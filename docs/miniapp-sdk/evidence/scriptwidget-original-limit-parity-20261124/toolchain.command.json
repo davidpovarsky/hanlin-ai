@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "swiftc",
+    "--version"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-scriptwidget-original-limit-parity-20261124",
+  "exitCode": 0,
+  "seconds": 0.126,
+  "atUTC": "2026-11-24T08:39:37.799675+00:00"
+}

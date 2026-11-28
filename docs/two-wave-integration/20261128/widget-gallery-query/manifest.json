@@ -1,0 +1,54 @@
+{
+  "schema": "hanlin.widget-gallery-query.public-proof-manifest.v1",
+  "sourceCommit": "57f69d269b28f86ff33c1f1de6923670f8cbb8a2",
+  "sourceTree": "9a6ceb4abb4d3f6b5504480f3754e2f4ac1858c5",
+  "sourcePath": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "sourceSHA256": "2cdc9ff12bc12b37bce5d95b8fadf5d826f139880b4c9a6e55fd6d9c9a0c237d",
+  "payloads": [
+    {
+      "path": "README.md",
+      "bytes": 3888,
+      "sha256": "bcb0a4937d2018b0c67d8c6e50cae25b80279c3821342fe9725bb411274885a2"
+    },
+    {
+      "path": "independent-root-source-review.json",
+      "bytes": 2437,
+      "sha256": "aaeb5347166745bb36c507089114ca12d16bd733e93cc9f88642571fc65cb572"
+    },
+    {
+      "path": "input-impact.json",
+      "bytes": 1241,
+      "sha256": "031a469f35b6d688516f72cfb415799f5730fcb77ce62f6f8fbdd98da4dc6bf5"
+    },
+    {
+      "path": "native-1353-1458.log.gz",
+      "bytes": 826,
+      "sha256": "e36fac5775182a59f933b33f47d6c59d9f38cc139f309f2a6d3b9131ffd0702b"
+    },
+    {
+      "path": "qualification.json",
+      "bytes": 1648,
+      "sha256": "13ed9187d4bb7589dd2ccfb75f1715e6156232dacf5fb891ffe77c5d907d6ffc"
+    },
+    {
+      "path": "retained-excerpts.json",
+      "bytes": 1389,
+      "sha256": "8ab1546ec5ac3fa3005f336cac6471c066eb141704a45b404dcf7a139b50a9af"
+    },
+    {
+      "path": "source-validation.json",
+      "bytes": 10942,
+      "sha256": "72c8d88b83444c3886c0fdf81127662d060877a3b0fa591cfe35e6de36d7d0ea"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 670,
+      "sha256": "99df0fab0055ccee15807c14471194093125deb896b132f4d026b7530ea68d95"
+    },
+    {
+      "path": "spindump-145-180.log.gz",
+      "bytes": 1370,
+      "sha256": "1077d3e8a535aa3b422bf99c15e4962feaf02349d272262fc265199064ebad29"
+    }
+  ]
+}

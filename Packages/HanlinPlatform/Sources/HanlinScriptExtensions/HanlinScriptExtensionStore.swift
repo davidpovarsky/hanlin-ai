@@ -1,0 +1,1229 @@
+import HanlinExtensionContracts
+import CryptoKit
+import Foundation
+import HanlinPlatformContracts
+import OSLog
+#if canImport(Darwin)
+import Darwin
+#endif
+
+public enum HanlinScriptExtensionStoreError: Error, Equatable, Sendable {
+    case appGroupUnavailable
+    case snapshotTooLarge
+    case invalidEnvelope
+    case integrityMismatch
+    case unsupportedSchema(UInt32)
+    case invalidArtifactReference
+    case artifactMissing
+    case artifactTooLarge
+    case storageBusy
+    case invalidCommit
+}
+
+private final class HanlinWidgetDiagnosticBuffer: @unchecked Sendable {
+    static let shared = HanlinWidgetDiagnosticBuffer()
+    private let lock = NSLock()
+    private var latest: HanlinWidgetStorageDiagnostic?
+    private var history: [HanlinWidgetStorageDiagnostic] = []
+
+    func record(_ diagnostic: HanlinWidgetStorageDiagnostic) {
+        lock.lock()
+        defer { lock.unlock() }
+        latest = diagnostic
+        history.append(diagnostic)
+        if history.count > 64 {
+            history.removeFirst(history.count - 64)
+        }
+    }
+
+    func lastDiagnostic() -> HanlinWidgetStorageDiagnostic? {
+        lock.lock()
+        defer { lock.unlock() }
+        return latest
+    }
+
+    func recentDiagnostics() -> [HanlinWidgetStorageDiagnostic] {
+        lock.lock()
+        defer { lock.unlock() }
+        return history
+    }
+}
+
+public struct HanlinScriptExtensionStore: Sendable {
+    public static let appGroupIdentifier = HanlinExtensionHostConfiguration.hanlinAppGroupIdentifier
+    private static let logger = Logger(subsystem: "com.hanlin.ai", category: "WidgetStorage")
+
+    public enum Recovery: String, Sendable {
+        case interruptedPublication
+        case completedPublicationCleanup
+        case legacyWriterDetected
+    }
+
+    public struct LoadResult: Sendable {
+        public let snapshot: HanlinScriptExtensionSnapshot?
+        public let recovery: Recovery?
+    }
+
+    private struct Commit: Codable, Equatable {
+        let version: UInt32
+        let snapshotHash: String
+        let shadowHash: String
+    }
+
+    private struct Pending: Codable {
+        let candidate: Commit
+        let previousShadowHash: String?
+    }
+
+    private struct Envelope: Codable {
+        let schemaVersion: UInt32
+        let sha256: String
+        let snapshot: HanlinScriptExtensionSnapshot
+    }
+
+    public let root: URL
+    private var persistsDiagnostics = true
+
+    public init(root: URL) {
+        self.root = Self.canonicalManagedRoot(for: root)
+    }
+
+    /// Resolve the current executable's explicitly declared shared container.
+    public init() throws {
+        try self.init(hostConfiguration: .load())
+    }
+
+    public init(hostConfiguration: HanlinExtensionHostConfiguration) throws {
+        guard let container = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: try hostConfiguration.requireAppGroupIdentifier()
+        ) else { throw HanlinScriptExtensionStoreError.appGroupUnavailable }
+        let product = try hostConfiguration.storageContainer(in: container)
+        self.init(root: product.appending(path: "ScriptingExtensions", directoryHint: .isDirectory))
+    }
+
+    public init(appGroupIdentifier: String) throws {
+        guard let container = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: appGroupIdentifier
+        ) else {
+            let diag = HanlinWidgetStorageDiagnostic(
+                phase: .storeLoad,
+                decisionPoint: .appGroupResolution,
+                relativePath: ".",
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 1,
+                summary: "Shared App Group container is unavailable."
+            )
+            Self.recordDiagnostic(diag)
+            throw HanlinScriptExtensionStoreError.appGroupUnavailable
+        }
+        let canonicalContainer = container.resolvingSymlinksInPath().standardizedFileURL
+        self.root = Self.canonicalManagedRoot(
+            for: canonicalContainer.appending(path: "ScriptingExtensions", directoryHint: .isDirectory)
+        )
+    }
+
+    public var lastDiagnostic: HanlinWidgetStorageDiagnostic? {
+        HanlinWidgetDiagnosticBuffer.shared.lastDiagnostic()
+    }
+
+    public static var latestDiagnostic: HanlinWidgetStorageDiagnostic? {
+        HanlinWidgetDiagnosticBuffer.shared.lastDiagnostic()
+    }
+
+    public static var recentDiagnostics: [HanlinWidgetStorageDiagnostic] {
+        HanlinWidgetDiagnosticBuffer.shared.recentDiagnostics()
+    }
+
+    public static func recordDiagnostic(_ diagnostic: HanlinWidgetStorageDiagnostic) {
+        HanlinWidgetDiagnosticBuffer.shared.record(diagnostic)
+        logger.error("widget_storage_diagnostic \(diagnostic.redactedReportString, privacy: .public)")
+    }
+
+    private var queryDiagnosticURL: URL {
+        root.appending(path: "diagnostics", directoryHint: .isDirectory)
+            .appending(path: "latest-query-diagnostic.json")
+    }
+
+    private var consistencyReportURL: URL {
+        root.appending(path: "diagnostics", directoryHint: .isDirectory)
+            .appending(path: "latest-consistency-report.json")
+    }
+
+    public func recordDurableQueryDiagnostic(_ diagnostic: HanlinWidgetStorageDiagnostic) {
+        Self.recordDiagnostic(diagnostic)
+        guard persistsDiagnostics else { return }
+        do {
+            let dir = root.appending(path: "diagnostics", directoryHint: .isDirectory)
+            try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+            let data = try JSONEncoder().encode(diagnostic)
+            try data.write(to: queryDiagnosticURL, options: .atomic)
+        } catch {
+            Self.logger.error("Failed to write durable query diagnostic: \(error.localizedDescription)")
+        }
+    }
+
+    public func recordDurableConsistencyReport(_ report: HanlinStorageConsistencyReport) {
+        guard persistsDiagnostics else { return }
+        do {
+            let dir = root.appending(path: "diagnostics", directoryHint: .isDirectory)
+            try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+            let data = try JSONEncoder().encode(report)
+            try data.write(to: consistencyReportURL, options: .atomic)
+        } catch {
+            Self.logger.error("Failed to write durable consistency report: \(error.localizedDescription)")
+        }
+    }
+
+    public var latestDurableQueryDiagnostic: HanlinWidgetStorageDiagnostic? {
+        guard let data = try? Data(contentsOf: queryDiagnosticURL),
+              let diag = try? JSONDecoder().decode(HanlinWidgetStorageDiagnostic.self, from: data) else {
+            return nil
+        }
+        return diag
+    }
+
+    public var latestDurableConsistencyReport: HanlinStorageConsistencyReport? {
+        guard let data = try? Data(contentsOf: consistencyReportURL),
+              let report = try? JSONDecoder().decode(HanlinStorageConsistencyReport.self, from: data) else {
+            return nil
+        }
+        return report
+    }
+
+    public func generateConsistencyReport() -> HanlinStorageConsistencyReport {
+        var validationFailure: (any Error)?
+        do { _ = try load() } catch { validationFailure = error }
+        let commit = try? optionalDecode(Commit.self, at: commitURL)
+        let commitPresent = FileManager.default.fileExists(atPath: commitURL.path)
+        let commitVersion = commit?.version
+        let commitSnapPrefix = commit?.snapshotHash.prefix(12).description
+        let commitShadowPrefix = commit?.shadowHash.prefix(12).description
+
+        var revPresent = false
+        var revSize: Int? = nil
+        var actualRevPrefix: String? = nil
+        if let commit {
+            if let revURL = try? revisionURL(commit.snapshotHash),
+               let revData = try? optionalData(at: revURL) {
+                revPresent = true
+                revSize = revData.count
+                actualRevPrefix = Self.digest(revData).prefix(12).description
+            }
+        }
+
+        var shadowPresent = false
+        var shadowSize: Int? = nil
+        var actualShadowPrefix: String? = nil
+        if let shadowData = try? optionalData(at: snapshotV1URL) {
+            shadowPresent = true
+            shadowSize = shadowData.count
+            actualShadowPrefix = Self.digest(shadowData).prefix(12).description
+        }
+
+        let pending = try? optionalDecode(Pending.self, at: pendingURL)
+        let pendingPresent = (pending != nil)
+
+        var failingStage: String? = nil
+        var summary = "Storage consistency verified."
+
+        if let commit {
+            if let actual = actualRevPrefix, let expected = commitSnapPrefix, actual != expected {
+                failingStage = "checkedRevision"
+                summary = "Revision digest mismatch: expected \(expected)... actual \(actual)..."
+            } else if let actual = actualShadowPrefix, let expected = commitShadowPrefix, actual != expected {
+                failingStage = "shadowValidation"
+                summary = "Shadow digest mismatch (downgrade candidate): expected \(expected)... actual \(actual)..."
+            }
+        } else if !shadowPresent && !(FileManager.default.fileExists(atPath: snapshotV2URL.path)) {
+            summary = "Fresh storage root (no committed snapshot)."
+        }
+
+        if let validationFailure {
+            if commitPresent && commit == nil {
+                failingStage = "commitDecode"
+            } else if commit != nil && !revPresent {
+                failingStage = "checkedRevision"
+            } else {
+                failingStage = failingStage ?? latestDurableQueryDiagnostic?.decisionPoint.rawValue ?? "storeLoad"
+            }
+            let error = validationFailure as NSError
+            summary = "Widget storage validation failed (\(error.domain), code \(error.code))."
+        }
+
+        let correlationID = lastDiagnostic?.correlationID ?? String(format: "HWG-%012llX", UInt64.random(in: 0...UInt64.max) & 0xFFFF_FFFF_FFFF)
+
+        let report = HanlinStorageConsistencyReport(
+            correlationID: correlationID,
+            commitPresent: commitPresent,
+            commitVersion: commitVersion,
+            commitSnapshotHashPrefix: commitSnapPrefix,
+            commitShadowHashPrefix: commitShadowPrefix,
+            revisionFilePresent: revPresent,
+            revisionFileSize: revSize,
+            actualRevisionHashPrefix: actualRevPrefix,
+            shadowFilePresent: shadowPresent,
+            shadowFileSize: shadowSize,
+            actualShadowHashPrefix: actualShadowPrefix,
+            pendingPresent: pendingPresent,
+            failingStage: failingStage,
+            summary: summary
+        )
+        recordDurableConsistencyReport(report)
+        return report
+    }
+
+    public static func recordQueryDiagnostic(
+        error: Error,
+        phase: HanlinWidgetStorageDiagnostic.Phase = .widgetExtensionEntityQuery
+    ) {
+        let store = try? HanlinScriptExtensionStore()
+        let diag: HanlinWidgetStorageDiagnostic
+        if let existing = store?.lastDiagnostic ?? latestDiagnostic {
+            diag = HanlinWidgetStorageDiagnostic(
+                correlationID: existing.correlationID,
+                phase: phase,
+                decisionPoint: existing.decisionPoint,
+                relativePath: existing.relativePath,
+                failingComponentIndex: existing.failingComponentIndex,
+                failingComponentName: existing.failingComponentName,
+                errorDomain: existing.errorDomain,
+                errorCode: existing.errorCode,
+                posixErrno: existing.posixErrno,
+                summary: existing.summary
+            )
+        } else {
+            let nsError = error as NSError
+            diag = HanlinWidgetStorageDiagnostic(
+                phase: phase,
+                decisionPoint: .instancePublication,
+                relativePath: "ScriptingExtensions",
+                errorDomain: nsError.domain,
+                errorCode: nsError.code,
+                summary: "Widget extension query failed: \(error.localizedDescription)"
+            )
+        }
+        if let store {
+            store.recordDurableQueryDiagnostic(diag)
+        } else {
+            recordDiagnostic(diag)
+        }
+    }
+
+    public func load() throws -> HanlinScriptExtensionSnapshot? {
+        try loadWithRecovery().snapshot
+    }
+
+    public func loadWithRecovery() throws -> LoadResult {
+        try withLock { try loadUnlocked() }
+    }
+
+
+    /// Read the last immutable committed publication without creating a shared
+    /// lock, repairing pending writes, materializing resources or saving a
+    /// diagnostic. A keyboard may read this container without Full Access.
+    /// Recovery remains the responsibility of the containing app.
+    public func loadReadOnly() throws -> HanlinScriptExtensionSnapshot? {
+        var reader = self
+        reader.persistsDiagnostics = false
+        return try reader.readCommittedSnapshotWithoutMutation()
+    }
+
+    private func readCommittedSnapshotWithoutMutation() throws -> HanlinScriptExtensionSnapshot? {
+        if let commit = try optionalDecode(Commit.self, at: commitURL) {
+            guard commit.version == 1 else { throw HanlinScriptExtensionStoreError.invalidCommit }
+            let snapshot = try decodeEnvelope(checkedRevision(commit.snapshotHash),
+                relativePath: "Revisions/committed.json")
+            guard try optionalDecode(Commit.self, at: commitURL) == commit else {
+                throw HanlinScriptExtensionStoreError.storageBusy
+            }
+            // The commit points at immutable bytes. A pending shadow or an old
+            // binary's v1 shadow must never overwrite this reader's native data.
+            return snapshot
+        }
+        if let pending = try optionalDecode(Pending.self, at: pendingURL) {
+            // First publication has not committed. Expose only the preceding
+            // verified shadow, if there was one; never admit its candidate.
+            guard let previous = pending.previousShadowHash else { return nil }
+            return try decodeEnvelope(checkedRevision(previous), relativePath: "Revisions/previous.json")
+        }
+        let snapshot: HanlinScriptExtensionSnapshot?
+        if FileManager.default.fileExists(atPath: snapshotV2URL.path) {
+            snapshot = try loadFile(at: snapshotV2URL)
+        } else {
+            snapshot = try loadFile(at: snapshotV1URL)
+        }
+        guard try optionalDecode(Commit.self, at: commitURL) == nil,
+              try optionalData(at: pendingURL) == nil else {
+            throw HanlinScriptExtensionStoreError.storageBusy
+        }
+        return snapshot
+    }
+
+    /// One cross-process read/modify/commit boundary, shared by host and intents.
+    /// The closure must be synchronous and must not re-enter this store.
+    @discardableResult
+    public func update(
+        _ mutation: (HanlinScriptExtensionSnapshot?) throws -> HanlinScriptExtensionSnapshot
+    ) throws -> HanlinScriptExtensionSnapshot {
+        try withLock {
+            let previous = try loadUnlocked().snapshot
+            let snapshot = try mutation(previous)
+            if snapshot != previous { try saveUnlocked(snapshot) }
+            return snapshot
+        }
+    }
+
+    // Internal queue admission shares this transaction; callers must hold withLock.
+    func loadUnlocked() throws -> LoadResult {
+        var recovery: Recovery?
+        let commit = try optionalDecode(Commit.self, at: commitURL)
+        if let pending = try optionalDecode(Pending.self, at: pendingURL) {
+            if commit == pending.candidate {
+                recovery = .completedPublicationCleanup
+            } else {
+                // The v1 shadow was written but its v2 commit never became visible.
+                // Restore exactly the preceding shadow, not a synthesized fallback.
+                if let hash = pending.previousShadowHash {
+                    try checkedRevision(hash).write(to: snapshotV1URL, options: Self.writeOptions)
+                } else if FileManager.default.fileExists(atPath: snapshotV1URL.path) {
+                    try FileManager.default.removeItem(at: snapshotV1URL)
+                }
+                recovery = .interruptedPublication
+            }
+            try FileManager.default.removeItem(at: pendingURL)
+        }
+        if let commit {
+            guard commit.version == 1 else {
+                let diag = HanlinWidgetStorageDiagnostic(
+                    phase: .storeLoad,
+                    decisionPoint: .snapshotDecode,
+                    relativePath: "commit.json",
+                    errorDomain: "HanlinScriptExtensionStoreError",
+                    errorCode: 10,
+                    summary: "Stage: loadUnlocked | Unsupported commit version \(commit.version)"
+                )
+                recordDurableQueryDiagnostic(diag)
+                throw HanlinScriptExtensionStoreError.invalidCommit
+            }
+            let data = try checkedRevision(commit.snapshotHash)
+            guard let shadow = try optionalData(at: snapshotV1URL) else {
+                let diag = HanlinWidgetStorageDiagnostic(
+                    phase: .storeLoad,
+                    decisionPoint: .filesystemError,
+                    relativePath: "snapshot-v1.json",
+                    errorDomain: "HanlinScriptExtensionStoreError",
+                    errorCode: 10,
+                    summary: "Stage: loadUnlocked | Missing shadow snapshot-v1.json for commit"
+                )
+                recordDurableQueryDiagnostic(diag)
+                throw HanlinScriptExtensionStoreError.invalidCommit
+            }
+            if Self.digest(shadow) != commit.shadowHash {
+                // A previous binary can only write snapshot-v1.json. Treat its
+                // verified bytes as an explicit downgrade, never prefer stale v2.
+                let snapshot = try decodeEnvelope(shadow, relativePath: "snapshot-v1.json")
+                guard snapshot.schemaVersion == 1 else {
+                    let diag = HanlinWidgetStorageDiagnostic(
+                        phase: .storeLoad,
+                        decisionPoint: .snapshotDecode,
+                        relativePath: "snapshot-v1.json",
+                        errorDomain: "HanlinScriptExtensionStoreError",
+                        errorCode: 10,
+                        summary: "Stage: loadUnlocked | Downgrade shadow schema must be 1, got \(snapshot.schemaVersion)"
+                    )
+                    recordDurableQueryDiagnostic(diag)
+                    throw HanlinScriptExtensionStoreError.invalidCommit
+                }
+                let committed = try decodeEnvelope(data, relativePath: "Revisions/\(commit.snapshotHash.prefix(12))...json")
+                // Preserve v2-only durable configuration/state while honoring
+                // the old binary's newly written legacy collections. The old
+                // executable cannot interpret native engines or their variants.
+                let restored = HanlinScriptExtensionSnapshot(schemaVersion: 1, generatedAt: snapshot.generatedAt,
+                    widgets: snapshot.widgets, intentEntities: snapshot.intentEntities, liveActivities: snapshot.liveActivities,
+                    translationApps: snapshot.translationApps, nativePresentations: committed.nativePresentations,
+                    widgetInstances: committed.widgetInstances,
+                    widgetStates: committed.widgetStates, widgetEntityMigrations: committed.widgetEntityMigrations,
+                    inactiveWidgetInstallations: committed.inactiveWidgetInstallations,
+                    widgetLastSuccessfulRenders: committed.widgetLastSuccessfulRenders)
+                return .init(snapshot: restored, recovery: .legacyWriterDetected)
+            }
+            return .init(snapshot: try decodeEnvelope(data, relativePath: "Revisions/\(commit.snapshotHash.prefix(12))...json"), recovery: recovery)
+        }
+        // Migrate the preceding store format without hiding corrupt v2 data.
+        if FileManager.default.fileExists(atPath: snapshotV2URL.path) {
+            return .init(snapshot: try loadFile(at: snapshotV2URL), recovery: recovery)
+        }
+        return .init(snapshot: try loadFile(at: snapshotV1URL), recovery: recovery)
+    }
+
+    private func loadFile(at url: URL) throws -> HanlinScriptExtensionSnapshot? {
+        try rejectSymlinks(to: url, phase: .storeLoad)
+        guard FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) else { return nil }
+        let data = try Data(contentsOf: url, options: .mappedIfSafe)
+        return try decodeEnvelope(data, relativePath: url.lastPathComponent)
+    }
+
+    private func decodeEnvelope(_ data: Data, relativePath: String = "snapshot") throws -> HanlinScriptExtensionSnapshot {
+        guard let raw = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let rawSnapshot = raw["snapshot"],
+              let expectedHash = raw["sha256"] as? String else {
+            let diag = HanlinWidgetStorageDiagnostic(
+                phase: .storeLoad,
+                decisionPoint: .snapshotDecode,
+                relativePath: relativePath,
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 3,
+                summary: "Stage: decodeEnvelope | Malformed envelope JSON or missing sha256/snapshot"
+            )
+            recordDurableQueryDiagnostic(diag)
+            throw HanlinScriptExtensionStoreError.invalidEnvelope
+        }
+        // Hash the original wire fields. Re-encoding a decoded v1 model adds v2
+        // defaults and would incorrectly reject a genuine historical SHA envelope.
+        let wireData = try JSONSerialization.data(withJSONObject: rawSnapshot, options: [.sortedKeys, .withoutEscapingSlashes])
+        let wireHash = Self.digest(wireData)
+
+        var matches = (wireHash == expectedHash)
+        if !matches, let original = Self.originalSnapshotData(in: data) {
+            // Historical writers hashed JSONEncoder's exact snapshot bytes.
+            // JSONSerialization can normalize fractional numbers differently;
+            // decoding the model can also change Date precision/add v2 defaults.
+            // Accept only an exact digest match, without rewriting stored data.
+            matches = Self.digest(original) == expectedHash
+        }
+        if !matches {
+            // Check historical encoder compatibility: early stores computed expectedHash on JSONEncoder().encode(snapshot)
+            if let envelopeModel = try? Self.decoded(Envelope.self, from: data) {
+                if let directData = try? Self.encoded(envelopeModel.snapshot), Self.digest(directData) == expectedHash {
+                    matches = true
+                }
+            }
+        }
+
+        guard matches else {
+            let diag = HanlinWidgetStorageDiagnostic(
+                phase: .storeLoad,
+                decisionPoint: .envelopeIntegrityMismatch,
+                relativePath: relativePath,
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 4,
+                summary: "Stage: decodeEnvelope | Expected: \(expectedHash.prefix(12))... | Computed wire: \(wireHash.prefix(12))... | Size: \(data.count) bytes"
+            )
+            recordDurableQueryDiagnostic(diag)
+            throw HanlinScriptExtensionStoreError.integrityMismatch
+        }
+        let envelope = try Self.decoded(Envelope.self, from: data)
+        guard envelope.schemaVersion == 1 || envelope.schemaVersion == 2 else {
+            let diag = HanlinWidgetStorageDiagnostic(
+                phase: .storeLoad,
+                decisionPoint: .snapshotDecode,
+                relativePath: relativePath,
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 5,
+                summary: "Stage: decodeEnvelope | Unsupported schema version \(envelope.schemaVersion)"
+            )
+            recordDurableQueryDiagnostic(diag)
+            throw HanlinScriptExtensionStoreError.unsupportedSchema(envelope.schemaVersion)
+        }
+        guard envelope.schemaVersion == envelope.snapshot.schemaVersion else {
+            let diag = HanlinWidgetStorageDiagnostic(
+                phase: .storeLoad,
+                decisionPoint: .snapshotDecode,
+                relativePath: relativePath,
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 3,
+                summary: "Stage: decodeEnvelope | Envelope schema \(envelope.schemaVersion) does not match snapshot schema \(envelope.snapshot.schemaVersion)"
+            )
+            recordDurableQueryDiagnostic(diag)
+            throw HanlinScriptExtensionStoreError.invalidEnvelope
+        }
+        return envelope.snapshot
+    }
+
+    /// Extracts the unique top-level snapshot value from already-validated JSON.
+    /// Preserve its exact bytes: re-encoding is not an integrity-preserving step.
+    private static func originalSnapshotData(in data: Data) -> Data? {
+        let bytes = Array(data)
+        var index = 0
+        var depth = 0
+        var snapshotKeys = 0
+        var snapshotStart: Int?
+        var snapshotRange: Range<Int>?
+
+        func skippingWhitespace(_ start: Int) -> Int {
+            var cursor = start
+            while cursor < bytes.count, [UInt8(32), 9, 10, 13].contains(bytes[cursor]) {
+                cursor += 1
+            }
+            return cursor
+        }
+
+        while index < bytes.count {
+            let byte = bytes[index]
+            if byte == 34 { // Skip whole strings, including escaped delimiters.
+                let start = index
+                index += 1
+                var escaped = false
+                while index < bytes.count {
+                    if escaped { escaped = false }
+                    else if bytes[index] == 92 { escaped = true }
+                    else if bytes[index] == 34 { break }
+                    index += 1
+                }
+                guard index < bytes.count else { return nil }
+                if depth == 1 {
+                    let colon = skippingWhitespace(index + 1)
+                    if colon < bytes.count, bytes[colon] == 58,
+                       let key = try? JSONDecoder().decode(String.self, from: Data(bytes[start...index])),
+                       key == "snapshot" {
+                        snapshotKeys += 1
+                        guard snapshotKeys == 1 else { return nil }
+                        let valueStart = skippingWhitespace(colon + 1)
+                        guard valueStart < bytes.count, bytes[valueStart] == 123 else { return nil }
+                        snapshotStart = valueStart
+                    }
+                }
+            } else if byte == 123 || byte == 91 {
+                depth += 1
+            } else if byte == 125 || byte == 93 {
+                depth -= 1
+                guard depth >= 0 else { return nil }
+                if depth == 1, let start = snapshotStart, index >= start, snapshotRange == nil {
+                    snapshotRange = start..<(index + 1)
+                }
+            }
+            index += 1
+        }
+        guard depth == 0, snapshotKeys == 1, let range = snapshotRange else { return nil }
+        return Data(bytes[range])
+    }
+
+    public func save(_ snapshot: HanlinScriptExtensionSnapshot) throws {
+        try withLock {
+            _ = try loadUnlocked()
+            try saveUnlocked(snapshot)
+        }
+    }
+
+    private func saveUnlocked(_ snapshot: HanlinScriptExtensionSnapshot) throws {
+        guard snapshot.schemaVersion == 1 || snapshot.schemaVersion == 2 else {
+            throw HanlinScriptExtensionStoreError.unsupportedSchema(snapshot.schemaVersion)
+        }
+        try rejectSymlinks(to: root, phase: .storeSave)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        try rejectSymlinks(to: root, phase: .storeSave)
+
+        let shadow: HanlinScriptExtensionSnapshot
+        if snapshot.schemaVersion == 2 {
+            let v1Widgets = snapshot.widgets.map { w in
+                HanlinScriptWidgetSnapshot(
+                    identity: w.identity,
+                    displayName: w.displayName,
+                    family: w.family,
+                    actionIdentity: w.actionIdentity,
+                    validUntil: w.validUntil,
+                    relevance: w.relevance,
+                    engine: .legacy,
+                    payload: .legacy(w.root),
+                    root: w.root,
+                    deepLink: w.deepLink
+                )
+            }
+            shadow = HanlinScriptExtensionSnapshot(
+                schemaVersion: 1,
+                generatedAt: snapshot.generatedAt,
+                widgets: v1Widgets,
+                intentEntities: snapshot.intentEntities,
+                liveActivities: snapshot.liveActivities,
+                translationApps: snapshot.translationApps,
+                nativePresentations: snapshot.nativePresentations
+            )
+        } else {
+            shadow = snapshot
+        }
+        let data = try envelopeData(snapshot)
+        let shadowData = try legacyEnvelopeData(shadow)
+        let candidate = Commit(version: 1, snapshotHash: Self.digest(data), shadowHash: Self.digest(shadowData))
+        try writeRevision(data)
+        try writeRevision(shadowData)
+        let previousShadow = try optionalData(at: snapshotV1URL)
+        if let previousShadow { try writeRevision(previousShadow) }
+        let pending = Pending(candidate: candidate, previousShadowHash: previousShadow.map(Self.digest))
+        try rejectSymlinks(to: pendingURL, phase: .storeSave)
+        try Self.encoded(pending).write(to: pendingURL, options: Self.writeOptions)
+        // Older readers see one complete v1 shadow. New readers switch only at
+        // the atomic commit marker after both immutable revisions are durable.
+        try rejectSymlinks(to: snapshotV1URL, phase: .storeSave)
+        try shadowData.write(to: snapshotV1URL, options: Self.writeOptions)
+        try rejectSymlinks(to: commitURL, phase: .storeSave)
+        try Self.encoded(candidate).write(to: commitURL, options: Self.writeOptions)
+        try FileManager.default.removeItem(at: pendingURL)
+    }
+
+    private func envelopeData(_ snapshot: HanlinScriptExtensionSnapshot) throws -> Data {
+        let snapshotData = try Self.encoded(snapshot)
+        let object = try JSONSerialization.jsonObject(with: snapshotData)
+        let canonical = try JSONSerialization.data(withJSONObject: object, options: [.sortedKeys, .withoutEscapingSlashes])
+        let envelope = Envelope(
+            schemaVersion: snapshot.schemaVersion,
+            sha256: Self.digest(canonical),
+            snapshot: snapshot
+        )
+        let data = try Self.encoded(envelope)
+        return data
+    }
+
+    private func legacyEnvelopeData(_ snapshot: HanlinScriptExtensionSnapshot) throws -> Data {
+        guard var raw = try JSONSerialization.jsonObject(with: Self.encoded(snapshot)) as? [String: Any] else { throw HanlinScriptExtensionStoreError.invalidEnvelope }
+        // V1 readers decode and re-encode their original model before checking
+        // the digest. Project its exact fields so new metadata cannot enter a
+        // shadow hash that an older reader is unable to reproduce.
+        let snapshotKeys: Set<String> = ["schemaVersion", "generatedAt", "widgets", "intentEntities", "liveActivities", "translationApps"]
+        raw = raw.filter { snapshotKeys.contains($0.key) }
+        func oldIdentity(_ value: Any?) -> Any? {
+            guard let object = value as? [String: Any] else { return value }
+            let keys: Set<String> = ["installedPackageID", "packageID", "generation", "entrypointID"]
+            return object.filter { keys.contains($0.key) }
+        }
+        let recordKeys: [String: Set<String>] = [
+            "widgets": ["identity", "displayName", "family", "actionIdentity", "validUntil", "relevance", "root", "deepLink"],
+            "intentEntities": ["identity", "id", "displayName", "subtitle"],
+            "liveActivities": ["identity", "activityID", "title", "state", "root", "staleDate"],
+            "translationApps": ["identity", "appID", "displayName", "summary", "iconSymbol", "accentHex", "isBeta", "entrypointID", "rootNode"]
+        ]
+        for (key, keys) in recordKeys {
+            let records = raw[key] as? [[String: Any]] ?? []
+            raw[key] = records.compactMap { record -> [String: Any]? in
+                if key == "widgets", let identity = record["identity"] as? [String: Any],
+                   let variant = identity["variantID"] as? String, variant != "default" { return nil }
+                var record = record.filter { keys.contains($0.key) }
+                record["identity"] = oldIdentity(record["identity"])
+                record["actionIdentity"] = oldIdentity(record["actionIdentity"])
+                return record
+            }
+        }
+        raw["schemaVersion"] = 1
+        let wire = try JSONSerialization.data(withJSONObject: raw, options: [.sortedKeys, .withoutEscapingSlashes])
+        let data = try JSONSerialization.data(withJSONObject: ["schemaVersion": 1, "sha256": Self.digest(wire), "snapshot": raw], options: [.sortedKeys, .withoutEscapingSlashes])
+        return data
+    }
+
+    public func storeArtifact(
+        data: Data,
+        installedPackageID: HanlinInstalledPackageID,
+        generation: UInt64
+    ) throws -> (ref: String, sha256: String) {
+        guard generation > 0 else {
+            Self.recordDiagnostic(.init(
+                phase: .storeArtifact,
+                decisionPoint: .invalidIdentifier,
+                relativePath: "Packages/\(installedPackageID.rawValue)/generations/\(generation)",
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 2,
+                summary: "Artifact generation must be greater than zero."
+            ))
+            throw HanlinScriptExtensionStoreError.invalidArtifactReference
+        }
+        let hash = Self.digest(data)
+        let relativePath = "Packages/\(installedPackageID.rawValue)/generations/\(generation)/artifacts/\(hash)"
+        let fileURL = root.appending(path: relativePath, directoryHint: .notDirectory)
+        try rejectSymlinks(to: fileURL, phase: .storeArtifact)
+        let dir = fileURL.deletingLastPathComponent()
+        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        try rejectSymlinks(to: fileURL, phase: .storeArtifact)
+        if FileManager.default.fileExists(atPath: fileURL.path(percentEncoded: false)) {
+            guard Self.digest(try Data(contentsOf: fileURL)) == hash else {
+                Self.recordDiagnostic(.init(
+                    phase: .storeArtifact,
+                    decisionPoint: .digestMismatch,
+                    relativePath: relativePath,
+                    errorDomain: "HanlinScriptExtensionStoreError",
+                    errorCode: 3,
+                    summary: "Existing artifact file digest did not match expected SHA-256."
+                ))
+                throw HanlinScriptExtensionStoreError.integrityMismatch
+            }
+        } else {
+            try data.write(to: fileURL, options: Self.writeOptions)
+        }
+        return (ref: relativePath, sha256: hash)
+    }
+
+    public func loadArtifact(ref: String) throws -> Data? {
+        let parts = ref.split(separator: "/", omittingEmptySubsequences: false)
+        guard parts.count == 6, parts[0] == "Packages", parts[2] == "generations", parts[4] == "artifacts",
+              let generation = UInt64(parts[3]), generation > 0 else {
+            Self.recordDiagnostic(.init(
+                phase: .storeArtifact,
+                decisionPoint: .lexicalBoundary,
+                relativePath: ref,
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 4,
+                summary: "Artifact reference format did not match canonical 6-segment layout."
+            ))
+            throw HanlinScriptExtensionStoreError.invalidArtifactReference
+        }
+        return try loadVerifiedArtifact(ref: ref, sha256: String(parts[5]), installedPackageID: HanlinInstalledPackageID(validating: String(parts[1])), generation: generation)
+    }
+
+    public func loadVerifiedArtifact(
+        ref: String, sha256: String, installedPackageID: HanlinInstalledPackageID, generation: UInt64
+    ) throws -> Data {
+        guard generation > 0, Self.isDigest(sha256),
+              ref == "Packages/\(installedPackageID.rawValue)/generations/\(generation)/artifacts/\(sha256)" else {
+            Self.recordDiagnostic(.init(
+                phase: .storeArtifact,
+                decisionPoint: .invalidIdentifier,
+                relativePath: ref,
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 5,
+                summary: "Artifact reference did not match package/generation/digest authority."
+            ))
+            throw HanlinScriptExtensionStoreError.invalidArtifactReference
+        }
+        let url = root.appending(path: ref, directoryHint: .notDirectory)
+        try rejectSymlinks(to: url, phase: .storeArtifact)
+        guard FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) else {
+            throw HanlinScriptExtensionStoreError.artifactMissing
+        }
+        let values = try url.resourceValues(forKeys: [.isRegularFileKey])
+        guard values.isRegularFile == true else {
+            Self.recordDiagnostic(.init(
+                phase: .storeArtifact,
+                decisionPoint: .nonDirectoryAncestor,
+                relativePath: ref,
+                failingComponentName: url.lastPathComponent,
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 6,
+                summary: "Artifact leaf is not a regular file."
+            ))
+            throw HanlinScriptExtensionStoreError.invalidArtifactReference
+        }
+        let data = try readArtifactWithoutSymlinks(ref: ref)
+        guard Self.digest(data) == sha256 else {
+            Self.recordDiagnostic(.init(
+                phase: .storeArtifact,
+                decisionPoint: .digestMismatch,
+                relativePath: ref,
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 7,
+                summary: "Loaded artifact bytes failed SHA-256 verification."
+            ))
+            throw HanlinScriptExtensionStoreError.integrityMismatch
+        }
+        return data
+    }
+
+    private func readArtifactWithoutSymlinks(ref: String) throws -> Data {
+#if canImport(Darwin)
+        var descriptors: [Int32] = []
+        defer { descriptors.reversed().forEach { _ = Darwin.close($0) } }
+        let rootPath = Self.lexicalNormalizedPath(root)
+        var descriptor = Darwin.open(rootPath, O_RDONLY | O_DIRECTORY | O_NOFOLLOW)
+        guard descriptor >= 0 else {
+            let err = errno
+            if err == ENOENT {
+                throw HanlinScriptExtensionStoreError.artifactMissing
+            }
+            Self.recordDiagnostic(.init(
+                phase: .storeArtifact,
+                decisionPoint: err == ELOOP ? .symlinkDetected : .openNoFollowFailed,
+                relativePath: ref,
+                failingComponentIndex: 0,
+                failingComponentName: root.lastPathComponent,
+                errorDomain: NSPOSIXErrorDomain,
+                errorCode: Int(err),
+                posixErrno: err,
+                summary: "Failed to open root directory with O_NOFOLLOW."
+            ))
+            throw HanlinScriptExtensionStoreError.invalidArtifactReference
+        }
+        descriptors.append(descriptor)
+        let parts = ref.split(separator: "/")
+        for (index, part) in parts.enumerated() {
+            let componentName = String(part)
+            descriptor = openat(descriptor, componentName, O_RDONLY | O_NOFOLLOW | (index == parts.count - 1 ? 0 : O_DIRECTORY))
+            guard descriptor >= 0 else {
+                let err = errno
+                Self.recordDiagnostic(.init(
+                    phase: .storeArtifact,
+                    decisionPoint: err == ELOOP ? .symlinkDetected : .openNoFollowFailed,
+                    relativePath: ref,
+                    failingComponentIndex: index + 1,
+                    failingComponentName: componentName,
+                    errorDomain: NSPOSIXErrorDomain,
+                    errorCode: Int(err),
+                    posixErrno: err,
+                    summary: "Failed to open artifact path component with O_NOFOLLOW."
+                ))
+                throw HanlinScriptExtensionStoreError.invalidArtifactReference
+            }
+            descriptors.append(descriptor)
+        }
+        var info = stat()
+        guard fstat(descriptor, &info) == 0, info.st_mode & S_IFMT == S_IFREG,
+              info.st_size >= 0 else { throw HanlinScriptExtensionStoreError.invalidArtifactReference }
+        let handle = FileHandle(fileDescriptor: descriptor, closeOnDealloc: false)
+        return try handle.readToEnd() ?? Data()
+#else
+        throw HanlinScriptExtensionStoreError.appGroupUnavailable
+#endif
+    }
+
+    public func loadArtifact(
+        installedPackageID: HanlinInstalledPackageID,
+        generation: UInt64,
+        hash: String
+    ) throws -> Data? {
+        let relativePath = "Packages/\(installedPackageID.rawValue)/generations/\(generation)/artifacts/\(hash)"
+        return try loadArtifact(ref: relativePath)
+    }
+
+    public func materializeResources(_ files: [String: Data], identity: HanlinScriptExtensionIdentity) throws -> [String: URL] {
+        var result: [String: URL] = [:]
+        for (name, data) in files {
+            let parts = name.split(separator: "/", omittingEmptySubsequences: false)
+            guard !name.contains("\\"), !name.contains(":"), !name.contains("\0"),
+                  parts.allSatisfy({ !$0.isEmpty && $0 != "." && $0 != ".." }) else {
+                Self.recordDiagnostic(.init(
+                    phase: .storeArtifact,
+                    decisionPoint: .lexicalBoundary,
+                    relativePath: name,
+                    errorDomain: "HanlinScriptExtensionStoreError",
+                    errorCode: 8,
+                    summary: "Resource name failed relative path validation."
+                ))
+                throw HanlinScriptExtensionStoreError.invalidArtifactReference
+            }
+            let artifact = try storeArtifact(data: data, installedPackageID: identity.installedPackageID, generation: identity.generation)
+            _ = try loadVerifiedArtifact(ref: artifact.ref, sha256: artifact.sha256,
+                installedPackageID: identity.installedPackageID, generation: identity.generation)
+            result[name] = root.appending(path: artifact.ref)
+        }
+        return result
+    }
+
+    private var snapshotV1URL: URL {
+        root.appending(path: "snapshot-v1.json", directoryHint: .notDirectory)
+    }
+
+    private var snapshotV2URL: URL {
+        root.appending(path: "snapshot-v2.json", directoryHint: .notDirectory)
+    }
+
+    var commandRoot: URL {
+        root.appending(path: "ResumeQueue", directoryHint: .isDirectory)
+    }
+
+    private var commitURL: URL { root.appending(path: "commit.json") }
+    private var pendingURL: URL { root.appending(path: "pending.json") }
+    private static var writeOptions: Data.WritingOptions { [.atomic, .completeFileProtectionUntilFirstUserAuthentication] }
+
+    private static func isDigest(_ value: String) -> Bool {
+        value.utf8.count == 64 && value.utf8.allSatisfy { (48...57).contains($0) || (97...102).contains($0) }
+    }
+
+    private func revisionURL(_ hash: String) throws -> URL {
+        guard Self.isDigest(hash) else { throw HanlinScriptExtensionStoreError.invalidCommit }
+        return root.appending(path: "Revisions/\(hash).json")
+    }
+
+    private func writeRevision(_ data: Data) throws {
+        let hash = Self.digest(data)
+        let url = try revisionURL(hash)
+        try rejectSymlinks(to: url, phase: .storeSave)
+        try FileManager.default.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try rejectSymlinks(to: url, phase: .storeSave)
+        var needsWrite = true
+        if FileManager.default.fileExists(atPath: url.path(percentEncoded: false)),
+           let existing = try? Data(contentsOf: url),
+           Self.digest(existing) == hash {
+            needsWrite = false
+        }
+        if needsWrite {
+            try data.write(to: url, options: Self.writeOptions)
+        }
+    }
+
+    private func checkedRevision(_ hash: String) throws -> Data {
+        let url = try revisionURL(hash)
+        try rejectSymlinks(to: url, phase: .storeLoad)
+        guard FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) else {
+            let diag = HanlinWidgetStorageDiagnostic(
+                phase: .storeLoad,
+                decisionPoint: .filesystemError,
+                relativePath: "Revisions/\(hash.prefix(12))...json",
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 4,
+                summary: "Stage: checkedRevision | Missing revision file for hash \(hash.prefix(12))..."
+            )
+            recordDurableQueryDiagnostic(diag)
+            throw HanlinScriptExtensionStoreError.integrityMismatch
+        }
+        let data = try Data(contentsOf: url)
+        let computed = Self.digest(data)
+        guard computed == hash else {
+            let diag = HanlinWidgetStorageDiagnostic(
+                phase: .storeLoad,
+                decisionPoint: .revisionIntegrityMismatch,
+                relativePath: "Revisions/\(hash.prefix(12))...json",
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 4,
+                summary: "Stage: checkedRevision | Expected: \(hash.prefix(12))... | Computed: \(computed.prefix(12))... | Size: \(data.count) bytes"
+            )
+            recordDurableQueryDiagnostic(diag)
+            throw HanlinScriptExtensionStoreError.integrityMismatch
+        }
+        return data
+    }
+
+    private func optionalData(at url: URL) throws -> Data? {
+        try rejectSymlinks(to: url, phase: .storeLoad)
+        guard FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) else { return nil }
+        let data = try Data(contentsOf: url)
+        return data
+    }
+
+    private func optionalDecode<T: Decodable>(_ type: T.Type, at url: URL) throws -> T? {
+        try optionalData(at: url).map { try Self.decoded(type, from: $0) }
+    }
+
+    /// Canonicalizes the trusted parent container above the managed `ScriptingExtensions` root
+    /// without resolving a symlink on the `ScriptingExtensions` leaf itself.
+    private static func canonicalManagedRoot(for candidateRoot: URL) -> URL {
+        let leafName = candidateRoot.lastPathComponent
+        guard !leafName.isEmpty, leafName != "/" else {
+            return URL(filePath: lexicalNormalizedPath(candidateRoot), directoryHint: .isDirectory)
+        }
+        let parentURL = candidateRoot.deletingLastPathComponent()
+        let parentRawPath = parentURL.path(percentEncoded: false)
+        let resolvedParentPath: String
+        if FileManager.default.fileExists(atPath: parentRawPath) {
+            resolvedParentPath = lexicalNormalizedPath(parentURL.resolvingSymlinksInPath())
+        } else {
+            resolvedParentPath = lexicalNormalizedPath(parentURL)
+        }
+        return URL(filePath: resolvedParentPath, directoryHint: .isDirectory)
+            .appending(path: leafName, directoryHint: .isDirectory)
+    }
+
+    /// Normalizes a filesystem path lexically and canonicalizes Darwin's `/var` and `/tmp`
+    /// system symlink prefixes consistently regardless of whether the target leaf currently exists on disk.
+    private static func lexicalNormalizedPath(_ url: URL) -> String {
+        var raw = url.path(percentEncoded: false)
+        while raw.count > 1 && raw.hasSuffix("/") {
+            raw.removeLast()
+        }
+#if canImport(Darwin)
+        if raw == "/var" || raw.hasPrefix("/var/") {
+            raw = "/private" + raw
+        } else if raw == "/tmp" || raw.hasPrefix("/tmp/") {
+            raw = "/private" + raw
+        } else if raw == "/etc" || raw.hasPrefix("/etc/") {
+            raw = "/private" + raw
+        }
+#endif
+        return raw
+    }
+
+    func rejectSymlinks(
+        to url: URL,
+        phase: HanlinWidgetStorageDiagnostic.Phase = .storeLoad
+    ) throws {
+        let rawTarget = url.path(percentEncoded: false)
+        let rawSegments = rawTarget.split(separator: "/", omittingEmptySubsequences: true)
+        if rawTarget.contains("\0") || rawTarget.contains("\\") || rawSegments.contains(".") || rawSegments.contains("..") {
+            Self.recordDiagnostic(.init(
+                phase: phase,
+                decisionPoint: .lexicalBoundary,
+                relativePath: HanlinWidgetStorageDiagnostic.sanitizeRelativePath(rawTarget),
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 10,
+                summary: "Target path contained prohibited traversal or control segments."
+            ))
+            throw HanlinScriptExtensionStoreError.invalidArtifactReference
+        }
+
+        let basePath = Self.lexicalNormalizedPath(root)
+        let targetPath = Self.lexicalNormalizedPath(url)
+        let isRootSelf = (targetPath == basePath)
+        guard isRootSelf || targetPath.hasPrefix(basePath + "/") else {
+            Self.recordDiagnostic(.init(
+                phase: phase,
+                decisionPoint: .lexicalBoundary,
+                relativePath: HanlinWidgetStorageDiagnostic.sanitizeRelativePath(targetPath),
+                errorDomain: "HanlinScriptExtensionStoreError",
+                errorCode: 11,
+                summary: "Target path is outside the canonical ScriptingExtensions store root."
+            ))
+            throw HanlinScriptExtensionStoreError.invalidArtifactReference
+        }
+
+        let relativePath: String
+        let components: [String]
+        if isRootSelf {
+            relativePath = "."
+            components = []
+        } else {
+            relativePath = String(targetPath.dropFirst(basePath.count + 1))
+            components = relativePath.split(separator: "/", omittingEmptySubsequences: false).map(String.init)
+            guard !components.isEmpty,
+                  components.allSatisfy({ !$0.isEmpty && $0 != "." && $0 != ".." && !$0.contains("\0") && !$0.contains("\\") }) else {
+                Self.recordDiagnostic(.init(
+                    phase: phase,
+                    decisionPoint: .lexicalBoundary,
+                    relativePath: relativePath,
+                    errorDomain: "HanlinScriptExtensionStoreError",
+                    errorCode: 12,
+                    summary: "Relative path under ScriptingExtensions contained invalid component."
+                ))
+                throw HanlinScriptExtensionStoreError.invalidArtifactReference
+            }
+        }
+
+#if canImport(Darwin)
+        var currentPath = basePath
+        for index in 0...components.count {
+            let componentName: String
+            if index == 0 {
+                componentName = root.lastPathComponent
+            } else {
+                componentName = components[index - 1]
+                currentPath += "/" + componentName
+            }
+            var info = stat()
+            if Darwin.lstat(currentPath, &info) == 0 {
+                let mode = info.st_mode & S_IFMT
+                if mode == S_IFLNK {
+                    Self.recordDiagnostic(.init(
+                        phase: phase,
+                        decisionPoint: .symlinkDetected,
+                        relativePath: relativePath,
+                        failingComponentIndex: index,
+                        failingComponentName: componentName,
+                        errorDomain: "HanlinScriptExtensionStoreError",
+                        errorCode: 13,
+                        summary: "Symbolic link rejected inside managed ScriptingExtensions tree."
+                    ))
+                    throw HanlinScriptExtensionStoreError.invalidArtifactReference
+                }
+                if index < components.count && mode != S_IFDIR {
+                    Self.recordDiagnostic(.init(
+                        phase: phase,
+                        decisionPoint: .nonDirectoryAncestor,
+                        relativePath: relativePath,
+                        failingComponentIndex: index,
+                        failingComponentName: componentName,
+                        errorDomain: "HanlinScriptExtensionStoreError",
+                        errorCode: 14,
+                        summary: "Ancestor component inside ScriptingExtensions is not a directory."
+                    ))
+                    throw HanlinScriptExtensionStoreError.invalidArtifactReference
+                }
+            } else {
+                let err = errno
+                if err == ENOENT {
+                    // A not-yet-created file or directory is allowed; lstat only returns
+                    // ENOENT when the component itself does not exist (dangling symlinks
+                    // return 0 with S_IFLNK and are rejected above).
+                    continue
+                }
+                if err == ENOTDIR || err == ELOOP {
+                    Self.recordDiagnostic(.init(
+                        phase: phase,
+                        decisionPoint: err == ELOOP ? .symlinkDetected : .nonDirectoryAncestor,
+                        relativePath: relativePath,
+                        failingComponentIndex: index,
+                        failingComponentName: componentName,
+                        errorDomain: NSPOSIXErrorDomain,
+                        errorCode: Int(err),
+                        posixErrno: err,
+                        summary: "Path traversal failed due to non-directory or symlink ancestor."
+                    ))
+                    throw HanlinScriptExtensionStoreError.invalidArtifactReference
+                }
+                Self.recordDiagnostic(.init(
+                    phase: phase,
+                    decisionPoint: .filesystemError,
+                    relativePath: relativePath,
+                    failingComponentIndex: index,
+                    failingComponentName: componentName,
+                    errorDomain: NSPOSIXErrorDomain,
+                    errorCode: Int(err),
+                    posixErrno: err,
+                    summary: "Filesystem lstat error while validating ScriptingExtensions path."
+                ))
+                throw NSError(domain: NSPOSIXErrorDomain, code: Int(err))
+            }
+        }
+#endif
+    }
+
+    func withLock<T>(_ operation: () throws -> T) throws -> T {
+        try rejectSymlinks(to: root, phase: .storeLoad)
+        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+        try rejectSymlinks(to: root, phase: .storeLoad)
+#if canImport(Darwin)
+        let lockURL = root.appending(path: ".transaction.lock", directoryHint: .notDirectory)
+        try rejectSymlinks(to: lockURL, phase: .storeLoad)
+        let lockPath = Self.lexicalNormalizedPath(lockURL)
+        let descriptor = Darwin.open(lockPath, O_CREAT | O_RDWR | O_NOFOLLOW, S_IRUSR | S_IWUSR)
+        guard descriptor >= 0 else {
+            let err = errno
+            if err == ELOOP {
+                Self.recordDiagnostic(.init(
+                    phase: .storeLoad,
+                    decisionPoint: .symlinkDetected,
+                    relativePath: ".transaction.lock",
+                    failingComponentIndex: 1,
+                    failingComponentName: ".transaction.lock",
+                    errorDomain: NSPOSIXErrorDomain,
+                    errorCode: Int(err),
+                    posixErrno: err,
+                    summary: "Transaction lock file is a symbolic link."
+                ))
+                throw HanlinScriptExtensionStoreError.invalidArtifactReference
+            }
+            Self.recordDiagnostic(.init(
+                phase: .storeLoad,
+                decisionPoint: .openNoFollowFailed,
+                relativePath: ".transaction.lock",
+                failingComponentIndex: 1,
+                failingComponentName: ".transaction.lock",
+                errorDomain: NSPOSIXErrorDomain,
+                errorCode: Int(err),
+                posixErrno: err,
+                summary: "Failed to open transaction lock file."
+            ))
+            throw HanlinScriptExtensionStoreError.storageBusy
+        }
+        defer { Darwin.close(descriptor) }
+        let deadline = ContinuousClock.now.advanced(by: .seconds(10))
+        while flock(descriptor, LOCK_EX | LOCK_NB) != 0 {
+            guard errno == EWOULDBLOCK, ContinuousClock.now < deadline else { throw HanlinScriptExtensionStoreError.storageBusy }
+            usleep(10_000)
+        }
+        defer { flock(descriptor, LOCK_UN) }
+        return try operation()
+#else
+        throw HanlinScriptExtensionStoreError.appGroupUnavailable
+#endif
+    }
+
+    static func encoded<T: Encodable>(_ value: T) throws -> Data {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .millisecondsSince1970
+        encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+        return try encoder.encode(value)
+    }
+
+    static func decoded<T: Decodable>(_ type: T.Type, from data: Data) throws -> T {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .millisecondsSince1970
+        return try decoder.decode(type, from: data)
+    }
+
+    private static func digest(_ data: Data) -> String {
+        SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
+    }
+}

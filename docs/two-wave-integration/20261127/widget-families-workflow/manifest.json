@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "source": ".github/workflows/validate-app-split.yml",
+  "sourceSHA256": "67cfaef7d04a1787a0abefb755061788e7d1c01a252e632d0888e29263463bf7",
+  "base": "a8b1dbb06d4f99adcefe9e6d5235207b37acc81b",
+  "familySourceDonor": "f2e25825c1e462c0394d8787cdc7a097d5c480b8",
+  "files": {
+    "validation.json": {
+      "bytes": 1099,
+      "sha256": "052aa5fc7d5fd5eb9a09eaa114eb8eb0af7971097481fc05675048cd6c946f78"
+    },
+    "independent-w1-review.json": {
+      "bytes": 1617,
+      "sha256": "ec130f9b725d2a861a08994f894e34a69aaea5fc9fae2968c0dac778e67d86d7"
+    }
+  },
+  "nativeAcceptance": "NOT_RUN"
+}

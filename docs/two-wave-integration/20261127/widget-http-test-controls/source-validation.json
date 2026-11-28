@@ -1,0 +1,113 @@
+{
+  "schema": 1,
+  "kind": "ORIGINAL_MACOS_HTTP_TEST_SOURCE_REPAIR",
+  "baseCommit": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "source": {
+    "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+    "beforeSHA256": "53bc610452297522b67593dc6a63e201aa5287acc8ed5b0e5769d94f381b7b5f",
+    "afterSHA256": "b8a786663b0bbd9b6b2e9bacdd077d4fd489f3b378d492a620676c92a372f589",
+    "methodSHA256": "6880b7f128bb80151ddfef2161da8a614a0b77360ce93bc11c6107b5ec54cfae"
+  },
+  "scope": "One original macOS test method and three macOS-only test imports. No production, Package.swift, frozen reference, workflow or native gate edits.",
+  "preservation": {
+    "outsideMethodAndMacOSImports": "BYTE_IDENTICAL",
+    "originalStoredValueAssertions": "Both original POST/string and status/integer assertions are byte-identical.",
+    "originalRenderedNodeAssertion": "Exact original text element tag and children are read on the real original session callback queue; no manufactured prepared node.",
+    "originalCategories": [
+      "GET/POST/PUT/PATCH methods and custom header",
+      "JSON request body and content type",
+      "DELETE raw body",
+      "503 status/safe response header/body",
+      "base64 binary",
+      "per-execution total request budget",
+      "oversized response",
+      "disallowed redirect",
+      "real timeout",
+      "file scheme rejection",
+      "real storage and rendered text"
+    ],
+    "policyUnchanged": "Original per-session/domain/permission/redirect/private-host/size/timeout/budget checks remain active. Only the existing DEBUG fetch-manager configuration seam is used.",
+    "nativeSession": "Original HanlinOriginalScriptWidgetSession, its callback queue, API registration, package identity, storage transaction and execution lifecycle.",
+    "additionalChecks": [
+      "All32 admitted requests arrive over actual wire;33rd never arrives",
+      "exact2MiB response is accepted;2MiB+1 rejects",
+      "actual one-second timeout floor with a three-second server delay",
+      "private-host denial remains active",
+      "wire log binds39 expected requests to the owned CONNECT authority"
+    ],
+    "concurrentLimit": "Original8 concurrent limit is unchanged; this focused test does not independently exercise concurrent saturation."
+  },
+  "productionSourceProvenance": {
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3",
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift": "f7b50ceacdf034833c92554a769fe692abebe296b87e55091e7a2fb09146d9da",
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetSession.swift": "aaba22894ddd8bf7863a5ddd4e1e61cece90081b579bb8ce7b2a084f751f8f9b",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift": "fa62de1025c7ae06406794e9c397e3f64ed0e32a8fb0fc3584e43fa2e28bd066",
+    "Packages/HanlinPlatform/Package.swift": "78d7081d0e197c3e99746e5b3e476b41280fc5b32110035fab31a3e949cb4dab"
+  },
+  "sdkDeclarationReceipt": {
+    "path": "installed-macos27-session-proxy-declarations.json",
+    "sha256": "c011340b51117431690c53eacbe271f6598f76c10d39219465c39d203085226c",
+    "scope": "Actual native macOS27 SDK availability declarations only; no compile or Session execution"
+  },
+  "officialAppleDocs": [
+    "https://developer.apple.com/documentation/network/proxyconfiguration/init(httpconnectproxy:tlsoptions:).md",
+    "https://developer.apple.com/documentation/foundation/urlsessionconfiguration/proxyconfigurations.md"
+  ],
+  "portableQualification": {
+    "receipt": "portable-fixture-evidence/receipt.json",
+    "receiptSHA256": "9af5d82b74577597283962b6fa979eb86abfeed5aaa7ec5d23e796325047df59",
+    "controllerExitCode": 0,
+    "sourceQualifiedByExactExtractedFixtureSHA256": "7ed69a0d8d7599503672e787d980af8a8d7c7f0ee0647e42846092d778945ac2",
+    "scope": "Six actual-wire fixture checks in one observed Python3.12.14 Linux execution; no Swift/native budget/URLSession acceptance claimed."
+  },
+  "nativeAcceptance": "NOT_RUN; original macOS Swift gate must compile and execute this exact test. Existing DEBUG test configuration is required for the already-shipping injection seam.",
+  "sourceImpact": {
+    "shippingSDKInputManifest": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/host-sdk-866d2d3c-pass-and-native-seal/sdk/miniapp-sdk.json",
+    "shippingSDKManifestSHA256": "59d4ad4748dd615d3f7b6536e012ef93c38bb96f76b3f3f28ebbbed909518235",
+    "shippingSDKInputCount": 392,
+    "intersection": [],
+    "completePackageTestsTree": "CHANGED; previous broad completeTests hash equality must not be reused.",
+    "original79Selection": "Mac owner independently confirmed this macOS-only method and the separate loader method are absent from actual iOS-simulator79 inventory a5530408269f296d1cbb743fd52624f74755509623ee68b2bfd0f7e351b78822. No79 execution claimed for this test.",
+    "packageSourcesAndManifest": "UNCHANGED"
+  },
+  "diffCheck": {
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "rawMembers": {
+    "docs/two-wave-integration/20261127/widget-http-test-controls/check_fixture_wire.py": {
+      "sha256": "f3f9d1b48e06cc5e8a179e3f1d204ae2966b9a9745d4b31ec7a9550bb4173637",
+      "bytes": 6248
+    },
+    "docs/two-wave-integration/20261127/widget-http-test-controls/installed-macos27-session-proxy-declarations.json": {
+      "sha256": "c011340b51117431690c53eacbe271f6598f76c10d39219465c39d203085226c",
+      "bytes": 6443
+    },
+    "docs/two-wave-integration/20261127/widget-http-test-controls/portable-fixture-evidence/extracted-proxy.py": {
+      "sha256": "7ed69a0d8d7599503672e787d980af8a8d7c7f0ee0647e42846092d778945ac2",
+      "bytes": 2842
+    },
+    "docs/two-wave-integration/20261127/widget-http-test-controls/portable-fixture-evidence/port": {
+      "sha256": "499499e5fcdb8febca760010183a2df3d396b7d6c104474558ff79a64cfddad5",
+      "bytes": 5
+    },
+    "docs/two-wave-integration/20261127/widget-http-test-controls/portable-fixture-evidence/receipt.json": {
+      "sha256": "9af5d82b74577597283962b6fa979eb86abfeed5aaa7ec5d23e796325047df59",
+      "bytes": 1552
+    },
+    "docs/two-wave-integration/20261127/widget-http-test-controls/portable-fixture-evidence/server.stderr": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "docs/two-wave-integration/20261127/widget-http-test-controls/portable-fixture-evidence/wire.jsonl": {
+      "sha256": "7b6bbb30d66db86ac8b17610ca057f769081d9a862058aea2fb7e3df75312629",
+      "bytes": 11756
+    },
+    "docs/two-wave-integration/20261127/widget-http-test-controls/source.patch.gz": {
+      "sha256": "b25994ddbe5efa4daf2156446f84b2b7246f5876f0ba011942d57336824e7240",
+      "bytes": 5301,
+      "decompressedSHA256": "d7aea3f46bcb0832ed036e471c8e81b20fed436456b20144d65ce708da3e40c8"
+    }
+  }
+}

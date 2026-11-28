@@ -1,0 +1,247 @@
+#include <jsi/jsi.h>
+#include <worklets/SharedItems/Serializable/Serializable.h>
+#include <worklets/SharedItems/Serializable/SerializableArray.h>
+#include <worklets/SharedItems/Serializable/SerializableBigInt.h>
+#include <worklets/SharedItems/Serializable/SerializableHostObject.h>
+#include <worklets/SharedItems/Serializable/SerializableObject.h>
+#include <worklets/SharedItems/Serializable/SerializableScalar.h>
+#include <worklets/SharedItems/Serializable/SerializableString.h>
+#include <worklets/SharedItems/Serializable/SerializableWorklet.h>
+#include <worklets/Tools/JSISerializer.h>
+#include <worklets/Tools/PlatformLogger.h>
+#include <worklets/Tools/WorkletsJSIUtils.h>
+#include <worklets/WorkletRuntime/HermesProfiling.h>
+#include <worklets/WorkletRuntime/RuntimeData.h>
+#include <worklets/WorkletRuntime/WorkletRuntime.h>
+#include <worklets/WorkletRuntime/WorkletRuntimeDecorator.h>
+
+#ifdef ANDROID
+#include <android/trace.h>
+#endif
+
+#if defined(__APPLE__)
+#include <os/trace_base.h>
+#if OS_LOG_TARGET_HAS_10_15_FEATURES
+#include <os/log.h>
+#include <os/signpost.h>
+#endif
+#endif
+
+#include <chrono>
+#include <memory>
+#include <string>
+#include <utility>
+
+#if defined(__APPLE__) && OS_LOG_TARGET_HAS_10_15_FEATURES
+static os_log_t workletsInstrumentsLogHandle = nullptr;
+static thread_local os_signpost_id_t tls_signpostId = OS_SIGNPOST_ID_INVALID;
+static thread_local std::string tls_signpostName;
+
+static os_log_t getWorkletsInstrumentsLogHandle() {
+  if (!workletsInstrumentsLogHandle) {
+    workletsInstrumentsLogHandle = os_log_create("dev.worklets.instruments", OS_LOG_CATEGORY_POINTS_OF_INTEREST);
+  }
+  return workletsInstrumentsLogHandle;
+}
+#endif
+
+namespace worklets {
+
+static inline double performanceNow() {
+  // copied from JSExecutor.cpp
+  auto time = std::chrono::steady_clock::now();
+  auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(time.time_since_epoch()).count();
+
+  constexpr double NANOSECONDS_IN_MILLISECOND = 1000000.0;
+  return duration / NANOSECONDS_IN_MILLISECOND;
+}
+
+void WorkletRuntimeDecorator::decorate(
+    jsi::Runtime &rt,
+    const RuntimeData::RuntimeKind runtimeKind,
+    const std::string &name,
+    const std::shared_ptr<JSScheduler> &jsScheduler,
+    const bool isDevBundle,
+    const bool enableMicrotaskQueue,
+    jsi::Object &&jsiWorkletsModuleProxy,
+    const std::shared_ptr<EventLoop> &eventLoop,
+    const RuntimeBindings::NativeLoggingHook &nativeLoggingHook) {
+  // resolves "ReferenceError: Property 'global' doesn't exist at ..."
+  rt.global().setProperty(rt, "global", rt.global());
+
+  rt.global().setProperty(rt, RuntimeData::runtimeKindBindingName, static_cast<int>(runtimeKind));
+
+  rt.global().setProperty(rt, "_WORKLET", true);
+
+  rt.global().setProperty(rt, RuntimeData::runtimeNameBindingName, jsi::String::createFromAscii(rt, name));
+
+  rt.global().setProperty(rt, "__DEV__", isDevBundle);
+
+  rt.global().setProperty(rt, "__workletsModuleProxy", std::move(jsiWorkletsModuleProxy));
+
+#ifndef NDEBUG
+  auto evalWithSourceUrl =
+      [](jsi::Runtime &rt, const jsi::Value &thisValue, const jsi::Value *args, size_t count) -> jsi::Value {
+    auto code = std::make_shared<const jsi::StringBuffer>(args[0].asString(rt).utf8(rt));
+    std::string url;
+    if (count > 1 && args[1].isString()) {
+      url = args[1].asString(rt).utf8(rt);
+    }
+    return rt.evaluateJavaScript(code, url);
+  };
+  rt.global().setProperty(
+      rt,
+      "evalWithSourceUrl",
+      jsi::Function::createFromHostFunction(
+          rt, jsi::PropNameID::forAscii(rt, "evalWithSourceUrl"), 1, evalWithSourceUrl));
+#endif // NDEBUG
+
+  jsi_utils::installJsiFunction(
+      rt, "_log", [](jsi::Runtime &rt, const jsi::Value &value) { PlatformLogger::log(stringifyJSIValue(rt, value)); });
+
+  if (nativeLoggingHook) {
+    rt.global().setProperty(
+        rt,
+        "nativeLoggingHook",
+        jsi::Function::createFromHostFunction(
+            rt, jsi::PropNameID::forAscii(rt, "nativeLoggingHook"), 2, nativeLoggingHook));
+  }
+
+  jsi_utils::installJsiFunction(rt, "_toString", [](jsi::Runtime &rt, const jsi::Value &value) {
+    return jsi::String::createFromUtf8(rt, stringifyJSIValue(rt, value));
+  });
+
+  jsi_utils::installJsiFunction(rt, "_beginSection", [](jsi::Runtime &rt, const jsi::Value &nameValue) {
+#ifdef ANDROID
+    ATrace_beginSection(nameValue.asString(rt).utf8(rt).c_str());
+#elif defined(__APPLE__) && OS_LOG_TARGET_HAS_10_15_FEATURES
+    os_log_t logHandle = getWorkletsInstrumentsLogHandle();
+    if (os_signpost_enabled(logHandle)) {
+      tls_signpostName = nameValue.asString(rt).utf8(rt);
+      tls_signpostId = os_signpost_id_make_with_pointer(logHandle, &tls_signpostId);
+      os_signpost_interval_begin(logHandle, tls_signpostId, "Worklets", "%s", tls_signpostName.c_str());
+    }
+#endif
+    return jsi::Value::undefined();
+  });
+
+  jsi_utils::installJsiFunction(rt, "_endSection", [](jsi::Runtime &rt) {
+#ifdef ANDROID
+    ATrace_endSection();
+#elif defined(__APPLE__) && OS_LOG_TARGET_HAS_10_15_FEATURES
+    os_log_t logHandle = getWorkletsInstrumentsLogHandle();
+    if (os_signpost_enabled(logHandle) && tls_signpostId != OS_SIGNPOST_ID_INVALID) {
+      os_signpost_interval_end(logHandle, tls_signpostId, "Worklets", "%s end", tls_signpostName.c_str());
+      tls_signpostId = OS_SIGNPOST_ID_INVALID;
+    }
+#endif
+    return jsi::Value::undefined();
+  });
+
+  jsi_utils::installJsiFunction(rt, "_createSerializableHostObject", [](jsi::Runtime &rt, const jsi::Value &value) {
+    return makeSerializableHostObject(rt, value.asObject(rt).asHostObject(rt));
+  });
+
+  jsi_utils::installJsiFunction(rt, "_createSerializableString", [](jsi::Runtime &rt, const jsi::Value &value) {
+    return makeSerializableString(rt, value.asString(rt));
+  });
+
+  jsi_utils::installJsiFunction(rt, "_createSerializableNumber", [](jsi::Runtime &rt, const jsi::Value &value) {
+    return makeSerializableNumber(rt, value.asNumber());
+  });
+
+  jsi_utils::installJsiFunction(rt, "_createSerializableBoolean", [](jsi::Runtime &rt, const jsi::Value &value) {
+    return makeSerializableBoolean(rt, value.asBool());
+  });
+
+  jsi_utils::installJsiFunction(rt, "_createSerializableBigInt", [](jsi::Runtime &rt, const jsi::Value &value) {
+    return makeSerializableBigInt(rt, value.asBigInt(rt));
+  });
+
+  jsi_utils::installJsiFunction(
+      rt, "_createSerializableUndefined", [](jsi::Runtime &rt) { return makeSerializableUndefined(rt); });
+
+  jsi_utils::installJsiFunction(rt, "_createSerializableArray", [](jsi::Runtime &rt, const jsi::Value &value) {
+    return makeSerializableArray(rt, value.asObject(rt).asArray(rt), false);
+  });
+
+  jsi_utils::installJsiFunction(
+      rt, "_createSerializableNull", [](jsi::Runtime &rt) { return makeSerializableNull(rt); });
+
+  jsi_utils::installJsiFunction(
+      rt,
+      "_createSerializableObject",
+      [](jsi::Runtime &rt,
+         const jsi::Value &value,
+         const jsi::Value &shouldRetainRemote,
+         const jsi::Value &nativeStateSource) {
+        return makeSerializableObject(rt, value.getObject(rt), shouldRetainRemote.getBool(), nativeStateSource);
+      });
+
+  jsi_utils::installJsiFunction(rt, "_createSerializableWorklet", [](jsi::Runtime &rt, const jsi::Value &value) {
+    return makeSerializableWorklet(rt, value.asObject(rt), false);
+  });
+
+  jsi_utils::installJsiFunction(rt, "_createSerializableSynchronizable", [](jsi::Runtime &rt, const jsi::Value &value) {
+    return SerializableJSRef::newNativeStateObject(rt, extractSerializableOrThrow(rt, value));
+  });
+
+  jsi_utils::installJsiFunction(
+      rt,
+      "_scheduleOnRuntime",
+      [](jsi::Runtime &rt, const jsi::Value &workletRuntimeValue, const jsi::Value &serializableWorkletValue) {
+        scheduleOnRuntime(rt, workletRuntimeValue, serializableWorkletValue);
+      });
+
+  jsi::Object performance(rt);
+  performance.setProperty(
+      rt,
+      "now",
+      jsi::Function::createFromHostFunction(
+          rt,
+          jsi::PropNameID::forAscii(rt, "now"),
+          0,
+          [](jsi::Runtime &runtime, const jsi::Value &, const jsi::Value *args, size_t count) {
+            return jsi::Value(performanceNow());
+          }));
+  rt.global().setProperty(rt, "performance", performance);
+
+  rt.global().setProperty(
+      rt,
+      "_startProfiling",
+      jsi::Function::createFromHostFunction(
+          rt,
+          jsi::PropNameID::forAscii(rt, "_startProfiling"),
+          1,
+          [](jsi::Runtime &rt, const jsi::Value &, const jsi::Value *args, size_t count) {
+            const double meanHzFreq = (count > 0 && !args[0].isUndefined()) ? args[0].asNumber() : 100.0;
+            startProfiling(rt, meanHzFreq);
+            return jsi::Value::undefined();
+          }));
+  jsi_utils::installJsiFunction(rt, "_stopProfiling", [](jsi::Runtime &rt) {
+    std::string path = stopProfiling(rt);
+    return jsi::String::createFromUtf8(rt, path);
+  });
+
+  if (enableMicrotaskQueue) {
+    jsi_utils::installJsiFunction(rt, "__drainMicrotasks", [](jsi::Runtime &rt) { rt.drainMicrotasks(); });
+  }
+
+  jsi_utils::installJsiFunction(
+      rt,
+      "_scheduleTimeoutCallback",
+      [weakEventLoop = std::weak_ptr<EventLoop>(eventLoop)](
+          jsi::Runtime &rt, const jsi::Value &delayJs, const jsi::Value &handlerIdJs) -> jsi::Value {
+        const auto delay = delayJs.asNumber();
+        const auto handlerId = handlerIdJs.asNumber();
+        const auto job = [handlerId](jsi::Runtime &rt) {
+          rt.global().getPropertyAsFunction(rt, "__runTimeoutCallback").call(rt, handlerId);
+        };
+        if (auto strongEventLoop = weakEventLoop.lock()) {
+          strongEventLoop->pushTimeout(job, delay);
+        }
+        return jsi::Value::undefined();
+      });
+}
+
+} // namespace worklets

@@ -1,0 +1,485 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project AI_HLY.xcodeproj -destination "platform=iOS Simulator,id=80E29B83-02CF-4481-B1AF-80A85CDE0247" -parallel-testing-enabled NO -derivedDataPath /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete -clonedSourcePackagesDirPath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=YES CODE_SIGNING_REQUIRED=YES CODE_SIGN_IDENTITY=- -scheme HanlinMiniApps test-without-building -resultBundlePath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9/paired-prefix/ModularDiagnostic.xcresult "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGNING_ALLOWED = YES
+    CODE_SIGNING_REQUIRED = YES
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  mcp-swift-sdk: https://github.com/modelcontextprotocol/swift-sdk.git @ a0ae212
+  MathJaxSwift: https://github.com/colinc86/MathJaxSwift @ 3.4.0
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.3.0
+  swift-markdown-ui: https://github.com/gonzalezreal/MarkdownUI.git @ 5f61335
+  swift-system: https://github.com/apple/swift-system.git @ 1.4.0
+  SWCompression: https://github.com/tsolomko/SWCompression.git @ c729f0b
+  swift-json-schema: https://github.com/ajevans99/swift-json-schema @ 0.13.2
+  SwiftSoup: https://github.com/scinfu/SwiftSoup @ bba848d
+  swift-argument-parser: https://github.com/apple/swift-argument-parser @ 1.8.2
+  SwiftTreeSitter: https://github.com/tree-sitter/swift-tree-sitter @ 08ef81e
+  cmark-gfm: https://github.com/swiftlang/swift-cmark @ 0.9.0
+  EventSource: https://github.com/mattt/eventsource.git @ 1.1.0
+  RichTextKit: https://github.com/danielsaidi/RichTextKit.git @ 8aa44cf
+  swift-syntax: https://github.com/swiftlang/swift-syntax.git @ 603.0.2
+  swift-log: https://github.com/apple/swift-log.git @ 96a2f8a
+  TreeSitterBash: https://github.com/tree-sitter/tree-sitter-bash @ a06c2e4
+  NativeScriptSDK: https://github.com/NativeScript/ios-spm.git @ 9.1.1
+  BitByteData: https://github.com/tsolomko/BitByteData @ 2.1.0
+  Yams: https://github.com/jpsim/Yams.git @ 6.2.2
+  SwiftDraw: https://github.com/swhitty/SwiftDraw @ 0.21.0
+  XMLCoder: https://github.com/maxdesiatov/XMLCoder.git @ 0.14.0
+  SwiftStreamingMarkdown: https://github.com/davidpovarsky/hanlin-streaming-markdown @ 5cbb4b6
+  SwiftUI-Shimmer: https://github.com/markiv/SwiftUI-Shimmer @ 1.5.1
+  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.0
+  swift-markdown: https://github.com/swiftlang/swift-markdown.git @ 0.7.3
+  HighlightSwift: https://github.com/appstefan/highlightswift @ 99c431b
+  A2UISwiftCore: https://github.com/a2ui-project/a2ui @ 3ed9601
+  LLM: https://github.com/eastriverlee/LLM.swift/ @ 4b25178
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation @ 0.9.19
+  swift-nio: https://github.com/apple/swift-nio.git @ 2.94.0
+  TreeSitter: https://github.com/tree-sitter/tree-sitter @ da6fe9b
+  Equatable: https://github.com/ordo-one/equatable @ 1.4.1
+  iosMath: https://github.com/junyan72/iosMath @ ba9ab77
+  LaTeXSwiftUI: https://github.com/colinc86/LaTeXSwiftUI @ c45e0fd
+  HanlinSDK: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete @ local
+  HTMLEntities: https://github.com/Kitura/swift-html-entities @ 4.0.1
+  SwiftyJSON: https://github.com/SwiftyJSON/SwiftyJSON.git @ 5.0.1
+  NetworkImage: https://github.com/gonzalezreal/NetworkImage @ 6.0.1
+  CoreXLSX: https://github.com/CoreOffice/CoreXLSX @ 1391f38
+  SwiftAISDK: https://github.com/davidpovarsky/swift-ai-sdk.git @ 07431ab
+
+Writing result bundle at path:
+	/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9/paired-prefix/ModularDiagnostic.xcresult
+
+Resolve Package Graph
+
+Resolve Package Graph
+2026-11-25 02:42:02.914725+0100 HanlinMiniAppsUITests-Runner[27376:2825939] [Default] Running tests...
+2026-11-25 02:42:03.407333+0100 HanlinMiniAppsUITests-Runner[27376:2825939] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+
+Resolve Package Graph
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-25 02:42:08.163.
+
+2026-11-25 02:42:08.716 xcodebuild[27005:2822508] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 02:42:08.717 xcodebuild[27005:2822508] [MT] IDELaunchParametersSnapshot: no debugger version
+Test Suite 'HanlinMiniAppsUITests.xctest' started at 2026-11-25 02:42:08.169.
+Test Suite 'MiniAppsProductionRuntimeUITests' started at 2026-11-25 02:42:08.169.
+Test Case '-[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneModularSearchLoadsActualSefariaText]' started.
+    t =     0.04s Start Test at 2026-11-25 02:42:08.209
+    t =     0.18s Set Up
+    t =     0.18s     Open com.itorah.hanlinminiapps
+    t =     0.19s         Launch com.itorah.hanlinminiapps
+Resolve Package Graph
+objc[27376]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x1060e8398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x106220310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+
+Resolve Package Graph
+
+Resolve Package Graph
+    t =    17.64s             Setting up automation session
+    t =    21.30s             Wait for com.itorah.hanlinminiapps to idle
+<unknown>:0: warning: -[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneModularSearchLoadsActualSefariaText] : Update the Info.plist: Support for all orientations will soon be required.
+
+Resolve Package Graph
+    t =    23.05s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    24.15s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    24.16s         Checking existence of `"hanlin-apps-add" Button`
+    t =    24.29s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    25.36s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    25.36s         Checking existence of `"hanlin-apps-add" Button`
+    t =    25.45s Tap "hanlin-apps-add" Button
+    t =    25.45s     Wait for com.itorah.hanlinminiapps to idle
+    t =    25.45s     Find the "hanlin-apps-add" Button
+    t =    25.60s     Check for interrupting elements affecting "hanlin-apps-add" Button
+    t =    25.70s         Wait for com.apple.springboard to idle
+    t =    25.73s     Synthesize event
+    t =    26.09s     Wait for com.itorah.hanlinminiapps to idle
+    t =    26.80s Waiting 15.0s for "hanlin-import-script-package" Button to exist
+    t =    27.88s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-script-package" Button`
+    t =    27.88s         Checking existence of `"hanlin-import-script-package" Button`
+    t =    28.18s Tap "hanlin-import-script-package" Button
+    t =    28.18s     Wait for com.itorah.hanlinminiapps to idle
+    t =    28.19s     Find the "hanlin-import-script-package" Button
+    t =    28.55s     Check for interrupting elements affecting "hanlin-import-script-package" Button
+    t =    28.68s         Wait for com.apple.springboard to idle
+    t =    28.70s     Synthesize event
+    t =    29.00s     Wait for com.itorah.hanlinminiapps to idle
+
+    t =    29.46s Waiting 15.0s for "hanlin-package-import-list" CollectionView to exist
+    t =    30.53s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-import-list" CollectionView`
+    t =    30.53s         Checking existence of `"hanlin-package-import-list" CollectionView`
+    t =    30.61s Checking existence of `"ModularTextSearch" Button`
+    t =    30.75s Swipe up "hanlin-package-import-list" CollectionView
+    t =    30.75s     Wait for com.itorah.hanlinminiapps to idle
+    t =    30.76s     Find the "hanlin-package-import-list" CollectionView
+    t =    30.83s     Check for interrupting elements affecting "hanlin-package-import-list" CollectionView
+    t =    30.93s         Wait for com.apple.springboard to idle
+    t =    30.95s     Synthesize event
+    t =    31.41s     Wait for com.itorah.hanlinminiapps to idle
+    t =    31.96s Checking existence of `"ModularTextSearch" Button`
+    t =    32.09s Find the "ModularTextSearch" Button
+    t =    32.24s Waiting 15.0s for "ModularTextSearch" Button to exist
+    t =    33.32s     Checking `Expect predicate `existsNoRetry == 1` for object "ModularTextSearch" Button`
+    t =    33.32s         Checking existence of `"ModularTextSearch" Button`
+    t =    33.47s Find the "ModularTextSearch" Button
+    t =    33.62s Tap "ModularTextSearch" Button
+    t =    33.62s     Wait for com.itorah.hanlinminiapps to idle
+    t =    33.63s     Find the "ModularTextSearch" Button
+    t =    33.78s     Check for interrupting elements affecting "ModularTextSearch" Button
+    t =    33.90s         Wait for com.apple.springboard to idle
+    t =    33.92s     Synthesize event
+    t =    34.23s     Wait for com.itorah.hanlinminiapps to idle
+    t =    34.23s Waiting 240.0s for "hanlin-package-install" Button to exist
+    t =    35.32s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    35.32s         Checking existence of `"hanlin-package-install" Button`
+    t =    35.61s         Capturing element debug description
+    t =    36.26s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    36.26s         Checking existence of `"hanlin-package-install" Button`
+    t =    36.52s         Capturing element debug description
+    t =    37.27s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    37.27s         Checking existence of `"hanlin-package-install" Button`
+    t =    37.53s         Capturing element debug description
+    t =    38.29s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    38.29s         Checking existence of `"hanlin-package-install" Button`
+    t =    38.53s         Capturing element debug description
+    t =    39.28s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    39.28s         Checking existence of `"hanlin-package-install" Button`
+    t =    39.58s         Capturing element debug description
+Resolve Package Graph
+    t =    40.25s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    40.25s         Checking existence of `"hanlin-package-install" Button`
+    t =    40.50s         Capturing element debug description
+    t =    41.26s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    41.26s         Checking existence of `"hanlin-package-install" Button`
+    t =    41.82s         Capturing element debug description
+    t =    42.24s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    42.24s         Checking existence of `"hanlin-package-install" Button`
+    t =    42.84s         Capturing element debug description
+    t =    43.27s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    43.27s         Checking existence of `"hanlin-package-install" Button`
+    t =    43.89s         Capturing element debug description
+    t =    44.33s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    44.33s         Checking existence of `"hanlin-package-install" Button`
+
+    t =    45.27s         Capturing element debug description
+    t =    46.25s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    46.25s         Checking existence of `"hanlin-package-install" Button`
+    t =    46.50s         Capturing element debug description
+    t =    47.26s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    47.26s         Checking existence of `"hanlin-package-install" Button`
+    t =    47.53s         Capturing element debug description
+    t =    48.29s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    48.29s         Checking existence of `"hanlin-package-install" Button`
+    t =    48.53s         Capturing element debug description
+    t =    49.29s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    49.29s         Checking existence of `"hanlin-package-install" Button`
+    t =    49.52s         Capturing element debug description
+    t =    50.27s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    50.27s         Checking existence of `"hanlin-package-install" Button`
+    t =    50.51s         Capturing element debug description
+    t =    51.26s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    51.26s         Checking existence of `"hanlin-package-install" Button`
+    t =    51.51s         Capturing element debug description
+    t =    52.25s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    52.25s         Checking existence of `"hanlin-package-install" Button`
+    t =    52.61s         Capturing element debug description
+    t =    53.25s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    53.25s         Checking existence of `"hanlin-package-install" Button`
+    t =    53.60s         Capturing element debug description
+    t =    54.25s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    54.25s         Checking existence of `"hanlin-package-install" Button`
+    t =    54.58s         Capturing element debug description
+    t =    55.23s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    55.23s         Checking existence of `"hanlin-package-install" Button`
+    t =    55.51s         Capturing element debug description
+    t =    56.24s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    56.24s         Checking existence of `"hanlin-package-install" Button`
+    t =    56.51s         Capturing element debug description
+    t =    57.28s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    57.28s         Checking existence of `"hanlin-package-install" Button`
+    t =    57.54s         Capturing element debug description
+    t =    58.30s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    58.30s         Checking existence of `"hanlin-package-install" Button`
+    t =    58.59s         Capturing element debug description
+    t =    59.33s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    59.33s         Checking existence of `"hanlin-package-install" Button`
+    t =    59.97s         Capturing element debug description
+    t =    60.30s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    60.31s         Checking existence of `"hanlin-package-install" Button`
+    t =    60.67s         Capturing element debug description
+    t =    61.29s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    61.29s         Checking existence of `"hanlin-package-install" Button`
+    t =    61.58s         Capturing element debug description
+    t =    62.31s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    62.31s         Checking existence of `"hanlin-package-install" Button`
+    t =    62.54s         Capturing element debug description
+    t =    63.28s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    63.28s         Checking existence of `"hanlin-package-install" Button`
+    t =    63.54s         Capturing element debug description
+    t =    64.26s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    64.27s         Checking existence of `"hanlin-package-install" Button`
+    t =    64.54s         Capturing element debug description
+    t =    65.27s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    65.27s         Checking existence of `"hanlin-package-install" Button`
+    t =    70.26s         Capturing element debug description
+    t =    71.30s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    71.30s         Checking existence of `"hanlin-package-install" Button`
+    t =    71.54s         Capturing element debug description
+    t =    72.26s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    72.26s         Checking existence of `"hanlin-package-install" Button`
+    t =    72.55s         Capturing element debug description
+    t =    73.28s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    73.28s         Checking existence of `"hanlin-package-install" Button`
+    t =    73.56s         Capturing element debug description
+    t =    74.29s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    74.29s         Checking existence of `"hanlin-package-install" Button`
+    t =    74.54s         Capturing element debug description
+    t =    75.26s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    75.26s         Checking existence of `"hanlin-package-install" Button`
+    t =    75.51s         Capturing element debug description
+    t =    76.24s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    76.27s         Checking existence of `"hanlin-package-install" Button`
+    t =    76.57s         Capturing element debug description
+    t =    77.30s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    77.30s         Checking existence of `"hanlin-package-install" Button`
+    t =    77.57s         Capturing element debug description
+    t =    78.30s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    78.30s         Checking existence of `"hanlin-package-install" Button`
+    t =    78.62s         Capturing element debug description
+    t =    79.28s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    79.28s         Checking existence of `"hanlin-package-install" Button`
+    t =    79.55s         Capturing element debug description
+    t =    80.31s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    80.31s         Checking existence of `"hanlin-package-install" Button`
+    t =    80.55s         Capturing element debug description
+    t =    81.31s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    81.31s         Checking existence of `"hanlin-package-install" Button`
+    t =    81.60s         Capturing element debug description
+    t =    82.27s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    82.28s         Checking existence of `"hanlin-package-install" Button`
+    t =    82.62s         Capturing element debug description
+    t =    83.45s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    83.60s         Checking existence of `"hanlin-package-install" Button`
+    t =    84.79s         Capturing element debug description
+    t =    85.23s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    85.23s         Checking existence of `"hanlin-package-install" Button`
+    t =    85.97s         Capturing element debug description
+    t =    86.24s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    86.24s         Checking existence of `"hanlin-package-install" Button`
+    t =    86.65s         Capturing element debug description
+    t =    87.30s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    87.30s         Checking existence of `"hanlin-package-install" Button`
+    t =    87.59s         Capturing element debug description
+    t =    88.24s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    88.24s         Checking existence of `"hanlin-package-install" Button`
+    t =    88.55s         Capturing element debug description
+    t =    89.30s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    89.30s         Checking existence of `"hanlin-package-install" Button`
+    t =    89.76s         Capturing element debug description
+    t =    90.30s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    90.31s         Checking existence of `"hanlin-package-install" Button`
+    t =    90.56s         Capturing element debug description
+    t =    91.29s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    91.29s         Checking existence of `"hanlin-package-install" Button`
+    t =    91.53s         Capturing element debug description
+    t =    92.28s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    92.28s         Checking existence of `"hanlin-package-install" Button`
+    t =    92.56s         Capturing element debug description
+    t =    93.30s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    93.30s         Checking existence of `"hanlin-package-install" Button`
+    t =    93.60s         Capturing element debug description
+    t =    94.33s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    94.33s         Checking existence of `"hanlin-package-install" Button`
+    t =    94.60s         Capturing element debug description
+    t =    95.25s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    95.25s         Checking existence of `"hanlin-package-install" Button`
+    t =    95.60s         Capturing element debug description
+    t =    96.23s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    96.23s         Checking existence of `"hanlin-package-install" Button`
+    t =    96.47s         Capturing element debug description
+    t =    97.33s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    97.33s         Checking existence of `"hanlin-package-install" Button`
+    t =    97.58s         Capturing element debug description
+    t =    98.24s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    98.24s         Checking existence of `"hanlin-package-install" Button`
+    t =    98.58s         Capturing element debug description
+    t =    99.32s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    99.47s         Checking existence of `"hanlin-package-install" Button`
+    t =    99.84s         Capturing element debug description
+    t =   100.27s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =   100.27s         Checking existence of `"hanlin-package-install" Button`
+    t =   100.54s         Capturing element debug description
+    t =   101.29s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =   101.29s         Checking existence of `"hanlin-package-install" Button`
+    t =   101.52s         Capturing element debug description
+    t =   102.27s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =   102.27s         Checking existence of `"hanlin-package-install" Button`
+    t =   102.49s         Capturing element debug description
+    t =   103.24s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =   103.24s         Checking existence of `"hanlin-package-install" Button`
+    t =   103.43s Checking existence of `"hanlin-approve-all-capabilities" Button`
+    t =   103.56s Find the "hanlin-package-install" Button
+    t =   103.79s Find the "hanlin-package-install" Button
+    t =   103.98s Find the "hanlin-package-install" Button
+    t =   104.16s Tap "hanlin-package-install" Button
+    t =   104.16s     Wait for com.itorah.hanlinminiapps to idle
+    t =   104.17s     Find the "hanlin-package-install" Button
+    t =   104.35s     Check for interrupting elements affecting "hanlin-package-install" Button
+    t =   104.48s         Wait for com.apple.springboard to idle
+    t =   104.58s     Synthesize event
+    t =   104.90s     Wait for com.itorah.hanlinminiapps to idle
+    t =   105.15s Checking existence of `"hanlin-package-install" Button`
+    t =   105.38s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   105.84s Checking existence of `"hanlin-package-install" Button`
+    t =   106.08s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   106.43s Checking existence of `"hanlin-package-install" Button`
+    t =   106.63s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   106.98s Checking existence of `"hanlin-package-install" Button`
+    t =   107.27s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   107.47s Checking existence of `"hanlin-package-install" Button`
+    t =   107.69s Waiting 10.0s for "Done" Button to exist
+    t =   108.70s     Checking `Expect predicate `existsNoRetry == 1` for object "Done" Button`
+    t =   108.70s         Checking existence of `"Done" Button`
+    t =   108.76s Tap "Done" Button
+    t =   108.76s     Wait for com.itorah.hanlinminiapps to idle
+    t =   108.76s     Find the "Done" Button
+    t =   108.82s     Check for interrupting elements affecting "hanlin-package-import-done" Button
+    t =   108.92s         Wait for com.apple.springboard to idle
+    t =   108.94s     Synthesize event
+    t =   109.26s     Wait for com.itorah.hanlinminiapps to idle
+    t =   109.67s Waiting 10.0s for "hanlin-apps-add-done" Button to exist
+    t =   110.73s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add-done" Button`
+    t =   110.73s         Checking existence of `"hanlin-apps-add-done" Button`
+    t =   110.93s Tap "hanlin-apps-add-done" Button
+    t =   110.93s     Wait for com.itorah.hanlinminiapps to idle
+    t =   110.93s     Find the "hanlin-apps-add-done" Button
+    t =   111.05s     Check for interrupting elements affecting "hanlin-apps-add-done" Button
+    t =   111.15s         Wait for com.apple.springboard to idle
+    t =   111.18s     Synthesize event
+    t =   111.48s     Wait for com.itorah.hanlinminiapps to idle
+    t =   111.96s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =   113.03s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =   113.03s         Checking existence of `"hanlin-apps-add" Button`
+    t =   113.08s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =   113.42s Added attachment named 'companion-import-ModularTextSearch'
+    t =   113.42s Requesting snapshot of accessibility hierarchy for app with pid 27608
+    t =   113.81s Requesting snapshot of accessibility hierarchy for app with pid 27608
+    t =   113.93s Added attachment named 'companion-import-ModularTextSearch-accessibility'
+    t =   113.93s Checking existence of `"hanlin-package-card-חיפוש טקסטים מודולרי — Expo" Button`
+    t =   114.01s Find the "hanlin-package-card-חיפוש טקסטים מודולרי — Expo" Button
+    t =   114.10s Waiting 30.0s for "hanlin-package-card-חיפוש טקסטים מודולרי — Expo" Button to exist
+    t =   115.18s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-card-חיפוש טקסטים מודולרי — Expo" Button`
+    t =   115.18s         Checking existence of `"hanlin-package-card-חיפוש טקסטים מודולרי — Expo" Button`
+    t =   115.27s Find the "hanlin-package-card-חיפוש טקסטים מודולרי — Expo" Button
+    t =   115.35s Tap "hanlin-package-card-חיפוש טקסטים מודולרי — Expo" Button
+    t =   115.35s     Wait for com.itorah.hanlinminiapps to idle
+    t =   115.36s     Find the "hanlin-package-card-חיפוש טקסטים מודולרי — Expo" Button
+    t =   115.44s     Check for interrupting elements affecting "hanlin-package-card-חיפוש טקסטים מודולרי — Expo" Button
+    t =   115.52s         Wait for com.apple.springboard to idle
+    t =   115.55s     Synthesize event
+    t =   115.86s     Wait for com.itorah.hanlinminiapps to idle
+    t =   116.05s Waiting 30.0s for "English" Button to exist
+    t =   117.12s     Checking `Expect predicate `existsNoRetry == 1` for object "English" Button`
+    t =   117.12s         Checking existence of `"English" Button`
+    t =   117.39s Tap "English" Button
+    t =   117.39s     Wait for com.itorah.hanlinminiapps to idle
+    t =   117.40s     Find the "English" Button
+    t =   117.62s     Check for interrupting elements affecting "English" Button
+    t =   117.74s         Wait for com.apple.springboard to idle
+    t =   117.76s     Synthesize event
+    t =   118.07s     Wait for com.itorah.hanlinminiapps to idle
+    t =   118.07s Waiting 10.0s for "Search now" Button to exist
+    t =   119.15s     Checking `Expect predicate `existsNoRetry == 1` for object "Search now" Button`
+    t =   119.15s         Checking existence of `"Search now" Button`
+    t =   119.37s Get all elements bound by index for: Descendants matching type SearchField
+    t =   119.47s Find the SearchField (Element at index 0)
+    t =   119.57s Get all elements bound by index for: Descendants matching type SearchField
+    t =   119.66s Find the SearchField (Element at index 0)
+    t =   119.76s Tap "Search a word, phrase, or source" SearchField
+    t =   119.76s     Wait for com.itorah.hanlinminiapps to idle
+    t =   119.77s     Find the "Search a word, phrase, or source" SearchField
+    t =   119.87s     Check for interrupting elements affecting "Search a word, phrase, or source" SearchField
+    t =   119.96s         Wait for com.apple.springboard to idle
+    t =   119.99s     Synthesize event
+    t =   120.30s     Wait for com.itorah.hanlinminiapps to idle
+    t =   122.60s Type 'In the beginning G...' into "Search a word, phrase, or source" SearchField
+    t =   122.60s     Wait for com.itorah.hanlinminiapps to idle
+    t =   122.60s     Find the "Search a word, phrase, or source" SearchField
+    t =   122.74s     Check for interrupting elements affecting "Search a word, phrase, or source" SearchField
+    t =   122.86s         Wait for com.apple.springboard to idle
+    t =   122.90s     Synthesize event
+    t =   123.61s     Wait for com.itorah.hanlinminiapps to idle
+    t =   123.87s Waiting 15.0s for "Native search submitted." StaticText to exist
+    t =   124.93s     Checking `Expect predicate `existsNoRetry == 1` for object "Native search submitted." StaticText`
+    t =   124.93s         Checking existence of `"Native search submitted." StaticText`
+    t =   125.13s Waiting 60.0s for StaticText (First Match) to exist
+    t =   126.20s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   126.20s         Checking existence of `StaticText (First Match)`
+    t =   126.36s         Capturing element debug description
+    t =   127.21s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   127.21s         Checking existence of `StaticText (First Match)`
+    t =   127.37s         Capturing element debug description
+    t =   128.23s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   128.23s         Checking existence of `StaticText (First Match)`
+    t =   128.40s         Capturing element debug description
+    t =   129.13s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   129.14s         Checking existence of `StaticText (First Match)`
+    t =   129.35s Get all elements bound by index for: Elements matching predicate 'label CONTAINS "
+" AND (NOT identifier BEGINSWITH "hanlin-")'
+    t =   129.48s Find the Button (Element at index 0)
+    t =   129.62s Get all elements bound by index for: Elements matching predicate 'label CONTAINS "
+" AND (NOT identifier BEGINSWITH "hanlin-")'
+    t =   129.73s Find the Button (Element at index 0)
+    t =   129.87s Find the "בראשית א׳:א׳
+In the beginning God created the heaven and the earth.
+7 more versions" Button
+    t =   129.99s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =   130.28s Added attachment named 'modular-search-live-sefaria-results'
+    t =   130.28s Requesting snapshot of accessibility hierarchy for app with pid 27608
+    t =   130.94s Requesting snapshot of accessibility hierarchy for app with pid 27608
+    t =   131.14s Added attachment named 'modular-search-live-sefaria-results-accessibility'
+    t =   131.14s Tap "בראשית א׳:א׳
+In the beginning God created the heaven and the earth.
+7 more versions" Button
+    t =   131.14s     Wait for com.itorah.hanlinminiapps to idle
+    t =   131.15s     Find the "בראשית א׳:א׳
+In the beginning God created the heaven and the earth.
+7 more versions" Button
+    t =   131.26s     Check for interrupting elements affecting "בראשית א׳:א׳
+In the beginning God created the heaven and the earth.
+7 more versions" Button
+    t =   131.36s         Wait for com.apple.springboard to idle
+    t =   131.39s     Synthesize event
+    t =   131.71s     Wait for com.itorah.hanlinminiapps to idle
+    t =   132.26s Waiting 15.0s for Any (First Match) to exist
+    t =   133.33s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   133.33s         Checking existence of `Any (First Match)`
+    t =   133.52s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   133.63s Find the CollectionView (Element at index 0)
+    t =   133.76s Get all elements bound by index for: Descendants matching type Table
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift:1177: error: -[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneModularSearchLoadsActualSefariaText] : XCTUnwrap failed: expected non-nil value of type "XCUIElement" - The result must render its native list
+    t =   133.91s Tear Down
+    t =   133.91s     Find the Target Application 'com.itorah.hanlinminiapps'
+    t =   134.17s     Added attachment named 'companion-runtime-failure'
+    t =   134.17s     Requesting snapshot of accessibility hierarchy for app with pid 27608
+    t =   135.05s     Requesting snapshot of accessibility hierarchy for app with pid 27608
+    t =   135.26s     Added attachment named 'companion-runtime-failure-accessibility'
+    t =   135.26s     Terminate com.itorah.hanlinminiapps:27608
+Test Case '-[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneModularSearchLoadsActualSefariaText]' failed (136.558 seconds).
+Test Suite 'MiniAppsProductionRuntimeUITests' failed at 2026-11-25 02:44:24.767.
+	 Executed 1 test, with 1 failure (0 unexpected) in 136.558 (136.598) seconds
+Test Suite 'HanlinMiniAppsUITests.xctest' failed at 2026-11-25 02:44:24.768.
+	 Executed 1 test, with 1 failure (0 unexpected) in 136.558 (136.599) seconds
+Test Suite 'Selected tests' failed at 2026-11-25 02:44:24.768.
+	 Executed 1 test, with 1 failure (0 unexpected) in 136.558 (136.605) seconds
+Resolve Package Graph
+
+Resolve Package Graph
+
+Resolve Package Graph
+
+Resolve Package Graph
+

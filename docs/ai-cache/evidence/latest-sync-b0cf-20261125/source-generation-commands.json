@@ -1,0 +1,42 @@
+[
+  {
+    "name": "app-intents-check",
+    "command": [
+      "python3",
+      "-B",
+      "Scripts/SDK/generate_app_intents_resources.py",
+      "--check"
+    ],
+    "started_at_utc": "2026-11-25T05:20:44.801142+00:00",
+    "finished_at_utc": "2026-11-25T05:20:45.065541+00:00",
+    "exit_code": 0,
+    "log": "app-intents-check.log",
+    "sha256": "dee7c7cc1ea4e0689e5f02b0dc6fc6ccf217e0f7a744f91bd9a91e7053b641cf"
+  },
+  {
+    "name": "manifest-generation",
+    "command": [
+      "python3",
+      "-B",
+      "Scripts/SDK/generate_manifest.py"
+    ],
+    "started_at_utc": "2026-11-25T05:20:45.067126+00:00",
+    "finished_at_utc": "2026-11-25T05:21:06.164368+00:00",
+    "exit_code": 0,
+    "log": "manifest-generation.log",
+    "sha256": "ef1d5f337d63832d7b11fad2f23da38bf3cdee83bd82bfecfddc56df7dcefdc5"
+  },
+  {
+    "name": "project-generation",
+    "command": [
+      "python3",
+      "-B",
+      "Scripts/SDK/update_project.py"
+    ],
+    "started_at_utc": "2026-11-25T05:21:06.164438+00:00",
+    "finished_at_utc": "2026-11-25T05:21:10.983990+00:00",
+    "exit_code": 0,
+    "log": "project-generation.log",
+    "sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+  }
+]

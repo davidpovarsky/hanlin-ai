@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T10:20:47.552959+00:00",
+  "baseCommit": "56539e07ba9a5ccf5853063c063948f95a8f946a",
+  "cause": "Private miniapps.return returned {ok:true} after an actual injected openSource callback returned false, while the saved completion result correctly survived.",
+  "fix": "Keep saved complete/cancel receipts and UI/engine cleanup unchanged. Existing returnToSource now yields an internal outcome; private return JSON reports actual requested/opened/outcome facts.",
+  "acknowledgements": [
+    {
+      "status": "opened",
+      "ok": true,
+      "requested": true,
+      "opened": true,
+      "condition": "This call invoked openSource and its completion was true."
+    },
+    {
+      "status": "failed",
+      "ok": false,
+      "requested": true,
+      "opened": false,
+      "condition": "This call invoked openSource and its completion was false; existing saved-result recovery message remains."
+    },
+    {
+      "status": "not-available",
+      "ok": false,
+      "requested": false,
+      "opened": false,
+      "condition": "No completed result/callback available; no openSource invocation."
+    },
+    {
+      "status": "in-progress",
+      "ok": false,
+      "requested": false,
+      "opened": false,
+      "condition": "Another return call is already in progress; this call did not invoke openSource."
+    }
+  ],
+  "red": {
+    "status": "EXECUTED_FAIL_EXPECTED",
+    "tests": 1,
+    "passed": 0,
+    "failedCases": 1,
+    "assertionFailures": 4,
+    "command": "red.command.json",
+    "actual": "ok:true and absent requested/opened/status after openSource=false",
+    "log": "red.stdout.log.gz"
+  },
+  "green": {
+    "status": "EXECUTED_PASS",
+    "tests": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "command": "green.command.json",
+    "log": "green.stdout.log.gz"
+  },
+  "portableProof": {
+    "actualExistingCase": "CrossAppInvocationTests.testUnavailableCallbackRetainsResultForSourceRecovery",
+    "sameTestSourceAcrossRedGreen": true,
+    "extraction": "build-portable-slice.py",
+    "originalFoundationFiles": [
+      "MiniAppContracts.swift",
+      "MiniAppPreferences.swift",
+      "MiniAppBridgeStore.swift"
+    ],
+    "productionMethods": [
+      "mailbox",
+      "restoreRequest",
+      "perform",
+      "returnToSource",
+      "completeJSON",
+      "finish",
+      "failure",
+      "localized"
+    ],
+    "proof": "Verbatim selected production methods plus unchanged complete original Foundation contracts/store execute the verbatim existing XCTest with its existing failed-open injection and real file persistence. No reimplementation of ACK behavior.",
+    "excluded": "UIKit/SwiftUI imports, application bootstrap and native engine are not compiled; cleanup is bookkeeping only and proves no scene/engine teardown.",
+    "warnings": "Function excerpts start at func and omit preceding @discardableResult attributes; retained logs show unused-result warnings only. Full production source keeps restoreRequest and returnToSource annotations. No suppression or compiler weakening."
+  },
+  "nativeAcceptance": {
+    "status": "NOT_RUN",
+    "selector": "HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery",
+    "rootPlannedFocusedCounts": {
+      "AIHosted": 2,
+      "MiniAppsUI": 8,
+      "MiniAppsNative": 1,
+      "total": 11
+    },
+    "boundary": "Root owns actual hosted Apple execution; portable failure injection is not UIApplication or device-opening proof."
+  },
+  "syntax": {
+    "status": "PASS_PARSE_ONLY",
+    "command": "swift-parse.command.json",
+    "files": [
+      "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+      "HanlinMiniAppsTests/CrossAppInvocationTests.swift"
+    ]
+  },
+  "sourcePreservation": "source-preservation.json",
+  "sourceHashes": {
+    "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift": "279e6a4c387afe6845c51a9adea622dc1085c82fb93ddfd23abb9dd5f4ec6f72",
+    "HanlinMiniAppsTests/CrossAppInvocationTests.swift": "22f91c12d0953f0d1e08ee1a1157bd595a6da01adb85ac8a104c069c4073b936"
+  },
+  "independentReview": {
+    "reviewer": "/root/entrypoints",
+    "result": "NO_CONCRETE_BLOCKER",
+    "scope": "Two exact stable source hashes, actual outcome fields, saved receipt and cleanup preservation, MainActor isolation, @discardableResult; no repeated tests."
+  },
+  "rawLogs": [
+    {
+      "originalMember": "green.stderr.log",
+      "originalBytes": 2318,
+      "originalSHA256": "9e4ecd3bc298ba8796aaf26148acccbe0ff947b9b640e2f47443a278f3510837",
+      "storedAs": "green.stderr.log.gz",
+      "gzipSHA256": "adf17a11f5c67192e0a2342c55cb32a5e4c00a3a79d9e83c7fe5828429d79aeb",
+      "gzipBytes": 750
+    },
+    {
+      "originalMember": "green.stdout.log",
+      "originalBytes": 656,
+      "originalSHA256": "129ab818dfa4d13056f5477e5aaa74d9e8df7530a7185f0a2864dbe04df138bb",
+      "storedAs": "green.stdout.log.gz",
+      "gzipSHA256": "8db9be30a4f52fa12fbdffc76db3ca3c13798e7f0520547d9d7219cc0afc685b",
+      "gzipBytes": 260
+    },
+    {
+      "originalMember": "red.stderr.log",
+      "originalBytes": 1527,
+      "originalSHA256": "67cf35884c8919b07d0012415f850aafe31ff7e16a2524fbd8b28aaeb3810b0d",
+      "storedAs": "red.stderr.log.gz",
+      "gzipSHA256": "832ed8ea3e446d658399818f862b59b86307d87200d45f9a81e358abe3d566f5",
+      "gzipBytes": 665
+    },
+    {
+      "originalMember": "red.stdout.log",
+      "originalBytes": 2268,
+      "originalSHA256": "5537fb3623a7ac420143707af491ff6e28b4be7d4c5947ba48dc049280ec19e5",
+      "storedAs": "red.stdout.log.gz",
+      "gzipSHA256": "a6dc57bb7240b7c35fa449329357ea23f32c487af14c52f20a90014800139c82",
+      "gzipBytes": 550
+    },
+    {
+      "originalMember": "source-diff-check.stderr.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedAs": "source-diff-check.stderr.log.gz",
+      "gzipSHA256": "bc98cddb34efa170bbd1ecad0ca2a84e73a298afa2695a594d9b11125af31d34",
+      "gzipBytes": 49
+    },
+    {
+      "originalMember": "source-diff-check.stdout.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedAs": "source-diff-check.stdout.log.gz",
+      "gzipSHA256": "4271bb0a46e68254430f3e63a6a9b98b13137f469d2b75b222277ff1bbf3ad74",
+      "gzipBytes": 49
+    },
+    {
+      "originalMember": "swift-parse.stderr.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedAs": "swift-parse.stderr.log.gz",
+      "gzipSHA256": "38e629adc02ec98f3199ce0ce52d4eeb3177133f3e460b35b721d22bdf04ef99",
+      "gzipBytes": 43
+    },
+    {
+      "originalMember": "swift-parse.stdout.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedAs": "swift-parse.stdout.log.gz",
+      "gzipSHA256": "ddb605e9d0296ad53981c68fd9269ae83a61c7b0bd657fb135fb49f10af6a12a",
+      "gzipBytes": 43
+    }
+  ],
+  "coverageReconciliation": "../sdk04-coverage-reconciliation-20261124/receipt.json",
+  "notPerformed": [
+    "CI query or dispatch",
+    "Apple build/test",
+    "OS open callback execution",
+    "New scene or native test hook",
+    "SDK regeneration",
+    "Legacy multiRuntime update"
+  ]
+}

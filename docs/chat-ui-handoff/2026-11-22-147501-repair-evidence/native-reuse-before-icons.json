@@ -1,0 +1,2602 @@
+{
+  "schema_version": 1,
+  "scope": "Read-only full-tree source/dependency reuse review for five actually passing native unit suites; not a new test result or whole-workflow pass.",
+  "baseline": {
+    "source_sha": "139c6bf93f80ef7301182110dcaf086612d9bbbd",
+    "git_tree": "39ef414b48b5655ba278af28e87f7a1ad5108c39",
+    "workflow_run_id": "45067928645",
+    "run_attempt": 1,
+    "workflow_conclusion": "failure",
+    "artifact_id": "14773257813",
+    "artifact_archive_sha256": "1248901f3fe2c0e6bb6008522a40b363f5321531a1e66aa82f3885dfd88c7768",
+    "artifact_identity_basis": "Prior root retrieval receipt; this review independently rehashes extracted raw evidence and validates seal/admission linkage.",
+    "passed_functions": 55,
+    "passed_invocations": 59,
+    "nonempty_passed_suites": 5,
+    "qualification": "Raw results establish individual passes although requested selection was incomplete and all three UI selectors failed. Zero-count XCTest wrapper precedes Swift Testing and is not the actual count."
+  },
+  "target": {
+    "source_sha": "951cd4f5d212a3997ac72a7b88c83cf64b5d79b6",
+    "git_tree": "9c47e5652953ac46efed9aa595a14c1500f4327f",
+    "result_status": "NO_NEW_EXECUTION_ASSERTED",
+    "final_reuse_status": "PENDING_ENVIRONMENT_COMPARISON"
+  },
+  "comparison": {
+    "command": "git diff --binary --no-ext-diff --no-textconv 139c6bf93f80ef7301182110dcaf086612d9bbbd 951cd4f5d212a3997ac72a7b88c83cf64b5d79b6 -- .",
+    "scope": "Complete explicit commit trees, independent of shallow ancestry and HEAD parent history.",
+    "full_diff_sha256": "feac567eca5acb201acef3e604c1c7a0713a02bc38a513603a5fba386241ee0c",
+    "changed_file_count": 14,
+    "changed_files": [
+      {
+        "status": "M",
+        "path": "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift",
+        "review": "Only PROMPT_UI03 HTTP fixture journey adds real code-skill loading and Python proof before unchanged read calls. The five unit suites neither enable the acceptance URLProtocol nor send that prompt; all unit in-source fixtures are unchanged.",
+        "affects_reviewed_unit_execution": false,
+        "baseline_git_blob": "3ed809767ec132e20abf863bb29a1e5f03133b1d",
+        "target_git_blob": "8c8afa411ff11d6a3b40cab00754fc3aec423dcc",
+        "baseline_sha256": "c5b12715d33a819ef321f2c3e6e6c29ca69269b355f9a20d54b4cbc7cc19c412",
+        "target_sha256": "4217b5db668047f53ed909154e2105c9ae92cc0af0d94cfc5fe77bfcd6bfae1e",
+        "byte_identical": false
+      },
+      {
+        "status": "M",
+        "path": "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinToolPermissionsView.swift",
+        "review": "Three accessibility identifiers only, on existing list/empty state/revoke action. No store, permissions, revocation implementation or policy change. No reviewed unit mounts this view.",
+        "affects_reviewed_unit_execution": false,
+        "baseline_git_blob": "041d90fbcb7f9607212a9caba7ed6ef8d4116837",
+        "target_git_blob": "56379081c44b822efd389a25807c732a4e425f46",
+        "baseline_sha256": "2bcc23b908f4913c962ec1e5dd5c35a8c9dde15d446959969f15e859d456a2b2",
+        "target_sha256": "8894cfc798968e37764dd3ab07bd521a82df82d1a797cb44faa4d266ba653733",
+        "byte_identical": false
+      },
+      {
+        "status": "M",
+        "path": "AI_HLY/Resource/Localizable.xcstrings",
+        "review": "Only Message, reference_materials and 资料内容 entries differ. Reviewed unit title/scope/fallback keys are unchanged; citation model assertions do not render source-sheet labels.",
+        "affects_reviewed_unit_execution": false,
+        "baseline_git_blob": "9ee73245ccd2f6d8856350023af66e7d3b552e2e",
+        "target_git_blob": "96d11e5d4bb43d4548342fbf1eaccf96e4f5cca2",
+        "baseline_sha256": "21627df690244f71193fc7263f1d62f67babf290255188eb59d525f5b4e0a5c7",
+        "target_sha256": "c84abcc423c6f0b27d09002f5a9d43da83d1adc3c7418b903fe8b63afab184c5",
+        "byte_identical": false
+      },
+      {
+        "status": "M",
+        "path": "AI_HLY/Views/Components/ChatViewComponents.swift",
+        "review": "Pending approval local optional is equivalent to its former conditional; actual wrapper AX identifier now uses immutable pending request UUID. No domain state, data mutation, action callback, rendering geometry, or projection logic changed. Unit suites call the separate model/projection files.",
+        "affects_reviewed_unit_execution": false,
+        "baseline_git_blob": "deb7ed512315e32cd28a3229185f6e59f4175ed5",
+        "target_git_blob": "2fdfa666c8dbcb4dc4eefafa5a8f9533efac154b",
+        "baseline_sha256": "c9732abacfac05da4c230c5e73a9e8a0a793f099fc68dd6736be40e7cc2ba7b5",
+        "target_sha256": "1d9150ad7f1f081c5d9970dc00839753afca318ecc713c8e1276ce08cce43282",
+        "byte_identical": false
+      },
+      {
+        "status": "M",
+        "path": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+        "review": "UI test selectors, native consent setup, expected remembered kind, exact UUID ownership and long-hold target changed. This separate UITest target is not the five unit suites or their fixtures. The affected UI selectors require fresh successful execution.",
+        "affects_reviewed_unit_execution": false,
+        "baseline_git_blob": "5e6a2e3836708a09a2070963afe3c6fbcd1af5b9",
+        "target_git_blob": "978a30fc5f5f228ae28be639e2a9cb124652581e",
+        "baseline_sha256": "79f8e5464f45617ac8436f5ca7e837a926707f9be6b56607a8f20c20bd2b29f7",
+        "target_sha256": "36bf3ed8dec51246b509a7fff8b364a591b71d2b00a956729c669a074754fdde",
+        "byte_identical": false
+      },
+      {
+        "status": "M",
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinInlineToolApproval.swift",
+        "review": "Only ColorScheme-aware ink/card/action fill values changed. Reviewed units never instantiate this SwiftUI view; shared HanlinPresentationKit citation types are byte-identical.",
+        "affects_reviewed_unit_execution": false,
+        "baseline_git_blob": "8077696c8f664758dce55e61037d0f66615e4365",
+        "target_git_blob": "78f47367417c15288955df00ae5c87df01ef7fea",
+        "baseline_sha256": "c8cde371fabe39dff757e64d9af7475baad8765ef4358efba5a41a7d7abbacaa",
+        "target_sha256": "ed3d056b73e13220f40ede81af417a624dd9c1aa0a2894ee3f8b2184eb0e5e80",
+        "byte_identical": false
+      },
+      {
+        "status": "M",
+        "path": "Scripts/CI/validate_chat_localization.py",
+        "review": "Adds three catalog keys to a portable validation list. It is not part of native test execution, app code generation, assertion semantics, runtime input or native build configuration.",
+        "affects_reviewed_unit_execution": false,
+        "baseline_git_blob": "3283207211b8c9caabaf3434487f54e66bdd4fbd",
+        "target_git_blob": "3a5f2f1722d6d294e7b3541be753be2603cbdb60",
+        "baseline_sha256": "d9c1a48cd8e1e9eb23e2b859b4bce709cc15069ebd9180f9764e485633827e96",
+        "target_sha256": "3534f785fb69575d785501d24c9f05507a3e4a7bb634bc830199bcc4fdeccc52",
+        "byte_identical": false
+      },
+      {
+        "status": "A",
+        "path": "docs/chat-ui-handoff/2026-11-22-147501-repair-evidence/consent-validation-plan.json",
+        "review": "Evidence/report/validation plan only; no build/runtime/test consumer of these newly added or edited documents.",
+        "affects_reviewed_unit_execution": false,
+        "target_git_blob": "4bc3415720357401f8ab38294a38db07224d8dc9",
+        "target_sha256": "82037339ab6b0a3a96320054bd68c0b302b52788f4fdbc25c8314fdb80b18abe"
+      },
+      {
+        "status": "A",
+        "path": "docs/chat-ui-handoff/2026-11-22-147501-repair-evidence/native-attempt-45066248406.json",
+        "review": "Evidence/report/validation plan only; no build/runtime/test consumer of these newly added or edited documents.",
+        "affects_reviewed_unit_execution": false,
+        "target_git_blob": "585febde1517ae37609ba3f7e572c336803a7bd5",
+        "target_sha256": "27cdbb0bfdccce8497eb1352d5ca9ce8ac60f067f423cd1dcde673d1764632a2"
+      },
+      {
+        "status": "A",
+        "path": "docs/chat-ui-handoff/2026-11-22-147501-repair-evidence/native-attempt-45067928645.json",
+        "review": "Evidence/report/validation plan only; no build/runtime/test consumer of these newly added or edited documents.",
+        "affects_reviewed_unit_execution": false,
+        "target_git_blob": "253c8929cf06f6869e9e442788e6b6fbf6c32491",
+        "target_sha256": "257d8526a75a1af069e8d34d0b87efc2bba8894d9c67c60084b875d341fe23ed"
+      },
+      {
+        "status": "A",
+        "path": "docs/chat-ui-handoff/2026-11-22-147501-repair-evidence/native-attempt-45068850876-1.json",
+        "review": "Evidence/report/validation plan only; no build/runtime/test consumer of these newly added or edited documents.",
+        "affects_reviewed_unit_execution": false,
+        "target_git_blob": "504d4a195a30bba501d89728d7ffdad2d28db280",
+        "target_sha256": "805aa25294472e372d37dadc5cc09adc89173c0be0812cca298f2ff15afd4772"
+      },
+      {
+        "status": "A",
+        "path": "docs/chat-ui-handoff/2026-11-22-147501-repair-evidence/native-attempt-45068850876-2.json",
+        "review": "Evidence/report/validation plan only; no build/runtime/test consumer of these newly added or edited documents.",
+        "affects_reviewed_unit_execution": false,
+        "target_git_blob": "d7482119e6ea82098ac93361dad119b9d06d34e5",
+        "target_sha256": "4d0c09be9c396df319c47e7ba8f5c9bdb0433009b730ab7852c485eafff0be8d"
+      },
+      {
+        "status": "A",
+        "path": "docs/chat-ui-handoff/2026-11-22-147501-repair-evidence/native-interaction-validation-plan.json",
+        "review": "Evidence/report/validation plan only; no build/runtime/test consumer of these newly added or edited documents.",
+        "affects_reviewed_unit_execution": false,
+        "target_git_blob": "7d4a7b8b626c969d203c1101a4bb2762d6aea7ea",
+        "target_sha256": "d3b87c41995c12f60dbd1934cb062509fdef323eb8b81e7d5054ecb8101a1e01"
+      },
+      {
+        "status": "M",
+        "path": "docs/chat-ui-handoff/2026-11-22-147501-repair.md",
+        "review": "Evidence/report/validation plan only; no build/runtime/test consumer of these newly added or edited documents.",
+        "affects_reviewed_unit_execution": false,
+        "baseline_git_blob": "25b2e995a977ca0aec98a89f04d4e9e60f0c2b8a",
+        "target_git_blob": "69307a1a597f7f36b462510b55b32a3b98a80661",
+        "baseline_sha256": "465e2024293c476deb0527a45b5c9fcde123b1c22984c23b79395d9f8c8b1ea0",
+        "target_sha256": "5c25cc3d7f10e5d895fbacfa09b86709b3638a8f8f7fbd3bce2b1c3ff72a5b3a",
+        "byte_identical": false
+      }
+    ],
+    "method": "Audit every changed runtime/build/test file against the five actual unit call paths, then verify exact direct-source and conservative dependency subtree identity. This is a bounded manual consumer review, not a claim of an automatically complete static call graph."
+  },
+  "source_fingerprints": [
+    {
+      "path": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "baseline_git_blob": "3e1dbe22a388fed571f27c469bb61a74ad5a7155",
+      "target_git_blob": "3e1dbe22a388fed571f27c469bb61a74ad5a7155",
+      "baseline_sha256": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "target_sha256": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Scrolling/ChatScrollViewHandle.swift",
+      "baseline_git_blob": "406a96fbc1e131d1847b227cb30e53856b2b7fe3",
+      "target_git_blob": "406a96fbc1e131d1847b227cb30e53856b2b7fe3",
+      "baseline_sha256": "aadaf3b09a1e431465531653be38dc0479e626946791f1ff26d3a216791a5584",
+      "target_sha256": "aadaf3b09a1e431465531653be38dc0479e626946791f1ff26d3a216791a5584",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowController.swift",
+      "baseline_git_blob": "4efc8dac55547a9289dba6d1151db030a6b94f0b",
+      "target_git_blob": "4efc8dac55547a9289dba6d1151db030a6b94f0b",
+      "baseline_sha256": "3ce4f3d623898702668ffe399856a47e5691a3884f6318839b006cd1bdb765f1",
+      "target_sha256": "3ce4f3d623898702668ffe399856a47e5691a3884f6318839b006cd1bdb765f1",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "baseline_git_blob": "06522f00a186a6c0aee84befdb72281778bd64d9",
+      "target_git_blob": "06522f00a186a6c0aee84befdb72281778bd64d9",
+      "baseline_sha256": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "target_sha256": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/AgentActivityModels.swift",
+      "baseline_git_blob": "40606bc8138073d59d41e836d32cd5f550c76ad6",
+      "target_git_blob": "40606bc8138073d59d41e836d32cd5f550c76ad6",
+      "baseline_sha256": "935bd6e487eaf95452ba7ad925fa108a608eaa9de8334b0de60ca1da3c98940e",
+      "target_sha256": "935bd6e487eaf95452ba7ad925fa108a608eaa9de8334b0de60ca1da3c98940e",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/AgentActivityPersistence.swift",
+      "baseline_git_blob": "854e8df5d71d3e538ea45d9680a5b2aaa3e95afa",
+      "target_git_blob": "854e8df5d71d3e538ea45d9680a5b2aaa3e95afa",
+      "baseline_sha256": "6fd77b744c5468823842663329dd1f29ef2201560e40cf553d0a16e037ad5034",
+      "target_sha256": "6fd77b744c5468823842663329dd1f29ef2201560e40cf553d0a16e037ad5034",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/AgentActivityStepView.swift",
+      "baseline_git_blob": "66cf1ab52365f74a8dce5f20b8e1a56bf95ecc56",
+      "target_git_blob": "66cf1ab52365f74a8dce5f20b8e1a56bf95ecc56",
+      "baseline_sha256": "a4a479287fb06a18a10ebf4599e9c411be2c0398d294330c67e192b700aba833",
+      "target_sha256": "a4a479287fb06a18a10ebf4599e9c411be2c0398d294330c67e192b700aba833",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/AgentEvent.swift",
+      "baseline_git_blob": "955f98a1cd5a3a5d1b379ac348b8334f044a4799",
+      "target_git_blob": "955f98a1cd5a3a5d1b379ac348b8334f044a4799",
+      "baseline_sha256": "51b5726348fbfae550006a7af80c75fa82103ab50aae7f75803209657b5958b5",
+      "target_sha256": "51b5726348fbfae550006a7af80c75fa82103ab50aae7f75803209657b5958b5",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/AgentEventAccumulator.swift",
+      "baseline_git_blob": "f25ba08f6d409d24a3a77e3f7214e8485653e09e",
+      "target_git_blob": "f25ba08f6d409d24a3a77e3f7214e8485653e09e",
+      "baseline_sha256": "9c20a6cd9ae655835a3f10a85c8407587c1117cc0286080ecc2ef7f9e945f888",
+      "target_sha256": "9c20a6cd9ae655835a3f10a85c8407587c1117cc0286080ecc2ef7f9e945f888",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/AgentRunLifecycleCoordinator.swift",
+      "baseline_git_blob": "c6c06f823bddc5181ffb0344b321ab8d694a8ce0",
+      "target_git_blob": "c6c06f823bddc5181ffb0344b321ab8d694a8ce0",
+      "baseline_sha256": "ecd09b57a4aa346b28e5a0497dd52abcffbea83c91e6e4e69fea67fe6121712d",
+      "target_sha256": "ecd09b57a4aa346b28e5a0497dd52abcffbea83c91e6e4e69fea67fe6121712d",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceAccumulator.swift",
+      "baseline_git_blob": "29c0691328dc4704ebfd37fc167ddc2fae6c5089",
+      "target_git_blob": "29c0691328dc4704ebfd37fc167ddc2fae6c5089",
+      "baseline_sha256": "4f84ed07467d3c1632dfedf0badeb16894e44002cad673dc2d3dab3ee0b4592d",
+      "target_sha256": "4f84ed07467d3c1632dfedf0badeb16894e44002cad673dc2d3dab3ee0b4592d",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceDeduplicator.swift",
+      "baseline_git_blob": "b502604a5e247dff093194e8518b960eb8e7ed76",
+      "target_git_blob": "b502604a5e247dff093194e8518b960eb8e7ed76",
+      "baseline_sha256": "784a9e0b09fee0c5b0c9de6972921ae559b3e18556568a66b563663411bb71d4",
+      "target_sha256": "784a9e0b09fee0c5b0c9de6972921ae559b3e18556568a66b563663411bb71d4",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceExtractor.swift",
+      "baseline_git_blob": "8b5fc69d9f311bb3ef1dd0b93f1d6a538731d4fe",
+      "target_git_blob": "8b5fc69d9f311bb3ef1dd0b93f1d6a538731d4fe",
+      "baseline_sha256": "fb8c5ab39b7029fb60e0ad5406b713ba6542edb2105fb4f685461659bb472cf8",
+      "target_sha256": "fb8c5ab39b7029fb60e0ad5406b713ba6542edb2105fb4f685461659bb472cf8",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceItem.swift",
+      "baseline_git_blob": "d812820a6a37170d1263ec8f3832afd444923c2a",
+      "target_git_blob": "d812820a6a37170d1263ec8f3832afd444923c2a",
+      "baseline_sha256": "824b305734a25d0affb96caa760b71e255171a473924a9a167154d7a452d2324",
+      "target_sha256": "824b305734a25d0affb96caa760b71e255171a473924a9a167154d7a452d2324",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceRow.swift",
+      "baseline_git_blob": "0ba4c4a67a5ea599c8cb49fee22d924612e0c999",
+      "target_git_blob": "0ba4c4a67a5ea599c8cb49fee22d924612e0c999",
+      "baseline_sha256": "3bbc41546629596769b0d0902225446146641d4729e9857783f0ce73b73cce8f",
+      "target_sha256": "3bbc41546629596769b0d0902225446146641d4729e9857783f0ce73b73cce8f",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceSheet.swift",
+      "baseline_git_blob": "2e4f9ea13daddd085bc9252d8d5e0b03d20fbe2d",
+      "target_git_blob": "2e4f9ea13daddd085bc9252d8d5e0b03d20fbe2d",
+      "baseline_sha256": "a389763b14c5cbc5ed0fbf85a54673135b52c463c5adcff32b8534fb3a740ce3",
+      "target_sha256": "a389763b14c5cbc5ed0fbf85a54673135b52c463c5adcff32b8534fb3a740ce3",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Evidence/LegacyResourcesEvidenceAdapter.swift",
+      "baseline_git_blob": "081c3637277a2bd2c1773e5ef9be8bbd7fd1a67f",
+      "target_git_blob": "081c3637277a2bd2c1773e5ef9be8bbd7fd1a67f",
+      "baseline_sha256": "fe0951972164de74a28539e5f71e0002c7d9c18a1b1992d7a26b4a13a29a57a5",
+      "target_sha256": "fe0951972164de74a28539e5f71e0002c7d9c18a1b1992d7a26b4a13a29a57a5",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/LegacyAgentActivityAdapter.swift",
+      "baseline_git_blob": "a170ec0d4734e5641f5e8e902911da1195b18c3b",
+      "target_git_blob": "a170ec0d4734e5641f5e8e902911da1195b18c3b",
+      "baseline_sha256": "76823d40ffecece222eb2293bca1391a4d67e620bab986016477fe7bb1c93b07",
+      "target_sha256": "76823d40ffecece222eb2293bca1391a4d67e620bab986016477fe7bb1c93b07",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityComposer.swift",
+      "baseline_git_blob": "f53a83d665166031b1040013abb95747cd4dab59",
+      "target_git_blob": "f53a83d665166031b1040013abb95747cd4dab59",
+      "baseline_sha256": "3da01d5bd22af56bd348d9d4f4af5e4390a3f5fe54f25f4e0b2ec4b1c7773318",
+      "target_sha256": "3da01d5bd22af56bd348d9d4f4af5e4390a3f5fe54f25f4e0b2ec4b1c7773318",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityCompositionPolicy.swift",
+      "baseline_git_blob": "df44e08d0b907747f18919f2a1cf170936aa801f",
+      "target_git_blob": "df44e08d0b907747f18919f2a1cf170936aa801f",
+      "baseline_sha256": "03dad015693059f1e4b6e4beff0842dee2c313272585bdec8f49c587375d6e16",
+      "target_sha256": "03dad015693059f1e4b6e4beff0842dee2c313272585bdec8f49c587375d6e16",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityDeduplicator.swift",
+      "baseline_git_blob": "13a5c34fecda412395daad70a913bacd84408300",
+      "target_git_blob": "13a5c34fecda412395daad70a913bacd84408300",
+      "baseline_sha256": "b0f4c871e983331166643c52c9b57e5c918abe33ce82779dc850564341734d6a",
+      "target_sha256": "b0f4c871e983331166643c52c9b57e5c918abe33ce82779dc850564341734d6a",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityDetailPolicy.swift",
+      "baseline_git_blob": "973e1d36f9dad18b27442ea94d20726686765fe6",
+      "target_git_blob": "973e1d36f9dad18b27442ea94d20726686765fe6",
+      "baseline_sha256": "795fc6de2e04214d9c4f1294c7850a0046667de89542c6f41088b05a2d095d85",
+      "target_sha256": "795fc6de2e04214d9c4f1294c7850a0046667de89542c6f41088b05a2d095d85",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityHeaderPhase.swift",
+      "baseline_git_blob": "561837a3474cecebce4f9b6ab12a565cb98c71b0",
+      "target_git_blob": "561837a3474cecebce4f9b6ab12a565cb98c71b0",
+      "baseline_sha256": "ca6abc68b36d5b26b55ff04c629b64b8d86d17ab9d89d3cddc02036bf6992de4",
+      "target_sha256": "ca6abc68b36d5b26b55ff04c629b64b8d86d17ab9d89d3cddc02036bf6992de4",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityTitleBuilder.swift",
+      "baseline_git_blob": "36874ffe5862de27341df9d9a16a7dd65450f700",
+      "target_git_blob": "36874ffe5862de27341df9d9a16a7dd65450f700",
+      "baseline_sha256": "09a954e8c447d2f8b6689db09a5e37d5a4e76ff98787b82bf6df50cde13a0006",
+      "target_sha256": "09a954e8c447d2f8b6689db09a5e37d5a4e76ff98787b82bf6df50cde13a0006",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityVisibilityPolicy.swift",
+      "baseline_git_blob": "6520cca2902a86355250f6a8725c59771b0e3830",
+      "target_git_blob": "6520cca2902a86355250f6a8725c59771b0e3830",
+      "baseline_sha256": "f322c371d400269cbb994a85b480d85494871baf24f2bc2beb5bab81f53f593d",
+      "target_sha256": "f322c371d400269cbb994a85b480d85494871baf24f2bc2beb5bab81f53f593d",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentDisplayActivity.swift",
+      "baseline_git_blob": "34efa8b0f54fe1f1fa8de654455cb0d9dba219f9",
+      "target_git_blob": "34efa8b0f54fe1f1fa8de654455cb0d9dba219f9",
+      "baseline_sha256": "e0d2a1b05168c69377d10e29cb4b952c957bc20f8fe65214e6ead0581a8a0b04",
+      "target_sha256": "e0d2a1b05168c69377d10e29cb4b952c957bc20f8fe65214e6ead0581a8a0b04",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentDisplayRound.swift",
+      "baseline_git_blob": "6b923036b6c2f75d6876ecce90ef49c335127184",
+      "target_git_blob": "6b923036b6c2f75d6876ecce90ef49c335127184",
+      "baseline_sha256": "eb9c9814b386eabc23e495fde5a28448c9db88224977ecffc81702ff3f7243b0",
+      "target_sha256": "eb9c9814b386eabc23e495fde5a28448c9db88224977ecffc81702ff3f7243b0",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ProviderCapabilities.swift",
+      "baseline_git_blob": "5440ac2e26a0ac65f85bca68022f49efb4cd8ea0",
+      "target_git_blob": "5440ac2e26a0ac65f85bca68022f49efb4cd8ea0",
+      "baseline_sha256": "0048c5a5e30f6501e56d4585983175b8ad8e70e6132659d4422cfde321cc52d8",
+      "target_sha256": "0048c5a5e30f6501e56d4585983175b8ad8e70e6132659d4422cfde321cc52d8",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ProviderEventAdapter.swift",
+      "baseline_git_blob": "cac20485338d8f191caca856e2a85ed6f7d4d4bd",
+      "target_git_blob": "cac20485338d8f191caca856e2a85ed6f7d4d4bd",
+      "baseline_sha256": "5a0d977614e03f3e388dce5957210522d717e8993aeb780584abf6ab09a2fa3a",
+      "target_sha256": "5a0d977614e03f3e388dce5957210522d717e8993aeb780584abf6ab09a2fa3a",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ReportProgressController.swift",
+      "baseline_git_blob": "e8d080d02f7a4b18f700938c0f2e302a5d726730",
+      "target_git_blob": "e8d080d02f7a4b18f700938c0f2e302a5d726730",
+      "baseline_sha256": "985278081c11f3702c9aaa879bc6c0705e1739a7b45e814da9e05e3fd5329a61",
+      "target_sha256": "985278081c11f3702c9aaa879bc6c0705e1739a7b45e814da9e05e3fd5329a61",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Scrolling/AgentRunScrollFingerprint.swift",
+      "baseline_git_blob": "6811beb8aa0df405a49d5d4ecc9cc3b52f1b5631",
+      "target_git_blob": "6811beb8aa0df405a49d5d4ecc9cc3b52f1b5631",
+      "baseline_sha256": "0ca3f3a396a6d0b0fcea6a709317213eb28ba60291a3a8d4b41a0923f01b456b",
+      "target_sha256": "0ca3f3a396a6d0b0fcea6a709317213eb28ba60291a3a8d4b41a0923f01b456b",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowValidation.swift",
+      "baseline_git_blob": "87455678640c2e9a1bed9f97285ae3f671c63fe8",
+      "target_git_blob": "87455678640c2e9a1bed9f97285ae3f671c63fe8",
+      "baseline_sha256": "4b5bb96ceb1886c6937706388a2a0b21add40a725a6715945d7652957c36e537",
+      "target_sha256": "4b5bb96ceb1886c6937706388a2a0b21add40a725a6715945d7652957c36e537",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ToolPresentation/LegacyToolPresentationAdapter.swift",
+      "baseline_git_blob": "b9aae9744165aa3c28fd6032c46f324e22e15e7f",
+      "target_git_blob": "b9aae9744165aa3c28fd6032c46f324e22e15e7f",
+      "baseline_sha256": "7c1dbf85960bb81e1702c93e6c2c550e8296db03c747bb2685d299c4508dcfc5",
+      "target_sha256": "7c1dbf85960bb81e1702c93e6c2c550e8296db03c747bb2685d299c4508dcfc5",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolInvocationMetadata.swift",
+      "baseline_git_blob": "e4ea97fba8b1c536fb1588998116bd41d9b05ce5",
+      "target_git_blob": "e4ea97fba8b1c536fb1588998116bd41d9b05ce5",
+      "baseline_sha256": "c3f61a93935100de5d80142141c501955448e9a96591863fb149f7b938d7a646",
+      "target_sha256": "c3f61a93935100de5d80142141c501955448e9a96591863fb149f7b938d7a646",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolPresentationProfile.swift",
+      "baseline_git_blob": "7e8a913f1a60aa5177f482bd49648143afa325c5",
+      "target_git_blob": "7e8a913f1a60aa5177f482bd49648143afa325c5",
+      "baseline_sha256": "e146502595a8d01d041d387a9568394b32440e550b7afd8a25f3de190241d2f4",
+      "target_sha256": "e146502595a8d01d041d387a9568394b32440e550b7afd8a25f3de190241d2f4",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolPresentationValidation.swift",
+      "baseline_git_blob": "9bba0a821054a2fca6209888fd055dba47ddb320",
+      "target_git_blob": "9bba0a821054a2fca6209888fd055dba47ddb320",
+      "baseline_sha256": "c45fea441ff2af657e567a87083f64bd9b0b7891f3a48b27fc8b9bb182833c1d",
+      "target_sha256": "c45fea441ff2af657e567a87083f64bd9b0b7891f3a48b27fc8b9bb182833c1d",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolResultPresentationCoordinator.swift",
+      "baseline_git_blob": "2c34bde0c082a47675a9ab8e62b9940dd934560d",
+      "target_git_blob": "2c34bde0c082a47675a9ab8e62b9940dd934560d",
+      "baseline_sha256": "882dd0e49f2529664379bef9790e85221448fc928a7fe803f6e0b295286c4969",
+      "target_sha256": "882dd0e49f2529664379bef9790e85221448fc928a7fe803f6e0b295286c4969",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ToolPresentationRegistry.swift",
+      "baseline_git_blob": "b2cf6ee10953f595b9d683d72dbcb09767c3460b",
+      "target_git_blob": "b2cf6ee10953f595b9d683d72dbcb09767c3460b",
+      "baseline_sha256": "3097430ec9e0e8cfcf6e61c60720bc26af50c62e1ad1b17e89196810be5cc711",
+      "target_sha256": "3097430ec9e0e8cfcf6e61c60720bc26af50c62e1ad1b17e89196810be5cc711",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ToolSchemaDecorator.swift",
+      "baseline_git_blob": "4134af8144bff0d4113e9d4f7ce9472c7e9bff79",
+      "target_git_blob": "4134af8144bff0d4113e9d4f7ce9472c7e9bff79",
+      "baseline_sha256": "e82563df026b24acc90b2fc8765b65d8c62915ef1eef065527ee155503b3f1d7",
+      "target_sha256": "e82563df026b24acc90b2fc8765b65d8c62915ef1eef065527ee155503b3f1d7",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptAccumulator.swift",
+      "baseline_git_blob": "72b4b194d725c58bdfd8aa264c657f8dbfbaaa4b",
+      "target_git_blob": "72b4b194d725c58bdfd8aa264c657f8dbfbaaa4b",
+      "baseline_sha256": "6a8335461e0dd2828a53b4eee33ebd33a19364f565e8cc3bbf85f665dc942a41",
+      "target_sha256": "6a8335461e0dd2828a53b4eee33ebd33a19364f565e8cc3bbf85f665dc942a41",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptItem.swift",
+      "baseline_git_blob": "6792e82aae316819c639cf98269b0a2868730498",
+      "target_git_blob": "6792e82aae316819c639cf98269b0a2868730498",
+      "baseline_sha256": "a41be2a7c56379139a36190f461d152cdf49685bba47d8048a96bc23060dbc8e",
+      "target_sha256": "a41be2a7c56379139a36190f461d152cdf49685bba47d8048a96bc23060dbc8e",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptTextView.swift",
+      "baseline_git_blob": "baa66586dce245eb459d82b401a81dce02b7f2d4",
+      "target_git_blob": "baa66586dce245eb459d82b401a81dce02b7f2d4",
+      "baseline_sha256": "30ab8b91e7b06d77a70ff989b60f7153b352c483b75df9ef5c893c4cf90a2dd3",
+      "target_sha256": "30ab8b91e7b06d77a70ff989b60f7153b352c483b75df9ef5c893c4cf90a2dd3",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptToolResultView.swift",
+      "baseline_git_blob": "76f556846a8758926d2fbaf9877ace6f8fcc59ea",
+      "target_git_blob": "76f556846a8758926d2fbaf9877ace6f8fcc59ea",
+      "baseline_sha256": "d49dd7e3e28b23096ebdb88b956001634f486bdb48682b7bcee3c4daedb32e50",
+      "target_sha256": "d49dd7e3e28b23096ebdb88b956001634f486bdb48682b7bcee3c4daedb32e50",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptValidation.swift",
+      "baseline_git_blob": "fb78b51fba1f9e05b98cf5272ac7e86345e95cac",
+      "target_git_blob": "fb78b51fba1f9e05b98cf5272ac7e86345e95cac",
+      "baseline_sha256": "4ae1bf381d81f83bddf51da3d64b1dc4cb1aeeb43e50517277fbbbf25f6e7e33",
+      "target_sha256": "4ae1bf381d81f83bddf51da3d64b1dc4cb1aeeb43e50517277fbbbf25f6e7e33",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "baseline_git_blob": "357a45619aece97b1cdf9ac6415cb3ab7030edc7",
+      "target_git_blob": "357a45619aece97b1cdf9ac6415cb3ab7030edc7",
+      "baseline_sha256": "cb3fdf2bbdb3512ab41d32576b5fae3569b97c81de03f47bcb4e3cd0c68429c2",
+      "target_sha256": "cb3fdf2bbdb3512ab41d32576b5fae3569b97c81de03f47bcb4e3cd0c68429c2",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Model/ChatMessages.swift",
+      "baseline_git_blob": "b0812e108b1e532412e50fe205839218f7ee2918",
+      "target_git_blob": "b0812e108b1e532412e50fe205839218f7ee2918",
+      "baseline_sha256": "7badb4ce6ec0202cd7ab9715363ada5189fb10fe7821b910496258dd287e7c44",
+      "target_sha256": "7badb4ce6ec0202cd7ab9715363ada5189fb10fe7821b910496258dd287e7c44",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ClassicChatAgentProjection.swift",
+      "baseline_git_blob": "27734ac68f7c1b4879a2d8f33006a6040677767f",
+      "target_git_blob": "27734ac68f7c1b4879a2d8f33006a6040677767f",
+      "baseline_sha256": "bf7f750d91692b0d6d6824193c3ad4fd93cd2c39bda68b4118724d4e552eef73",
+      "target_sha256": "bf7f750d91692b0d6d6824193c3ad4fd93cd2c39bda68b4118724d4e552eef73",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatSavedExcerpt.swift",
+      "baseline_git_blob": "82a320c76f0c3b7db7d22ea56bafb578ee0e7b3a",
+      "target_git_blob": "82a320c76f0c3b7db7d22ea56bafb578ee0e7b3a",
+      "baseline_sha256": "d4eee1341e49fbcde600de3325ecfa4a792054208acceba0d4561dca57da3406",
+      "target_sha256": "d4eee1341e49fbcde600de3325ecfa4a792054208acceba0d4561dca57da3406",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRecorder.swift",
+      "baseline_git_blob": "438a6a51828220af5d936ef0d22d8d5eb9745b27",
+      "target_git_blob": "438a6a51828220af5d936ef0d22d8d5eb9745b27",
+      "baseline_sha256": "048a4843b9ae26ba0797401cef6b1e405c749bf33c7f9a572175cfd843897e15",
+      "target_sha256": "048a4843b9ae26ba0797401cef6b1e405c749bf33c7f9a572175cfd843897e15",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsConfiguration.swift",
+      "baseline_git_blob": "7208f37067dcd70a61da45d00952b8605ca9f7da",
+      "target_git_blob": "7208f37067dcd70a61da45d00952b8605ca9f7da",
+      "baseline_sha256": "e584d9f7a7a41808bfe8ef8e835f02cb1e8a4b187ba6180b08955202cdb48d39",
+      "target_sha256": "e584d9f7a7a41808bfe8ef8e835f02cb1e8a4b187ba6180b08955202cdb48d39",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsSession.swift",
+      "baseline_git_blob": "514f137d05edbf8a3038b1a4a47f5429c4366a8b",
+      "target_git_blob": "514f137d05edbf8a3038b1a4a47f5429c4366a8b",
+      "baseline_sha256": "3a9cc6e795398a0a988b3cf74802c2270c07b85d2e15f668b7a01eb5fe1fbf49",
+      "target_sha256": "3a9cc6e795398a0a988b3cf74802c2270c07b85d2e15f668b7a01eb5fe1fbf49",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsJournal.swift",
+      "baseline_git_blob": "e0f0e88af7df775c6988a29f120eb14660d29f49",
+      "target_git_blob": "e0f0e88af7df775c6988a29f120eb14660d29f49",
+      "baseline_sha256": "bdc14a8fa8e1051893f5fb870afe3dbf7eb40656bc186c46001dcafdd37b576f",
+      "target_sha256": "bdc14a8fa8e1051893f5fb870afe3dbf7eb40656bc186c46001dcafdd37b576f",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRedactor.swift",
+      "baseline_git_blob": "c0d32704c65295bb689e2c7170dca829705544b9",
+      "target_git_blob": "c0d32704c65295bb689e2c7170dca829705544b9",
+      "baseline_sha256": "884f1634fe3de8a5d68d9971c56453420b6c3b38c2a8954b5635eb8042fcb416",
+      "target_sha256": "884f1634fe3de8a5d68d9971c56453420b6c3b38c2a8954b5635eb8042fcb416",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentTokenUsage.swift",
+      "baseline_git_blob": "52dbad9103762dc74988ee31700e053851ad86d4",
+      "target_git_blob": "52dbad9103762dc74988ee31700e053851ad86d4",
+      "baseline_sha256": "2adc5dabfb6280994052e5c956782c7c63e9d7ecce81e6387cc0afdbc004be35",
+      "target_sha256": "2adc5dabfb6280994052e5c956782c7c63e9d7ecce81e6387cc0afdbc004be35",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/HanlinMessageCitations.swift",
+      "baseline_git_blob": "f2df585086ed2409eb862233ea6c7535bc3070b9",
+      "target_git_blob": "f2df585086ed2409eb862233ea6c7535bc3070b9",
+      "baseline_sha256": "d2f84febe70cde64aa3665c06e0b90574a5934b1a413b32a4e99c2fd37c9137e",
+      "target_sha256": "d2f84febe70cde64aa3665c06e0b90574a5934b1a413b32a4e99c2fd37c9137e",
+      "byte_identical": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/HanlinCitations.swift",
+      "baseline_git_blob": "86e2f648bbc4e3f2af4018f57bf9797c4559b730",
+      "target_git_blob": "86e2f648bbc4e3f2af4018f57bf9797c4559b730",
+      "baseline_sha256": "91cfd8b2ba1480b17da80e22b9a91f540af04aa1312c3edf98f042feca759963",
+      "target_sha256": "91cfd8b2ba1480b17da80e22b9a91f540af04aa1312c3edf98f042feca759963",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinModelDisplayNameTests.swift",
+      "baseline_git_blob": "d4da0c4054c4f1ef7075ba015caffdee6b49cce2",
+      "target_git_blob": "d4da0c4054c4f1ef7075ba015caffdee6b49cce2",
+      "baseline_sha256": "e8a0ce9249d6093a7b53d6a167feadd2292e191ac317fa9c34750f58013a7106",
+      "target_sha256": "e8a0ce9249d6093a7b53d6a167feadd2292e191ac317fa9c34750f58013a7106",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/HanlinModelDisplayName.swift",
+      "baseline_git_blob": "d1730911e05d1d28f9c4d33f0973272547826a0c",
+      "target_git_blob": "d1730911e05d1d28f9c4d33f0973272547826a0c",
+      "baseline_sha256": "62cd12d392c5f80e23de3accd45b1c20fdfc68b12492ee7ce62ce1e14fddd677",
+      "target_sha256": "62cd12d392c5f80e23de3accd45b1c20fdfc68b12492ee7ce62ce1e14fddd677",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "baseline_git_blob": "53ec7c25784d922cf8f2e6fc461e4991dfe199b6",
+      "target_git_blob": "53ec7c25784d922cf8f2e6fc461e4991dfe199b6",
+      "baseline_sha256": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "target_sha256": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLYTests/CurrentLocationToolTests.swift",
+      "baseline_git_blob": "a52e49e0cc533f69ad55cde619e27216b993a9bf",
+      "target_git_blob": "a52e49e0cc533f69ad55cde619e27216b993a9bf",
+      "baseline_sha256": "ec0bff66f8bea7b6296622975ccb4f24d46d24cd47a33737b716b26f637069fb",
+      "target_sha256": "ec0bff66f8bea7b6296622975ccb4f24d46d24cd47a33737b716b26f637069fb",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/MapServices.swift",
+      "baseline_git_blob": "fb8551d2248768ef4c17dd47375b2c9f0595b0da",
+      "target_git_blob": "fb8551d2248768ef4c17dd47375b2c9f0595b0da",
+      "baseline_sha256": "7c67ce0b35083e2d20227d1f173f700b49fd90b0b21f06cf39b30dc0ad858d6a",
+      "target_sha256": "7c67ce0b35083e2d20227d1f173f700b49fd90b0b21f06cf39b30dc0ad858d6a",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/WeatherServices.swift",
+      "baseline_git_blob": "7e360a09fd9f2769a8dbec162d38677abe546f13",
+      "target_git_blob": "7e360a09fd9f2769a8dbec162d38677abe546f13",
+      "baseline_sha256": "728e1d6905930986ad77ee241daf3e7ccc757259f7bf02b2500f9ebd50827d0b",
+      "target_sha256": "728e1d6905930986ad77ee241daf3e7ccc757259f7bf02b2500f9ebd50827d0b",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager+LegacyTools.swift",
+      "baseline_git_blob": "176d3859182658cf1e4bf1d26e908aef850be0c1",
+      "target_git_blob": "176d3859182658cf1e4bf1d26e908aef850be0c1",
+      "baseline_sha256": "cba7aedf581df00981efadb684cf4056bbb02e608414d69f4106bc8a5269fda5",
+      "target_sha256": "cba7aedf581df00981efadb684cf4056bbb02e608414d69f4106bc8a5269fda5",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/Model/ToolKeys.swift",
+      "baseline_git_blob": "0c2ad388f195b956bde562087079c3cfd87930de",
+      "target_git_blob": "0c2ad388f195b956bde562087079c3cfd87930de",
+      "baseline_sha256": "f0066b37abc65019832f3a52bb2a25e479fccdb04be094c1995e49d317fda221",
+      "target_sha256": "f0066b37abc65019832f3a52bb2a25e479fccdb04be094c1995e49d317fda221",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/ToolRuntime/NativeTool.swift",
+      "baseline_git_blob": "ff07c0c3740b4e9613b444979f94f7776318fcab",
+      "target_git_blob": "ff07c0c3740b4e9613b444979f94f7776318fcab",
+      "baseline_sha256": "17882814d76d0f663639d7d99970078db83277f4dab373a1764c5466930d0a22",
+      "target_sha256": "17882814d76d0f663639d7d99970078db83277f4dab373a1764c5466930d0a22",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/ToolRuntime/NativeToolResult.swift",
+      "baseline_git_blob": "c7da92bd9e5e25663fa0b6683a7a10c5f73c63db",
+      "target_git_blob": "c7da92bd9e5e25663fa0b6683a7a10c5f73c63db",
+      "baseline_sha256": "d7d0dc48fde8e1e63ca0fc0098cc085f2648b38eb81c8ab6968a8c33b59a2321",
+      "target_sha256": "d7d0dc48fde8e1e63ca0fc0098cc085f2648b38eb81c8ab6968a8c33b59a2321",
+      "byte_identical": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptDeviceServices/HanlinAppleLocationService.swift",
+      "baseline_git_blob": "878f8b7bd868c73dcd764a2cb53b438e8fa6a4d5",
+      "target_git_blob": "878f8b7bd868c73dcd764a2cb53b438e8fa6a4d5",
+      "baseline_sha256": "9cff02a5cf34bc7ffb955da493c80f456bb151f0e30a72cee821838fed85eb29",
+      "target_sha256": "9cff02a5cf34bc7ffb955da493c80f456bb151f0e30a72cee821838fed85eb29",
+      "byte_identical": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptDeviceServices/HanlinAppleServiceContracts.swift",
+      "baseline_git_blob": "8ca86f6d09e86f6ab0e8c9b8d50eee73e934f643",
+      "target_git_blob": "8ca86f6d09e86f6ab0e8c9b8d50eee73e934f643",
+      "baseline_sha256": "b7354a9c30c29a52476e6e5366b8d99730e0ccb41264374ad80440d786371534",
+      "target_sha256": "b7354a9c30c29a52476e6e5366b8d99730e0ccb41264374ad80440d786371534",
+      "byte_identical": true
+    }
+  ],
+  "conservative_dependency_subtrees": [
+    {
+      "path": "AI_HLYTests",
+      "baseline_git_tree": "fe232039cc9c6ecb4fa04cce6d107eb0d065d4a9",
+      "target_git_tree": "fe232039cc9c6ecb4fa04cce6d107eb0d065d4a9",
+      "tree_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity",
+      "baseline_git_tree": "8eb661a81b5ea9a1518901aba253fd60803400ff",
+      "target_git_tree": "8eb661a81b5ea9a1518901aba253fd60803400ff",
+      "tree_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore",
+      "baseline_git_tree": "020d3e1f77727c37acba413232557eb68b7dae5c",
+      "target_git_tree": "020d3e1f77727c37acba413232557eb68b7dae5c",
+      "tree_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices",
+      "baseline_git_tree": "d230147d9dce6aca34acda6ea653c59a46674e6a",
+      "target_git_tree": "d230147d9dce6aca34acda6ea653c59a46674e6a",
+      "tree_identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore",
+      "baseline_git_tree": "d99af227ca3da736ac5b8899e932b1dda20231af",
+      "target_git_tree": "d99af227ca3da736ac5b8899e932b1dda20231af",
+      "tree_identical": true
+    },
+    {
+      "path": "AI_HLY/Services",
+      "baseline_git_tree": "29975cf58633e4d8c8bdc9c255a1ee5be8949c17",
+      "target_git_tree": "29975cf58633e4d8c8bdc9c255a1ee5be8949c17",
+      "tree_identical": true
+    },
+    {
+      "path": "AI_HLY/Model",
+      "baseline_git_tree": "5d3df35c8fd527d868a025eecafaab545afaa628",
+      "target_git_tree": "5d3df35c8fd527d868a025eecafaab545afaa628",
+      "tree_identical": true
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions",
+      "baseline_git_tree": "af938ad8895fb5b57b130d3ef37283d95c502f04",
+      "target_git_tree": "af938ad8895fb5b57b130d3ef37283d95c502f04",
+      "tree_identical": true
+    },
+    {
+      "path": "Packages/HanlinAgentSDK",
+      "baseline_git_tree": "77a4ed18a32d1f640660c4bfd4d59dd7f3be01c7",
+      "target_git_tree": "77a4ed18a32d1f640660c4bfd4d59dd7f3be01c7",
+      "tree_identical": true
+    },
+    {
+      "path": "Packages/HanlinPlatform",
+      "baseline_git_tree": "6cc95f952fd54b67657f4b3b2ff79717c46dd85c",
+      "target_git_tree": "6cc95f952fd54b67657f4b3b2ff79717c46dd85c",
+      "tree_identical": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit",
+      "baseline_git_tree": "b4102b7af65fc0b57957e40faab05e0d114ecb0a",
+      "target_git_tree": "b4102b7af65fc0b57957e40faab05e0d114ecb0a",
+      "tree_identical": true
+    },
+    {
+      "path": "AI_HLY.xcodeproj",
+      "baseline_git_tree": "67662cb64dee661bcf7dbada8f27e9f77069d516",
+      "target_git_tree": "67662cb64dee661bcf7dbada8f27e9f77069d516",
+      "tree_identical": true
+    }
+  ],
+  "build_and_test_input_fingerprints": [
+    {
+      "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "baseline_git_blob": "84fe044daf0de6a6fdd5327811d27702e24ce0bd",
+      "target_git_blob": "84fe044daf0de6a6fdd5327811d27702e24ce0bd",
+      "baseline_sha256": "50bc4f9a8a0c12883d3796c7e80c1a23ede6d92221e085a9a475fb1fd4c461aa",
+      "target_sha256": "50bc4f9a8a0c12883d3796c7e80c1a23ede6d92221e085a9a475fb1fd4c461aa",
+      "byte_identical": true
+    },
+    {
+      "path": "Scripts/CI/current_unit_xctestrun.py",
+      "baseline_git_blob": "48c0bd1e8aec55d8af6907783f65d410515f8b2e",
+      "target_git_blob": "48c0bd1e8aec55d8af6907783f65d410515f8b2e",
+      "baseline_sha256": "9c8ca17282dd07838bd685ca934934534138a32504885749553c40e9cc5c4169",
+      "target_sha256": "9c8ca17282dd07838bd685ca934934534138a32504885749553c40e9cc5c4169",
+      "byte_identical": true
+    },
+    {
+      "path": "Scripts/CI/simulator_test_allowance.py",
+      "baseline_git_blob": "44f2b71c0befe0e954af6461a1c7ad1a647cebc3",
+      "target_git_blob": "44f2b71c0befe0e954af6461a1c7ad1a647cebc3",
+      "baseline_sha256": "f2ce6df6635099b9b71f64ded12617a67b62f267f1e5502eecd0de8d49afc857",
+      "target_sha256": "f2ce6df6635099b9b71f64ded12617a67b62f267f1e5502eecd0de8d49afc857",
+      "byte_identical": true
+    },
+    {
+      "path": "Scripts/CI/verify_selected_tests.py",
+      "baseline_git_blob": "b19ac545b8ef1310456318c3b47076e01fa01779",
+      "target_git_blob": "b19ac545b8ef1310456318c3b47076e01fa01779",
+      "baseline_sha256": "4ae4a28934341461b364a9b83fb891ca214da64cf3046635278fb4e6837caad5",
+      "target_sha256": "4ae4a28934341461b364a9b83fb891ca214da64cf3046635278fb4e6837caad5",
+      "byte_identical": true
+    },
+    {
+      "path": "Scripts/CI/affected-validation-map.json",
+      "baseline_git_blob": "ef39a70bf1c9086b2a65e7dd5bd06d163b275407",
+      "target_git_blob": "ef39a70bf1c9086b2a65e7dd5bd06d163b275407",
+      "baseline_sha256": "db22268ea55e532fbc4199bfcd4f455a451b30b3b14edbed46074293b4c870ec",
+      "target_sha256": "db22268ea55e532fbc4199bfcd4f455a451b30b3b14edbed46074293b4c870ec",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "baseline_git_blob": "3a303d7b03e921d98a4fe31aa92227da8f52fb1d",
+      "target_git_blob": "3a303d7b03e921d98a4fe31aa92227da8f52fb1d",
+      "baseline_sha256": "d7eec981fcbdb20ef4519e413b154e0e3d81fc71f656d52fa60b02efecfe52a9",
+      "target_sha256": "d7eec981fcbdb20ef4519e413b154e0e3d81fc71f656d52fa60b02efecfe52a9",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme",
+      "baseline_git_blob": "0c88ea064929f7e3c14bc482250e45f895396be6",
+      "target_git_blob": "0c88ea064929f7e3c14bc482250e45f895396be6",
+      "baseline_sha256": "76cf81210150a79ccdf5690d566539fe680093f1091dc00afdedfe45441da74f",
+      "target_sha256": "76cf81210150a79ccdf5690d566539fe680093f1091dc00afdedfe45441da74f",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "baseline_git_blob": "55649fbf15e7bdeef2df41134ee587ca254963f9",
+      "target_git_blob": "55649fbf15e7bdeef2df41134ee587ca254963f9",
+      "baseline_sha256": "28fb383e35bd875dd91b124ad02ca4210da7771c53daf4c6c6d28c1e2a55e529",
+      "target_sha256": "28fb383e35bd875dd91b124ad02ca4210da7771c53daf4c6c6d28c1e2a55e529",
+      "byte_identical": true
+    },
+    {
+      "path": "RuntimeDependencies.lock.json",
+      "baseline_git_blob": "914e8d51b58a8a4c79cdbb5977d26ef5e55f6f88",
+      "target_git_blob": "914e8d51b58a8a4c79cdbb5977d26ef5e55f6f88",
+      "baseline_sha256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+      "target_sha256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+      "byte_identical": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Package.swift",
+      "baseline_git_blob": "01281d4e1ecb09cb33cddea28a448c355cd81f8e",
+      "target_git_blob": "01281d4e1ecb09cb33cddea28a448c355cd81f8e",
+      "baseline_sha256": "e9ea19d4bc3fe3873137e0c2e32cda50892ecd39103f3a63250acaa8f373e458",
+      "target_sha256": "e9ea19d4bc3fe3873137e0c2e32cda50892ecd39103f3a63250acaa8f373e458",
+      "byte_identical": true
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Package.swift",
+      "baseline_git_blob": "1af275c3f3097eb361251e4ed2a6d12e5271a174",
+      "target_git_blob": "1af275c3f3097eb361251e4ed2a6d12e5271a174",
+      "baseline_sha256": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b",
+      "target_sha256": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b",
+      "byte_identical": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Package.swift",
+      "baseline_git_blob": "adf2b937651a97899a72ffe72d0626879f87e246",
+      "target_git_blob": "adf2b937651a97899a72ffe72d0626879f87e246",
+      "baseline_sha256": "9b287993943f4e4636f27e0893a3f92aff4e1d9ac8b1944fbeeeea99928d45b1",
+      "target_sha256": "9b287993943f4e4636f27e0893a3f92aff4e1d9ac8b1944fbeeeea99928d45b1",
+      "byte_identical": true
+    },
+    {
+      "path": "AI_HLY/AI_HLY.swift",
+      "baseline_git_blob": "da1b1947f73efb9db207d8092f72aa1b9365f168",
+      "target_git_blob": "da1b1947f73efb9db207d8092f72aa1b9365f168",
+      "baseline_sha256": "0ee9045305afe4f0be964ed18fd41d39fa20a48b4cbe1a342849ad2d4b8b3676",
+      "target_sha256": "0ee9045305afe4f0be964ed18fd41d39fa20a48b4cbe1a342849ad2d4b8b3676",
+      "byte_identical": true
+    }
+  ],
+  "changed_localization_entries": [
+    {
+      "key": "Message",
+      "baseline": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Ask any questions."
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "询问任何问题"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Ask any questions."
+            }
+          }
+        }
+      },
+      "target": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Ask any questions."
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "询问任何问题"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "אפשר לשאול כל שאלה"
+            }
+          }
+        }
+      },
+      "called_by_reviewed_unit_assertions": false
+    },
+    {
+      "key": "reference_materials",
+      "baseline": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "📚 Reference"
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "📚 参考资料"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "📚 התייחסות"
+            }
+          }
+        }
+      },
+      "target": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Sources"
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "来源"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "מקורות"
+            }
+          }
+        }
+      },
+      "called_by_reviewed_unit_assertions": false
+    },
+    {
+      "key": "资料内容",
+      "baseline": {
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Information Content"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Information Content"
+            }
+          }
+        }
+      },
+      "target": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Information Content"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "תוכן המקור"
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "资料内容"
+            }
+          }
+        }
+      },
+      "called_by_reviewed_unit_assertions": false
+    }
+  ],
+  "suites": [
+    {
+      "suite": "ChatScrollViewHandleTests",
+      "function_count": 11,
+      "invocation_count": 11,
+      "baseline_status": "EXECUTED_PASS",
+      "target_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON",
+      "source_review_eligible": true,
+      "required_rerun_due_to_this_commit_range": false,
+      "reasoning": {
+        "scope": "Native UIScrollView window/viewport lifetime, weak ownership, generation checks, outgoing/incoming chat isolation and deferred readiness.",
+        "unchanged_execution": "All 11 tests create their own UIWindow/UIScrollView and call ChatScrollViewHandle directly. The handle and layout value/controller source are byte-identical. They do not instantiate ChatView, ChatBubbleView, approval UI, Settings or the HTTP acceptance provider.",
+        "changed_consumers": "The pending activity AX identifier and consent colors are downstream UI consumers, not inputs to the tested handle. These passes do not cover the still-failed real ChatView rotation/reattachment UI case."
+      },
+      "test_source": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "reviewed_source_files": [
+        "AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowController.swift",
+        "AI_HLY/Downstream/AgentActivity/Scrolling/ChatScrollViewHandle.swift"
+      ],
+      "tests": [
+        {
+          "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/positiveGeometryWithoutAWindowCannotPositionATranscript()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/positiveGeometryWithoutAWindowCannotPositionATranscript()",
+          "duration_seconds": 0.008206844329833984,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/positiveGeometryWithoutAWindowCannotPositionATranscript()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/everyReadRechecksWindowDimensionsAndConversation()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/everyReadRechecksWindowDimensionsAndConversation()",
+          "duration_seconds": 0.009070873260498047,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/everyReadRechecksWindowDimensionsAndConversation()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/detachAndReplacementInvalidateCapturedRequestsWithoutRetainingViews()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/detachAndReplacementInvalidateCapturedRequestsWithoutRetainingViews()",
+          "duration_seconds": 0.001294851303100586,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/detachAndReplacementInvalidateCapturedRequestsWithoutRetainingViews()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/lateWindowAttachmentDeliversOneDeferredReadinessCallback()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/lateWindowAttachmentDeliversOneDeferredReadinessCallback()",
+          "duration_seconds": 0.0023851394653320312,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/lateWindowAttachmentDeliversOneDeferredReadinessCallback()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/cancelledReadinessCannotRestoreAPreviousConversation()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/cancelledReadinessCannotRestoreAPreviousConversation()",
+          "duration_seconds": 0.003058910369873047,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/cancelledReadinessCannotRestoreAPreviousConversation()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/resizedViewportRejectsARequestBeforeTheNextBridgeCallback()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/resizedViewportRejectsARequestBeforeTheNextBridgeCallback()",
+          "duration_seconds": 0.0017549991607666016,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/resizedViewportRejectsARequestBeforeTheNextBridgeCallback()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/movingTheSameScrollViewToAnotherWindowInvalidatesQueuedPositioning()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/movingTheSameScrollViewToAnotherWindowInvalidatesQueuedPositioning()",
+          "duration_seconds": 0.006704092025756836,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/movingTheSameScrollViewToAnotherWindowInvalidatesQueuedPositioning()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/contentGrowthAndUserScrollingKeepTheViewportLifetime()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/contentGrowthAndUserScrollingKeepTheViewportLifetime()",
+          "duration_seconds": 0.0019600391387939453,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/contentGrowthAndUserScrollingKeepTheViewportLifetime()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/outgoingConversationCallbacksCannotUnbindOrCancelTheCurrentViewport()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/outgoingConversationCallbacksCannotUnbindOrCancelTheCurrentViewport()",
+          "duration_seconds": 0.0018131732940673828,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/outgoingConversationCallbacksCannotUnbindOrCancelTheCurrentViewport()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/deferredReadinessRechecksResizeAndCanRecoverAtTheNewViewport()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/deferredReadinessRechecksResizeAndCanRecoverAtTheNewViewport()",
+          "duration_seconds": 0.002868175506591797,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/deferredReadinessRechecksResizeAndCanRecoverAtTheNewViewport()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/incomingBindingBeforeActivationDoesNotNeedAnotherBridgeCallback()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/incomingBindingBeforeActivationDoesNotNeedAnotherBridgeCallback()",
+          "duration_seconds": 0.00446772575378418,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/incomingBindingBeforeActivationDoesNotNeedAnotherBridgeCallback()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        }
+      ]
+    },
+    {
+      "suite": "AgentRoundPresentationTests",
+      "function_count": 21,
+      "invocation_count": 21,
+      "baseline_status": "EXECUTED_PASS",
+      "target_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON",
+      "source_review_eligible": true,
+      "required_rerun_due_to_this_commit_range": false,
+      "reasoning": {
+        "scope": "Approval summaries, presentation profiles, round grouping, citation evidence/aliases/anchors/favicon projection, transcript replay and coordinator cancellation ownership.",
+        "unchanged_execution": "All 21 test bodies and their in-source fixture strings are byte-identical. The entire AgentActivity implementation subtree, citation projection/model, immutable source references, recorder/lifecycle logic and app stream model are unchanged.",
+        "changed_consumers": "The tests call AgentToolApprovalSummary and domain/citation projections directly; they do not render HanlinInlineToolApproval or call the UI03 HTTP journey. The pending-row AX modifier is in a UI consumer and does not change these models, grouping, approval disposition, or source ownership. None of the three changed catalog keys is an exercised summary/title assertion."
+      },
+      "test_source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "reviewed_source_files": [
+        "AI_HLY/Downstream/AgentActivity/AgentActivityModels.swift",
+        "AI_HLY/Downstream/AgentActivity/AgentActivityPersistence.swift",
+        "AI_HLY/Downstream/AgentActivity/AgentActivityStepView.swift",
+        "AI_HLY/Downstream/AgentActivity/AgentEvent.swift",
+        "AI_HLY/Downstream/AgentActivity/AgentEventAccumulator.swift",
+        "AI_HLY/Downstream/AgentActivity/AgentRunLifecycleCoordinator.swift",
+        "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceAccumulator.swift",
+        "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceDeduplicator.swift",
+        "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceExtractor.swift",
+        "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceItem.swift",
+        "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceRow.swift",
+        "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceSheet.swift",
+        "AI_HLY/Downstream/AgentActivity/Evidence/LegacyResourcesEvidenceAdapter.swift",
+        "AI_HLY/Downstream/AgentActivity/LegacyAgentActivityAdapter.swift",
+        "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityComposer.swift",
+        "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityCompositionPolicy.swift",
+        "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityDeduplicator.swift",
+        "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityDetailPolicy.swift",
+        "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityHeaderPhase.swift",
+        "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityTitleBuilder.swift",
+        "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityVisibilityPolicy.swift",
+        "AI_HLY/Downstream/AgentActivity/Presentation/AgentDisplayActivity.swift",
+        "AI_HLY/Downstream/AgentActivity/Presentation/AgentDisplayRound.swift",
+        "AI_HLY/Downstream/AgentActivity/ProviderCapabilities.swift",
+        "AI_HLY/Downstream/AgentActivity/ProviderEventAdapter.swift",
+        "AI_HLY/Downstream/AgentActivity/ReportProgressController.swift",
+        "AI_HLY/Downstream/AgentActivity/Scrolling/AgentRunScrollFingerprint.swift",
+        "AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowController.swift",
+        "AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowValidation.swift",
+        "AI_HLY/Downstream/AgentActivity/Scrolling/ChatScrollViewHandle.swift",
+        "AI_HLY/Downstream/AgentActivity/ToolPresentation/LegacyToolPresentationAdapter.swift",
+        "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolInvocationMetadata.swift",
+        "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolPresentationProfile.swift",
+        "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolPresentationValidation.swift",
+        "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolResultPresentationCoordinator.swift",
+        "AI_HLY/Downstream/AgentActivity/ToolPresentationRegistry.swift",
+        "AI_HLY/Downstream/AgentActivity/ToolSchemaDecorator.swift",
+        "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptAccumulator.swift",
+        "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptItem.swift",
+        "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptTextView.swift",
+        "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptToolResultView.swift",
+        "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptValidation.swift",
+        "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsConfiguration.swift",
+        "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsJournal.swift",
+        "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRecorder.swift",
+        "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRedactor.swift",
+        "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsSession.swift",
+        "AI_HLY/Downstream/AgentDiagnostics/AgentTokenUsage.swift",
+        "AI_HLY/Downstream/ChatPresentation/ChatSavedExcerpt.swift",
+        "AI_HLY/Downstream/ChatPresentation/ClassicChatAgentProjection.swift",
+        "AI_HLY/Downstream/ChatPresentation/HanlinMessageCitations.swift",
+        "AI_HLY/Model/ChatMessages.swift",
+        "AI_HLY/Services/ChatServices/APIManager.swift",
+        "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/HanlinCitations.swift"
+      ],
+      "tests": [
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/locationApprovalShowsRealScopeWithoutTrustingProgressNarrative()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/locationApprovalShowsRealScopeWithoutTrustingProgressNarrative()",
+          "duration_seconds": 0.0006501674652099609,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/locationApprovalShowsRealScopeWithoutTrustingProgressNarrative()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/approvalSummaryNeverHidesArgumentsThatNeedReview()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/approvalSummaryNeverHidesArgumentsThatNeedReview()",
+          "duration_seconds": 0.0010831356048583984,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/approvalSummaryNeverHidesArgumentsThatNeedReview()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/attributedSingletonRoundsKeepTheirHierarchyWithoutInventingLegacyParents()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/attributedSingletonRoundsKeepTheirHierarchyWithoutInventingLegacyParents()",
+          "duration_seconds": 0.0032002925872802734,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/attributedSingletonRoundsKeepTheirHierarchyWithoutInventingLegacyParents()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/exactBuiltInOperationsKeepTheirOwnActivityPresentation()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/exactBuiltInOperationsKeepTheirOwnActivityPresentation()",
+          "duration_seconds": 0.001071929931640625,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/exactBuiltInOperationsKeepTheirOwnActivityPresentation()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/emptySubsecondReasoningDoesNotCreateAZeroSecondHistoryRow()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/emptySubsecondReasoningDoesNotCreateAZeroSecondHistoryRow()",
+          "duration_seconds": 0.0014901161193847656,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/emptySubsecondReasoningDoesNotCreateAZeroSecondHistoryRow()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/chatCompletionsSourceLinksPersistWithoutProviderAnnotationEvents()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/chatCompletionsSourceLinksPersistWithoutProviderAnnotationEvents()",
+          "duration_seconds": 0.013418197631835938,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/chatCompletionsSourceLinksPersistWithoutProviderAnnotationEvents()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/sourceURLAliasesSurviveEvidenceDeduplicationAndCodable()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/sourceURLAliasesSurviveEvidenceDeduplicationAndCodable()",
+          "duration_seconds": 0.0003566741943359375,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/sourceURLAliasesSurviveEvidenceDeduplicationAndCodable()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/sourceURLAliasesStayBoundedAndKeepOriginalDestination()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/sourceURLAliasesStayBoundedAndKeepOriginalDestination()",
+          "duration_seconds": 0.0025589466094970703,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/sourceURLAliasesStayBoundedAndKeepOriginalDestination()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/sourceURLAliasesKeepClaimAnchorsAndScopedProjectionAfterReplay()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/sourceURLAliasesKeepClaimAnchorsAndScopedProjectionAfterReplay()",
+          "duration_seconds": 0.001680135726928711,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/sourceURLAliasesKeepClaimAnchorsAndScopedProjectionAfterReplay()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/citationEventBesideItsTextDeltaKeepsTheNewTranscriptOwner()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/citationEventBesideItsTextDeltaKeepsTheNewTranscriptOwner()",
+          "duration_seconds": 0.0008020401000976562,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/citationEventBesideItsTextDeltaKeepsTheNewTranscriptOwner()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/orderedMarkdownFragmentRetainsOnlyItsVerifiedAnchors()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/orderedMarkdownFragmentRetainsOnlyItsVerifiedAnchors()",
+          "duration_seconds": 0.0008590221405029297,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/orderedMarkdownFragmentRetainsOnlyItsVerifiedAnchors()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/legacyResourcesRequireExplicitSourceLinksAndNeverGuessNumericIndexes()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/legacyResourcesRequireExplicitSourceLinksAndNeverGuessNumericIndexes()",
+          "duration_seconds": 0.0007789134979248047,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/legacyResourcesRequireExplicitSourceLinksAndNeverGuessNumericIndexes()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/suppliedResourceFaviconSurvivesCanonicalSourceAndInlineAliasProjection()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/suppliedResourceFaviconSurvivesCanonicalSourceAndInlineAliasProjection()",
+          "duration_seconds": 0.00066375732421875,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/suppliedResourceFaviconSurvivesCanonicalSourceAndInlineAliasProjection()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/missingOrUnsafeResourceFaviconsKeepTheExistingDefault()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/missingOrUnsafeResourceFaviconsKeepTheExistingDefault()",
+          "duration_seconds": 0.0005431175231933594,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/missingOrUnsafeResourceFaviconsKeepTheExistingDefault()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/providerCitationsKeepTheOriginalAnswerAndCannotBorrowChangedText()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/providerCitationsKeepTheOriginalAnswerAndCannotBorrowChangedText()",
+          "duration_seconds": 0.0010898113250732422,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/providerCitationsKeepTheOriginalAnswerAndCannotBorrowChangedText()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/actualApprovalKeepsCallIdentityAndDenialStaysNeutralThroughFailureReplay()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/actualApprovalKeepsCallIdentityAndDenialStaysNeutralThroughFailureReplay()",
+          "duration_seconds": 0.007595062255859375,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/actualApprovalKeepsCallIdentityAndDenialStaysNeutralThroughFailureReplay()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/richToolFollowupPreservesPriorAnswerAndStableActivityIdentity()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/richToolFollowupPreservesPriorAnswerAndStableActivityIdentity()",
+          "duration_seconds": 0.0013108253479003906,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/richToolFollowupPreservesPriorAnswerAndStableActivityIdentity()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/asyncCancellationCannotClearANewerRunWhileRecorderDrains()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/asyncCancellationCannotClearANewerRunWhileRecorderDrains()",
+          "duration_seconds": 0.494678258895874,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/asyncCancellationCannotClearANewerRunWhileRecorderDrains()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/suspendedBeginCannotReclaimOwnershipFromANewerRun()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/suspendedBeginCannotReclaimOwnershipFromANewerRun()",
+          "duration_seconds": 0.13042068481445312,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/suspendedBeginCannotReclaimOwnershipFromANewerRun()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/actualRoundMarkersOwnReasoningAndParallelSameNameTools()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/actualRoundMarkersOwnReasoningAndParallelSameNameTools()",
+          "duration_seconds": 0.010873794555664062,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/actualRoundMarkersOwnReasoningAndParallelSameNameTools()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/legacyActivitiesNeverAcquireAParentFromTheirTimeOrName()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/legacyActivitiesNeverAcquireAParentFromTheirTimeOrName()",
+          "duration_seconds": 0.001737833023071289,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/legacyActivitiesNeverAcquireAParentFromTheirTimeOrName()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        }
+      ]
+    },
+    {
+      "suite": "HanlinModelDisplayNameTests",
+      "function_count": 2,
+      "invocation_count": 2,
+      "baseline_status": "EXECUTED_PASS",
+      "target_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON",
+      "source_review_eligible": true,
+      "required_rerun_due_to_this_commit_range": false,
+      "reasoning": {
+        "scope": "Exact legacy UUID suffix removal, user-label preservation and routing-name fallback.",
+        "unchanged_execution": "Both test bodies and HanlinModelDisplayName are byte-identical. They call Foundation string/UUID logic directly. The default fallback localization key Model is unchanged; explicit fallback fixture strings are unchanged.",
+        "changed_consumers": "No modified UI-only file is called. The updated Message/reference_materials/资料内容 translations are unrelated inputs."
+      },
+      "test_source": "AI_HLYTests/HanlinModelDisplayNameTests.swift",
+      "reviewed_source_files": [
+        "AI_HLY/Downstream/ChatPresentation/HanlinModelDisplayName.swift"
+      ],
+      "tests": [
+        {
+          "test_identifier": "AI_HLYTests/HanlinModelDisplayNameTests/removesOnlyTheGeneratedLegacyDisplaySuffix()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinModelDisplayNameTests/removesOnlyTheGeneratedLegacyDisplaySuffix()",
+          "duration_seconds": 0.00012993812561035156,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinModelDisplayNameTests/removesOnlyTheGeneratedLegacyDisplaySuffix()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/HanlinModelDisplayNameTests/keepsUserLabelsAndUsesTheRoutingNameOnlyAsFallback()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinModelDisplayNameTests/keepsUserLabelsAndUsesTheRoutingNameOnlyAsFallback()",
+          "duration_seconds": 0.00028896331787109375,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinModelDisplayNameTests/keepsUserLabelsAndUsesTheRoutingNameOnlyAsFallback()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        }
+      ]
+    },
+    {
+      "suite": "AgentActivityHeaderPhaseTests",
+      "function_count": 14,
+      "invocation_count": 14,
+      "baseline_status": "EXECUTED_PASS",
+      "target_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON",
+      "source_review_eligible": true,
+      "required_rerun_due_to_this_commit_range": false,
+      "reasoning": {
+        "scope": "History/live/permission phases, true operation activity, shimmer ownership, lazy detail projection, request receipts and semantic-output transitions.",
+        "unchanged_execution": "All 14 tests and the entire AgentActivity domain subtree are byte-identical, including HeaderPhase, VisibilityPolicy, TitleBuilder, Composer, EventAccumulator, ProviderEventAdapter and transcript validation. ClassicChatAgentProjection is unchanged.",
+        "changed_consumers": "These tests resolve domain enums/paths and projections; none mounts the activityRow SwiftUI branch whose AX identifier changed. ColorScheme and approval card fills do not enter the domain decisions. Relevant localized titles are unchanged."
+      },
+      "test_source": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "reviewed_source_files": [
+        "AI_HLY/Downstream/AgentActivity/AgentActivityModels.swift",
+        "AI_HLY/Downstream/AgentActivity/AgentActivityPersistence.swift",
+        "AI_HLY/Downstream/AgentActivity/AgentActivityStepView.swift",
+        "AI_HLY/Downstream/AgentActivity/AgentEvent.swift",
+        "AI_HLY/Downstream/AgentActivity/AgentEventAccumulator.swift",
+        "AI_HLY/Downstream/AgentActivity/AgentRunLifecycleCoordinator.swift",
+        "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceAccumulator.swift",
+        "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceDeduplicator.swift",
+        "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceExtractor.swift",
+        "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceItem.swift",
+        "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceRow.swift",
+        "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceSheet.swift",
+        "AI_HLY/Downstream/AgentActivity/Evidence/LegacyResourcesEvidenceAdapter.swift",
+        "AI_HLY/Downstream/AgentActivity/LegacyAgentActivityAdapter.swift",
+        "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityComposer.swift",
+        "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityCompositionPolicy.swift",
+        "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityDeduplicator.swift",
+        "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityDetailPolicy.swift",
+        "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityHeaderPhase.swift",
+        "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityTitleBuilder.swift",
+        "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityVisibilityPolicy.swift",
+        "AI_HLY/Downstream/AgentActivity/Presentation/AgentDisplayActivity.swift",
+        "AI_HLY/Downstream/AgentActivity/Presentation/AgentDisplayRound.swift",
+        "AI_HLY/Downstream/AgentActivity/ProviderCapabilities.swift",
+        "AI_HLY/Downstream/AgentActivity/ProviderEventAdapter.swift",
+        "AI_HLY/Downstream/AgentActivity/ReportProgressController.swift",
+        "AI_HLY/Downstream/AgentActivity/Scrolling/AgentRunScrollFingerprint.swift",
+        "AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowController.swift",
+        "AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowValidation.swift",
+        "AI_HLY/Downstream/AgentActivity/Scrolling/ChatScrollViewHandle.swift",
+        "AI_HLY/Downstream/AgentActivity/ToolPresentation/LegacyToolPresentationAdapter.swift",
+        "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolInvocationMetadata.swift",
+        "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolPresentationProfile.swift",
+        "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolPresentationValidation.swift",
+        "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolResultPresentationCoordinator.swift",
+        "AI_HLY/Downstream/AgentActivity/ToolPresentationRegistry.swift",
+        "AI_HLY/Downstream/AgentActivity/ToolSchemaDecorator.swift",
+        "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptAccumulator.swift",
+        "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptItem.swift",
+        "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptTextView.swift",
+        "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptToolResultView.swift",
+        "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptValidation.swift",
+        "AI_HLY/Downstream/ChatPresentation/ChatSavedExcerpt.swift",
+        "AI_HLY/Downstream/ChatPresentation/ClassicChatAgentProjection.swift",
+        "AI_HLY/Model/ChatMessages.swift",
+        "AI_HLY/Services/ChatServices/APIManager.swift"
+      ],
+      "tests": [
+        {
+          "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/completedHistoryNeverRevivesThinkingFromStaleApproval()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/completedHistoryNeverRevivesThinkingFromStaleApproval()",
+          "duration_seconds": 0.003631114959716797,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/completedHistoryNeverRevivesThinkingFromStaleApproval()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/permissionWaitPausesShimmerAndCanResumeOnlyWhileActive()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/permissionWaitPausesShimmerAndCanResumeOnlyWhileActive()",
+          "duration_seconds": 0.0005030632019042969,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/permissionWaitPausesShimmerAndCanResumeOnlyWhileActive()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/historicalFooterAndDuplicateActivityStatusAreHidden()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/historicalFooterAndDuplicateActivityStatusAreHidden()",
+          "duration_seconds": 0.0003681182861328125,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/historicalFooterAndDuplicateActivityStatusAreHidden()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/completedToolDoesNotReuseItsEarlierRunningSummary()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/completedToolDoesNotReuseItsEarlierRunningSummary()",
+          "duration_seconds": 0.003917217254638672,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/completedToolDoesNotReuseItsEarlierRunningSummary()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/failureCancellationAndConsentDoNotImplyLiveWorkOrSuccess()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/failureCancellationAndConsentDoNotImplyLiveWorkOrSuccess()",
+          "duration_seconds": 0.0007150173187255859,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/failureCancellationAndConsentDoNotImplyLiveWorkOrSuccess()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/firstAnswerTextStopsWorkingWithoutFalsifyingConcurrentExecution()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/firstAnswerTextStopsWorkingWithoutFalsifyingConcurrentExecution()",
+          "duration_seconds": 0.0001850128173828125,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/firstAnswerTextStopsWorkingWithoutFalsifyingConcurrentExecution()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/shimmerMovesBetweenLeafAndNearestVisibleAncestor()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/shimmerMovesBetweenLeafAndNearestVisibleAncestor()",
+          "duration_seconds": 0.001898050308227539,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/shimmerMovesBetweenLeafAndNearestVisibleAncestor()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/internalPreparationDoesNotCreateToolActivityOrRewriteHistory()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/internalPreparationDoesNotCreateToolActivityOrRewriteHistory()",
+          "duration_seconds": 0.007215023040771484,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/internalPreparationDoesNotCreateToolActivityOrRewriteHistory()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/mountedDetailsKeepCallIdentityAndPayloadIndependentOfExpansion()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/mountedDetailsKeepCallIdentityAndPayloadIndependentOfExpansion()",
+          "duration_seconds": 0.0016231536865234375,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/mountedDetailsKeepCallIdentityAndPayloadIndependentOfExpansion()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/providerReasoningSurvivesCompositionAndEndsAtTheFirstAnswer()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/providerReasoningSurvivesCompositionAndEndsAtTheFirstAnswer()",
+          "duration_seconds": 0.009032964706420898,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/providerReasoningSurvivesCompositionAndEndsAtTheFirstAnswer()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/reasoningAndRealToolLifecyclesSurviveWhileDiscoveryStaysHidden()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/reasoningAndRealToolLifecyclesSurviveWhileDiscoveryStaysHidden()",
+          "duration_seconds": 0.01007699966430664,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/reasoningAndRealToolLifecyclesSurviveWhileDiscoveryStaysHidden()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/onlyActualRequestReceiptShowsWaitingAndFirstSemanticOutputClearsIt()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/onlyActualRequestReceiptShowsWaitingAndFirstSemanticOutputClearsIt()",
+          "duration_seconds": 0.006272077560424805,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/onlyActualRequestReceiptShowsWaitingAndFirstSemanticOutputClearsIt()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/olderStoredRunsDoNotInventPendingRequestReceipt()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/olderStoredRunsDoNotInventPendingRequestReceipt()",
+          "duration_seconds": 0.0009448528289794922,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/olderStoredRunsDoNotInventPendingRequestReceipt()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/admittedNonTextOutputEndsReasoningWithoutDemotingTheFinalAnswer()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/admittedNonTextOutputEndsReasoningWithoutDemotingTheFinalAnswer()",
+          "duration_seconds": 0.0048639774322509766,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/admittedNonTextOutputEndsReasoningWithoutDemotingTheFinalAnswer()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        }
+      ]
+    },
+    {
+      "suite": "CurrentLocationToolTests",
+      "function_count": 7,
+      "invocation_count": 11,
+      "baseline_status": "EXECUTED_PASS",
+      "target_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON",
+      "source_review_eligible": true,
+      "required_rerun_due_to_this_commit_range": false,
+      "reasoning": {
+        "scope": "Coordinate/name composition, denial/cancellation propagation, original legacy dispatcher outcome and map append behavior, weather service rejection.",
+        "unchanged_execution": "Seven test bodies / eleven actual argument invocations are byte-identical. MapServices, the real APIManager legacy dispatcher, WeatherServices, NativeToolResult/Context, SwiftData models and shared Apple location service/contracts are unchanged. Coordinates/errors are explicit closures, and each dispatcher test owns a fresh in-memory ToolKeys database. The configured empty-key weather fixture rejects before network.",
+        "changed_consumers": "No changed Settings/consent view or UI03 protocol fixture is used by these tests. The Your current location localization key is unchanged. These passes do not attest physical-device authorization prompts or live Core Location updates."
+      },
+      "test_source": "AI_HLYTests/CurrentLocationToolTests.swift",
+      "reviewed_source_files": [
+        "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolInvocationMetadata.swift",
+        "AI_HLY/Model/ChatMessages.swift",
+        "AI_HLY/Model/ToolKeys.swift",
+        "AI_HLY/NativeAgentExtensions/ToolRuntime/NativeTool.swift",
+        "AI_HLY/NativeAgentExtensions/ToolRuntime/NativeToolResult.swift",
+        "AI_HLY/Services/ChatServices/APIManager+LegacyTools.swift",
+        "AI_HLY/Services/ChatServices/APIManager.swift",
+        "AI_HLY/Services/ChatServices/MapServices.swift",
+        "AI_HLY/Services/ChatServices/WeatherServices.swift",
+        "Packages/HanlinPlatform/Sources/HanlinScriptDeviceServices/HanlinAppleLocationService.swift",
+        "Packages/HanlinPlatform/Sources/HanlinScriptDeviceServices/HanlinAppleServiceContracts.swift"
+      ],
+      "tests": [
+        {
+          "test_identifier": "AI_HLYTests/CurrentLocationToolTests/validCoordinatesSurviveUnavailableAddress(emptyAddress:)",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/validCoordinatesSurviveUnavailableAddress(emptyAddress:)",
+          "duration_seconds": 0.005844593048095703,
+          "invocations": [
+            {
+              "argument": "false",
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/validCoordinatesSurviveUnavailableAddress(emptyAddress:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+            },
+            {
+              "argument": "true",
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/validCoordinatesSurviveUnavailableAddress(emptyAddress:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/CurrentLocationToolTests/addressLookupCancellationRemainsCancellation()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/addressLookupCancellationRemainsCancellation()",
+          "duration_seconds": 0.0006067752838134766,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/addressLookupCancellationRemainsCancellation()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/CurrentLocationToolTests/deniedLocationDoesNotAttemptAddressLookup()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/deniedLocationDoesNotAttemptAddressLookup()",
+          "duration_seconds": 0.0023081302642822266,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/deniedLocationDoesNotAttemptAddressLookup()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/CurrentLocationToolTests/currentLocationAppendsToExistingMapPayload()",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/currentLocationAppendsToExistingMapPayload()",
+          "duration_seconds": 0.06619715690612793,
+          "invocations": [
+            {
+              "argument": null,
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/currentLocationAppendsToExistingMapPayload()"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/CurrentLocationToolTests/currentLocationFailureAndCancellationAreTruthful(cancelled:)",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/currentLocationFailureAndCancellationAreTruthful(cancelled:)",
+          "duration_seconds": 0.01854383945465088,
+          "invocations": [
+            {
+              "argument": "false",
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/currentLocationFailureAndCancellationAreTruthful(cancelled:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+            },
+            {
+              "argument": "true",
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/currentLocationFailureAndCancellationAreTruthful(cancelled:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/CurrentLocationToolTests/weatherFailuresAreNotReportedAsSuccess(configuredService:)",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/weatherFailuresAreNotReportedAsSuccess(configuredService:)",
+          "duration_seconds": 0.032495856285095215,
+          "invocations": [
+            {
+              "argument": "false",
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/weatherFailuresAreNotReportedAsSuccess(configuredService:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+            },
+            {
+              "argument": "true",
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/weatherFailuresAreNotReportedAsSuccess(configuredService:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        },
+        {
+          "test_identifier": "AI_HLYTests/CurrentLocationToolTests/alreadyCancelledRequestDoesNotReportSuccess(toolName:)",
+          "result": "EXECUTED_PASS",
+          "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/alreadyCancelledRequestDoesNotReportSuccess(toolName:)",
+          "duration_seconds": 0.008183002471923828,
+          "invocations": [
+            {
+              "argument": "\"get_current_location\"",
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/alreadyCancelledRequestDoesNotReportSuccess(toolName:)?args=13e44d7b5a6bc3c42124c5666d90a804b1d4a750064fd2e4e4f8790233ec38a4"
+            },
+            {
+              "argument": "\"query_weather\"",
+              "result": "EXECUTED_PASS",
+              "original_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/alreadyCancelledRequestDoesNotReportSuccess(toolName:)?args=1211e442284c5748a078ff6263addcb2dedd42e0047e2e14e47226ae36d83950"
+            }
+          ],
+          "target_reuse_status": "ELIGIBLE_SOURCE_UNCHANGED_PENDING_ENVIRONMENT_COMPARISON"
+        }
+      ]
+    }
+  ],
+  "baseline_native_evidence": {
+    "files": [
+      {
+        "path": "/workspace/scratch/2453c7f51f3d/native-45067928645/simulator-logs/08-downstream-unit-test-results.json",
+        "sha256": "c76ce5764720c3a284ec469accebae185625dec8db499932c21fc296d93622ad",
+        "bytes": 40586
+      },
+      {
+        "path": "/workspace/scratch/2453c7f51f3d/native-45067928645/simulator-logs/08-downstream-unit-tests.log",
+        "sha256": "db12c4c1df164e30e8e9b0679c65487ef19ea5216b6241629ce01a409e15e722",
+        "bytes": 30742
+      },
+      {
+        "path": "/workspace/scratch/2453c7f51f3d/native-45067928645/simulator-logs/08-nativescript-production-ui-test-results.json",
+        "sha256": "26006347ca72195f941feb9066af3c11ca990ed1a3c745047df74ac60b4cb1b3",
+        "bytes": 27136
+      },
+      {
+        "path": "/workspace/scratch/2453c7f51f3d/native-45067928645/simulator-logs/06-current-unit-xctestrun.json",
+        "sha256": "9343a72b9fa6dbf7bb41b0d218b3f3796ffdf48361b77ca7229878d8e99ddd74",
+        "bytes": 2971
+      },
+      {
+        "path": "/workspace/scratch/2453c7f51f3d/native-45067928645/simulator-logs/08-current-unit-xctestrun-admission.json",
+        "sha256": "1c62eb4c64e14b07c64529f04f774fdf9fdd8c80ec972ac22e532a83b7a3656b",
+        "bytes": 3123
+      },
+      {
+        "path": "/workspace/scratch/2453c7f51f3d/native-45067928645/simulator-logs/06-diagnostics-build-provenance.json",
+        "sha256": "762199d637da69c170b5b64b0652cd12d3bca3892f3643a1000e0266f30acdf4",
+        "bytes": 6966
+      },
+      {
+        "path": "/workspace/scratch/2453c7f51f3d/native-45067928645/simulator-logs/06-xcodebuild-simulator.log",
+        "sha256": "5ccd8a68c84882b51b250e5e71795e9fba2eafb691dd243c828e5fd3bd4bc63b",
+        "bytes": 7195617
+      },
+      {
+        "path": "/workspace/scratch/2453c7f51f3d/native-45067928645/simulator-logs/06-generated-unit-manifests/AI_HLY_iphonesimulator27.2-arm64.xctestrun",
+        "sha256": "89ea1b243da5ce812ea8a63d069a2a2bfeb44c420addf6aa02c0b89d3b5a3fa2",
+        "bytes": 10400
+      },
+      {
+        "path": "/workspace/scratch/2453c7f51f3d/native-45067928645/simulator-logs/01-environment.log",
+        "sha256": "3b668dcda21f7e87d5347b8dc8e7c8df185996680caf8451bf4ded423cab9b26",
+        "bytes": 963
+      },
+      {
+        "path": "/workspace/scratch/2453c7f51f3d/native-45067928645/simulator-logs/verified-simulator-environment.json",
+        "sha256": "901a0e36b4e9a6285451d4284aa486a3da9589eb67d66ec5fec65a3f728d6fe4",
+        "bytes": 81337
+      },
+      {
+        "path": "/workspace/scratch/2453c7f51f3d/native-45067928645/simulator-logs/08-owned-simulator-boot.json",
+        "sha256": "e6046bc8b8230d4ea0fa7b38d9a27a03d9820d067de0bb778c06ba45edeb77bd",
+        "bytes": 465
+      },
+      {
+        "path": "/workspace/scratch/2453c7f51f3d/native-45067928645/simulator-logs/02-prepare-runtime-core.log",
+        "sha256": "43ccf5017e255c4f2a3fb33e9f6610e562103f0f58acb749700eb819185408c1",
+        "bytes": 1125
+      },
+      {
+        "path": "/workspace/scratch/2453c7f51f3d/native-45067928645/simulator-logs/07-simulator-runtime-signature.log",
+        "sha256": "a2bb1fc2e22d6b52e1cb3e4fcd48e7c0031d1d300cfc2ea505da7281016bff55",
+        "bytes": 203
+      }
+    ],
+    "xcresult": {
+      "path": "/workspace/scratch/2453c7f51f3d/native-45067928645/simulator-logs/DownstreamTestsResult.xcresult",
+      "file_count": 146,
+      "sorted_relative_path_sha256_size_manifest_sha256": "d3d8be441c2efcb771d58decd9161587cfc58e0e909b737cc5dfe88190470e41",
+      "manifest_format": "UTF-8 sorted relative_path NUL file_sha256 NUL decimal_size NEWLINE"
+    },
+    "receipt_integrity": {
+      "build_receipt_matches_admission_digest": true,
+      "sealed_products_equal_admitted_products": true,
+      "sealed_context_equals_admitted_context": true,
+      "receipt_status": "SEALED",
+      "admission_status": "ADMITTED_NOT_EXECUTED",
+      "execution_proof": "08-downstream-unit-test-results.json and original xcresult, corroborated by 55-test Swift Testing summary; admission alone is not execution."
+    },
+    "sealed_products": {
+      "files": [
+        {
+          "bytes": 40416,
+          "path": "Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin",
+          "sha256": "14a690aff9b052bbdb8d2d3d423d117227dd350dcb0b86e8c938f6ac72f0d040"
+        },
+        {
+          "bytes": 157863616,
+          "path": "Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin.debug.dylib",
+          "sha256": "d3515b5a4db5d7cec052cfdb85b70b2e6e4d558e7da1f373e8534e19a78e743b"
+        },
+        {
+          "bytes": 4500,
+          "path": "Debug-iphonesimulator/AI_Hanlin.app/Info.plist",
+          "sha256": "7d6ed4bf7f4dd3e9da685355c8dfb4d3bdfd7b29c6e607a84524a8d0003eeb89"
+        },
+        {
+          "bytes": 40036880,
+          "path": "Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests",
+          "sha256": "7c91db7527abf428c470371ec61d296db3f6e559dba96688f4662f1d6a8cf9be"
+        },
+        {
+          "bytes": 710,
+          "path": "Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/Info.plist",
+          "sha256": "f154be9926cb2c2f1db21635eba55ee7d9147a942ba37f74476cfbcb4174b895"
+        }
+      ],
+      "format_version": 1,
+      "host_path": "Debug-iphonesimulator/AI_Hanlin.app",
+      "manifest": "AI_HLY_iphonesimulator27.2-arm64.xctestrun",
+      "manifest_sha256": "89ea1b243da5ce812ea8a63d069a2a2bfeb44c420addf6aa02c0b89d3b5a3fa2",
+      "test_bundle_path": "Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest"
+    },
+    "tracked_workspace": {
+      "modified": true,
+      "tracked_diff_sha256": "56001efbfae2b14375f7424db6db084b76f5a356a0cb6ea4649f89072fca2cce",
+      "qualification": "The original CI build truthfully records generated tracked changes. Do not describe it as a pristine checkout or infer same build inputs solely from source SHA. New source-specific generated provenance changes digest by design; compare relevant generated content/build recipe, not blanket hash equality."
+    }
+  },
+  "baseline_environment": {
+    "configuration": "Debug",
+    "scheme": "AI_HLY",
+    "test_target": "AI_HLYTests",
+    "xcode": "Xcode 27.2\nBuild version 27B52",
+    "developer_directory": "/Applications/Xcode_27.2.app/Contents/Developer",
+    "host_macos": {
+      "version": "27.0.1",
+      "build": "26A434",
+      "evidence": "01-environment.log"
+    },
+    "sdk": "27.2",
+    "simulator_runtime": {
+      "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+      "version": "27.2",
+      "buildversion": "24B8117"
+    },
+    "device": {
+      "architecture": "arm64",
+      "deviceId": "490B01F6-2B5F-4446-8C49-AC646CD5CB1E",
+      "deviceName": "Hanlin-Phase2-45067928645-1",
+      "modelName": "iPad Pro 13-inch (M5)",
+      "osBuildNumber": "24B8117",
+      "osVersion": "27.2",
+      "platform": "iOS Simulator"
+    },
+    "device_type_identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-12GB",
+    "compile_records": [
+      {
+        "swift_version": [
+          "6"
+        ],
+        "target": [
+          "arm64-apple-ios27.0-simulator"
+        ],
+        "sdk": [
+          "/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk"
+        ],
+        "module_name": [
+          "AI_Hanlin"
+        ],
+        "defines": [
+          "DEBUG",
+          "HANLIN_A2UI_POC",
+          "HANLIN_SKILL_ANALYSIS_POC",
+          "HANLIN_TESTING",
+          "_LIBCPP_HARDENING_MODE",
+          "DEBUG"
+        ],
+        "optimization": "-Onone",
+        "enable_testing": true
+      },
+      {
+        "swift_version": [
+          "6"
+        ],
+        "target": [
+          "arm64-apple-ios27.0-simulator"
+        ],
+        "sdk": [
+          "/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk"
+        ],
+        "module_name": [
+          "AI_HLYTests"
+        ],
+        "defines": [
+          "DEBUG",
+          "HANLIN_A2UI_POC",
+          "HANLIN_SKILL_ANALYSIS_POC",
+          "HANLIN_TESTING",
+          "_LIBCPP_HARDENING_MODE",
+          "DEBUG"
+        ],
+        "optimization": "-Onone",
+        "enable_testing": true
+      }
+    ],
+    "test_library_version": "2403",
+    "test_library_reported_target": "arm64-apple-ios17.0-simulator",
+    "test_library_target_qualification": "This is the Swift Testing library banner; app/unit compile target is separately recorded above as arm64-apple-ios27.0-simulator.",
+    "test_manifest_settings": {
+      "BlueprintName": "AI_HLYTests",
+      "CommandLineArguments": [],
+      "EnvironmentVariables": {
+        "APP_DISTRIBUTOR_ID_OVERRIDE": "com.apple.AppStore",
+        "DYLD_INSERT_LIBRARIES": "/usr/lib/libRPAC.dylib",
+        "IDE_CHOSEN_LOGGING_METHOD": "1",
+        "OS_ACTIVITY_DT_MODE": "YES",
+        "PERFC_ENABLE_EXTENDED_DIAGNOSTIC_FORMAT": "1",
+        "PERFC_ENABLE_PROFILE_MODE": "1",
+        "PERFC_RESET_INSERT_LIBRARIES": "1",
+        "PERFC_SUPPRESS_SYSTEM_REPORTS": "1",
+        "SQLITE_ENABLE_THREAD_ASSERTIONS": "1",
+        "TERM": "dumb"
+      },
+      "TestingEnvironmentVariables": {
+        "DYLD_FRAMEWORK_PATH": "__TESTROOT__/Debug-iphonesimulator:__TESTROOT__/Debug-iphonesimulator/PackageFrameworks:__PLATFORMS__/iPhoneSimulator.platform/Developer/Library/Frameworks",
+        "DYLD_INSERT_LIBRARIES": "__TESTHOST__/Frameworks/libXCTestBundleInject.dylib:/usr/lib/libRPAC.dylib",
+        "DYLD_LIBRARY_PATH": "__TESTROOT__/Debug-iphonesimulator:__PLATFORMS__/iPhoneSimulator.platform/Developer/usr/lib",
+        "PERFC_SUPPRESS_SYSTEM_REPORTS": "1",
+        "XCInjectBundleInto": "unused",
+        "XCODE_SCHEME_NAME": "AI_HLY",
+        "__XCODE_BUILT_PRODUCTS_DIR_PATHS": "__TESTROOT__/Debug-iphonesimulator",
+        "__XPC_DYLD_FRAMEWORK_PATH": "__TESTROOT__/Debug-iphonesimulator",
+        "__XPC_DYLD_LIBRARY_PATH": "__TESTROOT__/Debug-iphonesimulator"
+      },
+      "TestLanguage": "",
+      "TestRegion": "",
+      "ParallelizationEnabled": true,
+      "DefaultTestExecutionTimeAllowance": 600,
+      "TestTimeoutsEnabled": false,
+      "IsAppHostedTestBundle": true
+    },
+    "execution_flags": {
+      "parallel_testing_enabled": false,
+      "test_timeouts_enabled": true,
+      "maximum_test_execution_time_allowance_seconds": 300
+    },
+    "dependency_package_resolved_sha256": "28fb383e35bd875dd91b124ad02ca4210da7771c53daf4c6c6d28c1e2a55e529",
+    "dependency_pins": [
+      {
+        "identity": "a2ui",
+        "state": {
+          "revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079"
+        }
+      },
+      {
+        "identity": "bitbytedata",
+        "state": {
+          "revision": "e1a5443be67daf0833cbb5f4fa3a06a265ca3105",
+          "version": "2.1.0"
+        }
+      },
+      {
+        "identity": "corexlsx",
+        "state": {
+          "revision": "1391f3832ea2eeee5186ea8abb81ea49ed0609cc",
+          "version": "0.14.2"
+        }
+      },
+      {
+        "identity": "equatable",
+        "state": {
+          "revision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+          "version": "1.4.1"
+        }
+      },
+      {
+        "identity": "eventsource",
+        "state": {
+          "revision": "e83f076811f32757305b8bf69ac92d05626ffdd7",
+          "version": "1.1.0"
+        }
+      },
+      {
+        "identity": "hanlin-streaming-markdown",
+        "state": {
+          "revision": "5cbb4b6c950051f98f02a0b0ae56756f5174a9b8"
+        }
+      },
+      {
+        "identity": "highlightswift",
+        "state": {
+          "revision": "99c431b38a1444a5fd6a4978307fbbefe3a7af53"
+        }
+      },
+      {
+        "identity": "ios-spm",
+        "state": {
+          "revision": "a8e26efad02d792a62d2d015f0f7a632e336b2d1",
+          "version": "9.1.0"
+        }
+      },
+      {
+        "identity": "iosmath",
+        "state": {
+          "revision": "ba9ab7729b151329c54fd895a7c1859981d9484c"
+        }
+      },
+      {
+        "identity": "latexswiftui",
+        "state": {
+          "revision": "c45e0fd45f64923c49c5904a9f9626bc8939f05f",
+          "version": "1.5.0"
+        }
+      },
+      {
+        "identity": "llm.swift",
+        "state": {
+          "revision": "4b2517839f24498bea0695bae8967b359b9a35c4",
+          "version": "1.8.0"
+        }
+      },
+      {
+        "identity": "markdownui",
+        "state": {
+          "revision": "5f613358148239d0292c0cef674a3c2314737f9e",
+          "version": "2.4.1"
+        }
+      },
+      {
+        "identity": "mathjaxswift",
+        "state": {
+          "revision": "e23d6eab941da699ac4a60fb0e60f3ba5c937459",
+          "version": "3.4.0"
+        }
+      },
+      {
+        "identity": "networkimage",
+        "state": {
+          "revision": "2849f5323265386e200484b0d0f896e73c3411b9",
+          "version": "6.0.1"
+        }
+      },
+      {
+        "identity": "richtextkit",
+        "state": {
+          "revision": "8aa44cfa645404ad84e52e3ab7723ecf4b82f92b",
+          "version": "1.2.0"
+        }
+      },
+      {
+        "identity": "swcompression",
+        "state": {
+          "revision": "c729f0baa49e91bafef3921fea663db2b75acc46",
+          "version": "4.9.0"
+        }
+      },
+      {
+        "identity": "swift-ai-sdk",
+        "state": {
+          "revision": "e7bf34111e603ca977becd007dd4e5bb109af857"
+        }
+      },
+      {
+        "identity": "swift-argument-parser",
+        "state": {
+          "revision": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+          "version": "1.8.2"
+        }
+      },
+      {
+        "identity": "swift-atomics",
+        "state": {
+          "revision": "b601256eab081c0f92f059e12818ac1d4f178ff7",
+          "version": "1.3.0"
+        }
+      },
+      {
+        "identity": "swift-cmark",
+        "state": {
+          "revision": "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
+          "version": "0.9.0"
+        }
+      },
+      {
+        "identity": "swift-collections",
+        "state": {
+          "revision": "7b847a3b7008b2dc2f47ca3110d8c782fb2e5c7e",
+          "version": "1.3.0"
+        }
+      },
+      {
+        "identity": "swift-html-entities",
+        "state": {
+          "revision": "d8ca73197f59ce260c71bd6d7f6eb8bbdccf508b",
+          "version": "4.0.1"
+        }
+      },
+      {
+        "identity": "swift-json-schema",
+        "state": {
+          "revision": "c0a9375ea9cd3fd47d875c98ed7f027ea61c03cb",
+          "version": "0.13.2"
+        }
+      },
+      {
+        "identity": "swift-log",
+        "state": {
+          "revision": "96a2f8a0fa41e9e09af4585e2724c4e825410b91",
+          "version": "1.6.2"
+        }
+      },
+      {
+        "identity": "swift-markdown",
+        "state": {
+          "revision": "7d9a5ce307528578dfa777d505496bd5f544ad94",
+          "version": "0.7.3"
+        }
+      },
+      {
+        "identity": "swift-nio",
+        "state": {
+          "revision": "5e72fc102906ebe75a3487595a653e6f43725552",
+          "version": "2.94.0"
+        }
+      },
+      {
+        "identity": "swift-sdk",
+        "state": {
+          "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605",
+          "version": "0.12.1"
+        }
+      },
+      {
+        "identity": "swift-syntax",
+        "state": {
+          "revision": "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
+          "version": "603.0.2"
+        }
+      },
+      {
+        "identity": "swift-system",
+        "state": {
+          "revision": "c8a44d836fe7913603e246acab7c528c2e780168",
+          "version": "1.4.0"
+        }
+      },
+      {
+        "identity": "swift-tree-sitter",
+        "state": {
+          "revision": "08ef81eb8620617b55b08868126707ad72bf754f"
+        }
+      },
+      {
+        "identity": "swiftdraw",
+        "state": {
+          "revision": "2a36e6ce369cbecdd031ee95f5b5b3faa69ef50f",
+          "version": "0.21.0"
+        }
+      },
+      {
+        "identity": "swiftsoup",
+        "state": {
+          "revision": "bba848db50462894e7fc0891d018dfecad4ef11e",
+          "version": "2.8.7"
+        }
+      },
+      {
+        "identity": "swiftui-shimmer",
+        "state": {
+          "revision": "0226e21f9bf355d40e07e5f5e1c33679d50e167f",
+          "version": "1.5.1"
+        }
+      },
+      {
+        "identity": "swiftyjson",
+        "state": {
+          "revision": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+          "version": "5.0.1"
+        }
+      },
+      {
+        "identity": "tree-sitter",
+        "state": {
+          "revision": "da6fe9beb4f7f67beb75914ca8e0d48ae48d6406"
+        }
+      },
+      {
+        "identity": "tree-sitter-bash",
+        "state": {
+          "revision": "a06c2e4415e9bc0346c6b86d401879ffb44058f7"
+        }
+      },
+      {
+        "identity": "xmlcoder",
+        "state": {
+          "revision": "ca932442d7481700f5434a7b138c47dd42d9902b",
+          "version": "0.14.0"
+        }
+      },
+      {
+        "identity": "yams",
+        "state": {
+          "revision": "a27b21e0c81c5bf42049b897a62aaf387e80f279",
+          "version": "6.2.2"
+        }
+      },
+      {
+        "identity": "zipfoundation",
+        "state": {
+          "revision": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
+          "version": "0.9.19"
+        }
+      }
+    ],
+    "runtime_native_artifact_and_host_closure": "2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+    "runtime_versions": {
+      "node": "24.5.0",
+      "python": "3.14.6"
+    },
+    "runtime_evidence": "02-prepare-runtime-core.log validates the artifact/Host closure. Frozen producer 42926628418 is parent release configuration; no new producer claim is derived here."
+  },
+  "finalization_requirements": [
+    {
+      "check": "Compare current authenticated native receipt source SHA with target SHA and final source tree. Any later code change requires review from this evidence source again.",
+      "where": "Latest 06-current-unit-xctestrun.json / 08-current-unit-xctestrun-admission.json / 06-diagnostics-build-provenance.json."
+    },
+    {
+      "check": "Match Xcode 27.2 build 27B52, Swift 6 compiler mode, Debug/testability/defines/optimization, iOS Simulator SDK 27.2 and arm64 app/unit compile target. If changed, source equivalence alone cannot authorize reuse.",
+      "where": "Latest 01-environment.log and 06-xcodebuild-simulator.log compile commands; current receipt context."
+    },
+    {
+      "check": "Match simulator OS 27.2 build 24B8117 and iPad Pro 13-inch (M5) device class, architecture and relevant locale/input environment. Run-owned UUID/device name must change legitimately and are not semantic equality requirements.",
+      "where": "Latest verified-simulator-environment.json and result devices; latest xctestrun language/region/environment settings."
+    },
+    {
+      "check": "Match Package.resolved and resolved dependency revisions, frozen Runtime native artifact/Host closure, relevant generated build inputs, entitlements and compiler/link settings. Source-specific provenance/run/selector digests can differ; inspect differences rather than suppressing them.",
+      "where": "Latest 06-diagnostics-build-provenance.json, 02-prepare-runtime-core.log, xctestrun seal/admission, build command and unchanged tracked build recipe."
+    },
+    {
+      "check": "Only after equivalent environment/runtime inputs are verified, label these 55 functions / 59 invocations REUSED_VERIFIED_PASS with original run and source; never EXECUTED_PASS at target.",
+      "where": "Final acceptance evidence manifest, linked to this JSON and original raw results."
+    },
+    {
+      "check": "Two missing ProductionSystemSkills methods and all affected/failed/unknown native UI selectors still need authentic fresh passes. Their result cannot be inferred from these five suites.",
+      "where": "Latest 08-downstream-unit-test-results.json / 08-nativescript-production-ui-test-results.json plus existing completeness verifier."
+    }
+  ],
+  "excluded_from_reuse": {
+    "not_executed_in_baseline": [
+      "AI_HLYTests/ProductionSystemSkillsTests/weatherSkillResolvesCoordinatesBeforeQuerying()",
+      "AI_HLYTests/ProductionSystemSkillsTests/weatherSkillRespectsDisabledMaps()"
+    ],
+    "failed_in_baseline": [
+      "AI_HLYUITests/AgentRuntimeConversationUITests/testOriginalChatActivitySurvivesKeyboardRotationAndConversationReattachment",
+      "AI_HLYUITests/AgentRuntimeConversationUITests/testNativePartialSelectionSaveAndOriginalLongPressPreview",
+      "AI_HLYUITests/AgentRuntimeConversationUITests/testUI03SearchMessageAndDeduplicatedCitations"
+    ],
+    "unknown_hebrew_ui": "AI_HLYUITests/AgentRuntimeConversationUITests/testUI03HebrewRTLSearchMessageAndDeduplicatedCitations",
+    "physical_device_acceptance": "NOT_RUN"
+  },
+  "review_actions": {
+    "code_edits": false,
+    "test_execution": false,
+    "ci_dispatch": false,
+    "ci_polling": false,
+    "written_file": "/workspace/scratch/2453c7f51f3d/native-reuse-139c-to-951c.json"
+  }
+}

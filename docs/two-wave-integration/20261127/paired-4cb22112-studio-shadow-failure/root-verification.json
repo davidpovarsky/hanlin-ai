@@ -1,0 +1,16 @@
+{
+  "reviewer": "/root",
+  "verifiedAt": "2026-11-27T03:35:26.548647+00:00",
+  "archiveSHA256": "ec17e3197a9cced46300dc31ea7b5ae6f275d4bc03a8bb3d0518f278e4778dfd",
+  "manifestSHA256": "1ba100f368326e7cfdff759d5e88303d19c12e7a4969c3fcfa69607bd6e7ab8d",
+  "verifiedOriginalFiles": 34,
+  "allSizesAndSHA256Match": true,
+  "extraOrMissingFiles": [],
+  "status": "BUILD_FAILED_TESTS_NOT_RUN",
+  "exitCode": 65,
+  "minimalFix": "f051d1bebbfcfb470d036a96cd5b1fcf228a4d1f",
+  "oldSourceSHA256": "1951bbf6033476518a48cf7298a30bb93ee5d8cfd6af7a5b603146448250ed39",
+  "newSourceSHA256": "ee4df962e7f05b3cf402ae366c50582f70342133b783d625f4d6cc0766d786ea",
+  "fixIndependentReviewer": "/root/w1_review_resume",
+  "fixNativeAcceptance": "PENDING"
+}

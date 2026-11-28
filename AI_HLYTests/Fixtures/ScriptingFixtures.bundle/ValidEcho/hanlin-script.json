@@ -1,0 +1,249 @@
+{
+  "descriptorRevision": 1,
+  "displayName": {
+    "fallbackLocale": "en",
+    "values": {
+      "en": "Hanlin Script Echo Fixture"
+    }
+  },
+  "entrypoint": {
+    "compiledIntegrity": {
+      "algorithm": "sha256",
+      "digest": "358693a21ddd782326cfab9d8e4b0f4492019e58dece483e7b51c91112b73465"
+    },
+    "compiledPath": "assistant_tool.js",
+    "compilerConfigurationHash": "ea250be3f93de1703163734fe2d0e31c9cc7b599aa09fce203d3ff8bdfbfcbea",
+    "compilerLane": "scripting-original",
+    "compilerProvenance": {
+      "bundlerConfigurationHash": "ea250be3f93de1703163734fe2d0e31c9cc7b599aa09fce203d3ff8bdfbfcbea",
+      "bundlerVersion": "hanlin-fixture-bundler-1.0.0",
+      "emitterConfigurationHash": "ea250be3f93de1703163734fe2d0e31c9cc7b599aa09fce203d3ff8bdfbfcbea",
+      "emitterVersion": "7.0.2",
+      "runtimeEngineVersion": "Apple",
+      "typecheckCompilerVersion": "7.0.2",
+      "typecheckConfigurationHash": "ea250be3f93de1703163734fe2d0e31c9cc7b599aa09fce203d3ff8bdfbfcbea"
+    },
+    "compilerVersion": "7.0.2",
+    "documentKind": "assistantTool",
+    "exportedTools": [
+      {
+        "id": "echo",
+        "inputSchema": {
+          "dialect": "https://json-schema.org/draft/2020-12/schema",
+          "findings": [],
+          "root": {
+            "type": "object",
+            "value": [
+              {
+                "key": "$schema",
+                "value": {
+                  "type": "string",
+                  "value": "https://json-schema.org/draft/2020-12/schema"
+                }
+              },
+              {
+                "key": "additionalProperties",
+                "value": {
+                  "type": "bool",
+                  "value": false
+                }
+              },
+              {
+                "key": "properties",
+                "value": {
+                  "type": "object",
+                  "value": [
+                    {
+                      "key": "text",
+                      "value": {
+                        "type": "object",
+                        "value": [
+                          {
+                            "key": "maxLength",
+                            "value": {
+                              "type": "integer",
+                              "value": "1024"
+                            }
+                          },
+                          {
+                            "key": "minLength",
+                            "value": {
+                              "type": "integer",
+                              "value": "1"
+                            }
+                          },
+                          {
+                            "key": "type",
+                            "value": {
+                              "type": "string",
+                              "value": "string"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "required",
+                "value": {
+                  "type": "array",
+                  "value": [
+                    {
+                      "type": "string",
+                      "value": "text"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "type",
+                "value": {
+                  "type": "string",
+                  "value": "object"
+                }
+              }
+            ]
+          }
+        },
+        "outputSchema": {
+          "dialect": "https://json-schema.org/draft/2020-12/schema",
+          "findings": [],
+          "root": {
+            "type": "object",
+            "value": [
+              {
+                "key": "$schema",
+                "value": {
+                  "type": "string",
+                  "value": "https://json-schema.org/draft/2020-12/schema"
+                }
+              },
+              {
+                "key": "additionalProperties",
+                "value": {
+                  "type": "bool",
+                  "value": false
+                }
+              },
+              {
+                "key": "properties",
+                "value": {
+                  "type": "object",
+                  "value": [
+                    {
+                      "key": "message",
+                      "value": {
+                        "type": "object",
+                        "value": [
+                          {
+                            "key": "type",
+                            "value": {
+                              "type": "string",
+                              "value": "string"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "key": "success",
+                      "value": {
+                        "type": "object",
+                        "value": [
+                          {
+                            "key": "type",
+                            "value": {
+                              "type": "string",
+                              "value": "boolean"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "required",
+                "value": {
+                  "type": "array",
+                  "value": [
+                    {
+                      "type": "string",
+                      "value": "success"
+                    },
+                    {
+                      "type": "string",
+                      "value": "message"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "type",
+                "value": {
+                  "type": "string",
+                  "value": "object"
+                }
+              }
+            ]
+          }
+        },
+        "requiredCapabilities": [],
+        "requiresApproval": false,
+        "risk": "passive",
+        "summary": {
+          "fallbackLocale": "en",
+          "values": {
+            "en": "Returns a deterministic message from the isolated Script runtime."
+          }
+        },
+        "title": {
+          "fallbackLocale": "en",
+          "values": {
+            "en": "Script Echo"
+          }
+        }
+      }
+    ],
+    "sourceIntegrity": {
+      "algorithm": "sha256",
+      "digest": "13769047e962847dd557f4613c60c6406eba19e51f3d041cc4b2e8ef9f8cf945"
+    },
+    "sourcePath": "assistant_tool.ts"
+  },
+  "integrity": {
+    "algorithm": "sha256",
+    "digest": "b54855365db02adc42e34400d808c6435775800e018a4994effa7110c15542f0"
+  },
+  "packageID": "com.hanlin.fixture.echo",
+  "runtime": {
+    "abiVersion": "1.0",
+    "cancellation": {
+      "deadlineEnforcement": false,
+      "interruptibleExecution": false
+    },
+    "capabilities": {
+      "asyncHostCalls": true,
+      "extensionSafe": true,
+      "filesystem": "capabilityBroker",
+      "hardInterruption": false,
+      "hardMemoryLimit": false,
+      "hardStackLimit": false,
+      "modules": true,
+      "network": "capabilityBroker",
+      "persistentContext": true,
+      "scriptUI": true,
+      "trustedCodeOnly": false
+    },
+    "engine": "JavaScriptCore",
+    "engineVersion": "Apple",
+    "kind": "javaScriptCore",
+    "minimumTrust": "localUnverified",
+    "profile": "scripting-jsc"
+  },
+  "schemaVersion": "1.0",
+  "version": "1.0.0"
+}

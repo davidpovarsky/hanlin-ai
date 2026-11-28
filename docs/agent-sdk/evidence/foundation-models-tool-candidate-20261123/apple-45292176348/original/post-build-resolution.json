@@ -1,0 +1,94 @@
+[
+  {
+    "source_path": "/Users/runner/work/_temp/hanlin-stop-continuation.egblddke/Packages/HanlinAgentSDK/Package.resolved",
+    "raw_file": "raw-locks/00-Package.resolved",
+    "sha256": "ecddc1432961f62d5f8f883e2884fffb6dad193f41867324d9124223c0e44f72",
+    "resolved": {
+      "originHash": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8",
+      "pins": [
+        {
+          "identity": "swift-ai-sdk",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/davidpovarsky/swift-ai-sdk.git",
+          "state": {
+            "revision": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8"
+          }
+        },
+        {
+          "identity": "swift-argument-parser",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-argument-parser",
+          "state": {
+            "revision": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+            "version": "1.8.2"
+          }
+        },
+        {
+          "identity": "swiftyjson",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/SwiftyJSON/SwiftyJSON.git",
+          "state": {
+            "revision": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+            "version": "5.0.1"
+          }
+        },
+        {
+          "identity": "zipfoundation",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/weichsel/ZIPFoundation.git",
+          "state": {
+            "revision": "e7048f0569f0ba37df26f8357f560b9d25e9a284",
+            "version": "0.9.21"
+          }
+        }
+      ],
+      "version": 3
+    }
+  },
+  {
+    "source_path": "/Users/runner/work/_temp/hanlin-stop-continuation.egblddke/Packages/HanlinPlatform/Package.resolved",
+    "raw_file": "raw-locks/01-Package.resolved",
+    "sha256": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
+    "resolved": {
+      "originHash": "3f8cbcbad6b07b509a7976fe0577315481f25358ce34a01e505f2d1b04821066",
+      "pins": [
+        {
+          "identity": "swift-ai-sdk",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/davidpovarsky/swift-ai-sdk.git",
+          "state": {
+            "revision": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8"
+          }
+        },
+        {
+          "identity": "swift-argument-parser",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-argument-parser",
+          "state": {
+            "revision": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+            "version": "1.8.2"
+          }
+        },
+        {
+          "identity": "swiftyjson",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/SwiftyJSON/SwiftyJSON.git",
+          "state": {
+            "revision": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+            "version": "5.0.1"
+          }
+        },
+        {
+          "identity": "zipfoundation",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/weichsel/ZIPFoundation.git",
+          "state": {
+            "revision": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
+            "version": "0.9.19"
+          }
+        }
+      ],
+      "version": 3
+    }
+  }
+]

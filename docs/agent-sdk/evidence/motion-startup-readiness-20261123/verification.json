@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "status": "PORTABLE_CONTROLS_PASS",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.CI.Tests.test_motion_simulator_boot",
+    "-v"
+  ],
+  "exit_code": 0,
+  "tests": 16,
+  "elapsed_seconds": 0.8323864191770554,
+  "bounds": {
+    "native_boot_command_seconds": 15,
+    "native_bootstatus_startup_seconds": 300,
+    "owned_shutdown_seconds": 20,
+    "owned_recovery_cycles": 1,
+    "read_only_observations_seconds": 15,
+    "read_only_process_snapshot_seconds": 5,
+    "read_only_simctl_path_lookup_seconds": 5
+  },
+  "unchanged_native_product_inputs": [
+    {
+      "path": "docs/chat-motion/MotionUI/App.swift",
+      "sha256": "7323a83f5ed539b25d12f944a7bd256faba63c2d5806168d0def42e829454b25",
+      "unchanged": true
+    },
+    {
+      "path": "docs/chat-motion/MotionUI/MotionUITests.swift",
+      "sha256": "ed053de2cf5013ef001fc198f4d730f7d8d7bf9d55991e784dbc454b90c46724",
+      "unchanged": true
+    },
+    {
+      "path": "docs/chat-motion/run_motion_ui.sh",
+      "sha256": "0c1b71a5db380c1e14e3210be62a004ff4a993ea913702a03407b6b482b643c7",
+      "unchanged": true
+    },
+    {
+      "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "sha256": "199726123e0311e43447fd2577a811b520eef5a285e753e7e3c2b922a66040d8",
+      "unchanged": true
+    },
+    {
+      "path": "Scripts/CI/owned_simulator_receipts.py",
+      "sha256": "878dba3d6890b6c701cebe8183efdeb4265f86e19818054d6e305eb8a84ebf6a",
+      "unchanged": true
+    },
+    {
+      "path": "Scripts/CI/select_installed_simulator.py",
+      "sha256": "869a0d4922337cdd4fed651b904868cb78c60388f86e07171f247feb56885da8",
+      "unchanged": true
+    },
+    {
+      "path": "Scripts/CI/select_stable_xcode.py",
+      "sha256": "531237772eeeb10888359064302a5980f42ad47cad135e5bb0b544afe289f05f",
+      "unchanged": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift",
+      "sha256": "d8ff25aa0ba06895108f09edf00709db04efe4f7467d1b8302adf1bae1785577",
+      "unchanged": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionPreferences.swift",
+      "sha256": "709f948ac85ac042d15fb8c258383f1bbb06f5336c0904dc170e04b46f143791",
+      "unchanged": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatShimmerEffect.swift",
+      "sha256": "40af700d48af8c3229db379cbc9add813484f7d465889523c0acc0a70b552f6a",
+      "unchanged": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+      "sha256": "91d60f960fd1ca1dea34b1ce34a6a5e99b4e60c2a030be78ac9f996a2533d084",
+      "unchanged": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinOriginalActivityControls.swift",
+      "sha256": "1a88b02132e48ba6fece0e9227943951e1c0b6a379abda5591e4537241833e71",
+      "unchanged": true
+    }
+  ],
+  "native_compilation": "NOT_RUN",
+  "native_B_C_A": "NOT_RUN",
+  "readiness_after_fix": "NOT_RUN",
+  "limits": "Portable controls verify bounds, immutable ownership, native result gating, real partial timeout-output retention, diagnostic filtering and absent-tool behavior. They do not establish Apple readiness or product acceptance.",
+  "unchanged_admission_functions": [
+    {
+      "function": "native_command",
+      "byte_identical": true,
+      "sha256": "1b252388635f8504edcc73a41433e1aa0bb46e22b596b5e4e733671bb9f65478"
+    },
+    {
+      "function": "ensure_ready",
+      "byte_identical": true,
+      "sha256": "d94c1d034b36cfa3d1cf7429673d1f5cc5400a45e200e392226af3fdf90173eb"
+    }
+  ],
+  "source_inputs": [
+    {
+      "path": "Scripts/CI/boot_motion_simulator.py",
+      "sha256": "35ab94e861e7e067859616e6046bdea6d2794299b6786a0274972c7fbac6175b"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_motion_simulator_boot.py",
+      "sha256": "f52d9faa8a50b3d569c406f204c1ad638105853380971d427fa9037a291b381b"
+    }
+  ]
+}

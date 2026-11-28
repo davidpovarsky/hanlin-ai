@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-11-28T04:09:48.207130+00:00",
+  "base": "c9908a25ebeda3562170f16d2cf852ec4fd788b1",
+  "candidatePaths": [
+    "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+    "AI_HLY/Downstream/ChatCore/HanlinAppConversationStore.swift",
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift"
+  ],
+  "sdk396Manifest": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/final-sdk-700664fd-pass/admission/current-sdk-fingerprint.json",
+    "sha256": "d576ef3b78fa276dd87579bca9b05dca2fae221bbfc9d63644630883e39768ff",
+    "fingerprint": "c4463f0f702e5b070f1e0236c452f90e5e31e8a2fa6a1978e72b9ad55caaf307"
+  },
+  "all396BaseGitInputsMatchAccepted": true,
+  "candidateSDKDirectIntersection": [],
+  "all99HostTestGitInputsMatchAccepted": true,
+  "candidateHost99Intersection": [],
+  "auditDocumentReferencesToChangedPaths": [],
+  "baseTrees": {
+    "Packages/HanlinPlatform": "4861e402c7be59a8d9454d9d320c5e5c96f3389c",
+    "Packages/HanlinAgentSDK": "40d655a4afe6469ca00c44675725fad2dcd53202",
+    "Fixtures/Widgets": "a0b7b0b1cb9e1ce756ccff40593a325ffffa73d6"
+  },
+  "actual619PlatformTree": "4861e402c7be59a8d9454d9d320c5e5c96f3389c",
+  "PlatformTreeStillExact619": true,
+  "authorities": {
+    "Packages/HanlinPlatform/Package.swift": {
+      "bytes": 10823,
+      "sha256": "78d7081d0e197c3e99746e5b3e476b41280fc5b32110035fab31a3e949cb4dab",
+      "retained": "Platform-Package.swift"
+    },
+    "Packages/HanlinAgentSDK/Package.swift": {
+      "bytes": 3056,
+      "sha256": "16becff5f9e626f171d21f0277684c249c773f3169334fc9a63a37876c44a36e",
+      "retained": "AgentSDK-Package.swift"
+    },
+    "Scripts/SDK/update_project.py": {
+      "bytes": 37103,
+      "sha256": "12c2fbd6d91788680404656b639e1475596eee7254dac7551431306fb46ba378",
+      "retained": "update_project.py"
+    },
+    "docs/miniapp-sdk/source-inventory.json": {
+      "bytes": 569739,
+      "sha256": "faa5ce452b45e21d9a2a7cd188f17cb286c47ab8f128bc72cec3249a7b93d14d"
+    },
+    "docs/miniapp-sdk/extension-reachability.json": {
+      "bytes": 213462,
+      "sha256": "478f28ffaf3afce7a90e7e05a9ddf564b733b69582cabcba3d73944124f5d98f"
+    }
+  },
+  "nativeCommandsRun": 0,
+  "revision": "R2"
+}

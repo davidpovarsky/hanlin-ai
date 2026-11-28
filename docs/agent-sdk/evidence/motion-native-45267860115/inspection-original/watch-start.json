@@ -1,0 +1,11 @@
+{
+  "time": "2026-11-23T21:46:11.134043+00:00",
+  "run": 45272858701,
+  "source_run": 45267860115,
+  "source": "35bfa9509ed4660d2c189b1935ed7725d0bae9f2",
+  "owner": "/root/motion_acceptance",
+  "maximum_watch_seconds": 1200,
+  "interval_seconds": 60,
+  "native_job_minutes": 10,
+  "scope": "Read-only original xcresult export; no simulator/build/test"
+}

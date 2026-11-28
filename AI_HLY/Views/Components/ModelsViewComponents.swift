@@ -1,3 +1,5 @@
+import HanlinLocalization
+import HanlinChatCore
 //
 //  ModelsViewComponents.swift
 //  AI_HLY
@@ -47,18 +49,18 @@ struct AddOnlineModelView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("基本信息")) {
-                    TextField("系统名称（用于API请求，参考官方API）", text: $name)
-                    TextField("显示名称（自定义）", text: $displayName)
+                Section(header: Text(String(localized: "基本信息", bundle: HanlinLocalization.bundle))) {
+                    TextField(String(localized: "系统名称（用于API请求，参考官方API）", bundle: HanlinLocalization.bundle), text: $name)
+                    TextField(String(localized: "显示名称（自定义）", bundle: HanlinLocalization.bundle), text: $displayName)
                     
                     HStack(spacing: 10) {
                         Image(systemName: "building.2")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 20, height: 20)
-                            .foregroundColor(.hlBluefont)
+                            .foregroundColor(.hanlinHLBluefont)
 
-                        Picker("模型厂商", selection: $selectedCompany) {
+                        Picker(String(localized: "模型厂商", bundle: HanlinLocalization.bundle), selection: $selectedCompany) {
                             ForEach(apiKeys, id: \.company) { apiKey in
                                 Text(getCompanyName(for: apiKey))
                                     .tag(apiKey.company ?? "Unknown")
@@ -68,31 +70,31 @@ struct AddOnlineModelView: View {
                     }
                 }
                 
-                Section(header: Text("价格")) {
+                Section(header: Text(String(localized: "价格", bundle: HanlinLocalization.bundle))) {
                     HStack(spacing: 10) {
                         Image(systemName: "yensign")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 20, height: 20)
-                            .foregroundColor(.hlBluefont)
-                        Picker("价格", selection: $price) {
-                            Text("免费").tag(Int16(0))
-                            Text("廉价 (≤0.001/千tokens)").tag(Int16(1))
-                            Text("适中 (0.001-0.006/千tokens)").tag(Int16(2))
-                            Text("昂贵 (≥0.006/千tokens)").tag(Int16(3))
+                            .foregroundColor(.hanlinHLBluefont)
+                        Picker(String(localized: "价格", bundle: HanlinLocalization.bundle), selection: $price) {
+                            Text(String(localized: "免费", bundle: HanlinLocalization.bundle)).tag(Int16(0))
+                            Text(String(localized: "廉价 (≤0.001/千tokens)", bundle: HanlinLocalization.bundle)).tag(Int16(1))
+                            Text(String(localized: "适中 (0.001-0.006/千tokens)", bundle: HanlinLocalization.bundle)).tag(Int16(2))
+                            Text(String(localized: "昂贵 (≥0.006/千tokens)", bundle: HanlinLocalization.bundle)).tag(Int16(3))
                         }
                         .pickerStyle(.menu)
                     }
                 }
                 
-                Section(header: Text("功能支持")) {
+                Section(header: Text(String(localized: "功能支持", bundle: HanlinLocalization.bundle))) {
                     HStack(spacing: 10) {
                         Image(systemName: "eye.slash")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 20, height: 20)
-                            .foregroundColor(.hlBluefont)
-                        Toggle("默认隐藏模型", isOn: $isHidden)
+                            .foregroundColor(.hanlinHLBluefont)
+                        Toggle(String(localized: "默认隐藏模型", bundle: HanlinLocalization.bundle), isOn: $isHidden)
                     }
                     
                     // 自动模型能力探测按钮
@@ -106,22 +108,22 @@ struct AddOnlineModelView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 20, height: 20)
-                            Text("自动模型能力探测")
+                            Text(String(localized: "自动模型能力探测", bundle: HanlinLocalization.bundle))
                             Spacer()
                             if isProbing {
                                 ProgressView()
                                     .scaleEffect(0.8)
                             } else {
                                 Image(systemName: "chevron.right")
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                                     .foregroundColor(.secondary)
                             }
                         }
                     }
                     .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || selectedCompany.isEmpty || isProbing)
                     
-                    Text("注意：自动模型能力探测中可能有一定的API费用消耗")
-                        .font(.caption)
+                    Text(String(localized: "注意：自动模型能力探测中可能有一定的API费用消耗", bundle: HanlinLocalization.bundle))
+                        .font(HanlinTypography.caption)
                         .foregroundColor(.secondary)
                     
                     HStack(spacing: 10) {
@@ -129,67 +131,67 @@ struct AddOnlineModelView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: 20, height: 20)
-                            .foregroundColor(.hlBluefont)
-                        Toggle("支持文本生成", isOn: $supportsTextGen)
+                            .foregroundColor(.hanlinHLBluefont)
+                        Toggle(String(localized: "支持文本生成", bundle: HanlinLocalization.bundle), isOn: $supportsTextGen)
                     }
                     HStack(spacing: 10) {
                         Image(systemName: "photo.on.rectangle.angled")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 20, height: 20)
-                            .foregroundColor(.hlBluefont)
-                        Toggle("支持视觉理解", isOn: $supportsMultimodal)
+                            .foregroundColor(.hanlinHLBluefont)
+                        Toggle(String(localized: "支持视觉理解", bundle: HanlinLocalization.bundle), isOn: $supportsMultimodal)
                     }
                     HStack(spacing: 10) {
                         Image(systemName: "atom")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 20, height: 20)
-                            .foregroundColor(.hlBluefont)
-                        Toggle("支持深度思考", isOn: $supportsReasoning)
+                            .foregroundColor(.hanlinHLBluefont)
+                        Toggle(String(localized: "支持深度思考", bundle: HanlinLocalization.bundle), isOn: $supportsReasoning)
                     }
                     HStack(spacing: 10) {
                         Image(systemName: "lightbulb")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 20, height: 20)
-                            .foregroundColor(.hlBluefont)
-                        Toggle("思考模式可控", isOn: $supportsReasoningChange)
+                            .foregroundColor(.hanlinHLBluefont)
+                        Toggle(String(localized: "思考模式可控", bundle: HanlinLocalization.bundle), isOn: $supportsReasoningChange)
                     }
                     HStack(spacing: 10) {
                         Image(systemName: "hammer")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 20, height: 20)
-                            .foregroundColor(.hlBluefont)
-                        Toggle("支持工具使用", isOn: $supportsToolUse)
+                            .foregroundColor(.hanlinHLBluefont)
+                        Toggle(String(localized: "支持工具使用", bundle: HanlinLocalization.bundle), isOn: $supportsToolUse)
                     }
                     HStack(spacing: 10) {
                         Image(systemName: "camera.aperture")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 20, height: 20)
-                            .foregroundColor(.hlBluefont)
-                        Toggle("图像生成模型", isOn: $supportsImageGen)
+                            .foregroundColor(.hanlinHLBluefont)
+                        Toggle(String(localized: "图像生成模型", bundle: HanlinLocalization.bundle), isOn: $supportsImageGen)
                     }
                 }
-                .tint(.hlBlue)
+                .tint(.hanlinHLBlue)
             }
-            .navigationTitle("添加在线模型")
+            .navigationTitle(String(localized: "添加在线模型", bundle: HanlinLocalization.bundle))
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("取消") {
+                    Button(String(localized: "取消", bundle: HanlinLocalization.bundle)) {
                         isPresented = false
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("保存") {
+                    Button(String(localized: "保存", bundle: HanlinLocalization.bundle)) {
                         saveModel()
                     }
                 }
             }
-            .alert("错误", isPresented: $showAlert) {
-                Button("确定", role: .cancel) {}
+            .alert(String(localized: "错误", bundle: HanlinLocalization.bundle), isPresented: $showAlert) {
+                Button(String(localized: "确定", bundle: HanlinLocalization.bundle), role: .cancel) {}
             } message: {
                 Text(alertMessage)
             }
@@ -281,10 +283,10 @@ struct AddOnlineModelView: View {
             return
         }
 
-        // 无论是否重复，都自动添加 _repeat_UUID 以确保唯一性
+        // Keep the routing identifier unique; the display name is the user's label.
         let uniqueUUID = UUID().uuidString
         let trimmedName = baseName + "_repeat_\(uniqueUUID)"
-        let trimmedDisplayName = baseDisplayName + "_repeat_\(uniqueUUID)"
+        let trimmedDisplayName = baseDisplayName
         
         // 设置厂商信息
         let finalCompany: String = {
@@ -412,38 +414,38 @@ struct LocalModelDownloadView: View {
                 Section {
                     VStack(alignment: .center) {
                         Image(systemName: "externaldrive")
-                            .font(.largeTitle)
+                            .font(HanlinTypography.largeTitle)
                             .fontWeight(.bold)
-                            .foregroundColor(.hlBluefont)
+                            .foregroundColor(.hanlinHLBluefont)
                             .padding()
                         
-                        Text("本地模型还属于测试阶段，暂不支持视觉功能等，输出也可能存在问题，将在后期修复优化。如果下载后需要删除，可以直接在模型列表进行删除，本地文件会随之一起删除。模型文件来自于魔塔社区或HuggingFace，本软件对模型输出结果不负有任何责任。请结合自己的设备性能合理下载，若超出设备承受能力，可能会出现闪退、卡死等现象。")
-                            .font(.footnote)
+                        Text(String(localized: "本地模型还属于测试阶段，暂不支持视觉功能等，输出也可能存在问题，将在后期修复优化。如果下载后需要删除，可以直接在模型列表进行删除，本地文件会随之一起删除。模型文件来自于魔塔社区或HuggingFace，本软件对模型输出结果不负有任何责任。请结合自己的设备性能合理下载，若超出设备承受能力，可能会出现闪退、卡死等现象。", bundle: HanlinLocalization.bundle))
+                            .font(HanlinTypography.footnote)
                             .multilineTextAlignment(.center)
                             .padding(.bottom)
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
                 
-                Section(header: Text("快速下载本地模型")) {
-                    Picker("下载源", selection: $selectedSource) {
+                Section(header: Text(String(localized: "快速下载本地模型", bundle: HanlinLocalization.bundle))) {
+                    Picker(String(localized: "下载源", bundle: HanlinLocalization.bundle), selection: $selectedSource) {
                         ForEach(DownloadSource.allCases, id: \.self) { source in
                             Text(source.rawValue)
                         }
                     }
                     ForEach(availableModels, id: \.name) { model in
                         HStack {
-                            Image(model.icon)
+                            Image(hanlinAsset: model.icon)
                                 .resizable()
                                 .frame(width: 40, height: 40)
                             
                             VStack(alignment: .leading) {
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     Text(model.displayName)
-                                        .font(.headline)
+                                        .font(HanlinTypography.headline)
                                 }
                                 Text(model.space)
-                                    .font(.caption)
+                                    .font(HanlinTypography.caption)
                             }
                             
                             Spacer()
@@ -464,13 +466,13 @@ struct LocalModelDownloadView: View {
                     }
                 }
                 
-                Section(header: Text("上传 GGUF 文件以使用本地模型")){
+                Section(header: Text(String(localized: "上传 GGUF 文件以使用本地模型", bundle: HanlinLocalization.bundle))){
                     Button(action: {
                         isShowingFileImporter = true
                     }) {
                         HStack {
                             Image(systemName: "externaldrive.badge.plus")
-                            Text("上传本地模型文件(.gguf)")
+                            Text(String(localized: "上传本地模型文件(.gguf)", bundle: HanlinLocalization.bundle))
                         }
                     }
                     .fileImporter(
@@ -538,15 +540,15 @@ struct LocalModelDownloadView: View {
                             }
                         })
                         .alert(isPresented: $showConflictAlert) {
-                            Alert(title: Text("名称冲突"),
-                                  message: Text("模型名称已存在，请修改名称后重试。"),
-                                  dismissButton: .default(Text("确定")))
+                            Alert(title: Text(String(localized: "名称冲突", bundle: HanlinLocalization.bundle)),
+                                  message: Text(String(localized: "模型名称已存在，请修改名称后重试。", bundle: HanlinLocalization.bundle)),
+                                  dismissButton: .default(Text(String(localized: "确定", bundle: HanlinLocalization.bundle))))
                         }
                     }
                 }
                 
             }
-            .navigationTitle("本地模型(Beta)")
+            .navigationTitle(String(localized: "本地模型(Beta)", bundle: HanlinLocalization.bundle))
             .onReceive(NotificationCenter.default.publisher(for: .downloadCompleted)) { notification in
                 if let modelName = notification.object as? String {
                     saveModelToDatabase(name: modelName)
@@ -606,12 +608,12 @@ struct RenameModelView: View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 20) {
                 
-                Text("请输入模型名称")
-                    .font(.system(size: 20, weight: .semibold))
+                Text(String(localized: "请输入模型名称", bundle: HanlinLocalization.bundle))
+                    .font(HanlinTypography.fixed(size: 20, weight: .semibold))
                     .foregroundColor(.primary)
                     .padding(.horizontal)
                 
-                TextField("模型名称", text: $newModelName)
+                TextField(String(localized: "模型名称", bundle: HanlinLocalization.bundle), text: $newModelName)
                     .padding()
                     .background(Color(.systemGray6))
                     .cornerRadius(10)
@@ -619,33 +621,33 @@ struct RenameModelView: View {
                 
                 HStack(spacing: 20) {
                     Button(action: onCancel) {
-                        Text("取消")
-                            .foregroundColor(.hlBlue)
+                        Text(String(localized: "取消", bundle: HanlinLocalization.bundle))
+                            .foregroundColor(.hanlinHLBlue)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 10)
-                            .background(Color.hlBlue.opacity(0.2))
+                            .background(Color.hanlinHLBlue.opacity(0.2))
                             .cornerRadius(20)
                     }
                     .buttonStyle(.plain)
                     
                     Button(action: onConfirm) {
-                        Text("确定")
+                        Text(String(localized: "确定", bundle: HanlinLocalization.bundle))
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 10)
-                            .background(Color.hlBlue)
+                            .background(Color.hanlinHLBlue)
                             .cornerRadius(20)
                     }
                     .buttonStyle(.plain)
                 }
                 .padding(.horizontal)
                 
-                Text("由于需要拷贝模型文件，上传后根据上传的模型大小，等待一段时间后才会在数据库中看见上传的本地模型。")
+                Text(String(localized: "由于需要拷贝模型文件，上传后根据上传的模型大小，等待一段时间后才会在数据库中看见上传的本地模型。", bundle: HanlinLocalization.bundle))
                     .padding(.horizontal)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .padding()
-            .navigationTitle("编辑模型名称")
+            .navigationTitle(String(localized: "编辑模型名称", bundle: HanlinLocalization.bundle))
             .navigationBarTitleDisplayMode(.inline)
         }
     }
@@ -662,15 +664,15 @@ struct DownloadButtonView: View {
         HStack {
             
             if let pro = progress {
-                Text("\(Int(pro))%")
-                    .font(.caption)
-                    .foregroundColor(.hlBluefont)
+                Text("\(Int(pro))%", bundle: HanlinLocalization.bundle)
+                    .font(HanlinTypography.caption)
+                    .foregroundColor(.hanlinHLBluefont)
             }
             
             if isDownloaded {
-                Text("已下载")
+                Text(String(localized: "已下载", bundle: HanlinLocalization.bundle))
                     .foregroundColor(.gray)
-                    .font(.caption)
+                    .font(HanlinTypography.caption)
             } else {
                 Button(action: {
                     if progress == nil {
@@ -685,7 +687,7 @@ struct DownloadButtonView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 30, height: 30)
-                                .foregroundColor(.hlBluefont)
+                                .foregroundColor(.hanlinHLBluefont)
                             
                             Circle()
                                 .stroke(Color(.systemGray5), lineWidth: 4)
@@ -693,7 +695,7 @@ struct DownloadButtonView: View {
                             
                             Circle()
                                 .trim(from: 0, to: CGFloat(progress / 100))
-                                .stroke(Color.hlBluefont, style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                                .stroke(Color.hanlinHLBluefont, style: StrokeStyle(lineWidth: 4, lineCap: .round))
                                 .rotationEffect(.degrees(-90))
                                 .frame(width: 27, height: 27)
                         } else {
@@ -701,7 +703,7 @@ struct DownloadButtonView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 31, height: 31)
-                                .foregroundColor(.hlBluefont)
+                                .foregroundColor(.hanlinHLBluefont)
                         }
                     }
                 }
@@ -785,12 +787,12 @@ struct AddAgentView: View {
                 }
                 
                 // 智能体名称
-                Section(header: Text("智能体名称")) {
-                    TextField("输入名称", text: $displayName)
+                Section(header: Text(String(localized: "智能体名称", bundle: HanlinLocalization.bundle))) {
+                    TextField(String(localized: "输入名称", bundle: HanlinLocalization.bundle), text: $displayName)
                 }
                 
                 // 智能体名称与人物设定
-                Section(header: Text("智能体设定")) {
+                Section(header: Text(String(localized: "智能体设定", bundle: HanlinLocalization.bundle))) {
                     
                     TextEditor(text: $characterDesign)
                         .frame(height: 150)
@@ -825,10 +827,10 @@ struct AddAgentView: View {
                                 
                                 ProgressView() // 显示加载指示器
                                     .frame(width: 25, height: 25)
-                                    .background(Capsule().fill(Color(.hlBluefont).opacity(0.1)))
-                                Text("正在填写")
-                                    .font(.caption)
-                                    .foregroundColor(.hlBluefont)
+                                    .background(Capsule().fill(Color(.hanlinHLBluefont).opacity(0.1)))
+                                Text(String(localized: "正在填写", bundle: HanlinLocalization.bundle))
+                                    .font(HanlinTypography.caption)
+                                    .foregroundColor(.hanlinHLBluefont)
                                 
                             } else if autoFilled {
                                 
@@ -836,11 +838,11 @@ struct AddAgentView: View {
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 25, height: 25)
-                                    .foregroundColor(.hlBluefont)
+                                    .foregroundColor(.hanlinHLBluefont)
                                 
-                                Text("撤销填写")
-                                    .font(.caption)
-                                    .foregroundColor(.hlBluefont)
+                                Text(String(localized: "撤销填写", bundle: HanlinLocalization.bundle))
+                                    .font(HanlinTypography.caption)
+                                    .foregroundColor(.hanlinHLBluefont)
                                 
                             } else {
                                 
@@ -848,22 +850,22 @@ struct AddAgentView: View {
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 25, height: 25)
-                                    .foregroundColor(displayName.isEmpty ? .gray : .hlBluefont)
+                                    .foregroundColor(displayName.isEmpty ? .gray : .hanlinHLBluefont)
                                 
-                                Text("自动填写")
-                                    .font(.caption)
-                                    .foregroundColor(displayName.isEmpty ? .gray : .hlBluefont)
+                                Text(String(localized: "自动填写", bundle: HanlinLocalization.bundle))
+                                    .font(HanlinTypography.caption)
+                                    .foregroundColor(displayName.isEmpty ? .gray : .hanlinHLBluefont)
                                 
                             }
                         }
                         .disabled(autoFilling || displayName.isEmpty)
                         .buttonStyle(.plain)
-                        .sensoryFeedback(.impact, trigger: isFeedBack)
+                        .hanlinFeedback(.impact, trigger: isFeedBack)
                         
                         Spacer()
                         
-                        Text("输入工具")
-                            .font(.caption)
+                        Text(String(localized: "输入工具", bundle: HanlinLocalization.bundle))
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.gray)
                         
                         Button(action: {
@@ -874,10 +876,10 @@ struct AddAgentView: View {
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 25, height: 25)
-                                .foregroundColor(.hlBluefont)
+                                .foregroundColor(.hanlinHLBluefont)
                         }
                         .buttonStyle(.plain)
-                        .sensoryFeedback(.impact, trigger: isFeedBack)
+                        .hanlinFeedback(.impact, trigger: isFeedBack)
                         
                         Button(action: {
                             isFeedBack.toggle()
@@ -887,19 +889,19 @@ struct AddAgentView: View {
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 25, height: 25)
-                                .foregroundColor(.hlBluefont)
+                                .foregroundColor(.hanlinHLBluefont)
                                 .symbolEffect(.bounce, value: inputExpanded)
                         }
                         .buttonStyle(.plain)
-                        .sensoryFeedback(.impact, trigger: isFeedBack)
+                        .hanlinFeedback(.impact, trigger: isFeedBack)
                     }
                 }
                 
                 // 基座模型选择
-                Section(header: Text("基础模型")) {
-                    Picker("选择基础模型", selection: $selectedModel) {
+                Section(header: Text(String(localized: "基础模型", bundle: HanlinLocalization.bundle))) {
+                    Picker(String(localized: "选择基础模型", bundle: HanlinLocalization.bundle), selection: $selectedModel) {
                         ForEach(filteredBaseModel, id: \.id) { model in
-                            Text(model.displayName ?? "Unknown")
+                            Text(model.presentationName)
                                 .tag(model as AllModels?)
                         }
                     }
@@ -909,27 +911,27 @@ struct AddAgentView: View {
                 }
                 
                 // 默认隐藏设置
-                Section(header: Text("显示设置")) {
-                    Toggle("默认隐藏智能体", isOn: $isHidden)
+                Section(header: Text(String(localized: "显示设置", bundle: HanlinLocalization.bundle))) {
+                    Toggle(String(localized: "默认隐藏智能体", bundle: HanlinLocalization.bundle), isOn: $isHidden)
                 }
-                .tint(.hlBlue)
+                .tint(.hanlinHLBlue)
             }
-            .navigationTitle("添加智能体")
+            .navigationTitle(String(localized: "添加智能体", bundle: HanlinLocalization.bundle))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("取消") {
+                    Button(String(localized: "取消", bundle: HanlinLocalization.bundle)) {
                         isPresented = false
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("保存") {
+                    Button(String(localized: "保存", bundle: HanlinLocalization.bundle)) {
                         saveModel()
                     }
                 }
             }
-            .alert("错误", isPresented: $showAlert) {
-                Button("确定", role: .cancel) { }
+            .alert(String(localized: "错误", bundle: HanlinLocalization.bundle), isPresented: $showAlert) {
+                Button(String(localized: "确定", bundle: HanlinLocalization.bundle), role: .cancel) { }
             } message: {
                 Text(alertMessage)
             }
@@ -1078,11 +1080,11 @@ struct IconSelectionView: View {
                 }
                 .padding()
             }
-            .navigationTitle("选择图标")
+            .navigationTitle(String(localized: "选择图标", bundle: HanlinLocalization.bundle))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") {
+                    Button(String(localized: "取消", bundle: HanlinLocalization.bundle)) {
                         dismiss()
                     }
                 }
@@ -1101,6 +1103,10 @@ struct EditModelSheetView: View {
     @State private var editedBriefDescription: String
     @State private var editedCharacterDesign: String
     @State private var original: String = ""
+
+    @State private var explicitCacheSelection: HanlinPromptCachePolicySelection? = nil
+    @State private var showSaveError = false
+    @State private var saveErrorMessage = ""
 
     // 基座模型选择
     @Query(filter: #Predicate<AllModels> {
@@ -1140,7 +1146,7 @@ struct EditModelSheetView: View {
 
     init(model: AllModels) {
         self.model = model
-        _editedDisplayName = State(initialValue: model.displayName ?? "")
+        _editedDisplayName = State(initialValue: HanlinModelDisplayName.clean(model.displayName ?? ""))
         _editedBriefDescription = State(initialValue: model.briefDescription ?? "")
         _editedCharacterDesign = State(initialValue: model.characterDesign ?? "")
         _editedSupportsTextGen = State(initialValue: model.supportsTextGen)
@@ -1155,47 +1161,51 @@ struct EditModelSheetView: View {
         NavigationStack {
             Form {
                 // 名称编辑
-                Section(header: Text(model.identity == "agent" ? "编辑智能体名称" : "编辑模型名称")) {
+                Section(header: Text(model.identity == "agent" ? String(localized: "编辑智能体名称", bundle: HanlinLocalization.bundle) : String(localized: "编辑模型名称", bundle: HanlinLocalization.bundle))) {
                     if model.systemProvision == true && model.identity == "agent" {
                         VStack(alignment: .leading, spacing: 6) {
                             Text(editedDisplayName)
-                            Text("⚠️ 默认智能体不可重命名")
-                                .font(.caption)
-                                .foregroundColor(.hlBluefont)
+                            Text(String(localized: "⚠️ 默认智能体不可重命名", bundle: HanlinLocalization.bundle))
+                                .font(HanlinTypography.caption)
+                                .foregroundColor(.hanlinHLBluefont)
                         }
                     } else {
-                        TextField(model.identity == "agent" ? "智能体名称" : "模型名称", text: $editedDisplayName)
+                        TextField(model.identity == "agent" ? String(localized: "智能体名称", bundle: HanlinLocalization.bundle) : String(localized: "模型名称", bundle: HanlinLocalization.bundle), text: $editedDisplayName)
                     }
                 }
 
                 // 功能支持开关（模型专用）
                 if model.identity?.lowercased() == "model", model.systemProvision == false, model.company != "LOCAL" {
-                    Section(header: Text("功能支持")) {
-                        Toggle("支持文本生成", isOn: $editedSupportsTextGen).iconLabel("character")
-                        Toggle("支持视觉理解", isOn: $editedSupportsMultimodal).iconLabel("photo.on.rectangle.angled")
-                        Toggle("支持深度思考", isOn: $editedSupportsReasoning).iconLabel("atom")
-                        Toggle("思考模式可控", isOn: $editedSupportsReasoningChange).iconLabel("lightbulb")
-                        Toggle("支持工具使用", isOn: $editedSupportsToolUse).iconLabel("hammer")
-                        Toggle("图像生成模型", isOn: $editedSupportsImageGen).iconLabel("camera.aperture")
+                    Section(header: Text(String(localized: "功能支持", bundle: HanlinLocalization.bundle))) {
+                        Toggle(String(localized: "支持文本生成", bundle: HanlinLocalization.bundle), isOn: $editedSupportsTextGen).iconLabel("character")
+                        Toggle(String(localized: "支持视觉理解", bundle: HanlinLocalization.bundle), isOn: $editedSupportsMultimodal).iconLabel("photo.on.rectangle.angled")
+                        Toggle(String(localized: "支持深度思考", bundle: HanlinLocalization.bundle), isOn: $editedSupportsReasoning).iconLabel("atom")
+                        Toggle(String(localized: "思考模式可控", bundle: HanlinLocalization.bundle), isOn: $editedSupportsReasoningChange).iconLabel("lightbulb")
+                        Toggle(String(localized: "支持工具使用", bundle: HanlinLocalization.bundle), isOn: $editedSupportsToolUse).iconLabel("hammer")
+                        Toggle(String(localized: "图像生成模型", bundle: HanlinLocalization.bundle), isOn: $editedSupportsImageGen).iconLabel("camera.aperture")
                     }
-                    .tint(.hlBlue)
+                    .tint(.hanlinHLBlue)
                 }
                 
+                if showsPromptCacheSettings {
+                    promptCacheSettingsSection
+                }
+
                 // 智能体人物概述
                 if model.identity == "agent", model.systemProvision == true {
-                    Section(header: Text("编辑智能体描述")) {
+                    Section(header: Text(String(localized: "编辑智能体描述", bundle: HanlinLocalization.bundle))) {
                         VStack(alignment: .leading, spacing: 6) {
                             Text(editedBriefDescription)
-                            Text("⚠️ 默认智能体不可更改描述")
-                                .font(.caption)
-                                .foregroundColor(.hlBluefont)
+                            Text(String(localized: "⚠️ 默认智能体不可更改描述", bundle: HanlinLocalization.bundle))
+                                .font(HanlinTypography.caption)
+                                .foregroundColor(.hanlinHLBluefont)
                         }
                     }
                 }
 
                 // 智能体人物设定
                 if model.identity == "agent", model.systemProvision == false {
-                    Section(header: Text("编辑智能体设定")) {
+                    Section(header: Text(String(localized: "编辑智能体设定", bundle: HanlinLocalization.bundle))) {
                         TextEditor(text: $editedCharacterDesign)
                             .frame(height: 150)
                         autoFillAndInputToolbar
@@ -1204,10 +1214,10 @@ struct EditModelSheetView: View {
                 
                 // 智能体可选基座模型
                 if model.identity == "agent", model.systemProvision == false {
-                    Section(header: Text("编辑基础模型")) {
-                        Picker("选择基础模型", selection: $selectedBaseModel) {
+                    Section(header: Text(String(localized: "编辑基础模型", bundle: HanlinLocalization.bundle))) {
+                        Picker(String(localized: "选择基础模型", bundle: HanlinLocalization.bundle), selection: $selectedBaseModel) {
                             ForEach(filteredBaseModels, id: \.id) { model in
-                                Text(model.displayName ?? "Unknown")
+                                Text(model.presentationName)
                                     .tag(model as AllModels?)
                             }
                         }
@@ -1220,11 +1230,11 @@ struct EditModelSheetView: View {
                 
                 // 复制智能体
                 if model.identity == "agent", model.systemProvision == true {
-                    Section(header: Text("复制智能体")) {
-                        Text("通过选择新的基础模型复制该智能体")
-                        Picker("选择基础模型", selection: $selectedCopyBaseModel) {
+                    Section(header: Text(String(localized: "复制智能体", bundle: HanlinLocalization.bundle))) {
+                        Text(String(localized: "通过选择新的基础模型复制该智能体", bundle: HanlinLocalization.bundle))
+                        Picker(String(localized: "选择基础模型", bundle: HanlinLocalization.bundle), selection: $selectedCopyBaseModel) {
                             ForEach(filteredBaseModels, id: \.id) { model in
-                                Text(model.displayName ?? "Unknown")
+                                Text(model.presentationName)
                                     .tag(model as AllModels?)
                             }
                         }
@@ -1236,13 +1246,47 @@ struct EditModelSheetView: View {
                 }
                 
             }
-            .navigationTitle(model.identity == "agent" ? "编辑智能体" : "编辑模型")
+            .navigationTitle(model.identity == "agent" ? String(localized: "编辑智能体", bundle: HanlinLocalization.bundle) : String(localized: "编辑模型", bundle: HanlinLocalization.bundle))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") { dismiss() }
+                    Button(String(localized: "取消", bundle: HanlinLocalization.bundle)) { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("保存") {
+                    Button(String(localized: "保存", bundle: HanlinLocalization.bundle)) {
+                        // Validate both rows before mutating any existing fields.
+                        // A preserved policy keeps its original serialized value.
+                        let cacheMutation = cachePolicyMutation
+                        let validatedModelCachePolicyJSON: String?
+                        let validatedCopyCachePolicyJSON: String?
+                        do {
+                            if case .preset(let preset) = explicitCacheSelection {
+                                guard availableCachePresets.contains(preset) else {
+                                    throw HanlinChatError.invalidRequest(String(
+                                        localized: "This cache option is no longer available for this provider and model. Choose another option.",
+                                        bundle: HanlinLocalization.bundle
+                                    ))
+                                }
+                            }
+                            if case .replace(let policy) = cacheMutation {
+                                validatedModelCachePolicyJSON = try HanlinModelPromptCachePreferences.encode(policy)
+                            } else {
+                                validatedModelCachePolicyJSON = nil
+                            }
+                            if model.identity == "agent", let selectedCopyBaseModel {
+                                validatedCopyCachePolicyJSON = try HanlinModelPromptCachePreferences.encode(
+                                    selectedCopyBaseModel.promptCachePolicy
+                                )
+                            } else {
+                                validatedCopyCachePolicyJSON = nil
+                            }
+                        } catch {
+                            saveErrorMessage = error.localizedDescription
+                            showSaveError = true
+                            return
+                        }
+                        if case .replace = cacheMutation {
+                            model.promptCachePolicyJSON = validatedModelCachePolicyJSON
+                        }
                         model.displayName = editedDisplayName
                         if model.identity == "model", model.company != "LOCAL" {
                             model.supportsTextGen = editedSupportsTextGen
@@ -1291,18 +1335,25 @@ struct EditModelSheetView: View {
                                 )
                                 newModel.icon = model.icon
                                 newModel.characterDesign = model.characterDesign
+                                newModel.promptCachePolicyJSON = validatedCopyCachePolicyJSON
                                 
                                 modelContext.insert(newModel)
                             }
                         }
                         do {
                             try modelContext.save()
+                            dismiss()
                         } catch {
-                            print("保存失败: \(error.localizedDescription)")
+                            saveErrorMessage = error.localizedDescription
+                            showSaveError = true
                         }
-                        dismiss()
                     }
                 }
+            }
+            .alert(String(localized: "Could not save model", bundle: HanlinLocalization.bundle), isPresented: $showSaveError) {
+                Button(String(localized: "确定", bundle: HanlinLocalization.bundle), role: .cancel) {}
+            } message: {
+                Text(saveErrorMessage)
             }
             .sheet(isPresented: $inputExpanded) {
                 BottomSheetView(message: $editedCharacterDesign, isExpanded: $inputExpanded)
@@ -1321,6 +1372,134 @@ struct EditModelSheetView: View {
         }
     }
     
+    private var isEditableCacheAgent: Bool {
+        model.identity?.lowercased() == "agent" && model.systemProvision == false
+    }
+
+    private var cacheSettingsModel: AllModels {
+        isEditableCacheAgent ? (selectedBaseModel ?? model) : model
+    }
+
+    private var showsPromptCacheSettings: Bool {
+        guard model.identity?.lowercased() == "model" || isEditableCacheAgent else { return false }
+        let supportsText = isEditableCacheAgent ? cacheSettingsModel.supportsTextGen : editedSupportsTextGen
+        // Keep a pending selection visible after a provider change so an
+        // unsupported choice can be replaced with inheritance or preservation.
+        return supportsText && (!availableCachePresets.isEmpty || explicitCacheSelection != nil)
+    }
+
+    private var availableCachePresets: [HanlinPromptCachePreset] {
+        let cacheModel = cacheSettingsModel
+        let providers = apiKeys.filter { $0.company == cacheModel.company }
+        let provider = providers.count == 1 ? providers.first : nil
+        return HanlinPromptCachePreset.available(
+            company: cacheModel.company,
+            apiType: provider?.apiType.rawValue,
+            endpoint: provider?.requestURL.flatMap(URL.init(string:)),
+            modelID: cacheModel.name ?? ""
+        )
+    }
+
+    private var cachePolicyMutation: HanlinPromptCachePolicyMutation {
+        guard model.identity?.lowercased() == "model" || isEditableCacheAgent else { return .preserve }
+        let base = isEditableCacheAgent ? selectedBaseModel : nil
+        return HanlinPromptCachePolicyMutation.resolve(
+            originalModelID: model.name ?? "",
+            originalCompany: model.company,
+            selectedBaseModelID: base.map { $0.name ?? "" },
+            selectedBaseCompany: base?.company,
+            selectedBasePolicy: base?.promptCachePolicy,
+            selection: explicitCacheSelection
+        )
+    }
+
+    private var cachePolicySelection: HanlinPromptCachePolicySelection {
+        if let explicitCacheSelection { return explicitCacheSelection }
+        if case .replace = cachePolicyMutation { return .inheritBase }
+        if let preset = HanlinPromptCachePreset.matching(model.promptCachePolicy),
+           availableCachePresets.contains(preset) {
+            return .preset(preset)
+        }
+        return .preserveSaved
+    }
+
+    private var cachePolicyBinding: Binding<HanlinPromptCachePolicySelection> {
+        Binding(
+            get: { cachePolicySelection },
+            set: { explicitCacheSelection = $0 }
+        )
+    }
+
+    private var promptCacheSettingsSection: some View {
+        Section {
+            Picker(String(localized: "Cache policy", bundle: HanlinLocalization.bundle), selection: cachePolicyBinding) {
+                if isEditableCacheAgent, selectedBaseModel != nil {
+                    Text(String(localized: "Use selected base model policy", bundle: HanlinLocalization.bundle))
+                        .tag(HanlinPromptCachePolicySelection.inheritBase)
+                }
+                ForEach(availableCachePresets, id: \.self) { preset in
+                    Text(cachePresetTitle(preset)).tag(HanlinPromptCachePolicySelection.preset(preset))
+                }
+                if isEditableCacheAgent || cachePolicySelection == .preserveSaved
+                    || HanlinPromptCachePreset.matching(model.promptCachePolicy) == nil {
+                    Text(String(
+                        localized: HanlinPromptCachePreset.matching(model.promptCachePolicy) == nil
+                            ? "Custom policy (unchanged)" : "Saved policy (unchanged)",
+                        bundle: HanlinLocalization.bundle
+                    ))
+                        .tag(HanlinPromptCachePolicySelection.preserveSaved)
+                }
+                if case .preset(let preset) = cachePolicySelection, !availableCachePresets.contains(preset) {
+                    Text(cachePresetTitle(preset))
+                        .tag(HanlinPromptCachePolicySelection.preset(preset))
+                        .disabled(true)
+                }
+            }
+        } header: {
+            Text(String(localized: "Prompt cache", bundle: HanlinLocalization.bundle))
+        } footer: {
+            VStack(alignment: .leading, spacing: 6) {
+                Text(cachePresetExplanation)
+                Text(String(
+                    localized: "Only supported options are shown. Cache writes and longer lifetimes may have different costs; the provider decides whether a request can be reused.",
+                    bundle: HanlinLocalization.bundle
+                ))
+            }
+        }
+    }
+
+    private func cachePresetTitle(_ preset: HanlinPromptCachePreset) -> String {
+        switch preset {
+        case .automatic: String(localized: "Automatic (recommended)", bundle: HanlinLocalization.bundle)
+        case .providerDefault: String(localized: "Provider defaults", bundle: HanlinLocalization.bundle)
+        case .noExplicitCaching: String(localized: "No explicit cache controls", bundle: HanlinLocalization.bundle)
+        case .anthropicOneHour: String(localized: "Anthropic: 1 hour", bundle: HanlinLocalization.bundle)
+        case .openAITwentyFourHours: String(localized: "OpenAI: up to 24 hours", bundle: HanlinLocalization.bundle)
+        case .openAIExplicitThirtyMinutes: String(localized: "Explicit cache: 30 minutes", bundle: HanlinLocalization.bundle)
+        case .openAIExplicitTwelveHours: String(localized: "Explicit cache: 12 hours", bundle: HanlinLocalization.bundle)
+        }
+    }
+
+    private var cachePresetExplanation: String {
+        switch cachePolicySelection {
+        case .preserveSaved:
+            String(localized: "Keep the policy currently saved on this model or agent.", bundle: HanlinLocalization.bundle)
+        case .inheritBase:
+            String(localized: "Use the selected base model's saved cache policy.", bundle: HanlinLocalization.bundle)
+        case .preset(let preset):
+            switch preset {
+            case .automatic:
+                String(localized: "Use Hanlin's automatic caching policy for this provider.", bundle: HanlinLocalization.bundle)
+            case .providerDefault:
+                String(localized: "Use the provider's defaults without Hanlin's cache hints.", bundle: HanlinLocalization.bundle)
+            case .noExplicitCaching:
+                String(localized: "Send no explicit cache controls. The provider may still use automatic caching.", bundle: HanlinLocalization.bundle)
+            case .anthropicOneHour, .openAITwentyFourHours, .openAIExplicitThirtyMinutes, .openAIExplicitTwelveHours:
+                String(localized: "Request this cache lifetime for reusable context. Availability and billing follow the provider's rules.", bundle: HanlinLocalization.bundle)
+            }
+        }
+    }
+
     /// 获取当前最大 position 并 +1
     private var nextPosition: Int {
         return (allModels.map { $0.position ?? 999 }.max() ?? 0) + 1
@@ -1354,10 +1533,10 @@ struct EditModelSheetView: View {
                     
                     ProgressView() // 显示加载指示器
                         .frame(width: 25, height: 25)
-                        .background(Capsule().fill(Color(.hlBluefont).opacity(0.1)))
-                    Text("正在填写")
-                        .font(.caption)
-                        .foregroundColor(.hlBluefont)
+                        .background(Capsule().fill(Color(.hanlinHLBluefont).opacity(0.1)))
+                    Text(String(localized: "正在填写", bundle: HanlinLocalization.bundle))
+                        .font(HanlinTypography.caption)
+                        .foregroundColor(.hanlinHLBluefont)
                     
                 } else if autoFilled {
                     
@@ -1365,11 +1544,11 @@ struct EditModelSheetView: View {
                         .resizable()
                         .scaledToFill()
                         .frame(width: 25, height: 25)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                     
-                    Text("撤销填写")
-                        .font(.caption)
-                        .foregroundColor(.hlBluefont)
+                    Text(String(localized: "撤销填写", bundle: HanlinLocalization.bundle))
+                        .font(HanlinTypography.caption)
+                        .foregroundColor(.hanlinHLBluefont)
                     
                 } else {
                     
@@ -1377,22 +1556,22 @@ struct EditModelSheetView: View {
                         .resizable()
                         .scaledToFill()
                         .frame(width: 25, height: 25)
-                        .foregroundColor(editedDisplayName.isEmpty ? .gray : .hlBluefont)
+                        .foregroundColor(editedDisplayName.isEmpty ? .gray : .hanlinHLBluefont)
                     
-                    Text("自动填写")
-                        .font(.caption)
-                        .foregroundColor(editedDisplayName.isEmpty ? .gray : .hlBluefont)
+                    Text(String(localized: "自动填写", bundle: HanlinLocalization.bundle))
+                        .font(HanlinTypography.caption)
+                        .foregroundColor(editedDisplayName.isEmpty ? .gray : .hanlinHLBluefont)
                     
                 }
             }
             .disabled(autoFilling || editedDisplayName.isEmpty)
             .buttonStyle(.plain)
-            .sensoryFeedback(.impact, trigger: isFeedBack)
+            .hanlinFeedback(.impact, trigger: isFeedBack)
 
             Spacer()
 
-            Text("输入工具")
-                .font(.caption)
+            Text(String(localized: "输入工具", bundle: HanlinLocalization.bundle))
+                .font(HanlinTypography.caption)
                 .foregroundColor(.gray)
 
             Button(action: {
@@ -1403,10 +1582,10 @@ struct EditModelSheetView: View {
                     .resizable()
                     .scaledToFill()
                     .frame(width: 25, height: 25)
-                    .foregroundColor(.hlBluefont)
+                    .foregroundColor(.hanlinHLBluefont)
             }
             .buttonStyle(.plain)
-            .sensoryFeedback(.impact, trigger: isFeedBack)
+            .hanlinFeedback(.impact, trigger: isFeedBack)
             
             Button(action: {
                 isFeedBack.toggle()
@@ -1416,11 +1595,11 @@ struct EditModelSheetView: View {
                     .resizable()
                     .scaledToFill()
                     .frame(width: 25, height: 25)
-                    .foregroundColor(.hlBluefont)
+                    .foregroundColor(.hanlinHLBluefont)
                     .symbolEffect(.bounce, value: inputExpanded)
             }
             .buttonStyle(.plain)
-            .sensoryFeedback(.impact, trigger: isFeedBack)
+            .hanlinFeedback(.impact, trigger: isFeedBack)
         }
     }
 }
@@ -1433,7 +1612,7 @@ private extension View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 20, height: 20)
-                .foregroundColor(.hlBluefont)
+                .foregroundColor(.hanlinHLBluefont)
             self
         }
     }
@@ -1444,53 +1623,53 @@ struct BaseModelCardView: View {
 
     var body: some View {
         HStack {
-            Image(getCompanyIcon(for: model.company ?? "UNKNOWN"))
+            Image(hanlinAsset: getCompanyIcon(for: model.company ?? "UNKNOWN"))
                 .resizable()
                 .frame(width: 30, height: 30)
 
             VStack(alignment: .leading) {
                 ScrollView(.horizontal, showsIndicators: false) {
-                    Text(model.displayName ?? "Unknown")
-                        .font(.subheadline)
+                    Text(model.presentationName)
+                        .font(HanlinTypography.subheadline)
                 }
                 HStack(spacing: 6) {
                     if model.supportsToolUse {
-                        Text("工具")
-                            .font(.caption)
-                            .foregroundColor(.hlBrown)
+                        Text(String(localized: "工具", bundle: HanlinLocalization.bundle))
+                            .font(HanlinTypography.caption)
+                            .foregroundColor(.hanlinHLBrown)
                     }
                     if model.supportsMultimodal {
-                        Text("视觉")
-                            .font(.caption)
-                            .foregroundColor(.hlTeal)
+                        Text(String(localized: "视觉", bundle: HanlinLocalization.bundle))
+                            .font(HanlinTypography.caption)
+                            .foregroundColor(.hanlinHLTeal)
                     } else if model.supportsTextGen {
-                        Text("文本")
-                            .font(.caption)
+                        Text(String(localized: "文本", bundle: HanlinLocalization.bundle))
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.gray)
                     }
-                    if model.supportsImageGen {
-                        Text("生图")
-                            .font(.caption)
-                            .foregroundColor(.hlGreen)
+                    if model.hasVerifiedImageOutput {
+                        Text(String(localized: "生图", bundle: HanlinLocalization.bundle))
+                            .font(HanlinTypography.caption)
+                            .foregroundColor(.hanlinHLGreen)
                     }
                     if model.supportsVoiceGen {
-                        Text("语音")
-                            .font(.caption)
-                            .foregroundColor(.hlPink)
+                        Text(String(localized: "语音", bundle: HanlinLocalization.bundle))
+                            .font(HanlinTypography.caption)
+                            .foregroundColor(.hanlinHLPink)
                     }
                     if model.supportsReasoning {
-                        Text("思考")
-                            .font(.caption)
-                            .foregroundColor(.hlPurple)
+                        Text(String(localized: "思考", bundle: HanlinLocalization.bundle))
+                            .font(HanlinTypography.caption)
+                            .foregroundColor(.hanlinHLPurple)
                     }
                     if model.company?.uppercased() == "LOCAL" {
-                        Text("本地")
-                            .font(.caption)
-                            .foregroundColor(.hlOrange)
+                        Text(String(localized: "本地", bundle: HanlinLocalization.bundle))
+                            .font(HanlinTypography.caption)
+                            .foregroundColor(.hanlinHLOrange)
                     }
 
                     Text(priceText(for: model.price))
-                        .font(.caption)
+                        .font(HanlinTypography.caption)
                         .foregroundColor(priceColor(for: model.price))
                 }
             }

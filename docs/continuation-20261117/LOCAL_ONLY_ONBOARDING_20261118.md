@@ -1,0 +1,11 @@
+# Ready local models can create a conversation — 2026-11-18
+
+Source review of NAV-25 / MODEL / phase-3 model selection found that ListView rejected every new conversation when there was no enabled remote API key, even when the canonical SDK Apple provider was available. The compact home also always chose the original remote default. Downloaded original LOCAL GGUF models had the same creation gate problem.
+
+The existing HanlinDefaultChatPolicy now resolves only a new conversation's initial model. An enabled remote provider retains the original default behavior. Without one, the policy chooses a visible, text-capable local row: the canonical native catalog row only when the real SDK availability is available, or an original LOCAL row only with an enabled original LOCAL provider and an actually downloaded file. Catalog presence alone is not readiness. No network fallback, model-weight download, new provider/runtime, capability override or production inference fixture is added.
+
+ListView fetches the same position-sorted catalog as ChatView and stores the selected original index in the newly created record. The existing compact home initializes its existing Composer from the same policy. Existing conversation indices, explicit Composer handoffs, catalog order, actual generation/approval/persistence paths and the SDK's execution-time availability check remain original. Optimization remains optional.
+
+Two focused policy controls cover available/unavailable/hidden Apple rows, configured/disabled remote providers, stable original indices, and downloaded/missing/disabled LOCAL entries. They inject facts only into the pure selection policy; they do not constitute Apple or GGUF inference evidence. The real app still obtains native availability from HanlinAppleOnDeviceProvider and downloaded paths from the original getLocalModelPath.
+
+Validation before Apple CI: five Swift source parses passed, git diff --check passed; existing 1,020 localization entries and all catalog metadata remain semantically unchanged, with one new English/Hebrew/Simplified Chinese message. Native compilation and relevant original UI acceptance remain pending. Live on-device Apple inference requires a supported provisioned physical device and loaded system model; simulator policy tests are not that proof.

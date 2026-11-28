@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.ProductSplit.Tests.test_share_translation_surface_observer.ShareTranslationObserverTests.test_all_four_actual_payload_routes_and_private_windows_are_admitted",
+    "Scripts.ProductSplit.Tests.test_share_translation_surface_observer.ShareTranslationObserverTests.test_new_share_window_and_original_translation_owner_cannot_be_substituted",
+    "-v"
+  ],
+  "startedAtUTC": "2026-11-27T06:27:01.274441+00:00",
+  "completedAtUTC": "2026-11-27T06:27:01.411528+00:00",
+  "exitCode": 0,
+  "elapsedSeconds": 0.13708355464041233,
+  "sourceHashes": {
+    "Scripts/ProductSplit/observe_share_translation_surfaces.py": "6702a1bb58c11b9f2e6d285eb62dee7db9f12ad1ddd6d466396d36cda91bee0a",
+    "Scripts/ProductSplit/Tests/test_share_translation_surface_observer.py": "d74749a52261d4ae45ea62ccc01f6becb255aa397a2a853f52f5b7ba1874a245"
+  },
+  "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSHA256": "54ffa58fc7bd7afe0d7bcb24c716f0188b42b2681d3b897939cd6018c45659d5",
+  "scope": "Only the2 affected existing controls for root-State preparation and fresh own-window Share. Prior15-method run retained at its original source; no fresh15 claim."
+}

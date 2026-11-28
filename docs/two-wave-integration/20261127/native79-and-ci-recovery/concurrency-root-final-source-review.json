@@ -1,0 +1,52 @@
+{
+  "sourceCommit": "41ace7e685d6d4fe50e5974e941433de50490ff4",
+  "priorReviewAttempt": "Source and raw evidence verified; proof metadata seal safely aborted because W1 concurrently sealed added raw retention and independent review metadata. Final e809 metadata delta reviewed before this seal.",
+  "schema": 1,
+  "reviewer": "/root",
+  "reviewedAtUTC": "2026-11-27T05:19:40.225168+00:00",
+  "decision": "APPROVED_ADDITIVE_CONCURRENCY_ACCEPTANCE_SOURCE_NATIVE_OS_PENDING",
+  "baseSource": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "sourceHashes": {
+    "Scripts/ProductSplit/observe_shortcut_concurrency.py": "d32fc2b40cd6649cf01fe1a774b29579e8f898dddd8bda4da1fb166a537bf183",
+    "Scripts/ProductSplit/Tests/test_shortcut_concurrency_observer.py": "69ff828b1f87da80bb406d74501ded01e17572f3c9f96039d6fd2f257565c4d2",
+    "Fixtures/HostActionSurfaces/nativescript/index.ts": "a4f8274693fcd9b9604a37667f2d48449ef1ce9541bfbeca8ef06d3057b1c0ee"
+  },
+  "readerReceiptSHA256": "2c117673fc3305ef795f153ae512147fa0e5f55469d6b08077c6a8f3f22fa898",
+  "reviewedCandidateProofSHA256": "e809e39a08cae921226b0a24cec4abc54c5db0738744e6b70f22d9ed1fc76881",
+  "reviewBasis": [
+    "Full R1 observer and14controls reviewed earlier; complete R1-to-R3 source/test diff independently reviewed; original controls retained",
+    "Initial UI-observed ownerWindowID sealed even for root State paths and required for final same-process/path/window callback",
+    "Exactly3 terminal commands/journals preserve native handler/token/window/path; successful private results immutable; final fresh native and catalog/container readback",
+    "Selected Stop occurs during actual held handler; both terminal and post-owner readback reject completed handler or5 successful runtime outcomes concealed by a cancelled native receipt",
+    "Conservative late-hold boundary retained; original owner callback begins only after actual terminal observation",
+    "Independent W2 review preserved original normal fixture run bodies and bounded actual-native-owner label"
+  ],
+  "validation": {
+    "readerPureControls": {
+      "total": 17,
+      "passed": 17,
+      "skipped": 0,
+      "executedBy": "/root/w1_review_resume",
+      "rootReran": false
+    },
+    "fixtureUnitControls": {
+      "total": 12,
+      "passed": 12,
+      "node": "24.5.0",
+      "qualifiedInputs": "Exact imported proof.ts modules and test unchanged; visible NS index label is separately reviewed UI-only delta; no native runtime claim",
+      "rootReran": false
+    }
+  },
+  "native": "NOT_RUN",
+  "OS": "NOT_RUN",
+  "limits": [
+    "Only one NativeScript foreground owner plus3 NativeScript background saved actions on actual iPad pilot",
+    "Original5 native concurrency methods, original54, extra26, original4 Shortcuts and remaining full engine/device/lifecycle matrix remain independent",
+    "Actual compiled fixtures using current shipping SDK and genuine OS run still required"
+  ],
+  "sharedCompanion": {
+    "reviewer": "/root/w2_source_resume",
+    "UI_SHA256": "c757994e7644db5bcf3aa480e2d126a794634e030a6626e6489cf2ea684ebde0",
+    "runnerSHA256": "efb9738edeafd21868ce232343a2db4634e370d47d267d160c86f927847a8836"
+  }
+}

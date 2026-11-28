@@ -1,0 +1,22 @@
+{
+  "atUTC": "2026-11-24T08:53:09.020182+00:00",
+  "reviewer": "/root/sdk_only_author",
+  "reviewedAuthorCommit": "04f78e12297c1b6e60959211e83a9496cb3f087d",
+  "integratedCommit": "842f0667",
+  "status": "NO_CONCRETE_SOURCE_OR_RECEIPT_BLOCKER",
+  "receiptSHA256": "4fe8f6a2366dd1da65368b61e424751bf7c63bc016f84b777379e8d2f0881d92",
+  "reviewedSourceHashes": 20,
+  "reviewedArtifactHashes": 23,
+  "complexFilesUnchanged": 15,
+  "helloWorldRetainedSourceFiles": 13,
+  "actualExportedProjectFiles": 28,
+  "generatedIndexFiles": 1,
+  "scope": [
+    "Shared root-scoped example copy/fingerprint exclusions preserve resourceZIP/build/dist data.",
+    "Existing readMiniAppSDK spread exposes examplesIndexPath and selectedEngine.examples without another publicAPI implementation.",
+    "Public build receipts report0diagnostics; no extra validate command or native pass invented."
+  ],
+  "dependency": "SDK01 mapping code integrated6b90ffe7; root generation must create MANIFEST_REFERENCE.md before shipping.",
+  "testsRepeated": false,
+  "fullFreshSDKAssembly": "PENDING"
+}

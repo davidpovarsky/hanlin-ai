@@ -1,0 +1,25 @@
+{
+  "sourceBase": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "candidatePaths": [
+    ".github/workflows/validate-app-split.yml",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+    "Scripts/ProductSplit/run_paired_acceptance.py",
+    "Scripts/ProductSplit/observe_shortcut_native_lists.py",
+    "Scripts/CI/Tests/test_shortcut_native_lists.py",
+    "Scripts/CI/Tests/fixtures/native_lists_actionsdata.json",
+    "Fixtures/ShortcutNativeLists/nativescript/package.json",
+    "Fixtures/ShortcutNativeLists/nativescript/script.json",
+    "Fixtures/ShortcutNativeLists/nativescript/tsconfig.json",
+    "Fixtures/ShortcutNativeLists/nativescript/hanlin.authoring.json",
+    "Fixtures/ShortcutNativeLists/nativescript/index.ts",
+    "Fixtures/ShortcutNativeLists/nativescript/proof.ts"
+  ],
+  "sourceInputCount": 396,
+  "actualFingerprint": "36b1fa73d649f52580ca83458f668d1184665480eb3d5ad9f83a4ee4b5cce254",
+  "actualCollectorSHA256": "60b6b9496330d4605f60f56587170b06c7eced31a6b3d79ef04aa8faa548022c",
+  "actualNode": "v24.5.0",
+  "intersection": [],
+  "all396ActualBytesEqualAccepted9ee": true,
+  "producerExecuted": false
+}

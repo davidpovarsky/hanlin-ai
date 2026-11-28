@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.SDK.tests.test_application_external_packages",
+    "Scripts.SDK.tests.test_host_link_ownership",
+    "-v"
+  ],
+  "exit": 1,
+  "duration": 3.5543429851531982,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "dfd5ad579de140885e6a69e6ff0ff0e3f3c5cf91c8b61110b5758288c5ea7d91",
+  "scope": "Original source graph and package ownership tests on resolved SDK merge; not native Apple runtime acceptance."
+}

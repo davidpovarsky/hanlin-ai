@@ -1,0 +1,50 @@
+{
+  "parentSHA": "e195ef50fbf741d339f4bf515869a1ee6a038fc2",
+  "createdUTC": "2026-11-17T22:29:17.671885+00:00",
+  "reason": "Close actual iOS WebKit async compile failures and validate new original-Host presentation lifecycle and inline approval projection. No passing unaffected full-app suites repeated.",
+  "changedFiles": {
+    "AI_HLY/ChatView.swift": "6877a59e1b39478545d1bf9734046943849febf19cd51acc8589857e2fc9f676",
+    "AI_HLY/Downstream/AgentActivity/AgentActivityModels.swift": "7f8af1012a4636759c3384c36d46baa1289c9d5f101d2ba5b36c61b80fec338a",
+    "AI_HLY/Downstream/AgentActivity/AgentEvent.swift": "6e3bad6ea949be5152914c6aed5b44ffdc853ee2198e5696cba92d17de4e71ef",
+    "AI_HLY/Downstream/AgentActivity/AgentEventAccumulator.swift": "978d1c25dc6b9e78aea1cda6c357a89d8a51781f0c676d0e7e6f3c7aa1bf8fb3",
+    "AI_HLY/Downstream/AgentActivity/ProviderEventAdapter.swift": "a4c580b4993afdc39507acce7ce360cf1a8b879a9af88b37785a5b55c04abcbd",
+    "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift": "7c9e804e26bf6ab67cae5611cd2692bd9c6680e1d8223923a57bc9a2fb5f08a0",
+    "AI_HLY/Downstream/ChatCore/HanlinAppToolConsent.swift": "5d1e03b8a1c037352742d4fdcbfd139d67e90ee3a0ce659b07016e4ab9eb6869",
+    "AI_HLY/Downstream/ChatPresentation/HanlinOpenUIPresentation.swift": "7ccf189b8551977aecd520a8c6d3aa6d848a7303b558f03172c5b327fc9deb03",
+    "AI_HLY/Services/ChatServices/APIManager.swift": "5968d9a9e179f0b6e479b375090c9a241e3256064eb53e092839e2ccb4d1fda2",
+    "AI_HLY/Views/Components/ChatViewComponents.swift": "902269724260b61c2357d9b18804ac769d903adf0e4567a276509b0f583db945",
+    "AI_HLYTests/AgentRoundPresentationTests.swift": "671122ed906d88a3db65e80f4e98bfcb092a49b0c1a6dd3e9c00815d90ff3b7d",
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift": "307939886bfde956876b8bbcf06d85dffea545cd981ddf91d5b717d2c13cdc3a",
+    "AI_HLYUITests/AgentRuntimeConversationUITests.swift": "fc549fac72b38613922026fe20e19f9782a73f89b10e0de1e87d591fedc27d65",
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift": "5170210ab9005203cc12cf2d1dae114d8b0a5b486a761e49f946cd2da16a36cb",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift": "bc17417831248d82b532a9c445dc78a263d03ac4dfc839f2737c6b0d8f7abdbb",
+    "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/NativeOpenUINode.swift": "8b528d2b8448159b6234f8aeaab17b1d158ea764f614255c58c0e05168840459",
+    "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/OpenUIBlock.swift": "a0c04426a726dbb6bca6a5ba2e4db90d4ed656641d8db33c26188d970259dfb5",
+    "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/OpenUICatalogs.swift": "d80d3d09e465f2d36bba3e4819c0824e960c59d9c01576461da9bb22b3eb4546",
+    "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/OpenUIRendererConfiguration.swift": "be58ebe69a95c69bfde290b2e8079f93166f8bf9b637e74f932826673f4cd4a6"
+  },
+  "portableSyntax": "19 changed Swift files parsed with Windows Swift 6.3.3; no native acceptance inferred",
+  "nativePlan": {
+    "workflow": "build-ios26-unsigned-ipa.yml",
+    "target": "agent_sdk_session_only_proof",
+    "suites": [
+      "AgentSessionTests",
+      "AgentSessionContextTests",
+      "AgentStoreTests",
+      "HanlinPresentationKitTests",
+      "HanlinPresentationSDK generic iOS Simulator compile"
+    ],
+    "remainingAppTests": [
+      "AgentRoundPresentationTests",
+      "HanlinAppAgentSessionOwnerTests",
+      "AgentRuntimeConversationUITests",
+      "HanlinNativeA2UIChatUITests/testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft"
+    ],
+    "basis": [
+      "44188087516 Agent SDK passed on earlier source; affected Session lifecycle changed",
+      "44189173233 Foundation passed, actual iOS compile failed on old callback overload; use imported async API"
+    ]
+  },
+  "productionRelease": false,
+  "optionalNativeScriptMetadata": "excluded"
+}

@@ -1,0 +1,287 @@
+{
+  "scope": "READ_ONLY cross-consumer reconciliation. No consumer source/cache edits, native jobs, process stops or Apple mutations.",
+  "pullRequests": [
+    {
+      "key": "otzariaPR",
+      "url": "https://github.com/davidpovarsky/Maktabah/pull/4",
+      "head": "bd8bb2d3a0244d1005c2e0eaf1d17901e3b87ade",
+      "base": "3ff067c7157694cd11b16f403f537881f00d8691",
+      "draft": true,
+      "state": "open",
+      "mergeable": true,
+      "updated_at": "2026-11-25T17:27:18Z"
+    },
+    {
+      "key": "anytypePR",
+      "url": "https://github.com/davidpovarsky/anytype-swift/pull/2",
+      "head": "4ce34f33ae515840bfbc9458f5904438200987de",
+      "base": "8da18fce1b59a10a9bd46f0dc3becd810d45dc80",
+      "draft": true,
+      "state": "open",
+      "mergeable": true,
+      "updated_at": "2026-11-25T08:04:51Z"
+    }
+  ],
+  "leanBoundary": "All16 complete HanlinMiniAppsBridge package files match across both actual PR pins, owner9565, standalone86, roota356/current. The package contains Bridge and SwiftUI Picker and has no external/runtime package dependencies.",
+  "fullSDKBoundary": "HanlinAgentSDK tree matches owner9565/root. HanlinPlatform and HanlinPresentationSDK trees differ (52 and42 changed paths at rootdacf); no blanket four-package or binary qualification reuse.",
+  "ownerSources": {
+    "Anytype": {
+      "worktree": "anytype-final-integration-20261125",
+      "head": "a089ff29a5c0a7e415aac800844505f099a5561d",
+      "sdkPin": "9565a9e4775901a4cee6f0402d7fd2978fab6612",
+      "companionPin": "86a6dde354947be9329fe1e8f4d45a433fe488c4"
+    },
+    "Otzaria": {
+      "worktree": "Maktabah-owner-release-20261126",
+      "head": "ec14460748dc79818b1a7a3f269a54e3a1ddfaa9",
+      "sdkPin": "9565a9e4775901a4cee6f0402d7fd2978fab6612",
+      "companionPin": "86a6dde354947be9329fe1e8f4d45a433fe488c4"
+    },
+    "Otzaria_a356_candidate": {
+      "worktree": "otzaria-latest-shared-hanlin-a35694f7-agent1",
+      "head": "3184f2bc4c4fd80924495c64c74c535321eb0d6a",
+      "sdkPin": "a35694f73d07b161d6db5e8c150b7d905e883455",
+      "change": "Vendor/HanlinSDK pin only, separate candidate from PR4 and prior qualified binary"
+    }
+  },
+  "signing": {
+    "rootASCReadback": "docs/two-wave-integration/20261126/asc-current-build-readback.json",
+    "rootASCReadbackSHA256": "07e8a7ec9e7c7a9ca1963ffac3ac56f410e4bea5fd52ca5473732eec0a7d1a2d",
+    "app": {
+      "id": "6839398256",
+      "name": "Pinkha Notes",
+      "bundleID": "io.anytype.app.NA6HPWARQ2"
+    },
+    "ownerProfileAuditAt": "2026-11-26T05:36:59.920691+00:00",
+    "mainProfile": {
+      "id": "9RF3H8H69R",
+      "state": "ACTIVE",
+      "uuid": "0a466cdf-7a7e-4153-a179-f4ee2f61385d",
+      "groups": [
+        "group.io.anytype.app.NA6HPWARQ2",
+        "group.com.itorah.shared"
+      ],
+      "multicastGranted": false
+    },
+    "sourceMulticastRequired": true,
+    "sourceEntitlements": "a089ff29a5c0a7e415aac800844505f099a5561d:Config/Signing/AnytypeOwner.entitlements",
+    "sourceEntitlementsSHA256": "4a0e75a96f6766ed4a7fc0a52a5ad956fd279b09027938633901caca40e47b68",
+    "distributionIdentityPresent": true,
+    "releaseCertificateChainValidation": "NOT_PERFORMED_BY_THIS_INVENTORY",
+    "archive": false,
+    "upload": false,
+    "boundary": "ASC record and both App Groups exist. Latest owner profile receipt lacks multicast, which current source requires. No fresh portal grant query in this lane; root READY_RESOURCE10 covers Hanlin/MiniApps only."
+  },
+  "currentConsumerGates": {
+    "a356_original_sharedSDK": {
+      "status": "FAIL",
+      "exit": 65,
+      "cause": "No space left on device in original compiler diagnostics/dependency outputs",
+      "sourceFailureInferred": false
+    },
+    "Otzaria_file_roundtrip": {
+      "source": "3d51363c8d3dba1c6fce8a5c6089290738f33436",
+      "build": "PASS",
+      "selector": "MiniAppsAnnotationAcceptanceTests/testOriginalNativeFilesRoundTripAndReplayAfterColdReopen",
+      "result": "FAIL",
+      "successorSource": "74ea79ec1401afaafba1ea31c3c1f3d9ac278996",
+      "successorBuild": "PASS",
+      "successorResult": "NOT_PRESENT_AT_15:09_READ",
+      "scope": "Two durable callbacks are separate partial observations; cancellation/replay/current file/text/RTL full acceptance still open."
+    },
+    "Anytype_main": {
+      "ownerAsanaLastUpdate": "2026-11-26T08:50:11.525Z",
+      "release": "No Release archive/upload reported",
+      "acceptance": "App15 focus32/drag1 and partial original source stages are limited proofs. Real editor focus correction, T2/T5 UI, remaining stages and full MiniApps acceptance remain separate."
+    }
+  },
+  "retainedSQLiteLifecycle": {
+    "observedAt": "2026-11-26T15:11:45.724114+00:00",
+    "classification": "RUNNING_CURRENT_ORIGINAL_GATE_NOT_ORPHAN",
+    "root": "/Users/m1/builds/otzaria-shared-agent1-20261126/anytype-original-sqlite-completion-after-2406",
+    "controllerPID": 77581,
+    "xcodebuildPID": 77620,
+    "processGroup": 77561,
+    "runnerPID": 77704,
+    "appPID": 77811,
+    "simulator": "2F225B23-3149-4384-906F-8865483CBE41",
+    "testCommit": "c15e148ed11bfdc03dea4119ac49672fa86253b2",
+    "selector": "Maktabah-iOSUITests/ProductionAnnotationEditorAcceptanceTests/testOrdinaryPreparationBackfillsFiveThousandSavedSQLiteNotes",
+    "controllerTimeoutSeconds": 14900,
+    "testAllowanceSeconds": 14400,
+    "elapsedAt15_10_35": "28m38s",
+    "initial": {
+      "original": 5000,
+      "distinct": 5000,
+      "prepared": 5000,
+      "native": 2406,
+      "revisions": 2406
+    },
+    "terminalFilesAbsent": [
+      "retained-original-result.json",
+      "retained-original.exit"
+    ],
+    "activeTestLogLastModified": "2026-11-26T15:11:43.338580+00:00",
+    "controllerWritesTerminalFilesInFinally": true,
+    "cleanupRecommended": false,
+    "previousFailures": "Earlier f300/phase-probe failures retained the simulator for retries; they do not terminate this continuation."
+  },
+  "asanaSnapshots": [
+    {
+      "task_id": "1220828323110690",
+      "name": "[MINIAPPS-BRIDGE-04] אוצריא — בחירת טקסט ועורך הערות עם חזרה ושמירה",
+      "completed": false,
+      "modified_at": "2026-11-26T14:59:05.193Z",
+      "comments": [
+        {
+          "id": "1220928313062015",
+          "created_at": "2026-11-26T11:14:31.463Z",
+          "text": "סוכן 1 | תיקון המיקוד של העורך המקורי נבנה בפועל ב־Xcode 27 על SHA e973cc7432419778f0342624a3b7052055fd270d https://github.com/davidpovarsky/anytype-swift/commit/e973cc7432419778f0342624a3b7052055fd270d. התיקון חל על הערה עם תוכן שמור; עריכה חדשה וריקה שומרת את מדיניות המיקוד המקורית. שני ה־frameworks המקוריים קושרו לחבילת f4 ללא שינוי בקוד Swift שלה. ה־Mach-O של launcher זהה לאחר הסרת חתימה מעותקי השוואה בלבד; המוצר חתום ואומת עם Go b18. SHA256 קבלת ה־overlay 4be9eaa4c748bd7db54722ae9d3c08c85037591fe6c98e14b2b68bd4ca76515e. הרצות File Workshop ו־TextStudio המקוריות החלו בסימולטורים נפרדים. לבניית b10 Debug שכבר עברה יש ארכיון נוסף ב־Oracle anytype-b10-formal-debug-external-runtime-evidence.tar.gz SHA256 abd076f8ccf94cb40b0090c6d8969934f5c45f97de8911118a5f6720a559057f."
+        },
+        {
+          "id": "1220928740292900",
+          "created_at": "2026-11-26T11:45:38.970Z",
+          "text": "[Agent 1 | MAIN_SESSION] Original iPad app Xcode build and native reader drawer regression passed for https://github.com/davidpovarsky/Maktabah/commit/37bf0408cb5651449dbf4d00f35ec4bb84ad54aa (Mac 50078fd40d4342e1c6a48f156120730c8b7d352f, identical two source blobs, original saved editor e973/b18). TextStudio durable SQLite before/after relaunch receipts have the identical SHA 58b9be8a442d64047e59d3d7ff9ed8de2031e966c4e8ac09b1dd3a29d98de61d. Original cold OS callback receipt 4e4e383cb8f321075682910e3f125fa364b5d4ace2b4848c671085f955030adb. Real reader selection created one linked annotation (receipt f4f8e50705e86a8cafea12e6e3981bbc0b0b9fa832c1e3762cfffdb476e5b266), unchanged source corpus 77e74102a79eb6b1f8d5ab0ab5d625737f2b5b4a4ae9a751d6f862d363a63a53. Full selector 0/1 at a later rich-editor empty-block XCTest assumption, which remains under verification. Raw logs, xcresult and attachments preserved on the Mac in live-original-9565-8e71775f/miniapps-37bf0408-e973-original-text-runtime."
+        },
+        {
+          "id": "1220928953522236",
+          "created_at": "2026-11-26T11:51:46.125Z",
+          "text": "[Agent 1 | MAIN_SESSION] Original File Workshop launch regression passed after the app's native canonical Save. App commits https://github.com/davidpovarsky/Maktabah/commit/7af5c5a074b79bf322380d94ac195ca3426ed411 and https://github.com/davidpovarsky/Maktabah/commit/3c15e96710c15f93340e5848bbb11c8e3833736a, Mac compiled exact five blobs on 61c7a50. Real iPad File Workshop editor opened, received original source text, cut it, entered generated replacement, and dispatched real Return. Screenshot c6aa119d1f59b9a467053ce14715f3d33d78bb7c6e7d2bcf00fa1ea019b4a292. Full native file test 0/1: callback brought Otzaria to foreground, then the original native editor stayed in Saving note 120 seconds (AX SHA 640fb5035403f10d70759b519a14ed57fdc943161594618b628ba49c622b6bb1). Investigating the original file upload/capture path. Raw Xcode evidence preserved at Mac live-original-9565-8e71775f/miniapps-3c15e967-e973-original-files-runtime."
+        },
+        {
+          "id": "1220930553073519",
+          "created_at": "2026-11-26T13:05:05.294Z",
+          "text": "אבחון באפליקציות iPad המקוריות מול Anytype SDK ‏9a046b6d32ad1e3ab877cbfe784b77f71d575b5f קלט את החזרת File Workshop. הקובץ נכתב ונקשר לאובייקט Anytype המקורי. לכידת ששת שלבי המקור הסתיימה אחרי קישור האובייקט ולפני קריאת הבתים. XCTest ‏0/1. SHA256 ללוג שלבים c165c09d209ed8b598ffd8cf7b19a313668f88c8dc09a531d044f201f699fdb2, ארכיון ב־Oracle ‏miniapps-9a046b6d-original-file-stage-evidence.tar.gz ‏SHA256 ‏1ba041db1d6636357470397706e4094b0c9dfbbfc0ef21f46627044c84b33619. מועמד 882c572b4172391c2e9591bc02d8c2f6b1a07fe0 משתמש בקריאת הבתים מהייצוא המקורי המלא של אותו אובייקט תוך שמירת בדיקות השם, הקישור והבתים. Xcode Build עבר. בדיקת המוצר החתום רצה."
+        },
+        {
+          "id": "1220931942442129",
+          "created_at": "2026-11-26T13:56:11.627Z",
+          "text": "במועמד c33949fc8b79da08a9677ad79a8c701878f20d81 האפליקציה המקורית יצרה וקיבלה קובץ מ־File Workshop, שמרה קבלת callback אחת, נסגרה, נפתחה מחדש, ושלחה את הקובץ השמור ל־File Workshop בפעם השנייה. הייצוא והקריאה החוזרת של האובייקט המקורי עברו על המכשיר המדומה. גרסת המסירה ללא לוגי אבחון bfc80e5e85eabaa52f914e872f2da6c6888ca88c מיועדת לתיקון הקריאה אחרי פתיחה קרה. הריצה המלאה נשארה 0/1 בשמירה לאחר העריכה השנייה. לוג קריאת הארכיון SHA256 ‏78e5d0644af0f73ef25049e67ee991a882f4e716505693bf2e4103c08550d13b וראיות ב־Oracle ‏miniapps-c33949fc-cold-native-file-evidence.tar.gz ‏2d5b12e06b8d13abca3bab8f4f3ea7a347d0fb1705e3e59ac209bce745b0eb2f. https://github.com/davidpovarsky/anytype-swift/commit/bfc80e5e85eabaa52f914e872f2da6c6888ca88c"
+        }
+      ]
+    },
+    {
+      "task_id": "1220933253710763",
+      "name": "MiniApps · שתי החזרות מקוריות, כולל שמירה לאחר פתיחה קרה",
+      "completed": false,
+      "modified_at": "2026-11-26T14:59:05.184Z",
+      "notes": "מוצר אוצריא ו-Anytype המקוריים שמרו שני callbacks של File Workshop לאותה הערה. בהחזרה השנייה iPadOS פתח תהליך חדש, העורך אימת את מזהי הארכיון, קרא את קובץ ה-UTF-8 והפיק ארכיון עם הקובץ. שתי הבקשות קיבלו ACK, ולכל אחת בדיוק קבלת SQLite אחת. קובץ ראיות Bridge ו-SQLite SHA-256 c21bbdd32fd8e6d17e34f473a12b5746c337383738858078cb4f3b7e95f91abd; לוג שלבי מקור 9f9f64a3b71f5a22e81db9035ab0c4f95888c809f4184a1f1307f148cdc40191. ריצת XCTest המלאה עדיין 0/1 משום ששאילתת נגישות נחתה במהלך החלפת העורך. תוקן סדר השאילתות. מועמד המשך 50caaf82d922c0ecc26642d98f9d4ab9c4aa4dbb שומר את ההקשר הפעיל בבעלות אותו request והעורך, כך שעריכה בבלוק אחר לפני ההחזרה נשמרת בהתאם להתנהגות המקורית. בדיקות ביטול, replay, File Workshop המלא ו-TextStudio העשיר על מועמד ההמשך עדיין פתוחות.\nhttps://github.com/davidpovarsky/Maktabah/commit/d1cea8e83f91d7e725d7dd04409162043da0e4ff\nhttps://github.com/davidpovarsky/Maktabah/commit/50caaf82d922c0ecc26642d98f9d4ab9c4aa4dbb\nhttps://github.com/davidpovarsky/anytype-swift/commit/bfc80e5e85eabaa52f914e872f2da6c6888ca88c\nראיות Mac /Users/m1/builds/otzaria-shared-agent1-20261126/miniapps-durable-archive-context-candidate/original-runtime-files.",
+      "comments": []
+    },
+    {
+      "task_id": "1220820444037166",
+      "name": "[MINIAPPS-BRIDGE-05] Anytype — סרגל עורך, בחירה ועריכת מסמך אמיתית",
+      "completed": false,
+      "modified_at": "2026-11-25T20:17:16.710Z",
+      "comments": []
+    }
+  ],
+  "at": "2026-11-26T15:14:59.706947+00:00",
+  "packageTrees": {
+    "Anytype_PR2_pin": {
+      "revision": "4b772b5a7f0eb826c9b9204122bba516af777592",
+      "treeIDs": {
+        "Packages/HanlinMiniAppsBridge": "98ef5d2b47c03f4ea98319a851abae183f500a40",
+        "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge": "5334065bd54293b0e9c9a6e05eab166804796e41",
+        "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsPicker": "1feabd59239b4ce32b007d1ff252cc30703a8774",
+        "Packages/HanlinAgentSDK": "c461d5a3ae420175d1f79866d822f04ce9c20515",
+        "Packages/HanlinPlatform": "9e5dbb4389bb4f51b26f5e93cdda8eed219c09f5",
+        "Packages/HanlinPresentationSDK": "6ec3257bbf0d7ec62e95f31424549810871bb2d1"
+      },
+      "bridgePackageFiles": 16,
+      "bridgeEntryListingSHA256": "238bf4e69e70c0b26e2886d8d15c881718553c66bedb2721fa810b7df7c45902"
+    },
+    "Otzaria_PR4_pin": {
+      "revision": "fe3f75d0638671c749225e9a8ddd487db70981cf",
+      "treeIDs": {
+        "Packages/HanlinMiniAppsBridge": "98ef5d2b47c03f4ea98319a851abae183f500a40",
+        "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge": "5334065bd54293b0e9c9a6e05eab166804796e41",
+        "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsPicker": "1feabd59239b4ce32b007d1ff252cc30703a8774",
+        "Packages/HanlinAgentSDK": "498032fa42a1bccbbbfcd0335ee61533af3ad086",
+        "Packages/HanlinPlatform": "b2407238ee930a0808ad393a264cb4f9660e78eb",
+        "Packages/HanlinPresentationSDK": "b695125356df74b9d31974583d605c381555ad58"
+      },
+      "bridgePackageFiles": 16,
+      "bridgeEntryListingSHA256": "238bf4e69e70c0b26e2886d8d15c881718553c66bedb2721fa810b7df7c45902"
+    },
+    "qualified_companion": {
+      "revision": "86a6dde354947be9329fe1e8f4d45a433fe488c4",
+      "treeIDs": {
+        "Packages/HanlinMiniAppsBridge": "98ef5d2b47c03f4ea98319a851abae183f500a40",
+        "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge": "5334065bd54293b0e9c9a6e05eab166804796e41",
+        "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsPicker": "1feabd59239b4ce32b007d1ff252cc30703a8774",
+        "Packages/HanlinAgentSDK": "498032fa42a1bccbbbfcd0335ee61533af3ad086",
+        "Packages/HanlinPlatform": "b2407238ee930a0808ad393a264cb4f9660e78eb",
+        "Packages/HanlinPresentationSDK": "b695125356df74b9d31974583d605c381555ad58"
+      },
+      "bridgePackageFiles": 16,
+      "bridgeEntryListingSHA256": "238bf4e69e70c0b26e2886d8d15c881718553c66bedb2721fa810b7df7c45902"
+    },
+    "active_owner_SDK_pin": {
+      "revision": "9565a9e4775901a4cee6f0402d7fd2978fab6612",
+      "treeIDs": {
+        "Packages/HanlinMiniAppsBridge": "98ef5d2b47c03f4ea98319a851abae183f500a40",
+        "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge": "5334065bd54293b0e9c9a6e05eab166804796e41",
+        "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsPicker": "1feabd59239b4ce32b007d1ff252cc30703a8774",
+        "Packages/HanlinAgentSDK": "498032fa42a1bccbbbfcd0335ee61533af3ad086",
+        "Packages/HanlinPlatform": "ba13838bbc6bf30f271a1d3c366b4a6f4d07a332",
+        "Packages/HanlinPresentationSDK": "b695125356df74b9d31974583d605c381555ad58"
+      },
+      "bridgePackageFiles": 16,
+      "bridgeEntryListingSHA256": "238bf4e69e70c0b26e2886d8d15c881718553c66bedb2721fa810b7df7c45902"
+    },
+    "root_production": {
+      "revision": "a35694f73d07b161d6db5e8c150b7d905e883455",
+      "treeIDs": {
+        "Packages/HanlinMiniAppsBridge": "98ef5d2b47c03f4ea98319a851abae183f500a40",
+        "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge": "5334065bd54293b0e9c9a6e05eab166804796e41",
+        "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsPicker": "1feabd59239b4ce32b007d1ff252cc30703a8774",
+        "Packages/HanlinAgentSDK": "498032fa42a1bccbbbfcd0335ee61533af3ad086",
+        "Packages/HanlinPlatform": "f33c56bab49c686b0f17779a969c6988a87a421a",
+        "Packages/HanlinPresentationSDK": "9fe4514bbf21bc43a1d92a89807ee987a13edc21"
+      },
+      "bridgePackageFiles": 16,
+      "bridgeEntryListingSHA256": "238bf4e69e70c0b26e2886d8d15c881718553c66bedb2721fa810b7df7c45902"
+    },
+    "root_current": {
+      "revision": "dacf9b70bad5b1d5c279debb473132397b001e9f",
+      "treeIDs": {
+        "Packages/HanlinMiniAppsBridge": "98ef5d2b47c03f4ea98319a851abae183f500a40",
+        "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge": "5334065bd54293b0e9c9a6e05eab166804796e41",
+        "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsPicker": "1feabd59239b4ce32b007d1ff252cc30703a8774",
+        "Packages/HanlinAgentSDK": "498032fa42a1bccbbbfcd0335ee61533af3ad086",
+        "Packages/HanlinPlatform": "f33c56bab49c686b0f17779a969c6988a87a421a",
+        "Packages/HanlinPresentationSDK": "4e9a73648c4779966c8f8cb127dbc18be9ed6ec1"
+      },
+      "bridgePackageFiles": 16,
+      "bridgeEntryListingSHA256": "238bf4e69e70c0b26e2886d8d15c881718553c66bedb2721fa810b7df7c45902"
+    }
+  },
+  "retainedEvidence": [
+    {
+      "name": "anytype-signing-resource-audit-0537.json",
+      "bytes": 8129,
+      "sha256": "2b86ca202f33c45727db8961e7b80c51f47b32b88bdbf7196f4af91a75b04366"
+    },
+    {
+      "name": "otzaria-a356-shared-sdk-build.log",
+      "bytes": 2676136,
+      "sha256": "0da5b60ee982b8bf191e860ddf1b00b6de012bcbcc8742fc816318273ec60646"
+    },
+    {
+      "name": "otzaria-a356-shared-sdk-build.exit",
+      "bytes": 3,
+      "sha256": "979b894f2d91bf199766571d58024f020d1a44a417da5f48e1fa1cdf554a14f5"
+    },
+    {
+      "name": "otzaria-file-roundtrip-3d51363c-result.json",
+      "bytes": 6729,
+      "sha256": "030f24ce4702b697afa5924b2aef5ab844c43b001e947d4d4393d63606b2e2e2"
+    },
+    {
+      "name": "retained-sqlite-controller.py",
+      "bytes": 6699,
+      "sha256": "474c0abbd11477ffecb260add635d46ad0427eaa70bfd1c810be69f8d9ec170d"
+    }
+  ]
+}

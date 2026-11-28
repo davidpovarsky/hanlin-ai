@@ -1,0 +1,27 @@
+{
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_original_source_fixtures.py",
+    "-k",
+    "test_canonical_phase_belongs_only_to_the_original_unit_test_product",
+    "-v"
+  ],
+  "startedAtUTC": "2026-11-27T15:15:20.879802+00:00",
+  "finishedAtUTC": "2026-11-27T15:15:21.182876+00:00",
+  "durationSeconds": 0.3013636078685522,
+  "exitCode": 0,
+  "sourceTestSHA256": "37b0b1a08a06e71f535cfd6996fc3896aa81d2ae59c1962cde014f769f177dd2",
+  "stderrSHA256": "7286c65ea342e11548099de6318df33e225bd87b4d0b1e76f64083aa40d12124",
+  "originalEightUnchangedMethods": "Actual PASS retained in portable-r1; not rerun",
+  "nativeStatus": "NOT_RUN"
+}

@@ -1,0 +1,498 @@
+import HanlinLocalization
+import Foundation
+
+import HanlinPlatformContracts
+
+@MainActor
+enum AssistantToolBridge {
+  struct Executors {
+    let executeNative:
+      @MainActor (
+        HanlinProviderInstanceID,
+        String,
+        String,
+        NativeToolExecutionContext
+      ) async -> NativeToolResult
+    let executeMCP:
+      @MainActor (
+        UUID,
+        String,
+        String,
+        String
+      ) async -> NativeToolResult
+    let executeScripting:
+      @MainActor (
+        HanlinScriptBackendRoute,
+        String
+      ) async -> NativeToolResult
+    let executeLegacy:
+      @MainActor (
+        String,
+        String,
+        NativeToolExecutionContext
+      ) async -> NativeToolResult
+
+    init(
+      executeNative: @escaping @MainActor (
+        HanlinProviderInstanceID,
+        String,
+        String,
+        NativeToolExecutionContext
+      ) async -> NativeToolResult,
+      executeMCP: @escaping @MainActor (
+        UUID,
+        String,
+        String,
+        String
+      ) async -> NativeToolResult = { _, _, _, _ in
+        NativeToolResult(modelText: "MCP not configured", outcome: .failed)
+      },
+      executeScripting: @escaping @MainActor (
+        HanlinScriptBackendRoute,
+        String
+      ) async -> NativeToolResult,
+      executeLegacy: (@MainActor (
+        String,
+        String,
+        NativeToolExecutionContext
+      ) async -> NativeToolResult)? = nil
+    ) {
+      self.executeNative = executeNative
+      self.executeMCP = executeMCP
+      self.executeScripting = executeScripting
+      self.executeLegacy = executeLegacy ?? { toolName, _, _ in
+        NativeToolResult(
+          modelText: "Legacy tool '\(toolName)' executor not configured.",
+          userText: "Legacy tool '\(toolName)' is not configured.",
+          uiBlocks: [],
+          outcome: .failed
+        )
+      }
+    }
+
+    // Nested Executors does not inherit the enclosing bridge's actor isolation.
+    @MainActor
+    static var live: Self {
+      live(scriptingRegistry: .shared)
+    }
+
+    @MainActor
+    static func live(
+      scriptingRegistry: HanlinScriptingProviderRegistry,
+      explicitlySelectedNativeNames: Set<String> = [],
+      miniAppTools: [NativeTool] = [],
+      executeLegacy: (@MainActor (String, String, NativeToolExecutionContext) async -> NativeToolResult)? = nil
+    ) -> Self {
+      let miniAppsByName = Dictionary(miniAppTools.map { ($0.name, $0) }, uniquingKeysWith: { first, _ in first })
+      return Self(
+        executeNative: { providerInstanceID, toolName, argumentsJSON, context in
+          if let tool = miniAppsByName[toolName] {
+            guard (try? NativeToolCanonicalShadowAdapter.providerInstanceID(for: tool.catalogEntry)) == providerInstanceID else {
+              return NativeToolResult(modelText: "The selected MiniApp route changed.", outcome: .rejectedByAvailability)
+            }
+            return await tool.execute(argumentsJSON: argumentsJSON, context: context)
+          }
+          return await NativeToolBridge.executeCanonical(
+            providerInstanceID: providerInstanceID,
+            toolName: toolName,
+            argumentsJSON: argumentsJSON,
+            context: context,
+            explicitlySelected: explicitlySelectedNativeNames.contains(toolName)
+          )
+        },
+        executeMCP: { serverID, toolName, resultTitle, argumentsJSON in
+          await MCPToolBridge.execute(
+            serverID: serverID,
+            toolName: toolName,
+            resultTitle: resultTitle,
+            argumentsJSON: argumentsJSON
+          )
+        },
+        executeScripting: { route, argumentsJSON in
+          do {
+            let result = try await scriptingRegistry.execute(
+              route: route,
+              argumentsJSON: argumentsJSON
+            )
+            if result.isStructured {
+              return try nativeResult(for: result)
+            }
+            let modelText: String
+            if let data = result.data {
+              let payload = HanlinJSONValue.object([
+                "success": .bool(result.success),
+                "message": .string(result.message),
+                "data": try data.jsonValue(),
+              ])
+              modelText = String(
+                decoding: try payload.canonicalJSONData(),
+                as: UTF8.self
+              )
+            } else {
+              modelText = result.message
+            }
+            return NativeToolResult(
+              modelText: modelText,
+              userText: result.success ? nil : result.message,
+              uiBlocks: result.success
+                ? []
+                : [
+                  .init(
+                    type: .error,
+                    title: "Script tool failed",
+                    body: result.message,
+                    systemImage: "exclamationmark.triangle"
+                  )
+                ],
+              outcome: result.success ? .succeeded : .failed
+            )
+          } catch let error as HanlinScriptingError {
+            return NativeToolResult(
+              modelText: "Script tool failed (\(error.diagnosticCode)).",
+              userText: error.localizedDescription,
+              uiBlocks: [
+                .init(
+                  type: .error,
+                  title: "Script tool failed",
+                  body: error.localizedDescription,
+                  systemImage: "exclamationmark.triangle"
+                )
+              ],
+              outcome: .failed
+            )
+          } catch {
+            return NativeToolResult(
+              modelText: "Script tool failed (unexpected_failure).",
+              userText: "The Script tool could not complete.",
+              uiBlocks: [
+                .init(
+                  type: .error,
+                  title: "Script tool failed",
+                  body: "The Script tool could not complete.",
+                  systemImage: "exclamationmark.triangle"
+                )
+              ],
+              outcome: .failed
+            )
+          }
+        },
+        executeLegacy: executeLegacy
+      )
+    }
+
+    static func nativeResult(
+      for result: HanlinScriptToolExecutionResult
+    ) throws -> NativeToolResult {
+      let assistantParts = result.assistantParts ?? []
+      let assistantPayload = HanlinValue.object([
+        "success": .bool(result.success),
+        "output": .object([
+          "assistantParts": .array(assistantParts.map(\.value))
+        ]),
+      ])
+      let modelText = String(
+        decoding: try assistantPayload.canonicalJSONData(),
+        as: UTF8.self
+      )
+      let userParts = result.userParts ?? []
+      let userText = userParts.compactMap { part -> String? in
+        switch part {
+        case .string(let text), .text(let text): text
+        case .image: nil
+        }
+      }.joined(separator: "\n")
+      let blocks = userParts.map { part -> NativeUIBlock in
+        switch part {
+        case .string(let text), .text(let text):
+          return NativeUIBlock(type: .markdown, body: text)
+        case .image(let base64, let mimeType):
+          return NativeUIBlock(
+            type: .card,
+            title: String(localized: "Image", bundle: HanlinLocalization.bundle),
+            systemImage: "photo",
+            embeddedImageBase64: base64,
+            embeddedImageMIMEType: mimeType
+          )
+        }
+      }
+      return NativeToolResult(
+        modelText: modelText,
+        userText: userText.isEmpty ? nil : userText,
+        uiBlocks: blocks,
+        outcome: result.success ? .succeeded : .failed
+      )
+    }
+  }
+
+  @MainActor
+  struct PreparedTools {
+    let authority: HanlinCanonicalToolAuthority
+    let executors: Executors
+    let legacySources: [HanlinCanonicalToolAuthority.LegacySource]
+
+    init(
+      authority: HanlinCanonicalToolAuthority,
+      executors: Executors = .live,
+      legacySources: [HanlinCanonicalToolAuthority.LegacySource] = []
+    ) {
+      self.authority = authority
+      self.executors = executors
+      self.legacySources = legacySources
+    }
+
+    var mcpAliases: [String] {
+      authority.schemasByAlias.keys.filter { $0.hasPrefix("mcp__") }.sorted()
+    }
+
+    func refreshingMCPTools(
+      scope: AssistantToolRequestScope,
+      scriptingRegistry: HanlinScriptingProviderRegistry = .shared
+    ) async throws -> PreparedTools {
+      try HanlinComposerCapabilities.validate(scope.capabilityAttachments)
+      var nativeSources = try NativeToolBridge.canonicalSourcesForRequest(
+        explicitToolNames: HanlinComposerCapabilities.explicitNativeNames(in: scope.capabilityAttachments))
+      nativeSources += AssistantToolBridge.miniAppSources(HanlinMiniAppAssistantToolExports.tools(attachments: scope.capabilityAttachments))
+      let mcpTools = await MCPToolBridge.resolveDescriptors(scope: scope)
+      let scriptSources = try HanlinScriptCanonicalAdapter.project(
+        await scriptingRegistry.snapshots()
+      )
+      return PreparedTools(
+        authority: try HanlinCanonicalToolAuthority.build(
+          nativeSources: nativeSources,
+          mcpTools: mcpTools,
+          scriptSources: scriptSources,
+          legacySources: legacySources
+        ),
+        executors: executors,
+        legacySources: legacySources
+      )
+    }
+
+    var schemas: [[String: Any]] {
+      authority.modelSchemas
+    }
+
+    func schemas(for exposedAliases: Set<String>) -> [[String: Any]] {
+      authority.schemas(forAliases: exposedAliases)
+    }
+
+    func schemaSizes() -> [String: Int] {
+      var sizes: [String: Int] = [:]
+      for (alias, schema) in authority.schemasByAlias {
+        if let data = try? JSONSerialization.data(withJSONObject: schema) {
+          sizes[alias] = data.count
+        } else {
+          sizes[alias] = 250
+        }
+      }
+      return sizes
+    }
+
+    func search(
+      query: String,
+      limit: Int = 10,
+      offset: Int = 0,
+      preferredAliases: Set<String> = []
+    ) -> [CanonicalToolSearchRecord] {
+      let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+      let terms = trimmed.split(separator: " ").map(String.init)
+      let all = authority.searchableMetadata()
+      guard !terms.isEmpty else {
+        let sorted = all.sorted {
+          let p0 = preferredAliases.contains($0.alias) ? 1 : 0
+          let p1 = preferredAliases.contains($1.alias) ? 1 : 0
+          if p0 != p1 { return p0 > p1 }
+          return $0.alias < $1.alias
+        }
+        let start = min(offset, sorted.count)
+        let end = min(start + limit, sorted.count)
+        return Array(sorted[start..<end])
+      }
+      let scored = all.compactMap { record -> (CanonicalToolSearchRecord, Int)? in
+        var lexicalScore = 0
+        let alias = record.alias.lowercased()
+        let title = record.title.lowercased()
+        let summary = record.summary.lowercased()
+        let category = record.category?.lowercased() ?? ""
+
+        // Exact match on full query gets highest priority (DISC-07)
+        if alias == trimmed {
+          lexicalScore += 1000
+        }
+
+        for term in terms {
+          if alias == term {
+            lexicalScore += 500
+          } else if alias.contains(term) {
+            lexicalScore += 50
+          }
+          if title.contains(term) { lexicalScore += 30 }
+          if summary.contains(term) { lexicalScore += 20 }
+          if category.contains(term) { lexicalScore += 15 }
+          for kw in record.keywords where kw.lowercased().contains(term) {
+            lexicalScore += 10
+          }
+        }
+
+        // DISC-08: Genuine lexical match is required.
+        // Boost alone does not return irrelevant tools when no terms match.
+        guard lexicalScore > 0 else { return nil }
+
+        var totalScore = lexicalScore
+        if preferredAliases.contains(record.alias) {
+          totalScore += 30
+        }
+        return (record, totalScore)
+      }
+
+      // Deterministic ranking: score descending, then alias ascending (DISC-21)
+      let sorted = scored.sorted {
+        if $0.1 != $1.1 { return $0.1 > $1.1 }
+        return $0.0.alias < $1.0.alias
+      }
+      let start = min(offset, sorted.count)
+      let end = min(start + limit, sorted.count)
+      return Array(sorted[start..<end].map(\.0))
+    }
+
+    func presentationProfile(for alias: String) -> ToolPresentationProfile? {
+      guard let resolution = authority.resolution(alias: alias) else { return nil }
+      var profile = resolution.presentationProfile
+      if profile.canonicalExecutionPresentation == nil {
+        profile.canonicalExecutionPresentation = resolution.toolPresentation.executionPresentation
+      }
+      if profile.canonicalEmbeddedPresentation == nil {
+        profile.canonicalEmbeddedPresentation = resolution.toolPresentation.embeddedPresentation
+      }
+      return profile
+    }
+
+    func toolPresentation(for alias: String) -> HanlinToolPresentationDescriptor? {
+      authority.resolution(alias: alias)?.toolPresentation
+    }
+
+    func toolDescriptor(for alias: String) -> HanlinToolDescriptor? {
+      authority.toolDescriptor(for: alias)
+    }
+
+    func execute(
+      alias: String,
+      argumentsJSON: String,
+      context: NativeToolExecutionContext
+    ) async -> NativeToolResult? {
+      guard let resolution = authority.resolution(alias: alias) else {
+        return nil
+      }
+      var result: NativeToolResult
+      var executionContext = context
+      executionContext.composerConfiguration = context.capabilitySession?.composerConfiguration(for: alias)
+      switch resolution.backend {
+      case .native(let providerInstanceID, let toolName):
+        result = await executors.executeNative(
+          providerInstanceID,
+          toolName,
+          argumentsJSON,
+          executionContext
+        )
+      case .mcp(let serverID, let toolName):
+        result = await executors.executeMCP(
+          serverID,
+          toolName,
+          resolution.resultTitle ?? toolName,
+          argumentsJSON
+        )
+      case .scripting(let route):
+        result = await executors.executeScripting(route, argumentsJSON)
+      case .legacy(let toolName):
+        result = await executors.executeLegacy(toolName, argumentsJSON, executionContext)
+      }
+      let logicalID = resolution.route.logicalToolID
+      result.diagnostics.canonicalLogicalToolID =
+        "\(logicalID.providerInstanceID.rawValue)|\(logicalID.localToolID.rawValue)"
+      result.diagnostics.modelFacingAlias = alias
+      result.diagnostics.backendRoute = backendRouteDescription(resolution.backend)
+      result.diagnostics.source = backendSource(resolution.backend)
+      return result
+    }
+
+    private func backendRouteDescription(
+      _ backend: HanlinCanonicalToolBackendRoute
+    ) -> String {
+      switch backend {
+      case .native(let providerInstanceID, let toolName):
+        "native:\(providerInstanceID.rawValue):\(toolName)"
+      case .mcp(let serverID, let toolName):
+        "mcp:\(serverID.uuidString.lowercased()):\(toolName)"
+      case .scripting(let route):
+        "scripting:\(route.providerInstanceID.rawValue)"
+      case .legacy(let toolName):
+        "legacy:\(toolName)"
+      }
+    }
+
+    private func backendSource(_ backend: HanlinCanonicalToolBackendRoute) -> String {
+      switch backend {
+      case .native: "native"
+      case .mcp: "mcp"
+      case .scripting: "scripting"
+      case .legacy: "legacy"
+      }
+    }
+  }
+
+  static func prepare(
+    scope: AssistantToolRequestScope,
+    legacySources: [HanlinCanonicalToolAuthority.LegacySource] = [],
+    legacyExecutor: (@MainActor (String, String, NativeToolExecutionContext) async -> NativeToolResult)? = nil,
+    scriptingRegistry: HanlinScriptingProviderRegistry = .shared
+  ) async throws -> PreparedTools {
+    do {
+      try HanlinComposerCapabilities.validate(scope.capabilityAttachments)
+      let explicitNames = HanlinComposerCapabilities.explicitNativeNames(in: scope.capabilityAttachments)
+      var selectedLegacySources = legacySources
+      let existingLegacyIDs = Set(legacySources.map { $0.descriptor.logicalID })
+      selectedLegacySources += HanlinComposerCapabilities.explicitLegacySources(in: scope.capabilityAttachments)
+        .filter { !existingLegacyIDs.contains($0.descriptor.logicalID) }
+      let miniAppTools = HanlinMiniAppAssistantToolExports.tools(attachments: scope.capabilityAttachments)
+      var nativeSources = try NativeToolBridge.canonicalSourcesForRequest(explicitToolNames: explicitNames)
+      nativeSources += miniAppSources(miniAppTools)
+      let mcpTools = await MCPToolBridge.resolveDescriptors(scope: scope)
+      let scriptSources = try HanlinScriptCanonicalAdapter.project(
+        await scriptingRegistry.snapshots()
+      )
+      let executors = Executors.live(
+        scriptingRegistry: scriptingRegistry,
+        explicitlySelectedNativeNames: explicitNames,
+        miniAppTools: miniAppTools,
+        executeLegacy: legacyExecutor
+      )
+      return PreparedTools(
+        authority: try HanlinCanonicalToolAuthority.build(
+          nativeSources: nativeSources,
+          mcpTools: mcpTools,
+          scriptSources: scriptSources,
+          legacySources: selectedLegacySources
+        ),
+        executors: executors,
+        legacySources: selectedLegacySources
+      )
+    } catch {
+      NativeToolTraceLogger.shared.log(
+        "canonical_tool_authority_build_failed",
+        [
+          "errorType": String(describing: type(of: error)),
+          "message": error.localizedDescription,
+        ]
+      )
+      throw error
+    }
+  }
+
+  private static func miniAppSources(_ tools: [NativeTool]) -> [HanlinCanonicalToolAuthority.NativeSource] {
+    tools.map { tool in
+      .init(entry: tool.catalogEntry, canonicalSchema: tool.openAIToolSchema(),
+            modelSchema: ToolSchemaDecorator.decorate(schema: tool.openAIToolSchema(),
+              profile: tool.catalogEntry.presentationProfile, progressSummaryRequired: false))
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "status": "SOURCE_REVIEW_APPROVED_NATIVE_NOT_RUN",
+  "base": "1aef1ec13b980454b5aba43f0a4787cd5301a748",
+  "sourceCommit": "6888ccdb024e701003204d4f17c7237943397d84",
+  "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "beforeSHA256": "07dab2303533a16e0a1e0dc36f0ebfa9f8689e1ec6f5ea203347c3170bcfd7ed",
+  "afterSHA256": "7c5e0a0c64e7bd46444cf71d01439a7738900f278805cead17e153237147f6a4",
+  "patchSHA256": "3d07fac71518a7d1e892de19edd8b8b90ec8e443029e4a98c27327cdb0362d75",
+  "sourceValidationSHA256": "da78fdead8c2870413e4fe798dcf71c2d46e9f88f135e311ccbc60fb3fda61b7",
+  "originalTestMethods": 37,
+  "helperChanges": [
+    "observeWidgetFamily",
+    "studioReplaceText",
+    "studioPathAlert",
+    "studioVisibleFilesControl",
+    "studioLocalFilesProvider"
+  ],
+  "addedHelper": [
+    "prepareWidgetFamilyInitialOrientation"
+  ],
+  "originalSelectorsAssertionsAndCaseDeadlinesUnchanged": true,
+  "ordinarySourceEditorInteractionUnchanged": true,
+  "productWorkflowObserverChanges": 0,
+  "readOnlyAPIQualification": "Installed Xcode27.0 public orientation declaration; no initial enum guarantee, not hosted native acceptance.",
+  "review": {
+    "sha256": "e64454588fef8f9d0cd62836c5f315e4829f47eea0f94a4e1ade4a162d09ab96",
+    "path": "independent-root-source-review.json"
+  },
+  "encodingMap": [
+    {
+      "path": "source.patch.gz",
+      "encoding": "lossless gzip",
+      "originalBytes": 6079,
+      "originalSHA256": "3d07fac71518a7d1e892de19edd8b8b90ec8e443029e4a98c27327cdb0362d75",
+      "compressedSHA256": "5a2304b03a521c9d8f07184291c758d2e7123636156a6126db44daf8d6e80cc5"
+    },
+    {
+      "path": "preparation-r1.json.gz",
+      "encoding": "lossless gzip",
+      "originalBytes": 1123,
+      "originalSHA256": "117c90c58da6d6cf131310ddea485919b88558893e1b2eb763187b01b335bfc8",
+      "compressedSHA256": "2ca759b9d517bf459fd80bcb2bae13c22894a2e519b7395d73bdac14e67107a5"
+    }
+  ],
+  "nativeCompilation": "NOT_RUN",
+  "nativeAcceptance": "NOT_RUN",
+  "portableTests": "NOT_RUN; exact source inverse only"
+}

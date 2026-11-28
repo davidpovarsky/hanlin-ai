@@ -1,0 +1,93 @@
+{
+  "createdAt": "2026-11-28T13:37:29.992993+00:00",
+  "status": "REVIEWED_SEVEN_SOURCE_PATHS_INTEGRATED_NATIVE_ACCEPTANCE_PENDING",
+  "base": "1ea6ab198151169236f473ab906993ff18d0c74c",
+  "head": "b52b345b4dc3efa0a5c5d8fec9982d3c4d05c52e",
+  "sourcePaths": [
+    {
+      "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "bytes": 315041,
+      "sha256": "c70c629f41cdea005e556f3a46a703be2dc53fa38d0b73ad6c227c68676db264",
+      "mode": "100644"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_shortcut_migration.py",
+      "bytes": 17280,
+      "sha256": "a2918b865e9bdc2210de8b15610dfb9e8af3ad9f9a386bd616ba1d32f588db77",
+      "mode": "100644"
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_migration.py",
+      "bytes": 21091,
+      "sha256": "a4530ff78bea59e0794e0184b7f13fa6cf35465f0c0e13390e5cad51fcd66685",
+      "mode": "100644"
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "bytes": 68492,
+      "sha256": "a503e1e9dea29bfe151164b5f4fb2ffb4565d919344853a308415a6156b2be46",
+      "mode": "100644"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 114067,
+      "sha256": "bbaaf97bb38c1e473770b21608848309d183e21ff87340032e5481555b709f5a",
+      "mode": "100644"
+    },
+    {
+      "path": "Scripts/ProductSplit/shortcut_migration_contract.py",
+      "bytes": 23282,
+      "sha256": "20c83ee0cb50bf4ecf628e1d346083dea13b7628c7c51c7c451251d7bdcf53d7",
+      "mode": "100644"
+    },
+    {
+      "path": "Scripts/ProductSplit/upgrade_shortcut_migration.py",
+      "bytes": 18993,
+      "sha256": "4e4078b1478ca20176e9e1869053656f8d96a6196ee070436cf6b3ec40de639f",
+      "mode": "100644"
+    }
+  ],
+  "operations": [
+    {
+      "operation": "fast-forward-reviewed-Shortcuts-R1-R2-source-proofs",
+      "head": "016bcc49b4cb2a200f729ff36670f9e77a56bd02",
+      "output": "Updating 1ea6ab198..016bcc49b\nFast-forward\n .../HanlinEntrypointSystemSurfaceUITests.swift     |  54 +++--\n docs/shortcuts-manual-editor/MANIFEST.json         |  82 +++++++\n docs/shortcuts-manual-editor/README.md             |  17 ++\n .../case-reconciliation.json                       | 204 ++++++++++++++++++\n .../import-query-sampled-boundary.json.gz          | Bin 0 -> 6719 bytes\n docs/shortcuts-manual-editor/paired-tests.log.gz   | Bin 0 -> 10002 bytes\n docs/shortcuts-manual-editor/r2/MANIFEST.json      |  76 +++++++\n docs/shortcuts-manual-editor/r2/README.md          |   9 +\n .../r2/concurrency-evidence-binding.json           |   8 +\n .../r2/concurrency-paired-tests.log.gz             | Bin 0 -> 8859 bytes\n .../r2/concurrency-reconciliation.json             | 238 +++++++++++++++++++++\n .../r2/concurrency-source-binding.json             | 112 ++++++++++\n .../r2/exact-title-representation.json             |  31 +++\n .../r2/own-case-visuals.json                       |  84 ++++++++\n .../r2/raw-member-verification.json.gz             | Bin 0 -> 4797 bytes\n .../r2/root-independent-review.json                |  45 ++++\n .../r2/source-qualification.json                   |  49 +++++\n .../r2/source-r1-to-r2.patch.gz                    | Bin 0 -> 672 bytes\n .../raw-member-verification.json.gz                | Bin 0 -> 8137 bytes\n .../root-independent-review.json                   |  54 +++++\n .../source-authorities-and-consumers.json.gz       | Bin 0 -> 4299 bytes\n .../source-qualification.json                      |  25 +++\n docs/shortcuts-manual-editor/source-seal.json      |  15 ++\n docs/shortcuts-manual-editor/source.patch.gz       | Bin 0 -> 1873 bytes\n .../visual-and-AX-review.json                      | 212 ++++++++++++++++++\n 25 files changed, 1302 insertions(+), 13 deletions(-)\n create mode 100644 docs/shortcuts-manual-editor/MANIFEST.json\n create mode 100644 docs/shortcuts-manual-editor/README.md\n create mode 100644 docs/shortcuts-manual-editor/case-reconciliation.json\n create mode 100644 docs/shortcuts-manual-editor/import-query-sampled-boundary.json.gz\n create mode 100644 docs/shortcuts-manual-editor/paired-tests.log.gz\n create mode 100644 docs/shortcuts-manual-editor/r2/MANIFEST.json\n create mode 100644 docs/shortcuts-manual-editor/r2/README.md\n create mode 100644 docs/shortcuts-manual-editor/r2/concurrency-evidence-binding.json\n create mode 100644 docs/shortcuts-manual-editor/r2/concurrency-paired-tests.log.gz\n create mode 100644 docs/shortcuts-manual-editor/r2/concurrency-reconciliation.json\n create mode 100644 docs/shortcuts-manual-editor/r2/concurrency-source-binding.json\n create mode 100644 docs/shortcuts-manual-editor/r2/exact-title-representation.json\n create mode 100644 docs/shortcuts-manual-editor/r2/own-case-visuals.json\n create mode 100644 docs/shortcuts-manual-editor/r2/raw-member-verification.json.gz\n create mode 100644 docs/shortcuts-manual-editor/r2/root-independent-review.json\n create mode 100644 docs/shortcuts-manual-editor/r2/source-qualification.json\n create mode 100644 docs/shortcuts-manual-editor/r2/source-r1-to-r2.patch.gz\n create mode 100644 docs/shortcuts-manual-editor/raw-member-verification.json.gz\n create mode 100644 docs/shortcuts-manual-editor/root-independent-review.json\n create mode 100644 docs/shortcuts-manual-editor/source-authorities-and-consumers.json.gz\n create mode 100644 docs/shortcuts-manual-editor/source-qualification.json\n create mode 100644 docs/shortcuts-manual-editor/source-seal.json\n create mode 100644 docs/shortcuts-manual-editor/source.patch.gz\n create mode 100644 docs/shortcuts-manual-editor/visual-and-AX-review.json\n"
+    },
+    {
+      "operation": "cherry-pick-reviewed-migration-source-or-proof",
+      "donor": "54b7d81c736ccc9e4c1081296ceafc525fe506f0",
+      "head": "cfc8b9f86b91c004df4fe7e66ad48564f9770b73",
+      "output": "Auto-merging AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift\n[codex/hanlin-two-wave-integration-20261126 cfc8b9f86] test: add genuine saved Shortcut upgrade acceptance\n Date: Sat Nov 28 13:23:02 2026 +0000\n 7 files changed, 1690 insertions(+), 4 deletions(-)\n create mode 100644 Scripts/CI/Tests/test_shortcut_migration.py\n create mode 100644 Scripts/ProductSplit/observe_shortcut_migration.py\n create mode 100644 Scripts/ProductSplit/shortcut_migration_contract.py\n create mode 100644 Scripts/ProductSplit/upgrade_shortcut_migration.py\n"
+    },
+    {
+      "operation": "cherry-pick-reviewed-migration-source-or-proof",
+      "donor": "e3b07c577d6424f355a360d4b2f668645e6e3bd5",
+      "head": "c24f93a2e6a92a9e9808cec077d79fbdb3e760ef",
+      "output": "[codex/hanlin-two-wave-integration-20261126 c24f93a2e] docs: retain genuine Shortcut migration source qualification\n Date: Sat Nov 28 13:25:02 2026 +0000\n 14 files changed, 1549 insertions(+)\n create mode 100644 docs/two-wave-integration/20261128/shortcut-genuine-migration/README.md\n create mode 100644 docs/two-wave-integration/20261128/shortcut-genuine-migration/candidate-manifest.json\n create mode 100644 docs/two-wave-integration/20261128/shortcut-genuine-migration/initial-sparse-add-result.json\n create mode 100644 docs/two-wave-integration/20261128/shortcut-genuine-migration/manifest.json\n create mode 100644 docs/two-wave-integration/20261128/shortcut-genuine-migration/metadata-single-collection-proof.json\n create mode 100644 docs/two-wave-integration/20261128/shortcut-genuine-migration/old-build-admission-contract.json\n create mode 100644 docs/two-wave-integration/20261128/shortcut-genuine-migration/r1-freeze-checkpoint.json\n create mode 100644 docs/two-wave-integration/20261128/shortcut-genuine-migration/r1-to-r2.patch.gz\n create mode 100644 docs/two-wave-integration/20261128/shortcut-genuine-migration/r2-qualification.json\n create mode 100644 docs/two-wave-integration/20261128/shortcut-genuine-migration/root-independent-review.json\n create mode 100644 docs/two-wave-integration/20261128/shortcut-genuine-migration/source-impact.json\n create mode 100644 docs/two-wave-integration/20261128/shortcut-genuine-migration/source-seal.json\n create mode 100644 docs/two-wave-integration/20261128/shortcut-genuine-migration/source-validation.json\n create mode 100644 docs/two-wave-integration/20261128/shortcut-genuine-migration/source.patch.gz\n"
+    },
+    {
+      "operation": "cherry-pick-reviewed-migration-source-or-proof",
+      "donor": "ae21e071aba7d5fc3d2a55f39c47ee81b19278c1",
+      "head": "0ea33df67011974701bbf15a52f7081891ea24c0",
+      "output": "[codex/hanlin-two-wave-integration-20261126 0ea33df67] test: retain iPad admission for Shortcut migration\n Date: Sat Nov 28 13:29:48 2026 +0000\n 1 file changed, 1 insertion(+), 1 deletion(-)\n"
+    },
+    {
+      "operation": "cherry-pick-reviewed-migration-source-or-proof",
+      "donor": "cc398c1e655f500b1b763bd81bc28a8b59dcc885",
+      "head": "10ea5b3342e5a8b1fab12a13ab54bd1866b9bae2",
+      "output": "[codex/hanlin-two-wave-integration-20261126 10ea5b334] docs: qualify migration iPad route correction\n Date: Sat Nov 28 13:29:48 2026 +0000\n 6 files changed, 122 insertions(+)\n create mode 100644 docs/two-wave-integration/20261128/shortcut-genuine-migration-device-r3/README.md\n create mode 100644 docs/two-wave-integration/20261128/shortcut-genuine-migration-device-r3/candidate-manifest.json\n create mode 100644 docs/two-wave-integration/20261128/shortcut-genuine-migration-device-r3/manifest.json\n create mode 100644 docs/two-wave-integration/20261128/shortcut-genuine-migration-device-r3/qualification.json\n create mode 100644 docs/two-wave-integration/20261128/shortcut-genuine-migration-device-r3/r2-to-r3.patch.gz\n create mode 100644 docs/two-wave-integration/20261128/shortcut-genuine-migration-device-r3/root-independent-review.json\n"
+    },
+    {
+      "operation": "commit-reviewed-background-source",
+      "head": "b52b345b4dc3efa0a5c5d8fec9982d3c4d05c52e",
+      "output": "[codex/hanlin-two-wave-integration-20261126 b52b345b4] fix(test): enter widget editing from observed Home Screen background\n 1 file changed, 61 insertions(+), 6 deletions(-)\n"
+    }
+  ],
+  "exactComposedSourceReceiptSHA256": "8240a4f2b137dd010481aaf43ed65be1ed2f0c431a535eff1fc1e9290827c4ed",
+  "original47CaseBodiesPreserved": true,
+  "newMigrationCases": 2,
+  "workflowUnchanged": true,
+  "nativeDispatches": 0,
+  "fullCIOnNewHead": "NOT_RUN",
+  "publishedIntegrationRef": "STILL_1ea6"
+}

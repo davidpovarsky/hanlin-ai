@@ -1,0 +1,161 @@
+{
+  "version": 1,
+  "recordedAt": "2026-11-28T08:05:09.146716+00:00",
+  "scope": "Frozen source/evidence candidate only; no compile/native test/commit",
+  "base": "fcedca4d091a3e11d26ef7526764b8d7eae0f3e0",
+  "sourceSHA256": "b9a5bcae10a7610e70377243f9a95a711a293b6ddc3b68d47c3fc2e0b3d13dad",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 5017,
+      "sha256": "69d65fed1c0e6a890a412aa152971316b20d340863a5024dc29b00220971d330",
+      "mode": "0o644",
+      "uid": 1002,
+      "gid": 1002
+    },
+    {
+      "path": "candidate.swift",
+      "bytes": 264827,
+      "sha256": "b9a5bcae10a7610e70377243f9a95a711a293b6ddc3b68d47c3fc2e0b3d13dad",
+      "mode": "0o644",
+      "uid": 1002,
+      "gid": 1002
+    },
+    {
+      "path": "checkout-preparation.json",
+      "bytes": 1952,
+      "sha256": "17738def792176a1f5272644a7a9c6aab662a57d1760b8b0be809c18372fa139",
+      "mode": "0o644",
+      "uid": 1002,
+      "gid": 1002
+    },
+    {
+      "path": "failed-source-to-current-binding.json",
+      "bytes": 4539,
+      "sha256": "868802f44fd2e3c55747e3f9235815db096d4371710606188c7c80fc14bc4401",
+      "mode": "0o644",
+      "uid": 1002,
+      "gid": 1002
+    },
+    {
+      "path": "files-own-case-excerpt.txt",
+      "bytes": 2119,
+      "sha256": "881504580f4ecc6ec3b10988b71b96298381eb1c0229b5f9474455f3ff4c0009",
+      "mode": "0o644",
+      "uid": 1002,
+      "gid": 1002
+    },
+    {
+      "path": "helper-delta.txt",
+      "bytes": 5737,
+      "sha256": "5b54ac259af23d97aa55d92bdd84aea52b1da10eee96b5cc34275d62cb85d0d6",
+      "mode": "0o644",
+      "uid": 1002,
+      "gid": 1002
+    },
+    {
+      "path": "initial-evidence-directory-write-failure.json",
+      "bytes": 1415,
+      "sha256": "8d222c9d6c4c2c735fccf372025b998f909bd4b982ed8fa1ece079b4efea3a18",
+      "mode": "0o644",
+      "uid": 1002,
+      "gid": 1002
+    },
+    {
+      "path": "installed-environment.json",
+      "bytes": 3307,
+      "sha256": "3400bc5ae5b90cd4c279ec024454f1f143fd9aa732d412c056e0af6ee03f2352",
+      "mode": "0o644",
+      "uid": 1002,
+      "gid": 1002
+    },
+    {
+      "path": "installed-keyboard-api.json",
+      "bytes": 10791,
+      "sha256": "96ecf23babe6bb38cb339c1fca3038ca22751eb63ba6f9148e3515d93020d6b1",
+      "mode": "0o644",
+      "uid": 1002,
+      "gid": 1002
+    },
+    {
+      "path": "official-api-sources.json",
+      "bytes": 1314,
+      "sha256": "6911b9e5591a2accbf33a00d069575384cfd6d6fb8ab0a8941537070a729a2ad",
+      "mode": "0o644",
+      "uid": 1002,
+      "gid": 1002
+    },
+    {
+      "path": "original-attachment-verification.json",
+      "bytes": 2657,
+      "sha256": "4a45f0307bf507c13003f867d381c31b8970f2273724eb635cec56580274f74a",
+      "mode": "0o644",
+      "uid": 1002,
+      "gid": 1002
+    },
+    {
+      "path": "original-effective-patch-scope.json",
+      "bytes": 1598,
+      "sha256": "53826081aac1deb26ec09eabd5eae46da232c30ba4df97b2b6e682aa28003f68",
+      "mode": "0o644",
+      "uid": 1002,
+      "gid": 1002
+    },
+    {
+      "path": "original.swift.gz",
+      "bytes": 50204,
+      "sha256": "27f4bebbf69d395a5572faa87a796f0dc99cf0668c408acbfee2249ce9193a28",
+      "mode": "0o644",
+      "uid": 1002,
+      "gid": 1002
+    },
+    {
+      "path": "retained-attachment-index-extract.json",
+      "bytes": 6246,
+      "sha256": "58d6708dbca88eade2973d7ed26432f3c7635a0c2541253be8448f29becd2307",
+      "mode": "0o644",
+      "uid": 1002,
+      "gid": 1002
+    },
+    {
+      "path": "retained-case-evidence.json",
+      "bytes": 16174,
+      "sha256": "5d91601ca2bfdcf07d4e45afaabd1f31a8c2e46d1873398f0a3eec441a968613",
+      "mode": "0o644",
+      "uid": 1002,
+      "gid": 1002
+    },
+    {
+      "path": "source-base-read.json",
+      "bytes": 2864,
+      "sha256": "39e8519657728ab7c5d99e96387ea4b4a17c95ac99b4f4bac5cea02bce84621e",
+      "mode": "0o644",
+      "uid": 1002,
+      "gid": 1002
+    },
+    {
+      "path": "source-edit-operation.json",
+      "bytes": 553,
+      "sha256": "280ecfddec1dc9f5d9bc1e508d65b5bb495a0f28aea0cffe930f019d999f7f33",
+      "mode": "0o644",
+      "uid": 1002,
+      "gid": 1002
+    },
+    {
+      "path": "source-validation.json",
+      "bytes": 48185,
+      "sha256": "18006f5dfe6dd3e12fb6af21dd0ddf7fb544a0ea0bbb5105114fe82c6ba79e42",
+      "mode": "0o644",
+      "uid": 1002,
+      "gid": 1002
+    },
+    {
+      "path": "source.patch",
+      "bytes": 2811,
+      "sha256": "25667f0857b42cff4ba24a2cbbc985d2756b8788c87916633957b276c6174b02",
+      "mode": "0o644",
+      "uid": 1002,
+      "gid": 1002
+    }
+  ]
+}

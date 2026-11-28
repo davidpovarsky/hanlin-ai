@@ -1,0 +1,1184 @@
+{
+  "schemaVersion": 1,
+  "reviewedSource": "9a76309c29d716d3f5676e392457937ec8846e56",
+  "provenance": {
+    "originalPhaseContractSHA256": "64a35c57a0ea39c69c61948a65f0202d6cf386d42d65a1a9019ca362bc80f54d",
+    "originalPacketManifestSHA256": "747727a0368e4cef1ac627eada57718466e0a34ba870fee3274e28a539979200",
+    "independentCurrentSelectionSHA256": "6e7d787eb33aec8d31fbb00647ef22aacfe65d0a9d63c64d8ef082cadcea44a6",
+    "independentSelectionCorrectionSHA256": "4317e2922de51cbcd4880f5c44743a1be5d973a6ddec640f53f428124c4aafec",
+    "historicalIOSSource": "b723338e995b14dc31f96a90ad4c865e8a4b345a",
+    "historicalIOSMethodCount": 58,
+    "historicalIOSInvocationCount": 79,
+    "separateFullPackagePASS": {
+      "source": "167219a491a844ae838041f195c12abe9800dac3",
+      "methodCount": 619,
+      "parameterRows": 316,
+      "reconciliationSHA256": "91a5a92b7f350ee4bb93f3d8ca1753f4c1f643f28cfaf51189cb8fdb79a42473",
+      "notRepeated": true
+    },
+    "scope": "Original95 ordered arguments select current64 methods/85 invocations, with all historical58/79 and28 parameter cases; generic5 performs no tests.",
+    "hostedSDKIdentityReadbackSHA256": "a14c4b9d6f5108f9ad39243f296263d628eee4a4ad2d7888277960f83a744c09"
+  },
+  "sourceTrees": {
+    "Packages/HanlinPlatform": "4861e402c7be59a8d9454d9d320c5e5c96f3389c",
+    "Packages/HanlinPlatform/Sources": "6251d5ef0053a6c9473cbef8e7b26f8eccfc631e",
+    "Packages/HanlinPlatform/Tests": "f79940ec9c1740b7f76b1e53deea3f4c4356617d",
+    "Fixtures/Widgets": "a0b7b0b1cb9e1ce756ccff40593a325ffffa73d6"
+  },
+  "packageFileCount": 376,
+  "packageManifestSHA256": "78d7081d0e197c3e99746e5b3e476b41280fc5b32110035fab31a3e949cb4dab",
+  "packageLockSHA256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d",
+  "pins": [
+    {
+      "identity": "opentelemetry-swift-core",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/open-telemetry/opentelemetry-swift-core.git",
+      "state": {
+        "revision": "c6fcee77cfc21ba400366f12475217c7b6e1d605",
+        "version": "2.6.0"
+      }
+    },
+    {
+      "identity": "swift-ai-sdk",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/davidpovarsky/swift-ai-sdk.git",
+      "state": {
+        "revision": "abf0921c6e89e6521cc2b510ff11016b45a0ef08"
+      }
+    },
+    {
+      "identity": "swift-argument-parser",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/apple/swift-argument-parser",
+      "state": {
+        "revision": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+        "version": "1.8.2"
+      }
+    },
+    {
+      "identity": "swift-atomics",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/apple/swift-atomics.git",
+      "state": {
+        "revision": "0442cb5a3f98ab802acb777929fdb446bda11a34",
+        "version": "1.3.1"
+      }
+    },
+    {
+      "identity": "swiftyjson",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/SwiftyJSON/SwiftyJSON.git",
+      "state": {
+        "revision": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+        "version": "5.0.1"
+      }
+    },
+    {
+      "identity": "zipfoundation",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/weichsel/ZIPFoundation.git",
+      "state": {
+        "revision": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
+        "version": "0.9.19"
+      }
+    }
+  ],
+  "externalFixtures": [
+    {
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "gitBlob": "939b67f0349c3fa1c772b2c8d55643def1cdfd77",
+      "bytes": 1149,
+      "sha256": "a52c828cdb87f115c668b7cba544781ce89c023b14a65551844ee7985faa3d9d"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "gitBlob": "c7d3f6d00440987240d377e6fa889afb57c89e0c",
+      "bytes": 1283,
+      "sha256": "4532c361e91e32580a7dca5c120e1131bb2d9f07138b2b4103bdab138f588368"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-ScriptWidget-Dashboard.scripting",
+      "gitBlob": "6f64a02b3f7d355e6452b1b753b1e42c79f0d81d",
+      "bytes": 968,
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting",
+      "gitBlob": "60b75892d301552659e5de4b7df6813186b527e7",
+      "bytes": 825,
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Widget-Legacy-Regression.scripting",
+      "gitBlob": "31bd2a33d7d078d70b54d1861e3c74cad766fcba",
+      "bytes": 444,
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "gitBlob": "234e4b0b1bf6535f681ad1d2cf9dcbb5d1494512",
+      "bytes": 1000,
+      "sha256": "2121ea971faa158e891b8222372e2250062286b813ad8a889971cc351a8c75d7"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "gitBlob": "9ffea1e09848037430647c1fb80ac321f396fcb4",
+      "bytes": 949,
+      "sha256": "a86f47a41f684ecbb1dcce23552798b88cc7ab6622a8c316f2b721b44daf52c5"
+    }
+  ],
+  "originalSelectors": [
+    "-only-testing:HanlinMiniAppCoreTests/cancelledNativeActionDoesNotStartOrAcceptALateSuccess()",
+    "-only-testing:HanlinMiniAppCoreTests/nativeActionIgnoresDuplicateCallbacksAndLateCancellation()",
+    "-only-testing:HanlinMiniAppCoreTests/waitingNativeActionResolvesOnCancellation()",
+    "-only-testing:HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests",
+    "-only-testing:HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests",
+    "-only-testing:HanlinScriptExtensionsTests/HanlinLiveActivityOperationQueueTests",
+    "-only-testing:HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests",
+    "-only-testing:HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/preparedSystemEntrypointsCompileBothOriginalPanels()",
+    "-only-testing:HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/systemPresentationsRequireTheirMatchingNativeSource()",
+    "-only-testing:HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/preparedSystemEntrypointsRequireThePreparedForegroundBundle()",
+    "-only-testing:HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/systemActionMetadataMustMatchThePreparedHandler()",
+    "-only-testing:HanlinScriptExtensionsTests/HanlinWidgetHostActionTests/optionalPresentationKeepsRealHandlerButPanelOnlyCannotQueue()",
+    "-only-testing:HanlinScriptExtensionsTests/HanlinInvocationQueueTests",
+    "-only-testing:HanlinPlatformContractsTests",
+    "-only-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests",
+    "-skip-testing:HanlinPlatformContractsTests/ExposureContractTests",
+    "-skip-testing:HanlinPlatformContractsTests/HanlinCapabilityAttachmentTests",
+    "-skip-testing:HanlinPlatformContractsTests/HanlinPreparedRuntimeVersionTests",
+    "-skip-testing:HanlinPlatformContractsTests/ToolApprovalAndPresentationTests",
+    "-skip-testing:HanlinPlatformContractsTests/appAndRuntimeSessionSnapshotsRemainPortableValues()",
+    "-skip-testing:HanlinPlatformContractsTests/appDescriptorDecodesLegacyPayloadWithoutSkills()",
+    "-skip-testing:HanlinPlatformContractsTests/appDescriptorRejectsDuplicateSkillIDs()",
+    "-skip-testing:HanlinPlatformContractsTests/appDescriptorRejectsUnsafeResourcePaths()",
+    "-skip-testing:HanlinPlatformContractsTests/appDescriptorWithEmbeddedResultEntryPointRoundTrips()",
+    "-skip-testing:HanlinPlatformContractsTests/binary64ExtremesRoundTripBitIdentically()",
+    "-skip-testing:HanlinPlatformContractsTests/canonicalLimitsRejectExcessiveDepthAndSize()",
+    "-skip-testing:HanlinPlatformContractsTests/conversionsRejectLossAndNonFiniteNumbers()",
+    "-skip-testing:HanlinPlatformContractsTests/correlationAndInstanceIdentitiesRemainDistinctTypedValues()",
+    "-skip-testing:HanlinPlatformContractsTests/descriptorAndCatalogRevisionsHaveSeparateSemantics()",
+    "-skip-testing:HanlinPlatformContractsTests/embeddedPresentationDefaultsAreMinimal()",
+    "-skip-testing:HanlinPlatformContractsTests/embeddedPresentationDescriptorRoundTrips()",
+    "-skip-testing:HanlinPlatformContractsTests/embeddedResultEntryPointKindExists()",
+    "-skip-testing:HanlinPlatformContractsTests/embeddedSizePresetsAllRoundTrip()",
+    "-skip-testing:HanlinPlatformContractsTests/entryPointDescriptorWithEmbeddedResultRoundTrips()",
+    "-skip-testing:HanlinPlatformContractsTests/executionPresentationFamilyIDIsExtensible()",
+    "-skip-testing:HanlinPlatformContractsTests/expansionMoDesAllRoundTrip()",
+    "-skip-testing:HanlinPlatformContractsTests/expansionModeBridgesToPresentationIntent()",
+    "-skip-testing:HanlinPlatformContractsTests/hostVersionRangeRejectsInversion()",
+    "-skip-testing:HanlinPlatformContractsTests/identifiersValidateAndRoundTripCanonically()",
+    "-skip-testing:HanlinPlatformContractsTests/jsonDecoderRejectsDuplicateKeysAndOutOfRangeIntegers()",
+    "-skip-testing:HanlinPlatformContractsTests/jsonObjectsSortByUnmodifiedUTF8KeyBytes()",
+    "-skip-testing:HanlinPlatformContractsTests/jsonPrimitivesUseCanonicalLexicalForms()",
+    "-skip-testing:HanlinPlatformContractsTests/jsonSchemaDocumentsPreserveUnknownAndNarrowingKeywords()",
+    "-skip-testing:HanlinPlatformContractsTests/logicalToolIdentityIsProviderQualifiedAndAliasesAreNotIdentity()",
+    "-skip-testing:HanlinPlatformContractsTests/majorMinorVersionsRejectNonCanonicalAndUnknownVersions()",
+    "-skip-testing:HanlinPlatformContractsTests/manifestRejectsDuplicateCanonicalIdentifiers()",
+    "-skip-testing:HanlinPlatformContractsTests/manifestRejectsUnsafePathsAndUnsupportedVersions()",
+    "-skip-testing:HanlinPlatformContractsTests/manifestRoundTripsDeterministically()",
+    "-skip-testing:HanlinPlatformContractsTests/manifestSchemaResourceIsValidJSONAndUnknownFieldsAreTolerated()",
+    "-skip-testing:HanlinPlatformContractsTests/packageVersionsUseStableTotalOrdering()",
+    "-skip-testing:HanlinPlatformContractsTests/permissionValuesKeepDeclarationDecisionGrantAndEffectivenessSeparate()",
+    "-skip-testing:HanlinPlatformContractsTests/richValuesUseExactTaggedIntegerNumberAndDataRepresentations()",
+    "-skip-testing:HanlinPlatformContractsTests/runtimeProfilesDeclareHonestIsolationAndTrustCapabilities()",
+    "-skip-testing:HanlinPlatformContractsTests/scriptManifestRejectsUnsafePathsDuplicateToolsAndUnsupportedABI()",
+    "-skip-testing:HanlinPlatformContractsTests/scriptManifestValidatesAndEncodesDeterministically()",
+    "-skip-testing:HanlinPlatformContractsTests/scriptingWireV2IsAdditiveAndRequiresExplicitV2Support()",
+    "-skip-testing:HanlinPlatformContractsTests/skillDescriptorEncodesAndDecodesCorrectly()",
+    "-skip-testing:HanlinPlatformContractsTests/skillIDsValidateAndRoundTripCanonically()",
+    "-skip-testing:HanlinPlatformContractsTests/standardJSONPromotesToRichValuesWithoutNumericCollapse()",
+    "-skip-testing:HanlinPlatformContractsTests/toolExecutionPresentationRoundTrips()",
+    "-skip-testing:HanlinPlatformContractsTests/toolPresentationBackwardCompatibleWhenNewFieldsAbsent()",
+    "-skip-testing:HanlinPlatformContractsTests/toolPresentationCanonicalEmbeddedIsAuthoritativeOverLegacyFlag()",
+    "-skip-testing:HanlinPlatformContractsTests/toolPresentationMigratesLegacyExpandedPayloadToCanonicalDescriptor()",
+    "-skip-testing:HanlinPlatformContractsTests/toolPresentationWithExecutionAndEmbeddedRoundTrips()",
+    "-skip-testing:HanlinPlatformContractsTests/valueSchemasValidateAndRoundTrip()",
+    "-skip-testing:HanlinPlatformContractsTests/wireEnvelopeRejectsUnknownVersionMalformedKindAndOversizedPayload()",
+    "-skip-testing:HanlinPlatformContractsTests/wireEnvelopeRoundTripsAndEnforcesRequestIdentity()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/checkedArtifactsRejectTamperTraversalOtherGenerationAndSymlink()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/concurrentSourceActionsReplayAndHostPublication()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/consistencyReportCannotHideMissingRevisionOrMalformedCommit(missingRevision:)",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/emittedExpoIntentCarriesVerifiedIdentityAndCallsSource()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/installAndVerifiedLoader(name:)",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/installedProgramPreparationAndActionMeasurements()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/originalScriptWidgetImportedHelpersAndVerifiedFileStorage()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/pass4PrivateVarAliasedRootCleanLoadArtifactStoreAndSnapshotPublishSucceeds()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/pass4SymlinkAndTraversalSecurityRejectsManagedTreeLinksWithDiagnostics()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/passiveLegacyNavigationCannotCoverNativeOrNestedButtons()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/realArchiveImport(name:)",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/rootFragmentsPreserveOriginalElementAllowances()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/sameSourceActionTargetAcrossInstalledPackagesAndVariantsIsIsolated()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/scriptWidgetNamedActionsAndBooleanSetValue()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/staleUndeclaredDisabledAndUninstalledActionsRejectBeforeMutation()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testDurableQueryDiagnosticCrossProcess()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testNativeEntityLookupResolvesOnlyExactIDs()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testNativeEntitySuggestionsReadPublishedDefaultAndVariants()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testNativePublisherRepairsMissingDefaultWithoutLosingA1A2()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testPass7InterruptedRevisionWriteOverwrittenAndClean(corruptedBytes:)",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testPass7SelectableWidgetEntitiesCrossProcess()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testPass7StorageConsistencyReportAndDurableDiagnostic()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testRegistryAndTemplateJoinHandlesFamilyAndOrphans()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/timelinePreparationCommitsOriginalTypedStorageAcrossColdReads()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/unconfiguredAndWrongFamilyNeverSelectAnotherWidget()",
+    "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/userCreatedInstancesAndHostRefreshPreserveState()"
+  ],
+  "expectedTests": [
+    {
+      "identifier": "HanlinMiniAppCoreTests/cancelledNativeActionDoesNotStartOrAcceptALateSuccess()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinMiniAppCoreTests/nativeActionIgnoresDuplicateCallbacksAndLateCancellation()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinMiniAppCoreTests/waitingNativeActionResolvesOnCancellation()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinPlatformContractsTests/manifestSurfaceSchemaMatchesRuntimeContracts()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinPlatformContractsTests/shortcutDictionaryAndListRetainStructureAndExactNumbers()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinPlatformContractsTests/shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding(_:)",
+      "invocations": 5,
+      "parameterValues": [
+        "null",
+        "true",
+        "42",
+        "1.5",
+        "\"hello\""
+      ],
+      "historical": true
+    },
+    {
+      "identifier": "HanlinPlatformContractsTests/shortcutJSONRejectsMalformedOrLossyInput(_:)",
+      "invocations": 5,
+      "parameterValues": [
+        "",
+        "[",
+        "{\"duplicate\":1,\"duplicate\":2}",
+        "9223372036854775808",
+        "NaN"
+      ],
+      "historical": true
+    },
+    {
+      "identifier": "HanlinPlatformContractsTests/shortcutNativeBooleanListDoesNotCoerceToNumbersOrText()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": false
+    },
+    {
+      "identifier": "HanlinPlatformContractsTests/shortcutNativeEmptyListsRemainArrays()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": false
+    },
+    {
+      "identifier": "HanlinPlatformContractsTests/shortcutNativeIntegerListRetainsValuesBeyondBinary64Precision()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": false
+    },
+    {
+      "identifier": "HanlinPlatformContractsTests/shortcutNativeNumberListRejectsNonfiniteItems()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": false
+    },
+    {
+      "identifier": "HanlinPlatformContractsTests/shortcutNativeNumberListRetainsFiniteBinary64TypesAndBits()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": false
+    },
+    {
+      "identifier": "HanlinPlatformContractsTests/shortcutNativeTextListPreservesOrderAndExactUnicodeBytes()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": false
+    },
+    {
+      "identifier": "HanlinPlatformContractsTests/shortcutTextRemainsTextAndBinaryOutputRequiresAFile()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/preparedSystemEntrypointsCompileBothOriginalPanels()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/preparedSystemEntrypointsRequireThePreparedForegroundBundle()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/systemActionMetadataMustMatchThePreparedHandler()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/systemPresentationsRequireTheirMatchingNativeSource()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/actionAndPublicationPreserveUnrelatedCollections()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/actualHistoricalV1EncoderAndDowngradeReader()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/corruptCommittedV2NeverFallsBackToGoodV1()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/interruptedShadowPublicationRestoresExactCommittedRevision()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testPass7HistoricalV1StoreEnvelopeCompatibility(timestamp:)",
+      "invocations": 2,
+      "parameterValues": [
+        200,
+        1730826191.123456
+      ],
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/v1ShadowProjectsHistoricalFieldsWithoutLosingCurrentMetadata()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests/actualAsyncHandlerIsCancelledBeforeItsTerminalReceipt()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests/atomicOwnedAdmissionHasOneLeaseAndPreservesExactRetriesAndConflicts()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests/busyAdmissionCanQueueAgainOnlyBeforeActionExecutionAndWithoutConsumingAnAttempt()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests/concurrentClaimsAcrossStoreInstancesHaveOnlyOneOwner()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests/damagedItemsDoNotBlockHealthyDeliveryOrEraseTheirOriginalBytes()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests/duplicateDeliveryNeverOverwritesACompletedReceiptOrPayload()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests/expiredQueuedAndCancelledQueuedCommandsNeverStart()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests/interruptedNonIdempotentWorkIsDeferredWithoutReplay()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests/legacyEnvelopeAndBinaryValuesRoundTripThroughTheSameQueue()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests/lostOwnedAdmissionIsDeferredAndCannotReplayAfterAProcessRestart()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests/malformedAndPoisonedRecordsFailWithoutReadingOutsideTheStore()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests/ownedAdmissionFailureIsTerminalWhileLegacyQueuedAdmissionRemainsRetryable()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests/ownedCancellationDrainsTheActualHandlerBeforeKeepingItsTerminalReceipt()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests/ownedExecutorKeepsForegroundDrainsOutAndReturnsTheOriginalReceiptOnRetry()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests/registeredIdempotentRecoveryFencesOutTheOriginalOwner()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests/runningCancellationIsARequestUntilTheActualExecutorReturns()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests/twoPackagesReceiveTheirOwnDurableResultsAndFailures()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests/unreadableRecordsCannotBlockAdmissionAndRetainTheirOriginalBytes()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests/unstartedReleaseRetainsCancellationExpiryAndFencesOldLeases()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests/keyboardContextEncodingMatchesSDKShape()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests/localModeRejectsSharedRoot()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests/notificationContinuationUsesTheExistingReceipt()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests/notificationPayloadRoundTripAndTargetMatch()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests/originalKeyboardExecutesLocallyAndDoesNotRepeatAnEdit()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests/readOnlyCatalogDoesNotWriteEvenOnFailure()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests/readOnlyCatalogUsesCommittedImmutableRevision()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests/removedPresentationDoesNotEnqueue()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests/typedEffectsPreserveOldPanelsAndSurfaceBoundaries()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinLiveActivityOperationQueueTests/canceledWaiterDoesNotRunOrCancelThePrecedingMutation()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinLiveActivityOperationQueueTests/differentActivityCanCompleteWhileFirstActivityIsSuspended()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinLiveActivityOperationQueueTests/sameActivityNeverOverlapsAndFailureDoesNotBlockLaterWork()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests/imageRotationKeepsTheOriginalSwiftUICenter(degrees:)",
+      "invocations": 4,
+      "parameterValues": [
+        0,
+        45,
+        90,
+        180
+      ],
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests/invalidImageDimensionsAndTransformsNeverReachSwiftUI(attribute:)",
+      "invocations": 3,
+      "parameterValues": [
+        "frame",
+        "rotation",
+        "ratio"
+      ],
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests/largeValidImagesUseTheOriginalBoundedDownsampler()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests/oversizedAndMalformedImagesAreRejectedBeforeDisplay()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinWidgetHostActionTests/optionalPresentationKeepsRealHandlerButPanelOnlyCannotQueue()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests/corruptRenderBytesAreRejectedAndUninstallDropsCacheReferences()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests/failedRefreshRetainsVerifiedRenderAndDoesNotCommitStagedState(engine:)",
+      "invocations": 2,
+      "parameterValues": [
+        "expo",
+        "scriptwidget"
+      ],
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests/fallbackNeverRestoresRevokedOrMismatchedContent(invalidation:)",
+      "invocations": 7,
+      "parameterValues": [
+        "settings",
+        "inactive",
+        "removed",
+        "generation",
+        "program",
+        "family",
+        "expired"
+      ],
+      "historical": true
+    },
+    {
+      "identifier": "HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests/precedingSnapshotWithoutRenderMetadataDecodesAndCopiesPreserveMetadata()",
+      "invocations": 1,
+      "parameterValues": null,
+      "historical": true
+    }
+  ],
+  "excludedCollateralIdentifiers": [
+    "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/consistencyReportCannotHideMissingRevisionOrMalformedCommit(missingRevision:)",
+    "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/installAndVerifiedLoader(name:)",
+    "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/realArchiveImport(name:)",
+    "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testPass7InterruptedRevisionWriteOverwrittenAndClean(corruptedBytes:)"
+  ],
+  "toolchain": {
+    "historical": {
+      "xcode": "27.0",
+      "build": "27A266a",
+      "swift": "6.4",
+      "sdk": "27.0"
+    },
+    "hosted": {
+      "xcode": "27.2",
+      "build": "27B52",
+      "swift": "6.4.2",
+      "simulatorSDK": "27.2",
+      "deviceSDK": "27.2",
+      "architecture": "arm64"
+    },
+    "portability": "Hosted27.2 is a distinct explicitly admitted compiler/SDK environment; package minimum iOS27.0, Debug/arm64, strict concurrency and original command flags remain unchanged.",
+    "sdkBuildEvidenceNote": "Retained hosted SDKStatCache identifies24B8118; actual test runtime must independently be27.2/24B8117. These are distinct identities."
+  },
+  "simulator": {
+    "runtimeIdentifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+    "version": "27.2",
+    "build": "24B8117",
+    "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-16GB"
+  },
+  "ios": {
+    "buildPhases": [
+      {
+        "name": "toolchain",
+        "argv": [
+          "xcodebuild",
+          "-version"
+        ],
+        "limitSeconds": 60
+      },
+      {
+        "name": "sdk",
+        "argv": [
+          "xcrun",
+          "--sdk",
+          "iphonesimulator",
+          "--show-sdk-version"
+        ],
+        "limitSeconds": 60
+      },
+      {
+        "name": "owned-device-inventory",
+        "argv": [
+          "xcrun",
+          "simctl",
+          "list",
+          "devices",
+          "available",
+          "-j"
+        ],
+        "limitSeconds": 90
+      },
+      {
+        "name": "original-package-scheme-discovery",
+        "argv": [
+          "xcodebuild",
+          "-list",
+          "-json",
+          "-clonedSourcePackagesDirPath",
+          "<IOS79_DERIVED_DATA>/SourcePackages",
+          "-skipPackagePluginValidation",
+          "-skipMacroValidation"
+        ],
+        "limitSeconds": 900,
+        "separateStderr": true
+      },
+      {
+        "name": "original-package-build-for-testing",
+        "argv": [
+          "xcodebuild",
+          "-scheme",
+          "<GENERATED_SCHEME>",
+          "-configuration",
+          "Debug",
+          "-sdk",
+          "iphonesimulator",
+          "-destination",
+          "platform=iOS Simulator,id=<OWNED_DEVICE_UUID>",
+          "-derivedDataPath",
+          "<IOS79_DERIVED_DATA>",
+          "-clonedSourcePackagesDirPath",
+          "<IOS79_DERIVED_DATA>/SourcePackages",
+          "-skipPackagePluginValidation",
+          "-skipMacroValidation",
+          "-parallel-testing-enabled",
+          "NO",
+          "-jobs",
+          "2",
+          "-resultBundlePath",
+          "<EVIDENCE>/ios79/build/PlatformBuild.xcresult",
+          "CODE_SIGNING_ALLOWED=NO",
+          "SWIFT_STRICT_CONCURRENCY=complete",
+          "-only-testing:HanlinMiniAppCoreTests/cancelledNativeActionDoesNotStartOrAcceptALateSuccess()",
+          "-only-testing:HanlinMiniAppCoreTests/nativeActionIgnoresDuplicateCallbacksAndLateCancellation()",
+          "-only-testing:HanlinMiniAppCoreTests/waitingNativeActionResolvesOnCancellation()",
+          "-only-testing:HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests",
+          "-only-testing:HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests",
+          "-only-testing:HanlinScriptExtensionsTests/HanlinLiveActivityOperationQueueTests",
+          "-only-testing:HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests",
+          "-only-testing:HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/preparedSystemEntrypointsCompileBothOriginalPanels()",
+          "-only-testing:HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/systemPresentationsRequireTheirMatchingNativeSource()",
+          "-only-testing:HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/preparedSystemEntrypointsRequireThePreparedForegroundBundle()",
+          "-only-testing:HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/systemActionMetadataMustMatchThePreparedHandler()",
+          "-only-testing:HanlinScriptExtensionsTests/HanlinWidgetHostActionTests/optionalPresentationKeepsRealHandlerButPanelOnlyCannotQueue()",
+          "-only-testing:HanlinScriptExtensionsTests/HanlinInvocationQueueTests",
+          "-only-testing:HanlinPlatformContractsTests",
+          "-only-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests",
+          "-skip-testing:HanlinPlatformContractsTests/ExposureContractTests",
+          "-skip-testing:HanlinPlatformContractsTests/HanlinCapabilityAttachmentTests",
+          "-skip-testing:HanlinPlatformContractsTests/HanlinPreparedRuntimeVersionTests",
+          "-skip-testing:HanlinPlatformContractsTests/ToolApprovalAndPresentationTests",
+          "-skip-testing:HanlinPlatformContractsTests/appAndRuntimeSessionSnapshotsRemainPortableValues()",
+          "-skip-testing:HanlinPlatformContractsTests/appDescriptorDecodesLegacyPayloadWithoutSkills()",
+          "-skip-testing:HanlinPlatformContractsTests/appDescriptorRejectsDuplicateSkillIDs()",
+          "-skip-testing:HanlinPlatformContractsTests/appDescriptorRejectsUnsafeResourcePaths()",
+          "-skip-testing:HanlinPlatformContractsTests/appDescriptorWithEmbeddedResultEntryPointRoundTrips()",
+          "-skip-testing:HanlinPlatformContractsTests/binary64ExtremesRoundTripBitIdentically()",
+          "-skip-testing:HanlinPlatformContractsTests/canonicalLimitsRejectExcessiveDepthAndSize()",
+          "-skip-testing:HanlinPlatformContractsTests/conversionsRejectLossAndNonFiniteNumbers()",
+          "-skip-testing:HanlinPlatformContractsTests/correlationAndInstanceIdentitiesRemainDistinctTypedValues()",
+          "-skip-testing:HanlinPlatformContractsTests/descriptorAndCatalogRevisionsHaveSeparateSemantics()",
+          "-skip-testing:HanlinPlatformContractsTests/embeddedPresentationDefaultsAreMinimal()",
+          "-skip-testing:HanlinPlatformContractsTests/embeddedPresentationDescriptorRoundTrips()",
+          "-skip-testing:HanlinPlatformContractsTests/embeddedResultEntryPointKindExists()",
+          "-skip-testing:HanlinPlatformContractsTests/embeddedSizePresetsAllRoundTrip()",
+          "-skip-testing:HanlinPlatformContractsTests/entryPointDescriptorWithEmbeddedResultRoundTrips()",
+          "-skip-testing:HanlinPlatformContractsTests/executionPresentationFamilyIDIsExtensible()",
+          "-skip-testing:HanlinPlatformContractsTests/expansionMoDesAllRoundTrip()",
+          "-skip-testing:HanlinPlatformContractsTests/expansionModeBridgesToPresentationIntent()",
+          "-skip-testing:HanlinPlatformContractsTests/hostVersionRangeRejectsInversion()",
+          "-skip-testing:HanlinPlatformContractsTests/identifiersValidateAndRoundTripCanonically()",
+          "-skip-testing:HanlinPlatformContractsTests/jsonDecoderRejectsDuplicateKeysAndOutOfRangeIntegers()",
+          "-skip-testing:HanlinPlatformContractsTests/jsonObjectsSortByUnmodifiedUTF8KeyBytes()",
+          "-skip-testing:HanlinPlatformContractsTests/jsonPrimitivesUseCanonicalLexicalForms()",
+          "-skip-testing:HanlinPlatformContractsTests/jsonSchemaDocumentsPreserveUnknownAndNarrowingKeywords()",
+          "-skip-testing:HanlinPlatformContractsTests/logicalToolIdentityIsProviderQualifiedAndAliasesAreNotIdentity()",
+          "-skip-testing:HanlinPlatformContractsTests/majorMinorVersionsRejectNonCanonicalAndUnknownVersions()",
+          "-skip-testing:HanlinPlatformContractsTests/manifestRejectsDuplicateCanonicalIdentifiers()",
+          "-skip-testing:HanlinPlatformContractsTests/manifestRejectsUnsafePathsAndUnsupportedVersions()",
+          "-skip-testing:HanlinPlatformContractsTests/manifestRoundTripsDeterministically()",
+          "-skip-testing:HanlinPlatformContractsTests/manifestSchemaResourceIsValidJSONAndUnknownFieldsAreTolerated()",
+          "-skip-testing:HanlinPlatformContractsTests/packageVersionsUseStableTotalOrdering()",
+          "-skip-testing:HanlinPlatformContractsTests/permissionValuesKeepDeclarationDecisionGrantAndEffectivenessSeparate()",
+          "-skip-testing:HanlinPlatformContractsTests/richValuesUseExactTaggedIntegerNumberAndDataRepresentations()",
+          "-skip-testing:HanlinPlatformContractsTests/runtimeProfilesDeclareHonestIsolationAndTrustCapabilities()",
+          "-skip-testing:HanlinPlatformContractsTests/scriptManifestRejectsUnsafePathsDuplicateToolsAndUnsupportedABI()",
+          "-skip-testing:HanlinPlatformContractsTests/scriptManifestValidatesAndEncodesDeterministically()",
+          "-skip-testing:HanlinPlatformContractsTests/scriptingWireV2IsAdditiveAndRequiresExplicitV2Support()",
+          "-skip-testing:HanlinPlatformContractsTests/skillDescriptorEncodesAndDecodesCorrectly()",
+          "-skip-testing:HanlinPlatformContractsTests/skillIDsValidateAndRoundTripCanonically()",
+          "-skip-testing:HanlinPlatformContractsTests/standardJSONPromotesToRichValuesWithoutNumericCollapse()",
+          "-skip-testing:HanlinPlatformContractsTests/toolExecutionPresentationRoundTrips()",
+          "-skip-testing:HanlinPlatformContractsTests/toolPresentationBackwardCompatibleWhenNewFieldsAbsent()",
+          "-skip-testing:HanlinPlatformContractsTests/toolPresentationCanonicalEmbeddedIsAuthoritativeOverLegacyFlag()",
+          "-skip-testing:HanlinPlatformContractsTests/toolPresentationMigratesLegacyExpandedPayloadToCanonicalDescriptor()",
+          "-skip-testing:HanlinPlatformContractsTests/toolPresentationWithExecutionAndEmbeddedRoundTrips()",
+          "-skip-testing:HanlinPlatformContractsTests/valueSchemasValidateAndRoundTrip()",
+          "-skip-testing:HanlinPlatformContractsTests/wireEnvelopeRejectsUnknownVersionMalformedKindAndOversizedPayload()",
+          "-skip-testing:HanlinPlatformContractsTests/wireEnvelopeRoundTripsAndEnforcesRequestIdentity()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/checkedArtifactsRejectTamperTraversalOtherGenerationAndSymlink()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/concurrentSourceActionsReplayAndHostPublication()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/consistencyReportCannotHideMissingRevisionOrMalformedCommit(missingRevision:)",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/emittedExpoIntentCarriesVerifiedIdentityAndCallsSource()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/installAndVerifiedLoader(name:)",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/installedProgramPreparationAndActionMeasurements()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/originalScriptWidgetImportedHelpersAndVerifiedFileStorage()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/pass4PrivateVarAliasedRootCleanLoadArtifactStoreAndSnapshotPublishSucceeds()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/pass4SymlinkAndTraversalSecurityRejectsManagedTreeLinksWithDiagnostics()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/passiveLegacyNavigationCannotCoverNativeOrNestedButtons()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/realArchiveImport(name:)",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/rootFragmentsPreserveOriginalElementAllowances()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/sameSourceActionTargetAcrossInstalledPackagesAndVariantsIsIsolated()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/scriptWidgetNamedActionsAndBooleanSetValue()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/staleUndeclaredDisabledAndUninstalledActionsRejectBeforeMutation()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testDurableQueryDiagnosticCrossProcess()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testNativeEntityLookupResolvesOnlyExactIDs()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testNativeEntitySuggestionsReadPublishedDefaultAndVariants()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testNativePublisherRepairsMissingDefaultWithoutLosingA1A2()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testPass7InterruptedRevisionWriteOverwrittenAndClean(corruptedBytes:)",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testPass7SelectableWidgetEntitiesCrossProcess()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testPass7StorageConsistencyReportAndDurableDiagnostic()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testRegistryAndTemplateJoinHandlesFamilyAndOrphans()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/timelinePreparationCommitsOriginalTypedStorageAcrossColdReads()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/unconfiguredAndWrongFamilyNeverSelectAnotherWidget()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/userCreatedInstancesAndHostRefreshPreserveState()",
+          "build-for-testing"
+        ],
+        "limitSeconds": 3300
+      }
+    ],
+    "testPhases": [
+      {
+        "name": "owned-device-readback",
+        "argv": [
+          "xcrun",
+          "simctl",
+          "list",
+          "devices",
+          "available",
+          "-j"
+        ],
+        "limitSeconds": 90
+      },
+      {
+        "name": "owned-simulator-boot",
+        "argv": [
+          "xcrun",
+          "simctl",
+          "boot",
+          "<OWNED_DEVICE_UUID>"
+        ],
+        "limitSeconds": 120,
+        "conditional": "Only if the owned available device is Shutdown."
+      },
+      {
+        "name": "owned-simulator-ready",
+        "argv": [
+          "xcrun",
+          "simctl",
+          "bootstatus",
+          "<OWNED_DEVICE_UUID>",
+          "-b"
+        ],
+        "limitSeconds": 300
+      },
+      {
+        "name": "original-native-test-without-building",
+        "argv": [
+          "xcodebuild",
+          "test-without-building",
+          "-xctestrun",
+          "<SAME_PRODUCTS_DERIVED_DESCRIPTOR>",
+          "-destination",
+          "platform=iOS Simulator,id=<OWNED_DEVICE_UUID>",
+          "-parallel-testing-enabled",
+          "NO",
+          "-resultBundlePath",
+          "<EVIDENCE>/ios79/test/PlatformTests.xcresult",
+          "-only-testing:HanlinMiniAppCoreTests/cancelledNativeActionDoesNotStartOrAcceptALateSuccess()",
+          "-only-testing:HanlinMiniAppCoreTests/nativeActionIgnoresDuplicateCallbacksAndLateCancellation()",
+          "-only-testing:HanlinMiniAppCoreTests/waitingNativeActionResolvesOnCancellation()",
+          "-only-testing:HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests",
+          "-only-testing:HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests",
+          "-only-testing:HanlinScriptExtensionsTests/HanlinLiveActivityOperationQueueTests",
+          "-only-testing:HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests",
+          "-only-testing:HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/preparedSystemEntrypointsCompileBothOriginalPanels()",
+          "-only-testing:HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/systemPresentationsRequireTheirMatchingNativeSource()",
+          "-only-testing:HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/preparedSystemEntrypointsRequireThePreparedForegroundBundle()",
+          "-only-testing:HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/systemActionMetadataMustMatchThePreparedHandler()",
+          "-only-testing:HanlinScriptExtensionsTests/HanlinWidgetHostActionTests/optionalPresentationKeepsRealHandlerButPanelOnlyCannotQueue()",
+          "-only-testing:HanlinScriptExtensionsTests/HanlinInvocationQueueTests",
+          "-only-testing:HanlinPlatformContractsTests",
+          "-only-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests",
+          "-skip-testing:HanlinPlatformContractsTests/ExposureContractTests",
+          "-skip-testing:HanlinPlatformContractsTests/HanlinCapabilityAttachmentTests",
+          "-skip-testing:HanlinPlatformContractsTests/HanlinPreparedRuntimeVersionTests",
+          "-skip-testing:HanlinPlatformContractsTests/ToolApprovalAndPresentationTests",
+          "-skip-testing:HanlinPlatformContractsTests/appAndRuntimeSessionSnapshotsRemainPortableValues()",
+          "-skip-testing:HanlinPlatformContractsTests/appDescriptorDecodesLegacyPayloadWithoutSkills()",
+          "-skip-testing:HanlinPlatformContractsTests/appDescriptorRejectsDuplicateSkillIDs()",
+          "-skip-testing:HanlinPlatformContractsTests/appDescriptorRejectsUnsafeResourcePaths()",
+          "-skip-testing:HanlinPlatformContractsTests/appDescriptorWithEmbeddedResultEntryPointRoundTrips()",
+          "-skip-testing:HanlinPlatformContractsTests/binary64ExtremesRoundTripBitIdentically()",
+          "-skip-testing:HanlinPlatformContractsTests/canonicalLimitsRejectExcessiveDepthAndSize()",
+          "-skip-testing:HanlinPlatformContractsTests/conversionsRejectLossAndNonFiniteNumbers()",
+          "-skip-testing:HanlinPlatformContractsTests/correlationAndInstanceIdentitiesRemainDistinctTypedValues()",
+          "-skip-testing:HanlinPlatformContractsTests/descriptorAndCatalogRevisionsHaveSeparateSemantics()",
+          "-skip-testing:HanlinPlatformContractsTests/embeddedPresentationDefaultsAreMinimal()",
+          "-skip-testing:HanlinPlatformContractsTests/embeddedPresentationDescriptorRoundTrips()",
+          "-skip-testing:HanlinPlatformContractsTests/embeddedResultEntryPointKindExists()",
+          "-skip-testing:HanlinPlatformContractsTests/embeddedSizePresetsAllRoundTrip()",
+          "-skip-testing:HanlinPlatformContractsTests/entryPointDescriptorWithEmbeddedResultRoundTrips()",
+          "-skip-testing:HanlinPlatformContractsTests/executionPresentationFamilyIDIsExtensible()",
+          "-skip-testing:HanlinPlatformContractsTests/expansionMoDesAllRoundTrip()",
+          "-skip-testing:HanlinPlatformContractsTests/expansionModeBridgesToPresentationIntent()",
+          "-skip-testing:HanlinPlatformContractsTests/hostVersionRangeRejectsInversion()",
+          "-skip-testing:HanlinPlatformContractsTests/identifiersValidateAndRoundTripCanonically()",
+          "-skip-testing:HanlinPlatformContractsTests/jsonDecoderRejectsDuplicateKeysAndOutOfRangeIntegers()",
+          "-skip-testing:HanlinPlatformContractsTests/jsonObjectsSortByUnmodifiedUTF8KeyBytes()",
+          "-skip-testing:HanlinPlatformContractsTests/jsonPrimitivesUseCanonicalLexicalForms()",
+          "-skip-testing:HanlinPlatformContractsTests/jsonSchemaDocumentsPreserveUnknownAndNarrowingKeywords()",
+          "-skip-testing:HanlinPlatformContractsTests/logicalToolIdentityIsProviderQualifiedAndAliasesAreNotIdentity()",
+          "-skip-testing:HanlinPlatformContractsTests/majorMinorVersionsRejectNonCanonicalAndUnknownVersions()",
+          "-skip-testing:HanlinPlatformContractsTests/manifestRejectsDuplicateCanonicalIdentifiers()",
+          "-skip-testing:HanlinPlatformContractsTests/manifestRejectsUnsafePathsAndUnsupportedVersions()",
+          "-skip-testing:HanlinPlatformContractsTests/manifestRoundTripsDeterministically()",
+          "-skip-testing:HanlinPlatformContractsTests/manifestSchemaResourceIsValidJSONAndUnknownFieldsAreTolerated()",
+          "-skip-testing:HanlinPlatformContractsTests/packageVersionsUseStableTotalOrdering()",
+          "-skip-testing:HanlinPlatformContractsTests/permissionValuesKeepDeclarationDecisionGrantAndEffectivenessSeparate()",
+          "-skip-testing:HanlinPlatformContractsTests/richValuesUseExactTaggedIntegerNumberAndDataRepresentations()",
+          "-skip-testing:HanlinPlatformContractsTests/runtimeProfilesDeclareHonestIsolationAndTrustCapabilities()",
+          "-skip-testing:HanlinPlatformContractsTests/scriptManifestRejectsUnsafePathsDuplicateToolsAndUnsupportedABI()",
+          "-skip-testing:HanlinPlatformContractsTests/scriptManifestValidatesAndEncodesDeterministically()",
+          "-skip-testing:HanlinPlatformContractsTests/scriptingWireV2IsAdditiveAndRequiresExplicitV2Support()",
+          "-skip-testing:HanlinPlatformContractsTests/skillDescriptorEncodesAndDecodesCorrectly()",
+          "-skip-testing:HanlinPlatformContractsTests/skillIDsValidateAndRoundTripCanonically()",
+          "-skip-testing:HanlinPlatformContractsTests/standardJSONPromotesToRichValuesWithoutNumericCollapse()",
+          "-skip-testing:HanlinPlatformContractsTests/toolExecutionPresentationRoundTrips()",
+          "-skip-testing:HanlinPlatformContractsTests/toolPresentationBackwardCompatibleWhenNewFieldsAbsent()",
+          "-skip-testing:HanlinPlatformContractsTests/toolPresentationCanonicalEmbeddedIsAuthoritativeOverLegacyFlag()",
+          "-skip-testing:HanlinPlatformContractsTests/toolPresentationMigratesLegacyExpandedPayloadToCanonicalDescriptor()",
+          "-skip-testing:HanlinPlatformContractsTests/toolPresentationWithExecutionAndEmbeddedRoundTrips()",
+          "-skip-testing:HanlinPlatformContractsTests/valueSchemasValidateAndRoundTrip()",
+          "-skip-testing:HanlinPlatformContractsTests/wireEnvelopeRejectsUnknownVersionMalformedKindAndOversizedPayload()",
+          "-skip-testing:HanlinPlatformContractsTests/wireEnvelopeRoundTripsAndEnforcesRequestIdentity()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/checkedArtifactsRejectTamperTraversalOtherGenerationAndSymlink()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/concurrentSourceActionsReplayAndHostPublication()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/consistencyReportCannotHideMissingRevisionOrMalformedCommit(missingRevision:)",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/emittedExpoIntentCarriesVerifiedIdentityAndCallsSource()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/installAndVerifiedLoader(name:)",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/installedProgramPreparationAndActionMeasurements()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/originalScriptWidgetImportedHelpersAndVerifiedFileStorage()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/pass4PrivateVarAliasedRootCleanLoadArtifactStoreAndSnapshotPublishSucceeds()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/pass4SymlinkAndTraversalSecurityRejectsManagedTreeLinksWithDiagnostics()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/passiveLegacyNavigationCannotCoverNativeOrNestedButtons()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/realArchiveImport(name:)",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/rootFragmentsPreserveOriginalElementAllowances()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/sameSourceActionTargetAcrossInstalledPackagesAndVariantsIsIsolated()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/scriptWidgetNamedActionsAndBooleanSetValue()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/staleUndeclaredDisabledAndUninstalledActionsRejectBeforeMutation()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testDurableQueryDiagnosticCrossProcess()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testNativeEntityLookupResolvesOnlyExactIDs()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testNativeEntitySuggestionsReadPublishedDefaultAndVariants()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testNativePublisherRepairsMissingDefaultWithoutLosingA1A2()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testPass7InterruptedRevisionWriteOverwrittenAndClean(corruptedBytes:)",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testPass7SelectableWidgetEntitiesCrossProcess()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testPass7StorageConsistencyReportAndDurableDiagnostic()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testRegistryAndTemplateJoinHandlesFamilyAndOrphans()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/timelinePreparationCommitsOriginalTypedStorageAcrossColdReads()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/unconfiguredAndWrongFamilyNeverSelectAnotherWidget()",
+          "-skip-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/userCreatedInstancesAndHostRefreshPreserveState()"
+        ],
+        "limitSeconds": 1800,
+        "nativeFailureRetainedForReconciliation": true
+      },
+      {
+        "name": "native-result-summary",
+        "argv": [
+          "xcrun",
+          "xcresulttool",
+          "get",
+          "test-results",
+          "summary",
+          "--path",
+          "<EVIDENCE>/ios79/test/PlatformTests.xcresult",
+          "--format",
+          "json"
+        ],
+        "limitSeconds": 300,
+        "conditional": "Original result Info.plist exists."
+      },
+      {
+        "name": "native-result-tests",
+        "argv": [
+          "xcrun",
+          "xcresulttool",
+          "get",
+          "test-results",
+          "tests",
+          "--path",
+          "<EVIDENCE>/ios79/test/PlatformTests.xcresult",
+          "--format",
+          "json"
+        ],
+        "limitSeconds": 300,
+        "conditional": "Original result Info.plist exists."
+      }
+    ],
+    "phaseMaximaSeconds": 7320,
+    "buildAdmission": {
+      "operator": ">",
+      "requiredBytes": 8073741824,
+      "freshCompileCheckoutsAndProductsAllowance": 5000000000,
+      "observedSharedGrowthAllowance": 2000000000,
+      "OSMargin": 1073741824
+    },
+    "testAdmission": {
+      "operator": ">=",
+      "requiredBytes": 4073741824,
+      "ownedNativeExecutionAndResultsAllowance": 1000000000,
+      "observedSharedGrowthAllowance": 2000000000,
+      "OSMargin": 1073741824
+    },
+    "buildObservationSeconds": 15,
+    "testObservationSeconds": 10
+  },
+  "generic": {
+    "originalOverallDeadlineSeconds": 3600,
+    "requiredAdmissionBytes": 9901152640,
+    "capacityPlan": {
+      "measuredAcceptedPackageDerivedDataBytes": 1566699520,
+      "genericEachAllowance": 3133399040,
+      "genericOutputs": 6266798080,
+      "warmSwiftIncrementalAllowance": 536870912,
+      "additionalSourceCacheAllowance": 200000000,
+      "observedSharedGrowthAllowance": 2147483648,
+      "OSReserve": 750000000,
+      "rationale": "Two fresh SDK-specific generic output roots, each allowed twice the just-measured 1.57GB full iOS build/test DerivedData; warmed macOS .build incremental allowance plus small pinned source-cache allowance. Current79 products and macOS cache retained. Shared-host growth and OS reserve are phase allowances, not a blanket free-space threshold."
+    },
+    "observationSeconds": 5,
+    "scripts": [
+      {
+        "name": "resolve-the-phase-1-swift-package.sh",
+        "cwd": "<SOURCE>",
+        "body": "set -euxo pipefail\nswift package --package-path \"$PACKAGE_PATH\" resolve \\\n  2>&1 | tee \"$LOG_DIR/03-swift-package-resolve.log\"\n\n",
+        "originalSHA256": "52090107ffa7552467e2360cb80bc6893b3d5118f9a0c2e22c0e8ff66160e344",
+        "renderedSHA256": "52090107ffa7552467e2360cb80bc6893b3d5118f9a0c2e22c0e8ff66160e344",
+        "phaseName": "resolve-the-phase-1-swift-package"
+      },
+      {
+        "name": "compile-the-phase-1-swift-package.sh",
+        "cwd": "<SOURCE>",
+        "body": "set -euxo pipefail\nswift build --package-path \"$PACKAGE_PATH\" \\\n  2>&1 | tee \"$LOG_DIR/04-swift-build.log\"\n\n",
+        "originalSHA256": "89c3f21a4b9fcb4bb4ec5fb74158d531a16f28c0dda1aa79bac20ab192883567",
+        "renderedSHA256": "89c3f21a4b9fcb4bb4ec5fb74158d531a16f28c0dda1aa79bac20ab192883567",
+        "phaseName": "compile-the-phase-1-swift-package"
+      },
+      {
+        "name": "discover-the-generated-xcode-package-scheme.sh",
+        "cwd": "<SOURCE>/Packages/HanlinPlatform",
+        "body": "set -euxo pipefail\nxcodebuild -list -json \\\n  > \"$LOG_DIR/06-xcodebuild-list.json\" \\\n  2> >(tee \"$LOG_DIR/06-xcodebuild-list.stderr.log\" >&2)\ncat \"$LOG_DIR/06-xcodebuild-list.json\"\npackage_scheme=\"$(python3 - \"$LOG_DIR/06-xcodebuild-list.json\" <<'PY'\nimport json\nimport sys\n\nwith open(sys.argv[1], encoding=\"utf-8\") as stream:\n    document = json.load(stream)\ncontainer = document.get(\"workspace\") or document.get(\"project\") or {}\nschemes = container.get(\"schemes\") or []\nif \"HanlinPlatform-Package\" in schemes:\n    print(\"HanlinPlatform-Package\")\nelif len(schemes) == 1:\n    print(schemes[0])\nelse:\n    raise SystemExit(f\"Expected one generated package scheme, found: {schemes}\")\nPY\n)\"\ntest -n \"$package_scheme\"\necho \"PACKAGE_XCODE_SCHEME=$package_scheme\" >> \"$GITHUB_ENV\"\necho \"Selected generated package scheme: $package_scheme\"\n\n",
+        "originalSHA256": "90a8ec05a2c3fdaea307ac2531fecd335ce08c1509f01fae5e59263314a63527",
+        "renderedSHA256": "90a8ec05a2c3fdaea307ac2531fecd335ce08c1509f01fae5e59263314a63527",
+        "phaseName": "discover-generated-package-scheme"
+      },
+      {
+        "name": "compile-contracts-for-generic-ios-simulator.sh",
+        "cwd": "<SOURCE>/Packages/HanlinPlatform",
+        "body": "set -euxo pipefail\nrm -rf \"$LOG_DIR/Phase1Simulator.xcresult\"\nbuild_actions=(build)\nif [ \"${{ inputs.force_clean_build }}\" = \"true\" ]; then\n  build_actions=(clean build)\nfi\nstarted_at=\"$(date +%s)\"\nxcodebuild \\\n  -scheme \"$PACKAGE_XCODE_SCHEME\" \\\n  -configuration Debug \\\n  -sdk iphonesimulator \\\n  -destination \"generic/platform=iOS Simulator\" \\\n  -derivedDataPath \"$GITHUB_WORKSPACE/build/Phase1SimulatorDerivedData\" \\\n  -resultBundlePath \"$LOG_DIR/Phase1Simulator.xcresult\" \\\n  -showBuildTimingSummary \\\n  CODE_SIGNING_ALLOWED=NO \\\n  SWIFT_STRICT_CONCURRENCY=complete \\\n  \"${build_actions[@]}\" 2>&1 | tee \"$LOG_DIR/07-ios-simulator.log\"\necho \"$(( $(date +%s) - started_at ))\" > \"$LOG_DIR/07-ios-simulator-duration-seconds.txt\"\n\n",
+        "originalSHA256": "724c81cd6870b6fc5cabe6eb7e967644716c1c4981cea1f4e1087c55723d695f",
+        "renderedSHA256": "50d89c44c7eabd809f98b4668cc13f6a19661c656442fe84a448527ac6dc9175",
+        "phaseName": "compile-contracts-for-generic-ios-simulator"
+      },
+      {
+        "name": "compile-contracts-for-generic-ios-device.sh",
+        "cwd": "<SOURCE>/Packages/HanlinPlatform",
+        "body": "set -euxo pipefail\nrm -rf \"$LOG_DIR/Phase1Device.xcresult\"\nbuild_actions=(build)\nif [ \"${{ inputs.force_clean_build }}\" = \"true\" ]; then\n  build_actions=(clean build)\nfi\nstarted_at=\"$(date +%s)\"\nxcodebuild \\\n  -scheme \"$PACKAGE_XCODE_SCHEME\" \\\n  -configuration Debug \\\n  -sdk iphoneos \\\n  -destination \"generic/platform=iOS\" \\\n  -derivedDataPath \"$GITHUB_WORKSPACE/build/Phase1DeviceDerivedData\" \\\n  -resultBundlePath \"$LOG_DIR/Phase1Device.xcresult\" \\\n  -showBuildTimingSummary \\\n  CODE_SIGNING_ALLOWED=NO \\\n  SWIFT_STRICT_CONCURRENCY=complete \\\n  \"${build_actions[@]}\" 2>&1 | tee \"$LOG_DIR/08-ios-device.log\"\necho \"$(( $(date +%s) - started_at ))\" > \"$LOG_DIR/08-ios-device-duration-seconds.txt\"\n\n",
+        "originalSHA256": "6eccd074df8f11b5805203c84072e0e236aa84f1175a3adf2121e889aa85e610",
+        "renderedSHA256": "3a686b7ee8f27f6a6a510dddf1e6cca938e704a7f80c78b947a7d62667255549",
+        "phaseName": "compile-contracts-for-generic-ios-device"
+      }
+    ]
+  },
+  "runningDiskFloorBytes": 750000000,
+  "signals": {
+    "SIGINTGraceSeconds": 30,
+    "SIGTERMGraceSeconds": 10
+  },
+  "hostedEnvelope": {
+    "ios": {
+      "checkoutSeconds": 600,
+      "toolchainSelectionSeconds": 120,
+      "originalPhaseMaximaSeconds": 7320,
+      "newPreparationSeconds": 1200,
+      "ownedDeviceCleanupSeconds": 360,
+      "stopAndReceiptSeconds": 180,
+      "uploadSeconds": 600,
+      "jobMinutes": 175,
+      "controllerMinutes": 152
+    },
+    "generic": {
+      "checkoutSeconds": 600,
+      "toolchainSelectionSeconds": 120,
+      "originalControllerSeconds": 3600,
+      "stopAndReceiptSeconds": 180,
+      "uploadSeconds": 600,
+      "jobMinutes": 85,
+      "controllerMinutes": 63
+    }
+  },
+  "sourceOnlyExcludedAdditions": [
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinRetainedExpoWidgetArtifactTests.swift",
+      "identifier": "HanlinScriptCompilerTests/HanlinRetainedExpoWidgetArtifactTests/retainedExpoWidgetMaterializesWithOriginalArtifactWriter()",
+      "matchedOriginalInclude": false
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinRetainedSurfaceImportTests.swift",
+      "identifier": "HanlinScriptCompilerTests/HanlinRetainedSurfaceImportTests/retainedNativeScriptSurfaceArchivePassesOriginalImportAnalysis()",
+      "matchedOriginalInclude": false
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests.swift",
+      "identifier": "HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests/mixedNativeWidgetKeepsDynamicImportsAndResourceAliases()",
+      "matchedOriginalInclude": false
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests.swift",
+      "identifier": "HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests/compiledInventoryDoesNotHideUnrecognizedPublishedHelpers()",
+      "matchedOriginalInclude": false
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests.swift",
+      "identifier": "HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests/configuredDebuggerSourceRootDoesNotChangeOwnership()",
+      "matchedOriginalInclude": false
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests.swift",
+      "identifier": "HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests/declaredSharedModuleAndMapOverrideForegroundPairClassification()",
+      "matchedOriginalInclude": false
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests.swift",
+      "identifier": "HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests/incompleteOrChangedVisibleInventoriesFailClosed()",
+      "matchedOriginalInclude": false
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests.swift",
+      "identifier": "HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests/escapingChangedAndAmbiguousResourceCopiesFailClosed()",
+      "matchedOriginalInclude": false
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests.swift",
+      "identifier": "HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests/explicitlySharedLargeResourceStillHitsOriginalArtifactLimit()",
+      "matchedOriginalInclude": false
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests.swift",
+      "identifier": "HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests/bundleOnlyAndUnrecognizedAuthoringKeepOriginalInputs()",
+      "matchedOriginalInclude": false
+    }
+  ]
+}

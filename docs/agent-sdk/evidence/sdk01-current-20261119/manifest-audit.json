@@ -1,0 +1,1543 @@
+{
+  "observed_at": "2026-11-19T00:51:58.350760+00:00",
+  "source_sha": "e564dc29d24239309b113244bec4556c211c5b2d",
+  "host": "Windows",
+  "swift_version": "Swift version 6.3.3 (swift-6.3.3-RELEASE)\nTarget: x86_64-unknown-windows-msvc\nBuild config: +assertions\n",
+  "scope": "SOURCE_AND_MANIFEST_AUDIT_ONLY",
+  "packages": [
+    {
+      "package": "HanlinAgentSDK",
+      "manifest_sha256": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b",
+      "exit": 0,
+      "stdout_sha256": "bcf0d96f7aba22c5b56d605cc6a687bb5aea0bc9849539ed8347e784b7d5178e",
+      "scope": "Manifest metadata evaluation only; no resolution, source compilation or tests.",
+      "name": "HanlinAgentSDK",
+      "platforms": [
+        {
+          "options": [],
+          "platformName": "ios",
+          "version": "27.0"
+        },
+        {
+          "options": [],
+          "platformName": "macos",
+          "version": "26.0"
+        }
+      ],
+      "products": [
+        {
+          "name": "HanlinHostContracts",
+          "settings": [],
+          "targets": [
+            "HanlinHostContracts"
+          ],
+          "type": {
+            "library": [
+              "automatic"
+            ]
+          }
+        },
+        {
+          "name": "HanlinAgentCore",
+          "settings": [],
+          "targets": [
+            "HanlinAgentCore"
+          ],
+          "type": {
+            "library": [
+              "automatic"
+            ]
+          }
+        },
+        {
+          "name": "HanlinPersistenceAdapters",
+          "settings": [],
+          "targets": [
+            "HanlinPersistenceAdapters"
+          ],
+          "type": {
+            "library": [
+              "automatic"
+            ]
+          }
+        },
+        {
+          "name": "HanlinFixtureHost",
+          "settings": [],
+          "targets": [
+            "HanlinFixtureHost"
+          ],
+          "type": {
+            "executable": null
+          }
+        }
+      ],
+      "dependencies": [
+        {
+          "fileSystem": [
+            {
+              "identity": "hanlinplatform",
+              "path": "C:\\Users\\DAVID\\Code\\hanlin-product-completion-20261117\\Packages\\HanlinPlatform",
+              "productFilter": null,
+              "traits": [
+                {
+                  "name": "default"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "sourceControl": [
+            {
+              "identity": "swift-ai-sdk",
+              "location": {
+                "remote": [
+                  {
+                    "urlString": "https://github.com/davidpovarsky/swift-ai-sdk.git"
+                  }
+                ]
+              },
+              "productFilter": null,
+              "requirement": {
+                "revision": [
+                  "e7bf34111e603ca977becd007dd4e5bb109af857"
+                ]
+              },
+              "traits": [
+                {
+                  "name": "default"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "targets": [
+        {
+          "name": "JSON",
+          "type": "regular",
+          "dependencies": [],
+          "path": "Vendor/Swift-JSON/Sources/JSON"
+        },
+        {
+          "name": "JSONRegexRuntime",
+          "type": "regular",
+          "dependencies": [
+            {
+              "byName": [
+                "JSON",
+                null
+              ]
+            }
+          ],
+          "path": "Vendor/Swift-JSON/Sources/JSONRegexRuntime"
+        },
+        {
+          "name": "HanlinExactJSONSchema",
+          "type": "regular",
+          "dependencies": [
+            {
+              "byName": [
+                "JSON",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "JSONRegexRuntime",
+                null
+              ]
+            }
+          ],
+          "path": "Vendor/Swift-JSON/Sources/JSONSchema"
+        },
+        {
+          "name": "HanlinHostContracts",
+          "type": "regular",
+          "dependencies": [
+            {
+              "product": [
+                "HanlinPlatformContracts",
+                "HanlinPlatform",
+                null,
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinAgentCore",
+          "type": "regular",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinHostContracts",
+                null
+              ]
+            },
+            {
+              "product": [
+                "HanlinChatCore",
+                "HanlinPlatform",
+                null,
+                null
+              ]
+            },
+            {
+              "product": [
+                "AISDKProvider",
+                "swift-ai-sdk",
+                null,
+                null
+              ]
+            },
+            {
+              "product": [
+                "SwiftAISDK",
+                "swift-ai-sdk",
+                null,
+                null
+              ]
+            },
+            {
+              "byName": [
+                "JSON",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinExactJSONSchema",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinPersistenceAdapters",
+          "type": "regular",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinHostContracts",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinSDKTestFixtures",
+          "type": "regular",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinHostContracts",
+                null
+              ]
+            }
+          ],
+          "path": "Tests/Fixtures"
+        },
+        {
+          "name": "HanlinFixtureHost",
+          "type": "executable",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinAgentCore",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinPersistenceAdapters",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinSDKTestFixtures",
+                null
+              ]
+            }
+          ],
+          "path": "Examples/FixtureHost"
+        },
+        {
+          "name": "HanlinSDKPortableProof",
+          "type": "executable",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinAgentCore",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinPersistenceAdapters",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinSDKTestFixtures",
+                null
+              ]
+            }
+          ],
+          "path": "Tests/PortableProof"
+        },
+        {
+          "name": "HanlinHostContractsTests",
+          "type": "test",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinHostContracts",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinHostConcurrencyTests",
+          "type": "test",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinHostContracts",
+                null
+              ]
+            },
+            {
+              "product": [
+                "HanlinPlatformContracts",
+                "HanlinPlatform",
+                null,
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinAgentCoreTests",
+          "type": "test",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinAgentCore",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinPersistenceAdapters",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinSDKTestFixtures",
+                null
+              ]
+            },
+            {
+              "product": [
+                "AISDKProvider",
+                "swift-ai-sdk",
+                null,
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinPersistenceAdaptersTests",
+          "type": "test",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinPersistenceAdapters",
+                null
+              ]
+            }
+          ],
+          "path": null
+        }
+      ],
+      "tools_version": {
+        "_version": "6.2.0"
+      },
+      "swift_language_versions": [
+        "6"
+      ]
+    },
+    {
+      "package": "HanlinPlatform",
+      "manifest_sha256": "6fa5cc06b7beb940f4e745ce186bb27b296ccf4583119ab06663da620b51460d",
+      "exit": 0,
+      "stdout_sha256": "ac1d1d6959a3d49cd4e7873e03b0bb98dcb6426ccc28e993ecd32693a375d977",
+      "scope": "Manifest metadata evaluation only; no resolution, source compilation or tests.",
+      "name": "HanlinPlatform",
+      "platforms": [
+        {
+          "options": [],
+          "platformName": "macos",
+          "version": "26.0"
+        },
+        {
+          "options": [],
+          "platformName": "ios",
+          "version": "27.0"
+        }
+      ],
+      "products": [
+        {
+          "name": "HanlinPlatformContracts",
+          "settings": [],
+          "targets": [
+            "HanlinPlatformContracts"
+          ],
+          "type": {
+            "library": [
+              "automatic"
+            ]
+          }
+        },
+        {
+          "name": "HanlinMiniAppCore",
+          "settings": [],
+          "targets": [
+            "HanlinMiniAppCore"
+          ],
+          "type": {
+            "library": [
+              "automatic"
+            ]
+          }
+        },
+        {
+          "name": "HanlinScriptContracts",
+          "settings": [],
+          "targets": [
+            "HanlinScriptContracts"
+          ],
+          "type": {
+            "library": [
+              "automatic"
+            ]
+          }
+        },
+        {
+          "name": "HanlinScriptCompiler",
+          "settings": [],
+          "targets": [
+            "HanlinScriptCompiler"
+          ],
+          "type": {
+            "library": [
+              "automatic"
+            ]
+          }
+        },
+        {
+          "name": "HanlinScriptStore",
+          "settings": [],
+          "targets": [
+            "HanlinScriptStore"
+          ],
+          "type": {
+            "library": [
+              "automatic"
+            ]
+          }
+        },
+        {
+          "name": "HanlinScriptRuntime",
+          "settings": [],
+          "targets": [
+            "HanlinScriptRuntime"
+          ],
+          "type": {
+            "library": [
+              "automatic"
+            ]
+          }
+        },
+        {
+          "name": "HanlinScriptingSDK",
+          "settings": [],
+          "targets": [
+            "HanlinScriptingSDK"
+          ],
+          "type": {
+            "library": [
+              "automatic"
+            ]
+          }
+        },
+        {
+          "name": "HanlinScriptUI",
+          "settings": [],
+          "targets": [
+            "HanlinScriptUI"
+          ],
+          "type": {
+            "library": [
+              "automatic"
+            ]
+          }
+        },
+        {
+          "name": "HanlinScriptServices",
+          "settings": [],
+          "targets": [
+            "HanlinScriptServices"
+          ],
+          "type": {
+            "library": [
+              "automatic"
+            ]
+          }
+        },
+        {
+          "name": "HanlinScriptDeviceServices",
+          "settings": [],
+          "targets": [
+            "HanlinScriptDeviceServices"
+          ],
+          "type": {
+            "library": [
+              "automatic"
+            ]
+          }
+        },
+        {
+          "name": "HanlinScriptExtensions",
+          "settings": [],
+          "targets": [
+            "HanlinScriptExtensions"
+          ],
+          "type": {
+            "library": [
+              "automatic"
+            ]
+          }
+        },
+        {
+          "name": "HanlinChatCore",
+          "settings": [],
+          "targets": [
+            "HanlinChatCore"
+          ],
+          "type": {
+            "library": [
+              "automatic"
+            ]
+          }
+        },
+        {
+          "name": "HanlinScriptingApplicationRuntime",
+          "settings": [],
+          "targets": [
+            "HanlinScriptingApplicationRuntime"
+          ],
+          "type": {
+            "library": [
+              "automatic"
+            ]
+          }
+        }
+      ],
+      "dependencies": [
+        {
+          "sourceControl": [
+            {
+              "identity": "swiftyjson",
+              "location": {
+                "remote": [
+                  {
+                    "urlString": "https://github.com/SwiftyJSON/SwiftyJSON.git"
+                  }
+                ]
+              },
+              "productFilter": null,
+              "requirement": {
+                "exact": [
+                  "5.0.1"
+                ]
+              },
+              "traits": [
+                {
+                  "name": "default"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "sourceControl": [
+            {
+              "identity": "swift-ai-sdk",
+              "location": {
+                "remote": [
+                  {
+                    "urlString": "https://github.com/davidpovarsky/swift-ai-sdk.git"
+                  }
+                ]
+              },
+              "productFilter": null,
+              "requirement": {
+                "revision": [
+                  "e7bf34111e603ca977becd007dd4e5bb109af857"
+                ]
+              },
+              "traits": [
+                {
+                  "name": "default"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "sourceControl": [
+            {
+              "identity": "zipfoundation",
+              "location": {
+                "remote": [
+                  {
+                    "urlString": "https://github.com/weichsel/ZIPFoundation.git"
+                  }
+                ]
+              },
+              "productFilter": null,
+              "requirement": {
+                "exact": [
+                  "0.9.19"
+                ]
+              },
+              "traits": [
+                {
+                  "name": "default"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "targets": [
+        {
+          "name": "HanlinPlatformContracts",
+          "type": "regular",
+          "dependencies": [],
+          "path": null
+        },
+        {
+          "name": "HanlinPlatformContractsTests",
+          "type": "test",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinPlatformContracts",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinMiniAppCore",
+          "type": "regular",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinPlatformContracts",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinMiniAppCoreTests",
+          "type": "test",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinMiniAppCore",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinPlatformContracts",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinScriptContracts",
+          "type": "regular",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinPlatformContracts",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinScriptContractsTests",
+          "type": "test",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinScriptContracts",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinWidgetCompiler",
+          "type": "regular",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinPlatformContracts",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinScriptContracts",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinScriptCompiler",
+          "type": "regular",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinWidgetCompiler",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinPlatformContracts",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinScriptContracts",
+                null
+              ]
+            },
+            {
+              "product": [
+                "ZIPFoundation",
+                "ZIPFoundation",
+                null,
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinScriptCompilerTests",
+          "type": "test",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinScriptCompiler",
+                null
+              ]
+            },
+            {
+              "product": [
+                "ZIPFoundation",
+                "ZIPFoundation",
+                null,
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinScriptStore",
+          "type": "regular",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinPlatformContracts",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinScriptContracts",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinMiniAppCore",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinScriptStoreTests",
+          "type": "test",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinScriptStore",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinMiniAppCore",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinScriptRuntime",
+          "type": "regular",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinPlatformContracts",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinScriptContracts",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinScriptRuntimeTests",
+          "type": "test",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinScriptRuntime",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinScriptingSDK",
+          "type": "regular",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinScriptContracts",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinScriptingSDKTests",
+          "type": "test",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinScriptingSDK",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinScriptUI",
+          "type": "regular",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinPlatformContracts",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinScriptContracts",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinChatCore",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinScriptUITests",
+          "type": "test",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinScriptUI",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinScriptServices",
+          "type": "regular",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinPlatformContracts",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinScriptContracts",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinScriptServicesTests",
+          "type": "test",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinScriptServices",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinScriptDeviceServices",
+          "type": "regular",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinPlatformContracts",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinScriptServices",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinScriptDeviceServicesTests",
+          "type": "test",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinScriptDeviceServices",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinChatCore",
+          "type": "regular",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinPlatformContracts",
+                null
+              ]
+            },
+            {
+              "product": [
+                "SwiftAISDK",
+                "swift-ai-sdk",
+                null,
+                null
+              ]
+            },
+            {
+              "product": [
+                "AISDKProvider",
+                "swift-ai-sdk",
+                null,
+                null
+              ]
+            },
+            {
+              "product": [
+                "AISDKProviderUtils",
+                "swift-ai-sdk",
+                null,
+                null
+              ]
+            },
+            {
+              "product": [
+                "OpenAIProvider",
+                "swift-ai-sdk",
+                null,
+                null
+              ]
+            },
+            {
+              "product": [
+                "AnthropicProvider",
+                "swift-ai-sdk",
+                null,
+                null
+              ]
+            },
+            {
+              "product": [
+                "GoogleProvider",
+                "swift-ai-sdk",
+                null,
+                null
+              ]
+            },
+            {
+              "product": [
+                "OpenAICompatibleProvider",
+                "swift-ai-sdk",
+                null,
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinChatCoreTests",
+          "type": "test",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinChatCore",
+                null
+              ]
+            },
+            {
+              "product": [
+                "SwiftAISDK",
+                "swift-ai-sdk",
+                null,
+                null
+              ]
+            },
+            {
+              "product": [
+                "AISDKProvider",
+                "swift-ai-sdk",
+                null,
+                null
+              ]
+            },
+            {
+              "product": [
+                "AISDKProviderUtils",
+                "swift-ai-sdk",
+                null,
+                null
+              ]
+            },
+            {
+              "product": [
+                "OpenAIProvider",
+                "swift-ai-sdk",
+                null,
+                null
+              ]
+            },
+            {
+              "product": [
+                "AnthropicProvider",
+                "swift-ai-sdk",
+                null,
+                null
+              ]
+            },
+            {
+              "product": [
+                "GoogleProvider",
+                "swift-ai-sdk",
+                null,
+                null
+              ]
+            },
+            {
+              "product": [
+                "OpenAICompatibleProvider",
+                "swift-ai-sdk",
+                null,
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinScriptExtensions",
+          "type": "regular",
+          "dependencies": [
+            {
+              "product": [
+                "SwiftyJSON",
+                "SwiftyJSON",
+                null,
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinPlatformContracts",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinScriptContracts",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinScriptStore",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinScriptUI",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinChatCore",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinScriptExtensionsTests",
+          "type": "test",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinScriptExtensions",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinChatCore",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinScriptCompiler",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinScriptStore",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinLegacyWidgetStoreFixture",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinLegacyWidgetStoreFixture",
+          "type": "regular",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinPlatformContracts",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinScriptUI",
+                null
+              ]
+            }
+          ],
+          "path": "Tests/Fixtures/LegacyWidgetStore"
+        },
+        {
+          "name": "HanlinScriptingApplicationRuntime",
+          "type": "regular",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinPlatformContracts",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinScriptUI",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinMiniAppCore",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinScriptingApplicationRuntimeTests",
+          "type": "test",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinPlatformContracts",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinMiniAppCore",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinScriptingApplicationRuntime",
+                null
+              ]
+            }
+          ],
+          "path": null
+        }
+      ],
+      "tools_version": {
+        "_version": "6.2.0"
+      },
+      "swift_language_versions": [
+        "6"
+      ]
+    },
+    {
+      "package": "HanlinPresentationSDK",
+      "manifest_sha256": "59272c233aca8fbf72f50a9296539b2ed55b33f625ce34d208a2b1c4e3d569b8",
+      "exit": 0,
+      "stdout_sha256": "e6691c36f79bde560edd417cdcb9ea260c3e1b05069d17c6791db431c2f4fdb6",
+      "scope": "Manifest metadata evaluation only; no resolution, source compilation or tests.",
+      "name": "HanlinPresentationSDK",
+      "platforms": [
+        {
+          "options": [],
+          "platformName": "ios",
+          "version": "27.0"
+        },
+        {
+          "options": [],
+          "platformName": "macos",
+          "version": "26.0"
+        }
+      ],
+      "products": [
+        {
+          "name": "HanlinPresentationKit",
+          "settings": [],
+          "targets": [
+            "HanlinPresentationKit"
+          ],
+          "type": {
+            "library": [
+              "automatic"
+            ]
+          }
+        },
+        {
+          "name": "HanlinRichUI",
+          "settings": [],
+          "targets": [
+            "HanlinRichUI"
+          ],
+          "type": {
+            "library": [
+              "automatic"
+            ]
+          }
+        },
+        {
+          "name": "HanlinChatUI",
+          "settings": [],
+          "targets": [
+            "HanlinChatUI"
+          ],
+          "type": {
+            "library": [
+              "automatic"
+            ]
+          }
+        }
+      ],
+      "dependencies": [
+        {
+          "sourceControl": [
+            {
+              "identity": "hanlin-streaming-markdown",
+              "location": {
+                "remote": [
+                  {
+                    "urlString": "https://github.com/davidpovarsky/hanlin-streaming-markdown"
+                  }
+                ]
+              },
+              "productFilter": null,
+              "requirement": {
+                "revision": [
+                  "6bde022876ef4af738c154b3d5c871984ef76195"
+                ]
+              },
+              "traits": [
+                {
+                  "name": "default"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "targets": [
+        {
+          "name": "HanlinPresentationKit",
+          "type": "regular",
+          "dependencies": [],
+          "path": null
+        },
+        {
+          "name": "HanlinRichUI",
+          "type": "regular",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinPresentationKit",
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinChatUI",
+          "type": "regular",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinPresentationKit",
+                null
+              ]
+            },
+            {
+              "byName": [
+                "HanlinRichUI",
+                null
+              ]
+            },
+            {
+              "product": [
+                "SwiftStreamingMarkdown",
+                "hanlin-streaming-markdown",
+                null,
+                {
+                  "platformNames": [
+                    "ios"
+                  ]
+                }
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinPresentationKitTests",
+          "type": "test",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinPresentationKit",
+                null
+              ]
+            }
+          ],
+          "path": null
+        }
+      ],
+      "tools_version": {
+        "_version": "6.2.0"
+      },
+      "swift_language_versions": [
+        "6"
+      ]
+    },
+    {
+      "package": "HanlinSkillFormat",
+      "manifest_sha256": "3878f654329884843943a463a901537c45f894b198a4bc9b9b9169410dc66741",
+      "exit": 0,
+      "stdout_sha256": "e86657d0840c56c9e067c687ae19894c4ff4f747fd10304b2d399fad804d959d",
+      "scope": "Manifest metadata evaluation only; no resolution, source compilation or tests.",
+      "name": "HanlinSkillFormat",
+      "platforms": [
+        {
+          "options": [],
+          "platformName": "ios",
+          "version": "26.0"
+        },
+        {
+          "options": [],
+          "platformName": "macos",
+          "version": "15.0"
+        }
+      ],
+      "products": [
+        {
+          "name": "HanlinSkillFormat",
+          "settings": [],
+          "targets": [
+            "HanlinSkillFormat"
+          ],
+          "type": {
+            "library": [
+              "automatic"
+            ]
+          }
+        }
+      ],
+      "dependencies": [
+        {
+          "sourceControl": [
+            {
+              "identity": "yams",
+              "location": {
+                "remote": [
+                  {
+                    "urlString": "https://github.com/jpsim/Yams.git"
+                  }
+                ]
+              },
+              "productFilter": null,
+              "requirement": {
+                "exact": [
+                  "6.2.2"
+                ]
+              },
+              "traits": [
+                {
+                  "name": "default"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "targets": [
+        {
+          "name": "HanlinSkillFormat",
+          "type": "regular",
+          "dependencies": [
+            {
+              "product": [
+                "Yams",
+                "Yams",
+                null,
+                null
+              ]
+            }
+          ],
+          "path": null
+        },
+        {
+          "name": "HanlinSkillFormatTests",
+          "type": "test",
+          "dependencies": [
+            {
+              "byName": [
+                "HanlinSkillFormat",
+                null
+              ]
+            }
+          ],
+          "path": null
+        }
+      ],
+      "tools_version": {
+        "_version": "6.2.0"
+      },
+      "swift_language_versions": [
+        "6"
+      ]
+    }
+  ]
+}

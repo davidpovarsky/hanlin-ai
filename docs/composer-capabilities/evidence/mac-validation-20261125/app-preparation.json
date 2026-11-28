@@ -1,0 +1,38 @@
+{
+  "sourceCommit": "f54aebbb35169ea63eca146a1ba3ef4e8bf4f84d",
+  "atUTC": "2026-11-25T00:16:46.164191+00:00",
+  "results": [
+    {
+      "command": [
+        "python3",
+        "Scripts/SDK/generate_manifest.py",
+        "--check"
+      ],
+      "exit": 0,
+      "logSHA256": "c8e7a124d438a3ed2d05fa552b80ee4b9285d6bd254f468dcfbe1d6e8a2d6d6e"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/SDK/update_project.py",
+        "--check"
+      ],
+      "exit": 0,
+      "logSHA256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/CI/stage_a2ui_schemas.py",
+        "--source-packages-path",
+        "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/SourcePackages",
+        "--derived-data-path",
+        "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124",
+        "--evidence",
+        "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/a2ui-schemas.json"
+      ],
+      "exit": 0,
+      "logSHA256": "bebfeccd07e5eea4c150228e97aee6eb5e46611ca6ee27af012d3d9cd16f7414"
+    }
+  ]
+}

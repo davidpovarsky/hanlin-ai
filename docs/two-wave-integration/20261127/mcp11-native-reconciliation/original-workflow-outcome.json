@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "runID": 46042428539,
+  "jobID": 140653254209,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/46042428539",
+  "source": "fe0001ac868339d0825d1cc3d07f8383341d163d",
+  "status": "completed",
+  "conclusion": "failure",
+  "originalMetadataSHA256": "a99b210d2921df0734b1cc25b35c607dff7d1d3ca1d9c5411423eda290c0e9e2",
+  "originalControllerStatus": "FOCUSED_ORIGINAL_MCP_WIRE_FAILED",
+  "originalControllerReceiptInArtifact": "mcp-wire-original11.json",
+  "posthocNativeScope": "Eleven exact package comparator tests passed; original failed workflow/controller are not rewritten."
+}

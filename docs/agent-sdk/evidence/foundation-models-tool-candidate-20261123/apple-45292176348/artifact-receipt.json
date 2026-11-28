@@ -1,0 +1,17 @@
+{
+  "run_id": 45292176348,
+  "run_attempt": 1,
+  "source": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+  "utc": "2026-11-24T00:28:16.760406+00:00",
+  "artifact_id": 14877495539,
+  "artifact_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14877495539",
+  "zip_bytes": 5423867,
+  "zip_sha256": "69a9a0e2a9f7f6671715c09160198bb1c01b85b165d630ce9ced402d9a1ceb83",
+  "api_digest_verified": true,
+  "api_run_source_verified": true,
+  "zip_crc": "PASS",
+  "acquisition_count": 1,
+  "archive_member_inventory_sha256": "43284f01aeac024276e152650cc508c840723bf3fc3f2a33de94e76cbf971a5c",
+  "extracted_files": 232,
+  "container_only_files": 115
+}

@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "baseSHA": "0f29e0a3399151dc111b28adc3487b784badeccf",
+  "recordedAt": "2026-11-24T01:57:35.583596+00:00",
+  "scope": "Shared MiniApp archive import and extension artifact/resource/snapshot storage",
+  "syntaxParse": {
+    "status": "EXECUTED_PASS",
+    "command": "swiftc -frontend -parse Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinArchivePolicy.swift Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinPackageCenter.swift AI_HLYTests/HanlinMiniAppStorageCapacityTests.swift",
+    "toolchain": "Swift6.4.3 Linux; syntax only"
+  },
+  "nativeStore": {
+    "status": "NOT_RUN",
+    "selector": "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
+    "cases": [
+      "largeArtifactsResourcesAndSnapshotsRetainIntegrity"
+    ],
+    "caseCount": 1,
+    "requiredPlatform": "Apple; parent-owned native gate",
+    "assertions": [
+      "artifact larger than3MiB stores and verifies unchanged",
+      "129 resources materialize without truncation",
+      "snapshot state larger than4MiB survives save and reopen",
+      "escaping path and wrong generation are rejected",
+      "changed artifact bytes fail SHA256 verification"
+    ]
+  },
+  "portableArchive": {
+    "status": "EXECUTED_PASS",
+    "testCount": 12,
+    "suiteCount": 2,
+    "receipt": "archive-import-policy.json"
+  },
+  "sourceFingerprints": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift",
+      "sha256": "f88b5e825329ec5d1a59a52d79ee06369a5daced940b0f81e2028d8da7670a90"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinArchivePolicy.swift",
+      "sha256": "fd64e17ee460d33743e2d2d51a967ee8b30616f1181068c4369a6c99bc88b9df"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinPackageCenter.swift",
+      "sha256": "cd98b6ffb24ec4c0463d021a30204b68bcb96f1bd8dc3e2749ca5862f21dac2b"
+    },
+    {
+      "path": "AI_HLYTests/HanlinMiniAppStorageCapacityTests.swift",
+      "sha256": "9693c0ff8bfa78e6582a8249ac118551c34c366f242ac43b5fa7a75d8537f281"
+    }
+  ],
+  "integrationDependency": "Combine with entrypoints804d9cebe4f40fcaca3fcda0caa9ea726b2d0d65, which removes the remaining NativePresentation reference to deleted maximumArtifactBytes.",
+  "originalEngineContracts": "Original upstream ScriptWidget limits and manifest fields are unchanged; the shared host no longer adds artifact/resource/snapshot or default archive byte/count/depth/ratio budgets."
+}

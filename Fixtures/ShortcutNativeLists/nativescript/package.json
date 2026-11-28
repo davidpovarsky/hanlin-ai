@@ -1,0 +1,14 @@
+{
+  "name": "hanlin.shortcutlists.nativescript",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.ts",
+  "hanlinRuntime": "hanlin-nativescript",
+  "type": "module",
+  "dependencies": {
+    "@nativescript/core": "9.1.4"
+  },
+  "hanlinNativeScript": {
+    "windowFactory": 1
+  }
+}

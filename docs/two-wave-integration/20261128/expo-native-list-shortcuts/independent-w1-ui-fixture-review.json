@@ -1,0 +1,172 @@
+{
+  "schema": 1,
+  "recordedAt": "2026-11-28T10:00:21.989383+00:00",
+  "verdict": "APPROVED_SOURCE_ONLY_WITH_EXISTING_QUERY_COMPILER_FIX_COMPOSITION",
+  "reviewScope": "Four added Expo UI entry methods, engine parameterization of shared native-list driver, completion foreground observation, and seven new Expo authored fixture files. Root independently owns reader/runner/controls/workflow review.",
+  "base": "04e33c45acedd3f372f836b06f17b805bc91293d",
+  "candidateManifestSHA256": "c04f2977d91963b3209fa13b0d001261788272d52d923adf90b82897c3157a4f",
+  "allCandidatePayloadsHashVerified": 33,
+  "uiSHA256": "496c4dd27806a5152a410a1e928fc1a38c9e8f937dd2a97618a87df647531078",
+  "sourcePatchSHA256": "d7f34179100a7874ac9b3a9b55ece0f3e3121d8df0636fd58d7ee7a8ac1263d4",
+  "wholeUIInverse": true,
+  "oldMethodBodiesUnchanged": 42,
+  "newMethods": [
+    "testExpoSavedBooleanListReopensThenClearsToEmpty",
+    "testExpoSavedIntegerListReopensThenClearsToEmpty",
+    "testExpoSavedNumberListReopensThenClearsToEmpty",
+    "testExpoSavedTextListReopensThenClearsToEmpty"
+  ],
+  "uiEditLedgerEntries": 8,
+  "actualGitAuthoritiesVerified": [
+    {
+      "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+      "gitBlob": "4b0b182fb90acc7edda5a901f1d90487b84d2917",
+      "sha256": "7bfcf804f4795147ebe1c308bcff4b82fc92a926cfdddeb7a9d237c4577e1617"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowSession.swift",
+      "gitBlob": "ed2d606d7eac301362779123298b0c5fc5083bd7",
+      "sha256": "de1329ae3359e51f0c101083f76733712076a7689a059ea60241f51516c91f8e"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/index.mjs",
+      "gitBlob": "3e341b8bedc4499213c3826b8db45c51802a58a1",
+      "sha256": "22e2fac403d3b6f5431b662424d9cba6c4cd9f121d943328616d778746950062"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/miniapp-actions.ts",
+      "gitBlob": "62d386f2fcc79a073c5bac3328c2233817ec34bb",
+      "sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/host-services.ts",
+      "gitBlob": "cf693002b714d4b3cac492805e4fde793778524c",
+      "sha256": "bb4a8d65fdeb6fe5b0780e856d126360e49f8bdbfc2cc61b6a101ad92653d518"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+      "gitBlob": "bb9bd32564688a7c33b83116d8cf07c0ce101e7c",
+      "sha256": "1348db7a36e8912faf5d4474299297cfde24d86729e51711abfc9c9195d77d71"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
+      "gitBlob": "33bf9e6bde4a9234c6d272e4352c2f7fd4f703cd",
+      "sha256": "a221b4c516c1e3f717eeaca8b5dc8e3fb52a66294b161d12ae893902fdb20766"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Data/HanlinFileService.swift",
+      "gitBlob": "f75eba31d08ed785bb912f6c5f96a2c092979f0f",
+      "sha256": "24838da663c832eefef21b441dfc3ec156d4d0cff205df662b37144f38498aa4"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppActionChannel.swift",
+      "gitBlob": "a2aa64e90c91ec70aa16a520f446400c81f56838",
+      "sha256": "6b759f6c21148cd3b0678b8f32e4c4e04c913aa0d646f2a2e705eb103f8de98e"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "gitBlob": "2182b4d68b0149d140328fd7c3de03672768aff1",
+      "sha256": "dadde747dfad34c4ac8efdd8199253624376146956204babe52d90701404b950"
+    },
+    {
+      "path": "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
+      "gitBlob": "d08395c6c41e3b7b7ee0017bbe1f3f4d1442f88c",
+      "sha256": "0f19aee0d55b90cc3d38eecbb50b64357d3ec5968ca198ebec5825f85ef339ea"
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "gitBlob": "a0924ecfdd00496c097024077efc5c6df488c3ba",
+      "sha256": "422c418689c6194268dccb54e8232711da44068925ca0a66fb27f1800610941a"
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_concurrency.py",
+      "gitBlob": "51673768bab0659b74a8c7b693b3ba1bb81cd6fa",
+      "sha256": "ade0b57d32fc718610017d845cfd27ea8762afffd5fa6827a3653e34397897bd"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "gitBlob": "b7f39bb5a702c85949b042f6c96ff06221f71ec9",
+      "sha256": "06fbe72f889da3befe00c2dfe9b286f062decd59a50c1df9c961df3bcb46b745"
+    },
+    {
+      "path": "Scripts/MiniApps/miniapp.mjs",
+      "gitBlob": "782e44105c78e31460f0ad4a0fae6a8941568595",
+      "sha256": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30"
+    },
+    {
+      "path": "Fixtures/ShortcutLongRunning/expo/package.json",
+      "gitBlob": "445388862ff2eb36dfe7c2ded9d442e1972dd0a7",
+      "sha256": "7f98541b8391b1f84b2728b35144921e855db9c28c20cda94d11e68d5272bb67"
+    },
+    {
+      "path": "Fixtures/ShortcutLongRunning/expo/App.tsx",
+      "gitBlob": "7c89d47ad6db7acb274f2c253229580eb6d264ad",
+      "sha256": "3306a9446bae91dc54a53048e058845053d1c8fb6bbe4812d0b541f5bfdb2081"
+    }
+  ],
+  "fixtures": [
+    {
+      "path": "Fixtures/ShortcutNativeLists/expo/App.tsx",
+      "bytes": 2014,
+      "sha256": "1dc14ca1b0594eac76b6ab621f63d51af3db618aa3b408d03ae95aec8b855f2f"
+    },
+    {
+      "path": "Fixtures/ShortcutNativeLists/expo/hanlin.authoring.json",
+      "bytes": 118,
+      "sha256": "57239928efb0bd0e6760bf64443e70bf021eb963f074908332de3f5b7959a5a3"
+    },
+    {
+      "path": "Fixtures/ShortcutNativeLists/expo/index.ts",
+      "bytes": 117,
+      "sha256": "e6ff990a5f73c39cebfecc539611b23872e530f1287c6b0d0d8447fbc9a832ee"
+    },
+    {
+      "path": "Fixtures/ShortcutNativeLists/expo/package.json",
+      "bytes": 298,
+      "sha256": "f77503c19530960bd9d5d40d4c42e91f2da6395f1cf8be2279d7974e904ea36d"
+    },
+    {
+      "path": "Fixtures/ShortcutNativeLists/expo/proof.ts",
+      "bytes": 737,
+      "sha256": "1c3cf09fe914c496d10cd01f6eabe989bc683f7a6194a80ae1b699c554515210"
+    },
+    {
+      "path": "Fixtures/ShortcutNativeLists/expo/script.json",
+      "bytes": 814,
+      "sha256": "49c8ac12904493e4657d27d14b18b8bbfcdf355e18660e822b78a2b94728b194"
+    },
+    {
+      "path": "Fixtures/ShortcutNativeLists/expo/tsconfig.json",
+      "bytes": 69,
+      "sha256": "40d7c93d27898a4c2f676e917017a532edd471abbe9e76b620104ef272d7d466"
+    }
+  ],
+  "fixtureProofByteEqualOriginalNS": true,
+  "authoredDependenciesByteValuesEqualOriginalExpoFixture": true,
+  "queryCompilerFix": {
+    "sourceCommit": "6bec7f7091c47df1e4fbddf52c43e492de13c19a",
+    "actualGitRead": true,
+    "sha256": "503a8d58e2b59fd83a4296954f63222c6668a913c46b8dce2f36a05cbf9556b8",
+    "composedSHA256": "6b6ae68459977419cfe8539d14bfd96c09100ccb5d488dbd5790608ba5f7a738",
+    "bothOrdersEqual": true,
+    "requiredBeforeNativeCompile": true
+  },
+  "sourceFindings": [
+    "The default engine remains NativeScript; four old NS test bodies and all42 prior UI method bodies are byte-exact. No creation, array-editor, save, reopen, clear or built-in result-chain helper is changed by this candidate.",
+    "Added selectors derive explicit Expo method names and fixture IDs; the same360-second shared case deadline covers both nonempty and empty executions. No new waiting allowance is added.",
+    "The new foreground observation reads public XCUIApplication.state after the original nativeListCompletion guard. It records the actual states and requires Shortcuts foreground and MiniApps not foreground without activating either app to manufacture the result.",
+    "Expo register serves the real public action table. The handler reads invocation.parameters, rejects non-array/non-scalar/non-finite values, preserves order and records actual caller and invocation.id. It does not receive or synthesize the test expected values or native Int/Double tags.",
+    "The actual action channel serializes its supplied UUID in invocation.id; the platform authority binds that action invocation to command.id. Host call context uses the admitted installed package scope; HanlinFileService maps it to HanlinPackages/<installedID>/State.",
+    "The fresh validated nonce chooses a single relative State filename; existing bytes cause failure. Unicode JSON is escaped to ASCII without changing the decoded result, the real public state write is awaited and checked, and only then is the identical ordinary JSON result returned.",
+    "The source pins preserve the existing authored Expo versions. The existing producer binds actual SDK package versions at build; this review does not infer current hosted ABI or compiler acceptance."
+  ],
+  "limits": [
+    "New Expo original CLI validation/build, Swift compilation and four OS cases with eight real saved-action executions remain NOT_RUN.",
+    "The frozen candidate intentionally retains the two old query compile errors until composed with the separately reviewed6bec donor. This review verified that exact composition, rather than claiming this standalone UI compiles.",
+    "Public Shortcuts array editor availability/labels and the full result chain remain actual native obligations; source-only review cannot prove those controls appear.",
+    "Real prechange saved-action migration and rich heterogeneous or nested native inputs are not covered by this four-case homogeneous list pilot.",
+    "No portable tests, producer commands, native tests, UI actions, API reads, source edits or workflow dispatch were executed by this review."
+  ],
+  "testsRunByReviewer": 0,
+  "nativeRunsByReviewer": 0
+}

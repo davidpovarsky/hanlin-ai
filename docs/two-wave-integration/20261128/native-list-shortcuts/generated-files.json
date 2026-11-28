@@ -1,0 +1,92 @@
+[
+  {
+    "path": "a184080e-3887-4463-a6d9-e60c2132c1cc/package/hanlin.authoring.json",
+    "bytes": 2076,
+    "mode": 420,
+    "sha256": "e37f90261d4da4f14809c1f9092de4a8b01a5a97982b552f2a4a40a07da5b6ad"
+  },
+  {
+    "path": "a184080e-3887-4463-a6d9-e60c2132c1cc/package/hanlin.validation.json",
+    "bytes": 899,
+    "mode": 420,
+    "sha256": "24bf29ac640c3dee6c1c4870f96df6d378158328711a7cf024a221ce0610ca88"
+  },
+  {
+    "path": "a184080e-3887-4463-a6d9-e60c2132c1cc/package/nativescript/app/bundle.mjs",
+    "bytes": 30,
+    "mode": 420,
+    "sha256": "77326621f8ddcf98a2eccfc7deb128f535b962f1969f914b562a8d3823a7d049"
+  },
+  {
+    "path": "a184080e-3887-4463-a6d9-e60c2132c1cc/package/nativescript/app/modules/index.mjs",
+    "bytes": 1750,
+    "mode": 420,
+    "sha256": "b6761042c5a260abba6917fa23f225da6aae314d0d8a6a1b5a54f885ed4c7222"
+  },
+  {
+    "path": "a184080e-3887-4463-a6d9-e60c2132c1cc/package/nativescript/app/modules/index.mjs.map",
+    "bytes": 3565,
+    "mode": 420,
+    "sha256": "11965b2af537ee256a36971b914b9a5316ea08149ddc499175a64c46ca42d338"
+  },
+  {
+    "path": "a184080e-3887-4463-a6d9-e60c2132c1cc/package/nativescript/app/modules/proof.mjs",
+    "bytes": 662,
+    "mode": 420,
+    "sha256": "48482a8e1b6f32aaecc712a2fa3d47aa901370cb38b5a2f897a99c343f4d7c5d"
+  },
+  {
+    "path": "a184080e-3887-4463-a6d9-e60c2132c1cc/package/nativescript/app/modules/proof.mjs.map",
+    "bytes": 1346,
+    "mode": 420,
+    "sha256": "fdaf6ac718eab439d4d7b85c19ab50cc38098e0295f8b8a4b1215805d35d7a32"
+  },
+  {
+    "path": "a184080e-3887-4463-a6d9-e60c2132c1cc/package/nativescript/app/package.json",
+    "bytes": 340,
+    "mode": 420,
+    "sha256": "06efb4576f02873de581e9d46d1b808485864d43b08320540884921c96bb5dec"
+  },
+  {
+    "path": "a184080e-3887-4463-a6d9-e60c2132c1cc/package/script.json",
+    "bytes": 877,
+    "mode": 420,
+    "sha256": "9b61a8b3503d72f2536c579cdea9625c1c9180f66e4cb88d66207c15343f7f08"
+  },
+  {
+    "path": "a184080e-3887-4463-a6d9-e60c2132c1cc/package/source/hanlin.authoring.json",
+    "bytes": 126,
+    "mode": 420,
+    "sha256": "5c45d2ab2cfce588d3758665eff52a9511613b2070a9946be001e32f87d517d9"
+  },
+  {
+    "path": "a184080e-3887-4463-a6d9-e60c2132c1cc/package/source/index.ts",
+    "bytes": 1616,
+    "mode": 420,
+    "sha256": "eac6a0cf6be0d3a956438a3d856784537b98df4ec5f4a89006bc313a5d743e85"
+  },
+  {
+    "path": "a184080e-3887-4463-a6d9-e60c2132c1cc/package/source/package.json",
+    "bytes": 288,
+    "mode": 420,
+    "sha256": "daade868d8345954dd06b629b6ab9912e7241adce7f46669e6ecbf1f8d676041"
+  },
+  {
+    "path": "a184080e-3887-4463-a6d9-e60c2132c1cc/package/source/proof.ts",
+    "bytes": 737,
+    "mode": 420,
+    "sha256": "1c3cf09fe914c496d10cd01f6eabe989bc683f7a6194a80ae1b699c554515210"
+  },
+  {
+    "path": "a184080e-3887-4463-a6d9-e60c2132c1cc/package/source/script.json",
+    "bytes": 877,
+    "mode": 420,
+    "sha256": "9b61a8b3503d72f2536c579cdea9625c1c9180f66e4cb88d66207c15343f7f08"
+  },
+  {
+    "path": "a184080e-3887-4463-a6d9-e60c2132c1cc/package/source/tsconfig.json",
+    "bytes": 54,
+    "mode": 420,
+    "sha256": "32212ba114edcbc3f0f923db351e65c228b1c0bc4f2a2339a1bd2eaa90e24e75"
+  }
+]

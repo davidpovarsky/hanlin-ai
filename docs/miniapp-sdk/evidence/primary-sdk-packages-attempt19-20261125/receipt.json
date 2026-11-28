@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "kind": "EVIDENCE_ONLY_RETAINED_ACTUAL_OUTPUT_RECONCILIATION",
+  "createdAt": "2026-11-25T11:38:38.281955+00:00",
+  "consumerSource": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+  "sdkProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3311,
+      "sha256": "4831f3628b5109326c3aaa62e9708d2315773b75d705d1973af170e0e5314921"
+    },
+    {
+      "path": "artifact-manifest.json",
+      "bytes": 5992,
+      "sha256": "d60726038c1ce128c4acc15af55818706d1a9bb3d05cb0abe7c64a37515afb73"
+    },
+    {
+      "path": "external-archives.json",
+      "bytes": 1014,
+      "sha256": "133589c7c5109ec133b244301c810b1d4555e3f691e271fa1f95099dab6848af"
+    },
+    {
+      "path": "raw/authoring-fixture-provenance.json",
+      "bytes": 4274,
+      "sha256": "2e151fec31f0ff114f43cc9743c60c736665716d1ee7e0e800a5bf79dd981796"
+    },
+    {
+      "path": "raw/authoring-mini-data-container.txt",
+      "bytes": 157,
+      "sha256": "0fd53dc414bd607caa75ed25ba6b37f420c1b61c229c09ad1199a25319ecf2ef"
+    },
+    {
+      "path": "raw/modular-search-build.json",
+      "bytes": 1658,
+      "sha256": "abf044a94e372eec27a1cbd2b267d2f4ca02e3a25c66d0fbe1cc9195510f4bca"
+    },
+    {
+      "path": "raw/receipt.json",
+      "bytes": 8625,
+      "sha256": "1b282a1226b4234cea6628582c1a06604649084e4fb8406b213d8152d81a3895"
+    },
+    {
+      "path": "raw/sample-package-hashes.json",
+      "bytes": 443,
+      "sha256": "85a9d20da00f78cb67dc6742184f96c493f8159fc91eeb538bb601b68cfc81de"
+    },
+    {
+      "path": "raw/sdk-only-departure-budget-build.json",
+      "bytes": 1683,
+      "sha256": "34c5a6bab071a8f3a8a70a26cea0f5c0e71f1a2bd61cf7dea54a5c008746f91a"
+    },
+    {
+      "path": "raw/sdk-only-package-provenance.json",
+      "bytes": 2573,
+      "sha256": "3a5fb5e20e9d3adaae56cdef3065555e9213fd72eb307b74a46e12a7fdba09e9"
+    },
+    {
+      "path": "raw/sdk-only-table-share-build.json",
+      "bytes": 1227,
+      "sha256": "5ceac27b3a05a1f4a35cfc84b9b3d3b5bd598b822e222dc7ba2055e89c7d80a8"
+    },
+    {
+      "path": "transport-manifest.json",
+      "bytes": 2556,
+      "sha256": "4bf4595cbb236a58bd3b5ddb0f06a627aaa9dc3b29d878d4df43282f101bd4c0"
+    },
+    {
+      "path": "verification.json",
+      "bytes": 22761,
+      "sha256": "6da7912d2ab009b24d2b74861465b5131bbc4baa2bbb9165f0d09640d5dfaf15"
+    }
+  ],
+  "fileCount": 13,
+  "totalBytes": 56274,
+  "sourceMutation": false,
+  "nativeExecution": false
+}

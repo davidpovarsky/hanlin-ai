@@ -1,0 +1,229 @@
+{
+  "status": "ORIGINAL_HOST188_AND_FRESH_SDK396_PASS",
+  "actualExecutionSource": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+  "generatedDocSourceSeal": "78ec8f97a607f5e1f8c01de5109ae850791b9e04",
+  "rawReceiptSHA256": "6046e68027dbb0acf87a42fd6b310c21405f9a58f721c4b17e90a5b775404942",
+  "originalPhases": 12,
+  "tests": {
+    "tests": 188,
+    "pass": 188,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "actualLongJobProof": {
+    "proof": "actual-node-job-over-300-seconds",
+    "elapsedMilliseconds": 305023.16687500005,
+    "executionID": "0afef886-b456-4204-bca7-9662a8cb8cd0"
+  },
+  "actualArchive": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host-764ed325-original-phases-r1/RuntimeHostResources.zip",
+    "canonicalPath": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81905738,
+    "sha256": "7e37a818f7502a44dc44c6369d3ca19164d8fae072504166aa18bf9e86cba241"
+  },
+  "actualSDK": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/fresh-sdk-764ed325-original-phases-r1/MiniAppSDK",
+    "manifestSHA256": "fde01eda875902fd4b399921902ad8589f03f6c7926d3298fcb4f4c929339838",
+    "sourceInputHash": "7e2d370d0753b37bb1c589e4c2b28e3e8383c6fb948b09b0556e651efcfa4a9e",
+    "sourceInputsCount": 396
+  },
+  "actualPackagedFingerprint": "7e2d370d0753b37bb1c589e4c2b28e3e8383c6fb948b09b0556e651efcfa4a9e",
+  "fingerprintBeforeOriginalInventoryRefresh": "c8ba03a71f5f0d4f2330589a87ccb3522daafcab418ae4db01b959c37f98ce83",
+  "noAppOrOSAcceptanceClaimed": true,
+  "members": [
+    {
+      "path": "original-phases/complete-original-test-set.log",
+      "bytes": 18944,
+      "sha256": "1075cd343cef64f5f308a2a7ade774d314a3b31e69e68cc74efeeb2d542ef04d"
+    },
+    {
+      "path": "original-phases/current-reachability-audit.log",
+      "bytes": 73,
+      "sha256": "231e3ea5da8cd01dfdc112d6cb7466ce2b2e6f38070dd193d6bbea0e17f7f39b"
+    },
+    {
+      "path": "original-phases/current-sdk-audit.log",
+      "bytes": 77,
+      "sha256": "6d938ed7d69471fb67d14ac1b2beae53a4383c809514a5f10888d2b14cfb1b06"
+    },
+    {
+      "path": "original-phases/current-sdk-fingerprint.log",
+      "bytes": 67312,
+      "sha256": "3bd11576057cc0cd70f3bad96454086688119c0377f9f55c00be5c6a6fbf08ac"
+    },
+    {
+      "path": "original-phases/grammar-closure-before.json",
+      "bytes": 6378,
+      "sha256": "71c4a92b5ec0d156b2b01959f3657eb932db24103d8892384d4ec72c9cffa9bc"
+    },
+    {
+      "path": "original-phases/host-input-fingerprint-after.log",
+      "bytes": 65,
+      "sha256": "0d7e54f737159b2ff9931a59a0848f52e3ffe4be7e6f9256e9dfcbe93a0a653e"
+    },
+    {
+      "path": "original-phases/host-input-fingerprint-before.log",
+      "bytes": 65,
+      "sha256": "0d7e54f737159b2ff9931a59a0848f52e3ffe4be7e6f9256e9dfcbe93a0a653e"
+    },
+    {
+      "path": "original-phases/node-fingerprint.log",
+      "bytes": 518,
+      "sha256": "5d9368cd4b939d652aab8afbd31375396f6312d3f7b6b30c4843c40aab2f32fe"
+    },
+    {
+      "path": "original-phases/node-version.log",
+      "bytes": 8,
+      "sha256": "2f30156cd7f9137514ea68d53554f583cf6541fd107dbc8ae8a19253379a735a"
+    },
+    {
+      "path": "original-phases/original-archive-reuse-validation.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original-phases/original-packed-validation-jitless-and-seal.log",
+      "bytes": 387,
+      "sha256": "7ff4ec17d227fd81ad1e4452272aa6b80ba5554b2b7d180442a6cf0d8dddd7d2"
+    },
+    {
+      "path": "original-phases/original-packed-verification-and-seal.sh",
+      "bytes": 1410,
+      "sha256": "8e4bc5c4a631ea51588ecd0686a468f41d61898647de1f60f9429ca737b696a5"
+    },
+    {
+      "path": "original-phases/original-post-test-packing.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original-phases/original-post-test-packing.sh",
+      "bytes": 130,
+      "sha256": "911a4622f94eef57be7952c184f623cebaa1bad9c8a47ad3bddeb4016b7d91c3"
+    },
+    {
+      "path": "original-phases/original-pretest-phases.log",
+      "bytes": 1759,
+      "sha256": "7cbfb808acb9604758a6f7bc8dfe2bc7d39fc316fae983aa6e4f1d3cc6391b67"
+    },
+    {
+      "path": "original-phases/original-pretest-phases.sh",
+      "bytes": 3565,
+      "sha256": "6873829b34e87ae6f2ed54fcc69cefa8b4a95d9fd126bcb968ecec72067a27ac"
+    },
+    {
+      "path": "original-phases/original-test-source-manifest.json",
+      "bytes": 19301,
+      "sha256": "9028657cebf5404853474d2e3a8900e48aefdc7cb109496bae43417409598711"
+    },
+    {
+      "path": "original-phases/staged-complete-closure-after.json",
+      "bytes": 6674552,
+      "sha256": "183d77c3905a2be51244c5db86009e87626dc0fbedf87ddefdc74f99986c130b"
+    },
+    {
+      "path": "original-phases/staged-complete-closure-before.json",
+      "bytes": 6674552,
+      "sha256": "183d77c3905a2be51244c5db86009e87626dc0fbedf87ddefdc74f99986c130b"
+    },
+    {
+      "path": "host-preparation-764ed325-original-phases-r1.json",
+      "bytes": 20023,
+      "sha256": "6046e68027dbb0acf87a42fd6b310c21405f9a58f721c4b17e90a5b775404942"
+    },
+    {
+      "path": "prepare-host-independent-764ed325-20261127.py",
+      "bytes": 22843,
+      "sha256": "a0a48ddce66fd80741aa2eb12e99a1185748958208e8958a5d30517f80eeaf7c"
+    },
+    {
+      "path": "host-independent-controller-764ed325-binding.json",
+      "bytes": 2359,
+      "sha256": "7347cad0145ab0c02737b218ad67d1b6f44a7b13eb668e2d2f200c5c8bfe4893"
+    },
+    {
+      "path": "host-independent-controller-764ed325-binding.diff",
+      "bytes": 6689,
+      "sha256": "397f344533ad71339b8e8269e2b7dcac9c9414d1c1e723135944becd4f2f184d"
+    },
+    {
+      "path": "source-stage-764ed325-r1.json",
+      "bytes": 3022,
+      "sha256": "fd7a3425f677e0d955cb0a887901782aa03be379872cb74fd5b0e62a5ba35f6b"
+    },
+    {
+      "path": "source-qualification-host-764ed325-r1.json",
+      "bytes": 6710,
+      "sha256": "33e9bbc06aaab9faa0d4e4f88368e67109e1e41082608dce7cebe93bccdb6b14"
+    },
+    {
+      "path": "host-source-tests-764ed325-r1.json",
+      "bytes": 19301,
+      "sha256": "9028657cebf5404853474d2e3a8900e48aefdc7cb109496bae43417409598711"
+    },
+    {
+      "path": "host-independent-764ed325-launch.json",
+      "bytes": 823,
+      "sha256": "913635423c01568ef1cda48a4ef433ae947bb6f61675290180227804b0fe782f"
+    },
+    {
+      "path": "host-independent-764ed325-controller.log",
+      "bytes": 1296,
+      "sha256": "edeb9dc55e81e6bff487ee5a606e21f697cbde0852e248ae436606af99cc9087"
+    },
+    {
+      "path": "sdk-fingerprint-764ed325-before-original-host.json",
+      "bytes": 67312,
+      "sha256": "38a385ed1867e16c847d041bb500ef74f1fd91839756efebbb6ef9c83a26b592"
+    },
+    {
+      "path": "host764-generated-inventory-delta.json",
+      "bytes": 19336,
+      "sha256": "ebcdd58c8cfeb632853f0d318e62e5ce06474e82a66454275dde39c2363f35de"
+    },
+    {
+      "path": "host764-source-seal.json",
+      "bytes": 3142,
+      "sha256": "55eb73b7391e0dd765ea42a86a8586497848e73f0f15fa8d9b7a609d768ae23b"
+    },
+    {
+      "path": "host764-actual-window-factory-archive-members.json",
+      "bytes": 2115,
+      "sha256": "ec0eb0d400c85919a0b8a549d3f5177a01d9613c1a9e3674d572f83218c65140"
+    },
+    {
+      "path": "actual-sdk-manifest.json",
+      "bytes": 5267911,
+      "sha256": "fde01eda875902fd4b399921902ad8589f03f6c7926d3298fcb4f4c929339838"
+    },
+    {
+      "path": "archive-metadata/host-metadata.json",
+      "bytes": 358,
+      "sha256": "8fa4431119a7427f102316a8ad3ec70c6eb4e7f5b1aba751b3d7fca8d7616ed8"
+    },
+    {
+      "path": "archive-metadata/runtime-host.sha256",
+      "bytes": 91,
+      "sha256": "b585dab7abf58cc26e28bf6da84c1365ec65f7017d14bb5fa95de3199ca399f0"
+    },
+    {
+      "path": "generated-docs/extension-reachability.json",
+      "bytes": 213458,
+      "sha256": "b04e9c4735d0076aded4eb68724049d37ea0a12fcd28d34cc3f3bd90fdd3d754"
+    },
+    {
+      "path": "generated-docs/extension-reachability.md",
+      "bytes": 37881,
+      "sha256": "05754bff0663fbca6ffd19b8d305f0109aedf7df86c641b3d3b2bdfa74167e5c"
+    },
+    {
+      "path": "generated-docs/source-inventory.json",
+      "bytes": 569738,
+      "sha256": "5222595233ecf5e945a704e8fe0d771709ce860fb2490a6ec694704e0ed0f7af"
+    }
+  ],
+  "memberCount": 38,
+  "payloadBytes": 19733504,
+  "createdAt": "2026-11-27T15:51:14.214951+00:00"
+}

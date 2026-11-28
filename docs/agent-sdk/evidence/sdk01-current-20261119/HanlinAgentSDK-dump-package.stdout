@@ -1,0 +1,534 @@
+{
+  "cLanguageStandard" : null,
+  "cxxLanguageStandard" : null,
+  "defaultLocalization" : null,
+  "dependencies" : [
+    {
+      "fileSystem" : [
+        {
+          "identity" : "hanlinplatform",
+          "path" : "C:\\Users\\DAVID\\Code\\hanlin-product-completion-20261117\\Packages\\HanlinPlatform",
+          "productFilter" : null,
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl" : [
+        {
+          "identity" : "swift-ai-sdk",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/davidpovarsky/swift-ai-sdk.git"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "revision" : [
+              "e7bf34111e603ca977becd007dd4e5bb109af857"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "name" : "HanlinAgentSDK",
+  "packageKind" : {
+    "root" : [
+      "C:\\Users\\DAVID\\Code\\hanlin-product-completion-20261117\\Packages\\HanlinAgentSDK"
+    ]
+  },
+  "pkgConfig" : null,
+  "platforms" : [
+    {
+      "options" : [
+
+      ],
+      "platformName" : "ios",
+      "version" : "27.0"
+    },
+    {
+      "options" : [
+
+      ],
+      "platformName" : "macos",
+      "version" : "26.0"
+    }
+  ],
+  "products" : [
+    {
+      "name" : "HanlinHostContracts",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinHostContracts"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinAgentCore",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinAgentCore"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinPersistenceAdapters",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinPersistenceAdapters"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinFixtureHost",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinFixtureHost"
+      ],
+      "type" : {
+        "executable" : null
+      }
+    }
+  ],
+  "providers" : null,
+  "swiftLanguageVersions" : [
+    "6"
+  ],
+  "targets" : [
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "JSON",
+      "packageAccess" : true,
+      "path" : "Vendor/Swift-JSON/Sources/JSON",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "JSON",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "JSONRegexRuntime",
+      "packageAccess" : true,
+      "path" : "Vendor/Swift-JSON/Sources/JSONRegexRuntime",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "JSON",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "JSONRegexRuntime",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinExactJSONSchema",
+      "packageAccess" : true,
+      "path" : "Vendor/Swift-JSON/Sources/JSONSchema",
+      "resources" : [
+        {
+          "path" : "Resources\\Draft2020-12",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "product" : [
+            "HanlinPlatformContracts",
+            "HanlinPlatform",
+            null,
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinHostContracts",
+      "packageAccess" : true,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "HanlinHostContracts",
+            null
+          ]
+        },
+        {
+          "product" : [
+            "HanlinChatCore",
+            "HanlinPlatform",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "AISDKProvider",
+            "swift-ai-sdk",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "SwiftAISDK",
+            "swift-ai-sdk",
+            null,
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "JSON",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinExactJSONSchema",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinAgentCore",
+      "packageAccess" : true,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "HanlinHostContracts",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinPersistenceAdapters",
+      "packageAccess" : true,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "HanlinHostContracts",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinSDKTestFixtures",
+      "packageAccess" : true,
+      "path" : "Tests/Fixtures",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "HanlinAgentCore",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinPersistenceAdapters",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinSDKTestFixtures",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinFixtureHost",
+      "packageAccess" : true,
+      "path" : "Examples/FixtureHost",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "executable"
+    },
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "HanlinAgentCore",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinPersistenceAdapters",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinSDKTestFixtures",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinSDKPortableProof",
+      "packageAccess" : true,
+      "path" : "Tests/PortableProof",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "executable"
+    },
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "HanlinHostContracts",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinHostContractsTests",
+      "packageAccess" : true,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "HanlinHostContracts",
+            null
+          ]
+        },
+        {
+          "product" : [
+            "HanlinPlatformContracts",
+            "HanlinPlatform",
+            null,
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinHostConcurrencyTests",
+      "packageAccess" : true,
+      "resources" : [
+
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "enableUpcomingFeature" : {
+              "_0" : "NonisolatedNonsendingByDefault"
+            }
+          },
+          "tool" : "swift"
+        }
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "HanlinAgentCore",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinPersistenceAdapters",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinSDKTestFixtures",
+            null
+          ]
+        },
+        {
+          "product" : [
+            "AISDKProvider",
+            "swift-ai-sdk",
+            null,
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinAgentCoreTests",
+      "packageAccess" : true,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "HanlinPersistenceAdapters",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinPersistenceAdaptersTests",
+      "packageAccess" : true,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    }
+  ],
+  "toolsVersion" : {
+    "_version" : "6.2.0"
+  },
+  "traits" : [
+
+  ]
+}

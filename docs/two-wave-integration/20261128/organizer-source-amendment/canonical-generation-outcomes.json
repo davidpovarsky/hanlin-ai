@@ -1,0 +1,32 @@
+{
+  "unchangedGeneratorPath": "Scripts/SDK/update_project.py",
+  "unchangedGeneratorSHA256": "12c2fbd6d91788680404656b639e1475596eee7254dac7551431306fb46ba378",
+  "function": "wire_original_source_fixtures",
+  "outcomes": [
+    {
+      "phase": "project-generation-r1",
+      "receiptSHA256": "fb2da0befe8ba22e03f596ed65b540c0432fe02558018b00aa71f1591db42a12",
+      "exitCode": 1,
+      "elapsedSeconds": 0.17914032936096191,
+      "scope": "Original narrow canonical project function only; no Swift package discovery, native build or full project regeneration.",
+      "stdout": "",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 4, in <module>\n  File \"/mnt/development/projects/worktrees/hanlin-organizer-source-amendment-20261128/Scripts/SDK/update_project.py\", line 10, in <module>\n    from project_graph import parse_project\n  File \"/mnt/development/projects/worktrees/hanlin-organizer-source-amendment-20261128/Scripts/CI/IntegrationValidation/project_graph.py\", line 9, in <module>\n    from extension_inventory import EXTENSIONS, MINIAPPS_EXTENSIONS, NEW_EXTENSION_KEYS, SIGNING_TARGETS\nModuleNotFoundError: No module named 'extension_inventory'\n",
+      "stderrSHA256": "81a8e53f23851920a6f0881b9da059129f0a2bb4b076e1a29bc81a645ffeaf37"
+    },
+    {
+      "phase": "project-generation-r2",
+      "receiptSHA256": "30ffae52c703dce222b13db7448d899b6a4485d5e4fb804badae67b3ad012710",
+      "exitCode": 0,
+      "elapsedSeconds": 0.12531304359436035,
+      "scope": "Original narrow canonical project function only; no Swift package discovery, native build or full project regeneration.",
+      "stdout": "{\"function\": \"Scripts/SDK/update_project.py:wire_original_source_fixtures\", \"beforeSHA256\": \"5b70df51a40bb8bad27a531cba6e931c19bb68686c4ba7e28b490b133da97808\", \"afterSHA256\": \"16d57d2ba64e9b39b3a7fdf2536a823d6f59055d2222517a8dab49f73560fcc9\", \"changed\": true, \"declaredOutputs\": 41}\n",
+      "stdoutSHA256": "79d0055be320f10e8ef73136f0e2f968b70cf903d0a373a7074d30bba25c2ae4",
+      "stderr": "",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "initialImportFailure": "Sparse checkout lacked original ProductSplit Python dependencies; preserved failure before materializing their exact base Git objects.",
+  "actualNarrowGeneratorExecutions": 1,
+  "fullProjectOrNativeExecution": false
+}

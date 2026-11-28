@@ -1,0 +1,45 @@
+[
+  {
+    "name": "skills-consent-safari-codefence",
+    "workflow": "build-ios26-unsigned-ipa.yml",
+    "inputs": {
+      "target_validation_group": "exact_test_selector",
+      "exact_test_selector": "AI_HLYTests/ChatCodeFenceTests,AI_HLYUITests/AgentRuntimeConversationUITests/testOriginalBubbleRendersLocalCodeFencesAndPreservesSourceActions,AI_HLYUITests/AgentRuntimeConversationUITests/testMarkdownLinkOpensAndClosesTheInternalSafariBrowser,AI_HLYUITests/AgentRuntimeConversationUITests/testNativePartialSelectionSaveAndOriginalLongPressPreview,AI_HLYUITests/AgentRuntimeConversationUITests/testProductionCodeSkillLocalPythonNeedsNoUserNudge,AI_HLYUITests/AgentRuntimeConversationUITests/testUI03SearchMessageAndDeduplicatedCitations,AI_HLYUITests/AgentSkillsEmbeddedResultsUITests/testAgentSkillsDeferredExposureAndEmbeddedResultFlow,AI_HLYUITests/HanlinSkillCenterUITests/testCreateEditDisableDeleteCustomSkill,AI_HLYUITests/HanlinSkillCenterUITests/testOverrideAndResetBuiltInSkill",
+      "fast_validation_only": "false",
+      "simulator_e2e_only": "false",
+      "compare_base_sha": "3a87634b8b478833ddd90c896fe494bd4becda82",
+      "full_validation": "false",
+      "testflight_upload": "false",
+      "runtime_publish_release": "false",
+      "runtime_bundle_artifact_run_id": "42926628418"
+    },
+    "dispatch_started_at": "2026-11-19T00:47:16.944966+00:00",
+    "id": "44431811538",
+    "head_sha": "e564dc29d24239309b113244bec4556c211c5b2d",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431811538",
+    "status": "queued",
+    "conclusion": null,
+    "recorded_at": "2026-11-19T00:47:22.555391+00:00"
+  },
+  {
+    "name": "original-signing-cms-admission-preflight",
+    "workflow": "validate-app-split.yml",
+    "inputs": {
+      "signed_release_archives": "true",
+      "signing_preflight_only": "true",
+      "audit_release_resources": "false",
+      "prepare_miniapps_registration": "false",
+      "paired_product_acceptance": "false",
+      "runtime_bundle_artifact_run_id": "42926628418",
+      "native_test_scope": "baseline",
+      "paired_test_scope": "cross_product"
+    },
+    "dispatch_started_at": "2026-11-19T00:47:23.852227+00:00",
+    "id": "44431826560",
+    "head_sha": "e564dc29d24239309b113244bec4556c211c5b2d",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431826560",
+    "status": "queued",
+    "conclusion": null,
+    "recorded_at": "2026-11-19T00:47:29.558148+00:00"
+  }
+]

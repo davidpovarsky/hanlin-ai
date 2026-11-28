@@ -1,0 +1,222 @@
+Attributes: Application, 0x10b0b4780, pid: 54794, label: 'Hanlin MiniApps'
+Element subtree:
+ →Application, 0x10b0b4780, pid: 54794, label: 'Hanlin MiniApps'
+    Window (Main), 0x10b0b48c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x10b0b4500, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x10b0b4640, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x10b0b4140, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x10b0b4280, {{0.0, 0.0}, {1032.0, 1376.0}}
+              Other, 0x10b0b43c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                NavigationBar, 0x10b0b4000, {{0.0, 32.0}, {1032.0, 106.0}}, identifier: 'Apps'
+                  Other, 0x10b0b6e40, {{14.0, 36.0}, {43.5, 36.0}}
+                    Other, 0x10b0b6f80, {{14.0, 36.0}, {43.5, 36.0}}
+                      Button, 0x10b0b70c0, {{14.0, 36.0}, {43.5, 36.0}}, label: 'Edit'
+                  Button, 0x10b0b7200, {{73.5, 36.0}, {40.0, 36.0}}, identifier: 'hanlin-apps-torah-capture', label: 'לימוד מצילום'
+                  Button, 0x10b0b7700, {{618.5, 36.0}, {37.0, 36.0}}, identifier: 'hanlin-apps-add', label: 'hanlin-apps-add'
+                  Other, 0x10b0b7840, {{671.5, 36.0}, {41.0, 36.0}}
+                    Other, 0x10b0b7980, {{671.5, 36.0}, {41.0, 36.0}}
+                      Button, 0x10b0b7ac0, {{671.5, 36.0}, {41.0, 36.0}}, identifier: 'miniapps-preferences', label: 'Edit MiniApps and windows'
+                  Button, 0x10b0b7c00, {{728.5, 36.0}, {37.5, 36.0}}, identifier: 'hanlin-miniapps-transfer', label: 'Transfer from Hanlin'
+                  SearchField, 0x10b0b7d40, {{782.0, 32.0}, {240.0, 44.0}}, label: 'Search Apps', placeholderValue: 'Search Apps'
+                    Image, 0x10b0b7e80, {{794.0, 43.5}, {20.5, 20.0}}, identifier: 'magnifyingglass', label: 'Search'
+                  StaticText, 0x10b0b6300, {{20.0, 89.5}, {83.0, 41.0}}, label: 'Apps'
+                Other, 0x10b0b6440, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x10b0b6580, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x10b0b66c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                      Other, 0x10b0b7340, {{0.0, 0.0}, {1032.0, 1376.0}}
+                        ScrollView, 0x10b0b75c0, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'hanlin-apps-catalog'
+                          Other, 0x10b0b5400, {{0.0, 0.0}, {1032.0, 1376.0}}
+                            Other, 0x10b0b5540, {{0.0, 0.0}, {1032.0, 126.0}}
+                          Other, 0x10b0b5680, {{0.0, 0.0}, {1032.0, 1376.0}}
+                          Other, 0x10b0b5040, {{0.0, 138.0}, {1032.0, 509.0}}
+                            Other, 0x10b0b5180, {{23.5, 156.0}, {985.0, 473.5}}
+                              StaticText, 0x10b0b57c0, {{24.0, 156.0}, {54.0, 26.5}}, identifier: 'hanlin-miniapps-section-swift', label: 'Swift'
+                              Other, 0x10b0b5900, {{23.5, 210.0}, {985.0, 169.0}}
+                                Button, 0x10b0b5a40, {{23.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Swift Parity', label: 'Swift Parity'
+                                  Image, 0x10b0b5b80, {{204.0, 231.0}, {30.5, 27.0}}, identifier: 'swift', label: 'Swift Programming Language Bird Logo'
+                                  StaticText, 0x10b0b5cc0, {{42.0, 318.0}, {105.5, 24.0}}, label: 'Swift Parity'
+                                  StaticText, 0x10b0b5e00, {{42.0, 346.0}, {139.0, 14.5}}, label: 'Native SwiftPM Mini App'
+                                Button, 0x10b0b6bc0, {{36.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-hanlin.demo.swift-parity', label: 'App Actions'
+                                  Button, 0x10a93cb40, {{36.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x10a93cc80, {{47.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x10a93e440, {{274.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Sefaria', label: 'Sefaria'
+                                  Image, 0x10a93e580, {{451.0, 231.0}, {34.0, 30.0}}, identifier: 'books.vertical.fill', label: 'Bookshelf'
+                                  StaticText, 0x10a93e6c0, {{293.0, 302.0}, {64.5, 24.0}}, label: 'Sefaria'
+                                  StaticText, 0x10a93e800, {{293.0, 330.0}, {132.0, 30.5}}, label: 'Search, read, save and revisit sources'
+                                Button, 0x10a93e940, {{287.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.sefaria', label: 'App Actions'
+                                  Button, 0x10a93ee40, {{287.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x10a93ef80, {{298.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x10a93f200, {{525.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Text Studio', label: 'Text Studio'
+                                  Image, 0x10a93fc00, {{702.5, 231.0}, {33.0, 20.5}}, identifier: 'textformat.alt', label: 'Text Formatting'
+                                  StaticText, 0x10a93fe80, {{544.0, 302.0}, {103.0, 24.0}}, label: 'Text Studio'
+                                  StaticText, 0x10a93fd40, {{544.0, 330.0}, {168.5, 30.5}}, label: 'Write, inspect, transform and keep history'
+                                Button, 0x10a93f840, {{538.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.textstudio', label: 'App Actions'
+                                  Button, 0x10a93f980, {{538.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x10a93fac0, {{549.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x10a93f340, {{776.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Wikipedia', label: 'Wikipedia'
+                                  Image, 0x10a93f700, {{960.0, 231.0}, {27.5, 27.5}}, identifier: 'globe.americas.fill', label: 'Globe Showing The Americas, Filled'
+                                  StaticText, 0x10a93ed00, {{795.0, 302.0}, {90.5, 24.0}}, label: 'Wikipedia'
+                                  StaticText, 0x10a93ea80, {{795.0, 330.0}, {103.0, 30.5}}, label: 'Explore, save and revisit knowledge'
+                                Button, 0x10a93ebc0, {{789.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.wikipedia', label: 'App Actions'
+                                  Button, 0x10a93d400, {{789.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x10a93e300, {{800.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                              StaticText, 0x10a93d7c0, {{24.0, 406.5}, {51.0, 26.5}}, identifier: 'hanlin-miniapps-section-expo', label: 'Expo'
+                              Other, 0x10a93dcc0, {{23.5, 460.5}, {232.0, 169.0}}
+                                Button, 0x10a93da40, {{23.5, 460.5}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Expo SwiftUI Probe A', label: 'Expo SwiftUI Probe A'
+                                  Image, 0x10a93d900, {{209.0, 481.5}, {25.5, 30.5}}, identifier: 'sparkles', label: 'Sparkle'
+                                  StaticText, 0x10a93d540, {{42.0, 552.5}, {194.5, 24.0}}, label: 'Expo SwiftUI Probe A'
+                                  StaticText, 0x10a93d680, {{42.0, 580.5}, {188.0, 30.5}}, label: 'Dynamic Expo MiniApp Variant A rendering Apple SwiftUI.'
+                                Button, 0x10a93de00, {{36.0, 473.0}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-script-ec17057f5a2c82aaed6ab6ca', label: 'App Actions'
+                                  Button, 0x10a93db80, {{36.0, 473.0}, {38.0, 38.0}}
+                                    Image, 0x10a93e1c0, {{47.0, 490.0}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                          Other, 0x10a93df40, {{999.0, 86.0}, {30.0, 887.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x10a93e080, {{1026.0, 415.0}, {3.0, 555.0}}
+                          Other, 0x10a93f5c0, {{999.0, 86.0}, {30.0, 887.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x10a93f0c0, {{1026.0, 415.0}, {3.0, 555.0}}
+                Toolbar, 0x10a93f480, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                  Other, 0x10a93cdc0, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x10a93d040, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x10a93d180, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x10a93d2c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x10a93cf00, {{0.0, 0.0}, {1032.0, 1376.0}}
+              NavigationBar, 0x10a8a2bc0, {{0.0, 32.0}, {1032.0, 106.0}}, identifier: 'Manual Native Adapters'
+                Other, 0x10a8a1900, {{951.0, 36.0}, {67.0, 36.0}}
+                  Other, 0x10a8a1b80, {{951.0, 36.0}, {67.0, 36.0}}
+                    Button, 0x10a8a1cc0, {{951.0, 36.0}, {67.0, 36.0}}, identifier: 'hanlin-script-app-close', label: 'Close'
+                StaticText, 0x10a8a3e80, {{20.0, 89.5}, {377.0, 41.0}}, label: 'Manual Native Adapters'
+              Other, 0x10a8a1a40, {{0.0, 0.0}, {1032.0, 1376.0}}
+                Other, 0x10a8a2f80, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x10a8a3d40, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x10a8a0f00, {{0.0, 0.0}, {1032.0, 1376.0}}
+                      Other, 0x10a8a1540, {{0.0, 138.0}, {1032.0, 835.0}}
+                        Other, 0x10a8a1680, {{0.0, 138.0}, {1032.0, 835.0}}
+                          Other, 0x10a8a17c0, {{0.0, 138.0}, {1032.0, 835.0}}
+                            Other, 0x10a8a1040, {{0.0, 138.0}, {1032.0, 835.0}}
+                              Other, 0x10a8a1400, {{0.0, 138.0}, {1032.0, 835.0}}
+                                Other, 0x10a8a12c0, {{0.0, 138.0}, {1032.0, 835.0}}
+                                  Other, 0x10a8a1180, {{0.0, 138.0}, {1032.0, 835.0}}
+                                    StaticText, 0x10a8a0dc0, {{108.8, 138.0}, {142.5, 20.5}}, label: 'INPUT_ADAPTERS'
+                                    Button, 0x10a8a2e40, {{103.0, 170.5}, {154.5, 20.5}}, label: 'Focus manual editor'
+                                    TextView, 0x10a8a08c0, {{0.0, 203.0}, {360.0, 100.0}}, identifier: 'manual-editor', value: Reset from React
+                                      Other, 0x10a8a0c80, {{0.0, 203.0}, {0.0, 0.0}}, identifier: '_UITextSelectionRangeAdjustmentContainerView'
+                                        Other, 0x10a8a2940, {{0.0, 203.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'
+                                          Other, 0x10a8a3c00, {{-7.2, 189.5}, {16.5, 16.5}}
+                                          Other, 0x10a8a2d00, {{0.0, 203.0}, {2.0, 0.0}}
+                                        Other, 0x10a8a2a80, {{0.0, 203.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'
+                                          Other, 0x10a8a2580, {{-7.2, 189.5}, {16.5, 16.5}}
+                                          Other, 0x10a8a26c0, {{0.0, 203.0}, {2.0, 0.0}}
+                                      Other, 0x10a8a2800, {{327.0, 203.0}, {30.0, 100.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                        Other, 0x10a8a2080, {{354.0, 268.0}, {3.0, 32.0}}
+                                    TextField, 0x10a8a2440, {{0.0, 315.0}, {360.0, 22.0}}, identifier: 'manual-other-field', placeholderValue: 'Other native field', Keyboard Focused, Focused
+                                    StaticText, 0x10a8a2300, {{52.8, 349.0}, {254.5, 20.5}}, label: 'EDITOR_VALUE:Reset from React'
+                                    StaticText, 0x10a8a21c0, {{101.5, 381.5}, {157.0, 20.5}}, label: 'FOCUS_VALUE:false'
+                                    StaticText, 0x10a8a0640, {{109.2, 414.0}, {141.5, 20.5}}, label: 'FOCUS_EVENTS:1'
+                                    Button, 0x10a8a0780, {{90.0, 446.5}, {180.0, 20.5}}, label: 'Reset editor from React'
+                                    Button, 0x10a8a1f40, {{126.5, 479.0}, {107.5, 20.5}}, label: 'Adapter menu'
+              Toolbar, 0x10a8a0140, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                Other, 0x10a8a0500, {{0.0, 0.0}, {1032.0, 1376.0}}
+    Window, 0x10a8a03c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x10a8a0280, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x10a8a1e00, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x10a8a0000, {{0.0, 973.0}, {1032.0, 403.0}}
+          Other, 0x107283d40, {{0.0, 973.0}, {1032.0, 403.0}}, identifier: 'inputView'
+    Window, 0x107283980, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x107283e80, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x107281680, {{0.0, 973.0}, {1032.0, 403.0}}
+          Other, 0x107281540, {{0.0, 973.0}, {1032.0, 55.0}}, identifier: 'SystemInputAssistantView'
+            Other, 0x107283c00, {{0.0, 973.0}, {1032.0, 55.0}}
+              Other, 0x107283ac0, {{0.0, 973.0}, {283.0, 49.0}}, identifier: 'LeftButtonBar'
+                Other, 0x10a462bc0, {{28.0, 973.0}, {255.0, 49.0}}
+                  Other, 0x10a462a80, {{28.0, 974.0}, {114.0, 49.0}}
+                    Other, 0x10a462f80, {{28.0, 974.0}, {22.0, 49.0}}
+                      Button, 0x10a463200, {{28.0, 974.0}, {22.0, 49.0}}, identifier: 'assistantUndo', label: 'undo', Disabled
+                    Other, 0x10a462e40, {{74.0, 974.0}, {22.0, 49.0}}
+                      Button, 0x10a4630c0, {{74.0, 974.0}, {22.0, 49.0}}, identifier: 'assistantRedo', label: 'Redo', Disabled
+                    Other, 0x10a463480, {{120.0, 974.0}, {22.0, 49.0}}
+                      Button, 0x10a463ac0, {{120.0, 974.0}, {22.0, 49.0}}, identifier: 'assistantPaste:forEvent:', label: 'Paste', Disabled
+              Other, 0x10a463e80, {{283.0, 979.0}, {466.0, 49.0}}, identifier: 'CenterPageView'
+                Other, 0x10a4608c0, {{283.0, 379.0}, {466.0, 1249.0}}
+                  ScrollView, 0x10a460dc0, {{283.0, 979.0}, {466.0, 49.0}}
+                Other, 0x10a460b40, {{283.0, 979.0}, {466.0, 49.0}}
+                  Other, 0x10a461400, {{283.0, 979.0}, {466.0, 49.0}}
+                    Other, 0x10a4617c0, {{283.0, 979.0}, {466.0, 49.0}}, label: 'Typing Predictions'
+                      Other, 0x10a461540, {{283.0, 979.0}, {466.0, 49.0}}
+                        Other, 0x10a461180, {{283.0, 979.0}, {466.0, 49.0}}
+                          Button, 0x10a461680, {{283.0, 979.0}, {155.3, 49.0}}
+                          Button, 0x10a463700, {{438.3, 979.0}, {155.3, 49.0}}
+                          Button, 0x10a463d40, {{593.7, 979.0}, {155.3, 49.0}}
+              Other, 0x10a463980, {{749.0, 973.0}, {283.0, 49.0}}, identifier: 'RightButtonBar'
+                Other, 0x10a463c00, {{749.0, 973.0}, {255.0, 49.0}}
+          Other, 0x10a4635c0, {{0.0, 973.0}, {1032.0, 404.0}}
+            Other, 0x10a461f40, {{0.0, 973.0}, {1032.0, 404.0}}
+              Other, 0x10a462940, {{0.0, 973.0}, {1032.0, 404.0}}
+          Other, 0x10a4626c0, {{0.0, 1028.0}, {1032.0, 345.0}}
+            Keyboard, 0x10a4621c0, {{0.0, 1028.0}, {1032.0, 345.0}}
+              Other, 0x10a462080, {{0.0, 1028.0}, {1032.0, 345.0}}
+                Other, 0x10a463840, {{0.0, 1028.0}, {1032.0, 345.0}}, identifier: 'UIKeyboardLayoutStar Preview'
+                  Key, 0x10a461900, {{0.5, 1033.0}, {71.0, 52.5}}, label: '`'
+                  Key, 0x10a461cc0, {{71.5, 1033.0}, {71.0, 52.5}}, label: '1'
+                  Key, 0x10b090000, {{142.5, 1033.0}, {71.0, 52.5}}, label: '2'
+                  Key, 0x10b090140, {{213.5, 1033.0}, {71.0, 52.5}}, label: '3'
+                  Key, 0x10b090280, {{284.5, 1033.0}, {71.0, 52.5}}, label: '4'
+                  Key, 0x10b0903c0, {{355.5, 1033.0}, {71.0, 52.5}}, label: '5'
+                  Key, 0x10b090500, {{426.5, 1033.0}, {71.0, 52.5}}, label: '6'
+                  Key, 0x10b090640, {{497.5, 1033.0}, {71.0, 52.5}}, label: '7'
+                  Key, 0x10b090780, {{568.5, 1033.0}, {71.0, 52.5}}, label: '8'
+                  Key, 0x10b0908c0, {{639.5, 1033.0}, {71.0, 52.5}}, label: '9'
+                  Key, 0x10b090a00, {{710.5, 1033.0}, {70.5, 52.5}}, label: '0'
+                  Key, 0x10b090b40, {{781.0, 1033.0}, {71.0, 52.5}}, label: '-'
+                  Key, 0x10b090c80, {{852.0, 1033.0}, {71.0, 52.5}}, label: '='
+                  Key, 0x10b090dc0, {{923.0, 1033.0}, {109.5, 52.5}}, identifier: 'delete', label: 'delete'
+                  Button, 0x10b090f00, {{0.5, 1085.5}, {109.5, 68.0}}, identifier: 'tab', label: 'Tab'
+                  Key, 0x10b091040, {{110.0, 1085.5}, {71.0, 68.0}}, label: 'q'
+                  Key, 0x10b091180, {{181.0, 1085.5}, {71.0, 68.0}}, label: 'w'
+                  Key, 0x10b0912c0, {{252.0, 1085.5}, {70.5, 68.0}}, label: 'e'
+                  Key, 0x10b091400, {{322.5, 1085.5}, {71.0, 68.0}}, label: 'r'
+                  Key, 0x10b091540, {{393.5, 1085.5}, {71.0, 68.0}}, label: 't'
+                  Key, 0x10b091680, {{464.5, 1085.5}, {71.0, 68.0}}, label: 'y'
+                  Key, 0x10b0917c0, {{535.5, 1085.5}, {71.0, 68.0}}, label: 'u'
+                  Key, 0x10b091900, {{606.5, 1085.5}, {71.0, 68.0}}, label: 'i'
+                  Key, 0x10b091a40, {{677.5, 1085.5}, {71.0, 68.0}}, label: 'o'
+                  Key, 0x10b091b80, {{748.5, 1085.5}, {71.0, 68.0}}, label: 'p'
+                  Key, 0x10b091cc0, {{819.5, 1085.5}, {71.0, 68.0}}, label: '['
+                  Key, 0x10b091e00, {{890.5, 1085.5}, {71.0, 68.0}}, label: ']'
+                  Key, 0x10b091f40, {{961.5, 1085.5}, {71.0, 68.0}}, label: '\'
+                  Key, 0x10b092080, {{0.5, 1153.5}, {125.5, 68.0}}, identifier: 'caps-lock', label: 'Caps Lock'
+                  Key, 0x10b0921c0, {{126.0, 1153.5}, {71.0, 68.0}}, label: 'a'
+                  Key, 0x10b092300, {{197.0, 1153.5}, {71.0, 68.0}}, label: 's'
+                  Key, 0x10b092440, {{268.0, 1153.5}, {71.0, 68.0}}, label: 'd'
+                  Key, 0x10b092580, {{339.0, 1153.5}, {71.0, 68.0}}, label: 'f'
+                  Key, 0x10b0926c0, {{410.0, 1153.5}, {71.0, 68.0}}, label: 'g'
+                  Key, 0x10b092800, {{481.0, 1153.5}, {71.0, 68.0}}, label: 'h'
+                  Key, 0x10b092940, {{552.0, 1153.5}, {71.0, 68.0}}, label: 'j'
+                  Key, 0x10b092a80, {{623.0, 1153.5}, {71.0, 68.0}}, label: 'k'
+                  Key, 0x10b092bc0, {{694.0, 1153.5}, {71.0, 68.0}}, label: 'l'
+                  Key, 0x10b092d00, {{765.0, 1153.5}, {71.0, 68.0}}, label: ';'
+                  Key, 0x10b092e40, {{836.0, 1153.5}, {71.0, 68.0}}, label: '''
+                  Button, 0x10b092f80, {{907.0, 1153.5}, {125.5, 68.0}}, identifier: 'Return', label: 'return'
+                  Button, 0x10b0930c0, {{0.5, 1221.5}, {161.0, 68.5}}, identifier: 'shift', label: 'shift'
+                  Key, 0x10b093200, {{161.5, 1221.5}, {71.0, 68.5}}, label: 'z'
+                  Key, 0x10b093340, {{232.5, 1221.5}, {71.0, 68.5}}, label: 'x'
+                  Key, 0x10b093480, {{303.5, 1221.5}, {71.0, 68.5}}, label: 'c'
+                  Key, 0x10b0935c0, {{374.5, 1221.5}, {71.0, 68.5}}, label: 'v'
+                  Key, 0x10b093700, {{445.5, 1221.5}, {71.0, 68.5}}, label: 'b'
+                  Key, 0x10b093840, {{516.5, 1221.5}, {71.0, 68.5}}, label: 'n'
+                  Key, 0x10b093980, {{587.5, 1221.5}, {71.0, 68.5}}, label: 'm'
+                  Key, 0x10b093ac0, {{658.5, 1221.5}, {71.0, 68.5}}, label: ','
+                  Key, 0x10b093c00, {{729.5, 1221.5}, {71.0, 68.5}}, label: '.'
+                  Key, 0x10b093d40, {{800.5, 1221.5}, {71.0, 68.5}}, label: '/'
+                  Key, 0x10b093e80, {{871.5, 1221.5}, {161.0, 68.5}}, label: 'shift'
+                  Button, 0x10b0b0000, {{0.5, 1290.0}, {100.5, 68.0}}, identifier: 'emoji', label: 'Emoji'
+                  Key, 0x10b0b0140, {{101.0, 1290.0}, {100.5, 68.0}}, identifier: 'more', label: 'numbers'
+                  Button, 0x10b0b0280, {{201.5, 1290.0}, {101.0, 68.0}}, identifier: 'dictation', label: 'Dictate'
+                  Key, 0x10b0b03c0, {{302.5, 1290.0}, {426.5, 68.0}}, label: 'space'
+                  Key, 0x10b0b0500, {{729.0, 1290.0}, {152.0, 68.0}}, identifier: 'more', label: 'numbers'
+                  Button, 0x10b0b0640, {{881.0, 1290.0}, {151.5, 68.0}}, label: 'Hide keyboard'
+Path to element:
+ →Application, 0x10b0b4780, pid: 54794, label: 'Hanlin MiniApps'
+Query chain:
+ →Find: Target Application 'com.itorah.hanlinminiapps'
+  Output: {
+    Application, 0x10b0b0780, pid: 54794, label: 'Hanlin MiniApps'
+  }

@@ -1,0 +1,30 @@
+[
+  {
+    "case": "observed-original",
+    "compilerVersion": "6.0.3",
+    "compilerIntegrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+    "diagnostics": [
+      {
+        "code": 2305,
+        "category": "error",
+        "message": "Module '\"scripting\"' has no exported member 'Storage'.",
+        "file": "index.tsx",
+        "line": 1,
+        "column": 30
+      }
+    ],
+    "emittedFiles": [],
+    "succeeded": false
+  },
+  {
+    "case": "corrected-global-storage",
+    "compilerVersion": "6.0.3",
+    "compilerIntegrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+    "diagnostics": [],
+    "emittedFiles": [
+      "dist\\index.js",
+      "dist\\index.js.map"
+    ],
+    "succeeded": true
+  }
+]

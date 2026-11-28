@@ -1,0 +1,40 @@
+{
+  "state": "UNAPPLIED_FOR_ROOT_REVIEW",
+  "canonicalHEAD": "1b2d8e2c3022be4b6bb97312bfdec0676d7eb76e",
+  "scope": "One read-only settings projection after a failed owned tiny archive, within original240s deadline; no additional archive/profile mutation/acceptance relaxation",
+  "files": [
+    {
+      "path": "Scripts/ProductSplit/signing_profile_preflight.py",
+      "preSHA256": "9c91916b085db2dbddd4056138a93321898352b949d7f569fdc7552020a139ea",
+      "postSHA256": "2e5e91a4220738d70e558ccb54bc710ed833797aa0841ba0661113b2dbc620b2"
+    },
+    {
+      "path": "Scripts/ProductSplit/test_signing_profiles.py",
+      "preSHA256": "7ae513104d5e54dee3b727848875b8edd3f2d915d118b5dd3bf920d4c5a640d3",
+      "postSHA256": "829ebd7351b3de7ecf65c3b4ddfb24e3ce0a42e4eb5f872452abf73ce121c841"
+    }
+  ],
+  "patchSHA256": "be4e8204211d9b55e65cb4317c213b267c4ead90c7dc22c28aa303b73d6a40df",
+  "validation": [
+    {
+      "name": "profile-tests",
+      "exit": 0,
+      "log": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\signing-profile-admission-diagnostics\\owned-build-settings-proposal\\profile-tests.log",
+      "sha256": "598eb31c0e0c10e31dd43c258d09421aeb27d30f1b74007a28cc0417ce23a8fb"
+    },
+    {
+      "name": "apply-check",
+      "exit": 0,
+      "log": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\signing-profile-admission-diagnostics\\owned-build-settings-proposal\\apply-check.log",
+      "sha256": "abc30023955fb1415cb6df613a2f287897377fa4b0a607d322483e2bd51a91d1"
+    }
+  ],
+  "combinedWithCMS": {
+    "testsExit": 0,
+    "testsLogSHA256": "54b4349f54ef3f2ecb6cf690af2cc9fc17d267081a039de0505a48478c042000",
+    "postSHA256": {
+      "Scripts/ProductSplit/signing_profile_preflight.py": "0c93b2c330e8e6072c6542aa5a3b85e18ed36b77ed8e7ea1f2c060f74eccfab0",
+      "Scripts/ProductSplit/test_signing_profiles.py": "978d57c94fb1508019f912787e6a6020f2cc1f179b37f842bac468934a09d886"
+    }
+  }
+}

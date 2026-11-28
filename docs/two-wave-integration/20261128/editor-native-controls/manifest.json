@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "sourceCommit": "b829ac67f89da53fce894710e6bbb9d002b6a212",
+  "members": [
+    {
+      "path": "source-validation.json",
+      "bytes": 4926,
+      "sha256": "cc52b8aad1d892ed3f89c9cffdfe700dc43db30ae508653c85e0138ca40d393c"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 1112,
+      "sha256": "4ebe21c45e1893c8f5711960c66c5ab0acf545cf9205aeef823bac41531405c4"
+    },
+    {
+      "path": "historical-command-a-reconciliation.json",
+      "bytes": 2927,
+      "sha256": "d57df55ffdf1695c560647f3ab01f1808e38e616814a3eac28a35005b46aecf0"
+    },
+    {
+      "path": "root-independent-review.json",
+      "bytes": 2824,
+      "sha256": "9f011a5155f1cb53d26339ad17420d3d8cf6b87319e1e870c3e4a82f632dbcd3"
+    },
+    {
+      "path": "candidate-r2-manifest.json",
+      "bytes": 3055,
+      "sha256": "4b585cbb7f254c2313040ce0ef584fe14a49432d5e3dd7029acb0cd694ca4c29"
+    },
+    {
+      "path": "rejected-r1-manifest.json",
+      "bytes": 4528,
+      "sha256": "c9debc793e46e9467059db818da968d7c87f3d65a2932c70743c71d0f78d3977"
+    },
+    {
+      "path": "rejected-r1-source.patch.gz",
+      "bytes": 1019,
+      "sha256": "5b86bc4a2c006e5bf0355611b51c83fe721dd4ceb768ef9bf0ec685243830ac6"
+    },
+    {
+      "path": "own-case-attachment-verification.json",
+      "bytes": 2657,
+      "sha256": "4a45f0307bf507c13003f867d381c31b8970f2273724eb635cec56580274f74a"
+    },
+    {
+      "path": "api-authority.json",
+      "bytes": 974,
+      "sha256": "5056f39c3ebb4e75fa651ab6e47380ef5da57753cec4410ee2e65865f82fa0dc"
+    },
+    {
+      "path": "source-seal.json",
+      "bytes": 500,
+      "sha256": "a17564b97026f1489ded1419d25de78ac80dfde442f948e679e46fd431ad96e1"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2967,
+      "sha256": "9cb03063388c0fba36a2666a8b6d1a716bf810d3e2f1d2d055ba3e07a725d1dc"
+    }
+  ]
+}

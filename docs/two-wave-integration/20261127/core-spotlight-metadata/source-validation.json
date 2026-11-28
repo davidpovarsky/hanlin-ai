@@ -1,0 +1,20 @@
+{
+  "base": "bd0859c61bc5659a868068b7adce3eb71b0f86dc",
+  "atUTC": "2026-11-27T12:09:27.036704+00:00",
+  "sourceFiles": {
+    "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": {
+      "beforeSHA256": "577e4d58a3bebd29e379918938199aacff0a4c775cfb1c4923e1f7735686238c",
+      "afterSHA256": "9e45c0aa8d951a6a59afa1eb4dbcad6e524fc1f408d2406d6c8e5a9efcdd7f8c"
+    },
+    "Scripts/CI/Tests/test_nativescript_metadata_wrapper.py": {
+      "beforeSHA256": "0580017fd708751f845631732bc9f6c6b3a4e334f32d13a0142693f257fb4b84",
+      "afterSHA256": "a15bef4c3db22813538a684859034c4d18f90f407f71df70591f9bd6519cebeb"
+    }
+  },
+  "productionChange": "Only append CoreSpotlight.framework to existing HOST_FRAMEWORKS",
+  "existingRegression": "Existing first wrapper test now requires the actual public umbrella before provider getter; previous assertions and15other methods preserved",
+  "nativeCompilation": "NOT_RUN",
+  "sdk392InputsChanged": 0,
+  "independentReview": "independent-w1-source-review.json",
+  "controls": "Focused regression FAIL before / PASS after; whole16wrapper controls also observed PASS"
+}

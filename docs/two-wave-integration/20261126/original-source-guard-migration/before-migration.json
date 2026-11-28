@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "atUTC": "2026-11-26T17:18:38.849212+00:00",
+  "classification": "PORTABLE_REPRODUCTION_OF_EXACT_EXISTING_SOURCE_ASSERTIONS",
+  "nativeExecution": "NOT_RUN",
+  "scope": "Existing OriginalSourceNonRegressionTests9.1 and9.2 source reads and normalizedSHA256; not app runtime/native acceptance",
+  "historicalAssertions": [
+    {
+      "commit": "2a161ec3035c239cb21497f529c1c8f3d2ea92f0",
+      "path": "AI_HLY/Views/Components/ChatViewComponents.swift",
+      "expectedBytes": 245684,
+      "actualBytes": 216385,
+      "expectedSHA256": "cbcbdffd5a05abe6889b9eafe83a5266661f61c6440c6e12ac74be4565ba1901",
+      "actualSHA256": "15875a20addac6bc43ada66e7c3b929118a0f8ad19159d91ace9a8274e9448c9",
+      "lengthPass": false,
+      "hashPass": false
+    },
+    {
+      "commit": "2a161ec3035c239cb21497f529c1c8f3d2ea92f0",
+      "path": "AI_HLY/Views/Components/ChatandFile.swift",
+      "expectedBytes": 1966,
+      "actualBytes": 1966,
+      "expectedSHA256": "3260125c5dece237c8775806b21c470275c9cb5a88328fa6fba2f283c8f3e26d",
+      "actualSHA256": "3260125c5dece237c8775806b21c470275c9cb5a88328fa6fba2f283c8f3e26d",
+      "lengthPass": true,
+      "hashPass": true
+    },
+    {
+      "commit": "2a161ec3035c239cb21497f529c1c8f3d2ea92f0",
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "expectedBytes": 197303,
+      "actualBytes": 225611,
+      "expectedSHA256": "ec09f12217985b6f37e9f88ea6653eff2823a31f96a9eb0ad6fe1062ea204df4",
+      "actualSHA256": "1e65885f3fa5aa398cf6a315cd365705986f092de9838692eb305ce87dc78b12",
+      "lengthPass": false,
+      "hashPass": false
+    },
+    {
+      "commit": "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+      "path": "AI_HLY/Views/Components/ChatViewComponents.swift",
+      "expectedBytes": 245684,
+      "actualBytes": 247703,
+      "expectedSHA256": "cbcbdffd5a05abe6889b9eafe83a5266661f61c6440c6e12ac74be4565ba1901",
+      "actualSHA256": "715eaf59b335940f43ebbbe8169a5eae5fa0b7de47b998626cf710cf1e59fb76",
+      "lengthPass": false,
+      "hashPass": false
+    },
+    {
+      "commit": "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+      "path": "AI_HLY/Views/Components/ChatandFile.swift",
+      "expectedBytes": 1966,
+      "actualBytes": 1966,
+      "expectedSHA256": "3260125c5dece237c8775806b21c470275c9cb5a88328fa6fba2f283c8f3e26d",
+      "actualSHA256": "3260125c5dece237c8775806b21c470275c9cb5a88328fa6fba2f283c8f3e26d",
+      "lengthPass": true,
+      "hashPass": true
+    },
+    {
+      "commit": "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "expectedBytes": 197303,
+      "actualBytes": 223094,
+      "expectedSHA256": "ec09f12217985b6f37e9f88ea6653eff2823a31f96a9eb0ad6fe1062ea204df4",
+      "actualSHA256": "2bd0f123e11de9ca01834789d8f7e6af1f8ac6e2bf74152b5e58fc766836a30a",
+      "lengthPass": false,
+      "hashPass": false
+    },
+    {
+      "commit": "86a6dde354947be9329fe1e8f4d45a433fe488c4",
+      "path": "AI_HLY/Views/Components/ChatViewComponents.swift",
+      "expectedBytes": 245684,
+      "actualBytes": 247703,
+      "expectedSHA256": "cbcbdffd5a05abe6889b9eafe83a5266661f61c6440c6e12ac74be4565ba1901",
+      "actualSHA256": "715eaf59b335940f43ebbbe8169a5eae5fa0b7de47b998626cf710cf1e59fb76",
+      "lengthPass": false,
+      "hashPass": false
+    },
+    {
+      "commit": "86a6dde354947be9329fe1e8f4d45a433fe488c4",
+      "path": "AI_HLY/Views/Components/ChatandFile.swift",
+      "expectedBytes": 1966,
+      "actualBytes": 1966,
+      "expectedSHA256": "3260125c5dece237c8775806b21c470275c9cb5a88328fa6fba2f283c8f3e26d",
+      "actualSHA256": "3260125c5dece237c8775806b21c470275c9cb5a88328fa6fba2f283c8f3e26d",
+      "lengthPass": true,
+      "hashPass": true
+    },
+    {
+      "commit": "86a6dde354947be9329fe1e8f4d45a433fe488c4",
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "expectedBytes": 197303,
+      "actualBytes": 225611,
+      "expectedSHA256": "ec09f12217985b6f37e9f88ea6653eff2823a31f96a9eb0ad6fe1062ea204df4",
+      "actualSHA256": "1e65885f3fa5aa398cf6a315cd365705986f092de9838692eb305ce87dc78b12",
+      "lengthPass": false,
+      "hashPass": false
+    }
+  ],
+  "currentAppOnlyIdentifierAssertions": {
+    "hanlin-user-bubble": false,
+    "hanlin-assistant-bubble": false,
+    "hanlin-search-bubble": true,
+    "hanlin-info-bubble": true,
+    "hanlin-action-buttons-row": false,
+    "hanlin-code-block-row": true,
+    "hanlin-html-web-bubble": true
+  },
+  "oldSourceTestBlob": "8d480f0c51a42676e19fab0519fac50476ad6333"
+}

@@ -1,0 +1,330 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project ChatMotionProof.xcodeproj -scheme ChatMotionProof -derivedDataPath /Users/m1/caches/DerivedData/hanlin-motion-dacb4ca5-20261126 -destination "platform=iOS Simulator,id=B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D" -destination-timeout 60 -resultBundlePath /Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/B/Motion.xcresult -disableAutomaticPackageResolution -skipMacroValidation -parallel-testing-enabled NO -test-timeouts-enabled YES -default-test-execution-time-allowance 600 -maximum-test-execution-time-allowance 720 CODE_SIGNING_ALLOWED=NO "-only-testing:ChatMotionProofUITests/MotionUITests/testBRapidReversalPresetSwitchAndPersistence"
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  swift-markdown: https://github.com/swiftlang/swift-markdown.git @ 0.7.3
+  iosMath: https://github.com/junyan72/iosMath @ ba9ab77
+  swift-syntax: https://github.com/swiftlang/swift-syntax.git @ 603.0.2
+  cmark-gfm: https://github.com/swiftlang/swift-cmark @ 0.9.0
+  SwiftStreamingMarkdown: https://github.com/davidpovarsky/hanlin-streaming-markdown @ 5cbb4b6
+  HanlinSDK: /Users/m1/builds/hanlin-motion-dacb4ca5-20261126/proof/Vendor/HanlinSDK
+  Equatable: https://github.com/ordo-one/equatable @ 1.4.1
+  SwiftUI-Shimmer: https://github.com/markiv/SwiftUI-Shimmer @ 1.5.1
+  HighlightSwift: https://github.com/appstefan/highlightswift @ 99c431b
+
+Writing result bundle at path:
+	/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/B/Motion.xcresult
+
+2026-11-26 17:15:16.561776+0100 ChatMotionProofUITests-Runner[44436:15506368] [Default] Running tests...
+2026-11-26 17:15:16.843881+0100 ChatMotionProofUITests-Runner[44436:15506368] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-26 17:15:22.482.
+Test Suite 'ChatMotionProofUITests.xctest' started at 2026-11-26 17:15:22.485.
+Test Suite 'MotionUITests' started at 2026-11-26 17:15:22.485.
+Test Case '-[ChatMotionProofUITests.MotionUITests testBRapidReversalPresetSwitchAndPersistence]' started.
+    t =     0.01s Start Test at 2026-11-26 17:15:22.493
+    t =     0.08s Set Up
+    t =     0.09s     Open ai.hanlin.motion-proof
+    t =     0.09s         Launch ai.hanlin.motion-proof
+2026-11-26 17:15:23.009 xcodebuild[44413:15505965] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-26 17:15:23.009 xcodebuild[44413:15505965] [MT] IDELaunchParametersSnapshot: no debugger version
+objc[44436]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.3CDVUO/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x108078310) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.3CDVUO/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x1080ac398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     3.26s             Setting up automation session
+    t =     6.82s             Wait for ai.hanlin.motion-proof to idle
+    t =    10.06s     Waiting 10.0s for "proof-thinking" Button to exist
+    t =    11.14s         Checking `Expect predicate `existsNoRetry == 1` for object "proof-thinking" Button`
+    t =    11.14s             Checking existence of `"proof-thinking" Button`
+<unknown>:0: warning: -[ChatMotionProofUITests.MotionUITests testBRapidReversalPresetSwitchAndPersistence] : Update the Info.plist: Support for all orientations will soon be required.
+    t =    12.39s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    12.39s     Find the "proof-geometry-state" StaticText
+    t =    12.42s Find the "proof-thinking" Button
+    t =    12.46s Tap "proof-thinking" Button
+    t =    12.46s     Wait for ai.hanlin.motion-proof to idle
+    t =    12.47s     Find the "proof-thinking" Button
+    t =    12.49s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    12.55s         Wait for com.apple.springboard to idle
+    t =    12.64s     Synthesize event
+    t =    12.96s     Wait for ai.hanlin.motion-proof to idle
+    t =    14.02s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    14.02s     Find the "proof-geometry-state" StaticText
+    t =    14.06s Checking existence of `"proof-summary" StaticText`
+    t =    14.08s Tap "proof-thinking" Button
+    t =    14.08s     Wait for ai.hanlin.motion-proof to idle
+    t =    14.09s     Find the "proof-thinking" Button
+    t =    14.11s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    14.13s         Wait for com.apple.springboard to idle
+    t =    14.15s     Synthesize event
+    t =    14.44s     Wait for ai.hanlin.motion-proof to idle
+    t =    15.49s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    15.49s     Find the "proof-geometry-state" StaticText
+    t =    15.51s Checking existence of `"proof-summary" StaticText`
+    t =    15.53s Find the "proof-action-receipt" StaticText
+    t =    15.55s Find the "proof-geometry-state" StaticText
+    t =    15.57s Added attachment named 'original-toggle-prewarm-baseline-receipt'
+    t =    15.57s Find the "proof-geometry-state" StaticText
+    t =    15.59s Tap "proof-thinking" Button with 3 taps and 1 touch
+    t =    15.59s     Wait for ai.hanlin.motion-proof to idle
+    t =    15.60s     Find the "proof-thinking" Button
+    t =    15.62s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    15.64s         Wait for com.apple.springboard to idle
+    t =    15.66s     Synthesize event
+    t =    16.08s     Wait for ai.hanlin.motion-proof to idle
+    t =    16.08s Find the "proof-action-receipt" StaticText
+    t =    16.10s Find the "proof-geometry-state" StaticText
+    t =    16.13s Added attachment named 'original-toggle-rapid-action-receipt'
+    t =    17.17s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    17.18s     Find the "proof-geometry-state" StaticText
+    t =    17.20s Tap "hanlin-chat-motion-preset" Button
+    t =    17.20s     Wait for ai.hanlin.motion-proof to idle
+    t =    17.21s     Find the "hanlin-chat-motion-preset" Button
+    t =    17.23s     Check for interrupting elements affecting "hanlin-chat-motion-preset" Button
+    t =    17.26s         Wait for com.apple.springboard to idle
+    t =    17.39s     Synthesize event
+    t =    17.69s     Wait for ai.hanlin.motion-proof to idle
+    t =    17.88s Tap "Height reveal" Button
+    t =    17.88s     Wait for ai.hanlin.motion-proof to idle
+    t =    19.03s     Find the "Height reveal" Button
+    t =    19.08s     Check for interrupting elements affecting "Height reveal" Button
+    t =    19.11s         Wait for com.apple.springboard to idle
+    t =    19.14s     Synthesize event
+    t =    19.44s     Wait for ai.hanlin.motion-proof to idle
+    t =    21.92s Checking `Expect predicate `label == "v1.height-reveal"` for object "proof-persisted-preset" StaticText`
+    t =    21.93s     Find the "proof-persisted-preset" StaticText
+    t =    23.01s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    23.01s     Find the "proof-geometry-state" StaticText
+    t =    23.03s Tap "Repeated tool name" Button
+    t =    23.03s     Wait for ai.hanlin.motion-proof to idle
+    t =    23.03s     Find the "Repeated tool name" Button
+    t =    23.06s     Check for interrupting elements affecting "Repeated tool name" Button
+    t =    23.08s         Wait for com.apple.springboard to idle
+    t =    23.10s     Synthesize event
+    t =    23.39s     Wait for ai.hanlin.motion-proof to idle
+    t =    23.40s Waiting 5.0s for "proof-tool-output" StaticText to exist
+    t =    24.46s     Checking `Expect predicate `existsNoRetry == 1` for object "proof-tool-output" StaticText`
+    t =    24.46s         Checking existence of `"proof-tool-output" StaticText`
+    t =    24.50s Tap "proof-thinking" Button
+    t =    24.50s     Wait for ai.hanlin.motion-proof to idle
+    t =    24.50s     Find the "proof-thinking" Button
+    t =    24.54s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    24.56s         Wait for com.apple.springboard to idle
+    t =    24.59s     Synthesize event
+    t =    24.88s     Wait for ai.hanlin.motion-proof to idle
+    t =    25.94s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    25.94s     Find the "proof-geometry-state" StaticText
+    t =    25.97s Tap "proof-thinking" Button
+    t =    25.97s     Wait for ai.hanlin.motion-proof to idle
+    t =    25.97s     Find the "proof-thinking" Button
+    t =    26.00s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    26.02s         Wait for com.apple.springboard to idle
+    t =    26.04s     Synthesize event
+    t =    26.33s     Wait for ai.hanlin.motion-proof to idle
+    t =    27.41s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    27.41s     Find the "proof-geometry-state" StaticText
+    t =    27.45s Checking existence of `"proof-tool-output" StaticText`
+    t =    27.48s Tap "proof-count" Button
+    t =    27.48s     Wait for ai.hanlin.motion-proof to idle
+    t =    27.49s     Find the "proof-count" Button
+    t =    27.53s     Check for interrupting elements affecting "proof-count" Button
+    t =    27.58s         Wait for com.apple.springboard to idle
+    t =    27.61s     Synthesize event
+    t =    27.91s     Wait for ai.hanlin.motion-proof to idle
+    t =    27.91s Tap "proof-count" Button
+    t =    27.91s     Wait for ai.hanlin.motion-proof to idle
+    t =    27.91s     Find the "proof-count" Button
+    t =    27.94s     Check for interrupting elements affecting "proof-count" Button
+    t =    27.96s         Wait for com.apple.springboard to idle
+    t =    27.98s     Synthesize event
+    t =    28.28s     Wait for ai.hanlin.motion-proof to idle
+    t =    28.28s Tap "proof-count" Button
+    t =    28.28s     Wait for ai.hanlin.motion-proof to idle
+    t =    28.28s     Find the "proof-count" Button
+    t =    28.31s     Check for interrupting elements affecting "proof-count" Button
+    t =    28.34s         Wait for com.apple.springboard to idle
+    t =    28.37s     Synthesize event
+    t =    28.67s     Wait for ai.hanlin.motion-proof to idle
+    t =    29.74s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    29.74s     Find the "proof-geometry-state" StaticText
+    t =    29.77s Tap "proof-long" Button
+    t =    29.77s     Wait for ai.hanlin.motion-proof to idle
+    t =    29.77s     Find the "proof-long" Button
+    t =    29.80s     Check for interrupting elements affecting "proof-long" Button
+    t =    29.83s         Wait for com.apple.springboard to idle
+    t =    29.85s     Synthesize event
+    t =    30.14s     Wait for ai.hanlin.motion-proof to idle
+    t =    30.15s Tap "proof-type" Button
+    t =    30.15s     Wait for ai.hanlin.motion-proof to idle
+    t =    30.15s     Find the "proof-type" Button
+    t =    30.18s     Check for interrupting elements affecting "proof-type" Button
+    t =    30.20s         Wait for com.apple.springboard to idle
+    t =    30.22s     Synthesize event
+    t =    30.51s     Wait for ai.hanlin.motion-proof to idle
+    t =    31.57s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    31.57s     Find the "proof-geometry-state" StaticText
+    t =    31.61s Find the "proof-thinking" Button
+    t =    31.66s Find the "proof-action-receipt" StaticText
+    t =    31.72s Press "proof-thinking" Button[0.50, 0.50] for 0.1 seconds, then drag to "proof-thinking" Button[0.50, 0.50] -> (0.0, -120.0) with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    31.72s     Wait for ai.hanlin.motion-proof to idle
+    t =    31.72s     Find the "proof-thinking" Button
+    t =    31.75s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    31.78s         Wait for com.apple.springboard to idle
+    t =    31.80s     Synthesize event
+    t =    31.80s         Find the "proof-thinking" Button
+    t =    31.85s         Find the "proof-thinking" Button
+    t =    31.88s         Find the "proof-thinking" Button
+    t =    31.93s         Find the "proof-thinking" Button
+    t =    31.97s         Find the "proof-thinking" Button
+    t =    32.55s     Wait for ai.hanlin.motion-proof to idle
+    t =    34.17s Find the "proof-action-receipt" StaticText
+    t =    34.20s Added attachment named 'scroll-drag-from-toggle-receipt'
+    t =    34.20s Terminate ai.hanlin.motion-proof:44546
+    t =    43.29s Open ai.hanlin.motion-proof
+    t =    43.29s     Launch ai.hanlin.motion-proof
+2026-11-26 17:16:05.779 xcodebuild[44413:15505965] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-26 17:16:05.779 xcodebuild[44413:15505965] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    44.15s         Setting up automation session
+    t =    50.88s         Wait for ai.hanlin.motion-proof to idle
+    t =    54.52s Find the "proof-persisted-preset" StaticText
+    t =    54.77s Terminate ai.hanlin.motion-proof:44752
+    t =    55.84s Open ai.hanlin.motion-proof
+    t =    55.84s     Launch ai.hanlin.motion-proof
+2026-11-26 17:16:18.331 xcodebuild[44413:15505965] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-26 17:16:18.331 xcodebuild[44413:15505965] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    56.07s         Setting up automation session
+    t =    58.67s         Wait for ai.hanlin.motion-proof to idle
+    t =    60.53s Find the "proof-persisted-preset" StaticText
+    t =    60.63s Open com.apple.Preferences
+    t =    60.63s     Launch com.apple.Preferences
+    t =    60.80s         Setting up automation session
+    t =    65.16s         Wait for com.apple.Preferences to idle
+    t =    70.03s Waiting 2.0s for "Reduce Motion" Switch to exist
+    t =    71.05s     Checking `Expect predicate `existsNoRetry == 1` for object "Reduce Motion" Switch`
+    t =    71.05s         Checking existence of `"Reduce Motion" Switch`
+    t =    71.35s         Capturing element debug description
+    t =    72.06s     Checking `Expect predicate `existsNoRetry == 1` for object "Reduce Motion" Switch`
+    t =    72.06s         Checking existence of `"Reduce Motion" Switch`
+    t =    72.15s         Capturing element debug description
+    t =    72.16s     Checking existence of `"Reduce Motion" Switch`
+    t =    72.33s Collecting debug information to assist test failure triage
+    t =    72.33s     Requesting snapshot of accessibility hierarchy for app with pid 44848
+    t =    72.91s Checking existence of `"Accessibility" StaticText`
+    t =    73.05s Find the "Accessibility" StaticText
+    t =    73.23s Waiting 5.0s for "Accessibility" StaticText to exist
+    t =    74.29s     Checking `Expect predicate `existsNoRetry == 1` for object "Accessibility" StaticText`
+    t =    74.29s         Checking existence of `"Accessibility" StaticText`
+    t =    74.40s Tap "Accessibility" StaticText
+    t =    74.40s     Wait for com.apple.Preferences to idle
+    t =    74.40s     Find the "Accessibility" StaticText
+    t =    74.48s     Check for interrupting elements affecting "Accessibility" StaticText
+    t =    74.58s         Wait for com.apple.springboard to idle
+    t =    74.62s     Synthesize event
+    t =    74.96s     Wait for com.apple.Preferences to idle
+    t =    77.93s Waiting 5.0s for "Motion" StaticText to exist
+    t =    79.01s     Checking `Expect predicate `existsNoRetry == 1` for object "Motion" StaticText`
+    t =    79.01s         Checking existence of `"Motion" StaticText`
+    t =    79.26s Tap "Motion" StaticText
+    t =    79.26s     Wait for com.apple.Preferences to idle
+    t =    79.27s     Find the "Motion" StaticText
+    t =    79.38s     Check for interrupting elements affecting "Motion" StaticText
+    t =    79.46s         Wait for com.apple.springboard to idle
+    t =    79.50s     Synthesize event
+    t =    79.83s     Wait for com.apple.Preferences to idle
+    t =    80.39s Waiting 5.0s for "Reduce Motion" Switch to exist
+    t =    81.42s     Checking `Expect predicate `existsNoRetry == 1` for object "Reduce Motion" Switch`
+    t =    81.42s         Checking existence of `"Reduce Motion" Switch`
+    t =    81.53s Find the "Reduce Motion" Switch
+    t =    81.59s Find the "REDUCE_MOTION" Switch
+    t =    81.66s Find the "REDUCE_MOTION" Switch
+    t =    81.74s Tap "REDUCE_MOTION" Switch[1.00, 0.50] -> (-28.0, 0.0)
+    t =    81.74s     Wait for com.apple.Preferences to idle
+    t =    81.75s     Find the "REDUCE_MOTION" Switch
+    t =    81.81s     Check for interrupting elements affecting "REDUCE_MOTION" Switch
+    t =    81.87s         Wait for com.apple.springboard to idle
+    t =    81.89s     Synthesize event
+    t =    81.91s         Find the "REDUCE_MOTION" Switch
+    t =    81.98s         Find the "REDUCE_MOTION" Switch
+    t =    82.05s         Find the "REDUCE_MOTION" Switch
+    t =    82.39s     Wait for com.apple.Preferences to idle
+    t =    84.12s Checking `Expect predicate `value == "1"` for object "REDUCE_MOTION" Switch`
+    t =    84.13s     Find the "REDUCE_MOTION" Switch
+    t =    84.23s Open ai.hanlin.motion-proof
+    t =    84.23s     Activate ai.hanlin.motion-proof
+    t =    84.36s         Wait for ai.hanlin.motion-proof to idle
+    t =    84.38s Find the "proof-effective-motion" StaticText
+    t =    84.41s Tap "proof-thinking" Button
+    t =    84.41s     Wait for ai.hanlin.motion-proof to idle
+    t =    84.43s     Find the "proof-thinking" Button
+    t =    84.46s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    84.48s         Wait for com.apple.Preferences to idle
+    t =    84.56s         Wait for com.apple.springboard to idle
+    t =    85.27s     Synthesize event
+    t =    85.64s     Wait for ai.hanlin.motion-proof to idle
+    t =    86.70s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    86.70s     Find the "proof-geometry-state" StaticText
+    t =    86.73s Tap "proof-thinking" Button
+    t =    86.73s     Wait for ai.hanlin.motion-proof to idle
+    t =    86.74s     Find the "proof-thinking" Button
+    t =    86.78s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    86.89s         Wait for com.apple.springboard to idle
+    t =    86.91s     Synthesize event
+    t =    87.62s     Wait for ai.hanlin.motion-proof to idle
+    t =    88.72s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    88.72s     Find the "proof-geometry-state" StaticText
+    t =    88.74s Find the Target Application 'ai.hanlin.motion-proof'
+    t =    88.93s Added attachment named 'reduce-motion-static'
+    t =    88.93s Tear Down
+    t =    88.93s     Open com.apple.Preferences
+    t =    88.93s         Activate com.apple.Preferences
+    t =    88.99s             Wait for com.apple.Preferences to idle
+    t =    89.13s     Waiting 2.0s for "Reduce Motion" Switch to exist
+    t =    90.19s         Checking `Expect predicate `existsNoRetry == 1` for object "Reduce Motion" Switch`
+    t =    90.19s             Checking existence of `"Reduce Motion" Switch`
+    t =    90.28s     Waiting 5.0s for "Reduce Motion" Switch to exist
+    t =    91.34s         Checking `Expect predicate `existsNoRetry == 1` for object "Reduce Motion" Switch`
+    t =    91.34s             Checking existence of `"Reduce Motion" Switch`
+    t =    91.40s     Find the "Reduce Motion" Switch
+    t =    91.47s     Find the "REDUCE_MOTION" Switch
+    t =    91.54s     Find the "REDUCE_MOTION" Switch
+    t =    91.61s     Tap "REDUCE_MOTION" Switch[1.00, 0.50] -> (-28.0, 0.0)
+    t =    91.61s         Wait for com.apple.Preferences to idle
+    t =    91.61s         Find the "REDUCE_MOTION" Switch
+    t =    91.67s         Check for interrupting elements affecting "REDUCE_MOTION" Switch
+    t =    91.73s             Wait for com.apple.springboard to idle
+    t =    91.75s         Synthesize event
+    t =    91.75s             Find the "REDUCE_MOTION" Switch
+    t =    91.82s             Find the "REDUCE_MOTION" Switch
+    t =    91.88s             Find the "REDUCE_MOTION" Switch
+    t =    92.23s         Wait for com.apple.Preferences to idle
+    t =    93.39s     Checking `Expect predicate `value == "0"` for object "REDUCE_MOTION" Switch`
+    t =    93.39s         Find the "REDUCE_MOTION" Switch
+    t =    93.46s     Open ai.hanlin.motion-proof
+    t =    93.46s         Activate ai.hanlin.motion-proof
+    t =    93.54s             Wait for ai.hanlin.motion-proof to idle
+    t =    93.55s     Setting device orientation to Portrait
+    t =    93.62s         Wait for com.apple.Preferences to idle
+    t =    93.64s         Wait for ai.hanlin.motion-proof to idle
+    t =    93.64s         Wait for com.apple.springboard to idle
+    t =    94.35s     Terminate ai.hanlin.motion-proof:44829
+Test Case '-[ChatMotionProofUITests.MotionUITests testBRapidReversalPresetSwitchAndPersistence]' passed (105.156 seconds).
+Test Suite 'MotionUITests' passed at 2026-11-26 17:17:07.650.
+	 Executed 1 test, with 0 failures (0 unexpected) in 105.156 (105.164) seconds
+Test Suite 'ChatMotionProofUITests.xctest' passed at 2026-11-26 17:17:07.652.
+	 Executed 1 test, with 0 failures (0 unexpected) in 105.156 (105.167) seconds
+Test Suite 'Selected tests' passed at 2026-11-26 17:17:07.652.
+	 Executed 1 test, with 0 failures (0 unexpected) in 105.156 (105.170) seconds
+2026-11-26 17:27:07.984 xcodebuild[44413:15516853]  IDETestOperationsObserverDebug: Failure collecting diagnostics from simulator: Timed out after 600.0 seconds while waiting for a response from the invoked process
+2026-11-26 17:27:08.041 xcodebuild[44413:15505965] [MT] IDETestOperationsObserverDebug: 716.224 elapsed -- Testing started completed.
+2026-11-26 17:27:08.041 xcodebuild[44413:15505965] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-26 17:27:08.041 xcodebuild[44413:15505965] [MT] IDETestOperationsObserverDebug: 716.224 sec, +716.224 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/B/Motion.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

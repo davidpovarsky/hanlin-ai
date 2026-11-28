@@ -1,0 +1,305 @@
+# AGENTS.md — Modern Apple Development Rules
+
+Explicit public repository consent (2026-11-18): The owner authorized normal, non-forced publication of the 17 pending local Hanlin continuation commits and subsequent in-scope fixes to https://github.com/davidpovarsky/hanlin-ai.git, branch codex/hanlin-product-completion-20261117, plus necessary bounded GitHub Actions CI and Asana evidence updates, without repeated per-push/per-run confirmation. See docs/continuation-20261117/OWNER_AUTHORIZATION_20261118.md for precise scope and safeguards. Historical local-only or per-phase pauses do not block this scoped work; external security approvals and secret protection remain mandatory.
+
+## Current owner authorization — 2026-11-18
+
+Read [OWNER_AUTHORIZATION_20261118.md](docs/continuation-20261117/OWNER_AUTHORIZATION_20261118.md). The owner has authorized autonomous completion of the remaining Hanlin Phase 2 and Phase 3 work, including the presented navigation proposal and necessary integration, validation and release preparation. Historical pauses, frozen-file leases, per-phase confirmations and mandatory extra-team handoffs do not block this task. This records the direct owner instruction; actual tool/platform access and truthful acceptance evidence remain authoritative.
+
+## 1. First action in every task
+
+Before changing code:
+
+1. Inspect this repository and read every applicable `AGENTS.md`.
+2. If this file or another instruction file already exists, preserve valid repository-specific rules and update or merge them rather than replacing them blindly.
+3. Identify:
+   - project type and Apple platforms;
+   - deployment targets;
+   - Swift language mode;
+   - Xcode and SDK versions used by CI;
+   - schemes, targets, packages, dependencies, and build workflows;
+   - whether this repository is an original project or a fork/mirror/derivative of an upstream repository.
+4. Do not invent project structure, file names, targets, schemes, entitlements, or commands.
+
+## 2. Platform policy
+
+This project prefers the newest stable Apple development stack.
+
+- Use the latest stable Xcode release available in the repository's GitHub Actions environment.
+- Use the latest stable Swift language mode supported by that Xcode release.
+- Target the newest stable iOS/iPadOS/macOS/watchOS/visionOS version appropriate to the project.
+- The user does not want backward compatibility with older Apple operating-system versions.
+- Do not add legacy implementations, compatibility wrappers, fallbacks, or old-platform branches.
+- Do not add `if #available` merely to support older systems.
+- Do not silently lower or preserve an old deployment target.
+- If the repository currently targets an older system, report it and propose the minimal required project-setting change.
+- Do not use beta SDKs or beta-only APIs unless explicitly requested.
+
+## 3. Modern API policy
+
+- Use current stable, public, officially supported Apple APIs.
+- Prefer the currently recommended Swift, SwiftUI, Observation, navigation, presentation, layout, data-flow, persistence, and concurrency approaches.
+- Never introduce deprecated APIs.
+- Avoid APIs and patterns that Apple has superseded even when they still compile.
+- Do not use private APIs, undocumented APIs, implementation details, or unreliable runtime tricks.
+- Do not copy obsolete patterns from old tutorials or old answers.
+- When modifying code that uses a legacy pattern, modernize the directly related implementation when safe and in scope.
+- Do not rewrite unrelated working areas merely for novelty.
+
+Examples that must trigger review in new or modified code include, but are not limited to:
+
+- `NavigationView`;
+- new `ObservableObject` / `@Published` models where Observation is appropriate;
+- completion-handler APIs where a stable native async API exists;
+- unnecessary `DispatchQueue.main.async`;
+- UIKit wrappers for functionality now properly available in SwiftUI;
+- obsolete `onChange` overloads;
+- `UIApplication.shared.windows`;
+- unnecessary `AnyView`;
+- avoidable force unwraps and force casts;
+- unstructured or detached tasks without a concrete reason.
+
+Their presence is not automatically an error; inspect context and use the newest correct stable alternative.
+
+## 4. Apple documentation and verification
+
+Apple Developer Documentation pages may depend on JavaScript and may expose only an incomplete shell.
+
+When documentation content is not readable:
+
+1. Do not claim the page was read.
+2. Do not guess an exact declaration, availability, deprecation state, or replacement.
+3. Do not repeatedly say that JavaScript is still loading.
+4. Search other official primary sources:
+   - Apple framework update pages;
+   - Apple release notes;
+   - Apple sample projects;
+   - Apple Technotes;
+   - WWDC session pages and transcripts;
+   - Swift Evolution proposals;
+   - official Swift documentation;
+   - source interfaces and availability metadata from the installed Xcode SDK when CI is explicitly run.
+5. Treat the installed Xcode SDK and compiler diagnostics as the final technical authority.
+
+Always distinguish between:
+
+- verified from readable official documentation;
+- verified from the installed SDK or a successful Xcode build;
+- inferred but not compiled;
+- uncertain and requiring SDK verification.
+
+Never state that an API is current, available, non-deprecated, or accepted by Xcode without a concrete basis.
+
+## 5. Swift requirements
+
+- Use modern stable Swift syntax.
+- Prefer structured concurrency, async/await, actors, `Sendable`, task groups, async sequences, and actor isolation where appropriate.
+- Keep UI-bound state correctly isolated, normally with `@MainActor`.
+- Avoid unnecessary detached tasks, unstructured concurrency, callbacks, and GCD-based designs.
+- Do not silence concurrency diagnostics with unsafe annotations merely to compile.
+- Prefer value semantics unless identity is required.
+- Use clear error propagation and typed errors where useful.
+- Avoid unnecessary type erasure, protocols, managers, service locators, dependency containers, and abstraction layers.
+
+## 6. SwiftUI requirements
+
+- Prefer SwiftUI for new user interfaces.
+- Use UIKit/AppKit only when the latest stable SwiftUI genuinely lacks the capability or the existing architecture requires it.
+- Prefer the Observation framework for new observable state where appropriate.
+- Keep state ownership explicit and predictable.
+- Avoid side effects in view bodies and oversized views.
+- Preserve native behavior, accessibility, Dynamic Type, localization, right-to-left layout, keyboard navigation, pointer interaction, multitasking, and window resizing where relevant.
+- Do not create wrappers around old UIKit APIs when a modern native SwiftUI solution exists.
+
+## 7. Independent-fork repository policy
+
+Hanlin is an independently maintained derivative of CherryHQ/hanlin-ai. Upstream mergeability is no longer a primary architecture constraint.
+
+### Policy rules
+
+- Hanlin is an independently maintained fork.
+- Future upstream changes may be cherry-picked selectively after review; upstream mergeability is not a design constraint.
+- Direct edits and deletions in former upstream files are allowed when they reduce duplicate implementation, remove obsolete paths, or improve Hanlin's architecture.
+- Keep modules clean, avoid oversized files, and separate domain responsibilities for Hanlin's own long-term maintainability.
+- Prefer one authoritative implementation path over wrappers kept only for historical ownership boundaries.
+- Do not duplicate files merely to claim downstream separation.
+- Do not preserve dead or legacy code merely because it originated from upstream.
+- Report large architectural deletions and migrations with tests and parity evidence, not “upstream touchpoints”.
+- Preserve attribution and license history required by the original project license.
+
+## 8. Normal editing mode
+
+Normal editing mode is the default for drafting, inspecting, and refactoring.
+
+In this mode:
+
+- inspect, reason about, and edit the repository;
+- use portable static and local checks available in the current environment first;
+- avoid wasteful or routine-only CI runs;
+- do not create commits merely to trigger CI;
+- do not claim Xcode compilation or runtime correctness succeeded until actually verified;
+- briefly state that platform verification remains pending when relevant.
+
+Routine editing does not warrant CI runs. However, under the owner's controlling authorization, project CI, builds, tests, archives, and IPA generation may be dispatched whenever necessary for verification, validation, or completing tasks, without requiring advance per-run approval.
+
+## 9. Verification mode
+
+Verification mode is entered whenever necessary for validating implementation correctness, checking impacted obligations, verifying Apple-platform compilation/tests, or when the user explicitly requests verification:
+
+- build;
+- compile;
+- test;
+- run GitHub Actions;
+- verify with Xcode;
+- run a modernization audit;
+- analyze warnings;
+- archive;
+- generate an IPA;
+- inspect CI failures.
+
+In verification mode:
+
+- use the repository's existing manually triggered workflow where possible;
+- prefer `workflow_dispatch`;
+- use the latest stable Xcode configured by the workflow;
+- build the relevant scheme and configuration;
+- run tests when present and relevant;
+- run static analysis when configured or requested;
+- collect complete errors and warnings;
+- resolve relevant deprecation, availability, and concurrency diagnostics;
+- do not rerun CI repeatedly without a concrete reason;
+- report the workflow, scheme, configuration, SDK, deployment target, Swift mode, and Xcode version when available.
+
+## 10. Modernization audit
+
+When the user explicitly requests a modernization, legacy, or code-health audit, inspect existing code rather than only newly changed code.
+
+Use the checks available to the repository, preferably including:
+
+1. Xcode build diagnostics;
+2. deprecation and availability warnings;
+3. complete Swift concurrency checking;
+4. Swift 6 language-mode diagnostics when supported;
+5. `xcodebuild analyze`;
+6. tests;
+7. SwiftLint when already configured or needed for the authorized task;
+8. Periphery when already configured or needed for the authorized task;
+9. dependency update and obsolescence review;
+10. a targeted search for legacy Apple and Swift patterns.
+
+Classify findings as:
+
+- definite compiler or SDK issue;
+- officially deprecated;
+- supported but superseded;
+- concurrency or safety issue;
+- code quality issue;
+- dead-code candidate;
+- dependency issue;
+- manual review only.
+
+Do not automatically rewrite every flagged occurrence. Explain false positives and context-sensitive cases.
+
+Use third-party audit tools and CI changes when needed by the owner-authorized work. Prefer focused manually triggered audits for individual verification needs.
+
+## 11. GitHub Actions policy
+
+- Project CI, builds, tests, audits, archives, and unsigned IPA generation may be dispatched whenever necessary for verification, validation, or completing tasks, without requiring advance explicit authorization for each run. Distribution and external publication required by the requested project tasks are covered by the standing owner authorization.
+- Configure workflow triggers as needed by the authorized task; prefer focused manual validation for individual corrections.
+- Prefer focused manual `workflow_dispatch`.
+- Do not hide warnings solely to obtain a green build.
+- Do not change signing, certificates, provisioning, bundle identifiers, entitlements, or deployment settings without explaining the need.
+- A successful build does not prove runtime correctness, UI correctness, memory safety, or behavior on a physical device.
+
+### Event-driven run monitoring
+
+After a GitHub Actions run has been dispatched, monitor it with one long-lived watcher command that exits only when the run completes. Do not repeatedly wake the model to poll the run status.
+
+Preferred command:
+
+```bash
+gh run watch <run-id> --exit-status --compact --interval 30
+```
+
+Required behavior:
+
+- Resolve the run ID once after dispatch, then start one watcher process for that exact run.
+- When the execution environment provides a native wait, resume, or completion-notification primitive, attach it to the watcher so the model is resumed only when the process exits successfully or unsuccessfully.
+- Do not implement status loops with repeated `gh run view`, `gh run list`, REST/GraphQL requests, shell polling, short sleeps, or recurring model turns.
+- Do not use repeated status checks merely to provide progress messages. The waiting command is expected to remain quiet from the model's perspective until completion.
+- After the watcher exits, query final run/job metadata once. Download logs or artifacts only when they are needed for the requested result or failure diagnosis.
+- If the watcher is interrupted by a tool timeout or connection failure, resume or reattach to the same watcher/session when possible. Start a new watcher only when the original process can no longer be resumed; never fall back to frequent model-driven polling.
+- `--exit-status` is mandatory so a failed or cancelled workflow wakes the model with a nonzero result instead of appearing successful.
+
+## 12. Impact-Aware Validation and Authentic Evidence Reuse
+
+This project enforces a strict, fail-closed impact-aware test selection and evidence reuse policy across all development and CI operations:
+
+1. **Default plan before running:** Every validation operation starts with a manifest of requested obligations, affected files, dependency graph, invalidated tests, eligible-to-reuse tests, missing results, final source SHA, runner/platform, and expected CI groups. State exactly why each group will execute or be reused. Avoid routine or wasteful retesting.
+2. **Strict reuse rule:** A test previously passed only if an authentic raw machine result proves that exact case actually executed and passed (including the original run's legitimate completion and bundle provenance). Validity requires matching test source/assertions/harness, invoked functionality, transitive implementation/runtime dependencies, generated resources, fixtures, configuration, lockfiles, entitlements where relevant, toolchain SDK/Xcode/Swift/compiler flags, simulator OS/device/architecture, and environment-sensitive behavior. Track full SHA range **from the test's last valid execution** to final implementation SHA. Files containing documentation alone need not invalidate code tests **unless** consumed by build/runtime/test logic. Never treat a passing test name in a log as proof.
+3. **Fail-closed invalidation:** Invalidate and rerun when directly/indirectly affected, newly required, impacted by shared startup/bridges/registries, changed test or fixtures, changed compiler/runtime/CI execution semantics, missing verifiable original artifacts, mismatched environment/fingerprints, flaky/expired or time-sensitive acceptance, unclear dependency lineage, an actual previous failure, or a mandatory fresh-execution requirement. Treat ambiguous links as unknown, not PASS. A `cache hit` or unchanged filename alone is not validation evidence.
+4. **Authoritative statuses:** Use separate `EXECUTED_PASS`, `REUSED_VERIFIED_PASS`, `FAILED`, `NOT_RUN`, `NEEDS_TEST`, `INVALIDATED`, and `BLOCKED` (or equivalent explicit fields preserving all distinctions). Aggregated requirement `PASSED` is permissible only when every required semantic assertion is proven by an eligible executed/reused pass and no higher-priority failed/blocking evidence remains. A test-case pass cannot automatically imply suite-, simulator-, workflow-, or scenario-level success.
+5. **Final acceptance:** Prefer a **coverage-complete aggregated acceptance** on the final SHA: run affected/failed/invalidated/unknown obligations, reuse proven unaffected obligations, and execute required fresh holistic cross-component checks. A final report must include both executed and reused lists/counts and raw provenance; a `REUSED_VERIFIED_PASS` must never be described as freshly executed. If a frozen/authoritative MASTER contract still explicitly requires physical same-run execution, do not silently reinterpret or claim its gate passed: make a transparent **versioned contract amendment** implementing the user's explicitly requested reuse policy, while preserving behavioral coverage and traceability; where an amendment is disallowed, leave the gate **OPEN** and identify the exact conflict rather than faking success.
+6. **No reduction of assurance:** Do not bypass tests, alter desired outputs/assertions, weaken coverage, lower required benchmark sample counts/thresholds, skip smoke/integration gates that actually changed, or recast mock fixtures as real engine execution. Reuse is a positive proof of unaffectedness, not blanket permission to skip.
+7. **Persistent proof and audit:** Maintain durable records across commits and CI runs, with exact test/scenario identifier, expected behavior, test method, previous execution SHA/run/job/artifact, raw result and hash, impacted-source fingerprint, dependency closure, fixture and runner/toolchain fingerprint, last validated status, invalidation cause, and final target SHA. Reused entries point at their original raw artifacts; do not copy them and rewrite the origin as the latest SHA.
+8. **Efficiency rules:** Use precise method-level filtered runs for debugging; avoid Release/device IPA and all performance suites in ordinary unrelated iterations; reuse compatible compiler caches; isolate test groups where safe; gather bounded, structured diagnostics; publish per-step/per-suite wall time and candidate waste. Keep required final coverage intact. A long/expensive full suite is not the default just because one test failed.
+9. **Impact-aware authorization:** Under the owner's controlling policy, advance approval is not required for necessary validation CI, focused builds, tests, or archives. Necessary workflow configuration and task-related publication use the standing owner authorization. Once dispatched, use a single event-driven watcher and inspect results rather than frequent polling.
+
+## 13. Existing instruction and workflow files
+
+Before creating any of the following, check whether an equivalent already exists:
+
+- `AGENTS.md`;
+- nested `AGENTS.md` files;
+- ChatGPT instruction files;
+- lint configuration;
+- modernization audit workflows;
+- build, test, archive, or IPA workflows.
+
+If one exists:
+
+- inspect it;
+- preserve valid project-specific settings;
+- update and merge missing rules;
+- avoid duplicate files and duplicate workflows;
+- do not overwrite secrets, signing configuration, scheme names, paths, or custom commands;
+- summarize what was retained, added, changed, or removed.
+
+## 14. Completion and honesty
+
+After substantial work, report briefly:
+
+- what changed;
+- which modern APIs and architecture were used;
+- whether the repository is upstream-derived;
+- how downstream customizations were isolated;
+- which upstream files, if any, were minimally modified;
+- whether official documentation was readable;
+- whether an Xcode SDK or compiler actually verified the work;
+- whether GitHub Actions ran;
+- which checks remain pending.
+
+Never claim:
+
+- the project builds;
+- there are no warnings;
+- an API is definitely current;
+- the code works on a real device;
+- an upstream merge will be conflict-free;
+
+unless that exact claim was verified.
+
+## 15. User preference
+
+The user wants modern, advanced, clean Swift and SwiftUI code, targets current stable Apple platforms only, does not want backward compatibility, works from Windows, and uses autonomously dispatched necessary GitHub Actions and Apple-devtools for Apple-platform compilation and verification under the owner-authorized impact-aware CI policy.
+
+## 16. Hanlin NativeScript and MiniApp scripts
+
+When building, modifying, or packaging NativeScript MiniApps and scripts for Hanlin:
+- Consult the full agent and developer guide: [`docs/hanlin-nativescript-guide.md`](file:///c:/Users/DAVID/Code/hanlin-ai/docs/hanlin-nativescript-guide.md).
+- MiniApps support both the `@nativescript/core` API (e.g. `Application`, `Page`, `StackLayout`, `Button`, `Label`, `Http`) and the direct NativeScript iOS Metadata Bridge (`UIKit`, `Foundation`, `Auto Layout`, `UITabBarController`, `UINavigationController`). Both paradigms coexist and can be mixed.
+- Hanlin embeds original `@nativescript/core` and resolves its exact version with the native runtime/types during host preparation. Read `get_miniapp_sdk(engine: "nativescript")` and declare the returned `selectedEngine.packageVersions["@nativescript/core"]`; an old guide version is not the current host contract. Use the original authoring/build tools to prepare the package.
+- Direct bridge-only packages that do not use `@nativescript/core` continue to be supported.
+- Pass the root controller to the host UI using `NativeScriptEmbedder.sharedInstance().delegate.presentNativeScriptApp(...)` when managing view controllers directly, or let `Application.run()` present automatically.
+- For TypeScript typings, reference `@nativescript/types-ios` and `@nativescript/core`.
+

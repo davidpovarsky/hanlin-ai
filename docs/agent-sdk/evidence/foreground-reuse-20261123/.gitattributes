@@ -1,0 +1,2 @@
+# Preserve the authenticated original swift-driver stderr bytes.
+original-raw/raw-001-toolchain.stderr.log -whitespace

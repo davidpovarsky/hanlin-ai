@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T08:29:49.886590+00:00",
+  "actualRetainedCompilerFiles": [
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoWorklets-t.build/Objects-normal/arm64/af3fcb34312c57c0f52879cdce924b91-common-args.resp",
+      "size": 3124,
+      "sha256": "586b640a9b521898a8622a6e698810cf0d99ed94f70bdf8a0f1a5a3383462c16",
+      "mtimeNs": 1795569317083111434,
+      "macroExcerpt": "MOBILE=1' '-DFOLLY_USE_LIBCPP=1' '-DREACT_NATIVE_PRODUCTION=1' '-DRN_DEBUG_STRING_CONVERTIBLE=0' '-DWORKLETS_VERSION=\"0.13.1\"' -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/include -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWo"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoWorklets-t.build/Objects-normal/arm64/WorkletsVersion.d",
+      "size": 1612,
+      "sha256": "d4d26a02620ccf9f329e6dda8819664531b2e3036830c9d4462563508d191e61",
+      "mtimeNs": 1795569330703557986,
+      "sourcePrefix": "dependencies: \\\n  /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/SDKSettings.json \\\n  /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/Common/cpp/worklets/Tools/WorkletsVersion.cpp \\\n  /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/Common/cpp/worklets/Tools/JSLogger.h \\\n  /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/include/jsi/jsi.h \\\n  /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/include/jsi/jsi-inl.h \\\n  /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/S"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoWorklets-t.build/Objects-normal/arm64/82b82416624d2658e5098eb0a28c15c5-common-args.resp",
+      "size": 3032,
+      "sha256": "0e6985f5ee6bb74bff5cc6a6fa6002cad3ee2dd62a32fd132a1a0227ad4f7013",
+      "mtimeNs": 1795569317083134518,
+      "macroExcerpt": "MOBILE=1' '-DFOLLY_USE_LIBCPP=1' '-DREACT_NATIVE_PRODUCTION=1' '-DRN_DEBUG_STRING_CONVERTIBLE=0' '-DWORKLETS_VERSION=\"0.13.1\"' -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/include -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWo"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoWorklets-t.build/Objects-normal/arm64/WorkletsVersion.o",
+      "size": 199424,
+      "sha256": "858156d8df38aa4c6def868ac563da18ff6b2aa76484b8e4558aef75d60ebe97",
+      "mtimeNs": 1795569330703397736,
+      "versionByteOccurrences": {
+        "0.13.0": 0,
+        "0.13.1": 1
+      }
+    }
+  ],
+  "notRecompiled": true
+}

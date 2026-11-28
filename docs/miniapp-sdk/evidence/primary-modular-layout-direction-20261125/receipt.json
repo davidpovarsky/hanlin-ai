@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "createdAt": "2026-11-25T03:19:30.608581+00:00",
+  "base": "d692c63a0c02959c73ffd49196c6d0978d054eb3",
+  "file": "Scripts/Expo/miniapps/modular-text-search/App.tsx",
+  "beforeSHA256": "ecb41f0a86b59a1bd4f3965d0eac0edb3d71194526fb0e055d7f52110850f775",
+  "afterSHA256": "4e8389eb6a232e6ed5db8273dd2686e45ab04edabd2e86bfea74cbdf862e5b7c",
+  "delta": "Original Host key={locale}; native subtree recreated on direction/language change, App state retained.",
+  "status": "NATIVE_VISUAL_VALIDATION_PENDING",
+  "testSourceUnchangedSHA256": "93db32b6af9af1eeba85070086c5d0eb6b9b80198dc161004d5729c7cc38d4d0",
+  "readmeSHA256": "e1c49b851c384873452e32d51979c4ee02f3a809e603dd62ee7b27bad0c5aa96"
+}

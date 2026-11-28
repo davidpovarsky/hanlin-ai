@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T09:05:51.905352+00:00",
+  "result": "EXECUTED_PASS_COMPONENT",
+  "runID": 45354940642,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45354940642",
+  "jobID": 138310323164,
+  "testedSourceCommit": "a12eb646aeb5c484f746c07ecffafc7d9f34f167",
+  "sourceApplicabilityCheckedAtCommit": "74ba980dbb91f3a38d4531f043801f5e742c283a",
+  "methods": 13,
+  "passed": 13,
+  "failed": 0,
+  "skipped": 0,
+  "method": "Match every exact test name from original source to one actual passing row in the Host preparation step of the full Apple CI log; the preliminary targeted lifecycle step is excluded. No test rerun. Compare three real source blobs against tested commit.",
+  "rows": [
+    {
+      "line": 24355,
+      "test": "real TypeScript reports semantic errors with original source locations",
+      "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T08:34:57.0785460Z ✔ real TypeScript reports semantic errors with original source locations (729.104708ms)"
+    },
+    {
+      "line": 24356,
+      "test": "validation uses actual original package declarations from the supplied SDK",
+      "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T08:34:57.0788440Z ✔ validation uses actual original package declarations from the supplied SDK (913.60575ms)"
+    },
+    {
+      "line": 24357,
+      "test": "NativeScript package emits a runnable ESM graph and retains exact editable sources",
+      "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T08:34:57.0790130Z ✔ NativeScript package emits a runnable ESM graph and retains exact editable sources (1377.20125ms)"
+    },
+    {
+      "line": 24358,
+      "test": "import rechecks retained source and ignores a stale successful report",
+      "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T08:34:57.0791780Z ✔ import rechecks retained source and ignores a stale successful report (1701.194167ms)"
+    },
+    {
+      "line": 24359,
+      "test": "ScriptWidget keeps original source and its explicit ABI declaration",
+      "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T08:34:57.0792930Z ✔ ScriptWidget keeps original source and its explicit ABI declaration (637.858542ms)"
+    },
+    {
+      "line": 24360,
+      "test": "failed typecheck emits no package",
+      "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T08:34:57.0793940Z ✔ failed typecheck emits no package (994.234791ms)"
+    },
+    {
+      "line": 24361,
+      "test": "a requested existing output directory is preserved",
+      "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T08:34:57.0795000Z ✔ a requested existing output directory is preserved (1084.480583ms)"
+    },
+    {
+      "line": 24362,
+      "test": "SDK discovery reads its real manifest and requested documentation",
+      "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T08:34:57.0796250Z ✔ SDK discovery reads its real manifest and requested documentation (13.875459ms)"
+    },
+    {
+      "line": 24363,
+      "test": "bundle-only imports do not receive a fabricated source typecheck pass",
+      "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T08:34:57.0797790Z ✔ bundle-only imports do not receive a fabricated source typecheck pass (13.181917ms)"
+    },
+    {
+      "line": 24364,
+      "test": "modified compiled output is rejected even when retained TypeScript is still valid",
+      "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T08:34:57.0800090Z ✔ modified compiled output is rejected even when retained TypeScript is still valid (2794.897125ms)"
+    },
+    {
+      "line": 24365,
+      "test": "the real CLI archives and revalidates retained source, diagnostics and output identity",
+      "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T08:34:57.0801500Z ✔ the real CLI archives and revalidates retained source, diagnostics and output identity (5145.667625ms)"
+    },
+    {
+      "line": 24366,
+      "test": "compiler-used sources named build or dist survive source retention and archive revalidation",
+      "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T08:34:57.0802960Z ✔ compiler-used sources named build or dist survive source retention and archive revalidation (2315.282042ms)"
+    },
+    {
+      "line": 24367,
+      "test": "NativeScript preserves the original npm runtime package rather than leaving an unresolved bare import",
+      "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T08:34:59.6343030Z ✔ NativeScript preserves the original npm runtime package rather than leaving an unresolved bare import (2552.056875ms)"
+    }
+  ],
+  "hostAggregate": {
+    "tests": 166,
+    "passed": 165,
+    "failed": 0,
+    "skipped": 1,
+    "rawRows": [
+      {
+        "line": 24429,
+        "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T08:35:30.1144770Z ℹ tests 166"
+      },
+      {
+        "line": 24431,
+        "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T08:35:30.1148190Z ℹ pass 165"
+      },
+      {
+        "line": 24432,
+        "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T08:35:30.1149670Z ℹ fail 0"
+      },
+      {
+        "line": 24434,
+        "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T08:35:30.1151260Z ℹ skipped 1"
+      }
+    ]
+  },
+  "rawLog": {
+    "path": "docs/miniapp-sdk/evidence/tenth-host-authoring-20261124/full-job.log.gz",
+    "encoding": "gzip lossless; mtime0",
+    "bytes": 5320368,
+    "sha256": "6caf5b6ef08f1fb8b023181f4bd8677a0d23d3ffd2869d0f3f3ce8d980c839f7",
+    "gzipBytes": 479693,
+    "gzipSHA256": "028d06cc38edae2c352b922b327a0a7d3ef15b27a1f2752880db23141526bd6d"
+  },
+  "sources": [
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+      "unchangedSinceTestedSource": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs",
+      "sha256": "bef93d623bae3ffa7ba5320d71cfaaed09d6316c46ec1715d16275e36b535dce",
+      "unchangedSinceTestedSource": true
+    },
+    {
+      "path": "Scripts/MiniApps/miniapp.mjs",
+      "sha256": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30",
+      "unchangedSinceTestedSource": true
+    }
+  ],
+  "boundary": "Actual Apple Mac Node Host/CLI component proof using original compiler and test SDK fixtures. Main app build failed later; all42 app/UI cases NOT_RUN. This does not establish embedded iOS/UI/device execution."
+}

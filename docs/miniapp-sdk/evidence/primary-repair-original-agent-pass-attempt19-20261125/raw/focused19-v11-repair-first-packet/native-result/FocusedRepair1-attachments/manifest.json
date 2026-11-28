@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "804AE0FF-D793-4D68-9C55-B1DE67DCED2B.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Hanlin AI authoring accessibility_0_EECECD70-AC7A-434F-A2BA-156DE4F712B5.txt",
+        "timestamp" : 1795627029.55
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "69AE47BD-2CDE-418F-858D-081EB1092ADB.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Hanlin AI authoring_0_B5F30EE6-8B65-49FE-BC91-B681CE80AAD1.png",
+        "timestamp" : 1795627028.736
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "9B5C8802-9A33-43C9-9D46-CDEDF1E0FC18.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "MiniApp repaired native result_0_C992475C-FA4E-4E13-AC0B-5FDDDD52EE59.png",
+        "timestamp" : 1795627016.309
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "DCC10FA2-BF0E-4C10-B5F7-E3A5AE65EDC5.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "MiniApp original TypeScript diagnostics_0_8B7C79A4-9B71-4E1D-A4B4-3AB2823D6906.png",
+        "timestamp" : 1795626690.269
+      }
+    ],
+    "testIdentifier" : "MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport"
+  }
+]

@@ -1,0 +1,187 @@
+import Foundation
+
+struct AgentDiagnosticsSession: Codable, Identifiable, Sendable, Equatable {
+    static let currentSchemaVersion = 2
+
+    var schemaVersion = currentSchemaVersion
+    var id: UUID
+    var runID: UUID
+    var groupID: UUID
+    var startedAt: Date
+    var completedAt: Date?
+    var lastUpdatedAt: Date
+    var providerID: String
+    var modelID: String
+    var endpointKind: String
+    var agentEngineKind: String = "swift_ai_sdk"
+    var appVersion: String?
+    var buildNumber: String?
+    var buildProvenanceJSON: String? = nil
+    var captureEnvironment: [String: String]? = nil
+    var status: String
+    var isComplete: Bool
+    var error: String? = nil
+    var level: AgentDiagnosticsLevel
+    var rounds: [AgentDiagnosticsRound]
+    var totals: AgentTokenUsage
+    var efficiency: AgentEfficiencyReport
+
+    var promptCacheSummary: AgentPromptCacheSummary {
+        AgentPromptCacheSummary(usages: rounds.map(\.usage))
+    }
+
+    /// Read files produced by the short-lived numeric-latency redaction bug.
+    /// Only its exact placeholders at these two known paths can be omitted.
+    /// Preserve the original file and never invent a missing measurement.
+    static func decodeStoredFile(_ data: Data) throws -> Self {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        do { return try decoder.decode(Self.self, from: data) }
+        catch {
+            let originalError = error
+            guard var object = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+                  object["schemaVersion"] as? Int == currentSchemaVersion else { throw originalError }
+            var repaired = false
+            if var efficiency = object["efficiency"] as? [String: Any],
+               efficiency["timeToFirstAnswerToken"] as? String == "<redacted>" {
+                efficiency.removeValue(forKey: "timeToFirstAnswerToken")
+                object["efficiency"] = efficiency; repaired = true
+            }
+            if var rounds = object["rounds"] as? [[String: Any]] {
+                for index in rounds.indices {
+                    if var response = rounds[index]["response"] as? [String: Any],
+                       response["timeToFirstToken"] as? String == "<redacted>" {
+                        response.removeValue(forKey: "timeToFirstToken")
+                        rounds[index]["response"] = response; repaired = true
+                    }
+                }
+                object["rounds"] = rounds
+            }
+            guard repaired else { throw originalError }
+            var session = try decoder.decode(Self.self, from: JSONSerialization.data(withJSONObject: object))
+            let warning = "Timing unavailable in this older log: latency values were previously redacted. Original files are unchanged."
+            if !session.efficiency.warnings.contains(warning) { session.efficiency.warnings.append(warning) }
+            return session
+        }
+    }
+}
+
+struct AgentDiagnosticsRound: Codable, Identifiable, Sendable, Equatable {
+    var id: UUID
+    var index: Int
+    var startedAt: Date
+    var completedAt: Date?
+    var trigger: String
+    var request: AgentDiagnosticsModelRequest
+    var response: AgentDiagnosticsModelResponse
+    var toolCalls: [AgentDiagnosticsToolCall]
+    var usage: AgentTokenUsage
+    var loadedSkillIDs: [String]? = nil
+    var modelVisibleToolAliases: [String]? = nil
+    var modelVisibleToolCount: Int? = nil
+    var modelVisibleSchemaBytes: Int? = nil
+    var providerID: String? = nil
+    var modelID: String? = nil
+    var meaningfulStreamEventCount: Int? = nil
+}
+
+struct AgentDiagnosticsModelRequest: Codable, Sendable, Equatable {
+    var sanitizedJSON: String?
+    var byteCount: Int
+    var contentHash: String
+    var composition: AgentPromptCompositionMetrics
+    var sanitizedHeaders: [String: String]? = nil
+}
+
+struct AgentDiagnosticsModelResponse: Codable, Sendable, Equatable {
+    var httpStatus: Int?
+    var providerRequestID: String?
+    var visibleContent: String?
+    var visibleReasoningSummary: String?
+    var finishReason: String?
+    var error: String?
+    var streamEventCount: Int
+    var timeToFirstToken: TimeInterval?
+    var totalLatency: TimeInterval?
+}
+
+struct AgentDiagnosticsToolCall: Codable, Identifiable, Sendable, Equatable {
+    var id: String { callID }
+    var callID: String
+    var toolName: String
+    var progressSummary: String?
+    var presentationProfileIdentity: String?
+    var resultPresentationRequested: String?
+    var resultPresentationEffective: Bool?
+    var resultRendererKind: String?
+    var resultPresentationSuppressed: Bool?
+    var suppressionReason: String?
+    var requestedAt: Date
+    var executionStartedAt: Date?
+    var executionCompletedAt: Date?
+    var status: String
+    var rawArgumentsBeforeSanitization: String?
+    var argumentsAfterMetadataRemoval: String?
+    var resultForModel: String?
+    var resultForUser: String?
+    var resultByteCount: Int
+    var error: String?
+    var wasDeduplicated: Bool
+    var duplicateOfCallID: String?
+    var canonicalLogicalToolID: String? = nil
+    var modelFacingAlias: String? = nil
+    var backendRoute: String? = nil
+    var backendSource: String? = nil
+    var runtimeKind: String? = nil
+    var outcome: String? = nil
+    var failureCategory: String? = nil
+    var argumentKeys: [String]? = nil
+    var argumentHash: String? = nil
+    var capabilityDecision: String? = nil
+    var availabilityDecision: String? = nil
+    var runtimeStateBefore: String? = nil
+    var runtimeStateAfter: String? = nil
+    var exitCode: Int? = nil
+    var didTimeOut: Bool? = nil
+    var wasCancelled: Bool? = nil
+    var outputWasTruncated: Bool? = nil
+    var stdoutByteCount: Int? = nil
+    var stderrByteCount: Int? = nil
+    var valueType: String? = nil
+    var modelResultByteCount: Int? = nil
+    var userResultByteCount: Int? = nil
+    var uiBlockTypes: [String]? = nil
+    var callerIdentity: String? = nil
+    var durationMilliseconds: Int? = nil
+}
+
+struct AgentEfficiencyReport: Codable, Hashable, Sendable {
+    var modelRoundCount = 0
+    var toolCallCount = 0
+    var uniqueToolCallCount = 0
+    var duplicateToolCallCount = 0
+    var repeatedIdenticalQueryCount = 0
+    var totalInputTokens: Int?
+    var totalOutputTokens: Int?
+    var tokenAmplificationRatio: Double?
+    var totalToolResultCharactersResent = 0
+    var largestToolResultCharacters = 0
+    var historyGrowthByRound: [Int] = []
+    var toolSchemaOverheadTokens = 0
+    var resultPresentationSchemaToolCount: Int?
+    var resultPresentationSchemaEstimatedTokens: Int?
+    var progressMessageCount = 0
+    var hiddenProgressCount = 0
+    var transportOnlyEventCount = 0
+    var timeToFirstAnswerToken: TimeInterval?
+    var totalDuration: TimeInterval?
+    var failedToolCount = 0
+    var succeededToolCount: Int? = nil
+    var invalidArgumentToolCount: Int? = nil
+    var capabilityDeniedToolCount: Int? = nil
+    var availabilityDeniedToolCount: Int? = nil
+    var timedOutToolCount: Int? = nil
+    var cancelledToolCount: Int? = nil
+    var retryCount = 0
+    var warnings: [String] = []
+}

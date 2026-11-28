@@ -1,0 +1,54 @@
+{
+  "base": "080d1a2b264ead9e3f9df690f2dd0d3e81ebd07e",
+  "obligation": "Otzaria UI06 / Hanlin SDK03 acknowledged same-scope navigation context transition",
+  "changed_production": [
+    "HanlinHostNavigationTransition.swift",
+    "HanlinHostDispatcher.swift"
+  ],
+  "impact": "All dispatcher admission, post-await cancellation/revocation, tool reservations/progress, original stable open and additive transition open. Original AgentSession/Host contracts consume these checks. No engine/store/provider change.",
+  "portable_new_tests": [
+    "originalRequestAndFreshSuccessorAreAcknowledgedExactly",
+    "retiredOriginCannotBecomeValidByReplayingItsOldContext",
+    "originalOpenStillRejectsAChangedContentContext",
+    "stablePresentationRetainsTheOriginalSession",
+    "queuedIsNotPresentationAndCannotBeReentered",
+    "reservedRequestRejectsChangedOpaqueDestinationBytes",
+    "capabilityVersionIsRequiredBeforeAnyHostEntry",
+    "versionAloneCannotInventTheHostCapability",
+    "foreignDestinationContextNeverNavigates",
+    "alreadyStaleAndRevokedSessionsNeverNavigate",
+    "requestTargetBlockAndOriginMustAllMatchExactly",
+    "successorCannotChangeAccountWorkspaceBackendAppSceneOrConversation",
+    "successorRequiresNewSessionAndGeneration",
+    "queuedCannotIssueASuccessor",
+    "returnedSuccessorMustBeRegisteredByTheLiveHost",
+    "changedContextWithoutASuccessorStillFailsFreshness",
+    "revocationDuringInitialContextAwaitPreventsHostEntry",
+    "cancellationDuringInitialContextAwaitPreventsHostEntry",
+    "inFlightTransitionBlocksAnotherOriginalSessionOperation",
+    "originRevokedAfterEffectSuppressesAckButRetainsReceipt",
+    "cancellationAfterEffectSuppressesAckButRetainsReceipt",
+    "originRevokedDuringSuccessorContextAwaitCannotReceiveAck",
+    "successorRevokedDuringItsContextAwaitCannotReceiveAck",
+    "cancellationDuringSuccessorContextAwaitCannotReceiveAck",
+    "unrelatedAuthorityChangeAfterEffectCannotReceiveAck",
+    "thrownPostEffectResultCannotBeRetriedEvenIfOldContextReappears",
+    "cancelledReceiptCannotAuthorizeItsUndeliveredSuccessor",
+    "receiptRoundTripPreservesCorrelationWithoutGrantingCurrentAuthority"
+  ],
+  "execute": [
+    "28 new original SDK transition tests, complete Platform/Host contracts and whole dispatcher on Windows Swift 6.3.3",
+    "real complete SDK graph: affected HostAssociation/AgentSession/Context/Callback tests plus navigation suite on Xcode 27",
+    "iOS Simulator SDK product compile"
+  ],
+  "reuse": [],
+  "not_claimed": [
+    "native Otzaria UI",
+    "physical iPad",
+    "live model/provider",
+    "release"
+  ],
+  "reason": "New behavior and changed shared dispatcher admission require fresh tests; previous passes cannot certify this source.",
+  "portable_command": "python Scripts/CI/IntegrationValidation/run_navigation_transition.py --artifacts-dir <empty evidence directory>",
+  "existing_dispatcher_regression": "Execute actual AgentSession/HostAssociation/Context/Callback source in the complete SDK Apple graph. The historical standalone portable driver assumes a different old 43ebcf producer checkout and is not run against a fabricated dependency."
+}

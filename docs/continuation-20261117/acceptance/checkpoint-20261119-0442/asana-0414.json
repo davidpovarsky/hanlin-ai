@@ -1,0 +1,69 @@
+{
+  "new": [
+    {
+      "task_id": "1220542199999956",
+      "story_id": "1220693204603412",
+      "completed": false,
+      "exact_text_match": true,
+      "text": "[ChatGPT | DEV/QA] שמירת מפתחות הספק המקוריים — תאימות ותיקוני עריכה פורסמו, 19.11.2026\n\nפורסם37a246f404cc2ed253200ddf6fd647f999637f68:\nhttps://github.com/davidpovarsky/hanlin-ai/commit/37a246f404cc2ed253200ddf6fd647f999637f68\n\nכל קוראי הספק המקוריים מבדילים כעת בין ערך ישן לבין הפניית Keychain בעלת גרסה וסוג. הפניה חסרה/שגויה אינה נשלחת כסוד. עריכת מפתח נשארת בטיוטה עד Save; גילוי מודלים ובדיקות יכולת משתמשים במפתח שהוקלד בפועל, גם כשהטיוטה ריקה במפורש, בלי לחזור בשקט לערך הישן. שמירה שאושרה במסד ורק לאחריה נכשל עדכון קובץ ההרחבה מוצגת כ״המפתח נשמר״; Retry מעדכן רק את קובץ ההרחבה.\n\nהכתיבה המוגנת משתמשת בדורות Keychain בלתי משתנים, readback ובדיקת הרשומה המקורית לפני/אחרי שמירה; הדור הקודם נשמר לשחזור. סכמות APIKeys/SearchKeys/ToolKeys, ה-ModelContainer, CloudKit וה-entitlements נשארו מקוריים. בשלב התאימות הזה ערכים ישנים ממשיכים להישמר בייצוג הישן; הפעלה מפורשת למפתחות חדשים/ערוכים והעברת מפתח קיים נמצאות בעבודה נפרדת. אין טענת השלמת הגירת סודות או סנכרון בין מכשירים.\n\n23 קלטי מקור ו-22 קבצים שהוחלו אומתו לפי hashes; 22 בדיקות תחביר Swift מקומיות עברו. שתי תקלות שאותרו בסקירה עצמאית תוקנו לפני הפרסום. נשלחה ריצת Apple עם11 מתודות חדשות/14 מקרי בדיקה ועוד בקרת הבעלות המקורית:\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44456578432\n\nתוצאה Native עדיין ממתינה. בדיקות ה-DATA/clear-history המלאות44451321578 נשמרות בנפרד. signed App Groups, CloudKit/iCloud Keychain, מחיקה/חשבון/שחזור ומכשיר אמיתי עדיין דורשים ראיות. המשימה פתוחה.\nראיות: docs/continuation-20261117/acceptance/provider-credential-compatibility-20261119."
+    },
+    {
+      "task_id": "1220546710417618",
+      "story_id": "1220693060128633",
+      "completed": false,
+      "exact_text_match": true,
+      "text": "[ChatGPT | DEV/QA] שתי בדיקות Skill Center המקוריות עברו ב-iPad — 19.11.2026\n\nאומת artifact14496483983 המלא של הריצה44431811538 על e564dc29d24239309b113244bec4556c211c5b2d: SHA256 5bd093af27f7421ed8cc2df87d01670c1c26dc16cf2c59c4dd7df687c4159d64 תואם GitHub;149,551,914bytes, כל1572 חברי ZIP עברו CRC.\n\nב-xcresult המקורי, iPad Pro13 M5 / iOS27.2 Simulator:\n• testCreateEditDisableDeleteCustomSkill — PASS,224.546s.\n• testOverrideAndResetBuiltInSkill — PASS,162.935s.\n\nכך אומתו תיקוני הניווט/הגלילה6167e2ee בלי להאריך את מגבלת300שניות ובלי להסיר פעולות CRUD/reset. זו הצלחה לשני התרחישים בלבד. באותה ריצה תרחיש embedded-results נכשל בהיעלמות האישור החד-פעמי ונמצא באבחון; אין טענת הצלחה כוללת.\n\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44431811538\nהרצת maintained corpus30/Yams נשארת44453570922; כלל דרישות Skill Center, נגישות, קבלה פיזית ויתר מקרי הבדיקה עדיין פתוחים."
+    },
+    {
+      "task_id": "1220542174541940",
+      "story_id": "1220693096363850",
+      "completed": false,
+      "exact_text_match": true,
+      "text": "[ChatGPT | DEV/QA] תוצאות רינדור וממשק הצ׳אט אומתו — 19.11.2026\n\nריצה44431811538 על e564dc29d24239309b113244bec4556c211c5b2d הסתיימה FAILED, עם תוצאות מדויקות:\nחמש בדיקות ChatCodeFenceTests עברו: Mermaid ממשי ב-WebKit וקאש לפי הקלט, unified/split diff ללא הרצת המקור, שני סוגי רינדור באתחול קר משותף, חסימת משאבים פגומים/סקריפטים, וביטול ללא פלט מיושן.\nשש מתוך שמונה בדיקות UI עברו: בחירה חלקית/שמירה/long-press; code-fences בתוך הבועה המקורית ופעולות מקור; Python מקומי דרך Skill ואישור מקורי; UI03 חיפוש וציטוטים ללא כפילות; Skill CRUD; override/reset.\nשני מקרי UI נכשלו (3assertions): Safari הפנימי לא נפתח לאחר לחיצת הקישור; ב-embedded-results כרטיס האישור המקורי נשאר לאחר Allow once. אבחון הקישור והבעלות/פגיעה בכפתור נמשך. אין המרה של FAIL ל-PASS ואין החלפת דרישת האישור.\n\nהורד ואומת ה-ZIP המלא14496483983, SHA256 5bd093af27f7421ed8cc2df87d01670c1c26dc16cf2c59c4dd7df687c4159d64, כל1572 רשומות CRC תקינות. נבדקו שתי תוצאות xcresult המקוריות; iPad Pro13 M5/iOS27.2 Simulator. הראיות שייכות ל-e564 ואינן מיוחסות אוטומטית ל-HEAD החדש.\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44431811538\n\nריצות iPhone/iPad/paired על7e27ded6 ממשיכות בנפרד. SDK04 המלא והקבלה בין אפליקציות/מכשיר נשארים פתוחים."
+    }
+  ],
+  "previous_0351": [
+    {
+      "task": "1220546846740594",
+      "story": "1220693016565983",
+      "exact": true,
+      "completed": false,
+      "at": "2026-11-19T03:51:21.901Z"
+    },
+    {
+      "task": "1220546710400478",
+      "story": "1220692909772249",
+      "exact": true,
+      "completed": false,
+      "at": "2026-11-19T03:51:21.901Z"
+    },
+    {
+      "task": "1220546710401425",
+      "story": "1220693016497278",
+      "exact": true,
+      "completed": false,
+      "at": "2026-11-19T03:51:21.901Z"
+    }
+  ],
+  "previous_bodies_0350": [
+    [
+      "1220546846740594",
+      "[ChatGPT | DEV/QA] אומת כשל האיפוס בניסוי Motion ופורסם תיקון מדידה — 19.11.2026 03:50 UTC\n\nריצה44437763739 על ca49d138 בנתה והפעילה את בדיקת D בפועל. הבדיקה נכשלה לאחר55.591שניות, במצב האיפוס לפני התרחיש הראשון של immediate-touch-down: static=collapsed;animated=transitioning במקום מצב סגור בשניהם. ששת דוחות שלב native-default צורפו ל־xcresult לפני הכשל; תוצאותיהם טרם קודמו לקבלת Motion.\n\nArtifact14495183550 אומת במלואו,33רשומות ZIP/CRC: SHA256 c245988613d846c99fb46528099520108290adb0bdf48e1b9ce15fd4cddcd5a9. כל9קלטי המקור המוצהרים הושוו בהצלחה ל־Git blobs של ca49d138. ארכיון xcresult המקורי נשמר: SHA25606897b4359488e94608729872d6227b8b0c0d7ed4162d7bf80000c645e29ad9a.\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44437763739\n\nב־031a331ad8c9819abe477f3c91517533d07234d4 תוקן תנאי ההכנה של D בלבד: המתנה מוגבלת למצב סגור לאחר reset, snapshot של ערכי expanded/natural/visible ושמירת attachments המקוריים גם אם תנאי הכנה מאוחר יותר נכשל. קריאת האירועים לאחר כל מחווה נשארת snapshot יחיד; ההקשות, ספי הגאומטריה וקוד הייצור לא שונו. A/B/C נשמרו byte-for-byte. שתי בדיקות תחביר Swift, תחביר collector ומנגנון הכנת מקורות המקור עברו מקומית בלבד.\n\nבדיקת D המעודכנת:\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44454057890\nNative ממתין. גם הצלחת D תיחשב לאיסוף אבחון בלבד; דרישת שלוש הפעולות המהירות של B, עשרים מחזורים לכל ערכה וכל קבלת Motion נשארות חובה."
+    ],
+    [
+      "1220546710400478",
+      "[ChatGPT | DEV/QA] המשך ריצת23החבילות, Cairo, Yams ו־Python — 19.11.2026 03:50 UTC\n\nריצה44440354095 על589420f3 הסתיימה cancelled. בניית האפליקציה המקורית עברה; פקודת test-without-building נעצרה בזמן Resolve Package Graph לפני תחילת מקרה בדיקה. אין מכאן PASS/FAIL התנהגותי. הודעת GitHub היא The operation was canceled; סיבת הביטול לא הוכחה. לא בוצע ביטול יזום במסגרת העבודה הנוכחית.\n\nArtifact14496476260 אומת מול GitHub,51רשומות/CRC תקין: SHA25682b9329d89f5ded010499a990671c5da18ddb65d1a146080af40755a1c3ff99b. הלוג המקורי נשמר.\n\nאותן שבע בחירות בדיקה נשלחו מחדש על873607e45e021b40fe5b940c836d398c329f95c8:\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44453570922\nההיקף נשמר:23חבילות מקור מתוחזקות,2תרחישי Cairo,4בדיקות אימוץ Yams ו־wheel מקומי1 —30מקרים מורחבים צפויים. RuntimeCore המקורי42926628418 נשמר. רק compare_base_sha עודכן לצורך תכנון ההרצה; אין החלפת מנוע או הקלה בבדיקות. התוצאה Native עדיין ממתינה והמשימה פתוחה."
+    ],
+    [
+      "1220546710401425",
+      "[ChatGPT | DEV/QA] ארבע בדיקות אימוץ Yams באפליקציה נשמרו בהרצת המשך — 19.11.2026 03:50 UTC\n\nריצת האפליקציה44440354095 על589420f3 בנתה בהצלחה, אך בוטלה ב־GitHub בזמן פתרון התלויות של test-without-building, לפני תחילת המבחנים. סיבת הביטול אינה ידועה מהלוג. Artifact14496476260 אומת במלואו, SHA25682b9329d89f5ded010499a990671c5da18ddb65d1a146080af40755a1c3ff99b; אין טענת PASS חדשה של Yams.\n\nכל ארבע הבדיקות המקוריות נכללות ללא שינוי בריצה החדשה:\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44453570922\nSHA873607e45e021b40fe5b940c836d398c329f95c8:\nnestedMetadataSurvivesStoreSaveAndOverride, anchoredStoreEditDoesNotRewriteOriginal, zipNestedMetadataAndResourcesRemainLossless, catalogMetadataFollowsSelectedSource.\n\nYams6.2.2 המקורית ו־lock שלה לא השתנו. תיקון ZIPFoundation ב־873607 מאפשר לצרכן אוצריא להשתמש בגרסתו הנעולה0.9.20; כל13קובצי Package.resolved במאגר Hanlin נשמרו ללא שינוי bytes. ההוכחה ההיסטורית של חבילת Yams נשמרת בנפרד; קבלת האימוץ באפליקציה ממתינה לתוצאה בפועל."
+    ]
+  ],
+  "a2ui_readback": {
+    "task": "1220489600044406",
+    "story": "1220693017507170",
+    "exact": true,
+    "completed": false,
+    "at": "2026-11-19T03:58:21.928Z"
+  }
+}

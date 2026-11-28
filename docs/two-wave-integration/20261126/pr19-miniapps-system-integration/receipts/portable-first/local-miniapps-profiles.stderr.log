@@ -1,0 +1,30 @@
+test_all_five_original_roles_reuse_profiles_with_exact_prefix_matching (test_local_miniapps_profiles.MiniAppsLocalProfilesTests.test_all_five_original_roles_reuse_profiles_with_exact_prefix_matching) ... FAIL
+test_all_source_plists_are_loaded_before_any_account_request (test_local_miniapps_profiles.MiniAppsLocalProfilesTests.test_all_source_plists_are_loaded_before_any_account_request) ... ok
+test_invalid_release_identity_precedes_any_account_request (test_local_miniapps_profiles.MiniAppsLocalProfilesTests.test_invalid_release_identity_precedes_any_account_request) ... ok
+test_missing_extension_is_created_once_and_get_cms_is_authoritative (test_local_miniapps_profiles.MiniAppsLocalProfilesTests.test_missing_extension_is_created_once_and_get_cms_is_authoritative) ... FAIL
+test_unassigned_extension_app_group_is_rejected_even_with_valid_main (test_local_miniapps_profiles.MiniAppsLocalProfilesTests.test_unassigned_extension_app_group_is_rejected_even_with_valid_main) ... ok
+test_widget_icloud_container_stays_required (test_local_miniapps_profiles.MiniAppsLocalProfilesTests.test_widget_icloud_container_stays_required) ... ok
+
+======================================================================
+FAIL: test_all_five_original_roles_reuse_profiles_with_exact_prefix_matching (test_local_miniapps_profiles.MiniAppsLocalProfilesTests.test_all_five_original_roles_reuse_profiles_with_exact_prefix_matching)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/ProductSplit/test_local_miniapps_profiles.py", line 89, in test_all_five_original_roles_reuse_profiles_with_exact_prefix_matching
+    self.assertEqual(len(result), 5)
+AssertionError: 8 != 5
+
+======================================================================
+FAIL: test_missing_extension_is_created_once_and_get_cms_is_authoritative (test_local_miniapps_profiles.MiniAppsLocalProfilesTests.test_missing_extension_is_created_once_and_get_cms_is_authoritative)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/ProductSplit/test_local_miniapps_profiles.py", line 109, in test_missing_extension_is_created_once_and_get_cms_is_authoritative
+    self.assertEqual(facts[-1]["source"], "CREATED_AND_READ_BACK_APPLE_PROFILE")
+AssertionError: 'REUSED_COMPATIBLE_APPLE_PROFILE' != 'CREATED_AND_READ_BACK_APPLE_PROFILE'
+- REUSED_COMPATIBLE_APPLE_PROFILE
++ CREATED_AND_READ_BACK_APPLE_PROFILE
+
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.015s
+
+FAILED (failures=2)

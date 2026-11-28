@@ -1,0 +1,240 @@
+{
+  "observed_at_utc": "2026-11-23T12:08:34.217120+00:00",
+  "base_commit": "50f4e0af115baedcedf8b4812bedc6d0429085a5",
+  "change": "Forward original caller generation settings to the original native configuration; unchanged native provider rejects unsupported topP.",
+  "syntax_only": {
+    "compiler": "Swift version 6.4.3 (swift-6.4.3-RELEASE), aarch64-unknown-linux-gnu",
+    "execution": "Sentinel script_job_6f4d86ec61ba4c20aeb69c8c3d7914de; all three parse return codes checked before the later evidence-normalization assertion. No parse rerun.",
+    "paths": [
+      {
+        "path": "AI_HLY/Model/HanlinAppleModelCatalogAdapter.swift",
+        "command": [
+          "swiftc",
+          "-frontend",
+          "-parse",
+          "-swift-version",
+          "6",
+          "AI_HLY/Model/HanlinAppleModelCatalogAdapter.swift"
+        ],
+        "exit_code": 0,
+        "sha256": "b6241c2e58835f8ea6c65ae130bc12e8f90521a65e5680503921339a2b4fd8aa"
+      },
+      {
+        "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+        "command": [
+          "swiftc",
+          "-frontend",
+          "-parse",
+          "-swift-version",
+          "6",
+          "AI_HLY/Services/ChatServices/APIManager.swift"
+        ],
+        "exit_code": 0,
+        "sha256": "2bd0f123e11de9ca01834789d8f7e6af1f8ac6e2bf74152b5e58fc766836a30a"
+      },
+      {
+        "path": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+        "command": [
+          "swiftc",
+          "-frontend",
+          "-parse",
+          "-swift-version",
+          "6",
+          "AI_HLYTests/HanlinOrganizerDockParityTests.swift"
+        ],
+        "exit_code": 0,
+        "sha256": "0e7366d161edcb410ab9707c408540bf5a4d22eb4c7710d09d2adf06530a6d16"
+      }
+    ]
+  },
+  "source_preservation": {
+    "status": "PASS",
+    "api_manager_only_change_is_three_argument_forwarding": true,
+    "native_catalog_registration_identity_validation_and_availability_guard_unchanged": true,
+    "existing_test_bodies_unchanged": true,
+    "unchanged_original_engine_provider_configuration": [
+      {
+        "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleOnDeviceProvider.swift",
+        "sha256": "e9cce91de6ae2ad7b93d86efe81d3ee8c550c504fe167c0a6bc17098f7ded22f",
+        "git_blob": "1762ce03bcbdd6533d5d8411979853876964b7df"
+      },
+      {
+        "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleTextDelta.swift",
+        "sha256": "c40a267b83f68e803c515ae43846d6b9d98d58b3c89007065f0909adb3477c7a",
+        "git_blob": "dab00fd9a4b16c3a9989b01ad61337a1192b7a0c"
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+        "sha256": "aaf8ae687d478710c2b4388f19350164a606facd02b70375743c808629cbe524",
+        "git_blob": "d8b353bc455addd30e850a7324127314ae935bf0"
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatModelConfiguration.swift",
+        "sha256": "f7b52386256f944677ef7d96380bdab99be8d724c88236112fdf79841a1edfa6",
+        "git_blob": "b53f797f046b3a671858f2c419630b2bb7c668f4"
+      }
+    ]
+  },
+  "pinned_upstream_error_review": {
+    "revision": "e7bf34111e603ca977becd007dd4e5bb109af857",
+    "repository": "https://github.com/davidpovarsky/swift-ai-sdk",
+    "files": [
+      {
+        "path": "Sources/SwiftAISDK/Util/RetryError.swift",
+        "sha256": "d944bd53a10a3967a0ebf9a4adc4d6d0a6d5525a630716a32a900df80f0f02eb"
+      },
+      {
+        "path": "Sources/SwiftAISDK/Util/RetryFunction.swift",
+        "sha256": "4a55e89b41d1916d8976bd1b4a32424ee313cf1a8ca6d65e4844e0f0169f3d58"
+      },
+      {
+        "path": "Sources/SwiftAISDK/Util/RetryWithExponentialBackoff.swift",
+        "sha256": "5a25246993a4d42e6a2e0b044e4cbbd745c24be5c020ed5b4ff52976cd8f4c4a"
+      },
+      {
+        "path": "Sources/SwiftAISDK/GenerateText/StreamTextActor.swift",
+        "sha256": "b9f6de97279affdfea026c1c1a4e4ba2561446d2f852b96bdb787b7648f4debf"
+      }
+    ],
+    "finding": "RetryWithExponentialBackoff rethrows the original nonretryable first error; StreamTextActor forwards it through finishAll/fullBroadcaster; unchanged HanlinAISDKAgentEngine rethrows stream .error."
+  },
+  "actual_consumer_membership": {
+    "Maktabah": {
+      "installed_sdk_revision": "32da9e314e22bbf22391fcf8902302acfbb281e2",
+      "receipt": "/mnt/development/projects/worktrees/maktabah-sdk-consumer-20261123/docs/hq-integration/canonical-hanlin-sdk-32da-20261123/canonical-installation.json",
+      "receipt_sha256": "f0f6f4eb3469ce470c45f4cbe811c81f1d51bdd5e444d10ce74d09de1cc30e13",
+      "products": [
+        "HanlinHostContracts",
+        "HanlinAgentCore",
+        "HanlinChatCore",
+        "HanlinScriptUI",
+        "HanlinChatUI",
+        "HanlinPresentationKit",
+        "HanlinRichUI",
+        "HanlinPlatformContracts"
+      ],
+      "sourcePaths": [
+        "Packages/HanlinAgentSDK/Sources/HanlinAgentCore",
+        "Packages/HanlinAgentSDK/Sources/HanlinHostContracts",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONRegexRuntime",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema",
+        "Packages/HanlinPlatform/Sources/HanlinChatCore",
+        "Packages/HanlinPlatform/Sources/HanlinPlatformContracts",
+        "Packages/HanlinPlatform/Sources/HanlinScriptContracts",
+        "Packages/HanlinPlatform/Sources/HanlinScriptUI",
+        "Packages/HanlinPresentationSDK/Sources/HanlinChatUI",
+        "Packages/HanlinPresentationSDK/Sources/HanlinLocalization",
+        "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit",
+        "Packages/HanlinPresentationSDK/Sources/HanlinRichUI"
+      ],
+      "matches": {
+        "AI_HLY/Model/HanlinAppleModelCatalogAdapter.swift": [],
+        "AI_HLY/Services/ChatServices/APIManager.swift": [],
+        "AI_HLY/SettingsView.swift": [],
+        "AI_HLY/Views/Components/ChatViewBottom.swift": [],
+        "AI_HLY/Views/Components/VoiceInputView.swift": [],
+        "ChavrusaChatTranslationProvider/ChavrusaChatTranslationProvider.swift": []
+      }
+    },
+    "Lorvex": {
+      "installed_sdk_revision": "32da9e314e22bbf22391fcf8902302acfbb281e2",
+      "receipt": "/mnt/development/projects/worktrees/lorvex-sdk-consumer-20261123/apps/apple/docs/development/hanlin-sdk-upgrade-32da-20261123/canonical-installation.json",
+      "receipt_sha256": "5c0ee266e1f8e3d00191c9bb82716dbbe35d6f78e1682d62090dcebbb6fc4aa8",
+      "products": [
+        "HanlinAgentCore",
+        "HanlinHostContracts",
+        "HanlinPersistenceAdapters",
+        "HanlinPlatformContracts",
+        "HanlinChatCore",
+        "HanlinChatUI",
+        "HanlinPresentationKit"
+      ],
+      "sourcePaths": [
+        "Packages/HanlinAgentSDK/Sources/HanlinAgentCore",
+        "Packages/HanlinAgentSDK/Sources/HanlinHostContracts",
+        "Packages/HanlinAgentSDK/Sources/HanlinPersistenceAdapters",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONRegexRuntime",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema",
+        "Packages/HanlinPlatform/Sources/HanlinChatCore",
+        "Packages/HanlinPlatform/Sources/HanlinPlatformContracts",
+        "Packages/HanlinPresentationSDK/Sources/HanlinChatUI",
+        "Packages/HanlinPresentationSDK/Sources/HanlinLocalization",
+        "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit",
+        "Packages/HanlinPresentationSDK/Sources/HanlinRichUI"
+      ],
+      "matches": {
+        "AI_HLY/Model/HanlinAppleModelCatalogAdapter.swift": [],
+        "AI_HLY/Services/ChatServices/APIManager.swift": [],
+        "AI_HLY/SettingsView.swift": [],
+        "AI_HLY/Views/Components/ChatViewBottom.swift": [],
+        "AI_HLY/Views/Components/VoiceInputView.swift": [],
+        "ChavrusaChatTranslationProvider/ChavrusaChatTranslationProvider.swift": []
+      }
+    },
+    "Anytype": {
+      "installed_sdk_revision": "32da9e314e22bbf22391fcf8902302acfbb281e2",
+      "receipt": "/mnt/development/projects/worktrees/anytype-canonical-hanlin-sdk-20261123/docs/validation/20261123-canonical-sdk-32da/installation.json",
+      "receipt_sha256": "9e50c25051f63ec071a2321654c2a2b719cfe5ca0f210bcdeda8d639ca272c0f",
+      "products": [
+        "HanlinHostContracts",
+        "HanlinPlatformContracts",
+        "HanlinAgentCore",
+        "HanlinPersistenceAdapters",
+        "HanlinChatCore",
+        "HanlinScriptUI",
+        "HanlinChatUI",
+        "HanlinPresentationKit"
+      ],
+      "sourcePaths": [
+        "Packages/HanlinAgentSDK/Sources/HanlinAgentCore",
+        "Packages/HanlinAgentSDK/Sources/HanlinHostContracts",
+        "Packages/HanlinAgentSDK/Sources/HanlinPersistenceAdapters",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONRegexRuntime",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema",
+        "Packages/HanlinPlatform/Sources/HanlinChatCore",
+        "Packages/HanlinPlatform/Sources/HanlinPlatformContracts",
+        "Packages/HanlinPlatform/Sources/HanlinScriptContracts",
+        "Packages/HanlinPlatform/Sources/HanlinScriptUI",
+        "Packages/HanlinPresentationSDK/Sources/HanlinChatUI",
+        "Packages/HanlinPresentationSDK/Sources/HanlinLocalization",
+        "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit",
+        "Packages/HanlinPresentationSDK/Sources/HanlinRichUI"
+      ],
+      "matches": {
+        "AI_HLY/Model/HanlinAppleModelCatalogAdapter.swift": [],
+        "AI_HLY/Services/ChatServices/APIManager.swift": [],
+        "AI_HLY/SettingsView.swift": [],
+        "AI_HLY/Views/Components/ChatViewBottom.swift": [],
+        "AI_HLY/Views/Components/VoiceInputView.swift": [],
+        "ChavrusaChatTranslationProvider/ChavrusaChatTranslationProvider.swift": []
+      }
+    }
+  },
+  "generator_inputs": {
+    "count": 22,
+    "base": "32da9e314e22bbf22391fcf8902302acfbb281e2",
+    "root_app_repair": "32b3168d73a9b92c3a774bcbb97f95941d8a4db7",
+    "all_path_mode_blob_records_unchanged": true,
+    "generators_executed": false
+  },
+  "apple_tests": [
+    {
+      "selector": "AI_HLYTests/ModelPopoverZoomOrderTests/nativeGenerationConfigurationPreservesOriginalSettings()",
+      "status": "NOT_RUN"
+    },
+    {
+      "selector": "AI_HLYTests/ModelPopoverZoomOrderTests/nativeGenerationRejectsUnsupportedTopPThroughOriginalEngine()",
+      "status": "NOT_RUN"
+    }
+  ],
+  "limits": [
+    "Swift frontend parse is syntax-only, not an Apple-module typecheck or test execution.",
+    "The real-provider topP test is authored for the existing native gate; it does not execute a native FoundationModels session.",
+    "Eligible physical-device availability, native text generation and cancellation remain separate unexecuted SDK02 acceptance.",
+    "No tool orchestration or cloud fallback was introduced.",
+    "No existing passing tests were replayed."
+  ]
+}

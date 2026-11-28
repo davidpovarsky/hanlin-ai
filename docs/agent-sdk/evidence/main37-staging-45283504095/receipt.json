@@ -1,0 +1,191 @@
+{
+  "reviewedUTC": "2026-11-23T23:43:00.656275+00:00",
+  "status": "FAIL_PRE_TEST_STAGING",
+  "run": 45283504095,
+  "attempt": 1,
+  "source": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45283504095",
+  "originalArchive": {
+    "path": "/mnt/development/projects/worktrees/hanlin-sdk02-interface-capture-20261123/build/sdk-main-remaining-45283504095/original-smoke-artifact.zip",
+    "bytes": 3462247,
+    "sha256": "caa30774d1c319df49647cb96e35ee4d983c070aee724d55fdf0e7aca0df344b",
+    "acquiredOnce": true,
+    "members": 93,
+    "allMemberCRCAndHashesVerified": true
+  },
+  "rootOriginalJobLog": {
+    "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-main-remaining-20261123/terminal/native-job.log",
+    "bytes": 36472622,
+    "sha256": "b692187e93578d0bd4925ee7e84b7a25f83b0b1481d104ac1d6e1d5f21e8dfde",
+    "acquiredBy": "root",
+    "redownloaded": false,
+    "failureExcerptLines": [
+      220445,
+      220463
+    ]
+  },
+  "steps": [
+    {
+      "name": "Build full arm64 simulator app",
+      "conclusion": "success",
+      "started_at": "2026-11-23T23:05:37Z",
+      "completed_at": "2026-11-23T23:16:54Z"
+    },
+    {
+      "name": "Validate the current build-for-testing unit products",
+      "conclusion": "success",
+      "started_at": "2026-11-23T23:16:54Z",
+      "completed_at": "2026-11-23T23:16:55Z"
+    },
+    {
+      "name": "Locate and scan simulator app",
+      "conclusion": "success",
+      "started_at": "2026-11-23T23:18:15Z",
+      "completed_at": "2026-11-23T23:18:27Z"
+    },
+    {
+      "name": "Boot iPad Simulator and stage fixtures",
+      "conclusion": "success",
+      "started_at": "2026-11-23T23:18:27Z",
+      "completed_at": "2026-11-23T23:19:57Z"
+    },
+    {
+      "name": "Run simulator test suite",
+      "conclusion": "failure",
+      "started_at": "2026-11-23T23:19:58Z",
+      "completed_at": "2026-11-23T23:26:52Z"
+    },
+    {
+      "name": "Upload simulator smoke evidence",
+      "conclusion": "success",
+      "started_at": "2026-11-23T23:27:47Z",
+      "completed_at": "2026-11-23T23:27:54Z"
+    }
+  ],
+  "actualStaging": {
+    "ownedSimulator": {
+      "simulator": "D98F2D6F-B139-404F-9031-0DBE1019F4F5",
+      "run_id": "45283504095",
+      "run_attempt": "1",
+      "selection_sha256": "06a7523cad366ce20b8ac30c3d6a4eda559efd1793de5a0aaa9dbf3b06961786",
+      "boot_receipt_sha256": "f3396e4de8ab0559d09de443f610c394ea67057af080c1cd8dd81a5d46323a40"
+    },
+    "installExit": 0,
+    "calendarPrivacyExit": 124,
+    "calendarPrivacyTimeoutSeconds": 20,
+    "remindersAttempted": false,
+    "testCommandReached": false,
+    "currentUnitProductAdmission": "ADMITTED_NOT_EXECUTED"
+  },
+  "testResults": {
+    "PASS": 0,
+    "FAIL": 0,
+    "NOT_RUN": 37,
+    "priorPASS": 18,
+    "priorFAIL": 7,
+    "priorNOT_RUN": 12,
+    "noUnitResultJSON": true,
+    "noUIResultJSON": true,
+    "onlyBuildXcresultInArchive": true,
+    "expectedIdentitySHA256": "495ea09bc6d34209b6f70fe42c2584eea70df8090a98625012a65548b74efd5b"
+  },
+  "generatedManifest": {
+    "sha256": "89ea1b243da5ce812ea8a63d069a2a2bfeb44c420addf6aa02c0b89d3b5a3fa2",
+    "targets": [
+      {
+        "BlueprintName": "AI_HLYTests",
+        "TestHostPath": "__TESTROOT__/Debug-iphonesimulator/AI_Hanlin.app",
+        "UITargetAppPath": null,
+        "TestBundlePath": "__TESTHOST__/PlugIns/AI_HLYTests.xctest",
+        "IsUITestBundle": null
+      },
+      {
+        "BlueprintName": "AI_HLYUITests",
+        "TestHostPath": "__TESTROOT__/Debug-iphonesimulator/AI_HLYUITests-Runner.app",
+        "UITargetAppPath": "__TESTROOT__/Debug-iphonesimulator/AI_Hanlin.app",
+        "TestBundlePath": "__TESTHOST__/PlugIns/AI_HLYUITests.xctest",
+        "IsUITestBundle": true
+      }
+    ],
+    "UIAppSuffixRepair": "PASS_GENERATED_PATH_ONLY",
+    "UIExecution": "NOT_RUN"
+  },
+  "resourceScan": {
+    "status": "PASS",
+    "originalCopiedResources": 37,
+    "identicalCopies": [
+      {
+        "entries": 49,
+        "files": 45,
+        "inventorySHA256": "eb843da819fae6ce51b398c702628069030a65fac576389464a7ca06a67139cc",
+        "path": "HanlinSDK_AI_Hanlin.bundle"
+      },
+      {
+        "entries": 49,
+        "files": 45,
+        "inventorySHA256": "eb843da819fae6ce51b398c702628069030a65fac576389464a7ca06a67139cc",
+        "path": "Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle"
+      }
+    ],
+    "errors": []
+  },
+  "localizationScan": {
+    "status": "PASS",
+    "catalogValues": 3683,
+    "packagedValues": 177,
+    "identicalCopies": [
+      {
+        "path": "HanlinSDK_HanlinLocalization.bundle",
+        "inventorySHA256": "a9e8fa19105202206a6e6bf7c51b725d97ed5ba55499ceee7d171a54fbc6d42d",
+        "entries": 19,
+        "files": 15
+      },
+      {
+        "path": "Extensions/ChavrusaChatTranslationProvider.appex/HanlinSDK_HanlinLocalization.bundle",
+        "inventorySHA256": "a9e8fa19105202206a6e6bf7c51b725d97ed5ba55499ceee7d171a54fbc6d42d",
+        "entries": 19,
+        "files": 15
+      },
+      {
+        "path": "PlugIns/ChavrusaChatShare.appex/HanlinSDK_HanlinLocalization.bundle",
+        "inventorySHA256": "a9e8fa19105202206a6e6bf7c51b725d97ed5ba55499ceee7d171a54fbc6d42d",
+        "entries": 19,
+        "files": 15
+      },
+      {
+        "path": "PlugIns/HanlinScriptingWidgets.appex/HanlinSDK_HanlinLocalization.bundle",
+        "inventorySHA256": "a9e8fa19105202206a6e6bf7c51b725d97ed5ba55499ceee7d171a54fbc6d42d",
+        "entries": 19,
+        "files": 15
+      }
+    ],
+    "errors": []
+  },
+  "runtimeSignature": "PASS_ORIGINAL_SCAN_LOG",
+  "runtimeIdentity": {
+    "status": "NOT_RUN",
+    "duplicateClassWarningsInJobLog": 0,
+    "qualification": "No app/test launch occurred; absence of runtime warnings does not prove the duplicate image repair."
+  },
+  "systemDiagnostics": {
+    "commandStatus": "TIMEOUT",
+    "timeoutSeconds": 20.0,
+    "qualification": "Original system-log output contains only the timeout; no inferred TCC cause."
+  },
+  "preparedNative": {
+    "artifactID": 14871626421,
+    "bytes": 184427369,
+    "digest": "sha256:c94047c82b611d1fd4dfe38656bcb4fab3c83523f8d4cce32a88fd7b1e0b61ec",
+    "status": "INELIGIBLE_FAILED_PRODUCER",
+    "acquired": false,
+    "published": false
+  },
+  "qualification": [
+    "Build-for-testing and validated current products PASS; validated compiler-product reuse may occur.",
+    "All37 selected acceptance invocations remain NOT_RUN in this attempt.",
+    "Prior18 PASS /7 FAIL /12 NOT_RUN are historical and retained separately.",
+    "Other305 prior PASS are not a new execution or a new source qualification here.",
+    "Native18 publication and final Host pins remain held.",
+    "No product tests, simulator actions, or additional CI runs were executed by this evidence audit."
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "reviewed_original_revision": "8538287fc7f17af6a5b2a0e7333ffed356b64a9a",
+  "own_prechange_revision": "12b72c9ce7bc3b463aa485a6e7d3389bf50305b1",
+  "toolchain": "Swift 6.4.3; aarch64-unknown-linux-gnu",
+  "production_swift_files": 30,
+  "original_source_sha256": "ee315d32cc319b30a4b776fe7f24dfc6cf388962e928ac29bad5cc590d9dbb4b",
+  "repaired_source_sha256": "009f7c5a8700feee07854ada7bd2437fc213000207094ea707b2e7416f1871b8",
+  "policy": "Ordered whole-record storage assignment matching existing upsert; identical records coalesce; last complete same-ID record wins; explicitly supplied revoked IDs retained without merging fields. Authorization unchanged.",
+  "baseline": {
+    "source": "8538287fc7f17af6a5b2a0e7333ffed356b64a9a",
+    "at": "2026-11-23T10:54:54.625354+00:00",
+    "cases": [
+      {
+        "mode": "init-identical",
+        "exit_code": -5,
+        "log": "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/permission-authority-duplicates-20261123/baseline-init-identical.log",
+        "log_sha256": "21316feacb97b2c94f35ea91c30e48f1d41e629a9d9bf09c547b64b2ddfc9a2f",
+        "duplicate_key_message": true
+      },
+      {
+        "mode": "replace-conflicting",
+        "exit_code": -5,
+        "log": "/mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/permission-authority-duplicates-20261123/baseline-replace-conflicting.log",
+        "log_sha256": "bcdd6ef3dcf995f00b21ca2d4f762e49accb19943b63e5e0f47791abd3855e8d",
+        "duplicate_key_message": true
+      }
+    ],
+    "build_exit": 0,
+    "binary_sha256": "c3cd934f5db929a87bd088c0b5bb29ab5a321b20d46687bb24d66577d206b9e2"
+  },
+  "after": {
+    "at": "2026-11-23T10:57:40.096388+00:00",
+    "production_authority_sha256": "009f7c5a8700feee07854ada7bd2437fc213000207094ea707b2e7416f1871b8",
+    "public_probe_cases": [
+      {
+        "mode": "init-identical",
+        "exit_code": 0,
+        "output": "PASS: init-identical"
+      },
+      {
+        "mode": "replace-conflicting",
+        "exit_code": 0,
+        "output": "PASS: replace-conflicting"
+      }
+    ],
+    "focused_tests_exit": 0,
+    "public_probe_binary_sha256": "f6c166477c480b84b406c16a11334b2fd8938019ec79ea0c4b6cad24eb7fb83a",
+    "probe_source_prefix_sha256": "009f7c5a8700feee07854ada7bd2437fc213000207094ea707b2e7416f1871b8",
+    "probe_extension_sha256": "7873d9375c9b6b125153aa3628ebd4cfa3e3e46d0219e76c249a3a24d032dd14",
+    "state_probe_build_exit": 0,
+    "state_probe_exit": 0,
+    "state_probe_binary_sha256": "0cffdea642300330ff688f9278872c44a2d23e875ae25a731202ec9df1118c9a",
+    "state_probe_checks": [
+      "PASS: init-identical-whole-record-and-revocations",
+      "PASS: replace-identical-whole-record-and-revocations",
+      "PASS: identical-original-upsert-revoke-and-empty-replace",
+      "PASS: init-conflicting-whole-record-and-revocations",
+      "PASS: replace-conflicting-whole-record-and-revocations",
+      "PASS: conflicting-original-upsert-revoke-and-empty-replace"
+    ],
+    "logs": {
+      "state-probe.log": "bc2af7ab0ebed99b5bea6fd0c79c46aceeec2cebe319c769eeb0b2144672ee6d",
+      "after-init-identical.log": "04ccbc2465f2b0859eb11612fb33a244706811f0c1d7ecd8b1629501ff2a1b87",
+      "baseline-replace-conflicting.log": "bcdd6ef3dcf995f00b21ca2d4f762e49accb19943b63e5e0f47791abd3855e8d",
+      "state-probe-build.log": "f9b792f73c9dc0de67fa00021219e0dbc464fef38230d8905cfcd13197350f51",
+      "focused-tests.log": "a8f915514d024589ed0decdd44c50ce5e9f277a942f0e7a0ac40c8867368c15d",
+      "after-replace-conflicting.log": "8f4df47299e95c7db14dead1d8e1a18890f5beff50273659a9b1c6072d8f2838",
+      "baseline-build.log": "c928ba20b291e0386611a166598b19f97684ecf9ddf324999d01eb858bc47cd2",
+      "baseline-init-identical.log": "21316feacb97b2c94f35ea91c30e48f1d41e629a9d9bf09c547b64b2ddfc9a2f"
+    }
+  },
+  "focused_test_filter": "HanlinScriptPermissionAuthorityTests|HanlinScriptServiceBrokerTests.permissions",
+  "focused_test_summary": "5 tests in 2 suites passed; two tests each include two parameter cases; 0 failures; 0.006 seconds",
+  "source_preservation": {
+    "original_revoke_upsert_authorize_suffix_identical": true,
+    "two_explicit_revoked_set_assignments_unchanged": true,
+    "public_declaration_lines_identical": true,
+    "all_other_29_original_swift_files_and_resources_unchanged": true,
+    "probe_extension_is_not_in_production": true,
+    "probe_prefix_sha256_matches_production": true
+  },
+  "native_ci_dispatched": false,
+  "apple_permission_execution": "NOT_RUN",
+  "artifacts": {
+    "after-init-identical.log": {
+      "bytes": 21,
+      "sha256": "04ccbc2465f2b0859eb11612fb33a244706811f0c1d7ecd8b1629501ff2a1b87"
+    },
+    "after-replace-conflicting.log": {
+      "bytes": 26,
+      "sha256": "8f4df47299e95c7db14dead1d8e1a18890f5beff50273659a9b1c6072d8f2838"
+    },
+    "baseline-init-identical.log": {
+      "bytes": 5184,
+      "sha256": "21316feacb97b2c94f35ea91c30e48f1d41e629a9d9bf09c547b64b2ddfc9a2f"
+    },
+    "baseline-replace-conflicting.log": {
+      "bytes": 6600,
+      "sha256": "bcdd6ef3dcf995f00b21ca2d4f762e49accb19943b63e5e0f47791abd3855e8d"
+    },
+    "focused-tests.log": {
+      "bytes": 2807,
+      "sha256": "a8f915514d024589ed0decdd44c50ce5e9f277a942f0e7a0ac40c8867368c15d"
+    },
+    "original-boundary-probe.swift": {
+      "bytes": 2242,
+      "sha256": "fa688242048d8fc2a00b0baef7a290adc6d1fc2fbcdd85df2d1aaec8ed8c876d"
+    },
+    "original-probe-Package.swift": {
+      "bytes": 626,
+      "sha256": "3dcdceb47373444c056b936ab568c00097a7274915aaab0eee985d21a464ec35"
+    },
+    "production-inputs.json": {
+      "bytes": 6100,
+      "sha256": "a9060283a2de5989a176477586160cc10d554d3c374a136d1324238b021c605c"
+    },
+    "snapshot-extension.swift": {
+      "bytes": 378,
+      "sha256": "7873d9375c9b6b125153aa3628ebd4cfa3e3e46d0219e76c249a3a24d032dd14"
+    },
+    "state-probe.log": {
+      "bytes": 326,
+      "sha256": "bc2af7ab0ebed99b5bea6fd0c79c46aceeec2cebe319c769eeb0b2144672ee6d"
+    },
+    "state-probe.swift": {
+      "bytes": 3623,
+      "sha256": "77e89fa144ae095c208ae29bb2fdf1cba9f6fb1ebaf2a9d57ee891940d8250bb"
+    }
+  }
+}

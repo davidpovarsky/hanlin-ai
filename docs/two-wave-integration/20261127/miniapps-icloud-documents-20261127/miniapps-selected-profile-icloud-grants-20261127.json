@@ -1,0 +1,28 @@
+{
+  "status": "EXISTING_SELECTED_MAIN_PROFILE_GRANTS_READ_ONLY",
+  "at": "2026-11-27T03:48:39.191662+00:00",
+  "profile": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/CF891208-A85E-4C35-AC83-48CDB7753F03.mobileprovision",
+  "profileSHA256": "aeb924df782c8b91958ae627f3d0d467cd5b0f438443dd668493514d031ff5c9",
+  "decodeMethod": "openssl-cms-verify-no-chain",
+  "uuid": "cf891208-a85e-4c35-ac83-48cdb7753f03",
+  "applicationIdentifier": "NA6HPWARQ2.com.itorah.hanlinminiapps",
+  "expiry": "2027-09-07T07:25:00",
+  "appleRequests": 0,
+  "profileMutation": false,
+  "credentialMutation": false,
+  "signedAppExecution": false,
+  "icloudEntitlements": {
+    "com.apple.developer.icloud-container-identifiers": [
+      "iCloud.com.itorah.chavrusachat"
+    ],
+    "com.apple.developer.icloud-services": "*",
+    "com.apple.developer.ubiquity-container-identifiers": [
+      "iCloud.com.itorah.chavrusachat"
+    ],
+    "com.apple.developer.ubiquity-kvstore-identifier": "NA6HPWARQ2.*",
+    "com.apple.developer.icloud-container-environment": [
+      "Production",
+      "Development"
+    ]
+  }
+}

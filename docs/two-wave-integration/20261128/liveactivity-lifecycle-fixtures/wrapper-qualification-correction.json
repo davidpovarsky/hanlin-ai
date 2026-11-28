@@ -1,0 +1,16 @@
+{
+  "previousReceiptSHA256": "638b80a13e3e80005834f233c2a468d171b7bf25c27d3b7ad5fa19a6a6367c86",
+  "previousWrapperError": "The wrapper applied Expo declaration flags to NativeScript after its successful original validate, and stopped before any NativeScript build.",
+  "unchangedOriginalNativeScriptReportSHA256": "a88c6a605c7e9c88f1880f00869917cf4fafee18e17808850475bf088782fdf5",
+  "unchangedOriginalSDKTsconfigSHA256": "0618a10c5d065ed7afa8c2e45163d8a55f6f41d87f479a40d917fee25275336c",
+  "actualNativeScriptValidation": {
+    "strict": true,
+    "checkJs": false,
+    "skipLibCheck": true,
+    "dependencyDeclarationsChecked": false
+  },
+  "compilerVersion": "5.9.3",
+  "commandsRepeated": 0,
+  "commandNow": "Only the never-started original NativeScript build600",
+  "productionOrSDKChanges": 0
+}

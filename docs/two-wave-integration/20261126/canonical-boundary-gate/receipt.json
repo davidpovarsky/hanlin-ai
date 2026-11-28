@@ -1,0 +1,42 @@
+{
+  "at": "2026-11-26T14:26:51.191312+00:00",
+  "base": "1a0f610a6ac369e221b32e90654d5500fae1692e",
+  "results": [
+    {
+      "label": "host-services-check",
+      "command": [
+        "node",
+        "Scripts/NativeScript/build-host-services.mjs",
+        "--check",
+        "--typescript-module",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-recovery-20261125/Scripts/NativeScript/node_modules/typescript/lib/typescript.js"
+      ],
+      "exit": 0,
+      "log": "/mnt/development/projects/evidence/hanlin-miniapps-concurrency-wave2-20261126/gate-wiring/host-services-check.log",
+      "logSHA256": "df87e43bbe41f840ba32c3a428304589089d9fe0182c83e060ff9b33dd35d2ef"
+    },
+    {
+      "label": "expo-operation-contract",
+      "command": [
+        "node",
+        "--test",
+        "Scripts/Audit/Tests/expo-operation-contract.test.mjs"
+      ],
+      "exit": 0,
+      "log": "/mnt/development/projects/evidence/hanlin-miniapps-concurrency-wave2-20261126/gate-wiring/expo-operation-contract.log",
+      "logSHA256": "32d15845afe6b00a99e4bbf9adc6c3b41fa4ad849a709f52df477d454a4e8900"
+    },
+    {
+      "label": "audit-syntax",
+      "command": [
+        "node",
+        "--check",
+        "Scripts/Audit/audit-miniapp-sdk.mjs"
+      ],
+      "exit": 0,
+      "log": "/mnt/development/projects/evidence/hanlin-miniapps-concurrency-wave2-20261126/gate-wiring/audit-syntax.log",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "scope": "original strict NativeScript --check now runs boundary tests; targeted Expo route audit; no Apple execution or full canonical SDK inventory claim"
+}

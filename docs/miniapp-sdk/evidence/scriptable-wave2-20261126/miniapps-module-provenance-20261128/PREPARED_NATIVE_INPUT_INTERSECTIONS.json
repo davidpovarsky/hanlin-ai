@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "08a6e52a6f03ac3223de1f0e9e35e59936ddf318",
+  "sourceBase": "3ab83672440fa6f588611fe91db5d746099b038c",
+  "patchSHA256": "da163ca1e8da3594bd630d58fec7014a3a528df5916cf219ace15201737b8995",
+  "actualHostedSDK": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/effective-hosted-sdk-9a76309c-w2-20261128/selected-0-miniapp-sdk.json",
+    "sha256": "f691a42f16446d78274d50a1b02a0ee6bb993f68e8cfe633027d04ffb113318a",
+    "rowsJSONPath": "/sourceInputs",
+    "inputCount": 396,
+    "changedPathIntersection": []
+  },
+  "preparedNativeSourceIdentity": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-current-composite-origin-9a76309c-selected/46093908427/artifact-selected-members/app-split-evidence/source-identity.json",
+    "sha256": "f76cba1dd8a53bb0d3dd0a05e067843b9c49361d782c202458b9e4fc514e03dd",
+    "inputCount": 10362,
+    "changedExistingPaths": [
+      "Scripts/ProductSplit/run_native_acceptance.py",
+      "Scripts/ProductSplit/run_paired_acceptance.py"
+    ],
+    "newCandidatePathsAbsentFromHistoricalSnapshot": [
+      "Scripts/CI/Tests/test_swift_module_provenance.py",
+      "Scripts/ProductSplit/capture_swift_module_provenance.py"
+    ]
+  },
+  "changedProductCompilerFixtureProjectWorkflowPaths": [],
+  "originalBuildInvocationAndAcceptanceBodies": "Whole runner byte inverse after removing failure hooks; all non-command function ASTs identical.",
+  "qualification": "Two source-observation runners genuinely change in the broad prepared inventory. No product/source/fixture/project/workflow path changes and no direct SDK396 input changes. This is not a whole native or effective SDK reuse claim.",
+  "native": "NOT_RUN"
+}

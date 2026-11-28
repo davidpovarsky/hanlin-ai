@@ -1,0 +1,105 @@
+{
+  "base": "36faa1904e819c92db193d65cafbec0b8bd62ab1",
+  "sourceFiles": [
+    {
+      "path": ".github/workflows/check-runtime-dependency-updates.yml",
+      "sha256": "2f97a9d4fd5a567eb72c9e6146f35cfb29d02369c2c66ec10e3b37886f158915"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/upstream-check-lineage.test.mjs",
+      "sha256": "24bca5d2387c39c853dd39cdc345448b8cd94141e53574a051536d69c460d753"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/upstream-dispatch-synchronization.test.mjs",
+      "sha256": "5029752ce7bdae835061640529df5d690e6955244d027bfd63e29c991028fe57"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/upstream-protection-reader.test.mjs",
+      "sha256": "8c3fa9389035d8aa7982ce6fd4ba693fc644b346cc979062e855c3a5bfbf5c5c"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/upstream-run-consumer.test.mjs",
+      "sha256": "afba342bae73bb9c86f001267892d5a8b74357e9682a7c7308a8894433fcab1c"
+    },
+    {
+      "path": "Scripts/Runtime/check-upstream-merge-gate.mjs",
+      "sha256": "3c9a3f8a2554c05a8795259ac0cfd17cced5b3f0541ec5ba545e8ea6dfb6985d"
+    },
+    {
+      "path": "Scripts/Runtime/consume-upstream-run.mjs",
+      "sha256": "c7733ec0a207ad3a0edb56a3d391a1cfbee45dcb68e39800e22abc5d83b9c6cd"
+    },
+    {
+      "path": "Scripts/Runtime/run-upstream-bot.mjs",
+      "sha256": "d785026858ef27d28c5b53f1b8873486a0fb4e2b1a467a4c3173ac6e6eea621b"
+    },
+    {
+      "path": "Scripts/Runtime/sync-upstream-host-pr.mjs",
+      "sha256": "6476fc4359d648f91d7dfed79daaab364620bc9758b953972a59e67205ff3b4b"
+    },
+    {
+      "path": "Scripts/Runtime/upstream-check-lineage.mjs",
+      "sha256": "72f09d7df244d607335a0018391872c0bf80bcdf474304514b73f29a4b1bec94"
+    },
+    {
+      "path": "Scripts/Runtime/upstream-dispatch-synchronization.mjs",
+      "sha256": "431a3884a0d4998b36810fe5b23abb862c1415317758add8b3a1b795a62c5dc2"
+    },
+    {
+      "path": "Scripts/Runtime/upstream-protection-reader.mjs",
+      "sha256": "bbdab0e8418ad77847e947ee3f3f732eb605b4bd99d84bcd1be345f9ea6b5c56"
+    },
+    {
+      "path": "Scripts/Runtime/upstream-run-consumer-policy.mjs",
+      "sha256": "484bc9d4bc758798c539dc651b7b92833af897af0ff5dcdd634daf5f5c12351e"
+    }
+  ],
+  "copiedEvidence": [
+    {
+      "path": "applied-validation.json",
+      "sha256": "97f86e91974ecafa59934ff250550eb42399eea7bd1d286ab913a7f2a619dff2"
+    },
+    {
+      "path": "root-validation.json",
+      "sha256": "d451e3e15760371ba6566d1dc891a9017093698a0eecb8c49b792e71fd9e1454"
+    },
+    {
+      "path": "initial-missing-local-semver.log",
+      "sha256": "0b9c892fbbe3aebcfe4a28b9b0eb57b1468ad6e5bcc95047e2b62d5c5cd077b6"
+    },
+    {
+      "path": "node-tests.log",
+      "sha256": "7e1fdbeee94ae26db821ee4e137e2f23e1da1ecba14b5b283bff9720602af265"
+    },
+    {
+      "path": "python-proof-reader-tests.log",
+      "sha256": "0af28857e746761c35c8b35ba27b658e2a0bf1d06337022fab7482e1c584b501"
+    },
+    {
+      "path": "actual-main-proof-workflow.json",
+      "sha256": "0f392df6b78f7770bcde70e1293ee212c70dcd2fb2d909a093cb592e6d490e4a"
+    },
+    {
+      "path": "reader-proposal.json",
+      "sha256": "0c70e02a329d2936e637ae20ed1264612ef63283c2ff675cd9df14d80d7b601d"
+    },
+    {
+      "path": "lineage-proposal.json",
+      "sha256": "427dbb09abf1fdd97c943c965a64897402cd4522abb6db5ccb59066612220a11"
+    },
+    {
+      "path": "dispatch-synchronization-proposal.json",
+      "sha256": "ccebd2df642f17daedb40739c05ca1cd43b163ec9479c8450628187833917cf7"
+    },
+    {
+      "path": "host-closure-before.json",
+      "sha256": "982ea840f5ae8b0bb7a4885ce1d62f113d87ffc1319c6a91a766db2f5156d5b9"
+    },
+    {
+      "path": "original-candidate-consumer-failure.json",
+      "sha256": "22584916bcb1daae0c8c843ff20eb136fd96d57efdf417dad158dbc8bb69a4b8"
+    }
+  ],
+  "rootReviewSHA256": "e38d8a2f60dd0d8b731ed44af2f44a06a570bd49b4684c0e55bf917b223a46a2",
+  "nativeAcceptance": "PENDING_REAL_CI_TOKEN_PROOF"
+}

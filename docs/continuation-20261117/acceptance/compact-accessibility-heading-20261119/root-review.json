@@ -1,0 +1,13 @@
+{
+  "reviewed_at": "2026-11-19T04:31:08.533210+00:00",
+  "reviewer": "root",
+  "base": "7d5f0a47d7cfb98b28fd9f16d83a2b917618da95",
+  "changed_source": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinMorphComposer.swift",
+  "patch_sha256": "629a014424ab02762b913c83213909626efb5977b8a7b03a37698537d49e4e35",
+  "source_after_sha256": "1557a79d273f0fdf6e1def1a2d40790c5da81a2b80fdd8f102f7b9f8aed1d404",
+  "swift_windows_syntax_parse": "PASS",
+  "native": "PENDING",
+  "controls": "Original two iPhone acceptance tests unchanged",
+  "findings": "Full original title/subtitle move inside the existing measured page ScrollView only at accessibility Dynamic Type. Native back/close remain in the fixed measured toolbar. Original per-page identity/tags, natural measurement, keyboard geometry, editor/draft ownership and scaling unchanged.",
+  "remaining_risk": "Native geometry and animation through original large-text attachment/navigation journeys"
+}

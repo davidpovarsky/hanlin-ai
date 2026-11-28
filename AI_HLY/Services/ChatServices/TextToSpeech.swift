@@ -128,7 +128,7 @@ class TextToSpeech: NSObject, ObservableObject, AVSpeechSynthesizerDelegate, @un
     private func getAPIKey(for company: String) -> String? {
         let predicate = #Predicate<APIKeys> { $0.company == company }
         let fetchDescriptor = FetchDescriptor<APIKeys>(predicate: predicate)
-        return (try? context!.fetch(fetchDescriptor).first)?.key
+        return (try? context!.fetch(fetchDescriptor).first)?.resolvedKey
     }
     
     private func speakAPISpeech(text: String, selectedModel: String) {

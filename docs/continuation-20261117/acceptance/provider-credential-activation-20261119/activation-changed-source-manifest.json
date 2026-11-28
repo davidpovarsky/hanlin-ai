@@ -1,0 +1,29 @@
+{
+  "base_commit": "37a246f404cc2ed253200ddf6fd647f999637f68",
+  "files": [
+    {
+      "path": "AI_HLY/Services/DataServices/HanlinAppProviderCredentials.swift",
+      "base_sha256": "0144d2e941ed4882661afd43b3c74faba869fb6a50dc3087d5e0964f37d5e9a1",
+      "proposed_sha256": "0c4a7b8438810f97219caa4b376fed567bccd8cdafcdd6232d2bede32a5e8af7",
+      "base_bytes": 14033,
+      "proposed_bytes": 17638,
+      "matches_published_and_canonical": true
+    },
+    {
+      "path": "AI_HLY/Views/Components/APISettingView.swift",
+      "base_sha256": "9564ed5bc0b9efde1743c58ba00487f66da061106121854ac82614b4847a888b",
+      "proposed_sha256": "24c9ad61dc0d22e4ca75df6f51411254d7d238c686a54d4af2015a1ba2a2d3e8",
+      "base_bytes": 89577,
+      "proposed_bytes": 92224,
+      "matches_published_and_canonical": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "base_sha256": "bbb954b00d1e6ed28d91225f808f94487227923fd7ae2b5be4fe355f24603877",
+      "proposed_sha256": "937d1bbf390512c1332e775b5b0e5ea153240bd42af839f5dede84fd89fe991b",
+      "base_bytes": 111989,
+      "proposed_bytes": 129029,
+      "matches_published_and_canonical": true
+    }
+  ]
+}

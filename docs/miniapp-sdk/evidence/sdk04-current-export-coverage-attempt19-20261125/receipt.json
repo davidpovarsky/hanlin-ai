@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-25T19:09:29.887411+00:00",
+  "directory": "docs/miniapp-sdk/evidence/sdk04-current-export-coverage-attempt19-20261125",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "memberCount": 14,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 13101,
+      "sha256": "9f1e4c663e83046645fe5be6673851c72ec1b512e0ac742c12b978cfe92812e9",
+      "mode": "100644"
+    },
+    {
+      "path": "current-native-results.json",
+      "bytes": 62350,
+      "sha256": "4a6455562a3ec4cf9b08c456f76d3320c7d9e60781f4c4fccedb51ed43918a70",
+      "mode": "100644"
+    },
+    {
+      "path": "historical-references.json",
+      "bytes": 3399,
+      "sha256": "39ad9c31e24e1febddecf3eb5045da16867d0ffc0a21a81539c3d389ce2ead67",
+      "mode": "100644"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 6181,
+      "sha256": "45c4897facb35698b94b1e90916d15533628eb696c07f596ebdd9a471542261d",
+      "mode": "100644"
+    },
+    {
+      "path": "per-export-coverage.json",
+      "bytes": 207827,
+      "sha256": "2640d95da1d4eae75e276c3b1dd0d413561013a5f89bc9e8d3b4eb2068a40350",
+      "mode": "100644"
+    },
+    {
+      "path": "producer-current-diff-command.json",
+      "bytes": 4039,
+      "sha256": "8bb96346e82fc8e643ae2e7e2bde1744d247402c79c6c25ec8d18f03275ecedd",
+      "mode": "100644"
+    },
+    {
+      "path": "producer-current.diff",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644"
+    },
+    {
+      "path": "raw/source-capture/source-conformance-current-command.json",
+      "bytes": 1396,
+      "sha256": "19efeff907e16ca906deb1ea3bcd32e0fa5edf58f1a37e103fbeebd1ce3008d8",
+      "mode": "100644"
+    },
+    {
+      "path": "raw/source-capture/source-conformance-current.json",
+      "bytes": 95561,
+      "sha256": "ee6fd505a35889628adc801bf9028eae4c5e05e0081922da5aa5868f04175dd0",
+      "mode": "100644"
+    },
+    {
+      "path": "raw/source-capture/source-conformance-current.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644"
+    },
+    {
+      "path": "raw/strict-metro/original-v5-commands.jsonl",
+      "bytes": 10923,
+      "sha256": "e0edf79da781f0b942101a3f422fc8ff408243325005c4c56ee5fe7781c5648b",
+      "mode": "100644"
+    },
+    {
+      "path": "raw/strict-metro/original-v5-expo-probe-copy-receipt.json",
+      "bytes": 643,
+      "sha256": "0e44a50cb005aa4e4c1e70dd80c5574d549fbd24acf8dcdb3123707427b9b293",
+      "mode": "100644"
+    },
+    {
+      "path": "raw/strict-metro/original-v5-expo-probe.log",
+      "bytes": 1922,
+      "sha256": "8dc9382950955ae0512c91ffb3c9ecfddc17628e7c98f7062bd4969e6d122f22",
+      "mode": "100644"
+    },
+    {
+      "path": "source-identities.json",
+      "bytes": 21525,
+      "sha256": "77afb891b7db6ca764a4c6655e7a236ab526551e5f7cd1680e61311848493f40",
+      "mode": "100644"
+    }
+  ],
+  "scope": "Receipt excludes itself. Raw copied files retain byte-exact source hashes; derived files are explicitly labeled. No native or compiler execution."
+}

@@ -5,6 +5,8 @@ trigger: always_on
 
 # Named AI Team — Repository Router & Execution Policy
 
+The current Hanlin two-wave execution is governed by root `AGENTS.md` and the dated execution note in `docs/ai-team/TEAM.md`: the owner explicitly requested ChatGPT built-in agents. Apply the actual platform API and invocation identifiers; preserve evidence-based acceptance and existing authorization.
+
 This repository is configured with the persistent named AI team:
 - **איתן (eitan)**: Principal architect (boundaries, contracts, migrations)
 - **נועם (noam)**: Engineering (scoped implementation and fixes)
@@ -33,3 +35,5 @@ Before acting on a task, load and review:
 - `docs/ai-team/PROJECT_ASSIGNMENTS.md`
 - `docs/ai-team/ASANA_POLICY.md`
 - Specific role instructions under `.agents/roles/<role>.md`
+
+Preserve current repository-specific technical instructions, security requirements and unfulfilled acceptance gates; apply existing owner authorization rather than reinstating historical pauses.

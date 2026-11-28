@@ -1,0 +1,121 @@
+{
+  "status": "SOURCE_AND_REFRESH_PASS_APPLE_RETEST_PENDING",
+  "baseCommit": "c2fe34037531462a23ce1e69c5de0890e3a35911",
+  "failure": {
+    "runID": 45350372512,
+    "jobID": 138295019905,
+    "sourceCommit": "a35cc1770e044f7b5388a8cfb0433bacb2782301",
+    "result": "FAILED_BEFORE_TESTS",
+    "requestedAnalyzerCases": 8,
+    "executedAnalyzerCases": 0,
+    "fullRawLog": "failed-mac-build.log",
+    "details": "failed-mac-run.json"
+  },
+  "design": "ScriptWidgetElementTagList is a plain helper type. Its only caller is the MainActor-isolated ScriptWidgetElementView.buildView; it builds MainActor child views/general modifiers synchronously. Isolate this genuine UI helper without moving elements or AnyView across actors.",
+  "productionChanges": {
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagStack.swift": {
+      "beforeSHA256": "18f2e2f80a13fdc6273029c893bc06bc84d1f23b2defe35887669e621081cc18",
+      "afterSHA256": "88bc7858b237c269ea5551cefd5ba9ea014897f2d4d6032f171a5db43a3a9b2f",
+      "change": "One MainActor annotation on ScriptWidgetElementTagList; every existing declaration/body byte remains otherwise unchanged."
+    },
+    "Scripts/MiniApps/refresh-original-sources.mjs": {
+      "beforeSHA256": "2423fcb1e767e6d4618cbe8b822e3177296096e5d86f27a0392141b3c53361e7",
+      "afterSHA256": "9b367c79ece68771e1ab193cc22c218feb72d2f519ffb410fc560b6fca59a7e8",
+      "change": "Narrow idempotent original-source projection on all three merge sides, including same-version refresh. No renderer substitution."
+    },
+    "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json": {
+      "sha256": "7388e4668e52a89219c4822e1080e3f3af6596d24bfad8e8283d520b4a0e6881",
+      "changedEntries": [
+        {
+          "index": 29,
+          "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagStack.swift",
+          "fields": [
+            "adaptation",
+            "localSHA256"
+          ]
+        }
+      ],
+      "otherRowsAndTopLevelMetadataUnchanged": true
+    }
+  },
+  "originalSourceProof": "original-source.json",
+  "originalFixture": {
+    "path": "Scripts/MiniApps/Tests/Fixtures/scriptwidget-4da256d5/ScriptWidgetElementTagStack.swift",
+    "sha256": "2214ccbb0a035d72630cb4b3825afca6ff1146bf9d9d55405a7dff3aea3996f0",
+    "byteIdentical": true,
+    "note": "Immutable original fixture preserves upstream trailing whitespace."
+  },
+  "focusedRegression": {
+    "path": "Scripts/MiniApps/Tests/original-tag-list-refresh.test.mjs",
+    "sha256": "abf7bf30a5e4030658a2e59045419a40e3f9ab824b2ddca090fe5853752c6ba2",
+    "redExitCode": 1,
+    "greenExitCode": 0,
+    "greenTests": 1,
+    "assertions": [
+      "Fresh original source gains only the UI isolation annotation.",
+      "All original stack/list/layout/drawing bodies remain.",
+      "Same-version refresh repairs the previously unannotated host source.",
+      "Projection is idempotent and unrelated targets are unchanged.",
+      "A controlled future-upstream body edit and existing Host annotations survive three-way merge."
+    ],
+    "upstreamUpdateFixtureBoundary": "The future body edit is a controlled mutation of authentic original bytes, not a claim of another published upstream commit."
+  },
+  "syntax": {
+    "swiftCommand": [
+      "swiftc",
+      "-frontend",
+      "-parse",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagStack.swift"
+    ],
+    "swiftExitCode": 0,
+    "nodeCommand": [
+      "node",
+      "--check",
+      "Scripts/MiniApps/refresh-original-sources.mjs"
+    ],
+    "nodeExitCode": 0,
+    "scope": "Syntax only; SwiftUI/AppIntents require the actual Apple compiler."
+  },
+  "clockFixRetained": {
+    "sourceSHA256": "5055ea7277afe42bf3fc914bd1fe4462722cf68a1e67ca24b8177f8900b3772e",
+    "sourceUnchanged": true,
+    "existingProjectionBranchByteIdentical": true,
+    "priorFocusedTestsNotRepeated": true
+  },
+  "manifestEvidencePackagingAttempt": "manifest-check-initial-failure.json",
+  "native": {
+    "status": "NOT_RUN",
+    "analyzerCasesStillPending": 8,
+    "noCIQueryDispatchOrPolling": true
+  },
+  "evidenceSHA256": {
+    "failed-mac-build.log": "cc5f24a2875bf7e09197a6a0ba1003ee1c42ba9ecce675b85e27da87a874f77c",
+    "failed-mac-run.json": "9cce91804ae6ddfb856ba3a65724b47c5a13cadc3bacfe7d77a64383da621e7c",
+    "manifest-check-initial-failure.json": "701a4fad03071ff62d1122c2b6f91928d1c185874a2fc048a441fb6d3290d56c",
+    "node-syntax.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "node-syntax.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "original-source.json": "516a105419726ef999f2846d5648bd30086cbfbcf0323b04637d9ed3257bdea3",
+    "projection-green.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "projection-green.stdout.log": "6d734420f6bd3ead658d515294cc084999df1fd20344fa6a2cec1a8faa7d2d83",
+    "projection-red.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "projection-red.stdout.log": "d1144ef992b44116243a94d6725af3b324a995f7163881e89956dd1f04c94bf2",
+    "swift-syntax.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "swift-syntax.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "authoredDiffCheck": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check",
+      "--",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagStack.swift",
+      "Scripts/MiniApps/refresh-original-sources.mjs",
+      "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
+      "Scripts/MiniApps/Tests/original-tag-list-refresh.test.mjs"
+    ],
+    "exitCode": 0,
+    "scope": "Authored production/provenance/test changes only; byte-identical immutable fixture and raw CI/test logs preserve their original trailing whitespace.",
+    "priorUnscopedCheck": "Reported original trailing whitespace in failed-mac-build.log and projection-red.stdout.log; no authored source defect and no source or log normalization was applied."
+  }
+}

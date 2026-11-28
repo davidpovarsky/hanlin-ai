@@ -1,0 +1,41 @@
+{
+  "manifest": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/AI_HLY_iphonesimulator27.2-arm64.xctestrun",
+  "manifest_sha256": "df0a5eec8eda3908b94e57e3f5ed3d78e6c45e7c8c8b3042db373445b53904e9",
+  "files": [
+    {
+      "path": "Debug-iphonesimulator/AI_HLYUITests-Runner.app/AI_HLYUITests-Runner",
+      "bytes": 95248,
+      "sha256": "c90bcd786bfe1b932f2e473be4fe9625c5dfefc0fdbdc263b5af744e0ac84683"
+    },
+    {
+      "path": "Debug-iphonesimulator/AI_HLYUITests-Runner.app/Info.plist",
+      "bytes": 10913,
+      "sha256": "fb04a4677e09659a6f1bd6dfc49b0ea4c104f1b93ed987debb9313a8fad29f40"
+    },
+    {
+      "path": "Debug-iphonesimulator/AI_HLYUITests-Runner.app/PlugIns/AI_HLYUITests.xctest/AI_HLYUITests",
+      "bytes": 3999328,
+      "sha256": "46ffec0588f85b2852aca8502ca5f2de6ce8fe420fb4509c1667f09685a468ea"
+    },
+    {
+      "path": "Debug-iphonesimulator/AI_HLYUITests-Runner.app/PlugIns/AI_HLYUITests.xctest/Info.plist",
+      "bytes": 742,
+      "sha256": "2e3bded9c1f6ad0abf5b7af602b9f3466a2047bcefdb25f8ed1c10fb8522057a"
+    },
+    {
+      "path": "Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin",
+      "bytes": 40416,
+      "sha256": "443267a8e53599e3c020fe8c43e133152c25653129eb68d842a36a5abe6e54a9"
+    },
+    {
+      "path": "Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin.debug.dylib",
+      "bytes": 3523056,
+      "sha256": "c8c69e029f56553de49c5a2932de1c5de96ff75c117d83e4ce9e7fb20c16a377"
+    },
+    {
+      "path": "Debug-iphonesimulator/AI_Hanlin.app/Info.plist",
+      "bytes": 5517,
+      "sha256": "cfe732305530b8394589149a294e8f0b59b47da9f418ffd05679939a25d90421"
+    }
+  ]
+}

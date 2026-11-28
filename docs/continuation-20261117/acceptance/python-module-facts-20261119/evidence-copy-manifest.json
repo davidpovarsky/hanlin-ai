@@ -1,0 +1,62 @@
+[
+  {
+    "file": "portable-original-wheel-proof.json",
+    "original_sha256": "1c45335866bfb296caf467c4be1ecbef6bcc89a0a03ebbb092471096de31f07c",
+    "repository_sha256": "44a0c7c529803e999f1453bc9e00870a319b7602ab4c51d78c142f11d8f2ee99",
+    "change": "CRLF to LF only; JSON value identical"
+  },
+  {
+    "file": "proposal-validation-v2.json",
+    "original_sha256": "9ce981a26ae495991b6a4b4402fb339932e9c4826c401eefbfb0d2fb846421a6",
+    "repository_sha256": "af038949b158e80ddc51509dcbad0ea6d82a9a05f4374262e368feebbb51799f",
+    "change": "CRLF to LF only; JSON value identical"
+  },
+  {
+    "file": "root-verification.json",
+    "original_sha256": "8a00a267fc4795324eadf15ada3476ef744e819e392e3a50a87835906649ed86",
+    "repository_sha256": "0a80a13b788067538de40c49a0fd65638aebd9600256350cc9808963bd741c9d",
+    "change": "CRLF to LF only; JSON value identical"
+  },
+  {
+    "file": "ci-routing.log",
+    "original_sha256": "e221b0aa832bdf2ac14c419c76c3da63f11b4f3be2861b4e728f07e8df8f66b3",
+    "repository_sha256": "e722ac56d3f053dc366770a350c469ec7a272ff64af7a9b1f12d6c2f3a981a9e",
+    "change": "CRLF to LF only; raw originals retained at root-review-v2/portable-original-wheel-probe.log"
+  },
+  {
+    "file": "git-diff-check.log",
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "repository_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "change": "CRLF to LF only; raw originals retained at root-review-v2/portable-original-wheel-probe.log"
+  },
+  {
+    "file": "MaintainedSkillCorpusTests-syntax.log",
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "repository_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "change": "CRLF to LF only; raw originals retained at root-review-v2/portable-original-wheel-probe.log"
+  },
+  {
+    "file": "portable-original-wheel-probe.log",
+    "original_sha256": "d33924af2ee7b6b78407ec8b4fb833ce6ac287de989e3ef88fb3bf2a82e093d0",
+    "repository_sha256": "5b66e6a62ea3dd1b7d062c0c122d0f5c55a470cad8bceba62603ff57880ba11f",
+    "change": "CRLF to LF only; raw originals retained at root-review-v2/portable-original-wheel-probe.log"
+  },
+  {
+    "file": "python-module-facts.log",
+    "original_sha256": "2f88bbc90078f878da890654e71dc458f62eeb87f11d155f1b42099259539745",
+    "repository_sha256": "bec04078ddacbb04053fbaa4a10ad05f3d76beb3b9c6739c273a87f9dccb9814",
+    "change": "CRLF to LF only; raw originals retained at root-review-v2/portable-original-wheel-probe.log"
+  },
+  {
+    "file": "PythonRuntimeService-syntax.log",
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "repository_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "change": "CRLF to LF only; raw originals retained at root-review-v2/portable-original-wheel-probe.log"
+  },
+  {
+    "file": "SkillRuntimeFactsProvider-syntax.log",
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "repository_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "change": "CRLF to LF only; raw originals retained at root-review-v2/portable-original-wheel-probe.log"
+  }
+]

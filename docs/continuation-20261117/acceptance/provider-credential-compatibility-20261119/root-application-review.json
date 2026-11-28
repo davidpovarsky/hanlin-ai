@@ -1,0 +1,12 @@
+{
+  "reviewed_at": "2026-11-19T04:10:02.059819+00:00",
+  "parent": "ce2fb04e8a266759f6c9eed70fd2dda02029720d",
+  "phase1_patch_sha256": "ec7f6f97928561a4ada702099200eaad035f6bbfaad497114dd13c176469a596",
+  "original_input_files_verified": 23,
+  "applied_files_verified": 22,
+  "independent_review": "unsaved model discovery and post-commit publication outcomes repaired in v2",
+  "core_review": "immutable staged Keychain generation, original row verification, legacy compatible reader/write path, request epoch and compact host ownership inspected",
+  "activation_applied": false,
+  "native_status": "NOT_RUN",
+  "syntax_scope": "agent Windows Swift6.3.3 parse22; root native dispatch pending"
+}

@@ -1,0 +1,196 @@
+{
+  "schema": "hanlin.evidence-receipt.v1",
+  "source": "8f63b410d97f6854b2a3785d2b3ef4dd14d4794f",
+  "originalTransfers": [
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-packet-attempt17/index.json",
+      "path": "raw/terminal-index.json",
+      "bytes": 237855,
+      "sha256": "fb7d3fb0b4ae0b98c495796af6ff4f75cdb4148d73701a0e534ee7636decece7"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-packet-attempt17/raw/original-runtimes-summary.json",
+      "path": "raw/original-runtimes-summary.json",
+      "bytes": 8853,
+      "sha256": "2f4439efadeb51fecb3844fa2b79bfa995cbf968565a980c7ff5bd5bc6374d3d"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-packet-attempt17/attachments/F5987D53-F410-438C-9038-8C6575C7DB6E.txt",
+      "path": "raw/attachments/F5987D53-F410-438C-9038-8C6575C7DB6E.txt",
+      "bytes": 16973,
+      "sha256": "d48e41915bc9eb848f31e23275040567a3f2fc130798b874a62b2a82ed258734"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-packet-attempt17/attachments/3EFF2615-7F62-46C8-BC88-91ACEEE219D9.png",
+      "path": "raw/attachments/3EFF2615-7F62-46C8-BC88-91ACEEE219D9.png",
+      "bytes": 161768,
+      "sha256": "b5723ef97913750d316ffe260bb7e0bf6eab8b2547f3a098156d874ada9b2118"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-packet-attempt17/attachments/DC4B1CEC-2F52-494B-8E41-3930A671D580.txt",
+      "path": "raw/attachments/DC4B1CEC-2F52-494B-8E41-3930A671D580.txt",
+      "bytes": 10683,
+      "sha256": "1983141544e2f17fb506147bc63864b195c80dd5b8d1b7675e08d81bbe120d40"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-packet-attempt17/attachments/C02D4F63-BDE4-418A-B749-EDB42FAA110B.png",
+      "path": "raw/attachments/C02D4F63-BDE4-418A-B749-EDB42FAA110B.png",
+      "bytes": 121327,
+      "sha256": "577f1c8f763eb2776604b06e024c1e5c414c1dd4b77ecaf9e24f3f11fffbafa9"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-packet-attempt17/attachments/4F5E4995-7D6B-43DE-80EE-9D72DD5A0988.txt",
+      "path": "raw/attachments/4F5E4995-7D6B-43DE-80EE-9D72DD5A0988.txt",
+      "bytes": 11430,
+      "sha256": "88f14f47d40c218105239f4d83cef8863769b7fc6f756da0c9f30b8ab42afa0a"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-packet-attempt17/attachments/7EA346DB-3692-448A-B2CB-CCA0E7ADF949.png",
+      "path": "raw/attachments/7EA346DB-3692-448A-B2CB-CCA0E7ADF949.png",
+      "bytes": 152019,
+      "sha256": "715f012e4b962a710b2601b075e706407ffbe8f894ee1415a0726866a97face5"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-packet-attempt17/attachments/C423A31D-1F68-4DA4-92BE-DE6C783B8F24.txt",
+      "path": "raw/attachments/C423A31D-1F68-4DA4-92BE-DE6C783B8F24.txt",
+      "bytes": 11298,
+      "sha256": "0e4445c2adf179ebc75240470841646080e8187aabd2b4b474f2d8fe1af888b1"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-packet-attempt17/attachments/CCEBE9F3-558A-4651-BBD5-9E77DF355C44.png",
+      "path": "raw/attachments/CCEBE9F3-558A-4651-BBD5-9E77DF355C44.png",
+      "bytes": 151246,
+      "sha256": "a807d568b62c812cbeb87ab0bc2293225e60e47bce2e959b02b3682510b81e17"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-packet-attempt17/attachments/54CB830C-1F28-4D92-B902-FF828288ECE9.png",
+      "path": "raw/attachments/54CB830C-1F28-4D92-B902-FF828288ECE9.png",
+      "bytes": 115476,
+      "sha256": "a23c820e06b3e049b8520d74af690cef88dfd3b25803c0e45e05c6e825e08219"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-packet-attempt17/attachments/5B2C9DA1-1631-4196-8066-E25BB7E51282.txt",
+      "path": "raw/attachments/5B2C9DA1-1631-4196-8066-E25BB7E51282.txt",
+      "bytes": 35248,
+      "sha256": "f453ea44ade7853df7945bdf95ccfe8c3a013adf61455e5790bc0bae824cad76"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-packet-attempt17/attachments/6842EAF2-7A6B-46E6-9001-2957A2331FF6.txt",
+      "path": "raw/attachments/6842EAF2-7A6B-46E6-9001-2957A2331FF6.txt",
+      "bytes": 10308,
+      "sha256": "9f6835c0afaec0242adde1fc938dbf343e36fd2e6f5b72eddf53b2640b7affea"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-packet-attempt17/attachments/50E087F0-3536-4416-B572-04B384396F3F.txt",
+      "path": "raw/attachments/50E087F0-3536-4416-B572-04B384396F3F.txt",
+      "bytes": 15967,
+      "sha256": "a6341fd1e3f901eb82548d6297a656ba034770e4a60c4bc1fc8fd5bf7187d82e"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-diagnostics-attempt17-supplement/modifier-input-pid94039.json",
+      "path": "raw/modifier-input-pid94039.json",
+      "bytes": 64149,
+      "sha256": "8fdd4fbf8dd268c3da6427475ca0ec181dd9d57b5346c50e9f6d0e1ced3c545a"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-diagnostics-attempt17-supplement/modifier-input-crash-context.json",
+      "path": "raw/modifier-input-crash-context.json",
+      "bytes": 89587,
+      "sha256": "04d145e8ff9667134365a6b1c9349a2ac86d620ee81b8bf72befd2e47190d052"
+    }
+  ],
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 1560,
+      "sha256": "9cdacc98694a02ce994ccb6b5cc647d2ab761ca11900a2cba2ce17228cb833a2"
+    },
+    {
+      "path": "analysis.json",
+      "bytes": 8015,
+      "sha256": "b9ebe7935f1cf60a5b7f032116247dcf6b1024d15f55b7fd5a843074538f6a7c"
+    },
+    {
+      "path": "raw/attachments/3EFF2615-7F62-46C8-BC88-91ACEEE219D9.png",
+      "bytes": 161768,
+      "sha256": "b5723ef97913750d316ffe260bb7e0bf6eab8b2547f3a098156d874ada9b2118"
+    },
+    {
+      "path": "raw/attachments/4F5E4995-7D6B-43DE-80EE-9D72DD5A0988.txt",
+      "bytes": 11430,
+      "sha256": "88f14f47d40c218105239f4d83cef8863769b7fc6f756da0c9f30b8ab42afa0a"
+    },
+    {
+      "path": "raw/attachments/50E087F0-3536-4416-B572-04B384396F3F.txt",
+      "bytes": 15967,
+      "sha256": "a6341fd1e3f901eb82548d6297a656ba034770e4a60c4bc1fc8fd5bf7187d82e"
+    },
+    {
+      "path": "raw/attachments/54CB830C-1F28-4D92-B902-FF828288ECE9.png",
+      "bytes": 115476,
+      "sha256": "a23c820e06b3e049b8520d74af690cef88dfd3b25803c0e45e05c6e825e08219"
+    },
+    {
+      "path": "raw/attachments/5B2C9DA1-1631-4196-8066-E25BB7E51282.txt",
+      "bytes": 35248,
+      "sha256": "f453ea44ade7853df7945bdf95ccfe8c3a013adf61455e5790bc0bae824cad76"
+    },
+    {
+      "path": "raw/attachments/6842EAF2-7A6B-46E6-9001-2957A2331FF6.txt",
+      "bytes": 10308,
+      "sha256": "9f6835c0afaec0242adde1fc938dbf343e36fd2e6f5b72eddf53b2640b7affea"
+    },
+    {
+      "path": "raw/attachments/7EA346DB-3692-448A-B2CB-CCA0E7ADF949.png",
+      "bytes": 152019,
+      "sha256": "715f012e4b962a710b2601b075e706407ffbe8f894ee1415a0726866a97face5"
+    },
+    {
+      "path": "raw/attachments/C02D4F63-BDE4-418A-B749-EDB42FAA110B.png",
+      "bytes": 121327,
+      "sha256": "577f1c8f763eb2776604b06e024c1e5c414c1dd4b77ecaf9e24f3f11fffbafa9"
+    },
+    {
+      "path": "raw/attachments/C423A31D-1F68-4DA4-92BE-DE6C783B8F24.txt",
+      "bytes": 11298,
+      "sha256": "0e4445c2adf179ebc75240470841646080e8187aabd2b4b474f2d8fe1af888b1"
+    },
+    {
+      "path": "raw/attachments/CCEBE9F3-558A-4651-BBD5-9E77DF355C44.png",
+      "bytes": 151246,
+      "sha256": "a807d568b62c812cbeb87ab0bc2293225e60e47bce2e959b02b3682510b81e17"
+    },
+    {
+      "path": "raw/attachments/DC4B1CEC-2F52-494B-8E41-3930A671D580.txt",
+      "bytes": 10683,
+      "sha256": "1983141544e2f17fb506147bc63864b195c80dd5b8d1b7675e08d81bbe120d40"
+    },
+    {
+      "path": "raw/attachments/F5987D53-F410-438C-9038-8C6575C7DB6E.txt",
+      "bytes": 16973,
+      "sha256": "d48e41915bc9eb848f31e23275040567a3f2fc130798b874a62b2a82ed258734"
+    },
+    {
+      "path": "raw/modifier-input-crash-context.json",
+      "bytes": 89587,
+      "sha256": "04d145e8ff9667134365a6b1c9349a2ac86d620ee81b8bf72befd2e47190d052"
+    },
+    {
+      "path": "raw/modifier-input-pid94039.json",
+      "bytes": 64149,
+      "sha256": "8fdd4fbf8dd268c3da6427475ca0ec181dd9d57b5346c50e9f6d0e1ced3c545a"
+    },
+    {
+      "path": "raw/original-runtimes-summary.json",
+      "bytes": 8853,
+      "sha256": "2f4439efadeb51fecb3844fa2b79bfa995cbf968565a980c7ff5bd5bc6374d3d"
+    },
+    {
+      "path": "raw/terminal-index.json",
+      "bytes": 237855,
+      "sha256": "fb7d3fb0b4ae0b98c495796af6ff4f75cdb4148d73701a0e534ee7636decece7"
+    }
+  ],
+  "memberCount": 18,
+  "memberBytes": 1223762
+}

@@ -1,0 +1,25 @@
+{
+  "inputs": {
+    "target_validation_group": "exact_test_selector",
+    "exact_test_selector": "AI_HLYTests/CalendarToolTests,AI_HLYTests/HanlinAppAgentSessionOwnerTests/actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow(),AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalCredentialHandlesFailClosedAndPreserveCurrentRequestAuthority(),AI_HLYTests/HanlinMCPEmbeddingTests,AI_HLYTests/ShareInboxHostIntegrationTests,AI_HLYTests/RuntimeAutonomyV3Tests/actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore(),AI_HLYTests/HanlinApplicationSystemIntegrationTests/widgetIntentMetadataLoadsTheOriginalHostTranslations(language:),AI_HLYUITests/HanlinNativeA2UIChatUITests,AI_HLYUITests/AgentRuntimeConversationUITests/testOriginalChatActivitySurvivesKeyboardRotationAndConversationReattachment,AI_HLYUITests/AgentRuntimeConversationUITests/testUI06ComposerMultilineAttachmentsModelSelectorNoOverlap,AI_HLYUITests/AgentRuntimeConversationUITests/testUI03SearchMessageAndDeduplicatedCitations,AI_HLYUITests/AgentRuntimeConversationUITests/testUI03HebrewRTLSearchMessageAndDeduplicatedCitations",
+    "compare_base_sha": "603576fa0aec5af1eea403d402f9ff676f3f09c8",
+    "runtime_bundle_artifact_run_id": "42926628418",
+    "runtime_reuse_artifacts_run_id": "42926628418",
+    "fast_validation_only": "false",
+    "simulator_e2e_only": "false",
+    "runtime_publish_release": "false",
+    "full_validation": "false",
+    "composer_validation_only": "false",
+    "nativescript_metadata_validation_only": "false",
+    "runtime_job_foundation_only": "false",
+    "markdown_renderer_validation_only": "false",
+    "code_fence_webkit_validation_only": "false",
+    "diagnostics_capture_validation_only": "false",
+    "testflight_upload": "false",
+    "runtime_bundle_only": "false",
+    "phase1_validation_only": "false",
+    "nativescript_poc_only": "false",
+    "force_clean_build": "false",
+    "measure_warm_rebuild": "false"
+  }
+}

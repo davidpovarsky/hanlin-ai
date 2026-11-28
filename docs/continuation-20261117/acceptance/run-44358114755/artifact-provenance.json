@@ -1,0 +1,31 @@
+{
+  "run_id": 44358114755,
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44358114755",
+  "head_sha": "a9085987ede10b605124e385ecf790557dcd5dfd",
+  "artifact_id": 14463975669,
+  "artifact_name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+  "artifact_sha256": "cd8fb4bbb31748910a5765aba2bb9298dc1f3d5b54f7e859191f9177f8902375",
+  "artifact_digest_verified": true,
+  "extracted_files": [
+    {
+      "source_member": "simulator-logs/08-downstream-unit-test-results.json",
+      "saved_file": "08-downstream-unit-test-results.json",
+      "sha256": "cf70fd1f5eee75a180720656904a0c96324fbb64e22ed9bbdbf1a5f500eb5837",
+      "size": 4199
+    },
+    {
+      "source_member": "simulator-logs/08-downstream-unit-tests.log",
+      "saved_file": "openclaw-original-policy-native.json",
+      "sha256": "44a8ffa5c6ae81cfbf870586b32835fb0482ee50a2a16a5a932ce769402f06d8",
+      "size": 2656
+    },
+    {
+      "source_member": "simulator-logs/08-nativescript-production-ui-test-results.json",
+      "saved_file": "08-nativescript-production-ui-test-results.json",
+      "sha256": "4969c393d1372244308647060c2bae962dd46d27b910572896d6c63bf4b6e9e0",
+      "size": 3033
+    }
+  ],
+  "status": "PARTIAL_EXECUTED_PASS_WITH_MISSING_SELECTORS",
+  "note": "Workflow failed at requested-test coverage gate: 8 granular Swift Testing selectors omitted signatures and did not execute. Five OpenClaw tests and three Skill Center UI tests executed and passed. Native report line extracted verbatim from artifact log."
+}

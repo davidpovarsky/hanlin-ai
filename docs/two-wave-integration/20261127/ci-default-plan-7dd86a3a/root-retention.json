@@ -1,0 +1,24 @@
+{
+  "reviewer": "/root",
+  "at": "2026-11-27T04:02:26.246363+00:00",
+  "records": [
+    {
+      "original": "receipt.json",
+      "retained": "receipt.json",
+      "originalBytes": 1639,
+      "originalSHA256": "1aeec84c345af35a556b535f61181a651cb0662b3dae5e460e82ea8e2cb8ff07"
+    },
+    {
+      "original": "stdout.log",
+      "retained": "stdout.log.gz",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "stderr.log",
+      "retained": "stderr.log.gz",
+      "originalBytes": 704,
+      "originalSHA256": "11893c5c6d9a0bcad3cc99f87df1300f389ec6d67a1741b3b92361b492989caf"
+    }
+  ]
+}

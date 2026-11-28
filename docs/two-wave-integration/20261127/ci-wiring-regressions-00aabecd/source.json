@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "35dc2744ae7fd6ba45b0f393cbcd6806dafefdfb",
+  "parent": "00aabecd5e4cf7995fe358d63a9724edb3b299e4",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-ci-wiring-regressions-20261127",
+  "status": "SOURCE_AND_FOCUSED_REGRESSIONS_READY_FOR_INDEPENDENT_REVIEW",
+  "files": {
+    "Scripts/CI/Tests/test_phase2_product_wiring.py": {
+      "sha256": "62a4cb804e38c4ae4fd542d44c0c479d57380c7ebe00155ff691dbe1b64c0917",
+      "bytes": 20818
+    },
+    "Scripts/CI/Tests/test_nativescript_test_log.py": {
+      "sha256": "395d0696d7eba4056618d1ecfe242999108dad3f155b645832a6338fa985e88b",
+      "bytes": 7400
+    }
+  },
+  "environmentObserved": {
+    "python": "3.12.3",
+    "platform": "Linux-6.17.0-1020-oracle-aarch64-with-glibc2.39",
+    "pyyaml": "6.0.1"
+  },
+  "testReceipt": "focused-test-receipt.json",
+  "originalFailedGate": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-router-original-00aabecd",
+  "scope": "Two CI test modules only. Production code, original validators, workflow, reference fixtures, pinned dependencies and native selectors remain unchanged.",
+  "notes": [
+    "Original cohort workflow is executed only as its extracted unchanged Bash log-validation guard against bounded temporary logs.",
+    "Active PBX target membership/framework links lead through canonical HanlinApplication to AI_Hanlin and all seven original external product dependencies.",
+    "Negative controls reject missing/duplicate/orphaned host links, missing SDK and inventory dependencies, wrong exported module, late/reinstalling fixture stage, wrong cohort logs/global selectors and swallowed validation errors.",
+    "Original 453-test discovery has not been rerun by this agent; this receipt proves only the two repaired modules (24 tests)."
+  ],
+  "artifacts": {
+    "focused-test-receipt.json": {
+      "bytes": 1947,
+      "sha256": "d536e68775a411a8c4cfc7bd4fa20b57dd1c1676233f378ffe12b41316add50d"
+    },
+    "focused.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "focused.stderr.log": {
+      "bytes": 5098,
+      "sha256": "e156577b1a80954e26acbd2af11cd2498117956dbbbf69ae3c395d28fe149247"
+    },
+    "validation-plan.json": {
+      "bytes": 3837,
+      "sha256": "68c9dda9d724c419348acf2276d10f3dfdc754c35e425d1cd0ba6f5237697379"
+    },
+    "source.patch": {
+      "bytes": 19574,
+      "sha256": "53aed6d4b26f7dc148cd2c539694d012aa11f5495936f1c6bd2002e78320f791"
+    }
+  }
+}

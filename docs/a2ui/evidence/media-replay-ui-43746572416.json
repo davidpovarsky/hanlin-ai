@@ -1,0 +1,145 @@
+{
+  "run": 43746572416,
+  "job": 132911082196,
+  "source_sha": "eb53a02bf24f68c5dd13cfc23a54b9d9605f1dc4",
+  "status": "BUILD_FAILED",
+  "executed_cases": 0,
+  "ui_behavior": "NOT_RUN",
+  "failure": "Synchronous XCTest tearDown accessed MainActor-isolated app/self; Swift 6 rejected the UI test bundle",
+  "additional_finding": "WebKit delegate callback lacked MainActor/Sendable isolation and nearly matched the optional SDK requirement; correcting the real witness before UI validation",
+  "artifact": 14175035229,
+  "artifact_sha256": "7f52f92fe34115c4b33842c99f75d535e07438806cf827dbee736f7c9970e4a1",
+  "artifact_bytes": 194180,
+  "inputs": {
+    "scope": "actual SwiftUI component UI; original ChatView/SDK/provider/physical NOT_RUN",
+    "upstream": "https://github.com/a2ui-project/a2ui",
+    "revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079",
+    "cases": [
+      "testHistoryYouTubeAllowsOnlyExplicitLocalMedia",
+      "testHistoryVideoAllowsExplicitLoadAndApprovedSource",
+      "testHistoryAudioAllowsExplicitLoadAndApprovedSource",
+      "testSealingALiveOwnerDoesNotGrantHistoryMediaPermission",
+      "testParentDisabledBlocksAndUnloadsEveryMediaBuilder",
+      "testBoundURLReplacementUnloadsEveryRequestedPlayer",
+      "testBackgroundDisappearanceAndDisposalUnloadEveryPlayer"
+    ],
+    "files": [
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIContentLimits.swift",
+        "sha256": "6a78f5bf5c3c829c608854bce16eac714397a248c94a67bedc21efcc260848e0"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIFrameLifetime.swift",
+        "sha256": "bc0b200e4db97cd200ac571253e878277a7df4d5132018dfb627d0cabb87bca8"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIIngress.swift",
+        "sha256": "0033c2f4522ac2fcee212becdaff3a2285d6a47349a2101457511116bda2cb1c"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UILocalMedia.swift",
+        "sha256": "ae58cf03a5da2f3a019a697279e40bb0911d0cc8254a7c7c65e725d6984dd107"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultOwner.swift",
+        "sha256": "546388db45d7bebe14c7a335e670e23e7cd87760ada4897373b025428a759ee4"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultProjectionSource.swift",
+        "sha256": "4420dd5bcd3d8cd3c65018a4a994f2cd65eb5e4f8162b7e318514f5004607f4a"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultView.swift",
+        "sha256": "afb27c3c95235bfac4d6ff6f0ea0c22ed47f89b03e501d4f4c0de198d0628df1"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UISession.swift",
+        "sha256": "60b64b4f2720df1d4e99e5222a1e606e425e2e71d4dfe1fd21da24fdcf40e5b3"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinChatContentProjection.swift",
+        "sha256": "6523fe65987113da98d161379aad075a550d98fd86aa3cafef3ccfa136d3615f"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinMediaCatalog.swift",
+        "sha256": "d39331996522721bfa1d482914ea2ef886d40f329aacecd77b63b093fdb5c99f"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinA2UIMediaURLGate.swift",
+        "sha256": "ea72ab27c189b7437864c6c54402b33857c8ef38f55c640adcf56142d5056ad7"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinMediaCatalogImplementation.swift",
+        "sha256": "f99d7b0f47b17bad512126ec3e17d5be44f84c03fe544615f9f9bdccbde382be"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinRemoteMediaURL.swift",
+        "sha256": "691a095aca71d0ffcdd7fa3af56480bc470d35e4d8f049042948f1bb949d9caa"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubeDocument.swift",
+        "sha256": "c7dbf50affd9ff18288b425617e583ca92fee44149a9d305f386ff42e8f44e90"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubePlayerView.swift",
+        "sha256": "37435cce17cdec0df39a6e127afc057bd69be17a3f512485d659331ec2f05658"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubeVideo.swift",
+        "sha256": "5791cfa1ca552332628ce4b4c9fc1145e3cbcaf1bdec05188bd74e4e340020c8"
+      },
+      {
+        "path": "docs/a2ui/MediaReplayUI/App.swift",
+        "sha256": "417e4d595234ad57c52fc5df186183e6eb5f611b19b4dfb1550b6220755fe077"
+      },
+      {
+        "path": "docs/a2ui/MediaReplayUI/MediaReplayUITests.swift",
+        "sha256": "4d52ba33786d9bad2da6642e96cefef592e411723e23d292f504d91bebfdcce3"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/A2UIReplayMedia.jsonl",
+        "sha256": "1f0fbb0926011673b95bfae719babede6bc138119559156543b81a97acc5cb1e"
+      }
+    ],
+    "project_spec_sha256": "533010cef5c74392d6b8b52c1f247142009dffb520eb4a9933097aa48610b006"
+  },
+  "toolchain": "Xcode 27.2\nBuild version 27B52\nApple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0\nDriverKit SDKs:\n\tDriverKit 27.2                \t-sdk driverkit27.2\n\niOS SDKs:\n\tiOS 27.2                      \t-sdk iphoneos27.2\n\niOS Simulator SDKs:\n\tSimulator - iOS 27.2          \t-sdk iphonesimulator27.2\n\nmacOS SDKs:\n\tmacOS 27.2                    \t-sdk macosx27.2\n\tmacOS 27.2                    \t-sdk macosx27.2\n\ntvOS SDKs:\n\ttvOS 27.2                     \t-sdk appletvos27.2\n\ntvOS Simulator SDKs:\n\tSimulator - tvOS 27.2         \t-sdk appletvsimulator27.2\n\nvisionOS SDKs:\n\tvisionOS 27.2                 \t-sdk xros27.2\n\nvisionOS Simulator SDKs:\n\tSimulator - visionOS 27.2     \t-sdk xrsimulator27.2\n\nwatchOS SDKs:\n\twatchOS 27.2                  \t-sdk watchos27.2\n\nwatchOS Simulator SDKs:\n\tSimulator - watchOS 27.2      \t-sdk watchsimulator27.2\n\nProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\narm64\n",
+  "xcodegen": "Version: 2.46.0",
+  "phase_seconds": {
+    "build-and-test": 77,
+    "diagnostics": 6,
+    "preflight": 27,
+    "resolution": 75,
+    "result-verification": 2
+  },
+  "raw_files_sha256": {
+    "attachment-export.log": "b907dbe647e51b623d634f8a651c5db6dd4aca33f17a7ad0201c44cf11388909",
+    "build-and-test-duration-seconds.txt": "94d5a38598be77593d4781b8fbd74cb4e2cd05bb006b1b531988ab2db90de9c9",
+    "ci-performance-report.json": "ded67d122265c18bd5873db6d6fc0e75a381acc7495de5f135c5ef5dd15bbfeb",
+    "devices.json": "98d36717798ad15b8cfe7d3facd4f815d3326cfd90b7a24ff03266b84e364b32",
+    "diagnostics-duration-seconds.txt": "06e9d52c1720fca412803e3b07c4b228ff113e303f4c7ab94665319d832bbfb7",
+    "disk.txt": "1db14d8bc56082f6d4336decd3d47b178ca9fc027f12cbc359cdad56d841ba35",
+    "Package.resolved": "b7d8190f3888474ecd5f100734b520eec8c83cdcc04db7163a1aa044ca99adfe",
+    "pin-validation.json": "322ff80748ab2a2db8ca9d464b4765c0edff8768c6397950c01994da103c9500",
+    "preflight-duration-seconds.txt": "932ab0a0e4191d32c0af7b3f565b7b180dbe9869378abc5816f9add54b806e7f",
+    "preflight.txt": "8e3257de49575e781696980941d13a1cc87ea42ada84d26382187c797f64efb4",
+    "preparation.json": "9328a5533bd9f0e525be3a8834c4416d49f4fd5880b132944c1c6ac24967e7a9",
+    "process-status.json": "be6e795b253e70ecc17e7109f393bb9530a7a452ee4ad2d055de748a63ee952a",
+    "project.json": "533010cef5c74392d6b8b52c1f247142009dffb520eb4a9933097aa48610b006",
+    "proof-inputs.json": "9328a5533bd9f0e525be3a8834c4416d49f4fd5880b132944c1c6ac24967e7a9",
+    "resolution-duration-seconds.txt": "84b9bb077be0d8a29d0d01ef350d718b77c2ec5f40c3ab90502b1b4b5016c550",
+    "resolve.log": "926846535c5fd67a3f75f64355a3593159063b8aa3d2098bb56fb6013423c1e7",
+    "resolved-before.json": "b7d8190f3888474ecd5f100734b520eec8c83cdcc04db7163a1aa044ca99adfe",
+    "result-verification-duration-seconds.txt": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
+    "runtimes.json": "5c7eaf04ba3bfca79d5d677ff55c44a5eb0359522e453b7ce71b4d19a84b88d7",
+    "schemes.json": "9a9df7f63d07df5872026c2d92e53b609ec24807fde19498e9f1f05b723a25ca",
+    "selected-device.txt": "a964b846a4a5d36046ae57070d5b9e94fcd04abd5e4dfe867702670b51fb1dfb",
+    "source-sha.txt": "144d2bf9de347fca92643a6bdab50b455790c8c64df70c10b9a6f30d4167a961",
+    "tests.json": "7fe3a9090bc3274f80e6b8b5426c777f79d29505746291ef50124ca9834dc9b7",
+    "xcodebuild.log": "c29662c76d8557500a8c878e55e31cb0ba0a5d2925fdbb6bef0d614994c0416d",
+    "xcodegen-install.log": "5543c39402b2867d94bc6d9c2f8f3108dd11a86c87515448a3a3d4932506347d",
+    "xcodegen-version.txt": "bf8aa757345fcd22d1fd26e760aa058f02991e2d930686b8eaf750cd6e5f8532",
+    "xcodegen.log": "6e1844f8d9d292600194de686a9b0bb36c8aeaa598b69ea74417d28e1a7f24f5"
+  },
+  "full_ci_pass": false
+}

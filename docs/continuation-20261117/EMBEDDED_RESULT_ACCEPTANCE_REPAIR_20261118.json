@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-18T07:46:13.782751+00:00",
+  "scope": "Source-confirmed missing explicit-handler verification and two old embedded-result UI acceptance gaps",
+  "original_issue": {
+    "production": "ChatPresentationBridge.resolveExpansions accepted nonempty expandedHandler when canResolveHandler was nil. The modern-native fallback caller has no resolver, so it could emit a dead expansion control.",
+    "test": "The old negative UI case only launched an empty seeded chat and queried a fabricated expansion_action_unresolvable ID. The actual UI uses expansion_action_sheet/fullScreen/window. The positive case hardcoded a TextField while the original editor can be TextView, and made expansion checks optional."
+  },
+  "changes": [
+    "Explicit expandedHandler now requires positive resolver evidence. Ordinary same-content sheet/full-screen modes remain unchanged.",
+    "Existing resolver regression checks missing resolver, explicit rejection, blank handler and positive resolution alongside existing valid modes.",
+    "Original provider has an opt-in strict flow that waits for real load_skill output, newly exposed tool schema, tool_search result and actual web result before final success text; other fixtures are unchanged.",
+    "Negative fixture seeds an original persisted ChatMessages/AgentRun with native fallback content and an unavailable original owner. No network/model dispatch or fake authorization.",
+    "Both original UI methods now open the actual chat/editor, assert visible content first, assert every original call completed, require real expansion/dismissal, and reject actual dead expansion control identifiers."
+  ],
+  "test_scope": {
+    "unit_suites": [
+      "AI_HLYTests/EmbeddedResultResolverTests",
+      "AI_HLYTests/ChatCanonicalPresentationSurvivalTests"
+    ],
+    "method_counts": {
+      "EmbeddedResultResolverTests": 16,
+      "ChatCanonicalPresentationSurvivalTests": 5
+    },
+    "ui_suites": [
+      "AI_HLYUITests/AgentSkillsEmbeddedResultsUITests"
+    ],
+    "ui_methods": 2,
+    "evidence_limit": "HTTP model and embedded view provider are declared fixtures. This does not prove live cloud provider or a companion process."
+  },
+  "validation": "NATIVE_BUILD_COMPONENT21_PASS_UI2_FAIL_REPAIR_PARSE_ONLY",
+  "phase2": "IN_PROGRESS",
+  "phase3": "IN_PROGRESS",
+  "release": "NO_GO",
+  "native_run": 44264369849,
+  "superseded_unexecuted_run": 44261561706,
+  "superseded_reason": "Queued native job carried missing runtime artifact input; replaced before native execution",
+  "native_outcome": {
+    "run": 44264369849,
+    "sha": "3542cc20e2ad842edc38af13d92805943febb6dd",
+    "unit_pass": 21,
+    "ui_failed": 2,
+    "report": "docs/continuation-20261117/acceptance/EMBEDDED_NATIVE_DIAGNOSIS_20261118.json"
+  }
+}

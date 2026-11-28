@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "6d9a59bfc1bd1830a8d56e694c42b19c6bd7d468",
+  "purpose": "Add targeted real-native observables for generated view/metadata gaps and integrate independently owned modifier/host-service probes.",
+  "ownedProductionFiles": [
+    "Fixtures/ExpoSwiftUIProbe/GeneratedViewsProbe.tsx",
+    "Fixtures/ExpoSwiftUIProbe/App.tsx",
+    "Fixtures/ExpoSwiftUIProbe/tsconfig.json",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift"
+  ],
+  "externalFixtureOwners": {
+    "sdk_only_author": [
+      "Fixtures/ExpoSwiftUIProbe/GeneratedModifiersProbe.tsx"
+    ],
+    "control_authoring": [
+      "Fixtures/ExpoSwiftUIProbe/HostServicesProbe.tsx",
+      "Fixtures/ExpoSwiftUIProbe/script.json",
+      "Fixtures/ExpoSwiftUIProbe/widget.tsx"
+    ]
+  },
+  "validationPlan": [
+    {
+      "operation": "Public runMiniAppOperation build",
+      "reason": "Changed real TSX entry/declarations must typecheck strictly and pass the original Metro bundler together. One build includes validation; no separate redundant validation run.",
+      "status": "NOT_RUN",
+      "inputs": "Immutable original exported SDK packages, plus exact current repository @hanlin/expo-ui source copied into an isolated project dependency overlay; no mutation of immutable SDK or original package caches.",
+      "boundary": "This is a current-facade authoring proof, not a new complete stageSDK export or Apple runtime execution."
+    },
+    {
+      "operation": "swiftc -frontend -parse changed UI source",
+      "reason": "Changed Swift method syntax; Apple-only type/behavior remains pending parent gate.",
+      "status": "NOT_RUN"
+    },
+    {
+      "operation": "Affected standalone native cases",
+      "status": "NOT_RUN",
+      "owner": "root",
+      "boundary": "No local simulator/device or UI pass claimed."
+    }
+  ],
+  "newNativeSelectors": [
+    "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+    "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+    "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+    "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+    "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+    "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts",
+    "MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication"
+  ],
+  "strengthenedSelector": "MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+  "addedExistingAssertion": "HOST_FILES_PASS:131073 from the real binary/empty/missing-file JS facade probe",
+  "explicitBoundaries": {
+    "DefaultDocumentGroupLaunchActions": "Instantiated only in an unmounted typed fragment. Requires real DocumentLaunchView/DocumentGroupLaunchScene context and document-browser configuration; no substitute VStack execution or new host scene introduced.",
+    "generatedModifiers": "All83 actual public factories have source/context coverage; only named behavior assertions claim observations after native execution. Panel appearance is not every modifier semantic pass.",
+    "metadata": "Native runtimeVersion must match both current package.hanlinExpo.runtimeVersion and current public constant; bridgeVersion and inventoryIdentity are checked separately.",
+    "widgetPublication": "Committed prepared state/catalog/reload receipt only; osRendered stays unknown/null.",
+    "physicalDevice": "NOT_RUN"
+  },
+  "primaryAppleContextReferences": [
+    "https://developer.apple.com/documentation/swiftui/defaultdocumentgrouplaunchactions",
+    "https://developer.apple.com/documentation/swiftui/documentlaunchview",
+    "https://developer.apple.com/documentation/swiftui/editbutton"
+  ]
+}

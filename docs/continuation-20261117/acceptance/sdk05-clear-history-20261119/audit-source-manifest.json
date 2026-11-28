@@ -1,0 +1,93 @@
+{
+  "base_commit": "1480b347f519073b384cd86f7efc506e9c2d1aab",
+  "files": [
+    {
+      "path": "AI_HLY/AI_HLY.swift",
+      "sha256": "0ee9045305afe4f0be964ed18fd41d39fa20a48b4cbe1a342849ad2d4b8b3676"
+    },
+    {
+      "path": "AI_HLY/Model/ChatRecords.swift",
+      "sha256": "ab03cf2fbacb493e634bb291ddebce3da305fb2a134689e7b1ec3fbbb758e163"
+    },
+    {
+      "path": "AI_HLY/Model/ChatMessages.swift",
+      "sha256": "7badb4ce6ec0202cd7ab9715363ada5189fb10fe7821b910496258dd287e7c44"
+    },
+    {
+      "path": "AI_HLY/Model/UserInfo.swift",
+      "sha256": "0333d6d3f42479179722bb64b50610b3b9036fd8fd73050ae94487ea9817fbf0"
+    },
+    {
+      "path": "AI_HLY/Model/MemoryArchive.swift",
+      "sha256": "1c9be3ef7666fb1fdf6d01c4f7c89722b68a51693ee2971f1436d3d548188444"
+    },
+    {
+      "path": "AI_HLY/Model/APIKeys.swift",
+      "sha256": "9a43d1c5e4d9f4fb60d8badc3f151a3c68c7ef82cde4a9891e4906b458e5003d"
+    },
+    {
+      "path": "AI_HLY/Model/SearchKeys.swift",
+      "sha256": "a02f691b1a4c23f482cdee0ce9dcb4d088e7a1f19528b272d7c118ef9cab22ae"
+    },
+    {
+      "path": "AI_HLY/Model/ToolKeys.swift",
+      "sha256": "f0066b37abc65019832f3a52bb2a25e479fccdb04be094c1995e49d317fda221"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "sha256": "792823155e9ee5964bdc286ff09672a209dbad405c4e4d07159e8332ad0a0aeb"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "sha256": "02547a1a784cf9902054ba713f20cb5147d975e92c554d4974422c105f158e53"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppConversationStore.swift",
+      "sha256": "b6bcce0a80f381a372cfb5213092110b1b83f2bc589d849725616d2ff371de0b"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppSplitOriginCoordinator.swift",
+      "sha256": "9def3a9560d323e3472305554d03825047556e2273d634e1a51db9a6a8697c85"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatSavedExcerpt.swift",
+      "sha256": "d4eee1341e49fbcde600de3325ecfa4a792054208acceba0d4561dca57da3406"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Environment/RuntimeEnvironment.swift",
+      "sha256": "af53ffbcbea48008181faabd263fbe36c95e433879f1acfc7a0ea8b805e2e2b9"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Persistence/MCPSecretStore.swift",
+      "sha256": "15ae03cb07b3f973bc97e989a2fd66f98d1de2ed8fa7c3e56e26624e759da1cd"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Persistence/MCPServerRegistryStore.swift",
+      "sha256": "a36fdd2c2615e673d517c59bf7b71e697bc3ccde8e9c7ca4c8a62ff0dbff34b0"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Runtime/MCPRuntimeProvider.swift",
+      "sha256": "a89473f050e635e5c06600dc53898f49398fd9fa1f61fda4792309deccba7133"
+    },
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "sha256": "e328ce86d07d9a17e4f3d5e3d30895912604b65a452b1f3adc6bdd886fc684bd"
+    },
+    {
+      "path": "AI_HLY/ListView.swift",
+      "sha256": "26d5682abf32dc250e9c537e5bb56e43eae4ecfccdd9173c027fad509166d67b"
+    },
+    {
+      "path": "AI_HLY/AI_HLY.entitlements",
+      "sha256": "54292b691e208ba5a53cfc4f6b4cd44dc39c237b87f06df0c2c287dac4b73c01"
+    },
+    {
+      "path": "HanlinMiniAppsApp/HanlinMiniApps.entitlements",
+      "sha256": "8eeb1557fc21f6a664ed1b717f3e259362b3cb85d6c99c60a708c03df2b7e793"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinPersistenceAdapters/HanlinPrivateConversationStore.swift",
+      "sha256": "3b33d595c6003ac2e733220e28c56e0ab73f81e5f61c1eff61a3bbcb98c301f3"
+    }
+  ]
+}

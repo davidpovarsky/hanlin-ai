@@ -3,16 +3,40 @@
 <plist version="1.0">
 <dict>
 	<key>aps-environment</key>
-	<string>development</string>
-	<key>com.apple.developer.healthkit</key>
-	<true/>
+	<string>$(APS_ENVIRONMENT)</string>
 	<key>com.apple.developer.icloud-container-identifiers</key>
 	<array>
-		<string>iCloud.$(TeamIdentifierPrefix)$(CFBundleIdentifier)</string>
+		<string>iCloud.com.itorah.chavrusachat</string>
 	</array>
 	<key>com.apple.developer.icloud-services</key>
 	<array>
 		<string>CloudKit</string>
+		<string>CloudDocuments</string>
+	</array>
+	<key>com.apple.developer.ubiquity-kvstore-identifier</key>
+	<string>$(TeamIdentifierPrefix)com.itorah.chavrusachat</string>
+	<key>com.apple.developer.healthkit</key>
+	<true/>
+	<key>com.apple.developer.kernel.extended-virtual-addressing</key>
+	<true/>
+	<key>com.apple.developer.siri</key>
+	<true/>
+	<key>com.apple.developer.translation-app</key>
+	<true/>
+	<key>com.apple.developer.usernotifications.time-sensitive</key>
+	<true/>
+	<key>com.apple.developer.weatherkit</key>
+	<true/>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.com.itorah.chavrusachat</string>
+		<string>group.com.itorah.shared</string>
+	</array>
+	<key>com.apple.developer.homekit</key>
+	<true/>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)com.itorah.chavrusachat.scriptwidget.services</string>
 	</array>
 </dict>
 </plist>

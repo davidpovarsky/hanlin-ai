@@ -1,0 +1,175 @@
+{
+  "actualOutcome": {
+    "ai_build": "NOT_RUN",
+    "build": "NOT_RUN",
+    "diagnostic_errors": [
+      "xcrun exit -1; inspect failure-device-state.json"
+    ],
+    "duration_seconds": 506.25096011161804,
+    "error": "Command '['git', '-C', '/Users/runner/work/hanlin-ai/hanlin-ai', 'diff', '--binary', '--no-ext-diff', 'HEAD', '--']' timed out after 120 seconds",
+    "mini_build": "NOT_RUN",
+    "status": "INFRA_ERROR",
+    "ui": "NOT_RUN"
+  },
+  "actualSource": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+  "diagnosis": {
+    "classification": "INFRASTRUCTURE_SOURCE_CAPTURE_FAILED_BEFORE_APP_BUILD_OR_TESTS",
+    "supportedInference": "Cold owned-Simulator initialization/resource pressure is supported by wired/swap growth and slow independent simctl diagnostics; no retained evidence establishes a huge binary diff.",
+    "uncertainty": "No git-process stack or completed final diff was retained. The exact internal cause of that subprocess timeout is not proved."
+  },
+  "guardsPreservedByWholeModuleInverse": true,
+  "hostResources": "hw.memsize: 7516192768\nhw.ncpu: 3\n",
+  "membersReadAndCRCVerified": {
+    "app-split-evidence/foreground/raw-origin/raw-007-working-tree.stdout.log": {
+      "bytes": 1269,
+      "crc32": "a70d3b75",
+      "crcVerifiedOnRead": true,
+      "sha256": "0961044c45e31c9dad9f34c6601c5173706cf6494a7f704084f13a602a370f4c"
+    },
+    "app-split-evidence/paired-product/acceptance.json": {
+      "bytes": 2894,
+      "crc32": "78d4283c",
+      "crcVerifiedOnRead": true,
+      "sha256": "636c33ba26f7848274c2ef04fc362a7e2856c55254b3e0e43b22b0fcbb4c90dd"
+    },
+    "app-split-evidence/paired-product/before-boot-host-resources.txt": {
+      "bytes": 34,
+      "crc32": "ba6bea3e",
+      "crcVerifiedOnRead": true,
+      "sha256": "8f1c8925647f04af1a1be4971bf5da70ce32f357a192f0373e4d2580881772fb"
+    },
+    "app-split-evidence/paired-product/before-boot-memory.txt": {
+      "bytes": 1247,
+      "crc32": "827c590a",
+      "crcVerifiedOnRead": true,
+      "sha256": "d4cdd13cdfce552c2d5861793906f144158766b8da1a2ada888f72bd96bc49c5"
+    },
+    "app-split-evidence/paired-product/commands.jsonl": {
+      "bytes": 3559,
+      "crc32": "8c527388",
+      "crcVerifiedOnRead": true,
+      "sha256": "18bf6e9a77068bb1a97d75be8ac6d50a00dde1f435d37642a5d8aac1f7fc44e2"
+    },
+    "app-split-evidence/paired-product/failure-memory.txt": {
+      "bytes": 1247,
+      "crc32": "6a26ef62",
+      "crcVerifiedOnRead": true,
+      "sha256": "19830257e150deeea1844d52702cb451c645e32393133e987ad617dd62ece8d1"
+    },
+    "app-split-evidence/upstream-inputs.patch": {
+      "bytes": 191005,
+      "crc32": "5c0e4d7a",
+      "crcVerifiedOnRead": true,
+      "sha256": "eb3965826486c76cb33f8fe1cb71af621eaf0890d88436750f7a469bdc30e9dd"
+    }
+  },
+  "minimalProposal": "Move the exact unchanged RUN_EXTRA26 capture_inputs block before owned Simulator boot. Preserve every source/index/untracked/SDK/toolchain/product check, later equality and all original budgets.",
+  "nativeExecutions": "NONE",
+  "observedSlowCommands": [
+    {
+      "argv": [
+        "xcrun",
+        "simctl",
+        "bootstatus",
+        "A93C589B-3155-4C08-A55D-89099F5D43BD",
+        "-b"
+      ],
+      "exit": 0,
+      "log": "bootstatus.log",
+      "seconds": 70.35097050000013,
+      "sha256": "f564a96988cd93861f4cc708e5cbb3e866aa26b16a83d95eee6aaa9aa154ac30"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "simctl",
+        "list",
+        "devices",
+        "-j"
+      ],
+      "exit": -1,
+      "log": "failure-device-state.json",
+      "seconds": 129.96281258299996,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "simctl",
+        "listapps",
+        "A93C589B-3155-4C08-A55D-89099F5D43BD"
+      ],
+      "exit": 0,
+      "log": "failure-installed-apps.plist",
+      "seconds": 62.05392374999997,
+      "sha256": "0289317cc7df31b578f28006ee779cd0147848fd4b177bf95dac96082ea69de1"
+    }
+  ],
+  "parentVerifiedArchive": {
+    "archiveBytes": 333712512,
+    "archiveSHA256": "1d2377b745379ec788061a7a9f1667654f546c479769b557b781fd0c71d03c4e",
+    "artifactID": 15200306859,
+    "crcAllMembersPassed": true,
+    "memberCount": 86
+  },
+  "retainedPreFailureWorkingChange": {
+    "binaryPatchMarkers": 0,
+    "matchesRetainedForegroundStatus": true,
+    "patchBytes": 191005,
+    "patchPaths": [
+      "Fixtures/ExpoNativeAPIProbe/package.json",
+      "Fixtures/ExpoSwiftUIProbe/package.json",
+      "Fixtures/ExpoWidgetsProbe/package.json",
+      "Generated/SwiftUIBridge/HanlinGeneratedViews.swift",
+      "Generated/SwiftUIBridge/bridge-manifest.ts",
+      "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
+      "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift",
+      "Packages/HanlinExpoUI/package.json",
+      "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+      "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ViewModifierRegistry.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+      "Scripts/Expo/dependency-lock.json",
+      "Scripts/Expo/package-lock.json",
+      "Scripts/Expo/package.json",
+      "Scripts/ExpoNativeAPI/dependency-lock.json",
+      "Scripts/MiniApps/upstream-resolution.json",
+      "Scripts/NativeScript/package-lock.json",
+      "Tools/SwiftUIBridge/configuration.json",
+      "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json"
+    ],
+    "patchSHA256": "eb3965826486c76cb33f8fe1cb71af621eaf0890d88436750f7a469bdc30e9dd",
+    "qualification": "Retained upstream/foreground state only. The final timed-out git diff has no retained output, so final equality is not asserted.",
+    "trackedModifiedCount": 19
+  },
+  "runID": 46000285780,
+  "sourceArchiveReceiptSHA256": "8370691a95309c6974c9ac9ca4755e67eee8097135ae5adaa9a0905f394296f5",
+  "testReruns": "NONE",
+  "vmCounters": {
+    "Pages free": {
+      "before": 7625,
+      "delta": -3144,
+      "failure": 4481
+    },
+    "Pages occupied by compressor": {
+      "before": 58045,
+      "delta": 9516,
+      "failure": 67561
+    },
+    "Pages wired down": {
+      "before": 85223,
+      "delta": 102845,
+      "failure": 188068
+    },
+    "Swapins": {
+      "before": 0,
+      "delta": 48024,
+      "failure": 48024
+    },
+    "Swapouts": {
+      "before": 0,
+      "delta": 156476,
+      "failure": 156476
+    }
+  },
+  "vmPageSizeBytes": 16384
+}

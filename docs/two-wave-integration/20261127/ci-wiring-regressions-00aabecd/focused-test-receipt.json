@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "purpose": "Original focused regression for the two owned CI test modules; no full discovery or native execution",
+  "workingDirectory": "/mnt/development/projects/worktrees/hanlin-ci-wiring-regressions-20261127",
+  "sourceBase": "00aabecd5e4cf7995fe358d63a9724edb3b299e4",
+  "sourceHashesBefore": {
+    "Scripts/CI/Tests/test_phase2_product_wiring.py": "62a4cb804e38c4ae4fd542d44c0c479d57380c7ebe00155ff691dbe1b64c0917",
+    "Scripts/CI/Tests/test_nativescript_test_log.py": "395d0696d7eba4056618d1ecfe242999108dad3f155b645832a6338fa985e88b"
+  },
+  "sourceHashesAfter": {
+    "Scripts/CI/Tests/test_phase2_product_wiring.py": "62a4cb804e38c4ae4fd542d44c0c479d57380c7ebe00155ff691dbe1b64c0917",
+    "Scripts/CI/Tests/test_nativescript_test_log.py": "395d0696d7eba4056618d1ecfe242999108dad3f155b645832a6338fa985e88b"
+  },
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "Scripts.CI.Tests.test_phase2_product_wiring",
+    "Scripts.CI.Tests.test_nativescript_test_log",
+    "-v"
+  ],
+  "startedAt": "2026-11-27T03:20:09.982866+00:00",
+  "finishedAt": "2026-11-27T03:20:12.513725+00:00",
+  "elapsedSeconds": 2.530848062597215,
+  "exitCode": 0,
+  "timedOut": false,
+  "testDefinitionsExpected": 24,
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "owner": "chatgpt-agent"
+  },
+  "logs": {
+    "focused.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "focused.stderr.log": {
+      "bytes": 5098,
+      "sha256": "e156577b1a80954e26acbd2af11cd2498117956dbbbf69ae3c395d28fe149247"
+    }
+  },
+  "gitStatusAfter": "M Scripts/CI/Tests/test_nativescript_test_log.py\n M Scripts/CI/Tests/test_phase2_product_wiring.py",
+  "nativeTestsRun": false,
+  "fullDiscoveryRun": false,
+  "networkOptIn": false
+}

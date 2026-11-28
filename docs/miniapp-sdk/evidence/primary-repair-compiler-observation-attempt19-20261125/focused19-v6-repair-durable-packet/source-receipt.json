@@ -1,0 +1,884 @@
+{
+  "capturedAt": "2026-11-25T13:43:00.484705+00:00",
+  "appData": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C",
+  "jobs": [
+    {
+      "executionID": "072c30f4-592f-443c-bc83-eca5afd80bb7",
+      "state": "running",
+      "startedAt": 1795613786923,
+      "completedAt": null,
+      "stdoutBytes": 0,
+      "stderrBytes": 0,
+      "error": null,
+      "result": null,
+      "main": "import { runMiniAppOperation } from \"file:\\/\\/\\/Users\\/m1\\/Library\\/Developer\\/CoreSimulator\\/Devices\\/E742FBCD-8FF0-4130-B143-7F8328637138\\/data\\/Containers\\/Data\\/Application\\/5478D077-32A2-4535-9113-318715D2635C\\/Library\\/Application%20Support\\/HanlinRuntime\\/v1\\/runtime\\/node\\/host-7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc\\/miniapp-authoring.mjs\";\nconst report = await runMiniAppOperation({\"projectRoot\":\"\\/Users\\/m1\\/Library\\/Developer\\/CoreSimulator\\/Devices\\/E742FBCD-8FF0-4130-B143-7F8328637138\\/data\\/Containers\\/Data\\/Application\\/5478D077-32A2-4535-9113-318715D2635C\\/Library\\/Application Support\\/HanlinRuntime\\/v1\\/clients\\/agents\\/miniapp-repair-9725f838-ce28-4ca5-a6c5-668a958c86ad\\/project\\/source\",\"operation\":\"build\",\"engine\":\"nativescript\"}, {sdkRoot: \"\\/Users\\/m1\\/Library\\/Developer\\/CoreSimulator\\/Devices\\/E742FBCD-8FF0-4130-B143-7F8328637138\\/data\\/Containers\\/Data\\/Application\\/5478D077-32A2-4535-9113-318715D2635C\\/Library\\/Application Support\\/HanlinRuntime\\/v1\\/runtime\\/node\\/host-7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc\\/MiniAppSDK\"});\nconst receipt = { ...report, executionID: \"072c30f4-592f-443c-bc83-eca5afd80bb7\" };\nconsole.log(JSON.stringify(receipt));\nprocess.exitCode = receipt.succeeded === false ? 1 : 0;\nexport default receipt;"
+    },
+    {
+      "executionID": "72682870-841c-46e9-a252-447140814653",
+      "state": "failed",
+      "startedAt": 1795613693650,
+      "completedAt": 1795613719840,
+      "stdoutBytes": 1357,
+      "stderrBytes": 0,
+      "error": null,
+      "result": {
+        "executionID": "72682870-841c-46e9-a252-447140814653",
+        "stdout": "{\"schemaVersion\":1,\"engine\":\"nativescript\",\"operation\":\"validate\",\"succeeded\":false,\"diagnostics\":[{\"code\":\"TS2322\",\"category\":\"error\",\"message\":\"Type 'string' is not assignable to type 'number'.\",\"file\":\"index.ts\",\"line\":1,\"column\":14,\"endLine\":1,\"endColumn\":20},{\"code\":\"MINIAPP_SOURCE_CHANGED\",\"category\":\"error\",\"message\":\"The package no longer matches its recorded build: index.ts\",\"file\":\"index.ts\",\"remediation\":\"Repair and validate the source project, then build a fresh archive before importing.\"}],\"sourceRoot\":\"/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-9725f838-ce28-4ca5-a6c5-668a958c86ad/project/source\",\"sdk\":{\"packageVersions\":{\"@nativescript/core\":\"9.1.4\",\"@nativescript/swift-ui\":\"4.0.2\",\"@nativescript/ios\":\"9.1.1\",\"@nativescript/types\":\"9.1.4\",\"@nativescript/vite\":\"8.0.24\",\"typescript\":\"5.9.3\",\"vite\":\"8.0.0\",\"@hanlin/notification-events\":\"1.0.0\",\"@hanlin/host-services\":\"1.0.0\"},\"manifestSHA256\":\"4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92\",\"compilerVersion\":\"5.9.3\"},\"typecheck\":{\"strict\":true,\"checkJs\":false,\"skipLibCheck\":true,\"dependencyDeclarationsChecked\":false},\"executionID\":\"72682870-841c-46e9-a252-447140814653\"}\n",
+        "stderr": "",
+        "value": {
+          "schemaVersion": 1,
+          "engine": "nativescript",
+          "operation": "validate",
+          "succeeded": false,
+          "diagnostics": [
+            {
+              "code": "TS2322",
+              "category": "error",
+              "message": "Type 'string' is not assignable to type 'number'.",
+              "file": "index.ts",
+              "line": 1,
+              "column": 14,
+              "endLine": 1,
+              "endColumn": 20
+            },
+            {
+              "code": "MINIAPP_SOURCE_CHANGED",
+              "category": "error",
+              "message": "The package no longer matches its recorded build: index.ts",
+              "file": "index.ts",
+              "remediation": "Repair and validate the source project, then build a fresh archive before importing."
+            }
+          ],
+          "sourceRoot": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-9725f838-ce28-4ca5-a6c5-668a958c86ad/project/source",
+          "sdk": {
+            "packageVersions": {
+              "@nativescript/core": "9.1.4",
+              "@nativescript/swift-ui": "4.0.2",
+              "@nativescript/ios": "9.1.1",
+              "@nativescript/types": "9.1.4",
+              "@nativescript/vite": "8.0.24",
+              "typescript": "5.9.3",
+              "vite": "8.0.0",
+              "@hanlin/notification-events": "1.0.0",
+              "@hanlin/host-services": "1.0.0"
+            },
+            "manifestSHA256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+            "compilerVersion": "5.9.3"
+          },
+          "typecheck": {
+            "strict": true,
+            "checkJs": false,
+            "skipLibCheck": true,
+            "dependencyDeclarationsChecked": false
+          },
+          "executionID": "72682870-841c-46e9-a252-447140814653"
+        },
+        "exitCode": 1,
+        "durationMilliseconds": 26189,
+        "didTimeOut": false,
+        "wasCancelled": false,
+        "outputWasTruncated": false,
+        "outputFiles": {
+          "stdout": {
+            "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/jobs/node/72682870-841c-46e9-a252-447140814653/stdout.log",
+            "bytes": 1357,
+            "sha256": "ccb2d631b5347765846f06dd4600c55d58c629ef5c81ab093240bf862dd4caf3"
+          },
+          "stderr": {
+            "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/jobs/node/72682870-841c-46e9-a252-447140814653/stderr.log",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      },
+      "main": "import { runMiniAppOperation } from \"file:\\/\\/\\/Users\\/m1\\/Library\\/Developer\\/CoreSimulator\\/Devices\\/E742FBCD-8FF0-4130-B143-7F8328637138\\/data\\/Containers\\/Data\\/Application\\/5478D077-32A2-4535-9113-318715D2635C\\/Library\\/Application%20Support\\/HanlinRuntime\\/v1\\/runtime\\/node\\/host-7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc\\/miniapp-authoring.mjs\";\nconst report = await runMiniAppOperation({\"engine\":\"nativescript\",\"operation\":\"validate\",\"projectRoot\":\"\\/Users\\/m1\\/Library\\/Developer\\/CoreSimulator\\/Devices\\/E742FBCD-8FF0-4130-B143-7F8328637138\\/data\\/Containers\\/Data\\/Application\\/5478D077-32A2-4535-9113-318715D2635C\\/Library\\/Application Support\\/HanlinRuntime\\/v1\\/clients\\/agents\\/miniapp-repair-9725f838-ce28-4ca5-a6c5-668a958c86ad\\/project\"}, {sdkRoot: \"\\/Users\\/m1\\/Library\\/Developer\\/CoreSimulator\\/Devices\\/E742FBCD-8FF0-4130-B143-7F8328637138\\/data\\/Containers\\/Data\\/Application\\/5478D077-32A2-4535-9113-318715D2635C\\/Library\\/Application Support\\/HanlinRuntime\\/v1\\/runtime\\/node\\/host-7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc\\/MiniAppSDK\"});\nconst receipt = { ...report, executionID: \"72682870-841c-46e9-a252-447140814653\" };\nconsole.log(JSON.stringify(receipt));\nprocess.exitCode = receipt.succeeded === false ? 1 : 0;\nexport default receipt;"
+    },
+    {
+      "executionID": "aec9f0dc-ec22-4b95-9533-99c2cd2c3d74",
+      "state": "completed",
+      "startedAt": 1795613738287,
+      "completedAt": 1795613778548,
+      "stdoutBytes": 949,
+      "stderrBytes": 0,
+      "error": null,
+      "result": {
+        "executionID": "aec9f0dc-ec22-4b95-9533-99c2cd2c3d74",
+        "stdout": "{\"schemaVersion\":1,\"engine\":\"nativescript\",\"operation\":\"validate\",\"succeeded\":true,\"diagnostics\":[],\"sourceRoot\":\"/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-9725f838-ce28-4ca5-a6c5-668a958c86ad/project/source\",\"sdk\":{\"packageVersions\":{\"@nativescript/core\":\"9.1.4\",\"@nativescript/swift-ui\":\"4.0.2\",\"@nativescript/ios\":\"9.1.1\",\"@nativescript/types\":\"9.1.4\",\"@nativescript/vite\":\"8.0.24\",\"typescript\":\"5.9.3\",\"vite\":\"8.0.0\",\"@hanlin/notification-events\":\"1.0.0\",\"@hanlin/host-services\":\"1.0.0\"},\"manifestSHA256\":\"4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92\",\"compilerVersion\":\"5.9.3\"},\"typecheck\":{\"strict\":true,\"checkJs\":false,\"skipLibCheck\":true,\"dependencyDeclarationsChecked\":false},\"executionID\":\"aec9f0dc-ec22-4b95-9533-99c2cd2c3d74\"}\n",
+        "stderr": "",
+        "value": {
+          "schemaVersion": 1,
+          "engine": "nativescript",
+          "operation": "validate",
+          "succeeded": true,
+          "diagnostics": [],
+          "sourceRoot": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-9725f838-ce28-4ca5-a6c5-668a958c86ad/project/source",
+          "sdk": {
+            "packageVersions": {
+              "@nativescript/core": "9.1.4",
+              "@nativescript/swift-ui": "4.0.2",
+              "@nativescript/ios": "9.1.1",
+              "@nativescript/types": "9.1.4",
+              "@nativescript/vite": "8.0.24",
+              "typescript": "5.9.3",
+              "vite": "8.0.0",
+              "@hanlin/notification-events": "1.0.0",
+              "@hanlin/host-services": "1.0.0"
+            },
+            "manifestSHA256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+            "compilerVersion": "5.9.3"
+          },
+          "typecheck": {
+            "strict": true,
+            "checkJs": false,
+            "skipLibCheck": true,
+            "dependencyDeclarationsChecked": false
+          },
+          "executionID": "aec9f0dc-ec22-4b95-9533-99c2cd2c3d74"
+        },
+        "exitCode": 0,
+        "durationMilliseconds": 40261,
+        "didTimeOut": false,
+        "wasCancelled": false,
+        "outputWasTruncated": false,
+        "outputFiles": {
+          "stdout": {
+            "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/jobs/node/aec9f0dc-ec22-4b95-9533-99c2cd2c3d74/stdout.log",
+            "bytes": 949,
+            "sha256": "4dced1e8c941fda75a95a61452d235c618160f0eddee7e3d5a5338dda70abcc4"
+          },
+          "stderr": {
+            "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/jobs/node/aec9f0dc-ec22-4b95-9533-99c2cd2c3d74/stderr.log",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      },
+      "main": "import { runMiniAppOperation } from \"file:\\/\\/\\/Users\\/m1\\/Library\\/Developer\\/CoreSimulator\\/Devices\\/E742FBCD-8FF0-4130-B143-7F8328637138\\/data\\/Containers\\/Data\\/Application\\/5478D077-32A2-4535-9113-318715D2635C\\/Library\\/Application%20Support\\/HanlinRuntime\\/v1\\/runtime\\/node\\/host-7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc\\/miniapp-authoring.mjs\";\nconst report = await runMiniAppOperation({\"operation\":\"validate\",\"engine\":\"nativescript\",\"projectRoot\":\"\\/Users\\/m1\\/Library\\/Developer\\/CoreSimulator\\/Devices\\/E742FBCD-8FF0-4130-B143-7F8328637138\\/data\\/Containers\\/Data\\/Application\\/5478D077-32A2-4535-9113-318715D2635C\\/Library\\/Application Support\\/HanlinRuntime\\/v1\\/clients\\/agents\\/miniapp-repair-9725f838-ce28-4ca5-a6c5-668a958c86ad\\/project\\/source\"}, {sdkRoot: \"\\/Users\\/m1\\/Library\\/Developer\\/CoreSimulator\\/Devices\\/E742FBCD-8FF0-4130-B143-7F8328637138\\/data\\/Containers\\/Data\\/Application\\/5478D077-32A2-4535-9113-318715D2635C\\/Library\\/Application Support\\/HanlinRuntime\\/v1\\/runtime\\/node\\/host-7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc\\/MiniAppSDK\"});\nconst receipt = { ...report, executionID: \"aec9f0dc-ec22-4b95-9533-99c2cd2c3d74\" };\nconsole.log(JSON.stringify(receipt));\nprocess.exitCode = receipt.succeeded === false ? 1 : 0;\nexport default receipt;"
+    },
+    {
+      "executionID": "b8b172f6-8cc1-434e-bcc2-f9584ff6674f",
+      "state": "completed",
+      "startedAt": 1795613680763,
+      "completedAt": 1795613680834,
+      "stdoutBytes": 13936,
+      "stderrBytes": 0,
+      "error": null,
+      "result": {
+        "executionID": "b8b172f6-8cc1-434e-bcc2-f9584ff6674f",
+        "stdout": "{\"schemaVersion\":1,\"inputSHA256\":\"ba8f3f1f09054887eed62532fa1d5ca2ac3bd60e6aa99a98ab1035c7653882a2\",\"engines\":{\"expo\":{\"toolingRoot\":\"expo\",\"tsconfigPath\":\"expo/tsconfig.json\",\"typescriptPath\":\"expo/node_modules/typescript/lib/typescript.js\",\"packageVersions\":{\"@expo/ui\":\"58.0.29\",\"@hanlin/expo-native-api\":\"1.0.0\",\"@hanlin/expo-ui\":\"1.0.0\",\"@nativescript/react-native\":\"9.1.2\",\"expo\":\"58.0.26\",\"expo-asset\":\"58.0.21\",\"expo-brownfield\":\"58.0.20\",\"expo-modules-core\":\"58.1.0\",\"expo-modules-jsi\":\"58.0.23\",\"react\":\"19.3.0\",\"react-native\":\"0.88.1\",\"react-native-worklets\":\"0.13.0\",\"expo-widgets\":\"58.0.29\",\"@babel/core\":\"7.29.7\",\"@react-native-community/cli\":\"20.2.0\",\"@react-native/codegen\":\"0.88.1\",\"@react-native/metro-config\":\"0.88.1\",\"@types/react\":\"19.3.2\",\"babel-preset-expo\":\"58.0.26\",\"esbuild\":\"0.25.12\",\"typescript\":\"6.0.2\",\"@hanlin/notification-events\":\"1.0.0\"},\"typescript\":{\"packageName\":\"@typescript/typescript6\",\"packageVersion\":\"6.0.2\",\"compilerVersion\":\"6.0.3\"},\"installation\":{\"inputs\":{\"schemaVersion\":1,\"packageSHA256\":\"bb447094c0ef2250c445f580fa91c81a55fc3187c7d49e145b84e9c1c3756dce\",\"lockSHA256\":\"3b31e1c8fd34145df900764a2cda013ab02ecea7f890c969ad5e0a92925d0dd8\",\"policySHA256\":\"6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120\",\"node\":\"24.5.0\",\"platform\":\"darwin\",\"architecture\":\"arm64\"},\"files\":19594,\"contentSHA256\":\"ec40dab8d54f6f359e3dc6084084f66d36c4d36f7d8167b0cbea599958df9d41\",\"command\":[\"npm\",\"ci\",\"--ignore-scripts\",\"--no-audit\",\"--no-fund\",\"--prefix\",\"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo\"]},\"hostContract\":{\"runtimeVersion\":\"58.0.29\",\"expoSDKVersion\":\"58.0.26\",\"bridgeVersion\":\"3.0.0\",\"nativeApiContractVersion\":\"1.0.0\",\"nativeApiAbiIdentity\":\"rn0.88.1-hermes260318099.0.5\",\"plugins\":{\"@expo/ui\":\"58.0.29\",\"expo-asset\":\"58.0.21\",\"expo-widgets\":\"58.0.29\",\"@hanlin/expo-ui\":\"3.0.0\",\"@nativescript/react-native\":\"9.1.2\",\"react-native-worklets\":\"0.13.0\"}},\"typeCheckingPolicy\":{\"strictSource\":true,\"checkOriginalDeclarationBodies\":true,\"explanation\":\"Original declarations and source are checked.\"},\"docs\":[\"docs/hanlin-expo-runtime.md\",\"docs/miniapp-sdk/README.md\",\"docs/miniapp-sdk/EXPO_WIDGETS_ORIGINAL.md\",\"docs/miniapp-sdk/EXAMPLES.md\",\"docs/miniapp-sdk/NOTIFICATION_EVENTS.md\"],\"capabilities\":[\"foreground\",\"native-ui\",\"host-services\",\"prepared-widgets\",\"original-widget-api\",\"original-live-activity-api\"],\"notificationEvents\":{\"schemaVersion\":1,\"packageName\":\"@hanlin/notification-events\",\"schemaPath\":\"docs/miniapp-sdk/notification-event.schema.json\",\"docsPath\":\"docs/miniapp-sdk/NOTIFICATION_EVENTS.md\",\"delivery\":\"foreground\",\"entrypointKind\":\"appIntent\"},\"build\":{\"nativeHostRebuildRequiredForNativeDependencyChanges\":true},\"examples\":[{\"id\":\"expo-hello-world\",\"engine\":\"expo\",\"level\":\"hello-world\",\"title\":\"Expo Hello World\",\"directory\":\"expo-hello-world\",\"path\":\"examples/expo-hello-world\",\"entry\":\"index.ts\"},{\"id\":\"sdk-only-departure-budget\",\"engine\":\"expo\",\"level\":\"complete-app\",\"title\":\"Departure Budget\",\"directory\":\"sdk-only-departure-budget\",\"path\":\"examples/sdk-only-departure-budget\",\"entry\":\"index.ts\"}]},\"nativescript\":{\"toolingRoot\":\"nativescript\",\"tsconfigPath\":\"nativescript/tsconfig.json\",\"typescriptPath\":\"nativescript/node_modules/typescript/lib/typescript.js\",\"packageVersions\":{\"@nativescript/core\":\"9.1.4\",\"@nativescript/swift-ui\":\"4.0.2\",\"@nativescript/ios\":\"9.1.1\",\"@nativescript/types\":\"9.1.4\",\"@nativescript/vite\":\"8.0.24\",\"typescript\":\"5.9.3\",\"vite\":\"8.0.0\",\"@hanlin/notification-events\":\"1.0.0\",\"@hanlin/host-services\":\"1.0.0\"},\"typescript\":{\"packageName\":\"typescript\",\"packageVersion\":\"5.9.3\",\"compilerVersion\":\"5.9.3\"},\"installation\":{\"inputs\":{\"schemaVersion\":1,\"packageSHA256\":\"08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b\",\"lockSHA256\":\"16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b\",\"policySHA256\":\"6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120\",\"node\":\"24.5.0\",\"platform\":\"darwin\",\"architecture\":\"arm64\"},\"files\":5966,\"contentSHA256\":\"9e83864b9618b6e7f4a7106ec78d5a290d2dfed6a317fc0cf6e7843a9126f616\",\"command\":[\"npm\",\"ci\",\"--ignore-scripts\",\"--no-audit\",\"--no-fund\",\"--prefix\",\"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/NativeScript\"]},\"typeCheckingPolicy\":{\"strictSource\":true,\"checkOriginalDeclarationBodies\":false,\"explanation\":\"Original NativeScript consumer mode: source is strict; original declaration bodies are not revalidated. Set skipLibCheck:false for SDK declaration diagnostics.\"},\"docs\":[\"docs/hanlin-nativescript-guide.md\",\"docs/miniapp-sdk/README.md\",\"docs/miniapp-sdk/EXAMPLES.md\",\"docs/miniapp-sdk/NOTIFICATION_EVENTS.md\"],\"capabilities\":[\"foreground\",\"native-ui\",\"host-services\",\"esm-package\"],\"notificationEvents\":{\"schemaVersion\":1,\"packageName\":\"@hanlin/notification-events\",\"schemaPath\":\"docs/miniapp-sdk/notification-event.schema.json\",\"docsPath\":\"docs/miniapp-sdk/NOTIFICATION_EVENTS.md\",\"delivery\":\"foreground\",\"entrypointKind\":\"appIntent\"},\"build\":{\"nativeHostRebuildRequiredForNativeDependencyChanges\":true},\"examples\":[{\"id\":\"nativescript-hello-world\",\"engine\":\"nativescript\",\"level\":\"hello-world\",\"title\":\"NativeScript Hello World\",\"directory\":\"nativescript-hello-world\",\"path\":\"examples/nativescript-hello-world\",\"entry\":\"index.ts\"},{\"id\":\"sdk-only-table-share\",\"engine\":\"nativescript\",\"level\":\"complete-app\",\"title\":\"Table Share\",\"directory\":\"sdk-only-table-share\",\"path\":\"examples/sdk-only-table-share\",\"entry\":\"index.ts\"}],\"packageResources\":[{\"name\":\"@nativescript/core\",\"packageJSON\":\"nativescript/node_modules/@nativescript/core/package.json\",\"types\":\"nativescript/node_modules/@nativescript/core/index.d.ts\"},{\"name\":\"@nativescript/swift-ui\",\"packageJSON\":\"nativescript/node_modules/@nativescript/swift-ui/package.json\",\"types\":\"nativescript/node_modules/@nativescript/swift-ui/index.d.ts\"},{\"name\":\"@nativescript/ios\",\"packageJSON\":\"nativescript/node_modules/@nativescript/ios/package.json\",\"types\":\"nativescript/node_modules/@nativescript/ios/types/index.d.ts\"},{\"name\":\"@nativescript/types\",\"packageJSON\":\"nativescript/node_modules/@nativescript/types/package.json\"},{\"name\":\"@nativescript/vite\",\"packageJSON\":\"nativescript/node_modules/@nativescript/vite/package.json\",\"types\":\"nativescript/node_modules/@nativescript/vite/index.d.ts\"},{\"name\":\"typescript\",\"packageJSON\":\"nativescript/node_modules/typescript/package.json\",\"types\":\"nativescript/node_modules/typescript/lib/typescript.d.ts\"},{\"name\":\"vite\",\"packageJSON\":\"nativescript/node_modules/vite/package.json\"},{\"name\":\"@hanlin/notification-events\",\"packageJSON\":\"nativescript/node_modules/@hanlin/notification-events/package.json\",\"types\":\"nativescript/node_modules/@hanlin/notification-events/index.d.ts\"},{\"name\":\"@hanlin/host-services\",\"packageJSON\":\"nativescript/node_modules/@hanlin/host-services/package.json\",\"types\":\"nativescript/node_modules/@hanlin/host-services/index.d.ts\"}],\"declarationEntrypoints\":[]},\"scriptwidget\":{\"toolingRoot\":\"scriptwidget\",\"tsconfigPath\":\"scriptwidget/tsconfig.json\",\"typescriptPath\":\"expo/node_modules/typescript/lib/typescript.js\",\"typescript\":{\"packageName\":\"@typescript/typescript6\",\"packageVersion\":\"6.0.2\",\"compilerVersion\":\"6.0.3\"},\"packageVersions\":{\"everettjf/scriptwidget\":\"4da256d58247bbafb9a5cd443a285250b97b3c4b,68f04194f00222558c44d5a832e7617a96f62574\"},\"docs\":[\"docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md\",\"docs/miniapp-sdk/SCRIPTWIDGET_CONTROLS.md\"],\"capabilities\":[\"prepared-widgets\",\"original-native-services\",\"original-control-widgets\"],\"packageManifestSchemaPath\":\"scriptwidget/widget-manifest.schema.json\",\"packageManifestValidatorPath\":\"scriptwidget/manifest-validation.mjs\",\"nativeAPIManifestPath\":\"scriptwidget/native-api.json\",\"nativeAPISummary\":{\"globals\":41,\"objects\":24,\"methods\":118},\"upstreamTypingStatus\":\"Original component catalog and declarations generated from the original native JSExport APIs and explicit Hanlin host additions embedded in this exact build.\"}},\"examplesIndexPath\":\"examples/index.json\",\"upstream\":{\"expo\":{\"sdkVersion\":\"58.0.26\",\"uiVersion\":\"58.0.29\",\"assetVersion\":\"58.0.21\",\"widgetsVersion\":\"58.0.29\",\"brownfieldVersion\":\"58.0.20\",\"modulesCoreVersion\":\"58.1.0\",\"reactNativeVersion\":\"0.88.1\",\"reactVersion\":\"19.3.0\",\"hermesVersion\":\"260318099.0.5\"},\"nativescript\":{\"coreVersion\":\"9.1.4\",\"iosRuntimeVersion\":\"9.1.1\",\"iosSPMRepository\":\"https://github.com/NativeScript/ios-spm.git\",\"iosSPMTagRevision\":\"33605a91197dc86bd9f15fecaad6e897223caa8a\"},\"scriptwidget\":{\"everettjf/scriptwidget\":\"4da256d58247bbafb9a5cd443a285250b97b3c4b,68f04194f00222558c44d5a832e7617a96f62574\"}},\"nativeBinaries\":\"Native host binaries are installed by the host build. This SDK contains original JavaScript and declaration sources.\",\"sdkRoot\":\"/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/runtime/node/host-7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc/MiniAppSDK\",\"manifestSHA256\":\"4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92\",\"inventory\":{\"resource\":\"miniapp-sdk.json\",\"fileCount\":25669,\"sourceInputCount\":235},\"engine\":\"nativescript\",\"selectedEngine\":{\"toolingRoot\":\"nativescript\",\"tsconfigPath\":\"nativescript/tsconfig.json\",\"typescriptPath\":\"nativescript/node_modules/typescript/lib/typescript.js\",\"packageVersions\":{\"@nativescript/core\":\"9.1.4\",\"@nativescript/swift-ui\":\"4.0.2\",\"@nativescript/ios\":\"9.1.1\",\"@nativescript/types\":\"9.1.4\",\"@nativescript/vite\":\"8.0.24\",\"typescript\":\"5.9.3\",\"vite\":\"8.0.0\",\"@hanlin/notification-events\":\"1.0.0\",\"@hanlin/host-services\":\"1.0.0\"},\"typescript\":{\"packageName\":\"typescript\",\"packageVersion\":\"5.9.3\",\"compilerVersion\":\"5.9.3\"},\"installation\":{\"inputs\":{\"schemaVersion\":1,\"packageSHA256\":\"08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b\",\"lockSHA256\":\"16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b\",\"policySHA256\":\"6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120\",\"node\":\"24.5.0\",\"platform\":\"darwin\",\"architecture\":\"arm64\"},\"files\":5966,\"contentSHA256\":\"9e83864b9618b6e7f4a7106ec78d5a290d2dfed6a317fc0cf6e7843a9126f616\",\"command\":[\"npm\",\"ci\",\"--ignore-scripts\",\"--no-audit\",\"--no-fund\",\"--prefix\",\"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/NativeScript\"]},\"typeCheckingPolicy\":{\"strictSource\":true,\"checkOriginalDeclarationBodies\":false,\"explanation\":\"Original NativeScript consumer mode: source is strict; original declaration bodies are not revalidated. Set skipLibCheck:false for SDK declaration diagnostics.\"},\"docs\":[\"docs/hanlin-nativescript-guide.md\",\"docs/miniapp-sdk/README.md\",\"docs/miniapp-sdk/EXAMPLES.md\",\"docs/miniapp-sdk/NOTIFICATION_EVENTS.md\"],\"capabilities\":[\"foreground\",\"native-ui\",\"host-services\",\"esm-package\"],\"notificationEvents\":{\"schemaVersion\":1,\"packageName\":\"@hanlin/notification-events\",\"schemaPath\":\"docs/miniapp-sdk/notification-event.schema.json\",\"docsPath\":\"docs/miniapp-sdk/NOTIFICATION_EVENTS.md\",\"delivery\":\"foreground\",\"entrypointKind\":\"appIntent\"},\"build\":{\"nativeHostRebuildRequiredForNativeDependencyChanges\":true},\"examples\":[{\"id\":\"nativescript-hello-world\",\"engine\":\"nativescript\",\"level\":\"hello-world\",\"title\":\"NativeScript Hello World\",\"directory\":\"nativescript-hello-world\",\"path\":\"examples/nativescript-hello-world\",\"entry\":\"index.ts\"},{\"id\":\"sdk-only-table-share\",\"engine\":\"nativescript\",\"level\":\"complete-app\",\"title\":\"Table Share\",\"directory\":\"sdk-only-table-share\",\"path\":\"examples/sdk-only-table-share\",\"entry\":\"index.ts\"}],\"packageResources\":[{\"name\":\"@nativescript/core\",\"packageJSON\":\"nativescript/node_modules/@nativescript/core/package.json\",\"types\":\"nativescript/node_modules/@nativescript/core/index.d.ts\"},{\"name\":\"@nativescript/swift-ui\",\"packageJSON\":\"nativescript/node_modules/@nativescript/swift-ui/package.json\",\"types\":\"nativescript/node_modules/@nativescript/swift-ui/index.d.ts\"},{\"name\":\"@nativescript/ios\",\"packageJSON\":\"nativescript/node_modules/@nativescript/ios/package.json\",\"types\":\"nativescript/node_modules/@nativescript/ios/types/index.d.ts\"},{\"name\":\"@nativescript/types\",\"packageJSON\":\"nativescript/node_modules/@nativescript/types/package.json\"},{\"name\":\"@nativescript/vite\",\"packageJSON\":\"nativescript/node_modules/@nativescript/vite/package.json\",\"types\":\"nativescript/node_modules/@nativescript/vite/index.d.ts\"},{\"name\":\"typescript\",\"packageJSON\":\"nativescript/node_modules/typescript/package.json\",\"types\":\"nativescript/node_modules/typescript/lib/typescript.d.ts\"},{\"name\":\"vite\",\"packageJSON\":\"nativescript/node_modules/vite/package.json\"},{\"name\":\"@hanlin/notification-events\",\"packageJSON\":\"nativescript/node_modules/@hanlin/notification-events/package.json\",\"types\":\"nativescript/node_modules/@hanlin/notification-events/index.d.ts\"},{\"name\":\"@hanlin/host-services\",\"packageJSON\":\"nativescript/node_modules/@hanlin/host-services/package.json\",\"types\":\"nativescript/node_modules/@hanlin/host-services/index.d.ts\"}],\"declarationEntrypoints\":[]},\"authoring\":{\"config\":\"hanlin.authoring.json\",\"documentation\":\"docs/miniapp-sdk/AUTHORING_WORKFLOW.md\",\"operations\":[\"get_miniapp_sdk\",\"write_miniapp\",\"validate_miniapp\",\"build_miniapp\",\"import_miniapp\"],\"sourceRetention\":\"source/\",\"template\":{\"schemaVersion\":1,\"engine\":\"nativescript\",\"entry\":\"index.tsx\",\"tsconfig\":\"tsconfig.json\"},\"instructions\":[\"Use the selected engine packageVersions and original declarations in toolingRoot.\",\"Use write_miniapp to create script.json, package.json, tsconfig.json, an entry source, and hanlin.authoring.json; it returns a writable sourceRoot.\",\"Run validate_miniapp; repair every error using the reported file and one-based line/column.\",\"Run build_miniapp, then import_miniapp with archive_path from the successful build report.\",\"A queued import is not yet installed; retain its transfer ID and inspect the receiver result.\"]},\"executionID\":\"b8b172f6-8cc1-434e-bcc2-f9584ff6674f\"}\n",
+        "stderr": "",
+        "value": {
+          "schemaVersion": 1,
+          "inputSHA256": "ba8f3f1f09054887eed62532fa1d5ca2ac3bd60e6aa99a98ab1035c7653882a2",
+          "engines": {
+            "expo": {
+              "toolingRoot": "expo",
+              "tsconfigPath": "expo/tsconfig.json",
+              "typescriptPath": "expo/node_modules/typescript/lib/typescript.js",
+              "packageVersions": {
+                "@expo/ui": "58.0.29",
+                "@hanlin/expo-native-api": "1.0.0",
+                "@hanlin/expo-ui": "1.0.0",
+                "@nativescript/react-native": "9.1.2",
+                "expo": "58.0.26",
+                "expo-asset": "58.0.21",
+                "expo-brownfield": "58.0.20",
+                "expo-modules-core": "58.1.0",
+                "expo-modules-jsi": "58.0.23",
+                "react": "19.3.0",
+                "react-native": "0.88.1",
+                "react-native-worklets": "0.13.0",
+                "expo-widgets": "58.0.29",
+                "@babel/core": "7.29.7",
+                "@react-native-community/cli": "20.2.0",
+                "@react-native/codegen": "0.88.1",
+                "@react-native/metro-config": "0.88.1",
+                "@types/react": "19.3.2",
+                "babel-preset-expo": "58.0.26",
+                "esbuild": "0.25.12",
+                "typescript": "6.0.2",
+                "@hanlin/notification-events": "1.0.0"
+              },
+              "typescript": {
+                "packageName": "@typescript/typescript6",
+                "packageVersion": "6.0.2",
+                "compilerVersion": "6.0.3"
+              },
+              "installation": {
+                "inputs": {
+                  "schemaVersion": 1,
+                  "packageSHA256": "bb447094c0ef2250c445f580fa91c81a55fc3187c7d49e145b84e9c1c3756dce",
+                  "lockSHA256": "3b31e1c8fd34145df900764a2cda013ab02ecea7f890c969ad5e0a92925d0dd8",
+                  "policySHA256": "6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120",
+                  "node": "24.5.0",
+                  "platform": "darwin",
+                  "architecture": "arm64"
+                },
+                "files": 19594,
+                "contentSHA256": "ec40dab8d54f6f359e3dc6084084f66d36c4d36f7d8167b0cbea599958df9d41",
+                "command": [
+                  "npm",
+                  "ci",
+                  "--ignore-scripts",
+                  "--no-audit",
+                  "--no-fund",
+                  "--prefix",
+                  "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo"
+                ]
+              },
+              "hostContract": {
+                "runtimeVersion": "58.0.29",
+                "expoSDKVersion": "58.0.26",
+                "bridgeVersion": "3.0.0",
+                "nativeApiContractVersion": "1.0.0",
+                "nativeApiAbiIdentity": "rn0.88.1-hermes260318099.0.5",
+                "plugins": {
+                  "@expo/ui": "58.0.29",
+                  "expo-asset": "58.0.21",
+                  "expo-widgets": "58.0.29",
+                  "@hanlin/expo-ui": "3.0.0",
+                  "@nativescript/react-native": "9.1.2",
+                  "react-native-worklets": "0.13.0"
+                }
+              },
+              "typeCheckingPolicy": {
+                "strictSource": true,
+                "checkOriginalDeclarationBodies": true,
+                "explanation": "Original declarations and source are checked."
+              },
+              "docs": [
+                "docs/hanlin-expo-runtime.md",
+                "docs/miniapp-sdk/README.md",
+                "docs/miniapp-sdk/EXPO_WIDGETS_ORIGINAL.md",
+                "docs/miniapp-sdk/EXAMPLES.md",
+                "docs/miniapp-sdk/NOTIFICATION_EVENTS.md"
+              ],
+              "capabilities": [
+                "foreground",
+                "native-ui",
+                "host-services",
+                "prepared-widgets",
+                "original-widget-api",
+                "original-live-activity-api"
+              ],
+              "notificationEvents": {
+                "schemaVersion": 1,
+                "packageName": "@hanlin/notification-events",
+                "schemaPath": "docs/miniapp-sdk/notification-event.schema.json",
+                "docsPath": "docs/miniapp-sdk/NOTIFICATION_EVENTS.md",
+                "delivery": "foreground",
+                "entrypointKind": "appIntent"
+              },
+              "build": {
+                "nativeHostRebuildRequiredForNativeDependencyChanges": true
+              },
+              "examples": [
+                {
+                  "id": "expo-hello-world",
+                  "engine": "expo",
+                  "level": "hello-world",
+                  "title": "Expo Hello World",
+                  "directory": "expo-hello-world",
+                  "path": "examples/expo-hello-world",
+                  "entry": "index.ts"
+                },
+                {
+                  "id": "sdk-only-departure-budget",
+                  "engine": "expo",
+                  "level": "complete-app",
+                  "title": "Departure Budget",
+                  "directory": "sdk-only-departure-budget",
+                  "path": "examples/sdk-only-departure-budget",
+                  "entry": "index.ts"
+                }
+              ]
+            },
+            "nativescript": {
+              "toolingRoot": "nativescript",
+              "tsconfigPath": "nativescript/tsconfig.json",
+              "typescriptPath": "nativescript/node_modules/typescript/lib/typescript.js",
+              "packageVersions": {
+                "@nativescript/core": "9.1.4",
+                "@nativescript/swift-ui": "4.0.2",
+                "@nativescript/ios": "9.1.1",
+                "@nativescript/types": "9.1.4",
+                "@nativescript/vite": "8.0.24",
+                "typescript": "5.9.3",
+                "vite": "8.0.0",
+                "@hanlin/notification-events": "1.0.0",
+                "@hanlin/host-services": "1.0.0"
+              },
+              "typescript": {
+                "packageName": "typescript",
+                "packageVersion": "5.9.3",
+                "compilerVersion": "5.9.3"
+              },
+              "installation": {
+                "inputs": {
+                  "schemaVersion": 1,
+                  "packageSHA256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+                  "lockSHA256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+                  "policySHA256": "6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120",
+                  "node": "24.5.0",
+                  "platform": "darwin",
+                  "architecture": "arm64"
+                },
+                "files": 5966,
+                "contentSHA256": "9e83864b9618b6e7f4a7106ec78d5a290d2dfed6a317fc0cf6e7843a9126f616",
+                "command": [
+                  "npm",
+                  "ci",
+                  "--ignore-scripts",
+                  "--no-audit",
+                  "--no-fund",
+                  "--prefix",
+                  "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/NativeScript"
+                ]
+              },
+              "typeCheckingPolicy": {
+                "strictSource": true,
+                "checkOriginalDeclarationBodies": false,
+                "explanation": "Original NativeScript consumer mode: source is strict; original declaration bodies are not revalidated. Set skipLibCheck:false for SDK declaration diagnostics."
+              },
+              "docs": [
+                "docs/hanlin-nativescript-guide.md",
+                "docs/miniapp-sdk/README.md",
+                "docs/miniapp-sdk/EXAMPLES.md",
+                "docs/miniapp-sdk/NOTIFICATION_EVENTS.md"
+              ],
+              "capabilities": [
+                "foreground",
+                "native-ui",
+                "host-services",
+                "esm-package"
+              ],
+              "notificationEvents": {
+                "schemaVersion": 1,
+                "packageName": "@hanlin/notification-events",
+                "schemaPath": "docs/miniapp-sdk/notification-event.schema.json",
+                "docsPath": "docs/miniapp-sdk/NOTIFICATION_EVENTS.md",
+                "delivery": "foreground",
+                "entrypointKind": "appIntent"
+              },
+              "build": {
+                "nativeHostRebuildRequiredForNativeDependencyChanges": true
+              },
+              "examples": [
+                {
+                  "id": "nativescript-hello-world",
+                  "engine": "nativescript",
+                  "level": "hello-world",
+                  "title": "NativeScript Hello World",
+                  "directory": "nativescript-hello-world",
+                  "path": "examples/nativescript-hello-world",
+                  "entry": "index.ts"
+                },
+                {
+                  "id": "sdk-only-table-share",
+                  "engine": "nativescript",
+                  "level": "complete-app",
+                  "title": "Table Share",
+                  "directory": "sdk-only-table-share",
+                  "path": "examples/sdk-only-table-share",
+                  "entry": "index.ts"
+                }
+              ],
+              "packageResources": [
+                {
+                  "name": "@nativescript/core",
+                  "packageJSON": "nativescript/node_modules/@nativescript/core/package.json",
+                  "types": "nativescript/node_modules/@nativescript/core/index.d.ts"
+                },
+                {
+                  "name": "@nativescript/swift-ui",
+                  "packageJSON": "nativescript/node_modules/@nativescript/swift-ui/package.json",
+                  "types": "nativescript/node_modules/@nativescript/swift-ui/index.d.ts"
+                },
+                {
+                  "name": "@nativescript/ios",
+                  "packageJSON": "nativescript/node_modules/@nativescript/ios/package.json",
+                  "types": "nativescript/node_modules/@nativescript/ios/types/index.d.ts"
+                },
+                {
+                  "name": "@nativescript/types",
+                  "packageJSON": "nativescript/node_modules/@nativescript/types/package.json"
+                },
+                {
+                  "name": "@nativescript/vite",
+                  "packageJSON": "nativescript/node_modules/@nativescript/vite/package.json",
+                  "types": "nativescript/node_modules/@nativescript/vite/index.d.ts"
+                },
+                {
+                  "name": "typescript",
+                  "packageJSON": "nativescript/node_modules/typescript/package.json",
+                  "types": "nativescript/node_modules/typescript/lib/typescript.d.ts"
+                },
+                {
+                  "name": "vite",
+                  "packageJSON": "nativescript/node_modules/vite/package.json"
+                },
+                {
+                  "name": "@hanlin/notification-events",
+                  "packageJSON": "nativescript/node_modules/@hanlin/notification-events/package.json",
+                  "types": "nativescript/node_modules/@hanlin/notification-events/index.d.ts"
+                },
+                {
+                  "name": "@hanlin/host-services",
+                  "packageJSON": "nativescript/node_modules/@hanlin/host-services/package.json",
+                  "types": "nativescript/node_modules/@hanlin/host-services/index.d.ts"
+                }
+              ],
+              "declarationEntrypoints": []
+            },
+            "scriptwidget": {
+              "toolingRoot": "scriptwidget",
+              "tsconfigPath": "scriptwidget/tsconfig.json",
+              "typescriptPath": "expo/node_modules/typescript/lib/typescript.js",
+              "typescript": {
+                "packageName": "@typescript/typescript6",
+                "packageVersion": "6.0.2",
+                "compilerVersion": "6.0.3"
+              },
+              "packageVersions": {
+                "everettjf/scriptwidget": "4da256d58247bbafb9a5cd443a285250b97b3c4b,68f04194f00222558c44d5a832e7617a96f62574"
+              },
+              "docs": [
+                "docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md",
+                "docs/miniapp-sdk/SCRIPTWIDGET_CONTROLS.md"
+              ],
+              "capabilities": [
+                "prepared-widgets",
+                "original-native-services",
+                "original-control-widgets"
+              ],
+              "packageManifestSchemaPath": "scriptwidget/widget-manifest.schema.json",
+              "packageManifestValidatorPath": "scriptwidget/manifest-validation.mjs",
+              "nativeAPIManifestPath": "scriptwidget/native-api.json",
+              "nativeAPISummary": {
+                "globals": 41,
+                "objects": 24,
+                "methods": 118
+              },
+              "upstreamTypingStatus": "Original component catalog and declarations generated from the original native JSExport APIs and explicit Hanlin host additions embedded in this exact build."
+            }
+          },
+          "examplesIndexPath": "examples/index.json",
+          "upstream": {
+            "expo": {
+              "sdkVersion": "58.0.26",
+              "uiVersion": "58.0.29",
+              "assetVersion": "58.0.21",
+              "widgetsVersion": "58.0.29",
+              "brownfieldVersion": "58.0.20",
+              "modulesCoreVersion": "58.1.0",
+              "reactNativeVersion": "0.88.1",
+              "reactVersion": "19.3.0",
+              "hermesVersion": "260318099.0.5"
+            },
+            "nativescript": {
+              "coreVersion": "9.1.4",
+              "iosRuntimeVersion": "9.1.1",
+              "iosSPMRepository": "https://github.com/NativeScript/ios-spm.git",
+              "iosSPMTagRevision": "33605a91197dc86bd9f15fecaad6e897223caa8a"
+            },
+            "scriptwidget": {
+              "everettjf/scriptwidget": "4da256d58247bbafb9a5cd443a285250b97b3c4b,68f04194f00222558c44d5a832e7617a96f62574"
+            }
+          },
+          "nativeBinaries": "Native host binaries are installed by the host build. This SDK contains original JavaScript and declaration sources.",
+          "sdkRoot": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/runtime/node/host-7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc/MiniAppSDK",
+          "manifestSHA256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+          "inventory": {
+            "resource": "miniapp-sdk.json",
+            "fileCount": 25669,
+            "sourceInputCount": 235
+          },
+          "engine": "nativescript",
+          "selectedEngine": {
+            "toolingRoot": "nativescript",
+            "tsconfigPath": "nativescript/tsconfig.json",
+            "typescriptPath": "nativescript/node_modules/typescript/lib/typescript.js",
+            "packageVersions": {
+              "@nativescript/core": "9.1.4",
+              "@nativescript/swift-ui": "4.0.2",
+              "@nativescript/ios": "9.1.1",
+              "@nativescript/types": "9.1.4",
+              "@nativescript/vite": "8.0.24",
+              "typescript": "5.9.3",
+              "vite": "8.0.0",
+              "@hanlin/notification-events": "1.0.0",
+              "@hanlin/host-services": "1.0.0"
+            },
+            "typescript": {
+              "packageName": "typescript",
+              "packageVersion": "5.9.3",
+              "compilerVersion": "5.9.3"
+            },
+            "installation": {
+              "inputs": {
+                "schemaVersion": 1,
+                "packageSHA256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+                "lockSHA256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+                "policySHA256": "6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120",
+                "node": "24.5.0",
+                "platform": "darwin",
+                "architecture": "arm64"
+              },
+              "files": 5966,
+              "contentSHA256": "9e83864b9618b6e7f4a7106ec78d5a290d2dfed6a317fc0cf6e7843a9126f616",
+              "command": [
+                "npm",
+                "ci",
+                "--ignore-scripts",
+                "--no-audit",
+                "--no-fund",
+                "--prefix",
+                "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/NativeScript"
+              ]
+            },
+            "typeCheckingPolicy": {
+              "strictSource": true,
+              "checkOriginalDeclarationBodies": false,
+              "explanation": "Original NativeScript consumer mode: source is strict; original declaration bodies are not revalidated. Set skipLibCheck:false for SDK declaration diagnostics."
+            },
+            "docs": [
+              "docs/hanlin-nativescript-guide.md",
+              "docs/miniapp-sdk/README.md",
+              "docs/miniapp-sdk/EXAMPLES.md",
+              "docs/miniapp-sdk/NOTIFICATION_EVENTS.md"
+            ],
+            "capabilities": [
+              "foreground",
+              "native-ui",
+              "host-services",
+              "esm-package"
+            ],
+            "notificationEvents": {
+              "schemaVersion": 1,
+              "packageName": "@hanlin/notification-events",
+              "schemaPath": "docs/miniapp-sdk/notification-event.schema.json",
+              "docsPath": "docs/miniapp-sdk/NOTIFICATION_EVENTS.md",
+              "delivery": "foreground",
+              "entrypointKind": "appIntent"
+            },
+            "build": {
+              "nativeHostRebuildRequiredForNativeDependencyChanges": true
+            },
+            "examples": [
+              {
+                "id": "nativescript-hello-world",
+                "engine": "nativescript",
+                "level": "hello-world",
+                "title": "NativeScript Hello World",
+                "directory": "nativescript-hello-world",
+                "path": "examples/nativescript-hello-world",
+                "entry": "index.ts"
+              },
+              {
+                "id": "sdk-only-table-share",
+                "engine": "nativescript",
+                "level": "complete-app",
+                "title": "Table Share",
+                "directory": "sdk-only-table-share",
+                "path": "examples/sdk-only-table-share",
+                "entry": "index.ts"
+              }
+            ],
+            "packageResources": [
+              {
+                "name": "@nativescript/core",
+                "packageJSON": "nativescript/node_modules/@nativescript/core/package.json",
+                "types": "nativescript/node_modules/@nativescript/core/index.d.ts"
+              },
+              {
+                "name": "@nativescript/swift-ui",
+                "packageJSON": "nativescript/node_modules/@nativescript/swift-ui/package.json",
+                "types": "nativescript/node_modules/@nativescript/swift-ui/index.d.ts"
+              },
+              {
+                "name": "@nativescript/ios",
+                "packageJSON": "nativescript/node_modules/@nativescript/ios/package.json",
+                "types": "nativescript/node_modules/@nativescript/ios/types/index.d.ts"
+              },
+              {
+                "name": "@nativescript/types",
+                "packageJSON": "nativescript/node_modules/@nativescript/types/package.json"
+              },
+              {
+                "name": "@nativescript/vite",
+                "packageJSON": "nativescript/node_modules/@nativescript/vite/package.json",
+                "types": "nativescript/node_modules/@nativescript/vite/index.d.ts"
+              },
+              {
+                "name": "typescript",
+                "packageJSON": "nativescript/node_modules/typescript/package.json",
+                "types": "nativescript/node_modules/typescript/lib/typescript.d.ts"
+              },
+              {
+                "name": "vite",
+                "packageJSON": "nativescript/node_modules/vite/package.json"
+              },
+              {
+                "name": "@hanlin/notification-events",
+                "packageJSON": "nativescript/node_modules/@hanlin/notification-events/package.json",
+                "types": "nativescript/node_modules/@hanlin/notification-events/index.d.ts"
+              },
+              {
+                "name": "@hanlin/host-services",
+                "packageJSON": "nativescript/node_modules/@hanlin/host-services/package.json",
+                "types": "nativescript/node_modules/@hanlin/host-services/index.d.ts"
+              }
+            ],
+            "declarationEntrypoints": []
+          },
+          "authoring": {
+            "config": "hanlin.authoring.json",
+            "documentation": "docs/miniapp-sdk/AUTHORING_WORKFLOW.md",
+            "operations": [
+              "get_miniapp_sdk",
+              "write_miniapp",
+              "validate_miniapp",
+              "build_miniapp",
+              "import_miniapp"
+            ],
+            "sourceRetention": "source/",
+            "template": {
+              "schemaVersion": 1,
+              "engine": "nativescript",
+              "entry": "index.tsx",
+              "tsconfig": "tsconfig.json"
+            },
+            "instructions": [
+              "Use the selected engine packageVersions and original declarations in toolingRoot.",
+              "Use write_miniapp to create script.json, package.json, tsconfig.json, an entry source, and hanlin.authoring.json; it returns a writable sourceRoot.",
+              "Run validate_miniapp; repair every error using the reported file and one-based line/column.",
+              "Run build_miniapp, then import_miniapp with archive_path from the successful build report.",
+              "A queued import is not yet installed; retain its transfer ID and inspect the receiver result."
+            ]
+          },
+          "executionID": "b8b172f6-8cc1-434e-bcc2-f9584ff6674f"
+        },
+        "exitCode": 0,
+        "durationMilliseconds": 71,
+        "didTimeOut": false,
+        "wasCancelled": false,
+        "outputWasTruncated": false,
+        "outputFiles": {
+          "stdout": {
+            "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/jobs/node/b8b172f6-8cc1-434e-bcc2-f9584ff6674f/stdout.log",
+            "bytes": 13936,
+            "sha256": "af0a1e09526bffd9bb40cae392a9fa9c3675326d081c00b8218ed5a9dabb3de4"
+          },
+          "stderr": {
+            "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/jobs/node/b8b172f6-8cc1-434e-bcc2-f9584ff6674f/stderr.log",
+            "bytes": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      },
+      "main": "import { runMiniAppOperation } from \"file:\\/\\/\\/Users\\/m1\\/Library\\/Developer\\/CoreSimulator\\/Devices\\/E742FBCD-8FF0-4130-B143-7F8328637138\\/data\\/Containers\\/Data\\/Application\\/5478D077-32A2-4535-9113-318715D2635C\\/Library\\/Application%20Support\\/HanlinRuntime\\/v1\\/runtime\\/node\\/host-7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc\\/miniapp-authoring.mjs\";\nconst report = await runMiniAppOperation({\"operation\":\"sdk\",\"engine\":\"nativescript\"}, {sdkRoot: \"\\/Users\\/m1\\/Library\\/Developer\\/CoreSimulator\\/Devices\\/E742FBCD-8FF0-4130-B143-7F8328637138\\/data\\/Containers\\/Data\\/Application\\/5478D077-32A2-4535-9113-318715D2635C\\/Library\\/Application Support\\/HanlinRuntime\\/v1\\/runtime\\/node\\/host-7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc\\/MiniAppSDK\"});\nconst receipt = { ...report, executionID: \"b8b172f6-8cc1-434e-bcc2-f9584ff6674f\" };\nconsole.log(JSON.stringify(receipt));\nprocess.exitCode = receipt.succeeded === false ? 1 : 0;\nexport default receipt;"
+    }
+  ],
+  "members": [
+    {
+      "path": "jobs/node/072c30f4-592f-443c-bc83-eca5afd80bb7/job.json",
+      "bytes": 174,
+      "sha256": "117fccafee610c1f45144b81a479dd977440383dbc00837b51dedd2e46120aaf"
+    },
+    {
+      "path": "jobs/node/072c30f4-592f-443c-bc83-eca5afd80bb7/main.mjs",
+      "bytes": 1318,
+      "sha256": "e9fee87eea64130d05dedd53307678ba94374708b79efd75cca3116f29187ffa"
+    },
+    {
+      "path": "jobs/node/072c30f4-592f-443c-bc83-eca5afd80bb7/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "jobs/node/072c30f4-592f-443c-bc83-eca5afd80bb7/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "jobs/node/72682870-841c-46e9-a252-447140814653/job.json",
+      "bytes": 3998,
+      "sha256": "e95644d1616d1ff55740952f11b7e57f6ec2aef047a41069505df8289a991a8e"
+    },
+    {
+      "path": "jobs/node/72682870-841c-46e9-a252-447140814653/main.mjs",
+      "bytes": 1313,
+      "sha256": "f9fb6b8da35df537c9f86b6041b4b666e6487462a5f0e86614d1cb9eb91c9f6b"
+    },
+    {
+      "path": "jobs/node/72682870-841c-46e9-a252-447140814653/stdout.log",
+      "bytes": 1357,
+      "sha256": "ccb2d631b5347765846f06dd4600c55d58c629ef5c81ab093240bf862dd4caf3"
+    },
+    {
+      "path": "jobs/node/72682870-841c-46e9-a252-447140814653/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "jobs/node/aec9f0dc-ec22-4b95-9533-99c2cd2c3d74/job.json",
+      "bytes": 3139,
+      "sha256": "58e548e2481598f1d0a5581c82a355806822daf8c19de86cc768aa28a93f2264"
+    },
+    {
+      "path": "jobs/node/aec9f0dc-ec22-4b95-9533-99c2cd2c3d74/main.mjs",
+      "bytes": 1321,
+      "sha256": "02621dad13e96984998f2f4cc5935ed280bdd8cb6b8ca577a0249b900bd5174f"
+    },
+    {
+      "path": "jobs/node/aec9f0dc-ec22-4b95-9533-99c2cd2c3d74/stdout.log",
+      "bytes": 949,
+      "sha256": "4dced1e8c941fda75a95a61452d235c618160f0eddee7e3d5a5338dda70abcc4"
+    },
+    {
+      "path": "jobs/node/aec9f0dc-ec22-4b95-9533-99c2cd2c3d74/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "jobs/node/b8b172f6-8cc1-434e-bcc2-f9584ff6674f/job.json",
+      "bytes": 30282,
+      "sha256": "e08b9785f56a76c2b0e99a7c88dfdd2151243c578b7144edad64ab2d2394019d"
+    },
+    {
+      "path": "jobs/node/b8b172f6-8cc1-434e-bcc2-f9584ff6674f/main.mjs",
+      "bytes": 995,
+      "sha256": "fcd235aef0683cd64a6edc64b678c4199da37d37f1a9096d6ceae759f4f0d456"
+    },
+    {
+      "path": "jobs/node/b8b172f6-8cc1-434e-bcc2-f9584ff6674f/stdout.log",
+      "bytes": 13936,
+      "sha256": "af0a1e09526bffd9bb40cae392a9fa9c3675326d081c00b8218ed5a9dabb3de4"
+    },
+    {
+      "path": "jobs/node/b8b172f6-8cc1-434e-bcc2-f9584ff6674f/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "toolResults/chat-ce19f67884fed7e14eaa86bf10352238aad4c18174941d97636a71c7f89fc4ba/ref_2b59a51dee9f4dbb9b0e7921c89089b6.json",
+      "bytes": 139,
+      "sha256": "518ab094d2a235cbe30cffd5264fbf1174898fc1db0bd24a4cdb79d7660fbb50"
+    },
+    {
+      "path": "toolResults/chat-ce19f67884fed7e14eaa86bf10352238aad4c18174941d97636a71c7f89fc4ba/ref_2b59a51dee9f4dbb9b0e7921c89089b6.payload",
+      "bytes": 1340,
+      "sha256": "2f9f050605d280c6c52b58457723d7e1fb016b8556d7c069b4bc2728e6f2ac7b"
+    },
+    {
+      "path": "toolResults/chat-ce19f67884fed7e14eaa86bf10352238aad4c18174941d97636a71c7f89fc4ba/ref_456d6d1454854c7aa138608853ce9f7e.json",
+      "bytes": 140,
+      "sha256": "211315939d4d8e2207b27098c0831db2c830dd2048047abd9a80b77fc1a5c48b"
+    },
+    {
+      "path": "toolResults/chat-ce19f67884fed7e14eaa86bf10352238aad4c18174941d97636a71c7f89fc4ba/ref_456d6d1454854c7aa138608853ce9f7e.payload",
+      "bytes": 13935,
+      "sha256": "49ff07958bffbf8197b62761b4a350e66f597ef19d4153868553122b91cf8b39"
+    },
+    {
+      "path": "repairProject/MiniAppTypeError.hanlinNativeScript",
+      "bytes": 4399,
+      "sha256": "9a2a14be4ad24565bad66a98fc53522229de903acfb8a41b3df18006e81b51c9"
+    },
+    {
+      "path": "repairProject/diagnostics.json",
+      "bytes": 1973,
+      "sha256": "fbe0c97ae40e12bb00a9635de2ac7bb99b4875b6f38aa8a7603c05eb5f09a358"
+    },
+    {
+      "path": "repairProject/project/hanlin.validation.json",
+      "bytes": 774,
+      "sha256": "a59ff01c18c3a992b45cb055a5af4deca5d1893b3a7b38000e65a77f2c6f30ba"
+    },
+    {
+      "path": "repairProject/project/hanlin.authoring.json",
+      "bytes": 1643,
+      "sha256": "e642cc15f45d70c606097c3b62cca6534b9bd53a659b8a28bd8175f7a3e40019"
+    },
+    {
+      "path": "repairProject/project/script.json",
+      "bytes": 171,
+      "sha256": "acd6800ca8220fa14546ed28eab6dd1e8676ec8f107d13ccf8535f467bd6b39f"
+    },
+    {
+      "path": "repairProject/project/nativescript/app/package.json",
+      "bytes": 299,
+      "sha256": "9afb516e7e0301554d6dc122a33651d5b15af29e134879f6e616d4da29903345"
+    },
+    {
+      "path": "repairProject/project/nativescript/app/bundle.mjs",
+      "bytes": 30,
+      "sha256": "77326621f8ddcf98a2eccfc7deb128f535b962f1969f914b562a8d3823a7d049"
+    },
+    {
+      "path": "repairProject/project/nativescript/app/modules/index.mjs.map",
+      "bytes": 1005,
+      "sha256": "75817b5a5e3fcef325906ef4e6609c122cb17692e83fa94f55a161acfbf72507"
+    },
+    {
+      "path": "repairProject/project/nativescript/app/modules/index.mjs",
+      "bytes": 473,
+      "sha256": "385f77fdbb936605a555084d36db281e8b0c81914de51815927a47595bca1844"
+    },
+    {
+      "path": "repairProject/project/source/hanlin.authoring.json",
+      "bytes": 76,
+      "sha256": "fcd55704f81de3ab56c92484d1c59bb3e5efe8dd9383ee791e61a58429314e0c"
+    },
+    {
+      "path": "repairProject/project/source/script.json",
+      "bytes": 171,
+      "sha256": "acd6800ca8220fa14546ed28eab6dd1e8676ec8f107d13ccf8535f467bd6b39f"
+    },
+    {
+      "path": "repairProject/project/source/package.json",
+      "bytes": 94,
+      "sha256": "5832acb1bde65c8cac7e628b64902291ee2aa2a20c23962524b0ea5e7ae933eb"
+    },
+    {
+      "path": "repairProject/project/source/tsconfig.json",
+      "bytes": 188,
+      "sha256": "91961a73001983b248169b1544e7ef30f96334bfa5528aaad3c24429a1d92af0"
+    },
+    {
+      "path": "repairProject/project/source/index.ts",
+      "bytes": 397,
+      "sha256": "9ca13f866936891fd664e0001e366632c94fe2f069308ae6cca0cc09149a6101"
+    },
+    {
+      "path": "repairProject/project/source/.hanlin-build/c3ca2a3c-c501-4b54-9945-bd94f48744b0/package/source/hanlin.authoring.json",
+      "bytes": 76,
+      "sha256": "fcd55704f81de3ab56c92484d1c59bb3e5efe8dd9383ee791e61a58429314e0c"
+    },
+    {
+      "path": "repairProject/project/source/.hanlin-build/c3ca2a3c-c501-4b54-9945-bd94f48744b0/package/source/script.json",
+      "bytes": 171,
+      "sha256": "acd6800ca8220fa14546ed28eab6dd1e8676ec8f107d13ccf8535f467bd6b39f"
+    },
+    {
+      "path": "repairProject/project/source/.hanlin-build/c3ca2a3c-c501-4b54-9945-bd94f48744b0/package/source/package.json",
+      "bytes": 94,
+      "sha256": "5832acb1bde65c8cac7e628b64902291ee2aa2a20c23962524b0ea5e7ae933eb"
+    },
+    {
+      "path": "repairProject/project/source/.hanlin-build/c3ca2a3c-c501-4b54-9945-bd94f48744b0/package/source/tsconfig.json",
+      "bytes": 188,
+      "sha256": "91961a73001983b248169b1544e7ef30f96334bfa5528aaad3c24429a1d92af0"
+    },
+    {
+      "path": "repairProject/project/source/.hanlin-build/c3ca2a3c-c501-4b54-9945-bd94f48744b0/package/source/index.ts",
+      "bytes": 397,
+      "sha256": "9ca13f866936891fd664e0001e366632c94fe2f069308ae6cca0cc09149a6101"
+    },
+    {
+      "path": "runtimeLogs/node-runtime.log",
+      "bytes": 4576,
+      "sha256": "2350f769b331510a73af5260c77c778e3eda76e5faac80d1301bf7e560138dad"
+    }
+  ]
+}

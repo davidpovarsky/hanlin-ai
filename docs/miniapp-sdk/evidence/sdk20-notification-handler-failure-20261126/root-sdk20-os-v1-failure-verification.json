@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "verifiedAt": "2026-11-26T00:59:10.754718+00:00",
+  "status": "PRESERVED_OS_FAILURE_IDENTITIES_VERIFIED",
+  "verification": [
+    {
+      "receipt": {
+        "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/receipt.json",
+        "bytes": 46210,
+        "sha256": "b0b9419ec8a58bc931176d9648a6f5625e775d599df945a8163a7f51d51f49c2"
+      },
+      "members": 74,
+      "storedAndRawHashes": "PASS"
+    },
+    {
+      "receipt": {
+        "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-receipt-supplement/receipt.json",
+        "bytes": 2108,
+        "sha256": "5dcad62d0e4390973f97ff353a8d6394b3e2e8d9892792b4bb9e79a0dc765472"
+      },
+      "members": 2,
+      "storedAndRawHashes": "PASS"
+    },
+    {
+      "archive": {
+        "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-xcresult-archive/original-notification-result.tar.gz",
+        "bytes": 200519680,
+        "sha256": "61ba4f91ccdd86908d7f8ea9c86169932675f5ea9b5a53ca07ce0cfa2ec1322a"
+      }
+    },
+    {
+      "manifest": {
+        "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-xcresult-archive/original-results-manifest.json",
+        "bytes": 50879,
+        "sha256": "190ea4b853a090c21e1a98d67a90dc2074b60c15206f55b8a9bb7aad8ee74ec2"
+      }
+    }
+  ],
+  "boundary": "Read only originals and copied terminal evidence; no native command, fixture change, observer change or rerun. OS remains failed0/1/0; Expo branch passed, actual NativeScript succeeded receipt lacked expected state fields."
+}

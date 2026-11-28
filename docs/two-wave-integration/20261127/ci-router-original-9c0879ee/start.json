@@ -1,0 +1,1 @@
+{"startedAt": "2026-11-27T03:33:41.322725+00:00", "command": ["runuser", "-u", "chatgpt-agent", "--", "python3", "-m", "unittest", "discover", "-s", "Scripts/CI/Tests", "-p", "test_*.py", "-v"], "source": "9c0879ee168b6aec78a4cc80fd071514c8787887"}

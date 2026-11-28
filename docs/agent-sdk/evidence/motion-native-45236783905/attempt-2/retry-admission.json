@@ -1,0 +1,12 @@
+{
+  "time": "2026-11-23T18:32:11.444546+00:00",
+  "source": "0b74c6c1df60926c09a00560598af478bafb3e75",
+  "original_failure_evidence_commit": "93bf99a71412c4ef1ea27762360319dacb5327ce",
+  "active_motion_jobs": [],
+  "original_attempt": "BLOCKED / NOT_RUN at CoreSimulator readiness",
+  "diagnosis": "No repository defect established; owned simulator commands and read-only CoreSimulator listing/log diagnostics timed out.",
+  "authorization": "Parent approved ONE same-source failed-job continuation after reviewing original host-specific readiness evidence.",
+  "bounds_and_assertions": "UNCHANGED",
+  "recovery": "Request a new hosted allocation for the exact original failed job.",
+  "A_and_xcresult_export": "HELD until actual B+C execution"
+}

@@ -1,0 +1,296 @@
+{
+  "priorOriginalWorkflowMethods": {
+    "status": "REUSED_VERIFIED_PASS",
+    "methodCount": 2,
+    "logSHA256": "f81a07bac26e5c4d01fbd780fff908e361792d22d05667c8d73ca659969c5c9b",
+    "log": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shell-validator-contract-b723338e/first-sparse-import-failure.log",
+    "tests": [
+      "ShellWorkflowSourceTests.test_app_liveness_is_checked_inside_the_simulator",
+      "ShellWorkflowSourceTests.test_simulator_cleanup_tolerates_an_already_exited_app"
+    ],
+    "limit": "The first combined command failed because the validator module lacked a sparse-checkout helper; these two original workflow methods actually passed, and both source and workflow bytes remain unchanged. No original combined suite PASS is claimed."
+  },
+  "sparseImportFailuresPreserved": [
+    "first-sparse-import-failure.log",
+    "second-sparse-import-failure.log"
+  ],
+  "validatorTestsExecuted": 12,
+  "schemaVersion": 1,
+  "status": "PORTABLE_VALIDATION_PASS_NATIVE_CONTINUATION_NOT_RUN",
+  "sourceBase": "b723338e995b14dc31f96a90ad4c865e8a4b345a",
+  "agent": "/root/mac_build_resume",
+  "createdAt": "2026-11-27T14:24:45.237454+00:00",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-shell-validator-contract-20261127",
+  "changed": [
+    {
+      "path": "Scripts/Runtime/validate_shell_acceptance.py",
+      "sha256": "1acd648f05117c915ff84cfa0621a452c9970bc2e89b72a1e5bdd6bb2157a538"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/test_validate_shell_acceptance.py",
+      "sha256": "673b8fbd33d549eb33b1ac406a7a554a0f855de137c6def7c8b6122f037172fb"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/shell-validator-current-contract.md",
+      "sha256": "bf4fc3c899fb60d8f42e5eea47d66b2417ff612b9a60b7d422364f7315c5d93c"
+    }
+  ],
+  "phases": [
+    {
+      "name": "original-validator-tests-after-sparse-recovery",
+      "argv": [
+        "/usr/bin/python3",
+        "-m",
+        "unittest",
+        "Scripts.Runtime.Tests.test_validate_shell_acceptance",
+        "-v"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shell-validator-contract-b723338e/original-validator-tests-after-sparse-recovery.log",
+      "logSHA256": "d5ba02c69901c6f88de61999a672fee4d2c4de0d99dd566fde29edbc2d52395c",
+      "passed": true
+    },
+    {
+      "name": "diff-check",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shell-validator-contract-b723338e/diff-check.log",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "passed": true
+    },
+    {
+      "name": "candidate-validates-actual-retained-native-report",
+      "argv": [
+        "/usr/bin/python3",
+        "Scripts/Runtime/validate_shell_acceptance.py",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-release-b723338e-terminal/original-native-proof/shell-acceptance.json",
+        "--summary-output",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shell-validator-contract-b723338e/actual-native-report-candidate-summary.json"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shell-validator-contract-b723338e/candidate-validates-actual-retained-native-report.log",
+      "logSHA256": "cca4ae4dcda76e6200b864a78b863bd42dc1d9899bb5d3e6a2ca7375c547ed71",
+      "passed": true
+    },
+    {
+      "name": "original-validator-retained-report-rejection-control",
+      "argv": [
+        "/usr/bin/python3",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shell-validator-contract-b723338e/original-validate-shell-acceptance.py",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-release-b723338e-terminal/original-native-proof/shell-acceptance.json"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "log": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shell-validator-contract-b723338e/original-validator-retained-report-rejection-control.log",
+      "logSHA256": "a32ee9c16dcd96c5cb36c89afcef44763ed72c9f8cf169ce4b5ad5406b48d46a",
+      "passed": true
+    },
+    {
+      "name": "original-canonical-block-actual-report",
+      "argv": [
+        "/usr/bin/python3",
+        "-",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/original-release-b723338e-terminal/original-native-proof/shell-acceptance.json"
+      ],
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "log": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shell-validator-contract-b723338e/original-canonical-block-actual-report.log",
+      "logSHA256": "098ae2d0a8e151cde476fa7a3ac24160c96dc93c16fc01ba5e0c1b5c66a03843",
+      "passed": true
+    },
+    {
+      "name": "original-canonical-missing-canonical",
+      "argv": [
+        "/usr/bin/python3",
+        "-",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shell-validator-contract-b723338e/missing-canonical-negative-control.json"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "log": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shell-validator-contract-b723338e/original-canonical-missing-canonical.log",
+      "logSHA256": "3d5c70ed5254060461517ad9ae205e0e16e4eed8213e2482d88c7bee9e1dcc35",
+      "passed": true
+    },
+    {
+      "name": "original-canonical-canonical-mismatch",
+      "argv": [
+        "/usr/bin/python3",
+        "-",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shell-validator-contract-b723338e/canonical-mismatch-negative-control.json"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "log": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shell-validator-contract-b723338e/original-canonical-canonical-mismatch.log",
+      "logSHA256": "a7b2dfa9c349045deb0687ec3c51f2c1c59f99f437f0b8490b8473a77844cc7a",
+      "passed": true
+    },
+    {
+      "name": "original-canonical-runtime-core-not-passed",
+      "argv": [
+        "/usr/bin/python3",
+        "-",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shell-validator-contract-b723338e/runtime-core-not-passed-negative-control.json"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "log": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shell-validator-contract-b723338e/original-canonical-runtime-core-not-passed.log",
+      "logSHA256": "c209b8ba9e288c811109b9f03cd92e914064d74a4a46fa363d91b8bb5a122e73",
+      "passed": true
+    },
+    {
+      "name": "original-canonical-runtime-core-missing",
+      "argv": [
+        "/usr/bin/python3",
+        "-",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shell-validator-contract-b723338e/runtime-core-missing-negative-control.json"
+      ],
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "log": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shell-validator-contract-b723338e/original-canonical-runtime-core-missing.log",
+      "logSHA256": "c209b8ba9e288c811109b9f03cd92e914064d74a4a46fa363d91b8bb5a122e73",
+      "passed": true
+    }
+  ],
+  "actualNativeInputReportSHA256": "46a5eba972c7b00022cd399f837bcfd42f764f8925a628feaf992897ac3ce26e",
+  "actualNativeReportCandidateSummary": {
+    "commandCount": 23,
+    "commands": [
+      {
+        "command": "awk",
+        "exitCode": 0,
+        "representativeOutput": "1\n2"
+      },
+      {
+        "command": "cat",
+        "exitCode": 0,
+        "representativeOutput": "cat-ok"
+      },
+      {
+        "command": "cp",
+        "exitCode": 0,
+        "representativeOutput": "exit=0"
+      },
+      {
+        "command": "curl",
+        "exitCode": 0,
+        "representativeOutput": "curl 8.1.2 (x86_64-apple-darwin22.5.0) libcurl/8.1.2 OpenSSL/1.1.1w zlib/1.2.12\nRelease-Date: 2023-05-30\nProtocols: dict file ftp ftps gopher gophers http https imap imaps mqtt pop3 pop3s rtsp smb smbs smtp smtps telnet tftp\nFeatures: alt-svc AsynchDNS HSTS HTTPS-proxy IPv6 Largefile libz NTLM NTLM_WB SSL threadsafe TLS-SRP UnixSockets"
+      },
+      {
+        "command": "grep",
+        "exitCode": 0,
+        "representativeOutput": "beta"
+      },
+      {
+        "command": "head",
+        "exitCode": 0,
+        "representativeOutput": "first"
+      },
+      {
+        "command": "ln",
+        "exitCode": 0,
+        "representativeOutput": "exit=0"
+      },
+      {
+        "command": "ls",
+        "exitCode": 0,
+        "representativeOutput": "ls-visible.txt"
+      },
+      {
+        "command": "mkdir",
+        "exitCode": 0,
+        "representativeOutput": "exit=0"
+      },
+      {
+        "command": "mv",
+        "exitCode": 0,
+        "representativeOutput": "exit=0"
+      },
+      {
+        "command": "readlink",
+        "exitCode": 0,
+        "representativeOutput": "readlink-target.txt"
+      },
+      {
+        "command": "rm",
+        "exitCode": 0,
+        "representativeOutput": "exit=0"
+      },
+      {
+        "command": "rmdir",
+        "exitCode": 0,
+        "representativeOutput": "exit=0"
+      },
+      {
+        "command": "sed",
+        "exitCode": 0,
+        "representativeOutput": "second"
+      },
+      {
+        "command": "sort",
+        "exitCode": 0,
+        "representativeOutput": "alpha\nbravo\ncharlie"
+      },
+      {
+        "command": "stat",
+        "exitCode": 0,
+        "representativeOutput": "16777232 74897424 -rw-r--r-- 1 (501) staff 0 8 \"Nov 27 15:05:30 2026\" \"Nov 27 15:05:30 2026\" \"Nov 27 15:05:30 2026\" \"Nov 27 15:05:30 2026\" 4096 8 0 stat-input.txt"
+      },
+      {
+        "command": "tail",
+        "exitCode": 0,
+        "representativeOutput": "last"
+      },
+      {
+        "command": "tar",
+        "exitCode": 0,
+        "representativeOutput": "tar-input.txt"
+      },
+      {
+        "command": "touch",
+        "exitCode": 0,
+        "representativeOutput": "exit=0"
+      },
+      {
+        "command": "tr",
+        "exitCode": 0,
+        "representativeOutput": "LOWER"
+      },
+      {
+        "command": "uniq",
+        "exitCode": 0,
+        "representativeOutput": "alpha\nbeta"
+      },
+      {
+        "command": "unlink",
+        "exitCode": 0,
+        "representativeOutput": "exit=0"
+      },
+      {
+        "command": "wc",
+        "exitCode": 0,
+        "representativeOutput": "2 wc-input.txt"
+      }
+    ],
+    "passed": true,
+    "policyCount": 5,
+    "workspaceEscapeCount": 0
+  },
+  "originalCanonicalBlockSHA256": "d9d5fc3caddd03a4337b1e759664905baa500c7be29c72b2cd066459c946b3ba",
+  "originalLaunchScriptSHA256": "a9c5bb380680ef5178797a5c1e9bef11d3cf0a0027f8d1e3c50f8673b5c92b0a",
+  "sdkInputManifestSHA256": "e7aa424015d509dc7d99b3158b85f6dbcbcc72fc17b3671d247382331e87e649",
+  "sdk392Intersection": [],
+  "noProductionChanges": true,
+  "nativeStatus": {
+    "originalAttempt": "FAILED_SHELL_VALIDATOR",
+    "MCP": "NOT_RUN",
+    "candidateNativeContinuation": "NOT_RUN"
+  },
+  "sourcePatchSHA256": "81eb3d5ace805bee41e2c0f5cfea5e1b665cb79068b4e0234f0b58760dff7156"
+}

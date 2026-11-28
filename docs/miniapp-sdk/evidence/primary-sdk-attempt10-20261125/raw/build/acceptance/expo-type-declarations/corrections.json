@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "reactNative": "0.88.1",
+  "nativeAPI": "9.1.2",
+  "boundary": "Declaration-only corrections; strict checking and native/Metro execution are separate mandatory gates.",
+  "patches": [
+    {
+      "package": "react-native",
+      "file": "Libraries/Animated/nodes/AnimatedProps.d.ts",
+      "originalSHA256": "0dde4c5442c332f01cb8f830ead7965b64996dca6b9bcc3a280806f48b8d3f21",
+      "correctedSHA256": "aed96d9f0b4b196eb342fdc5c0e952025cdcbb894179360d00319bc9c2b37b4c",
+      "source": "Libraries/Animated/nodes/AnimatedProps.js",
+      "sourceSHA256": "d860011a3cde601ef237ffb40eef05c68cb3b15bc3c25e2fead8db751f1167de",
+      "reason": "Flow explicitly permits an optional nullable style. The TS index signature must admit that named property."
+    },
+    {
+      "package": "react-native",
+      "file": "Libraries/Lists/VirtualizedList.d.ts",
+      "originalSHA256": "90335722e3f37fbca6dc2dc699efac7ebf2f8866a9cfddce21a3dd6bb9e9a92a",
+      "correctedSHA256": "51500c381dc135aba8268f7af110fb2cc657a0db9c823ec8555f0b9231de0272",
+      "source": "Libraries/Lists/VirtualizedList.js",
+      "sourceSHA256": "94d0e1f682f3422648451be3070a68a6e69eeddce7bed4c43cc3124e89565b5e",
+      "reason": "The exported value is the actual class constructor. Infer its instance without the unrelated React static lifecycle generic constraint."
+    },
+    {
+      "package": "react-native",
+      "file": "src/private/webapis/dom/nodes/ReadOnlyNode.d.ts",
+      "originalSHA256": "b0599260380ad18e7b783d712990bdf0cfba1346719bb8273fbaf06ed5a61bae",
+      "correctedSHA256": "9f09899132976f3110b403314e07e1a0157459e9f2194259df42094e4114dbaf",
+      "source": "src/private/webapis/dom/nodes/ReactNativeDocument.js",
+      "sourceSHA256": "dcafb922a27f7dac28f3d6079af34c90dfb047ea42f519d6a45fc16a671a4394",
+      "reason": "The abstract base throws; the concrete Document getter really returns null. Preserve that actual subclass behavior in the base return type."
+    },
+    {
+      "package": "@nativescript/react-native",
+      "file": "Runtime.d.ts",
+      "originalSHA256": "f28f211c956653fe859b9fc30a3765afb8902aa3d505248e28e3991fe32d1ca1",
+      "correctedSHA256": "0ec1d58c4bc38f66f8ff77bf03240c304f5e74b5ac17b923de8976f45a68f0cc",
+      "source": "native-api/ffi/objc/shared/bridge/Install.mm",
+      "sourceSHA256": "f8c156b7ea87e6eed0e7aa9a5af1816bacb40332a68038ac521e191e15510e83",
+      "reason": "Actual Install.mm installs constants first and does not overwrite conflicting globals with struct constructors. Keep struct field types and actual constants; do not advertise new timezone()/new dyld_shared_cache_ranges()."
+    },
+    {
+      "package": "@nativescript/react-native",
+      "file": "UIKit.d.ts",
+      "originalSHA256": "6ad19868e345469b507442f2666ca55ba69a5a98915e09459739e43246469638",
+      "correctedSHA256": "fde14e711cf6a496d48ba026cc022808df3bce202eec8a0d5521efc72f23d837",
+      "source": "native-api/ffi/objc/shared/bridge/host_objects/Object.mm",
+      "sourceSHA256": "fbc95bc22a5115453f944a408183ca2a64e3338954ba8ca4b2b045146afe7348",
+      "reason": "Apple exposes the ObjC description selector, but the actual JS host object explicitly resolves description to a string before method lookup. Match that JS boundary and inherited NSObject property."
+    }
+  ],
+  "originalUIExports": {
+    "module": "@expo/ui/swift-ui/modifiers",
+    "originalExports": 232,
+    "additionalExports": 87,
+    "originalPrecedence": [
+      "navigationBarTitleDisplayMode",
+      "preferredColorScheme",
+      "presentationCornerRadius",
+      "sectionIndexLabel"
+    ]
+  }
+}

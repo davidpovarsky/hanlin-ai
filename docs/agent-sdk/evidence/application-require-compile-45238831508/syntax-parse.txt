@@ -1,0 +1,2 @@
+Command: swiftc -frontend -parse AI_HLYTests/HanlinApplicationEmbeddingTests.swift
+Exit: 0

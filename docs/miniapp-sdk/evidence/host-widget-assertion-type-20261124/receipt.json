@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-24T15:01:44.808425+00:00",
+  "baseCommit": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
+  "finding": "SOURCE_CONFIRMED_TEST_TYPE_MISMATCH, not an observed MAIN15 failure",
+  "path": "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests.swift",
+  "beforeSHA256": "206953a80ed6258043315e18e18e3a2be2bd44d0afffe93581a51b604093cfd3",
+  "afterSHA256": "0e7e2a2c38ed4449869ea61e5e9757cd4dc67e66258ae340958ebe617c93a829",
+  "before": "XCTAssertEqual(.object(state.values), props)",
+  "after": "XCTAssertEqual(try .object(HanlinObject(uniqueMembers: Array(state.values))), props)",
+  "exactSingleExpressionReplacement": true,
+  "assertionCallsBefore": 39,
+  "assertionCallsAfter": 39,
+  "preserved": "Same XCTest equality, same expected props, same reopened-state comparison, same original consumer/stale-state assertions, same method selectors and case counts.",
+  "reuse": "constructor-evidence-reuse.json",
+  "nativeStatus": "NOT_RUN by this lane. MAIN15 uses original e222 source; this patch is not part of that run. Its current execution status was not queried by this review.",
+  "independentReview": "independent-review.json",
+  "otherBoundedReview": "widget-ui-static-scope.json"
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/produced-packages-attempt19/ModularTextSearch.hanlinExpo",
+    "bytes": 2203953,
+    "sha256": "40ade14cf7ebcaa96d0f7bf71757d92a243236f682227c9683ebf06bc8255f6f"
+  },
+  {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/produced-packages-attempt19/SDKOnlyDepartureBudget.hanlinExpo",
+    "bytes": 1956567,
+    "sha256": "dda4e3b1536426156d2695209736186f4d804895f0a04fb3741bbe24c5a4df1f"
+  },
+  {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/produced-packages-attempt19/SDKOnlyTableShare.hanlinNativeScript",
+    "bytes": 12933,
+    "sha256": "4d817ba5dd1c84fce5c0ae4b3d281929520dfaebbbe1dd41465d1ebe6305c4b3"
+  },
+  {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/produced-packages-attempt19/MiniAppTypeError.hanlinNativeScript",
+    "bytes": 4399,
+    "sha256": "9a2a14be4ad24565bad66a98fc53522229de903acfb8a41b3df18006e81b51c9"
+  }
+]

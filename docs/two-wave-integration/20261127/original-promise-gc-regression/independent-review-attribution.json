@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "sourceSHA256": "2f7f8d4bccb94e9f2957067d48ac9e96bd7ababf9491788bd71f33b7f0623394",
+  "assessment": "APPROVED_SOURCE_FOR_OLD_PRODUCTION_NATIVE_DIAGNOSTIC",
+  "reviews": [
+    {
+      "reviewer": "/root",
+      "actualMessage": "Root reviewed actual165-line2f7f candidate. Approve for old-production diagnostic run contingent W1 final nativeAPI/lifecycle review: actual session/Promise/guardedcallbacks/queue, noproducthook, original601+budgets preserved, extra2 meaningfulGC/cancel tests. Note single forcedGC negative observation must be interpreted carefully (conservative roots can retain values); if unexpected release assertions fail, retain raw and diagnose, do not call it proof ofleakautomatically. Strong pendingcallbacks+weak sessionregistry design soundsbounded and avoids8-query quota; no productionfix approval untilbaselineevidence."
+    },
+    {
+      "reviewer": "/root/w1_review_resume",
+      "actualMessage": "Bounded source/API review of exact candidate 2f7f8d4bccb94e9f2957067d48ac9e96bd7ababf9491788bd71f33b7f0623394 is approved for the old-source native diagnostic. I reread original session init/onJavaScriptQueue/cancel/finish plus original Promise 13f8c156. Managed observer has no addManagedReference, initial JSValue temporaries are scoped inside a drained autoreleasepool, the JS global capture is deleted, and the queued settlement read follows the actual async delivery lane. Guarded callbacks are the controlled operation\u2019s only retained delivery handles; cleanup removes them/global bridge and checks the weak context afterward. No obvious Swift API/isolation mismatch found. Single JSGarbageCollect non-release remains inconclusive because conservative roots may survive; retain raw outcome and do not treat that assertion alone as a proven leak or change production solely to satisfy it. I will save hash-bound review now; no tests run."
+    }
+  ],
+  "native": "NOT_RUN",
+  "productionRepair": "NOT_AUTHORIZED_BY_THIS_REVIEW"
+}

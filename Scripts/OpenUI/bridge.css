@@ -1,0 +1,7 @@
+:root { color-scheme: light dark; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+html, body { margin: 0; padding: 0; min-height: 0; background: transparent !important; overflow-x: hidden; }
+body { color: CanvasText; }
+#root { width: 100%; min-width: 0; overflow-wrap: anywhere; }
+.torah-comparison { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; }
+blockquote { margin-inline: 0; padding-inline-start: .8rem; border-inline-start: 2px solid currentColor; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0s !important; transition-duration: 0s !important; } }

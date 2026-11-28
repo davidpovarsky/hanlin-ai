@@ -1,0 +1,35 @@
+{
+  "source_sha": "7923425b636b9cd889e6cdc174956a2a46470595",
+  "parent": "a84ecd6db0dfa77e2241cb9481b9f9d43a7a13c6",
+  "paths": [
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinFileContentView.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinImageViewer.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActionBar.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageMarkdownView.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageSelectionView.swift"
+  ],
+  "archive_sha256": "4f9e8d3ce650d896def9a1433e42b8a86bc5bb2441e72f6b63fd340f607502e6",
+  "bytes": 6502,
+  "files": {
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinFileContentView.swift": {
+      "before_sha256": "f530ffaa6b5558b17ef681bebcfecc5f35f5a5f50742f3d54d468820c0ce40bf",
+      "after_sha256": "cae1895609127a867a0a028f5716e602026e5c87d4f669f051e9c4e665457801"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinImageViewer.swift": {
+      "before_sha256": "2438e46b52da5014964fed470d822ad59dcab9f87ea4974bc09f34be72e6dcf2",
+      "after_sha256": "8427d5bfafea323a84d0f62f9c272aaed848241ed26af6e3f832d767b5a57f13"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActionBar.swift": {
+      "before_sha256": "6e0ad3ce2436d21052bdd8ea06fcf30e36269dfea2c4569be8cf93b79802774b",
+      "after_sha256": "f559b1b5fb3ab8f858399a710e79024bd8fe25b6267c84a9ef843ab7150e004e"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageMarkdownView.swift": {
+      "before_sha256": "3eea377d1d55ce20ab0e153940f54836086472799cb967222c97c7b59472c838",
+      "after_sha256": "633b3cc4c400e6770531eb6b732e08bcbcf85534ba942dfa7a662400c20fb4e0"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageSelectionView.swift": {
+      "before_sha256": "052f855201f3364b37b7b7e5d01965b930d93d90e882450476dc6945bd4fdfed",
+      "after_sha256": "b53108a0ddc25c49eb10ba5992f67e908ae3bba7f5cea3b417adacc5e941c52b"
+    }
+  }
+}

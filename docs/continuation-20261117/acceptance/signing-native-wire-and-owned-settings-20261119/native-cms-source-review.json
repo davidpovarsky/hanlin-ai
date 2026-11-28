@@ -1,0 +1,42 @@
+{
+  "state": "UNAPPLIED_FOR_ROOT_REVIEW",
+  "scope": "Correct classification of the authenticated native CMS wire representation only; does not fix or waive Xcode profile admission",
+  "canonicalHEAD": "1b2d8e2c3022be4b6bb97312bfdec0676d7eb76e",
+  "files": [
+    {
+      "path": "Scripts/ProductSplit/signing_profile_preflight.py",
+      "preSHA256": "9c91916b085db2dbddd4056138a93321898352b949d7f569fdc7552020a139ea",
+      "postSHA256": "8c65ffb2d4412c9de05b6ba2dce17da34da44755c816d996ac10eb657b2da675"
+    },
+    {
+      "path": "Scripts/ProductSplit/test_signing_profiles.py",
+      "preSHA256": "7ae513104d5e54dee3b727848875b8edd3f2d915d118b5dd3bf920d4c5a640d3",
+      "postSHA256": "93f7a946f01f88b37c2c30a6845e43c4351389b7a68135f9e661cdf2636d3b84"
+    }
+  ],
+  "patchSHA256": "edd97c3f048dd06daac4f8d0422f15ba82f475d53f825162b4b59858127afe39",
+  "validation": [
+    {
+      "name": "profile-tests",
+      "exit": 0,
+      "log": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\signing-profile-admission-diagnostics\\native-cms-boolean-proposal\\profile-tests.log",
+      "sha256": "6b27cf8992626ffd4b07a5745ca5c812acd42ee736170eab313600c0af19a767"
+    },
+    {
+      "name": "apply-check",
+      "exit": 0,
+      "log": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\signing-profile-admission-diagnostics\\native-cms-boolean-proposal\\apply-check.log",
+      "sha256": "abc30023955fb1415cb6df613a2f287897377fa4b0a607d322483e2bd51a91d1"
+    }
+  ],
+  "actualNativeReplay": {
+    "run": 44431826560,
+    "sourceSHA": "e564dc29d24239309b113244bec4556c211c5b2d",
+    "rawSHA256": "1267e955fa5139ed80901d413623da0162f220b7833e05f31ffd0c55f8fc7415",
+    "profiles": 6,
+    "result": "CMS_SIGNATURES_VALID",
+    "actualTinyArchive": "EXECUTED_FAIL_NO_PROFILE_FOUND",
+    "nativeProductAcceptance": "NOT_RUN",
+    "artifactSHA256": "554d2712c18d25f19fca6dab775e92438b0875abe5250cbb467de73bac74b7aa"
+  }
+}

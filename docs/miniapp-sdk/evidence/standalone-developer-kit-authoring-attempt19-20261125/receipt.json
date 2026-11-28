@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "folder": "docs/miniapp-sdk/evidence/standalone-developer-kit-authoring-attempt19-20261125",
+  "status": "VERIFIED_HELD_NOT_INTEGRATED",
+  "baseCommit": "2e55181e1de9db14340b7d8a5038bf3b8808f295",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4658,
+      "sha256": "95257627065ac8ed4e9fff362cb71b091b8c9a180801eeaea57a5b31d8f65fe8",
+      "mode": "100644"
+    },
+    {
+      "path": "SDK08-Standalone-Authoring-Proof-2026-11-25.zip",
+      "bytes": 4404863,
+      "sha256": "357827dad828dea02aa422523df8cc460222bfb1b7e5fc84c02ddde12bb4cb16",
+      "mode": "100644"
+    },
+    {
+      "path": "delivery-receipt.json",
+      "bytes": 2314,
+      "sha256": "1bf9785cd842793026aa720a44c4fd7a8289cdfc09aa42f1e4891f64e1b84b8e",
+      "mode": "100644"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 4118,
+      "sha256": "d1b4388b3ba84f75ab78436b12db9dd944e83ff0e25e14e7456188f2e6cc1993",
+      "mode": "100644"
+    },
+    {
+      "path": "proof-receipt.json",
+      "bytes": 13018,
+      "sha256": "8408547fc4351508d8a6ed349be59dba0631aa963a29bb699921202ced902919",
+      "mode": "100644"
+    },
+    {
+      "path": "verification-summary.json",
+      "bytes": 12347,
+      "sha256": "7d1885c948302bc7a4b8151be968105bc41ffbebee715d2d5cdc4800fea9970f",
+      "mode": "100644"
+    }
+  ],
+  "fileCount": 6,
+  "totalBytes": 4441318,
+  "originalProofZIPUnchanged": true
+}

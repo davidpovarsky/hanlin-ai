@@ -1,0 +1,22 @@
+{
+  "observedAtUTC": "2026-11-23T07:39:55.200199+00:00",
+  "scope": "Actual Foundation-only original MCP model module and separate external client typecheck; not full AI_Hanlin/Apple native acceptance.",
+  "originalModelFiles": [
+    "Core/MCPServerDescriptor.swift",
+    "Core/MCPServerRuntimeState.swift",
+    "Core/MCPInstallState.swift",
+    "Core/MCPCompatibilityReport.swift",
+    "Runtime/MCPRuntimeSnapshot.swift",
+    "Installer/MCPPackageSpec.swift",
+    "Core/MCPEnvironmentDraft.swift",
+    "Core/MCPError.swift",
+    "Core/MCPServerSettings.swift"
+  ],
+  "modelModuleExit": 0,
+  "externalClientExit": 0,
+  "externalClientSHA256": "496be6f2c3066d074f618996a01728f4af4aacee4fb4997d2556c0bca8335308",
+  "applicationSourceCount": 505,
+  "nativeSuite": "HanlinMCPEmbeddingTests",
+  "nativeMethods": 10,
+  "nativeStatus": "NOT_RUN"
+}

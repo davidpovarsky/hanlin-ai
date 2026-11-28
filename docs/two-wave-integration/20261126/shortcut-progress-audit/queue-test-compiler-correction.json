@@ -1,0 +1,48 @@
+{
+  "sourceBase": "d84fc98a96cd554bbc67613f96dedd8e380e7f97",
+  "commit": "36fdc933d36c5a171910116a5429bab5792b37f5",
+  "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinInvocationQueueTests.swift",
+  "beforeSHA256": "23e451c2f4367a12b1a2f1a5cd94a23882ebd51535403b49450a1e213881f4a6",
+  "afterSHA256": "e6ae932f6fd5fbbd8fe6c605b26d7a3221cea4feb68999d1d1edab2c8abe638e",
+  "testsUnchanged": [
+    "busyAdmissionCanQueueAgainOnlyBeforeActionExecutionAndWithoutConsumingAnAttempt",
+    "unstartedReleaseRetainsCancellationExpiryAndFencesOldLeases",
+    "damagedItemsDoNotBlockHealthyDeliveryOrEraseTheirOriginalBytes",
+    "unreadableRecordsCannotBlockAdmissionAndRetainTheirOriginalBytes",
+    "atomicOwnedAdmissionHasOneLeaseAndPreservesExactRetriesAndConflicts",
+    "lostOwnedAdmissionIsDeferredAndCannotReplayAfterAProcessRestart",
+    "ownedExecutorKeepsForegroundDrainsOutAndReturnsTheOriginalReceiptOnRetry",
+    "ownedAdmissionFailureIsTerminalWhileLegacyQueuedAdmissionRemainsRetryable",
+    "ownedCancellationDrainsTheActualHandlerBeforeKeepingItsTerminalReceipt",
+    "legacyEnvelopeAndBinaryValuesRoundTripThroughTheSameQueue",
+    "duplicateDeliveryNeverOverwritesACompletedReceiptOrPayload",
+    "concurrentClaimsAcrossStoreInstancesHaveOnlyOneOwner",
+    "interruptedNonIdempotentWorkIsDeferredWithoutReplay",
+    "registeredIdempotentRecoveryFencesOutTheOriginalOwner",
+    "expiredQueuedAndCancelledQueuedCommandsNeverStart",
+    "runningCancellationIsARequestUntilTheActualExecutorReturns",
+    "malformedAndPoisonedRecordsFailWithoutReadingOutsideTheStore",
+    "twoPackagesReceiveTheirOwnDurableResultsAndFailures",
+    "actualAsyncHandlerIsCancelledBeforeItsTerminalReceipt"
+  ],
+  "testDefinitions": 19,
+  "expectationCountBefore": 79,
+  "expectationCountAfter": 79,
+  "diff": "diff --git a/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinInvocationQueueTests.swift b/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinInvocationQueueTests.swift\nindex 357df717b..477b43283 100644\n--- a/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinInvocationQueueTests.swift\n+++ b/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinInvocationQueueTests.swift\n@@ -150,7 +150,8 @@ struct HanlinInvocationQueueTests {\n         let release = InvocationStartSignal()\n         let task = Task {\n             try await owner.execute(input) { command in\n-                #expect(try store.command(for: input.id) == command)\n+                let persistedCommand = try store.command(for: input.id)\n+                #expect(persistedCommand == command)\n                 await entered.signal()\n                 await release.wait()\n                 return .string(\"ORIGINAL_RESULT\")\n",
+  "originalNativeFailure": {
+    "source": "628dbe083a5ceffc28b026e5701cd8c71c8734ff",
+    "status": "FAILED65",
+    "tests": "NOT_RUN",
+    "log": "/Users/m1/builds/hanlin-two-wave-root-20261126/validation/platform-628dbe08/build-r4/original-package-build-for-testing.log",
+    "sha256": "c4c657aa7772ce73c6c041aab6da2137169f7336a95d08f9d1d3935eaca55e04",
+    "diagnosticLogLine": 739,
+    "diagnostic": "Throwing store.command read within #expect expansion is not handled in its generated nonthrowing closure.",
+    "verifiedBy": "/root/mac_build_ops"
+  },
+  "validation": {
+    "boundedDiffCheck": "PASS",
+    "caseAndAssertionPreservation": "PASS",
+    "appleCompile": "NOT_RUN",
+    "nativeTests": "NOT_RUN"
+  }
+}

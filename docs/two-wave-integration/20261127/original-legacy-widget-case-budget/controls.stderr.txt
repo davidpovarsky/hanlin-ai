@@ -1,0 +1,7 @@
+test_original_default_live_scriptui_and_full_budgets_are_preserved (test_legacy_widget_case_budget.LegacyWidgetCaseBudgetTests.test_original_default_live_scriptui_and_full_budgets_are_preserved) ... ok
+test_original_legacy_allowance_is_confined_to_the_exact_request (test_legacy_widget_case_budget.LegacyWidgetCaseBudgetTests.test_original_legacy_allowance_is_confined_to_the_exact_request) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 2.299s
+
+OK

@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "suite": "production activity lifetime and motion-policy checks",
+  "status": "passed",
+  "assertions_passed": 132,
+  "base_commit": "5b0a369dd674a96a3f2583ad331c1ba83ec03501",
+  "working_tree_changes_included": true,
+  "execution": {
+    "sentinel_job_id": "job_ab2edef42a8f",
+    "host_id": "host_7ec8382e82747448",
+    "started_at": "2026-11-22T00:11:22.791032+00:00",
+    "finished_at": "2026-11-22T00:12:00.946459+00:00",
+    "exit_code": 0,
+    "duration_seconds": 38.16,
+    "toolchain": "Swift version 6.3.3 (swift-6.3.3-RELEASE)",
+    "target": "x86_64-unknown-windows-msvc",
+    "build_configuration": "+assertions",
+    "stdout": "PASS: 132 production activity lifetime and motion-policy checks"
+  },
+  "source_closure": [
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityHeaderPhase.swift",
+      "sha256": "cd03128ff7c77c483b23297d553e64c5996b57b53e74af2c6f4bdbcdff9a54fc"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift",
+      "sha256": "d8ff25aa0ba06895108f09edf00709db04efe4f7467d1b8302adf1bae1785577"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+      "sha256": "a19e5c748ab601d598116e364d2d7b4bedc36de396b120b3fc40eea3aa4d68a8"
+    },
+    {
+      "path": "Scripts/CI/AgentActivityHeaderChecks.swift",
+      "sha256": "a84a188f3e57910a828f872662f31e0227871817267ed40a47faa6852cb456c8"
+    }
+  ],
+  "reproduce": {
+    "shell": "PowerShell",
+    "working_directory": "C:\\Users\\DAVID\\Code\\hanlin-ipad-interactions-20261122",
+    "command": "Set-Location 'C:\\Users\\DAVID\\Code\\hanlin-ipad-interactions-20261122'\n$activityCheckExecutable = Join-Path $env:TEMP 'hanlin_activity_20261122.exe'\nswiftc 'AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityHeaderPhase.swift' 'Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift' 'Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift' 'Scripts/CI/AgentActivityHeaderChecks.swift' -o $activityCheckExecutable\nif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }\n& $activityCheckExecutable\nexit $LASTEXITCODE"
+  },
+  "coverage": [
+    "Run lifetime, first provisional answer delta, genuine concurrent running operations and approval waiting combinations.",
+    "Standalone status visibility before an answer and suppression when answer text starts.",
+    "Shimmer ownership for the active visible leaf, collapsed round or collapsed root, including concurrent branches and ancestor deduplication.",
+    "Disclosure reveal geometry for zero, finite, negative, NaN, infinity, large values and direction reversal.",
+    "Production motion presets and Reduce Motion policy."
+  ],
+  "limitations": [
+    "Windows portable logic execution only; UIKit and SwiftUI runtime code is excluded by conditional imports.",
+    "Does not establish that the reported physical-iPad collapse crash is resolved.",
+    "UIKit layout, visual fidelity, keyboard interactions and actual animation lifecycle require device verification.",
+    "App-target projection tests were added but not run in this domain validation; no Simulator was used.",
+    "The source closure is the four repository files compiled by the portable suite; the mutable ChatViewComponents.swift integration file is not represented as runtime-validated by these checks."
+  ]
+}

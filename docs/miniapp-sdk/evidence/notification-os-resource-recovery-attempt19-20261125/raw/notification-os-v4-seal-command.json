@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/opt/homebrew/opt/python@3.12/bin/python3.12",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/seal-notification-os-decision-v7.py"
+  ],
+  "startedAt": "2026-11-25T19:32:36.010746+00:00",
+  "finishedAt": "2026-11-25T19:32:41.912811+00:00",
+  "seconds": 5.902149457993801,
+  "exitCode": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/seal-notification-os-decision-v7.py\", line 590, in <module>\n    main()\n  File \"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/seal-notification-os-decision-v7.py\", line 491, in main\n    decision, context = base_decision()\n                        ^^^^^^^^^^^^^^^\n  File \"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/seal-notification-os-decision-v7.py\", line 299, in base_decision\n    assert free >= need, {\"freeBytes\": free, \"retainedApprovedBoundBytes\": need}\n           ^^^^^^^^^^^^\nAssertionError: {'freeBytes': 5106081792, 'retainedApprovedBoundBytes': 7852293846}\n"
+}

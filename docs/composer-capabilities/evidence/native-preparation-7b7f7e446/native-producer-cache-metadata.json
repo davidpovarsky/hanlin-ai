@@ -1,0 +1,56 @@
+{
+  "atUTC": "2026-11-25T00:41:35.155137+00:00",
+  "method": "byte-identical original producer metadata restored because portable SDK export excludes .artifact-manifest.json",
+  "items": [
+    {
+      "target": "ExpoUI",
+      "sha256": "261f0038daa3816145120410b77e0d5dee023ad4a065907d3f8417eab1fd8ab3",
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ExpoUI.xcframework/.artifact-manifest.json"
+    },
+    {
+      "target": "ExpoAsset",
+      "sha256": "80afcbce26c01da5a63f951e04c6fea5959d3b3a51271d6a24002c35c07ceb47",
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.artifact-manifest.json"
+    },
+    {
+      "target": "ExpoModulesJSI",
+      "sha256": "562582d9966476d524c9b38b71c7485556c4738d58a2504c0e46a4ec1ce6c75a",
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ExpoModulesJSI.xcframework/.artifact-manifest.json"
+    },
+    {
+      "target": "ExpoModulesCore",
+      "sha256": "2c6d0f27c4129f7b4e2840f64e641ddaf820d48990af5afa28010b8e27ee0aad",
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ExpoModulesCore.xcframework/.artifact-manifest.json"
+    },
+    {
+      "target": "ExpoModulesWorklets",
+      "sha256": "6c923d0eca0f98c6f2363110ee7df897a927c84f5153fc1f9c7866fef0b42aa3",
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ExpoModulesWorklets.xcframework/.artifact-manifest.json"
+    },
+    {
+      "target": "ExpoBrownfield",
+      "sha256": "ba91ab6ba7d991e9a69d62c1db9ff89bdc908bce81347a2ab8f26c8cc9a25c16",
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ExpoBrownfield.xcframework/.artifact-manifest.json"
+    },
+    {
+      "target": "React",
+      "sha256": "27ca0e783d1efca3a7fad0fc18d586837538dc609328610033677b41f4ec5d65",
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/React.xcframework/.artifact-manifest.json"
+    },
+    {
+      "target": "ReactNativeDependencies",
+      "sha256": "155757f16b3520cb33113a2512180b1ea2035d126f2b81a2f44aac5c7953592f",
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/.artifact-manifest.json"
+    },
+    {
+      "target": "hermesvm",
+      "sha256": "facd2689cde9501d72cfffa443c43fba0cfdf3a4441cb020221a037d8225f685",
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/hermesvm.xcframework/.artifact-manifest.json"
+    },
+    {
+      "target": "ReactNativeHeaders",
+      "sha256": "497c1e1338c81e37caef22ba60419a0511afc714448138ca4d38e6f364378878",
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/.artifact-manifest.json"
+    }
+  ]
+}

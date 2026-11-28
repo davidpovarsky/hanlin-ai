@@ -1,0 +1,161 @@
+{
+  "observed_at": "2026-11-19T02:57:20.967248+00:00",
+  "items": [
+    {
+      "task_id": "1220539644804804",
+      "posted": {
+        "data": {
+          "gid": "1220692208421653",
+          "created_at": "2026-11-19T02:52:59.718Z",
+          "is_pinned": false,
+          "text": "[ChatGPT | DEV/QA] פורסם תיקון בעלות המקלדת והמשך אבחון ההקלדה — 19.11.2026 02:53 UTC\nקומיט: 7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc. הראיות המקוריות של paired הראו מקלדת גלויה, overlap אפס וכפתור Send מכוסה. ה-workspace המקורי מודד כעת את מסגרת המקלדת המתועדת רק עבור עורך הטקסט המקורי שבבעלותו, בחלון הפעיל ובסצנה הפעילה; נשמר כותב יחיד של מרווח המקלדת. נוסף טיפול באובדן focus/window ובמקלדת צפה, ללא החלפת העורך או שינוי סמנטיקת סנכרון הטקסט.\n9 קובצי Swift עברו parse; 9 מקרי geometry של helper המקור עברו portably. זו אינה קבלת UIKit. שיבוש ההקלדה עדיין פתוח: נוסף trace מותנה ללא תוכן משתמש, ובדיקת שוויון לטקסט המקורי לפני ניווט/שליחה.\nריצות מקור חדשות עם Runtime42926628418:\niPhone2: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447123515\niPad: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447126258 — כל ההיקף הישן, ארבע בדיקות בעלות/geometry חדשות ותרחישי Canvas/Reasoning/בחירה. מפת ה-CI של שתיהן הורדה ואומתה מול SHA וה-selectors המדויקים. האייפון הישן44429703865 כבר פעיל ונשמר; לאייפד הישן44429728630 נשלחה בקשת ביטול רק אחרי שאומת שהוא עדיין queued/runner0 ושמלוא היקפו כלול בהחלפה.\nראיות: docs/continuation-20261117/acceptance/compact-keyboard-canvas-20261119. קבלת Morph/מקלדת/RTL/מכשיר נשארת פתוחה.",
+          "created_by": {
+            "gid": "1219597879016933",
+            "resource_type": "user",
+            "name": "דוד פוברסקי"
+          },
+          "html_text": "<body>[ChatGPT | DEV/QA] פורסם תיקון בעלות המקלדת והמשך אבחון ההקלדה — 19.11.2026 02:53 UTC\nקומיט: 7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc. הראיות המקוריות של paired הראו מקלדת גלויה, overlap אפס וכפתור Send מכוסה. ה-workspace המקורי מודד כעת את מסגרת המקלדת המתועדת רק עבור עורך הטקסט המקורי שבבעלותו, בחלון הפעיל ובסצנה הפעילה; נשמר כותב יחיד של מרווח המקלדת. נוסף טיפול באובדן focus/window ובמקלדת צפה, ללא החלפת העורך או שינוי סמנטיקת סנכרון הטקסט.\n9 קובצי Swift עברו parse; 9 מקרי geometry של helper המקור עברו portably. זו אינה קבלת UIKit. שיבוש ההקלדה עדיין פתוח: נוסף trace מותנה ללא תוכן משתמש, ובדיקת שוויון לטקסט המקורי לפני ניווט/שליחה.\nריצות מקור חדשות עם Runtime42926628418:\niPhone2: <a href=\"https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447123515\">https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447123515</a>\niPad: <a href=\"https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447126258\">https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447126258</a> — כל ההיקף הישן, ארבע בדיקות בעלות/geometry חדשות ותרחישי Canvas/Reasoning/בחירה. מפת ה-CI של שתיהן הורדה ואומתה מול SHA וה-selectors המדויקים. האייפון הישן44429703865 כבר פעיל ונשמר; לאייפד הישן44429728630 נשלחה בקשת ביטול רק אחרי שאומת שהוא עדיין queued/runner0 ושמלוא היקפו כלול בהחלפה.\nראיות: docs/continuation-20261117/acceptance/compact-keyboard-canvas-20261119. קבלת Morph/מקלדת/RTL/מכשיר נשארת פתוחה.</body>"
+        }
+      },
+      "readback": {
+        "data": {
+          "gid": "1220539644804804",
+          "completed": false,
+          "name": "[HANLIN][UI APPROVED] מימוש בועת ההודעה והכלים החדשה — התאמה 1:1 ל-MorphView Swift Playground",
+          "comments": [
+            {
+              "gid": "1220692208421653",
+              "created_at": "2026-11-19T02:52:59.718Z",
+              "created_by": {
+                "gid": "1219597879016933",
+                "name": "דוד פוברסקי",
+                "resource_type": "user"
+              },
+              "resource_type": "story",
+              "text": "[ChatGPT | DEV/QA] פורסם תיקון בעלות המקלדת והמשך אבחון ההקלדה — 19.11.2026 02:53 UTC\nקומיט: 7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc. הראיות המקוריות של paired הראו מקלדת גלויה, overlap אפס וכפתור Send מכוסה. ה-workspace המקורי מודד כעת את מסגרת המקלדת המתועדת רק עבור עורך הטקסט המקורי שבבעלותו, בחלון הפעיל ובסצנה הפעילה; נשמר כותב יחיד של מרווח המקלדת. נוסף טיפול באובדן focus/window ובמקלדת צפה, ללא החלפת העורך או שינוי סמנטיקת סנכרון הטקסט.\n9 קובצי Swift עברו parse; 9 מקרי geometry של helper המקור עברו portably. זו אינה קבלת UIKit. שיבוש ההקלדה עדיין פתוח: נוסף trace מותנה ללא תוכן משתמש, ובדיקת שוויון לטקסט המקורי לפני ניווט/שליחה.\nריצות מקור חדשות עם Runtime42926628418:\niPhone2: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447123515\niPad: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447126258 — כל ההיקף הישן, ארבע בדיקות בעלות/geometry חדשות ותרחישי Canvas/Reasoning/בחירה. מפת ה-CI של שתיהן הורדה ואומתה מול SHA וה-selectors המדויקים. האייפון הישן44429703865 כבר פעיל ונשמר; לאייפד הישן44429728630 נשלחה בקשת ביטול רק אחרי שאומת שהוא עדיין queued/runner0 ושמלוא היקפו כלול בהחלפה.\nראיות: docs/continuation-20261117/acceptance/compact-keyboard-canvas-20261119. קבלת Morph/מקלדת/RTL/מכשיר נשארת פתוחה.",
+              "type": "comment",
+              "resource_subtype": "comment_added"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "task_id": "1220542174541940",
+      "posted": {
+        "data": {
+          "gid": "1220692232773285",
+          "created_at": "2026-11-19T02:53:01.151Z",
+          "is_pinned": false,
+          "text": "[ChatGPT | DEV/QA] תוצאות Native חדשות ותיקון בדיקת Canvas — 19.11.2026\nאומתו הקובץ המלא וה-xcresult של https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428104345 @d6cb7d0b: שתי בדיקות Reasoning, תרחיש UI04 עם Inspector והתרחיש המקורי של בחירה חלקית/שמירה/preview עברו — 4 PASS. UI01 נכשל בשיבוש טקסט; Canvas נכשל בציפייה לכפתור Cancel. אין קבלה כוללת לריצה.\nב-Canvas בוצע חישוב Python מקומי אמיתי (42) והוצג גילוי השליחה ל-Piston. ההקלטה וה-AX המקוריים מראים שב-iPad חלונית האישור אינה מציגה Cancel. פורסם7e27ded6: הבדיקה שומרת את לחיצת Cancel כאשר היא קיימת, ובחלונית הרגילה משתמשת בנקודת פלט נמדדת שמחוץ לאישור. נדרשים היעלמות האישור, שימור Canvas והפלט, והמשך בדיקות הסגירה/הפתיחה מחדש. לא הוקלה דרישת האישור ולא שונה UI המוצר לצורך הבדיקה. אין כאן תיעוד תעבורת רשת.\nכל ההיקף המקורי נכלל בהרצת iPad החדשה https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447126258 @7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc. נוסף אבחון ההקלדה ללא תוכן משתמש. בדיקת Gemini/Python/consent/cold-reopen המקורית נשלחה בנפרד: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447388017 ; הסוד הזמני המקורי הועבר דרך stdin בלבד ונמחק לאחר אימות הריצה. תוצאות Native על הקוד החדש עדיין ממתינות; המשימה נשארת פתוחה.",
+          "html_text": "<body>[ChatGPT | DEV/QA] תוצאות Native חדשות ותיקון בדיקת Canvas — 19.11.2026\nאומתו הקובץ המלא וה-xcresult של <a href=\"https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428104345\">https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428104345</a> @d6cb7d0b: שתי בדיקות Reasoning, תרחיש UI04 עם Inspector והתרחיש המקורי של בחירה חלקית/שמירה/preview עברו — 4 PASS. UI01 נכשל בשיבוש טקסט; Canvas נכשל בציפייה לכפתור Cancel. אין קבלה כוללת לריצה.\nב-Canvas בוצע חישוב Python מקומי אמיתי (42) והוצג גילוי השליחה ל-Piston. ההקלטה וה-AX המקוריים מראים שב-iPad חלונית האישור אינה מציגה Cancel. פורסם7e27ded6: הבדיקה שומרת את לחיצת Cancel כאשר היא קיימת, ובחלונית הרגילה משתמשת בנקודת פלט נמדדת שמחוץ לאישור. נדרשים היעלמות האישור, שימור Canvas והפלט, והמשך בדיקות הסגירה/הפתיחה מחדש. לא הוקלה דרישת האישור ולא שונה UI המוצר לצורך הבדיקה. אין כאן תיעוד תעבורת רשת.\nכל ההיקף המקורי נכלל בהרצת iPad החדשה <a href=\"https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447126258\">https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447126258</a> @7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc. נוסף אבחון ההקלדה ללא תוכן משתמש. בדיקת Gemini/Python/consent/cold-reopen המקורית נשלחה בנפרד: <a href=\"https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447388017\">https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447388017</a> ; הסוד הזמני המקורי הועבר דרך stdin בלבד ונמחק לאחר אימות הריצה. תוצאות Native על הקוד החדש עדיין ממתינות; המשימה נשארת פתוחה.</body>",
+          "created_by": {
+            "gid": "1219597879016933",
+            "resource_type": "user",
+            "name": "דוד פוברסקי"
+          }
+        }
+      },
+      "readback": {
+        "data": {
+          "gid": "1220542174541940",
+          "completed": false,
+          "name": "[HANLIN-SDK-04][P0][UI] אותו ChatView/Composer/Thinking/A2UI בכל האפליקציות — SwiftUI",
+          "comments": [
+            {
+              "gid": "1220692232773285",
+              "created_at": "2026-11-19T02:53:01.151Z",
+              "created_by": {
+                "gid": "1219597879016933",
+                "name": "דוד פוברסקי",
+                "resource_type": "user"
+              },
+              "resource_type": "story",
+              "text": "[ChatGPT | DEV/QA] תוצאות Native חדשות ותיקון בדיקת Canvas — 19.11.2026\nאומתו הקובץ המלא וה-xcresult של https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428104345 @d6cb7d0b: שתי בדיקות Reasoning, תרחיש UI04 עם Inspector והתרחיש המקורי של בחירה חלקית/שמירה/preview עברו — 4 PASS. UI01 נכשל בשיבוש טקסט; Canvas נכשל בציפייה לכפתור Cancel. אין קבלה כוללת לריצה.\nב-Canvas בוצע חישוב Python מקומי אמיתי (42) והוצג גילוי השליחה ל-Piston. ההקלטה וה-AX המקוריים מראים שב-iPad חלונית האישור אינה מציגה Cancel. פורסם7e27ded6: הבדיקה שומרת את לחיצת Cancel כאשר היא קיימת, ובחלונית הרגילה משתמשת בנקודת פלט נמדדת שמחוץ לאישור. נדרשים היעלמות האישור, שימור Canvas והפלט, והמשך בדיקות הסגירה/הפתיחה מחדש. לא הוקלה דרישת האישור ולא שונה UI המוצר לצורך הבדיקה. אין כאן תיעוד תעבורת רשת.\nכל ההיקף המקורי נכלל בהרצת iPad החדשה https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447126258 @7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc. נוסף אבחון ההקלדה ללא תוכן משתמש. בדיקת Gemini/Python/consent/cold-reopen המקורית נשלחה בנפרד: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447388017 ; הסוד הזמני המקורי הועבר דרך stdin בלבד ונמחק לאחר אימות הריצה. תוצאות Native על הקוד החדש עדיין ממתינות; המשימה נשארת פתוחה.",
+              "type": "comment",
+              "resource_subtype": "comment_added"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "task_id": "1219605282038820",
+      "posted": {
+        "data": {
+          "gid": "1220692211657429",
+          "created_at": "2026-11-19T02:53:02.825Z",
+          "is_pinned": false,
+          "text": "[ChatGPT | DEV/QA] תוקן דיווח CMS ונשלח אבחון חתימה ממוקד — 19.11.2026\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44431826560 @e564dc29 הסתיים בכשל preflight: Xcode עדיין אינו מאתר את פרופיל MiniApps בארכיון המזערי, לפני compilation/export. כל ששת הפרופילים והזהות המקורית הותקנו ונבדקו. ה-CMS המקורי היה תקין; נמצאה טעות בפענוח האבחון: Security.framework החזיר מספר1, והקורא דרש דווקא Boolean true.\nפורסם8a505675eca035fbca3877afd1f8776f00f629d0: התוצאה נוצרת כ-Boolean מפורש; הקורא מקבל true או integer1 בלבד. אם הארכיון המזערי נכשל, נאספות פעם אחת הגדרות החתימה של אותו פרויקט/target בלבד, מזוהות ב-nonce ובנתיב המדויקים ובתקציב הזמן הקיים. מידע סביבתי רגיש נשמר כמצב/טביעות בלבד; אין dump של credentials או ניסיון archive נוסף. הכשל המקורי נשמר ואינו הופך להצלחה.\n28 בדיקות portable עברו. ההרצה החדשה, על SHA מאומת: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44446182012 . עדיין נדרשים admission אמיתי ב-Xcode, שני יצואים חתומים והתקנה/השוואה במכשיר. אין שינוי בתעודות/פרופילים או טענת חתימה מלאה.",
+          "created_by": {
+            "gid": "1219597879016933",
+            "resource_type": "user",
+            "name": "דוד פוברסקי"
+          },
+          "html_text": "<body>[ChatGPT | DEV/QA] תוקן דיווח CMS ונשלח אבחון חתימה ממוקד — 19.11.2026\n<a href=\"https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431826560\">https://github.com/davidpovarsky/hanlin-ai/actions/runs/44431826560</a> @e564dc29 הסתיים בכשל preflight: Xcode עדיין אינו מאתר את פרופיל MiniApps בארכיון המזערי, לפני compilation/export. כל ששת הפרופילים והזהות המקורית הותקנו ונבדקו. ה-CMS המקורי היה תקין; נמצאה טעות בפענוח האבחון: Security.framework החזיר מספר1, והקורא דרש דווקא Boolean true.\nפורסם8a505675eca035fbca3877afd1f8776f00f629d0: התוצאה נוצרת כ-Boolean מפורש; הקורא מקבל true או integer1 בלבד. אם הארכיון המזערי נכשל, נאספות פעם אחת הגדרות החתימה של אותו פרויקט/target בלבד, מזוהות ב-nonce ובנתיב המדויקים ובתקציב הזמן הקיים. מידע סביבתי רגיש נשמר כמצב/טביעות בלבד; אין dump של credentials או ניסיון archive נוסף. הכשל המקורי נשמר ואינו הופך להצלחה.\n28 בדיקות portable עברו. ההרצה החדשה, על SHA מאומת: <a href=\"https://github.com/davidpovarsky/hanlin-ai/actions/runs/44446182012\">https://github.com/davidpovarsky/hanlin-ai/actions/runs/44446182012</a> . עדיין נדרשים admission אמיתי ב-Xcode, שני יצואים חתומים והתקנה/השוואה במכשיר. אין שינוי בתעודות/פרופילים או טענת חתימה מלאה.</body>"
+        }
+      },
+      "readback": {
+        "data": {
+          "gid": "1219605282038820",
+          "completed": false,
+          "name": "[CURRENT WAVE I] אישור נפרד: Xcode 27 / iOS 27 / IPA / השוואה חזותית במכשיר",
+          "comments": [
+            {
+              "gid": "1220692211657429",
+              "created_at": "2026-11-19T02:53:02.825Z",
+              "created_by": {
+                "gid": "1219597879016933",
+                "name": "דוד פוברסקי",
+                "resource_type": "user"
+              },
+              "resource_type": "story",
+              "text": "[ChatGPT | DEV/QA] תוקן דיווח CMS ונשלח אבחון חתימה ממוקד — 19.11.2026\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44431826560 @e564dc29 הסתיים בכשל preflight: Xcode עדיין אינו מאתר את פרופיל MiniApps בארכיון המזערי, לפני compilation/export. כל ששת הפרופילים והזהות המקורית הותקנו ונבדקו. ה-CMS המקורי היה תקין; נמצאה טעות בפענוח האבחון: Security.framework החזיר מספר1, והקורא דרש דווקא Boolean true.\nפורסם8a505675eca035fbca3877afd1f8776f00f629d0: התוצאה נוצרת כ-Boolean מפורש; הקורא מקבל true או integer1 בלבד. אם הארכיון המזערי נכשל, נאספות פעם אחת הגדרות החתימה של אותו פרויקט/target בלבד, מזוהות ב-nonce ובנתיב המדויקים ובתקציב הזמן הקיים. מידע סביבתי רגיש נשמר כמצב/טביעות בלבד; אין dump של credentials או ניסיון archive נוסף. הכשל המקורי נשמר ואינו הופך להצלחה.\n28 בדיקות portable עברו. ההרצה החדשה, על SHA מאומת: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44446182012 . עדיין נדרשים admission אמיתי ב-Xcode, שני יצואים חתומים והתקנה/השוואה במכשיר. אין שינוי בתעודות/פרופילים או טענת חתימה מלאה.",
+              "type": "comment",
+              "resource_subtype": "comment_added"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "task_id": "1219656771637321",
+      "posted": {
+        "data": {
+          "gid": "1220692293478399",
+          "created_at": "2026-11-19T02:57:15.526Z",
+          "is_pinned": false,
+          "text": "[ChatGPT | DEV/QA] בדיקת שני המוצרים נשלחה עם תיקוני המקור — 19.11.2026\nהקומיט7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc כולל את תיקון Storage המקורי b32e5084 ואת תיקון בעלות המקלדת: ה-workspace מודד את המקלדת עבור עורך הטקסט המקורי בחלון ובסצנה הפעילים. נוסף אימות שהטקסט שהוקלד שווה לטקסט המקורי לפני Send/Share, כדי להבחין בין שיבוש הקלדה לבין כשל העברה.\nכל שמונת תרחישי product_and_share המקוריים נשלחו מחדש, ללא צמצום דרישות: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447129341 . המקורות נשארו Runtime42926628418 וראיית ה-Host המקורית44351078724; שתי האפליקציות ייבנו על SHA החדש. הריצה החדשה מופרדת מקבוצת החתימה, כך שאינה מבטלת את בדיקת הפרופילים.\nהצלחה עדיין נדרשת במסעות העברת החבילה והנתונים, החזרה לצ׳אט, הביטול ו-Share Inbox. ארבע הצלחות ה-Host בריצה הישנה נשמרות רק עם90314963 והיקפן המקורי. אין עדיין קבלת cross-product או מיגרציה מלאה.",
+          "created_by": {
+            "gid": "1219597879016933",
+            "resource_type": "user",
+            "name": "דוד פוברסקי"
+          },
+          "html_text": "<body>[ChatGPT | DEV/QA] בדיקת שני המוצרים נשלחה עם תיקוני המקור — 19.11.2026\nהקומיט7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc כולל את תיקון Storage המקורי b32e5084 ואת תיקון בעלות המקלדת: ה-workspace מודד את המקלדת עבור עורך הטקסט המקורי בחלון ובסצנה הפעילים. נוסף אימות שהטקסט שהוקלד שווה לטקסט המקורי לפני Send/Share, כדי להבחין בין שיבוש הקלדה לבין כשל העברה.\nכל שמונת תרחישי product_and_share המקוריים נשלחו מחדש, ללא צמצום דרישות: <a href=\"https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447129341\">https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447129341</a> . המקורות נשארו Runtime42926628418 וראיית ה-Host המקורית44351078724; שתי האפליקציות ייבנו על SHA החדש. הריצה החדשה מופרדת מקבוצת החתימה, כך שאינה מבטלת את בדיקת הפרופילים.\nהצלחה עדיין נדרשת במסעות העברת החבילה והנתונים, החזרה לצ׳אט, הביטול ו-Share Inbox. ארבע הצלחות ה-Host בריצה הישנה נשמרות רק עם90314963 והיקפן המקורי. אין עדיין קבלת cross-product או מיגרציה מלאה.</body>"
+        }
+      },
+      "readback": {
+        "data": {
+          "gid": "1219656771637321",
+          "completed": false,
+          "name": "[CURRENT WAVE K][ARCH][SEC] שני Targets, Shared Contracts ומיגרציה בטוחה",
+          "comments": [
+            {
+              "gid": "1220692293478399",
+              "created_at": "2026-11-19T02:57:15.526Z",
+              "created_by": {
+                "gid": "1219597879016933",
+                "name": "דוד פוברסקי",
+                "resource_type": "user"
+              },
+              "resource_type": "story",
+              "text": "[ChatGPT | DEV/QA] בדיקת שני המוצרים נשלחה עם תיקוני המקור — 19.11.2026\nהקומיט7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc כולל את תיקון Storage המקורי b32e5084 ואת תיקון בעלות המקלדת: ה-workspace מודד את המקלדת עבור עורך הטקסט המקורי בחלון ובסצנה הפעילים. נוסף אימות שהטקסט שהוקלד שווה לטקסט המקורי לפני Send/Share, כדי להבחין בין שיבוש הקלדה לבין כשל העברה.\nכל שמונת תרחישי product_and_share המקוריים נשלחו מחדש, ללא צמצום דרישות: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44447129341 . המקורות נשארו Runtime42926628418 וראיית ה-Host המקורית44351078724; שתי האפליקציות ייבנו על SHA החדש. הריצה החדשה מופרדת מקבוצת החתימה, כך שאינה מבטלת את בדיקת הפרופילים.\nהצלחה עדיין נדרשת במסעות העברת החבילה והנתונים, החזרה לצ׳אט, הביטול ו-Share Inbox. ארבע הצלחות ה-Host בריצה הישנה נשמרות רק עם90314963 והיקפן המקורי. אין עדיין קבלת cross-product או מיגרציה מלאה.",
+              "type": "comment",
+              "resource_subtype": "comment_added"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

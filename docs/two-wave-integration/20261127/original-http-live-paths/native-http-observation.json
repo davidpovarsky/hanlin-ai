@@ -1,0 +1,87 @@
+{
+  "status": "ACTUAL_HTTP_PRE_AWAIT_TIMEOUT_AND_OBSERVER_GAP",
+  "source": "466c6187309f86da9d20b389de3c424cd93c9bdd",
+  "testSourceSHA256": "9996460cb770d19297fdda3c87423685223e5fa4243a044c0ef824dd58628a35",
+  "nativeStagesSHA256": "daea53a74db1ea2bfba1686941087061fca95a2ec7d64facf838d77d3ee58d7c",
+  "wireSHA256": "e8e5be3d274d658ba35e24c8e1af5baf86c8392f4220b42e181ecbd115a5ad2f",
+  "executionTimeoutObserved": 5,
+  "limitStageRows": [
+    {
+      "at": 1795774816.144238,
+      "isMainThread": false,
+      "label": "limits",
+      "phase": "preparing",
+      "pid": 65780
+    },
+    {
+      "at": 1795774816.241426,
+      "isMainThread": false,
+      "label": "limits",
+      "phase": "evaluating",
+      "pid": 65780
+    },
+    {
+      "at": 1795774816.241766,
+      "isMainThread": false,
+      "label": "limits",
+      "phase": "javascript",
+      "pid": 65780,
+      "requests": 0,
+      "stage": "within-limit"
+    },
+    {
+      "at": 1795774821.39902,
+      "executionTimeout": 5,
+      "isMainThread": false,
+      "label": "limits",
+      "phase": "timeout",
+      "pid": 65780
+    }
+  ],
+  "wireTail": [
+    {
+      "at": 258630.912635625,
+      "authority": "transport.hanlin.invalid:80",
+      "body": "",
+      "header": null,
+      "host": "transport.hanlin.invalid",
+      "method": "GET",
+      "path": "/response/binary",
+      "phase": "request",
+      "type": null
+    },
+    {
+      "at": 258630.912789375,
+      "bytes": 3,
+      "path": "/response/binary",
+      "phase": "response"
+    },
+    {
+      "at": 258631.031766958,
+      "authority": "transport.hanlin.invalid:80",
+      "body": "",
+      "header": null,
+      "host": "transport.hanlin.invalid",
+      "method": "GET",
+      "path": "/limits/within-limit",
+      "phase": "request",
+      "type": null
+    },
+    {
+      "at": 258631.03361725,
+      "bytes": 2097152,
+      "path": "/limits/within-limit",
+      "phase": "response"
+    }
+  ],
+  "wireRowCount": 73,
+  "samplerRecords": [],
+  "optionalSamplerErrors": [],
+  "samplerGap": "Live native-stages.jsonl is written under the original temporary fixture root. Its durable HANLIN_WIDGET_EVIDENCE_DIR destination is populated only in defer after the test ends. The controller observed that durable destination, so no live checkpoint could qualify. No stack was captured; no transport/GC cause is inferred.",
+  "sourceExcerpt": {
+    "firstLine": 131,
+    "lastLine": 180,
+    "text": "    @Test func originalScriptWidgetHTTPUsesBoundedRealTransport() throws {\n        let root = try temporary()\n        let stagesFile = root.appending(path: \"native-stages.jsonl\")\n        let stagesLock = NSLock()\n        var reachedFinalAssertion = false\n        func recordStage(_ label: String, _ phase: String, _ details: [String: Any] = [:]) {\n            stagesLock.lock()\n            defer { stagesLock.unlock() }\n            do {\n                var event = details\n                event[\"label\"] = label\n                event[\"phase\"] = phase\n                event[\"at\"] = Date().timeIntervalSince1970\n                event[\"pid\"] = ProcessInfo.processInfo.processIdentifier\n                event[\"isMainThread\"] = Thread.isMainThread\n                var bytes = try JSONSerialization.data(withJSONObject: event, options: [.sortedKeys])\n                bytes.append(0x0a)\n                if !FileManager.default.fileExists(atPath: stagesFile.path) {\n                    try Data().write(to: stagesFile)\n                }\n                let output = try FileHandle(forWritingTo: stagesFile)\n                defer { try? output.close() }\n                try output.seekToEnd()\n                try output.write(contentsOf: bytes)\n            } catch {\n                print(\"Original HTTP diagnostic could not record \\(label)/\\(phase): \\(error)\")\n            }\n        }\n        defer {\n            recordStage(\"test\", reachedFinalAssertion ? \"assertions-reached-end\" : \"exited-before-end\")\n            if let directory = ProcessInfo.processInfo.environment[\"HANLIN_WIDGET_EVIDENCE_DIR\"] {\n                let retained = URL(filePath: directory).appending(path: \"original-http-\" + root.lastPathComponent)\n                do {\n                    try FileManager.default.createDirectory(at: retained, withIntermediateDirectories: true)\n                    for name in [\"native-stages.jsonl\", \"wire.jsonl\", \"server.stdout\", \"server.stderr\", \"port\"] {\n                        let source = root.appending(path: name)\n                        if FileManager.default.fileExists(atPath: source.path) {\n                            try FileManager.default.copyItem(at: source, to: retained.appending(path: name))\n                        }\n                    }\n                    print(\"Original HTTP native evidence retained at \\(retained.path)\")\n                    try FileManager.default.removeItem(at: root)\n                } catch {\n                    print(\"Original HTTP evidence copy failed; source retained at \\(root.path): \\(error)\")\n                }\n            } else {\n                print(\"Original HTTP native evidence retained at \\(root.path)\")\n            }\n        }\n        recordStage(\"test\", \"started\", [\"executionTimeout\": HanlinOriginalScriptWidgetSession.executionTimeout])"
+  },
+  "clockBoundary": "Native stages use epoch wall time. Wire timestamps use the Python server clock; compare intervals only within a given clock."
+}

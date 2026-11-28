@@ -1,0 +1,40 @@
+{
+  "author": {
+    "homepage": "https://github.com/001ProMax",
+    "email": null,
+    "name": "001"
+  },
+  "remoteResource": null,
+  "localizedNames": {
+    "pt": "",
+    "fr": "",
+    "en": "",
+    "it": "",
+    "ru": "",
+    "ja": "",
+    "zh": "",
+    "de": "",
+    "es": ""
+  },
+  "name": "Map Snapshot",
+  "localizedDescriptions": {
+    "pt": "",
+    "fr": "",
+    "en": "",
+    "it": "",
+    "ru": "",
+    "ja": "",
+    "zh": "",
+    "de": "",
+    "es": ""
+  },
+  "intentInputTypes": [],
+  "description": "Create MapKit snapshots from code or from the live map. Supports headless coordinate-based capture, shortcut/intents input, orientation control, zoom/distance params, and interactive capture.",
+  "contributors": [],
+  "entry": "index.tsx",
+  "iconImage": null,
+  "version": "2.0.1-syntax-fix",
+  "runInApp": false,
+  "color": "rgba(0, 198, 165,1)",
+  "icon": "map"
+}

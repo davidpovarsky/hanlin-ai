@@ -1,0 +1,30 @@
+{
+  "root": "/mnt/development/projects/worktrees/hanlin-ai-cache-integration-20261125",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-ai-cache-sync-f391-20261125",
+  "branch": "codex/hanlin-ai-cache-sync-f391-20261125",
+  "base": "495680e928d5f4fd9735d14b0be5f267ced84b42",
+  "heads": [
+    {
+      "branch": "codex/hanlin-composer-capabilities-20261124",
+      "sha": "f39142d3d14ae1bbbb81febceeef61fdc605f2a0",
+      "observed_at": "2026-11-25T04:43:43.289Z"
+    },
+    {
+      "branch": "codex/hanlin-three-waves-wave3-20261124",
+      "sha": "a2127598a677e0b8a67d41cdb422c4e19c8d1afc",
+      "observed_at": "2026-11-25T04:43:42.269Z"
+    },
+    {
+      "branch": "codex/hanlin-miniapps-sdk-completion-20261123",
+      "sha": "3d3a89bbfb5921490764f01b20632f62fb398433",
+      "observed_at": "2026-11-25T04:43:42.113Z"
+    }
+  ],
+  "artifacts": "/mnt/development/projects/artifacts/hanlin-ai-cache-sync-f391-20261125",
+  "preserve": [
+    "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+    "docs/miniapp-sdk/extension-reachability.json",
+    "docs/miniapp-sdk/extension-reachability.md",
+    "docs/miniapp-sdk/source-inventory.json"
+  ]
+}

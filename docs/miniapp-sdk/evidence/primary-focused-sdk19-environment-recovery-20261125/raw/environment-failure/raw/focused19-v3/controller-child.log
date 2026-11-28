@@ -1,0 +1,14 @@
+{"observedAt": "2026-11-25T12:22:25.566733+00:00", "status": "RUNNING", "phase": "authenticated-reuse", "elapsedSeconds": 3.358299727551639e-05, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+{"observedAt": "2026-11-25T12:22:25.567801+00:00", "status": "RUNNING", "phase": "boot.log", "elapsedSeconds": 0.001097166008548811, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+Paired command starting: boot.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: boot.log; pid=38347; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: boot.log; pid=38347; elapsed=0.7s; log_bytes=0; observed_exit=0
+{"observedAt": "2026-11-25T12:22:26.268806+00:00", "status": "RUNNING", "phase": "bootstatus.log", "elapsedSeconds": 0.702109207995818, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+Paired command starting: bootstatus.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: bootstatus.log; pid=38405; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: bootstatus.log; pid=38405; elapsed=9.5s; log_bytes=597; observed_exit=0
+{"observedAt": "2026-11-25T12:22:35.787749+00:00", "status": "RUNNING", "phase": "original-expo-probe.log", "elapsedSeconds": 10.221087166006328, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}
+Paired command starting: original-expo-probe.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: original-expo-probe.log; pid=38501; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: original-expo-probe.log; pid=38501; elapsed=21.6s; log_bytes=1731; observed_exit=1
+{"observedAt": "2026-11-25T12:23:01.215958+00:00", "status": "FOCUSED_FAILED", "phase": null, "elapsedSeconds": 35.649356249996345, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}

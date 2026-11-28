@@ -1,0 +1,38 @@
+{
+  "status": "SOURCE_SEAL_AND_ORIGINAL_HOST_TERMINAL_TRANSFERRED",
+  "source": "78ec8f97a607f5e1f8c01de5109ae850791b9e04",
+  "actualHostSource": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+  "files": [
+    {
+      "path": "host764-generated-docs.bundle",
+      "bytes": 1427,
+      "sha256": "de2160db79aa49e14337263443b974e6fc540e9961b6d77e33b6ed6c3d419981"
+    },
+    {
+      "path": "host764-source-seal.json",
+      "bytes": 3142,
+      "sha256": "55eb73b7391e0dd765ea42a86a8586497848e73f0f15fa8d9b7a609d768ae23b"
+    },
+    {
+      "path": "host764-generated-inventory-delta.json",
+      "bytes": 19336,
+      "sha256": "ebcdd58c8cfeb632853f0d318e62e5ce06474e82a66454275dde39c2363f35de"
+    },
+    {
+      "path": "host-preparation-764ed325-original-phases-r1.json",
+      "bytes": 20023,
+      "sha256": "6046e68027dbb0acf87a42fd6b310c21405f9a58f721c4b17e90a5b775404942"
+    },
+    {
+      "path": "sdk-fingerprint-764ed325-before-original-host.json",
+      "bytes": 67312,
+      "sha256": "38a385ed1867e16c847d041bb500ef74f1fd91839756efebbb6ef9c83a26b592"
+    },
+    {
+      "path": "current-sdk-fingerprint.log",
+      "bytes": 67312,
+      "sha256": "3bd11576057cc0cd70f3bad96454086688119c0377f9f55c00be5c6a6fbf08ac"
+    }
+  ],
+  "at": "2026-11-27T15:42:57.416216+00:00"
+}

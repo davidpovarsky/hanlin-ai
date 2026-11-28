@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "sourceCommit": "ae21e071aba7d5fc3d2a55f39c47ee81b19278c1",
+  "sourceParent": "e3b07c577d6424f355a360d4b2f668645e6e3bd5",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 944,
+      "sha256": "4a16221cdefec96871bf17d46ff6cf8d92a2d0a1ff47ce54954fc250040e12c9"
+    },
+    {
+      "path": "candidate-manifest.json",
+      "bytes": 649,
+      "sha256": "10a6fe6d81216bf0eda74080ebe2e2648a5fd77ccbe516a7fd9e1592d14019c0"
+    },
+    {
+      "path": "qualification.json",
+      "bytes": 1436,
+      "sha256": "cb2b7463714cf9b4603623d721661519e854d880adcff9103dd117bf4874f17b"
+    },
+    {
+      "path": "r2-to-r3.patch.gz",
+      "bytes": 511,
+      "sha256": "126533035462da68d038f43153f81165890f3bcf859554a4bc916a3e8c2b3f9d"
+    },
+    {
+      "path": "root-independent-review.json",
+      "bytes": 1080,
+      "sha256": "86a4b1e8986cec1e4248504d18e35b50262bb9ad3e6d256d20f79c671b2fb921"
+    }
+  ],
+  "testsExecuted": 0,
+  "nativeInvocations": 0
+}

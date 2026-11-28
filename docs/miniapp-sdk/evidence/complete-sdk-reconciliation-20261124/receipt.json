@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "createdAtUTC": "2026-11-24T10:25:42.550252+00:00",
+  "sourceCommit": "b07527ea9a9493a9dbc8d2c6fe2c699db86fc7a2",
+  "uncommittedSourcePaths": [
+    "Scripts/Audit/audit-miniapp-sdk.mjs"
+  ],
+  "result": "PASS",
+  "commands": [
+    {
+      "atUTC": "2026-11-24T10:25:38.420109+00:00",
+      "command": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--write"
+      ],
+      "exit": 0,
+      "stdout": "docs/miniapp-sdk/evidence/complete-sdk-reconciliation-20261124/attempt-01/1.stdout.txt",
+      "stderr": "docs/miniapp-sdk/evidence/complete-sdk-reconciliation-20261124/attempt-01/1.stderr.txt"
+    },
+    {
+      "atUTC": "2026-11-24T10:25:39.102626+00:00",
+      "command": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py"
+      ],
+      "exit": 0,
+      "stdout": "docs/miniapp-sdk/evidence/complete-sdk-reconciliation-20261124/attempt-01/2.stdout.txt",
+      "stderr": "docs/miniapp-sdk/evidence/complete-sdk-reconciliation-20261124/attempt-01/2.stderr.txt"
+    },
+    {
+      "atUTC": "2026-11-24T10:25:40.611236+00:00",
+      "command": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "docs/miniapp-sdk/evidence/complete-sdk-reconciliation-20261124/attempt-01/3.stdout.txt",
+      "stderr": "docs/miniapp-sdk/evidence/complete-sdk-reconciliation-20261124/attempt-01/3.stderr.txt"
+    },
+    {
+      "atUTC": "2026-11-24T10:25:41.121463+00:00",
+      "command": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "docs/miniapp-sdk/evidence/complete-sdk-reconciliation-20261124/attempt-01/4.stdout.txt",
+      "stderr": "docs/miniapp-sdk/evidence/complete-sdk-reconciliation-20261124/attempt-01/4.stderr.txt"
+    }
+  ],
+  "sourceCount": 93,
+  "localPublicExports": 176,
+  "manifestFieldCount": 334,
+  "expoPublicRuntime": {
+    "runtimeVersion": "58.0.29",
+    "configuration": "Tools/SwiftUIBridge/configuration.json",
+    "typescriptSources": [
+      "Generated/SwiftUIBridge/bridge-manifest.ts",
+      "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts"
+    ],
+    "swiftSources": [
+      "Generated/SwiftUIBridge/HanlinGeneratedViews.swift",
+      "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift"
+    ],
+    "originalRuntimeSource": "Scripts/Expo/dependency-lock.json"
+  },
+  "reviewedCoverage": {
+    "source": "Tools/SwiftUIBridge/configuration.json",
+    "expoUIVersion": "58.0.3",
+    "purpose": "reviewed Apple API coverage input; not the installed runtime version"
+  },
+  "outputs": [
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "bytes": 493311,
+      "sha256": "0fd0bc2eb8aa0ab33bfaa74a48c4e2ad3d743d682cbf3bcc059d7a17aacdd515"
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "bytes": 118561,
+      "sha256": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "bytes": 147521,
+      "sha256": "f4e2bd0bead729e6a05c591947ee1cd7f13eaf85e3f1a193510f65ac83c95008"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "bytes": 21494,
+      "sha256": "8d9c979eedf51d8fd8a2f0535d616a3c03950d6b47f9cccb7fb1bb3a1b26487c"
+    }
+  ],
+  "scope": "Current source/types/field reference and canonical reachability after runtime metadata, GroupBox, modern widget publication, truthful return ACK and native widget C++ consumer correction.",
+  "boundary": "Source reconciliation is not the52-case native app gate or physical-device acceptance. Native source/consumer evidence is retained separately."
+}

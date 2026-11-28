@@ -1,0 +1,9 @@
+// Original shared implementation is owned by the SDK.
+import HanlinAgentActivityCore
+
+typealias AgentActivityStatus = HanlinAgentActivityCore.AgentActivityStatus
+typealias AgentActivityKind = HanlinAgentActivityCore.AgentActivityKind
+typealias ProgressSummarySource = HanlinAgentActivityCore.ProgressSummarySource
+typealias AgentActivitySource = HanlinAgentActivityCore.AgentActivitySource
+typealias AgentActivityStep = HanlinAgentActivityCore.AgentActivityStep
+typealias AgentRun = HanlinAgentActivityCore.AgentRun

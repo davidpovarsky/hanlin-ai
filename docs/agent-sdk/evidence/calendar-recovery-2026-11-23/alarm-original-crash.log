@@ -1,0 +1,57 @@
+
+*** Signal 5: Backtracing from 0xbe71de6416a0... done ***
+
+*** Program crashed: System trap at 0x0000be71de6416a0 ***
+
+Platform: arm64 Linux (Ubuntu 24.04.4 LTS)
+
+Thread 0 "prior-crash-rep" crashed:
+
+0      0x0000be71de6416a0 main + 816 in prior-crash-reproducer
+1 [ra] 0x0000eb1bc32284c4 <unknown> in libc.so.6
+2 [ra] 0x0000eb1bc3228598 <unknown> in libc.so.6
+
+
+Registers:
+
+ x0 0x0000be721b3e4160  a0 7a c6 c4 1b eb 00 00 03 00 00 00 00 00 00 00   zÆÄ·ë··········
+ x1 0x0000be721b3e4180  08 fb d7 c4 1b eb 00 00 38 fb d7 c4 1b eb 00 00  ·û×Ä·ë··8û×Ä·ë··
+ x2 0x0000be721b3d1016  01 00 01 00 01 00 00 00 01 00 01 00 00 00 00 00  ················
+ x3 0x0000000000000000  0
+ x4 0x28eec6c41beb0000  2949513351558529024
+ x5 0x0000eb1bc4c6ee28  03 03 00 00 00 00 00 00 00 00 00 80 00 00 00 00  ················
+ x6 0x0000eb1bc4c6ee28  03 03 00 00 00 00 00 00 00 00 00 80 00 00 00 00  ················
+ x7 0x0000fffff2d727f0  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ················
+ x8 0x000000000000001e  30
+ x9 0xffffffffffffffc4  18446744073709551556
+x10 0x000000000000003c  60
+x11 0x0000000000000000  0
+x12 0x0000eb1bc4e2d2e0  00 00 da c4 1b eb 00 00 70 d2 e2 c4 1b eb 00 00  ··ÚÄ·ë··pÒâÄ·ë··
+x13 0x0000000000000033  51
+x14 0x00000000009baa5e  10201694
+x15 0x0000000000000010  16
+x16 0x0000eb1bc4c70010  70 64 29 c3 1b eb 00 00 10 7f 29 c3 1b eb 00 00  pd)Ã·ë····)Ã·ë··
+x17 0x0000eb1bc3296470  fd 7b bc a9 fd 03 00 91 f7 63 03 a9 17 09 00 90  ý{¼©ý···÷c·©····
+x18 0x0000000000000016  22
+x19 0x0000fffff2d73e38  e8 4d d7 f2 ff ff 00 00 27 4e d7 f2 ff ff 00 00  èM×òÿÿ··'N×òÿÿ··
+x20 0x0000eb1bc4c61750  00 02 00 00 00 00 00 00 d0 c4 c9 c4 1b eb 00 00  ········ÐÄÉÄ·ë··
+x21 0x0000be71de65fca8  03 00 00 00 00 00 00 00 e8 ff 65 de 71 be 00 00  ········èÿeÞq¾··
+x22 0x0000be71de641370  ff 83 05 d1 fd 7b 14 a9 fc 53 15 a9 fd 03 05 91  ÿ··Ñý{·©üS·©ý···
+x23 0x0000fffff2d73e58  41 4e d7 f2 ff ff 00 00 4e 4e d7 f2 ff ff 00 00  AN×òÿÿ··NN×òÿÿ··
+x24 0x0000eb1bc4e36b58  00 00 00 00 00 00 00 00 48 40 d7 f2 ff ff 00 00  ········H@×òÿÿ··
+x25 0x0000000000000000  0
+x26 0x0000eb1bc4e37000  50 83 e3 c4 1b eb 00 00 17 00 00 00 00 00 00 00  P·ãÄ·ë··········
+x27 0x0000be71de65fca8  03 00 00 00 00 00 00 00 e8 ff 65 de 71 be 00 00  ········èÿeÞq¾··
+x28 0x0000000000000000  0
+ fp 0x0000fffff2d73ca0  c0 3d d7 f2 ff ff 00 00 c4 84 22 c3 1b eb 00 00  À=×òÿÿ··Ä·"Ã·ë··
+ lr 0x0000be71de6415ec  e9 1f 40 f9 e0 23 00 f9 88 07 80 52 ea 03 08 2a  é·@ùà#·ù···Rê··*
+ sp 0x0000fffff2d73b60  01 00 00 00 71 be 00 00 00 00 00 00 00 00 00 00  ····q¾··········
+ pc 0x0000be71de6416a0  20 00 20 d4 1f 20 03 d5 fd 7b bf a9 fd 03 00 91   · Ô· ·Õý{¿©ý···
+
+
+Images (20 omitted):
+
+0x0000be71de640000–0x0000be71de641958 b9a8f5df8bb9462dddf993ad2c93bc6b468549e6 prior-crash-reproducer /tmp/hanlin-sdk-calendar-proof-20261123/prior-crash-reproducer
+0x0000eb1bc3200000–0x0000eb1bc3399f91 345abad84f89835d724f49349b1a6b92c6ad4ba3 libc.so.6              /usr/lib/aarch64-linux-gnu/libc.so.6
+
+Backtrace took 0.00s

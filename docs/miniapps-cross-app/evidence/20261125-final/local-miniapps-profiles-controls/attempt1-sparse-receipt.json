@@ -1,0 +1,23 @@
+{
+  "scope": "Portable release-family/profile controls; no Apple requests, no signing and no native app acceptance",
+  "started_at": "2026-11-25T05:55:00.598656+00:00",
+  "finished_at": "2026-11-25T05:55:00.809243+00:00",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "-v",
+    "test_local_miniapps_profiles",
+    "test_local_distribution_profiles",
+    "test_signed_product_bundles",
+    "test_signing_profiles.ProfileResolutionTests",
+    "test_signing_profiles.ProfileCacheTests"
+  ],
+  "exit_code": 1,
+  "sources": {
+    "Scripts/ProductSplit/resolve_signing_profiles.py": "1d33bb6326aa1e59b906ced6b43bd7e2fb160b8a1f2d5a920b3bd09154e6feb5",
+    "Scripts/ProductSplit/test_local_miniapps_profiles.py": "618f6fb83dd8c13fb2ed455d7f324064af95df539395f25d3b8ea32dffd2a2f7",
+    "Scripts/ProductSplit/audit_release_resources.py": "7e32c559616e9525ab630ce2fde5924037323a679ec3e2c893f0274b3e2480da"
+  },
+  "test_log_sha256": "09bbb1f50a63fabcf7e38c315055f6458e761a044d66b3fae844ad9329360cb2"
+}

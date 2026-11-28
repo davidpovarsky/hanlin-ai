@@ -1,0 +1,14 @@
+{
+  "accepted": {
+    "expectedName": "main",
+    "registrations": [
+      "main"
+    ],
+    "nativeSessionSHA256": "27505a611dbe1b61ab100ca53c393ca9a72aedb76bbc084015c35423f25804c7",
+    "mode": "source-contract-check",
+    "nativeLaunch": "NOT_RUN"
+  },
+  "rejectedSource": "import { AppRegistry } from 'react-native';\nimport App from './App';\n\nAppRegistry.registerComponent('ExpoSwiftUIProbe', () => App);\n",
+  "rejectedSHA256": "364733e334a6932e95c5e512f7fdb0d61a18015e513aae4524d5318f47a5d3d2",
+  "expectedRejection": "native foreground host requests main"
+}

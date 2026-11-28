@@ -1,0 +1,8 @@
+{
+  "status": "NOT_STAGED_ALLOWLIST_PATH_LABEL_MISMATCH",
+  "sourceRemained": "9c0879ee168b6aec78a4cc80fd071514c8787887",
+  "nativeExecution": "NOT_RUN",
+  "at": "2026-11-27T04:23:57.640475+00:00",
+  "originalProof": "/Users/m1/builds/hanlin-two-wave-root-20261126/source-stage-866d2d3c-proof",
+  "reason": "Initial expected Matrix mirror path was wrong; actual independently reviewed mirror is AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo."
+}

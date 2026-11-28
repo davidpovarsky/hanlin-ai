@@ -1,0 +1,19 @@
+Command: node --experimental-vm-modules --test Scripts/NativeScript/Tests/window-factory.test.mjs Scripts/NativeScript/Tests/miniapps-sharing.test.mjs
+Scope: 5 new factory cases + 2 existing facade cases impacted by explicit-bridge extraction. This is not native UIWindow/VM proof.
+✔ cross-app facade keeps each captured native session and all payload bytes (2.715056ms)
+✔ native errors and invalid replies reject without inventing completion (1.931451ms)
+(node:3426447) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ two fresh roots retain explicit request contexts and reverse-order async returns (15.059128ms)
+✔ closing first or second window preserves remaining root and its attachment/runtime routing (11.579228ms)
+✔ a reused root is rejected without moving it out of the first window (4.304705ms)
+✔ a delayed factory cannot present or return after its own window closes (4.322545ms)
+✔ scene detach and reattach keeps the same root/request binding (3.815302ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 186.951976

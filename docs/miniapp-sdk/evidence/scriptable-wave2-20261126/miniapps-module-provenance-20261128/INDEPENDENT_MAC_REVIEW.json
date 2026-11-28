@@ -1,0 +1,158 @@
+{
+  "at": "2026-11-28T03:11:47.420793+00:00",
+  "reviewer": "/root/mac_build_resume",
+  "scope": "SOURCE_AND_EXISTING_EVIDENCE_REVIEW_ONLY",
+  "nativeInvocations": 0,
+  "portableControlsRerun": 0,
+  "frozenPacket": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/miniapps-module-provenance-3ab83672/candidate-r1",
+    "manifestSHA256": "fb8852e671e8070cd22c6606e69160e7978bc6a87343f2c2fa9eb48c317471dd",
+    "verifiedMembers": [
+      {
+        "path": "README.md",
+        "bytes": 4410,
+        "sha256": "1b3823eeac5897b78895d0013d8df13d9a8b612ef2bb9d32c5aa0f2e06187310"
+      },
+      {
+        "path": "candidate/Scripts/CI/Tests/test_swift_module_provenance.py",
+        "bytes": 17618,
+        "sha256": "72bb3d2b40fd7c5ed18ca3bd25dbbf0d541564b8a8c2c0721d3ddd1d9dc52e4d"
+      },
+      {
+        "path": "candidate/Scripts/ProductSplit/capture_swift_module_provenance.py",
+        "bytes": 14031,
+        "sha256": "dd2c3ba670a5b74f139b4a57e29d9c6dce72ae9ef529d3fbfc68fcbe88ee7b06"
+      },
+      {
+        "path": "candidate/Scripts/ProductSplit/run_native_acceptance.py",
+        "bytes": 64540,
+        "sha256": "f9982e58d166f780781f7181692877592b60d3b15cd7374dbaa458de37331a3f"
+      },
+      {
+        "path": "candidate/Scripts/ProductSplit/run_paired_acceptance.py",
+        "bytes": 97454,
+        "sha256": "d26555b15ba50e8890ffe4a3a83e56ec9f8cdaec91a6ae6137ed0c9068d34320"
+      },
+      {
+        "path": "original/Scripts/ProductSplit/run_native_acceptance.py",
+        "bytes": 64064,
+        "sha256": "ad292cae96fe84b8c7672c21b83d790b97b12d3f73ec344466993e595db8f7b3"
+      },
+      {
+        "path": "original/Scripts/ProductSplit/run_paired_acceptance.py",
+        "bytes": 96742,
+        "sha256": "38b7c4e8a3cc3051018497f5eb5edcbb94bb73ba41953eb0cc0562fab71337a7"
+      },
+      {
+        "path": "source-validation.json",
+        "bytes": 3682,
+        "sha256": "14fa22e66f879650ef6c5a016678ad9abb274776b15df148ed030d0351daa6cd"
+      },
+      {
+        "path": "source.patch",
+        "bytes": 35327,
+        "sha256": "da163ca1e8da3594bd630d58fec7014a3a528df5916cf219ace15201737b8995"
+      }
+    ]
+  },
+  "runnerInverses": [
+    {
+      "path": "Scripts/ProductSplit/run_native_acceptance.py",
+      "originalGitSHA256": "ad292cae96fe84b8c7672c21b83d790b97b12d3f73ec344466993e595db8f7b3",
+      "candidateSHA256": "f9982e58d166f780781f7181692877592b60d3b15cd7374dbaa458de37331a3f",
+      "insertedLines": 7,
+      "wholeByteInverse": true,
+      "unchangedFunctions": [
+        "notification_check",
+        "notification_file",
+        "notification_equal",
+        "notification_source",
+        "notification_bundle",
+        "notification_products",
+        "notification_container",
+        "notification_active",
+        "notification_containers",
+        "notification_stop",
+        "run_notification_test",
+        "validate_notification_observations",
+        "main"
+      ],
+      "changedFunctionOnly": "command",
+      "originalArgvTimeoutCleanupAndMainExact": true
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "originalGitSHA256": "38b7c4e8a3cc3051018497f5eb5edcbb94bb73ba41953eb0cc0562fab71337a7",
+      "candidateSHA256": "d26555b15ba50e8890ffe4a3a83e56ec9f8cdaec91a6ae6137ed0c9068d34320",
+      "insertedLines": 11,
+      "wholeByteInverse": true,
+      "unchangedFunctions": [
+        "select_paired_runtime",
+        "command_phase_status",
+        "record_build_phases",
+        "capture_app_intents_metadata",
+        "fixture_archive",
+        "authoring_fixtures",
+        "verify_native_result",
+        "start_native_adapter_assets",
+        "widget_recovery_fixture",
+        "shortcut_surface_fixtures",
+        "long_running_shortcut_fixtures",
+        "system_surface_inputs",
+        "stage_system_surface_share_input",
+        "start_system_surface_input_producer",
+        "finish_system_surface_input_producer",
+        "start_shortcut_observer",
+        "finish_shortcut_observer",
+        "main"
+      ],
+      "changedFunctionOnly": "command",
+      "originalArgvTimeoutCleanupAndMainExact": true
+    }
+  ],
+  "preservedReviewerPreparationError": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/miniapps-module-provenance-independent-mac-review-r1/independent-review.json",
+    "sha256": "4d03c36ba09e0b5ca9aa3337f476e31f9816961292bec0976013ed118a388d55",
+    "reason": "Initial one-line unittest OK parser did not allow original diagnostic stderr interleaving; this exact same immutable log is reconciled by complete per-case segments. No source or test execution changed."
+  },
+  "existingPortableControls": {
+    "receiptSHA256": "4791013d943b3f2c08bfd5359fecd89124668e4ea807410dc33336c46fd32ca8",
+    "rawStdout": {
+      "bytes": 1469,
+      "sha256": "53c0ab7ceda5abc0dbeb9fc6de36dcf587dff0c76571264cec9fa5ae0e93813c"
+    },
+    "rawStderr": {
+      "bytes": 3245,
+      "sha256": "c2308d2b28882edc7dfb06c9374174265549a1bf7e463e2f9f907aabf8128a65"
+    },
+    "actual15NamesExact": true,
+    "rerun": false
+  },
+  "actualFailedCompilerPaths": {
+    "observations": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/miniapps-module-provenance-independent-mac-review-r2/actual-compiler-path-bindings.json",
+      "bytes": 9364,
+      "sha256": "0f776056d7216fffb52258e6ae88ffa9ea3f0b6c8f05ffa7519e89e35e3de9a4"
+    },
+    "allProducerImporterAndOutputFileMapNamesMatch": true,
+    "producerTargetSuffixIsDirectoryOnly": "HanlinPlatformContracts-t.build; emitted module and map basenames remain HanlinPlatformContracts",
+    "competingCandidates": "Emitted producer; top-level Products module/file or directory; flat PackageFrameworks and direct framework modules; explicit-precompiled HanlinPlatformContracts modules.",
+    "symlinkPolicy": "Source logs prove flat copy destinations, not future inode state. Actual symlink components/files are rejected and remain missing/unavailable; no following is introduced."
+  },
+  "sdkImpactReceipt": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/miniapps-module-provenance-3ab83672/sdk-input-intersection.json",
+    "sha256": "a3da0c57e89bde600bd99afdfdbfbcf88eff7568737493830d68d356465305c5"
+  },
+  "SDK396DirectIntersection": 0,
+  "semanticReview": {
+    "trigger": "Only fatal original MiniApps build names; successful/other phases/allowed paired failures bypass.",
+    "originalFailure": "Raw log, failed command journal, and paired terminal checkpoint precede the hook; original RuntimeError or TimeoutExpired is retained. Best-effort collection cannot promote acceptance.",
+    "deadline": "Original effective command start+timeout, additionally clamped to the existing original54 preparation-inclusive clock. Expired/invalid deadline launches no child; child receives same absolute deadline; cooperative6s and subprocess min(8s, remaining) cap. No original timeout extension.",
+    "timeScopeLimit": "As documented, parent metadata writes, process launch/reaping and OS I/O are ordinary operations, not a hard real-time guarantee on an unresponsive OS.",
+    "ownership": "Owned DerivedData/evidence descriptor anchors; component-wise nofollow; regular same-UID single-link files; before/after dev/inode/mode/uid/gid/nlink/size/mtime/ctime equal. Fresh output only.",
+    "scopeAndBounds": "Only named module/ABI/interface/file-list/dependency/output-map artifacts in fixed directories;8MiB each/16MiB unique retained/32MiB reads/48 candidates/4096 entries per directory. No source/cache/product mutation or native invocation.",
+    "limitsRetained": "Unavailable/rejected/changed/truncated/timed-out artifacts remain explicit. A successful collector does not establish which module was imported or why the compiler failed."
+  },
+  "verdict": "APPROVED_SOURCE_ONLY",
+  "completedAt": "2026-11-28T03:11:47.684667+00:00"
+}

@@ -1,0 +1,331 @@
+TAP version 13
+# node:internal/modules/cjs/loader:1401
+#   const err = new Error(message);
+#               ^
+# Error: Cannot find module 'semver'
+# Require stack:
+# - C:\\Users\\DAVID\\Code\\hanlin-product-completion-20261117\\Scripts\\Runtime\\DependencyUpdates\\package.json
+#     at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+#     at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+#     at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+#     at Function._load (node:internal/modules/cjs/loader:1211:37)
+#     at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+#     at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+#     at Module.require (node:internal/modules/cjs/loader:1487:12)
+#     at require (node:internal/modules/helpers:135:16)
+#     at file:///C:/Users/DAVID/Code/hanlin-product-completion-20261117/Scripts/Runtime/Tests/dependency-updates.test.mjs:9:91 {
+#   code: 'MODULE_NOT_FOUND',
+#   requireStack: [
+#     'C:\\\\Users\\\\DAVID\\\\Code\\\\hanlin-product-completion-20261117\\\\Scripts\\\\Runtime\\\\DependencyUpdates\\\\package.json'
+#   ]
+# }
+# Node.js v22.17.0
+# Subtest: Scripts\\Runtime\\Tests\\dependency-updates.test.mjs
+not ok 1 - Scripts\\Runtime\\Tests\\dependency-updates.test.mjs
+  ---
+  duration_ms: 104.4051
+  type: 'test'
+  location: 'C:\\Users\\DAVID\\Code\\hanlin-product-completion-20261117\\Scripts\\Runtime\\Tests\\dependency-updates.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: actual policy bootstraps an in-progress independent proof without claiming merge eligibility
+ok 2 - actual policy bootstraps an in-progress independent proof without claiming merge eligibility
+  ---
+  duration_ms: 4.4677
+  type: 'test'
+  ...
+# Subtest: authentic later producer attempt replaces older failure; raw history remains attributed
+ok 3 - authentic later producer attempt replaces older failure; raw history remains attributed
+  ---
+  duration_ms: 0.5257
+  type: 'test'
+  ...
+# Subtest: newest current-head failure is retained, never replaced by older green
+ok 4 - newest current-head failure is retained, never replaced by older green
+  ---
+  duration_ms: 0.4847
+  type: 'test'
+  ...
+# Subtest: out-of-order old completion is superseded before proof publication
+ok 5 - out-of-order old completion is superseded before proof publication
+  ---
+  duration_ms: 0.3727
+  type: 'test'
+  ...
+# Subtest: same workflow rerun uses exact current run_attempt and original job identity
+ok 6 - same workflow rerun uses exact current run_attempt and original job identity
+  ---
+  duration_ms: 0.3285
+  type: 'test'
+  ...
+# Subtest: later consumer on the same producer can replace its previous failed proof
+ok 7 - later consumer on the same producer can replace its previous failed proof
+  ---
+  duration_ms: 0.4629
+  type: 'test'
+  ...
+# Subtest: current producer excludes separately authenticated prior-producer proof history
+ok 8 - current producer excludes separately authenticated prior-producer proof history
+  ---
+  duration_ms: 0.2554
+  type: 'test'
+  ...
+# Subtest: unknown extra required failures remain unchanged and blocking
+ok 9 - unknown extra required failures remain unchanged and blocking
+  ---
+  duration_ms: 0.275
+  type: 'test'
+  ...
+# Subtest: duplicates within one authentic attempt remain ambiguous
+ok 10 - duplicates within one authentic attempt remain ambiguous
+  ---
+  duration_ms: 2.3465
+  type: 'test'
+  ...
+# Subtest: unknown job binding and ambiguous run chronology fail closed
+ok 11 - unknown job binding and ambiguous run chronology fail closed
+  ---
+  duration_ms: 0.8174
+  type: 'test'
+  ...
+# Subtest: a foreign workflow cannot self-claim the independent proof name
+ok 12 - a foreign workflow cannot self-claim the independent proof name
+  ---
+  duration_ms: 0.3827
+  type: 'test'
+  ...
+# Subtest: proof without source/consumer/run-attempt identity cannot shadow a valid proof
+ok 13 - proof without source/consumer/run-attempt identity cannot shadow a valid proof
+  ---
+  duration_ms: 0.219
+  type: 'test'
+  ...
+# Subtest: different-app source checks are not silently filtered out
+ok 14 - different-app source checks are not silently filtered out
+  ---
+  duration_ms: 0.3366
+  type: 'test'
+  ...
+# Subtest: actual direct execution is attributed to the Host stage and current run
+ok 15 - actual direct execution is attributed to the Host stage and current run
+  ---
+  duration_ms: 4.9947
+  type: 'test'
+  ...
+# Subtest: verified same-run reuse identifies the native-origin execution separately
+ok 16 - verified same-run reuse identifies the native-origin execution separately
+  ---
+  duration_ms: 1.0908
+  type: 'test'
+  ...
+# Subtest: reuse and passed metadata booleans without a verified execution origin remain UNKNOWN
+ok 17 - reuse and passed metadata booleans without a verified execution origin remain UNKNOWN
+  ---
+  duration_ms: 0.4475
+  type: 'test'
+  ...
+# Subtest: origin missing capture cannot authorize consumer acceptance
+ok 18 - origin missing capture cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.7041
+  type: 'test'
+  ...
+# Subtest: origin other run cannot authorize consumer acceptance
+ok 19 - origin other run cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.512
+  type: 'test'
+  ...
+# Subtest: origin other attempt cannot authorize consumer acceptance
+ok 20 - origin other attempt cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.5401
+  type: 'test'
+  ...
+# Subtest: origin other source head cannot authorize consumer acceptance
+ok 21 - origin other source head cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.4073
+  type: 'test'
+  ...
+# Subtest: origin changed source inputs cannot authorize consumer acceptance
+ok 22 - origin changed source inputs cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.321
+  type: 'test'
+  ...
+# Subtest: origin changed Node fingerprint cannot authorize consumer acceptance
+ok 23 - origin changed Node fingerprint cannot authorize consumer acceptance
+  ---
+  duration_ms: 1.008
+  type: 'test'
+  ...
+# Subtest: origin wrong archive cannot authorize consumer acceptance
+ok 24 - origin wrong archive cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.6527
+  type: 'test'
+  ...
+# Subtest: origin missing environment cannot authorize consumer acceptance
+ok 25 - origin missing environment cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.476
+  type: 'test'
+  ...
+# Subtest: origin missing source hash cannot authorize consumer acceptance
+ok 26 - origin missing source hash cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.2865
+  type: 'test'
+  ...
+# Subtest: origin missing direct capture cannot authorize consumer acceptance
+ok 27 - origin missing direct capture cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.3943
+  type: 'test'
+  ...
+# Subtest: origin wrong counts cannot authorize consumer acceptance
+ok 28 - origin wrong counts cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.4775
+  type: 'test'
+  ...
+# Subtest: origin missing packed probe cannot authorize consumer acceptance
+ok 29 - origin missing packed probe cannot authorize consumer acceptance
+  ---
+  duration_ms: 0.4826
+  type: 'test'
+  ...
+# Subtest: ambiguous duplicate fresh origins cannot authorize the archive
+ok 30 - ambiguous duplicate fresh origins cannot authorize the archive
+  ---
+  duration_ms: 0.997
+  type: 'test'
+  ...
+# Subtest: receipt consumer recomputes accounting from raw proof rather than trusting its accepted boolean
+ok 31 - receipt consumer recomputes accounting from raw proof rather than trusting its accepted boolean
+  ---
+  duration_ms: 2.6319
+  type: 'test'
+  ...
+# Subtest: original authenticated green log really executed150/149/0/1 in native-origin
+ok 32 - original authenticated green log really executed150/149/0/1 in native-origin
+  ---
+  duration_ms: 16.0975
+  type: 'test'
+  ...
+# Subtest: one exact protected-base current-head candidate is selected
+ok 33 - one exact protected-base current-head candidate is selected
+  ---
+  duration_ms: 1.7449
+  type: 'test'
+  ...
+# Subtest: generic base-branch audit cannot select a candidate
+ok 34 - generic base-branch audit cannot select a candidate
+  ---
+  duration_ms: 0.2988
+  type: 'test'
+  ...
+# Subtest: a moved candidate does not inherit the old run
+ok 35 - a moved candidate does not inherit the old run
+  ---
+  duration_ms: 0.251
+  type: 'test'
+  ...
+# Subtest: foreign repository run is rejected
+ok 36 - foreign repository run is rejected
+  ---
+  duration_ms: 0.3247
+  type: 'test'
+  ...
+# Subtest: non-dispatch and noncanonical run paths are rejected
+ok 37 - non-dispatch and noncanonical run paths are rejected
+  ---
+  duration_ms: 0.3414
+  type: 'test'
+  ...
+# Subtest: ambiguous and incomplete pull inventories are rejected
+ok 38 - ambiguous and incomplete pull inventories are rejected
+  ---
+  duration_ms: 0.213
+  type: 'test'
+  ...
+# Subtest: draft and unowned candidate branches cannot become eligible
+ok 39 - draft and unowned candidate branches cannot become eligible
+  ---
+  duration_ms: 0.3487
+  type: 'test'
+  ...
+# Subtest: failed or skipped source run cannot use an otherwise positive receipt
+ok 40 - failed or skipped source run cannot use an otherwise positive receipt
+  ---
+  duration_ms: 0.35
+  type: 'test'
+  ...
+# Subtest: green audit without schema2 native-origin accounting is rejected
+ok 41 - green audit without schema2 native-origin accounting is rejected
+  ---
+  duration_ms: 0.5257
+  type: 'test'
+  ...
+# Subtest: legacy schema1 proof is never upgraded
+ok 42 - legacy schema1 proof is never upgraded
+  ---
+  duration_ms: 0.5431
+  type: 'test'
+  ...
+# Subtest: base and source receipt drift are rejected
+ok 43 - base and source receipt drift are rejected
+  ---
+  duration_ms: 0.3605
+  type: 'test'
+  ...
+# Subtest: unknown or failed source validation cannot qualify
+ok 44 - unknown or failed source validation cannot qualify
+  ---
+  duration_ms: 1.1724
+  type: 'test'
+  ...
+# Subtest: strict source and proof app bindings are both required
+ok 45 - strict source and proof app bindings are both required
+  ---
+  duration_ms: 0.8423
+  type: 'test'
+  ...
+# Subtest: an additional required failed gate prevents automatic merge
+ok 46 - an additional required failed gate prevents automatic merge
+  ---
+  duration_ms: 0.2229
+  type: 'test'
+  ...
+# Subtest: pending, stale, skipped and ambiguous server gates prevent automatic merge
+ok 47 - pending, stale, skipped and ambiguous server gates prevent automatic merge
+  ---
+  duration_ms: 0.3204
+  type: 'test'
+  ...
+# Subtest: only activation-disabled can remain after all gates pass
+ok 48 - only activation-disabled can remain after all gates pass
+  ---
+  duration_ms: 0.3369
+  type: 'test'
+  ...
+# Subtest: closed or draft proposals cannot activate automatic merge
+ok 49 - closed or draft proposals cannot activate automatic merge
+  ---
+  duration_ms: 0.1813
+  type: 'test'
+  ...
+1..49
+# tests 49
+# suites 0
+# pass 48
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 162.2782

@@ -1,0 +1,76 @@
+{
+    "classification":  "EXECUTED_PORTABLE_SWIFT_CHECKS_AND_PARSE_ONLY",
+    "startedUTC":  "2026-11-22T13:11:43.4264292Z",
+    "completedUTC":  "2026-11-22T13:12:22.1890128Z",
+    "compiler":  [
+                     "Swift version 6.3.3 (swift-6.3.3-RELEASE)",
+                     "Target: x86_64-unknown-windows-msvc",
+                     "Build config: +assertions"
+                 ],
+    "compilerArguments":  [
+                              "-swift-version",
+                              "6",
+                              "-strict-concurrency=complete",
+                              "-warnings-as-errors",
+                              "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityHeaderPhase.swift",
+                              "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityVisibilityPolicy.swift",
+                              "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift",
+                              "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+                              "Scripts/CI/AgentActivityHeaderChecks.swift",
+                              "-o",
+                              "C:\\Users\\DAVID\\AppData\\Local\\Temp\\hanlin-activity-regression-145801.exe"
+                          ],
+    "checksOutput":  [
+                         "PASS: 202 production activity lifetime and motion-policy checks"
+                     ],
+    "portableExecutableSHA256":  "C0B4C847471DDE90E6C272AF004D56E37A3DAC471681C7D4EFBB26F2EDE8D84E",
+    "parseArguments":  [
+                           "-frontend",
+                           "-parse",
+                           "-D",
+                           "HANLIN_A2UI_POC"
+                       ],
+    "parsedFiles":  [
+                        "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityVisibilityPolicy.swift",
+                        "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityCompositionPolicy.swift",
+                        "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityComposer.swift",
+                        "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityHeaderPhase.swift",
+                        "AI_HLY/Downstream/AgentActivity/LegacyAgentActivityAdapter.swift",
+                        "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+                        "AI_HLY/Views/Components/ChatViewComponents.swift",
+                        "AI_HLY/Downstream/AgentActivity/AgentEvent.swift",
+                        "AI_HLY/Downstream/AgentActivity/AgentActivityModels.swift",
+                        "AI_HLY/Downstream/AgentActivity/AgentEventAccumulator.swift",
+                        "AI_HLY/Downstream/AgentActivity/ProviderEventAdapter.swift",
+                        "AI_HLY/Downstream/ChatCore/HanlinAppAgentPresentationContracts.swift",
+                        "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+                        "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UIAgentPresentationAdapter.swift",
+                        "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UIAppPresentation.swift",
+                        "AI_HLYTests/HanlinA2UIProductPerformanceTests.swift"
+                    ],
+    "sourceSHA256":  {
+                         "AI_HLY/Downstream/ChatCore/HanlinAppAgentPresentationContracts.swift":  "CA9879ECA860E17E34F10C84C9C098ACC106E8793A8A3839682F51C111C8E9CA",
+                         "AI_HLY/Downstream/AgentActivity/ProviderEventAdapter.swift":  "32DDFEF5BED597186A817BD3EA0193841FE96F8C2DFFB65C2A431D0EBF358046",
+                         "AI_HLY/Downstream/AgentActivity/LegacyAgentActivityAdapter.swift":  "76823D40FFECECE222EB2293BCA1391A4D67E620BAB986016477FE7BB1C93B07",
+                         "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift":  "AF64CE09E5AF9646430556B723466BCF98AD9AEBC1A764FAC083D3BC8A633DA2",
+                         "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UIAgentPresentationAdapter.swift":  "84AAACD8E7E2EF5E198D1B79353DE8BB7D411798673700B73EC3C138FEFA963B",
+                         "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift":  "D8FF25AA0BA06895108F09EDF00709DB04EFE4F7467D1B8302ADF1BAE1785577",
+                         "AI_HLYTests/AgentActivityHeaderPhaseTests.swift":  "B05AEA3E3B2A17D0F45872F7A30475713968B6FD9255FAE3907CB231BD143BF7",
+                         "AI_HLY/Downstream/AgentActivity/AgentEventAccumulator.swift":  "7C90B58E8390B3376201C163D3F521C97D3401882CBAAA325761952ECFB30AF3",
+                         "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityCompositionPolicy.swift":  "03DAD015693059F1E4B6E4BEFF0842DEE2C313272585BDEC8F49C587375D6E16",
+                         "AI_HLY/Views/Components/ChatViewComponents.swift":  "36D3FF2AF9D29FE38BE699700DA199527625CE7FF19AFD1EDE0D2A3CA03CCD30",
+                         "Scripts/CI/AgentActivityHeaderChecks.swift":  "4330F016C3BAB449B640A6C4AA94BDFDC0FBEB939A4DF721570B32ACA8199D9A",
+                         "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityComposer.swift":  "D46C3937DFB5C0671377E6652A5D342F383A9E8D75133ED34CA99A38C60AD384",
+                         "AI_HLY/Downstream/AgentActivity/AgentEvent.swift":  "51B5726348FBFAE550006A7AF80C75FA82103AB50AAE7F75803209657B5958B5",
+                         "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UIAppPresentation.swift":  "1E68962971282877A9C30DF4B46BFF04F8B16C6DE4374E33899E1754DEB85ACF",
+                         "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift":  "A19E5C748AB601D598116E364D2D7B4BEDC36DE396B120B3FC40EEA3AA4D68A8",
+                         "AI_HLY/Downstream/AgentActivity/AgentActivityModels.swift":  "935BD6E487EAF95452BA7AD925FA108A608EAA9DE8334B0DE60CA1DA3C98940E",
+                         "AI_HLYTests/HanlinA2UIProductPerformanceTests.swift":  "8F6246F6314EB99051AE1869B7AE947B267B7A90AB327309909A6DC2455AD99E",
+                         "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityVisibilityPolicy.swift":  "F322C371D400269CBB994A85B480D85494871BAF24F2BC2BEB5BAB81F53F593D",
+                         "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityHeaderPhase.swift":  "CA6ABC68B36D5B26B55FF04C629B64B8D86D17AB9D89D3CDDC02036BF6992DE4"
+                     },
+    "sourceUnchangedDuringValidation":  true,
+    "nativeApplicationTestsExecuted":  false,
+    "simulatorStarted":  false,
+    "limitation":  "Portable policy executable and syntax parsing do not prove Apple SDK type checking, pixels, or device behavior."
+}

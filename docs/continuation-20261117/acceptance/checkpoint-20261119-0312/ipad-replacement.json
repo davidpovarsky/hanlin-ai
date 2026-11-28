@@ -1,0 +1,15 @@
+{
+  "old_run": 44429728630,
+  "replacement_run": 44447126258,
+  "replacement_head": "7e27ded6111f3e8f3fa793531bc29d9d7de3d5bc",
+  "full_old_selector_subset": true,
+  "original_status": "queued",
+  "active_jobs": [
+    {
+      "id": 135243815857,
+      "status": "queued",
+      "runner_id": 0
+    }
+  ],
+  "action": "CANCEL_REQUESTED_AFTER_AUTHENTICATED_REPLACEMENT"
+}

@@ -1,0 +1,29 @@
+// !$*UTF8*$!
+{
+ archiveVersion = 1;
+ classes = {};
+ objectVersion = 77;
+ objects = {
+  A00000000000000000000001 = {isa = PBXProject; attributes = {LastUpgradeCheck = 2700;}; buildConfigurationList = A00000000000000000000002; compatibilityVersion = "Xcode 16.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, he, Base); mainGroup = A00000000000000000000003; packageReferences = (A00000000000000000000015); productRefGroup = A00000000000000000000004; projectDirPath = ""; projectRoot = ""; targets = (A00000000000000000000005); };
+  A00000000000000000000002 = {isa = XCConfigurationList; buildConfigurations = (A00000000000000000000006, A00000000000000000000007); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+  A00000000000000000000003 = {isa = PBXGroup; children = (A00000000000000000000008, A00000000000000000000004); sourceTree = "<group>"; };
+  A00000000000000000000004 = {isa = PBXGroup; children = (A00000000000000000000009); name = Products; sourceTree = "<group>"; };
+  A00000000000000000000005 = {isa = PBXNativeTarget; buildConfigurationList = A00000000000000000000010; buildPhases = (A00000000000000000000011, A00000000000000000000012); buildRules = (); dependencies = (); name = HanlinMiniAppsBridgeCompilation; packageProductDependencies = (A00000000000000000000016, A00000000000000000000017); productName = HanlinMiniAppsBridgeCompilation; productReference = A00000000000000000000009; productType = "com.apple.product-type.framework"; };
+  A00000000000000000000006 = {isa = XCBuildConfiguration; buildSettings = {SDKROOT = iphoneos; IPHONEOS_DEPLOYMENT_TARGET = 27.0; SWIFT_VERSION = 6.0; CLANG_ENABLE_MODULES = YES;}; name = Debug; };
+  A00000000000000000000007 = {isa = XCBuildConfiguration; buildSettings = {SDKROOT = iphoneos; IPHONEOS_DEPLOYMENT_TARGET = 27.0; SWIFT_VERSION = 6.0; CLANG_ENABLE_MODULES = YES;}; name = Release; };
+  A00000000000000000000008 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilationProbe.swift; sourceTree = "<group>"; };
+  A00000000000000000000009 = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HanlinMiniAppsBridgeCompilation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+  A00000000000000000000010 = {isa = XCConfigurationList; buildConfigurations = (A00000000000000000000013, A00000000000000000000014); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+  A00000000000000000000011 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A00000000000000000000018); runOnlyForDeploymentPostprocessing = 0; };
+  A00000000000000000000012 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (A00000000000000000000019, A00000000000000000000020); runOnlyForDeploymentPostprocessing = 0; };
+  A00000000000000000000013 = {isa = XCBuildConfiguration; buildSettings = {PRODUCT_BUNDLE_IDENTIFIER = com.hanlin.validation.miniappsbridge; PRODUCT_NAME = "$(TARGET_NAME)"; DEFINES_MODULE = YES; GENERATE_INFOPLIST_FILE = YES; CODE_SIGNING_ALLOWED = NO; CODE_SIGNING_REQUIRED = NO; SKIP_INSTALL = YES; MACH_O_TYPE = staticlib; TARGETED_DEVICE_FAMILY = "1,2"; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; SWIFT_OPTIMIZATION_LEVEL = "-Onone"; SWIFT_STRICT_CONCURRENCY = complete;}; name = Debug; };
+  A00000000000000000000014 = {isa = XCBuildConfiguration; buildSettings = {PRODUCT_BUNDLE_IDENTIFIER = com.hanlin.validation.miniappsbridge; PRODUCT_NAME = "$(TARGET_NAME)"; DEFINES_MODULE = YES; GENERATE_INFOPLIST_FILE = YES; CODE_SIGNING_ALLOWED = NO; CODE_SIGNING_REQUIRED = NO; SKIP_INSTALL = YES; MACH_O_TYPE = staticlib; TARGETED_DEVICE_FAMILY = "1,2"; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; SWIFT_STRICT_CONCURRENCY = complete;}; name = Release; };
+  A00000000000000000000015 = {isa = XCLocalSwiftPackageReference; relativePath = ../..; };
+  A00000000000000000000016 = {isa = XCSwiftPackageProductDependency; package = A00000000000000000000015; productName = HanlinMiniAppsBridge; };
+  A00000000000000000000017 = {isa = XCSwiftPackageProductDependency; package = A00000000000000000000015; productName = HanlinMiniAppsPicker; };
+  A00000000000000000000018 = {isa = PBXBuildFile; fileRef = A00000000000000000000008; };
+  A00000000000000000000019 = {isa = PBXBuildFile; productRef = A00000000000000000000016; };
+  A00000000000000000000020 = {isa = PBXBuildFile; productRef = A00000000000000000000017; };
+ };
+ rootObject = A00000000000000000000001;
+}

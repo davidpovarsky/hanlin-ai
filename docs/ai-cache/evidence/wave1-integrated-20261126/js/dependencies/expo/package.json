@@ -1,0 +1,10 @@
+{
+  "name": "hanlin-wave1-expo-validation",
+  "private": true,
+  "version": "0.0.0",
+  "dependencies": {
+    "typescript": "npm:@typescript/typescript6@6.0.2",
+    "@typescript/old": "npm:typescript@6.0.3",
+    "base64-js": "1.5.1"
+  }
+}

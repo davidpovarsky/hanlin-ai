@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  TranslationDicView.swift
 //  AI_Hanlin
@@ -34,40 +35,40 @@ struct TranslationDicView: View {
             Section {
                 VStack(alignment: .center) {
                     Image(systemName: "character.book.closed")
-                        .font(.largeTitle)
+                        .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding()
                     
-                    Text("自定义翻译词典将使得“即时翻译”的翻译结果变得更加个性化，特别是对于某些私有化的翻译知识而言，在翻译词典中添加搭配能最快速的优化你的翻译结果。")
-                        .font(.footnote)
+                    Text(String(localized: "自定义翻译词典将使得“即时翻译”的翻译结果变得更加个性化，特别是对于某些私有化的翻译知识而言，在翻译词典中添加搭配能最快速的优化你的翻译结果。", bundle: HanlinLocalization.bundle))
+                        .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
             }
             // MARK: 翻译输入区
-            Section(header: Text("输入翻译词汇")) {
+            Section(header: Text(String(localized: "输入翻译词汇", bundle: HanlinLocalization.bundle))) {
                 
-                TextField("内容1", text: $contentOne)
+                TextField(String(localized: "内容1", bundle: HanlinLocalization.bundle), text: $contentOne)
                 
                 HStack {
                     Spacer()
                     Image(systemName: "arrow.up.arrow.down")
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .bold()
                     Spacer()
                 }
                 
-                TextField("内容2", text: $contentTwo)
+                TextField(String(localized: "内容2", bundle: HanlinLocalization.bundle), text: $contentTwo)
                 
                 Button(action: {
                     addTranslation()
                 }, label: {
                     HStack {
                         Spacer()
-                        Text("保存翻译搭配")
-                            .foregroundColor(.hlBluefont)
+                        Text(String(localized: "保存翻译搭配", bundle: HanlinLocalization.bundle))
+                            .foregroundColor(.hanlinHLBluefont)
                             .bold()
                         Spacer()
                     }
@@ -76,20 +77,20 @@ struct TranslationDicView: View {
             }
             
             // MARK: 翻译词典列表
-            Section(header: Text("翻译词典")) {
+            Section(header: Text(String(localized: "翻译词典", bundle: HanlinLocalization.bundle))) {
                 if translationEntries.isEmpty {
-                    Text("暂无翻译记录")
+                    Text(String(localized: "暂无翻译记录", bundle: HanlinLocalization.bundle))
                         .foregroundColor(.gray)
                 } else {
                     ForEach(translationEntries) { entry in
                         VStack(alignment: .leading, spacing: 4) {
                             Text(entry.contentOne ?? "")
                             Image(systemName: "arrow.up.arrow.down")
-                                .font(.caption)
+                                .font(HanlinTypography.caption)
                                 .foregroundColor(.secondary)
                             Text(entry.contentTwo ?? "")
-                            Text("更新时间：\(entry.timestamp, formatter: dateFormatter)")
-                                .font(.caption)
+                            Text("更新时间：\(entry.timestamp, formatter: dateFormatter)", bundle: HanlinLocalization.bundle)
+                                .font(HanlinTypography.caption)
                                 .foregroundColor(.secondary)
                         }
                         .padding(.vertical, 4)
@@ -97,9 +98,9 @@ struct TranslationDicView: View {
                             Button {
                                 editingTranslation = entry
                             } label: {
-                                Label("编辑", systemImage: "paintbrush")
+                                Label(String(localized: "编辑", bundle: HanlinLocalization.bundle), systemImage: "paintbrush")
                             }
-                            .tint(.hlGreen)
+                            .tint(.hanlinHLGreen)
                         }
                         .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                             Button(role: .destructive) {
@@ -107,16 +108,16 @@ struct TranslationDicView: View {
                                     deleteTranslation(at: IndexSet(integer: index))
                                 }
                             } label: {
-                                Label("删除", systemImage: "trash")
+                                Label(String(localized: "删除", bundle: HanlinLocalization.bundle), systemImage: "trash")
                             }
-                            .tint(.hlRed)
+                            .tint(.hanlinHLRed)
                         }
                     }
                 }
             }
         }
         .listStyle(.insetGrouped)    // 原生分组列表风格
-        .navigationTitle("翻译词典")
+        .navigationTitle(String(localized: "翻译词典", bundle: HanlinLocalization.bundle))
         .overlay(toastOverlay)
         .sheet(item: $editingTranslation) { translation in
             EditTranslationView(translation: translation)
@@ -215,29 +216,29 @@ struct EditTranslationView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("编辑翻译词汇")) {
-                    TextField("内容1", text: $contentOne)
+                Section(header: Text(String(localized: "编辑翻译词汇", bundle: HanlinLocalization.bundle))) {
+                    TextField(String(localized: "内容1", bundle: HanlinLocalization.bundle), text: $contentOne)
                     
                     HStack {
                         Spacer()
                         Image(systemName: "arrow.up.arrow.down")
-                            .foregroundColor(.hlBluefont)
+                            .foregroundColor(.hanlinHLBluefont)
                             .bold()
                         Spacer()
                     }
                     
-                    TextField("内容2", text: $contentTwo)
+                    TextField(String(localized: "内容2", bundle: HanlinLocalization.bundle), text: $contentTwo)
                 }
             }
-            .navigationTitle("编辑翻译")
+            .navigationTitle(String(localized: "编辑翻译", bundle: HanlinLocalization.bundle))
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("保存") {
+                    Button(String(localized: "保存", bundle: HanlinLocalization.bundle)) {
                         saveEdits()
                     }
                 }
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") {
+                    Button(String(localized: "取消", bundle: HanlinLocalization.bundle)) {
                         dismiss()
                     }
                 }

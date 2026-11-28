@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "status": "SOURCE_AND_PORTABLE_REGRESSION_PASSED_EXISTING_PROFILE_GRANT_RETAINED",
+  "sourceCommit": "c96236298432cae4df2e481122145322e5844bf5",
+  "parent": "9c0879ee168b6aec78a4cc80fd071514c8787887",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-miniapps-icloud-documents-20261127",
+  "sourceHashes": {
+    "HanlinMiniAppsApp/HanlinMiniApps.entitlements": "3b41191835437afb791dd7d9bfc9287e2051c059ef8c2c368377e8063f31292e",
+    "Scripts/ProductSplit/verify_targets.py": "7d98c480a0a9866115527277abd093e897671705a6164e86b5952e00093c1602",
+    "Scripts/ProductSplit/test_local_miniapps_profiles.py": "85665934c4b8d8ab45e97e941d76c41347252b502f8cecda6675305e55524282"
+  },
+  "independentSourceReview": {
+    "reviewer": "/root",
+    "basis": "Parent read and approved the exact three-file candidate conditional on these seven original portable tests passing and sealed source hashes; both conditions now hold."
+  },
+  "change": {
+    "key": "com.apple.developer.ubiquity-container-identifiers",
+    "containers": [
+      "iCloud.com.itorah.chavrusachat"
+    ],
+    "otherEntitlementsUnchanged": true,
+    "target": "HanlinMiniApps",
+    "bundle": "com.itorah.hanlinminiapps",
+    "signingInventory": "Scripts/ProductSplit/extension_inventory.py: SIGNING_TARGETS role miniapps",
+    "activeBuildConfigurations": {
+      "Debug": "HanlinMiniAppsApp/HanlinMiniApps.entitlements",
+      "Release": "HanlinMiniAppsApp/HanlinMiniApps.entitlements"
+    }
+  },
+  "officialAppleSources": [
+    {
+      "url": "https://developer.apple.com/documentation/xcode/configuring-icloud-services",
+      "finding": "The iCloud Documents service requires both the iCloud services entitlement and ubiquity-container-identifiers. When Documents and CloudKit share a selected container, both container entitlement arrays contain it."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/foundation/filemanager/url(forubiquitycontaineridentifier:)",
+      "finding": "The container passed to this FileManager API must be declared in the ubiquity-container-identifiers array. Source MiniAppsDeveloperStudio uses the same already-declared existing container."
+    }
+  ],
+  "originalPortableGate": {
+    "command": [
+      "runuser",
+      "-u",
+      "chatgpt-agent",
+      "--",
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/ProductSplit",
+      "-p",
+      "test_local_miniapps_profiles.py",
+      "-v"
+    ],
+    "passed": 7,
+    "exitCode": 0,
+    "unittestSeconds": 0.03,
+    "controllerSeconds": 0.31634357012808323,
+    "negativeControls": [
+      "missing document-container grant",
+      "empty document-container array",
+      "wrong document container while CloudKit and CloudDocuments remain granted"
+    ]
+  },
+  "existingProfileReceipt": {
+    "source": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/miniapps-main-profile-icloud-grants/miniapps-selected-profile-icloud-grants-20261127.json",
+    "retainedCopy": "miniapps-selected-profile-icloud-grants-20261127.json",
+    "sha256": "131ac0520b26d7215231112b14231fd068c464656a1195a63757fce4f36e406b",
+    "profileSHA256": "aeb924df782c8b91958ae627f3d0d467cd5b0f438443dd668493514d031ff5c9",
+    "scope": "Mac-owned read-only CMS verification and exact iCloud grant inspection; no account or profile mutation."
+  },
+  "remainingGate": "Actual signed product entitlement and user/device iCloud document open/save/reopen behavior remain native release/UI acceptance; this source/fixture receipt does not claim them.",
+  "nativeOrAccountActionsByReviewer": false,
+  "artifacts": {
+    "source.patch": {
+      "bytes": 3251,
+      "sha256": "83ef715d1fb7aede9b14faee6aa08956819ea8183da52dea0620d84df707b169"
+    },
+    "focused-test-receipt.json": {
+      "bytes": 2227,
+      "sha256": "65ce92526321a06e933baa1408d70988516a10a7e58206544217baf713edd4fb"
+    },
+    "focused.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "focused.stderr.log": {
+      "bytes": 1433,
+      "sha256": "55bb9829f58cb3c91d666a928b39509852f210ab4d3ea34acce26374872a389f"
+    },
+    "miniapps-selected-profile-icloud-grants-20261127.json": {
+      "bytes": 1108,
+      "sha256": "131ac0520b26d7215231112b14231fd068c464656a1195a63757fce4f36e406b"
+    }
+  }
+}

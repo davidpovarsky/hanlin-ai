@@ -1,0 +1,29 @@
+[
+  {
+    "startLine": 122379,
+    "lines": [
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8081910Z     |                    `- warning: result of call to 'updateProvider' is unused [#NoUsage]",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8083520Z 226 |         preloadAPIKeysIfNeeded(context: container.mainContext)",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8085000Z 227 |         let restored = try access.provider(\"OPENAI\")",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8085320Z ",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8085760Z macro expansion #require:2:3: error: call can throw, but it is not marked with 'try' and the error is not handled",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8086810Z `- /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinApplicationEmbeddingTests.swift:329:48: note: expanded code originates here",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8087400Z 326 |         try context.save()",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8087930Z 327 |         let originalID = original.persistentModelID, namesakeID = namesake.persistentModelID",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8093390Z 328 |         let announcement = try #require(HanlinConversationMutation.rename(original, title: \"Renamed \u05e9\u05dc\u05d5\u05dd\",",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8094000Z     |                                `- note: in expansion of macro 'require' here",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8094450Z 329 |             announceChange: true, in: context))",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8094940Z     +--- macro expansion #require --------------------------------------",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8095450Z     |1 | Testing.__checkFunctionCall(HanlinConversationMutation.self,calling: {",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8096520Z     |2 |   $0.rename($1,title: $2,announceChange: $3,in: $4)",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8097570Z     |  |   `- error: call can throw, but it is not marked with 'try' and the error is not handled",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8105340Z     |3 | },original,\"Renamed \u05e9\u05dc\u05d5\u05dd\",true,context,expression: .__fromFunctionCall(.__fromSyntaxNode(\"HanlinConversationMutation\"),\"rename\",(nil,.__fromSyntaxNode(\"original\")),(\"title\",.__fromStringLiteral(#\"\"Renamed \u05e9\u05dc\u05d5\u05dd\"\"#, \"Renamed \u05e9\u05dc\u05d5\u05dd\")),(\"announceChange\",.__fromSyntaxNode(\"true\")),(\"in\",.__fromSyntaxNode(\"context\"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8107310Z     +-------------------------------------------------------------------",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8107910Z 330 |         try HanlinConversationMutation.setPinned(original, isPinned: true, in: context)",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8108710Z 331 |         #expect(original.persistentModelID == originalID && original.isPinned)",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8109460Z ",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8109930Z [#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>",
+      "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:58:15.8110660Z [#NoUsage]: <https://docs.swift.org/compiler/documentation/diagnostics/no-usage>"
+    ]
+  }
+]

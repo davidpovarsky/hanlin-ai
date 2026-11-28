@@ -1,0 +1,18 @@
+{
+  "task": "1220546608370437",
+  "completed": false,
+  "comment": {
+    "gid": "1220693311997479",
+    "created_at": "2026-11-19T04:35:28.572Z",
+    "created_by": {
+      "gid": "1219597879016933",
+      "name": "דוד פוברסקי",
+      "resource_type": "user"
+    },
+    "resource_type": "story",
+    "text": "[UPSTREAM / תוצאת מועמד מקורית ואימות הראיות — 19.11.2026 04:35 UTC]\n\nריצת המועמד המקורית44455722821 הסתיימה בהצלחה על HEADc80f620ba8ed28243922728e00acffcdd439cc12 של PR15, מול בסיס v3 הקבוע d6e2e3f062633fe7a55c0f44b922c5b3321aaf4a: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44455722821 . ראיות schema2 המקוריות מציגות153 בדיקות,152PASS/0FAIL/1SKIP, Node24.5.0 ב-Darwin arm64 ו-packed JITless probe שעבר. הביצוע האמיתי היה בשלב native-origin של אותה ריצה; שלב Host הבא השתמש בארכיון המאומת מאותה ריצה. בזמן הביצוע המקורי repositoryCredentialsPresent=true, ולכן אין טענה להרצת בדיקות Host ללא אישורי המאגר.\n\nשני ZIPים הורדו במלואם ואומתו מול digest רשמי ובדיקת CRC: proof14497894304 SHA256ab812eb32f94eddebc0d6a574efb1daadc8bf0da519f252cdf71a54a57dbcd9d; Host14498413320 SHA2563d0584fb2abff4d6eabecba018fdd0684616d76777b1544619492121b2b2e3c6. הארכיון הפנימי2260ccc0f6a36d9ad02c6e4f79e900d3076182b60296e3e9a5d6a929339f3c6c קשור ל-sourceInputsHasha4a9b76fc104ef316477bbb0249ca443699539fd2e47feee71df043ec94c9cb4. לא מדובר בבנייה מחודשת של בינארי iOS או בקבלת UI.\n\nאימות הצרכן המקורי טרם עבר: הופעל פעם אחת נתיב proof_run המקורי, ריצה44458610092 על מקור האמון d6. ה-GITHUB_TOKEN אינו יכול לקרוא את REST branch-protection, שהחזיר403 Resource not accessible by integration; בגלל העצירה גם candidate-proof.json לא נכתב. הלוג הגולמי נשמר. הצרכן פרסם check כושל בשם Hanlin upstream schema2 proof, ממקור app15368 ועל אותו HEAD, ולא ביצע מיזוג: https://github.com/davidpovarsky/hanlin-ai/actions/runs/44458610092 . ZIP14498878746 אומת במלואו מול758475071570246b3329ceeb168408d2a47e2584780fcc96d807f6499f75b22c.\n\nאני מתקן את קריאת תצורת ההגנה בלי להפחית את דרישות strict, אכיפה גם למנהלים או שני checks המחייבים. PR15 נשאר פתוח, auto-merge כבוי וההגנות קיימות. כשל מקרי בצרכן אינו מחליף את ניסוי failure-demo המתוכנן: עדיין נדרשים אימות ירוק מלא, כשל מכוון וחסימת merge אמיתית בשרת, הצלחה מאוחרת על אותו HEAD, מיזוג מוגן ו-rollback בהשוואת בתים. המשימה נשארת פתוחה.",
+    "type": "comment",
+    "resource_subtype": "comment_added"
+  },
+  "exactReadback": true
+}

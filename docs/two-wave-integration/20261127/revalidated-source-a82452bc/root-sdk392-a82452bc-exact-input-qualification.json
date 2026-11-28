@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "atUTC": "2026-11-27T07:29:09.808324+00:00",
+  "head": "a82452bce57a55ea13a9cee655b3588dc3e17f6a",
+  "sourceInputCount": 392,
+  "inputManifestSHA256": "4b75c9122e17ff24464a8dfb757b1b3c72d2817d55472b4c0be035e7c71b55cc",
+  "differingInputs": [],
+  "hostPassSource": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "producerSeal": "d2902ba9a4b18d5dba92662430e7eda355744b0c",
+  "hostOriginal188": "REUSED_ON_EXACT_392_INPUTS",
+  "hostZIP": "Original archive retained on Mac; root has verified input/phase evidence, not independently downloaded the ZIP",
+  "nativePackage": "Current test sources changed; no blanket79 reuse",
+  "actualNativeOnThisHead": "NOT_RUN"
+}

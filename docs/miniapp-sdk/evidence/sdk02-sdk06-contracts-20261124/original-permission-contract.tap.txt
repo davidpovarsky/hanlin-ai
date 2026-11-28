@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: genuine action references, legacy controls and nullable optional fields validate
+ok 1 - genuine action references, legacy controls and nullable optional fields validate
+  ---
+  duration_ms: 11.677867
+  type: 'test'
+  ...
+# Subtest: original semantic and JSON shape errors include precise manifest locations
+ok 2 - original semantic and JSON shape errors include precise manifest locations
+  ---
+  duration_ms: 18.616067
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 452.560793

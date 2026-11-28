@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "pullRequest": 6,
+  "base": "abbcd4ce9a72177a068f52c0d21fa226c7df42f6",
+  "head": "ea969bee9c1b18a19eafeeecb16ecf454935c244",
+  "operation": "Actual git apply --reverse in isolated scratch data; original worktree and remote branch unchanged",
+  "files": [
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json",
+      "candidateSHA256": "34e9dc8175a214e2e126f79ab270d34f9d70d3f590ca0dbd2dd572125f01a0f9",
+      "parentSHA256": "4a1f2ecaae83c3f68cb02b605c03323260bc4bbb32923865d5c654be5736c7b4",
+      "restoredSHA256": "4a1f2ecaae83c3f68cb02b605c03323260bc4bbb32923865d5c654be5736c7b4",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package.json",
+      "candidateSHA256": "46dee029627d14139ae9e9d3cc268fe5e7fa50444a7201f961ab2de84c3a6ad4",
+      "parentSHA256": "1794af1338974e7f024e67daceb586fb0b7d897a702ce26ab66b690d41e20968",
+      "restoredSHA256": "1794af1338974e7f024e67daceb586fb0b7d897a702ce26ab66b690d41e20968",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "path": "RuntimeDependencies.lock.json",
+      "candidateSHA256": "e917ebb45adaf0df4e654c8845d091937e952e60bfa8e2e5f20de7abd6d82222",
+      "parentSHA256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+      "restoredSHA256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+      "status": "EXECUTED_PASS"
+    }
+  ]
+}

@@ -1,0 +1,283 @@
+{
+  "schemaVersion": 1,
+  "status": "BLOCKED",
+  "build": "NOT_RUN",
+  "B": "NOT_RUN",
+  "C": "NOT_RUN",
+  "A": "NOT_RUN",
+  "source": "0b74c6c1df60926c09a00560598af478bafb3e75",
+  "run": 45236783905,
+  "attempt": 2,
+  "job": 137919914818,
+  "runner": "GitHub Actions 1000024859",
+  "phase": "preflight",
+  "artifact": {
+    "run": 45236783905,
+    "attempt": 2,
+    "artifact_id": 14851835918,
+    "artifact_bytes": 13377,
+    "artifact_sha256": "5366219320b17b05ec7a78e0cfc0fbc0ad8dd4a50c0027a52676765f74d3c017",
+    "api_digest_and_size_match": true,
+    "zip_crc": "PASS",
+    "member_count": 19
+  },
+  "readiness": {
+    "schema_version": 1,
+    "status": "NOT_READY",
+    "device": "23F8B166-D370-4128-AD85-0386DD9C1242",
+    "strategy": "fresh",
+    "run_id": "45236783905",
+    "run_attempt": "2",
+    "attempts": [
+      {
+        "name": "boot-initial",
+        "command": [
+          "xcrun",
+          "simctl",
+          "boot",
+          "23F8B166-D370-4128-AD85-0386DD9C1242"
+        ],
+        "timeout_seconds": 15.0,
+        "return_code": 0,
+        "timed_out": false,
+        "elapsed_seconds": 3.874,
+        "output_file": "boot-initial.log",
+        "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "bootstatus-attempt-1",
+        "command": [
+          "xcrun",
+          "simctl",
+          "bootstatus",
+          "23F8B166-D370-4128-AD85-0386DD9C1242",
+          "-b"
+        ],
+        "timeout_seconds": 180.0,
+        "return_code": 124,
+        "timed_out": true,
+        "elapsed_seconds": 181.964,
+        "output_file": "bootstatus-attempt-1.log",
+        "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "shutdown-recovery",
+        "command": [
+          "xcrun",
+          "simctl",
+          "shutdown",
+          "23F8B166-D370-4128-AD85-0386DD9C1242"
+        ],
+        "timeout_seconds": 20.0,
+        "return_code": 124,
+        "timed_out": true,
+        "elapsed_seconds": 25.674,
+        "output_file": "shutdown-recovery.log",
+        "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "recovery_count": 1,
+    "scope": "Simulator readiness only; Motion product tests NOT_RUN",
+    "ownership": {
+      "simulator": "23F8B166-D370-4128-AD85-0386DD9C1242",
+      "run_id": "45236783905",
+      "run_attempt": "2",
+      "name": "Hanlin-Phase2-Motion-45236783905",
+      "selection_sha256": "bcc4c0cf879814b1cab0da330d220967186c3682fcb8b93282c1cdc324ffc6c0"
+    },
+    "recovery_reason": "FIRST_NATIVE_BOOTSTATUS_TIMEOUT",
+    "error": "Owned Motion recovery shutdown failed"
+  },
+  "retained_files": [
+    {
+      "path": "artifact-verification.json",
+      "bytes": 267,
+      "sha256": "09a3d4a05d22094a6394cd4dfd1dec47705188c23ea78a43324bb36413c53e02"
+    },
+    {
+      "path": "collection-result.json",
+      "bytes": 5922,
+      "sha256": "934fff3058aba85140b8a04ec3001428448ce84732df17ab3eadb7984a1816f6"
+    },
+    {
+      "path": "collector-start.json",
+      "bytes": 153,
+      "sha256": "0bd2e2b8bcaf74f10b6632db0f1bbedcc07017be793475b8f03544e955f1c7d2"
+    },
+    {
+      "path": "environment-comparison.json",
+      "bytes": 24526,
+      "sha256": "f1cea701b98a72926e69cbb9d382312e29c5a69d0a4cf2e901c0395cd35af489"
+    },
+    {
+      "path": "frozen-ref-readback.json",
+      "bytes": 529,
+      "sha256": "c6cbfa29fdd8fd5c4b993ab5a0cd7d9f35e03c8313c32906307d25a4701094b7"
+    },
+    {
+      "path": "native/boot-initial.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/bootstatus-attempt-1.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/bootstatus.log",
+      "bytes": 261,
+      "sha256": "739e9f145ce63bf5e0377220c0e5c1a8b55bf260d414b1596c054f3342c6521b"
+    },
+    {
+      "path": "native/ci-performance-report.json",
+      "bytes": 2035,
+      "sha256": "f78aa6c6f9a8689f383c830757590f5b23b5fda37b5c2d1cfac0d12b8a87a5b6"
+    },
+    {
+      "path": "native/core-simulator-log.timeout",
+      "bytes": 24,
+      "sha256": "380338e6873abcf07093e46530492652b7bc8aadd3fd6ba7ee4a2a69b85814cb"
+    },
+    {
+      "path": "native/device-strategy.txt",
+      "bytes": 6,
+      "sha256": "02db0d2659c9d48bc15f81a388594fc0e3cf4c780fdc27ea21e0671afc37de19"
+    },
+    {
+      "path": "native/devices-after.timeout",
+      "bytes": 24,
+      "sha256": "380338e6873abcf07093e46530492652b7bc8aadd3fd6ba7ee4a2a69b85814cb"
+    },
+    {
+      "path": "native/devices.json",
+      "bytes": 22084,
+      "sha256": "98d36717798ad15b8cfe7d3facd4f815d3326cfd90b7a24ff03266b84e364b32"
+    },
+    {
+      "path": "native/motion-boot-readiness.json",
+      "bytes": 1961,
+      "sha256": "0a127fb697b0374f9209109063fcc85d9285170f03ca3bcd16333109ea822f93"
+    },
+    {
+      "path": "native/owned-simulator-cleanup.log",
+      "bytes": 1683,
+      "sha256": "2d19c3d8a6a1738152a107726046d54bf2b2a8559b534f2998a13d294a234d1e"
+    },
+    {
+      "path": "native/preflight-duration-seconds.txt",
+      "bytes": 4,
+      "sha256": "20b7863224b7cb6edbc009c2ef30a14a585fca79b285595a11f066bbd8b54bc6"
+    },
+    {
+      "path": "native/preflight.txt",
+      "bytes": 962,
+      "sha256": "f284b4ef718929a36b93576892c9e6c599ed58ea7aa7e9d4a2693b1bd433d032"
+    },
+    {
+      "path": "native/process-status.txt",
+      "bytes": 28,
+      "sha256": "5fecb30c9edeef67794fce1856d1b70fc392c560e8e3459bc2662c377e2f0b3d"
+    },
+    {
+      "path": "native/requested-scope.txt",
+      "bytes": 9,
+      "sha256": "686459f77bbf90b61ad584226ca79c956786b2dc7621d683393cfaf66a594430"
+    },
+    {
+      "path": "native/runtimes.json",
+      "bytes": 60604,
+      "sha256": "d8dadcf0615ca905cda2b54661e589ed5331ca022a22e729cb268636276d60c2"
+    },
+    {
+      "path": "native/shutdown-recovery.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/source-sha.txt",
+      "bytes": 41,
+      "sha256": "7d8a25b03c0940c46d8cceec3535fef1cd23cdda3bf97957d501884914286a2b"
+    },
+    {
+      "path": "native/verified-environment.json",
+      "bytes": 81347,
+      "sha256": "bcc4c0cf879814b1cab0da330d220967186c3682fcb8b93282c1cdc324ffc6c0"
+    },
+    {
+      "path": "native/xcodegen-install.log",
+      "bytes": 327,
+      "sha256": "5543c39402b2867d94bc6d9c2f8f3108dd11a86c87515448a3a3d4932506347d"
+    },
+    {
+      "path": "native-job-phase-observation.json",
+      "bytes": 2313,
+      "sha256": "446a052c9aad34a307ef4e2f1d03efda25a55eac6147eba38a3726f970aead73"
+    },
+    {
+      "path": "prior-artifact-verification.json",
+      "bytes": 267,
+      "sha256": "bd309343e117e8dcda35f800f231bf9aa22c874fb1a31586eb84075d5ffa7c00"
+    },
+    {
+      "path": "readiness-helper-comparison.json",
+      "bytes": 2261,
+      "sha256": "bd99c9d7d929fa51712a65c52978e90737b221dd1bf936baaf46b68e5d3a536c"
+    },
+    {
+      "path": "retry-ack.json",
+      "bytes": 102,
+      "sha256": "7f1908482b474dcbf206f7de968063cabbcc70aab3c93c572a8e0cfefd1376a1"
+    },
+    {
+      "path": "retry-admission.json",
+      "bytes": 748,
+      "sha256": "e9b86dcb2a053bf3aab78a26cda0fa9f242c24cce4009355274cfb7fa89bcc1d"
+    },
+    {
+      "path": "retry-intent.json",
+      "bytes": 447,
+      "sha256": "9382b9bcd42e0d69094851fc215be61993adf4a3ad968f3f7715bed361c2ac55"
+    },
+    {
+      "path": "run-readback.json",
+      "bytes": 15733,
+      "sha256": "dae39eaee3385e7137e55e9a4e9fd6b9004edcb986d587b0a8991151e7cdf764"
+    },
+    {
+      "path": "terminal-annotations.json",
+      "bytes": 372,
+      "sha256": "e0cbeffb738d408f0cb9d1c24b360b7dbd2e0e5f0b439b6fad8fd5a8f9be8f86"
+    },
+    {
+      "path": "terminal-artifacts.json",
+      "bytes": 1856,
+      "sha256": "6a14373f4c408c3ac2613a597598220cdf525430998b1991b055619d7cf6f57e"
+    },
+    {
+      "path": "terminal-check.json",
+      "bytes": 3860,
+      "sha256": "5fcf3a883868d0c8ef8b07263d84a18cf1e09907ef8982bbc637b591f33d6f5e"
+    },
+    {
+      "path": "terminal-jobs.json",
+      "bytes": 32990,
+      "sha256": "d9e16b4cca41dce17d1f17d89093adfa4a11d3b1560e6e3496e0d74861097652"
+    },
+    {
+      "path": "terminal-run.json",
+      "bytes": 15736,
+      "sha256": "8ced4476e1627f9934932cb965cf12743e9d68bd576333f154f1a5e4df5f0e89"
+    },
+    {
+      "path": "watch-ended.json",
+      "bytes": 106,
+      "sha256": "cb560534da1fe0d3436b09ca595ae5a4261b8ab65931eb4478113a806a26257f"
+    },
+    {
+      "path": "watch-start.json",
+      "bytes": 324,
+      "sha256": "8ecca798f031a05d03907694b015f35bb10e2c2a89afbee3ed7e9b3ced63d325"
+    }
+  ]
+}

@@ -1,0 +1,1103 @@
+import CryptoKit
+import Foundation
+import HanlinPlatformContracts
+import HanlinScriptContracts
+import HanlinWidgetCompiler
+
+public struct HanlinAPISymbolRecord: Codable, Hashable, Sendable {
+    public let symbol: String
+    public let state: HanlinCompatibilityState
+    public let requiredCapability: HanlinCapabilityID?
+    public let allowedContexts: Set<HanlinExecutionContext>
+    public let rationale: String?
+
+    public init(
+        symbol: String,
+        state: HanlinCompatibilityState,
+        requiredCapability: HanlinCapabilityID? = nil,
+        allowedContexts: Set<HanlinExecutionContext> = [],
+        rationale: String? = nil
+    ) {
+        self.symbol = symbol
+        self.state = state
+        self.requiredCapability = requiredCapability
+        self.allowedContexts = allowedContexts
+        self.rationale = rationale
+    }
+}
+
+public struct HanlinCompatibilityInventory: Codable, Hashable, Sendable {
+    public let schemaVersion: UInt32
+    public let baselineID: String
+    public let baselineDigest: String
+    public let symbols: [HanlinAPISymbolRecord]
+
+    public init(
+        schemaVersion: UInt32 = 1,
+        baselineID: String,
+        baselineDigest: String,
+        symbols: [HanlinAPISymbolRecord]
+    ) {
+        self.schemaVersion = schemaVersion
+        self.baselineID = baselineID
+        self.baselineDigest = baselineDigest
+        self.symbols = symbols
+    }
+}
+
+public struct HanlinScriptAnalyzer: Sendable {
+    private static let nativeScriptRuntimeVersion = HanlinMiniAppHostVersions.nativeScriptRuntimeVersion
+    private static let nativeScriptCoreVersion = HanlinMiniAppHostVersions.nativeScriptCoreVersion
+    private static let nativeScriptSwiftUIVersion = HanlinMiniAppHostVersions.nativeScriptSwiftUIVersion
+    private static let expoSDKVersion = HanlinMiniAppHostVersions.expoSDKVersion
+    private static let expoUIVersion = HanlinMiniAppHostVersions.expoUIVersion
+    private static let expoUIBridgeVersion = "3.0.0"
+    private static let reactNativeVersion = HanlinMiniAppHostVersions.reactNativeVersion
+    private let inventory: HanlinCompatibilityInventory
+    private let symbols: [String: HanlinAPISymbolRecord]
+    private var fileManager: FileManager { .default }
+
+    public init(
+        inventory: HanlinCompatibilityInventory
+    ) {
+        self.inventory = inventory
+        symbols = Dictionary(
+            inventory.symbols.map { ($0.symbol, $0) },
+            uniquingKeysWith: { current, _ in current }
+        )
+    }
+
+    public func analyze(_ package: HanlinStagedPackage) throws -> HanlinImportPreview {
+        let files = try packageFiles(root: package.packageRoot)
+        let sourcePaths = files.keys.filter(Self.isModule).sorted()
+        let nativeScriptDeclared = package.manifest.hanlinRuntime == HanlinRuntimeProfile.hanlinNativeScript.rawValue
+            || package.manifest.unknownFields["hanlinRuntime"] == .string(HanlinRuntimeProfile.hanlinNativeScript.rawValue)
+        let expoDeclared = package.manifest.hanlinRuntime == HanlinRuntimeProfile.hanlinExpo.rawValue
+            || package.manifest.unknownFields["hanlinRuntime"] == .string(HanlinRuntimeProfile.hanlinExpo.rawValue)
+            || package.manifest.declaredWidgetEngine == .expo
+        let scriptWidgetDeclared = package.manifest.declaredWidgetEngine == .scriptwidget
+        let discoveredEntrypoints = discoverEntrypoints(
+            manifest: package.manifest,
+            sourcePaths: sourcePaths
+        )
+        var edges: [HanlinPackageDependencyEdge] = []
+        var unresolved: Set<String> = []
+        var findings: [HanlinCompatibilityFinding] = []
+        let entrypoints = Self.preparedEntrypoints(manifest: package.manifest, files: files,
+            discovered: discoveredEntrypoints, findings: &findings)
+        var importedSymbols: Set<String> = []
+        let conventionalWidgets = ["widget.jsx", "widget.tsx", "widget.ts", "widget.js", "widget.json"].filter {
+            files[$0] != nil && !($0 == "widget.json" && scriptWidgetDeclared)
+        }
+        if !package.manifest.isWidgetOnlyPackage, conventionalWidgets.count > 1 {
+            findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                message: "Ambiguous widget entrypoints: \(conventionalWidgets.joined(separator: ", ")). Supply one widget entrypoint; source order never selects an engine or program."))
+        }
+        if package.manifest.declaredWidgetEngine != nil && !entrypoints.contains(where: { $0.kind == .widget }) {
+            findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json", message: "widgetEngine requires a declared or discoverable widget entrypoint."))
+        }
+
+        do {
+            try package.manifest.validateWidgetMetadata()
+        } catch {
+            findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                message: "Invalid widget manifest: \(error). Declare a supported engine and matching runtime explicitly."))
+        }
+        if let entry = package.manifest.entry,
+           HanlinArchivePolicy.normalizedRelativePath(entry) != entry || files[entry] == nil {
+            findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json", message: "The declared entry must be a canonical existing package-relative source path."))
+        }
+
+        for path in sourcePaths where Self.isSource(path) {
+            guard let data = files[path], let source = String(data: data, encoding: .utf8) else {
+                findings.append(.init(
+                    state: .unsupported,
+                    severity: .error,
+                    sourcePath: path,
+                    message: "Source file is not valid UTF-8."
+                ))
+                continue
+            }
+            if !nativeScriptDeclared && !expoDeclared && !scriptWidgetDeclared {
+                if Self.matches(#"\bimport\s*\("#, source) {
+                    findings.append(.init(
+                        state: .unsupported,
+                        severity: .error,
+                        sourcePath: path,
+                        message: "Dynamic import is not supported in installed packages."
+                    ))
+                }
+                if Self.matches(#"\beval\s*\("#, source) {
+                    findings.append(.init(
+                        state: .unsupported,
+                        severity: .error,
+                        sourcePath: path,
+                        message: "eval is forbidden by the package module policy."
+                    ))
+                }
+                importedSymbols.formUnion(Self.scriptingImports(in: source))
+                importedSymbols.formUnion(Self.ambientScriptingSymbols(in: source))
+                for specifier in Self.moduleSpecifiers(in: source) {
+                    let resolved = resolve(
+                        specifier: specifier,
+                        importer: path,
+                        modulePaths: Set(sourcePaths)
+                    )
+                    edges.append(.init(
+                        importer: path,
+                        specifier: specifier,
+                        resolvedPath: resolved
+                    ))
+                    if resolved == nil && specifier != "scripting" {
+                        unresolved.insert(specifier)
+                        findings.append(.init(
+                            state: .unsupported,
+                            severity: .error,
+                            sourcePath: path,
+                            message: specifier.hasPrefix(".")
+                                ? "Package-local module '\(specifier)' cannot be resolved."
+                                : "Bare module '\(specifier)' is not allowed."
+                        ))
+                    }
+                }
+            }
+        }
+
+        if nativeScriptDeclared {
+            Self.validatePreparedNativeScriptApplication(
+                files: files,
+                entrypoints: entrypoints,
+                findings: &findings
+            )
+        } else if expoDeclared {
+            Self.validatePreparedExpoApplication(
+                files: files,
+                entrypoints: entrypoints,
+                declaredCapabilities: package.manifest.declaredCapabilities,
+                findings: &findings
+            )
+        }
+
+        if let widgetMetadata = package.manifest.unknownFields["hanlinWidget"] {
+            do {
+                let metadata = try JSONDecoder().decode(HanlinWidgetPackageMetadata.self,
+                    from: widgetMetadata.canonicalJSONData(limits: .unbounded))
+                try HanlinWidgetCompiler.validateHostActionTargets(metadata.actions,
+                    manifest: package.manifest, entrypoints: entrypoints)
+            } catch {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                    message: "Invalid widget Host action: \(error)",
+                    code: "MINIAPP_WIDGET_HOST_ACTION_INVALID"))
+            }
+        }
+
+        for entrypoint in entrypoints where entrypoint.kind == .widget && entrypoint.widgetEngine != .legacy && entrypoint.widgetEngine != nil {
+            do {
+                _ = try HanlinWidgetCompiler.prepare(manifest: package.manifest, entryPath: entrypoint.sourcePath, files: files)
+            } catch {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: entrypoint.sourcePath,
+                    message: "Widget preparation failed: \(error)"))
+            }
+        }
+
+        do {
+            for (entrypointID, declaration) in try HanlinNativePresentationMetadata.declarations(in: package.manifest) {
+                guard entrypoints.contains(where: {
+                    $0.id == entrypointID && [.appIntent, .translationUI, .keyboard, .notificationUI].contains($0.kind)
+                }) else { throw HanlinWidgetProgramError.invalidProgram }
+                do {
+                    _ = try HanlinWidgetCompiler.preparePresentation(declaration, files: files)
+                } catch {
+                    findings.append(.init(state: .unsupported, severity: .error,
+                        sourcePath: declaration.sourcePath, message: "Native presentation preparation failed: \(error)",
+                        code: "MINIAPP_NATIVE_PRESENTATION_INVALID"))
+                }
+            }
+        } catch {
+            findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                message: "Native presentations must name an existing appIntent, translationUI, keyboard, or notificationUI entrypoint: \(error)",
+                code: "MINIAPP_NATIVE_PRESENTATION_INVALID"))
+        }
+
+        let presentations = try? HanlinNativePresentationMetadata.declarations(in: package.manifest)
+        for entrypoint in entrypoints where [.keyboard, .notificationUI].contains(entrypoint.kind) {
+            guard presentations?[entrypoint.id] != nil else {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                    message: "\(entrypoint.kind.rawValue) entrypoint '\(entrypoint.id)' requires its compiled nativePresentations declaration.",
+                    code: "MINIAPP_SYSTEM_PRESENTATION_REQUIRED"))
+                continue
+            }
+        }
+
+        for entrypoint in entrypoints where [.capture, .spotlight].contains(entrypoint.kind) {
+            // Spotlight may open a package directly. Captured files need a
+            // declared prepared action in the containing app.
+            if entrypoint.kind == .spotlight && entrypoint.exportedSymbol == nil { continue }
+            let name = entrypoint.exportedSymbol ?? ""
+            let declarations: [HanlinJSONValue]
+            if case let .array(value)? = package.manifest.unknownFields["actions"] { declarations = value }
+            else { declarations = [] }
+            let matching = declarations.compactMap { item -> HanlinObject<HanlinJSONValue>? in
+                guard case let .object(action) = item, action["id"] == .string(name) else { return nil }
+                return action
+            }
+            var declaredHandler: String?
+            if matching.count == 1, let action = matching.first {
+                if case let .string(value)? = action["handler"] { declaredHandler = value }
+                else if case let .string(value)? = action["entrypoint"] { declaredHandler = value }
+            }
+            let handlerMatches = declaredHandler.map {
+                $0 == entrypoint.sourcePath || "source/" + $0 == entrypoint.sourcePath
+            } ?? false
+            guard (try? HanlinActionID(validating: name)) != nil, matching.count == 1, handlerMatches else {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                    message: "\(entrypoint.kind.rawValue) entrypoint '\(entrypoint.id)' must name one declared prepared action in exportedSymbol, with its handler targeting the same foreground bundle.",
+                    code: "MINIAPP_SYSTEM_ACTION_INVALID"))
+                continue
+            }
+        }
+
+        var capabilities: [HanlinCapabilityID: HanlinCapabilityRequest] = [:]
+        for declaredCapability in package.manifest.declaredCapabilities {
+            let purpose = declaredCapability.rawValue == "ios-native-api"
+                ? "Broad native Objective-C/UIKit and JSI access."
+                : "Declared in package manifest."
+            capabilities[declaredCapability] = .init(
+                capabilityID: declaredCapability,
+                required: false,
+                purpose: purpose
+            )
+        }
+        for symbol in importedSymbols.sorted() {
+            guard let record = symbols[symbol] else {
+                findings.append(.init(
+                    state: .unsupported,
+                    severity: .error,
+                    symbol: symbol,
+                    message: "The imported symbol is absent from the authorized baseline."
+                ))
+                continue
+            }
+            findings.append(.init(
+                state: record.state,
+                severity: record.state == .unsupported ? .error : .information,
+                symbol: symbol,
+                message: "Scripting symbol '\(symbol)' is \(record.state.rawValue).",
+                rationale: record.rationale
+            ))
+            let capability = record.requiredCapability ?? Self.inferredCapability(for: symbol)
+            if let capability {
+                capabilities[capability] = .init(
+                    capabilityID: capability,
+                    required: false,
+                    purpose: "Required by imported Scripting symbol '\(symbol)'."
+                )
+            }
+        }
+
+        if entrypoints.isEmpty {
+            findings.append(.init(
+                state: .unsupported,
+                severity: .error,
+                message: "No supported Scripting entrypoint was found."
+            ))
+        }
+        let resources = files.filter { !Self.isModule($0.key) }
+        let extractedBytes = files.values.reduce(Int64(0)) { partial, data in
+            partial > Int64.max - Int64(data.count) ? Int64.max : partial + Int64(data.count)
+        }
+        _ = resources // Resource descriptors are produced by the install plan in the next stage.
+
+        let resolvedEntrypoints = entrypoints.map { descriptor in
+            var requested = descriptor.requiredCapabilities
+            requested.append(contentsOf: capabilities.values.filter { candidate in
+                !requested.contains { $0.capabilityID == candidate.capabilityID }
+            })
+            return HanlinPackageEntrypointDescriptor(
+                id: descriptor.id,
+                kind: descriptor.kind,
+                sourcePath: descriptor.sourcePath,
+                exportedSymbol: descriptor.exportedSymbol,
+                supportedContexts: descriptor.supportedContexts,
+                requiredCapabilities: requested.sorted {
+                    $0.capabilityID.rawValue < $1.capabilityID.rawValue
+                },
+                runtimePolicyID: descriptor.runtimePolicyID,
+                runtimeProfile: descriptor.runtimeProfile,
+                artifactDigest: descriptor.artifactDigest,
+                compatibility: descriptor.compatibility,
+                widgetEngine: descriptor.widgetEngine,
+                assistantTool: descriptor.assistantTool
+            )
+        }
+        let approvalState = HanlinCapabilityApprovalState(
+            requests: resolvedEntrypoints.flatMap(\.requiredCapabilities)
+        )
+        return HanlinImportPreview(
+            source: package.source,
+            archive: package.inspection,
+            manifest: package.manifest,
+            entrypoints: resolvedEntrypoints,
+            dependencyGraph: .init(
+                modules: sourcePaths,
+                edges: edges.sorted {
+                    ($0.importer, $0.specifier) < ($1.importer, $1.specifier)
+                },
+                unresolvedSpecifiers: unresolved.sorted()
+            ),
+            requestedCapabilities: approvalState.requests,
+            findings: findings.sorted {
+                ($0.sourcePath ?? "", $0.symbol ?? "", $0.message)
+                    < ($1.sourcePath ?? "", $1.symbol ?? "", $1.message)
+            },
+            sourceBytes: package.source.byteCount,
+            extractedBytes: extractedBytes
+        )
+    }
+
+    private static func validatePreparedNativeScriptApplication(
+        files: [String: Data],
+        entrypoints: [HanlinPackageEntrypointDescriptor],
+        findings: inout [HanlinCompatibilityFinding]
+    ) {
+        let appEntrypoints = entrypoints.filter { $0.kind == .app }
+        guard appEntrypoints.count == 1, let entrypoint = appEntrypoints.first else {
+            findings.append(.init(
+                state: .unsupported,
+                severity: .error,
+                message: "A NativeScript package must declare exactly one foreground app entrypoint."
+            ))
+            return
+        }
+        // Manifest paths are archive-relative, including a bundle at its root.
+        // A filesystem URL would resolve a root entry against the process directory.
+        let entryDirectory = entrypoint.sourcePath.split(separator: "/").dropLast().joined(separator: "/")
+        let packageJSONPath = entryDirectory.isEmpty ? "package.json" : entryDirectory + "/package.json"
+        guard let packageJSONData = files[packageJSONPath],
+              let packageJSON = try? JSONSerialization.jsonObject(with: packageJSONData) as? [String: Any],
+              URL(filePath: entrypoint.sourcePath).lastPathComponent == "bundle.mjs",
+              packageJSON["main"] as? String == "bundle.mjs",
+              packageJSON["hanlinRuntime"] as? String == HanlinRuntimeProfile.hanlinNativeScript.rawValue else {
+            findings.append(.init(
+                state: .unsupported,
+                severity: .error,
+                sourcePath: packageJSONPath,
+                message: "NativeScript requires a prepared bundle.mjs entry and package.json with main: bundle.mjs and hanlinRuntime: hanlin-nativescript.",
+                rationale: "Use the canonical prepared entry for every session; alternate main names are not a supported Host contract.",
+                code: "MINIAPP_ENTRYPOINT_INVALID"
+            ))
+            return
+        }
+        if let contractValue = packageJSON["hanlinNativeScript"] {
+            guard let contract = contractValue as? [String: Any],
+                  let runtimeVersion = contract["runtimeVersion"] as? String,
+                  let plugins = contract["plugins"] as? [String: Any] else {
+                findings.append(.init(
+                    state: .unsupported,
+                    severity: .error,
+                    sourcePath: packageJSONPath,
+                    message: "NativeScript hanlinNativeScript must declare string runtimeVersion and object plugins fields."
+                ))
+                return
+            }
+            guard HanlinPreparedRuntimeVersion.supportsCompatiblePatch(runtimeVersion, installed: nativeScriptRuntimeVersion) else {
+                findings.append(.init(
+                    state: .unsupported,
+                    severity: .error,
+                    sourcePath: packageJSONPath,
+                    message: "This Hanlin build supports NativeScript \(nativeScriptRuntimeVersion), but the package requires \(runtimeVersion)."
+                ))
+                return
+            }
+            for (name, value) in plugins.sorted(by: { $0.key < $1.key }) {
+                guard let version = value as? String else {
+                    findings.append(.init(
+                        state: .unsupported,
+                        severity: .error,
+                        sourcePath: packageJSONPath,
+                        message: "NativeScript plugin \(name) must declare a string version."
+                    ))
+                    continue
+                }
+                if name != "@nativescript/swift-ui" || version != nativeScriptSwiftUIVersion {
+                    let supported = name == "@nativescript/swift-ui"
+                        ? "\(name) \(nativeScriptSwiftUIVersion)"
+                        : "only @nativescript/swift-ui \(nativeScriptSwiftUIVersion)"
+                    findings.append(.init(
+                        state: .unsupported,
+                        severity: .error,
+                        sourcePath: packageJSONPath,
+                        message: "This Hanlin build supports \(supported), but the package requires \(name) \(version)."
+                    ))
+                } else {
+                    findings.append(.init(
+                        state: .supported,
+                        severity: .information,
+                        sourcePath: packageJSONPath,
+                        message: "NativeScript plugin @nativescript/swift-ui \(nativeScriptSwiftUIVersion) has embedded native provider support."
+                    ))
+                }
+            }
+        }
+        guard validatePreparedDependencyTypes(packageJSON, sourcePath: packageJSONPath, findings: &findings) else { return }
+        var declaredCoreVersion: String?
+        if let deps = packageJSON["dependencies"] as? [String: Any], let version = deps["@nativescript/core"] as? String {
+            declaredCoreVersion = version
+        } else if let devDeps = packageJSON["devDependencies"] as? [String: Any], let version = devDeps["@nativescript/core"] as? String {
+            declaredCoreVersion = version
+        }
+        if let coreVersion = declaredCoreVersion {
+            if isCoreVersionCompatible(coreVersion) {
+                findings.append(.init(
+                    state: .supported,
+                    severity: .information,
+                    sourcePath: packageJSONPath,
+                    message: "NativeScript core @nativescript/core \(coreVersion) is supported by embedded runtime \(nativeScriptRuntimeVersion)."
+                ))
+            } else {
+                findings.append(.init(
+                    state: .unsupported,
+                    severity: .error,
+                    sourcePath: packageJSONPath,
+                    message: "This Hanlin build supports @nativescript/core \(nativeScriptCoreVersion), but the package requires \(coreVersion).",
+                    rationale: "Declare a released semantic version no newer than the embedded Core in the same major version.",
+                    code: "MINIAPP_CORE_VERSION_MISMATCH"
+                ))
+            }
+        }
+        findings.append(.init(
+            state: .supported,
+            severity: .information,
+            sourcePath: entrypoint.sourcePath,
+            message: "Prepared NativeScript application structure is valid."
+        ))
+    }
+
+    private static func isCoreVersionCompatible(_ versionString: String) -> Bool {
+        HanlinPreparedRuntimeVersion.supportsMinimum(versionString, installed: nativeScriptCoreVersion)
+    }
+
+    private static func validatePreparedExpoApplication(
+        files: [String: Data],
+        entrypoints: [HanlinPackageEntrypointDescriptor],
+        declaredCapabilities: [HanlinCapabilityID] = [],
+        findings: inout [HanlinCompatibilityFinding]
+    ) {
+        let appEntrypoints = entrypoints.filter { $0.kind == .app }
+        let widgetEntrypoints = entrypoints.filter { $0.kind == .widget }
+
+        guard appEntrypoints.count <= 1, let entrypoint = appEntrypoints.first ?? widgetEntrypoints.first else {
+            findings.append(.init(
+                state: .unsupported,
+                severity: .error,
+                message: "Expo requires exactly one foreground app entrypoint; additional supported exposures are allowed."
+            ))
+            return
+        }
+        for candidate in entrypoints where candidate.kind != .app {
+            switch candidate.kind {
+            case .widget:
+                findings.append(.init(
+                    state: .supported,
+                    severity: .information,
+                    sourcePath: candidate.sourcePath,
+                    message: "Expo widget exposure '\(candidate.sourcePath)' is supported via host services bridge."
+                ))
+            case .assistantTool:
+                let dedicated = candidate.assistantTool != nil && appEntrypoints.first?.sourcePath != candidate.sourcePath
+                findings.append(.init(state: dedicated ? .supported : .unsupported,
+                    severity: dedicated ? .information : .error, sourcePath: candidate.sourcePath,
+                    message: dedicated
+                        ? "Assistant tools use their dedicated prepared program only when an explicit model tool call is dispatched."
+                        : "An assistantTool requires its own prepared source and action declarations.",
+                    code: dedicated ? "MINIAPP_ASSISTANT_TOOL_READY" : "MINIAPP_ASSISTANT_TOOL_INVALID"))
+            case .appIntent, .share, .spotlight, .capture:
+                let prepared = appEntrypoints.first?.sourcePath == candidate.sourcePath
+                findings.append(.init(state: prepared ? .supported : .unsupported,
+                    severity: prepared ? .information : .error, sourcePath: candidate.sourcePath,
+                    message: prepared
+                        ? "Expo action exposure uses the foreground app's registered Host Services handlers."
+                        : "Expo exposure '\(candidate.kind.rawValue)' is unsupported until it references the prepared foreground bundle containing the registered handlers.",
+                    code: prepared ? "MINIAPP_EXPO_ACTION_READY" : "MINIAPP_EXPO_ACTION_BUNDLE_REQUIRED"))
+            case .embeddedResult:
+                let prepared = appEntrypoints.first?.sourcePath == candidate.sourcePath
+                findings.append(.init(state: prepared ? .supported : .unsupported,
+                    severity: prepared ? .information : .error, sourcePath: candidate.sourcePath,
+                    message: prepared
+                        ? "Embedded results use the installed Expo app bundle and its declared handler identity."
+                        : "An embedded result exposure must reference the prepared foreground app bundle.",
+                    code: prepared ? "MINIAPP_EMBEDDED_RESULT_READY" : "MINIAPP_EMBEDDED_RESULT_BUNDLE_REQUIRED"))
+            case .liveActivity:
+                let prepared = appEntrypoints.first?.sourcePath == candidate.sourcePath
+                findings.append(.init(state: prepared ? .supported : .unsupported,
+                    severity: prepared ? .information : .error, sourcePath: candidate.sourcePath,
+                    message: prepared
+                        ? "Live Activities use the typed ActivityKit Host Services API from the prepared foreground app."
+                        : "A Live Activity exposure must reference the prepared foreground app bundle.",
+                    code: prepared ? "MINIAPP_LIVE_ACTIVITY_READY" : "MINIAPP_LIVE_ACTIVITY_BUNDLE_REQUIRED"))
+            case .keyboard, .notificationUI:
+                let prepared = appEntrypoints.first?.sourcePath == candidate.sourcePath
+                findings.append(.init(state: prepared ? .supported : .unsupported,
+                    severity: prepared ? .information : .error, sourcePath: candidate.sourcePath,
+                    message: prepared
+                        ? "This system extension uses the package's separately compiled original native presentation."
+                        : "A system presentation exposure must identify the prepared foreground package.",
+                    code: prepared ? "MINIAPP_SYSTEM_PRESENTATION_READY" : "MINIAPP_SYSTEM_PRESENTATION_BUNDLE_REQUIRED"))
+            case .translationUI:
+                let prepared = appEntrypoints.first?.sourcePath == candidate.sourcePath
+                let snapshot = candidate.sourcePath.hasSuffix(".json")
+                findings.append(.init(state: prepared || snapshot ? .supported : .unsupported,
+                    severity: prepared || snapshot ? .information : .error, sourcePath: candidate.sourcePath,
+                    message: prepared
+                        ? "Translation opens the registered action in the foreground Expo app with the selected text."
+                        : "Translation UI requires a JSON snapshot or the prepared foreground bundle.",
+                    code: prepared || snapshot ? "MINIAPP_TRANSLATION_READY" : "MINIAPP_TRANSLATION_BUNDLE_REQUIRED"))
+            default:
+                findings.append(.init(
+                    state: .unsupported,
+                    severity: .error,
+                    sourcePath: candidate.sourcePath,
+                    message: "Expo exposure '\(candidate.kind.rawValue)' is unsupported because no native executor is available."
+                ))
+            }
+        }
+        let entryDir = entrypoint.sourcePath.split(separator: "/").dropLast().joined(separator: "/")
+        let candidateA = entryDir.isEmpty || entryDir == "." ? "package.json" : "\(entryDir)/package.json"
+        let packageJSONPath = files[candidateA] != nil ? candidateA : "package.json"
+        guard let packageJSONData = files[packageJSONPath],
+              let packageJSON = try? JSONSerialization.jsonObject(with: packageJSONData) as? [String: Any],
+              packageJSON["hanlinRuntime"] as? String == HanlinRuntimeProfile.hanlinExpo.rawValue else {
+            findings.append(.init(
+                state: .unsupported,
+                severity: .error,
+                sourcePath: packageJSONPath,
+                message: "Expo requires a prepared app package.json with hanlinRuntime set to hanlin-expo."
+            ))
+            return
+        }
+        if !appEntrypoints.isEmpty {
+            let main = packageJSON["main"] as? String ?? (packageJSON["main"] == nil ? "bundle.js" : "")
+            let parts = main.split(separator: "/", omittingEmptySubsequences: false)
+            let safe = !main.isEmpty && !main.contains("\\") && !main.contains(":") && !main.contains("\0") &&
+                parts.allSatisfy { !$0.isEmpty && $0 != "." && $0 != ".." }
+            let packageDirectory = packageJSONPath.split(separator: "/").dropLast().joined(separator: "/")
+            let resolvedMain = packageDirectory.isEmpty ? main : packageDirectory + "/" + main
+            if !safe || resolvedMain != entrypoint.sourcePath || files[resolvedMain] == nil {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: packageJSONPath,
+                    message: "Expo package.json main must name the same prepared file as the declared foreground entrypoint.",
+                    rationale: "Use a relative file path within this prepared package, matching script.json entry; bundle.js remains the default when main is omitted.",
+                    code: "MINIAPP_ENTRYPOINT_INVALID"))
+            }
+        }
+        if !widgetEntrypoints.isEmpty, packageJSON["hanlinExpo"] == nil {
+            findings.append(.init(state: .unsupported, severity: .error, sourcePath: packageJSONPath,
+                message: "Expo widgets require an explicit hanlinExpo runtimeVersion/plugins contract."))
+        }
+        if let contractValue = packageJSON["hanlinExpo"] {
+            guard let contract = contractValue as? [String: Any],
+                  let runtimeVersion = contract["runtimeVersion"] as? String,
+                  let plugins = contract["plugins"] as? [String: Any] else {
+                findings.append(.init(
+                    state: .unsupported,
+                    severity: .error,
+                    sourcePath: packageJSONPath,
+                    message: "Expo hanlinExpo must declare string runtimeVersion and object plugins fields."
+                ))
+                return
+            }
+            guard isExpoVersionCompatible(runtimeVersion) else {
+                findings.append(.init(
+                    state: .unsupported,
+                    severity: .error,
+                    sourcePath: packageJSONPath,
+                    message: "This Hanlin build supports Expo \(expoSDKVersion), but the package requires \(runtimeVersion).",
+                    rationale: "Declare a released semantic version no newer than the embedded Expo runtime contract in the same major version.",
+                    code: "MINIAPP_EXPO_VERSION_MISMATCH"
+                ))
+                return
+            }
+            if widgetEntrypoints.contains(where: { $0.widgetEngine == .expo }),
+               runtimeVersion != expoUIVersion || plugins["@expo/ui"] as? String != expoUIVersion {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: packageJSONPath,
+                    message: "Native Expo widgets require the exact embedded runtime \(expoUIVersion) and @expo/ui plugin \(expoUIVersion)."))
+            }
+            if let requiredBridge = contract["bridgeVersion"] {
+                guard let requiredBridgeVersion = requiredBridge as? String else {
+                    findings.append(.init(state: .unsupported, severity: .error, sourcePath: packageJSONPath,
+                        message: "Expo hanlinExpo.bridgeVersion must be a released semantic version string.",
+                        rationale: "Use the generated bridge contract version; do not substitute an integer or npm package version.",
+                        code: "MINIAPP_BRIDGE_VERSION_INVALID"))
+                    return
+                }
+                if !isVersion(requiredBridgeVersion, atMost: expoUIBridgeVersion) {
+                    findings.append(.init(
+                        state: .unsupported, severity: .error, sourcePath: packageJSONPath,
+                        message: "This Hanlin build provides @hanlin/expo-ui bridge \(expoUIBridgeVersion), but the package requires \(requiredBridgeVersion).",
+                        rationale: "Use a released semantic bridge version at most the installed version, without wildcard or malformed components.",
+                        code: "MINIAPP_BRIDGE_VERSION_MISMATCH"))
+                }
+            }
+            for (name, value) in plugins.sorted(by: { $0.key < $1.key }) {
+                guard let version = value as? String else {
+                    findings.append(.init(
+                        state: .unsupported,
+                        severity: .error,
+                        sourcePath: packageJSONPath,
+                        message: "Expo plugin \(name) must declare a string version."
+                    ))
+                    continue
+                }
+                if name == "@nativescript/react-native" {
+                    if version != HanlinMiniAppHostVersions.nativeApiVersion {
+                        findings.append(.init(
+                            state: .unsupported,
+                            severity: .error,
+                            sourcePath: packageJSONPath,
+                            message: "This Hanlin build supports @nativescript/react-native \(HanlinMiniAppHostVersions.nativeApiVersion), but the package requires \(version)."
+                        ))
+                    } else {
+                        findings.append(.init(
+                            state: .supported,
+                            severity: .information,
+                            sourcePath: packageJSONPath,
+                            message: "Expo plugin @nativescript/react-native \(HanlinMiniAppHostVersions.nativeApiVersion) has embedded native JSI & Fabric support."
+                        ))
+                    }
+                    continue
+                }
+                if name == "react-native-worklets" {
+                    if version != HanlinMiniAppHostVersions.reactNativeWorkletsVersion {
+                        findings.append(.init(
+                            state: .unsupported,
+                            severity: .error,
+                            sourcePath: packageJSONPath,
+                            message: "This Hanlin build supports react-native-worklets \(HanlinMiniAppHostVersions.reactNativeWorkletsVersion), but the package requires \(version)."
+                        ))
+                    } else {
+                        findings.append(.init(
+                            state: .supported,
+                            severity: .information,
+                            sourcePath: packageJSONPath,
+                            message: "Expo plugin react-native-worklets \(HanlinMiniAppHostVersions.reactNativeWorkletsVersion) is supported as a build-embedded runtime dependency."
+                        ))
+                    }
+                    continue
+                }
+                let supported = switch name {
+                case "@expo/ui": isExpoVersionCompatible(version)
+                case "expo-asset": version == HanlinMiniAppHostVersions.expoAssetVersion
+                case "expo-widgets": HanlinPreparedRuntimeVersion.supportsMinimum(version, installed: HanlinMiniAppHostVersions.expoWidgetsVersion)
+                case "@hanlin/expo-ui": isVersion(version, atMost: expoUIBridgeVersion)
+                default: false
+                }
+                if !supported {
+                    findings.append(.init(
+                        state: .unsupported,
+                        severity: .error,
+                        sourcePath: packageJSONPath,
+                        message: "This Hanlin build supports @expo/ui \(expoUIVersion), expo-asset \(HanlinMiniAppHostVersions.expoAssetVersion), expo-widgets \(HanlinMiniAppHostVersions.expoWidgetsVersion), and @hanlin/expo-ui \(expoUIBridgeVersion), but the package requires \(name) \(version)."
+                    ))
+                } else {
+                    findings.append(.init(
+                        state: .supported,
+                        severity: .information,
+                        sourcePath: packageJSONPath,
+                        message: name == "expo-asset"
+                            ? "Expo plugin \(name) \(version) has embedded original native asset support."
+                            : "Expo plugin \(name) \(version) has embedded native SwiftUI support."
+                    ))
+                }
+            }
+        }
+        guard validatePreparedDependencyTypes(packageJSON, sourcePath: packageJSONPath, findings: &findings) else { return }
+        var declaredUIVersion: String?
+        if let deps = packageJSON["dependencies"] as? [String: Any], let version = deps["@expo/ui"] as? String {
+            declaredUIVersion = version
+        } else if let devDeps = packageJSON["devDependencies"] as? [String: Any], let version = devDeps["@expo/ui"] as? String {
+            declaredUIVersion = version
+        }
+        if let uiVersion = declaredUIVersion {
+            if isExpoVersionCompatible(uiVersion) {
+                findings.append(.init(
+                    state: .supported,
+                    severity: .information,
+                    sourcePath: packageJSONPath,
+                    message: "Expo UI @expo/ui \(uiVersion) is supported by embedded runtime \(expoUIVersion)."
+                ))
+            } else {
+                findings.append(.init(
+                    state: .unsupported,
+                    severity: .error,
+                    sourcePath: packageJSONPath,
+                    message: "This Hanlin build supports @expo/ui \(expoUIVersion), but the package requires \(uiVersion)."
+                ))
+            }
+        }
+        findings.append(.init(
+            state: .supported,
+            severity: .information,
+            sourcePath: entrypoint.sourcePath,
+            message: "Prepared Expo application structure is valid."
+        ))
+    }
+
+    private static func isExpoVersionCompatible(_ versionString: String) -> Bool {
+        HanlinPreparedRuntimeVersion.supportsMinimum(versionString, installed: expoUIVersion)
+    }
+
+    private static func isVersion(_ required: String, atMost installed: String) -> Bool {
+        HanlinPreparedRuntimeVersion.supportsMinimum(required, installed: installed, requireSameMajor: false)
+    }
+
+    private static func validatePreparedDependencyTypes(_ package: [String: Any], sourcePath: String,
+                                                        findings: inout [HanlinCompatibilityFinding]) -> Bool {
+        var valid = true
+        for key in ["dependencies", "devDependencies"] {
+            guard let raw = package[key] else { continue }
+            guard let dependencies = raw as? [String: Any] else {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: sourcePath,
+                    message: "Prepared package \(key) must be an object of module names and version strings.",
+                    code: "MINIAPP_DEPENDENCY_VERSION_INVALID"))
+                valid = false; continue
+            }
+            for name in dependencies.keys.sorted() where !(dependencies[name] is String) {
+                findings.append(.init(state: .unsupported, severity: .error, symbol: name, sourcePath: sourcePath,
+                    message: "Prepared package dependency \(name) must declare a version string.",
+                    code: "MINIAPP_DEPENDENCY_VERSION_INVALID"))
+                valid = false
+            }
+        }
+        return valid
+    }
+
+    private func packageFiles(root: URL) throws -> [String: Data] {
+        let keys: [URLResourceKey] = [.isRegularFileKey, .isSymbolicLinkKey]
+        guard let enumerator = fileManager.enumerator(
+            at: root,
+            includingPropertiesForKeys: keys,
+            options: [.skipsHiddenFiles]
+        ) else {
+            return [:]
+        }
+        var result: [String: Data] = [:]
+        for case let url as URL in enumerator {
+            let values = try url.resourceValues(forKeys: Set(keys))
+            guard values.isSymbolicLink != true else {
+                throw HanlinPackageCenterError.unsafeArchive([.init(
+                    code: .symbolicLink,
+                    severity: .error,
+                    entry: url.lastPathComponent,
+                    message: "Extracted package contains a symbolic link."
+                )])
+            }
+            guard values.isRegularFile == true else { continue }
+            let depth = enumerator.level
+            guard depth > 0, url.pathComponents.count >= depth else {
+                throw HanlinPackageCenterError.stagingFailed
+            }
+            let relative = url.pathComponents.suffix(depth).joined(separator: "/")
+                .replacingOccurrences(of: "\\", with: "/")
+            guard let path = HanlinArchivePolicy.normalizedRelativePath(relative) else {
+                throw HanlinPackageCenterError.stagingFailed
+            }
+            result[path] = try Data(contentsOf: url)
+        }
+        return result
+    }
+
+    /// Prepared runtimes declare exposures explicitly because source modules
+    /// such as intent.tsx and app_intents.tsx are bundled into the same program.
+    /// Distinct IDs survive even when their kind and prepared source are equal.
+    private static func preparedEntrypoints(
+        manifest: HanlinScriptingManifest,
+        files: [String: Data],
+        discovered: [HanlinPackageEntrypointDescriptor],
+        findings: inout [HanlinCompatibilityFinding]
+    ) -> [HanlinPackageEntrypointDescriptor] {
+        guard let field = manifest.unknownFields["entrypoints"] else { return discovered }
+        let runtime = manifest.hanlinRuntime.flatMap(HanlinRuntimeProfile.init(rawValue:))
+        guard let runtime, [.hanlinExpo, .hanlinNativeScript].contains(runtime),
+              case let .array(items) = field else {
+            findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                message: "entrypoints must be an array of explicit Expo or NativeScript exposures.",
+                code: "MINIAPP_ENTRYPOINT_DECLARATION_INVALID"))
+            return discovered
+        }
+        var declared: [HanlinPackageEntrypointDescriptor] = []
+        var identifiers = Set<String>()
+        for (index, item) in items.enumerated() {
+            guard case let .object(fields) = item,
+                  case let .string(id)? = fields["id"], !id.isEmpty,
+                  case let .string(rawKind)? = fields["kind"],
+                  let kind = HanlinPackageEntrypointKind(rawValue: rawKind),
+                  [.assistantTool, .appIntent, .embeddedResult, .share, .translationUI, .liveActivity, .keyboard, .notificationUI, .spotlight, .capture].contains(kind),
+                  case let .string(path)? = fields["sourcePath"],
+                  HanlinArchivePolicy.normalizedRelativePath(path) == path, files[path] != nil,
+                  (![.embeddedResult, .keyboard, .notificationUI, .spotlight, .capture].contains(kind) || discovered.contains(where: { $0.kind == .app && $0.sourcePath == path })),
+                  identifiers.insert(id).inserted, id != "app", id != "widget" else {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                    message: "entrypoints[\(index)] requires a unique id, supported kind (assistantTool, appIntent, embeddedResult, share, translationUI, liveActivity, keyboard, notificationUI, spotlight, capture), and existing package-relative sourcePath. Embedded results and the four system exposures must reference the prepared foreground app bundle.",
+                    code: "MINIAPP_ENTRYPOINT_DECLARATION_INVALID"))
+                continue
+            }
+            var assistantTool: HanlinAssistantToolDeclaration?
+            if kind == .assistantTool {
+                do {
+                    guard let metadata = fields["assistantTool"],
+                          !discovered.contains(where: { $0.kind == .app && $0.sourcePath == path }) else {
+                        throw HanlinContractError.invalidSchema(reason: "assistantTool requires metadata and a dedicated source, separate from the foreground app")
+                    }
+                    let declaration = try JSONDecoder().decode(
+                        HanlinAssistantToolDeclaration.self, from: metadata.canonicalJSONData(limits: .unbounded)
+                    )
+                    try declaration.validateDefinition()
+                    let directory = path.split(separator: "/").dropLast().joined(separator: "/")
+                    let packagePath = directory.isEmpty ? "package.json" : directory + "/package.json"
+                    let expectedMain = runtime == .hanlinNativeScript ? "bundle.mjs" : "bundle.js"
+                    guard URL(filePath: path).lastPathComponent == expectedMain,
+                          let packageData = files[packagePath],
+                          let package = try JSONSerialization.jsonObject(with: packageData) as? [String: Any],
+                          package["main"] as? String == expectedMain,
+                          package["hanlinRuntime"] as? String == runtime.rawValue else {
+                        throw HanlinContractError.invalidSchema(reason: "assistantTool requires its own prepared folder with matching package.json, runtime and canonical bundle")
+                    }
+                    assistantTool = declaration
+                } catch {
+                    findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                        message: "entrypoints[\(index)].assistantTool is invalid: \(error)",
+                        code: "MINIAPP_ASSISTANT_TOOL_INVALID"))
+                    continue
+                }
+            } else if fields["assistantTool"] != nil {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                    message: "assistantTool metadata is only valid on an assistantTool entrypoint.",
+                    code: "MINIAPP_ASSISTANT_TOOL_INVALID"))
+                continue
+            }
+            let context: HanlinExecutionContext = switch kind {
+            case .appIntent: .appIntent
+            case .translationUI: .translationUI
+            case .keyboard: .keyboard
+            case .notificationUI: .notificationUI
+            case .liveActivity: .liveActivity
+            default: .mainApplication
+            }
+            let symbol: String? = if case let .string(value)? = fields["exportedSymbol"] { value } else { nil }
+            let policy: String = switch kind {
+            case .liveActivity: "prepared-system-surface-v1"
+            case .embeddedResult: "embedded-result-v1"
+            case .assistantTool: "prepared-assistant-tool-v1"
+            case .keyboard, .notificationUI: "native-presentation-v1"
+            case .spotlight: "prepared-spotlight-v1"
+            case .capture: "prepared-capture-v1"
+            default: "prepared-foreground-action-v1"
+            }
+            declared.append(.init(id: id, kind: kind, sourcePath: path, exportedSymbol: symbol,
+                supportedContexts: [context, .mainApplication], runtimePolicyID: policy,
+                runtimeProfile: runtime, compatibility: .partial, assistantTool: assistantTool))
+        }
+        let declaredKinds = Set(declared.map(\.kind))
+        let retained = discovered.filter { !declaredKinds.contains($0.kind) }
+        let result = (retained + declared).sorted { ($0.kind.rawValue, $0.id) < ($1.kind.rawValue, $1.id) }
+        for entry in declared {
+            for action in entry.assistantTool?.actions ?? [] {
+                if let rendererID = action.embeddedResultID,
+                   !result.contains(where: { $0.id == rendererID && $0.kind == .embeddedResult }) {
+                    findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                        message: "assistantTool action '\(action.id)' references missing embeddedResult '\(rendererID)'.",
+                        code: "MINIAPP_ASSISTANT_TOOL_INVALID"))
+                }
+            }
+        }
+        return result
+    }
+
+    private func discoverEntrypoints(
+        manifest: HanlinScriptingManifest,
+        sourcePaths: [String]
+    ) -> [HanlinPackageEntrypointDescriptor] {
+        let available = Set(sourcePaths)
+        var candidates: [(String, HanlinPackageEntrypointKind, Set<HanlinExecutionContext>, String, HanlinWidgetEngine?)] = []
+        let isWidgetOnly = manifest.isWidgetOnlyPackage
+
+        if !isWidgetOnly {
+            let appPath = manifest.entry.flatMap { available.contains($0) ? $0 : nil }
+                ?? ["index.tsx", "index.ts", "index.jsx", "index.js", "index.py"].first { available.contains($0) }
+            if let appPath {
+                candidates.append((appPath, .app, [.mainApplication], "foreground-app-v1", nil))
+            }
+        }
+
+        // Widget entrypoint from manifest.entry when widget-only
+        if isWidgetOnly, let entry = manifest.entry, available.contains(entry) {
+            let engine = manifest.declaredWidgetEngine ?? .legacy
+            candidates.append((entry, .widget, [.widget], "widget-v1", engine))
+        }
+
+        let conventions: [(String, HanlinPackageEntrypointKind, HanlinExecutionContext, String, HanlinWidgetEngine?)] = [
+            ("assistant_tool.tsx", .assistantTool, .mainApplication, "assistant-tool-v1", nil),
+            ("assistant_tool.ts", .assistantTool, .mainApplication, "assistant-tool-v1", nil),
+            ("embedded_result.tsx", .embeddedResult, .mainApplication, "embedded-result-v1", nil),
+            ("embedded_result.ts", .embeddedResult, .mainApplication, "embedded-result-v1", nil),
+            ("chat_card.tsx", .embeddedResult, .mainApplication, "embedded-result-v1", nil),
+            ("chat_card.ts", .embeddedResult, .mainApplication, "embedded-result-v1", nil),
+            ("widget.jsx", .widget, .widget, "widget-v1", .legacy),
+            ("widget.tsx", .widget, .widget, "widget-v1", .legacy),
+            ("widget.ts", .widget, .widget, "widget-v1", .legacy),
+            ("widget.js", .widget, .widget, "widget-v1", .legacy),
+            ("widget.json", .widget, .widget, "widget-v1", .legacy),
+            ("app_intents.tsx", .appIntent, .appIntent, "app-intent-v1", nil),
+            ("intent.tsx", .appIntent, .appIntent, "app-intent-v1", nil),
+            ("intent.json", .appIntent, .appIntent, "app-intent-v1", nil),
+            ("live_activity.tsx", .liveActivity, .liveActivity, "live-activity-v1", nil),
+            ("translation_ui_provider.tsx", .translationUI, .translationUI, "translation-ui-v1", nil),
+            ("translation_ui_provider.ts", .translationUI, .translationUI, "translation-ui-v1", nil),
+            ("translation.json", .translationUI, .translationUI, "translation-ui-v1", nil),
+            ("translation_ui.json", .translationUI, .translationUI, "translation-ui-v1", nil)
+        ]
+        var kinds = Set(candidates.map { $0.1 })
+        for (path, kind, context, policy, defaultEngine) in conventions
+            where available.contains(path)
+                && !(kind == .assistantTool && [HanlinRuntimeProfile.hanlinExpo.rawValue, HanlinRuntimeProfile.hanlinNativeScript.rawValue].contains(manifest.hanlinRuntime ?? ""))
+                && !(path == "widget.json" && manifest.declaredWidgetEngine == .scriptwidget)
+                && kinds.insert(kind).inserted
+        {
+            let engine = (kind == .widget) ? (manifest.declaredWidgetEngine ?? defaultEngine) : nil
+            candidates.append((path, kind, [context], policy, engine))
+        }
+        return candidates.map { path, kind, contexts, policy, engine in
+            let requestedRuntime = manifest.hanlinRuntime ?? manifest.unknownFields["hanlinRuntime"].flatMap { value -> String? in
+                if case let .string(rawValue) = value { rawValue } else { nil }
+            }
+            let profile: HanlinRuntimeProfile = if requestedRuntime == HanlinRuntimeProfile.hanlinNativeScript.rawValue {
+                .hanlinNativeScript
+            } else if requestedRuntime == HanlinRuntimeProfile.hanlinExpo.rawValue || engine == .expo {
+                .hanlinExpo
+            } else if path.lowercased().hasSuffix(".py") {
+                .hanlinPython
+            } else {
+                .scriptingJSC
+            }
+            return .init(
+                id: kind.rawValue,
+                kind: kind,
+                sourcePath: path,
+                supportedContexts: contexts,
+                runtimePolicyID: policy,
+                runtimeProfile: profile,
+                compatibility: .partial,
+                widgetEngine: engine
+            )
+        }.sorted { ($0.kind.rawValue, $0.sourcePath) < ($1.kind.rawValue, $1.sourcePath) }
+    }
+
+    private func resolve(
+        specifier: String,
+        importer: String,
+        modulePaths: Set<String>
+    ) -> String? {
+        if specifier == "scripting" { return "virtual:scripting" }
+        guard specifier.hasPrefix(".") else { return nil }
+        let parent = importer.split(separator: "/").dropLast().map(String.init)
+        var components = parent
+        for component in specifier.split(separator: "/") {
+            switch component {
+            case ".": continue
+            case "..":
+                guard !components.isEmpty else { return nil }
+                components.removeLast()
+            default: components.append(String(component))
+            }
+        }
+        let base = components.joined(separator: "/")
+        let candidates = [base, "\(base).ts", "\(base).tsx", "\(base).js", "\(base).jsx", "\(base).mjs", "\(base).json",
+                          "\(base)/index.ts", "\(base)/index.tsx", "\(base)/index.js", "\(base)/index.jsx", "\(base)/index.mjs"]
+        return candidates.first(where: modulePaths.contains)
+    }
+
+    private static func moduleSpecifiers(in source: String) -> [String] {
+        let boundImports = captures(
+            #"(?:from\s+|import\s*\(|require\s*\()\s*[\"']([^\"']+)[\"']"#,
+            source
+        )
+        let sideEffectImports = captures(
+            #"import\s*[\"']([^\"']+)[\"']"#,
+            source
+        )
+        return Array(Set(boundImports + sideEffectImports)).sorted()
+    }
+
+    private static func scriptingImports(in source: String) -> Set<String> {
+        let clauses = captures(
+            #"import\s*\{([^}]+)\}\s*from\s*[\"']scripting[\"']"#,
+            source
+        )
+        return Set(clauses.flatMap { clause in
+            clause.split(separator: ",").compactMap { part in
+                let name = part.trimmingCharacters(in: .whitespacesAndNewlines)
+                    .split(separator: " ").first.map(String.init)
+                return name?.isEmpty == false ? name : nil
+            }
+        })
+    }
+
+    private static func ambientScriptingSymbols(in source: String) -> Set<String> {
+        let candidates = [
+            "Assistant", "AssistantTool", "CacheStorage", "Dialog", "DocumentPicker", "EditorController", "FileManager", "Health",
+            "IntentMemoryStorage", "Location", "Notification", "OpenURL", "Pasteboard", "Photos", "Reminder",
+            "QuickLook", "Safari", "Storage", "addLocationListener"
+        ]
+        return Set(candidates.filter { symbol in
+            matches("\\b\(NSRegularExpression.escapedPattern(for: symbol))\\b", source)
+        })
+    }
+
+    private static func captures(_ pattern: String, _ source: String) -> [String] {
+        guard let expression = try? NSRegularExpression(pattern: pattern) else { return [] }
+        let range = NSRange(source.startIndex..., in: source)
+        return expression.matches(in: source, range: range).compactMap { match in
+            guard match.numberOfRanges > 1,
+                  let range = Range(match.range(at: 1), in: source)
+            else { return nil }
+            return String(source[range])
+        }
+    }
+
+    private static func matches(_ pattern: String, _ source: String) -> Bool {
+        guard let expression = try? NSRegularExpression(pattern: pattern) else { return false }
+        return expression.firstMatch(
+            in: source,
+            range: NSRange(source.startIndex..., in: source)
+        ) != nil
+    }
+
+    private static func inferredCapability(for symbol: String) -> HanlinCapabilityID? {
+        let mapping: [(Set<String>, String)] = [
+            (["Storage", "CacheStorage", "IntentMemoryStorage"], "storage"),
+            (["DocumentPicker", "FileManager", "QuickLook"], "files"),
+            (["fetch", "Request", "Response", "Headers"], "network"),
+            (["Assistant", "AssistantTool"], "assistant"),
+            (["Location", "addLocationListener"], "location"),
+            (["Notification"], "notifications"),
+            (["Reminder"], "reminders"),
+            (["Health"], "health"),
+            (["Photos"], "photos"),
+            (["Pasteboard"], "pasteboard"),
+            (["OpenURL", "Safari"], "open-url")
+        ]
+        guard let raw = mapping.first(where: { $0.0.contains(symbol) })?.1 else { return nil }
+        return try? HanlinCapabilityID(validating: raw)
+    }
+
+    private static func isModule(_ path: String) -> Bool {
+        ["ts", "tsx", "js", "jsx", "mjs", "json", "py"].contains(
+            URL(filePath: path).pathExtension.lowercased()
+        )
+    }
+
+    private static func isSource(_ path: String) -> Bool {
+        ["ts", "tsx", "js", "jsx", "mjs", "py"].contains(
+            URL(filePath: path).pathExtension.lowercased()
+        )
+    }
+}

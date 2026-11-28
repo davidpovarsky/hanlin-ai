@@ -1,0 +1,209 @@
+{
+  "run": 44233498638,
+  "sha": "e56dcc8693bebe0d4febcadaf86ec3bd58962377",
+  "build": "EXECUTED_PASS",
+  "storage_boundary": "EXECUTED_PASS",
+  "storage_counts": {
+    "passedTests": 20,
+    "failedTests": 0,
+    "skippedTests": 0,
+    "totalTestCount": 20
+  },
+  "ui_counts": {
+    "passedTests": 7,
+    "failedTests": 0,
+    "skippedTests": 0,
+    "totalTestCount": 7
+  },
+  "passed_ui": [
+    "HanlinMiniAppsUITests/testInstalledScriptUIAppearsAndRunsAfterRestart",
+    "HanlinMiniAppsUITests/testPackageImportUsesExistingPreviewScreen",
+    "HanlinMiniAppsUITests/testPrivateStateSurvivesStandaloneProcessRelaunch",
+    "HanlinMiniAppsUITests/testStandaloneCatalogOpensRealCompiledApp",
+    "MiniAppsProviderUITests/testCanonicalLibraryLaunchesRealCompiledSwiftApp",
+    "MiniAppsProviderUITests/testManagementPresentsExistingPackageImportScreen",
+    "MiniAppsProviderUITests/testOrdinaryInstalledScriptUICatalogAndStatefulLaunch"
+  ],
+  "ui_failures": [],
+  "foreground_component_tests": {
+    "count": 53,
+    "status": "EXECUTED_PASS",
+    "sha": "e56dcc8693bebe0d4febcadaf86ec3bd58962377",
+    "toolchain": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0",
+    "scope": "Actual local Swift and owned disk/process fixtures; Apple apps/SDK/device and production stores NOT_RUN",
+    "result_sha256": "18f4124db724835948bc2532ce179025ecd5d2b25aabc05f15e65747fc9f2cb6"
+  },
+  "artifact": {
+    "artifact_id": 14397243888,
+    "run_id": 44233498638,
+    "api_zip_sha256": "46dfea38bfc3a7eda251dcf671dd08de107c6b937f29cfc2be6f200e715d870e",
+    "size": 17293619,
+    "full_zip_digest_recomputed": false,
+    "entries": [
+      {
+        "entry": "app-split-evidence/acceptance.json",
+        "bytes": 24797,
+        "sha256": "fa40bfb6b0d2531e59a85075810293d1273ea56d403fcd820c9022ce5d6b14de",
+        "crc_verified": true
+      },
+      {
+        "entry": "app-split-evidence/foreground/foreground-results.json",
+        "bytes": 21372,
+        "sha256": "18f4124db724835948bc2532ce179025ecd5d2b25aabc05f15e65747fc9f2cb6",
+        "crc_verified": true
+      },
+      {
+        "entry": "app-split-evidence/storage-tests.log",
+        "bytes": 21913,
+        "sha256": "4d0fb56629ada2ac5af2f7963d7e70511764ab4571adeb685c349b7d24e8a359",
+        "crc_verified": true
+      },
+      {
+        "entry": "app-split-evidence/test-summary.json",
+        "bytes": 1022,
+        "sha256": "96ea4c865c95e32398db83bf4e1795031c933759c87535baa0d601a38d40999b",
+        "crc_verified": true
+      },
+      {
+        "entry": "app-split-evidence/storage-summary.json",
+        "bytes": 1214,
+        "sha256": "4a8eeabed15b4cfc930db5cbdeb20d2ede5b8ad1d0e8a2f934040cad91189469",
+        "crc_verified": true
+      },
+      {
+        "entry": "app-split-evidence/xcodebuild.log",
+        "bytes": 79872,
+        "sha256": "0ade355eae52a40621f1bb3b366d96ef0c7811d24d6892f141c1b811173ff4e4",
+        "crc_verified": true
+      }
+    ]
+  },
+  "job_log": {
+    "bytes": 799996,
+    "sha256": "b5abbea8381b9f274d5dfa66890642094de02c29509e2f344cd387dcece246ea"
+  },
+  "scope": "Actual original standalone target on iPhone 18 Pro iOS 27.2 (24B8117), 27 native tests. This does not accept paired apps, provisioned signing, physical device, NativeScript/Expo app-level cases, or full 278 parity.",
+  "prior_attempts": [
+    {
+      "run": 44226098581,
+      "sha": "33168b5a332335cb104a451857b801e9dc0045ae",
+      "build": "EXECUTED_PASS",
+      "storage_boundary": "EXECUTED_PASS",
+      "storage_counts": {
+        "passedTests": 20,
+        "failedTests": 0,
+        "skippedTests": 0,
+        "totalTestCount": 20
+      },
+      "ui_counts": {
+        "passedTests": 1,
+        "failedTests": 6,
+        "skippedTests": 0,
+        "totalTestCount": 7
+      },
+      "ui_failures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "HanlinMiniAppsUITests",
+          "testIdentifier": 5,
+          "testIdentifierString": "MiniAppsProviderUITests/testCanonicalLibraryLaunchesRealCompiledSwiftApp()",
+          "testIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProviderUITests/testCanonicalLibraryLaunchesRealCompiledSwiftApp",
+          "testName": "testCanonicalLibraryLaunchesRealCompiledSwiftApp()"
+        },
+        {
+          "failureText": "XCTAssertTrue failed - The production package fixture must be staged in this app's Documents.",
+          "targetName": "HanlinMiniAppsUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "HanlinMiniAppsUITests/testInstalledScriptUIAppearsAndRunsAfterRestart()",
+          "testIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/HanlinMiniAppsUITests/testInstalledScriptUIAppearsAndRunsAfterRestart",
+          "testName": "testInstalledScriptUIAppearsAndRunsAfterRestart()"
+        },
+        {
+          "failureText": "XCTAssertTrue failed - Original package importer was not presented",
+          "targetName": "HanlinMiniAppsUITests",
+          "testIdentifier": 6,
+          "testIdentifierString": "MiniAppsProviderUITests/testManagementPresentsExistingPackageImportScreen()",
+          "testIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProviderUITests/testManagementPresentsExistingPackageImportScreen",
+          "testName": "testManagementPresentsExistingPackageImportScreen()"
+        },
+        {
+          "failureText": "XCTAssertTrue failed - The actual package was not staged in this simulator app's Documents",
+          "targetName": "HanlinMiniAppsUITests",
+          "testIdentifier": 7,
+          "testIdentifierString": "MiniAppsProviderUITests/testOrdinaryInstalledScriptUICatalogAndStatefulLaunch()",
+          "testIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProviderUITests/testOrdinaryInstalledScriptUICatalogAndStatefulLaunch",
+          "testName": "testOrdinaryInstalledScriptUICatalogAndStatefulLaunch()"
+        },
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "HanlinMiniAppsUITests",
+          "testIdentifier": 2,
+          "testIdentifierString": "HanlinMiniAppsUITests/testPackageImportUsesExistingPreviewScreen()",
+          "testIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/HanlinMiniAppsUITests/testPackageImportUsesExistingPreviewScreen",
+          "testName": "testPackageImportUsesExistingPreviewScreen()"
+        },
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "HanlinMiniAppsUITests",
+          "testIdentifier": 4,
+          "testIdentifierString": "HanlinMiniAppsUITests/testStandaloneCatalogOpensRealCompiledApp()",
+          "testIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/HanlinMiniAppsUITests/testStandaloneCatalogOpensRealCompiledApp",
+          "testName": "testStandaloneCatalogOpensRealCompiledApp()"
+        }
+      ],
+      "passed_ui": "HanlinMiniAppsUITests/testPrivateStateSurvivesStandaloneProcessRelaunch",
+      "artifact": {
+        "artifact_id": 14395345894,
+        "run_id": 44226098581,
+        "api_zip_sha256": "0d379f62eba0da1b26666943f8ce6adf6fadbb6e8cc5f3c1adfd7b9e3e761c21",
+        "full_zip_digest_recomputed": false,
+        "selective_http_bytes": 452640,
+        "entries": [
+          {
+            "entry": "app-split-evidence/acceptance.json",
+            "bytes": 27910,
+            "sha256": "695e9f4a5af7e1e855f5ebefdc421a863d120c0c51b5126ba753c58ef84ee0d2",
+            "crc_verified": true
+          },
+          {
+            "entry": "app-split-evidence/foreground/foreground-results.json",
+            "bytes": 21372,
+            "sha256": "862b690a1b1943a6219b40d586ff07574b9f50d42b3fc12f56ba677445189ad4",
+            "crc_verified": true
+          },
+          {
+            "entry": "app-split-evidence/source-inputs.json",
+            "bytes": 586824,
+            "sha256": "d13a9a3c69973b6f59da69b4ee7609874902139e2acffd08d15bb8137beed455",
+            "crc_verified": true
+          },
+          {
+            "entry": "app-split-evidence/storage-summary.json",
+            "bytes": 1215,
+            "sha256": "20c9dd965645aec939f72f3b44e1eef2ea8afe9b22598552e6edf5d88647d286",
+            "crc_verified": true
+          },
+          {
+            "entry": "app-split-evidence/storage-tests.log",
+            "bytes": 22340,
+            "sha256": "35f68306b082633228db9ca1f4929ad9965d058b9d4b0495994d03cdd730f7ec",
+            "crc_verified": true
+          },
+          {
+            "entry": "app-split-evidence/test-summary.json",
+            "bytes": 3993,
+            "sha256": "fa0f637997889e343a750070c52ace25ec36aa0fb0ec8fbe6ead5c8e6ff03979",
+            "crc_verified": true
+          },
+          {
+            "entry": "app-split-evidence/xcodebuild.log",
+            "bytes": 45354,
+            "sha256": "c63de85ffc0b37f2d0cfd099479b19c1a75c921b8aabdde18da78f457734569d",
+            "crc_verified": true
+          }
+        ]
+      },
+      "scope": "Actual original standalone target on iPhone 18 Pro iOS 27.2 (24B8117); not two-app/physical/distribution acceptance"
+    }
+  ]
+}

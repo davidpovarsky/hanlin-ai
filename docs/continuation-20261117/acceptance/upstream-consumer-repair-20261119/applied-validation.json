@@ -1,0 +1,87 @@
+{
+  "base": "36faa1904e819c92db193d65cafbec0b8bd62ab1",
+  "patches": [
+    {
+      "path": "upstream-protection-reader-proposal/v2-complete-declarations/exact-ref-protection-reader-v2.UNAPPLIED.patch",
+      "sha256": "621baeb772177dfd9812fd1a9e478f075503df557969a1a74b2f076a89c6e00f"
+    },
+    {
+      "path": "upstream-proof-url-proposal/canonical-check-url-lineage.UNAPPLIED.patch",
+      "sha256": "a0f42869f9bcf15753bcf61ec6583521b44760d6581233903885998e47815046"
+    },
+    {
+      "path": "upstream-dispatch-sync-proposal/authoritative-sync-convergence.UNAPPLIED.patch",
+      "sha256": "0eae4dc4dc90e12c6f81979a38e8945f2c5c8317ac943679c0a9a52c37d1c362"
+    }
+  ],
+  "nodeTests": {
+    "exit": 1,
+    "command": [
+      "C:\\Users\\DAVID\\.local\\tools\\node-v24.22.1-win-x64\\node.exe",
+      "--test",
+      "Scripts/Runtime/Tests/dependency-updates.test.mjs",
+      "Scripts/Runtime/Tests/upstream-host-accounting.test.mjs",
+      "Scripts/Runtime/Tests/upstream-run-consumer.test.mjs",
+      "Scripts/Runtime/Tests/upstream-check-lineage.test.mjs",
+      "Scripts/Runtime/Tests/upstream-dispatch-synchronization.test.mjs",
+      "Scripts/Runtime/Tests/upstream-protection-reader.test.mjs"
+    ],
+    "logSHA256": "0b9c892fbbe3aebcfe4a28b9b0eb57b1468ad6e5bcc95047e2b62d5c5cd077b6",
+    "tail": "not authorize consumer acceptance (0.3854ms)\n✔ ambiguous duplicate fresh origins cannot authorize the archive (1.0828ms)\n✔ receipt consumer recomputes accounting from raw proof rather than trusting its accepted boolean (1.8325ms)\n✔ historical150/149/0/1 execution remains recorded but cannot satisfy the current153 suite (74.902ms)\n✔ historical suite cannot substitute for the exact current153-case suite (0.2738ms)\n✔ one missing case cannot substitute for the exact current153-case suite (0.1529ms)\n✔ unexpected additional case cannot substitute for the exact current153-case suite (0.1318ms)\n✔ REST success is preserved without invoking an alternative API (3.4137ms)\n✔ only authenticated REST403 triggers exact-ref GraphQL, with explicit provenance (2.3555ms)\n✔ REST404 remains unprotected, without an alternate success (0.339ms)\n✔ network, server, and unknown REST errors are not reclassified as access denial (0.8105ms)\n✔ an unavailable GraphQL read preserves HTTP403 as primary and fails closed (0.7316ms)\n✔ public or unrelated repositories and unlisted/wildcard bases cannot use fallback (0.478ms)\n✔ partial GraphQL errors are rejected even when data appears positive (0.3548ms)\n✔ repository, exact ref, and resolved base commit are all bound to the PR (0.475ms)\n✔ missing classic rule and wildcard rule are never used as exact protection (0.4489ms)\n✔ unknown boolean and incomplete or duplicate required declarations are rejected (0.8047ms)\n✔ false protection properties are preserved as false rather than synthesized (1.8562ms)\n✔ complete additional and legacy unbound checks remain required (0.5887ms)\n✔ GraphQL classic success never supplies missing or additional effective rules (0.4638ms)\n✔ wrong app binding remains a failed exact server gate (0.2315ms)\n✔ older explicit bases require their own exact ref, rule, and base SHA (0.6302ms)\n✔ missing context declarations cannot hide a configured binding (0.3489ms)\n✔ orphan context without a binding is not treated as an unbound app requirement (0.2298ms)\n✔ equal context counts with different membership are rejected (0.2267ms)\n✔ order-independent complete context and binding declarations are accepted (0.3488ms)\n✔ one exact protected-base current-head candidate is selected (1.7066ms)\n✔ generic base-branch audit cannot select a candidate (0.1832ms)\n✔ a moved candidate does not inherit the old run (0.2293ms)\n✔ foreign repository run is rejected (0.3331ms)\n✔ non-dispatch and noncanonical run paths are rejected (0.2931ms)\n✔ ambiguous and incomplete pull inventories are rejected (0.2379ms)\n✔ draft and unowned candidate branches cannot become eligible (0.2846ms)\n✔ failed or skipped source run cannot use an otherwise positive receipt (0.2258ms)\n✔ green audit without schema2 native-origin accounting is rejected (0.2636ms)\n✔ legacy schema1 proof is never upgraded (0.3104ms)\n✔ base and source receipt drift are rejected (0.3051ms)\n✔ unknown or failed source validation cannot qualify (0.2757ms)\n✔ strict source and proof app bindings are both required (0.8796ms)\n✔ an additional required failed gate prevents automatic merge (0.2939ms)\n✔ pending, stale, skipped and ambiguous server gates prevent automatic merge (0.2459ms)\n✔ only activation-disabled can remain after all gates pass (0.2566ms)\n✔ closed or draft proposals cannot activate automatic merge (0.2161ms)\n✔ only the three explicitly protected acceptance bases are recognized (0.189ms)\n✔ v2 selects only its own exact candidate and never inherits the original base (0.2702ms)\n✔ a matching PR cannot authorize a main or unlisted target (0.7029ms)\n✔ v3 selects only its own exact candidate and cannot inherit either older base (0.2888ms)\n✔ missing or disabled administrator enforcement cannot publish proof (0.386ms)\nℹ tests 91\nℹ suites 0\nℹ pass 90\nℹ fail 1\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 275.8946\n\n✖ failing tests:\n\ntest at Scripts\\Runtime\\Tests\\dependency-updates.test.mjs:1:1\n✖ Scripts\\Runtime\\Tests\\dependency-updates.test.mjs (147.0494ms)\n  'test failed'\n"
+  },
+  "sourceFiles": [
+    {
+      "path": ".github/workflows/check-runtime-dependency-updates.yml",
+      "sha256": "2f97a9d4fd5a567eb72c9e6146f35cfb29d02369c2c66ec10e3b37886f158915"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/upstream-check-lineage.test.mjs",
+      "sha256": "24bca5d2387c39c853dd39cdc345448b8cd94141e53574a051536d69c460d753"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/upstream-dispatch-synchronization.test.mjs",
+      "sha256": "5029752ce7bdae835061640529df5d690e6955244d027bfd63e29c991028fe57"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/upstream-protection-reader.test.mjs",
+      "sha256": "8c3fa9389035d8aa7982ce6fd4ba693fc644b346cc979062e855c3a5bfbf5c5c"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/upstream-run-consumer.test.mjs",
+      "sha256": "afba342bae73bb9c86f001267892d5a8b74357e9682a7c7308a8894433fcab1c"
+    },
+    {
+      "path": "Scripts/Runtime/check-upstream-merge-gate.mjs",
+      "sha256": "3c9a3f8a2554c05a8795259ac0cfd17cced5b3f0541ec5ba545e8ea6dfb6985d"
+    },
+    {
+      "path": "Scripts/Runtime/consume-upstream-run.mjs",
+      "sha256": "c7733ec0a207ad3a0edb56a3d391a1cfbee45dcb68e39800e22abc5d83b9c6cd"
+    },
+    {
+      "path": "Scripts/Runtime/run-upstream-bot.mjs",
+      "sha256": "d785026858ef27d28c5b53f1b8873486a0fb4e2b1a467a4c3173ac6e6eea621b"
+    },
+    {
+      "path": "Scripts/Runtime/sync-upstream-host-pr.mjs",
+      "sha256": "6476fc4359d648f91d7dfed79daaab364620bc9758b953972a59e67205ff3b4b"
+    },
+    {
+      "path": "Scripts/Runtime/upstream-check-lineage.mjs",
+      "sha256": "72f09d7df244d607335a0018391872c0bf80bcdf474304514b73f29a4b1bec94"
+    },
+    {
+      "path": "Scripts/Runtime/upstream-dispatch-synchronization.mjs",
+      "sha256": "431a3884a0d4998b36810fe5b23abb862c1415317758add8b3a1b795a62c5dc2"
+    },
+    {
+      "path": "Scripts/Runtime/upstream-protection-reader.mjs",
+      "sha256": "bbdab0e8418ad77847e947ee3f3f732eb605b4bd99d84bcd1be345f9ea6b5c56"
+    },
+    {
+      "path": "Scripts/Runtime/upstream-run-consumer-policy.mjs",
+      "sha256": "484bc9d4bc758798c539dc651b7b92833af897af0ff5dcdd634daf5f5c12351e"
+    }
+  ],
+  "diffCheck": 0
+}

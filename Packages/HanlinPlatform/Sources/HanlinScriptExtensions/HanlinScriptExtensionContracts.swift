@@ -1,0 +1,787 @@
+import Foundation
+import HanlinPlatformContracts
+import HanlinScriptUI
+import HanlinScriptContracts
+
+public enum HanlinScriptExtensionContext: String, Codable, CaseIterable, Hashable, Sendable {
+    case widget
+    case appIntent
+    case liveActivity
+}
+
+public struct HanlinScriptExtensionIdentity: Codable, Hashable, Sendable {
+    public let installedPackageID: HanlinInstalledPackageID
+    public let packageID: HanlinPackageID
+    public let generation: UInt64
+    public let entrypointID: String
+    public let variantID: String
+
+    public init(
+        installedPackageID: HanlinInstalledPackageID,
+        packageID: HanlinPackageID,
+        generation: UInt64,
+        entrypointID: String,
+        variantID: String = "default"
+    ) {
+        self.installedPackageID = installedPackageID
+        self.packageID = packageID
+        self.generation = generation
+        self.entrypointID = entrypointID
+        self.variantID = variantID
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case installedPackageID, packageID, generation, entrypointID, variantID
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        installedPackageID = try container.decode(HanlinInstalledPackageID.self, forKey: .installedPackageID)
+        packageID = try container.decode(HanlinPackageID.self, forKey: .packageID)
+        generation = try container.decode(UInt64.self, forKey: .generation)
+        entrypointID = try container.decode(String.self, forKey: .entrypointID)
+        variantID = try container.decodeIfPresent(String.self, forKey: .variantID) ?? "default"
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(installedPackageID, forKey: .installedPackageID)
+        try container.encode(packageID, forKey: .packageID)
+        try container.encode(generation, forKey: .generation)
+        try container.encode(entrypointID, forKey: .entrypointID)
+        try container.encode(variantID, forKey: .variantID)
+    }
+}
+
+public typealias HanlinWidgetEngine = HanlinPlatformContracts.HanlinWidgetEngine
+
+public struct ExpoWidgetDescriptor: Codable, Hashable, Sendable {
+    public let layout: String
+    public let props: [String: HanlinValue]?
+    public let sourceName: String?
+    public let layoutRef: String?
+    public let layoutSHA256: String?
+    public let propsRef: String?
+
+    public init(
+        layout: String,
+        props: [String: HanlinValue]? = nil,
+        sourceName: String? = nil,
+        layoutRef: String? = nil,
+        layoutSHA256: String? = nil,
+        propsRef: String? = nil
+    ) {
+        self.layout = layout
+        self.props = props
+        self.sourceName = sourceName
+        self.layoutRef = layoutRef
+        self.layoutSHA256 = layoutSHA256
+        self.propsRef = propsRef
+    }
+}
+
+public struct ScriptWidgetDescriptor: Codable, Hashable, Sendable {
+    public let script: String
+    public let environment: [String: HanlinValue]?
+    public let scriptRef: String?
+    public let scriptSHA256: String?
+    public let resourcesManifestRef: String?
+
+    public init(
+        script: String,
+        environment: [String: HanlinValue]? = nil,
+        scriptRef: String? = nil,
+        scriptSHA256: String? = nil,
+        resourcesManifestRef: String? = nil
+    ) {
+        self.script = script
+        self.environment = environment
+        self.scriptRef = scriptRef
+        self.scriptSHA256 = scriptSHA256
+        self.resourcesManifestRef = resourcesManifestRef
+    }
+}
+
+public enum HanlinWidgetPayload: Codable, Hashable, Sendable {
+    case legacy(HanlinScriptUINode)
+    case expo(ExpoWidgetDescriptor)
+    case scriptwidget(ScriptWidgetDescriptor)
+    case malformed(String)
+
+    private enum CodingKeys: String, CodingKey {
+        case kind, legacyNode, expoDescriptor, scriptDescriptor, malformedReason
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let kind = try container.decode(String.self, forKey: .kind)
+        switch kind {
+        case "legacy":
+            let node = try container.decode(HanlinScriptUINode.self, forKey: .legacyNode)
+            self = .legacy(node)
+        case "expo":
+            let desc = try container.decode(ExpoWidgetDescriptor.self, forKey: .expoDescriptor)
+            self = .expo(desc)
+        case "scriptwidget":
+            let desc = try container.decode(ScriptWidgetDescriptor.self, forKey: .scriptDescriptor)
+            self = .scriptwidget(desc)
+        case "malformed":
+            let reason = try container.decodeIfPresent(String.self, forKey: .malformedReason) ?? "Malformed widget payload"
+            self = .malformed(reason)
+        default:
+            self = .malformed("Unsupported widget payload kind: \(kind)")
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        switch self {
+        case let .legacy(node):
+            try container.encode("legacy", forKey: .kind)
+            try container.encode(node, forKey: .legacyNode)
+        case let .expo(desc):
+            try container.encode("expo", forKey: .kind)
+            try container.encode(desc, forKey: .expoDescriptor)
+        case let .scriptwidget(desc):
+            try container.encode("scriptwidget", forKey: .kind)
+            try container.encode(desc, forKey: .scriptDescriptor)
+        case let .malformed(reason):
+            try container.encode("malformed", forKey: .kind)
+            try container.encode(reason, forKey: .malformedReason)
+        }
+    }
+}
+
+public struct HanlinScriptWidgetSnapshot: Codable, Hashable, Sendable {
+    public let identity: HanlinScriptExtensionIdentity
+    public let displayName: String
+    public let family: String
+    public let actionIdentity: HanlinScriptExtensionIdentity?
+    public let validUntil: Date
+    public let relevance: Double
+    public let engine: HanlinWidgetEngine
+    public let payload: HanlinWidgetPayload?
+    public let root: HanlinScriptUINode
+    public let deepLink: URL?
+    let engineIsExplicit: Bool
+
+    public init(
+        identity: HanlinScriptExtensionIdentity,
+        displayName: String,
+        family: String = "systemMedium",
+        actionIdentity: HanlinScriptExtensionIdentity? = nil,
+        validUntil: Date,
+        relevance: Double = 0,
+        engine: HanlinWidgetEngine = .legacy,
+        payload: HanlinWidgetPayload? = nil,
+        root: HanlinScriptUINode,
+        deepLink: URL? = nil
+    ) {
+        self.identity = identity
+        self.displayName = displayName
+        self.family = family
+        self.actionIdentity = actionIdentity
+        self.validUntil = validUntil
+        self.relevance = relevance
+        self.engine = engine
+        self.payload = payload ?? (engine == .legacy ? .legacy(root) : nil)
+        self.root = root
+        self.deepLink = deepLink
+        self.engineIsExplicit = true
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case identity, displayName, family, actionIdentity, validUntil, relevance, engine, payload, root, deepLink
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        identity = try container.decode(HanlinScriptExtensionIdentity.self, forKey: .identity)
+        displayName = try container.decode(String.self, forKey: .displayName)
+        family = try container.decodeIfPresent(String.self, forKey: .family) ?? "systemMedium"
+        actionIdentity = try container.decodeIfPresent(HanlinScriptExtensionIdentity.self, forKey: .actionIdentity)
+        validUntil = try container.decode(Date.self, forKey: .validUntil)
+        relevance = try container.decodeIfPresent(Double.self, forKey: .relevance) ?? 0
+        let rawEngine = try? container.decode(String.self, forKey: .engine)
+        engineIsExplicit = container.contains(.engine)
+        engine = rawEngine.flatMap(HanlinWidgetEngine.init(rawValue:)) ?? .legacy
+        if engineIsExplicit && rawEngine == nil {
+            payload = .malformed("Widget engine must be a string")
+        } else if let rawEngine, HanlinWidgetEngine(rawValue: rawEngine) == nil {
+            payload = .malformed("Unsupported widget engine: \(rawEngine)")
+        } else {
+            do { payload = try container.decodeIfPresent(HanlinWidgetPayload.self, forKey: .payload) }
+            catch { payload = .malformed("Invalid \(engine.rawValue) widget payload: \(error)") }
+        }
+        if let decodedRoot = try container.decodeIfPresent(HanlinScriptUINode.self, forKey: .root) {
+            root = decodedRoot
+        } else {
+            root = HanlinScriptUINode(kind: .text, properties: ["text": .string(displayName)])
+        }
+        deepLink = try container.decodeIfPresent(URL.self, forKey: .deepLink)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(identity, forKey: .identity)
+        try container.encode(displayName, forKey: .displayName)
+        try container.encode(family, forKey: .family)
+        try container.encodeIfPresent(actionIdentity, forKey: .actionIdentity)
+        try container.encode(validUntil, forKey: .validUntil)
+        try container.encode(relevance, forKey: .relevance)
+        try container.encode(engine, forKey: .engine)
+        try container.encodeIfPresent(payload, forKey: .payload)
+        try container.encode(root, forKey: .root)
+        try container.encodeIfPresent(deepLink, forKey: .deepLink)
+    }
+}
+
+public struct HanlinScriptIntentEntityRecord: Codable, Hashable, Sendable {
+    public let identity: HanlinScriptExtensionIdentity
+    public let id: String
+    public let displayName: String
+    public let subtitle: String?
+    public let appID: HanlinAppID?
+    /// Present only for an actual declared native action matched during publication.
+    public let hostActionHandler: String?
+    public let nativePresentation: HanlinNativePresentationDescriptor?
+
+    public init(
+        identity: HanlinScriptExtensionIdentity,
+        id: String,
+        displayName: String,
+        subtitle: String? = nil,
+        appID: HanlinAppID? = nil,
+        hostActionHandler: String? = nil,
+        nativePresentation: HanlinNativePresentationDescriptor? = nil
+    ) {
+        self.identity = identity
+        self.id = id
+        self.displayName = displayName
+        self.subtitle = subtitle
+        self.appID = appID
+        self.hostActionHandler = hostActionHandler
+        self.nativePresentation = nativePresentation
+    }
+}
+
+public struct HanlinScriptIntentInvocation: Codable, Hashable, Sendable {
+    public let identity: HanlinScriptExtensionIdentity
+    public let entityID: String?
+    public let parameters: HanlinValue
+    public let continueInForeground: Bool
+    public let delivery: HanlinInvocationDelivery?
+
+    public init(
+        identity: HanlinScriptExtensionIdentity,
+        entityID: String? = nil,
+        parameters: HanlinValue = .null,
+        continueInForeground: Bool = false,
+        delivery: HanlinInvocationDelivery? = nil
+    ) {
+        self.identity = identity
+        self.entityID = entityID
+        self.parameters = parameters
+        self.continueInForeground = continueInForeground
+        self.delivery = delivery
+    }
+}
+
+public struct HanlinScriptResumeCommand: Codable, Hashable, Identifiable, Sendable {
+    public let id: UUID
+    public let createdAt: Date
+    public let invocation: HanlinScriptIntentInvocation
+
+    public init(
+        id: UUID = UUID(),
+        createdAt: Date = .now,
+        invocation: HanlinScriptIntentInvocation
+    ) {
+        self.id = id
+        self.createdAt = createdAt
+        self.invocation = invocation
+    }
+}
+
+public struct HanlinGenericLiveActivityAttributes: Codable, Hashable, Sendable {
+    public struct ContentState: Codable, Hashable, Sendable {
+        public let revision: UInt64
+        public let title: String
+        public let state: HanlinValue
+        public let root: HanlinScriptUINode
+
+        public init(revision: UInt64, title: String, state: HanlinValue, root: HanlinScriptUINode) {
+            self.revision = revision
+            self.title = title
+            self.state = state
+            self.root = root
+        }
+    }
+
+    public let installedPackageID: String
+    public let activityID: String
+    public let actionIdentity: HanlinScriptExtensionIdentity?
+
+    public init(installedPackageID: String, activityID: String,
+                actionIdentity: HanlinScriptExtensionIdentity? = nil) {
+        self.installedPackageID = installedPackageID
+        self.activityID = activityID
+        self.actionIdentity = actionIdentity
+    }
+}
+
+public struct HanlinScriptLiveActivityDescriptor: Codable, Hashable, Sendable {
+    public let identity: HanlinScriptExtensionIdentity
+    public let activityID: String
+    public let title: String
+    public let state: HanlinValue
+    public let root: HanlinScriptUINode
+    public let staleDate: Date?
+
+    public init(
+        identity: HanlinScriptExtensionIdentity,
+        activityID: String,
+        title: String,
+        state: HanlinValue,
+        root: HanlinScriptUINode,
+        staleDate: Date? = nil
+    ) {
+        self.identity = identity
+        self.activityID = activityID
+        self.title = title
+        self.state = state
+        self.root = root
+        self.staleDate = staleDate
+    }
+}
+
+public struct HanlinTranslationSessionContext: Codable, Hashable, Sendable {
+    public let sourceText: String
+    public let origin: HanlinExecutionContext
+    public let presentation: String
+    public let createdAt: Date
+
+    public init(
+        sourceText: String,
+        origin: HanlinExecutionContext = .translationUI,
+        presentation: String = "compact",
+        createdAt: Date = .now
+    ) {
+        self.sourceText = sourceText
+        self.origin = origin
+        self.presentation = presentation
+        self.createdAt = createdAt
+    }
+}
+
+public struct HanlinScriptTranslationUISnapshot: Codable, Hashable, Sendable, Identifiable {
+    public var id: String { "\(identity.packageID.rawValue)|\(identity.entrypointID)" }
+    public let identity: HanlinScriptExtensionIdentity
+    public let appID: String
+    public let displayName: String
+    public let summary: String?
+    public let iconSymbol: String?
+    public let accentHex: String?
+    public let isBeta: Bool
+    public let entrypointID: String
+    public let rootNode: HanlinScriptUINode?
+    public let nativePresentation: HanlinNativePresentationDescriptor?
+
+    public init(
+        identity: HanlinScriptExtensionIdentity,
+        appID: String,
+        displayName: String,
+        summary: String? = nil,
+        iconSymbol: String? = nil,
+        accentHex: String? = nil,
+        isBeta: Bool = false,
+        entrypointID: String,
+        rootNode: HanlinScriptUINode? = nil,
+        nativePresentation: HanlinNativePresentationDescriptor? = nil
+    ) {
+        self.identity = identity
+        self.appID = appID
+        self.displayName = displayName
+        self.summary = summary
+        self.iconSymbol = iconSymbol
+        self.accentHex = accentHex
+        self.isBeta = isBeta
+        self.entrypointID = entrypointID
+        self.rootNode = rootNode
+        self.nativePresentation = nativePresentation
+    }
+}
+
+/// An enabled installed package's native panel for a system extension.
+/// The immutable program uses the original declared renderer; its identity
+/// invalidates saved selections when the package generation changes.
+public struct HanlinNativePresentationSnapshot: Codable, Hashable, Sendable {
+    public let identity: HanlinScriptExtensionIdentity
+    public let displayName: String
+    public let kind: HanlinNativePresentationKind
+    public let nativePresentation: HanlinNativePresentationDescriptor
+
+    public init(identity: HanlinScriptExtensionIdentity, displayName: String,
+                kind: HanlinNativePresentationKind,
+                nativePresentation: HanlinNativePresentationDescriptor) {
+        self.identity = identity
+        self.displayName = displayName
+        self.kind = kind
+        self.nativePresentation = nativePresentation
+    }
+}
+
+public struct HanlinScriptExtensionSnapshot: Codable, Hashable, Sendable {
+    public let schemaVersion: UInt32
+    public let generatedAt: Date
+    public let widgets: [HanlinScriptWidgetSnapshot]
+    public let intentEntities: [HanlinScriptIntentEntityRecord]
+    public let liveActivities: [HanlinScriptLiveActivityDescriptor]
+    public let translationApps: [HanlinScriptTranslationUISnapshot]
+    public let nativePresentations: [HanlinNativePresentationSnapshot]
+    public let widgetInstances: [HanlinWidgetInstance]
+    public let widgetStates: [HanlinWidgetInstanceState]
+    public let widgetEntityMigrations: [String: String]
+    public let inactiveWidgetInstallations: [String]
+    public let widgetLastSuccessfulRenders: [HanlinWidgetLastSuccessfulRender]
+
+    public init(
+        schemaVersion: UInt32 = 1,
+        generatedAt: Date,
+        widgets: [HanlinScriptWidgetSnapshot] = [],
+        intentEntities: [HanlinScriptIntentEntityRecord] = [],
+        liveActivities: [HanlinScriptLiveActivityDescriptor] = [],
+        translationApps: [HanlinScriptTranslationUISnapshot] = [],
+        nativePresentations: [HanlinNativePresentationSnapshot] = [],
+        widgetInstances: [HanlinWidgetInstance] = [],
+        widgetStates: [HanlinWidgetInstanceState] = [],
+        widgetEntityMigrations: [String: String] = [:],
+        inactiveWidgetInstallations: [String] = [],
+        widgetLastSuccessfulRenders: [HanlinWidgetLastSuccessfulRender] = []
+    ) {
+        self.schemaVersion = schemaVersion
+        self.generatedAt = generatedAt
+        self.widgets = widgets
+        self.intentEntities = intentEntities
+        self.liveActivities = liveActivities
+        self.translationApps = translationApps
+        self.nativePresentations = nativePresentations
+        self.widgetInstances = widgetInstances
+        self.widgetStates = widgetStates
+        self.widgetEntityMigrations = widgetEntityMigrations
+        self.inactiveWidgetInstallations = inactiveWidgetInstallations
+        self.widgetLastSuccessfulRenders = widgetLastSuccessfulRenders
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case schemaVersion, generatedAt, widgets, intentEntities, liveActivities, translationApps, nativePresentations
+        case widgetInstances, widgetStates
+        case widgetEntityMigrations
+        case inactiveWidgetInstallations, widgetLastSuccessfulRenders
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        schemaVersion = try container.decodeIfPresent(UInt32.self, forKey: .schemaVersion) ?? 1
+        generatedAt = try container.decode(Date.self, forKey: .generatedAt)
+        let decodedWidgets = try container.decodeIfPresent([HanlinScriptWidgetSnapshot].self, forKey: .widgets) ?? []
+        let version = schemaVersion
+        widgets = decodedWidgets.map { widget in
+            guard version == 2, !widget.engineIsExplicit else { return widget }
+            return .init(identity: widget.identity, displayName: widget.displayName, family: widget.family,
+                actionIdentity: widget.actionIdentity, validUntil: widget.validUntil, relevance: widget.relevance,
+                engine: .legacy, payload: .malformed("Schema v2 widget is missing its engine declaration"), root: widget.root, deepLink: widget.deepLink)
+        }
+        intentEntities = try container.decodeIfPresent([HanlinScriptIntentEntityRecord].self, forKey: .intentEntities) ?? []
+        liveActivities = try container.decodeIfPresent([HanlinScriptLiveActivityDescriptor].self, forKey: .liveActivities) ?? []
+        translationApps = try container.decodeIfPresent([HanlinScriptTranslationUISnapshot].self, forKey: .translationApps) ?? []
+        nativePresentations = try container.decodeIfPresent([HanlinNativePresentationSnapshot].self, forKey: .nativePresentations) ?? []
+        widgetInstances = try container.decodeIfPresent([HanlinWidgetInstance].self, forKey: .widgetInstances) ?? []
+        widgetStates = try container.decodeIfPresent([HanlinWidgetInstanceState].self, forKey: .widgetStates) ?? []
+        widgetEntityMigrations = try container.decodeIfPresent([String: String].self, forKey: .widgetEntityMigrations) ?? [:]
+        inactiveWidgetInstallations = try container.decodeIfPresent([String].self, forKey: .inactiveWidgetInstallations) ?? []
+        widgetLastSuccessfulRenders = try container.decodeIfPresent([HanlinWidgetLastSuccessfulRender].self, forKey: .widgetLastSuccessfulRenders) ?? []
+    }
+}
+
+extension HanlinScriptUINode {
+    public func substituting(context: [String: String]) -> HanlinScriptUINode {
+        func substitute(_ value: HanlinValue) -> HanlinValue {
+            switch value {
+            case let .string(template):
+                // Substitute the original template once. Selected text containing
+                // another placeholder remains verbatim user text.
+                guard let expression = try? NSRegularExpression(pattern: #"\{\{([A-Za-z][A-Za-z0-9]*)\}\}"#) else { return value }
+                let range = NSRange(template.startIndex..., in: template)
+                var output = template
+                for match in expression.matches(in: template, range: range).reversed() {
+                    guard let keyRange = Range(match.range(at: 1), in: template),
+                          let replacement = context[String(template[keyRange])],
+                          let outputRange = Range(match.range, in: output) else { continue }
+                    output.replaceSubrange(outputRange, with: replacement)
+                }
+                return .string(output)
+            case let .array(values): return .array(values.map(substitute))
+            case let .object(values): return .object(values.mapValues(substitute))
+            default: return value
+            }
+        }
+        let updatedProps = properties.mapValues(substitute)
+        let updatedChildren = children.map { $0.substituting(context: context) }
+        return HanlinScriptUINode(
+            kind: kind,
+            key: key,
+            properties: updatedProps,
+            children: updatedChildren
+        )
+    }
+
+    public func substituting(sessionContext: HanlinTranslationSessionContext) -> HanlinScriptUINode {
+        substituting(context: [
+            "selectedText": sessionContext.sourceText,
+            "selectedTextLength": String(sessionContext.sourceText.count),
+            "origin": sessionContext.origin.rawValue,
+            "presentation": sessionContext.presentation
+        ])
+    }
+}
+
+
+extension HanlinValue {
+    public func toAny() -> Any {
+        switch self {
+        case .null:
+            return NSNull()
+        case let .bool(b):
+            return b
+        case let .integer(i):
+            return i
+        case let .number(d):
+            return d
+        case let .string(s):
+            return s
+        case let .data(d):
+            return d
+        case let .array(arr):
+            return arr.map { $0.toAny() }
+        case let .object(obj):
+            var dict: [String: Any] = [:]
+            for (k, v) in obj {
+                dict[k] = v.toAny()
+            }
+            return dict
+        }
+    }
+}
+
+public struct HanlinWidgetStorageDiagnostic: Codable, Hashable, Sendable, Identifiable {
+    public enum Phase: String, Codable, Hashable, Sendable {
+        case hostRestore = "host.restore"
+        case hostInstallAtomicCommit = "host.install.atomicCommit"
+        case hostPublishWidgetProgram = "host.publish.widgetProgram"
+        case hostPublishSnapshot = "host.publish.snapshot"
+        case packageDetailsLoadInstances = "packageDetails.loadInstances"
+        case widgetExtensionEntityQuery = "widgetExtension.entityQuery"
+        case widgetExtensionPrepare = "widgetExtension.prepare"
+        case actionPerform = "action.perform"
+        case storeLoad = "store.load"
+        case storeSave = "store.save"
+        case storeArtifact = "store.artifact"
+    }
+
+    public enum DecisionPoint: String, Codable, Hashable, Sendable {
+        case appGroupResolution
+        case rootPreparation
+        case lexicalBoundary
+        case symlinkDetected
+        case nonDirectoryAncestor
+        case openNoFollowFailed
+        case filesystemError
+        case digestMismatch
+        case invalidIdentifier
+        case snapshotDecode
+        case widgetCompilation
+        case instancePublication
+        case revisionIntegrityMismatch
+        case envelopeIntegrityMismatch
+    }
+
+    public let correlationID: String
+    public let phase: Phase
+    public let decisionPoint: DecisionPoint
+    public let relativePath: String
+    public let failingComponentIndex: Int?
+    public let failingComponentName: String?
+    public let errorDomain: String
+    public let errorCode: Int
+    public let posixErrno: Int32?
+    public let summary: String
+    public let recordedAt: Date
+
+    public var id: String { correlationID }
+
+    public init(
+        correlationID: String? = nil,
+        phase: Phase,
+        decisionPoint: DecisionPoint,
+        relativePath: String,
+        failingComponentIndex: Int? = nil,
+        failingComponentName: String? = nil,
+        errorDomain: String,
+        errorCode: Int,
+        posixErrno: Int32? = nil,
+        summary: String,
+        recordedAt: Date = .now
+    ) {
+        self.correlationID = correlationID ?? Self.makeCorrelationID(
+            phase: phase,
+            decisionPoint: decisionPoint,
+            relativePath: relativePath,
+            errorDomain: errorDomain,
+            errorCode: errorCode
+        )
+        self.phase = phase
+        self.decisionPoint = decisionPoint
+        self.relativePath = Self.sanitizeRelativePath(relativePath)
+        self.failingComponentIndex = failingComponentIndex
+        self.failingComponentName = failingComponentName.map(Self.sanitizeComponentName)
+        self.errorDomain = errorDomain
+        self.errorCode = errorCode
+        self.posixErrno = posixErrno
+        self.summary = summary
+        self.recordedAt = recordedAt
+    }
+
+    public var userFacingHeadline: String {
+        "Widget configuration unavailable — storage validation failed"
+    }
+
+    public var redactedReportString: String {
+        var fields: [String] = [
+            "id=\(correlationID)",
+            "phase=\(phase.rawValue)",
+            "decision=\(decisionPoint.rawValue)",
+            "relPath=\(relativePath)",
+            "domain=\(errorDomain)",
+            "code=\(errorCode)"
+        ]
+        if let failingComponentIndex {
+            fields.append("componentIndex=\(failingComponentIndex)")
+        }
+        if let failingComponentName {
+            fields.append("componentName=\(failingComponentName)")
+        }
+        if let posixErrno {
+            fields.append("errno=\(posixErrno)")
+        }
+        fields.append("summary=\(summary)")
+        return fields.joined(separator: " ")
+    }
+
+    private static func makeCorrelationID(
+        phase: Phase,
+        decisionPoint: DecisionPoint,
+        relativePath: String,
+        errorDomain: String,
+        errorCode: Int
+    ) -> String {
+        let seed = "\(phase.rawValue)|\(decisionPoint.rawValue)|\(sanitizeRelativePath(relativePath))|\(errorDomain)|\(errorCode)"
+        var hash: UInt64 = 14_695_981_039_346_656_037
+        for byte in seed.utf8 {
+            hash ^= UInt64(byte)
+            hash &*= 1_099_511_628_211
+        }
+        return String(format: "HWG-%012llX", hash & 0xFFFF_FFFF_FFFF)
+    }
+
+    public static func sanitizeRelativePath(_ raw: String) -> String {
+        let trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return "." }
+        if let markerRange = trimmed.range(of: "ScriptingExtensions/") {
+            return String(trimmed[markerRange.upperBound...])
+        }
+        if trimmed.hasSuffix("ScriptingExtensions") {
+            return "."
+        }
+        if trimmed.hasPrefix("/") {
+            return URL(filePath: trimmed).lastPathComponent
+        }
+        return String(trimmed.prefix(160))
+    }
+
+    public static func sanitizeComponentName(_ raw: String) -> String {
+        let name = URL(filePath: raw).lastPathComponent
+        return String(name.prefix(64))
+    }
+}
+
+public struct HanlinStorageConsistencyReport: Codable, Hashable, Sendable {
+    public let correlationID: String
+    public let commitPresent: Bool
+    public let commitVersion: UInt32?
+    public let commitSnapshotHashPrefix: String?
+    public let commitShadowHashPrefix: String?
+    public let revisionFilePresent: Bool
+    public let revisionFileSize: Int?
+    public let actualRevisionHashPrefix: String?
+    public let shadowFilePresent: Bool
+    public let shadowFileSize: Int?
+    public let actualShadowHashPrefix: String?
+    public let pendingPresent: Bool
+    public let failingStage: String?
+    public let summary: String
+    public let recordedAt: Date
+
+    public init(
+        correlationID: String,
+        commitPresent: Bool,
+        commitVersion: UInt32? = nil,
+        commitSnapshotHashPrefix: String? = nil,
+        commitShadowHashPrefix: String? = nil,
+        revisionFilePresent: Bool,
+        revisionFileSize: Int? = nil,
+        actualRevisionHashPrefix: String? = nil,
+        shadowFilePresent: Bool,
+        shadowFileSize: Int? = nil,
+        actualShadowHashPrefix: String? = nil,
+        pendingPresent: Bool,
+        failingStage: String? = nil,
+        summary: String,
+        recordedAt: Date = .now
+    ) {
+        self.correlationID = correlationID
+        self.commitPresent = commitPresent
+        self.commitVersion = commitVersion
+        self.commitSnapshotHashPrefix = commitSnapshotHashPrefix
+        self.commitShadowHashPrefix = commitShadowHashPrefix
+        self.revisionFilePresent = revisionFilePresent
+        self.revisionFileSize = revisionFileSize
+        self.actualRevisionHashPrefix = actualRevisionHashPrefix
+        self.shadowFilePresent = shadowFilePresent
+        self.shadowFileSize = shadowFileSize
+        self.actualShadowHashPrefix = actualShadowHashPrefix
+        self.pendingPresent = pendingPresent
+        self.failingStage = failingStage
+        self.summary = summary
+        self.recordedAt = recordedAt
+    }
+
+    public var redactedReportString: String {
+        var fields: [String] = [
+            "id=\(correlationID)",
+            "commitPresent=\(commitPresent)",
+            "revisionPresent=\(revisionFilePresent)",
+            "shadowPresent=\(shadowFilePresent)",
+            "pendingPresent=\(pendingPresent)"
+        ]
+        if let commitSnapshotHashPrefix { fields.append("commitSnapHash=\(commitSnapshotHashPrefix)") }
+        if let actualRevisionHashPrefix { fields.append("actualRevHash=\(actualRevisionHashPrefix)") }
+        if let commitShadowHashPrefix { fields.append("commitShadowHash=\(commitShadowHashPrefix)") }
+        if let actualShadowHashPrefix { fields.append("actualShadowHash=\(actualShadowHashPrefix)") }
+        if let revisionFileSize { fields.append("revSize=\(revisionFileSize)") }
+        if let shadowFileSize { fields.append("shadowSize=\(shadowFileSize)") }
+        if let failingStage { fields.append("stage=\(failingStage)") }
+        fields.append("summary=\(summary)")
+        return fields.joined(separator: " ")
+    }
+}

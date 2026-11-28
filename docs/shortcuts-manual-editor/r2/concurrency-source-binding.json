@@ -1,0 +1,112 @@
+{
+  "actualNativeHead": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "candidateBase": "1ea6ab198151169236f473ab906993ff18d0c74c",
+  "gitAuthorities": [
+    {
+      "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "actualGitSHA": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+      "actualGitBytes": 271791,
+      "actualGitSHA256": "6b6ae68459977419cfe8539d14bfd96c09100ccb5d488dbd5790608ba5f7a738",
+      "comparisonGitSHA": "1ea6ab198151169236f473ab906993ff18d0c74c",
+      "comparisonBytes": 294721,
+      "comparisonSHA256": "94287f72d62edf8e15a77a01cc6b7869d46b591575f811886e0c5fe3661eeb93",
+      "wholeFileEqual": false
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_concurrency.py",
+      "actualGitSHA": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+      "actualGitBytes": 38746,
+      "actualGitSHA256": "ade0b57d32fc718610017d845cfd27ea8762afffd5fa6827a3653e34397897bd",
+      "comparisonGitSHA": "1ea6ab198151169236f473ab906993ff18d0c74c",
+      "comparisonBytes": 38746,
+      "comparisonSHA256": "ade0b57d32fc718610017d845cfd27ea8762afffd5fa6827a3653e34397897bd",
+      "wholeFileEqual": true
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "actualGitSHA": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+      "actualGitBytes": 67581,
+      "actualGitSHA256": "422c418689c6194268dccb54e8232711da44068925ca0a66fb27f1800610941a",
+      "comparisonGitSHA": "1ea6ab198151169236f473ab906993ff18d0c74c",
+      "comparisonBytes": 68044,
+      "comparisonSHA256": "7d001d486ad668fa4efd68bc244ce08daf943756cc344612542550c83cbc6380",
+      "wholeFileEqual": false
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "actualGitSHA": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+      "actualGitBytes": 108251,
+      "actualGitSHA256": "33b817d5ea7c4e6f010f52c537c431bb9ad9f2e06139a64c22a38b084c0d20af",
+      "comparisonGitSHA": "1ea6ab198151169236f473ab906993ff18d0c74c",
+      "comparisonBytes": 110066,
+      "comparisonSHA256": "7a386466c5df2caa8c1d72eaf9204eed36b6477ce21a15ed5521b5e6db4245aa",
+      "wholeFileEqual": false
+    }
+  ],
+  "originalRelevantFunctions": [
+    {
+      "name": "testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts",
+      "byteExactActualFC5ToCandidateBase1ea": true,
+      "sha256": "3dc218ee953dcdcbfb51df6d606794427981eb3f1c5edd64af252472b9e332b4",
+      "bytes": 161
+    },
+    {
+      "name": "testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+      "byteExactActualFC5ToCandidateBase1ea": true,
+      "sha256": "13a6b8ca51c5ffe18002c2a1b1e2c898e985fbb6d4e1d8c71733528c08762805",
+      "bytes": 161
+    },
+    {
+      "name": "configureConcurrencyShortcut",
+      "byteExactActualFC5ToCandidateBase1ea": true,
+      "sha256": "236cc78726ae4e6936d8d3f08760278d5c3fd73038fa31944273dff92ab64825",
+      "bytes": 3334
+    },
+    {
+      "name": "findShortcutActionSearch",
+      "byteExactActualFC5ToCandidateBase1ea": true,
+      "sha256": "b8eb7dd651692eb7ae5b9cf07e55ad0beedc46667f3256dbaf20cc45e962a67e",
+      "bytes": 1924
+    },
+    {
+      "name": "shortcutActionSearchFields",
+      "byteExactActualFC5ToCandidateBase1ea": true,
+      "sha256": "db85327e06d2890bf3d597ec8fc484f06c6695231f608bf2bd36e79382388ed1",
+      "bytes": 410
+    }
+  ],
+  "trackedOverlay": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-concurrency-terminal-r1/selected-r1/concurrency/artifact-selected-members/prepared-native/upstream-inputs.patch",
+    "sha256": "6deb83d10e54540552c500da85b2d937c5dc20c3fe75ca357d5e1a391065f1d3",
+    "pathCount": 20,
+    "paths": [
+      "Fixtures/ExpoNativeAPIProbe/package.json",
+      "Fixtures/ExpoSwiftUIProbe/package.json",
+      "Fixtures/ExpoWidgetsProbe/package.json",
+      "Generated/SwiftUIBridge/HanlinGeneratedViews.swift",
+      "Generated/SwiftUIBridge/bridge-manifest.ts",
+      "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
+      "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift",
+      "Packages/HanlinExpoUI/package.json",
+      "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+      "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ViewModifierRegistry.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+      "Scripts/Expo/dependency-lock.json",
+      "Scripts/Expo/package-lock.json",
+      "Scripts/Expo/package.json",
+      "Scripts/ExpoNativeAPI/dependency-lock.json",
+      "Scripts/MiniApps/scriptwidget/upstream/provenance.json",
+      "Scripts/MiniApps/upstream-resolution.json",
+      "Scripts/NativeScript/package-lock.json",
+      "Tools/SwiftUIBridge/configuration.json",
+      "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json"
+    ],
+    "doesNotChangeFourAuthorities": true
+  },
+  "sourceShaRecord": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-fc5-concurrency-terminal-r1/selected-r1/concurrency/artifact-selected-members/paired-product/source-sha.txt",
+    "bytes": 41,
+    "sha256": "eded0f2402ccb60b41f273f9bcf3612ab264bee7798ab7b0dbc6fc5db5f24bfe"
+  },
+  "limit": "No independently retained compiled UI file hash is present; this binds actual Git/source-sha, complete tracked overlay and original runtime call-line evidence, not a reconstructed binary."
+}

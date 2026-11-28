@@ -1,0 +1,5 @@
+{
+  "error": "Broken installed symlink: /mnt/development/projects/hanlin-sdk-artifacts-20261123/nativescript-core-9.1.0-layout/baseline-versioned-symlink/installed/Versioned.framework/Resources",
+  "archive_sha256": "8246376d5660c47c57d2ff7f8579b643e21a413b9d9e267343d023b7fa888ddb",
+  "real_binary_sha256": "d9e634e975b9c5e0540a8e573eaebfb125f9dd44e6636d2891e3f803b88e1c3a"
+}

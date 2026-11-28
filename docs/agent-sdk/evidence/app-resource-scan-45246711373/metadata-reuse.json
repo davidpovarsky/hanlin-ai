@@ -1,0 +1,119 @@
+{
+  "previousRun": 45238831508,
+  "previousProofDirectory": "../nativescript-metadata-45238831508",
+  "currentRun": 45246711373,
+  "nativeMetadataFiles": [
+    {
+      "path": "build/acceptance/nativescript-metadata/iphonesimulator-arm64/FrameworkSearchView.inventory.json",
+      "sha256": "8073ff48130b4406885e4173c2e7b6e158cba31b18ad3a37f10a3db6455f647d",
+      "previousSHA256": "8073ff48130b4406885e4173c2e7b6e158cba31b18ad3a37f10a3db6455f647d",
+      "identical": true
+    },
+    {
+      "path": "build/acceptance/nativescript-metadata/iphonesimulator-arm64/HanlinMetadataInput.h",
+      "sha256": "5c1251646d4c8de07f3ff64f833033848fb9c11c5493b082076f9ab56419767a",
+      "previousSHA256": "5c1251646d4c8de07f3ff64f833033848fb9c11c5493b082076f9ab56419767a",
+      "identical": true
+    },
+    {
+      "path": "build/acceptance/nativescript-metadata/iphonesimulator-arm64/HanlinMetadataInput.inventory.json",
+      "sha256": "161a43708d1ec1bdc7ed301df322b29f76767b25bef8144bd83349eb862913b8",
+      "previousSHA256": "161a43708d1ec1bdc7ed301df322b29f76767b25bef8144bd83349eb862913b8",
+      "identical": true
+    },
+    {
+      "path": "build/acceptance/nativescript-metadata/iphonesimulator-arm64/metadata-arm64.bin",
+      "sha256": "0a914fed8d321c372585c8afb13663a06c6476c04d02823e0e88294b8296d1a7",
+      "previousSHA256": "0a914fed8d321c372585c8afb13663a06c6476c04d02823e0e88294b8296d1a7",
+      "identical": true
+    },
+    {
+      "path": "build/acceptance/nativescript-metadata/iphonesimulator-arm64/metadata-generation-stderr-arm64.txt",
+      "sha256": "d471b20c127dbdd0ca63f5fc1dbdb6e8628a1b6b65536ab3f3683cb7bbca89a4",
+      "previousSHA256": "d471b20c127dbdd0ca63f5fc1dbdb6e8628a1b6b65536ab3f3683cb7bbca89a4",
+      "identical": true
+    },
+    {
+      "path": "build/acceptance/nativescript-metadata/iphonesimulator-arm64/provenance.json",
+      "sha256": "b763edf9f1081f2c29c5982981c7a8ed22acd2345e437aca85d11ada4784949c",
+      "previousSHA256": "b763edf9f1081f2c29c5982981c7a8ed22acd2345e437aca85d11ada4784949c",
+      "identical": true
+    },
+    {
+      "path": "build/acceptance/nativescript-metadata/iphonesimulator-arm64/umbrella-arm64.h",
+      "sha256": "5c1251646d4c8de07f3ff64f833033848fb9c11c5493b082076f9ab56419767a",
+      "previousSHA256": "5c1251646d4c8de07f3ff64f833033848fb9c11c5493b082076f9ab56419767a",
+      "identical": true
+    },
+    {
+      "path": "build/acceptance/nativescript-metadata/iphonesimulator-arm64/visibility.json",
+      "sha256": "07d0157bcaeedead59541b0776fc17f0e21f77bae6eff272c8f954ed4ca696de",
+      "previousSHA256": "07d0157bcaeedead59541b0776fc17f0e21f77bae6eff272c8f954ed4ca696de",
+      "identical": true
+    }
+  ],
+  "appIntentsReceiptFiles": [
+    {
+      "path": "AI_HLY.build/Debug-iphonesimulator/HanlinScriptingWidgets.build/Objects-normal/arm64/HanlinScriptingAppIntents.swiftconstvalues",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "identicalTo452388": true
+    },
+    {
+      "path": "AI_HLY.build/Debug-iphonesimulator/HanlinScriptingWidgets.build/Objects-normal/arm64/HanlinScriptingWidgets.SwiftConstValuesFileList",
+      "bytes": 677,
+      "sha256": "ca7ce2c62c4892c776d8c1e4107e2e4f091402b8abe0031db2eba37162793baf",
+      "identicalTo452388": true
+    },
+    {
+      "path": "AI_HLY.build/Debug-iphonesimulator/HanlinScriptingWidgets.build/Objects-normal/arm64/HanlinScriptingWidgets.SwiftFileList",
+      "bytes": 404,
+      "sha256": "2cebfd9fa8f56b8e9e02d70187f8d04156256d30395828a5a330481fec49aff6",
+      "identicalTo452388": true
+    },
+    {
+      "path": "AI_HLY.build/Debug-iphonesimulator/HanlinScriptingWidgets.build/Objects-normal/arm64/HanlinScriptingWidgets.swiftconstvalues",
+      "bytes": 1578,
+      "sha256": "6df886727079702747670b4546bb5f2ba06be18103a45dfe6bbffcf42ff950e9",
+      "identicalTo452388": true
+    },
+    {
+      "path": "HanlinSDK.build/Debug-iphonesimulator/AI_Hanlin-t.build/Objects-normal/arm64/ChavrusaSystemIntegrations.swiftconstvalues",
+      "bytes": 48021,
+      "sha256": "6b11b3b4230fd3a1a0046d2282d105f9f286461378b28a75b46e55a8ba1d1ed2",
+      "identicalTo452388": true
+    },
+    {
+      "path": "HanlinSDK.build/Debug-iphonesimulator/AI_Hanlin-t.build/Objects-normal/arm64/VisionIntent.swiftconstvalues",
+      "bytes": 6853,
+      "sha256": "65e21925abdc1ecac37d5fff5a066de5a309848b206207e57b4ab10b46c859f7",
+      "identicalTo452388": true
+    },
+    {
+      "path": "HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingAppIntents.swiftconstvalues",
+      "bytes": 34872,
+      "sha256": "eda0ac185be7fd354f90142b5a9aa12ca5e28804fbfd028dd2f3480bf1cb8a3b",
+      "identicalTo452388": true
+    },
+    {
+      "path": "HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingWidgets.SwiftConstValuesFileList",
+      "bytes": 679,
+      "sha256": "d8256773ac6bb66ba76328a18bc38f49a6e04dac2ff44fe3a7bf2e447a3da63f",
+      "identicalTo452388": true
+    },
+    {
+      "path": "HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingWidgets.SwiftFileList",
+      "bytes": 379,
+      "sha256": "58288dec228d9aa0e4a813b4b24f592a5f7bb007630f0cc4e6ceed1ed952cf24",
+      "identicalTo452388": true
+    },
+    {
+      "path": "HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingWidgets.swiftconstvalues",
+      "bytes": 25429,
+      "sha256": "88ac098af2184b6c0756bdebed5d56eaf99112f0a1d74b9d4e22a80be69d0916",
+      "identicalTo452388": true
+    }
+  ],
+  "appIntentsUnsupportedBundleDiagnosticOccurrences": 0,
+  "qualification": "Original bytes authenticated against prior accepted metadata evidence; no metadata generator, compiler or test was rerun for this review."
+}

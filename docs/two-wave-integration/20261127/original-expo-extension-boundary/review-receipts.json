@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "sourceManifestSHA256": "ca187a54560f2cb8a22651a5956703593c07f4ce08a99cefa69537f423ac18cf",
+  "sourceValidationSHA256": "f0e6fa635b76cf3673ab4fda2f6f7aaab8fc4a705ca26a96dd03e52b5201681c",
+  "reviews": [
+    {
+      "path": "independent-w2-native-source-review.json",
+      "sha256": "7618b02f9587f5df6e0f1f56a6a24c77ab11197370106e1db7fdb00081efcf58",
+      "bytes": 3412
+    },
+    {
+      "path": "root-extension-packaging-review-a729.json",
+      "sha256": "0c96be60ae4b279cf19ddc464e4afc507d5899815f999c6b58b2756d4c99eb25",
+      "bytes": 17102
+    }
+  ],
+  "nativeStatus": "NOT_RUN_ON_THIS_BOUNDARY"
+}

@@ -1,0 +1,332 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-18T06:35:04.726440+00:00",
+  "source_sha": "a64249e970383b46c2326ac20544329ea07ac6a9",
+  "count": 26,
+  "reference_limit": "Hanlin_Classic_Native_UI_Inline_Sources_Composer_MASTER_PROMPT_2026-10-12.md not found in the worktree; exact full wording/visual acceptance not claimed",
+  "decisions": [
+    {
+      "id": "LEGACY-UI-01",
+      "historical_choice": "KEEP",
+      "canonical_summary_name": "split",
+      "feature_ids": [
+        "NAV-23",
+        "NAV-24"
+      ],
+      "resolution": "Retain native compact/wide behavior; two app targets do not require Chat layout replacement",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Retain original native iPhone stack and wide iPad split; compact/wide draft and narrow sizing are actual native obligations."
+    },
+    {
+      "id": "LEGACY-UI-02",
+      "historical_choice": "KEEP",
+      "canonical_summary_name": "tabs",
+      "feature_ids": [
+        "NAV-01"
+      ],
+      "resolution": "Conflict with proposed Chat/Library IA and separate MiniApps app; J decision pending; no tab rewrite",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Owner authorized current Chat/Library primary shell with History/Profile/Advanced contextual navigation. Former J-owner pause is superseded."
+    },
+    {
+      "id": "LEGACY-UI-03",
+      "historical_choice": "KEEP",
+      "canonical_summary_name": "groups",
+      "feature_ids": [
+        "NAV-04",
+        "RUN-05",
+        "RUN-14"
+      ],
+      "resolution": "Preserve conversation/message grouping semantics; full original choice wording needed for exact visual mapping",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Retain pinned/recent conversations, message grouping and typed transcript identity. Search/selection must preserve the exact conversation."
+    },
+    {
+      "id": "LEGACY-UI-04",
+      "historical_choice": "KEEP",
+      "canonical_summary_name": "title",
+      "feature_ids": [
+        "NAV-17",
+        "RESULT-02"
+      ],
+      "resolution": "Retain title/model identity and rename behavior; preserve approved host",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Retain original title, model identity and editing; no rename of stored IDs or account scope."
+    },
+    {
+      "id": "LEGACY-UI-05",
+      "historical_choice": "KEEP",
+      "canonical_summary_name": "apps",
+      "feature_ids": [
+        "MINI-01",
+        "MINI-03",
+        "MINI-16",
+        "MINI-17"
+      ],
+      "resolution": "Catalog owner becomes MiniApps; AI tools and inline results remain available; J decides launch affordance",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Independent MiniApps owns catalog/import/run; AI exposes contextual original launch and inline results with existing Host consent."
+    },
+    {
+      "id": "LEGACY-UI-06",
+      "historical_choice": "KEEP",
+      "canonical_summary_name": "collapse",
+      "feature_ids": [
+        "RESULT-04",
+        "RESULT-06"
+      ],
+      "resolution": "Retain reasoning/tool details and their persisted visibility semantics",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Canonical native disclosure retains persisted thinking/tool detail state; no fabricated private reasoning."
+    },
+    {
+      "id": "LEGACY-UI-07",
+      "historical_choice": "KEEP",
+      "canonical_summary_name": "activityrow",
+      "feature_ids": [
+        "RESULT-05",
+        "RESULT-27",
+        "RESULT-28"
+      ],
+      "resolution": "Retain existing activity semantics; no separate speculative activity engine",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "One canonical original activity/header source; removed duplicate legacy three-row ticker without duplicating runtime state."
+    },
+    {
+      "id": "LEGACY-UI-08",
+      "historical_choice": "KEEP",
+      "canonical_summary_name": "inspector",
+      "feature_ids": [
+        "RESULT-29"
+      ],
+      "resolution": "Retain detail/inspector and exact tool-result identity",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Retain original inspector and exact tool invocation/result ownership; actual inspector UI remains an acceptance obligation."
+    },
+    {
+      "id": "LEGACY-UI-09",
+      "historical_choice": "KEEP",
+      "canonical_summary_name": "evidence",
+      "feature_ids": [
+        "RESULT-11",
+        "RESULT-30",
+        "RESULT-31"
+      ],
+      "resolution": "Retain original Evidence system and inline source integration; no new duplicate source store",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Keep original Evidence/inline sources, deduplication and source-link actions; no parallel source registry."
+    },
+    {
+      "id": "LEGACY-UI-10",
+      "historical_choice": "KEEP",
+      "canonical_summary_name": "shimmer",
+      "feature_ids": [
+        "RESULT-28",
+        "RESULT-38"
+      ],
+      "resolution": "Retain status and Reduce Motion behavior, subject to current UI owner",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Use the original blue tool shimmer, terminal cancellation and Reduce Motion path; actual Motion B/C and native visual proof required."
+    },
+    {
+      "id": "LEGACY-UI-11",
+      "historical_choice": "KEEP",
+      "canonical_summary_name": "embedded",
+      "feature_ids": [
+        "RESULT-32",
+        "RESULT-33",
+        "RESULT-36",
+        "MINI-16"
+      ],
+      "resolution": "AI retains embedded results and A2UI; never transfer all UI output to companion",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Preserve original inline A2UI/OpenUI and native rich results in AI. Full MiniApps remain independent."
+    },
+    {
+      "id": "LEGACY-UI-12",
+      "historical_choice": "KEEP",
+      "canonical_summary_name": "expansion",
+      "feature_ids": [
+        "RESULT-29",
+        "RESULT-34",
+        "RESULT-37"
+      ],
+      "resolution": "Inline expansion stays AI; full app launches use authenticated foreground continuation",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Inline expansion preserves original message state; cross-app foreground follows authenticated continuation and receiving-window ACK."
+    },
+    {
+      "id": "LEGACY-UI-13",
+      "historical_choice": "KEEP",
+      "canonical_summary_name": "modelmenu",
+      "feature_ids": [
+        "INPUT-09",
+        "INPUT-10",
+        "INPUT-11"
+      ],
+      "resolution": "Preserve current model picker and mention paths; do not force a permanent model bar against Morph design",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Keep original searchable model chooser and mention editor with real provider availability; removed obsolete inactive selector-style preference."
+    },
+    {
+      "id": "LEGACY-UI-14",
+      "historical_choice": "KEEP",
+      "canonical_summary_name": "attachments",
+      "feature_ids": [
+        "ATT-01",
+        "INPUT-05",
+        "INPUT-06",
+        "INPUT-15"
+      ],
+      "resolution": "Preserve live attachments/drafts/paste and attachments-only send through Composer owner",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Preserve original attachment/draft/paste paths. Shared Inbox imports through original Composer with verified private copies and explicit Send."
+    },
+    {
+      "id": "LEGACY-UI-15",
+      "historical_choice": "RESTORE_TRIAL",
+      "canonical_summary_name": "rows",
+      "feature_ids": [
+        "NAV-04",
+        "RESULT-01"
+      ],
+      "resolution": "Current literal restoration is authoritative; no split-owned row redesign",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Keep native original conversation/transcript row semantics; approved navigation relocation does not permit data/index changes."
+    },
+    {
+      "id": "LEGACY-UI-16",
+      "historical_choice": "RESTORE_TRIAL",
+      "canonical_summary_name": "bubblecolor",
+      "feature_ids": [
+        "RESULT-01"
+      ],
+      "resolution": "Keep current approved chat visual identity; no change in split tranche",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Keep approved original chat colors; source presence is not a completed visual comparison."
+    },
+    {
+      "id": "LEGACY-UI-17",
+      "historical_choice": "RESTORE_TRIAL",
+      "canonical_summary_name": "corners",
+      "feature_ids": [
+        "RESULT-01"
+      ],
+      "resolution": "Keep current chat geometry; full original specification needed for detailed visual parity",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Keep approved original corner geometry; no invented measurements from the missing complete October reference."
+    },
+    {
+      "id": "LEGACY-UI-18",
+      "historical_choice": "RESTORE_TRIAL",
+      "canonical_summary_name": "bubblewidth",
+      "feature_ids": [
+        "RESULT-01",
+        "RESULT-38"
+      ],
+      "resolution": "Preserve current width/accessibility/platform behavior; no split UI edit",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Keep original native bubble width, Dynamic Type and platform layout; compact/wide native proof is separate from physical review."
+    },
+    {
+      "id": "LEGACY-UI-19",
+      "historical_choice": "RESTORE_TRIAL",
+      "canonical_summary_name": "actions",
+      "feature_ids": [
+        "RESULT-07",
+        "RESULT-10",
+        "RESULT-35"
+      ],
+      "resolution": "Preserve actions and precise origin identity; only cross-app destination changes later",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Retain exact-origin original message actions. Translate/polish/summarize are contextual selected-message tools."
+    },
+    {
+      "id": "LEGACY-UI-20",
+      "historical_choice": "RESTORE_TRIAL",
+      "canonical_summary_name": "transcript presentation",
+      "feature_ids": [
+        "RUN-14",
+        "RESULT-27"
+      ],
+      "resolution": "Retain typed transcript/replay order and current presentation; no schema migration",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Retain ordered original Agent transcript and receipts; no new storage schema merely for display."
+    },
+    {
+      "id": "LEGACY-UI-21",
+      "historical_choice": "RESTORE_TRIAL",
+      "canonical_summary_name": "scroll",
+      "feature_ids": [
+        "NAV-12",
+        "RESULT-38"
+      ],
+      "resolution": "Preserve search-to-message, follow/stop and platform sizing; device acceptance remains open",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Keep original search-to-message, streaming follow/stop and scroll state; Unicode range repair preserves original match IDs."
+    },
+    {
+      "id": "LEGACY-UI-22",
+      "historical_choice": "RESTORE_TRIAL",
+      "canonical_summary_name": "resultframe",
+      "feature_ids": [
+        "RESULT-33",
+        "RESULT-34"
+      ],
+      "resolution": "Retain bounded inline result frames; full companion is distinct foreground presentation",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Keep bounded original inline result frames, with full companion presentation governed by existing foreground contract."
+    },
+    {
+      "id": "LEGACY-UI-23",
+      "historical_choice": "RESTORE_TRIAL",
+      "canonical_summary_name": "glass design language",
+      "feature_ids": [
+        "INPUT-01",
+        "INPUT-03"
+      ],
+      "resolution": "Authenticated Morph reference W1-002 belongs to Maya; split does not replace or infer active-tools styling",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Use authenticated approved Morph source and canonical shared SwiftUI Composer. Historical Maya ownership does not require a separate agent."
+    },
+    {
+      "id": "LEGACY-UI-24",
+      "historical_choice": "RESTORE_TRIAL",
+      "canonical_summary_name": "inputwidth",
+      "feature_ids": [
+        "INPUT-01",
+        "INPUT-03"
+      ],
+      "resolution": "Maya owns reference measurement/overflow and approved host seam; no hand-coded competing composer",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Preserve original native text sizing and source width constraints; six TextKit tests passed at their recorded SHA, broader native geometry still pending."
+    },
+    {
+      "id": "LEGACY-UI-25",
+      "historical_choice": "RESTORE_TRIAL",
+      "canonical_summary_name": "floating",
+      "feature_ids": [
+        "INPUT-01",
+        "INPUT-03",
+        "INPUT-15"
+      ],
+      "resolution": "Keep authentic outer bubble/page transition/lifecycle under Composer owner",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Keep the original floating outer bubble and its shared lifetime; one keyboard safe area and no competing editor."
+    },
+    {
+      "id": "LEGACY-UI-26",
+      "historical_choice": "OPEN",
+      "canonical_summary_name": "hiding",
+      "feature_ids": [
+        "RESULT-04",
+        "RESULT-06",
+        "RESULT-27",
+        "RESULT-32"
+      ],
+      "resolution": "Keep all content accessible with no duplicate presentation; detailed hiding rule remains J/owner acceptance",
+      "status": "SOURCE_MAPPED_VISUAL_ACCEPTANCE_PENDING",
+      "current_resolution": "Keep all original content inspectable, native disclosure and history replay; remove duplicate presentations without dropping receipt data."
+    }
+  ]
+}

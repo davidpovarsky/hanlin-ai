@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w2_source_resume",
+  "assessment": "APPROVED_ORIGINAL_EXPO_NATIVE_SOURCE_BOUNDARY_FOR_ORIGINAL_BUILD_RETRY",
+  "sourceManifestSHA256": "ca187a54560f2cb8a22651a5956703593c07f4ce08a99cefa69537f423ac18cf",
+  "sourcePatchSHA256": "483deff6b4ee7b76df020a152f43089457ff7a48a21da773f35f23fcdd93f9db",
+  "stagedSourceTree": "921a7da80c10704483ec3afa9fbbf7a1ca5b7290",
+  "sourceBase": "a729bc6380fe08807d67d83f916b9bfda9cc1051",
+  "scope": "Independent native DictionaryContext, full pinned registry and original renderer bridge review. Root owns canonical package/project/product graph and SDK guard review.",
+  "actualChecks": {
+    "all55NativeSourceHashesMatchFrozenManifest": true,
+    "originalModifierRegistrations": 97,
+    "restoredModifierRegistrations": 164,
+    "pinnedModifierRegistrations": 164,
+    "restoredKeysAndRegistryBodyExactPinnedIgnoringImportsAndBlankLines": true,
+    "preparedModifierCount": 101,
+    "preparedNamesExactOriginal97PlusFourExistingWidgetImageSpecials": true,
+    "newPinnedModifierFiles": 32,
+    "importOnlyNewModifierBodies": 30,
+    "explicitJSIConversionFiles": [
+      "ScrollObservationModifiers.swift",
+      "HingeObservationModifiers.swift"
+    ],
+    "childViewBodyUnchangedApartFromImports": true,
+    "dynamicViewBodyUnchangedApartFromImports": true
+  },
+  "reviewedReasoning": [
+    "AppContext defaults to existing preparedResources policy; restored registry does not expand its admitted modifier set or verified-file image policy",
+    "Original Widgets explicitly selects originalWidgets properties; native raw file-image handling remains available and actual original renderer/timeline/action paths remain in ExpoWidgets",
+    "Non-null worklet JSON is rejected rather than assigned a pretend JSI callback; original native event branches remain present",
+    "Original Widgets JSON cannot create ObservableState/JSI SharedObject; prepared frozen scalar adapter remains available, with setter only as required to compile exact native modifier source",
+    "ViewRenderer preserves existing view selection, source/entry/environment action arguments, native child identity and original supported Button branches; removed pre-iOS17 branch is outside the original iOS27 package minimum",
+    "LiveActivityAttributes and ContentState remain one nominal ExpoWidgets type; only required package access/init enable the separate host module",
+    "No duplicate Integration registry, substituted timeline renderer, synthetic action result, pin change, original assertion weakening or native result inferred"
+  ],
+  "retainedEvidence": {
+    "canonicalInitialReceipt": "44f0349488fd77d2566bfa03d1ea92f6dfd4c127268ffcbada2be80a97c21537",
+    "initialStatus": "FAIL retained (initial project updater), not erased by later success",
+    "canonicalCorrectedReceipt": "ba9858c7850a0e073ff5b971560adeafdc6528248b5a2e0f659827b1105dbb0f",
+    "focusedControlsReceipt": "a888e23aee29e749d56422a2c6db9b7e6a9c478cde88a591e07073db0451cd3b",
+    "reviewerTestsRun": 0
+  },
+  "limitations": [
+    "Actual Swift/iOS app and extension compile/link are NOT_RUN on this boundary",
+    "Actual device Mach-O dependency closure and original Widget/Activity UI outcomes still require the owned native gates",
+    "Mechanical source parity and portable controls are not runtime proof of all 164 modifiers"
+  ],
+  "recordedAtUTC": "2026-11-27T08:45:02.014Z"
+}

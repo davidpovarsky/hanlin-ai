@@ -1,0 +1,4 @@
+$(TARGET_TEMP_DIR)/HanlinNativeScriptSwiftMetadata-$(ARCHS)
+$(CONFIGURATION_BUILD_DIR)/metadata-generation-stderr-$(ARCHS).txt
+$(CONFIGURATION_BUILD_DIR)/umbrella-$(ARCHS).h
+$(SRCROOT)/build/acceptance/nativescript-metadata/$(PLATFORM_NAME)-$(ARCHS)

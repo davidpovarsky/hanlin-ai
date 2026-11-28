@@ -1,0 +1,20 @@
+{
+  "id": 14849715568,
+  "node_id": "MDg6QXJ0aWZhY3QxNDg0OTcxNTU2OA==",
+  "name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+  "size_in_bytes": 3893728,
+  "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14849715568",
+  "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14849715568/zip",
+  "expired": false,
+  "digest": "sha256:822d58b4853deb384896071ade17f4982599b61bbb7dfb72faf5cbc3a258c695",
+  "created_at": "2026-11-23T18:09:47Z",
+  "updated_at": "2026-11-23T18:09:47Z",
+  "expires_at": "2026-12-07T18:09:44Z",
+  "workflow_run": {
+    "id": 45230545076,
+    "repository_id": 1295277723,
+    "head_repository_id": 1295277723,
+    "head_branch": "codex/hanlin-sdk-unification-20261123",
+    "head_sha": "7523f45cf8ea180a8e30f511ff0fbd3bb5ccae6d"
+  }
+}

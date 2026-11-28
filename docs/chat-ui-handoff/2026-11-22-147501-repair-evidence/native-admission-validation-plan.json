@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "base_commit": "78979c92971ef3c2e36d7847bdea1ec2f5a5742e",
+  "source_files": {
+    "Scripts/CI/current_unit_xctestrun.py": "2d7839768ed684daee282382ab846e118adab049e22a6a7252053062e7f08efa",
+    "Scripts/CI/Tests/test_current_unit_xctestrun.py": "1200e511ec31145e4968736cb16748471ec70e3440241f27a1e441de4e1f49d7"
+  },
+  "exact_test_selector": "AI_HLYTests/ProductionSystemSkillsTests/weatherSkillResolvesCoordinatesBeforeQuerying(),AI_HLYTests/ProductionSystemSkillsTests/weatherSkillRespectsDisabledMaps()",
+  "expected_unit_methods": 2,
+  "expected_ui_methods": 0,
+  "local_validation": {
+    "command": "python3 -m unittest Scripts/CI/Tests/test_current_unit_xctestrun.py -v",
+    "tests_passed": 24,
+    "receipt": "native-admission-local-verification.json",
+    "scope": "Python admission contract; not native test execution",
+    "receipt_sha256": "92aae9b91c6b63db5dbd1c145c20292117cb72f2f3bfa092d3c602ddd21d442d"
+  },
+  "source_impact": "Only CI identity observation and its tests change. App, native tests, fixtures, runtime and workflow source remain identical to78979c9. Source/run/selector/product/manifest/owned-simulator/result gates remain mandatory.",
+  "prior_missing_result": {
+    "run": "45073227781",
+    "source_sha": "951cd4f5d212a3997ac72a7b88c83cf64b5d79b6",
+    "unit_tests_executed": 0,
+    "ui_tests_executed": 0,
+    "reason": "Both fresh xcodebuild version queries timed out before any test invocation."
+  },
+  "independent_native_run": {
+    "run": "45076547453",
+    "source_sha": "78979c92971ef3c2e36d7847bdea1ec2f5a5742e",
+    "scope": "27 affected/new unit methods and4 native UI methods",
+    "status": "PENDING",
+    "rule": "Retain only actual passing results with matching app/test/runtime/toolchain inputs; failures or missing methods require execution with corrected admission."
+  },
+  "primary_sources": [
+    "https://developer.apple.com/documentation/xcode/configuring-command-line-tools-settings.md",
+    "https://github.com/dotnet/macios/blob/main/tools/common/Driver.cs"
+  ],
+  "native_status": "NOT_RUN"
+}

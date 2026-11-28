@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="TestResults" errors="0" tests="4" failures="0" skipped="0" time="1.525928271">
+    <testcase classname="ActionPayloadCapacityTests.HanlinMiniAppRequestLifetimeTests" name="explicitlyRequestedDeadlinesAndSizeBudgetsAreStillEnforced()" time="1.114525407" />
+    <testcase classname="ActionPayloadCapacityTests.NativeFoundationCodecTests" name="appIntentJSONConversionPreservesLargeDeepValuesAndRejectsMalformedJSON()" time="0.173782784" />
+    <testcase classname="ActionPayloadCapacityTests.NativeFoundationCodecTests" name="nativeScriptJSONCodecsPreserveLargeDeepValuesAndRejectMalformedJSON()" time="1.088681374" />
+    <testcase classname="ActionPayloadCapacityTests.HanlinMiniAppActionChannelTests" name="requestReplyPreservesIdentityAndPayload()" time="1.351125921" />
+  </testsuite>
+</testsuites>

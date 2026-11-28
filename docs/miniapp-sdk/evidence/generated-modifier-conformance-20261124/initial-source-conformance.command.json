@@ -1,0 +1,23 @@
+{
+  "cwd": "/mnt/development/projects/worktrees/hanlin-generated-modifier-probe-20261124",
+  "argv": [
+    "/usr/local/bin/node",
+    "/mnt/development/projects/worktrees/hanlin-generated-modifier-probe-20261124/docs/miniapp-sdk/evidence/generated-modifier-conformance-20261124/capture-source-conformance.cjs",
+    "/mnt/development/projects/worktrees/hanlin-generated-modifier-probe-20261124",
+    "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK/expo/node_modules/typescript/lib/typescript.js"
+  ],
+  "exitCode": 0,
+  "seconds": 0.3345159264281392,
+  "stdout": {
+    "file": "source-conformance.json",
+    "bytes": 95561,
+    "sha256": "dfac1eed552c53ac31578d5d82631e3df123bfbb4513556baed94a0e7a95aabc",
+    "storedAs": "initial-source-conformance.json"
+  },
+  "stderr": {
+    "file": "source-conformance.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "storedAs": "initial-source-conformance.stderr.txt"
+  }
+}

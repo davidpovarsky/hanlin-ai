@@ -1,0 +1,180 @@
+import HanlinPresentationKit
+import HanlinLocalization
+import HanlinMiniAppCore
+import HanlinPlatformContracts
+import HanlinScriptStore
+import SwiftUI
+
+struct NativeAppsAddSheet: View {
+    let items: [HanlinMiniAppCatalogItem]
+    let host: HanlinMiniAppHost
+    let scriptingPlatform: HanlinScriptingPlatform
+    var onLaunchPackage: ((HanlinInstalledPackageID) -> Void)? = nil
+    @Environment(\.dismiss) private var dismiss
+
+    @State private var selectedPackageID: HanlinInstalledPackageID?
+
+    var body: some View {
+        NavigationStack {
+            List {
+                Section {
+                    Text("Swift apps are compiled into Hanlin. Dynamic packages (NativeScript, Expo) are importable.", bundle: HanlinLocalization.bundle)
+                        .font(HanlinTypography.subheadline)
+                        .foregroundStyle(.secondary)
+
+                    NavigationLink {
+                        ScriptingPackageImportView(platform: scriptingPlatform)
+                    } label: {
+                        Label(hanlin: "Import Package", systemImage: "doc.badge.plus")
+                    }
+                    .accessibilityIdentifier("hanlin-import-script-package")
+                }
+
+                let hidden = items.filter { host.isHidden($0.id) }
+                if !hidden.isEmpty {
+                    Section(hanlin: "Hidden Apps") {
+                        ForEach(hidden) { item in
+                            Button {
+                                host.setHidden(false, appID: item.id)
+                            } label: {
+                                Label(
+                                    item.descriptor.name.preferredValue(forLocale: Locale.current.identifier),
+                                    systemImage: "eye"
+                                )
+                            }
+                        }
+                    }
+                }
+
+                let compiledSwiftAppIDs = Set(items.filter { $0.engine == .swift }.map(\.id))
+                let legacyPackages = scriptingPlatform.installedPackages.filter { !compiledSwiftAppIDs.contains($0.appID) }
+                if !legacyPackages.isEmpty {
+                    Section(hanlin: "Scripting Packages") {
+                        ForEach(legacyPackages, id: \.self) { package in
+                            let livePackage = scriptingPlatform.installedPackages.first(where: { $0.record.installedPackageID == package.record.installedPackageID }) ?? package
+                            let name = livePackage.manifest?.name ?? livePackage.record.packageID.rawValue
+                            let hasLaunchableApp = livePackage.entrypoints.contains { $0.kind == .app }
+                            let hasWidget = livePackage.entrypoints.contains { $0.kind == .widget }
+                            Button {
+                                guard let current = scriptingPlatform.installedPackages.first(where: { $0.record.installedPackageID == livePackage.record.installedPackageID }) else { return }
+                                let currentHasLaunchableApp = current.entrypoints.contains { $0.kind == .app }
+                                guard currentHasLaunchableApp else {
+                                    selectedPackageID = current.record.installedPackageID
+                                    return
+                                }
+                                guard current.enabled else { return }
+                                let required = Set(current.entrypoints.first(where: { $0.kind == .app })?.requiredCapabilities.filter(\.required).map(\.capabilityID) ?? [])
+                                guard required.isSubset(of: Set(current.grantedCapabilities)) else {
+                                    return
+                                }
+                                if let onLaunchPackage {
+                                    onLaunchPackage(current.record.installedPackageID)
+                                    dismiss()
+                                } else {
+                                    dismiss()
+                                    Task {
+                                        try? await Task.sleep(for: .milliseconds(500))
+                                        await scriptingPlatform.launch(current.record.installedPackageID)
+                                    }
+                                }
+                            } label: {
+                                HStack {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(name)
+                                            .font(HanlinTypography.headline)
+                                            .foregroundStyle(.primary)
+                                        Text(livePackage.record.packageID.rawValue)
+                                            .font(HanlinTypography.caption)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    Spacer()
+                                    if !livePackage.enabled {
+                                        Text("Disabled", bundle: HanlinLocalization.bundle)
+                                            .font(HanlinTypography.caption)
+                                            .foregroundStyle(.secondary)
+                                    } else if !hasLaunchableApp && hasWidget {
+                                        Text("Widget", bundle: HanlinLocalization.bundle)
+                                            .font(HanlinTypography.caption2.weight(.medium))
+                                            .foregroundStyle(.secondary)
+                                    }
+                                }
+                                .contentShape(Rectangle())
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityIdentifier("hanlin-package-card-\(name)")
+                            .accessibilityLabel(name)
+                            .contextMenu {
+                                if hasLaunchableApp {
+                                    Button {
+                                        guard let current = scriptingPlatform.installedPackages.first(where: { $0.record.installedPackageID == livePackage.record.installedPackageID }),
+                                              current.enabled else { return }
+                                        if let onLaunchPackage {
+                                            onLaunchPackage(current.record.installedPackageID)
+                                            dismiss()
+                                        } else {
+                                            dismiss()
+                                            Task {
+                                                try? await Task.sleep(for: .milliseconds(500))
+                                                await scriptingPlatform.launch(current.record.installedPackageID)
+                                            }
+                                        }
+                                    } label: {
+                                        Label(hanlin: "Open", systemImage: "play.fill")
+                                    }
+                                    .disabled(!livePackage.enabled)
+                                }
+
+                                if hasWidget {
+                                    Button {
+                                        selectedPackageID = livePackage.record.installedPackageID
+                                    } label: {
+                                        Label(hanlin: "Configure Widget", systemImage: "square.grid.2x2")
+                                    }
+                                    .accessibilityIdentifier("hanlin-configure-widget-menu-item")
+                                }
+
+                                Button {
+                                    selectedPackageID = livePackage.record.installedPackageID
+                                } label: {
+                                    Label(hanlin: "Package Information", systemImage: "info.circle")
+                                }
+                                .accessibilityIdentifier("hanlin-package-information-menu-item")
+                            }
+                        }
+                    }
+                }
+
+                Section(hanlin: "Bundled Swift Apps") {
+                    ForEach(items.filter({ $0.engine == .swift })) { item in
+                        Label(
+                            item.descriptor.name.preferredValue(forLocale: Locale.current.identifier),
+                            systemImage: "swift"
+                        )
+                    }
+                }
+            }
+            .navigationTitle(Text("Add Apps", bundle: HanlinLocalization.bundle))
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(hanlin: "Done") { dismiss() }
+                        .accessibilityIdentifier("hanlin-apps-add-done")
+                }
+            }
+            .sheet(item: Binding(
+                get: { selectedPackageID.map { IdentifiablePackageID(id: $0) } },
+                set: { selectedPackageID = $0?.id }
+            )) { wrapper in
+                NavigationStack {
+                    ScriptingInstalledPackageDetailView(
+                        packageID: wrapper.id,
+                        platform: scriptingPlatform
+                    )
+                }
+            }
+        }
+    }
+}
+
+private struct IdentifiablePackageID: Identifiable {
+    let id: HanlinInstalledPackageID
+}

@@ -1,0 +1,6 @@
+{
+  "originalAttempt": "Sparse worktree configuration had not populated the new index; git apply --check failed before source edits.",
+  "correction": "Original read-tree -mu HEAD materialized only configured sparse files, then exact before hash and apply check passed.",
+  "sourceChangeBeforeCorrection": false,
+  "testsRun": 0
+}

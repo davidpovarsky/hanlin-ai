@@ -1,0 +1,15 @@
+{
+  "perRun": {
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+    "RUNNER_TEMP": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/build/primary-temp",
+    "GITHUB_WORKSPACE": "/Users/m1/builds/hanlin-notification-wire-fix-20261125",
+    "GITHUB_SHA": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+    "SPLIT_EVIDENCE": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1",
+    "SPLIT_DERIVED_DATA": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125",
+    "PAIRED_TEST_SCOPE": "miniapp_complete",
+    "PATH": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Tools/node-v24.5.0-darwin-arm64/bin:/opt/homebrew/opt/python@3.12/libexec/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+  },
+  "python": "/opt/homebrew/opt/python@3.12/bin/python3.12",
+  "producerInvocation": "NONE",
+  "originalCommandLimitsUnchanged": true
+}

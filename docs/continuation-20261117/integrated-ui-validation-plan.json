@@ -1,0 +1,61 @@
+{
+  "scope": "affected integrated original iPad app, canonical UI extraction, V17, mixed OpenUI and citation bridge",
+  "previous_native_build": "44184135947 app build PASS, two parametrized Skills methods PASS, streaming stop and Markdown Skill import UI PASS; four UI cases FAIL",
+  "parent": "9c66a724c724133e110cd0e0cd74ac4e8a9f1e9c",
+  "selectors": [
+    "AI_HLYTests/AgentRoundPresentationTests",
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests",
+    "AI_HLYTests/NativeComposerLineSizingTests",
+    "AI_HLYUITests/HanlinNativeA2UIChatUITests",
+    "AI_HLYUITests/AgentRuntimeConversationUITests/testPhase2OfficialToolSurfaceContinuesThroughTheSameOriginalChat",
+    "AI_HLYUITests/AgentRuntimeConversationUITests/testPhase2ActualPythonToolApprovalAndColdConversationRestoration",
+    "AI_HLYUITests/HanlinMorphComposerUITests/testWideNavigationKeepsDraft",
+    "AI_HLYTests/HanlinAppSplitOriginTests"
+  ],
+  "runtime_bundle_artifact_run_id": "42926628418",
+  "runtime_bundle_sha256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+  "presentation_package_compile": "44199353299 SUCCESS; native iOS27 includes latest actual OpenUI control semantics",
+  "markdown_native_tests": "44193348464 9 PASS",
+  "core_provider_tests": "44193344010 21 PASS; corrected result summarizer, original job failure retained",
+  "no_release": true,
+  "device": "one freshly created owned iPad, no personal simulator",
+  "last_attempt": {
+    "run": 44199348584,
+    "source": "16934250",
+    "result": "ROUTING_FAILED before native job: new PresentationSDK/OpenUI sources unmapped",
+    "correction": "Explicit affected-source mappings for original Presentation SDK and ProductSplit, preserving fail-on-unmapped routing"
+  },
+  "provider_approval_apple_proof": {
+    "run": 44197039335,
+    "sha": "ffa75eb3fbe1917f0bcb824988668625de852eb3",
+    "result": "SUCCESS; Core+Session and native AgentCore iOS27 compilation",
+    "executed_pass": 53,
+    "failed": 0,
+    "skipped": 0,
+    "artifact_id": 14380396693,
+    "artifact_sha256": "a1c6621d0ee4126747d4908ae32c604418a7431b1bee9513c3ae6906e5f6be21"
+  },
+  "split_origin_delivery": "71ba9d73941c27c582ebb71e05bee36ec02dd8a7 integrated with existing consent, actual origin row and receiving-window mount ACK",
+  "composer_followup": {
+    "cause": "Binding clears/restores during first responder editing were ignored by updateUIView; repeated unchanged placeholder assignment could invalidate UIKit unnecessarily.",
+    "correction": "Reconcile original binding while preserving marked text, unchanged selection and clamped UTF16 cursor; keep ordinary native focus/motion.",
+    "new_case": "AI_HLYTests/NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing"
+  },
+  "remaining_native_scope": [
+    "AI_HLYTests/NativeComposerLineSizingTests",
+    "AI_HLYTests/NativeScriptRuntimeWireTests",
+    "AI_HLYTests/ExpoPreparedEntrypointTests",
+    "AI_HLYTests/SkillRuntimeProductTests/originalOpenClawSixCasesExecuteInTheActualEmbeddedAppEngine",
+    "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen",
+    "AI_HLYTests/SkillRuntimeProductTests/hostileImportedArchivesAreRejectedBeforeInstallation",
+    "AI_HLYUITests/HanlinMorphComposerUITests/testCompactNavigationKeepsDraft",
+    "AI_HLYUITests/HanlinMorphComposerUITests/testCompactLargeTextWithAttachment",
+    "AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime",
+    "AI_HLYUITests/HanlinExpoProductionE2ETests/testProductionExpoSwiftUIProbeEndToEnd",
+    "AI_HLYUITests/HanlinSkillCenterUITests/testImportedSkillExecutionRequiresApprovalAndPersistsAfterColdLaunch",
+    "AI_HLYUITests/HanlinSkillCenterUITests/testCancelActuallyRunningImportedNodeSkillRetainsPartialOutput",
+    "AI_HLYUITests/HanlinSkillCenterUITests/testImportSkillZipPreviewInstall",
+    "AI_HLYUITests/HanlinSkillCenterUITests/testSkillResourceAddImportEditDelete"
+  ],
+  "remaining_scope_reason": "Required original native runtime/Skills and two failed compact obligations, plus affected editor semantics. Uses one owned iPhone27; no passed fixture parser controls or optional Full-SDK expansion repeated."
+}

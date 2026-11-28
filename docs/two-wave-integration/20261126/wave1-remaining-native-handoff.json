@@ -1,0 +1,37 @@
+{
+  "integration_source_before": "3101be04fd745c829318c9efb5df50dc8ce57b10",
+  "motion": {
+    "test_source": "c0990aa0aead061f44c8b93f20255e7f341532c0",
+    "path": "docs/chat-motion/MotionUI/MotionUITests.swift",
+    "sha256": "5f714f6ad4fc5db3abec22abc5e520f4bba94d5f66740f69673ed3d401665874",
+    "change": "Use already-reviewed actual Settings switch frame and verify its 0/1 native value before returning to the app",
+    "original_ABC_bodies_byte_identical": true,
+    "production_change": false,
+    "status": "NATIVE_NOT_RUN",
+    "selectors": [
+      "MotionUITests/testBRapidReversalPresetSwitchAndPersistence",
+      "MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach",
+      "MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion"
+    ]
+  },
+  "openui": {
+    "reviewed_reference": "2f0f46d4065a07e13395ac63f5b56bb365d5a237",
+    "review": "Original RichUI assets/renderer and bridge source/test are identical; shared state adds the already-integrated optional ActivityDisclosure field; no old shipping-source projection applied",
+    "status": "NATIVE_NOT_RUN",
+    "selectors": [
+      "AI_HLYTests/HanlinOpenUIBridgeTests/originalBundledQueryUsesHostBridge(target:)",
+      "AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft"
+    ],
+    "expected_invocations": 3,
+    "parameter_arguments": [
+      "react",
+      "swiftui"
+    ]
+  },
+  "sidebar": {
+    "status": "NATIVE_NOT_RUN",
+    "suite": "AI_HLYUITests/HanlinSidebarNavigationUITests",
+    "method_count": 6,
+    "note": "Existing original navigation/draft/gesture/RTL assertions retained; final suite selection also follows POST149101 owner closure."
+  }
+}

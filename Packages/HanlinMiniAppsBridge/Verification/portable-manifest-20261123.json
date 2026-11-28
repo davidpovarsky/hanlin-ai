@@ -1,0 +1,23 @@
+{
+  "baseSHA": "476a14c5533f1816078a64b9553fab3ac40f6a63",
+  "status": "EXECUTED_PASS",
+  "testCount": 11,
+  "swift": "Swift 6.4.3 (swift-6.4.3-RELEASE)",
+  "platform": "aarch64-unknown-linux-gnu",
+  "command": "swift test --package-path Packages/HanlinMiniAppsBridge --jobs 2",
+  "validatedFiles": {
+    "Package.swift": "579cdb6febf974d7f463aee0cd6592cdf0cfd5a4c8e53840009ff170e52b6e2e",
+    "Sources/HanlinMiniAppsBridge/MiniAppBridgeStore.swift": "a50fcd574c1716c62440ec46ed58e4576d0906c3084b9a7a0e1b3ddad97a1048",
+    "Sources/HanlinMiniAppsBridge/MiniAppContracts.swift": "f3834e432bf48097d065234c0222ca96d0bbe025c36a9491af483a9b16e39bec",
+    "Sources/HanlinMiniAppsBridge/MiniAppPreferences.swift": "8a359491aac0f7602cd5347395f7c36755e5450b16edea2388818d3aa46357d4",
+    "Tests/HanlinMiniAppsBridgeTests/MiniAppBridgeTests.swift": "724c46671d02ab7693dac43716c9b6f54ee5b89727e10fe429f366c496f946b8"
+  },
+  "rawReceiptSHA256": "5fb7a5af356a554e42820b7acf82ccabf8b62eefb615577c89afb3dac756447f",
+  "notVerified": [
+    "SwiftUI compilation/rendering",
+    "App Group provisioning/signing",
+    "iPad multiple-window runtime",
+    "native cross-app editor callbacks"
+  ],
+  "reuseNote": "Only SwiftUI picker and documentation changed after this portable pass; recorded Foundation sources and test assertions are unchanged."
+}

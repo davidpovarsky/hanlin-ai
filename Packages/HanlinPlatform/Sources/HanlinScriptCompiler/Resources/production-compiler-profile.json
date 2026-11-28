@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": [
+      "ESNext"
+    ],
+    "module": "CommonJS",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "sourceMap": true,
+    "inlineSources": true,
+    "skipLibCheck": true,
+    "jsx": "react",
+    "jsxFactory": "createElement",
+    "jsxFragmentFactory": "Fragment",
+    "allowJs": true,
+    "checkJs": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "types": [],
+    "paths": {
+      "scripting": [
+        "./virtual/scripting.d.ts"
+      ]
+    },
+    "rootDir": ".",
+    "outDir": "dist",
+    "newLine": "lf"
+  }
+}

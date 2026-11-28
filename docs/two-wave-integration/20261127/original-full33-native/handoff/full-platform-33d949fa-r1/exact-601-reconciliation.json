@@ -1,0 +1,4045 @@
+{
+  "status": "ORIGINAL_FULL_601_EXECUTED_600_PASS_1_FAIL",
+  "source": "33d949fa8d91d238ba93a9ef09373c5eafe58b84",
+  "nativeExitCode": 1,
+  "originalCommand": [
+    "/usr/bin/swift",
+    "test",
+    "--package-path",
+    "Packages/HanlinPlatform",
+    "--parallel"
+  ],
+  "nativeMethodStarts": 601,
+  "nativeMethodTerminals": 601,
+  "passed": 600,
+  "failed": 1,
+  "skipped": 0,
+  "parameterCaseStartRecords": 316,
+  "parameterCaseStartLines": [
+    "case passing 1 argument duplicatingEntry \u2192 true to \"Malformed stored identity rejects cold load and restore without changing registry bytes\"",
+    "case passing 1 argument duplicatingEntry \u2192 false to \"Malformed stored identity rejects cold load and restore without changing registry bytes\"",
+    "case passing 1 argument point \u2192 .uninstallMoved to \"Uninstall recovery restores or completes according to its commit point\"",
+    "case passing 1 argument point \u2192 .uninstallRegistryCommitted to \"Uninstall recovery restores or completes according to its commit point\"",
+    "case passing 1 argument point \u2192 .journalPersisted to \"Install recovery is atomic at every persisted transition\"",
+    "case passing 1 argument point \u2192 .artifactStaged to \"Install recovery is atomic at every persisted transition\"",
+    "case passing 1 argument point \u2192 .generationPromoted to \"Install recovery is atomic at every persisted transition\"",
+    "case passing 1 argument point \u2192 .registryCommitted to \"Install recovery is atomic at every persisted transition\"",
+    "case passing 1 argument point \u2192 .rollbackIntentPersisted to \"Rollback resumes after every journaled restore boundary\"",
+    "case passing 1 argument point \u2192 .installedRestored to \"Rollback resumes after every journaled restore boundary\"",
+    "case passing 1 argument point \u2192 .dataRestored to \"Rollback resumes after every journaled restore boundary\"",
+    "case passing 1 argument kind \u2192 \"package\" to \"Conflicting package identities or data are rejected before live changes\"",
+    "case passing 1 argument kind \u2192 \"data\" to \"Conflicting package identities or data are rejected before live changes\"",
+    "case passing 1 argument point \u2192 .intentPersisted to \"A fresh process recovers each durable two-store promotion boundary\"",
+    "case passing 1 argument point \u2192 .installedBackedUp to \"A fresh process recovers each durable two-store promotion boundary\"",
+    "case passing 1 argument point \u2192 .installedPromoted to \"A fresh process recovers each durable two-store promotion boundary\"",
+    "case passing 1 argument point \u2192 .dataBackedUp to \"A fresh process recovers each durable two-store promotion boundary\"",
+    "case passing 1 argument point \u2192 .dataPromoted to \"A fresh process recovers each durable two-store promotion boundary\"",
+    "case passing 1 argument point \u2192 .committed to \"A fresh process recovers each durable two-store promotion boundary\"",
+    "case passing 1 argument field \u2192 \"handler\" to \"Conflicting canonical exposures remain validation errors\"",
+    "case passing 1 argument field \u2192 \"runtime\" to \"Conflicting canonical exposures remain validation errors\"",
+    "case passing 1 argument field \u2192 \"contexts\" to \"Conflicting canonical exposures remain validation errors\"",
+    "case passing 1 argument conflicting \u2192 false to \"The public initializer accepts repeated rows without adding a legacy permission gate\"",
+    "case passing 1 argument conflicting \u2192 true to \"The public initializer accepts repeated rows without adding a legacy permission gate\"",
+    "case passing 1 argument conflicting \u2192 false to \"Public replacement accepts repeated rows without changing the existing authorization path\"",
+    "case passing 1 argument conflicting \u2192 true to \"Public replacement accepts repeated rows without changing the existing authorization path\"",
+    "case passing 1 argument engine \u2192 .expo to failedRefreshRetainsVerifiedRenderAndDoesNotCommitStagedState(engine:)",
+    "case passing 1 argument missingRevision \u2192 true to consistencyReportCannotHideMissingRevisionOrMalformedCommit(missingRevision:)",
+    "case passing 1 argument missingRevision \u2192 false to consistencyReportCannotHideMissingRevisionOrMalformedCommit(missingRevision:)",
+    "case passing 1 argument tag \u2192 \"hstack\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"vstack\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"zstack\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"hgrid\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"vgrid\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"text\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"date\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"image\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"gif\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"spacer\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"rect\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"capsule\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"ellipse\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"circle\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"gauge\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"chart\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"link\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"divider\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"line\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"roundedrect\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"icon\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"label\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"progress\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"ring\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"badge\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"chip\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"stat\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"button\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument tag \u2192 \"toggle\" to originalTagProducesDistinctNativeRaster(tag:)",
+    "case passing 1 argument degrees \u2192 0.0 to imageRotationKeepsTheOriginalSwiftUICenter(degrees:)",
+    "case passing 1 argument degrees \u2192 45.0 to imageRotationKeepsTheOriginalSwiftUICenter(degrees:)",
+    "case passing 1 argument degrees \u2192 90.0 to imageRotationKeepsTheOriginalSwiftUICenter(degrees:)",
+    "case passing 1 argument degrees \u2192 180.0 to imageRotationKeepsTheOriginalSwiftUICenter(degrees:)",
+    "case passing 1 argument attribute \u2192 \"frame\" to invalidImageDimensionsAndTransformsNeverReachSwiftUI(attribute:)",
+    "case passing 1 argument attribute \u2192 \"ratio\" to invalidImageDimensionsAndTransformsNeverReachSwiftUI(attribute:)",
+    "case passing 1 argument attribute \u2192 \"rotation\" to invalidImageDimensionsAndTransformsNeverReachSwiftUI(attribute:)",
+    "case passing 1 argument type \u2192 \"bar\" to originalChartVariantUsesItsNativeDataSchema(type:)",
+    "case passing 1 argument type \u2192 \"bar-x\" to originalChartVariantUsesItsNativeDataSchema(type:)",
+    "case passing 1 argument type \u2192 \"bar-y\" to originalChartVariantUsesItsNativeDataSchema(type:)",
+    "case passing 1 argument type \u2192 \"bar-gantt\" to originalChartVariantUsesItsNativeDataSchema(type:)",
+    "case passing 1 argument type \u2192 \"line\" to originalChartVariantUsesItsNativeDataSchema(type:)",
+    "case passing 1 argument type \u2192 \"point\" to originalChartVariantUsesItsNativeDataSchema(type:)",
+    "case passing 1 argument type \u2192 \"line-point\" to originalChartVariantUsesItsNativeDataSchema(type:)",
+    "case passing 1 argument type \u2192 \"area\" to originalChartVariantUsesItsNativeDataSchema(type:)",
+    "case passing 1 argument type \u2192 \"rect\" to originalChartVariantUsesItsNativeDataSchema(type:)",
+    "case passing 1 argument type \u2192 \"rule-x\" to originalChartVariantUsesItsNativeDataSchema(type:)",
+    "case passing 1 argument tag \u2192 \"hstack\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"vstack\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"zstack\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"hgrid\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"vgrid\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"text\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"date\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"image\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"gif\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"spacer\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"rect\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"capsule\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"ellipse\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"circle\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"gauge\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"chart\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"link\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"divider\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"line\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"roundedrect\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"icon\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"label\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"progress\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"ring\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"badge\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"chip\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"stat\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"button\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument tag \u2192 \"toggle\" to originalTagRespondsToItsSemanticInput(tag:)",
+    "case passing 1 argument timestamp \u2192 200.0 to testPass7HistoricalV1StoreEnvelopeCompatibility(timestamp:)",
+    "case passing 1 argument timestamp \u2192 1730826191.123456 to testPass7HistoricalV1StoreEnvelopeCompatibility(timestamp:)",
+    "case passing 1 argument name \u2192 \"Hanlin-Expo-Widget-Counter.hanlinExpo\" to realArchiveImport(name:)",
+    "case passing 1 argument name \u2192 \"Hanlin-Expo-Widget-Visuals.hanlinExpo\" to realArchiveImport(name:)",
+    "case passing 1 argument name \u2192 \"Hanlin-ScriptWidget-Dashboard.scripting\" to realArchiveImport(name:)",
+    "case passing 1 argument name \u2192 \"Hanlin-ScriptWidget-Actions.scripting\" to realArchiveImport(name:)",
+    "case passing 1 argument name \u2192 \"Hanlin-Widget-Legacy-Regression.scripting\" to realArchiveImport(name:)",
+    "case passing 1 argument name \u2192 \"Hanlin-Mixed-Native-Widget.hanlinExpo\" to realArchiveImport(name:)",
+    "case passing 1 argument name \u2192 \"Hanlin-Widget-Invalid-Cases.hanlinExpo\" to realArchiveImport(name:)",
+    "case passing 1 argument name \u2192 \"Hanlin-Expo-Widget-Counter.hanlinExpo\" to installAndVerifiedLoader(name:)",
+    "case passing 1 argument name \u2192 \"Hanlin-Expo-Widget-Visuals.hanlinExpo\" to installAndVerifiedLoader(name:)",
+    "case passing 1 argument name \u2192 \"Hanlin-ScriptWidget-Dashboard.scripting\" to installAndVerifiedLoader(name:)",
+    "case passing 1 argument name \u2192 \"Hanlin-ScriptWidget-Actions.scripting\" to installAndVerifiedLoader(name:)",
+    "case passing 1 argument name \u2192 \"Hanlin-Widget-Legacy-Regression.scripting\" to installAndVerifiedLoader(name:)",
+    "case passing 1 argument corruptedBytes \u2192 0 bytes to testPass7InterruptedRevisionWriteOverwrittenAndClean(corruptedBytes:)",
+    "case passing 1 argument corruptedBytes \u2192 26 bytes to testPass7InterruptedRevisionWriteOverwrittenAndClean(corruptedBytes:)",
+    "case passing 1 argument runtime \u2192 .hanlinExpo to typedEventExecutesOnceAndKeepsItsActualResultAfterReopen(_:)",
+    "case passing 1 argument runtime \u2192 .hanlinNativeScript to typedEventExecutesOnceAndKeepsItsActualResultAfterReopen(_:)",
+    "case passing 1 argument engine \u2192 .scriptwidget to failedRefreshRetainsVerifiedRenderAndDoesNotCommitStagedState(engine:)",
+    "case passing 1 argument engine \u2192 .expo to currentOriginQueuesExactDeclaredTargetAndRetainsNull(engine:)",
+    "case passing 1 argument engine \u2192 .scriptwidget to currentOriginQueuesExactDeclaredTargetAndRetainsNull(engine:)",
+    "case passing 1 argument reason \u2192 \"disabled\" to invalidCurrentOriginOrTargetDoesNotEnqueue(reason:)",
+    "case passing 1 argument reason \u2192 \"removedVariant\" to invalidCurrentOriginOrTargetDoesNotEnqueue(reason:)",
+    "case passing 1 argument reason \u2192 \"staleProgram\" to invalidCurrentOriginOrTargetDoesNotEnqueue(reason:)",
+    "case passing 1 argument reason \u2192 \"missingTarget\" to invalidCurrentOriginOrTargetDoesNotEnqueue(reason:)",
+    "case passing 1 argument reason \u2192 \"wrongProduct\" to invalidCurrentOriginOrTargetDoesNotEnqueue(reason:)",
+    "case passing 1 argument invalidation \u2192 .settings to fallbackNeverRestoresRevokedOrMismatchedContent(invalidation:)",
+    "case passing 1 argument reason \u2192 \"duplicateTarget\" to invalidCurrentOriginOrTargetDoesNotEnqueue(reason:)",
+    "case passing 1 argument invalidation \u2192 .inactive to fallbackNeverRestoresRevokedOrMismatchedContent(invalidation:)",
+    "case passing 1 argument invalidation \u2192 .removed to fallbackNeverRestoresRevokedOrMismatchedContent(invalidation:)",
+    "case passing 1 argument invalidation \u2192 .generation to fallbackNeverRestoresRevokedOrMismatchedContent(invalidation:)",
+    "case passing 1 argument invalidation \u2192 .program to fallbackNeverRestoresRevokedOrMismatchedContent(invalidation:)",
+    "case passing 1 argument invalidation \u2192 .family to fallbackNeverRestoresRevokedOrMismatchedContent(invalidation:)",
+    "case passing 1 argument invalidation \u2192 .expired to fallbackNeverRestoresRevokedOrMismatchedContent(invalidation:)",
+    "case passing 1 argument value \u2192 nan to nonfiniteDatesCannotReachEventKit(value:)",
+    "case passing 1 argument value \u2192 inf to nonfiniteDatesCannotReachEventKit(value:)",
+    "case passing 1 argument value \u2192 -inf to nonfiniteDatesCannotReachEventKit(value:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"update_event\",\"identifier\":\"saved-id\",\"item\":{}}\" to emptyMutationAndNullCalendarFieldsAreRejected(json:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"update_reminder\",\"identifier\":\"saved-id\",\"item\":{}}\" to emptyMutationAndNullCalendarFieldsAreRejected(json:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"update_event\",\"identifier\":\"saved-id\",\"item\":{\"clear_fields\":[]}}\" to emptyMutationAndNullCalendarFieldsAreRejected(json:)",
+    "case passing 1 argument operation \u2192 \"update_event\" to mutationRequiresAnActualIdentifier(operation:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"update_reminder\",\"identifier\":\"saved-id\",\"item\":{\"clear_fields\":[]}}\" to emptyMutationAndNullCalendarFieldsAreRejected(json:)",
+    "case passing 1 argument operation \u2192 \"delete_event\" to mutationRequiresAnActualIdentifier(operation:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"update_calendar\",\"entity_type\":\"event\",\"identifier\":\"saved-id\",\"calendar\":{}}\" to emptyMutationAndNullCalendarFieldsAreRejected(json:)",
+    "case passing 1 argument operation \u2192 \"update_reminder\" to mutationRequiresAnActualIdentifier(operation:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"update_calendar\",\"entity_type\":\"event\",\"identifier\":\"saved-id\",\"calendar\":{\"title\":null}}\" to emptyMutationAndNullCalendarFieldsAreRejected(json:)",
+    "case passing 1 argument operation \u2192 \"delete_reminder\" to mutationRequiresAnActualIdentifier(operation:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"update_calendar\",\"entity_type\":\"reminder\",\"identifier\":\"saved-id\",\"calendar\":{\"color\":null}}\" to emptyMutationAndNullCalendarFieldsAreRejected(json:)",
+    "case passing 1 argument operation \u2192 \"complete_reminder\" to mutationRequiresAnActualIdentifier(operation:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"update_calendar\",\"entity_type\":\"event\",\"identifier\":\"saved-id\",\"calendar\":{\"source_identifier\":null}}\" to emptyMutationAndNullCalendarFieldsAreRejected(json:)",
+    "case passing 1 argument operation \u2192 \"reopen_reminder\" to mutationRequiresAnActualIdentifier(operation:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"update_calendar\",\"entity_type\":\"event\",\"identifier\":\"saved-id\",\"calendar\":{\"title\":\"New title\",\"color\":null}}\" to emptyMutationAndNullCalendarFieldsAreRejected(json:)",
+    "case passing 1 argument value \u2192 \"2026-02-30\" to suppliedMalformedDayDoesNotBecomeUnbounded(value:)",
+    "case passing 1 argument value \u2192 \"2026-13-01\" to suppliedMalformedDayDoesNotBecomeUnbounded(value:)",
+    "case passing 1 argument value \u2192 \"2026-11-23tail\" to suppliedMalformedDayDoesNotBecomeUnbounded(value:)",
+    "case passing 1 argument value \u2192 \"2026-11-23T00:00:00Z\" to suppliedMalformedDayDoesNotBecomeUnbounded(value:)",
+    "case passing 1 argument operation \u2192 \"update_event\" to clearOnlyUpdateStillExpressesAMutation(operation:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"update_event\",\"identifier\":\"id\",\"item\":{\"attendees\":[\"a@example.com\"]}}\" to invalidArgumentsCannotReachEventKit(json:)",
+    "case passing 1 argument operation \u2192 \"update_reminder\" to clearOnlyUpdateStillExpressesAMutation(operation:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"create_event\",\"item\":{\"title\":\"A\",\"start_date\":\"2026-11-27T15:00:00Z\"}}\" to invalidArgumentsCannotReachEventKit(json:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"update_reminder\",\"identifier\":\"id\",\"item\":{\"is_all_day\":true}}\" to invalidArgumentsCannotReachEventKit(json:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"request_access\",\"entity_type\":\"reminder\",\"access\":\"write_only\"}\" to invalidArgumentsCannotReachEventKit(json:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"create_calendar\",\"entity_type\":\"event\",\"calendar\":{\"title\":\"A\"}}\" to invalidArgumentsCannotReachEventKit(json:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"list_events\",\"start_date\":\"2026-11-27\",\"end_date\":\"2026-11-26\"}\" to invalidArgumentsCannotReachEventKit(json:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"update_reminder\",\"identifier\":\"id\",\"item\":{\"notes\":null}}\" to invalidArgumentsCannotReachEventKit(json:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"update_reminder\",\"identifier\":\"saved-id\",\"item\":{\"due_date\":\"\"}}\" to suppliedBlankOperationDatesAreRejected(json:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"update_reminder\",\"identifier\":\"saved-id\",\"item\":{\"due_date\":\" \\t\\n \"}}\" to suppliedBlankOperationDatesAreRejected(json:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"update_reminder\",\"identifier\":\"saved-id\",\"item\":{\"completion_date\":\"\"}}\" to suppliedBlankOperationDatesAreRejected(json:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"update_event\",\"identifier\":\"saved-id\",\"item\":{\"start_date\":\"\"}}\" to suppliedBlankOperationDatesAreRejected(json:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"update_event\",\"identifier\":\"saved-id\",\"item\":{\"end_date\":\" \"}}\" to suppliedBlankOperationDatesAreRejected(json:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"update_event\",\"identifier\":\"saved-id\",\"occurrence_date\":\"\",\"item\":{\"notes\":\"Updated\"}}\" to suppliedBlankOperationDatesAreRejected(json:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"list_events\",\"start_date\":\"\",\"end_date\":\"2026-11-27\"}\" to suppliedBlankOperationDatesAreRejected(json:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"list_reminders\",\"end_date\":\"          \"}\" to suppliedBlankOperationDatesAreRejected(json:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"update_event\",\"identifier\":\"saved-id\",\"item\":{\"alarms\":[{\"absolute_date\":\"\"}]}}\" to suppliedBlankOperationDatesAreRejected(json:)",
+    "case passing 1 argument json \u2192 \"{\"operation\":\"update_event\",\"identifier\":\"saved-id\",\"item\":{\"recurrence_rules\":[{\"frequency\":\"weekly\",\"end_date\":\" \"}]}}\" to suppliedBlankOperationDatesAreRejected(json:)",
+    "case passing 1 argument path \u2192 \"../script.json\" to rejectsEscapingPaths(path:)",
+    "case passing 1 argument path \u2192 \"/script.json\" to rejectsEscapingPaths(path:)",
+    "case passing 1 argument path \u2192 \"C:/script.json\" to rejectsEscapingPaths(path:)",
+    "case passing 1 argument path \u2192 \"folder/../../script.json\" to rejectsEscapingPaths(path:)",
+    "case passing 1 argument input \u2192 \"\" to shortcutJSONRejectsMalformedOrLossyInput(_:)",
+    "case passing 1 argument input \u2192 \"[\" to shortcutJSONRejectsMalformedOrLossyInput(_:)",
+    "case passing 1 argument input \u2192 \"{\"duplicate\":1,\"duplicate\":2}\" to shortcutJSONRejectsMalformedOrLossyInput(_:)",
+    "case passing 1 argument input \u2192 \"9223372036854775808\" to shortcutJSONRejectsMalformedOrLossyInput(_:)",
+    "case passing 1 argument input \u2192 \"NaN\" to shortcutJSONRejectsMalformedOrLossyInput(_:)",
+    "case passing 1 argument input \u2192 \"null\" to shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding(_:)",
+    "case passing 1 argument input \u2192 \"true\" to shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding(_:)",
+    "case passing 1 argument input \u2192 \"42\" to shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding(_:)",
+    "case passing 1 argument input \u2192 \"1.5\" to shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding(_:)",
+    "case passing 1 argument input \u2192 \"\"hello\"\" to shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding(_:)",
+    "case passing 1 argument api \u2192 \"anthropic\" to \"One request supplies title and icon through the configured provider\"",
+    "case passing 1 argument api \u2192 \"openai\" to \"One request supplies title and icon through the configured provider\"",
+    "case passing 1 argument api \u2192 \"compatible\" to \"One request supplies title and icon through the configured provider\"",
+    "case passing 1 argument api \u2192 \"gemini\" to \"One request supplies title and icon through the configured provider\"",
+    "case passing 1 argument api \u2192 \"responses\" to \"One request supplies title and icon through the configured provider\"",
+    "case passing 1 argument profile \u2192 .openAICompatiblePlain to \"S02: Single tool call with provider-native continuation pairing\"",
+    "case passing 1 argument profile \u2192 .openAINativeChat to \"S02: Single tool call with provider-native continuation pairing\"",
+    "case passing 1 argument profile \u2192 .openAINativeChat to \"S01: Plain text baseline across all provider profiles\"",
+    "case passing 1 argument profile \u2192 .anthropicNative to \"S02: Single tool call with provider-native continuation pairing\"",
+    "case passing 1 argument profile \u2192 .googleNative to \"S02: Single tool call with provider-native continuation pairing\"",
+    "case passing 1 argument profile \u2192 .openAICompatibleReasoningContent to \"S01: Plain text baseline across all provider profiles\"",
+    "case passing 1 argument profile \u2192 .openAICompatiblePlain to \"S01: Plain text baseline across all provider profiles\"",
+    "case passing 1 argument profile \u2192 .openAICompatibleReasoning to \"S01: Plain text baseline across all provider profiles\"",
+    "case passing 1 argument profile \u2192 .openRouterReasoningDetails to \"S01: Plain text baseline across all provider profiles\"",
+    "case passing 1 argument profile \u2192 .googleNative to \"S01: Plain text baseline across all provider profiles\"",
+    "case passing 1 argument profile \u2192 .anthropicNative to \"S01: Plain text baseline across all provider profiles\"",
+    "case passing 1 argument profile \u2192 .openAINativeChat to \"S05: Parallel tool calls in a single model step across OpenAI, Anthropic, and Google\"",
+    "case passing 1 argument profile \u2192 .anthropicNative to \"S05: Parallel tool calls in a single model step across OpenAI, Anthropic, and Google\"",
+    "case passing 1 argument profile \u2192 .googleNative to \"S05: Parallel tool calls in a single model step across OpenAI, Anthropic, and Google\"",
+    "case passing 1 argument apiType \u2192 \"OpenAI-Response\" to \"Saved Responses dialects select Responses on official and custom hosts\"",
+    "case passing 1 argument apiType \u2192 \"openai-responses\" to \"Saved Responses dialects select Responses on official and custom hosts\"",
+    "case passing 1 argument apiType \u2192 \"openAIResponse\" to \"Saved Responses dialects select Responses on official and custom hosts\"",
+    "case passing 1 argument apiType \u2192 \"openai-chatgpt-plan\" to \"Saved Responses dialects select Responses on official and custom hosts\"",
+    "case passing 1 argument requiresApproval \u2192 false to \"Cloud accepted original numeric JSON remains unchanged\"",
+    "case passing 1 argument requiresApproval \u2192 true to \"Cloud accepted original numeric JSON remains unchanged\"",
+    "case passing 1 argument requiresApproval \u2192 false to \"Native reserialized input never becomes acceptedOriginal\"",
+    "case passing 1 argument requiresApproval \u2192 true to \"Native reserialized input never becomes acceptedOriginal\"",
+    "case passing 2 arguments input \u2192 \"{\"number\":0}\", requiresApproval \u2192 false to \"Native numeric leaves fail before approval or host effect\"",
+    "case passing 2 arguments input \u2192 \"{\"number\":0}\", requiresApproval \u2192 true to \"Native numeric leaves fail before approval or host effect\"",
+    "case passing 2 arguments input \u2192 \"{\"nested\":[{\"number\":1.25}]}\", requiresApproval \u2192 false to \"Native numeric leaves fail before approval or host effect\"",
+    "case passing 2 arguments input \u2192 \"{\"nested\":[{\"number\":1.25}]}\", requiresApproval \u2192 true to \"Native numeric leaves fail before approval or host effect\"",
+    "case passing 2 arguments input \u2192 \"{\"number\":9007199254740993}\", requiresApproval \u2192 false to \"Native numeric leaves fail before approval or host effect\"",
+    "case passing 2 arguments input \u2192 \"{\"number\":9007199254740993}\", requiresApproval \u2192 true to \"Native numeric leaves fail before approval or host effect\"",
+    "case passing 2 arguments input \u2192 \"{\"nested\":{\"number\":1e100}}\", requiresApproval \u2192 false to \"Native numeric leaves fail before approval or host effect\"",
+    "case passing 2 arguments input \u2192 \"{\"nested\":{\"number\":1e100}}\", requiresApproval \u2192 true to \"Native numeric leaves fail before approval or host effect\"",
+    "case passing 2 arguments rawReason \u2192 \"STOP\", expectedNormalized \u2192 \"stop\" to \"Gemini direct finish reason normalization matrix\"",
+    "case passing 2 arguments rawReason \u2192 \"MAX_TOKENS\", expectedNormalized \u2192 \"length\" to \"Gemini direct finish reason normalization matrix\"",
+    "case passing 2 arguments rawReason \u2192 \"MALFORMED_FUNCTION_CALL\", expectedNormalized \u2192 \"malformed_function_call\" to \"Gemini direct finish reason normalization matrix\"",
+    "case passing 2 arguments rawReason \u2192 \"SAFETY\", expectedNormalized \u2192 \"safety\" to \"Gemini direct finish reason normalization matrix\"",
+    "case passing 2 arguments rawReason \u2192 \"BLOCKLIST\", expectedNormalized \u2192 \"blocklist\" to \"Gemini direct finish reason normalization matrix\"",
+    "case passing 2 arguments rawReason \u2192 \"PROHIBITED_CONTENT\", expectedNormalized \u2192 \"prohibited_content\" to \"Gemini direct finish reason normalization matrix\"",
+    "case passing 2 arguments rawReason \u2192 \"SPII\", expectedNormalized \u2192 \"spii\" to \"Gemini direct finish reason normalization matrix\"",
+    "case passing 2 arguments rawReason \u2192 \"RECITATION\", expectedNormalized \u2192 \"recitation\" to \"Gemini direct finish reason normalization matrix\"",
+    "case passing 2 arguments rawReason \u2192 \"OTHER\", expectedNormalized \u2192 \"other\" to \"Gemini direct finish reason normalization matrix\"",
+    "case passing 2 arguments rawReason \u2192 \"FINISH_REASON_UNSPECIFIED\", expectedNormalized \u2192 \"finish_reason_unspecified\" to \"Gemini direct finish reason normalization matrix\"",
+    "case passing 1 argument approved \u2192 true to \"Original SDK approval pauses effects and resumes the same exact call once\"",
+    "case passing 1 argument approved \u2192 false to \"Original SDK approval pauses effects and resumes the same exact call once\"",
+    "case passing 1 argument profile \u2192 .openAINativeChat to \"F09: Malformed JSON payload in SSE stream aborts stream without tool execution or completed event\"",
+    "case passing 1 argument profile \u2192 .openRouterReasoningDetails to \"F09: Malformed JSON payload in SSE stream aborts stream without tool execution or completed event\"",
+    "case passing 1 argument profile \u2192 .openAICompatiblePlain to \"F09: Malformed JSON payload in SSE stream aborts stream without tool execution or completed event\"",
+    "case passing 1 argument profile \u2192 .anthropicNative to \"F09: Malformed JSON payload in SSE stream aborts stream without tool execution or completed event\"",
+    "case passing 1 argument profile \u2192 .googleNative to \"F09: Malformed JSON payload in SSE stream aborts stream without tool execution or completed event\"",
+    "case passing 2 arguments rawReason \u2192 \"STOP\", expectedUnified \u2192 \"stop\" to \"Section 18: Google finish_reason mapping table\"",
+    "case passing 2 arguments rawReason \u2192 \"MAX_TOKENS\", expectedUnified \u2192 \"length\" to \"Section 18: Google finish_reason mapping table\"",
+    "case passing 2 arguments rawReason \u2192 \"MALFORMED_FUNCTION_CALL\", expectedUnified \u2192 \"other\" to \"Section 18: Google finish_reason mapping table\"",
+    "case passing 2 arguments rawReason \u2192 \"SAFETY\", expectedUnified \u2192 \"content-filter\" to \"Section 18: Google finish_reason mapping table\"",
+    "case passing 2 arguments rawReason \u2192 \"BLOCKLIST\", expectedUnified \u2192 \"content-filter\" to \"Section 18: Google finish_reason mapping table\"",
+    "case passing 2 arguments rawReason \u2192 \"stop\", expectedUnified \u2192 \"stop\" to \"Section 18: OpenAI finish_reason mapping table\"",
+    "case passing 2 arguments rawReason \u2192 \"PROHIBITED_CONTENT\", expectedUnified \u2192 \"content-filter\" to \"Section 18: Google finish_reason mapping table\"",
+    "case passing 2 arguments rawReason \u2192 \"length\", expectedUnified \u2192 \"length\" to \"Section 18: OpenAI finish_reason mapping table\"",
+    "case passing 2 arguments rawReason \u2192 \"SPII\", expectedUnified \u2192 \"content-filter\" to \"Section 18: Google finish_reason mapping table\"",
+    "case passing 2 arguments rawReason \u2192 \"content_filter\", expectedUnified \u2192 \"content-filter\" to \"Section 18: OpenAI finish_reason mapping table\"",
+    "case passing 2 arguments rawReason \u2192 \"RECITATION\", expectedUnified \u2192 \"other\" to \"Section 18: Google finish_reason mapping table\"",
+    "case passing 2 arguments rawReason \u2192 \"tool_calls\", expectedUnified \u2192 \"tool-calls\" to \"Section 18: OpenAI finish_reason mapping table\"",
+    "case passing 2 arguments rawReason \u2192 \"function_call\", expectedUnified \u2192 \"tool-calls\" to \"Section 18: OpenAI finish_reason mapping table\"",
+    "case passing 2 arguments rawReason \u2192 \"OTHER\", expectedUnified \u2192 \"other\" to \"Section 18: Google finish_reason mapping table\"",
+    "case passing 2 arguments rawReason \u2192 \"unrecognized_raw_finish\", expectedUnified \u2192 \"other\" to \"Section 18: OpenAI finish_reason mapping table\"",
+    "case passing 2 arguments rawReason \u2192 \"FINISH_REASON_UNSPECIFIED\", expectedUnified \u2192 \"other\" to \"Section 18: Google finish_reason mapping table\"",
+    "case passing 1 argument profile \u2192 .openAINativeChat to \"F03: Abrupt stream close mid-text terminates with transport error and no completed event\"",
+    "case passing 1 argument profile \u2192 .openAICompatiblePlain to \"F03: Abrupt stream close mid-text terminates with transport error and no completed event\"",
+    "case passing 1 argument profile \u2192 .openRouterReasoningDetails to \"F03: Abrupt stream close mid-text terminates with transport error and no completed event\"",
+    "case passing 1 argument profile \u2192 .googleNative to \"F03: Abrupt stream close mid-text terminates with transport error and no completed event\"",
+    "case passing 1 argument profile \u2192 .openAINativeChat to \"F01: Empty provider stream retries once and throws emptyProviderResponse after 2 empty streams\"",
+    "case passing 1 argument profile \u2192 .anthropicNative to \"F03: Abrupt stream close mid-text terminates with transport error and no completed event\"",
+    "case passing 1 argument profile \u2192 .openAICompatiblePlain to \"F01: Empty provider stream retries once and throws emptyProviderResponse after 2 empty streams\"",
+    "case passing 1 argument profile \u2192 .openRouterReasoningDetails to \"F01: Empty provider stream retries once and throws emptyProviderResponse after 2 empty streams\"",
+    "case passing 1 argument profile \u2192 .anthropicNative to \"F01: Empty provider stream retries once and throws emptyProviderResponse after 2 empty streams\"",
+    "case passing 1 argument profile \u2192 .googleNative to \"F01: Empty provider stream retries once and throws emptyProviderResponse after 2 empty streams\"",
+    "case passing 2 arguments rawReason \u2192 \"end_turn\", expectedUnified \u2192 \"stop\" to \"Section 18: Anthropic finish_reason mapping table\"",
+    "case passing 2 arguments rawReason \u2192 \"stop_sequence\", expectedUnified \u2192 \"stop\" to \"Section 18: Anthropic finish_reason mapping table\"",
+    "case passing 2 arguments rawReason \u2192 \"tool_use\", expectedUnified \u2192 \"tool-calls\" to \"Section 18: Anthropic finish_reason mapping table\"",
+    "case passing 2 arguments rawReason \u2192 \"max_tokens\", expectedUnified \u2192 \"length\" to \"Section 18: Anthropic finish_reason mapping table\"",
+    "case passing 1 argument profile \u2192 .openAINativeChat to \"F05: Empty delta noise does not corrupt parser or yield empty text events\"",
+    "case passing 1 argument profile \u2192 .openAINativeChat to \"F06: Final usage-only chunk is processed for token usage and not treated as text\"",
+    "case passing 2 arguments rawReason \u2192 \"model_context_window_exceeded\", expectedUnified \u2192 \"length\" to \"Section 18: Anthropic finish_reason mapping table\"",
+    "case passing 1 argument profile \u2192 .openAICompatiblePlain to \"F05: Empty delta noise does not corrupt parser or yield empty text events\"",
+    "case passing 1 argument profile \u2192 .openAICompatiblePlain to \"F06: Final usage-only chunk is processed for token usage and not treated as text\"",
+    "case passing 2 arguments rawReason \u2192 \"pause_turn\", expectedUnified \u2192 \"other\" to \"Section 18: Anthropic finish_reason mapping table\"",
+    "case passing 1 argument profile \u2192 .openRouterReasoningDetails to \"F06: Final usage-only chunk is processed for token usage and not treated as text\"",
+    "case passing 2 arguments rawReason \u2192 \"unrecognized_reason\", expectedUnified \u2192 \"other\" to \"Section 18: Anthropic finish_reason mapping table\"",
+    "case passing 1 argument profile \u2192 .openAINativeChat to \"F07: Duplicate content chunk delta does not abort parser\"",
+    "case passing 1 argument profile \u2192 .openAICompatiblePlain to \"F07: Duplicate content chunk delta does not abort parser\"",
+    "case passing 1 argument profile \u2192 .openRouterReasoningDetails to \"F07: Duplicate content chunk delta does not abort parser\"",
+    "case passing 1 argument profile \u2192 .openAINativeChat to \"F04: Stream ending after finish without explicit [DONE] still terminates cleanly\"",
+    "case passing 1 argument profile \u2192 .openRouterReasoningDetails to \"F05: Empty delta noise does not corrupt parser or yield empty text events\"",
+    "case passing 1 argument profile \u2192 .openAICompatiblePlain to \"F04: Stream ending after finish without explicit [DONE] still terminates cleanly\"",
+    "case passing 1 argument profile \u2192 .openRouterReasoningDetails to \"F04: Stream ending after finish without explicit [DONE] still terminates cleanly\"",
+    "case passing 2 arguments rawReason \u2192 \"refusal\", expectedUnified \u2192 \"content-filter\" to \"Section 18: Anthropic finish_reason mapping table\"",
+    "case passing 2 arguments profile \u2192 .openAINativeChat, statusCode \u2192 400 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .openAINativeChat, statusCode \u2192 401 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .openAINativeChat, statusCode \u2192 500 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .openAINativeChat, statusCode \u2192 503 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .openAINativeChat, statusCode \u2192 429 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .openAICompatiblePlain, statusCode \u2192 400 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .openAICompatiblePlain, statusCode \u2192 500 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .openAICompatiblePlain, statusCode \u2192 503 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .openAICompatiblePlain, statusCode \u2192 401 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .openRouterReasoningDetails, statusCode \u2192 400 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .openRouterReasoningDetails, statusCode \u2192 401 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .openRouterReasoningDetails, statusCode \u2192 429 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .openRouterReasoningDetails, statusCode \u2192 503 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .openRouterReasoningDetails, statusCode \u2192 500 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .openAICompatiblePlain, statusCode \u2192 429 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .anthropicNative, statusCode \u2192 400 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .anthropicNative, statusCode \u2192 401 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .anthropicNative, statusCode \u2192 429 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .anthropicNative, statusCode \u2192 503 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .anthropicNative, statusCode \u2192 500 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .googleNative, statusCode \u2192 401 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .googleNative, statusCode \u2192 400 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .googleNative, statusCode \u2192 429 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .googleNative, statusCode \u2192 500 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+    "case passing 2 arguments profile \u2192 .googleNative, statusCode \u2192 503 to \"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\""
+  ],
+  "unmatchedStarts": {},
+  "unexpectedTerminals": {},
+  "targetSummaries": [
+    {
+      "tests": 2,
+      "suites": 1,
+      "status": "passed",
+      "seconds": 0.071
+    },
+    {
+      "tests": 32,
+      "suites": 5,
+      "status": "passed",
+      "seconds": 2.723
+    },
+    {
+      "tests": 20,
+      "suites": 2,
+      "status": "passed",
+      "seconds": 0.008
+    },
+    {
+      "tests": 52,
+      "suites": 5,
+      "status": "passed",
+      "seconds": 2.148
+    },
+    {
+      "tests": 10,
+      "suites": 2,
+      "status": "passed",
+      "seconds": 0.004
+    },
+    {
+      "tests": 5,
+      "suites": 1,
+      "status": "passed",
+      "seconds": 0.005
+    },
+    {
+      "tests": 114,
+      "suites": 12,
+      "status": "failed",
+      "seconds": 7.347
+    },
+    {
+      "tests": 29,
+      "suites": 4,
+      "status": "passed",
+      "seconds": 0.052
+    },
+    {
+      "tests": 6,
+      "suites": 1,
+      "status": "passed",
+      "seconds": 0.006
+    },
+    {
+      "tests": 48,
+      "suites": 4,
+      "status": "passed",
+      "seconds": 0.312
+    },
+    {
+      "tests": 76,
+      "suites": 4,
+      "status": "passed",
+      "seconds": 0.012
+    },
+    {
+      "tests": 25,
+      "suites": 6,
+      "status": "passed",
+      "seconds": 16.952
+    },
+    {
+      "tests": 182,
+      "suites": 27,
+      "status": "passed",
+      "seconds": 6.296
+    }
+  ],
+  "fileManagerTerminal": [
+    "\"Imports FileManager selections and previews the package copy through system UI\"",
+    "passed",
+    "0.016"
+  ],
+  "httpTerminal": [
+    "originalScriptWidgetHTTPUsesBoundedRealTransport()",
+    "failed",
+    "7.345"
+  ],
+  "issues": [
+    "\u2718 Test originalScriptWidgetHTTPUsesBoundedRealTransport() recorded an issue at HanlinDualWidgetEnginesTests.swift:131:6: Caught error: HanlinScriptWidgetError(message: \"The original HTTP execution did not finish within its native budget (stage: limits; evidence: /var/folders/gc/cfct9cdj5y3fydcmx_32wmjc0000gn/T/hanlin-widget-pass3-C36CE132-C60E-4870-965B-18F303970393)\")"
+  ],
+  "rawReceiptSHA256": "566a93a837dce1cd4da47f725458043913d7ee729b2efecd7b6017326485ed4b",
+  "rawLogSHA256": "3d0e13d59aee33e9c0a6ba88d570ca729481f8c71c45f0f760136ac7e019f153",
+  "allMethods": {
+    "\"Generated manifest is stable canonical JSON\"": 1,
+    "\"Loads integrity-checked declarations and registration metadata\"": 1,
+    "\"Original file bridge preserves files beyond former payload, per-file and total quotas on reopen\"": 1,
+    "largeRecordsSurviveReinstallationAndClearPreservesMigrationIntent()": 1,
+    "\"Compiles and renders independently of the application target\"": 1,
+    "\"An embedded chat session blocks its store until native disposal completes\"": 1,
+    "\"Original JS database owners retain more than sixteen independent temporary databases\"": 1,
+    "\"Explicit file budgets fail before replacement and permissions and source errors still preserve data\"": 1,
+    "\"Renders a family-specific widget and preserves its reload date\"": 1,
+    "storagePayloadPolicyIsExplicit()": 1,
+    "\"Registers bounded App Intent actions without requiring application UI\"": 1,
+    "\"Receives intent inputs and captures typed Script.exit results\"": 1,
+    "\"Projects the native device snapshot into an immutable Scripting Device object\"": 1,
+    "\"Runs FileManager and nativ-ai Pasteboard and Safari calls through the native system channel\"": 1,
+    "\"An unrelated isolated store cannot block or bypass a production checkpoint\"": 1,
+    "\"Denies Pasteboard and open-URL operations before invoking the native system loader\"": 1,
+    "\"A failed initializer cancels its owners before the same store becomes available\"": 1,
+    "\"Routes deprecated Clipboard through the Pasteboard capability\"": 1,
+    "\"Bridges typed Pasteboard items and privacy options without losing value types\"": 1,
+    "\"Runs CryptoKit hashes, HMAC, key generation, UUID, and AES-GCM\"": 1,
+    "\"Runs the nativ-ai Reminder creation flow and returns the EventKit identifier\"": 1,
+    "\"Bridges Reminder CRUD, filtered queries, and reminder calendars\"": 1,
+    "\"Rejects malformed Reminder payloads before invoking EventKit\"": 1,
+    "\"Imports FileManager selections and previews the package copy through system UI\"": 1,
+    "\"Runs the exact nativ-ai photo attachment primitives with real encoded image values\"": 1,
+    "\"Runs FileManager and nativ-ai Dialog interactions through native modal results\"": 1,
+    "\"Runs the exact FileManager EditorController presentation and content lifecycle\"": 1,
+    "\"Decodes bounded Assistant requests and emits Web-compatible chunks\"": 1,
+    "\"SQLite executes parameterized statements and returns typed rows\"": 1,
+    "\"Location requests validate capabilities, coordinates, locales, and accuracy\"": 1,
+    "\"Health and Notification payloads reject unsupported or unbounded requests\"": 1,
+    "\"Actual JavaScript Data round trip preserves empty BLOB and an ordinary column matching the private tag\"": 1,
+    "\"Runs smart-eating Health statistics and recurring Notification primitives end to end\"": 1,
+    "\"Store validates before side effects and preserves remaining owners when one handle is released\"": 1,
+    "\"Reorders keyed children before applying their property patches\"": 1,
+    "\"Interactive acceptance primitives retain their wire representation\"": 1,
+    "\"Unknown routes and invalid pops fail closed\"": 1,
+    "\"Rejects duplicate keys and bounded patch overflow\"": 1,
+    "\"Rendered presentation nodes drive native modal state\"": 1,
+    "\"Model dispatches events and disposes effects\"": 1,
+    "\"Rendered navigation destinations synchronize path and native back events\"": 1,
+    "\"An invalid nested reorder does not commit an earlier patch in its batch\"": 1,
+    "\"Produces deterministic patches that recreate an unkeyed tree\"": 1,
+    "\"Valid keyed reordering preserves full nodes and subsequent property patches\"": 1,
+    "\"A current child without a key cannot be reordered\"": 1,
+    "\"Missing and unknown requested child keys remain rejected\"": 1,
+    "\"A non-first duplicate in current reorder children is identified accurately\"": 1,
+    "\"A non-first duplicate in requested reorder keys is identified accurately\"": 1,
+    "\"SVG sanitizer accepts local vector markup and rejects active or remote content\"": 1,
+    "\"The original duplicate-key poisoning sequence throws before changing the tree\"": 1,
+    "\"Navigation, presentation, scene, and resume state are explicit\"": 1,
+    "\"A non-first duplicate in the new diff tree is identified accurately\"": 1,
+    "\"A non-first duplicate in the old diff tree is identified accurately\"": 1,
+    "\"Duplicate current child keys are rejected before dictionary construction\"": 1,
+    "realItemProvidersCopyFilesAndPreserveTextURLAndPerItemErrors()": 1,
+    "\"The selected backup must also have matching installed identities\"": 1,
+    "\"Malformed stored identity rejects cold load and restore without changing registry bytes\"": 1,
+    "\"Artifact corruption fails before catalog mutation\"": 1,
+    "cancelledStagingAndCorruptBatchesCannotRemoveOrStarveHealthyItems()": 1,
+    "\"Uninstall recovery restores or completes according to its commit point\"": 1,
+    "\"Unified catalog retains native and installed script authorities\"": 1,
+    "\"Capability grants persist and revocation is package scoped\"": 1,
+    "tamperedPathsLinksAndBytesCannotBecomeVerifiedOwnedFiles()": 1,
+    "\"Valid primary precedence and valid backup recovery retain their original data\"": 1,
+    "\"Cold restoration through a symlinked root preserves the active manifest while pruning staging\"": 1,
+    "copiedFilesSurviveProviderDeletionAndPublishOnlyWithTheirWholeBatch()": 1,
+    "\"Packages install and restore with legacy empty grants\"": 1,
+    "\"Install recovery is atomic at every persisted transition\"": 1,
+    "existingInboxPathsMustBeRealDirectoriesWhenReopened()": 1,
+    "\"Rollback resumes after every journaled restore boundary\"": 1,
+    "\"Real identities, all generations, grants, disabled state and private bytes survive import and rollback\"": 1,
+    "\"Missing artifact manifest fails deterministically before catalog mutation\"": 1,
+    "\"Install, update, rollback, disable, restore, and uninstall preserve stable identity\"": 1,
+    "\"Retry preserves later user edits, and rollback refuses to discard them\"": 1,
+    "\"Live canonical KV and SQLite owners checkpoint, reopen, and follow rollback roots\"": 1,
+    "\"A read-only destination cannot change either source store\"": 1,
+    "\"Conflicting package identities or data are rejected before live changes\"": 1,
+    "\"Durable snapshots retain nonempty SQLite WAL and ordinary similarly named files\"": 1,
+    "\"Failed update promotion restores the previous active generation\"": 1,
+    "\"A symlink in private data cannot pull other files into the transfer\"": 1,
+    "\"A fresh process recovers each durable two-store promotion boundary\"": 1,
+    "independentConcurrentBatchesNeverOverwriteEachOtherOrHistoricalInbox()": 1,
+    "\"Unopened legacy ScriptUI defaults migrate before export without replacing newer canonical data\"": 1,
+    "\"Conflicting canonical exposures remain validation errors\"": 1,
+    "\"A later committed SQLite KV edit prevents rollback and survives a repeated import\"": 1,
+    "\"Tampered checkpoint bytes are rejected before destination writes\"": 1,
+    "\"Prepared action exports retain their identities behind one canonical App Intent bridge\"": 1,
+    "\"Stored Expo package keeps every action while equivalent exposures share a canonical descriptor\"": 1,
+    "\"Action identity preserves JavaScript case through Codable without changing other identifiers\"": 1,
+    "\"Exposure-only package does not get fake .app entrypoint and retains declared exposures in catalog snapshot\"": 1,
+    "\"Normal legacy foreground script package gets expected app/index.tsx behavior\"": 1,
+    "\"Identical foreground entries still violate the canonical unique-kind contract\"": 1,
+    "\"Different App Intent handlers, runtimes and context sets remain conflicting canonical routes\"": 1,
+    "\"Prepared action identifiers preserve export case, round trip, and reject malformed values\"": 1,
+    "\"Ambiguous assistant kinds need an exact registered handler without foreground fallback\"": 1,
+    "\"Different assistant identities cannot alias the same dedicated handler\"": 1,
+    "\"NativeScript package preserves nativeScript implementation, runtimeProfile, and exposures\"": 1,
+    "\"Legacy descriptor JSON without supportedExposures decodes seamlessly with default derivation\"": 1,
+    "\"Several dedicated assistant tools preserve their sources, configuration and installed identities\"": 1,
+    "\"Package entrypoint kinds bridge bidirectionally to canonical kinds\"": 1,
+    "\"Unknown and future exposure raw values survive Codable round-trip\"": 1,
+    "\"Stored package snapshot conforms to HanlinMiniAppRegistration and validates\"": 1,
+    "\"Prepared action handlers resolve to the installed bundle without a second source prefix\"": 1,
+    "\"Manifest declared supportedExposures (translation_ui, widget, app_intent) are exposed in appDescriptor\"": 1,
+    "\"Legacy-format NativeScript package with hanlinRuntime manifest field resolves to .nativeScript\"": 1,
+    "\"HanlinScriptPackageDiscovery discovers registrations and builds catalog snapshot\"": 1,
+    "\"Legacy grant metadata does not add a Hanlin permission gate\"": 1,
+    "\"Network broker retains HTTPS, redirects and response limits without grants\"": 1,
+    "\"Audit storage is bounded and contains no payload data\"": 1,
+    "\"Programmatic URL requests do not require an extra Hanlin user-gesture approval\"": 1,
+    "\"Dialog, device, URL, pasteboard, and Assistant remain brokered\"": 1,
+    "\"The public initializer accepts repeated rows without adding a legacy permission gate\"": 1,
+    "\"Storage and VFS are package-namespaced, bounded, and traversal-safe\"": 1,
+    "\"Conflicting IDs retain the last complete record without merging fields\"": 1,
+    "\"Identical repeated legacy grants coalesce\"": 1,
+    "\"Public replacement accepts repeated rows without changing the existing authorization path\"": 1,
+    "\"Rejects cross-session envelopes and inbound replay\"": 1,
+    "\"Owns and releases promises, callbacks, subscriptions, and handles\"": 1,
+    "\"Applies quotas and queue backpressure\"": 1,
+    "\"Context policies are distinct and valid\"": 1,
+    "\"Enforces the complete lifecycle and idempotent close\"": 1,
+    "\"Original keyboard stays local, keeps state across text changes and does not repeat edits\"": 1,
+    "\"Old effects decode and keyboard commands cannot target a notification\"": 1,
+    "\"Read-only catalog does not create a shared container, lock or diagnostic\"": 1,
+    "wrongBatchReferencesAndChangedOwnedBytesFailBeforeDispatch()": 1,
+    "expiredOrCancelledIngressCannotInvokeTheHandler()": 1,
+    "\"Extension-local execution cannot accidentally target the shared directory\"": 1,
+    "\"Absent keyboard document text is omitted, matching its optional SDK fields\"": 1,
+    "\"Extracts every Scripting Live Activity presentation region\"": 1,
+    "\"Decodes the visual properties used by the smart-eating widgets\"": 1,
+    "\"Notification continuation keeps its queued and actual terminal receipt\"": 1,
+    "\"HanlinScriptTranslationUISnapshot round-trip in extension store\"": 1,
+    "\"HanlinTranslationSessionContext substitution into HanlinScriptUINode\"": 1,
+    "\"HanlinCompactAgentConfigStore save, load, and clear round-trip\"": 1,
+    "\"Rejects malformed Live Activity region trees\"": 1,
+    "largeInputsUseOneStableQueueIdentityAndReturnTheActualResultAfterReopen()": 1,
+    "\"Pending publication is neither repaired nor admitted by the keyboard reader\"": 1,
+    "\"Translation action parameters preserve literal selected text through nested payloads\"": 1,
+    "\"Persists an integrity-checked extension-safe snapshot\"": 1,
+    "ownedCancellationDrainsTheActualHandlerBeforeKeepingItsTerminalReceipt()": 1,
+    "\"A first-launch MiniApps share is read by its app without entering the AI inbox\"": 1,
+    "\"A removed presentation cannot enqueue a new notification continuation\"": 1,
+    "\"Notification selection uses plain JSON and matches action installation, package and generation\"": 1,
+    "ordinaryJSONParametersKeepNullNumbersUnicodeAndOmission()": 1,
+    "failedRefreshRetainsVerifiedRenderAndDoesNotCommitStagedState(engine:)": 1,
+    "runningCancellationIsARequestUntilTheActualExecutorReturns()": 1,
+    "\"App and extensions address the same product, without an AI receipt alias\"": 1,
+    "legacyEnvelopeAndBinaryValuesRoundTripThroughTheSameQueue()": 1,
+    "malformedAndPoisonedRecordsFailWithoutReadingOutsideTheStore()": 1,
+    "unreadableRecordsCannotBlockAdmissionAndRetainTheirOriginalBytes()": 1,
+    "lostOwnedAdmissionIsDeferredAndCannotReplayAfterAProcessRestart()": 1,
+    "consistencyReportCannotHideMissingRevisionOrMalformedCommit(missingRevision:)": 1,
+    "registeredIdempotentRecoveryFencesOutTheOriginalOwner()": 1,
+    "ownedExecutorKeepsForegroundDrainsOutAndReturnsTheOriginalReceiptOnRetry()": 1,
+    "busyAdmissionCanQueueAgainOnlyBeforeActionExecutionAndWithoutConsumingAnAttempt()": 1,
+    "originalTagProducesDistinctNativeRaster(tag:)": 1,
+    "expiredQueuedAndCancelledQueuedCommandsNeverStart()": 1,
+    "actionAndPublicationPreserveUnrelatedCollections()": 1,
+    "v1ShadowProjectsHistoricalFieldsWithoutLosingCurrentMetadata()": 1,
+    "twoPackagesReceiveTheirOwnDurableResultsAndFailures()": 1,
+    "frozenIntegerPropsPreserveOriginalJSCNumberSemantics()": 1,
+    "interruptedNonIdempotentWorkIsDeferredWithoutReplay()": 1,
+    "gridColumnsDateAndNativeElementSemantics()": 1,
+    "imageRotationKeepsTheOriginalSwiftUICenter(degrees:)": 1,
+    "unstartedReleaseRetainsCancellationExpiryAndFencesOldLeases()": 1,
+    "originalScriptWidgetImportedHelpersAndVerifiedFileStorage()": 1,
+    "originalGaugeRejectsUnsafeNumbersAndPreservesValidNeedle()": 1,
+    "damagedItemsDoNotBlockHealthyDeliveryOrEraseTheirOriginalBytes()": 1,
+    "invalidImageDimensionsAndTransformsNeverReachSwiftUI(attribute:)": 1,
+    "testNativeEntitySuggestionsReadPublishedDefaultAndVariants()": 1,
+    "atomicOwnedAdmissionHasOneLeaseAndPreservesExactRetriesAndConflicts()": 1,
+    "unconfiguredAndWrongFamilyNeverSelectAnotherWidget()": 1,
+    "oversizedAndMalformedImagesAreRejectedBeforeDisplay()": 1,
+    "duplicateDeliveryNeverOverwritesACompletedReceiptOrPayload()": 1,
+    "originalChartVariantUsesItsNativeDataSchema(type:)": 1,
+    "originalTagRespondsToItsSemanticInput(tag:)": 1,
+    "timelinePreparationCommitsOriginalTypedStorageAcrossColdReads()": 1,
+    "concurrentClaimsAcrossStoreInstancesHaveOnlyOneOwner()": 1,
+    "emittedExpoIntentCarriesVerifiedIdentityAndCallsSource()": 1,
+    "largeValidImagesUseTheOriginalBoundedDownsampler()": 1,
+    "pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting()": 1,
+    "actualAsyncHandlerIsCancelledBeforeItsTerminalReceipt()": 1,
+    "testNativeEntityLookupResolvesOnlyExactIDs()": 1,
+    "testDurableQueryDiagnosticCrossProcess()": 1,
+    "testPass7HistoricalV1StoreEnvelopeCompatibility(timestamp:)": 1,
+    "ownedAdmissionFailureIsTerminalWhileLegacyQueuedAdmissionRemainsRetryable()": 1,
+    "differentActivityCanCompleteWhileFirstActivityIsSuspended()": 1,
+    "installedProgramPreparationAndActionMeasurements()": 1,
+    "sameActivityNeverOverlapsAndFailureDoesNotBlockLaterWork()": 1,
+    "originalScriptWidgetHTTPUsesBoundedRealTransport()": 1,
+    "canceledWaiterDoesNotRunOrCancelThePrecedingMutation()": 1,
+    "checkedArtifactsRejectTamperTraversalOtherGenerationAndSymlink()": 1,
+    "realArchiveImport(name:)": 1,
+    "testNativePublisherRepairsMissingDefaultWithoutLosingA1A2()": 1,
+    "passiveLegacyNavigationCannotCoverNativeOrNestedButtons()": 1,
+    "testPass7SelectableWidgetEntitiesCrossProcess()": 1,
+    "pass4PrivateVarAliasedRootCleanLoadArtifactStoreAndSnapshotPublishSucceeds()": 1,
+    "testRegistryAndTemplateJoinHandlesFamilyAndOrphans()": 1,
+    "userCreatedInstancesAndHostRefreshPreserveState()": 1,
+    "pass4SymlinkAndTraversalSecurityRejectsManagedTreeLinksWithDiagnostics()": 1,
+    "installAndVerifiedLoader(name:)": 1,
+    "interruptedShadowPublicationRestoresExactCommittedRevision()": 1,
+    "rootFragmentsPreserveOriginalElementAllowances()": 1,
+    "testPass7StorageConsistencyReportAndDurableDiagnostic()": 1,
+    "testPass7InterruptedRevisionWriteOverwrittenAndClean(corruptedBytes:)": 1,
+    "changedInstallationsAndUndeclaredTargetsProduceRealFailureReceipts()": 1,
+    "scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas()": 1,
+    "malformedTaggedEventsAndUnknownVersionsDoNotBecomeCommands()": 1,
+    "missingCatalogStillDurablyRetainsTheEventForLiveHostValidation()": 1,
+    "identicalEventIDsStayInsideTheirProductNamespace()": 1,
+    "userInfoEmitsPlainJSONWhileInternalCodableKeepsItsTags()": 1,
+    "independentlyAuthoredAPNsStillRequiresTheCompleteValidEnvelope()": 1,
+    "cachedCatalogCannotOverrideLiveInstallationOrItsFailureReceipt()": 1,
+    "cancellationExpiryAndActionErrorsRemainDistinct()": 1,
+    "foregroundAdmissionLeavesUnstartedWorkQueuedWithoutConsumingAnAttempt()": 1,
+    "independentlyAuthoredAPNsParametersDecodeAsPlainJSON()": 1,
+    "staleUndeclaredDisabledAndUninstalledActionsRejectBeforeMutation()": 1,
+    "typedEventExecutesOnceAndKeepsItsActualResultAfterReopen(_:)": 1,
+    "actualHistoricalV1EncoderAndDowngradeReader()": 1,
+    "concurrentSourceActionsReplayAndHostPublication()": 1,
+    "sameSourceActionTargetAcrossInstalledPackagesAndVariantsIsIsolated()": 1,
+    "scriptWidgetNamedActionsAndBooleanSetValue()": 1,
+    "corruptCommittedV2NeverFallsBackToGoodV1()": 1,
+    "currentOriginQueuesExactDeclaredTargetAndRetainsNull(engine:)": 1,
+    "liveActivityParametersOverrideDefaultsWithoutChangingSourceIdentity()": 1,
+    "nativeNodeLiveActivityRecordsItsRealRouteAndRetainsLegacyCompatibility()": 1,
+    "optionalPresentationKeepsRealHandlerButPanelOnlyCannotQueue()": 1,
+    "explicitNonceRetainsReceiptAndRejectsConflictingParameters()": 1,
+    "invalidCurrentOriginOrTargetDoesNotEnqueue(reason:)": 1,
+    "fallbackNeverRestoresRevokedOrMismatchedContent(invalidation:)": 1,
+    "queuedOriginIsRevalidatedAfterDisableAndCancellationDoesNotExecute()": 1,
+    "continuationUsesCanonicalStoreRootBeforeAndAfterCreation()": 1,
+    "corruptRenderBytesAreRejectedAndUninstallDropsCacheReferences()": 1,
+    "activationBeforeEnqueueUsesExistingDrainAndMissingHostKeepsQueue()": 1,
+    "precedingSnapshotWithoutRenderMetadataDecodesAndCopiesPreserveMetadata()": 1,
+    "\"Sensitive frameworks declare their signing and privacy requirements\"": 1,
+    "validReminderKeepsOriginalAlarmAndPriority()": 1,
+    "nonfiniteDatesCannotReachEventKit(value:)": 1,
+    "hugeAlarmCannotOverflowIntegerOrCreateInvalidEventKitDate()": 1,
+    "incompleteCalendarCannotReachWrite()": 1,
+    "requestedEntitySelectionIsPreserved()": 1,
+    "reversedRangeFailsBeforeDateInterval()": 1,
+    "\"Location and placemark values preserve modern MapKit result fields\"": 1,
+    "\"Every implemented family has one explicit availability record\"": 1,
+    "\"Health and notification bridge values preserve declared Scripting semantics\"": 1,
+    "cancelledFetchFinishesWithoutOSCallbackAndIgnoresLateResult()": 1,
+    "singleEndpointOutsideDefaultWindowKeepsOrderedBounds()": 1,
+    "emptyMutationAndNullCalendarFieldsAreRejected(json:)": 1,
+    "completionIsConsumedOnceWithoutCancellingSuccessfulRequest()": 1,
+    "missingOSCallbackTimesOutAndNextOperationWorks()": 1,
+    "mutationRequiresAnActualIdentifier(operation:)": 1,
+    "alreadyCancelledOperationNeverStartsEventKit()": 1,
+    "broadSearchRetainsPresentAndFutureInsteadOfEventKitTruncation()": 1,
+    "reminderEndDayIncludesAfternoonAndExcludesFollowingMidnight()": 1,
+    "suppliedMalformedDayDoesNotBecomeUnbounded(value:)": 1,
+    "inclusiveDayRangeUsesCalendarArithmeticAcrossDST()": 1,
+    "clearOnlyUpdateStillExpressesAMutation(operation:)": 1,
+    "invalidArgumentsCannotReachEventKit(json:)": 1,
+    "dueComponentsCannotBeSetWhileClearingDueTimestamp()": 1,
+    "dueTimestampCannotBeSetWhileClearingDueComponents()": 1,
+    "completePublicWritablePayloadDecodes()": 1,
+    "invalidRecurrenceAndAlarmAreRejected()": 1,
+    "suppliedBlankOperationDatesAreRejected(json:)": 1,
+    "patchKeepsOmittedFieldsAndExplicitClearDistinct()": 1,
+    "\"Legacy installed entrypoint migrates to its historical QuickJS profile\"": 1,
+    "\"Preview installability fails closed on archive or analyzer errors\"": 1,
+    "\"Installed records and artifact manifests round trip deterministically\"": 1,
+    "\"Release performance budgets are versioned and deterministic\"": 1,
+    "\"Preserves unknown script.json fields without granting behavior\"": 1,
+    "\"Legacy capability metadata normalizes without gating installation\"": 1,
+    "\"Imports archives from File Provider paths containing spaces\"": 1,
+    "\"Malformed manifests fail before a staged package can escape\"": 1,
+    "\"Production exporter round trips through production archive import\"": 1,
+    "\"Autonomous Skills accept large resources while explicit budgets remain enforceable\"": 1,
+    "\"Stages, validates, extracts, and decodes without executing source\"": 1,
+    "\"Extracts declared capabilities from script.json manifest\"": 1,
+    "\"Imports prepared NativeScript packages containing ESM bundles\"": 1,
+    "\"Imports archives whose source paths contain Unicode and spaces\"": 1,
+    "\"Accepts one wrapped Scripting manifest and ignores macOS metadata\"": 1,
+    "\"Rejects links, collisions, configured ratio excess and hidden encrypted entries\"": 1,
+    "rejectsEscapingPaths(path:)": 1,
+    "\"Root and single-wrapper manifests retain source metadata and ordinary resources\"": 1,
+    "\"Autonomous Skills still reject invalid sizes, overflow, escaping paths and collisions\"": 1,
+    "\"Rejects ambiguous manifests and case collisions\"": 1,
+    "\"Default imports accept original engine resources beyond former host budgets\"": 1,
+    "\"Expo import main matches the manifest entry and cannot redirect launch elsewhere\"": 1,
+    "\"Prepared Expo packages preserve the embedded original asset version contract\"": 1,
+    "\"Legacy finding JSON remains readable without a diagnostic code\"": 1,
+    "\"Discovers entrypoints, resolves modules, and derives capabilities deterministically\"": 1,
+    "\"Capture and Spotlight reject undeclared, ambiguous or unrelated foreground actions\"": 1,
+    "\"Routes original Python entrypoint deterministically without engine fallback\"": 1,
+    "\"Accepts prepared NativeScript ESM bundle artifacts\"": 1,
+    "\"Keyboard and notification declarations without compiled panels are actionable import errors\"": 1,
+    "\"Bridge version types and complete semantic versions are validated before import\"": 1,
+    "\"Prepared Expo and NativeScript exposures retain independent action and embedded identities\"": 1,
+    "\"Prepared NativeScript entry metadata uses the canonical bundle across sessions\"": 1,
+    "\"Malformed dependency maps cannot bypass version validation\"": 1,
+    "\"Validates declared @nativescript/core dependency compatibility\"": 1,
+    "\"Assistant selection cannot fall back to the foreground app or malformed metadata\"": 1,
+    "\"Prepared system entrypoints retain Host identity and separately compile their native panels\"": 1,
+    "\"Writes only validated JavaScript, maps, and a sorted manifest\"": 1,
+    "\"Validates the embedded Expo SwiftUI plugin contract\"": 1,
+    "\"Routes only explicitly declared NativeScript packages to the native runtime\"": 1,
+    "\"Install artifact writer atomically closes the bundler-store manifest contract\"": 1,
+    "\"Fails closed on preview errors and compiler identity mismatch\"": 1,
+    "\"Rejects unresolved graphs and compiler output traversal\"": 1,
+    "\"Detects capability-bearing ambient Scripting globals\"": 1,
+    "\"Builds a closed virtual project and deterministic artifact manifest\"": 1,
+    "\"Production compiler profile excludes DOM libraries and cannot drift\"": 1,
+    "\"Prepared runtimes reject malformed, wildcard and future required versions\"": 1,
+    "\"Expo import evaluates foreground app and multi-exposure support fail-closed\"": 1,
+    "\"Malformed and duplicate prepared entrypoints are visible import failures\"": 1,
+    "\"Rejects dynamic imports, eval, unresolved paths, and arbitrary bare modules\"": 1,
+    "\"System exposures cannot redirect from the prepared Host to an unrelated source\"": 1,
+    "\"Modern filename convention does not create an undeclared assistant capability\"": 1,
+    "\"Unavailable native plugins fail before Expo and NativeScript import\"": 1,
+    "\"Validates the embedded NativeScript SwiftUI plugin contract without changing ordinary Scripting\"": 1,
+    "\"Dedicated prepared assistant tools survive analysis and installed entrypoint mapping\"": 1,
+    "appDescriptorWithEmbeddedResultEntryPointRoundTrips()": 1,
+    "jsonDecoderRejectsDuplicateKeysAndOutOfRangeIntegers()": 1,
+    "toolPresentationBackwardCompatibleWhenNewFieldsAbsent()": 1,
+    "wireEnvelopeRoundTripsAndEnforcesRequestIdentity()": 1,
+    "executionPresentationFamilyIDIsExtensible()": 1,
+    "appDescriptorDecodesLegacyPayloadWithoutSkills()": 1,
+    "logicalToolIdentityIsProviderQualifiedAndAliasesAreNotIdentity()": 1,
+    "valueSchemasValidateAndRoundTrip()": 1,
+    "shortcutTextRemainsTextAndBinaryOutputRequiresAFile()": 1,
+    "appDescriptorRejectsUnsafeResourcePaths()": 1,
+    "permissionValuesKeepDeclarationDecisionGrantAndEffectivenessSeparate()": 1,
+    "hostVersionRangeRejectsInversion()": 1,
+    "identifiersValidateAndRoundTripCanonically()": 1,
+    "shortcutJSONRejectsMalformedOrLossyInput(_:)": 1,
+    "toolPresentationMigratesLegacyExpandedPayloadToCanonicalDescriptor()": 1,
+    "expansionModeBridgesToPresentationIntent()": 1,
+    "standardJSONPromotesToRichValuesWithoutNumericCollapse()": 1,
+    "embeddedPresentationDefaultsAreMinimal()": 1,
+    "expansionMoDesAllRoundTrip()": 1,
+    "jsonObjectsSortByUnmodifiedUTF8KeyBytes()": 1,
+    "packageVersionsUseStableTotalOrdering()": 1,
+    "skillDescriptorEncodesAndDecodesCorrectly()": 1,
+    "descriptorAndCatalogRevisionsHaveSeparateSemantics()": 1,
+    "jsonSchemaDocumentsPreserveUnknownAndNarrowingKeywords()": 1,
+    "scriptManifestValidatesAndEncodesDeterministically()": 1,
+    "wireEnvelopeRejectsUnknownVersionMalformedKindAndOversizedPayload()": 1,
+    "scriptManifestRejectsUnsafePathsDuplicateToolsAndUnsupportedABI()": 1,
+    "manifestRoundTripsDeterministically()": 1,
+    "correlationAndInstanceIdentitiesRemainDistinctTypedValues()": 1,
+    "shortcutDictionaryAndListRetainStructureAndExactNumbers()": 1,
+    "canonicalLimitsRejectExcessiveDepthAndSize()": 1,
+    "appDescriptorRejectsDuplicateSkillIDs()": 1,
+    "embeddedSizePresetsAllRoundTrip()": 1,
+    "shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding(_:)": 1,
+    "toolPresentationCanonicalEmbeddedIsAuthoritativeOverLegacyFlag()": 1,
+    "majorMinorVersionsRejectNonCanonicalAndUnknownVersions()": 1,
+    "conversionsRejectLossAndNonFiniteNumbers()": 1,
+    "embeddedPresentationDescriptorRoundTrips()": 1,
+    "jsonPrimitivesUseCanonicalLexicalForms()": 1,
+    "scriptingWireV2IsAdditiveAndRequiresExplicitV2Support()": 1,
+    "toolExecutionPresentationRoundTrips()": 1,
+    "\"Exported entrypoint schema accepts every current runtime and exposure\"": 1,
+    "runtimeProfilesDeclareHonestIsolationAndTrustCapabilities()": 1,
+    "appAndRuntimeSessionSnapshotsRemainPortableValues()": 1,
+    "embeddedResultEntryPointKindExists()": 1,
+    "manifestRejectsUnsafePathsAndUnsupportedVersions()": 1,
+    "toolPresentationWithExecutionAndEmbeddedRoundTrips()": 1,
+    "manifestSchemaResourceIsValidJSONAndUnknownFieldsAreTolerated()": 1,
+    "richValuesUseExactTaggedIntegerNumberAndDataRepresentations()": 1,
+    "binary64ExtremesRoundTripBitIdentically()": 1,
+    "manifestRejectsDuplicateCanonicalIdentifiers()": 1,
+    "skillIDsValidateAndRoundTripCanonically()": 1,
+    "entryPointDescriptorWithEmbeddedResultRoundTrips()": 1,
+    "releasedRuntimeMinimumsCannotAdmitMalformedFutureOrPrereleaseVersions()": 1,
+    "malformedInstalledAuthorityNeverBecomesACompatibleDefault()": 1,
+    "javascriptRuntimeCompatibilityAcceptsOnlyCurrentOrOlderSameMinorPatches()": 1,
+    "explicitBackwardBridgeCompatibilityStillRequiresCompleteStableVersions()": 1,
+    "\"Composite discovery aggregates and deduplicates across providers\"": 1,
+    "\"Exposure catalog defines standard classifications for near-term surfaces\"": 1,
+    "\"Exposure classifications round-trip through JSON\"": 1,
+    "\"Duplicate fields across panels and invalid defaults fail declaration validation\"": 1,
+    "\"Configuration decoder defaults support minimal author manifests\"": 1,
+    "\"Required metadata and optional omissions agree with the author manifest schema\"": 1,
+    "\"Default configuration is a value snapshot, independent between drafts\"": 1,
+    "\"Author defaults use ordinary JSON while preserving absent and explicit null values\"": 1,
+    "\"Assistant action IDs preserve case and reject only exact duplicates\"": 1,
+    "\"Stale versions and actions are rejected independently of catalog display labels\"": 1,
+    "\"Assistant metadata preserves raw schemas and declared rich result IDs\"": 1,
+    "\"Catalog and map input cannot silently carry invalid or undeclared values\"": 1,
+    "\"Provider-scoped identities cannot collide through separators or titles\"": 1,
+    "optionalPolicyFieldsDecodeSafely()": 1,
+    "mixedManifestExemptsOnlyExactDeclaredReadActions()": 1,
+    "nonSensitiveReadDoesNotRequireBlanketConsent()": 1,
+    "explicitMetadataRoundTripsAndOverridesFamilyAnimation()": 1,
+    "missingPresentationMetadataUsesGenericToolsAndCommonAnimation()": 1,
+    "unknownAnimationCannotInjectCustomExecutableContent()": 1,
+    "nativeActionIgnoresDuplicateCallbacksAndLateCancellation()": 1,
+    "waitingNativeActionResolvesOnCancellation()": 1,
+    "\"Registration rejects missing handlers rather than claiming success\"": 1,
+    "legacyMigrationAndExplicitUnhideSurviveReopening()": 1,
+    "cancelledNativeActionDoesNotStartOrAcceptALateSuccess()": 1,
+    "\"Catalog preserves all four original engines and de-duplicates stable IDs\"": 1,
+    "\"A late result from a cancelled call cannot complete another invocation\"": 1,
+    "corruptOrSymlinkedMarkersAreRetainedAndRejected()": 1,
+    "\"Inter-app requests enforce routes, capability, authorization, size, and timeout\"": 1,
+    "\"An invocation returns its actual registered JavaScript result\"": 1,
+    "\"Session teardown completes pending readers and invokes with an error\"": 1,
+    "\"Launch runtime is selected from the requested entrypoint\"": 1,
+    "\"Data is durable, namespaced, traversal-safe, and quota-bound\"": 1,
+    "\"Per-entrypoint engine resolution works for hybrid descriptors\"": 1,
+    "\"Expo runtime profile resolves to .expo engine and valid launch plan\"": 1,
+    "actualPersonalHostActionOutlivesTheOldFifteenSecondDeadline()": 1,
+    "independentConnectionsPreserveConcurrentCommittedKeys()": 1,
+    "\"Explicit budgets reject work and terminal stop prevents delayed queries or reopening\"": 1,
+    "legacyMigrationPagesAllKeysAndDoesNotResurrectClearedValues()": 1,
+    "uncappedRequestCancellationDrainsItsRealHandlerBeforeReportingCancelled()": 1,
+    "largeValuesReopenAndExplicitSharing()": 1,
+    "\"Dynamic UTF-8 multi-statement transactions retain SQLite tail bytes\"": 1,
+    "explicitlyRequestedDeadlinesAndSizeBudgetsAreStillEnforced()": 1,
+    "\"Default SQLite resources preserve live handles, complete rows, parameters and large SQL\"": 1,
+    "\"SQLite preserves NUL text, empty binary, NULL, full bytes and numeric storage classes\"": 1,
+    "\"S04: Sequential 5-tool chain executing 6 provider steps with monotonic history\"": 1,
+    "\"S11: Long 20-step tool-heavy run with strict per-round request validation\"": 1,
+    "\"Section 19: Offline reproduction of OpenRouter reasoning_details and finish=other failure class\"": 1,
+    "\"S13: Multi-turn conversation preserves prior tool and answer history without stale run state\"": 1,
+    "\"P12B: Structured assistant tool-call and tool-result history survives into next provider model request\"": 1,
+    "onePromptRequestsBothFieldsAndConversationLanguage()": 1,
+    "\"S12: Engine step limit boundary (configured stopWhen: stepCountIs(32)) terminates cleanly\"": 1,
+    "parsesHebrewTitleAndTopicIcon()": 1,
+    "explicitPresetOverridesBaseInheritanceAndAutomaticClearsSavedOverride()": 1,
+    "recognizesLegacyAndCurrentPlaceholderLanguagesOnly()": 1,
+    "unchangedWireModelAndProviderPreserveSavedCustomPolicy()": 1,
+    "unknownOrMissingSymbolUsesValidDefault()": 1,
+    "changedModelOrProviderInheritsSelectedBasePolicyIncludingAutomatic()": 1,
+    "defaultsAndCustomPoliciesPreserveMigrationSemantics()": 1,
+    "\"A catalog restored after the stop decision still delivers the original empty tool result\"": 1,
+    "anthropicAndLocalAvailabilityReflectNativeProvider()": 1,
+    "explicitPreserveOverridesRebindAndExplicitInheritanceCanRefreshUnchangedBase()": 1,
+    "proxiesPlanTransportAndOtherProvidersDoNotInheritOpenAIPresets()": 1,
+    "nativeLegacyRetentionAndModernExplicitLifetimeAreDistinct()": 1,
+    "\"Anthropic Native: Thinking signature round-trip across multi-tool turns\"": 1,
+    "\"S06: Tool returns non-fatal error and model recovers on next turn\"": 1,
+    "acceptsOneJSONFenceButRejectsProseAndInvalidTitles()": 1,
+    "\"One request supplies title and icon through the configured provider\"": 1,
+    "\"S03: Production skill activation: load_skill exposes python dynamically\"": 1,
+    "cancellationCannotApplyEvenAnOtherwiseValidJSONResponse()": 1,
+    "\"S02: Single tool call with provider-native continuation pairing\"": 1,
+    "\"Anthropic Native: Tool result error is properly flagged and recovered\"": 1,
+    "\"S10 R1: OpenAI-compatible reasoning_content multi-turn reasoning tool loop\"": 1,
+    "\"S01: Plain text baseline across all provider profiles\"": 1,
+    "\"S08: Unknown tool call returns non-fatal tool error and allows continuation\"": 1,
+    "\"S15: Empty tool result succeeds and continuation remains valid without mismatch\"": 1,
+    "incompleteTruncatedAndOversizedStreamsCannotBecomeMetadata()": 1,
+    "\"S05: Parallel tool calls in a single model step across OpenAI, Anthropic, and Google\"": 1,
+    "\"Anthropic Native: Parallel tool use and tool results\"": 1,
+    "\"S14: Large deterministic tool result containing Unicode, newlines, and structured JSON\"": 1,
+    "\"S10 R2: OpenAI-compatible reasoning field multi-turn reasoning tool loop\"": 1,
+    "\"S10: Reasoning + tool continuation across multiple turns for reasoning profiles\"": 1,
+    "nativeChatDoesNotOfferResponsesOnlyExplicitPresets()": 1,
+    "\"S10 R4: Google native thoughtSignature multi-turn reasoning tool loop\"": 1,
+    "\"Validate multi-assistant tool call regression in harness validator\"": 1,
+    "\"HanlinChatStreamParser extracts <think> tags into reasoning events\"": 1,
+    "\"HanlinChatModelConfiguration uses the shared default and preserves explicit maxTokens\"": 1,
+    "\"HanlinChatRequestBuilder creates correct Gemini native request\"": 1,
+    "\"S07: Stream tool arguments fragmented across Hebrew UTF-8 and JSON escape boundaries\"": 1,
+    "\"Google Native: Parallel thoughtSignature placement on first functionCall part only\"": 1,
+    "\"S09: Multi-Skill exposure enforces monotonic visibility across rounds\"": 1,
+    "\"S10 R5: Anthropic native thinking signature multi-turn reasoning tool loop\"": 1,
+    "\"HanlinChatRequestBuilder creates correct Anthropic native request\"": 1,
+    "\"Google Native: Sequential thoughtSignature preserved exactly across requests\"": 1,
+    "\"S16: Hebrew prompt, Hebrew arguments, Hebrew result, and Hebrew final response\"": 1,
+    "\"HanlinChatStreamParser correctly parses Gemini SSE events\"": 1,
+    "\"All configured provider companies map to known conformance profiles\"": 1,
+    "\"HanlinChatStreamParser correctly parses OpenAI SSE content, reasoning, and done events\"": 1,
+    "\"S10 R3: OpenRouter reasoning_details multi-turn reasoning tool loop\"": 1,
+    "\"E10: valid tool call -> no retry\"": 1,
+    "\"Custom third-party providers route to openAICompatible\"": 1,
+    "\"HanlinChatRequestBuilder creates the configured OpenAI/OpenRouter request\"": 1,
+    "\"HanlinChatStreamParser correctly parses Anthropic SSE events\"": 1,
+    "\"Full and compact message adapters produce the same production request\"": 1,
+    "\"LAN and local host routing to openAICompatible\"": 1,
+    "\"E12: cancellation during first attempt -> cancelled, no retry\"": 1,
+    "\"E05: empty deltas + finish only -> retry\"": 1,
+    "\"Saved Responses dialects select Responses on official and custom hosts\"": 1,
+    "\"OpenAI with custom host routes to openAICompatible\"": 1,
+    "\"E02: finish(other)-only -> retry -> empty -> error\"": 1,
+    "\"E11: abrupt transport error -> no retry\"": 1,
+    "reasoningIsNotIncludedAndNativeCompletionReasonsAreNormalized()": 1,
+    "\"E06: first attempt empty, second attempt valid text -> exactly one visible completion\"": 1,
+    "\"Cancellation during final catalog lookup cannot start another provider step\"": 1,
+    "\"The SDK validates complete JSON against the declared response schema\"": 1,
+    "\"Reasoning-only length is incomplete and never automatically repeats a token-limited request\"": 1,
+    "\"E09: reasoning-only stop retries once, preserves reasoning and never emits a successful finish\"": 1,
+    "\"Cloud accepted original numeric JSON remains unchanged\"": 1,
+    "\"E01: truly empty stream -> retry -> empty -> emptyProviderResponse(2)\"": 1,
+    "\"E03: metadata + finish(other) only -> retry\"": 1,
+    "\"E07: first attempt finish-only, second attempt valid tool call -> tool executes exactly once\"": 1,
+    "\"E04: usage-only + finish only -> retry\"": 1,
+    "\"Anthropic routing and endpoint normalization\"": 1,
+    "\"Native reserialized input never becomes acceptedOriginal\"": 1,
+    "\"Original Anthropic SDK receives stable breakpoint and retains native read/write usage\"": 1,
+    "\"Gemini company name routes to native google provider\"": 1,
+    "\"Compact requests retain original Responses envelope, message order, cache scope and normalized usage\"": 1,
+    "\"OpenAI legacy wire uses only supported cache options and an opaque scope\"": 1,
+    "\"Cache policy merges with reasoning and omits unsupported transport controls\"": 1,
+    "\"Malformed, non-schema and oversized schema inputs fail before provider dispatch\"": 1,
+    "\"Google Generative AI routing and endpoint normalization\"": 1,
+    "\"OpenAI native routing for api.openai.com\"": 1,
+    "\"E08: normal text -> no retry\"": 1,
+    "\"OpenRouter profile sets HTTP-Referer, X-Title, and openAICompatible kind\"": 1,
+    "\"Query parameters are preserved during endpoint normalization\"": 1,
+    "\"Explicit Google references require correct scope and cannot discard system or tools\"": 1,
+    "\"Anthropic incremental usage normalizes input once, retains cache fields and resets between messages\"": 1,
+    "\"Tool catalog continuation keeps usage from every original SDK round\"": 1,
+    "\"Repeated endpoint query keys use the last explicit value without crashing\"": 1,
+    "\"Legacy and compact Anthropic requests keep stable and changing instructions in distinct blocks\"": 1,
+    "\"Direct chat path parses OpenAI plain streamed text and reasoning\"": 1,
+    "\"OpenAI and Gemini parser accounting retains read/write and reasoning distinctions\"": 1,
+    "\"Anthropic direct descriptor and options\"": 1,
+    "\"Direct chat path tolerates empty deltas, malformed lines, and tool-shaped payloads\"": 1,
+    "\"Native numeric leaves fail before approval or host effect\"": 1,
+    "cancellationBeforeRequestDoesNotSend()": 1,
+    "validationFailsBeforeNetworkAndImplicitOnlyModelsAreRejected()": 1,
+    "\"Opaque scopes remain stable across credentials and isolate namespaces, models and conversations\"": 1,
+    "\"OpenRouter descriptor includes HTTP-Referer and X-Title headers\"": 1,
+    "\"OpenAI direct descriptor and options\"": 1,
+    "\"Historical snapshots retain automatic policy and unknown cache-write accounting\"": 1,
+    "\"Google Gemini descriptor and options\"": 1,
+    "\"Direct chat path parses Gemini SSE events\"": 1,
+    "failedCreationIsNotRetriedAndErrorCannotEchoInput()": 1,
+    "\"Direct chat path normalizes inline <think> tags\"": 1,
+    "\"Direct chat request builder generates correct headers and URL for OpenRouter\"": 1,
+    "\"Custom OpenAI compatible endpoint normalization\"": 1,
+    "referenceRejectsWrongScopeModelExpiredAndPathTraversal()": 1,
+    "\"Direct chat path parses Anthropic SSE events\"": 1,
+    "\"Gemini direct finish reason normalization matrix\"": 1,
+    "lifecycleUsesOriginalWireAndScopedMetadata()": 1,
+    "settingsDisableContentAndUseTheInjectedTracer()": 1,
+    "\"Parallel tool execution in a single model step\"": 1,
+    "\"Tool continuation regression test: provider-native tool call and response pairing\"": 1,
+    "invalidTimelineAndCancellationRejectBeforeReplay()": 1,
+    "streamingSpanOutlivesActiveClosureAndEndsExactlyOnce()": 1,
+    "byteSplitsReplayThroughBothActualParsersWithoutMutation()": 1,
+    "toolCallsRemainDataWithNoRegisteredExecutorOrSecondStep()": 1,
+    "incompleteAndMalformedSourceRemainVisibleAsFailures()": 1,
+    "shutdownDrainsBoundedProcessorAndIsIdempotent()": 1,
+    "referencesRoundTripWithoutCorpusOrCredential()": 1,
+    "deleteIsIdempotentForExpiredResource()": 1,
+    "successfulCreationReceiptSurvivesLateCancellation()": 1,
+    "partialTextAndDoneWithoutCompletedAreNotSuccess()": 1,
+    "quotaFailureAndIncompleteAreSurfaced()": 1,
+    "originalSDKExportsCacheCountsAndDropsContent()": 1,
+    "\"Cancelling an original SDK approval never executes or continues the provider\"": 1,
+    "taskContextPreservesParentageAcrossSuspensionAndSeparatesConcurrentRequests()": 1,
+    "\"Advertised tool schema preserves original required, properties, and constraints\"": 1,
+    "\"Multimodal user message with text, imageData, and imageURL preserves all parts in V3 prompt\"": 1,
+    "mismatchedToolNamespaceIsRejectedBeforeDispatch()": 1,
+    "\"Invalid and extra arguments reach Hanlin executor and return non-fatal error\"": 1,
+    "canonicalAgentExecutesNamespacedToolAndContinuesExactlyOnce()": 1,
+    "errorsNamesAndInvalidNumbersCannotExportRawContent()": 1,
+    "officialValidationFailureIsAtomic()": 1,
+    "namespacesToolsAndPreservesFullStatelessHistory()": 1,
+    "reasoningOnlyCaptureCannotSilentlyReplayTheSameAttemptTwice()": 1,
+    "\"Unknown tool call produces non-fatal tool error and allows multi-step recovery\"": 1,
+    "providerMetadataCannotChangeResourceOrModel()": 1,
+    "\"Default agent continues beyond 40 actual tool steps, including dynamic discovery\"": 1,
+    "nativeSchemaKeepsTheExistingToolContinuationAndExactlyOneEffect()": 1,
+    "fragmentedUTF8StreamMustReachCompletion()": 1,
+    "realResponsesAdapterRequestsStrictSchemaAndPublishesOnlyCanonicalParts()": 1,
+    "malformedRepairedAndTruncatedResponsesPublishNoParts()": 1,
+    "\"Engine maps provider-native source and file stream parts to HanlinAISDKStreamEvent\"": 1,
+    "\"Real provider or transport error terminates stream\"": 1,
+    "\"Original SDK approval pauses effects and resumes the same exact call once\"": 1,
+    "directChatUsesTheObservedBytesForItsActualParser()": 1,
+    "unsupportedModelsFailBeforeAnyHTTPRequest()": 1,
+    "sdkFetchObserverPreservesTheSameBodyAndAttemptIdentity()": 1,
+    "\"Explicit cancellation after 45 actual steps cancels the executing tool\"": 1,
+    "\"F09: Malformed JSON payload in SSE stream aborts stream without tool execution or completed event\"": 1,
+    "\"Provider text-end citations retain exact part and Unicode scalar ranges\"": 1,
+    "\"maxSteps <= 0 is clamped to >= 1 so streamText still executes at least one step\"": 1,
+    "\"Dynamic tool exposure via prepareStep filters active tools\"": 1,
+    "\"F02: HTTP 200 with finish_reason='other' and 0 text/tools is retried then throws emptyProviderResponse\"": 1,
+    "duplicateDefinitionsThrowBeforeDictionaryConstruction()": 1,
+    "\"Section 18: Google finish_reason mapping table\"": 1,
+    "\"Section 18: OpenAI finish_reason mapping table\"": 1,
+    "nativeNonTextRejectedBeforeProviderCapabilityOrDownloadPath()": 1,
+    "\"F03: Abrupt stream close mid-text terminates with transport error and no completed event\"": 1,
+    "\"F01: Empty provider stream retries once and throws emptyProviderResponse after 2 empty streams\"": 1,
+    "\"Section 18: Anthropic finish_reason mapping table\"": 1,
+    "nativeDescriptorNeverSelectsNetworkProvider()": 1,
+    "\"F05: Empty delta noise does not corrupt parser or yield empty text events\"": 1,
+    "\"F06: Final usage-only chunk is processed for token usage and not treated as text\"": 1,
+    "\"F07: Duplicate content chunk delta does not abort parser\"": 1,
+    "\"F04: Stream ending after finish without explicit [DONE] still terminates cleanly\"": 1,
+    "\"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"": 1,
+    "\"An authorized tool without an additional approval prompt continues after stop with its canonical output\"": 1,
+    "\"Denied stop-labeled tool continues with a correlated denial and no host effect\"": 1,
+    "\"Rejected native numeric stop-labeled tool cannot reach approval, effect or another provider request\"": 1,
+    "\"Automatic native Responses keeps the same stable boundary across changing context without changing implicit mode\"": 1,
+    "\"Compact facade refuses tool authority and legacy Chat-shaped Responses requests before transport\"": 1,
+    "\"Cancelling compact consumption cancels the underlying original SDK URLSession request\"": 1,
+    "\"Cancelling one agent turn leaves another turn on the same fetch session active\"": 1,
+    "\"Provider redirects cannot bypass admission or forward credential headers\"": 1
+  },
+  "allTerminals": [
+    [
+      "\"Generated manifest is stable canonical JSON\"",
+      "passed",
+      "0.005"
+    ],
+    [
+      "\"Loads integrity-checked declarations and registration metadata\"",
+      "passed",
+      "0.071"
+    ],
+    [
+      "\"Original file bridge preserves files beyond former payload, per-file and total quotas on reopen\"",
+      "passed",
+      "0.730"
+    ],
+    [
+      "\"Explicit file budgets fail before replacement and permissions and source errors still preserve data\"",
+      "passed",
+      "0.017"
+    ],
+    [
+      "\"Compiles and renders independently of the application target\"",
+      "passed",
+      "1.823"
+    ],
+    [
+      "largeRecordsSurviveReinstallationAndClearPreservesMigrationIntent()",
+      "passed",
+      "1.837"
+    ],
+    [
+      "\"Renders a family-specific widget and preserves its reload date\"",
+      "passed",
+      "0.018"
+    ],
+    [
+      "storagePayloadPolicyIsExplicit()",
+      "passed",
+      "0.690"
+    ],
+    [
+      "\"Registers bounded App Intent actions without requiring application UI\"",
+      "passed",
+      "0.686"
+    ],
+    [
+      "\"Receives intent inputs and captures typed Script.exit results\"",
+      "passed",
+      "0.005"
+    ],
+    [
+      "\"Projects the native device snapshot into an immutable Scripting Device object\"",
+      "passed",
+      "0.007"
+    ],
+    [
+      "\"An embedded chat session blocks its store until native disposal completes\"",
+      "passed",
+      "2.543"
+    ],
+    [
+      "\"Runs FileManager and nativ-ai Pasteboard and Safari calls through the native system channel\"",
+      "passed",
+      "0.020"
+    ],
+    [
+      "\"An unrelated isolated store cannot block or bypass a production checkpoint\"",
+      "passed",
+      "0.028"
+    ],
+    [
+      "\"Denies Pasteboard and open-URL operations before invoking the native system loader\"",
+      "passed",
+      "0.041"
+    ],
+    [
+      "\"Routes deprecated Clipboard through the Pasteboard capability\"",
+      "passed",
+      "0.011"
+    ],
+    [
+      "\"Bridges typed Pasteboard items and privacy options without losing value types\"",
+      "passed",
+      "0.005"
+    ],
+    [
+      "\"Runs CryptoKit hashes, HMAC, key generation, UUID, and AES-GCM\"",
+      "passed",
+      "0.008"
+    ],
+    [
+      "\"Runs the nativ-ai Reminder creation flow and returns the EventKit identifier\"",
+      "passed",
+      "0.003"
+    ],
+    [
+      "\"A failed initializer cancels its owners before the same store becomes available\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Bridges Reminder CRUD, filtered queries, and reminder calendars\"",
+      "passed",
+      "0.007"
+    ],
+    [
+      "\"Rejects malformed Reminder payloads before invoking EventKit\"",
+      "passed",
+      "0.001"
+    ],
+    [
+      "\"Imports FileManager selections and previews the package copy through system UI\"",
+      "passed",
+      "0.016"
+    ],
+    [
+      "\"Runs the exact nativ-ai photo attachment primitives with real encoded image values\"",
+      "passed",
+      "0.005"
+    ],
+    [
+      "\"Runs FileManager and nativ-ai Dialog interactions through native modal results\"",
+      "passed",
+      "0.023"
+    ],
+    [
+      "\"Runs the exact FileManager EditorController presentation and content lifecycle\"",
+      "passed",
+      "0.006"
+    ],
+    [
+      "\"Decodes bounded Assistant requests and emits Web-compatible chunks\"",
+      "passed",
+      "0.001"
+    ],
+    [
+      "\"SQLite executes parameterized statements and returns typed rows\"",
+      "passed",
+      "0.006"
+    ],
+    [
+      "\"Location requests validate capabilities, coordinates, locales, and accuracy\"",
+      "passed",
+      "0.001"
+    ],
+    [
+      "\"Original JS database owners retain more than sixteen independent temporary databases\"",
+      "passed",
+      "2.702"
+    ],
+    [
+      "\"Health and Notification payloads reject unsupported or unbounded requests\"",
+      "passed",
+      "0.004"
+    ],
+    [
+      "\"Runs smart-eating Health statistics and recurring Notification primitives end to end\"",
+      "passed",
+      "0.014"
+    ],
+    [
+      "\"Actual JavaScript Data round trip preserves empty BLOB and an ordinary column matching the private tag\"",
+      "passed",
+      "0.019"
+    ],
+    [
+      "\"Store validates before side effects and preserves remaining owners when one handle is released\"",
+      "passed",
+      "0.001"
+    ],
+    [
+      "\"Reorders keyed children before applying their property patches\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"Valid keyed reordering preserves full nodes and subsequent property patches\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"Produces deterministic patches that recreate an unkeyed tree\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"An invalid nested reorder does not commit an earlier patch in its batch\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"A current child without a key cannot be reordered\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"Duplicate current child keys are rejected before dictionary construction\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"A non-first duplicate in the new diff tree is identified accurately\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"Missing and unknown requested child keys remain rejected\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"A non-first duplicate in current reorder children is identified accurately\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"A non-first duplicate in the old diff tree is identified accurately\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"A non-first duplicate in requested reorder keys is identified accurately\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"Rejects duplicate keys and bounded patch overflow\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"The original duplicate-key poisoning sequence throws before changing the tree\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"Interactive acceptance primitives retain their wire representation\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"Model dispatches events and disposes effects\"",
+      "passed",
+      "0.003"
+    ],
+    [
+      "\"Rendered navigation destinations synchronize path and native back events\"",
+      "passed",
+      "0.004"
+    ],
+    [
+      "\"Rendered presentation nodes drive native modal state\"",
+      "passed",
+      "0.004"
+    ],
+    [
+      "\"Unknown routes and invalid pops fail closed\"",
+      "passed",
+      "0.005"
+    ],
+    [
+      "\"Navigation, presentation, scene, and resume state are explicit\"",
+      "passed",
+      "0.005"
+    ],
+    [
+      "\"SVG sanitizer accepts local vector markup and rejects active or remote content\"",
+      "passed",
+      "0.007"
+    ],
+    [
+      "cancelledStagingAndCorruptBatchesCannotRemoveOrStarveHealthyItems()",
+      "passed",
+      "1.257"
+    ],
+    [
+      "tamperedPathsLinksAndBytesCannotBecomeVerifiedOwnedFiles()",
+      "passed",
+      "1.257"
+    ],
+    [
+      "copiedFilesSurviveProviderDeletionAndPublishOnlyWithTheirWholeBatch()",
+      "passed",
+      "1.257"
+    ],
+    [
+      "\"Unified catalog retains native and installed script authorities\"",
+      "passed",
+      "1.258"
+    ],
+    [
+      "\"Uninstall recovery restores or completes according to its commit point\"",
+      "passed",
+      "1.258"
+    ],
+    [
+      "existingInboxPathsMustBeRealDirectoriesWhenReopened()",
+      "passed",
+      "1.267"
+    ],
+    [
+      "\"Artifact corruption fails before catalog mutation\"",
+      "passed",
+      "1.272"
+    ],
+    [
+      "\"The selected backup must also have matching installed identities\"",
+      "passed",
+      "1.272"
+    ],
+    [
+      "\"Valid primary precedence and valid backup recovery retain their original data\"",
+      "passed",
+      "1.272"
+    ],
+    [
+      "\"Packages install and restore with legacy empty grants\"",
+      "passed",
+      "1.272"
+    ],
+    [
+      "\"Capability grants persist and revocation is package scoped\"",
+      "passed",
+      "1.274"
+    ],
+    [
+      "\"Malformed stored identity rejects cold load and restore without changing registry bytes\"",
+      "passed",
+      "1.274"
+    ],
+    [
+      "\"Cold restoration through a symlinked root preserves the active manifest while pruning staging\"",
+      "passed",
+      "1.274"
+    ],
+    [
+      "\"Install recovery is atomic at every persisted transition\"",
+      "passed",
+      "1.281"
+    ],
+    [
+      "\"Missing artifact manifest fails deterministically before catalog mutation\"",
+      "passed",
+      "1.283"
+    ],
+    [
+      "\"Rollback resumes after every journaled restore boundary\"",
+      "passed",
+      "1.283"
+    ],
+    [
+      "\"Durable snapshots retain nonempty SQLite WAL and ordinary similarly named files\"",
+      "passed",
+      "1.283"
+    ],
+    [
+      "\"A read-only destination cannot change either source store\"",
+      "passed",
+      "1.283"
+    ],
+    [
+      "\"Failed update promotion restores the previous active generation\"",
+      "passed",
+      "1.283"
+    ],
+    [
+      "\"Conflicting package identities or data are rejected before live changes\"",
+      "passed",
+      "1.283"
+    ],
+    [
+      "\"Retry preserves later user edits, and rollback refuses to discard them\"",
+      "passed",
+      "1.331"
+    ],
+    [
+      "\"Real identities, all generations, grants, disabled state and private bytes survive import and rollback\"",
+      "passed",
+      "1.332"
+    ],
+    [
+      "\"A symlink in private data cannot pull other files into the transfer\"",
+      "passed",
+      "1.332"
+    ],
+    [
+      "\"Conflicting canonical exposures remain validation errors\"",
+      "passed",
+      "1.332"
+    ],
+    [
+      "\"Live canonical KV and SQLite owners checkpoint, reopen, and follow rollback roots\"",
+      "passed",
+      "1.332"
+    ],
+    [
+      "\"Prepared action exports retain their identities behind one canonical App Intent bridge\"",
+      "passed",
+      "1.331"
+    ],
+    [
+      "\"Stored Expo package keeps every action while equivalent exposures share a canonical descriptor\"",
+      "passed",
+      "1.331"
+    ],
+    [
+      "\"Action identity preserves JavaScript case through Codable without changing other identifiers\"",
+      "passed",
+      "1.318"
+    ],
+    [
+      "\"Exposure-only package does not get fake .app entrypoint and retains declared exposures in catalog snapshot\"",
+      "passed",
+      "1.299"
+    ],
+    [
+      "\"Normal legacy foreground script package gets expected app/index.tsx behavior\"",
+      "passed",
+      "1.299"
+    ],
+    [
+      "\"Identical foreground entries still violate the canonical unique-kind contract\"",
+      "passed",
+      "1.299"
+    ],
+    [
+      "\"Different App Intent handlers, runtimes and context sets remain conflicting canonical routes\"",
+      "passed",
+      "1.284"
+    ],
+    [
+      "\"Prepared action identifiers preserve export case, round trip, and reject malformed values\"",
+      "passed",
+      "1.284"
+    ],
+    [
+      "\"Ambiguous assistant kinds need an exact registered handler without foreground fallback\"",
+      "passed",
+      "1.283"
+    ],
+    [
+      "\"Different assistant identities cannot alias the same dedicated handler\"",
+      "passed",
+      "1.283"
+    ],
+    [
+      "\"NativeScript package preserves nativeScript implementation, runtimeProfile, and exposures\"",
+      "passed",
+      "1.283"
+    ],
+    [
+      "\"Legacy descriptor JSON without supportedExposures decodes seamlessly with default derivation\"",
+      "passed",
+      "1.269"
+    ],
+    [
+      "\"Several dedicated assistant tools preserve their sources, configuration and installed identities\"",
+      "passed",
+      "1.261"
+    ],
+    [
+      "\"Package entrypoint kinds bridge bidirectionally to canonical kinds\"",
+      "passed",
+      "1.261"
+    ],
+    [
+      "\"Unknown and future exposure raw values survive Codable round-trip\"",
+      "passed",
+      "1.260"
+    ],
+    [
+      "\"Stored package snapshot conforms to HanlinMiniAppRegistration and validates\"",
+      "passed",
+      "1.246"
+    ],
+    [
+      "\"Prepared action handlers resolve to the installed bundle without a second source prefix\"",
+      "passed",
+      "1.246"
+    ],
+    [
+      "\"Manifest declared supportedExposures (translation_ui, widget, app_intent) are exposed in appDescriptor\"",
+      "passed",
+      "1.243"
+    ],
+    [
+      "\"Legacy-format NativeScript package with hanlinRuntime manifest field resolves to .nativeScript\"",
+      "passed",
+      "1.243"
+    ],
+    [
+      "\"HanlinScriptPackageDiscovery discovers registrations and builds catalog snapshot\"",
+      "passed",
+      "1.243"
+    ],
+    [
+      "independentConcurrentBatchesNeverOverwriteEachOtherOrHistoricalInbox()",
+      "passed",
+      "1.354"
+    ],
+    [
+      "\"Install, update, rollback, disable, restore, and uninstall preserve stable identity\"",
+      "passed",
+      "1.360"
+    ],
+    [
+      "realItemProvidersCopyFilesAndPreserveTextURLAndPerItemErrors()",
+      "passed",
+      "1.381"
+    ],
+    [
+      "\"A fresh process recovers each durable two-store promotion boundary\"",
+      "passed",
+      "1.974"
+    ],
+    [
+      "\"Tampered checkpoint bytes are rejected before destination writes\"",
+      "passed",
+      "2.076"
+    ],
+    [
+      "\"A later committed SQLite KV edit prevents rollback and survives a repeated import\"",
+      "passed",
+      "2.143"
+    ],
+    [
+      "\"Unopened legacy ScriptUI defaults migrate before export without replacing newer canonical data\"",
+      "passed",
+      "2.147"
+    ],
+    [
+      "\"Programmatic URL requests do not require an extra Hanlin user-gesture approval\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"Audit storage is bounded and contains no payload data\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"Legacy grant metadata does not add a Hanlin permission gate\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"The public initializer accepts repeated rows without adding a legacy permission gate\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"Public replacement accepts repeated rows without changing the existing authorization path\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"Network broker retains HTTPS, redirects and response limits without grants\"",
+      "passed",
+      "0.003"
+    ],
+    [
+      "\"Dialog, device, URL, pasteboard, and Assistant remain brokered\"",
+      "passed",
+      "0.003"
+    ],
+    [
+      "\"Identical repeated legacy grants coalesce\"",
+      "passed",
+      "0.003"
+    ],
+    [
+      "\"Conflicting IDs retain the last complete record without merging fields\"",
+      "passed",
+      "0.003"
+    ],
+    [
+      "\"Storage and VFS are package-namespaced, bounded, and traversal-safe\"",
+      "passed",
+      "0.003"
+    ],
+    [
+      "\"Context policies are distinct and valid\"",
+      "passed",
+      "0.001"
+    ],
+    [
+      "\"Owns and releases promises, callbacks, subscriptions, and handles\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"Enforces the complete lifecycle and idempotent close\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"Rejects cross-session envelopes and inbound replay\"",
+      "passed",
+      "0.004"
+    ],
+    [
+      "\"Applies quotas and queue backpressure\"",
+      "passed",
+      "0.004"
+    ],
+    [
+      "\"Decodes the visual properties used by the smart-eating widgets\"",
+      "passed",
+      "0.057"
+    ],
+    [
+      "\"Absent keyboard document text is omitted, matching its optional SDK fields\"",
+      "passed",
+      "0.058"
+    ],
+    [
+      "\"Extracts every Scripting Live Activity presentation region\"",
+      "passed",
+      "0.064"
+    ],
+    [
+      "\"Old effects decode and keyboard commands cannot target a notification\"",
+      "passed",
+      "0.077"
+    ],
+    [
+      "\"Rejects malformed Live Activity region trees\"",
+      "passed",
+      "0.541"
+    ],
+    [
+      "\"Extension-local execution cannot accidentally target the shared directory\"",
+      "passed",
+      "0.541"
+    ],
+    [
+      "\"HanlinTranslationSessionContext substitution into HanlinScriptUINode\"",
+      "passed",
+      "0.640"
+    ],
+    [
+      "\"Translation action parameters preserve literal selected text through nested payloads\"",
+      "passed",
+      "1.336"
+    ],
+    [
+      "\"HanlinCompactAgentConfigStore save, load, and clear round-trip\"",
+      "passed",
+      "1.362"
+    ],
+    [
+      "wrongBatchReferencesAndChangedOwnedBytesFailBeforeDispatch()",
+      "passed",
+      "1.552"
+    ],
+    [
+      "\"Read-only catalog does not create a shared container, lock or diagnostic\"",
+      "passed",
+      "1.553"
+    ],
+    [
+      "ordinaryJSONParametersKeepNullNumbersUnicodeAndOmission()",
+      "passed",
+      "1.552"
+    ],
+    [
+      "\"Notification selection uses plain JSON and matches action installation, package and generation\"",
+      "passed",
+      "1.689"
+    ],
+    [
+      "\"A first-launch MiniApps share is read by its app without entering the AI inbox\"",
+      "passed",
+      "2.079"
+    ],
+    [
+      "\"HanlinScriptTranslationUISnapshot round-trip in extension store\"",
+      "passed",
+      "2.079"
+    ],
+    [
+      "\"A removed presentation cannot enqueue a new notification continuation\"",
+      "passed",
+      "2.079"
+    ],
+    [
+      "expiredOrCancelledIngressCannotInvokeTheHandler()",
+      "passed",
+      "2.079"
+    ],
+    [
+      "\"Pending publication is neither repaired nor admitted by the keyboard reader\"",
+      "passed",
+      "2.079"
+    ],
+    [
+      "runningCancellationIsARequestUntilTheActualExecutorReturns()",
+      "passed",
+      "2.078"
+    ],
+    [
+      "\"Persists an integrity-checked extension-safe snapshot\"",
+      "passed",
+      "2.079"
+    ],
+    [
+      "malformedAndPoisonedRecordsFailWithoutReadingOutsideTheStore()",
+      "passed",
+      "2.078"
+    ],
+    [
+      "legacyEnvelopeAndBinaryValuesRoundTripThroughTheSameQueue()",
+      "passed",
+      "2.078"
+    ],
+    [
+      "lostOwnedAdmissionIsDeferredAndCannotReplayAfterAProcessRestart()",
+      "passed",
+      "2.080"
+    ],
+    [
+      "\"Notification continuation keeps its queued and actual terminal receipt\"",
+      "passed",
+      "2.080"
+    ],
+    [
+      "consistencyReportCannotHideMissingRevisionOrMalformedCommit(missingRevision:)",
+      "passed",
+      "2.080"
+    ],
+    [
+      "\"App and extensions address the same product, without an AI receipt alias\"",
+      "passed",
+      "2.080"
+    ],
+    [
+      "registeredIdempotentRecoveryFencesOutTheOriginalOwner()",
+      "passed",
+      "2.080"
+    ],
+    [
+      "interruptedNonIdempotentWorkIsDeferredWithoutReplay()",
+      "passed",
+      "2.081"
+    ],
+    [
+      "expiredQueuedAndCancelledQueuedCommandsNeverStart()",
+      "passed",
+      "2.081"
+    ],
+    [
+      "v1ShadowProjectsHistoricalFieldsWithoutLosingCurrentMetadata()",
+      "passed",
+      "2.090"
+    ],
+    [
+      "duplicateDeliveryNeverOverwritesACompletedReceiptOrPayload()",
+      "passed",
+      "2.090"
+    ],
+    [
+      "unstartedReleaseRetainsCancellationExpiryAndFencesOldLeases()",
+      "passed",
+      "2.197"
+    ],
+    [
+      "testDurableQueryDiagnosticCrossProcess()",
+      "passed",
+      "2.197"
+    ],
+    [
+      "testPass7HistoricalV1StoreEnvelopeCompatibility(timestamp:)",
+      "passed",
+      "2.197"
+    ],
+    [
+      "originalScriptWidgetImportedHelpersAndVerifiedFileStorage()",
+      "passed",
+      "2.198"
+    ],
+    [
+      "checkedArtifactsRejectTamperTraversalOtherGenerationAndSymlink()",
+      "passed",
+      "2.198"
+    ],
+    [
+      "unconfiguredAndWrongFamilyNeverSelectAnotherWidget()",
+      "passed",
+      "2.198"
+    ],
+    [
+      "testNativeEntityLookupResolvesOnlyExactIDs()",
+      "passed",
+      "2.198"
+    ],
+    [
+      "actionAndPublicationPreserveUnrelatedCollections()",
+      "passed",
+      "2.199"
+    ],
+    [
+      "testNativePublisherRepairsMissingDefaultWithoutLosingA1A2()",
+      "passed",
+      "2.196"
+    ],
+    [
+      "timelinePreparationCommitsOriginalTypedStorageAcrossColdReads()",
+      "passed",
+      "2.198"
+    ],
+    [
+      "realArchiveImport(name:)",
+      "passed",
+      "2.196"
+    ],
+    [
+      "passiveLegacyNavigationCannotCoverNativeOrNestedButtons()",
+      "passed",
+      "2.196"
+    ],
+    [
+      "testPass7SelectableWidgetEntitiesCrossProcess()",
+      "passed",
+      "2.196"
+    ],
+    [
+      "pass4PrivateVarAliasedRootCleanLoadArtifactStoreAndSnapshotPublishSucceeds()",
+      "passed",
+      "2.196"
+    ],
+    [
+      "pass4SymlinkAndTraversalSecurityRejectsManagedTreeLinksWithDiagnostics()",
+      "passed",
+      "2.196"
+    ],
+    [
+      "testRegistryAndTemplateJoinHandlesFamilyAndOrphans()",
+      "passed",
+      "2.196"
+    ],
+    [
+      "\"Original keyboard stays local, keeps state across text changes and does not repeat edits\"",
+      "passed",
+      "2.200"
+    ],
+    [
+      "testNativeEntitySuggestionsReadPublishedDefaultAndVariants()",
+      "passed",
+      "2.199"
+    ],
+    [
+      "interruptedShadowPublicationRestoresExactCommittedRevision()",
+      "passed",
+      "2.196"
+    ],
+    [
+      "testPass7StorageConsistencyReportAndDurableDiagnostic()",
+      "passed",
+      "2.196"
+    ],
+    [
+      "testPass7InterruptedRevisionWriteOverwrittenAndClean(corruptedBytes:)",
+      "passed",
+      "2.195"
+    ],
+    [
+      "pass4TwoStorePublicationFailureRecoveryAndEntrypointRouting()",
+      "passed",
+      "2.198"
+    ],
+    [
+      "malformedTaggedEventsAndUnknownVersionsDoNotBecomeCommands()",
+      "passed",
+      "2.195"
+    ],
+    [
+      "identicalEventIDsStayInsideTheirProductNamespace()",
+      "passed",
+      "2.194"
+    ],
+    [
+      "userInfoEmitsPlainJSONWhileInternalCodableKeepsItsTags()",
+      "passed",
+      "2.194"
+    ],
+    [
+      "independentlyAuthoredAPNsStillRequiresTheCompleteValidEnvelope()",
+      "passed",
+      "2.194"
+    ],
+    [
+      "independentlyAuthoredAPNsParametersDecodeAsPlainJSON()",
+      "passed",
+      "2.191"
+    ],
+    [
+      "userCreatedInstancesAndHostRefreshPreserveState()",
+      "passed",
+      "2.196"
+    ],
+    [
+      "actualHistoricalV1EncoderAndDowngradeReader()",
+      "passed",
+      "2.191"
+    ],
+    [
+      "corruptCommittedV2NeverFallsBackToGoodV1()",
+      "passed",
+      "2.190"
+    ],
+    [
+      "staleUndeclaredDisabledAndUninstalledActionsRejectBeforeMutation()",
+      "passed",
+      "2.218"
+    ],
+    [
+      "atomicOwnedAdmissionHasOneLeaseAndPreservesExactRetriesAndConflicts()",
+      "passed",
+      "2.369"
+    ],
+    [
+      "concurrentClaimsAcrossStoreInstancesHaveOnlyOneOwner()",
+      "passed",
+      "2.369"
+    ],
+    [
+      "concurrentSourceActionsReplayAndHostPublication()",
+      "passed",
+      "2.488"
+    ],
+    [
+      "damagedItemsDoNotBlockHealthyDeliveryOrEraseTheirOriginalBytes()",
+      "passed",
+      "2.501"
+    ],
+    [
+      "unreadableRecordsCannotBlockAdmissionAndRetainTheirOriginalBytes()",
+      "passed",
+      "2.501"
+    ],
+    [
+      "missingCatalogStillDurablyRetainsTheEventForLiveHostValidation()",
+      "passed",
+      "2.496"
+    ],
+    [
+      "largeInputsUseOneStableQueueIdentityAndReturnTheActualResultAfterReopen()",
+      "passed",
+      "2.502"
+    ],
+    [
+      "cancellationExpiryAndActionErrorsRemainDistinct()",
+      "passed",
+      "2.496"
+    ],
+    [
+      "typedEventExecutesOnceAndKeepsItsActualResultAfterReopen(_:)",
+      "passed",
+      "2.494"
+    ],
+    [
+      "twoPackagesReceiveTheirOwnDurableResultsAndFailures()",
+      "passed",
+      "2.506"
+    ],
+    [
+      "differentActivityCanCompleteWhileFirstActivityIsSuspended()",
+      "passed",
+      "2.505"
+    ],
+    [
+      "ownedExecutorKeepsForegroundDrainsOutAndReturnsTheOriginalReceiptOnRetry()",
+      "passed",
+      "2.508"
+    ],
+    [
+      "canceledWaiterDoesNotRunOrCancelThePrecedingMutation()",
+      "passed",
+      "2.508"
+    ],
+    [
+      "currentOriginQueuesExactDeclaredTargetAndRetainsNull(engine:)",
+      "passed",
+      "0.142"
+    ],
+    [
+      "busyAdmissionCanQueueAgainOnlyBeforeActionExecutionAndWithoutConsumingAnAttempt()",
+      "passed",
+      "2.525"
+    ],
+    [
+      "foregroundAdmissionLeavesUnstartedWorkQueuedWithoutConsumingAnAttempt()",
+      "passed",
+      "2.520"
+    ],
+    [
+      "cachedCatalogCannotOverrideLiveInstallationOrItsFailureReceipt()",
+      "passed",
+      "2.520"
+    ],
+    [
+      "ownedAdmissionFailureIsTerminalWhileLegacyQueuedAdmissionRemainsRetryable()",
+      "passed",
+      "2.536"
+    ],
+    [
+      "liveActivityParametersOverrideDefaultsWithoutChangingSourceIdentity()",
+      "passed",
+      "0.017"
+    ],
+    [
+      "nativeNodeLiveActivityRecordsItsRealRouteAndRetainsLegacyCompatibility()",
+      "passed",
+      "0.029"
+    ],
+    [
+      "sameActivityNeverOverlapsAndFailureDoesNotBlockLaterWork()",
+      "passed",
+      "2.611"
+    ],
+    [
+      "optionalPresentationKeepsRealHandlerButPanelOnlyCannotQueue()",
+      "passed",
+      "0.050"
+    ],
+    [
+      "changedInstallationsAndUndeclaredTargetsProduceRealFailureReceipts()",
+      "passed",
+      "2.640"
+    ],
+    [
+      "explicitNonceRetainsReceiptAndRejectsConflictingParameters()",
+      "passed",
+      "0.051"
+    ],
+    [
+      "failedRefreshRetainsVerifiedRenderAndDoesNotCommitStagedState(engine:)",
+      "passed",
+      "2.771"
+    ],
+    [
+      "sameSourceActionTargetAcrossInstalledPackagesAndVariantsIsIsolated()",
+      "passed",
+      "2.806"
+    ],
+    [
+      "invalidCurrentOriginOrTargetDoesNotEnqueue(reason:)",
+      "passed",
+      "0.156"
+    ],
+    [
+      "queuedOriginIsRevalidatedAfterDisableAndCancellationDoesNotExecute()",
+      "passed",
+      "0.035"
+    ],
+    [
+      "scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas()",
+      "passed",
+      "3.048"
+    ],
+    [
+      "ownedCancellationDrainsTheActualHandlerBeforeKeepingItsTerminalReceipt()",
+      "passed",
+      "3.342"
+    ],
+    [
+      "actualAsyncHandlerIsCancelledBeforeItsTerminalReceipt()",
+      "passed",
+      "3.480"
+    ],
+    [
+      "rootFragmentsPreserveOriginalElementAllowances()",
+      "passed",
+      "3.643"
+    ],
+    [
+      "installedProgramPreparationAndActionMeasurements()",
+      "passed",
+      "3.805"
+    ],
+    [
+      "scriptWidgetNamedActionsAndBooleanSetValue()",
+      "passed",
+      "3.857"
+    ],
+    [
+      "installAndVerifiedLoader(name:)",
+      "passed",
+      "4.063"
+    ],
+    [
+      "fallbackNeverRestoresRevokedOrMismatchedContent(invalidation:)",
+      "passed",
+      "1.390"
+    ],
+    [
+      "emittedExpoIntentCarriesVerifiedIdentityAndCallsSource()",
+      "passed",
+      "4.168"
+    ],
+    [
+      "originalTagProducesDistinctNativeRaster(tag:)",
+      "passed",
+      "4.171"
+    ],
+    [
+      "gridColumnsDateAndNativeElementSemantics()",
+      "passed",
+      "4.171"
+    ],
+    [
+      "frozenIntegerPropsPreserveOriginalJSCNumberSemantics()",
+      "passed",
+      "4.171"
+    ],
+    [
+      "invalidImageDimensionsAndTransformsNeverReachSwiftUI(attribute:)",
+      "passed",
+      "4.171"
+    ],
+    [
+      "originalGaugeRejectsUnsafeNumbersAndPreservesValidNeedle()",
+      "passed",
+      "4.171"
+    ],
+    [
+      "imageRotationKeepsTheOriginalSwiftUICenter(degrees:)",
+      "passed",
+      "4.171"
+    ],
+    [
+      "oversizedAndMalformedImagesAreRejectedBeforeDisplay()",
+      "passed",
+      "4.171"
+    ],
+    [
+      "largeValidImagesUseTheOriginalBoundedDownsampler()",
+      "passed",
+      "4.171"
+    ],
+    [
+      "originalChartVariantUsesItsNativeDataSchema(type:)",
+      "passed",
+      "4.171"
+    ],
+    [
+      "originalTagRespondsToItsSemanticInput(tag:)",
+      "passed",
+      "4.171"
+    ],
+    [
+      "continuationUsesCanonicalStoreRootBeforeAndAfterCreation()",
+      "passed",
+      "1.306"
+    ],
+    [
+      "activationBeforeEnqueueUsesExistingDrainAndMissingHostKeepsQueue()",
+      "passed",
+      "0.012"
+    ],
+    [
+      "corruptRenderBytesAreRejectedAndUninstallDropsCacheReferences()",
+      "passed",
+      "0.177"
+    ],
+    [
+      "precedingSnapshotWithoutRenderMetadataDecodesAndCopiesPreserveMetadata()",
+      "passed",
+      "0.011"
+    ],
+    [
+      "originalScriptWidgetHTTPUsesBoundedRealTransport()",
+      "failed",
+      "7.345"
+    ],
+    [
+      "requestedEntitySelectionIsPreserved()",
+      "passed",
+      "0.006"
+    ],
+    [
+      "hugeAlarmCannotOverflowIntegerOrCreateInvalidEventKitDate()",
+      "passed",
+      "0.006"
+    ],
+    [
+      "incompleteCalendarCannotReachWrite()",
+      "passed",
+      "0.006"
+    ],
+    [
+      "nonfiniteDatesCannotReachEventKit(value:)",
+      "passed",
+      "0.006"
+    ],
+    [
+      "\"Location and placemark values preserve modern MapKit result fields\"",
+      "passed",
+      "0.007"
+    ],
+    [
+      "\"Every implemented family has one explicit availability record\"",
+      "passed",
+      "0.007"
+    ],
+    [
+      "mutationRequiresAnActualIdentifier(operation:)",
+      "passed",
+      "0.006"
+    ],
+    [
+      "\"Sensitive frameworks declare their signing and privacy requirements\"",
+      "passed",
+      "0.007"
+    ],
+    [
+      "\"Health and notification bridge values preserve declared Scripting semantics\"",
+      "passed",
+      "0.007"
+    ],
+    [
+      "suppliedMalformedDayDoesNotBecomeUnbounded(value:)",
+      "passed",
+      "0.007"
+    ],
+    [
+      "emptyMutationAndNullCalendarFieldsAreRejected(json:)",
+      "passed",
+      "0.007"
+    ],
+    [
+      "clearOnlyUpdateStillExpressesAMutation(operation:)",
+      "passed",
+      "0.006"
+    ],
+    [
+      "dueComponentsCannotBeSetWhileClearingDueTimestamp()",
+      "passed",
+      "0.006"
+    ],
+    [
+      "validReminderKeepsOriginalAlarmAndPriority()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "reversedRangeFailsBeforeDateInterval()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "invalidRecurrenceAndAlarmAreRejected()",
+      "passed",
+      "0.005"
+    ],
+    [
+      "suppliedBlankOperationDatesAreRejected(json:)",
+      "passed",
+      "0.005"
+    ],
+    [
+      "patchKeepsOmittedFieldsAndExplicitClearDistinct()",
+      "passed",
+      "0.005"
+    ],
+    [
+      "alreadyCancelledOperationNeverStartsEventKit()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "completionIsConsumedOnceWithoutCancellingSuccessfulRequest()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "cancelledFetchFinishesWithoutOSCallbackAndIgnoresLateResult()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "broadSearchRetainsPresentAndFutureInsteadOfEventKitTruncation()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "singleEndpointOutsideDefaultWindowKeepsOrderedBounds()",
+      "passed",
+      "0.009"
+    ],
+    [
+      "invalidArgumentsCannotReachEventKit(json:)",
+      "passed",
+      "0.009"
+    ],
+    [
+      "inclusiveDayRangeUsesCalendarArithmeticAcrossDST()",
+      "passed",
+      "0.009"
+    ],
+    [
+      "dueTimestampCannotBeSetWhileClearingDueComponents()",
+      "passed",
+      "0.010"
+    ],
+    [
+      "completePublicWritablePayloadDecodes()",
+      "passed",
+      "0.009"
+    ],
+    [
+      "reminderEndDayIncludesAfternoonAndExcludesFollowingMidnight()",
+      "passed",
+      "0.011"
+    ],
+    [
+      "missingOSCallbackTimesOutAndNextOperationWorks()",
+      "passed",
+      "0.052"
+    ],
+    [
+      "\"Release performance budgets are versioned and deterministic\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"Preview installability fails closed on archive or analyzer errors\"",
+      "passed",
+      "0.004"
+    ],
+    [
+      "\"Legacy installed entrypoint migrates to its historical QuickJS profile\"",
+      "passed",
+      "0.005"
+    ],
+    [
+      "\"Preserves unknown script.json fields without granting behavior\"",
+      "passed",
+      "0.005"
+    ],
+    [
+      "\"Legacy capability metadata normalizes without gating installation\"",
+      "passed",
+      "0.006"
+    ],
+    [
+      "\"Installed records and artifact manifests round trip deterministically\"",
+      "passed",
+      "0.006"
+    ],
+    [
+      "\"Accepts one wrapped Scripting manifest and ignores macOS metadata\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Autonomous Skills accept large resources while explicit budgets remain enforceable\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Root and single-wrapper manifests retain source metadata and ordinary resources\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Autonomous Skills still reject invalid sizes, overflow, escaping paths and collisions\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Rejects ambiguous manifests and case collisions\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Rejects links, collisions, configured ratio excess and hidden encrypted entries\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Extracts declared capabilities from script.json manifest\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Stages, validates, extracts, and decodes without executing source\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "rejectsEscapingPaths(path:)",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Legacy finding JSON remains readable without a diagnostic code\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Accepts prepared NativeScript ESM bundle artifacts\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Imports archives from File Provider paths containing spaces\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Imports archives whose source paths contain Unicode and spaces\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Production exporter round trips through production archive import\"",
+      "passed",
+      "0.067"
+    ],
+    [
+      "\"Malformed manifests fail before a staged package can escape\"",
+      "passed",
+      "0.067"
+    ],
+    [
+      "\"Imports prepared NativeScript packages containing ESM bundles\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Routes original Python entrypoint deterministically without engine fallback\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Discovers entrypoints, resolves modules, and derives capabilities deterministically\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Prepared Expo packages preserve the embedded original asset version contract\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Keyboard and notification declarations without compiled panels are actionable import errors\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Prepared Expo and NativeScript exposures retain independent action and embedded identities\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Validates declared @nativescript/core dependency compatibility\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Writes only validated JavaScript, maps, and a sorted manifest\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Malformed dependency maps cannot bypass version validation\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Routes only explicitly declared NativeScript packages to the native runtime\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Prepared NativeScript entry metadata uses the canonical bundle across sessions\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Validates the embedded Expo SwiftUI plugin contract\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Fails closed on preview errors and compiler identity mismatch\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Rejects unresolved graphs and compiler output traversal\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Default imports accept original engine resources beyond former host budgets\"",
+      "passed",
+      "0.067"
+    ],
+    [
+      "\"Production compiler profile excludes DOM libraries and cannot drift\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Detects capability-bearing ambient Scripting globals\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Capture and Spotlight reject undeclared, ambiguous or unrelated foreground actions\"",
+      "passed",
+      "0.067"
+    ],
+    [
+      "\"Builds a closed virtual project and deterministic artifact manifest\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Assistant selection cannot fall back to the foreground app or malformed metadata\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Install artifact writer atomically closes the bundler-store manifest contract\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Expo import main matches the manifest entry and cannot redirect launch elsewhere\"",
+      "passed",
+      "0.067"
+    ],
+    [
+      "\"Bridge version types and complete semantic versions are validated before import\"",
+      "passed",
+      "0.067"
+    ],
+    [
+      "\"Rejects dynamic imports, eval, unresolved paths, and arbitrary bare modules\"",
+      "passed",
+      "0.066"
+    ],
+    [
+      "\"Modern filename convention does not create an undeclared assistant capability\"",
+      "passed",
+      "0.067"
+    ],
+    [
+      "\"Validates the embedded NativeScript SwiftUI plugin contract without changing ordinary Scripting\"",
+      "passed",
+      "0.072"
+    ],
+    [
+      "\"Expo import evaluates foreground app and multi-exposure support fail-closed\"",
+      "passed",
+      "0.080"
+    ],
+    [
+      "\"System exposures cannot redirect from the prepared Host to an unrelated source\"",
+      "passed",
+      "0.081"
+    ],
+    [
+      "\"Dedicated prepared assistant tools survive analysis and installed entrypoint mapping\"",
+      "passed",
+      "0.083"
+    ],
+    [
+      "\"Unavailable native plugins fail before Expo and NativeScript import\"",
+      "passed",
+      "0.084"
+    ],
+    [
+      "\"Malformed and duplicate prepared entrypoints are visible import failures\"",
+      "passed",
+      "0.087"
+    ],
+    [
+      "\"Prepared runtimes reject malformed, wildcard and future required versions\"",
+      "passed",
+      "0.112"
+    ],
+    [
+      "\"Prepared system entrypoints retain Host identity and separately compile their native panels\"",
+      "passed",
+      "0.311"
+    ],
+    [
+      "toolPresentationBackwardCompatibleWhenNewFieldsAbsent()",
+      "passed",
+      "0.006"
+    ],
+    [
+      "executionPresentationFamilyIDIsExtensible()",
+      "passed",
+      "0.006"
+    ],
+    [
+      "permissionValuesKeepDeclarationDecisionGrantAndEffectivenessSeparate()",
+      "passed",
+      "0.006"
+    ],
+    [
+      "shortcutTextRemainsTextAndBinaryOutputRequiresAFile()",
+      "passed",
+      "0.006"
+    ],
+    [
+      "logicalToolIdentityIsProviderQualifiedAndAliasesAreNotIdentity()",
+      "passed",
+      "0.006"
+    ],
+    [
+      "expansionModeBridgesToPresentationIntent()",
+      "passed",
+      "0.006"
+    ],
+    [
+      "hostVersionRangeRejectsInversion()",
+      "passed",
+      "0.006"
+    ],
+    [
+      "identifiersValidateAndRoundTripCanonically()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "toolPresentationMigratesLegacyExpandedPayloadToCanonicalDescriptor()",
+      "passed",
+      "0.006"
+    ],
+    [
+      "valueSchemasValidateAndRoundTrip()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "embeddedPresentationDefaultsAreMinimal()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "shortcutJSONRejectsMalformedOrLossyInput(_:)",
+      "passed",
+      "0.007"
+    ],
+    [
+      "standardJSONPromotesToRichValuesWithoutNumericCollapse()",
+      "passed",
+      "0.006"
+    ],
+    [
+      "jsonDecoderRejectsDuplicateKeysAndOutOfRangeIntegers()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "packageVersionsUseStableTotalOrdering()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "expansionMoDesAllRoundTrip()",
+      "passed",
+      "0.006"
+    ],
+    [
+      "jsonObjectsSortByUnmodifiedUTF8KeyBytes()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "descriptorAndCatalogRevisionsHaveSeparateSemantics()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "skillDescriptorEncodesAndDecodesCorrectly()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "wireEnvelopeRoundTripsAndEnforcesRequestIdentity()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "correlationAndInstanceIdentitiesRemainDistinctTypedValues()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "jsonSchemaDocumentsPreserveUnknownAndNarrowingKeywords()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "canonicalLimitsRejectExcessiveDepthAndSize()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "embeddedSizePresetsAllRoundTrip()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "appDescriptorRejectsUnsafeResourcePaths()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "appDescriptorRejectsDuplicateSkillIDs()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "toolPresentationCanonicalEmbeddedIsAuthoritativeOverLegacyFlag()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding(_:)",
+      "passed",
+      "0.007"
+    ],
+    [
+      "majorMinorVersionsRejectNonCanonicalAndUnknownVersions()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "shortcutDictionaryAndListRetainStructureAndExactNumbers()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "embeddedPresentationDescriptorRoundTrips()",
+      "passed",
+      "0.007"
+    ],
+    [
+      "appDescriptorDecodesLegacyPayloadWithoutSkills()",
+      "passed",
+      "0.008"
+    ],
+    [
+      "toolExecutionPresentationRoundTrips()",
+      "passed",
+      "0.008"
+    ],
+    [
+      "jsonPrimitivesUseCanonicalLexicalForms()",
+      "passed",
+      "0.008"
+    ],
+    [
+      "runtimeProfilesDeclareHonestIsolationAndTrustCapabilities()",
+      "passed",
+      "0.008"
+    ],
+    [
+      "embeddedResultEntryPointKindExists()",
+      "passed",
+      "0.008"
+    ],
+    [
+      "conversionsRejectLossAndNonFiniteNumbers()",
+      "passed",
+      "0.008"
+    ],
+    [
+      "scriptManifestRejectsUnsafePathsDuplicateToolsAndUnsupportedABI()",
+      "passed",
+      "0.008"
+    ],
+    [
+      "toolPresentationWithExecutionAndEmbeddedRoundTrips()",
+      "passed",
+      "0.008"
+    ],
+    [
+      "scriptManifestValidatesAndEncodesDeterministically()",
+      "passed",
+      "0.008"
+    ],
+    [
+      "appAndRuntimeSessionSnapshotsRemainPortableValues()",
+      "passed",
+      "0.008"
+    ],
+    [
+      "binary64ExtremesRoundTripBitIdentically()",
+      "passed",
+      "0.008"
+    ],
+    [
+      "skillIDsValidateAndRoundTripCanonically()",
+      "passed",
+      "0.008"
+    ],
+    [
+      "wireEnvelopeRejectsUnknownVersionMalformedKindAndOversizedPayload()",
+      "passed",
+      "0.008"
+    ],
+    [
+      "entryPointDescriptorWithEmbeddedResultRoundTrips()",
+      "passed",
+      "0.008"
+    ],
+    [
+      "scriptingWireV2IsAdditiveAndRequiresExplicitV2Support()",
+      "passed",
+      "0.008"
+    ],
+    [
+      "appDescriptorWithEmbeddedResultEntryPointRoundTrips()",
+      "passed",
+      "0.009"
+    ],
+    [
+      "manifestRejectsDuplicateCanonicalIdentifiers()",
+      "passed",
+      "0.008"
+    ],
+    [
+      "manifestRejectsUnsafePathsAndUnsupportedVersions()",
+      "passed",
+      "0.008"
+    ],
+    [
+      "\"Exposure catalog defines standard classifications for near-term surfaces\"",
+      "passed",
+      "0.003"
+    ],
+    [
+      "malformedInstalledAuthorityNeverBecomesACompatibleDefault()",
+      "passed",
+      "0.004"
+    ],
+    [
+      "\"Composite discovery aggregates and deduplicates across providers\"",
+      "passed",
+      "0.003"
+    ],
+    [
+      "richValuesUseExactTaggedIntegerNumberAndDataRepresentations()",
+      "passed",
+      "0.008"
+    ],
+    [
+      "javascriptRuntimeCompatibilityAcceptsOnlyCurrentOrOlderSameMinorPatches()",
+      "passed",
+      "0.004"
+    ],
+    [
+      "\"Duplicate fields across panels and invalid defaults fail declaration validation\"",
+      "passed",
+      "0.003"
+    ],
+    [
+      "manifestRoundTripsDeterministically()",
+      "passed",
+      "0.008"
+    ],
+    [
+      "\"Configuration decoder defaults support minimal author manifests\"",
+      "passed",
+      "0.003"
+    ],
+    [
+      "explicitBackwardBridgeCompatibilityStillRequiresCompleteStableVersions()",
+      "passed",
+      "0.004"
+    ],
+    [
+      "\"Exposure classifications round-trip through JSON\"",
+      "passed",
+      "0.003"
+    ],
+    [
+      "\"Provider-scoped identities cannot collide through separators or titles\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"Stale versions and actions are rejected independently of catalog display labels\"",
+      "passed",
+      "0.002"
+    ],
+    [
+      "releasedRuntimeMinimumsCannotAdmitMalformedFutureOrPrereleaseVersions()",
+      "passed",
+      "0.004"
+    ],
+    [
+      "\"Default configuration is a value snapshot, independent between drafts\"",
+      "passed",
+      "0.003"
+    ],
+    [
+      "\"Catalog and map input cannot silently carry invalid or undeclared values\"",
+      "passed",
+      "0.003"
+    ],
+    [
+      "explicitMetadataRoundTripsAndOverridesFamilyAnimation()",
+      "passed",
+      "0.002"
+    ],
+    [
+      "nonSensitiveReadDoesNotRequireBlanketConsent()",
+      "passed",
+      "0.002"
+    ],
+    [
+      "missingPresentationMetadataUsesGenericToolsAndCommonAnimation()",
+      "passed",
+      "0.002"
+    ],
+    [
+      "optionalPolicyFieldsDecodeSafely()",
+      "passed",
+      "0.002"
+    ],
+    [
+      "mixedManifestExemptsOnlyExactDeclaredReadActions()",
+      "passed",
+      "0.002"
+    ],
+    [
+      "unknownAnimationCannotInjectCustomExecutableContent()",
+      "passed",
+      "0.002"
+    ],
+    [
+      "\"Assistant action IDs preserve case and reject only exact duplicates\"",
+      "passed",
+      "0.003"
+    ],
+    [
+      "\"Author defaults use ordinary JSON while preserving absent and explicit null values\"",
+      "passed",
+      "0.003"
+    ],
+    [
+      "\"Assistant metadata preserves raw schemas and declared rich result IDs\"",
+      "passed",
+      "0.004"
+    ],
+    [
+      "\"Exported entrypoint schema accepts every current runtime and exposure\"",
+      "passed",
+      "0.011"
+    ],
+    [
+      "\"Required metadata and optional omissions agree with the author manifest schema\"",
+      "passed",
+      "0.006"
+    ],
+    [
+      "manifestSchemaResourceIsValidJSONAndUnknownFieldsAreTolerated()",
+      "passed",
+      "0.012"
+    ],
+    [
+      "\"Registration rejects missing handlers rather than claiming success\"",
+      "passed",
+      "0.080"
+    ],
+    [
+      "nativeActionIgnoresDuplicateCallbacksAndLateCancellation()",
+      "passed",
+      "0.080"
+    ],
+    [
+      "waitingNativeActionResolvesOnCancellation()",
+      "passed",
+      "0.080"
+    ],
+    [
+      "cancelledNativeActionDoesNotStartOrAcceptALateSuccess()",
+      "passed",
+      "0.080"
+    ],
+    [
+      "\"Launch runtime is selected from the requested entrypoint\"",
+      "passed",
+      "0.080"
+    ],
+    [
+      "\"Expo runtime profile resolves to .expo engine and valid launch plan\"",
+      "passed",
+      "0.080"
+    ],
+    [
+      "\"Per-entrypoint engine resolution works for hybrid descriptors\"",
+      "passed",
+      "0.080"
+    ],
+    [
+      "\"Catalog preserves all four original engines and de-duplicates stable IDs\"",
+      "passed",
+      "0.080"
+    ],
+    [
+      "legacyMigrationAndExplicitUnhideSurviveReopening()",
+      "passed",
+      "0.183"
+    ],
+    [
+      "\"SQLite preserves NUL text, empty binary, NULL, full bytes and numeric storage classes\"",
+      "passed",
+      "0.182"
+    ],
+    [
+      "\"Data is durable, namespaced, traversal-safe, and quota-bound\"",
+      "passed",
+      "0.182"
+    ],
+    [
+      "\"Explicit budgets reject work and terminal stop prevents delayed queries or reopening\"",
+      "passed",
+      "0.182"
+    ],
+    [
+      "\"Session teardown completes pending readers and invokes with an error\"",
+      "passed",
+      "0.187"
+    ],
+    [
+      "\"Inter-app requests enforce routes, capability, authorization, size, and timeout\"",
+      "passed",
+      "0.187"
+    ],
+    [
+      "uncappedRequestCancellationDrainsItsRealHandlerBeforeReportingCancelled()",
+      "passed",
+      "0.187"
+    ],
+    [
+      "\"A late result from a cancelled call cannot complete another invocation\"",
+      "passed",
+      "0.187"
+    ],
+    [
+      "corruptOrSymlinkedMarkersAreRetainedAndRejected()",
+      "passed",
+      "0.188"
+    ],
+    [
+      "\"Dynamic UTF-8 multi-statement transactions retain SQLite tail bytes\"",
+      "passed",
+      "0.203"
+    ],
+    [
+      "explicitlyRequestedDeadlinesAndSizeBudgetsAreStillEnforced()",
+      "passed",
+      "0.207"
+    ],
+    [
+      "independentConnectionsPreserveConcurrentCommittedKeys()",
+      "passed",
+      "0.224"
+    ],
+    [
+      "legacyMigrationPagesAllKeysAndDoesNotResurrectClearedValues()",
+      "passed",
+      "0.230"
+    ],
+    [
+      "\"Default SQLite resources preserve live handles, complete rows, parameters and large SQL\"",
+      "passed",
+      "0.261"
+    ],
+    [
+      "largeValuesReopenAndExplicitSharing()",
+      "passed",
+      "0.486"
+    ],
+    [
+      "\"An invocation returns its actual registered JavaScript result\"",
+      "passed",
+      "0.765"
+    ],
+    [
+      "actualPersonalHostActionOutlivesTheOldFifteenSecondDeadline()",
+      "passed",
+      "16.951"
+    ],
+    [
+      "recognizesLegacyAndCurrentPlaceholderLanguagesOnly()",
+      "passed",
+      "0.020"
+    ],
+    [
+      "onePromptRequestsBothFieldsAndConversationLanguage()",
+      "passed",
+      "0.020"
+    ],
+    [
+      "explicitPresetOverridesBaseInheritanceAndAutomaticClearsSavedOverride()",
+      "passed",
+      "0.020"
+    ],
+    [
+      "unchangedWireModelAndProviderPreserveSavedCustomPolicy()",
+      "passed",
+      "0.020"
+    ],
+    [
+      "changedModelOrProviderInheritsSelectedBasePolicyIncludingAutomatic()",
+      "passed",
+      "0.020"
+    ],
+    [
+      "defaultsAndCustomPoliciesPreserveMigrationSemantics()",
+      "passed",
+      "0.021"
+    ],
+    [
+      "anthropicAndLocalAvailabilityReflectNativeProvider()",
+      "passed",
+      "0.021"
+    ],
+    [
+      "parsesHebrewTitleAndTopicIcon()",
+      "passed",
+      "0.021"
+    ],
+    [
+      "unknownOrMissingSymbolUsesValidDefault()",
+      "passed",
+      "0.021"
+    ],
+    [
+      "explicitPreserveOverridesRebindAndExplicitInheritanceCanRefreshUnchangedBase()",
+      "passed",
+      "0.021"
+    ],
+    [
+      "proxiesPlanTransportAndOtherProvidersDoNotInheritOpenAIPresets()",
+      "passed",
+      "0.021"
+    ],
+    [
+      "nativeLegacyRetentionAndModernExplicitLifetimeAreDistinct()",
+      "passed",
+      "0.021"
+    ],
+    [
+      "acceptsOneJSONFenceButRejectsProseAndInvalidTitles()",
+      "passed",
+      "0.022"
+    ],
+    [
+      "cancellationCannotApplyEvenAnOtherwiseValidJSONResponse()",
+      "passed",
+      "0.030"
+    ],
+    [
+      "incompleteTruncatedAndOversizedStreamsCannotBecomeMetadata()",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"HanlinChatModelConfiguration uses the shared default and preserves explicit maxTokens\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Validate multi-assistant tool call regression in harness validator\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"HanlinChatStreamParser extracts <think> tags into reasoning events\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"HanlinChatStreamParser correctly parses Gemini SSE events\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"All configured provider companies map to known conformance profiles\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"HanlinChatRequestBuilder creates correct Gemini native request\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "nativeChatDoesNotOfferResponsesOnlyExplicitPresets()",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"HanlinChatRequestBuilder creates correct Anthropic native request\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"HanlinChatStreamParser correctly parses OpenAI SSE content, reasoning, and done events\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"LAN and local host routing to openAICompatible\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Custom third-party providers route to openAICompatible\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"HanlinChatStreamParser correctly parses Anthropic SSE events\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"HanlinChatRequestBuilder creates the configured OpenAI/OpenRouter request\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Saved Responses dialects select Responses on official and custom hosts\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"OpenAI with custom host routes to openAICompatible\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Full and compact message adapters produce the same production request\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "reasoningIsNotIncludedAndNativeCompletionReasonsAreNormalized()",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Anthropic routing and endpoint normalization\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Gemini company name routes to native google provider\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Cache policy merges with reasoning and omits unsupported transport controls\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Google Generative AI routing and endpoint normalization\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"OpenAI native routing for api.openai.com\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"OpenRouter profile sets HTTP-Referer, X-Title, and openAICompatible kind\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Repeated endpoint query keys use the last explicit value without crashing\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Anthropic incremental usage normalizes input once, retains cache fields and resets between messages\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Legacy and compact Anthropic requests keep stable and changing instructions in distinct blocks\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Query parameters are preserved during endpoint normalization\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Direct chat path parses OpenAI plain streamed text and reasoning\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"OpenAI and Gemini parser accounting retains read/write and reasoning distinctions\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Anthropic direct descriptor and options\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"OpenAI direct descriptor and options\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"OpenRouter descriptor includes HTTP-Referer and X-Title headers\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Direct chat path parses Gemini SSE events\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Google Gemini descriptor and options\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Explicit Google references require correct scope and cannot discard system or tools\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Opaque scopes remain stable across credentials and isolate namespaces, models and conversations\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Direct chat request builder generates correct headers and URL for OpenRouter\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Custom OpenAI compatible endpoint normalization\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Direct chat path normalizes inline <think> tags\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"OpenAI legacy wire uses only supported cache options and an opaque scope\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Direct chat path tolerates empty deltas, malformed lines, and tool-shaped payloads\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "referenceRejectsWrongScopeModelExpiredAndPathTraversal()",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Direct chat path parses Anthropic SSE events\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Gemini direct finish reason normalization matrix\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Historical snapshots retain automatic policy and unknown cache-write accounting\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "validationFailsBeforeNetworkAndImplicitOnlyModelsAreRejected()",
+      "passed",
+      "0.031"
+    ],
+    [
+      "deleteIsIdempotentForExpiredResource()",
+      "passed",
+      "0.031"
+    ],
+    [
+      "referencesRoundTripWithoutCorpusOrCredential()",
+      "passed",
+      "0.031"
+    ],
+    [
+      "failedCreationIsNotRetriedAndErrorCannotEchoInput()",
+      "passed",
+      "0.031"
+    ],
+    [
+      "\"Malformed, non-schema and oversized schema inputs fail before provider dispatch\"",
+      "passed",
+      "0.031"
+    ],
+    [
+      "partialTextAndDoneWithoutCompletedAreNotSuccess()",
+      "passed",
+      "0.031"
+    ],
+    [
+      "mismatchedToolNamespaceIsRejectedBeforeDispatch()",
+      "passed",
+      "0.031"
+    ],
+    [
+      "namespacesToolsAndPreservesFullStatelessHistory()",
+      "passed",
+      "0.031"
+    ],
+    [
+      "quotaFailureAndIncompleteAreSurfaced()",
+      "passed",
+      "0.031"
+    ],
+    [
+      "unsupportedModelsFailBeforeAnyHTTPRequest()",
+      "passed",
+      "0.031"
+    ],
+    [
+      "fragmentedUTF8StreamMustReachCompletion()",
+      "passed",
+      "0.031"
+    ],
+    [
+      "nativeNonTextRejectedBeforeProviderCapabilityOrDownloadPath()",
+      "passed",
+      "0.030"
+    ],
+    [
+      "duplicateDefinitionsThrowBeforeDictionaryConstruction()",
+      "passed",
+      "0.031"
+    ],
+    [
+      "providerMetadataCannotChangeResourceOrModel()",
+      "passed",
+      "0.033"
+    ],
+    [
+      "nativeDescriptorNeverSelectsNetworkProvider()",
+      "passed",
+      "0.031"
+    ],
+    [
+      "lifecycleUsesOriginalWireAndScopedMetadata()",
+      "passed",
+      "0.033"
+    ],
+    [
+      "\"The SDK validates complete JSON against the declared response schema\"",
+      "passed",
+      "0.039"
+    ],
+    [
+      "\"Reasoning-only length is incomplete and never automatically repeats a token-limited request\"",
+      "passed",
+      "0.056"
+    ],
+    [
+      "\"E09: reasoning-only stop retries once, preserves reasoning and never emits a successful finish\"",
+      "passed",
+      "0.056"
+    ],
+    [
+      "\"E12: cancellation during first attempt -> cancelled, no retry\"",
+      "passed",
+      "0.056"
+    ],
+    [
+      "\"E02: finish(other)-only -> retry -> empty -> error\"",
+      "passed",
+      "0.056"
+    ],
+    [
+      "\"E11: abrupt transport error -> no retry\"",
+      "passed",
+      "0.056"
+    ],
+    [
+      "\"E04: usage-only + finish only -> retry\"",
+      "passed",
+      "0.056"
+    ],
+    [
+      "\"E07: first attempt finish-only, second attempt valid tool call -> tool executes exactly once\"",
+      "passed",
+      "0.056"
+    ],
+    [
+      "\"E08: normal text -> no retry\"",
+      "passed",
+      "0.056"
+    ],
+    [
+      "\"E06: first attempt empty, second attempt valid text -> exactly one visible completion\"",
+      "passed",
+      "0.056"
+    ],
+    [
+      "\"E01: truly empty stream -> retry -> empty -> emptyProviderResponse(2)\"",
+      "passed",
+      "0.056"
+    ],
+    [
+      "\"E05: empty deltas + finish only -> retry\"",
+      "passed",
+      "0.056"
+    ],
+    [
+      "\"E10: valid tool call -> no retry\"",
+      "passed",
+      "0.057"
+    ],
+    [
+      "\"E03: metadata + finish(other) only -> retry\"",
+      "passed",
+      "0.056"
+    ],
+    [
+      "cancellationBeforeRequestDoesNotSend()",
+      "passed",
+      "0.056"
+    ],
+    [
+      "invalidTimelineAndCancellationRejectBeforeReplay()",
+      "passed",
+      "0.056"
+    ],
+    [
+      "successfulCreationReceiptSurvivesLateCancellation()",
+      "passed",
+      "0.058"
+    ],
+    [
+      "directChatUsesTheObservedBytesForItsActualParser()",
+      "passed",
+      "0.061"
+    ],
+    [
+      "settingsDisableContentAndUseTheInjectedTracer()",
+      "passed",
+      "0.136"
+    ],
+    [
+      "sdkFetchObserverPreservesTheSameBodyAndAttemptIdentity()",
+      "passed",
+      "0.147"
+    ],
+    [
+      "\"Engine maps provider-native source and file stream parts to HanlinAISDKStreamEvent\"",
+      "passed",
+      "0.157"
+    ],
+    [
+      "\"Provider text-end citations retain exact part and Unicode scalar ranges\"",
+      "passed",
+      "0.157"
+    ],
+    [
+      "\"maxSteps <= 0 is clamped to >= 1 so streamText still executes at least one step\"",
+      "passed",
+      "0.157"
+    ],
+    [
+      "\"Multimodal user message with text, imageData, and imageURL preserves all parts in V3 prompt\"",
+      "passed",
+      "0.159"
+    ],
+    [
+      "\"Native numeric leaves fail before approval or host effect\"",
+      "passed",
+      "0.178"
+    ],
+    [
+      "\"Rejected native numeric stop-labeled tool cannot reach approval, effect or another provider request\"",
+      "passed",
+      "0.165"
+    ],
+    [
+      "\"Cancelling an original SDK approval never executes or continues the provider\"",
+      "passed",
+      "0.180"
+    ],
+    [
+      "incompleteAndMalformedSourceRemainVisibleAsFailures()",
+      "passed",
+      "0.181"
+    ],
+    [
+      "byteSplitsReplayThroughBothActualParsersWithoutMutation()",
+      "passed",
+      "0.181"
+    ],
+    [
+      "officialValidationFailureIsAtomic()",
+      "passed",
+      "0.181"
+    ],
+    [
+      "realResponsesAdapterRequestsStrictSchemaAndPublishesOnlyCanonicalParts()",
+      "passed",
+      "0.180"
+    ],
+    [
+      "reasoningOnlyCaptureCannotSilentlyReplayTheSameAttemptTwice()",
+      "passed",
+      "0.182"
+    ],
+    [
+      "toolCallsRemainDataWithNoRegisteredExecutorOrSecondStep()",
+      "passed",
+      "0.182"
+    ],
+    [
+      "\"Compact requests retain original Responses envelope, message order, cache scope and normalized usage\"",
+      "passed",
+      "0.184"
+    ],
+    [
+      "\"An authorized tool without an additional approval prompt continues after stop with its canonical output\"",
+      "passed",
+      "0.172"
+    ],
+    [
+      "canonicalAgentExecutesNamespacedToolAndContinuesExactlyOnce()",
+      "passed",
+      "0.184"
+    ],
+    [
+      "\"Section 19: Offline reproduction of OpenRouter reasoning_details and finish=other failure class\"",
+      "passed",
+      "0.186"
+    ],
+    [
+      "nativeSchemaKeepsTheExistingToolContinuationAndExactlyOneEffect()",
+      "passed",
+      "0.184"
+    ],
+    [
+      "\"Denied stop-labeled tool continues with a correlated denial and no host effect\"",
+      "passed",
+      "0.171"
+    ],
+    [
+      "\"Native reserialized input never becomes acceptedOriginal\"",
+      "passed",
+      "0.186"
+    ],
+    [
+      "\"Cloud accepted original numeric JSON remains unchanged\"",
+      "passed",
+      "0.186"
+    ],
+    [
+      "\"Original SDK approval pauses effects and resumes the same exact call once\"",
+      "passed",
+      "0.185"
+    ],
+    [
+      "\"F09: Malformed JSON payload in SSE stream aborts stream without tool execution or completed event\"",
+      "passed",
+      "0.191"
+    ],
+    [
+      "\"S10 R2: OpenAI-compatible reasoning field multi-turn reasoning tool loop\"",
+      "passed",
+      "0.194"
+    ],
+    [
+      "\"S10 R3: OpenRouter reasoning_details multi-turn reasoning tool loop\"",
+      "passed",
+      "0.195"
+    ],
+    [
+      "\"S10 R1: OpenAI-compatible reasoning_content multi-turn reasoning tool loop\"",
+      "passed",
+      "0.197"
+    ],
+    [
+      "\"S10: Reasoning + tool continuation across multiple turns for reasoning profiles\"",
+      "passed",
+      "0.198"
+    ],
+    [
+      "\"Section 18: Google finish_reason mapping table\"",
+      "passed",
+      "0.195"
+    ],
+    [
+      "malformedRepairedAndTruncatedResponsesPublishNoParts()",
+      "passed",
+      "0.197"
+    ],
+    [
+      "\"Google Native: Parallel thoughtSignature placement on first functionCall part only\"",
+      "passed",
+      "0.201"
+    ],
+    [
+      "\"Advertised tool schema preserves original required, properties, and constraints\"",
+      "passed",
+      "0.201"
+    ],
+    [
+      "\"Cancellation during final catalog lookup cannot start another provider step\"",
+      "passed",
+      "0.204"
+    ],
+    [
+      "\"S10 R4: Google native thoughtSignature multi-turn reasoning tool loop\"",
+      "passed",
+      "0.205"
+    ],
+    [
+      "\"Google Native: Sequential thoughtSignature preserved exactly across requests\"",
+      "passed",
+      "0.205"
+    ],
+    [
+      "\"F01: Empty provider stream retries once and throws emptyProviderResponse after 2 empty streams\"",
+      "passed",
+      "0.202"
+    ],
+    [
+      "\"F03: Abrupt stream close mid-text terminates with transport error and no completed event\"",
+      "passed",
+      "0.206"
+    ],
+    [
+      "\"A catalog restored after the stop decision still delivers the original empty tool result\"",
+      "passed",
+      "0.212"
+    ],
+    [
+      "\"Section 18: OpenAI finish_reason mapping table\"",
+      "passed",
+      "0.209"
+    ],
+    [
+      "\"Unknown tool call produces non-fatal tool error and allows multi-step recovery\"",
+      "passed",
+      "0.211"
+    ],
+    [
+      "\"F06: Final usage-only chunk is processed for token usage and not treated as text\"",
+      "passed",
+      "0.210"
+    ],
+    [
+      "\"F04: Stream ending after finish without explicit [DONE] still terminates cleanly\"",
+      "passed",
+      "0.209"
+    ],
+    [
+      "\"Invalid and extra arguments reach Hanlin executor and return non-fatal error\"",
+      "passed",
+      "0.212"
+    ],
+    [
+      "\"Dynamic tool exposure via prepareStep filters active tools\"",
+      "passed",
+      "0.212"
+    ],
+    [
+      "\"Automatic native Responses keeps the same stable boundary across changing context without changing implicit mode\"",
+      "passed",
+      "0.028"
+    ],
+    [
+      "\"Tool catalog continuation keeps usage from every original SDK round\"",
+      "passed",
+      "0.213"
+    ],
+    [
+      "\"Compact facade refuses tool authority and legacy Chat-shaped Responses requests before transport\"",
+      "passed",
+      "0.001"
+    ],
+    [
+      "\"One request supplies title and icon through the configured provider\"",
+      "passed",
+      "0.215"
+    ],
+    [
+      "\"F07: Duplicate content chunk delta does not abort parser\"",
+      "passed",
+      "0.212"
+    ],
+    [
+      "\"Parallel tool execution in a single model step\"",
+      "passed",
+      "0.215"
+    ],
+    [
+      "\"S01: Plain text baseline across all provider profiles\"",
+      "passed",
+      "0.216"
+    ],
+    [
+      "\"Original Anthropic SDK receives stable breakpoint and retains native read/write usage\"",
+      "passed",
+      "0.216"
+    ],
+    [
+      "\"Section 18: Anthropic finish_reason mapping table\"",
+      "passed",
+      "0.213"
+    ],
+    [
+      "\"F02: HTTP 200 with finish_reason='other' and 0 text/tools is retried then throws emptyProviderResponse\"",
+      "passed",
+      "0.216"
+    ],
+    [
+      "\"P12B: Structured assistant tool-call and tool-result history survives into next provider model request\"",
+      "passed",
+      "0.219"
+    ],
+    [
+      "\"S08: Unknown tool call returns non-fatal tool error and allows continuation\"",
+      "passed",
+      "0.219"
+    ],
+    [
+      "\"S15: Empty tool result succeeds and continuation remains valid without mismatch\"",
+      "passed",
+      "0.219"
+    ],
+    [
+      "\"S16: Hebrew prompt, Hebrew arguments, Hebrew result, and Hebrew final response\"",
+      "passed",
+      "0.219"
+    ],
+    [
+      "\"Tool continuation regression test: provider-native tool call and response pairing\"",
+      "passed",
+      "0.219"
+    ],
+    [
+      "\"S14: Large deterministic tool result containing Unicode, newlines, and structured JSON\"",
+      "passed",
+      "0.220"
+    ],
+    [
+      "\"F05: Empty delta noise does not corrupt parser or yield empty text events\"",
+      "passed",
+      "0.217"
+    ],
+    [
+      "\"Anthropic Native: Tool result error is properly flagged and recovered\"",
+      "passed",
+      "0.222"
+    ],
+    [
+      "\"S02: Single tool call with provider-native continuation pairing\"",
+      "passed",
+      "0.222"
+    ],
+    [
+      "\"S13: Multi-turn conversation preserves prior tool and answer history without stale run state\"",
+      "passed",
+      "0.223"
+    ],
+    [
+      "\"S03: Production skill activation: load_skill exposes python dynamically\"",
+      "passed",
+      "0.223"
+    ],
+    [
+      "\"S05: Parallel tool calls in a single model step across OpenAI, Anthropic, and Google\"",
+      "passed",
+      "0.223"
+    ],
+    [
+      "\"S06: Tool returns non-fatal error and model recovers on next turn\"",
+      "passed",
+      "0.223"
+    ],
+    [
+      "\"Anthropic Native: Parallel tool use and tool results\"",
+      "passed",
+      "0.223"
+    ],
+    [
+      "\"S09: Multi-Skill exposure enforces monotonic visibility across rounds\"",
+      "passed",
+      "0.225"
+    ],
+    [
+      "\"Anthropic Native: Thinking signature round-trip across multi-tool turns\"",
+      "passed",
+      "0.225"
+    ],
+    [
+      "\"S07: Stream tool arguments fragmented across Hebrew UTF-8 and JSON escape boundaries\"",
+      "passed",
+      "0.226"
+    ],
+    [
+      "\"S10 R5: Anthropic native thinking signature multi-turn reasoning tool loop\"",
+      "passed",
+      "0.226"
+    ],
+    [
+      "\"S04: Sequential 5-tool chain executing 6 provider steps with monotonic history\"",
+      "passed",
+      "0.227"
+    ],
+    [
+      "shutdownDrainsBoundedProcessorAndIsIdempotent()",
+      "passed",
+      "0.227"
+    ],
+    [
+      "streamingSpanOutlivesActiveClosureAndEndsExactlyOnce()",
+      "passed",
+      "0.227"
+    ],
+    [
+      "taskContextPreservesParentageAcrossSuspensionAndSeparatesConcurrentRequests()",
+      "passed",
+      "0.227"
+    ],
+    [
+      "errorsNamesAndInvalidNumbersCannotExportRawContent()",
+      "passed",
+      "0.229"
+    ],
+    [
+      "originalSDKExportsCacheCountsAndDropsContent()",
+      "passed",
+      "0.229"
+    ],
+    [
+      "\"S11: Long 20-step tool-heavy run with strict per-round request validation\"",
+      "passed",
+      "0.250"
+    ],
+    [
+      "\"S12: Engine step limit boundary (configured stopWhen: stepCountIs(32)) terminates cleanly\"",
+      "passed",
+      "0.269"
+    ],
+    [
+      "\"Cancelling compact consumption cancels the underlying original SDK URLSession request\"",
+      "passed",
+      "0.065"
+    ],
+    [
+      "\"Default agent continues beyond 40 actual tool steps, including dynamic discovery\"",
+      "passed",
+      "0.286"
+    ],
+    [
+      "\"Explicit cancellation after 45 actual steps cancels the executing tool\"",
+      "passed",
+      "0.439"
+    ],
+    [
+      "\"Cancelling one agent turn leaves another turn on the same fetch session active\"",
+      "passed",
+      "0.194"
+    ],
+    [
+      "\"Provider redirects cannot bypass admission or forward credential headers\"",
+      "passed",
+      "0.008"
+    ],
+    [
+      "\"Real provider or transport error terminates stream\"",
+      "passed",
+      "6.286"
+    ],
+    [
+      "\"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+      "passed",
+      "6.284"
+    ]
+  ],
+  "classificationNote": "Swift Testing parameter case start records and global Test run headers are preserved separately, not counted as additional method definitions. The initial read-only collector rejected its overbroad917-start classification before writing a result; no native rerun occurred.",
+  "boundary": "Actual complete original unfiltered native gate failed. Focused earlier passes are not promoted to full-suite PASS."
+}

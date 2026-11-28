@@ -1,0 +1,33 @@
+[
+  {
+    "argv": [
+      "xcodebuild",
+      "-version"
+    ],
+    "exit": 0,
+    "stdout": "Xcode 27.0\nBuild version 27A266a\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "xcrun",
+      "--sdk",
+      "iphonesimulator",
+      "--show-sdk-path"
+    ],
+    "exit": 0,
+    "stdout": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "xcrun",
+      "--sdk",
+      "iphonesimulator",
+      "--show-sdk-platform-path"
+    ],
+    "exit": 0,
+    "stdout": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform\n",
+    "stderr": ""
+  }
+]

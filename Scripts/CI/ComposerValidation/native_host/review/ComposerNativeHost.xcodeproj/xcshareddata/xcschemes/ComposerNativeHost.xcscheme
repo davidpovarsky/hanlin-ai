@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Scheme version="1.7" LastUpgradeVersion="2700">
+  <BuildAction parallelizeBuildables="NO" buildImplicitDependencies="YES">
+    <BuildActionEntries>
+      <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="NO" buildForArchiving="NO" buildForAnalyzing="YES">
+        <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="08F329FA9267432CDC84D3F7" BuildableName="AI_Hanlin.app" BlueprintName="AI_Hanlin" ReferencedContainer="container:ComposerNativeHost.xcodeproj" />
+      </BuildActionEntry>
+      <BuildActionEntry buildForTesting="YES" buildForRunning="NO" buildForProfiling="NO" buildForArchiving="NO" buildForAnalyzing="YES">
+        <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="EA26C42B1F5380EB1E3D7D52" BuildableName="AI_HanlinTests.xctest" BlueprintName="AI_HanlinTests" ReferencedContainer="container:ComposerNativeHost.xcodeproj" />
+      </BuildActionEntry>
+    </BuildActionEntries>
+  </BuildAction>
+  <TestAction buildConfiguration="Debug" shouldUseLaunchSchemeArgsEnv="YES" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.IDEFoundation.Launcher.LLDB">
+    <Testables>
+      <TestableReference skipped="NO" parallelizable="NO">
+        <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="EA26C42B1F5380EB1E3D7D52" BuildableName="AI_HanlinTests.xctest" BlueprintName="AI_HanlinTests" ReferencedContainer="container:ComposerNativeHost.xcodeproj" />
+      </TestableReference>
+    </Testables>
+    <MacroExpansion>
+      <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="08F329FA9267432CDC84D3F7" BuildableName="AI_Hanlin.app" BlueprintName="AI_Hanlin" ReferencedContainer="container:ComposerNativeHost.xcodeproj" />
+    </MacroExpansion>
+  </TestAction>
+</Scheme>

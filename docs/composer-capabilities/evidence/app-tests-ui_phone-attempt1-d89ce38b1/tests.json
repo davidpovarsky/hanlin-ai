@@ -1,0 +1,128 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+      "deviceName" : "Hanlin-Composer-iPhone-20261124",
+      "modelName" : "iPhone 17 Pro Max",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "failed - Composer control did not become reachable: hanlin-capability-attach-4:tool20:hanlin.ui.acceptance14:library-region",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift",
+                        "lineNumber" : 258
+                      }
+                    }
+                  ],
+                  "duration" : "3m 7s",
+                  "durationInSeconds" : 187.0529750585556,
+                  "name" : "testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing()",
+                  "nodeIdentifier" : "HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertTrue failed - @ suggestions must follow the actual caret before an existing suffix",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift",
+                        "lineNumber" : 78
+                      }
+                    }
+                  ],
+                  "duration" : "30s",
+                  "durationInSeconds" : 30.31432604789734,
+                  "name" : "testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity()",
+                  "nodeIdentifier" : "HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertTrue failed",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift",
+                        "lineNumber" : 50
+                      }
+                    }
+                  ],
+                  "duration" : "46s",
+                  "durationInSeconds" : 46.32673692703247,
+                  "name" : "testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend()",
+                  "nodeIdentifier" : "HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                }
+              ],
+              "name" : "HanlinComposerCapabilitiesUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinComposerCapabilitiesUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            },
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "Failed to tap \"hanlin-composer-model-picker\" Button: No matches found for first query match sequence: `Descendants matching type Button` -> `Elements matching predicate '\"hanlin-composer-model-picker\" IN identifiers'`, given input App element pid: 44517\nPossibly caused by runtime issues:\nAutomation type mismatch: computed Button from legacy attributes vs Key from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 20;\n    \"XC_kAXXCAttributeElementBaseType\" = UIAccessibilityElement;\n    \"XC_kAXXCAttributeElementType\" = UIAccessibilityElementKBKey;\n    \"XC_kAXXCAttributeTraits\" = 8589934649;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Key from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 20;\n    \"XC_kAXXCAttributeElementBaseType\" = UIAccessibilityElement;\n    \"XC_kAXXCAttributeElementType\" = UIAccessibilityElementKBKey;\n    \"XC_kAXXCAttributeTraits\" = 8589934641;\n}\nSee test report attachments for more detail.",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/AI_HLYUITests/HanlinMorphComposerUITests.swift",
+                        "lineNumber" : 78
+                      }
+                    }
+                  ],
+                  "duration" : "18s",
+                  "durationInSeconds" : 18.55938696861267,
+                  "name" : "testDismissModelPickerKeepsSelectedModelAndDraft()",
+                  "nodeIdentifier" : "HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                }
+              ],
+              "name" : "HanlinMorphComposerUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinMorphComposerUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            }
+          ],
+          "name" : "AI_HLYUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Failed"
+        }
+      ],
+      "name" : "AI_HLY",
+      "nodeType" : "Test Plan",
+      "result" : "Failed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

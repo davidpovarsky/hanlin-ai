@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "603576fa0aec5af1eea403d402f9ff676f3f09c8",
+  "checks": {
+    "xcode_source_ownership": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "public_package_graph": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "whitespace": {
+      "exit": 0,
+      "stderr": ""
+    }
+  },
+  "projectBoundaryCases": 15,
+  "projectBoundaryResult": "PASS",
+  "nativeBuild": "NOT_RUN",
+  "nativeUI": "NOT_RUN",
+  "runtimeDistribution": "IN_PROGRESS",
+  "scope": "Original source ownership, public facade and complete root package graph; not an SDK acceptance claim"
+}

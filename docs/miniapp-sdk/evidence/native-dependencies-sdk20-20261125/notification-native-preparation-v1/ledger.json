@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "id": "notification-native-preparation-v1",
+  "allowanceSeconds": 1800,
+  "charges": [
+    {
+      "startedAt": "2026-11-25T21:47:17.425063+00:00",
+      "finishedAt": "2026-11-25T21:50:26.262338+00:00",
+      "seconds": 188.837976625,
+      "status": "FAILED"
+    }
+  ],
+  "totalChargedSeconds": 188.837976625,
+  "remainingAllowanceSeconds": 1611.162023375,
+  "priorLedgersModified": false,
+  "restorationChargeRecordedSeparately": 54.375687207997544
+}

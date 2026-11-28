@@ -1,0 +1,307 @@
+{
+  "schema": "hanlin.native-consumer-readback.v1",
+  "recordedAtUTC": "2026-11-23T10:00:23.838068+00:00",
+  "repository": "davidpovarsky/anytype-swift",
+  "runID": 45135961459,
+  "attempt": 1,
+  "runURL": "https://github.com/davidpovarsky/anytype-swift/actions/runs/45135961459",
+  "jobID": 137562182075,
+  "sourceCommit": "fa078feb6bd496689b812ccf00945dce60c03599",
+  "branch": "codex/chatgpt-wave15-canonical-hanlin-20261123",
+  "terminalConclusion": "FAILURE",
+  "sdk": {
+    "lock": {
+      "revision": "d49a4fd4115b8335105d2991bf74ab4d7f6aad2d",
+      "products": [
+        "HanlinHostContracts",
+        "HanlinPlatformContracts",
+        "HanlinAgentCore",
+        "HanlinPersistenceAdapters",
+        "HanlinChatCore",
+        "HanlinScriptUI",
+        "HanlinChatUI",
+        "HanlinPresentationKit"
+      ]
+    },
+    "installationPath": "Dependencies/Hanlin",
+    "capturedSnapshotSHA256": "414b64e1df4b6a5ce0b7ac72d49722f2b25f2979cda1953f560592de0906afd2",
+    "capturedSnapshotFiles": 581,
+    "selectedManifestSHA256": "518f91d40d3433a88ab6255c252bc2c81fa1e2199dad0322b4136bb7f2d6f20c",
+    "binaryTargets": []
+  },
+  "artifact": {
+    "archiveSHA256": "738ac36ffbed82377ec625f8febf452cf407a7dc172da3e058c0d3a3689e34fe",
+    "archiveBytes": 50398716,
+    "outerCRC": "PASS",
+    "innerName": "Pinkha-Native-Derived-Evidence.zip",
+    "innerSHA256": "40b8d8a5cbfab50da738069bd2eccd16ac3bf3f030fda1b489194582c7736ae2",
+    "innerBytes": 50667756,
+    "innerCRC": "PASS",
+    "extractedFiles": 1438,
+    "extractedBytes": 71101847
+  },
+  "artifactID": 14804841664,
+  "artifactName": "Pinkha-UI27-hanlin-native-45135961459-1",
+  "runtimeProducer": {
+    "runID": 45091223011,
+    "sourceCommit": "8b08033135f7cb508e813ab1d47d81c255037c07",
+    "runtimeBuildRepeated": false
+  },
+  "nativeAppBuildSucceeded": true,
+  "macroAuthorization": {
+    "status": "PASS_EXACT_MACRO_SOURCE_AND_FINGERPRINT",
+    "revision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+    "validationDisabled": false
+  },
+  "retainedControllerControls": {
+    "status": "PASS_RETAINED_NATIVE_CONTROLLER_CONTROLS_ONLY",
+    "current_control_methods": 69,
+    "retained_original_methods": 62,
+    "qualified_observer_methods": 7,
+    "controller_methods_executed_now": 0,
+    "product_tests_executed_now": 0
+  },
+  "xcresultSQLite": {
+    "preparation/prepare.xcresult/database.sqlite3": {
+      "sha256": "c5afc9e208f01ce2cb038f0057020a7c860b601d16c7a38ba5f7101029d5666a",
+      "caseRuns": [
+        {
+          "name": "prepareRealHostFixture()",
+          "identifier": "HanlinNativeAcceptancePreparationTests/prepareRealHostFixture()",
+          "result": "Success",
+          "duration": 23.124465942382812,
+          "identifierURL": "test://com.apple.xcode/Anytype/AnytypeTests/HanlinNativeAcceptancePreparationTests/prepareRealHostFixture()"
+        }
+      ],
+      "issues": []
+    },
+    "ui/wave15-hanlin-native.xcresult/database.sqlite3": {
+      "sha256": "0a68c9cd2e96618b9f0e35a1288f2c492353e92f43699499f91ca5e3783139c1",
+      "caseRuns": [
+        {
+          "name": "testRealNativeConsentCreatePageAndAuthorityRevocation()",
+          "identifier": "HanlinNativeAcceptanceUITests/testRealNativeConsentCreatePageAndAuthorityRevocation()",
+          "result": "Failure",
+          "duration": 80.0776070356369,
+          "identifierURL": "test://com.apple.xcode/PinkhaPrebuiltUI/PinkhaStage1AcceptanceUITests/HanlinNativeAcceptanceUITests/testRealNativeConsentCreatePageAndAuthorityRevocation"
+        }
+      ],
+      "issues": [
+        {
+          "compactDescription": "XCTAssertTrue failed - The actual app must leave the foreground without being terminated",
+          "sanitizedDescription": "XCTAssertTrue failed - The actual app must leave the foreground without being terminated",
+          "detailedDescription": null,
+          "timestamp": 817118949.388,
+          "issueType": "Assertion Failure"
+        }
+      ]
+    }
+  },
+  "device": {
+    "architecture": "arm64",
+    "deviceId": "8120B58C-BB0D-47A5-8130-CCA2DDBB9064",
+    "deviceName": "Pinkha-UI27-45135961459-ipad",
+    "modelName": "iPad Pro 13-inch (M5)",
+    "osBuildNumber": "24A434",
+    "osVersion": "27.0",
+    "platform": "iOS Simulator"
+  },
+  "capturedSourceInputsVerifiedAgainstExactGitCommit": {
+    "HanlinSDK.lock.json": "3ea789ff6e457b50fe1155aa69d9214fffc2efe90dfa449f9aec64d71855a924",
+    "Modules/PinkhaAnyHanlin/Package.swift": "9e9a3fff34e1f8e9064439856f6b5275b0bb774a62a33db0ddfe2858136498c9",
+    "PinkhaStage1Acceptance/Tests/HanlinNativeAcceptanceUITests.swift": "8af3eea788ab5383d754bd8fdd8ca8443e9cbf44cde34eb5ae2323bd90849824",
+    "Anytype/Sources/Pinkha/Diagnostics/PinkhaHanlinNativeAcceptanceDriver.swift": "03e8e2a0262cd010decb4e20bf0785f76417b8603ed6617346b6500fb569a757"
+  },
+  "nativePartialReceipt": {
+    "phase": "READY_FOR_BACKGROUND",
+    "processID": 58359,
+    "providerConfigured": false,
+    "checks": {
+      "no_provider_configuration": true,
+      "read_denied_before_native_consent": true,
+      "closed_presentation_denies_read_and_create": true,
+      "background_presentation_had_live_read_access": true,
+      "middleware_logging_disabled": true,
+      "created_page_read_back_by_journal_id": true,
+      "native_confirm_creates_exact_page": true,
+      "native_return_mounted_original_document": true,
+      "native_cancel_prevents_write": true,
+      "replay_does_not_create_duplicate": true,
+      "cancelled_title_absent_from_native_index": true,
+      "real_native_context_text_read": true
+    },
+    "completed": false,
+    "sceneEventCountsMeaning": "Last persisted READY_FOR_BACKGROUND snapshot; not evidence that subsequent scene notifications never happened."
+  },
+  "failure": {
+    "file": "PinkhaStage1Acceptance/Tests/HanlinNativeAcceptanceUITests.swift",
+    "line": 211,
+    "assertion": "The actual app must leave the foreground without being terminated",
+    "observedStateAtTimeout": "Running Foreground",
+    "observedStateSource": "Original decoded XCTest session log, line 15987",
+    "appActivateAfterAssertionExecuted": false,
+    "cause": "XCTest did not observe the required background state within its existing wait. The exact final video frame does show SpringBoard, so delayed transition versus stale XCTest state remains unresolved. No SDK crash is established by this assertion."
+  },
+  "timelineUTC": [
+    {
+      "time": "09:28:58.873",
+      "event": "Original XCTest starts Home action."
+    },
+    {
+      "time": "09:28:59.365",
+      "event": "Synthesized Home action completes after 0.492311 seconds; original background wait begins."
+    },
+    {
+      "time": "09:29:09.381",
+      "event": "Original XCTest timeout explicitly reports current state = Running Foreground."
+    },
+    {
+      "time": "09:29:09.388",
+      "event": "Original SQLite records assertion failure; continueAfterFailure=false prevents the subsequent activate and authority checks."
+    },
+    {
+      "time": "09:29:10.126",
+      "event": "Original test Tear Down begins."
+    },
+    {
+      "time": "09:29:22.999",
+      "event": "Later runtime vmmap reports Target Type: corpse; this post-test observation does not prove a pre-assertion app crash."
+    }
+  ],
+  "runtimeObservation": {
+    "status": "FAIL_ACTUAL_UI_RUNTIME_NOT_BOUND",
+    "errorType": "TimeoutExpired",
+    "extraAppLaunches": 0,
+    "everyLaunchVerified": false,
+    "installedSourceMappingSeconds": 28.080363166999632,
+    "runningProcessMappingSeconds": 16.649736624999605,
+    "finalBinding": "NOT_ACCEPTED",
+    "policy": "No observer deadline, process-binding, source, runtime, selector or artifact guard changed."
+  },
+  "compressedDiagnostics": {
+    "scannedFiles": 1290,
+    "zstdFiles": 548,
+    "decodedBytes": 92476638,
+    "decodeErrors": [],
+    "capturedJSONCrashDiagnostics": 20,
+    "diagnosticNames": [
+      "AppIntentsLiveEntityService",
+      "intelligencetasksd"
+    ],
+    "anytypeCrashReportFound": false,
+    "scope": "Only the authenticated captured xcresult Data. Embedded binary error-message strings were not treated as crash events."
+  },
+  "decodedXCTestSession": {
+    "originalBlob": "ui/wave15-hanlin-native.xcresult/Data/data.0~h8FnfUq8wE0Cw_GeqzRtUe5frI-bnAcEkbdW9utqRNoDOalrvwI5LflNz6Ou7y_vS9rpV1yNPysUbw3HFwPZpQ==",
+    "originalBlobSHA256": "dffb0816d21211d9026d1cbd1e83a8ac4a2c0971c789fddb26c74f907171c36d",
+    "decodedSHA256": "b27e06c5a401bfc10d0da90da8ef00f58b7e55af55586e05c3abc4b8a0be6cba",
+    "backgroundStateLine": "09:29:09.381 ... Waiter returned XCTWaiterResultTimedOut waiting for application state Running Background, current state = Running Foreground"
+  },
+  "visualReview": {
+    "screenshots": [
+      {
+        "file": "ui/wave15-hanlin-native-attachments/1C11BFF7-DD82-458E-B606-BB28EAD2CF3C.png",
+        "sha256": "4624e39906ea5557a1b748aa208a6fd2e423d168ec0d4b57fd11ccb5b55d556a",
+        "bytes": 314048,
+        "review": "Oracle native read_media, original resolution",
+        "observed": "Original native cancellation prompt with title, disposable Space, Cancel and Create page controls visible."
+      },
+      {
+        "file": "ui/wave15-hanlin-native-attachments/7FEB644A-0607-4349-BB08-7EDE3688028B.png",
+        "sha256": "00c5fbf9bb4784d1d91da3e27446c40470d35016038ef1fbd561dff1a9c1e67c",
+        "bytes": 314317,
+        "review": "Oracle native read_media, original resolution",
+        "observed": "Original native confirmation prompt with the exact requested page title and Space."
+      },
+      {
+        "file": "ui/wave15-hanlin-native-attachments/82C392C9-C0E5-487C-AF6E-D227B04E76D6.png",
+        "sha256": "f15779f49b0522869c4bfe7089edf6defe4a212a0a4abf6493698112f55b0349",
+        "bytes": 243716,
+        "review": "Oracle native read_media, original resolution",
+        "observed": "READY_TO_CLOSE: document access is allowed; provider model and credential fields remain empty."
+      },
+      {
+        "file": "ui/wave15-hanlin-native-attachments/2A1BE131-AF8F-4F39-9EA9-370526CBCBBE.png",
+        "sha256": "16c23a99d3d999ed18b3f59e9d79ed122c7c380f7d17ac4681a69371a8b98bcf",
+        "bytes": 177270,
+        "review": "Oracle native read_media, original resolution",
+        "observed": "The original document is mounted after return; its native body is visible at AWAIT_BACKGROUND_PRESENTATION."
+      },
+      {
+        "file": "ui/wave15-hanlin-native-attachments/076A7C9B-2E45-4240-A170-F955A5A16A2B.png",
+        "sha256": "8a055f1bb77d2b6ac17904c653904cf6d7a4f4b709d69d83023ea5eba6e154d9",
+        "bytes": 244898,
+        "review": "Oracle native read_media, original resolution",
+        "observed": "The second original SDK presentation before Home; current source access allowed, provider unconfigured."
+      }
+    ],
+    "video": {
+      "file": "ui/wave15-hanlin-native-attachments/D7C90368-8090-43E3-9913-967B57B24F52.mp4",
+      "sha256": "fd10a9009adc434a4592e5da982026221760ce544f8bd60fe937ee417b08b396",
+      "bytes": 10379683,
+      "durationSeconds": 70.315,
+      "width": 2064,
+      "height": 2752,
+      "reviewedFrames": [
+        {
+          "file": "video-frames/frame-66.png",
+          "sha256": "9c785dadd0d4b3a239a7fb59fe589823e7b6b7b6fd26d7261eca45b7a26e724c",
+          "seconds": 66,
+          "review": "Oracle native read_media, original resolution",
+          "observed": "Original SDK session form with source access allowed."
+        },
+        {
+          "file": "video-frames/frame-68_5.png",
+          "sha256": "af23df423c4778fbc469e13c7cfa1dcf3ec4e5f342d591a3b2095822c329b9d9",
+          "seconds": 68.5,
+          "review": "Oracle native read_media, original resolution",
+          "observed": "Underlying original document after the sheet disappears; this frame does not show SpringBoard."
+        },
+        {
+          "file": "video-frames/frame-last.png",
+          "sha256": "b745121c016e59f33aad41afaa13f5f84e14b756afada41b43dd8dc2626e9f93",
+          "seconds": 69.94,
+          "frameIndex": 673,
+          "review": "Oracle native read_media, original resolution",
+          "observed": "Exact final encoded video frame shows SpringBoard/Home screen, with Anytype icon and test runner icon. It does not prove the app remained alive or satisfy the unchanged XCTest background-state assertion."
+        }
+      ],
+      "totalEncodedFrames": 674,
+      "recordingRequestUTC": {
+        "startedAcknowledged": "09:27:51.629",
+        "stopRequested": "09:29:10.127",
+        "stopAcknowledged": "09:29:10.333",
+        "timingLimit": "Encoded PTS and request/acknowledgement times do not by themselves establish an exact frame wall clock; no assumed linear alignment is used."
+      }
+    },
+    "limitations": [
+      "No pixel-baseline comparison.",
+      "No live provider, conversational response or typed Composer acceptance.",
+      "Remaining background, pending-consent, fresh-session, permission, workspace and logout checks did not execute."
+    ]
+  },
+  "compiledProductsReuse": {
+    "status": "OBSERVED_PRODUCTS_INVENTORY_NOT_BUILD_PROVENANCE",
+    "capture_phase": "AFTER_EXECUTION_OR_FAILURE",
+    "build_reuse_enabled": false,
+    "every_entry_build_origin_verified": false,
+    "native_acceptance_reused": false,
+    "ui_acceptance_reused": false
+  },
+  "evidenceSHA256": {
+    "execution.json": "76b687b419ced3d8b3b6482df8c431890d57b8036ada24b70d3241babb588df7",
+    "hanlin-snapshot.json": "414b64e1df4b6a5ce0b7ac72d49722f2b25f2979cda1953f560592de0906afd2",
+    "hanlin-native-result.json": "b1fbbac96e18d85dd98a90b68a964f812c75b43d4f0fc85e87ccb2af9d7ed04d",
+    "canonical-macro-authorization.json": "438969b56e7199a5b01aaaf342085849ce8495c1cc03c79a7e16f880d968d975",
+    "hanlin-runtime-controller-controls.json": "0f61c0ead4429c7971a0287a9f4e815c23b0a00dcb3d280f2afc5f18dc58bbd9",
+    "compiled-products/manifest.json": "c66a18a9a46ab26a54f3bd2eec13103f93aeb99cc7bc844295852c7b430608f4",
+    "compiled-products/source-inputs.json": "8395114814c1cd0a28c96f6cffb485fddd2d96b0868dd9b387f6dae33ac2c8dd",
+    "actual-ui-runtime/live-runtime.json": "165f2691bcef3ba8de19378c1ac81dbfc70ab5347a874407fdb2b99a9f56b055",
+    "actual-ui-runtime/live-runtime-vmmap.log": "6634a70ae1ac48196a993a36bc91245b3d231fb1f5742a8cbab3a9cff27cbfa9",
+    "ui/wave15-hanlin-native-summary.json": "bb84d9786cba274d33eb3d450bfbe5c29d286a6bed74d8ca7ca6dc9d3c3da321"
+  },
+  "preservedOracleArtifactDirectory": "/mnt/development/projects/worktrees/anytype-canonical-hanlin-sdk-20261123/build/canonical-native-admission-20261123/macro-retry/original-artifact",
+  "newTestsDuringReadback": 0,
+  "newCIDispatchDuringReadback": 0,
+  "otherOwnerScope": "SDK06 23 methods/32 cases plus ACK7 remains owned by the active existing continuation owner; no competing selector, mapping, quiescence changes or artifact download."
+}

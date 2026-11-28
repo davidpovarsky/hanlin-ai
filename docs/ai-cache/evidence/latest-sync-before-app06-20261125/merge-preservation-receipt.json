@@ -1,0 +1,82 @@
+{
+  "checkedAtUTC": "2026-11-25T04:34:06.723190+00:00",
+  "baseSHA": "bc28e07e1e76d83e1b4f9a4638f1792b1ec2874c",
+  "combinedSHA": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa",
+  "combinedTree": "d0dc201253ea9a57a4837c9a47cf4049004185fb",
+  "incomingHeads": [
+    "b3bd277f81a588a48869ae68dd09fc465891ab2c",
+    "2aa24f1460f238d9b1a8e046bb0774c238306028",
+    "de2c1d11fd92bbf89f7f0b30e39baf5f614cd0cf"
+  ],
+  "normalMergeCommits": [
+    "c9df5418542cf1884a7add837f47ea848ef2b0f9",
+    "50e8b48a7bb301bef977684fd3b346e9dbae139c",
+    "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa"
+  ],
+  "textualConflicts": [],
+  "manualSourceEdits": [],
+  "changedPathCount": 81,
+  "nonEvidenceDocumentationPaths": [
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+    "AI_HLY/Views/Components/ChatViewBottom.swift",
+    "AI_HLYTests/HanlinMiniAppAssistantToolAcceptanceTests.swift",
+    "AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+    "PROJECT_BOARD.md",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinCapabilityConfigurationView.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinCapabilityPicker.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinComposerFieldFocus.swift",
+    "Scripts/Expo/miniapps/modular-text-search/App.tsx"
+  ],
+  "protectedIdentities": [
+    {
+      "path": "AI_HLYTests/ClassicChatRestorationTests.swift",
+      "sha256": "e6055f2196de6afee93d27ac56449e0c5db8edbb902f0987f4925c9c40aa4261",
+      "unchanged": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinModelPromptCachePersistenceTests.swift",
+      "sha256": "da9b9b3d35a9194b2cb54833f3a5bebe552833ae9fe133e415a9b88513252bfe",
+      "unchanged": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests.swift",
+      "sha256": "b1244b4e53b4cda305bda25382d43cccd4b1b60bc8c02c9c15f2d0649c70976a",
+      "unchanged": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinPromptCachingIntegrationTests.swift",
+      "sha256": "7c211e86bb78c0e48421f3a532769362e7a8e4dad95babd09d25e4b8e597a127",
+      "unchanged": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Package.swift",
+      "sha256": "ac0e2b793a9df8329f12fbb27cd02ee91cb8cb29257f185e0969ebffa2510ebc",
+      "unchanged": true
+    },
+    {
+      "path": "Package.swift",
+      "sha256": "afef4a0c438afc8cf0586b1665d96bc1559db09833086af9e3b2f47811b6568c",
+      "unchanged": true
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "2592ed787e1654a43451e3cc95492ca5ed9879f01dff100da75b4d23c083460f",
+      "unchanged": true
+    }
+  ],
+  "comparedActiveAndNonFixtureLockFiles": 26,
+  "changedLockFiles": [],
+  "expectedMethodCount": 46,
+  "expectedInvocationCount": 48,
+  "app05InventoryComparison": [
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt05/test/expected-test-inventory.json",
+      "equalToCurrentOriginalInventory": true
+    }
+  ],
+  "hostSourceSHA256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+  "nativeBuildOrTests": "NOT_RUN: root owns final validation"
+}

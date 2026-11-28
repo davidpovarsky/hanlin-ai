@@ -1,0 +1,6 @@
+{
+  "source": "65689c797358cfb8cf9b9f0bafdf8a81d784bc86",
+  "exit_code": 0,
+  "at": "2026-11-26T14:02:42.071788+00:00",
+  "scope": "Existing production updater preserved; redundant extra active workflow omitted; legacy source retained as docs"
+}

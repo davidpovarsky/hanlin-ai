@@ -17,7 +17,35 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D7B6C3C02D50A55D004E3AD6"
                BuildableName = "AI_Hanlin.app"
-               BlueprintName = "AI_Hanlin"
+               BlueprintName = "HanlinApp"
+               ReferencedContainer = "container:AI_HLY.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E30000000000000000000003"
+               BuildableName = "AI_HLYUITests.xctest"
+               BlueprintName = "AI_HLYUITests"
+               ReferencedContainer = "container:AI_HLY.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B10000000000000000000007"
+               BuildableName = "AI_HLYTests.xctest"
+               BlueprintName = "AI_HLYTests"
                ReferencedContainer = "container:AI_HLY.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -27,8 +55,39 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      shouldAutocreateTestPlan = "YES">
+      shouldUseLaunchSchemeArgsEnv = "NO"
+      shouldAutocreateTestPlan = "NO">
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "HANLIN_UNIT_TEST_HOST"
+            value = "1"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
+      <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B10000000000000000000007"
+               BuildableName = "AI_HLYTests.xctest"
+               BlueprintName = "AI_HLYTests"
+               ReferencedContainer = "container:AI_HLY.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E30000000000000000000003"
+               BuildableName = "AI_HLYUITests.xctest"
+               BlueprintName = "AI_HLYUITests"
+               ReferencedContainer = "container:AI_HLY.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -48,7 +107,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D7B6C3C02D50A55D004E3AD6"
             BuildableName = "AI_Hanlin.app"
-            BlueprintName = "AI_Hanlin"
+            BlueprintName = "HanlinApp"
             ReferencedContainer = "container:AI_HLY.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -72,7 +131,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D7B6C3C02D50A55D004E3AD6"
             BuildableName = "AI_Hanlin.app"
-            BlueprintName = "AI_Hanlin"
+            BlueprintName = "HanlinApp"
             ReferencedContainer = "container:AI_HLY.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

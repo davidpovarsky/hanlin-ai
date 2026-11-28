@@ -1,0 +1,26 @@
+{
+  "sourceHead": "25c28ae8981eceba18a2beb648da5d1a7660ac63",
+  "patchSHA256": "a0f42869f9bcf15753bcf61ec6583521b44760d6581233903885998e47815046",
+  "files": [
+    {
+      "path": "Scripts/Runtime/upstream-check-lineage.mjs",
+      "beforeSHA256": "78e520c4c4483e6f1854bfe79488131ab9610ae3c632ea8d1f3542cc68d9b1fa",
+      "afterSHA256": "72f09d7df244d607335a0018391872c0bf80bcdf474304514b73f29a4b1bec94"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/upstream-check-lineage.test.mjs",
+      "beforeSHA256": "cd9804ae9f3a7f1e094e98319e1390c5fbfb5c824a139881f2677a8d4436f20f",
+      "afterSHA256": "24bca5d2387c39c853dd39cdc345448b8cd94141e53574a051536d69c460d753"
+    }
+  ],
+  "testExit": 0,
+  "gitApplyCheckExit": 0,
+  "applied": false,
+  "actualProofCheckID": 135339754500,
+  "actualConsumerID": 44458610092,
+  "actualExternalID": "upstream:44455722821:1:15:44458610092:1",
+  "observedAPIURL": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/135339754500",
+  "observedDetailsAndHTMLURL": "https://github.com/davidpovarsky/hanlin-ai/runs/135339754500",
+  "trustBoundary": "All checks still originate from authenticated GitHub API, app15368 exact HEAD; original external-id PR/producer/run-attempt/main-consumer identities stay required. Only exact server canonical check page form is additionally recognized. Unknown/mismatched/foreign identities remain blocked.",
+  "nativeProofUnchanged": true
+}

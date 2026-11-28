@@ -1,0 +1,76 @@
+Application, 0x106e2c140, pid: 58434, label: 'Hanlin MiniApps' <App element pid: 58434>
+  Window (Main), 0x106e2c280, {{0.0, 0.0}, {1032.0, 1376.0}} <AX element pid: 58434, elementOrHash.elementID: 4587537408.4>
+    Other, 0x106e2c3c0, {{0.0, 0.0}, {1032.0, 1376.0}} <AX element pid: 58434, elementOrHash.elementID: 4587916288.5>
+      Other, 0x106e2c500, {{0.0, 0.0}, {1032.0, 1376.0}} <AX element pid: 58434, elementOrHash.elementID: 4593885952.6>
+        Other, 0x106e2c640, {{0.0, 0.0}, {1032.0, 1376.0}} <AX element pid: 58434, elementOrHash.elementID: 4587536384.7>
+          Other, 0x106e2c780, {{0.0, 0.0}, {1032.0, 1376.0}} <AX element pid: 58434, elementOrHash.elementID: 4888101024.8>
+            Other, 0x106e2c8c0, {{0.0, 0.0}, {1032.0, 1376.0}} <AX element pid: 58434, elementOrHash.elementID: 4587929088.9>
+              NavigationBar, 0x106e2ca00, {{0.0, 32.0}, {1032.0, 106.0}}, identifier: 'Apps' <AX element pid: 58434, elementOrHash.elementID: 4593654528.10>
+                Other, 0x106e2cb40, {{14.0, 36.0}, {43.5, 36.0}} <AX element pid: 58434, elementOrHash.elementID: 4884350208.13>
+                  Other, 0x106e2cc80, {{14.0, 36.0}, {43.5, 36.0}} <AX element pid: 58434, elementOrHash.elementID: 4888110624.22>
+                    Button, 0x106e2cdc0, {{14.0, 36.0}, {43.5, 36.0}}, label: 'Edit' <AX element pid: 58434, elementOrHash.elementID: 4888110464.26>
+                Button, 0x106e2cf00, {{73.5, 36.0}, {40.0, 36.0}}, identifier: 'hanlin-apps-torah-capture', label: 'לימוד מצילום' <AX element pid: 58434, elementOrHash.elementID: 4887518080.14>
+                Button, 0x106e2d040, {{618.5, 36.0}, {37.0, 36.0}}, identifier: 'hanlin-apps-add', label: 'hanlin-apps-add' <AX element pid: 58434, elementOrHash.elementID: 4887519360.15>
+                Other, 0x106e2d180, {{671.5, 36.0}, {41.0, 36.0}} <AX element pid: 58434, elementOrHash.elementID: 4587055104.16>
+                  Other, 0x106e2d2c0, {{671.5, 36.0}, {41.0, 36.0}} <AX element pid: 58434, elementOrHash.elementID: 4888106944.23>
+                    Button, 0x106e2d400, {{671.5, 36.0}, {41.0, 36.0}}, identifier: 'miniapps-preferences', label: 'Edit MiniApps and windows' <AX element pid: 58434, elementOrHash.elementID: 4888106464.27>
+                Button, 0x106e2d540, {{728.5, 36.0}, {37.5, 36.0}}, identifier: 'hanlin-miniapps-transfer', label: 'Transfer from Hanlin' <AX element pid: 58434, elementOrHash.elementID: 4887520640.17>
+                SearchField, 0x106e2d680, {{782.0, 32.0}, {240.0, 44.0}}, label: 'Search Apps', placeholderValue: 'Search Apps' <AX element pid: 58434, elementOrHash.elementID: 4587058944.18>
+                  Image, 0x106e2d7c0, {{794.0, 43.5}, {20.5, 20.0}}, identifier: 'magnifyingglass', label: 'Search' <AX element pid: 58434, elementOrHash.elementID: 4887512960.24>
+                StaticText, 0x106e2d900, {{20.0, 89.5}, {83.0, 41.0}}, label: 'Apps' <AX element pid: 58434, elementOrHash.elementID: 4587935424.19>
+              Other, 0x106e2da40, {{0.0, 0.0}, {1032.0, 1376.0}} <AX element pid: 58434, elementOrHash.elementID: 4587937216.11>
+                Other, 0x106e2db80, {{0.0, 0.0}, {1032.0, 1376.0}} <AX element pid: 58434, elementOrHash.elementID: 4884972416.20>
+                  Other, 0x106e2dcc0, {{0.0, 0.0}, {1032.0, 1376.0}} <AX element pid: 58434, elementOrHash.elementID: 4586997504.25>
+                    Other, 0x106e2de00, {{0.0, 0.0}, {1032.0, 1376.0}} <AX element pid: 58434, elementOrHash.elementID: 4888116864.28>
+                      ScrollView, 0x106e2df40, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'hanlin-apps-catalog' <AX element pid: 58434, elementOrHash.elementID: 4587821056.29>
+                        Other, 0x106e2e080, {{0.0, 0.0}, {1032.0, 1376.0}} <AX element pid: 58434, elementOrHash.elementID: 4587936768.30>
+                          Other, 0x106e2e1c0, {{0.0, 0.0}, {1032.0, 126.0}} <AX element pid: 58434, elementOrHash.elementID: 4888210816.34>
+                        Other, 0x106e2e300, {{0.0, 0.0}, {1032.0, 1376.0}} <AX element pid: 58434, elementOrHash.elementID: 4587936320.31>
+                        Other, 0x106e2e440, {{0.0, 138.0}, {1032.0, 509.0}} <AX element pid: 58434, elementOrHash.elementID: 4587927552.32>
+                          Other, 0x106e2e580, {{23.5, 156.0}, {985.0, 473.5}} <AX element pid: 58434, elementOrHash.elementID: 4888116544.35>
+                            StaticText, 0x106e2e6c0, {{24.0, 156.0}, {54.0, 26.5}}, identifier: 'hanlin-miniapps-section-swift', label: 'Swift' <AX element pid: 58434, elementOrHash.elementID: 4888116384.37>
+                            Other, 0x106e2e800, {{23.5, 210.0}, {985.0, 169.0}} <AX element pid: 58434, elementOrHash.elementID: 4888116224.38>
+                              Button, 0x106e2e940, {{23.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Swift Parity', label: 'Swift Parity' <AX element pid: 58434, elementOrHash.elementID: 4888111904.39>
+                                Image, 0x106e2ea80, {{204.0, 231.0}, {30.5, 27.0}}, identifier: 'swift', label: 'Swift Programming Language Bird Logo' <AX element pid: 58434, elementOrHash.elementID: 4888111104.47>
+                                StaticText, 0x106e2ebc0, {{42.0, 318.0}, {105.5, 24.0}}, label: 'Swift Parity' <AX element pid: 58434, elementOrHash.elementID: 4888111584.48>
+                                StaticText, 0x106e2ed00, {{42.0, 346.0}, {139.0, 14.5}}, label: 'Native SwiftPM Mini App' <AX element pid: 58434, elementOrHash.elementID: 4888111744.49>
+                              Button, 0x106e2ee40, {{36.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-hanlin.demo.swift-parity', label: 'App Actions' <AX element pid: 58434, elementOrHash.elementID: 4888112704.40>
+                                Button, 0x106e2ef80, {{36.0, 222.5}, {38.0, 38.0}} <AX element pid: 58434, elementOrHash.elementID: 4586996608.50>
+                                  Image, 0x106e2f0c0, {{47.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More' <AX element pid: 58434, elementOrHash.elementID: 4888112064.64>
+                              Button, 0x106e2f200, {{274.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Sefaria', label: 'Sefaria' <AX element pid: 58434, elementOrHash.elementID: 4888113344.41>
+                                Image, 0x106e2f340, {{451.0, 231.0}, {34.0, 30.0}}, identifier: 'books.vertical.fill', label: 'Bookshelf' <AX element pid: 58434, elementOrHash.elementID: 4888112864.51>
+                                StaticText, 0x106e2f480, {{293.0, 302.0}, {64.5, 24.0}}, label: 'Sefaria' <AX element pid: 58434, elementOrHash.elementID: 4888113024.52>
+                                StaticText, 0x106e2f5c0, {{293.0, 330.0}, {132.0, 30.5}}, label: 'Search, read, save and revisit sources' <AX element pid: 58434, elementOrHash.elementID: 4888113184.53>
+                              Button, 0x106e2f700, {{287.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.sefaria', label: 'App Actions' <AX element pid: 58434, elementOrHash.elementID: 4888113824.42>
+                                Button, 0x106e2f840, {{287.0, 222.5}, {38.0, 38.0}} <AX element pid: 58434, elementOrHash.elementID: 4586998400.54>
+                                  Image, 0x106e2f980, {{298.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More' <AX element pid: 58434, elementOrHash.elementID: 4888113504.66>
+                              Button, 0x106e2fac0, {{525.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Text Studio', label: 'Text Studio' <AX element pid: 58434, elementOrHash.elementID: 4888114464.43>
+                                Image, 0x106e2fc00, {{702.5, 231.0}, {33.0, 20.5}}, identifier: 'textformat.alt', label: 'Text Formatting' <AX element pid: 58434, elementOrHash.elementID: 4888113984.55>
+                                StaticText, 0x106e2fd40, {{544.0, 302.0}, {103.0, 24.0}}, label: 'Text Studio' <AX element pid: 58434, elementOrHash.elementID: 4888114144.56>
+                                StaticText, 0x106e2fe80, {{544.0, 330.0}, {168.5, 30.5}}, label: 'Write, inspect, transform and keep history' <AX element pid: 58434, elementOrHash.elementID: 4888114304.57>
+                              Button, 0x106cbd680, {{538.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.textstudio', label: 'App Actions' <AX element pid: 58434, elementOrHash.elementID: 4888114944.44>
+                                Button, 0x106e24000, {{538.0, 222.5}, {38.0, 38.0}} <AX element pid: 58434, elementOrHash.elementID: 4586999296.58>
+                                  Image, 0x106e24140, {{549.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More' <AX element pid: 58434, elementOrHash.elementID: 4888114624.68>
+                              Button, 0x106e24280, {{776.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Wikipedia', label: 'Wikipedia' <AX element pid: 58434, elementOrHash.elementID: 4888115584.45>
+                                Image, 0x106e243c0, {{960.0, 231.0}, {27.5, 27.5}}, identifier: 'globe.americas.fill', label: 'Globe Showing The Americas, Filled' <AX element pid: 58434, elementOrHash.elementID: 4888115104.59>
+                                StaticText, 0x106e24500, {{795.0, 302.0}, {90.5, 24.0}}, label: 'Wikipedia' <AX element pid: 58434, elementOrHash.elementID: 4888115264.60>
+                                StaticText, 0x106e24640, {{795.0, 330.0}, {103.0, 30.5}}, label: 'Explore, save and revisit knowledge' <AX element pid: 58434, elementOrHash.elementID: 4888115424.61>
+                              Button, 0x106e24780, {{789.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.wikipedia', label: 'App Actions' <AX element pid: 58434, elementOrHash.elementID: 4888116064.46>
+                                Button, 0x106e248c0, {{789.0, 222.5}, {38.0, 38.0}} <AX element pid: 58434, elementOrHash.elementID: 4587000192.62>
+                                  Image, 0x106e24a00, {{800.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More' <AX element pid: 58434, elementOrHash.elementID: 4888115744.70>
+                            StaticText, 0x106e24b40, {{24.0, 406.5}, {127.5, 26.5}}, identifier: 'hanlin-miniapps-section-nativeScript', label: 'NativeScript' <AX element pid: 58434, elementOrHash.elementID: 4922017504.535>
+                            Other, 0x106e24c80, {{23.5, 460.5}, {232.0, 169.0}} <AX element pid: 58434, elementOrHash.elementID: 4922018624.536>
+                              Button, 0x106e24dc0, {{23.5, 460.5}, {232.0, 169.0}}, identifier: 'hanlin-package-card-HanlinScript Parity', label: 'HanlinScript Parity' <AX element pid: 58434, elementOrHash.elementID: 4922018464.537>
+                                StaticText, 0x106e24f00, {{49.0, 483.0}, {29.5, 13.5}}, label: 'BETA' <AX element pid: 58434, elementOrHash.elementID: 4922028704.539>
+                                Image, 0x106e25040, {{202.0, 481.5}, {31.5, 25.0}}, identifier: 'terminal.fill', label: 'Terminal Command Prompt, Filled' <AX element pid: 58434, elementOrHash.elementID: 4922019104.540>
+                                StaticText, 0x106e25180, {{42.0, 552.5}, {171.0, 24.0}}, label: 'HanlinScript Parity' <AX element pid: 58434, elementOrHash.elementID: 4922019904.541>
+                                StaticText, 0x106e252c0, {{42.0, 580.5}, {194.5, 30.5}}, label: 'Real HanlinScript parity MiniApp with deterministic Node, Python, JavaScript, and HTTPS execution.' <AX element pid: 58434, elementOrHash.elementID: 4922025664.542>
+                              Button, 0x106e25400, {{36.0, 473.0}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-hanlin.demo.script-parity', label: 'App Actions' <AX element pid: 58434, elementOrHash.elementID: 4922018144.538>
+                                Button, 0x106e25540, {{36.0, 473.0}, {38.0, 38.0}} <AX element pid: 58434, elementOrHash.elementID: 4587007360.543>
+                                  Image, 0x106e25680, {{47.0, 490.0}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More' <AX element pid: 58434, elementOrHash.elementID: 4922025824.544>
+                        Other, 0x106e257c0, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 1 page', value: 0% <AX element pid: 58434, elementOrHash.elementID: 4593841152.33>
+                          Other, 0x106e25900, {{1026.0, 798.0}, {3.0, 545.0}} <AX element pid: 58434, elementOrHash.elementID: 4884980032.36>
+                        Other, 0x106e25a40, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 1 page', value: 0% <AX element pid: 58434, elementOrHash.elementID: 4593841152.33>
+                          Other, 0x106e25b80, {{1026.0, 798.0}, {3.0, 545.0}} <AX element pid: 58434, elementOrHash.elementID: 4884980032.36>
+              Toolbar, 0x106e25cc0, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'Toolbar', label: 'Toolbar' <AX element pid: 58434, elementOrHash.elementID: 4593827840.12>
+                Other, 0x106e25e00, {{0.0, 0.0}, {1032.0, 1376.0}} <AX element pid: 58434, elementOrHash.elementID: 4593828352.21>

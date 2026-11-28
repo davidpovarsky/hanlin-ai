@@ -1,0 +1,13 @@
+{
+  "preparation_exit": 0,
+  "delta_test_exit": null,
+  "ios_build_exit": 0,
+  "baseline_core_exit": null,
+  "core_test_exit": null,
+  "sdk_test_exit": null,
+  "native_core_test_exit": 0,
+  "native_sdk_test_exit": 0,
+  "baseline_execution": "HISTORICAL_REFERENCE_ONLY",
+  "accepted_cases_execution": "REUSED_VERIFIED",
+  "ios_build_execution": "EXECUTED"
+}

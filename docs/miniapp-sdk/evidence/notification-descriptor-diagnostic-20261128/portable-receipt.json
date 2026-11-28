@@ -1,0 +1,153 @@
+{
+  "source": "04e33c45acedd3f372f836b06f17b805bc91293d",
+  "candidateManifestSHA256": "2714ddc079ba3d580d9a3119e45496b0b1ec14c6ad57e14d0acf1bacc27b05f9",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-notification-descriptor-diagnostic-04e33c45-20261128",
+  "argv": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_notification_os_scope.py",
+    "-v"
+  ],
+  "start": "2026-11-28T09:56:39.894851+00:00",
+  "end": "2026-11-28T09:56:40.535547+00:00",
+  "wallSeconds": 0.6406654985621572,
+  "returncode": 0,
+  "reportedTests": 25,
+  "reportedSeconds": 0.472,
+  "methodRows": [
+    {
+      "method": "test_actual_failed_result_and_duplicate_semantics_cannot_be_relabelled",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_actual_failed_result_and_duplicate_semantics_cannot_be_relabelled",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_changed_durable_receipt_or_wrong_product_store_cannot_pass",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_changed_durable_receipt_or_wrong_product_store_cannot_pass",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_changed_original_build_or_transformed_command_cannot_select_another_run",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_changed_original_build_or_transformed_command_cannot_select_another_run",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_complete_original_five_observations_require_both_actual_process_results",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_complete_original_five_observations_require_both_actual_process_results",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_current_metadata_binds_both_containers_without_equating_directory_and_metadata_uuid",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_current_metadata_binds_both_containers_without_equating_directory_and_metadata_uuid",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_descriptor_change_before_worker_stops_only_the_already_owned_native_child",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_descriptor_change_before_worker_stops_only_the_already_owned_native_child",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_descriptor_count_failure_retains_bounded_metadata_without_content_reads",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_descriptor_count_failure_retains_bounded_metadata_without_content_reads",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_descriptor_diagnostic_failure_preserves_original_error_and_prior_evidence",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_descriptor_diagnostic_failure_preserves_original_error_and_prior_evidence",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_descriptor_links_and_symlinked_product_components_are_rejected",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_descriptor_links_and_symlinked_product_components_are_rejected",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_exited_child_race_or_one_cleanup_error_still_stops_other_child_and_persists_receipt",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_exited_child_race_or_one_cleanup_error_still_stops_other_child_and_persists_receipt",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_foreign_escaped_and_wrong_product_descriptor_paths_are_rejected",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_foreign_escaped_and_wrong_product_descriptor_paths_are_rejected",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_foreign_run_missing_observation_and_bool_version_cannot_pass",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_foreign_run_missing_observation_and_bool_version_cannot_pass",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_installed_debug_code_test_binary_and_post_xctest_fixture_must_match",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_installed_debug_code_test_binary_and_post_xctest_fixture_must_match",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_missing_build_reuse_wrong_selector_and_parallelism_never_launch",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_missing_build_reuse_wrong_selector_and_parallelism_never_launch",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_original_descriptor_bytes_and_other_command_arguments_are_preserved",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_original_descriptor_bytes_and_other_command_arguments_are_preserved",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_push_command_and_raw_output_are_bound_to_the_owned_device",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_push_command_and_raw_output_are_bound_to_the_owned_device",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_raw_descriptor_mutation_or_unbound_helper_never_launches",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_raw_descriptor_mutation_or_unbound_helper_never_launches",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_retained_admission_and_raw_copy_cannot_be_substituted",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_retained_admission_and_raw_copy_cannot_be_substituted",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_stale_future_nonfinite_or_coerced_active_identity_is_rejected",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_stale_future_nonfinite_or_coerced_active_identity_is_rejected",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_terminal_descriptor_change_rejects_zero_exit_and_preserves_native_failure",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_terminal_descriptor_change_rejects_zero_exit_and_preserves_native_failure",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_worker_deadline_stops_only_its_owned_children_and_zero_exit_cannot_pass",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_worker_deadline_stops_only_its_owned_children_and_zero_exit_cannot_pass",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_worker_starts_only_after_actual_fresh_ui_exchange_and_uses_original_budgets",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_worker_starts_only_after_actual_fresh_ui_exchange_and_uses_original_budgets",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_wrong_created_device_or_prior_result_never_launch",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_wrong_created_device_or_prior_result_never_launch",
+      "outcome": "ok"
+    },
+    {
+      "method": "test_wrong_source_missing_worker_or_changed_prepared_diff_never_launch",
+      "identity": "test_notification_os_scope.NotificationScopeTests.test_wrong_source_missing_worker_or_changed_prepared_diff_never_launch",
+      "outcome": "ok"
+    }
+  ],
+  "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSHA256": "7c421ada691447a3ea8cd6283af0cbb21bd49a6427f0cb83032e784669a69a23",
+  "tests": "Original notification scope module once;23 old+2 added failure-diagnostic controls.",
+  "native": "NOT_RUN",
+  "noModifiedAssertionsOrBudgets": true
+}

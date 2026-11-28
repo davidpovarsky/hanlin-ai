@@ -1,0 +1,90 @@
+name: Package native Hanlin Expo search MiniApp
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: native-expo-search-package-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  bundle-and-publish:
+    name: Typecheck, bundle and publish editable .hanlinExpo
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          fetch-depth: 1
+          persist-credentials: true
+
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '24.5.0'
+          cache: npm
+          cache-dependency-path: Scripts/Expo/package-lock.json
+
+      - name: Install original host-matching Expo tooling
+        run: node Scripts/MiniApps/install-tooling.mjs --engine=expo
+
+      - name: Prepare original types and author SDK
+        run: |
+          node Scripts/Expo/prepare-types.mjs
+          node Scripts/MiniApps/stage-sdk.mjs --output=build/MiniAppSDK-Expo --engines=expo,scriptwidget
+
+      - name: Native UI regression checks
+        run: node Scripts/Expo/miniapps/modular-text-search/tests/ui-regression.test.cjs
+
+      - name: Typecheck and build a source-preserving package
+        env:
+          HANLIN_AUTHORING_TYPESCRIPT: ${{ github.workspace }}/Scripts/Expo/node_modules/typescript/lib/typescript.js
+        run: |
+          node Scripts/MiniApps/miniapp.mjs build \
+            --sdk build/MiniAppSDK-Expo --engine expo \
+            --project Scripts/Expo/miniapps/modular-text-search \
+            --archive build/miniapp-packages/ModularTextSearch.hanlinExpo \
+            --report build/miniapp-packages/ModularTextSearch.build.json
+
+      - name: Verify archived sources and compiled artifact identity
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, pathlib, zipfile
+          archive = pathlib.Path("build/miniapp-packages/ModularTextSearch.hanlinExpo")
+          with zipfile.ZipFile(archive) as package:
+              names = set(package.namelist())
+              assert {"bundle.js", "bundle.js.map", "script.json", "package.json",
+                      "hanlin.authoring.json", "hanlin.validation.json",
+                      "source/App.tsx", "source/index.ts", "source/tsconfig.json"} <= names
+              author = json.loads(package.read("hanlin.authoring.json"))
+              assert author["engine"] == "expo" and author["sourceRoot"] == "source"
+              for name, digest in author["sourceHashes"].items():
+                  assert hashlib.sha256(package.read("source/" + name)).hexdigest() == digest, name
+              for name, digest in author["compiledHashes"].items():
+                  assert hashlib.sha256(package.read(name)).hexdigest() == digest, name
+              assert not any(name.startswith("source/node_modules/") for name in names)
+          print(f"Verified {archive.stat().st_size} bytes with original editable source and compiled digests")
+          PY
+
+      - uses: actions/upload-artifact@v7.0.2
+        with:
+          name: Hanlin-ModularTextSearch-authoring
+          path: build/miniapp-packages/ModularTextSearch.*
+          retention-days: 7
+
+      - name: Publish package to the branch that was built
+        if: github.ref_type == 'branch'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p Scripts/Expo/miniapps/modular-text-search/dist
+          cp build/miniapp-packages/ModularTextSearch.hanlinExpo Scripts/Expo/miniapps/modular-text-search/dist/ModularTextSearch.hanlinExpo
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Scripts/Expo/miniapps/modular-text-search/dist/ModularTextSearch.hanlinExpo
+          if ! git diff --cached --quiet; then
+            git commit -m "build(miniapp): publish source-preserving search package [skip ci]"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi

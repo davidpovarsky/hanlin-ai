@@ -1,0 +1,125 @@
+{
+  "schema": "hanlin.shortcut-private-path.independent-w1-review.v1",
+  "reviewer": "/root/w1_review_resume",
+  "verdict": "APPROVED_SOURCE_ONLY_NATIVE_NOT_RUN",
+  "base": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+  "candidateManifestSHA256": "ca6d45a852f567b68e58c054f83570566034a05d6f45c856ffb2965db5fc1848",
+  "patchSHA256": "31a1eb8dff8dd16c75c97a77c988bb7ac124b54a9885b067d257d46dfa822ca0",
+  "sourceSHA256": "ade0b57d32fc718610017d845cfd27ea8762afffd5fa6827a3653e34397897bd",
+  "testSHA256": "654730b33fc81195984d35dd3456eb7a8df669a55e91a7714fa5d56bc41bed7e",
+  "independentlyVerified": {
+    "frozenPayloads": 18,
+    "payloadBytes": 163172,
+    "preimages": "Both original files equal actual local Git objects at exact5fac.",
+    "sourceWholeFileInverse": "Remove the exact508-byte added helper and reverse the four unique substitutions; the entire original observer is recovered.",
+    "testWholeFileInverse": "Remove the exact4249-byte new test insertion; the entire original module is recovered.",
+    "originalFunctions": 20,
+    "unchangedOriginalFunctions": 17,
+    "originalTestMethods": 17,
+    "originalRequireMessages": 89,
+    "originalTimingHoldLeaseLinesUnchanged": true,
+    "originalTestMethodsAndHelperASTsUnchanged": true,
+    "sourcePatchGzipRoundTrip": true,
+    "mechanicalReceiptSHA256": "50ce6a71c150c3e85cebd6e6f9213ec132d4bea9a56cca034626c055ab839c1b"
+  },
+  "lexicalContract": {
+    "canonicalSide": "Only the already read and validated document path is authoritative. It is never normalized or replaced by a caller-controlled path.",
+    "observedSide": "Only repeated interior '/' separators are collapsed before exact string equality.",
+    "rejected": [
+      "non-string",
+      "relative",
+      "double-leading-root",
+      "trailing separator",
+      "NUL",
+      "dot component",
+      "parent component",
+      "different container",
+      "different window",
+      "different filename"
+    ],
+    "notPerformed": [
+      "filesystem resolution",
+      "link following",
+      "case folding",
+      "Unicode normalization",
+      "percent decoding",
+      "alternative-container search",
+      "file read or write"
+    ],
+    "rawEvidencePreserved": true
+  },
+  "sites": [
+    {
+      "function": "observe",
+      "boundary": "Initial prepared owner",
+      "finding": "The unique original prepared proof remains mandatory; only raw visible spelling is compared lexically."
+    },
+    {
+      "function": "collect",
+      "boundary": "Every headless presentation sample",
+      "finding": "Exact handler filename, nonce, token, window path suffix, non-owner window, headless execution and detached presentation remain mandatory."
+    },
+    {
+      "function": "owner_completion",
+      "boundary": "Prepared/final owner path",
+      "finding": "Both actual reader paths remain strictly equal. The raw request path must be the same lexical path."
+    },
+    {
+      "function": "owner_completion",
+      "boundary": "Every foreground presentation sample",
+      "finding": "The original owner window, foreground mode, attachment and separation from all action windows remain mandatory."
+    }
+  ],
+  "unchangedReadBoundary": {
+    "sourcePath": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+    "sourceSHA256": "422c418689c6194268dccb54e8232711da44068925ca0a66fb27f1800610941a",
+    "checks": [
+      "OS-resolved actual container",
+      "absolute contained path",
+      "no dot or parent components",
+      "no symlink in any path component",
+      "O_NOFOLLOW and O_NONBLOCK open",
+      "regular file with one hard link",
+      "bounded byte read",
+      "unchanged product-root revalidation"
+    ],
+    "observation": "The new helper operates after this original read boundary and does not admit a new filesystem path."
+  },
+  "controls": {
+    "actualRetainedRun": {
+      "methods": 19,
+      "passed": 19,
+      "failed": 0,
+      "skipped": 0,
+      "exit": 0,
+      "reportedSeconds": 0.154,
+      "receiptSHA256": "503e804faadfe9c0d2927c08019c1ebb23eacf1285c64e5149879ccb03000805",
+      "stderrSHA256": "8f53e28cc255c2dc11ffc2ddec66d827bdab051c8c69b6654e47e591664b5967"
+    },
+    "positive": "Equivalent observed separators pass the original collect and owner-completion validations while the request, sample spelling and canonical reader path remain unchanged in the result.",
+    "negative": "Eleven malformed or foreign spellings are rejected at helper admission, final-owner, foreground-sample and headless-sample boundaries. An otherwise equivalent path with a foreign window is rejected.",
+    "reviewerExecutedTests": 0,
+    "scope": "Retained synthetic portable controls; no native or full-CI result."
+  },
+  "nativeFailureAttribution": {
+    "source": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+    "runID": 46116538431,
+    "started": 2,
+    "passed": 0,
+    "failed": 2,
+    "diagnosisSHA256": "7d573bafada61e63d76c6e52737c14b98118facb6d5e4a6aea0650b2f210e92c",
+    "observed": "The retained diagnosis binds an actual pre-identity path-mismatch error and both own-case State//surface-proof.json strings.",
+    "limit": "The original private files and observer request values were not separately retained. Current native success and a sole-cause explanation for all later acceptance are not claimed."
+  },
+  "impact": {
+    "productUIWorkflowFixturePackageChanges": 0,
+    "SDK396Intersection": [],
+    "Host99Intersection": []
+  },
+  "native": "NOT_RUN",
+  "reviewLimits": [
+    "No native action, test rerun, source edit, dispatch or cancellation by this reviewer.",
+    "The shared Shortcuts creation correction is separate; this path change does not qualify that UI boundary."
+  ],
+  "reviewedAtUTC": "2026-11-28T09:16:08.164800+00:00"
+}

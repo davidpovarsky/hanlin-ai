@@ -1,0 +1,335 @@
+{
+  "schemaVersion": 1,
+  "sourceSHA": "95367b8c06b166873dfab2143a8323a869085af2",
+  "sourceFingerprint": "05a2dea2597135566edb0ce28185807198d372102845f79a6af44a77277d8ce9",
+  "status": "EXECUTED_PASS",
+  "scope": "Original focused Motion B thenA thenC on current selected HanlinChatUI production, not a full-app/device release claim",
+  "startedUTC": "2026-11-26T16:13:42.503799+00:00",
+  "finishedUTC": "2026-11-26T16:45:13.635543+00:00",
+  "controllerSHA256": "57624575057005b15c6ad4e495f7cf516507682450bf025521cffd70a5c4ea4f",
+  "toolchain": {
+    "Xcode": "Xcode 27.0\nBuild version 27A266a",
+    "Swift": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+    "compilerSDK": "27.0",
+    "simulatorRuntime": {
+      "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+      "version": "27.2",
+      "buildversion": "24B8117"
+    },
+    "device": "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+    "model": "iPad Pro 13-inch (M5)"
+  },
+  "sourceCount": 418,
+  "selectedProducts": [
+    "HanlinChatUI"
+  ],
+  "exactPins": [
+    {
+      "identity": "equatable",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/ordo-one/equatable",
+      "state": {
+        "revision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+        "version": "1.4.1"
+      }
+    },
+    {
+      "identity": "hanlin-streaming-markdown",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/davidpovarsky/hanlin-streaming-markdown",
+      "state": {
+        "revision": "5cbb4b6c950051f98f02a0b0ae56756f5174a9b8"
+      }
+    },
+    {
+      "identity": "highlightswift",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/appstefan/highlightswift",
+      "state": {
+        "revision": "99c431b38a1444a5fd6a4978307fbbefe3a7af53"
+      }
+    },
+    {
+      "identity": "iosmath",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/junyan72/iosMath",
+      "state": {
+        "revision": "ba9ab7729b151329c54fd895a7c1859981d9484c"
+      }
+    },
+    {
+      "identity": "swift-cmark",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/swiftlang/swift-cmark",
+      "state": {
+        "revision": "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
+        "version": "0.9.0"
+      }
+    },
+    {
+      "identity": "swift-markdown",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/swiftlang/swift-markdown.git",
+      "state": {
+        "revision": "7d9a5ce307528578dfa777d505496bd5f544ad94",
+        "version": "0.7.3"
+      }
+    },
+    {
+      "identity": "swift-syntax",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/swiftlang/swift-syntax.git",
+      "state": {
+        "revision": "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
+        "version": "603.0.2"
+      }
+    },
+    {
+      "identity": "swiftui-shimmer",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/markiv/SwiftUI-Shimmer",
+      "state": {
+        "revision": "0226e21f9bf355d40e07e5f5e1c33679d50e167f",
+        "version": "1.5.1"
+      }
+    }
+  ],
+  "originalTestFileSHA256": "5f714f6ad4fc5db3abec22abc5e520f4bba94d5f66740f69673ed3d401665874",
+  "originalABCMethodBodiesUnchangedFrom": "c0990aa0aead061f44c8b93f20255e7f341532c0",
+  "cases": {
+    "B": {
+      "method": "testBRapidReversalPresetSwitchAndPersistence",
+      "status": "EXECUTED_PASS",
+      "evidence": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/B",
+      "testExit": 0,
+      "attachmentExportExit": 0,
+      "caseNodes": [
+        {
+          "nodeIdentifier": "MotionUITests/testBRapidReversalPresetSwitchAndPersistence()",
+          "result": "Passed",
+          "duration": "1m 45s"
+        }
+      ],
+      "rawResult": {
+        "test_exit_code": 0,
+        "archive": "ARCHIVED",
+        "readability": "READABLE",
+        "diagnostics": [],
+        "archive_sha256": "3577016252c9ff0a8b0b1361e79cd38d435075dd769c8b86c381e6c6612c35e2",
+        "status": "FINALIZED_READABLE_ARCHIVED"
+      },
+      "video": {
+        "exit_code": 0,
+        "status": "CAPTURE_ATTEMPTED",
+        "maximum_recording_seconds": 120,
+        "scope": "first120s from an actual XCTest case event, not every preset or original app",
+        "stop_reason": "timer_120s",
+        "elapsed_seconds": 120.018,
+        "sigint_sent": true,
+        "timed_out_finalizing": false,
+        "output_bytes": 50584633
+      }
+    },
+    "A": {
+      "method": "testAAllFivePresetsTwentyCompleteCyclesEach",
+      "status": "EXECUTED_PASS",
+      "evidence": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/A",
+      "testExit": 0,
+      "attachmentExportExit": 0,
+      "caseNodes": [
+        {
+          "nodeIdentifier": "MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach()",
+          "result": "Passed",
+          "duration": "5m 41s"
+        }
+      ],
+      "rawResult": {
+        "test_exit_code": 0,
+        "archive": "ARCHIVED",
+        "readability": "READABLE",
+        "diagnostics": [],
+        "archive_sha256": "4979dbd6d601d860d2d69272dc33990eaeeaafb1bca7dee110ade61129de525a",
+        "status": "FINALIZED_READABLE_ARCHIVED"
+      },
+      "video": {
+        "exit_code": 0,
+        "status": "CAPTURE_ATTEMPTED",
+        "maximum_recording_seconds": 120,
+        "scope": "first120s from an actual XCTest case event, not every preset or original app",
+        "stop_reason": "timer_120s",
+        "elapsed_seconds": 120.01,
+        "sigint_sent": true,
+        "timed_out_finalizing": false,
+        "output_bytes": 19881365
+      }
+    },
+    "C": {
+      "method": "testCReadableLongContentRTLTypeOrientationAndCompletion",
+      "status": "EXECUTED_PASS",
+      "evidence": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/C",
+      "testExit": 0,
+      "attachmentExportExit": 0,
+      "caseNodes": [
+        {
+          "nodeIdentifier": "MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion()",
+          "result": "Passed",
+          "duration": "39s"
+        }
+      ],
+      "rawResult": {
+        "test_exit_code": 0,
+        "archive": "ARCHIVED",
+        "readability": "READABLE",
+        "diagnostics": [],
+        "archive_sha256": "a007690c3fd6e3b160536ecf796b537a695b2044ae3d91270ae71b7a95303f41",
+        "status": "FINALIZED_READABLE_ARCHIVED"
+      },
+      "video": {
+        "exit_code": 0,
+        "status": "CAPTURE_ATTEMPTED",
+        "maximum_recording_seconds": 120,
+        "scope": "first120s from an actual XCTest case event, not every preset or original app",
+        "stop_reason": "test_finished",
+        "elapsed_seconds": 57.48,
+        "sigint_sent": true,
+        "timed_out_finalizing": false,
+        "output_bytes": 34699964
+      }
+    }
+  },
+  "exactCaseSeconds": {
+    "B": 105.156,
+    "A": 341.678,
+    "C": 39.497
+  },
+  "A": {
+    "cyclesPerPreset": 20,
+    "presets": [
+      "v1.gentle-squeeze",
+      "v1.height-reveal",
+      "v1.none",
+      "v1.quiet-fade",
+      "v1.relaxed"
+    ],
+    "geometrySamples": 3448,
+    "samplesByPreset": {
+      "v1.relaxed": 848,
+      "v1.height-reveal": 940,
+      "v1.gentle-squeeze": 980,
+      "v1.quiet-fade": 640,
+      "v1.none": 40
+    }
+  },
+  "B": {
+    "actualNativeTapCountDelta": 3,
+    "twoRapidGapsSeconds": [
+      0.0665,
+      0.0501
+    ],
+    "intermediateRenderedGeometryObserved": true,
+    "dragScrollDeltaPoints": 268.0,
+    "dragActionCountBeforeAfter": [
+      7,
+      7
+    ],
+    "realOSReduceMotionAndRestorationPassed": true
+  },
+  "visualReview": {
+    "reviewer": "/root/wave1_chat_sdk",
+    "atUTC": "2026-11-26T16:52:30.959311+00:00",
+    "status": "PASS",
+    "method": "Viewed original exported PNGs through SentinelX native image content; no generated, edited or substitute screenshot",
+    "landscapeFullScreen": "evidence/C/attachments/1786F876-E5BF-46FB-8EA4-FDBCC6B92080.png",
+    "observations": [
+      "Full-screen landscape image displays native chrome and width across the whole iPad surface; EXIF orientation8 rotates encoded2064x2752 pixels into2752x2064 landscape.",
+      "Large Hebrew/Arabic/Latin content is visible and right aligned in the retained disclosure. Header and controls remain distinct; no stale overlapping expanded snapshot is visible.",
+      "Portrait long-content screenshot keeps the same right-aligned large text and summary; long content extends in its scroll viewport.",
+      "Completed-closed portrait shows collapsed geometry, shimmer=false/numeric=true, and Original content after details immediately below the retained header; expanded summary/tool content is absent."
+    ],
+    "pngMetadata": {
+      "82671AA8-2BDA-44A4-B98E-02DE356AD742.png": {
+        "bytes": 208465,
+        "sha256": "40c5b71af6920dcacce91901ae114f4898c5f4403c8dcac6bd1c68abf6a0fcb4",
+        "encodedPixels": [
+          2752,
+          2064
+        ],
+        "exifOrientation": 8
+      },
+      "36026C89-64F2-45F2-9910-A15885C95388.png": {
+        "bytes": 157646,
+        "sha256": "4931b5d0c080f8a67b7db6ee19cae393782478cbfda671417ac593c4d741eafc",
+        "encodedPixels": [
+          2064,
+          2752
+        ],
+        "exifOrientation": 1
+      },
+      "FCFB73AA-2A3C-4DD2-8C85-85B967B081E5.png": {
+        "bytes": 545508,
+        "sha256": "6f4071ea54983550eddf6c6d2531658c71784faebd07c6726bf6efa93499c0c7",
+        "encodedPixels": [
+          2064,
+          2752
+        ],
+        "exifOrientation": 1
+      },
+      "1786F876-E5BF-46FB-8EA4-FDBCC6B92080.png": {
+        "bytes": 271782,
+        "sha256": "e1422dadbafccedc7a689b443ca6572d943af7580e0188e3e597d1264d3684cb",
+        "encodedPixels": [
+          2064,
+          2752
+        ],
+        "exifOrientation": 8
+      }
+    },
+    "limits": [
+      "Static screenshots do not claim physical-device acceptance or every intermediate video frame",
+      "Literal markdown punctuation is fixture text; this gate does not claim full Markdown rendering parity"
+    ]
+  },
+  "rootSourceReadback": {
+    "targetSHA": "0bbd94866f10a5a64b8a1d401d14bcb06e7b4ddb",
+    "matchingCounts": {
+      "source": 418,
+      "fixture": 10,
+      "graph": 25
+    },
+    "differences": {
+      "source": [],
+      "fixture": [],
+      "graph": []
+    },
+    "reuseDecision": "REUSE_ELIGIBLE_INPUT_MATCH: all418 source/resource files,10 fixture/recorder inputs and25 graph inputs match0bbd exactly. The execution remains the original953 run; this does not claim fresh execution on0bbd or native full-app acceptance."
+  },
+  "retainedWarnings": [
+    "B andA original Xcode simctl diagnose reached600s timeout; readable finalized archived testresults and0exit retained",
+    "C recorded upcoming all-orientations Info.plist warning; original fixture/test unchanged"
+  ],
+  "priorFailures": [
+    {
+      "source": "dacb4ca5c809e7b0355a95e53d137ef3bb58f7fb",
+      "status": "FAILED",
+      "cause": "B originalline144 collapsedAX exists"
+    },
+    {
+      "source": "24bc34c618615cb75b362d9d64f55e4607fd0e74",
+      "status": "FAILED",
+      "cause": "sameBfailure, actualAX+pixel diagnosis retained"
+    },
+    {
+      "source": "efb33bf0093981abdf882031ffe56c3044902968",
+      "status": "FAILED",
+      "cause": "sameBfailure, originalraw/video archived"
+    }
+  ],
+  "archiveTransfer": {
+    "bytes": 2146004,
+    "sha256": "636c9035a1528b678a944ac5c7c7e00ad1e67964936364b9cca7bc0c9128c31a",
+    "verifiedFiles": 96
+  },
+  "largeArtifactsManifest": "native/selected-evidence-manifest.json",
+  "freshnessLimit": "New1177 PR19 SDK/contracts/native queues were not part of this953 execution; root must qualify their dependency impact separately.",
+  "productionFileChanged": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift"
+}

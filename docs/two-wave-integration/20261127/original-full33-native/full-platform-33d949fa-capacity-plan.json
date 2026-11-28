@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "status": "MEASURED_WARM_ORIGINAL_PHASE_CAPACITY_PLAN",
+  "source": "33d949fa8d91d238ba93a9ef09373c5eafe58b84",
+  "command": [
+    "/usr/bin/swift",
+    "test",
+    "--package-path",
+    "Packages/HanlinPlatform",
+    "--parallel"
+  ],
+  "originalPhaseDeadlineSeconds": 3600,
+  "stageReceiptSHA256": "ebe26f5fbb9666a2b1f3ba6fec2309c01f2a5a5669f5534c8d9a0a571cf4941e",
+  "controllerSHA256": "0ca2d78ae2daf2bacbf41b1a37ee4b96059813a8d1f0e0175424b99f52dfe90e",
+  "measuredAffectedOutputsBytes": 99581952,
+  "budgetComponentsBytes": {
+    "incrementalCompileAndLink": 536870912,
+    "originalTestTemporaryArtifacts": 536870912,
+    "diagnosticEvidence": 67108864,
+    "observedForeignGrowthAllowance": 2147483648,
+    "osReserve": 1073741824
+  },
+  "admissionBytes": 4362076160,
+  "continuousReserveBytes": 1073741824,
+  "measurement": {
+    "at": "2026-11-27T07:28:45.663446+00:00",
+    "freeBytes": 2934087680,
+    "affectedOutputs": [
+      {
+        "target": "HanlinScriptExtensionsTests",
+        "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/.build/out/Products/Debug/HanlinScriptExtensionsTests.swiftmodule",
+        "isDir": true,
+        "sizeKiB": 408,
+        "mtime": "2026-11-27T07:00:05.765647+00:00"
+      },
+      {
+        "target": "HanlinScriptExtensionsTests",
+        "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/.build/out/Products/Debug/HanlinScriptExtensionsTests.xctest",
+        "isDir": true,
+        "sizeKiB": 86428,
+        "mtime": "2026-11-27T07:00:11.989627+00:00"
+      },
+      {
+        "target": "HanlinScriptingSDKTests",
+        "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/.build/out/Products/Debug/HanlinScriptingSDKTests.swiftmodule",
+        "isDir": true,
+        "sizeKiB": 60,
+        "mtime": "2026-11-27T06:59:44.323683+00:00"
+      },
+      {
+        "target": "HanlinScriptingSDKTests",
+        "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/.build/out/Products/Debug/HanlinScriptingSDKTests.xctest",
+        "isDir": true,
+        "sizeKiB": 10352,
+        "mtime": "2026-11-27T06:59:48.018390+00:00"
+      }
+    ],
+    "packageChangedPaths": [
+      "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+      "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests.swift",
+      "Packages/HanlinPlatform/Tests/HanlinScriptingSDKTests/HanlinScriptingSDKTests.swift"
+    ],
+    "completeWarmBuildKiB": "1957896\t/Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/.build"
+  },
+  "rationale": {
+    "warmBuild": "Original telemetry command compiled all package and test modules on d290; this same .build is preserved. Production Sources, Package.swift and all pinned dependencies are unchanged. Only three package test files in two test targets differ.",
+    "incrementalCompileAndLink": "512 MiB covers more than five times the measured 99.6 MB of affected linked test products and Swift modules, including replacement object/link intermediates.",
+    "originalTestTemporaryArtifacts": "512 MiB contingency for original fixture archives, storage roots, images and bounded HTTP data; no expected new dependency checkout or full cold product build.",
+    "diagnosticEvidence": "64 MiB for original streaming log, process snapshots and at most four three-second sample captures.",
+    "observedForeignGrowthAllowance": "2 GiB additional allowance for observed foreign G21/Lorvex writers. Free space declined from 10.15 GB at07:12 to2.74 GB at07:27; a foreign owner then reclaimed its own obsolete simulator, and actual07:38 free is6.86 GB. This is an admission estimate, not a promise against other writers.",
+    "osReserve": "Continuous1 GiB reserve; the controller stops only its own verified process tree if actual free space reaches it. No PASS is credited after a resource stop."
+  },
+  "cleanupBoundary": "Our narrow inventory preparation timed out before producing its inventory; all four candidate directories remain present and no deletion occurred. Live space recovered through another owner's recorded cleanup; further cleanup is unnecessary for this measured phase.",
+  "recordedAt": "2026-11-27T08:48:18.376002+00:00",
+  "liveFreeAtPreparation": 5316259840,
+  "memoryPressureReadback": "The system has 17179869184 (1048576 pages with a page size of 16384).\nSystem-wide memory free percentage: 49%",
+  "focusedPrerequisite": {
+    "receipt": "/Users/m1/builds/hanlin-two-wave-root-20261126/validation/original-filemanager-33d949fa-r1/source-bound-display-name-reconciliation.json",
+    "sha256": "b2c4e3458813756a68339daff12cc060646defc98184af46248e5fc88d67e460",
+    "status": "SOURCE_BOUND_ORIGINAL_FILEMANAGER_SELECTOR_EXECUTED_PASS",
+    "source": "33d949fa8d91d238ba93a9ef09373c5eafe58b84"
+  },
+  "currentWarmBuildAllocatedBytes": 2006888448,
+  "currentWarmBuildSourceQualification": "The original focused command just compiled the reviewed production change successfully at this exact clean source. No source/test/pin changes occur before this original unfiltered continuation.",
+  "historicalCapacitySource": "/Users/m1/builds/hanlin-two-wave-root-20261126/full-platform-bd4c83ba-capacity-plan.json",
+  "historicalCapacitySourceSHA256": "489151a6e254578bc386633ac2bd499a2d6bc7187ed9425a9a03cc08c9d2b091",
+  "historicalMeasuredAffectedOutputsBytes": 99581952,
+  "previousOriginalFullGate": {
+    "source": "bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb",
+    "nativeTests": 601,
+    "result": "599PASS2FAIL",
+    "original60minDeadlineUnchanged": true
+  },
+  "currentFreeBytes": 5556183040,
+  "purpose": "Same-source original unfiltered full macOS Swift gate after the one original FileManager selector passes. Prior measured full-suite allocation profile and conservative original component budgets are retained; this does not claim the prior failed full gate passed."
+}

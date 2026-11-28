@@ -1,0 +1,22 @@
+{
+  "oldBuild": "145401",
+  "newBuild": "145801",
+  "oldArchiveSHA256": "f6346b53c32bae70a040278b2290ce6b6a3526d699eea8530eb4ec95253bfa21",
+  "newArchiveSHA256": "90eea3cceba98ebab415331b4d5a358d8e7fb5ae47b87823be516f1d5d375a6b",
+  "entryCount": 3101,
+  "added": [],
+  "removed": [],
+  "payloadChanged": [],
+  "entryOrderMatches": true,
+  "archiveCommentMatches": true,
+  "changedMetadataFields": {
+    "date_time": 3101
+  },
+  "comparisonSourceSHA256": "1816a1faf7e71ca7979b8a442520fcda552f66bfe61a299d7a4a5bb0a76a172f",
+  "initialVerifier": {
+    "jobID": "job_e70bb7b9f35a",
+    "exitCode": 1,
+    "message": "Runtime receipt Host archive checksum differs",
+    "scope": "Historical ZIP container checksum was overstrict for freshly generated timestamped Host archive; all payloads compared unchanged. Independent final verifier still required."
+  }
+}

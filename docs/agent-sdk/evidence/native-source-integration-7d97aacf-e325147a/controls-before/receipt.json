@@ -1,0 +1,23 @@
+{
+  "phase": "BEFORE_TWO_INTEGRATION_CONTROL_CORRECTIONS",
+  "utc": "2026-11-24T00:10:11.477491+00:00",
+  "argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "-v",
+    "Scripts.CI.Tests.test_native_tool_candidate_report.NativeToolCandidateReportTests.test_inventory_is_bound_to_authored_swift_arguments_and_methods",
+    "Scripts.CI.Tests.test_stop_continuation_delta_report.StopContinuationDeltaReportTests.test_frozen_fixture_inventory_retains_exact_stop_labels_and_no_old_suite_selection"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-sdk-release-readiness-20261123/build/sdk02-source-integration-7d97aacf-e325147a/composed-control-source",
+  "elapsed_seconds": 0.3468930469825864,
+  "exit_code": 1,
+  "source_control_sha256": {
+    "Scripts/CI/Tests/test_native_tool_candidate_report.py": "778626578601833dafa6ec0ee19bf1310727b6e4301da24b34366de134ad5303",
+    "Scripts/CI/Tests/test_stop_continuation_delta_report.py": "b4b8f92549612f9760ec1d2025f206f54a7c3fafd9b66b712d186ef5bb0578ef"
+  },
+  "native_tests_executed": false,
+  "only_two_methods_selected": true,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "92354af92bd0e51d7b901fb3d1a79fb215b5464c7ff31d4b30f351035c59a168"
+}

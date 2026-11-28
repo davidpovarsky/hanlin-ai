@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/usr/local/bin/node",
+    "--test",
+    "--test-name-pattern=SDK documentation and complete example staging",
+    "Scripts/MiniApps/Tests/stage-sdk.test.mjs"
+  ],
+  "exitCode": 0,
+  "seconds": 0.3502058982849121,
+  "node": "v24.22.0",
+  "platform": "Linux-6.17.0-1020-oracle-aarch64-with-glibc2.39",
+  "scope": "One affected existing staging case only; not original compiler/native proof"
+}

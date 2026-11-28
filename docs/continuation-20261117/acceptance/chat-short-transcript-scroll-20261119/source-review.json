@@ -1,0 +1,18 @@
+{
+  "source_parent": "37a246f404cc2ed253200ddf6fd647f999637f68",
+  "at": "2026-11-19T04:20:52.667375+00:00",
+  "before": {
+    "AI_HLY/ChatView.swift": "c042da669f660e20be9757da40a517b954bcb3c67b145238dee08dfba2636424",
+    "AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowController.swift": "585e4cd8d17b0bda7064cfa12957938877a3e17dbb95bc440bd9c047013f23d4",
+    "AI_HLYTests/ChatAutoFollowTests.swift": "e4a309d6f83d8741355537143aba9359e5d77f0d22f6fb29519ff07927d45e41"
+  },
+  "after": {
+    "AI_HLY/ChatView.swift": "25b3ac311ba66de6a96e757b84378189bc357ca1cdff6a7912beefb4e3e44fcf",
+    "AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowController.swift": "1a6f020f3db2b21522d90be333cdb141c5429be3a648aaad6d61c45d8e598088",
+    "AI_HLYTests/ChatAutoFollowTests.swift": "18da6d0ffeb7225bf409190ee48c046fd804a544e46c52c47c0b6368bdda95c8"
+  },
+  "source_reason": "Existing scroll requests reposition even fitting content; latest measured offset range now gates both admission and execution",
+  "native_observation": "Safari and Skills original recordings show approximately108pt transcript movement around a synthesized tap; causal platform mechanism remains unproven",
+  "assertions_preserved": "Original Safari/Skills UI tests and all original coalescing assertions unchanged; original timer tests supply real overflow geometry",
+  "native_status": "NOT_RUN"
+}

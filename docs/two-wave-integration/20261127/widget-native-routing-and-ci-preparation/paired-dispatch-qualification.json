@@ -1,0 +1,96 @@
+{
+  "source": "6aa3da405bf555863f81d24c45f1392081dd94ec",
+  "priorOriginal54DispatchSource": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "miniappCompleteUnchanged": true,
+  "originalPlanValue": [
+    [
+      "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()",
+      "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft()",
+      "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic()",
+      "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair()",
+      "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource()",
+      "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode()",
+      "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+      "AI_HLYTests/HanlinNativePresentationTests",
+      "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+      "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+      "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
+      "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+      "AI_HLYUITests/MiniAppAuthoringUITests",
+      "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+      "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"
+    ],
+    29
+  ],
+  "note": "The plan minimum29 is not an executed-test count. The original native54 inventory/result reconciliation remains required.",
+  "currentExplicitScopes": {
+    "miniapp_complete": [
+      [
+        "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()",
+        "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft()",
+        "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic()",
+        "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair()",
+        "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource()",
+        "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode()",
+        "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+        "AI_HLYTests/HanlinNativePresentationTests",
+        "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+        "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+        "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
+        "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+        "AI_HLYUITests/MiniAppAuthoringUITests",
+        "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+        "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"
+      ],
+      29
+    ],
+    "miniapp_shortcuts_os": [
+      [
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoRunMiniAppActionSavedForegroundReturnsTypedResult",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult"
+      ],
+      4
+    ],
+    "miniapp_widget_recovery_os": [
+      [
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers"
+      ],
+      1
+    ],
+    "miniapp_shortcut_concurrency_os": [
+      [
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts"
+      ],
+      2
+    ],
+    "miniapp_system_surfaces_os": [
+      [
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoPlacedWidgetInvokesAllFiveRuntimes",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptPlacedWidgetInvokesAllFiveRuntimes",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoLiveActivityInvokesAllFiveRuntimes",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptLiveActivityInvokesAllFiveRuntimes",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoShortcutInvokesAllFiveRuntimes",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptShortcutInvokesAllFiveRuntimes",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoSystemShareInvokesAllFiveRuntimes",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptSystemShareInvokesAllFiveRuntimes",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoSystemTranslationInvokesAllFiveRuntimes",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptSystemTranslationInvokesAllFiveRuntimes"
+      ],
+      10
+    ],
+    "miniapp_studio_gallery_os": [
+      [
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns"
+      ],
+      5
+    ]
+  },
+  "nativeExecuted": false
+}

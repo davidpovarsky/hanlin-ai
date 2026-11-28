@@ -1,0 +1,50 @@
+{
+  "status": "R2_REVIEW_ONLY_NATIVE_NOT_RUN",
+  "files": [
+    {
+      "path": "build-platform-native-866d2d3c-r2.py",
+      "sha256": "e66483c6e193f76c3f2445fbbe425f87d752de3237b3e27355444bcdd3e6534a",
+      "bytes": 12972
+    },
+    {
+      "path": "run-platform-native-866d2d3c-test-r2.py",
+      "sha256": "ba549b64d0145537f57ea52c535264dcd68c617dea07d2e2ab3f56dbfd354ed7",
+      "bytes": 15351
+    },
+    {
+      "path": "platform866-r2-attempt-binding.diff",
+      "sha256": "b698b521eaf55f74fdd1dd19226c124a5caf2e5aea74aebfc7cf854379f9e70e",
+      "bytes": 5449
+    },
+    {
+      "path": "platform866-r2-candidate-manifest.json",
+      "sha256": "da31f28e915a09f7bfab019f7ace159d16662ac2860301720c1b830718c554ef",
+      "bytes": 991
+    },
+    {
+      "path": "platform-sourcepackages-recovery-866d2d3c.json",
+      "sha256": "c032a99fa639eccf6e7c5b84d4034e463abfc593026aaec2e9bbb139ecf77e28",
+      "bytes": 3956
+    },
+    {
+      "path": "platform-native-build-866d2d3c-r1.json",
+      "sha256": "7d270b0d672f4cf37e96818ebe48eea9c2233dfdf77f0398fffc30da1a061b9e",
+      "bytes": 1961
+    },
+    {
+      "path": "platform-native-build-866d2d3c-r1-launch.json",
+      "sha256": "b6ce742f7f450476bf6db35b9cbabb94b9f5935336181d23f1d1b5c17ca03927",
+      "bytes": 543
+    },
+    {
+      "path": "obsolete-g17-phone-compiled-pretrim-20261127/receipt.json",
+      "sha256": "45d03862074da606415bb4129c5fb3540f4ea49215fa91877e22722e12c607d4",
+      "bytes": 2093
+    },
+    {
+      "path": "obsolete-g17-phone-app-evidence-20261127/receipt.json",
+      "sha256": "ec1870b0c756d59078008a988959dca796523f8dfc8f26f82ea9f1e56201b722",
+      "bytes": 2838
+    }
+  ]
+}

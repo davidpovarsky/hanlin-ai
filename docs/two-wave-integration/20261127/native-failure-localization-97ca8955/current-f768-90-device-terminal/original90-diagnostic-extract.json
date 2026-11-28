@@ -1,0 +1,252 @@
+{
+  "label": "original90",
+  "lineCount": 225372,
+  "specificErrorsAndBuildMarkers": [
+    {
+      "line": 10741,
+      "text": "2026-11-27T06:18:22.5929940Z ** BUILD SUCCEEDED **"
+    },
+    {
+      "line": 21261,
+      "text": "2026-11-27T06:20:45.7457020Z ** BUILD SUCCEEDED **"
+    },
+    {
+      "line": 25613,
+      "text": "2026-11-27T06:21:10.4146270Z ** BUILD SUCCEEDED **"
+    },
+    {
+      "line": 30024,
+      "text": "2026-11-27T06:21:32.6496080Z ** BUILD SUCCEEDED **"
+    },
+    {
+      "line": 223312,
+      "text": "2026-11-27T07:14:17.8047170Z /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinOriginalExpoWidgetTests.swift:289:39: error: reference to static property 'appGroupIdentifier' is not concurrency-safe because it involves shared mutable state"
+    },
+    {
+      "line": 224993,
+      "text": "2026-11-27T07:15:06.4646280Z ##[error]Process completed with exit code 65."
+    }
+  ],
+  "tail": [
+    {
+      "line": 225318,
+      "text": "2026-11-27T07:15:09.1904770Z   RUN_SIMULATOR_SHELL_ACCEPTANCE: false"
+    },
+    {
+      "line": 225319,
+      "text": "2026-11-27T07:15:09.1905100Z   RUN_SIMULATOR_MCP_ACCEPTANCE: false"
+    },
+    {
+      "line": 225320,
+      "text": "2026-11-27T07:15:09.1905620Z   RUN_SIMULATOR_SMOKE_LAUNCH: false"
+    },
+    {
+      "line": 225321,
+      "text": "2026-11-27T07:15:09.1905960Z   RUN_SIMULATOR_NATIVESCRIPT_POC: false"
+    },
+    {
+      "line": 225322,
+      "text": "2026-11-27T07:15:09.1906360Z   RUN_RUNTIME_TOOLING_FULL_ACCEPTANCE: false"
+    },
+    {
+      "line": 225323,
+      "text": "2026-11-27T07:15:09.1906660Z ##[endgroup]"
+    },
+    {
+      "line": 225324,
+      "text": "2026-11-27T07:15:10.1701610Z Multiple search paths detected. Calculating the least common ancestor of all paths"
+    },
+    {
+      "line": 225325,
+      "text": "2026-11-27T07:15:10.1718650Z The least common ancestor is /Users/runner/work/hanlin-ai/hanlin-ai. This will be the root directory of the artifact"
+    },
+    {
+      "line": 225326,
+      "text": "2026-11-27T07:15:10.1719740Z With the provided path, there will be 65 files uploaded"
+    },
+    {
+      "line": 225327,
+      "text": "2026-11-27T07:15:10.1724800Z Artifact name is valid!"
+    },
+    {
+      "line": 225328,
+      "text": "2026-11-27T07:15:10.1726960Z Root directory input is valid!"
+    },
+    {
+      "line": 225329,
+      "text": "2026-11-27T07:15:10.6156340Z Uploading artifact: AI_Hanlin-iOS26-simulator-smoke-logs.zip"
+    },
+    {
+      "line": 225330,
+      "text": "2026-11-27T07:15:10.6177530Z Beginning upload of artifact content to blob storage"
+    },
+    {
+      "line": 225331,
+      "text": "2026-11-27T07:15:11.9949540Z Uploaded bytes 4414691"
+    },
+    {
+      "line": 225332,
+      "text": "2026-11-27T07:15:12.0736910Z Finished uploading artifact content to blob storage!"
+    },
+    {
+      "line": 225333,
+      "text": "2026-11-27T07:15:12.0743370Z SHA256 digest of uploaded artifact is 30ab26559f0e4ee50d423aa5a5bcb9ee78ac423eb0b9239c596e4c2d35f32041"
+    },
+    {
+      "line": 225334,
+      "text": "2026-11-27T07:15:12.0745330Z Finalizing artifact upload"
+    },
+    {
+      "line": 225335,
+      "text": "2026-11-27T07:15:12.6157670Z Artifact AI_Hanlin-iOS26-simulator-smoke-logs successfully finalized. Artifact ID 15179232491"
+    },
+    {
+      "line": 225336,
+      "text": "2026-11-27T07:15:12.6161330Z Artifact AI_Hanlin-iOS26-simulator-smoke-logs has been successfully uploaded! Final size is 4414691 bytes. Artifact ID is 15179232491"
+    },
+    {
+      "line": 225337,
+      "text": "2026-11-27T07:15:12.6169260Z Artifact download URL: https://github.com/davidpovarsky/hanlin-ai/actions/runs/45950016033/artifacts/15179232491"
+    },
+    {
+      "line": 225338,
+      "text": "2026-11-27T07:15:12.6488350Z Post job cleanup."
+    },
+    {
+      "line": 225339,
+      "text": "2026-11-27T07:15:12.8699830Z [command]/opt/homebrew/bin/git version"
+    },
+    {
+      "line": 225340,
+      "text": "2026-11-27T07:15:12.9430560Z git version 2.56.0"
+    },
+    {
+      "line": 225341,
+      "text": "2026-11-27T07:15:12.9462630Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/388fce48-a2e5-45f9-a802-9b145b4d0ac3/.gitconfig'"
+    },
+    {
+      "line": 225342,
+      "text": "2026-11-27T07:15:12.9476370Z Temporarily overriding HOME='/Users/runner/work/_temp/388fce48-a2e5-45f9-a802-9b145b4d0ac3' before making global git config changes"
+    },
+    {
+      "line": 225343,
+      "text": "2026-11-27T07:15:12.9479210Z Adding repository directory to the temporary git global config as a safe directory"
+    },
+    {
+      "line": 225344,
+      "text": "2026-11-27T07:15:12.9483800Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/hanlin-ai/hanlin-ai"
+    },
+    {
+      "line": 225345,
+      "text": "2026-11-27T07:15:12.9920490Z Removing SSH command configuration"
+    },
+    {
+      "line": 225346,
+      "text": "2026-11-27T07:15:13.0023000Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\\.sshCommand"
+    },
+    {
+      "line": 225347,
+      "text": "2026-11-27T07:15:13.0244590Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'core\\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+    },
+    {
+      "line": 225348,
+      "text": "2026-11-27T07:15:13.2356360Z Removing HTTP extra header"
+    },
+    {
+      "line": 225349,
+      "text": "2026-11-27T07:15:13.2367340Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\\.https\\:\\/\\/github\\.com\\/\\.extraheader"
+    },
+    {
+      "line": 225350,
+      "text": "2026-11-27T07:15:13.2493820Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'http\\.https\\:\\/\\/github\\.com\\/\\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+    },
+    {
+      "line": 225351,
+      "text": "2026-11-27T07:15:13.4829560Z Removing includeIf entries pointing to credentials config files"
+    },
+    {
+      "line": 225352,
+      "text": "2026-11-27T07:15:13.4837010Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\\.gitdir:"
+    },
+    {
+      "line": 225353,
+      "text": "2026-11-27T07:15:13.5019760Z includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path"
+    },
+    {
+      "line": 225354,
+      "text": "2026-11-27T07:15:13.5021970Z includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path"
+    },
+    {
+      "line": 225355,
+      "text": "2026-11-27T07:15:13.5023550Z includeif.gitdir:/github/workspace/.git.path"
+    },
+    {
+      "line": 225356,
+      "text": "2026-11-27T07:15:13.5025030Z includeif.gitdir:/github/workspace/.git/worktrees/*.path"
+    },
+    {
+      "line": 225357,
+      "text": "2026-11-27T07:15:13.5039120Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path"
+    },
+    {
+      "line": 225358,
+      "text": "2026-11-27T07:15:13.5153810Z /Users/runner/work/_temp/git-credentials-a7528112-8967-46fe-b2c5-db3392c1588d.config"
+    },
+    {
+      "line": 225359,
+      "text": "2026-11-27T07:15:13.5183260Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path \\/Users\\/runner\\/work\\/_temp\\/git\\-credentials\\-a7528112\\-8967\\-46fe\\-b2c5\\-db3392c1588d\\.config"
+    },
+    {
+      "line": 225360,
+      "text": "2026-11-27T07:15:13.5375170Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path"
+    },
+    {
+      "line": 225361,
+      "text": "2026-11-27T07:15:13.5486080Z /Users/runner/work/_temp/git-credentials-a7528112-8967-46fe-b2c5-db3392c1588d.config"
+    },
+    {
+      "line": 225362,
+      "text": "2026-11-27T07:15:13.5489240Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path \\/Users\\/runner\\/work\\/_temp\\/git\\-credentials\\-a7528112\\-8967\\-46fe\\-b2c5\\-db3392c1588d\\.config"
+    },
+    {
+      "line": 225363,
+      "text": "2026-11-27T07:15:13.5592570Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path"
+    },
+    {
+      "line": 225364,
+      "text": "2026-11-27T07:15:13.5681180Z /github/runner_temp/git-credentials-a7528112-8967-46fe-b2c5-db3392c1588d.config"
+    },
+    {
+      "line": 225365,
+      "text": "2026-11-27T07:15:13.5719590Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \\/github\\/runner_temp\\/git\\-credentials\\-a7528112\\-8967\\-46fe\\-b2c5\\-db3392c1588d\\.config"
+    },
+    {
+      "line": 225366,
+      "text": "2026-11-27T07:15:13.5822070Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path"
+    },
+    {
+      "line": 225367,
+      "text": "2026-11-27T07:15:13.5914160Z /github/runner_temp/git-credentials-a7528112-8967-46fe-b2c5-db3392c1588d.config"
+    },
+    {
+      "line": 225368,
+      "text": "2026-11-27T07:15:13.5923710Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \\/github\\/runner_temp\\/git\\-credentials\\-a7528112\\-8967\\-46fe\\-b2c5\\-db3392c1588d\\.config"
+    },
+    {
+      "line": 225369,
+      "text": "2026-11-27T07:15:13.6050350Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url"
+    },
+    {
+      "line": 225370,
+      "text": "2026-11-27T07:15:13.7754470Z Removing credentials config '/Users/runner/work/_temp/git-credentials-a7528112-8967-46fe-b2c5-db3392c1588d.config'"
+    },
+    {
+      "line": 225371,
+      "text": "2026-11-27T07:15:13.7974740Z Cleaning up orphan processes"
+    },
+    {
+      "line": 225372,
+      "text": "2026-11-27T07:15:15.9885580Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/"
+    }
+  ]
+}

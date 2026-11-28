@@ -1,0 +1,292 @@
+{
+  "revision": "847611dcaa3bf0e2783335f961dd1fd0580e4d9f",
+  "groups": [
+    {
+      "file": "src/shared/frontmatter.test.ts",
+      "suite": "shared/frontmatter",
+      "cases": "*"
+    },
+    {
+      "file": "src/skills/loading/frontmatter.test.ts",
+      "suite": "resolveSkillManifestMetadata install validation",
+      "exclude": [
+        "parses Link-style YAML metadata with node install hints"
+      ],
+      "reason": "The original Markdown/YAML parser is deliberately excluded. Hanlin Yams owns native frontmatter parsing."
+    },
+    {
+      "file": "src/shared/config-eval.test.ts",
+      "suite": "config-eval helpers",
+      "cases": [
+        "normalizes truthy values across primitive types",
+        "resolves nested config paths and missing branches safely",
+        "blocks prototype keys while resolving config paths",
+        "uses defaults only when config paths are unresolved",
+        "does not use inherited defaults for blocked config paths",
+        "returns the active runtime platform"
+      ]
+    },
+    {
+      "file": "src/shared/config-eval.test.ts",
+      "suite": "runtime requirements through eligibility",
+      "cases": "*"
+    },
+    {
+      "file": "src/shared/config-eval.test.ts",
+      "suite": "evaluateRuntimeEligibility",
+      "cases": "*"
+    },
+    {
+      "file": "src/skills/loading/skills.test.ts",
+      "suite": "shouldIncludeSkill",
+      "cases": "*",
+      "helpers": [
+        "withClearedEnv",
+        "makeSkillEntry",
+        "rawSkillApiKeyRefConfig"
+      ]
+    }
+  ],
+  "declarations": [
+    {
+      "file": "src/shared/frontmatter.test.ts",
+      "suite": "shared/frontmatter",
+      "case": "parseFrontmatterBool respects explicit values and fallback",
+      "start": 499,
+      "end": 824,
+      "sha256": "8cc5f36ab6896d47646d0f605a84b9ea6a677e152fcd2f05be1cb30632103358"
+    },
+    {
+      "file": "src/shared/frontmatter.test.ts",
+      "suite": "shared/frontmatter",
+      "case": "resolveOpenClawManifestBlock returns undefined for invalid input",
+      "start": 828,
+      "end": 1423,
+      "sha256": "86702b94630614526294b5e3fededc6fc63097939238b9b62ddf68cf5ea90bc2"
+    },
+    {
+      "file": "src/shared/frontmatter.test.ts",
+      "suite": "shared/frontmatter",
+      "case": "normalizes manifest requirement and os lists",
+      "start": 1427,
+      "end": 2059,
+      "sha256": "322f13319f46cb60e7a80024df8050d02c84007526727450f523aa1c37ef610b"
+    },
+    {
+      "file": "src/shared/frontmatter.test.ts",
+      "suite": "shared/frontmatter",
+      "case": "parses and applies install common fields",
+      "start": 2063,
+      "end": 3009,
+      "sha256": "432700371a844b0bd33f7af477800f31b904b1492b198f6ad90b41a4600160f1"
+    },
+    {
+      "file": "src/shared/frontmatter.test.ts",
+      "suite": "shared/frontmatter",
+      "case": "prefers explicit kind, ignores invalid common fields, and leaves missing ones untouched",
+      "start": 3013,
+      "end": 3737,
+      "sha256": "8365a4a2142b7d6c604d7892c74b6f0012029e05434902db47dab7b8e7e7a82f"
+    },
+    {
+      "file": "src/shared/frontmatter.test.ts",
+      "suite": "shared/frontmatter",
+      "case": "maps install entries through the parser and filters rejected specs",
+      "start": 3741,
+      "end": 4260,
+      "sha256": "9bcb4513eb38aaf0326b0162210531a479e40b3700a371a5cbd67b39a79889b8"
+    },
+    {
+      "file": "src/skills/loading/frontmatter.test.ts",
+      "suite": "resolveSkillManifestMetadata install validation",
+      "case": "accepts safe install specs",
+      "start": 760,
+      "end": 1483,
+      "sha256": "25a084ff0f4f89c34cf20172246c2c1d674592218f96b9f9cc30cdb2aeeb11ba"
+    },
+    {
+      "file": "src/skills/loading/frontmatter.test.ts",
+      "suite": "resolveSkillManifestMetadata install validation",
+      "case": "drops unsafe brew formula values",
+      "start": 1487,
+      "end": 1707,
+      "sha256": "926ee240c9e77ddd939c8a8e20111c407660252f36295bfbbf6ef335944ac924"
+    },
+    {
+      "file": "src/skills/loading/frontmatter.test.ts",
+      "suite": "resolveSkillManifestMetadata install validation",
+      "case": "drops unsafe npm package specs for node installers",
+      "start": 1711,
+      "end": 1955,
+      "sha256": "64c8113af81eeb36b473bd90ab09f1b42dba2b3a697e55d47322079e7804ce7c"
+    },
+    {
+      "file": "src/skills/loading/frontmatter.test.ts",
+      "suite": "resolveSkillManifestMetadata install validation",
+      "case": "drops unsafe go module specs",
+      "start": 1959,
+      "end": 2185,
+      "sha256": "d8fdda1664cbd056d0091c0913d57cffb4c129976411782068a66a8b82300923"
+    },
+    {
+      "file": "src/skills/loading/frontmatter.test.ts",
+      "suite": "resolveSkillManifestMetadata install validation",
+      "case": "drops unsafe download urls",
+      "start": 2189,
+      "end": 2415,
+      "sha256": "cd8b2869e54dbb355903d5c9b106e0d2b01f738d318878c33cb1b0f07021c600"
+    },
+    {
+      "file": "src/skills/loading/frontmatter.test.ts",
+      "suite": "resolveSkillManifestMetadata install validation",
+      "case": "normalizes a download installer's optional SHA-256 digest",
+      "start": 2419,
+      "end": 2973,
+      "sha256": "7c013f62f483e645347aed2913ef312bb90a02862a4046e23ae83ec959e1f7f3"
+    },
+    {
+      "file": "src/skills/loading/frontmatter.test.ts",
+      "suite": "resolveSkillManifestMetadata install validation",
+      "case": "drops a download installer declaring an invalid SHA-256 digest (%j)",
+      "start": 2977,
+      "end": 3381,
+      "sha256": "8616b3757c69c6e5aef90a7a84a8597295cb185bdbad758261dafc16c7fe85b7"
+    },
+    {
+      "file": "src/shared/config-eval.test.ts",
+      "suite": "config-eval helpers",
+      "case": "normalizes truthy values across primitive types",
+      "start": 579,
+      "end": 979,
+      "sha256": "7bb337f93db2fcd38f31f11635c8b65045f03de0d08dfb3667702de88b160756"
+    },
+    {
+      "file": "src/shared/config-eval.test.ts",
+      "suite": "config-eval helpers",
+      "case": "resolves nested config paths and missing branches safely",
+      "start": 983,
+      "end": 1555,
+      "sha256": "ba0bb0a67e62d7ce8b94f97042767b9de136dabf14f6263feb47228efa39a7d1"
+    },
+    {
+      "file": "src/shared/config-eval.test.ts",
+      "suite": "config-eval helpers",
+      "case": "blocks prototype keys while resolving config paths",
+      "start": 1559,
+      "end": 2046,
+      "sha256": "8e19e9c6a4ff0e840f678afe2f7d1b77bb64b1ae543f14eb1a20ca3e726aaab7"
+    },
+    {
+      "file": "src/shared/config-eval.test.ts",
+      "suite": "config-eval helpers",
+      "case": "uses defaults only when config paths are unresolved",
+      "start": 2050,
+      "end": 2534,
+      "sha256": "cab9a76637ed86366e00488eacad8b029daa12670c003e358fbb86fba42293db"
+    },
+    {
+      "file": "src/shared/config-eval.test.ts",
+      "suite": "config-eval helpers",
+      "case": "does not use inherited defaults for blocked config paths",
+      "start": 2538,
+      "end": 2863,
+      "sha256": "42ab97f8e7f517a973c2902902fff08874518f7d0441035873cee3114e76298f"
+    },
+    {
+      "file": "src/shared/config-eval.test.ts",
+      "suite": "config-eval helpers",
+      "case": "returns the active runtime platform",
+      "start": 2867,
+      "end": 3152,
+      "sha256": "ec9ab0c7a23f839c79aeb64aa4aca001b3846827f42dba8d7c6c8520eb21ee0b"
+    },
+    {
+      "file": "src/shared/config-eval.test.ts",
+      "suite": "runtime requirements through eligibility",
+      "case": "accepts remote bins and remote any-bin matches",
+      "start": 8879,
+      "end": 9441,
+      "sha256": "9f0d02122010dc0fb6f54de135b9cc47031611f4b49385d682f4dafb2b5c3e5c"
+    },
+    {
+      "file": "src/shared/config-eval.test.ts",
+      "suite": "runtime requirements through eligibility",
+      "case": "rejects when any required runtime check is still unsatisfied",
+      "start": 9445,
+      "end": 9996,
+      "sha256": "c8a33afb53db8f28680093f89d59cc2ff8fdda60fcc2200d9b460e262b26a06d"
+    },
+    {
+      "file": "src/shared/config-eval.test.ts",
+      "suite": "evaluateRuntimeEligibility",
+      "case": "rejects entries when required OS does not match local or remote",
+      "start": 10051,
+      "end": 10388,
+      "sha256": "064e0da03580608543dab5705edfed2a9b9b097896f1d31114d20b8fe4affffd"
+    },
+    {
+      "file": "src/shared/config-eval.test.ts",
+      "suite": "evaluateRuntimeEligibility",
+      "case": "accepts entries when remote platform satisfies OS requirements",
+      "start": 10392,
+      "end": 10741,
+      "sha256": "6b5f5de51a8386fc8faffcda0837c38a877706e19b3ee12c040887107904bb4c"
+    },
+    {
+      "file": "src/shared/config-eval.test.ts",
+      "suite": "evaluateRuntimeEligibility",
+      "case": "bypasses runtime requirements when always=true",
+      "start": 10745,
+      "end": 11056,
+      "sha256": "0135e25ed1f7c7661216af4c8e27ee4b02675a5e3bf7f1f1d53aed2d366aaa72"
+    },
+    {
+      "file": "src/shared/config-eval.test.ts",
+      "suite": "evaluateRuntimeEligibility",
+      "case": "evaluates runtime requirements when always is false",
+      "start": 11060,
+      "end": 11573,
+      "sha256": "2d85fe1c65e11344ca707d6a5c5d82ac5ae2bd6e64a7798717cd93bc7843d641"
+    },
+    {
+      "file": "src/skills/loading/skills.test.ts",
+      "helper": "withClearedEnv",
+      "start": 2768,
+      "end": 3291,
+      "sha256": "3017a3974058f6b73d57c4162d34c0df285cde9cd5d08a6b76f75c23c27075a4"
+    },
+    {
+      "file": "src/skills/loading/skills.test.ts",
+      "helper": "makeSkillEntry",
+      "start": 3293,
+      "end": 3783,
+      "sha256": "8fcb9972e74126ce30021e7f8175939541ffea69101ae168ce6772fb6a9892ee"
+    },
+    {
+      "file": "src/skills/loading/skills.test.ts",
+      "helper": "rawSkillApiKeyRefConfig",
+      "start": 4186,
+      "end": 4503,
+      "sha256": "8f98d9980343eb6562c2037c865ac7b5e93c6a70157e39181cd739a8d6f58873"
+    },
+    {
+      "file": "src/skills/loading/skills.test.ts",
+      "suite": "shouldIncludeSkill",
+      "case": "requires non-blank host and configured env values",
+      "start": 11097,
+      "end": 11742,
+      "sha256": "562e895d3e82a1f056e75cfba5d33d707b6d07a6a6917ce9af44f582b050009e"
+    },
+    {
+      "file": "src/skills/loading/skills.test.ts",
+      "suite": "shouldIncludeSkill",
+      "case": "excludes only the skill whose configured secret is unavailable",
+      "start": 11746,
+      "end": 12382,
+      "sha256": "3f27433627787a60372509851cfa5da8df0c872424e59e2723ea31d3885c6922"
+    }
+  ],
+  "transformedArtifactSHA256": "a38f3b14d6d759606404ac480aeb32e2a10bc5de23eb6e3fffb2633b8c708814",
+  "expectedTestInvocations": 28,
+  "boundary": "Unchanged original test statements/helpers. Framework, platform mock and secret-registry cleanup are explicit fixture adapters. Filesystem discovery, workspace loading and the upstream YAML parser are outside this subset."
+}

@@ -1,0 +1,182 @@
+{
+  "container": {
+    "bytes": 111072,
+    "format": "gzip-compressed tar",
+    "path": "original-source-evidence.tar.gz",
+    "sha256": "47c9193c1c2c17c9ef4aa54fc0fe5e7feb111460f514d0f0ac6877b5d316b10f"
+  },
+  "memberCount": 24,
+  "members": [
+    {
+      "bytes": 2257,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "bounded-r1-r2.diff",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/r2/bounded-r1-r2.diff",
+      "sha256": "d6d2fde713787252c2f8ddc602fc726c0ff201e267572d9f0455b08bbf2640bd"
+    },
+    {
+      "bytes": 4292,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "r1/portable-r1/python.stderr",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/proof/portable-r1/python.stderr",
+      "sha256": "25ec1ff6bb48a8cf90e6c3ff391b6033de0711dae5d495017fd5a2d13628dd2f"
+    },
+    {
+      "bytes": 0,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "r1/portable-r1/python.stdout",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/proof/portable-r1/python.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2077,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "r1/portable-r1/receipt.json",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/proof/portable-r1/receipt.json",
+      "sha256": "f8c9b01bfb7f5cdbf3e0d06db1a7cfeae0b220ae50dd2e090ec9b3f987008449"
+    },
+    {
+      "bytes": 1006,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "r1/sdk-input-intersection.json",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/proof/sdk-input-intersection.json",
+      "sha256": "427f0d473413a7193ee9841c04729d07fc08ed28b7c95d66658939db0d73bf59"
+    },
+    {
+      "bytes": 8864,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "r1/source-preservation.json",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/proof/source-preservation.json",
+      "sha256": "992589c405a24fd8ed7b2a9cbbcac710458c6e1d6426f5c562659d9deafabc23"
+    },
+    {
+      "bytes": 2732,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "r1/source.json",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/proof/source.json",
+      "sha256": "1880b5a76c667c2b9465c791f24233ff4cf7f876146b727df7b85ce33d3521f1"
+    },
+    {
+      "bytes": 126516,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "r1/source.patch",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/proof/source.patch",
+      "sha256": "6b82f37538b44d3e695d2f39e14216b11986569a76777a28ae7ca59939946d07"
+    },
+    {
+      "bytes": 6557,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "r2/REVIEW.md",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/r2/proof/REVIEW.md",
+      "sha256": "b8f79bba6dd663fc18d69342b0bc12048628be79f28331b9f2a6696d797336ce"
+    },
+    {
+      "bytes": 4292,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "r2/portable-r1/python.stderr",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/r2/proof/portable-r1/python.stderr",
+      "sha256": "25ec1ff6bb48a8cf90e6c3ff391b6033de0711dae5d495017fd5a2d13628dd2f"
+    },
+    {
+      "bytes": 0,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "r2/portable-r1/python.stdout",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/r2/proof/portable-r1/python.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2077,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "r2/portable-r1/receipt.json",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/r2/proof/portable-r1/receipt.json",
+      "sha256": "f8c9b01bfb7f5cdbf3e0d06db1a7cfeae0b220ae50dd2e090ec9b3f987008449"
+    },
+    {
+      "bytes": 4519,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "r2/portable-r2/python.stderr",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/r2/proof/portable-r2/python.stderr",
+      "sha256": "b6b09c84313fd90260b9647d14e7a787953f5a83ff537e04c95cd9e1c0087ec1"
+    },
+    {
+      "bytes": 0,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "r2/portable-r2/python.stdout",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/r2/proof/portable-r2/python.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2146,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "r2/portable-r2/receipt.json",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/r2/proof/portable-r2/receipt.json",
+      "sha256": "ab9d4f80c7827de316f2429edb5d40f57add77819f2051e7289a6849308be6fe"
+    },
+    {
+      "bytes": 1006,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "r2/sdk-input-intersection.json",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/r2/proof/sdk-input-intersection.json",
+      "sha256": "427f0d473413a7193ee9841c04729d07fc08ed28b7c95d66658939db0d73bf59"
+    },
+    {
+      "bytes": 8864,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "r2/source-preservation.json",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/r2/proof/source-preservation.json",
+      "sha256": "992589c405a24fd8ed7b2a9cbbcac710458c6e1d6426f5c562659d9deafabc23"
+    },
+    {
+      "bytes": 4080,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "r2/source-r2.json",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/r2/proof/source-r2.json",
+      "sha256": "3796ca4d6e78a588ac35c743396aa67bbc30780779de3552f136516b0c5ee986"
+    },
+    {
+      "bytes": 127620,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "r2/source-r2.patch",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/r2/proof/source-r2.patch",
+      "sha256": "549645a73c2fbdb58ed10281a0d90f1845ca2c9efc551a022bcbfae874a3de37"
+    },
+    {
+      "bytes": 2732,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "r2/source.json",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/r2/proof/source.json",
+      "sha256": "1880b5a76c667c2b9465c791f24233ff4cf7f876146b727df7b85ce33d3521f1"
+    },
+    {
+      "bytes": 126516,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "r2/source.patch",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/r2/proof/source.patch",
+      "sha256": "6b82f37538b44d3e695d2f39e14216b11986569a76777a28ae7ca59939946d07"
+    },
+    {
+      "bytes": 3300,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "root-independent-source-review.json",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/r2/root-independent-source-review.json",
+      "sha256": "5aa2a378e90fe11c9b14958b562cc27c986ccb4e3bbd52ea64971af50258cb06"
+    },
+    {
+      "bytes": 2496,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "transfer-r1.json",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/transfer-receipt.json",
+      "sha256": "743e572397259f033b29be33145bae0e28370863972d848eb852aca141cdf809"
+    },
+    {
+      "bytes": 655,
+      "encoding": "utf-8; original bytes unchanged",
+      "member": "transfer-r2.json",
+      "originalPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/studio-editor-source-5cd29884/r2/transfer-receipt.json",
+      "sha256": "33065aaa959f25049a2b99e17df321fd1b69b31ca2f177534cede616c911ba5b"
+    }
+  ],
+  "purpose": "Retain original R1/R2 patches, metadata and raw logs without whitespace normalization",
+  "rawBytes": 444604,
+  "schemaVersion": 1
+}

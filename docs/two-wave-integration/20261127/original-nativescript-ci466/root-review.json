@@ -1,0 +1,13 @@
+{
+  "reviewer": "/root",
+  "reviewedAtUTC": "2026-11-27T10:54:37.116069+00:00",
+  "sourcePacket": "ci90-45977172889-baseline-job-140432237541-w2",
+  "originalManifestSHA256": "86027b4e7d4866e156cb5aed76b62332542e37dc58a91f52c2325260ce0b5082",
+  "declaredMemberCount": 13,
+  "allDeclaredBytesIndependentlyVerified": true,
+  "status": "ACTUAL_NATIVESCRIPT_SIMULATOR_AND_DEVICE_PACKAGE_BUILD_PASS_ONLY",
+  "jobID": 140432237541,
+  "source": "466c6187309f86da9d20b389de3c424cd93c9bdd",
+  "completeRawLogSHA256": "fc2cfdce6174374ab29135eeb6c994d0b1b1bea54ca9d8921bb00ccb0776f353",
+  "boundary": "Actual job steps and raw log support NativeScript preflight,3Node controls and2generic package builds only. Original HanlinPlatform/Phase0 steps skipped; all app/native/OS/distribution gates remain separate."
+}

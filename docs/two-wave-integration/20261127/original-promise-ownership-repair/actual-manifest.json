@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "source": "778ed7e597a2fe19708e1dde5598350b56b25d6d",
+  "files": [
+    {
+      "path": "controller-binding.json",
+      "bytes": 886,
+      "sha256": "7ef6c6475f10b59406e1fb782f6ae4094b9872a4bbf5bb71c1652d6e03ca1270"
+    },
+    {
+      "path": "controller-receipt-snapshot.json",
+      "bytes": 66283,
+      "sha256": "2a5047eee4da21e23aea569269bd557d26b4f000b917953082d61aa0f3e076f9"
+    },
+    {
+      "path": "live-paths.json",
+      "bytes": 1002,
+      "sha256": "d41009c520248b48961d0121b332fad041962d4cc8f12ee16754c7278c2c3cfd"
+    },
+    {
+      "path": "native-stages.jsonl",
+      "bytes": 86714,
+      "sha256": "4274c49d0a97466a32f67a0c41ca7f2871dc274e5678e7611e8f520c0eea12cb"
+    },
+    {
+      "path": "original-http-pending-at-sample.jsonl",
+      "bytes": 84031,
+      "sha256": "a682a2423c52225d8ddd731e3f50866e6b2898dd2156acb37541808992200652"
+    },
+    {
+      "path": "original-http-pending-process-tree.json",
+      "bytes": 4414,
+      "sha256": "e55138aa3423435b9bd8c8ca6b341abf665166fa2bd8f6a76a0a683e704d85f8"
+    },
+    {
+      "path": "original-swift-test-snapshot.log",
+      "bytes": 211884,
+      "sha256": "57be4aac0264fb02d52daa580bfe6440853f9499e7587e6bb37dad99e212947c"
+    },
+    {
+      "path": "port",
+      "bytes": 5,
+      "sha256": "17813b240fceaac230502079a4e43ef07d005a10d2b8f2d8527a4b3128400bbf"
+    },
+    {
+      "path": "sample-original-http-pid-22526.command.log",
+      "bytes": 293,
+      "sha256": "a84182276408734b4d6737a110f29aa901fc7183724f47ed9c978ec80e61d7df"
+    },
+    {
+      "path": "sample-original-http-pid-22526.txt",
+      "bytes": 221132,
+      "sha256": "46c5d3d6bca21b0c853128e6f8e1cfb7146a0b1b28c92e9d680297e2f16f492e"
+    },
+    {
+      "path": "server.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "server.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "source-stage.json",
+      "bytes": 4158,
+      "sha256": "06c6bfee224732926b99a1dda6c5c534c2062381d378ab47e67b07ed29a0b675"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 608,
+      "sha256": "8cd106805e20fe79d8cee5641360e5154b005156f4fc3dbb31f1b83d48be519c"
+    },
+    {
+      "path": "wire.jsonl",
+      "bytes": 11001,
+      "sha256": "daad4ccc876b14cd3189b565775f74c11e9f8e7e466e697bb2b0f9cc05cf6bc3"
+    }
+  ]
+}

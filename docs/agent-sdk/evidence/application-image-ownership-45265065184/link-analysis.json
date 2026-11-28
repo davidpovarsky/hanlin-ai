@@ -1,0 +1,965 @@
+{
+  "utc": "2026-11-23T22:20:50.650659+00:00",
+  "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+  "integration_base": "4968a88d39cb9e5fccf408bdac832be7df483801",
+  "scope": "Original image ownership diagnosis and portable graph repair; native post-repair execution NOT_RUN.",
+  "artifact": {
+    "utc": "2026-11-23T21:58:56.793408+00:00",
+    "run": 45265065184,
+    "attempt": 1,
+    "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+    "producer_conclusion": "failure",
+    "artifact_id": 14864733741,
+    "artifact_name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+    "zip_path": "/mnt/development/projects/worktrees/hanlin-sdk02-interface-capture-20261123/build/sdk-main-tests-45265065184/original-smoke-artifact.zip",
+    "zip_bytes": 66998891,
+    "zip_sha256": "62dab969033c2f5db51bf9b9e31640521eec6f3848e08b8c20e2ee1a359679e9",
+    "api_source_digest_size_verified": true,
+    "acquisition_count": 1,
+    "download_exit": 0,
+    "native_prepared": "INELIGIBLE_NOT_ACQUIRED",
+    "zip_crc": "PASS",
+    "safe_unique_member_paths": true,
+    "members": 3482,
+    "expanded_bytes": 89206542,
+    "archive_member_inventory_sha256": "469e0cfba2db1b779b2f88fa77a972557182d15522736ff2c77d63f0adb30936"
+  },
+  "target_links": {
+    "AI_Hanlin": {
+      "phase": "D7B6C3BE2D50A55D004E3AD6",
+      "declared_products": [
+        "HanlinPresentationKit",
+        "HanlinRichUI",
+        "HanlinChatUI",
+        "A2UISwiftCore",
+        "A2UISwiftUI",
+        "BasicCatalog",
+        "BasicCatalogSwiftUI",
+        "SwiftTreeSitter",
+        "TreeSitter",
+        "TreeSitterBash",
+        "HanlinSkillFormat",
+        "HanlinHostContracts",
+        "HanlinAgentCore",
+        "HanlinPersistenceAdapters",
+        "HanlinParityMiniApp",
+        "HanlinSefariaMiniApp",
+        "TorahLibraryKit",
+        "HanlinWikipediaMiniApp",
+        "HanlinTextStudioMiniApp",
+        "HanlinMiniAppCore",
+        "HanlinNativeScriptRuntime",
+        "HanlinExpoRuntime",
+        "HanlinExpoNativeAPI",
+        "HanlinScriptDeviceServices",
+        "HanlinScriptingApplicationRuntime",
+        "HanlinScriptExtensions",
+        "HanlinScriptingSDK",
+        "HanlinScriptStore",
+        "HanlinScriptCompiler",
+        "HanlinScriptContracts",
+        "HanlinQuickJS",
+        "HanlinPlatformContracts",
+        "IOSSystemLite",
+        "MCP",
+        "SWCompression",
+        "Logging",
+        "CoreXLSX",
+        "RichTextKit",
+        "LaTeXSwiftUI",
+        "ZIPFoundation",
+        "MarkdownUI",
+        "SwiftStreamingMarkdown",
+        "SwiftSoup",
+        "LLM",
+        "HanlinProductSplit",
+        "HanlinApplication",
+        "HanlinA2UI",
+        "HanlinLocalization",
+        "HanlinExtensionContracts"
+      ],
+      "linked_before": [
+        "HanlinPresentationKit",
+        "HanlinRichUI",
+        "HanlinChatUI",
+        "A2UISwiftCore",
+        "A2UISwiftUI",
+        "BasicCatalog",
+        "BasicCatalogSwiftUI",
+        "SwiftTreeSitter",
+        "TreeSitter",
+        "TreeSitterBash",
+        "HanlinSkillFormat",
+        "HanlinHostContracts",
+        "HanlinAgentCore",
+        "HanlinPersistenceAdapters",
+        "HanlinParityMiniApp",
+        "HanlinSefariaMiniApp",
+        "TorahLibraryKit",
+        "HanlinWikipediaMiniApp",
+        "HanlinTextStudioMiniApp",
+        "HanlinMiniAppCore",
+        "HanlinNativeScriptRuntime",
+        "HanlinExpoRuntime",
+        "HanlinExpoNativeAPI",
+        "HanlinScriptDeviceServices",
+        "HanlinScriptingApplicationRuntime",
+        "HanlinScriptExtensions",
+        "HanlinScriptingSDK",
+        "HanlinScriptStore",
+        "HanlinScriptCompiler",
+        "HanlinScriptContracts",
+        "HanlinQuickJS",
+        "HanlinPlatformContracts",
+        "IOSSystemLite",
+        "Logging",
+        "SWCompression",
+        "MCP",
+        "RichTextKit",
+        "CoreXLSX",
+        "MarkdownUI",
+        "SwiftStreamingMarkdown",
+        "LaTeXSwiftUI",
+        "LLM",
+        "ZIPFoundation",
+        "SwiftSoup",
+        "HanlinProductSplit",
+        "HanlinApplication",
+        "HanlinA2UI",
+        "HanlinLocalization",
+        "HanlinExtensionContracts"
+      ],
+      "linked_after": [
+        "HanlinApplication"
+      ],
+      "removed_redundant_link_inputs": [
+        "HanlinPresentationKit",
+        "HanlinRichUI",
+        "HanlinChatUI",
+        "A2UISwiftCore",
+        "A2UISwiftUI",
+        "BasicCatalog",
+        "BasicCatalogSwiftUI",
+        "SwiftTreeSitter",
+        "TreeSitter",
+        "TreeSitterBash",
+        "HanlinSkillFormat",
+        "HanlinHostContracts",
+        "HanlinAgentCore",
+        "HanlinPersistenceAdapters",
+        "HanlinParityMiniApp",
+        "HanlinSefariaMiniApp",
+        "TorahLibraryKit",
+        "HanlinWikipediaMiniApp",
+        "HanlinTextStudioMiniApp",
+        "HanlinMiniAppCore",
+        "HanlinNativeScriptRuntime",
+        "HanlinExpoRuntime",
+        "HanlinExpoNativeAPI",
+        "HanlinScriptDeviceServices",
+        "HanlinScriptingApplicationRuntime",
+        "HanlinScriptExtensions",
+        "HanlinScriptingSDK",
+        "HanlinScriptStore",
+        "HanlinScriptCompiler",
+        "HanlinScriptContracts",
+        "HanlinQuickJS",
+        "HanlinPlatformContracts",
+        "IOSSystemLite",
+        "Logging",
+        "SWCompression",
+        "MCP",
+        "RichTextKit",
+        "CoreXLSX",
+        "MarkdownUI",
+        "SwiftStreamingMarkdown",
+        "LaTeXSwiftUI",
+        "LLM",
+        "ZIPFoundation",
+        "SwiftSoup",
+        "HanlinProductSplit",
+        "HanlinA2UI",
+        "HanlinLocalization",
+        "HanlinExtensionContracts"
+      ],
+      "all_declarations_reachable_through_application": true
+    },
+    "AI_HLYTests": {
+      "phase": "B10000000000000000000004",
+      "declared_products": [
+        "A2UISwiftCore",
+        "A2UISwiftUI",
+        "BasicCatalog",
+        "BasicCatalogSwiftUI",
+        "SwiftTreeSitter",
+        "TreeSitter",
+        "TreeSitterBash",
+        "HanlinSkillFormat",
+        "HanlinAgentCore",
+        "HanlinExpoWidgetNative",
+        "HanlinPlatformContracts",
+        "HanlinNativeScriptRuntime",
+        "HanlinExpoRuntime",
+        "HanlinProductSplit",
+        "HanlinApplication",
+        "HanlinA2UI",
+        "HanlinLocalization",
+        "HanlinExtensionContracts"
+      ],
+      "linked_before": [
+        "A2UISwiftCore",
+        "A2UISwiftUI",
+        "BasicCatalog",
+        "BasicCatalogSwiftUI",
+        "SwiftTreeSitter",
+        "TreeSitter",
+        "TreeSitterBash",
+        "HanlinSkillFormat",
+        "HanlinAgentCore",
+        "HanlinPlatformContracts",
+        "HanlinNativeScriptRuntime",
+        "HanlinExpoRuntime",
+        "HanlinExpoWidgetNative",
+        "HanlinProductSplit",
+        "HanlinApplication",
+        "HanlinA2UI",
+        "HanlinLocalization",
+        "HanlinExtensionContracts"
+      ],
+      "linked_after": [
+        "HanlinApplication"
+      ],
+      "removed_redundant_link_inputs": [
+        "A2UISwiftCore",
+        "A2UISwiftUI",
+        "BasicCatalog",
+        "BasicCatalogSwiftUI",
+        "SwiftTreeSitter",
+        "TreeSitter",
+        "TreeSitterBash",
+        "HanlinSkillFormat",
+        "HanlinAgentCore",
+        "HanlinPlatformContracts",
+        "HanlinNativeScriptRuntime",
+        "HanlinExpoRuntime",
+        "HanlinExpoWidgetNative",
+        "HanlinProductSplit",
+        "HanlinA2UI",
+        "HanlinLocalization",
+        "HanlinExtensionContracts"
+      ],
+      "all_declarations_reachable_through_application": true
+    }
+  },
+  "only_changed_pbx_object_ids": [
+    "D7B6C3BE2D50A55D004E3AD6",
+    "B10000000000000000000004"
+  ],
+  "all_other_project_objects_identical": true,
+  "application_reachable_local_products": [
+    "HanlinA2UI",
+    "HanlinAgentActivityCore",
+    "HanlinAgentActivityUI",
+    "HanlinAgentCore",
+    "HanlinApplication",
+    "HanlinChatCore",
+    "HanlinChatUI",
+    "HanlinExpoNativeAPI",
+    "HanlinExpoRuntime",
+    "HanlinExpoWidgetNative",
+    "HanlinExpoWidgetSubset",
+    "HanlinExtensionContracts",
+    "HanlinHostContracts",
+    "HanlinLocalization",
+    "HanlinMiniAppCore",
+    "HanlinMiniAppsUI",
+    "HanlinNativeScriptRuntime",
+    "HanlinParityMiniApp",
+    "HanlinPersistenceAdapters",
+    "HanlinPlatformContracts",
+    "HanlinPresentationKit",
+    "HanlinProductSplit",
+    "HanlinQuickJS",
+    "HanlinRichUI",
+    "HanlinScriptCompiler",
+    "HanlinScriptContracts",
+    "HanlinScriptDeviceServices",
+    "HanlinScriptExtensions",
+    "HanlinScriptServices",
+    "HanlinScriptStore",
+    "HanlinScriptUI",
+    "HanlinScriptingApplicationRuntime",
+    "HanlinScriptingSDK",
+    "HanlinSefariaMiniApp",
+    "HanlinSkillFormat",
+    "HanlinTextStudioMiniApp",
+    "HanlinWidgetUI",
+    "HanlinWikipediaMiniApp",
+    "IOSSystemLite",
+    "TorahLibraryKit"
+  ],
+  "application_reachable_remote_products": [
+    [
+      "A2UISwiftCore",
+      "a2ui"
+    ],
+    [
+      "A2UISwiftUI",
+      "a2ui"
+    ],
+    [
+      "AISDKProvider",
+      "swift-ai-sdk"
+    ],
+    [
+      "AISDKProviderUtils",
+      "swift-ai-sdk"
+    ],
+    [
+      "AnthropicProvider",
+      "swift-ai-sdk"
+    ],
+    [
+      "BasicCatalog",
+      "a2ui"
+    ],
+    [
+      "BasicCatalogSwiftUI",
+      "a2ui"
+    ],
+    [
+      "CoreXLSX",
+      "corexlsx"
+    ],
+    [
+      "GoogleProvider",
+      "swift-ai-sdk"
+    ],
+    [
+      "LLM",
+      "llm.swift"
+    ],
+    [
+      "LaTeXSwiftUI",
+      "latexswiftui"
+    ],
+    [
+      "Logging",
+      "swift-log"
+    ],
+    [
+      "MCP",
+      "swift-sdk"
+    ],
+    [
+      "MarkdownUI",
+      "markdownui"
+    ],
+    [
+      "NativeScript",
+      "ios-spm"
+    ],
+    [
+      "OpenAICompatibleProvider",
+      "swift-ai-sdk"
+    ],
+    [
+      "OpenAIProvider",
+      "swift-ai-sdk"
+    ],
+    [
+      "RichTextKit",
+      "richtextkit"
+    ],
+    [
+      "SWCompression",
+      "swcompression"
+    ],
+    [
+      "SwiftAISDK",
+      "swift-ai-sdk"
+    ],
+    [
+      "SwiftSoup",
+      "swiftsoup"
+    ],
+    [
+      "SwiftStreamingMarkdown",
+      "hanlin-streaming-markdown"
+    ],
+    [
+      "SwiftTreeSitter",
+      "swift-tree-sitter"
+    ],
+    [
+      "SwiftyJSON",
+      "swiftyjson"
+    ],
+    [
+      "TreeSitter",
+      "tree-sitter"
+    ],
+    [
+      "TreeSitterBash",
+      "tree-sitter-bash"
+    ],
+    [
+      "Yams",
+      "yams"
+    ],
+    [
+      "ZIPFoundation",
+      "zipfoundation"
+    ]
+  ],
+  "duplicate_warnings": 129,
+  "duplicate_warning_pairs": {
+    "app-debug": 94,
+    "unit-test": 35
+  },
+  "duplicate_warnings_source_sha256": "27deecde27e809b2337454a1ebfb8ddd7bfda51c37e595de62084b295b11de5a",
+  "native_link_commands_source_sha256": "4cfe41e6fba28d47d2a5490b5dc61d641cece7720ac7e738707b0a5677cfaec6",
+  "warnings": [
+    {
+      "line": 7,
+      "text": "objc[61217]: Class _TtC12HanlinRichUIP33_A4B7978939DE75E966656BE68F4DB82F12BundleFinder is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11baf96c0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c08950). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 8,
+      "text": "objc[61217]: Class _TtC12HanlinRichUI17OpenUIBridgeModel is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bafabe8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c09e78). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 9,
+      "text": "objc[61217]: Class _TtCV12HanlinRichUIP33_F50735E693195765C87C16F35A87132A16OpenUIWebRuntime11Coordinator is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11babc5d0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c07288). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 10,
+      "text": "objc[61217]: Class _TtC12HanlinChatUIP33_9559CB44AFFE6AEB5F3CCD265256776F12BundleFinder is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bafafe0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c0a270). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 11,
+      "text": "objc[61217]: Class _TtC12HanlinChatUI19ChatCodeFenceEngine is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11babc6b0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c07368). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 12,
+      "text": "objc[61217]: Class _TtCC12HanlinChatUI19ChatCodeFenceEngineP33_C1AB7F2A8545FBD0593F667683E1CEBA6Cached is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11babc7d0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c07488). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 13,
+      "text": "objc[61217]: Class _TtCC12HanlinChatUI19ChatCodeFenceEngineP33_C1AB7F2A8545FBD0593F667683E1CEBA10Invocation is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bafb358) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c0a5e8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 14,
+      "text": "objc[61217]: Class _TtCV12HanlinChatUI20ChatCodeFenceWebView11Coordinator is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11babc8e8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c075a0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 15,
+      "text": "objc[61217]: Class _TtC12HanlinChatUI19HanlinComposerDraft is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bafbb80) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c0ae10). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 16,
+      "text": "objc[61217]: Class _TtCV12HanlinChatUI25NativeMultilineTextEditor11Coordinator is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11babc9f8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c076b0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 17,
+      "text": "objc[61217]: Class _TtC12HanlinChatUI22MultilineInnerTextView is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11babcb18) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c077d0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 18,
+      "text": "objc[61217]: Class _TtC12HanlinChatUIP33_4B2338193A8A36A0E8BEC61DB867783F20HanlinFeedbackPlayer is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bafce18) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c0c0a8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 19,
+      "text": "objc[61217]: Class _TtC12HanlinChatUIP33_6B713D9B63EC5B44721933F2961B68B124HanlinIconRedirectPolicy is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11babcc30) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c078e8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 20,
+      "text": "objc[61217]: Class _TtC12HanlinChatUIP33_748E98DCF1EC9F68E563D53231CB033522HanlinMarkdownListener is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bafd8d8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c0cb68). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 21,
+      "text": "objc[61217]: Class _TtCV12HanlinChatUI17HanlinSearchField11Coordinator is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11babcce0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c07998). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 22,
+      "text": "objc[61217]: Class _TtC12HanlinChatUI24ChatAutoFollowController is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bafeaf8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c0dd88). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 23,
+      "text": "objc[61217]: Class _TtCV12HanlinChatUI33ChatScrollImmediateContentTouches17ConfigurationView is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11babcdf0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c07aa8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 24,
+      "text": "objc[61217]: Class _TtC12HanlinChatUI20ChatScrollViewHandle is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bafecc0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c0df50). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 25,
+      "text": "objc[61217]: Class _TtC25HanlinPersistenceAdapters31HanlinInMemoryConversationStore is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bafedd0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c0e060). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 26,
+      "text": "objc[61217]: Class _TtC25HanlinPersistenceAdapters30HanlinPrivateConversationStore is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bafefd8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c0e268). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 27,
+      "text": "objc[61217]: Class _TtC19HanlinParityMiniAppP33_559153922A5CC7F0A1162A58777C064C5Model is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb019a8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c0e570). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 28,
+      "text": "objc[61217]: Class _TtC21HanlinScriptContractsP33_4A86AA17BA15F72FFF84E452F9D796B012BundleFinder is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11baff148) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c0e6e0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 29,
+      "text": "objc[61217]: Class _TtC14HanlinScriptUIP33_A314D15F123FD00C5B4B5C64904C07B412BundleFinder is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bafffe0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c0f570). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 30,
+      "text": "objc[61217]: Class _TtC14HanlinScriptUIP33_E5218521959F4DF02544E0BDA578D03F27HanlinSVGValidationDelegate is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11babcf58) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c07c60). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 31,
+      "text": "objc[61217]: Class _TtC14HanlinScriptUIP33_E5218521959F4DF02544E0BDA578D03F27HanlinSVGNavigationDelegate is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11babd018) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c07d20). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 32,
+      "text": "objc[61217]: Class _TtC14HanlinScriptUI19HanlinScriptUIModel is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb015e8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c10b78). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 33,
+      "text": "objc[61217]: Class _TtC20HanlinSefariaMiniApp21NativeAppSefariaStore is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb02118) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c113a0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 34,
+      "text": "objc[61217]: Class _TtC15TorahLibraryKit23TorahLibraryCoordinator is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb03658) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c128e0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 35,
+      "text": "objc[61217]: Class _TtC15TorahLibraryKit19TorahSourceResolver is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb03778) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c12a00). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 36,
+      "text": "objc[61217]: Class _TtC15TorahLibraryKit22GenizahLibraryProvider is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb03988) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c12c10). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 37,
+      "text": "objc[61217]: Class _TtC15TorahLibraryKit22OtzariaLibraryProvider is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb03a90) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c12d18). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 38,
+      "text": "objc[61217]: Class _TtC15TorahLibraryKit22SefariaLibraryProvider is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb03b70) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c12df8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 39,
+      "text": "objc[61217]: Class _TtC15TorahLibraryKit24MockTorahLibraryProvider is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb03c88) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c12f10). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 40,
+      "text": "objc[61217]: Class _TtC15TorahLibraryKit21YochaiLibraryProvider is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb03dc0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c13048). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 41,
+      "text": "objc[61217]: Class _TtC15TorahLibraryKit20ZayitLibraryProvider is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb03e70) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c130f8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 42,
+      "text": "objc[61217]: Class _TtCO15TorahLibraryKit19ITorahSharedStorageP33_A7391FAAABEB02ACE8D939C2C0ADFB5618StorageOverrideBox is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb03ff0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c13278). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 43,
+      "text": "objc[61217]: Class _TtC22HanlinWikipediaMiniApp23NativeAppWikipediaStore is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb043a8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c13630). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 44,
+      "text": "objc[61217]: Class _TtC23HanlinTextStudioMiniApp29UserDefaultsTextStudioStorage is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb052a0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c14528). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 45,
+      "text": "objc[61217]: Class _TtC23HanlinTextStudioMiniApp24NativeAppTextStudioStore is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb05520) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c147a8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 46,
+      "text": "objc[61217]: Class _TtC26HanlinScriptDeviceServices26HanlinAppleCalendarService is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb067e0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c15368). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 47,
+      "text": "objc[61217]: Class _TtC26HanlinScriptDeviceServices24HanlinAppleHealthService is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb069d0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c15558). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 48,
+      "text": "objc[61217]: Class _TtC26HanlinScriptDeviceServices26HanlinAppleLocationService is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb06b98) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c15720). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 49,
+      "text": "objc[61217]: Class _TtC26HanlinScriptDeviceServices30HanlinAppleNotificationService is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb06ce0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c15868). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 50,
+      "text": "objc[61217]: Class _TtC20HanlinScriptServices31HanlinScriptPermissionAuthority is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb05f58) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c16278). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 51,
+      "text": "objc[61217]: Class _TtC20HanlinScriptServices25HanlinScriptServiceBroker is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb06110) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c16430). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 52,
+      "text": "objc[61217]: Class _TtC33HanlinScriptingApplicationRuntime33HanlinScriptingApplicationSession is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb07b88) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c16e10). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 53,
+      "text": "objc[61217]: Class _TtC33HanlinScriptingApplicationRuntimeP33_C1A81829828D0F915438288E5C24D43328HanlinScriptingUIEventRouter is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb07d70) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c16ff8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 54,
+      "text": "objc[61217]: Class _TtC33HanlinScriptingApplicationRuntime32HanlinScriptingPackageFileSystem is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb08500) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c17788). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 55,
+      "text": "objc[61217]: Class _TtC33HanlinScriptingApplicationRuntime26HanlinScriptingSQLiteStore is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb088e0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c17b68). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 56,
+      "text": "objc[61217]: Class _TtC33HanlinScriptingApplicationRuntime29HanlinScriptingPackageStorage is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb089c0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c17c48). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 57,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensionsP33_564800CA3DC4E51FF4414F9367A017A312BundleFinder is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb09c80) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c17d10). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 58,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions24HanlinCompactAgentClient is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb09ff0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c18080). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 59,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions24HanlinInvocationExecutor is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0ac60) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c18cf0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 60,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensionsP33_67C000A2AE817C7D32A795EC0BD06AD928HanlinWidgetDiagnosticBuffer is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0c018) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1a0a8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 61,
+      "text": "objc[61217]: Class _TtCO22HanlinScriptExtensions26HanlinWidgetImageTransportP33_DC4BB07D5E53C9EFBB958E6A4A5FFC548Transfer is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11babd668) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c082d0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 62,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions25ScriptWidgetStorageBridge is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11babd738) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c083a0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 63,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions22HanlinWidgetFileBridge is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11babd800) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c08468). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 64,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions28ScriptWidgetElementTagButton is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0d9f8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1ba88). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 65,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions27ScriptWidgetElementTagChart is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0df08) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1bf98). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 66,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions26ScriptWidgetElementTagDate is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0e2d8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1c368). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 67,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions29ScriptWidgetElementTagDivider is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0e588) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1c618). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 68,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions26ScriptWidgetElementTagLine is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0e620) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1c6b0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 69,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions33ScriptWidgetElementTagRoundedRect is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0e6b8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1c748). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 70,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions26ScriptWidgetElementTagIcon is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0e750) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1c7e0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 71,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions27ScriptWidgetElementTagLabel is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0e7e8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1c878). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 72,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions30ScriptWidgetElementTagProgress is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0e880) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1c910). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 73,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions26ScriptWidgetElementTagRing is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0e918) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1c9a8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 74,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions27ScriptWidgetElementTagBadge is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0e9b0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1ca40). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 75,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions26ScriptWidgetElementTagChip is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0ea48) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1cad8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 76,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions26ScriptWidgetElementTagStat is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0eae0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1cb70). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 77,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions27ScriptWidgetElementTagGauge is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0ed90) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1ce20). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 78,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions23ScriptWidgetGifSequence is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0f010) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1d0a0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 79,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions25ScriptWidgetElementTagGif is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0f160) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1d1f0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 80,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions26ScriptWidgetElementTagGrid is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0f298) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1d328). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 81,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions27ScriptWidgetElementTagImage is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0f548) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1d5d8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 82,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions31ScriptWidgetElementTagRectangle is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0f910) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1d9a0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 83,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions29ScriptWidgetElementTagCapsule is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0f9a8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1da38). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 84,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions29ScriptWidgetElementTagEllipse is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0fa40) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1dad0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 85,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions28ScriptWidgetElementTagCircle is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0fad8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1db68). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 86,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions28ScriptWidgetElementTagSpacer is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0fc08) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1dc98). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 87,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions27ScriptWidgetElementTagStack is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0fd50) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1dde0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 88,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions26ScriptWidgetElementTagText is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0fdf8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1de88). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 89,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions28ScriptWidgetElementTagToggle is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0fee8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1df78). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 90,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions28ScriptWidgetElementTagZStack is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb0ffa8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1e038). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 91,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions26ScriptWidgetElementContext is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb10068) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1e0f8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 92,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions26ScriptWidgetRuntimeElement is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11babd918) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c08580). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 93,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions27ScriptWidgetElementGradient is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb10510) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1e5a0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 94,
+      "text": "objc[61217]: Class _TtC22HanlinScriptExtensions24ScriptWidgetElementPoint is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb105a8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1e638). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 95,
+      "text": "objc[61217]: Class _TtC17HanlinScriptStore23HanlinAtomicScriptStore is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb08f98) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1ebe8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 96,
+      "text": "objc[61217]: Class _TtC18HanlinScriptingSDKP33_E66B66DEA3762D7DFCB874448E3F04D712BundleFinder is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb10640) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1f8c8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 97,
+      "text": "objc[61217]: Class _TtC20HanlinScriptCompilerP33_86831A2B6156AB838E7AC72889970CBB12BundleFinder is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb10ac8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c1fb30). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 98,
+      "text": "objc[61217]: Class _TtC20HanlinWidgetCompilerP33_2AFAB38E9099DD889216D642D0C9A41F12BundleFinder is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb108a8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c20648). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 99,
+      "text": "objc[61217]: Class _TtC13IOSSystemLiteP33_1F8E2158250EC15A9FAA16E876D1B3D212BundleFinder is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb11648) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c208d0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 100,
+      "text": "objc[61217]: Class _TtCO13IOSSystemLite15IOSSystemRunnerP33_5D3C6E9AC1D71F5DDD144E03E4D325B013OutputCapture is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb11978) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x103c20c00). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 101,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetNativeP33_3C31E1E0F247DE2195F7565860D30D6C16FallbackIdentity is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb1c0f0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c13e28). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 102,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetNative13FragmentProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb1c218) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c13f50). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 103,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetNative11ButtonProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb1c540) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c14278). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 104,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset10AppContext is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb14628) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c14d68). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 105,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset15EventDispatcher is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb146c8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c14e08). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 106,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset15ObservableState is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb14760) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c14ea0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 107,
+      "text": "objc[61217]: Class _TtCV22HanlinExpoWidgetSubset11ExpoSwiftUI9ViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb14800) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c14f40). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 108,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset30AccessoryWidgetBackgroundProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb149b8) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c150f8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 109,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset19BackgroundViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb14bd0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c15310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 110,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset11ButtonProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb14d78) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c154b8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 111,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset16CapsuleViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb14fe0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c15720). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 112,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset10ChartProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb154f0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c15c30). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 113,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset15CircleViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb15800) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c15f40). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 114,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset15ClosedRangeDate is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb15948) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c16088). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 115,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset12DividerProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb15da0) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c164e0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 116,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset16EllipseViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb15f58) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c16698). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 117,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset10GaugeProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb16140) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c16880). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 118,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset15HStackViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb16358) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c16a98). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 119,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset14ImageViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb16578) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c16cb8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 120,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset14LabelViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb16818) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c16f58). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 121,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset13LinkViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb16a58) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c17198). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 122,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset13MaskViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb16c58) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c17398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 123,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset20ViewModifierRegistry is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb19f30) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c1a670). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 124,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset17NamespaceRegistry is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb1ab18) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c1b258). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 125,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset16OverlayViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb1ac40) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c1b380). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 126,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset17ProgressViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb1ae70) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c1b5b0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 127,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset18RectangleViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb1b058) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c1b798). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 128,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset25RoundedRectangleViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb1b208) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c1b948). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 129,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset13SlotViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb1b400) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c1bb40). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 130,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset15SpacerViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb1b580) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c1bcc0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 131,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset13TextViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb1b798) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c1bed8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 132,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset15UIBaseViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb1b998) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c1c0d8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 133,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset31UnevenRoundedRectangleViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb1bb50) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c1c290). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 134,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset15VStackViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb1bd80) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c1c4c0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 135,
+      "text": "objc[61217]: Class _TtC22HanlinExpoWidgetSubset15ZStackViewProps is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11bb1bf68) and /Users/runner/Library/Developer/CoreSimulator/Devices/6DC972D7-0F22-4828-86A3-8A48B6E448E5/data/Containers/Bundle/Application/8D9E8CDA-8D46-47C5-BF96-A3F8DEAED276/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests (0x124c1c6a8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    }
+  ],
+  "link_commands": [
+    {
+      "line": 132642,
+      "label": "Ld /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct normal (in target 'HanlinApplicationdynamic-product' from project 'HanlinSDK')",
+      "command_line": 132644,
+      "command": "    /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -Xlinker -reproducible -target arm64-apple-ios27.0-simulator -emit-library -sdk /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk -Xlinker -no_warn_duplicate_libraries -L/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator -L/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator -F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -F/Users/runner/work/hanlin-ai/hanlin-ai/Artifacts/ModularFrameworks -Fsystem /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -Fsystem /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/Developer/Library/Frameworks @/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinApplication-product-t.build/Objects-normal/arm64/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.LinkFileList -Xclang-linker -install_name -Xclang-linker @rpath/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinApplication-product-t.build/Objects-normal/arm64/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct_lto.o -Xclang-linker -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinApplication-product-t.build/Objects-normal/arm64/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct_dependency_info.dat -link-objc-runtime -L/Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -lc++ -lc++ -lc++ -lc++ -lc++ -licucore -lz -lc++ -Xlinker -application_extension -framework UIKit -framework UIKit -framework Foundation -framework QuartzCore -F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks -Xlinker -undefined -Xlinker dynamic_lookup -framework UIKit -framework Foundation -framework QuartzCore -F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks -Xlinker -undefined -Xlinker dynamic_lookup -F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks -Xlinker -undefined -Xlinker dynamic_lookup -framework UIKit -framework SwiftUI -framework JavaScriptCore -framework UniformTypeIdentifiers -lsqlite3 -framework JavaScriptCore -framework JavaScriptCore -framework Foundation -framework Foundation -framework SwiftUI -framework WidgetKit -framework AVKit -framework HanlinPresentationKit -framework HanlinLocalization /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/SwiftStreamingMarkdown_-504EC1C7D1AEC0F0_PackageProduct.framework/SwiftStreamingMarkdown_-504EC1C7D1AEC0F0_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/Yams_712EB057E_PackageProduct.framework/Yams_712EB057E_PackageProduct -framework HanlinSkillFormat -framework HanlinPlatformContracts -framework HanlinHostContracts /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/SwiftAISDK_6FA7094CA5C06683_PackageProduct.framework/SwiftAISDK_6FA7094CA5C06683_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/AISDKProvider.framework/AISDKProvider /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/AISDKProviderUtils.framework/AISDKProviderUtils /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/AISDKZodAdapter.framework/AISDKZodAdapter /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/EventSourceParser.framework/EventSourceParser /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/OpenAIProvider_-2301E57905F4388B_PackageProduct.framework/OpenAIProvider_-2301E57905F4388B_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/AnthropicProvider_1131E7754C45D704_PackageProduct.framework/AnthropicProvider_1131E7754C45D704_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/GoogleProvider_-6DD8AE9F9ECCE14A_PackageProduct.framework/GoogleProvider_-6DD8AE9F9ECCE14A_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/OpenAICompatibleProvider_-12EEEC9CC3715281_PackageProduct.framework/OpenAICompatibleProvider_-12EEEC9CC3715281_PackageProduct -framework HanlinChatCore -framework JSON -framework JSONRegexRuntime -framework HanlinExactJSONSchema -framework HanlinAgentCore -framework HanlinMiniAppCore -framework TNSWidgets -framework NSCWinterTC -framework NativeScript -framework TKLiveSync -framework NativeScript -framework TKLiveSync -framework HanlinNativeScriptCoreSupport -framework HanlinNativeScriptRuntime -lReactNativeHeaders-ios-simulator -framework React -framework ReactNativeDependencies -framework hermesvm -framework ExpoModulesJSI -framework ExpoModulesCore -framework ExpoModulesWorklets -framework ExpoUI -framework ExpoBrownfield -framework HanlinExpoWorklets -lffi -framework HanlinExpoNativeAPICore -framework HanlinExpoNativeAPI -framework HanlinExpoRuntime -framework HanlinExtensionContracts /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/SwiftyJSON_6FA7ED0ED7CD70CA_PackageProduct.framework/SwiftyJSON_6FA7ED0ED7CD70CA_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/ZIPFoundation_-14A6248D789D2CE9_PackageProduct.framework/ZIPFoundation_-14A6248D789D2CE9_PackageProduct -framework ios_system -framework files -framework text -framework tar -framework curl_ios -framework libssh2 -framework openssl -framework awk -framework HanlinProductSplit /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/A2UIJSON.framework/A2UIJSON /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/A2UICore.framework/A2UICore /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/JSONSchema_4F994C247B498495_PackageProduct.framework/JSONSchema_4F994C247B498495_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/OrderedJSON.framework/OrderedJSON /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/OrderedCollections_1222128174265B56_PackageProduct.framework/OrderedCollections_1222128174265B56_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/A2UISwiftUI.framework/A2UISwiftUI /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/JSONSchema_4F994C247B498495_PackageProduct.framework/JSONSchema_4F994C247B498495_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/BasicCatalog.framework/BasicCatalog /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/JSONSchema_4F994C247B498495_PackageProduct.framework/JSONSchema_4F994C247B498495_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/BasicCatalogSwiftUI_1DEB646528BA6C5B_PackageProduct.framework/BasicCatalogSwiftUI_1DEB646528BA6C5B_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/SwiftSoup_-5E59CDCC5017C843_PackageProduct.framework/SwiftSoup_-5E59CDCC5017C843_PackageProduct -framework HanlinA2UI -framework NodeMobile -framework Python /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/SwiftTreeSitter_2A3772C8AF086327_PackageProduct.framework/SwiftTreeSitter_2A3772C8AF086327_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/TreeSitter_-5E75B4324747B2EB_PackageProduct.framework/TreeSitter_-5E75B4324747B2EB_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/TreeSitterBash_1AA30C11B8314197_PackageProduct.framework/TreeSitterBash_1AA30C11B8314197_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/MCP_1E0E1DFB_PackageProduct.framework/MCP_1E0E1DFB_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/SWCompression_24577EEF38A77749_PackageProduct.framework/SWCompression_24577EEF38A77749_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/Logging_35C93DA702091ECE_PackageProduct.framework/Logging_35C93DA702091ECE_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/CoreXLSX_-6A6700FBE57CAD20_PackageProduct.framework/CoreXLSX_-6A6700FBE57CAD20_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/RichTextKit_5598A367D446E5E_PackageProduct.framework/RichTextKit_5598A367D446E5E_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/LaTeXSwiftUI_-612D976DC7D4318B_PackageProduct.framework/LaTeXSwiftUI_-612D976DC7D4318B_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/MarkdownUI_6D662E314863B6EB_PackageProduct.framework/MarkdownUI_6D662E314863B6EB_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/LLM_1E055D28_PackageProduct.framework/LLM_1E055D28_PackageProduct -o /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/AI_Hanlin-t.build/Objects-normal/arm64/AI_Hanlin.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinRichUI-t.build/Objects-normal/arm64/HanlinRichUI.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinChatUI-t.build/Objects-normal/arm64/HanlinChatUI.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinPersistenceAdapters-t.build/Objects-normal/arm64/HanlinPersistenceAdapters.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptContracts-t.build/Objects-normal/arm64/HanlinScriptContracts.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptUI-t.build/Objects-normal/arm64/HanlinScriptUI.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinParityMiniApp-t.build/Objects-normal/arm64/HanlinParityMiniApp.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinSefariaMiniApp-t.build/Objects-normal/arm64/HanlinSefariaMiniApp.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/TorahLibraryKit-t.build/Objects-normal/arm64/TorahLibraryKit.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinWikipediaMiniApp-t.build/Objects-normal/arm64/HanlinWikipediaMiniApp.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinTextStudioMiniApp-t.build/Objects-normal/arm64/HanlinTextStudioMiniApp.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptServices-t.build/Objects-normal/arm64/HanlinScriptServices.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptDeviceServices-t.build/Objects-normal/arm64/HanlinScriptDeviceServices.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingApplicationRuntime-t.build/Objects-normal/arm64/HanlinScriptingApplicationRuntime.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptStore-t.build/Objects-normal/arm64/HanlinScriptStore.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptExtensions-t.build/Objects-normal/arm64/HanlinScriptExtensions.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingSDK-t.build/Objects-normal/arm64/HanlinScriptingSDK.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinWidgetCompiler-t.build/Objects-normal/arm64/HanlinWidgetCompiler.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptCompiler-t.build/Objects-normal/arm64/HanlinScriptCompiler.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/IOSSystemLite-t.build/Objects-normal/arm64/IOSSystemLite.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinAgentActivityCore-t.build/Objects-normal/arm64/HanlinAgentActivityCore.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinAgentActivityUI-t.build/Objects-normal/arm64/HanlinAgentActivityUI.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoWidgetSubset-t.build/Objects-normal/arm64/HanlinExpoWidgetSubset.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoWidgetNative-t.build/Objects-normal/arm64/HanlinExpoWidgetNative.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingWidgets.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinWidgetUI-t.build/Objects-normal/arm64/HanlinWidgetUI.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinMiniAppsUI-t.build/Objects-normal/arm64/HanlinMiniAppsUI.swiftmodule"
+    },
+    {
+      "line": 174206,
+      "label": "Ld /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin.debug.dylib normal (in target 'AI_Hanlin' from project 'AI_HLY')",
+      "command_line": 174208,
+      "command": "    /Users/runner/work/hanlin-ai/hanlin-ai/Scripts/NativeScript/hanlin-nsld.sh -Xlinker -reproducible -target arm64-apple-ios27.0-simulator -dynamiclib -isysroot /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk -O0 -Xlinker -no_warn_duplicate_libraries -L/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator -L/Users/runner/work/hanlin-ai/hanlin-ai -F/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator -F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -F/Users/runner/work/hanlin-ai/hanlin-ai/Artifacts/ModularFrameworks -filelist /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/AI_Hanlin.build/Objects-normal/arm64/AI_Hanlin.LinkFileList -install_name @rpath/AI_Hanlin.debug.dylib -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/AI_Hanlin.build/Objects-normal/arm64/AI_Hanlin_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/AI_Hanlin.build/Objects-normal/arm64/AI_Hanlin_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/AI_Hanlin.build/Objects-normal/arm64/HanlinApp.swiftmodule -lc++ -lc++ -lc++ -lc++ -lc++ -ObjC -sectcreate __DATA __TNSMetadata /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/metadata-arm64.bin -licucore -lz -lc++ -framework Foundation -framework UIKit -framework CoreGraphics -framework CoreServices -framework Security -licucore -lz -lc++ -Xlinker -application_extension -framework UIKit -framework UIKit -framework Foundation -framework QuartzCore -F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks -Xlinker -undefined -Xlinker dynamic_lookup -framework UIKit -framework Foundation -framework QuartzCore -F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks -Xlinker -undefined -Xlinker dynamic_lookup -F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks -Xlinker -undefined -Xlinker dynamic_lookup -framework UIKit -framework SwiftUI -framework JavaScriptCore -framework UniformTypeIdentifiers -lsqlite3 -framework JavaScriptCore -framework JavaScriptCore -framework Foundation -framework Foundation -framework SwiftUI -framework WidgetKit -framework AVKit -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinPresentationKit.framework/HanlinPresentationKit /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinLocalization.framework/HanlinLocalization /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/SwiftStreamingMarkdown_-504EC1C7D1AEC0F0_PackageProduct.framework/SwiftStreamingMarkdown_-504EC1C7D1AEC0F0_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/A2UIJSON.framework/A2UIJSON /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/A2UICore.framework/A2UICore /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/JSONSchema_4F994C247B498495_PackageProduct.framework/JSONSchema_4F994C247B498495_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/OrderedJSON.framework/OrderedJSON /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/OrderedCollections_1222128174265B56_PackageProduct.framework/OrderedCollections_1222128174265B56_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/A2UISwiftUI.framework/A2UISwiftUI /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/JSONSchema_4F994C247B498495_PackageProduct.framework/JSONSchema_4F994C247B498495_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/BasicCatalog.framework/BasicCatalog /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/JSONSchema_4F994C247B498495_PackageProduct.framework/JSONSchema_4F994C247B498495_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/BasicCatalogSwiftUI_1DEB646528BA6C5B_PackageProduct.framework/BasicCatalogSwiftUI_1DEB646528BA6C5B_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/SwiftTreeSitter_2A3772C8AF086327_PackageProduct.framework/SwiftTreeSitter_2A3772C8AF086327_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/TreeSitter_-5E75B4324747B2EB_PackageProduct.framework/TreeSitter_-5E75B4324747B2EB_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/TreeSitterBash_1AA30C11B8314197_PackageProduct.framework/TreeSitterBash_1AA30C11B8314197_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinSkillFormat.framework/HanlinSkillFormat /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/Yams_712EB057E_PackageProduct.framework/Yams_712EB057E_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinHostContracts.framework/HanlinHostContracts /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinPlatformContracts.framework/HanlinPlatformContracts /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinAgentCore.framework/HanlinAgentCore /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/SwiftAISDK_6FA7094CA5C06683_PackageProduct.framework/SwiftAISDK_6FA7094CA5C06683_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/AISDKProvider.framework/AISDKProvider /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/AISDKProviderUtils.framework/AISDKProviderUtils /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/AISDKZodAdapter.framework/AISDKZodAdapter /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/EventSourceParser.framework/EventSourceParser /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/OpenAIProvider_-2301E57905F4388B_PackageProduct.framework/OpenAIProvider_-2301E57905F4388B_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/AnthropicProvider_1131E7754C45D704_PackageProduct.framework/AnthropicProvider_1131E7754C45D704_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/GoogleProvider_-6DD8AE9F9ECCE14A_PackageProduct.framework/GoogleProvider_-6DD8AE9F9ECCE14A_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/OpenAICompatibleProvider_-12EEEC9CC3715281_PackageProduct.framework/OpenAICompatibleProvider_-12EEEC9CC3715281_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinChatCore.framework/HanlinChatCore /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/JSON.framework/JSON /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/JSONRegexRuntime.framework/JSONRegexRuntime /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinExactJSONSchema.framework/HanlinExactJSONSchema /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinMiniAppCore.framework/HanlinMiniAppCore /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/SwiftAISDK_6FA7094CA5C06683_PackageProduct.framework/SwiftAISDK_6FA7094CA5C06683_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/OpenAIProvider_-2301E57905F4388B_PackageProduct.framework/OpenAIProvider_-2301E57905F4388B_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/AnthropicProvider_1131E7754C45D704_PackageProduct.framework/AnthropicProvider_1131E7754C45D704_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/GoogleProvider_-6DD8AE9F9ECCE14A_PackageProduct.framework/GoogleProvider_-6DD8AE9F9ECCE14A_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/OpenAICompatibleProvider_-12EEEC9CC3715281_PackageProduct.framework/OpenAICompatibleProvider_-12EEEC9CC3715281_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinNativeScriptRuntime.framework/HanlinNativeScriptRuntime -framework TNSWidgets -framework NSCWinterTC -framework NativeScript -framework TKLiveSync -framework NativeScript -framework TKLiveSync /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinNativeScriptCoreSupport.framework/HanlinNativeScriptCoreSupport /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinExpoRuntime.framework/HanlinExpoRuntime -lReactNativeHeaders-ios-simulator -framework React -framework ReactNativeDependencies -framework hermesvm -framework ExpoModulesJSI -framework ExpoModulesCore -framework ExpoModulesWorklets -framework ExpoUI -framework ExpoBrownfield /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinExpoWorklets.framework/HanlinExpoWorklets -lffi /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinExpoNativeAPICore.framework/HanlinExpoNativeAPICore /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinExpoNativeAPI.framework/HanlinExpoNativeAPI -lffi /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/SwiftAISDK_6FA7094CA5C06683_PackageProduct.framework/SwiftAISDK_6FA7094CA5C06683_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/OpenAIProvider_-2301E57905F4388B_PackageProduct.framework/OpenAIProvider_-2301E57905F4388B_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/AnthropicProvider_1131E7754C45D704_PackageProduct.framework/AnthropicProvider_1131E7754C45D704_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/GoogleProvider_-6DD8AE9F9ECCE14A_PackageProduct.framework/GoogleProvider_-6DD8AE9F9ECCE14A_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/OpenAICompatibleProvider_-12EEEC9CC3715281_PackageProduct.framework/OpenAICompatibleProvider_-12EEEC9CC3715281_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinExtensionContracts.framework/HanlinExtensionContracts /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/SwiftAISDK_6FA7094CA5C06683_PackageProduct.framework/SwiftAISDK_6FA7094CA5C06683_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/OpenAIProvider_-2301E57905F4388B_PackageProduct.framework/OpenAIProvider_-2301E57905F4388B_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/AnthropicProvider_1131E7754C45D704_PackageProduct.framework/AnthropicProvider_1131E7754C45D704_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/GoogleProvider_-6DD8AE9F9ECCE14A_PackageProduct.framework/GoogleProvider_-6DD8AE9F9ECCE14A_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/OpenAICompatibleProvider_-12EEEC9CC3715281_PackageProduct.framework/OpenAICompatibleProvider_-12EEEC9CC3715281_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/SwiftyJSON_6FA7ED0ED7CD70CA_PackageProduct.framework/SwiftyJSON_6FA7ED0ED7CD70CA_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/ZIPFoundation_-14A6248D789D2CE9_PackageProduct.framework/ZIPFoundation_-14A6248D789D2CE9_PackageProduct -framework JavaScriptCore -framework ios_system -framework files -framework text -framework tar -framework curl_ios -framework libssh2 -framework openssl -framework awk /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/Logging_35C93DA702091ECE_PackageProduct.framework/Logging_35C93DA702091ECE_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/SWCompression_24577EEF38A77749_PackageProduct.framework/SWCompression_24577EEF38A77749_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/MCP_1E0E1DFB_PackageProduct.framework/MCP_1E0E1DFB_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/RichTextKit_5598A367D446E5E_PackageProduct.framework/RichTextKit_5598A367D446E5E_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/CoreXLSX_-6A6700FBE57CAD20_PackageProduct.framework/CoreXLSX_-6A6700FBE57CAD20_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/MarkdownUI_6D662E314863B6EB_PackageProduct.framework/MarkdownUI_6D662E314863B6EB_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/SwiftStreamingMarkdown_-504EC1C7D1AEC0F0_PackageProduct.framework/SwiftStreamingMarkdown_-504EC1C7D1AEC0F0_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/LaTeXSwiftUI_-612D976DC7D4318B_PackageProduct.framework/LaTeXSwiftUI_-612D976DC7D4318B_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/LLM_1E055D28_PackageProduct.framework/LLM_1E055D28_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/ZIPFoundation_-14A6248D789D2CE9_PackageProduct.framework/ZIPFoundation_-14A6248D789D2CE9_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/SwiftSoup_-5E59CDCC5017C843_PackageProduct.framework/SwiftSoup_-5E59CDCC5017C843_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinProductSplit.framework/HanlinProductSplit /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinA2UI.framework/HanlinA2UI /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/BasicCatalogSwiftUI_1DEB646528BA6C5B_PackageProduct.framework/BasicCatalogSwiftUI_1DEB646528BA6C5B_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/SwiftSoup_-5E59CDCC5017C843_PackageProduct.framework/SwiftSoup_-5E59CDCC5017C843_PackageProduct -Xlinker -no_adhoc_codesign -o /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin.debug.dylib -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinRichUI-t.build/Objects-normal/arm64/HanlinRichUI.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinChatUI-t.build/Objects-normal/arm64/HanlinChatUI.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinPersistenceAdapters-t.build/Objects-normal/arm64/HanlinPersistenceAdapters.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinParityMiniApp-t.build/Objects-normal/arm64/HanlinParityMiniApp.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptContracts-t.build/Objects-normal/arm64/HanlinScriptContracts.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptUI-t.build/Objects-normal/arm64/HanlinScriptUI.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinSefariaMiniApp-t.build/Objects-normal/arm64/HanlinSefariaMiniApp.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/TorahLibraryKit-t.build/Objects-normal/arm64/TorahLibraryKit.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinWikipediaMiniApp-t.build/Objects-normal/arm64/HanlinWikipediaMiniApp.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinTextStudioMiniApp-t.build/Objects-normal/arm64/HanlinTextStudioMiniApp.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptDeviceServices-t.build/Objects-normal/arm64/HanlinScriptDeviceServices.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptServices-t.build/Objects-normal/arm64/HanlinScriptServices.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingApplicationRuntime-t.build/Objects-normal/arm64/HanlinScriptingApplicationRuntime.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptExtensions-t.build/Objects-normal/arm64/HanlinScriptExtensions.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptStore-t.build/Objects-normal/arm64/HanlinScriptStore.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingSDK-t.build/Objects-normal/arm64/HanlinScriptingSDK.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptCompiler-t.build/Objects-normal/arm64/HanlinScriptCompiler.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinWidgetCompiler-t.build/Objects-normal/arm64/HanlinWidgetCompiler.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/IOSSystemLite-t.build/Objects-normal/arm64/IOSSystemLite.swiftmodule"
+    },
+    {
+      "line": 178055,
+      "label": "Ld /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests normal (in target 'AI_HLYTests' from project 'AI_HLY')",
+      "command_line": 178057,
+      "command": "    /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios27.0-simulator -bundle -isysroot /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk -O0 -Xlinker -no_warn_duplicate_libraries -L/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator -L/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator -F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -F/Users/runner/work/hanlin-ai/hanlin-ai/Artifacts/ModularFrameworks -iframework /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/Developer/Library/Frameworks -filelist /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/AI_HLYTests.build/Objects-normal/arm64/AI_HLYTests.LinkFileList -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -bundle_loader /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin -Xlinker -object_path_lto -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/AI_HLYTests.build/Objects-normal/arm64/AI_HLYTests_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/AI_HLYTests.build/Objects-normal/arm64/AI_HLYTests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/AI_HLYTests.build/Objects-normal/arm64/AI_HLYTests.swiftmodule -lc++ -lc++ -lc++ -lc++ -lc++ -lc++ -lc++ -lc++ -lc++ -lc++ -licucore -lz -lc++ -Xlinker -application_extension -framework UIKit -framework UIKit -framework Foundation -framework QuartzCore -F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks -Xlinker -undefined -Xlinker dynamic_lookup -framework UIKit -framework Foundation -framework QuartzCore -F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks -Xlinker -undefined -Xlinker dynamic_lookup -F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks -Xlinker -undefined -Xlinker dynamic_lookup -framework UIKit -framework SwiftUI -framework JavaScriptCore -framework UniformTypeIdentifiers -lsqlite3 -framework JavaScriptCore -framework JavaScriptCore -framework Foundation -framework Foundation -framework SwiftUI -framework WidgetKit -framework AVKit -licucore -lz -lc++ -Xlinker -application_extension -framework UIKit -framework UIKit -framework Foundation -framework QuartzCore -F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks -Xlinker -undefined -Xlinker dynamic_lookup -framework UIKit -framework Foundation -framework QuartzCore -F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks -Xlinker -undefined -Xlinker dynamic_lookup -F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks -Xlinker -undefined -Xlinker dynamic_lookup -framework UIKit -framework SwiftUI -framework JavaScriptCore -framework UniformTypeIdentifiers -lsqlite3 -framework JavaScriptCore -framework JavaScriptCore -framework Foundation -framework Foundation -framework SwiftUI -framework WidgetKit -framework AVKit -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/A2UIJSON.framework/A2UIJSON /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/A2UICore.framework/A2UICore /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/JSONSchema_4F994C247B498495_PackageProduct.framework/JSONSchema_4F994C247B498495_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/OrderedJSON.framework/OrderedJSON /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/OrderedCollections_1222128174265B56_PackageProduct.framework/OrderedCollections_1222128174265B56_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/A2UISwiftUI.framework/A2UISwiftUI /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/JSONSchema_4F994C247B498495_PackageProduct.framework/JSONSchema_4F994C247B498495_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/BasicCatalog.framework/BasicCatalog /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/JSONSchema_4F994C247B498495_PackageProduct.framework/JSONSchema_4F994C247B498495_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/BasicCatalogSwiftUI_1DEB646528BA6C5B_PackageProduct.framework/BasicCatalogSwiftUI_1DEB646528BA6C5B_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/SwiftTreeSitter_2A3772C8AF086327_PackageProduct.framework/SwiftTreeSitter_2A3772C8AF086327_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/TreeSitter_-5E75B4324747B2EB_PackageProduct.framework/TreeSitter_-5E75B4324747B2EB_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/TreeSitterBash_1AA30C11B8314197_PackageProduct.framework/TreeSitterBash_1AA30C11B8314197_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinSkillFormat.framework/HanlinSkillFormat /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/Yams_712EB057E_PackageProduct.framework/Yams_712EB057E_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinAgentCore.framework/HanlinAgentCore /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinPlatformContracts.framework/HanlinPlatformContracts /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinHostContracts.framework/HanlinHostContracts /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/SwiftAISDK_6FA7094CA5C06683_PackageProduct.framework/SwiftAISDK_6FA7094CA5C06683_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/AISDKProvider.framework/AISDKProvider /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/AISDKProviderUtils.framework/AISDKProviderUtils /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/AISDKZodAdapter.framework/AISDKZodAdapter /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/EventSourceParser.framework/EventSourceParser /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/OpenAIProvider_-2301E57905F4388B_PackageProduct.framework/OpenAIProvider_-2301E57905F4388B_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/AnthropicProvider_1131E7754C45D704_PackageProduct.framework/AnthropicProvider_1131E7754C45D704_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/GoogleProvider_-6DD8AE9F9ECCE14A_PackageProduct.framework/GoogleProvider_-6DD8AE9F9ECCE14A_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/OpenAICompatibleProvider_-12EEEC9CC3715281_PackageProduct.framework/OpenAICompatibleProvider_-12EEEC9CC3715281_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinChatCore.framework/HanlinChatCore /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/JSON.framework/JSON /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/JSONRegexRuntime.framework/JSONRegexRuntime /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinExactJSONSchema.framework/HanlinExactJSONSchema /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinNativeScriptRuntime.framework/HanlinNativeScriptRuntime -framework TNSWidgets -framework NSCWinterTC -framework NativeScript -framework TKLiveSync -framework NativeScript -framework TKLiveSync /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinNativeScriptCoreSupport.framework/HanlinNativeScriptCoreSupport /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinExpoRuntime.framework/HanlinExpoRuntime -lReactNativeHeaders-ios-simulator -framework React -framework ReactNativeDependencies -framework hermesvm -framework ExpoModulesJSI -framework ExpoModulesCore -framework ExpoModulesWorklets -framework ExpoUI -framework ExpoBrownfield /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinExpoWorklets.framework/HanlinExpoWorklets -lffi /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinExpoNativeAPICore.framework/HanlinExpoNativeAPICore /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinExpoNativeAPI.framework/HanlinExpoNativeAPI /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinProductSplit.framework/HanlinProductSplit /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinMiniAppCore.framework/HanlinMiniAppCore /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinA2UI.framework/HanlinA2UI /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinPresentationKit.framework/HanlinPresentationKit /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinLocalization.framework/HanlinLocalization /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/BasicCatalogSwiftUI_1DEB646528BA6C5B_PackageProduct.framework/BasicCatalogSwiftUI_1DEB646528BA6C5B_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/SwiftSoup_-5E59CDCC5017C843_PackageProduct.framework/SwiftSoup_-5E59CDCC5017C843_PackageProduct /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinExtensionContracts.framework/HanlinExtensionContracts /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin.debug.dylib -Xlinker -no_adhoc_codesign -o /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoWidgetNative-t.build/Objects-normal/arm64/HanlinExpoWidgetNative.swiftmodule -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoWidgetSubset-t.build/Objects-normal/arm64/HanlinExpoWidgetSubset.swiftmodule"
+    }
+  ],
+  "limits": [
+    "Swift nominal-type catch/cast failure is consistent with duplicate image ownership; native correction is not yet executed.",
+    "No Calendar/ShareInbox/credential assertions or production business rules changed.",
+    "Full source-qualified342 authored-invocation reconciliation belongs to integration owner."
+  ]
+}

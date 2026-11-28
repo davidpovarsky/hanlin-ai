@@ -1,0 +1,28 @@
+{
+  "recorded_at": "2026-11-19T01:19:55.276264+00:00",
+  "source": "c91732b21456f964c8e1cf612b06497277ae9fdf",
+  "checks": [
+    {
+      "file": "docs\\continuation-20261117\\PHASE_2_INTEGRATION_LEDGER.json",
+      "original_source_tasks": 30,
+      "prior_evidence_unchanged": 67,
+      "new_evidence": 8,
+      "pending_runs": 10
+    },
+    {
+      "file": "docs\\continuation-20261117\\PHASE_3_INTEGRATION_LEDGER.json",
+      "original_source_tasks": 30,
+      "prior_evidence_unchanged": 67,
+      "new_evidence": 8,
+      "pending_runs": 10
+    },
+    {
+      "file": "docs\\continuation-20261117\\acceptance\\ACCEPTANCE_REGISTER.json",
+      "original_source_tasks": 30,
+      "prior_evidence_unchanged": 67,
+      "new_evidence": 8,
+      "pending_runs": 10
+    }
+  ],
+  "feature_and_ux_matrices": "UNMODIFIED"
+}

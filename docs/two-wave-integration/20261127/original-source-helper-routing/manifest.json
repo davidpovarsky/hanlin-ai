@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1804,
+      "sha256": "4bd6c0bf511da1cb6cf48e3b8ada0ebc26f6d8a1c2d5af7008fbd57f1bab85f3"
+    },
+    {
+      "path": "candidate-r3.patch.gz",
+      "bytes": 1248,
+      "sha256": "6100341c4fa941fe13a56584a93d8d08f46e42741a7975919a0fb1999f4cef1e",
+      "encoding": "gzip",
+      "decodedSHA256": "bfb644275eb0137e0642708ebf020300be8dc062b7990a1087d3e404b79b1f70"
+    },
+    {
+      "path": "controls-receipt.json",
+      "bytes": 1250,
+      "sha256": "b393c1d8417851cef34a8462792897c5d82b00596e2aca2012647d6fb42ef4fc"
+    },
+    {
+      "path": "controls.stderr.gz",
+      "bytes": 459,
+      "sha256": "15e86d234b28c9de9b6a644d6aee3737393c86ff0e9a605737e380ee89f65700",
+      "encoding": "gzip",
+      "decodedSHA256": "56912cd35485513af388efe1f21e366bf4848260c6aa9f7747f71f90391e51c2"
+    },
+    {
+      "path": "corrected-control-receipt.json",
+      "bytes": 724,
+      "sha256": "ce78f5eb2a177af3c6cbcb6cc344097308c1d08f8369a6091d76bf8ce0833201"
+    },
+    {
+      "path": "corrected-control.stderr.gz",
+      "bytes": 460,
+      "sha256": "58ca5de8b916b81aee00e153592f77653324e313a141a703240c62c7e0958b76",
+      "encoding": "gzip",
+      "decodedSHA256": "b7cfb3dbff42711bf725e307442cfa79e336240d128d5936b01f83adbfc6bbfb"
+    },
+    {
+      "path": "final-control-receipt.json",
+      "bytes": 788,
+      "sha256": "fc76f63866d1054bcfc83b5e29c954e93b52d2fe433bb4555f90a931edfa0688"
+    },
+    {
+      "path": "final-control.stderr.gz",
+      "bytes": 165,
+      "sha256": "a293ea536cc1872a22ad476fc99860586cf5213ca2896879ae3c7bd1bf083f15",
+      "encoding": "gzip",
+      "decodedSHA256": "ed8baa3b3df28e55903e416fbba0622415c7bec78d7cbd7932f30cf2d17fb533"
+    },
+    {
+      "path": "final-planner-stop-readback.json",
+      "bytes": 527,
+      "sha256": "fd1e506099d0673b2957ad0d55f663b268c72d466ee1a651e979fd89d3be9f5f"
+    },
+    {
+      "path": "original-planner-timeout-notification.json",
+      "bytes": 2492,
+      "sha256": "2fe00ae93c1e46d9fa320f2f390fda250c62686e1c5cb65fd76515426ab0e46b"
+    },
+    {
+      "path": "source-validation.json",
+      "bytes": 4200,
+      "sha256": "9effa95b64ffcba16601b5517ddc7615f9039f836a771f17865ba1ac99387eb8"
+    }
+  ]
+}

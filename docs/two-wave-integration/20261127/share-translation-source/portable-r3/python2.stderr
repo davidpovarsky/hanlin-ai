@@ -1,0 +1,7 @@
+test_all_four_actual_payload_routes_and_private_windows_are_admitted (Scripts.ProductSplit.Tests.test_share_translation_surface_observer.ShareTranslationObserverTests.test_all_four_actual_payload_routes_and_private_windows_are_admitted) ... ok
+test_new_share_window_and_original_translation_owner_cannot_be_substituted (Scripts.ProductSplit.Tests.test_share_translation_surface_observer.ShareTranslationObserverTests.test_new_share_window_and_original_translation_owner_cannot_be_substituted) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.005s
+
+OK

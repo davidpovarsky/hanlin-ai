@@ -1,0 +1,11 @@
+{
+  "source_sha": "07f6526841df1c356b873f2c4b79280a10ce045e",
+  "parent": "f3b55fdd3926330a9169d104bd245d877ac942c4",
+  "archive_sha256": "f8ddb2ec73c41444879267b5b190dda977c784ad65ab1a527512774e9256fb27",
+  "files": {
+    "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/HanlinMessageInteractionTests.swift": {
+      "before_sha256": "5496e70b20301d1cdb52b5e55560d3ae541c6d911b168b666fe31571f4a8dd45",
+      "after_sha256": "9ebc746229f11b2e8cb7c2091a160aa8174a45b6906a2d364e66288e8ccd83f3"
+    }
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "createdAt": "2026-11-28T13:35:25.499801+00:00",
+  "status": "REVIEWED_COMPOSED_SOURCE_ADMITTED_FOR_ONE_WHOLE_UI_TYPECHECK",
+  "revision": "R2_EXACT_OBSERVED_TITLE_AND_R3_IPAD_ROUTE",
+  "priorCompositionReceiptSHA256": "3a7d835d02a7d41c2809fbabbc644e2c227a660ea07b5b0778f5932590381b76",
+  "priorUITypecheckRetained": "1f9de292 passed once; new observed-title code requires this separate exact-byte qualification",
+  "base": "1ea6ab198151169236f473ab906993ff18d0c74c",
+  "sourcePaths": [
+    {
+      "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "bytes": 315041,
+      "sha256": "c70c629f41cdea005e556f3a46a703be2dc53fa38d0b73ad6c227c68676db264",
+      "mode": "100644"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_shortcut_migration.py",
+      "bytes": 17280,
+      "sha256": "a2918b865e9bdc2210de8b15610dfb9e8af3ad9f9a386bd616ba1d32f588db77",
+      "mode": "100644"
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_migration.py",
+      "bytes": 21091,
+      "sha256": "a4530ff78bea59e0794e0184b7f13fa6cf35465f0c0e13390e5cad51fcd66685",
+      "mode": "100644"
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "bytes": 68492,
+      "sha256": "a503e1e9dea29bfe151164b5f4fb2ffb4565d919344853a308415a6156b2be46",
+      "mode": "100644"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 114067,
+      "sha256": "bbaaf97bb38c1e473770b21608848309d183e21ff87340032e5481555b709f5a",
+      "mode": "100644"
+    },
+    {
+      "path": "Scripts/ProductSplit/shortcut_migration_contract.py",
+      "bytes": 23282,
+      "sha256": "20c83ee0cb50bf4ecf628e1d346083dea13b7628c7c51c7c451251d7bdcf53d7",
+      "mode": "100644"
+    },
+    {
+      "path": "Scripts/ProductSplit/upgrade_shortcut_migration.py",
+      "bytes": 18993,
+      "sha256": "4e4078b1478ca20176e9e1869053656f8d96a6196ee070436cf6b3ec40de639f",
+      "mode": "100644"
+    }
+  ],
+  "reviewReceipts": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-shortcut-migration-r2-source-review/receipt.json",
+      "sha256": "46e919f80b4914acf5826cc389bd376d32eb2b3732188351bde9f0cd758ef333"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-shortcuts-manual-editor-review-r1/receipt.json",
+      "sha256": "8f47fe06413dc824e82695045c2ff59b35d8314623808549a145fa17d391f549"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/mac-independent-widget-home-background-review-r2/independent-review.json",
+      "sha256": "ec86292bc28959a046e3440c61ddf043c7eb85339cd8bb6a6b7a632d08e7051e"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-shortcuts-manual-editor-review-r2/receipt.json",
+      "sha256": "d566247db7a7ce461307b815a32d627c9b12fb2abdacc20220df04136b61c409"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-shortcut-migration-r3-device-review/receipt.json",
+      "sha256": "86a4b1e8986cec1e4248504d18e35b50262bb9ad3e6d256d20f79c671b2fb921"
+    }
+  ],
+  "inputPatches": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-genuine-migration-064b7b58/candidate-r2/source.patch",
+      "sha256": "5d547dbd3cdebca170c0829dc9e9d1dfad5ae04706f83fac52e435ec9287ca16"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-genuine-migration-064b7b58/candidate-r3-device/r2-to-r3.patch",
+      "sha256": "a8135550a6fee9b438c652215ca7da550d1dec464801bc120b6a97f92e5b2215"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcuts-manual-editor-1ea6ab19/candidate-r1/source.patch",
+      "sha256": "ec95a19b8cf3bd51be28e8c8d92a5f88abb3cdea2b3f72d11eb7e12be4625d27"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcuts-manual-editor-1ea6ab19/candidate-r2/source-r1-to-r2.patch",
+      "sha256": "ae412b81df5ea28286ac8679fe44745022c9d4e5b074f7e9ee5115b90ef549ff"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-widget-home-background-1ea6ab19-candidate-r2/source.patch",
+      "sha256": "6f33bc0f4767b41678a5091899a728a9ea2ef8a49c6a5b13008ccf51dad9cee1"
+    }
+  ],
+  "originalWholeInverse": true,
+  "original47TestBodiesByteExact": true,
+  "newTestMethods": [
+    "testExpoSavedJSONListSurvivesFiveToNineParameterAppUpgrade",
+    "testNativeScriptSavedJSONListSurvivesFiveToNineParameterAppUpgrade"
+  ],
+  "finalUITestCount": 49,
+  "changedOriginalHelpers": [
+    "addShortcutAction",
+    "findShortcutActionSearch",
+    "importMatrixWidgetAndCreateInstance",
+    "importWidgetComponentsAndCreateInstance",
+    "observeStudioGallery",
+    "openInstalledFixture",
+    "openLongRunningFixture",
+    "openNativeListFixture",
+    "openWidgetFamilyGallery",
+    "shortcutActionSearchFields"
+  ],
+  "allOtherOriginalMethodsByteExact": 178,
+  "newMethods": [
+    "createMigrationJSONShortcut",
+    "enterWidgetFamilyHomeScreenEditMode",
+    "migrationElementObservation",
+    "migrationNamedEditorElement",
+    "readMigrationEditor",
+    "reopenMigrationShortcut",
+    "savedShortcutMigration",
+    "testExpoSavedJSONListSurvivesFiveToNineParameterAppUpgrade",
+    "testNativeScriptSavedJSONListSurvivesFiveToNineParameterAppUpgrade"
+  ],
+  "fullSourcePatchSHA256": "d552f9f93d2811baf3bb641b53cb219923f12775dbfd61fbc0a012109bb10ede",
+  "oneWholeUITypecheck": {
+    "authorized": true,
+    "count": 1,
+    "originalTimeoutSeconds": 120,
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-ui-shortcuts-widget-migration-composed-1ea6ab19-r2/source/AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+    "sha256": "c70c629f41cdea005e556f3a46a703be2dc53fa38d0b73ad6c227c68676db264",
+    "nativeAcceptance": false
+  },
+  "fullOriginalCI": "NOT_RUN_ON_THIS_COMPOSITION",
+  "nativeAcceptance": "NOT_RUN_ON_THIS_COMPOSITION",
+  "noEdits": [
+    "Originalcasebodies/selectors/assertions/deadlines",
+    "Productruntime/fixtures/pins",
+    "PreviouslyreviewedGalleryformatselector"
+  ],
+  "remaining": [
+    "OriginalfullCI onceintegrated",
+    "ApplewholeUItypecheck",
+    "Currentnativeproductsandoriginalfailedscoperuns",
+    "Migrationold/currentfixture/environmentrouteadmissionandbothnativeenginepilots"
+  ]
+}

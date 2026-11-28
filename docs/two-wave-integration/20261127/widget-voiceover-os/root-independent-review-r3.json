@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "decision": "APPROVED_R3_SOURCE_ONLY_EXPLICIT_PUBLIC_IMPORT",
+  "sourceValidationSHA256": "72ceff514a2722f4052d3ea50b5f40bb850f5e435b5dd945ced5b4940959ca42",
+  "sourcePatchSHA256": "a3e74f83888430dafe6ab62c9a0ba81290bb663d43a81e260d4e47a0814597cb",
+  "UI_SHA256": "0ae41eadc0e30eb81ac25c5f1a82505eaa07cdf3ff57e1f176951753ead54f01",
+  "priorRootReviewSHA256": "9ef23d65d484d2f042fb2f49ae4d4aa0617eaf83886fac48a7c9c8e6fedecd18",
+  "onlyR2Delta": "One explicit public import XCUIAutomation; removal restores entire reviewed R2 UI byte-for-byte.",
+  "otherFourSourcesExact": true,
+  "original32SelectorBodiesPreserved": true,
+  "portable14Qualification": "REUSED_VERIFIED_UNCHANGED_PYTHON_INPUTS",
+  "newPortableInvocations": 0,
+  "nativeFullUIStatus": "NOT_RUN",
+  "independentUIReview": "W1 owns final public service lifecycle review",
+  "at": "2026-11-27T20:05:38.114146+00:00"
+}

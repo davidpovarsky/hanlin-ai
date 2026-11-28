@@ -1,0 +1,107 @@
+{
+  "base": "74ba980dbb91f3a38d4531f043801f5e742c283a",
+  "sourceChanges": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptMetadata.swift",
+      "beforeSHA256": "27dada0499f2d5d3299bc4a8c7131f066ba148c4b89be6d5a48ce24224120075",
+      "afterSHA256": "f1b202b4caef78877cad69700ff698350066066c12f7fcc5bf557810aa1234f9",
+      "beforeBytes": 25174,
+      "afterBytes": 24769
+    },
+    {
+      "path": "Scripts/MiniApps/Tests/scriptwidget-manifest.test.mjs",
+      "beforeSHA256": "93bc4596d363fac13165fc17a1935341da2bea0ba35cd34331769a151b60e5f2",
+      "afterSHA256": "36d94f587b0a9be6d503678d4d11c3f73fc5c9d0c9d7bcba3baa7bbdfcf03cc1",
+      "beforeBytes": 11707,
+      "afterBytes": 13673
+    },
+    {
+      "path": "Scripts/MiniApps/generate-scriptwidget-manifest.mjs",
+      "beforeSHA256": "ca852f733478f46e5e829b803251aa354a32e48ff0bd21f51b58bfa3d708f791",
+      "afterSHA256": "2c768de46884937c6ac6e99a0430c754be99257c32571e80c6a7210dbe049aff",
+      "beforeBytes": 12343,
+      "afterBytes": 12810
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/manifest-validation.mjs",
+      "beforeSHA256": "326176eac507dc298b91065d2ce93de15869ab801bd02c31edfc0a474d9cd7c5",
+      "afterSHA256": "f84c8dfbe6c86a862c87c4bc6423b30003620fae4d1a7a826cd8c02ae4410289",
+      "beforeBytes": 12768,
+      "afterBytes": 13070
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
+      "beforeSHA256": "4deb4b2a1071ed0557ae6924a4f4ab3a5d57e467eb8796c4e6febb629ddde022",
+      "afterSHA256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+      "beforeBytes": 12845,
+      "afterBytes": 13230
+    },
+    {
+      "path": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
+      "beforeSHA256": "ddbed82d8b5ab54941772979355dec4b61a9186ce6b260edd0d12b417872ea7d",
+      "afterSHA256": "63aa2132a1463552c274c328d63fd4b76b45046de28a8420e5a278257905bb5c",
+      "beforeBytes": 210987,
+      "afterBytes": 210998
+    }
+  ],
+  "retainedInputs": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetSession.swift",
+      "bytes": 13303,
+      "sha256": "aaba22894ddd8bf7863a5ddd4e1e61cece90081b579bb8ce7b2a084f751f8f9b",
+      "byteIdenticalToBase": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+      "bytes": 17207,
+      "sha256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3",
+      "byteIdenticalToBase": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntime.swift",
+      "bytes": 69622,
+      "sha256": "15a60ffc1a6171dde86fa442a7a51764fd073eee4f615e329b6593dc5cf9b34a",
+      "byteIdenticalToBase": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+      "bytes": 79563,
+      "sha256": "f79bb40cbfff82eb8631275fd70f99e2f527c5ee497b4cbb168602b6fbf81658",
+      "byteIdenticalToBase": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptWidgetOriginalLimitParityTests.swift",
+      "bytes": 5431,
+      "sha256": "1bb84b5decffcd17ddf54d9283f6871e85f4dd83a4fc67fa95dcaa3ef00bf148",
+      "byteIdenticalToBase": true
+    },
+    {
+      "path": "Scripts/MiniApps/refresh-original-sources.mjs",
+      "bytes": 31410,
+      "sha256": "9b367c79ece68771e1ab193cc22c218feb72d2f519ffb410fc560b6fca59a7e8",
+      "byteIdenticalToBase": true
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/widget-manifest.d.ts",
+      "bytes": 2052,
+      "sha256": "6d9d086bb8d8289390f5b3454b17a435aea0f148724f897c9befb62bf31d5e8f",
+      "byteIdenticalToBase": true
+    }
+  ],
+  "manifestProvenance": {
+    "repository": "everettjf/scriptwidget",
+    "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+    "upstream": "Shared/ScriptWidgetRuntime/Common/ScriptMetadata.swift",
+    "upstreamBlob": "37a4fb37cbb73a43da3e505e675c185068476ea9",
+    "beforeLocalSHA256": "27dada0499f2d5d3299bc4a8c7131f066ba148c4b89be6d5a48ce24224120075",
+    "beforeByteIdentical": true,
+    "afterByteIdentical": false,
+    "afterLocalSHA256": "f1b202b4caef78877cad69700ff698350066066c12f7fcc5bf557810aa1234f9",
+    "newAdaptation": "Call established host network declaration policy; no policy/body or matching rewrite."
+  },
+  "refreshSourceReview": {
+    "path": "Scripts/MiniApps/refresh-original-sources.mjs",
+    "mechanism": "Existing mergeOriginal retains local bytes when upstream unchanged (line 33); otherwise three-way merge preserves local adaptation or fails on conflict (lines 38-41), then updates original identity and localSHA256/byteIdentical (lines 282-288).",
+    "refreshExecuted": false
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "process-wrap-blocked",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "server.mjs"
+}

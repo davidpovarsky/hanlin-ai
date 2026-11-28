@@ -1,0 +1,2339 @@
+{
+  "version": 1,
+  "description": "Declarative component and validation mapping for affected-test CI routing",
+  "no_impact_patterns": [
+    "README.md",
+    "AGENTS.md",
+    "PROJECT_AGENT_GUIDANCE.md",
+    "PROJECT_BOARD.md",
+    "CLAUDE*.md",
+    "*.md",
+    "**/*.md",
+    "docs/**",
+    ".gitignore",
+    ".gitattributes",
+    "LICENSE*",
+    "**/LICENSE*",
+    "NOTICE*",
+    "**/NOTICE*",
+    "recovery-state-before.txt",
+    "cherry_icon.png",
+    "logo_3_0.png",
+    "capability-invariants.md",
+    "test-results.jsonl",
+    ".codex/**",
+    ".agents/**",
+    "Tools/ai-team/**",
+    "tools/ai-team/ensure-team.ps1",
+    "Docs/SDK/HanlinMessageBubblePreservation.json",
+    "Docs/SDK/HanlinNavigationIntegration20261123.json",
+    "Docs/SDK/HanlinMCPPublicModelVerification20261123.json",
+    "Docs/SDK/HanlinSelectedProfileIdentity20261123.json",
+    "Docs/SDK/HanlinAnytypeNativeConsumerReadback20261123.json",
+    "Docs/SDK/HanlinScriptRegistryBoundary20261123.json",
+    "Docs/SDK/registry-identity-20261123/**",
+    "Docs/SDK/HanlinNativeArtifactProvenance20261123.json",
+    "Docs/SDK/NativeArtifactProvenanceEvidence20261123/**",
+    "Docs/SDK/AppIntentsInstallationEvidence20261123/**",
+    "Docs/SDK/validation/provider-summary-count-20261123/**",
+    "Docs/SDK/Validation/post149101-activity-20261126/portable-checks.stdout.txt",
+    "Docs/SDK/Validation/post149101-activity-20261126/portable-result.json",
+    "Docs/SDK/Validation/post149101-activity-20261126/source-fingerprints.json",
+    "Docs/SDK/Validation/post149101-activity-20261126/validation-plan.json",
+    "Docs/SDK/Validation/post149101-metadata-review-20261126/finish-reason-validation.json",
+    "Docs/SDK/Validation/post149101-metadata-review-20261126/syntax-validation.json",
+    "Docs/Validation/Post149101Metadata/portable-metadata.stdout.txt",
+    "Docs/Validation/Post149101Metadata/portable-result.json",
+    "Docs/Validation/Post149101Metadata/validation-plan.json",
+    "Docs/Validation/Post149101RuntimeRecovery.json"
+  ],
+  "components": {
+    "ci_router": {
+      "description": "CI workflows, actions, acceptance pipeline and planning scripts",
+      "patterns": [
+        ".github/**",
+        ".renovaterc.json",
+        "Scripts/Runtime/DependencyUpdates/**",
+        "Scripts/Runtime/upstream-sources.json",
+        "Scripts/Runtime/verify-swiftpm-pin.py",
+        "Scripts/Runtime/verify-swiftpm-update.py",
+        "Scripts/Runtime/verify-upstream-proof.py",
+        "Scripts/CI/**",
+        "Scripts/Diagnostics/**",
+        "Scripts/ChatRendering/**",
+        "Scripts/generate_acceptance_results.mjs",
+        "Scripts/Audit/**",
+        "Scripts/*.mjs",
+        "scripts/**",
+        "capability-invariants.json",
+        "provider-conformance-summary.json",
+        "docs/hanlin-platform/personal-runtime-completion/scenario-evidence-map.json",
+        "docs/hanlin-platform/personal-runtime-completion/authoritative-master-spec.md",
+        "docs/hanlin-platform/personal-runtime-completion/*.json",
+        "docs/hanlin-platform/contract-audit/**",
+        "docs/hanlin-platform/personal-runtime-completion/evidence/**",
+        "Scripts/Runtime/verify-runtime-job-foundation.sh",
+        "Scripts/SDK/**"
+      ],
+      "direct_validation_groups": [
+        "ci_router"
+      ],
+      "consumers": []
+    },
+    "torah_photo_study": {
+      "description": "Torah Photo Study engine, native tools, TorahLibraryKit package, skills, and fixtures",
+      "patterns": [
+        "AI_HLY/Downstream/TorahStudy/**",
+        "Packages/TorahLibraryKit/**",
+        "Skills/**",
+        "Tests/Fixtures/TorahPhotoStudy/**",
+        "Scripts/Acceptance/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "consumers": [
+        "app_core"
+      ]
+    },
+    "package_dependencies": {
+      "description": "Package manifests, lockfiles, and resolved dependency snapshots",
+      "patterns": [
+        "package-lock.json",
+        "**/package-lock.json",
+        "Package.resolved",
+        "**/Package.resolved"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "consumers": [
+        "nativescript_dependencies",
+        "runtimecore_bundle",
+        "platform_contracts"
+      ]
+    },
+    "vendor_dependencies": {
+      "description": "Vendor libraries and upstream dependencies",
+      "patterns": [
+        "Vendor/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "consumers": [
+        "platform_contracts"
+      ]
+    },
+    "runtime_tooling_acceptance": {
+      "description": "Full Runtime, package, Host Services, Mini App, Agent, and UI acceptance collector",
+      "patterns": [
+        "Scripts/Runtime/run_runtime_tooling_acceptance.py"
+      ],
+      "direct_validation_groups": [
+        "runtime_tooling_full_acceptance"
+      ],
+      "consumers": []
+    },
+    "runtime_tool_contract_unit_tests": {
+      "description": "Runtime tool contract unit tests",
+      "patterns": [
+        "AI_HLYTests/RuntimeToolContractTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeToolContractTests"
+      ],
+      "consumers": []
+    },
+    "runtime_package_acceptance_unit_tests": {
+      "description": "Runtime package acceptance unit tests",
+      "patterns": [
+        "AI_HLYTests/RuntimePackageAcceptanceTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimePackageAcceptanceTests"
+      ],
+      "consumers": []
+    },
+    "agent_runtime_conversation_acceptance_unit_tests": {
+      "description": "Agent runtime conversation acceptance unit tests",
+      "patterns": [
+        "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AgentRuntimeConversationAcceptanceTests"
+      ],
+      "consumers": []
+    },
+    "provider_conformance_unit_tests": {
+      "description": "Provider conformance and agent torture harness integration unit tests",
+      "patterns": [
+        "AI_HLYTests/ProviderConformance/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ProductionProviderConformanceTests"
+      ],
+      "consumers": []
+    },
+    "apple_local_providers_tests": {
+      "description": "Apple Foundation Models and Core AI local provider tests",
+      "patterns": [
+        "AI_HLYTests/AppleLocalProvidersTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AppleLocalProvidersTests"
+      ],
+      "consumers": []
+    },
+    "automatic_web_search_tests": {
+      "description": "Automatic keyless web search coordinator and evaluator unit tests",
+      "patterns": [
+        "AI_HLYTests/AutomaticWebSearchTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AutomaticWebSearchTests"
+      ],
+      "consumers": []
+    },
+    "original_source_fixture_test_helper": {
+      "description": "Build-bound original source fixture reader shared by the existing source-parity and FINAL12 tests",
+      "patterns": [
+        "AI_HLYTests/OriginalSourceFixtures.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/OriginalSourceNonRegressionTests",
+        "AI_HLYTests/MasterScenarioSemanticAcceptanceTests"
+      ],
+      "consumers": []
+    },
+    "master_scenario_semantic_acceptance_tests": {
+      "description": "Master scenario semantic acceptance tests",
+      "patterns": [
+        "AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/MasterScenarioSemanticAcceptanceTests"
+      ],
+      "consumers": []
+    },
+    "voice_recording_lifecycle_unit_tests": {
+      "description": "Voice recording lifecycle, audio tap isolation, and localized input unit tests",
+      "patterns": [
+        "AI_HLYTests/VoiceRecordingLifecycleTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/VoiceRecordingLifecycleTests"
+      ],
+      "consumers": []
+    },
+    "agent_runtime_conversation_ui_tests": {
+      "description": "Agent runtime conversation UI tests",
+      "patterns": [
+        "AI_HLYUITests/AgentRuntimeConversationUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/AgentRuntimeConversationUITests"
+      ],
+      "consumers": []
+    },
+    "unified_host_services": {
+      "description": "Unified Host Services layer",
+      "patterns": [
+        "AI_HLY/Downstream/HostServices/**",
+        "AI_HLYTests/HanlinUnifiedHostServices*",
+        "AI_HLYTests/NativeScriptRuntimeWireTests.swift",
+        "AI_HLYTests/NativeScriptShareDeliveryTests.swift"
+      ],
+      "direct_validation_groups": [
+        "unified_host_services"
+      ],
+      "consumers": []
+    },
+    "expo_prepared_entry_tests": {
+      "description": "Prepared Expo constructor entry validation before runtime creation",
+      "patterns": [
+        "AI_HLYTests/ExpoPreparedEntrypointTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "consumers": [],
+      "unit_suites": [
+        "AI_HLYTests/ExpoPreparedEntrypointTests"
+      ]
+    },
+    "expo_runtime": {
+      "description": "Hanlin Expo dynamic runtime and fixtures",
+      "patterns": [
+        "Packages/HanlinExpoRuntime/**",
+        "Packages/HanlinExpoNativeAPI/**",
+        "Scripts/ExpoNativeAPI/**",
+        "Fixtures/ExpoSwiftUIProbe/**",
+        "Fixtures/ExpoNativeAPIProbe/**",
+        "Scripts/Expo/**",
+        "AI_HLYUITests/HanlinExpoProductionE2ETests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinExpoProductionE2ETests",
+        "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests"
+      ],
+      "consumers": [
+        "expo_prepared_entry_tests"
+      ]
+    },
+    "swiftui_bridge_generator": {
+      "description": "SwiftUI Bridge Generator, tools, and HanlinExpoUI package",
+      "patterns": [
+        "Generated/SwiftUIBridge/**",
+        "Packages/HanlinExpoUI/**",
+        "Packages/HanlinSwiftUIBridgeGenerator/**",
+        "Tools/SwiftUIBridge/**"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "consumers": []
+    },
+    "scripting_reference": {
+      "description": "Scripting compatibility reference data, schemas, and generators",
+      "patterns": [
+        "Reference/**",
+        "Scripts/ScriptingReference/**"
+      ],
+      "direct_validation_groups": [
+        "scripting_reference"
+      ],
+      "consumers": [
+        "scripting_compiler",
+        "platform_contracts",
+        "app_scripting_acceptance_test_files"
+      ]
+    },
+    "scripting_compiler": {
+      "description": "TypeScript/QuickJS scripting compiler and production compiler fixtures",
+      "patterns": [
+        "Scripts/ScriptingCompiler/**",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinNodeMobileScriptingCompiler.swift"
+      ],
+      "direct_validation_groups": [
+        "scripting_compiler",
+        "simulator_scripting_acceptance"
+      ],
+      "consumers": [
+        "platform_contracts"
+      ]
+    },
+    "platform_contracts": {
+      "description": "Phase 1 HanlinPlatform package: contracts, runtime, compiler, and store targets",
+      "patterns": [
+        "Packages/HanlinPlatform/**"
+      ],
+      "direct_validation_groups": [
+        "platform_contracts"
+      ],
+      "consumers": [
+        "app_core"
+      ]
+    },
+    "quickjs": {
+      "description": "QuickJS embedded C engine package and downstream session bridge",
+      "patterns": [
+        "Packages/HanlinQuickJS/**",
+        "AI_HLY/Downstream/Scripting/HanlinQuickJSSession.swift"
+      ],
+      "direct_validation_groups": [
+        "quickjs"
+      ],
+      "consumers": [
+        "platform_contracts",
+        "app_core"
+      ]
+    },
+    "nativescript_dependencies": {
+      "description": "NativeScript iOS dependency manifests, locks, scripts, and preflight tools",
+      "patterns": [
+        "Scripts/NativeScript/package.json",
+        "Scripts/NativeScript/package-lock.json",
+        "Scripts/NativeScript/dependency-lock.json",
+        "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "Scripts/NativeScript/preflight-ios-dependencies.mjs",
+        "Scripts/NativeScript/hanlin-nsld.sh",
+        "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+        "Scripts/NativeScript/probe-sdk-metadata.py",
+        "Scripts/NativeScript/build-metadata-tool.py",
+        "Scripts/NativeScript/metadata_public_headers.py",
+        ".github/actions/prepare-nativescript-metadata-tool/**",
+        "Scripts/NativeScript/host-services.ts",
+        "Scripts/NativeScript/build-host-services.mjs",
+        "Scripts/NativeScript/host-service-actions.test.mjs"
+      ],
+      "direct_validation_groups": [
+        "nativescript_dependencies"
+      ],
+      "consumers": [
+        "nativescript_runtime",
+        "nativescript_fixtures"
+      ]
+    },
+    "nativescript_fixtures": {
+      "description": "NativeScript fixture TypeScript sources, prepared bundles, and build configs",
+      "patterns": [
+        "Scripts/NativeScript/Fixtures/**",
+        "Scripts/NativeScript/Prepared/**",
+        "Scripts/NativeScript/prepare-fixture.mjs",
+        "Scripts/NativeScript/prepare-production-package.mjs",
+        "Scripts/NativeScript/build-unbundled-fixture.mjs",
+        "Scripts/NativeScript/build-sefaria-fixture.mjs",
+        "Scripts/NativeScript/build-controller-fixtures.mjs",
+        "Scripts/NativeScript/nativescript.config.ts",
+        "Scripts/NativeScript/tsconfig.json",
+        "Scripts/NativeScript/vite.config.mts",
+        "Scripts/NativeScript/build_package_window_fixtures.py",
+        "Scripts/NativeScript/window-factory.d.ts"
+      ],
+      "direct_validation_groups": [
+        "nativescript_dependencies",
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinNativeScriptProductionE2ETests"
+      ],
+      "consumers": []
+    },
+    "nativescript_runtime": {
+      "description": "NativeScript SPM package, CoreSupport bridge, and downstream host bootstrap",
+      "patterns": [
+        "Packages/HanlinNativeScriptRuntime/**",
+        "AI_HLY/Downstream/NativeScript/**"
+      ],
+      "direct_validation_groups": [
+        "nativescript_runtime",
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinNativeScriptProductionE2ETests"
+      ],
+      "consumers": []
+    },
+    "runtimecore_bundle": {
+      "description": "RuntimeCore lock file, bundle build/assemble workflows, and manifest scripts",
+      "patterns": [
+        "RuntimeDependencies.lock.json",
+        "Scripts/Runtime/validate-runtime-lock.mjs",
+        "Scripts/Runtime/compute-runtime-dependency-hash.mjs",
+        "Scripts/Runtime/build-runtime-bundle.sh",
+        "Scripts/Runtime/assemble-runtime-bundle.sh",
+        "Scripts/Runtime/generate-runtime-manifest.mjs",
+        "Scripts/Runtime/update-runtime-dependencies.mjs",
+        "Scripts/Runtime/validate-runtime-localization.mjs",
+        ".github/workflows/build-runtime-bundle.yml",
+        "Scripts/Runtime/apply-node-source-patches.py",
+        "Scripts/Runtime/configure-node-wasm.py",
+        "Scripts/Runtime/Tests/test_node_wasm_configuration.py",
+        "Scripts/Runtime/Tests/wasm-interpreter-probe.mjs",
+        "Scripts/Runtime/Patches/**",
+        "Scripts/Runtime/Tests/test_node_source_patches.py",
+        "Scripts/Runtime/Tests/node-fd-ownership-probe*.mjs",
+        "Scripts/Runtime/Tests/node-mobile-smoke.mjs"
+      ],
+      "direct_validation_groups": [
+        "runtimecore_bundle"
+      ],
+      "consumers": [
+        "runtimecore_host",
+        "project_packaging"
+      ]
+    },
+    "runtimecore_host": {
+      "description": "RuntimeCore host packaging, preflight, and bundled Node host resources",
+      "patterns": [
+        "AI_HLY/Downstream/RuntimeCore/Node/Host/**",
+        "AI_HLY/Downstream/RuntimeCore/Resources/**",
+        "Scripts/Runtime/prepare-runtime-host.sh",
+        "Scripts/Runtime/runtime_host_archive.py",
+        "Scripts/Runtime/prepare-runtime-core.sh",
+        "Scripts/Runtime/preflight-runtime-core.sh",
+        "Scripts/Runtime/validate_runtime_host_source_exclusion.py",
+        "Scripts/Runtime/run-with-heartbeat.py",
+        "Scripts/Runtime/runtime_bundle_source.py",
+        "Scripts/Runtime/runtime_native_identity.py",
+        "Scripts/Runtime/Tests/test_runtime_native_identity.py",
+        "Scripts/Runtime/Tests/test_runtime_bundle_source.py",
+        "Scripts/Runtime/generate-yarn-unicode-patch.mjs",
+        "Scripts/Runtime/generate-yarn-multiline-patch.mjs",
+        "Scripts/Runtime/HostGrammarTools/**",
+        "Scripts/Runtime/verify_runtime_reuse.py",
+        "Scripts/MiniApps/AssistantExamples/**",
+        "Scripts/MiniApps/assistant-tools.d.ts",
+        "Scripts/MiniApps/assistant-tools.schema.json",
+        "Scripts/MiniApps/native-presentations.d.ts",
+        "Scripts/MiniApps/Examples/**",
+        "Scripts/MiniApps/scriptwidget/**"
+      ],
+      "direct_validation_groups": [
+        "runtimecore_host"
+      ],
+      "consumers": [
+        "python_runtime",
+        "node_runtime",
+        "ios_system"
+      ]
+    },
+    "python_runtime": {
+      "description": "Python iOS runtime slice scripts and downstream Python environment",
+      "patterns": [
+        "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeBridge.swift",
+        "AI_HLY/Downstream/RuntimeCore/Python/PythonQueuedExecution.swift",
+        "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeService.swift",
+        "AI_HLY/Downstream/RuntimeCore/Python/PythonNativeExtensions.swift",
+        "AI_HLY/Downstream/RuntimeCore/Python/Native/**",
+        "Scripts/Runtime/prepare-python-runtime.sh",
+        "AI_HLY/Downstream/RuntimeCore/Python/Resources/**",
+        "Scripts/Runtime/Tests/test_python_execution.py",
+        "Scripts/Runtime/Tests/test_python_cancellation_context.py",
+        "Scripts/Runtime/Tests/test_python_native_catalog.py",
+        "Scripts/Runtime/Tests/python_native_catalog_probe.cpp",
+        "Scripts/Runtime/Tests/python_cancellation_probe.cpp",
+        "Scripts/Runtime/Tests/test_python_packaging.py",
+        "Scripts/Runtime/package-python-native-probe.py"
+      ],
+      "direct_validation_groups": [
+        "python_runtime",
+        "simulator_shell_acceptance"
+      ],
+      "consumers": []
+    },
+    "node_runtime": {
+      "description": "Node mobile runtime scripts, Node/V8 bridge, and MCP downstream runtime",
+      "patterns": [
+        "AI_HLY/Downstream/RuntimeCore/Node/Host/**",
+        "AI_HLY/Downstream/RuntimeCore/Node/Native/**",
+        "AI_HLY/Downstream/RuntimeCore/Node/NodeRuntimeService.swift",
+        "AI_HLY/Downstream/RuntimeCore/Node/RuntimeHostConnection+Operations.swift",
+        "AI_HLY/Downstream/RuntimeCore/Node/TypeScriptRuntimeService.swift",
+        "AI_HLY/Downstream/MCP/Core/**",
+        "AI_HLY/Downstream/MCP/Diagnostics/**",
+        "AI_HLY/Downstream/MCP/Persistence/**",
+        "AI_HLY/Downstream/MCP/Resources/**",
+        "AI_HLY/Downstream/MCP/Runtime/**",
+        "AI_HLY/Downstream/MCP/ToolIntegration/**",
+        "AI_HLY/Downstream/MCP/README.md",
+        "Scripts/Runtime/prepare-node-source.sh",
+        "Scripts/Runtime/build-node-slice.sh",
+        "Scripts/Runtime/NodeMobile.exports",
+        "Scripts/Runtime/validate_mcp_acceptance.py",
+        "Scripts/Runtime/validate-mcp-install-dedup.mjs"
+      ],
+      "direct_validation_groups": [
+        "node_runtime",
+        "simulator_mcp_acceptance"
+      ],
+      "consumers": []
+    },
+    "ios_system": {
+      "description": "IOSSystemLite Swift package, bridge, and shell commands integration",
+      "patterns": [
+        "Packages/IOSSystemLite/**",
+        "AI_HLY/Downstream/RuntimeCore/Shell/**",
+        "Scripts/Runtime/validate_ios_system_resources.py",
+        "Scripts/Runtime/validate_shell_acceptance.py",
+        "Scripts/Runtime/validate-ios-system-package.mjs"
+      ],
+      "direct_validation_groups": [
+        "ios_system",
+        "simulator_shell_acceptance"
+      ],
+      "consumers": []
+    },
+    "runtime_tests": {
+      "description": "Runtime validation unit tests and link dependency specs",
+      "patterns": [
+        "Scripts/Runtime/Tests/**"
+      ],
+      "direct_validation_groups": [
+        "runtimecore_host"
+      ],
+      "consumers": []
+    },
+    "runtime_tools": {
+      "description": "Runtime validation scripts, link dependency tests, and dyld closure scanner",
+      "patterns": [
+        "Scripts/Runtime/validate-app-dyld-closure.py"
+      ],
+      "direct_validation_groups": [
+        "runtimecore_host"
+      ],
+      "consumers": [
+        "project_packaging"
+      ]
+    },
+    "python_package_manager_ui": {
+      "description": "Downstream Python package manager and packages view",
+      "patterns": [
+        "AI_HLY/Downstream/RuntimeCore/Python/PythonPackageManager.swift",
+        "AI_HLY/Downstream/RuntimeCore/UI/PythonPackagesView.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinRuntimeInstallationUITests/testPythonPackageManagerUIWorkflowAndSuccess",
+        "AI_HLYUITests/HanlinRuntimeInstallationUITests/testPythonPackageManagerUIWorkflowAndFailure"
+      ],
+      "consumers": []
+    },
+    "node_package_manager_ui": {
+      "description": "Downstream Node package manager and packages view",
+      "patterns": [
+        "AI_HLY/Downstream/RuntimeCore/Node/NodePackageManager.swift",
+        "AI_HLY/Downstream/RuntimeCore/UI/NodePackagesView.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinRuntimeInstallationUITests/testNodePackageManagerUIWorkflowAndSuccess",
+        "AI_HLYUITests/HanlinRuntimeInstallationUITests/testNodePackageManagerUIWorkflowAndFailure"
+      ],
+      "consumers": []
+    },
+    "mcp_installation_ui": {
+      "description": "Downstream MCP server installer views and flow",
+      "patterns": [
+        "AI_HLY/Downstream/MCP/UI/**",
+        "AI_HLY/Downstream/MCP/Installer/**"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinRuntimeInstallationUITests/testMCPServerInstallationUIWorkflowAndFailure"
+      ],
+      "consumers": []
+    },
+    "runtime_center_ui": {
+      "description": "Downstream Runtime Center hub and embedded runtime status views",
+      "patterns": [
+        "AI_HLY/Downstream/RuntimeCore/UI/RuntimeCenterView.swift",
+        "AI_HLY/Downstream/RuntimeCore/UI/RuntimeEnvironmentView.swift",
+        "AI_HLY/Downstream/RuntimeCore/UI/RuntimeL10n.swift",
+        "AI_HLY/Downstream/RuntimeCore/UI/RuntimeLogsView.swift",
+        "AI_HLY/Downstream/RuntimeCore/UI/ShellCapabilitiesView.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinRuntimeInstallationUITests/testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness"
+      ],
+      "consumers": []
+    },
+    "app_ui": {
+      "description": "SwiftUI views, screens, assets, localization, and UI components",
+      "patterns": [
+        "AI_HLY/Views/**",
+        "AI_HLY/ChatView.swift",
+        "AI_HLY/KnowledgeListView.swift",
+        "AI_HLY/ListView.swift",
+        "AI_HLY/MainTabView.swift",
+        "AI_HLY/ModelsView.swift",
+        "AI_HLY/SettingsView.swift",
+        "AI_HLY/VisionIntent.swift",
+        "AI_HLY/VisionView.swift",
+        "AI_HLY/AI_HLY.swift",
+        "AI_HLY/Assets.xcassets/**",
+        "AI_HLY/*.lproj/**",
+        "AI_HLY/Resource/**",
+        "AI_HLY/Base.lproj/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests",
+        "simulator_smoke_launch"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/CanonicalAdapterTests",
+        "AI_HLYTests/VoiceRecordingLifecycleTests"
+      ],
+      "consumers": []
+    },
+    "app_core": {
+      "description": "Core data models, services, native app hub, canonical coordinator, and agents",
+      "patterns": [
+        "AI_HLY/Model/**",
+        "AI_HLY/Services/**",
+        "AI_HLY/NativeAppPlatform/**",
+        "AI_HLY/NativeAgentExtensions/**",
+        "AI_HLY/Downstream/CanonicalAdapters/**",
+        "AI_HLY/Downstream/CanonicalShadow/**",
+        "AI_HLY/Downstream/CanonicalTools/**",
+        "AI_HLY/Downstream/AgentActivity/**",
+        "AI_HLY/Downstream/AgentDiagnostics/**",
+        "AI_HLY/Downstream/AgentSkills/**",
+        "AI_HLY/Downstream/EmbeddedResults/**",
+        "AI_HLY/Downstream/Compatibility/**",
+        "AI_HLY/Downstream/RuntimeCore/Core/**",
+        "AI_HLY/Downstream/RuntimeCore/Environment/**",
+        "AI_HLY/Downstream/RuntimeCore/Lifecycle/**",
+        "AI_HLY/Downstream/RuntimeCore/Tools/**",
+        "AI_HLY/Downstream/RuntimeCore/JavaScriptCore/**",
+        "AI_HLY/Downstream/Scripting/**",
+        "AI_HLY/Downstream/ChatPresentation/**",
+        "AI_HLY/Downstream/ChatInput/**",
+        "AI_HLY/Downstream/ChatCore/**",
+        "AI_HLY/Downstream/SystemIntegrations/**",
+        "Scripts/Tests/verify_chatgpt_plan_contract.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AgentRuntimeConversationAcceptanceTests",
+        "AI_HLYTests/AgentSkillsExposureTests",
+        "AI_HLYTests/AppleLocalProvidersTests",
+        "AI_HLYTests/CanonicalAdapterTests",
+        "AI_HLYTests/CanonicalShadowCoordinatorTests",
+        "AI_HLYTests/CanonicalToolAuthorityTests",
+        "AI_HLYTests/ChatCanonicalPresentationSurvivalTests",
+        "AI_HLYTests/ClassicChatRestorationTests",
+        "AI_HLYTests/EmbeddedResultResolverTests",
+        "AI_HLYTests/FoundationJSONShadowAdapterTests",
+        "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests",
+        "AI_HLYTests/LegacyToolMigrationTests",
+        "AI_HLYTests/MasterScenarioSemanticAcceptanceTests",
+        "AI_HLYTests/ProductionProviderConformanceTests",
+        "AI_HLYTests/ProductionSystemSkillsTests",
+        "AI_HLYTests/RuntimeToolContractTests",
+        "AI_HLYTests/ScriptingCanonicalAuthorityTests",
+        "AI_HLYTests/SkillStoreAndImportTests",
+        "AI_HLYTests/OrganizerDockStateTests",
+        "AI_HLYTests/HanlinComposerDrawerRouteTests",
+        "AI_HLYTests/CompactRecentConversationsTests",
+        "AI_HLYTests/CompactChatRouteTests",
+        "AI_HLYTests/ChatComposerSessionBridgeTests",
+        "AI_HLYTests/PendingFirstTurnTests",
+        "AI_HLYTests/ModelPopoverZoomOrderTests",
+        "AI_HLYTests/ComposerActionsParityTests",
+        "AI_HLYTests/OriginalSourceNonRegressionTests"
+      ],
+      "consumers": [
+        "app_ui"
+      ]
+    },
+    "scripting_platform": {
+      "description": "Downstream Scripting platform coordinator, views, and package lifecycle",
+      "patterns": [
+        "AI_HLY/Downstream/ScriptingPlatform/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests",
+        "simulator_targeted_ui"
+      ],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinScriptPackageProductionE2ETests"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinScriptUIProductionE2ETests"
+      ],
+      "consumers": [
+        "app_ui"
+      ]
+    },
+    "scripting_widgets": {
+      "description": "HanlinScriptingWidgets app extension target",
+      "patterns": [
+        "HanlinScriptingWidgets/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/CanonicalAdapterTests"
+      ],
+      "consumers": [
+        "project_packaging"
+      ]
+    },
+    "canonical_adapter_unit_tests": {
+      "description": "Canonical adapter unit tests",
+      "patterns": [
+        "AI_HLYTests/CanonicalAdapterTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/CanonicalAdapterTests"
+      ],
+      "consumers": []
+    },
+    "canonical_shadow_coordinator_unit_tests": {
+      "description": "Canonical shadow coordinator unit tests",
+      "patterns": [
+        "AI_HLYTests/CanonicalShadowCoordinatorTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/CanonicalShadowCoordinatorTests"
+      ],
+      "consumers": []
+    },
+    "canonical_tool_authority_unit_tests": {
+      "description": "Canonical tool authority unit tests",
+      "patterns": [
+        "AI_HLYTests/CanonicalToolAuthorityTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/CanonicalToolAuthorityTests"
+      ],
+      "consumers": []
+    },
+    "foundation_json_shadow_adapter_unit_tests": {
+      "description": "Foundation JSON shadow adapter unit tests",
+      "patterns": [
+        "AI_HLYTests/FoundationJSONShadowAdapterTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/FoundationJSONShadowAdapterTests"
+      ],
+      "consumers": []
+    },
+    "scripting_assistant_provider_adapter_unit_tests": {
+      "description": "Scripting assistant provider adapter unit tests",
+      "patterns": [
+        "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests.swift",
+        "AI_HLYTests/HanlinScriptingPlatformCompositionTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests",
+        "AI_HLYTests/HanlinScriptingPlatformCompositionTests"
+      ],
+      "consumers": []
+    },
+    "scripting_canonical_authority_unit_tests": {
+      "description": "Scripting canonical authority unit tests",
+      "patterns": [
+        "AI_HLYTests/ScriptingCanonicalAuthorityTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ScriptingCanonicalAuthorityTests"
+      ],
+      "consumers": []
+    },
+    "chat_canonical_presentation_survival_unit_tests": {
+      "description": "Chat canonical presentation survival unit tests",
+      "patterns": [
+        "AI_HLYTests/ChatCanonicalPresentationSurvivalTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ChatCanonicalPresentationSurvivalTests"
+      ],
+      "consumers": []
+    },
+    "agent_skills_unit_tests": {
+      "description": "Agent skills, tool exposure, and capability session unit tests",
+      "patterns": [
+        "AI_HLYTests/AgentSkillsExposureTests.swift",
+        "AI_HLYTests/HanlinCapabilityObservationTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AgentSkillsExposureTests",
+        "AI_HLYTests/HanlinCapabilityObservationTests"
+      ],
+      "consumers": []
+    },
+    "production_system_skills_unit_tests": {
+      "description": "Production system skills and code tool priority unit tests",
+      "patterns": [
+        "AI_HLYTests/ProductionSystemSkillsTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ProductionSystemSkillsTests"
+      ],
+      "consumers": []
+    },
+    "skill_import_presentation_state": {
+      "description": "Attempt-scoped Skills import UI callbacks, cancellation and retry presentation",
+      "patterns": [
+        "AI_HLY/Downstream/AgentSkills/UI/SkillImportPresentationState.swift",
+        "AI_HLYTests/SkillImportPresentationStateTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/SkillImportPresentationStateTests"
+      ],
+      "consumers": []
+    },
+    "skill_store_and_import_unit_tests": {
+      "description": "Skill store persistence, overrides, and archive importer unit tests",
+      "patterns": [
+        "Packages/HanlinSkillFormat/**",
+        "AI_HLYTests/SkillStoreAndImportTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/SkillStoreAndImportTests"
+      ],
+      "consumers": []
+    },
+    "legacy_tool_migration_unit_tests": {
+      "description": "Legacy tool migration and canonical discovery unit tests",
+      "patterns": [
+        "AI_HLYTests/LegacyToolMigrationTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/LegacyToolMigrationTests"
+      ],
+      "consumers": []
+    },
+    "embedded_results_unit_tests": {
+      "description": "Embedded results resolver and engine adapters unit tests",
+      "patterns": [
+        "AI_HLYTests/EmbeddedResultResolverTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/EmbeddedResultResolverTests"
+      ],
+      "consumers": []
+    },
+    "classic_chat_restoration_unit_tests": {
+      "description": "Classic source-first chat restoration and agent capability repair unit tests",
+      "patterns": [
+        "AI_HLYTests/ClassicChatRestorationTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ClassicChatRestorationTests"
+      ],
+      "consumers": []
+    },
+    "hanlin_organizer_dock_parity_unit_tests": {
+      "description": "InteriorOrganizer V3.3 OrganizerDock source parity, compact workspace, and zoom unit tests",
+      "patterns": [
+        "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+        "AI_HLYTests/NativeComposerLineSizingTests.swift",
+        "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2.json",
+        "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2_APPROVED_TRANSITION_467cfcab.json"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/OrganizerDockStateTests",
+        "AI_HLYTests/HanlinComposerDrawerRouteTests",
+        "AI_HLYTests/CompactRecentConversationsTests",
+        "AI_HLYTests/CompactChatRouteTests",
+        "AI_HLYTests/ChatComposerSessionBridgeTests",
+        "AI_HLYTests/PendingFirstTurnTests",
+        "AI_HLYTests/ModelPopoverZoomOrderTests",
+        "AI_HLYTests/ComposerActionsParityTests",
+        "AI_HLYTests/NativeComposerLineSizingTests",
+        "AI_HLYTests/ComposerSelectionRefreshTests",
+        "AI_HLYTests/ComposerRefreshIdentityTests",
+        "AI_HLYTests/OriginalSourceNonRegressionTests"
+      ],
+      "consumers": []
+    },
+    "hanlin_model_hosting_environment": {
+      "description": "Existing native model picker hosting boundary and catalog context propagation",
+      "patterns": [
+        "AI_HLY/Downstream/ChatInput/HanlinModelZoomPopover.swift",
+        "AI_HLYTests/HanlinModelHostingEnvironmentTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinModelHostingEnvironmentTests"
+      ],
+      "consumers": []
+    },
+    "hanlin_morph_composer_ui_test_files": {
+      "description": "Morph Composer navigation, viewport and enabled capability UI acceptance",
+      "patterns": [
+        "AI_HLYUITests/HanlinMorphComposerUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinMorphComposerUITests"
+      ],
+      "consumers": []
+    },
+    "agent_skills_ui_test_files": {
+      "description": "Agent skills, lightweight execution, and embedded results UI acceptance test suite",
+      "patterns": [
+        "AI_HLYUITests/AgentSkillsEmbeddedResultsUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/AgentSkillsEmbeddedResultsUITests"
+      ],
+      "consumers": []
+    },
+    "skill_center_ui_tests": {
+      "description": "Native Skill Center management and interaction UI acceptance test suite",
+      "patterns": [
+        "AI_HLYUITests/HanlinSkillCenterUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinSkillCenterUITests"
+      ],
+      "consumers": []
+    },
+    "app_scripting_acceptance_test_files": {
+      "description": "Downstream Scripting acceptance test suites and fixtures",
+      "patterns": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+        "AI_HLYTests/Fixtures/**"
+      ],
+      "direct_validation_groups": [
+        "simulator_scripting_acceptance",
+        "app_unit_tests"
+      ],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinScriptPackageProductionE2ETests"
+      ],
+      "consumers": []
+    },
+    "nativescript_ui_test_files": {
+      "description": "Downstream NativeScript production E2E UI test suite",
+      "patterns": [
+        "AI_HLYUITests/HanlinNativeScriptProductionE2ETests.swift"
+      ],
+      "direct_validation_groups": [
+        "nativescript_dependencies",
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinNativeScriptProductionE2ETests"
+      ],
+      "consumers": []
+    },
+    "runtime_install_ui_test_files": {
+      "description": "Downstream Runtime installation & package management UI test suite",
+      "patterns": [
+        "AI_HLYUITests/HanlinRuntimeInstallationUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinRuntimeInstallationUITests"
+      ],
+      "consumers": []
+    },
+    "scripting_ui_test_files": {
+      "description": "Downstream ScriptUI and JavaScriptCore production E2E UI test suite",
+      "patterns": [
+        "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift",
+        "AI_HLYUITests/Fixtures/**"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinScriptUIProductionE2ETests"
+      ],
+      "consumers": []
+    },
+    "navigation_smoke_ui_test_files": {
+      "description": "Primary whole-app navigation smoke UI test suite",
+      "patterns": [
+        "AI_HLYUITests/HanlinPrimaryNavigationSmokeUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinPrimaryNavigationSmokeUITests"
+      ],
+      "consumers": []
+    },
+    "command_acceptance_ui_test_files": {
+      "description": "Runtime command and operations acceptance UI test suite",
+      "patterns": [
+        "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests"
+      ],
+      "consumers": []
+    },
+    "runtime_performance_test_files": {
+      "description": "Downstream runtime and engine performance benchmark test suite",
+      "patterns": [
+        "AI_HLYTests/HanlinRuntimePerformanceTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinRuntimePerformanceTests"
+      ],
+      "consumers": []
+    },
+    "ui_performance_test_files": {
+      "description": "Downstream UI and end-to-end performance benchmark test suite",
+      "patterns": [
+        "AI_HLYUITests/HanlinUIPerformanceUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "nativescript_dependencies",
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinUIPerformanceUITests"
+      ],
+      "consumers": []
+    },
+    "canonical_mini_apps": {
+      "description": "Canonical Swift MiniApps, packages, MiniAppHost, DemoMiniApps, and integration tests",
+      "patterns": [
+        "AI_HLY/Downstream/MiniApps/**",
+        "AI_HLYTests/CanonicalMiniAppIntegrationTests.swift",
+        "AI_HLYTests/HanlinMiniAppHostDiscoveryTests.swift",
+        "DemoMiniApps/**",
+        "Packages/HanlinParityMiniApp/**",
+        "Packages/HanlinSefariaMiniApp/**",
+        "Packages/HanlinWikipediaMiniApp/**",
+        "Packages/HanlinTextStudioMiniApp/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests",
+        "simulator_targeted_ui"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/CanonicalMiniAppIntegrationTests",
+        "AI_HLYTests/HanlinMiniAppHostDiscoveryTests"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinNativeScriptProductionE2ETests"
+      ],
+      "consumers": [
+        "app_ui"
+      ]
+    },
+    "project_packaging": {
+      "description": "Xcode project structure, build settings, entitlements, and configs",
+      "patterns": [
+        "AI_HLY.xcodeproj/**",
+        "AI-HLY-Info.plist",
+        "AI_HLY/AI_HLY.entitlements",
+        "Config.xcconfig.template",
+        "ChavrusaChatNotificationService/**",
+        "ChavrusaChatShare/**",
+        "ChavrusaChatTranslationProvider/**",
+        "HanlinMiniAppsExtensions/**"
+      ],
+      "direct_validation_groups": [
+        "device_build",
+        "ipa_packaging"
+      ],
+      "consumers": []
+    },
+    "autonomous_runtime_acceptance": {
+      "description": "Autonomous host policy, canonical Skill execution and actual embedded HTTPS acceptance",
+      "patterns": [
+        "AI_HLYTests/HanlinAutonomousRuntimeTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinAutonomousRuntimeTests"
+      ],
+      "consumers": []
+    },
+    "expo_native_api_ui_tests": {
+      "description": "Existing native JSI/Fabric integration, grantless install and session lifecycle acceptance",
+      "patterns": [
+        "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests"
+      ],
+      "consumers": []
+    },
+    "chat_diagnostics_journal_tests": {
+      "description": "Automatic chat capture, encryption and redaction acceptance",
+      "patterns": [
+        "AI_HLYTests/AgentDiagnosticsJournalTests.swift",
+        "AI_HLYTests/AgentDiagnosticsSessionPersistenceTests.swift",
+        "AI_HLYTests/AgentDiagnosticsRecorderPersistenceTests.swift",
+        "AI_HLY/Downstream/AgentDiagnostics/**",
+        "AI_HLYTests/AgentDiagnosticsExportTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AgentDiagnosticsJournalTests",
+        "AI_HLYTests/AgentDiagnosticsSessionPersistenceTests",
+        "AI_HLYTests/AgentDiagnosticsRecorderPersistenceTests",
+        "AI_HLYTests/AgentDiagnosticsExportTests"
+      ],
+      "consumers": []
+    },
+    "chat_round_presentation_tests": {
+      "description": "Actual provider-round ownership and legacy unattributed activities",
+      "patterns": [
+        "AI_HLYTests/AgentRoundPresentationTests.swift",
+        "AI_HLY/Downstream/AgentActivity/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AgentRoundPresentationTests"
+      ],
+      "consumers": []
+    },
+    "provider_model_catalog_tests": {
+      "description": "Authoritative provider prices, modalities, freshness and provenance",
+      "patterns": [
+        "AI_HLYTests/ProviderModelCatalogTests.swift",
+        "AI_HLY/Downstream/ChatPresentation/ProviderModelCatalogMetadata.swift",
+        "AI_HLY/Services/APIServices/ModelRefreshService.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ProviderModelCatalogTests"
+      ],
+      "consumers": []
+    },
+    "chat_model_display_name_tests": {
+      "description": "Human-readable model labels preserve the original routing identity",
+      "patterns": [
+        "AI_HLY/Downstream/ChatPresentation/HanlinModelDisplayName.swift",
+        "AI_HLYTests/HanlinModelDisplayNameTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinModelDisplayNameTests"
+      ],
+      "consumers": []
+    },
+    "diagnostics_raw_review_tests": {
+      "description": "Deliberate encrypted capture authentication and response-only local review",
+      "patterns": [
+        "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRawReview.swift",
+        "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsJournal.swift",
+        "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsExport.swift",
+        "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRedactor.swift",
+        "AI_HLYTests/AgentDiagnosticsRawReviewTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AgentDiagnosticsRawReviewTests"
+      ],
+      "consumers": []
+    },
+    "current_location_tool_tests": {
+      "description": "Original current-location authorization, callback ownership and tool result handling",
+      "patterns": [
+        "AI_HLY/Services/ChatServices/MapServices.swift",
+        "AI_HLY/Services/ChatServices/APIManager+LegacyTools.swift",
+        "AI_HLYTests/CurrentLocationToolTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/CurrentLocationToolTests"
+      ],
+      "consumers": []
+    },
+    "chat_auto_follow_tests": {
+      "description": "Original-chat layout-driven scroll coalescing and cancellation ownership",
+      "patterns": [
+        "AI_HLY/Downstream/AgentActivity/Scrolling/**",
+        "AI_HLYTests/ChatAutoFollowTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ChatAutoFollowTests"
+      ],
+      "consumers": []
+    },
+    "chat_scroll_viewport_tests": {
+      "description": "Original-chat native viewport attachment, geometry and conversation ownership",
+      "patterns": [
+        "AI_HLY/Downstream/AgentActivity/Scrolling/ChatScrollViewHandle.swift",
+        "AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowController.swift",
+        "AI_HLYTests/ChatScrollViewHandleTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ChatScrollViewHandleTests"
+      ],
+      "consumers": []
+    },
+    "chat_code_fence_tests": {
+      "description": "Pinned local Mermaid/Diff assets, native WebKit renderer and original Markdown hook",
+      "patterns": [
+        "AI_HLY/Downstream/ChatPresentation/CodeFences/**",
+        "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift",
+        "AI_HLYTests/ChatCodeFenceTests.swift",
+        "Scripts/ChatRendering/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ChatCodeFenceTests"
+      ],
+      "consumers": []
+    },
+    "original_chat_presentation_tests": {
+      "description": "ChatPresentationTests acceptance for original chat and Runtime V3",
+      "patterns": [
+        "AI_HLYTests/A2UITests.swift",
+        "AI_HLYTests/HanlinRemoteMediaURLTests.swift",
+        "AI_HLYTests/ChatPresentationTests.swift",
+        "AI_HLY/Downstream/ChatPresentation/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ChatPresentationTests"
+      ],
+      "consumers": []
+    },
+    "runtime_autonomy_v3_tests": {
+      "description": "RuntimeAutonomyV3Tests acceptance for original chat and Runtime V3",
+      "patterns": [
+        "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+        "AI_HLY/Downstream/AgentSkills/ToolResultStore.swift",
+        "AI_HLY/Downstream/AgentSkills/AssistantCapabilitySession.swift",
+        "AI_HLY/Downstream/RuntimeCore/Core/RuntimeCapabilityContract.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeAutonomyV3Tests"
+      ],
+      "consumers": []
+    },
+    "runtime_command_bridge": {
+      "description": "Finite Host command receipts dispatch through the existing Node/Python/Shell actors",
+      "patterns": [
+        "AI_HLY/Downstream/RuntimeCore/Node/RuntimeCommandDispatcher.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeAutonomyV3Tests"
+      ],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "consumers": [
+        "python_runtime",
+        "node_runtime",
+        "ios_system"
+      ]
+    },
+    "mcp_package_generation_tests": {
+      "description": "MCPPackageGenerationTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/MCPPackageGenerationTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/MCPPackageGenerationTests"
+      ],
+      "consumers": []
+    },
+    "runtime_execution_input_artifact_tests": {
+      "description": "RuntimeExecutionInputArtifactTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/RuntimeExecutionInputArtifactTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeExecutionInputArtifactTests"
+      ],
+      "consumers": []
+    },
+    "runtime_fetch_conformance_tests": {
+      "description": "RuntimeFetchConformanceTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/RuntimeFetchConformanceTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeFetchConformanceTests"
+      ],
+      "consumers": [],
+      "prerequisites": [
+        "runtimecore_host"
+      ]
+    },
+    "runtime_java_script_core_tests": {
+      "description": "RuntimeJavaScriptCoreTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/RuntimeJavaScriptCoreTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeJavaScriptCoreTests"
+      ],
+      "consumers": []
+    },
+    "runtime_job_interruption_tests": {
+      "description": "RuntimeJobInterruptionTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/RuntimeJobInterruptionTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeJobInterruptionTests"
+      ],
+      "consumers": []
+    },
+    "runtime_native_interruption_tests": {
+      "description": "RuntimeNativeInterruptionTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/RuntimeNativeInterruptionTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeNativeInterruptionTests"
+      ],
+      "consumers": [],
+      "prerequisites": [
+        "runtimecore_host"
+      ]
+    },
+    "runtime_user_operation_tests": {
+      "description": "RuntimeUserOperationTests actual original Runtime acceptance",
+      "patterns": [
+        "AI_HLYTests/RuntimeUserOperationTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/RuntimeUserOperationTests"
+      ],
+      "consumers": []
+    },
+    "prepared_runtime_version_gate_tests": {
+      "description": "Direct NativeScript/Expo version contract constructor gates without starting either VM",
+      "patterns": [
+        "AI_HLYTests/PreparedRuntimeVersionGateTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/PreparedRuntimeVersionGateTests"
+      ],
+      "consumers": []
+    },
+    "share_inbox_host_tests": {
+      "description": "Actual owned provider batch through the Host App Group reader; not physical system-sheet acceptance",
+      "patterns": [
+        "AI_HLYTests/ShareInboxHostIntegrationTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/ShareInboxHostIntegrationTests"
+      ],
+      "consumers": []
+    },
+    "nativescript_environment_unit_tests": {
+      "description": "Actual NS VM environment ownership and failed-start rollback in the existing serialized NS suite",
+      "patterns": [
+        "AI_HLYTests/NativeScriptEnvironmentOwnershipTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/onlyTheStartedNativeScriptSessionRestoresItsExactPreviousEnvironment()",
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/failedNativeScriptBootstrapRollsBackEnvironmentWithoutKeepingAFalseOwner()"
+      ],
+      "consumers": []
+    },
+    "agent_app_session_tests": {
+      "description": "Original app product integration and execution acceptance",
+      "patterns": [
+        "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinAppAgentSessionOwnerTests"
+      ],
+      "consumers": []
+    },
+    "agent_original_a2ui_ui_tests": {
+      "description": "Original app product integration and execution acceptance",
+      "patterns": [
+        "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinNativeA2UIChatUITests"
+      ],
+      "consumers": []
+    },
+    "original_a2ui_product_benchmarks": {
+      "description": "Native original Session/presentation/renderer matrix observations and original-store lifecycle; separate from the 16 ScriptUI/Runtime performance flows",
+      "patterns": [
+        "AI_HLYTests/HanlinA2UIProductPerformanceTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinA2UIProductPerformanceTests"
+      ],
+      "consumers": []
+    },
+    "skill_product_execution_tests": {
+      "description": "Original app product integration and execution acceptance",
+      "patterns": [
+        "AI_HLYTests/SkillRuntimeProductTests.swift",
+        "AI_HLYTests/SkillOpenClawPolicyTests.swift",
+        "AI_HLYTests/MaintainedSkillCorpusTests.swift",
+        "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/SkillRuntimeProductTests",
+        "AI_HLYTests/SkillOpenClawPolicyTests",
+        "AI_HLYTests/MaintainedSkillCorpusTests"
+      ],
+      "consumers": []
+    },
+    "skills_openclaw_original": {
+      "description": "Pinned original OpenClaw policy source closure, parity and embedded product integration",
+      "patterns": [
+        "Scripts/Skills/OpenClaw/**"
+      ],
+      "direct_validation_groups": [
+        "runtimecore_host",
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/SkillRuntimeProductTests",
+        "AI_HLYTests/SkillOpenClawPolicyTests"
+      ],
+      "consumers": []
+    },
+    "canonical_agent_sdk": {
+      "description": "Canonical SDK Host schemas and source consumers",
+      "patterns": [
+        "Packages/HanlinAgentSDK/**",
+        "Scripts/Tests/run_private_store_tests.py"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinAppAgentSessionOwnerTests"
+      ],
+      "consumers": []
+    },
+    "canonical_presentation_sdk": {
+      "description": "Reusable original Composer/Markdown/OpenUI source; native SDK compilation uses dedicated proof and its real app consumer uses these suites",
+      "patterns": [
+        "Packages/HanlinPresentationSDK/**",
+        "Scripts/OpenUI/**",
+        "Examples/HanlinLauncherLab/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests",
+        "simulator_targeted_ui"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AgentRoundPresentationTests",
+        "AI_HLYTests/NativeComposerLineSizingTests"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinNativeA2UIChatUITests"
+      ],
+      "consumers": []
+    },
+    "canonical_product_split": {
+      "description": "Canonical two-app leaves, production shell and standalone workflow; origin consumer units here; paired UI and standalone UI/storage require validate-app-split.yml with both original products",
+      "patterns": [
+        "Packages/HanlinProductSplit/**",
+        "AI_HLY/Downstream/ProductSplit/**",
+        "AI_HLY/Downstream/ProductSplitIntegration/**",
+        "Scripts/ProductSplit/**",
+        "HanlinMiniAppsApp/**",
+        "HanlinMiniAppsTests/**",
+        "HanlinMiniAppsUITests/**",
+        "Tests/ProductSplit/**",
+        "AI_HLYTests/HanlinAppSplitOriginTests.swift",
+        "AI_HLYUITests/HanlinPairedProductUITests.swift",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+        "Fixtures/HostActionSurfaces/expo/App.tsx",
+        "Fixtures/HostActionSurfaces/expo/proof.ts",
+        "Fixtures/HostActionSurfaces/nativescript/index.ts",
+        "Fixtures/HostActionSurfaces/nativescript/package.json",
+        "Fixtures/HostActionSurfaces/nativescript/proof.ts",
+        "Fixtures/LiveActivityLifecycle/expo/App.tsx",
+        "Fixtures/LiveActivityLifecycle/expo/hanlin.authoring.json",
+        "Fixtures/LiveActivityLifecycle/expo/index.ts",
+        "Fixtures/LiveActivityLifecycle/expo/package.json",
+        "Fixtures/LiveActivityLifecycle/expo/script.json",
+        "Fixtures/LiveActivityLifecycle/expo/tsconfig.json",
+        "Fixtures/LiveActivityLifecycle/nativescript/hanlin.authoring.json",
+        "Fixtures/LiveActivityLifecycle/nativescript/index.ts",
+        "Fixtures/LiveActivityLifecycle/nativescript/package.json",
+        "Fixtures/LiveActivityLifecycle/nativescript/script.json",
+        "Fixtures/LiveActivityLifecycle/nativescript/tsconfig.json",
+        "Fixtures/LiveActivityLifecycle/nativescript/widget.jsx",
+        "Fixtures/ShortcutLongRunning/expo/App.tsx",
+        "Fixtures/ShortcutLongRunning/expo/hanlin.authoring.json",
+        "Fixtures/ShortcutLongRunning/expo/index.ts",
+        "Fixtures/ShortcutLongRunning/expo/package.json",
+        "Fixtures/ShortcutLongRunning/expo/proof.ts",
+        "Fixtures/ShortcutLongRunning/expo/script.json",
+        "Fixtures/ShortcutLongRunning/expo/tsconfig.json",
+        "Fixtures/ShortcutLongRunning/nativescript/hanlin.authoring.json",
+        "Fixtures/ShortcutLongRunning/nativescript/index.ts",
+        "Fixtures/ShortcutLongRunning/nativescript/package.json",
+        "Fixtures/ShortcutLongRunning/nativescript/proof.ts",
+        "Fixtures/ShortcutLongRunning/nativescript/script.json",
+        "Fixtures/ShortcutLongRunning/nativescript/tsconfig.json",
+        "Fixtures/ShortcutNativeLists/expo/App.tsx",
+        "Fixtures/ShortcutNativeLists/expo/hanlin.authoring.json",
+        "Fixtures/ShortcutNativeLists/expo/index.ts",
+        "Fixtures/ShortcutNativeLists/expo/package.json",
+        "Fixtures/ShortcutNativeLists/expo/proof.ts",
+        "Fixtures/ShortcutNativeLists/expo/script.json",
+        "Fixtures/ShortcutNativeLists/expo/tsconfig.json",
+        "Fixtures/ShortcutNativeLists/nativescript/hanlin.authoring.json",
+        "Fixtures/ShortcutNativeLists/nativescript/index.ts",
+        "Fixtures/ShortcutNativeLists/nativescript/package.json",
+        "Fixtures/ShortcutNativeLists/nativescript/proof.ts",
+        "Fixtures/ShortcutNativeLists/nativescript/script.json",
+        "Fixtures/ShortcutNativeLists/nativescript/tsconfig.json",
+        "Fixtures/WidgetComponents/script.json",
+        "Fixtures/WidgetComponents/widget.jsx",
+        "Packages/HanlinMiniAppsBridge/**",
+        "HanlinMiniAppsExtensions/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinAppSplitOriginTests",
+        "AI_HLYTests/HanlinAppAgentSessionOwnerTests"
+      ],
+      "consumers": []
+    },
+    "canvas_runtime_ui_tests": {
+      "description": "Original Canvas embedded Python execution and source restoration",
+      "patterns": [
+        "AI_HLYUITests/HanlinCanvasRuntimeUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinCanvasRuntimeUITests"
+      ],
+      "consumers": []
+    },
+    "contextual_text_tools_ui_tests": {
+      "description": "Original contextual text tools and conversation preservation",
+      "patterns": [
+        "AI_HLYUITests/HanlinContextualTextToolsUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinContextualTextToolsUITests"
+      ],
+      "consumers": []
+    },
+    "native_help_ui_tests": {
+      "description": "Native offline guide, costs and support navigation",
+      "patterns": [
+        "AI_HLYUITests/HanlinHelpUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinHelpUITests"
+      ],
+      "consumers": []
+    },
+    "share_inbox_chat_ui_tests": {
+      "description": "Original shared ingress to Composer, SDK request and retained conversation",
+      "patterns": [
+        "AI_HLYUITests/HanlinShareInboxUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinShareInboxUITests"
+      ],
+      "consumers": []
+    },
+    "hanlin_application_sdk": {
+      "description": "Original full application source assembly, injected host facade and public source ownership graph",
+      "patterns": [
+        "AI_HLY/Downstream/SDK/**",
+        "Package.swift",
+        "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+        "AI_HLYTests/HanlinConversationControllerTests.swift",
+        "AI_HLYTests/HanlinConversationProjectionTests.swift",
+        "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift",
+        "AI_HLYTests/HanlinMCPEmbeddingTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinApplicationEmbeddingTests",
+        "AI_HLYTests/HanlinConversationProjectionTests",
+        "AI_HLYTests/HanlinApplicationSystemIntegrationTests",
+        "AI_HLYTests/HanlinMCPEmbeddingTests"
+      ],
+      "consumers": [
+        "app_core"
+      ]
+    },
+    "calendar_tool_recovery": {
+      "description": "Original calendar adapter and malformed-input/cancelled callback regressions",
+      "patterns": [
+        "AI_HLYTests/CalendarToolTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/CalendarToolTests"
+      ],
+      "consumers": []
+    },
+    "hanlin_localization_sdk": {
+      "description": "Original shared language tables, images, colors and exact native-control resource routing",
+      "patterns": [
+        "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/**",
+        "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/**",
+        "Scripts/Localization/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinLocalizationTests",
+        "AI_HLYTests/HanlinLocalizedControlTests",
+        "AI_HLYTests/HanlinOriginalAssetTests"
+      ],
+      "consumers": [
+        "app_core"
+      ]
+    },
+    "canonical_extension_sdk": {
+      "description": "Original share, notification, translation and WidgetKit implementations; real embedded extension targets are built with the host app",
+      "patterns": [
+        "Packages/HanlinAppExtensionsSDK/**",
+        "Packages/HanlinWidgetSDK/**",
+        "Scripts/Extensions/**"
+      ],
+      "direct_validation_groups": [
+        "device_build",
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinApplicationSystemIntegrationTests"
+      ],
+      "consumers": [
+        "project_packaging"
+      ]
+    },
+    "chat_completion_unit_tests": {
+      "description": "Original chat activity, cache, Composer, metadata, sidebar and MiniApp assistant integration test source",
+      "patterns": [
+        "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+        "AI_HLYTests/AgentTokenUsageCacheTests.swift",
+        "AI_HLYTests/AutomaticWebSearchCacheTests.swift",
+        "AI_HLYTests/HanlinComposerCapabilityIntegrationTests.swift",
+        "AI_HLYTests/HanlinConversationMetadataTests.swift",
+        "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests.swift",
+        "AI_HLYTests/HanlinMiniAppAssistantToolAcceptanceTests.swift",
+        "AI_HLYTests/HanlinMiniAppAssistantToolTests.swift",
+        "AI_HLYTests/HanlinModelPromptCachePersistenceTests.swift",
+        "AI_HLYTests/HanlinOpenUIBridgeTests.swift",
+        "AI_HLYTests/HanlinPromptCachingIntegrationTests.swift",
+        "AI_HLYTests/HanlinSidebarGestureTests.swift",
+        "AI_HLYTests/NodeHostHealthRecoveryTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AgentActivityHeaderPhaseTests",
+        "AI_HLYTests/AgentTokenUsageCacheTests",
+        "AI_HLYTests/AutomaticWebSearchCacheTests",
+        "AI_HLYTests/HanlinComposerCapabilityIntegrationTests",
+        "AI_HLYTests/HanlinConversationHistorySectionTests",
+        "AI_HLYTests/HanlinConversationMetadataTests",
+        "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests",
+        "AI_HLYTests/HanlinMiniAppAssistantToolTests",
+        "AI_HLYTests/HanlinModelPromptCachePersistenceTests",
+        "AI_HLYTests/HanlinOpenUIBridgeTests",
+        "AI_HLYTests/HanlinPromptCachingIntegrationTests",
+        "AI_HLYTests/HanlinSidebarAccessibilityOwnershipTests",
+        "AI_HLYTests/HanlinSidebarGestureTests",
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests",
+        "AI_HLYTests/NodeHostHealthRecoveryTests"
+      ],
+      "consumers": []
+    },
+    "chat_completion_ui_tests": {
+      "description": "Original Composer capabilities and sidebar navigation UI acceptance",
+      "patterns": [
+        "AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift",
+        "AI_HLYUITests/HanlinSidebarNavigationUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinComposerCapabilitiesUITests",
+        "AI_HLYUITests/HanlinSidebarNavigationUITests"
+      ],
+      "consumers": []
+    },
+    "original_widget_archive_contracts": {
+      "description": "Exact original generated widget archives consumed by HanlinDualWidgetEnginesTests import, version and isolation contracts",
+      "patterns": [
+        "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo",
+        "Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+        "Fixtures/Widgets/Hanlin-Mixed-Native-Widget.hanlinExpo",
+        "Fixtures/Widgets/Hanlin-Widget-Invalid-Cases.hanlinExpo"
+      ],
+      "direct_validation_groups": [
+        "platform_contracts"
+      ],
+      "consumers": []
+    },
+    "original_widget_renderer_fixtures": {
+      "description": "Counter and Visuals archive copies consumed by the original native widget renderer suite",
+      "patterns": [
+        "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo",
+        "Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinNativeWidgetRendererTests"
+      ],
+      "consumers": []
+    },
+    "original_widget_counter_ui_fixture": {
+      "description": "Original Counter archive used by the existing SpringBoard source-action acceptance method",
+      "patterns": [
+        "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeExpoWidgetSourceActionsWithHostTerminated"
+      ],
+      "consumers": []
+    },
+    "original_widget_native_primitives": {
+      "description": "Original native SwiftUI primitives shared by original ExpoWidgets and prepared widgets; preserve native renderer/action consumers and packaged extension closure",
+      "patterns": [
+        "Packages/HanlinExpoWidgetSubset/Package.swift",
+        "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests",
+        "runtimecore_host",
+        "simulator_targeted_ui",
+        "device_build",
+        "ipa_packaging"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinNativeWidgetRendererTests",
+        "AI_HLYTests/HanlinOriginalExpoWidgetTests"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeExpoWidgetSourceActionsWithHostTerminated"
+      ],
+      "consumers": []
+    },
+    "original_widget_contracts": {
+      "description": "Original Expo and ScriptWidget native renderers, ActivityKit actions, shared widget fixture and typed authoring contract",
+      "patterns": [
+        "AI_HLYTests/HanlinNativeWidgetRendererTests.swift",
+        "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift",
+        "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift",
+        "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo",
+        "Fixtures/Widgets/SHA256.json",
+        "Scripts/Widgets/Tests/widget-types-consumer.ts"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests",
+        "runtimecore_host"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinNativeWidgetRendererTests",
+        "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+        "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests"
+      ],
+      "consumers": []
+    },
+    "miniapps_system_entrypoints": {
+      "description": "Standalone MiniApps system publication, camera ownership, typed keyboard and notification surfaces; real OS and paired-product acceptance remain separate gates",
+      "patterns": [
+        "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureInbox.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemCatalog.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift",
+        "HanlinMiniAppsExtensions/Keyboard/**",
+        "HanlinMiniAppsExtensions/NotificationContent/**",
+        "HanlinMiniAppsExtensions/CameraCapture/**",
+        "HanlinMiniAppsExtensions/Widgets/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests"
+      ],
+      "consumers": [
+        "platform_contracts",
+        "project_packaging"
+      ]
+    }
+  },
+  "validation_groups": {
+    "runtime_tooling_full_acceptance": {
+      "description": "Run cohesive Runtime, package, Host Services, Mini App, Agent, and UI simulator acceptance with consolidated reporting",
+      "job": "simulator",
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_runtime_tooling_full_acceptance": true
+      }
+    },
+    "unified_host_services": {
+      "description": "Unified Host Services layer tests",
+      "job": "simulator",
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_unit": true,
+        "simulator_unit_filter": "AI_HLYTests/HanlinUnifiedHostServicesTests,AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests,AI_HLYTests/HanlinUnifiedHostServicesE2ETests"
+      }
+    },
+    "ci_router": {
+      "description": "Execute CI router and cache input normalization unit tests",
+      "job": "phase1",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_ci_router": true,
+        "run_phase1": true
+      }
+    },
+    "scripting_reference": {
+      "description": "Verify Scripting baseline integrity, inventory, schemas, and JS tests",
+      "job": "phase1",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_scripting_reference": true,
+        "run_phase1": true
+      }
+    },
+    "scripting_compiler": {
+      "description": "Verify TypeScript 7.0.2 Scripting compiler and production acceptance",
+      "job": "phase1",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_scripting_compiler": true,
+        "run_phase1": true
+      }
+    },
+    "platform_contracts": {
+      "description": "Resolve, build, and test HanlinPlatform Swift package contracts",
+      "job": "phase1",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_platform_contracts": true,
+        "run_phase1": true
+      }
+    },
+    "quickjs": {
+      "description": "QuickJS engine validation and downstream session tests",
+      "job": "simulator",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_unit": true,
+        "simulator_unit_filter": "AI_HLYTests/HanlinQuickJSEngineTests"
+      }
+    },
+    "nativescript_dependencies": {
+      "description": "Prepare, preflight, and lock NativeScript iOS dependencies",
+      "job": "phase1",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_nativescript_dependencies": true
+      }
+    },
+    "nativescript_runtime": {
+      "description": "Compile HanlinNativeScriptRuntime package for simulator and device",
+      "job": "phase1",
+      "prerequisites": [
+        "nativescript_dependencies"
+      ],
+      "workflow_outputs": {
+        "run_nativescript_runtime": true,
+        "run_phase1": true
+      }
+    },
+    "runtimecore_bundle": {
+      "description": "Run split RuntimeCore bundle verification and assembly workflow",
+      "job": "runtime_bundle",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_runtimecore_bundle": true
+      }
+    },
+    "runtimecore_host": {
+      "description": "Package RuntimeCore host resources, preflight, and link-closure regression",
+      "job": "phase1",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_runtimecore_host": true
+      }
+    },
+    "python_runtime": {
+      "description": "Verify Python runtime slices and Shell acceptance",
+      "job": "simulator",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_shell_acceptance": true
+      }
+    },
+    "node_runtime": {
+      "description": "Verify Node/V8 slices and MCP acceptance",
+      "job": "simulator",
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_mcp_acceptance": true
+      }
+    },
+    "ios_system": {
+      "description": "Verify IOSSystemLite commands and Shell acceptance",
+      "job": "simulator",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_shell_acceptance": true
+      }
+    },
+    "app_unit_tests": {
+      "description": "Run downstream unit tests on iPad Simulator",
+      "job": "simulator",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_unit": true
+      }
+    },
+    "simulator_targeted_ui": {
+      "description": "Run NativeScript production UI E2E test suite on iPad Simulator",
+      "job": "simulator",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_targeted_ui": true
+      }
+    },
+    "simulator_scripting_acceptance": {
+      "description": "Run Hanlin Scripting acceptance tests on iPad Simulator",
+      "job": "simulator",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_scripting_acceptance": true
+      }
+    },
+    "simulator_shell_acceptance": {
+      "description": "Launch app and verify Shell runtime acceptance & canonical shadow",
+      "job": "simulator",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_shell_acceptance": true
+      }
+    },
+    "simulator_mcp_acceptance": {
+      "description": "Launch app and verify MCP runtime acceptance & canonical shadow",
+      "job": "simulator",
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_mcp_acceptance": true
+      }
+    },
+    "simulator_smoke_launch": {
+      "description": "Perform basic fast app launch smoke check on iPad Simulator",
+      "job": "simulator",
+      "prerequisites": [],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_smoke_launch": true
+      }
+    },
+    "simulator_nativescript_poc": {
+      "description": "Launch and verify post-install NativeScript POC on iPad Simulator",
+      "job": "simulator",
+      "prerequisites": [
+        "nativescript_dependencies"
+      ],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_nativescript_poc": true
+      }
+    },
+    "device_build": {
+      "description": "Build arm64 release application archive for iOS device",
+      "job": "device_build",
+      "prerequisites": [
+        "nativescript_dependencies"
+      ],
+      "workflow_outputs": {
+        "run_device_build": true
+      }
+    },
+    "performance_regression": {
+      "description": "Execute iPad performance regression suite (unit and UI benchmarks)",
+      "job": "simulator",
+      "prerequisites": [
+        "nativescript_dependencies",
+        "runtimecore_host"
+      ],
+      "workflow_outputs": {
+        "run_simulator_job": true,
+        "run_simulator_unit": true,
+        "simulator_unit_filter": "AI_HLYTests/HanlinRuntimePerformanceTests",
+        "run_simulator_targeted_ui": true,
+        "simulator_ui_filter": "AI_HLYUITests/HanlinUIPerformanceUITests",
+        "stage_scriptui_fixtures": true
+      }
+    },
+    "ipa_packaging": {
+      "description": "Package unsigned IPA, validate dyld closure and system resources",
+      "job": "device_build",
+      "prerequisites": [
+        "device_build"
+      ],
+      "workflow_outputs": {
+        "run_device_build": true,
+        "run_ipa_packaging": true
+      }
+    }
+  },
+  "expensive_groups_for_summary": [
+    {
+      "name": "Phase 1 platform contracts compilation",
+      "validation_group": "platform_contracts"
+    },
+    {
+      "name": "Phase 1 Scripting baseline verification",
+      "validation_group": "scripting_reference"
+    },
+    {
+      "name": "Phase 1 Scripting compiler acceptance",
+      "validation_group": "scripting_compiler"
+    },
+    {
+      "name": "Phase 1 NativeScript runtime package",
+      "validation_group": "nativescript_runtime"
+    },
+    {
+      "name": "RuntimeCore bundle pipeline",
+      "validation_group": "runtimecore_bundle"
+    },
+    {
+      "name": "iPad Simulator downstream unit tests",
+      "validation_group": "app_unit_tests"
+    },
+    {
+      "name": "iPad Simulator Scripting acceptance",
+      "validation_group": "simulator_scripting_acceptance"
+    },
+    {
+      "name": "iPad Simulator NativeScript UI E2E",
+      "validation_group": "simulator_targeted_ui"
+    },
+    {
+      "name": "iPad Simulator Shell runtime acceptance",
+      "validation_group": "simulator_shell_acceptance"
+    },
+    {
+      "name": "iPad Simulator MCP runtime acceptance",
+      "validation_group": "simulator_mcp_acceptance"
+    },
+    {
+      "name": "Device Release IPA build & packaging",
+      "validation_group": "device_build"
+    }
+  ]
+}

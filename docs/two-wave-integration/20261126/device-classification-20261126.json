@@ -1,0 +1,13 @@
+{
+  "observed_at": null,
+  "classified_at": "2026-11-26T13:32:18.405084+00:00",
+  "source_path": "/Users/m1/builds/hanlin-two-wave-root-20261126/physical-device-list-20261126.json",
+  "source_sha256": "4af5be7ddb27071a865bca1df6bccb42efa69f6df929e61a0293c4df968bfad6",
+  "known_entry_count": 17,
+  "reality_counts": {
+    "simulated": 17
+  },
+  "physical_device_count": 0,
+  "physical_gate": "NOT_RUN_NO_PHYSICAL_DEVICE_OBSERVED",
+  "note": "devicectl includes CoreSimulator entries; connected simulated devices are not physical hardware."
+}

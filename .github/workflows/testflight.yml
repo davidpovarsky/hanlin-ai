@@ -1,0 +1,886 @@
+name: Build Signed ChavrusaChat IPA and Upload to TestFlight
+
+on:
+  workflow_call:
+    inputs:
+      upload_to_testflight:
+        required: true
+        type: boolean
+      skip_simulator_tests:
+        required: false
+        default: false
+        type: boolean
+      existing_build_number:
+        required: false
+        default: ''
+        type: string
+      audience_source_build:
+        required: false
+        default: ''
+        type: string
+      runtime_bundle_artifact_run_id:
+        required: false
+        default: ''
+        type: string
+  workflow_dispatch:
+    inputs:
+      upload_to_testflight:
+        description: Validate and upload the exported IPA to App Store Connect
+        required: true
+        type: boolean
+        default: true
+      skip_simulator_tests:
+        description: Direct TestFlight device preview without simulator UI tests (explicit opt-in)
+        required: false
+        type: boolean
+        default: false
+      existing_build_number:
+        description: Distribute an existing uploaded build without rebuilding
+        required: false
+        default: ''
+        type: string
+      audience_source_build:
+        description: Previous build whose internal groups should receive the uploaded build
+        required: false
+        default: ''
+        type: string
+      runtime_bundle_artifact_run_id:
+        description: Completed verified Runtime candidate to include without release publication
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: chavrusachat-testflight-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  PROJECT_PATH: AI_HLY.xcodeproj
+  SCHEME: AI_HLY
+  TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+  APP_BUNDLE_ID: com.itorah.chavrusachat
+  SHARE_BUNDLE_ID: com.itorah.chavrusachat.share
+  WIDGETS_BUNDLE_ID: com.itorah.chavrusachat.widgets
+  TRANSLATION_BUNDLE_ID: com.itorah.chavrusachat.translation-provider
+  NOTIFICATION_BUNDLE_ID: com.itorah.chavrusachat.notification-service
+  PRIVATE_APP_GROUP: group.com.itorah.chavrusachat
+  SHARED_APP_GROUP: group.com.itorah.shared
+  ICLOUD_CONTAINER: iCloud.com.itorah.chavrusachat
+  BUILD_DIR: ${{ github.workspace }}/build/signed-ios
+
+jobs:
+  build-sign-and-upload:
+    if: ${{ inputs.existing_build_number == '' }}
+    runs-on: xcode-27
+    timeout-minutes: 120
+
+    steps:
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Checkout exact source
+        uses: actions/checkout@v7.0.1
+        with:
+          clean: true
+          fetch-depth: 1
+
+      - name: Validate chat status and permission translations
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 Scripts/CI/validate_chat_localization.py
+
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Select Xcode 27 and verify iOS 27 SDK
+        shell: bash
+        run: |
+          set -euo pipefail
+          selected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -print | grep -E '/Xcode_27([._][0-9]+)*\.app$' | sort -V | tail -1)"
+          test -n "$selected_xcode"
+          export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
+          echo "DEVELOPER_DIR=$DEVELOPER_DIR" >> "$GITHUB_ENV"
+          sw_vers
+          xcodebuild -version
+          sdk_version="$(xcrun --sdk iphoneos --show-sdk-version)"
+          echo "iOS SDK: $sdk_version"
+          case "$sdk_version" in 27.*) ;; *) echo "ERROR: iOS 27 SDK is required"; exit 1;; esac
+
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Set up pinned Node
+        uses: actions/setup-node@v7.1.0
+        with:
+          node-version: 24.5.0
+
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Compute build number and prepare folders
+        shell: bash
+        run: |
+          set -euo pipefail
+          build_number=$((GITHUB_RUN_NUMBER * 100 + GITHUB_RUN_ATTEMPT))
+          echo "BUILD_NUMBER=$build_number" >> "$GITHUB_ENV"
+          mkdir -p "$BUILD_DIR/logs"
+          echo "Using CFBundleVersion $build_number"
+
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Freeze required actual app UI contract before release work
+        if: ${{ inputs.upload_to_testflight && !inputs.skip_simulator_tests }}
+        env:
+          UI_ACCEPTANCE_EVIDENCE: ${{ env.BUILD_DIR }}/ui-acceptance
+        run: |
+          python3 Scripts/CI/SimulatorAcceptance/gate.py plan \
+            --evidence "$UI_ACCEPTANCE_EVIDENCE" --build-number "$BUILD_NUMBER"
+
+      - name: Record explicit fast TestFlight device preview
+        if: ${{ inputs.skip_simulator_tests }}
+        run: |
+          echo 'Simulator UI tests and dependent UI proof gates skipped by operator request; not a validated full release.' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Resolve current original MiniApp sources and exact release graph
+        shell: bash
+        run: |
+          set -euo pipefail
+          trap 'cp build/acceptance/miniapp-upstreams/resolution.json "$BUILD_DIR/logs/miniapp-upstream-resolution.json" 2>/dev/null || true; git diff --binary > "$BUILD_DIR/logs/miniapp-upstream-inputs.patch"' EXIT
+          node Scripts/MiniApps/resolve-upstreams.mjs --apply --cache="$RUNNER_TEMP/hanlin-miniapp-upstreams" 2>&1 | tee "$BUILD_DIR/logs/miniapp-upstream-resolution.log"
+          cp build/acceptance/miniapp-upstreams/resolution.json "$BUILD_DIR/logs/miniapp-upstream-resolution.json"
+          git diff --binary > "$BUILD_DIR/logs/miniapp-upstream-inputs.patch"
+      - name: Prepare application build inputs
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUNTIME_CORE_ARTIFACT_RUN_ID: ${{ inputs.runtime_bundle_artifact_run_id }}
+        run: |
+          set -euo pipefail
+          cat > Config.xcconfig <<'EOF'
+          // Generated by GitHub Actions. Do not commit secrets here.
+          HANLIN_API_KEY =
+          HANLIN_OPEN_API_KEY =
+          SWIFT_ENABLE_EXPLICIT_MODULES = NO
+          EOF
+          node Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts
+          npm run prepare:ios-dependencies --prefix Scripts/NativeScript
+          node Scripts/NativeScript/prepare-fixture.mjs
+          npm run preflight:ios-dependencies --prefix Scripts/NativeScript
+          node Scripts/MiniApps/install-tooling.mjs --engine=expo
+          node Scripts/Expo/prepare-ios-dependencies.mjs
+          node Scripts/Expo/prepare-types.mjs
+          node Scripts/Expo/build-probe.mjs
+          bash Scripts/Runtime/prepare-runtime-core.sh
+          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/ScriptingCompiler
+          npm ci --ignore-scripts --no-audit --no-fund --prefix AI_HLY/Downstream/RuntimeCore/Node/Host
+          npm run test:production --prefix Scripts/ScriptingCompiler
+          rm -rf AI_HLY/Downstream/RuntimeCore/Node/Host/node_modules
+          bash Scripts/Runtime/prepare-runtime-host.sh
+          cp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip
+          bash Scripts/Runtime/preflight-runtime-core.sh
+
+      - name: Live Activity · refresh
+        if: ${{ inputs.upload_to_testflight }}
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Restore App Store Connect API key
+        if: ${{ inputs.upload_to_testflight }}
+        shell: bash
+        env:
+          ASC_KEY_P8_B64: ${{ secrets.ASC_KEY_P8 }}
+          ASC_KEY_ID_VALUE: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID_VALUE: ${{ secrets.ASC_ISSUER_ID }}
+        run: |
+          set -euo pipefail
+          for required in ASC_KEY_P8_B64 ASC_KEY_ID_VALUE ASC_ISSUER_ID_VALUE; do
+            test -n "${!required:-}" || { echo "::error::Missing signing secret $required"; exit 1; }
+          done
+          mkdir -p "$HOME/.appstoreconnect/private_keys" "$HOME/.private_keys"
+          key_path="$HOME/.appstoreconnect/private_keys/AuthKey_${ASC_KEY_ID_VALUE}.p8"
+          printf '%s' "$ASC_KEY_P8_B64" | base64 --decode > "$key_path"
+          cp "$key_path" "$HOME/.private_keys/AuthKey_${ASC_KEY_ID_VALUE}.p8"
+          chmod 600 "$key_path" "$HOME/.private_keys/AuthKey_${ASC_KEY_ID_VALUE}.p8"
+          echo "ASC_KEY_ID=$ASC_KEY_ID_VALUE" >> "$GITHUB_ENV"
+          echo "ASC_ISSUER_ID=$ASC_ISSUER_ID_VALUE" >> "$GITHUB_ENV"
+          echo "ASC_KEY_PATH=$key_path" >> "$GITHUB_ENV"
+
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Obtain a main distribution profile with Extended Virtual Addressing
+        if: ${{ inputs.upload_to_testflight && inputs.skip_simulator_tests }}
+        shell: bash
+        env:
+          ASC_KEY_P8_B64: ${{ secrets.ASC_KEY_P8 }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_CERTIFICATE_P12_B64: ${{ secrets.APPLE_CERTIFICATE_P12_B64 }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/apple-signing-venv"
+          "$RUNNER_TEMP/apple-signing-venv/bin/pip" install --quiet 'PyJWT[crypto]==2.10.1'
+          "$RUNNER_TEMP/apple-signing-venv/bin/python" Scripts/CI/AppleSigning/reconcile_main_profile.py --output "$RUNNER_TEMP/hanlin-main-extended-va.mobileprovision"
+
+      - name: Import distribution certificate and provisioning profiles
+        shell: bash
+        env:
+          CERTIFICATE_B64: ${{ secrets.APPLE_CERTIFICATE_P12_B64 }}
+          CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          MAIN_PROFILE_B64: ${{ secrets.APPLE_MAIN_PROVISIONING_PROFILE_B64 }}
+          SHARE_PROFILE_B64: ${{ secrets.APPLE_SHARE_PROVISIONING_PROFILE_B64 }}
+          WIDGETS_PROFILE_B64: ${{ secrets.APPLE_WIDGETS_PROVISIONING_PROFILE_B64 }}
+          TRANSLATION_PROFILE_B64: ${{ secrets.APPLE_TRANSLATION_PROVISIONING_PROFILE_B64 }}
+          NOTIFICATION_PROFILE_B64: ${{ secrets.APPLE_NOTIFICATION_SERVICE_PROVISIONING_PROFILE_B64 }}
+        run: |
+          set -Eeuo pipefail
+          for required in TEAM_ID CERTIFICATE_B64 CERTIFICATE_PASSWORD MAIN_PROFILE_B64 SHARE_PROFILE_B64 WIDGETS_PROFILE_B64 TRANSLATION_PROFILE_B64 NOTIFICATION_PROFILE_B64; do
+            test -n "${!required:-}" || { echo "::error::Missing signing secret $required"; exit 1; }
+          done
+
+          keychain="$RUNNER_TEMP/chavrusachat-signing.keychain-db"
+          keychain_password="$(openssl rand -hex 24)"
+          certificate="$RUNNER_TEMP/apple-distribution.p12"
+          mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
+          printf '%s' "$CERTIFICATE_B64" | base64 --decode > "$certificate"
+          security create-keychain -p "$keychain_password" "$keychain"
+          security set-keychain-settings -lut 21600 "$keychain"
+          security unlock-keychain -p "$keychain_password" "$keychain"
+          security import "$certificate" -P "$CERTIFICATE_PASSWORD" -A -f pkcs12 -k "$keychain"
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$keychain_password" "$keychain"
+          security list-keychains -d user -s "$keychain"
+          security default-keychain -d user -s "$keychain"
+          security find-identity -v -p codesigning "$keychain" | grep 'Apple Distribution'
+
+          install_profile() {
+            local role="$1" bundle_id="$2" encoded="$3" env_prefix="$4"
+            local profile="$RUNNER_TEMP/${role}.mobileprovision"
+            local plist="$BUILD_DIR/logs/${role}-profile.plist"
+            if [[ "$role" == main && -n "${HANLIN_GENERATED_MAIN_PROFILE_PATH:-}" ]]; then
+              cp "$HANLIN_GENERATED_MAIN_PROFILE_PATH" "$profile"
+            else
+              printf '%s' "$encoded" | base64 --decode > "$profile"
+            fi
+            security cms -D -i "$profile" > "$plist"
+            local uuid name team app_identifier get_task_allow groups
+            uuid=$(/usr/libexec/PlistBuddy -c 'Print :UUID' "$plist")
+            name=$(/usr/libexec/PlistBuddy -c 'Print :Name' "$plist")
+            team=$(/usr/libexec/PlistBuddy -c 'Print :TeamIdentifier:0' "$plist")
+            app_identifier=$(/usr/libexec/PlistBuddy -c 'Print :Entitlements:application-identifier' "$plist")
+            get_task_allow=$(/usr/libexec/PlistBuddy -c 'Print :Entitlements:get-task-allow' "$plist")
+            test "$team" = "$TEAM_ID"
+            test "$app_identifier" = "$TEAM_ID.$bundle_id"
+            test "$get_task_allow" = false
+            ! /usr/libexec/PlistBuddy -c 'Print :ProvisionedDevices' "$plist" >/dev/null 2>&1
+            ! /usr/libexec/PlistBuddy -c 'Print :ProvisionsAllDevices' "$plist" >/dev/null 2>&1
+            groups=$(/usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.security.application-groups' "$plist")
+            grep -Fq "$PRIVATE_APP_GROUP" <<< "$groups"
+            grep -Fq "$SHARED_APP_GROUP" <<< "$groups"
+            if [ "$bundle_id" = "$APP_BUNDLE_ID" ]; then
+              local containers services
+              containers=$(/usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.developer.icloud-container-identifiers' "$plist")
+              services=$(/usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.developer.icloud-services' "$plist")
+              grep -Fq "$ICLOUD_CONTAINER" <<< "$containers"
+              if [ "$services" != "*" ]; then
+                grep -Fq CloudDocuments <<< "$services"
+                grep -Fq CloudKit <<< "$services"
+              fi
+              test "$(/usr/libexec/PlistBuddy -c 'Print :Entitlements:aps-environment' "$plist")" = production
+              python3 Scripts/CI/verify_runtime_memory_entitlements.py --profile "$plist"
+            fi
+            cp "$profile" "$HOME/Library/MobileDevice/Provisioning Profiles/$uuid.mobileprovision"
+            echo "${env_prefix}_PROFILE_SPECIFIER=$name" >> "$GITHUB_ENV"
+            echo "${env_prefix}_PROFILE_UUID=$uuid" >> "$GITHUB_ENV"
+            echo "Installed $role App Store profile ($uuid)"
+          }
+
+          install_profile main "$APP_BUNDLE_ID" "$MAIN_PROFILE_B64" MAIN
+          install_profile share "$SHARE_BUNDLE_ID" "$SHARE_PROFILE_B64" SHARE
+          install_profile widgets "$WIDGETS_BUNDLE_ID" "$WIDGETS_PROFILE_B64" WIDGETS
+          install_profile translation "$TRANSLATION_BUNDLE_ID" "$TRANSLATION_PROFILE_B64" TRANSLATION
+          install_profile notification "$NOTIFICATION_BUNDLE_ID" "$NOTIFICATION_PROFILE_B64" NOTIFICATION
+          echo "SIGNING_KEYCHAIN=$keychain" >> "$GITHUB_ENV"
+
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Bind regenerated main App Store profile to Release target
+        if: ${{ inputs.upload_to_testflight && inputs.skip_simulator_tests }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          profile_name=$(/usr/libexec/PlistBuddy -c 'Print :Name' "$BUILD_DIR/logs/main-profile.plist")
+          python3 - "$PROJECT_PATH/project.pbxproj" "$profile_name" <<'PY'
+          from pathlib import Path
+          import sys
+          source = Path(sys.argv[1])
+          name = sys.argv[2]
+          old = 'PROVISIONING_PROFILE_SPECIFIER = "ChavrusaChat App Store";'
+          body = source.read_text()
+          if body.count(old) != 1 or '"' in name or '\\' in name:
+              raise SystemExit("Cannot safely bind generated main profile in Xcode project")
+          updated = body.replace(old, 'PROVISIONING_PROFILE_SPECIFIER = "' + name + '";')
+          source.write_text(updated)
+          print("Mapped original main Release target to fresh Apple profile")
+          PY
+          echo "Bound Apple-issued Extended VA profile to main Release target; other targets unchanged." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Resolve package dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in 1 2 3 4; do
+            if xcodebuild -project "$PROJECT_PATH" -scheme "$SCHEME" -resolvePackageDependencies \
+              -clonedSourcePackagesDirPath "$BUILD_DIR/SourcePackages" \
+              -skipPackagePluginValidation -skipMacroValidation; then
+              break
+            fi
+            if [ "$attempt" -eq 4 ]; then
+              echo "::error::Swift package resolution failed after $attempt attempts"
+              exit 1
+            fi
+            delay=$((attempt * 20))
+            echo "Swift package resolution attempt $attempt failed; retrying in ${delay}s"
+            sleep "$delay"
+          done
+
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Normalize third-party App Store binary slices
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          framework=$(find "$BUILD_DIR/SourcePackages/artifacts" -type d \
+            -path '*/libssh2.xcframework/ios-arm64_arm64e/libssh2.framework' -print -quit)
+          test -d "$framework"
+          binary="$framework/libssh2"
+          test -f "$binary"
+          archs=$(lipo -archs "$binary")
+          grep -qw arm64 <<< "$archs"
+          grep -qw arm64e <<< "$archs"
+          stripped="$RUNNER_TEMP/libssh2-arm64"
+          lipo -remove arm64e -output "$stripped" "$binary"
+          mv "$stripped" "$binary"
+          rm -rf "$framework/_CodeSignature"
+          plutil -replace MinimumOSVersion -string 26.0 "$framework/Info.plist"
+          test "$(lipo -archs "$binary")" = arm64
+          test "$(plutil -extract MinimumOSVersion raw "$framework/Info.plist")" = 26.0
+
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Prepare the existing declaration-only metadata tool for app UI
+        if: ${{ inputs.upload_to_testflight }}
+        uses: ./.github/actions/prepare-nativescript-metadata-tool
+
+      - name: Execute mandatory actual iPhone and iPad 27 Release UI acceptance
+        timeout-minutes: 75
+        if: ${{ inputs.upload_to_testflight && !inputs.skip_simulator_tests }}
+        env:
+          UI_ACCEPTANCE_EVIDENCE: ${{ env.BUILD_DIR }}/ui-acceptance
+        run: python3 Scripts/CI/SimulatorAcceptance/run_app.py
+
+      - name: Retain UI execution immediately before archive or upload work
+        if: ${{ always() && inputs.upload_to_testflight && !inputs.skip_simulator_tests }}
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: Hanlin-App-UI-execution-${{ env.BUILD_NUMBER }}
+          path: ${{ env.BUILD_DIR }}/ui-acceptance
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Verify signing settings for every distributed target
+        shell: bash
+        run: |
+          set -euo pipefail
+          check_target() {
+            local target="$1" bundle_id="$2" profile="$3" entitlements="$4"
+            local log="$BUILD_DIR/logs/${target}-settings.log"
+            xcodebuild -project "$PROJECT_PATH" -target "$target" -configuration Release \
+              -destination 'generic/platform=iOS' CURRENT_PROJECT_VERSION="$BUILD_NUMBER" \
+              -showBuildSettings | tee "$log"
+            grep -E "^[[:space:]]*PRODUCT_BUNDLE_IDENTIFIER = $bundle_id$" "$log"
+            grep -E "^[[:space:]]*DEVELOPMENT_TEAM = $TEAM_ID$" "$log"
+            grep -F "PROVISIONING_PROFILE_SPECIFIER = $profile" "$log"
+            grep -F "CODE_SIGN_ENTITLEMENTS = $entitlements" "$log"
+          }
+          check_target HanlinApp "$APP_BUNDLE_ID" "$MAIN_PROFILE_SPECIFIER" AI_HLY/AI_HLY.entitlements
+          check_target ChavrusaChatShare "$SHARE_BUNDLE_ID" "$SHARE_PROFILE_SPECIFIER" ChavrusaChatShare/ChavrusaChatShare.entitlements
+          check_target HanlinScriptingWidgets "$WIDGETS_BUNDLE_ID" "$WIDGETS_PROFILE_SPECIFIER" HanlinScriptingWidgets/HanlinScriptingWidgets.entitlements
+          check_target ChavrusaChatTranslationProvider "$TRANSLATION_BUNDLE_ID" "$TRANSLATION_PROFILE_SPECIFIER" ChavrusaChatTranslationProvider/ChavrusaChatTranslationProvider.entitlements
+          check_target ChavrusaChatNotificationService "$NOTIFICATION_BUNDLE_ID" "$NOTIFICATION_PROFILE_SPECIFIER" ChavrusaChatNotificationService/ChavrusaChatNotificationService.entitlements
+
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Archive signed Release app
+        shell: bash
+        run: |
+          set -o pipefail
+          xcodebuild archive \
+            -project "$PROJECT_PATH" \
+            -scheme "$SCHEME" \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$BUILD_DIR/ChavrusaChat.xcarchive" \
+            -derivedDataPath "$BUILD_DIR/DerivedData" \
+            -clonedSourcePackagesDirPath "$BUILD_DIR/SourcePackages" \
+            -skipPackagePluginValidation -skipMacroValidation \
+            CURRENT_PROJECT_VERSION="$BUILD_NUMBER" \
+            | tee "$BUILD_DIR/logs/archive.log"
+
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Export App Store Connect IPA
+        shell: bash
+        run: |
+          set -euo pipefail
+          export_options="$RUNNER_TEMP/ExportOptions.plist"
+          cat > "$export_options" <<PLIST
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0"><dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>destination</key><string>export</string>
+            <key>signingStyle</key><string>manual</string>
+            <key>signingCertificate</key><string>Apple Distribution</string>
+            <key>teamID</key><string>$TEAM_ID</string>
+            <key>manageAppVersionAndBuildNumber</key><false/>
+            <key>stripSwiftSymbols</key><true/>
+            <key>uploadSymbols</key><true/>
+            <key>provisioningProfiles</key><dict>
+              <key>$APP_BUNDLE_ID</key><string>$MAIN_PROFILE_SPECIFIER</string>
+              <key>$SHARE_BUNDLE_ID</key><string>$SHARE_PROFILE_SPECIFIER</string>
+              <key>$WIDGETS_BUNDLE_ID</key><string>$WIDGETS_PROFILE_SPECIFIER</string>
+              <key>$TRANSLATION_BUNDLE_ID</key><string>$TRANSLATION_PROFILE_SPECIFIER</string>
+              <key>$NOTIFICATION_BUNDLE_ID</key><string>$NOTIFICATION_PROFILE_SPECIFIER</string>
+            </dict>
+          </dict></plist>
+          PLIST
+          plutil -lint "$export_options"
+          mkdir -p "$BUILD_DIR/export"
+          xcodebuild -exportArchive \
+            -archivePath "$BUILD_DIR/ChavrusaChat.xcarchive" \
+            -exportPath "$BUILD_DIR/export" \
+            -exportOptionsPlist "$export_options" \
+            | tee "$BUILD_DIR/logs/export.log"
+          raw_ipa=$(find "$BUILD_DIR/export" -maxdepth 1 -type f -name '*.ipa' -print -quit)
+          test -s "$raw_ipa"
+          final_ipa="$BUILD_DIR/export/ChavrusaChat-$BUILD_NUMBER.ipa"
+          mv "$raw_ipa" "$final_ipa"
+          echo "IPA_PATH=$final_ipa" >> "$GITHUB_ENV"
+          shasum -a 256 "$final_ipa" | tee "$final_ipa.sha256"
+
+      - name: Live Activity · refresh
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Verify archive, signatures, profiles, and entitlements
+        shell: bash
+        env:
+          RUNTIME_CORE_ARTIFACT_RUN_ID: ${{ inputs.runtime_bundle_artifact_run_id }}
+        run: |
+          set -Eeuo pipefail
+          verify_dir="$RUNNER_TEMP/verify-ipa"
+          ditto -x -k "$IPA_PATH" "$verify_dir"
+          app=$(find "$verify_dir/Payload" -maxdepth 1 -type d -name '*.app' -print -quit)
+          test -d "$app"
+          python3 Scripts/CI/validate_chat_localization.py --app "$app" --output "$BUILD_DIR/logs/chat-localization-packaged.json"
+          python3 Scripts/SDK/verify_bundle_resources.py --app "$app" --module AI_Hanlin \
+            --json-output "$BUILD_DIR/logs/sdk-bundle-resources.json"
+          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$app/Info.plist")" = "$APP_BUNDLE_ID"
+          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleDisplayName' "$app/Info.plist")" = "Hanlin AI"
+          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$app/Info.plist")" = "$BUILD_NUMBER"
+
+          privacy_log="$BUILD_DIR/logs/main-privacy-purpose-strings.txt"
+          required_usage_descriptions=(
+            NSAlarmKitUsageDescription
+            NSCalendarsFullAccessUsageDescription
+            NSCameraUsageDescription
+            NSContactsUsageDescription
+            NSFaceIDUsageDescription
+            NSHealthClinicalHealthRecordsShareUsageDescription
+            NSHealthShareUsageDescription
+            NSHealthUpdateUsageDescription
+            NSLocationAlwaysAndWhenInUseUsageDescription
+            NSLocationWhenInUseUsageDescription
+            NSMicrophoneUsageDescription
+            NSPhotoLibraryAddUsageDescription
+            NSPhotoLibraryUsageDescription
+            NSRemindersFullAccessUsageDescription
+            NSSpeechRecognitionUsageDescription
+          )
+          : > "$privacy_log"
+          for key in "${required_usage_descriptions[@]}"; do
+            value=$(/usr/libexec/PlistBuddy -c "Print :$key" "$app/Info.plist" 2>/dev/null || true)
+            trimmed_value=$(printf '%s' "$value" | tr -d '[:space:]')
+            if [ -z "$trimmed_value" ]; then
+              echo "::error::Final IPA Info.plist is missing a non-empty $key"
+              exit 1
+            fi
+            printf '%s=%s\n' "$key" "$value" >> "$privacy_log"
+          done
+          echo "Verified ${#required_usage_descriptions[@]} non-empty privacy purpose strings in the final IPA"
+
+          codesign --verify --deep --strict --verbose=2 "$app"
+
+          verify_bundle() {
+            local bundle="$1" expected_id="$2" role="$3"
+            local entitlements="$BUILD_DIR/logs/${role}-signed-entitlements.plist"
+            local profile="$BUILD_DIR/logs/${role}-embedded-profile.plist"
+            codesign --display --entitlements - --xml "$bundle" > "$entitlements"
+            security cms -D -i "$bundle/embedded.mobileprovision" > "$profile"
+            test "$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.team-identifier' "$entitlements")" = "$TEAM_ID"
+            test "$(/usr/libexec/PlistBuddy -c 'Print :application-identifier' "$entitlements")" = "$TEAM_ID.$expected_id"
+            test "$(/usr/libexec/PlistBuddy -c 'Print :Entitlements:application-identifier' "$profile")" = "$TEAM_ID.$expected_id"
+            local groups
+            groups=$(/usr/libexec/PlistBuddy -c 'Print :com.apple.security.application-groups' "$entitlements")
+            grep -Fq "$PRIVATE_APP_GROUP" <<< "$groups"
+            grep -Fq "$SHARED_APP_GROUP" <<< "$groups"
+          }
+
+          verify_bundle "$app" "$APP_BUNDLE_ID" main
+          verify_extension() {
+            local role="$1" bundle_name="$2" bundle_id="$3" container="${4:-PlugIns}"
+            bundle="$app/$container/$bundle_name"
+            test -d "$bundle"
+            codesign --verify --strict --verbose=2 "$bundle"
+            verify_bundle "$bundle" "$bundle_id" "$role"
+            test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$bundle/Info.plist")" = "$BUILD_NUMBER"
+          }
+          verify_extension share ChavrusaChatShare.appex "$SHARE_BUNDLE_ID"
+          verify_extension widgets HanlinScriptingWidgets.appex "$WIDGETS_BUNDLE_ID"
+          verify_extension translation ChavrusaChatTranslationProvider.appex "$TRANSLATION_BUNDLE_ID" Extensions
+          verify_extension notification ChavrusaChatNotificationService.appex "$NOTIFICATION_BUNDLE_ID"
+
+          translation_info="$app/Extensions/ChavrusaChatTranslationProvider.appex/Info.plist"
+          test -n "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleDisplayName' "$translation_info")"
+          test "$(/usr/libexec/PlistBuddy -c 'Print :EXAppExtensionAttributes:EXExtensionPointIdentifier' "$translation_info")" = com.apple.public.translation-ui-provider
+          test "$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.translation-ui-provider.network-access' "$app/Info.plist")" = true
+          test ! -e "$app/PlugIns/ChavrusaChatTranslationProvider.appex"
+
+          find "$app/Frameworks" -mindepth 1 -maxdepth 1 -type d -name '*.framework' -print0 |
+            while IFS= read -r -d '' framework; do
+              info="$framework/Info.plist"
+              binary="$framework/$(basename "$framework" .framework)"
+              test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundlePackageType' "$info")" = FMWK
+              minimum=$(/usr/libexec/PlistBuddy -c 'Print :MinimumOSVersion' "$info")
+              [[ "$minimum" =~ ^[0-9]+(\.[0-9]+){0,2}$ ]]
+              archs=$(lipo -archs "$binary")
+              grep -qw arm64 <<< "$archs"
+              ! grep -Eqw 'arm64e|i386|x86_64' <<< "$archs"
+            done
+
+          # Signing changes binary bytes, but preserves the linked image UUID.
+          source_node="Vendor/NodeMobile/NodeMobile.xcframework/ios-arm64/NodeMobile.framework/NodeMobile"
+          packaged_node="$app/Frameworks/NodeMobile.framework/NodeMobile"
+          xcrun dwarfdump --uuid "$source_node" | awk '/^UUID:/ {print $2, $3}' > "$BUILD_DIR/logs/node-source-uuid.txt"
+          xcrun dwarfdump --uuid "$packaged_node" | awk '/^UUID:/ {print $2, $3}' > "$BUILD_DIR/logs/node-packaged-uuid.txt"
+          test -s "$BUILD_DIR/logs/node-source-uuid.txt"
+          cmp "$BUILD_DIR/logs/node-source-uuid.txt" "$BUILD_DIR/logs/node-packaged-uuid.txt"
+          python3 - "$app" <<'PY'
+          import hashlib, json, os, sys
+          from pathlib import Path
+          sys.path.insert(0, str(Path("Scripts/SDK").resolve()))
+          from verify_bundle_resources import module_bundle
+          app = Path(sys.argv[1])
+          resources = module_bundle(app, "AI_Hanlin")
+          expected = json.loads(Path("AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json").read_text())
+          packaged = json.loads((resources / "RuntimeManifest.json").read_text())
+          if packaged != expected:
+              raise SystemExit("Packaged Runtime manifest does not match the verified build input")
+          def sha256(path):
+              checksum = hashlib.sha256()
+              with path.open("rb") as stream:
+                  for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+                      checksum.update(chunk)
+              return checksum.hexdigest()
+          host_hash = sha256(Path("AI_HLY/RuntimeHostResources.zip"))
+          if sha256(resources / "RuntimeHostResources.zip") != host_hash:
+              raise SystemExit("Packaged Runtime Host archive does not match the verified build input")
+          lock = json.loads(Path("RuntimeDependencies.lock.json").read_text())
+          logs = Path(os.environ["BUILD_DIR"]) / "logs"
+          evidence = {
+              "sourceSHA": os.environ["GITHUB_SHA"],
+              "runtimeBundleArtifactRunID": os.environ["RUNTIME_CORE_ARTIFACT_RUN_ID"],
+              "runtimeBundleSha256": lock["runtimeBundle"]["sha256"],
+              "nodeXCFrameworkSha256": lock["node"]["xcframeworkSha256"],
+              "nodeImageUUIDs": (logs / "node-packaged-uuid.txt").read_text().splitlines(),
+              "runtimeHostArchiveSha256": host_hash,
+              "resourceBundle": str(resources.relative_to(app)),
+              "packagedManifestMatches": True,
+          }
+          (logs / "runtime-distribution.json").write_text(json.dumps(evidence, indent=2) + "\n")
+          print("Verified packaged Node image UUID and Runtime manifest")
+          PY
+
+          main_entitlements="$BUILD_DIR/logs/main-signed-entitlements.plist"
+          containers=$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.icloud-container-identifiers' "$main_entitlements")
+          services=$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.icloud-services' "$main_entitlements")
+          grep -Fq "$ICLOUD_CONTAINER" <<< "$containers"
+          grep -Fq CloudDocuments <<< "$services"
+          grep -Fq CloudKit <<< "$services"
+          test "$(/usr/libexec/PlistBuddy -c 'Print :aps-environment' "$main_entitlements")" = production
+          test "$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.siri' "$main_entitlements")" = true
+          test "$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.translation-app' "$main_entitlements")" = true
+          test "$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.weatherkit' "$main_entitlements")" = true
+          python3 Scripts/CI/verify_runtime_memory_entitlements.py \
+            --profile "$BUILD_DIR/logs/main-embedded-profile.plist" --signed "$main_entitlements" \
+            | tee "$BUILD_DIR/logs/runtime-memory-entitlements.json"
+          echo "Signed IPA verification passed for the app and all four extensions"
+
+      - name: Live Activity · refresh
+        if: ${{ inputs.upload_to_testflight }}
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Enforce UI proof bound to the exact signed candidate before upload
+        if: ${{ inputs.upload_to_testflight && !inputs.skip_simulator_tests }}
+        run: |
+          python3 Scripts/CI/SimulatorAcceptance/release_gate.py seal \
+            --evidence "$BUILD_DIR/ui-acceptance" --build-number "$BUILD_NUMBER" \
+            --ipa "$IPA_PATH" --run-id "$GITHUB_RUN_ID"
+
+      - name: Validate with App Store Connect
+        if: ${{ inputs.upload_to_testflight }}
+        run: xcrun altool --validate-app -f "$IPA_PATH" -t ios --apiKey "$ASC_KEY_ID" --apiIssuer "$ASC_ISSUER_ID"
+
+      - name: Live Activity · refresh
+        if: ${{ inputs.upload_to_testflight }}
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Upload to App Store Connect and TestFlight
+        if: ${{ inputs.upload_to_testflight }}
+        run: xcrun altool --upload-app -f "$IPA_PATH" -t ios --apiKey "$ASC_KEY_ID" --apiIssuer "$ASC_ISSUER_ID"
+
+      - name: Live Activity · refresh
+        if: ${{ inputs.upload_to_testflight }}
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Verify uploaded build appears in TestFlight
+        if: ${{ inputs.upload_to_testflight }}
+        shell: bash
+        env:
+          AUDIENCE_SOURCE: ${{ inputs.audience_source_build }}
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/asc-venv"
+          "$RUNNER_TEMP/asc-venv/bin/pip" install --quiet 'PyJWT[crypto]==2.10.1'
+          verify_args=("$BUILD_NUMBER")
+          if [[ -n "$AUDIENCE_SOURCE" ]]; then
+            verify_args+=(--reuse-internal-audience-from "$AUDIENCE_SOURCE")
+          fi
+          "$RUNNER_TEMP/asc-venv/bin/python" Scripts/CI/verify_testflight_build.py "${verify_args[@]}"
+
+      - name: Live Activity · refresh
+        if: always()
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Bind the uploaded App Store build identity to its UI proof
+        if: ${{ inputs.upload_to_testflight && !inputs.skip_simulator_tests }}
+        run: |
+          python3 Scripts/CI/SimulatorAcceptance/release_gate.py uploaded \
+            --evidence "$BUILD_DIR/ui-acceptance" --build-number "$BUILD_NUMBER" \
+            --readiness "$BUILD_DIR/logs/testflight-readiness.json"
+
+      - name: Retain mandatory app UI proof including blocked or failed execution
+        if: ${{ always() && inputs.upload_to_testflight && !inputs.skip_simulator_tests }}
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: Hanlin-App-UI-${{ env.BUILD_NUMBER }}
+          path: ${{ env.BUILD_DIR }}/ui-acceptance
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload signed IPA and verification logs
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: ChavrusaChat-signed-ipa-${{ env.BUILD_NUMBER }}
+          path: |
+            ${{ env.IPA_PATH }}
+            ${{ env.IPA_PATH }}.sha256
+            ${{ env.BUILD_DIR }}/ChavrusaChat.xcarchive/dSYMs
+            ${{ env.BUILD_DIR }}/logs
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Live Activity · refresh
+        if: always()
+        timeout-minutes: 1
+        uses: davidpovarsky/github-automation/live-refresh@main
+        continue-on-error: true
+        with:
+          event: refresh
+          device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
+          token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
+          github_token: ${{ github.token }}
+      - name: Remove temporary signing material
+        if: always()
+        shell: bash
+        run: |
+          if [ -n "${SIGNING_KEYCHAIN:-}" ]; then security delete-keychain "$SIGNING_KEYCHAIN" || true; fi
+          for uuid in "${MAIN_PROFILE_UUID:-}" "${SHARE_PROFILE_UUID:-}" "${WIDGETS_PROFILE_UUID:-}" "${TRANSLATION_PROFILE_UUID:-}" "${NOTIFICATION_PROFILE_UUID:-}"; do
+            if [ -n "$uuid" ]; then rm -f "$HOME/Library/MobileDevice/Provisioning Profiles/$uuid.mobileprovision"; fi
+          done
+          rm -f "${ASC_KEY_PATH:-$RUNNER_TEMP/missing-asc-key}"
+          rm -f "$HOME/.private_keys/AuthKey_${ASC_KEY_ID:-missing}.p8"
+
+  distribute-existing-build:
+    if: ${{ inputs.existing_build_number != '' && inputs.upload_to_testflight }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Enforce authenticated exact-build app UI proof before distribution
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EXISTING_BUILD: ${{ inputs.existing_build_number }}
+        run: |
+          python3 Scripts/CI/SimulatorAcceptance/release_gate.py existing \
+            --repository "$GITHUB_REPOSITORY" --build-number "$EXISTING_BUILD" \
+            --evidence build/testflight-audience/ui-acceptance
+
+      - name: Verify and reuse the previous build's internal audience
+        env:
+          EXISTING_BUILD: ${{ inputs.existing_build_number }}
+          AUDIENCE_SOURCE: ${{ inputs.audience_source_build }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8_B64: ${{ secrets.ASC_KEY_P8 }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$EXISTING_BUILD" =~ ^[0-9]+$ && "$AUDIENCE_SOURCE" =~ ^[0-9]+$ ]]
+          export ASC_KEY_PATH="$RUNNER_TEMP/testflight-audience-key.p8"
+          export BUILD_DIR="$GITHUB_WORKSPACE/build/testflight-audience"
+          trap 'rm -f "$ASC_KEY_PATH"' EXIT
+          umask 077
+          printf '%s' "$ASC_KEY_P8_B64" | base64 --decode > "$ASC_KEY_PATH"
+          unset ASC_KEY_P8_B64
+          python -m venv "$RUNNER_TEMP/asc-audience-venv"
+          "$RUNNER_TEMP/asc-audience-venv/bin/pip" install --quiet 'PyJWT[crypto]==2.10.1'
+          export HANLIN_EXPECTED_ASC_BUILD_ID="$(python3 -c 'import json; print(json.load(open("build/testflight-audience/ui-acceptance/existing-build-ui-gate.json"))["app_store_build_id"])')"
+          export HANLIN_EXPECTED_ASC_APP_ID="$(python3 -c 'import json; print(json.load(open("build/testflight-audience/ui-acceptance/existing-build-ui-gate.json"))["app_store_app_id"])')"
+          "$RUNNER_TEMP/asc-audience-venv/bin/python" Scripts/CI/verify_testflight_build.py \
+            "$EXISTING_BUILD" --reuse-internal-audience-from "$AUDIENCE_SOURCE"
+      - name: Retain non-secret distribution evidence
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: TestFlight-existing-build-readiness-${{ inputs.existing_build_number }}
+          path: |
+            build/testflight-audience/logs/testflight-readiness.json
+            build/testflight-audience/ui-acceptance
+          if-no-files-found: warn
+          retention-days: 30

@@ -1,0 +1,419 @@
+{
+  "run_id": 43742612086,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/43742612086",
+  "source_sha": "9c42cddd14f76741ce0af7045381c7a9a7db0f79",
+  "job_id": 132898870623,
+  "artifact_id": 14172853768,
+  "artifact_digest": "sha256:23f962a56890524d03e6cde65eadf360428197c067aa0c7ed69c2cb86c98cd20",
+  "source_hashes_authenticated": 245,
+  "classification": "EXECUTED_PASS",
+  "unique_actual_cases": 33,
+  "cases": [
+    {
+      "duration": "0.02s",
+      "durationInSeconds": 0.01971292495727539,
+      "name": "structuredReplayRejectsForeignScopeConflictsAndPartKindChanges()",
+      "nodeIdentifier": "ContextTests/structuredReplayRejectsForeignScopeConflictsAndPartKindChanges()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinHostContractsTests/ContextTests/structuredReplayRejectsForeignScopeConflictsAndPartKindChanges()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.005s",
+      "durationInSeconds": 0.004966020584106445,
+      "name": "decodedNamespacesCannotBypassValidation()",
+      "nodeIdentifier": "ContextTests/decodedNamespacesCannotBypassValidation()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinHostContractsTests/ContextTests/decodedNamespacesCannotBypassValidation()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0059s",
+      "durationInSeconds": 0.005903720855712891,
+      "name": "previousMetadataFormatRemainsReadableWithoutMutation()",
+      "nodeIdentifier": "ContextTests/previousMetadataFormatRemainsReadableWithoutMutation()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinHostContractsTests/ContextTests/previousMetadataFormatRemainsReadableWithoutMutation()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.001s",
+      "durationInSeconds": 0.001001119613647461,
+      "name": "persistedPresentationCarriesNoExecutionAuthority()",
+      "nodeIdentifier": "ContextTests/persistedPresentationCarriesNoExecutionAuthority()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinHostContractsTests/ContextTests/persistedPresentationCarriesNoExecutionAuthority()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0095s",
+      "durationInSeconds": 0.009533166885375977,
+      "name": "hostManagedMutationRequiresExplicitMinorVersionAndRoundTripsWithoutDowngrade()",
+      "nodeIdentifier": "ContextTests/hostManagedMutationRequiresExplicitMinorVersionAndRoundTripsWithoutDowngrade()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinHostContractsTests/ContextTests/hostManagedMutationRequiresExplicitMinorVersionAndRoundTripsWithoutDowngrade()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0039s",
+      "durationInSeconds": 0.0038652420043945312,
+      "name": "canonicalStructuredReplayKeepsExactBytesGlobalOrderAndDeduplicates()",
+      "nodeIdentifier": "ContextTests/canonicalStructuredReplayKeepsExactBytesGlobalOrderAndDeduplicates()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinHostContractsTests/ContextTests/canonicalStructuredReplayKeepsExactBytesGlobalOrderAndDeduplicates()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0055s",
+      "durationInSeconds": 0.005541801452636719,
+      "name": "dispatcherRetainsOriginalBytesAndNeverReplaysAChangedRoundedValue()",
+      "nodeIdentifier": "HostSchemaValidationTests/dispatcherRetainsOriginalBytesAndNeverReplaysAChangedRoundedValue()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HostSchemaValidationTests/dispatcherRetainsOriginalBytesAndNeverReplaysAChangedRoundedValue()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "2s",
+      "durationInSeconds": 2.974992036819458,
+      "name": "finiteInputDepthAndCancellationFailWithoutVerdict()",
+      "nodeIdentifier": "HostSchemaValidationTests/finiteInputDepthAndCancellationFailWithoutVerdict()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HostSchemaValidationTests/finiteInputDepthAndCancellationFailWithoutVerdict()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.9s",
+      "durationInSeconds": 0.9030857086181641,
+      "name": "localReferencesSiblingsAndLegalAnnotationsAreEvaluated()",
+      "nodeIdentifier": "HostSchemaValidationTests/localReferencesSiblingsAndLegalAnnotationsAreEvaluated()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HostSchemaValidationTests/localReferencesSiblingsAndLegalAnnotationsAreEvaluated()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0052s",
+      "durationInSeconds": 0.005192279815673828,
+      "name": "actualProviderProjectionAndExecutorMetadataTransformMustBeFaithful()",
+      "nodeIdentifier": "HostSchemaValidationTests/actualProviderProjectionAndExecutorMetadataTransformMustBeFaithful()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HostSchemaValidationTests/actualProviderProjectionAndExecutorMetadataTransformMustBeFaithful()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.88s",
+      "durationInSeconds": 0.883018970489502,
+      "name": "requiredTypeAndAdditionalAssertionsAdmitHebrewAndEmoji()",
+      "nodeIdentifier": "HostSchemaValidationTests/requiredTypeAndAdditionalAssertionsAdmitHebrewAndEmoji()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HostSchemaValidationTests/requiredTypeAndAdditionalAssertionsAdmitHebrewAndEmoji()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.39s",
+      "durationInSeconds": 0.39481401443481445,
+      "name": "offlineMissingResourcesAndUnsupportedRequiredVocabularyFailClosed()",
+      "nodeIdentifier": "HostSchemaValidationTests/offlineMissingResourcesAndUnsupportedRequiredVocabularyFailClosed()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HostSchemaValidationTests/offlineMissingResourcesAndUnsupportedRequiredVocabularyFailClosed()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "2s",
+      "durationInSeconds": 2.5805890560150146,
+      "name": "exactDecimalsDoNotMergeAtTwoTo53OrUseApproximateMultipleOf()",
+      "nodeIdentifier": "HostSchemaValidationTests/exactDecimalsDoNotMergeAtTwoTo53OrUseApproximateMultipleOf()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HostSchemaValidationTests/exactDecimalsDoNotMergeAtTwoTo53OrUseApproximateMultipleOf()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "2s",
+      "durationInSeconds": 2.0616800785064697,
+      "name": "distinctScalarStringsAndObjectKeysRemainDistinct()",
+      "nodeIdentifier": "HostSchemaValidationTests/distinctScalarStringsAndObjectKeysRemainDistinct()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HostSchemaValidationTests/distinctScalarStringsAndObjectKeysRemainDistinct()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "2s",
+      "durationInSeconds": 2.3713550567626953,
+      "name": "booleanSchemasAndUnicodeScalarLengthsAreStandard()",
+      "nodeIdentifier": "HostSchemaValidationTests/booleanSchemasAndUnicodeScalarLengthsAreStandard()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HostSchemaValidationTests/booleanSchemasAndUnicodeScalarLengthsAreStandard()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "2s",
+      "durationInSeconds": 2.2068538665771484,
+      "name": "invalidationDuringInteractionPreparationRejectsCapturedAdmission()",
+      "nodeIdentifier": "AgentSessionTests/invalidationDuringInteractionPreparationRejectsCapturedAdmission()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/invalidationDuringInteractionPreparationRejectsCapturedAdmission()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "2s",
+      "durationInSeconds": 2.2139101028442383,
+      "name": "existingEngineRunsHostToolOnceAndPersistsCorrelation()",
+      "nodeIdentifier": "AgentSessionTests/existingEngineRunsHostToolOnceAndPersistsCorrelation()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/existingEngineRunsHostToolOnceAndPersistsCorrelation()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0012s",
+      "durationInSeconds": 0.0012211799621582031,
+      "name": "generalMutationPolicyDenialAndPostDispatchUncertaintyStayDistinct()",
+      "nodeIdentifier": "AgentSessionTests/generalMutationPolicyDenialAndPostDispatchUncertaintyStayDistinct()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/generalMutationPolicyDenialAndPostDispatchUncertaintyStayDistinct()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0007s",
+      "durationInSeconds": 0.0006971359252929688,
+      "name": "generalMutationProgressAndReceiptKeepOriginalContextAndStep()",
+      "nodeIdentifier": "AgentSessionTests/generalMutationProgressAndReceiptKeepOriginalContextAndStep()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/generalMutationProgressAndReceiptKeepOriginalContextAndStep()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0011s",
+      "durationInSeconds": 0.0010962486267089844,
+      "name": "structuredChannelRejectsConflictingReplayOrderAndInvalidVersion()",
+      "nodeIdentifier": "AgentSessionTests/structuredChannelRejectsConflictingReplayOrderAndInvalidVersion()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/structuredChannelRejectsConflictingReplayOrderAndInvalidVersion()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "1s",
+      "durationInSeconds": 1.8379950523376465,
+      "name": "interactionAfterProducerEOFCreatesNewTurnAndReplayCannotRestoreAuthority()",
+      "nodeIdentifier": "AgentSessionTests/interactionAfterProducerEOFCreatesNewTurnAndReplayCannotRestoreAuthority()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/interactionAfterProducerEOFCreatesNewTurnAndReplayCannotRestoreAuthority()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.00047s",
+      "durationInSeconds": 0.0004723072052001953,
+      "name": "nativeSnapshotsEmitOnlyNewSuffixAndRejectRevision()",
+      "nodeIdentifier": "AgentSessionTests/nativeSnapshotsEmitOnlyNewSuffixAndRejectRevision()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/nativeSnapshotsEmitOnlyNewSuffixAndRejectRevision()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.19s",
+      "durationInSeconds": 0.190018892288208,
+      "name": "originalNumericInputSurvivesCanonicalEngineSessionAndScopedReceipt()",
+      "nodeIdentifier": "AgentSessionTests/originalNumericInputSurvivesCanonicalEngineSessionAndScopedReceipt()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/originalNumericInputSurvivesCanonicalEngineSessionAndScopedReceipt()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.17s",
+      "durationInSeconds": 0.16680216789245605,
+      "name": "unsupportedOriginalNumericInputNeverCreatesPendingOrHostEffect()",
+      "nodeIdentifier": "AgentSessionTests/unsupportedOriginalNumericInputNeverCreatesPendingOrHostEffect()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/unsupportedOriginalNumericInputNeverCreatesPendingOrHostEffect()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.14s",
+      "durationInSeconds": 0.14229679107666016,
+      "name": "invalidationDuringPostReceiptContextSuppressesCallbackButKeepsReceipt()",
+      "nodeIdentifier": "AgentSessionTests/invalidationDuringPostReceiptContextSuppressesCallbackButKeepsReceipt()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/invalidationDuringPostReceiptContextSuppressesCallbackButKeepsReceipt()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.14s",
+      "durationInSeconds": 0.13946199417114258,
+      "name": "invalidationDuringCapturedEventContextSuppressesDelivery()",
+      "nodeIdentifier": "AgentSessionTests/invalidationDuringCapturedEventContextSuppressesDelivery()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/invalidationDuringCapturedEventContextSuppressesDelivery()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.13s",
+      "durationInSeconds": 0.12976908683776855,
+      "name": "interruptedStructuredOutputIsDurableButCannotRestoreLiveAdmission()",
+      "nodeIdentifier": "AgentSessionTests/interruptedStructuredOutputIsDurableButCannotRestoreLiveAdmission()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/interruptedStructuredOutputIsDurableButCannotRestoreLiveAdmission()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.093s",
+      "durationInSeconds": 0.09292984008789062,
+      "name": "providerMustAdvertiseStructuredChannelAndProseCannotEnterIt()",
+      "nodeIdentifier": "AgentSessionTests/providerMustAdvertiseStructuredChannelAndProseCannotEnterIt()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/providerMustAdvertiseStructuredChannelAndProseCannotEnterIt()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.15s",
+      "durationInSeconds": 0.14952707290649414,
+      "name": "structuredChannelPreservesInterleavingAndDeduplicatesExactReplay()",
+      "nodeIdentifier": "AgentSessionTests/structuredChannelPreservesInterleavingAndDeduplicatesExactReplay()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/structuredChannelPreservesInterleavingAndDeduplicatesExactReplay()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0007s",
+      "durationInSeconds": 0.0006990432739257812,
+      "name": "generalMutationDuplicateAndChangedArgumentsCannotRedispatch()",
+      "nodeIdentifier": "AgentSessionTests/generalMutationDuplicateAndChangedArgumentsCannotRedispatch()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/generalMutationDuplicateAndChangedArgumentsCannotRedispatch()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.065s",
+      "durationInSeconds": 0.06531715393066406,
+      "name": "concurrentStartIsReservedBeforeInitialContextAwait()",
+      "nodeIdentifier": "AgentSessionTests/concurrentStartIsReservedBeforeInitialContextAwait()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/concurrentStartIsReservedBeforeInitialContextAwait()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.14s",
+      "durationInSeconds": 0.1400890350341797,
+      "name": "nativeSchemaPartsPersistBeforeDeliveryWithOriginalSessionIdentity()",
+      "nodeIdentifier": "AgentSessionTests/nativeSchemaPartsPersistBeforeDeliveryWithOriginalSessionIdentity()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/nativeSchemaPartsPersistBeforeDeliveryWithOriginalSessionIdentity()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.086s",
+      "durationInSeconds": 0.08596992492675781,
+      "name": "duplicateReceiptRetainsIdentityAndNewRunSeparatesProviderCallID()",
+      "nodeIdentifier": "AgentSessionTests/duplicateReceiptRetainsIdentityAndNewRunSeparatesProviderCallID()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/duplicateReceiptRetainsIdentityAndNewRunSeparatesProviderCallID()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    }
+  ],
+  "ios_agent_core_compile": "EXECUTED_PASS",
+  "resolution": [
+    {
+      "path": "Packages/HanlinAgentSDK/Package.resolved",
+      "raw_file": "raw-0-Package.resolved",
+      "sha256": "f1d3bc296d9140741423eac850a1426eb8cf2e6a9aea9db21079746f7c573474",
+      "resolved": {
+        "originHash": "22f30a52c2b08e3a255c30c0887c35e8d2cdc1b0ca6b84648fbacd7f678b8d2c",
+        "pins": [
+          {
+            "identity": "swift-ai-sdk",
+            "kind": "remoteSourceControl",
+            "location": "https://github.com/davidpovarsky/swift-ai-sdk.git",
+            "state": {
+              "revision": "e7bf34111e603ca977becd007dd4e5bb109af857"
+            }
+          },
+          {
+            "identity": "swift-argument-parser",
+            "kind": "remoteSourceControl",
+            "location": "https://github.com/apple/swift-argument-parser",
+            "state": {
+              "revision": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+              "version": "1.8.2"
+            }
+          },
+          {
+            "identity": "swift-json",
+            "kind": "remoteSourceControl",
+            "location": "https://github.com/ThorFuchs/Swift-JSON.git",
+            "state": {
+              "revision": "f2a0d12da7028edfbcb0cb307f19a921a3a12d03"
+            }
+          },
+          {
+            "identity": "swiftyjson",
+            "kind": "remoteSourceControl",
+            "location": "https://github.com/SwiftyJSON/SwiftyJSON.git",
+            "state": {
+              "revision": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+              "version": "5.0.1"
+            }
+          },
+          {
+            "identity": "zipfoundation",
+            "kind": "remoteSourceControl",
+            "location": "https://github.com/weichsel/ZIPFoundation.git",
+            "state": {
+              "revision": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
+              "version": "0.9.19"
+            }
+          }
+        ],
+        "version": 3
+      }
+    },
+    {
+      "path": "Packages/HanlinPlatform/Package.resolved",
+      "raw_file": "raw-1-Package.resolved",
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+      "resolved": {
+        "originHash": "3f8cbcbad6b07b509a7976fe0577315481f25358ce34a01e505f2d1b04821066",
+        "pins": [
+          {
+            "identity": "swift-ai-sdk",
+            "kind": "remoteSourceControl",
+            "location": "https://github.com/davidpovarsky/swift-ai-sdk.git",
+            "state": {
+              "revision": "e7bf34111e603ca977becd007dd4e5bb109af857"
+            }
+          },
+          {
+            "identity": "swift-argument-parser",
+            "kind": "remoteSourceControl",
+            "location": "https://github.com/apple/swift-argument-parser",
+            "state": {
+              "revision": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+              "version": "1.8.2"
+            }
+          },
+          {
+            "identity": "swiftyjson",
+            "kind": "remoteSourceControl",
+            "location": "https://github.com/SwiftyJSON/SwiftyJSON.git",
+            "state": {
+              "revision": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+              "version": "5.0.1"
+            }
+          },
+          {
+            "identity": "zipfoundation",
+            "kind": "remoteSourceControl",
+            "location": "https://github.com/weichsel/ZIPFoundation.git",
+            "state": {
+              "revision": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
+              "version": "0.9.19"
+            }
+          }
+        ],
+        "version": 3
+      }
+    }
+  ],
+  "toolchain": "Xcode 27.2\nBuild version 27B52\nApple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0\n27.2\n27.2\narm64\nProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\n",
+  "process_exit": {
+    "exit": 0,
+    "total_seconds": 423
+  },
+  "limits": "Package-only33 actual cases. App/native OS boundary/SwiftData/UI/live model/MCP original external schema/device remain NOT_RUN or OPEN. Frozen80/e7 V3 aggregate is a separate historical graph."
+}

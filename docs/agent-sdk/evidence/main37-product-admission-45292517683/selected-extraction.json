@@ -1,0 +1,111 @@
+{
+  "archiveSHA256": "fff55f6c75917fcc851acf468ca6f3491d593a751a422ca0659c7631d5a29296",
+  "files": [
+    {
+      "path": "simulator-logs/01-environment.log",
+      "bytes": 963,
+      "sha256": "3b668dcda21f7e87d5347b8dc8e7c8df185996680caf8451bf4ded423cab9b26"
+    },
+    {
+      "path": "simulator-logs/04-runtime-preflight.log",
+      "bytes": 1736,
+      "sha256": "ffe0af0206650208afb46e4f34c525e7a604df7a0f7c0dc09d211de5a918290a"
+    },
+    {
+      "path": "simulator-logs/06-current-unit-xctestrun.json",
+      "bytes": 3854,
+      "sha256": "2fb8e1509020f4902cac46e15788b5da2e7d33320a746aecb39dafd060b53725"
+    },
+    {
+      "path": "simulator-logs/06-generated-unit.xctestrun",
+      "bytes": 10400,
+      "sha256": "89ea1b243da5ce812ea8a63d069a2a2bfeb44c420addf6aa02c0b89d3b5a3fa2"
+    },
+    {
+      "path": "simulator-logs/06-unit-xctestrun-prepare.log",
+      "bytes": 122,
+      "sha256": "d4d719ad8de6a9e90319526a80dc4793e87cb3f819190d6b1c123747d0ffc677"
+    },
+    {
+      "path": "simulator-logs/06-unit-xctestrun-seal.log",
+      "bytes": 120,
+      "sha256": "4839a62ee6ffafd486432694f6ca5f1eae9d8f745e4b2924b14ab1af2332daaa"
+    },
+    {
+      "path": "simulator-logs/07-simulator-sdk-bundle-resources.json",
+      "bytes": 10518,
+      "sha256": "8a0430f7e0a353d97502d7c2db1c60ff744c2104615bc497ebd83b9b11fe1c9b"
+    },
+    {
+      "path": "simulator-logs/07-simulator-sdk-localization.json",
+      "bytes": 1025,
+      "sha256": "cd0846f26d9d6147f912ea06bb8d7a0f5dd84b63065294c8a52320b5dfc8f88d"
+    },
+    {
+      "path": "simulator-logs/07-simulator-runtime-signature.log",
+      "bytes": 203,
+      "sha256": "a2bb1fc2e22d6b52e1cb3e4fcd48e7c0031d1d300cfc2ea505da7281016bff55"
+    },
+    {
+      "path": "simulator-logs/08-owned-simulator-boot.json",
+      "bytes": 465,
+      "sha256": "8929b621ca0cdfc15280a2d8b3060f37818988d35ec6bb3b8060412fe2541d10"
+    },
+    {
+      "path": "simulator-logs/08-bootstatus.log",
+      "bytes": 1707,
+      "sha256": "e15a1cbf30370a1d763946b7f2b497c76743046a268ce97f8bf389164e1da128"
+    },
+    {
+      "path": "simulator-logs/09-host-resources.log",
+      "bytes": 108924,
+      "sha256": "6a004467e84c8656aa7c5b6de6ef29d9bc51428ef821d87cb7dc3bc1685910b2"
+    },
+    {
+      "path": "simulator-logs/09-simulator-system.log",
+      "bytes": 88,
+      "sha256": "289f493f147f8fea6832f978dc8f2934ff190ba94aed1f2f61d3fc5311278184"
+    },
+    {
+      "path": "simulator-logs/performance-summary.json",
+      "bytes": 107,
+      "sha256": "c9dbceeea60dc1d2ebb3fe380f7501e2bca63527717f50bfc6f70a34f3108162"
+    },
+    {
+      "path": "simulator-logs/app-path.txt",
+      "bytes": 40,
+      "sha256": "a3b4a5197338b3663fa72b98194a1ea3f5bd5fe8266af768aa9a4cd871b71cab"
+    },
+    {
+      "path": "simulator-logs/app-executable.txt",
+      "bytes": 10,
+      "sha256": "0aadda1cb8a292e1e5e08d32e3d79694a777b60244661e1f8f9a7eac00646952"
+    },
+    {
+      "path": "simulator-logs/bundle-id.txt",
+      "bytes": 24,
+      "sha256": "2b647e2df6c537e477d32eca4a643686109691751c74438b3a1a80a0cce32b15"
+    },
+    {
+      "path": "simulator-logs/app-intents-metadata/receipt.json",
+      "bytes": 2836,
+      "sha256": "d12369d6c1debb1eddf69248710d6982185e09e4eae7bfa78413698d4b7d9100"
+    },
+    {
+      "path": "simulator-logs/Resolved-Package.resolved",
+      "bytes": 10180,
+      "sha256": "91e4db47a139f8e9161df685bd51ee2d92ab680c227acc8489be71d1d2350352"
+    },
+    {
+      "path": "simulator-logs/sdk-native-export.log",
+      "bytes": 1439,
+      "sha256": "340b74ce49c05ddc892b074ca6ea8ba7ccbcef818e95f8781a8258d6a2dae6f9"
+    },
+    {
+      "path": "simulator-logs/sdk-native-verify.log",
+      "bytes": 65,
+      "sha256": "4c9d4a5204d1cbac0f74163fc660f12c97db3b8c023041f4855974835bff7a86"
+    }
+  ],
+  "allOtherMembers": "RETAINED_IN_ORIGINAL_ZIP"
+}

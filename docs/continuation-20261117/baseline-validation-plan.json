@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Diagnose previously failed Phase2 obligations before product changes",
+  "sourceBase": "bff3364d64f43b1d5235ead2b6e8f3756e890eed",
+  "target": "commit containing this manifest; bind actual immutable SHA in CI receipt",
+  "changedFiles": [
+    ".github/workflows/build-ios26-unsigned-ipa.yml"
+  ],
+  "impact": "The original app source is unchanged. Simulator setup creates a fresh task-owned device because acceptance fixtures reseed app data. All selected identities previously failed or lack valid current native results. No prior pass is promoted.",
+  "execute": [
+    "AI_HLYUITests/AgentRuntimeConversationUITests/testPhase2OfficialToolSurfaceContinuesThroughTheSameOriginalChat",
+    "AI_HLYUITests/AgentRuntimeConversationUITests/testStreamingStopObserveTemporaryAndStateTransitions",
+    "AI_HLYUITests/HanlinMorphComposerUITests/testWideNavigationKeepsDraft",
+    "AI_HLYUITests/HanlinNativeA2UIChatUITests/testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest",
+    "AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft",
+    "AI_HLYUITests/HanlinSkillCenterUITests/testImportInstructionOnlyMarkdownShowsParseOnlyWithoutExecution",
+    "AI_HLYTests/SkillRuntimeProductTests/nativeManifestAnalysisProducesTheExpectedPassiveFacts(_:)",
+    "AI_HLYTests/SkillRuntimeProductTests/importedSkillPlanExecuteAndReopen(_:)"
+  ],
+  "reuse": [],
+  "deferred": [
+    "Compact Composer two cases need separate narrow simulator",
+    "Motion B and C use existing focused Motion route",
+    "Phase1 remaining NativeScript and Composer smokes",
+    "Late V17, OpenUI, Presentation SDK and split acceptance after implementation"
+  ],
+  "runner": "xcode-27, installed stable iOS SDK, fresh iPad simulator",
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "group": "exact_test_selector",
+  "release": false
+}

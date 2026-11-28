@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "reviewer": "/root",
+  "basis": "Actual independent review communicated in collaboration",
+  "approvedPatchSHA256": "ddb9ecc47a0a41935d617b6e4b41c53cadeed16e5aae039f66294e71aabee613",
+  "approvedWorkflowSHA256": "e9777f014bde0a00f8dafd583e5470bf0fbefe469d4c22cba837af443b6c0c36",
+  "decision": "APPROVED_FOR_ORIGINAL_LEGACY_WIDGET_DIAGNOSTIC",
+  "scope": "Exact target_validation_group and single existing method only; all original default/live/ScriptUI/full budgets retained.",
+  "reviewedActualMappingCases": 13,
+  "nativeStatus": "NOT_RUN"
+}

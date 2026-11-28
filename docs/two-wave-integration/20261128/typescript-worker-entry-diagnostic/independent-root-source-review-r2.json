@@ -1,0 +1,30 @@
+{
+  "status": "SOURCE_APPROVED_FOR_TWO_SEALS_NATIVE_PENDING",
+  "at": "2026-11-28T07:39:50.792805+00:00",
+  "sourceBase": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "currentRoot": "fcedca4d091a3e11d26ef7526764b8d7eae0f3e0",
+  "path": "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+  "candidateSHA256": "02015ecd575ff3c445d56c555636a3db7715da5668e0ee564b5d4d637b9a470b",
+  "manifestSHA256": "14a7c28f0a499d88eb0de1a0ee31187b8e49aa111b7eacddb1118cd005349f19",
+  "membersRehashed": 17,
+  "payloadBytes": 235704,
+  "independentMacReviewSHA256": "850151c17a32630d27db60b9e510c165a09f17a135d32f00a80bdfc4b2c424d7",
+  "wholePreimageInverse": "All original bytes outside inserted test-local helper plus the exact replaced single method preserved; only boundary whitespace normalized by rstrip for the terminal helper boundary. Original assertion/test annotation lines checked separately and exact.",
+  "originalAnnotations": 43,
+  "originalAssertionLines": 294,
+  "r2TwoSubstitutionInverseRecoversR1": true,
+  "review": "Actual MainActor async Sendable reporter; inherited callback awaited; failure-only last-observation summaries; optional exit code represented explicitly; originalTask/loop/stop/cancel tail unchanged. No extra engine/task/poll/read action.",
+  "bounds": "15s entry/10ms polls/30s synthetic Promise/2min test/16384 total emittedUTF8 bytes; no increase",
+  "qualifications": [
+    "Snapshot is last observed callback, not fresh current engine state.",
+    "Observation may perturb timing.",
+    "Old31.100s is a whole-method duration, not compiler or execution deadline.",
+    "R1 compile-API blocker retained; source R2 approval does not prove Swift compile or repaired native run."
+  ],
+  "sourceInputIntersection": {
+    "SDK396": 0,
+    "Host99": 0
+  },
+  "native": "NOT_RUN",
+  "testsRepeatedByRoot": false
+}

@@ -1,0 +1,20 @@
+Command line invocation:
+    /Applications/Xcode_27.2.app/Contents/Developer/usr/bin/xcodebuild -project AI_HLY.xcodeproj -scheme HanlinMiniApps -showdestinations -clonedSourcePackagesDirPath /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages
+
+Resolve Package Graph
+
+Fetching from https://github.com/a2ui-project/a2ui
+
+Fetching from https://github.com/davidpovarsky/hanlin-streaming-markdown
+
+Fetching from https://github.com/tree-sitter/swift-tree-sitter
+
+Fetching from https://github.com/tree-sitter/tree-sitter
+
+Fetching from https://github.com/tree-sitter/tree-sitter-bash
+
+Fetching from https://github.com/CoreOffice/CoreXLSX
+
+Fetching from https://github.com/colinc86/LaTeXSwiftUI
+
+Fetching from https://github.com/eastriverlee/LLM.swift/

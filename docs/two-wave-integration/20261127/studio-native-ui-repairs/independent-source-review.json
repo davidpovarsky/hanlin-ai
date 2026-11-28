@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w1_review_resume",
+  "recordedAtUTC": "2026-11-27T15:41:00.468239+00:00",
+  "decision": "APPROVED_SOURCE_ONLY",
+  "candidateSHA256": "efe7abe29bd1be36d7991844d67d7d79e12a1f3c1bc639fca741be87fd00480c",
+  "patchSHA256": "986b458b8ceab54e13023775c461af58c382fd7e418a170ebfc971d473f8e40e",
+  "actualAXSHA256": "7f9572e7ad1897ff75ca529b201d6ddc648363b9690c0b1759e91e6f1747e5a6",
+  "failureContextSHA256": "e1decf44f6c4401cc843fc12123291a082bdd8323276a6bb755fae5c8fa660e8",
+  "installedKeyboardReceiptSHA256": "b22ea0d42724bec2a9835205ff3518d0a2f76f741a66ea23842ff151b50044da",
+  "findings": [
+    "Actual AX distinguishes the underlying Mini Apps Developer Studio button from My Projects BackButton; the new query binds the latter exact navigation bar.",
+    "Actual original alert chronology shows default interruption handling tapped Cancel before the global Select All action failed.",
+    "Installed iOS XCUIElement declares typeKey:modifierFlags:. The new route addresses the existing guarded alert text field directly, then retains the exact-value assertion.",
+    "Reversing all four documented substitutions independently recovered the entire original file. All28 selectors and existing bounds remain. Ordinary editor calls retain the prior default menu route."
+  ],
+  "limitations": [
+    "No Swift compile, native UI action or repeated portable tests by reviewer.",
+    "The separate blank Files picker and Loading apps observations are not repaired or waived by this change."
+  ]
+}

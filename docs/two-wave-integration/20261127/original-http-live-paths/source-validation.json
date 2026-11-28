@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "createdAt": "2026-11-27T10:26:09.030595+00:00",
+  "base": "4cce12cfe277ba5849c5de0b0d5bc43eb564f7f1",
+  "actualFailedSource": "466c6187309f86da9d20b389de3c424cd93c9bdd",
+  "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+  "originalSHA256": "9996460cb770d19297fdda3c87423685223e5fa4243a044c0ef824dd58628a35",
+  "candidateSHA256": "433703973e69d764686c6761ad1851c40d76f5e53afa4561d1720d873a5a1ae4",
+  "patchSHA256": "22c8ee0b129ca8485c44dee42f1d2007435d8388d5ed85b0fb06910fe0c48373",
+  "addedLines": 23,
+  "removedLines": 0,
+  "onlyTestSourceChanged": true,
+  "wholeOriginalRestoredByRemovingAddition": true,
+  "allOriginalTestBodiesAndAssertionsRetained": true,
+  "testCountRemains": 603,
+  "executionTimeoutUnchanged": 5,
+  "runtimeTransportAndFinalDeferUnchanged": true,
+  "runtimeProductionEdited": false,
+  "nativeExecuted": false,
+  "portableTestsExecuted": false,
+  "actualFailureProof": {
+    "manifest.json": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/full-platform-466c6187-r1/manifest.json",
+      "bytes": 28166,
+      "sha256": "54f9a636ef99621c3af6eea08de003009774c5e47eb7f22ac084685d19d45627"
+    },
+    "exact-603-reconciliation.json": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/full-platform-466c6187-r1/exact-603-reconciliation.json",
+      "bytes": 249294,
+      "sha256": "b9cab4cc3cca5511c770c3150e70067c70f67343fd6419c0248120ef9f691e80"
+    },
+    "http-stage-and-sampler-observation.json": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/full-platform-466c6187-r1/http-stage-and-sampler-observation.json",
+      "bytes": 5485,
+      "sha256": "9ab588e3e088a5bd60d1b6f96a4f7a6897aeef75c938fdd27359b09c21cd0f25"
+    }
+  },
+  "publication": {
+    "path": "<HANLIN_WIDGET_EVIDENCE_DIR>/original-http-<existing temporary instance>/live-paths.json",
+    "timing": "After initial real started JSONL row and before server or any execute call.",
+    "sourceBinding": "Actual current #filePath bytes SHA256, to be matched by sole Mac owner against its admitted Git test-source hash.",
+    "runBinding": "Exact existing evidence directory supplied by the controller, unique original temporary instance ID, actual native PID and epoch timestamp.",
+    "observer": "Mac must read only its admitted evidence directory, verify source/run/PID/freshness, then follow the exact stagesFile path; no broad temp scan.",
+    "cleanup": "Existing defer still copies five raw files and removes temporary root. Descriptor is retained as observational metadata."
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "R3Qualification": "Mac reports test-import isolation only; frozen R2 UIhash remains the review boundary.",
+  "authorities": {
+    "intentPath": "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift",
+    "intentSHA256": "88eaefa67a733beb153d2c0d3310de2e23ae85c80bf854f22b161c0b9e49ebeb",
+    "parameterMapping": {
+      "boolean": [
+        "Boolean List",
+        "booleanList",
+        "booleanItems"
+      ],
+      "integer": [
+        "Integer List",
+        "integerList",
+        "integerItems"
+      ],
+      "number": [
+        "Number List",
+        "numberList",
+        "numberItems"
+      ],
+      "text": [
+        "Text List",
+        "textList",
+        "textItems"
+      ]
+    }
+  },
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "candidateManifestSHA256": "5151a6efeb1b88b4db0e77a411232793c4821f46858dfc29d4ee8f21bb4ea014",
+  "createdAt": "2026-11-28T07:02:34.154850+00:00",
+  "findings": [
+    "The candidate names the existing shipping typed action and exact installed action title, then selects the current public input enum; it does not substitute JSON/scalar input.",
+    "Only one matching visible public parameter and one matching sheet/popover/dialog are admitted. Every append increments the actual row count once; entered values/order are read before save and after process restart.",
+    "The second execution starts only after the first correlated terminal and real built-in chain read acknowledgment. Actual row deletion, empty readback, second save/restart/reopen and distinct second result are required.",
+    "The same360-second case deadline remains throughout both steps. Existing wait/tap/response helpers cap per-step waits against that deadline; original600 runner allowance and2100 command are outside the unchanged UI helper boundary.",
+    "Boolean switch values are exact0/1, integer editor values parseInt, number values are finiteDouble, text uses exactUnicode. JSON result comparison separatesBoolean; it does not falsely prove integer/Double native tags from plainJS/JSON.",
+    "The original require autoclosure is nonthrowing. New throwing switch/value/response bindings occur before require; the throwing action-title expression is passed to the ordinary throwing tap call.",
+    "All original38 methods, existing creation helpers, original fixture bytes and native action code are unchanged by the UI insertion."
+  ],
+  "limitations": [
+    "Actual public array editor AX shape has not yet been observed; title/button/container/deletion assumptions can fail and retainAX/PNG. This is source admission for a bounded pilot, not a successful locator claim.",
+    "No Swift typecheck, simulator, system action or native execution was performed during review.",
+    "No existing saved-action migration, Expo native-list acceptance or physical-device result is claimed.",
+    "Root separately owns leaf/runner/fixture/CLI review; this receipt does not duplicate those controls."
+  ],
+  "newMethods": [
+    "testNativeScriptSavedTextListReopensThenClearsToEmpty",
+    "testNativeScriptSavedIntegerListReopensThenClearsToEmpty",
+    "testNativeScriptSavedNumberListReopensThenClearsToEmpty",
+    "testNativeScriptSavedBooleanListReopensThenClearsToEmpty"
+  ],
+  "reviewPreparation": {
+    "initialReadSlice": "A read-only excerpt request exceeded the file line count after the first segment; the bounded corrected read succeeded. Candidate remained immutable.",
+    "noTestsExecuted": true
+  },
+  "reviewer": "W1 independent review",
+  "schema": 1,
+  "sourcePatchSHA256": "1955a795fec075093abb97443cfa17e3f214ab28cb781444020841914e1d7381",
+  "uiSHA256": "2abf678e162ae445d9e55802786843872251760d328756cfcc569ec137f04b4e",
+  "verdict": "APPROVED_SOURCE_ONLY_UI_PILOT",
+  "wholeUIInverse": {
+    "entireOriginalRecovered": true,
+    "insertedLines": 368,
+    "newMethods": 4,
+    "originalMethods": 38,
+    "originalSHA256": "b1c993f84b8e9ebff3890be47797f60531f3c80a67b938e5ee5a17369fc837bd",
+    "singleLineInsertion": [
+      3659,
+      4027
+    ]
+  }
+}

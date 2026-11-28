@@ -1,0 +1,9 @@
+Verified every ZIP checksum, archive path and native slice hash.
+test_versioned_framework_metadata_binary_paths_and_link_chain_roundtrip (test_native_artifacts.NativeArtifactsTests.test_versioned_framework_metadata_binary_paths_and_link_chain_roundtrip) ... ok
+test_versioned_framework_rejects_foreign_binary_metadata_and_missing_platform (test_native_artifacts.NativeArtifactsTests.test_versioned_framework_rejects_foreign_binary_metadata_and_missing_platform) ... ok
+test_deferred_internal_links_still_reject_a_resolved_escape (test_native_artifacts.NativeArtifactsTests.test_deferred_internal_links_still_reject_a_resolved_escape) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.034s
+
+OK

@@ -1,0 +1,1155 @@
+{
+  "schema_version": 1,
+  "scope": "Full 139c-to-frozen-working-tree impact review; four native UI obligations separately compared from 951c. No execution result is created.",
+  "baseline_unit_source": "139c6bf93f80ef7301182110dcaf086612d9bbbd",
+  "baseline_unit_run": "45067928645",
+  "baseline_unit_result_sha256": "c76ce5764720c3a284ec469accebae185625dec8db499932c21fc296d93622ad",
+  "baseline_ui_source": "951cd4f5d212a3997ac72a7b88c83cf64b5d79b6",
+  "baseline_ui_run": "45073227781",
+  "baseline_ui_result_status": "UNKNOWN_TO_THIS_READ_ONLY_REVIEW",
+  "target": {
+    "git_head_observed": "951cd4f5d212a3997ac72a7b88c83cf64b5d79b6",
+    "kind": "frozen_working_tree",
+    "handoff_path": "/workspace/scratch/2453c7f51f3d/mcp-icon-change-hashes.json",
+    "handoff_sha256": "bff7588f88d8e9dd588ec871f09a9872c6a1871318f9f9667301c2eaee8dcafe",
+    "all_12_icon_file_hashes_match_handoff": true,
+    "tracked_diff_from_139c_sha256": "8ec04f597bad4f1b6ee325fac592f8bc4b4d5a1fa99c3addfa8c0aecaff187fd",
+    "tracked_diff_from_951c_sha256": "927b7a2833e6d49c6a3fe8aa74e53d02ed103d7c325eb61ab8501525b94b71b2",
+    "full_changed_file_snapshot": [
+      {
+        "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityComposer.swift",
+        "target_sha256": "82554012e86036dee09ca12f91ab7b42abed08403f98ae328c2988375b83979b",
+        "sha256_at_139c": "3da01d5bd22af56bd348d9d4f4af5e4390a3f5fe54f25f4e0b2ec4b1c7773318",
+        "sha256_at_951c": "3da01d5bd22af56bd348d9d4f4af5e4390a3f5fe54f25f4e0b2ec4b1c7773318"
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentDisplayActivity.swift",
+        "target_sha256": "7b2c8c7c83fcb2d47fb48b89a609537d4d97a194ce64d851b733c8e8501b3092",
+        "sha256_at_139c": "e0d2a1b05168c69377d10e29cb4b952c957bc20f8fe65214e6ead0581a8a0b04",
+        "sha256_at_951c": "e0d2a1b05168c69377d10e29cb4b952c957bc20f8fe65214e6ead0581a8a0b04"
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolPresentationProfile.swift",
+        "target_sha256": "5911189e04f77ec3c940a7cdb903a53db6c76f1f03a0f217803fdde92a8812e9",
+        "sha256_at_139c": "e146502595a8d01d041d387a9568394b32440e550b7afd8a25f3de190241d2f4",
+        "sha256_at_951c": "e146502595a8d01d041d387a9568394b32440e550b7afd8a25f3de190241d2f4"
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift",
+        "target_sha256": "4217b5db668047f53ed909154e2105c9ae92cc0af0d94cfc5fe77bfcd6bfae1e",
+        "sha256_at_139c": "c5b12715d33a819ef321f2c3e6e6c29ca69269b355f9a20d54b4cbc7cc19c412",
+        "sha256_at_951c": "4217b5db668047f53ed909154e2105c9ae92cc0af0d94cfc5fe77bfcd6bfae1e"
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinToolPermissionsView.swift",
+        "target_sha256": "8894cfc798968e37764dd3ab07bd521a82df82d1a797cb44faa4d266ba653733",
+        "sha256_at_139c": "2bcc23b908f4913c962ec1e5dd5c35a8c9dde15d446959969f15e859d456a2b2",
+        "sha256_at_951c": "8894cfc798968e37764dd3ab07bd521a82df82d1a797cb44faa4d266ba653733"
+      },
+      {
+        "path": "AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift",
+        "target_sha256": "3496fc24615db8e482aa6b62fc210d916c0b6b3ad28056875df50f9d96ec0bd9",
+        "sha256_at_139c": "56cca1e2bb56f8a54b0d661ce01ccec6343cb210053c68d45023b8df6e107729",
+        "sha256_at_951c": "56cca1e2bb56f8a54b0d661ce01ccec6343cb210053c68d45023b8df6e107729"
+      },
+      {
+        "path": "AI_HLY/Downstream/MCP/ToolIntegration/MCPToolBridge.swift",
+        "target_sha256": "a8f78a57576b8135dd02319f4c6bab70e2ee41a236f17d8db8312ef144d8d2a8",
+        "sha256_at_139c": "4d07e186e2180495d41040be943e47495cd4c7edff95d8afea1025deb0ed8c26",
+        "sha256_at_951c": "4d07e186e2180495d41040be943e47495cd4c7edff95d8afea1025deb0ed8c26"
+      },
+      {
+        "path": "AI_HLY/Downstream/MCP/ToolIntegration/MCPToolDescriptor.swift",
+        "target_sha256": "a5d4897f53427ab059750bd5f41a231bc9e079ce7a7639b8b79b17af1b08072c",
+        "sha256_at_139c": "1a6e11a3c029d66ec636503095dc546ea030f062be2b9a41476eda86c1bdffec",
+        "sha256_at_951c": "1a6e11a3c029d66ec636503095dc546ea030f062be2b9a41476eda86c1bdffec"
+      },
+      {
+        "path": "AI_HLY/Resource/Localizable.xcstrings",
+        "target_sha256": "c84abcc423c6f0b27d09002f5a9d43da83d1adc3c7418b903fe8b63afab184c5",
+        "sha256_at_139c": "21627df690244f71193fc7263f1d62f67babf290255188eb59d525f5b4e0a5c7",
+        "sha256_at_951c": "c84abcc423c6f0b27d09002f5a9d43da83d1adc3c7418b903fe8b63afab184c5"
+      },
+      {
+        "path": "AI_HLY/Views/Components/ChatViewComponents.swift",
+        "target_sha256": "fbb281ef2181d6d8bd2aa717df5376b0c9d4a84b39016397e1caf7c2fb6ddbce",
+        "sha256_at_139c": "c9732abacfac05da4c230c5e73a9e8a0a793f099fc68dd6736be40e7cc2ba7b5",
+        "sha256_at_951c": "1d9150ad7f1f081c5d9970dc00839753afca318ecc713c8e1276ce08cce43282"
+      },
+      {
+        "path": "AI_HLYTests/AgentRoundPresentationTests.swift",
+        "target_sha256": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+        "sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+        "sha256_at_951c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3"
+      },
+      {
+        "path": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+        "target_sha256": "36bf3ed8dec51246b509a7fff8b364a591b71d2b00a956729c669a074754fdde",
+        "sha256_at_139c": "79f8e5464f45617ac8436f5ca7e837a926707f9be6b56607a8f20c20bd2b29f7",
+        "sha256_at_951c": "36bf3ed8dec51246b509a7fff8b364a591b71d2b00a956729c669a074754fdde"
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinIconThumbnailLoader.swift",
+        "target_sha256": "9ead1e6d32cea78f619196c3e69bf0c574ca1c46b7aff2a03fc68d6899a36df4",
+        "sha256_at_139c": null,
+        "sha256_at_951c": null
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinInlineToolApproval.swift",
+        "target_sha256": "ed3d056b73e13220f40ede81af417a624dd9c1aa0a2894ee3f8b2184eb0e5e80",
+        "sha256_at_139c": "c8cde371fabe39dff757e64d9af7475baad8765ef4358efba5a41a7d7abbacaa",
+        "sha256_at_951c": "ed3d056b73e13220f40ede81af417a624dd9c1aa0a2894ee3f8b2184eb0e5e80"
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMarkdownView.swift",
+        "target_sha256": "2279ca4ab590b6ee7089feea1dd1d307ee77a575be8dbc8f170e5969ad132ea9",
+        "sha256_at_139c": "1b5cd6fa9b1b93b4dcea93110f1f99a33b227d9b09ddeff5f910be04dd0681c6",
+        "sha256_at_951c": "1b5cd6fa9b1b93b4dcea93110f1f99a33b227d9b09ddeff5f910be04dd0681c6"
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinToolActivityHeader.swift",
+        "target_sha256": "21f3b0f344ce324d4057211c10779510120c3a246a4098a51442900ea0372f28",
+        "sha256_at_139c": "2096ead7585cb96278e8880726c9b45180946d4928f3ecada432f21a5ed30340",
+        "sha256_at_951c": "2096ead7585cb96278e8880726c9b45180946d4928f3ecada432f21a5ed30340"
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/HanlinToolIconSet.swift",
+        "target_sha256": "f64258a4d2def0c90e202c26e08bb34a23b77e7d18ed03388b0407fa6caf51a2",
+        "sha256_at_139c": null,
+        "sha256_at_951c": null
+      },
+      {
+        "path": "Scripts/CI/validate_chat_localization.py",
+        "target_sha256": "3534f785fb69575d785501d24c9f05507a3e4a7bb634bc830199bcc4fdeccc52",
+        "sha256_at_139c": "d9c1a48cd8e1e9eb23e2b859b4bce709cc15069ebd9180f9764e485633827e96",
+        "sha256_at_951c": "3534f785fb69575d785501d24c9f05507a3e4a7bb634bc830199bcc4fdeccc52"
+      },
+      {
+        "path": "docs/chat-ui-handoff/2026-11-22-147501-repair-evidence/consent-validation-plan.json",
+        "target_sha256": "82037339ab6b0a3a96320054bd68c0b302b52788f4fdbc25c8314fdb80b18abe",
+        "sha256_at_139c": null,
+        "sha256_at_951c": "82037339ab6b0a3a96320054bd68c0b302b52788f4fdbc25c8314fdb80b18abe"
+      },
+      {
+        "path": "docs/chat-ui-handoff/2026-11-22-147501-repair-evidence/native-attempt-45066248406.json",
+        "target_sha256": "27cdbb0bfdccce8497eb1352d5ca9ce8ac60f067f423cd1dcde673d1764632a2",
+        "sha256_at_139c": null,
+        "sha256_at_951c": "27cdbb0bfdccce8497eb1352d5ca9ce8ac60f067f423cd1dcde673d1764632a2"
+      },
+      {
+        "path": "docs/chat-ui-handoff/2026-11-22-147501-repair-evidence/native-attempt-45067928645.json",
+        "target_sha256": "257d8526a75a1af069e8d34d0b87efc2bba8894d9c67c60084b875d341fe23ed",
+        "sha256_at_139c": null,
+        "sha256_at_951c": "257d8526a75a1af069e8d34d0b87efc2bba8894d9c67c60084b875d341fe23ed"
+      },
+      {
+        "path": "docs/chat-ui-handoff/2026-11-22-147501-repair-evidence/native-attempt-45068850876-1.json",
+        "target_sha256": "805aa25294472e372d37dadc5cc09adc89173c0be0812cca298f2ff15afd4772",
+        "sha256_at_139c": null,
+        "sha256_at_951c": "805aa25294472e372d37dadc5cc09adc89173c0be0812cca298f2ff15afd4772"
+      },
+      {
+        "path": "docs/chat-ui-handoff/2026-11-22-147501-repair-evidence/native-attempt-45068850876-2.json",
+        "target_sha256": "4d0c09be9c396df319c47e7ba8f5c9bdb0433009b730ab7852c485eafff0be8d",
+        "sha256_at_139c": null,
+        "sha256_at_951c": "4d0c09be9c396df319c47e7ba8f5c9bdb0433009b730ab7852c485eafff0be8d"
+      },
+      {
+        "path": "docs/chat-ui-handoff/2026-11-22-147501-repair-evidence/native-interaction-validation-plan.json",
+        "target_sha256": "d3b87c41995c12f60dbd1934cb062509fdef323eb8b81e7d5054ecb8101a1e01",
+        "sha256_at_139c": null,
+        "sha256_at_951c": "d3b87c41995c12f60dbd1934cb062509fdef323eb8b81e7d5054ecb8101a1e01"
+      },
+      {
+        "path": "docs/chat-ui-handoff/2026-11-22-147501-repair.md",
+        "target_sha256": "86f2a531f7facc4b8692b6986a8b5cf31051f7e6ebab144fe45b845fce5d936d",
+        "sha256_at_139c": "465e2024293c476deb0527a45b5c9fcde123b1c22984c23b79395d9f8c8b1ea0",
+        "sha256_at_951c": "5c25cc3d7f10e5d895fbacfa09b86709b3638a8f8f7fbd3bce2b1c3ff72a5b3a"
+      }
+    ],
+    "qualification": "Parent must bind this exact 12-file snapshot to the final icon commit and review any additional relevant changes before dispatch/aggregation."
+  },
+  "prior_review": {
+    "path": "/workspace/scratch/2453c7f51f3d/native-reuse-139c-to-951c.json",
+    "sha256": "d86173e918e0e6a785b6b466ff29ebd7ea51d8fed5a380b6321bfb51d8c84a1d",
+    "qualification": "Its all-55 source-eligible conclusion applies only to 951c and is superseded by this per-function impact split for the icon patch."
+  },
+  "summary": {
+    "original_functions": 55,
+    "original_invocations": 59,
+    "original_functions_requiring_rerun": 23,
+    "original_invocations_requiring_rerun": 23,
+    "original_functions_eligible_for_retention": 32,
+    "original_invocations_eligible_for_retention": 36,
+    "new_unit_functions": 4,
+    "native_ui_functions_requiring_final_source_execution": 4,
+    "required_unit_functions_in_selector_file": 27,
+    "total_selectors_in_file": 31,
+    "per_suite": {
+      "AgentActivityHeaderPhaseTests": {
+        "rerun_functions": 9,
+        "retain_functions": 5,
+        "retain_invocations": 5
+      },
+      "AgentRoundPresentationTests": {
+        "rerun_functions": 14,
+        "retain_functions": 7,
+        "retain_invocations": 7
+      },
+      "ChatScrollViewHandleTests": {
+        "rerun_functions": 0,
+        "retain_functions": 11,
+        "retain_invocations": 11
+      },
+      "CurrentLocationToolTests": {
+        "rerun_functions": 0,
+        "retain_functions": 7,
+        "retain_invocations": 11
+      },
+      "HanlinModelDisplayNameTests": {
+        "rerun_functions": 0,
+        "retain_functions": 2,
+        "retain_invocations": 2
+      }
+    }
+  },
+  "original_function_decisions": [
+    {
+      "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/completedHistoryNeverRevivesThinkingFromStaleApproval()",
+      "suite": "AgentActivityHeaderPhaseTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/completedHistoryNeverRevivesThinkingFromStaleApproval()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "Only unchanged pure AgentActivityHeaderPhase / AgentActivityShimmerOwner enum and boolean/path logic is called; no profile, composer, serialized AgentRun or header view is instantiated.",
+      "function_signature_body_sha256": "f774089ffcba0e511b5b9d0cffd7959952b291a828cd7ae94f1e4c26456ab59c",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "test_file_sha256_at_target": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/permissionWaitPausesShimmerAndCanResumeOnlyWhileActive()",
+      "suite": "AgentActivityHeaderPhaseTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/permissionWaitPausesShimmerAndCanResumeOnlyWhileActive()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "Only unchanged pure AgentActivityHeaderPhase / AgentActivityShimmerOwner enum and boolean/path logic is called; no profile, composer, serialized AgentRun or header view is instantiated.",
+      "function_signature_body_sha256": "2b15a0c148d79c8c4c3f8500e59f60b43d00cece830fb0700f82da688294c8ca",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "test_file_sha256_at_target": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/historicalFooterAndDuplicateActivityStatusAreHidden()",
+      "suite": "AgentActivityHeaderPhaseTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/historicalFooterAndDuplicateActivityStatusAreHidden()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "Only unchanged pure AgentActivityHeaderPhase / AgentActivityShimmerOwner enum and boolean/path logic is called; no profile, composer, serialized AgentRun or header view is instantiated.",
+      "function_signature_body_sha256": "cb173df70a9e991776efbdb04d51e729a973f30b1143ded917b9709ad2b840fb",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "test_file_sha256_at_target": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/completedToolDoesNotReuseItsEarlierRunningSummary()",
+      "suite": "AgentActivityHeaderPhaseTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/completedToolDoesNotReuseItsEarlierRunningSummary()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "Calls the profile/title/projection/composer or containing AgentRun Codable path affected by the new profile metadata and display activity contract; reexecute instead of assuming nil metadata equivalence.",
+      "function_signature_body_sha256": "0136f4c648a34dc8995c588a20fbab138b5fe197cf25e0a51fa79ad2ab9f1029",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "test_file_sha256_at_target": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/failureCancellationAndConsentDoNotImplyLiveWorkOrSuccess()",
+      "suite": "AgentActivityHeaderPhaseTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/failureCancellationAndConsentDoNotImplyLiveWorkOrSuccess()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "Calls the profile/title/projection/composer or containing AgentRun Codable path affected by the new profile metadata and display activity contract; reexecute instead of assuming nil metadata equivalence.",
+      "function_signature_body_sha256": "bc811b37a742b54b297f5e6fb17ef7b444690961be7d742793fec9272496a999",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "test_file_sha256_at_target": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/firstAnswerTextStopsWorkingWithoutFalsifyingConcurrentExecution()",
+      "suite": "AgentActivityHeaderPhaseTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/firstAnswerTextStopsWorkingWithoutFalsifyingConcurrentExecution()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "Only unchanged pure AgentActivityHeaderPhase / AgentActivityShimmerOwner enum and boolean/path logic is called; no profile, composer, serialized AgentRun or header view is instantiated.",
+      "function_signature_body_sha256": "26e2d3e2000220a8b68299c23ea5e7054b17df077ec6782047b709ef169c8920",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "test_file_sha256_at_target": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/shimmerMovesBetweenLeafAndNearestVisibleAncestor()",
+      "suite": "AgentActivityHeaderPhaseTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/shimmerMovesBetweenLeafAndNearestVisibleAncestor()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "Only unchanged pure AgentActivityHeaderPhase / AgentActivityShimmerOwner enum and boolean/path logic is called; no profile, composer, serialized AgentRun or header view is instantiated.",
+      "function_signature_body_sha256": "76539254cb9c513b13c9dc62b54abbbc9716b383da9a61c379916b27c72f5cf7",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "test_file_sha256_at_target": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/internalPreparationDoesNotCreateToolActivityOrRewriteHistory()",
+      "suite": "AgentActivityHeaderPhaseTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/internalPreparationDoesNotCreateToolActivityOrRewriteHistory()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "Calls the profile/title/projection/composer or containing AgentRun Codable path affected by the new profile metadata and display activity contract; reexecute instead of assuming nil metadata equivalence.",
+      "function_signature_body_sha256": "9d6e450b08b524517844980d269dbfb2fafd68b2947aff27a2d2c5fc2f1d2902",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "test_file_sha256_at_target": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/mountedDetailsKeepCallIdentityAndPayloadIndependentOfExpansion()",
+      "suite": "AgentActivityHeaderPhaseTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/mountedDetailsKeepCallIdentityAndPayloadIndependentOfExpansion()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "Calls the profile/title/projection/composer or containing AgentRun Codable path affected by the new profile metadata and display activity contract; reexecute instead of assuming nil metadata equivalence.",
+      "function_signature_body_sha256": "1f4d787edf4a8647a33b11d9e699c885128d7041d809589ce1f049d98292b2e5",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "test_file_sha256_at_target": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/providerReasoningSurvivesCompositionAndEndsAtTheFirstAnswer()",
+      "suite": "AgentActivityHeaderPhaseTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/providerReasoningSurvivesCompositionAndEndsAtTheFirstAnswer()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "Calls the profile/title/projection/composer or containing AgentRun Codable path affected by the new profile metadata and display activity contract; reexecute instead of assuming nil metadata equivalence.",
+      "function_signature_body_sha256": "339499b9ec9158aa6673d4fa6a6362fa1667989687e1fb01903ab7d35fcb1559",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "test_file_sha256_at_target": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/reasoningAndRealToolLifecyclesSurviveWhileDiscoveryStaysHidden()",
+      "suite": "AgentActivityHeaderPhaseTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/reasoningAndRealToolLifecyclesSurviveWhileDiscoveryStaysHidden()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "Calls the profile/title/projection/composer or containing AgentRun Codable path affected by the new profile metadata and display activity contract; reexecute instead of assuming nil metadata equivalence.",
+      "function_signature_body_sha256": "8a7bdf03f97d3fe0c08b9ba1ca549a69ab245ac1eb760cc0cdc743c53a546926",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "test_file_sha256_at_target": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/onlyActualRequestReceiptShowsWaitingAndFirstSemanticOutputClearsIt()",
+      "suite": "AgentActivityHeaderPhaseTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/onlyActualRequestReceiptShowsWaitingAndFirstSemanticOutputClearsIt()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "Calls the profile/title/projection/composer or containing AgentRun Codable path affected by the new profile metadata and display activity contract; reexecute instead of assuming nil metadata equivalence.",
+      "function_signature_body_sha256": "e23d9ede376f78fdccaf2a849250f2d7b268c66bfdfabe48f23beef810fd3f8c",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "test_file_sha256_at_target": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/olderStoredRunsDoNotInventPendingRequestReceipt()",
+      "suite": "AgentActivityHeaderPhaseTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/olderStoredRunsDoNotInventPendingRequestReceipt()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "Calls the profile/title/projection/composer or containing AgentRun Codable path affected by the new profile metadata and display activity contract; reexecute instead of assuming nil metadata equivalence.",
+      "function_signature_body_sha256": "9bc5b90a2191ebb3a98adae2afce1e907d34e677ce3ee55a3668ea0dd7827370",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "test_file_sha256_at_target": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentActivityHeaderPhaseTests/admittedNonTextOutputEndsReasoningWithoutDemotingTheFinalAnswer()",
+      "suite": "AgentActivityHeaderPhaseTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/admittedNonTextOutputEndsReasoningWithoutDemotingTheFinalAnswer()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "Calls the profile/title/projection/composer or containing AgentRun Codable path affected by the new profile metadata and display activity contract; reexecute instead of assuming nil metadata equivalence.",
+      "function_signature_body_sha256": "a94b23a747205fb7a96d5e0aaf7eab8d9aa30d5a65585edbd08a703723cbd0c7",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "test_file_sha256_at_target": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/locationApprovalShowsRealScopeWithoutTrustingProgressNarrative()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/locationApprovalShowsRealScopeWithoutTrustingProgressNarrative()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "The tested call/approval/round/profile/composer or containing AgentRun Codable contract now includes optional icon metadata. Reexecute this domain obligation; do not assume an absent icon leaves the changed contract equivalent.",
+      "function_signature_body_sha256": "2b7f506efa07c82174d5ed5748be832557a3e79cd5e40ff9c0e10c90147acbe6",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/approvalSummaryNeverHidesArgumentsThatNeedReview()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/approvalSummaryNeverHidesArgumentsThatNeedReview()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "The tested call/approval/round/profile/composer or containing AgentRun Codable contract now includes optional icon metadata. Reexecute this domain obligation; do not assume an absent icon leaves the changed contract equivalent.",
+      "function_signature_body_sha256": "9dd0a03c5628737fe3c25455a8d03db56efc11ca87193eff04493cf508bc5668",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/attributedSingletonRoundsKeepTheirHierarchyWithoutInventingLegacyParents()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/attributedSingletonRoundsKeepTheirHierarchyWithoutInventingLegacyParents()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "The tested call/approval/round/profile/composer or containing AgentRun Codable contract now includes optional icon metadata. Reexecute this domain obligation; do not assume an absent icon leaves the changed contract equivalent.",
+      "function_signature_body_sha256": "730a026cfa3c71cc6fc5e1060fd4426acb494a77ddc131711ee389abac98f0e0",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/exactBuiltInOperationsKeepTheirOwnActivityPresentation()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/exactBuiltInOperationsKeepTheirOwnActivityPresentation()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "The tested call/approval/round/profile/composer or containing AgentRun Codable contract now includes optional icon metadata. Reexecute this domain obligation; do not assume an absent icon leaves the changed contract equivalent.",
+      "function_signature_body_sha256": "40ed57f90d1b9e192a7927ee5d78aa9671350c3a157f42abb2d678d1182c4b7c",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/emptySubsecondReasoningDoesNotCreateAZeroSecondHistoryRow()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/emptySubsecondReasoningDoesNotCreateAZeroSecondHistoryRow()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "The tested call/approval/round/profile/composer or containing AgentRun Codable contract now includes optional icon metadata. Reexecute this domain obligation; do not assume an absent icon leaves the changed contract equivalent.",
+      "function_signature_body_sha256": "0f01ad5e9791a7ba1b76d9175a07d3813283da1aefc2aee79f2d46bdc0bd43e6",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/chatCompletionsSourceLinksPersistWithoutProviderAnnotationEvents()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/chatCompletionsSourceLinksPersistWithoutProviderAnnotationEvents()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "The tested call/approval/round/profile/composer or containing AgentRun Codable contract now includes optional icon metadata. Reexecute this domain obligation; do not assume an absent icon leaves the changed contract equivalent.",
+      "function_signature_body_sha256": "edfcc167c5782e127df02dc4e8e75b45f3860202017b3d860733d20d69762946",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/sourceURLAliasesSurviveEvidenceDeduplicationAndCodable()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/sourceURLAliasesSurviveEvidenceDeduplicationAndCodable()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "Only unchanged AgentEvidenceAccumulator/AgentEvidenceItem/Deduplicator and their Codable array are executed; no ToolPresentationProfile, composer, header or image loader is used.",
+      "function_signature_body_sha256": "7427450f1c2161719237d4871ab193a0b0f670d5dce82daa35f4a7d86f190bad",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/sourceURLAliasesStayBoundedAndKeepOriginalDestination()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/sourceURLAliasesStayBoundedAndKeepOriginalDestination()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "Only unchanged evidence deduplication and alias bounds are exercised.",
+      "function_signature_body_sha256": "6000ceec6bb4b24e194989732f8d9743c08bfd83d84c79569ff8a04310b2f520",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/sourceURLAliasesKeepClaimAnchorsAndScopedProjectionAfterReplay()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/sourceURLAliasesKeepClaimAnchorsAndScopedProjectionAfterReplay()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "The tested call/approval/round/profile/composer or containing AgentRun Codable contract now includes optional icon metadata. Reexecute this domain obligation; do not assume an absent icon leaves the changed contract equivalent.",
+      "function_signature_body_sha256": "df78e51293f8aacd1a7df684833aea7e6a1c6c7338d27efc3fe0cab1525b3798",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/citationEventBesideItsTextDeltaKeepsTheNewTranscriptOwner()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/citationEventBesideItsTextDeltaKeepsTheNewTranscriptOwner()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "The tested call/approval/round/profile/composer or containing AgentRun Codable contract now includes optional icon metadata. Reexecute this domain obligation; do not assume an absent icon leaves the changed contract equivalent.",
+      "function_signature_body_sha256": "e0739b0858fcf92e6f3a41189e85d737e7ecbd2444b8784d1417baa543896b94",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/orderedMarkdownFragmentRetainsOnlyItsVerifiedAnchors()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/orderedMarkdownFragmentRetainsOnlyItsVerifiedAnchors()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "The tested call/approval/round/profile/composer or containing AgentRun Codable contract now includes optional icon metadata. Reexecute this domain obligation; do not assume an absent icon leaves the changed contract equivalent.",
+      "function_signature_body_sha256": "72c674635a044a07d3e95db3c77261926d9f931e8c7310446f905ca561f73614",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/legacyResourcesRequireExplicitSourceLinksAndNeverGuessNumericIndexes()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/legacyResourcesRequireExplicitSourceLinksAndNeverGuessNumericIndexes()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "Only unchanged Resource/HanlinMessageCitations/HanlinCitationProjection/HanlinSourceReference logic is executed; no image fetch/view is mounted.",
+      "function_signature_body_sha256": "0c0b6503e1bb2050f6d919be114f5cfea333cd382eea4b69383c329f10a53989",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/suppliedResourceFaviconSurvivesCanonicalSourceAndInlineAliasProjection()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/suppliedResourceFaviconSurvivesCanonicalSourceAndInlineAliasProjection()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "Only unchanged pure evidence/resource URL-to-citation projection is executed, not the extracted UI thumbnail loader.",
+      "function_signature_body_sha256": "c4f1f8e9c972f2577f452a695fde262af8c9237fc6b039c53ea31db01eb080b4",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/missingOrUnsafeResourceFaviconsKeepTheExistingDefault()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/missingOrUnsafeResourceFaviconsKeepTheExistingDefault()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "Only unchanged pure source-reference URL admission/fallback projection is executed, not HanlinToolIcon or either native image consumer.",
+      "function_signature_body_sha256": "748a9b60062812c3042f9dfa9338cc2007016c43cac5c9afc3136cfe1bc39bc9",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/providerCitationsKeepTheOriginalAnswerAndCannotBorrowChangedText()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/providerCitationsKeepTheOriginalAnswerAndCannotBorrowChangedText()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "The tested call/approval/round/profile/composer or containing AgentRun Codable contract now includes optional icon metadata. Reexecute this domain obligation; do not assume an absent icon leaves the changed contract equivalent.",
+      "function_signature_body_sha256": "ab8b5a37ffc45575b265a457e434b207cd00e32cbd7075dd074386f8ce6cdbf4",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/actualApprovalKeepsCallIdentityAndDenialStaysNeutralThroughFailureReplay()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/actualApprovalKeepsCallIdentityAndDenialStaysNeutralThroughFailureReplay()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "The tested call/approval/round/profile/composer or containing AgentRun Codable contract now includes optional icon metadata. Reexecute this domain obligation; do not assume an absent icon leaves the changed contract equivalent.",
+      "function_signature_body_sha256": "97857b27739dbf8ad2b9d46002e0e35af70ed205c6dc66e2b737687e82a12100",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/richToolFollowupPreservesPriorAnswerAndStableActivityIdentity()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/richToolFollowupPreservesPriorAnswerAndStableActivityIdentity()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "The tested call/approval/round/profile/composer or containing AgentRun Codable contract now includes optional icon metadata. Reexecute this domain obligation; do not assume an absent icon leaves the changed contract equivalent.",
+      "function_signature_body_sha256": "01e998bd75a126804970a2ed6bb39576312e3615803fa95f8c7345864df8fda2",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/asyncCancellationCannotClearANewerRunWhileRecorderDrains()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/asyncCancellationCannotClearANewerRunWhileRecorderDrains()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "The unchanged AgentRunLifecycleCoordinator, RecorderDrainGate and recorder start/complete methods own UUID/task/recorder state; no AgentRun/ToolPresentationProfile or tool execution path is constructed or serialized.",
+      "function_signature_body_sha256": "e75ed6320174056dd59af9038b0212ec0b1acd54f1b1e293caff58323388e7fa",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/suspendedBeginCannotReclaimOwnershipFromANewerRun()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/suspendedBeginCannotReclaimOwnershipFromANewerRun()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "The unchanged coordinator, gate and recorder start/complete path test UUID ownership across suspension. The new MCP profile/metadata code is not called.",
+      "function_signature_body_sha256": "a39a6201fcca74223507a3aa274fcd4912b9658d386696b5378277deac974a5a",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/actualRoundMarkersOwnReasoningAndParallelSameNameTools()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/actualRoundMarkersOwnReasoningAndParallelSameNameTools()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "The tested call/approval/round/profile/composer or containing AgentRun Codable contract now includes optional icon metadata. Reexecute this domain obligation; do not assume an absent icon leaves the changed contract equivalent.",
+      "function_signature_body_sha256": "d3fa25c18295b2d287f70885a1031bb34908977c40401e24aecd74e77a6a56b2",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/legacyActivitiesNeverAcquireAParentFromTheirTimeOrName()",
+      "suite": "AgentRoundPresentationTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/legacyActivitiesNeverAcquireAParentFromTheirTimeOrName()",
+      "target_status": "INVALIDATED_REEXECUTE",
+      "reason": "The tested call/approval/round/profile/composer or containing AgentRun Codable contract now includes optional icon metadata. Reexecute this domain obligation; do not assume an absent icon leaves the changed contract equivalent.",
+      "function_signature_body_sha256": "1c22c489410e2bad67389e56a576f6ceddf193b3765acf2ddb45308e99039f37",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "848a6c6b61240d71e47f74b7db3e4d30d9743440e68603e1c0e070195a7a37b3",
+      "test_file_sha256_at_target": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/positiveGeometryWithoutAWindowCannotPositionATranscript()",
+      "suite": "ChatScrollViewHandleTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/positiveGeometryWithoutAWindowCannotPositionATranscript()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "The handle, layout/controller dependencies and 11 UIWindow/UIScrollView fixture bodies are byte-identical. No changed profile/composer/header/image code is invoked.",
+      "function_signature_body_sha256": "83db66bb8da5b652dfa2192c52f4af710ae4ac2bd1b3790825b60a73cf34991d",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "test_file_sha256_at_target": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/everyReadRechecksWindowDimensionsAndConversation()",
+      "suite": "ChatScrollViewHandleTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/everyReadRechecksWindowDimensionsAndConversation()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "The handle, layout/controller dependencies and 11 UIWindow/UIScrollView fixture bodies are byte-identical. No changed profile/composer/header/image code is invoked.",
+      "function_signature_body_sha256": "316dd6567b5a81d103c731dcbec3a19ce07766b59cd42e5d260655d2abbfaf28",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "test_file_sha256_at_target": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/detachAndReplacementInvalidateCapturedRequestsWithoutRetainingViews()",
+      "suite": "ChatScrollViewHandleTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/detachAndReplacementInvalidateCapturedRequestsWithoutRetainingViews()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "The handle, layout/controller dependencies and 11 UIWindow/UIScrollView fixture bodies are byte-identical. No changed profile/composer/header/image code is invoked.",
+      "function_signature_body_sha256": "a4c1b692f98c9e6c2dc1b983031d8aadb3c899f2071d608b09fa7d990a358bd1",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "test_file_sha256_at_target": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/lateWindowAttachmentDeliversOneDeferredReadinessCallback()",
+      "suite": "ChatScrollViewHandleTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/lateWindowAttachmentDeliversOneDeferredReadinessCallback()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "The handle, layout/controller dependencies and 11 UIWindow/UIScrollView fixture bodies are byte-identical. No changed profile/composer/header/image code is invoked.",
+      "function_signature_body_sha256": "88c7fe623d69abab7c175abab5d522558083b47d24d736e367f8d619d2be8c75",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "test_file_sha256_at_target": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/cancelledReadinessCannotRestoreAPreviousConversation()",
+      "suite": "ChatScrollViewHandleTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/cancelledReadinessCannotRestoreAPreviousConversation()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "The handle, layout/controller dependencies and 11 UIWindow/UIScrollView fixture bodies are byte-identical. No changed profile/composer/header/image code is invoked.",
+      "function_signature_body_sha256": "b9503ed386fbc7e6cc5738ce784f13d350bd5549cc2e8490453708a8cac5c49c",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "test_file_sha256_at_target": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/resizedViewportRejectsARequestBeforeTheNextBridgeCallback()",
+      "suite": "ChatScrollViewHandleTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/resizedViewportRejectsARequestBeforeTheNextBridgeCallback()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "The handle, layout/controller dependencies and 11 UIWindow/UIScrollView fixture bodies are byte-identical. No changed profile/composer/header/image code is invoked.",
+      "function_signature_body_sha256": "d4e88c386290e16319b19e6d0c857dbb379a49e27e055895733320fef99c097c",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "test_file_sha256_at_target": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/movingTheSameScrollViewToAnotherWindowInvalidatesQueuedPositioning()",
+      "suite": "ChatScrollViewHandleTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/movingTheSameScrollViewToAnotherWindowInvalidatesQueuedPositioning()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "The handle, layout/controller dependencies and 11 UIWindow/UIScrollView fixture bodies are byte-identical. No changed profile/composer/header/image code is invoked.",
+      "function_signature_body_sha256": "23559f2dc54b11b559d833fc33c55e9677c8c59b878e4ba524777552197bbd98",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "test_file_sha256_at_target": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/contentGrowthAndUserScrollingKeepTheViewportLifetime()",
+      "suite": "ChatScrollViewHandleTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/contentGrowthAndUserScrollingKeepTheViewportLifetime()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "The handle, layout/controller dependencies and 11 UIWindow/UIScrollView fixture bodies are byte-identical. No changed profile/composer/header/image code is invoked.",
+      "function_signature_body_sha256": "6200097a746b639643145af5a14d3795ea23b2fc47e66a0aea396298f1eb8f7e",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "test_file_sha256_at_target": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/outgoingConversationCallbacksCannotUnbindOrCancelTheCurrentViewport()",
+      "suite": "ChatScrollViewHandleTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/outgoingConversationCallbacksCannotUnbindOrCancelTheCurrentViewport()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "The handle, layout/controller dependencies and 11 UIWindow/UIScrollView fixture bodies are byte-identical. No changed profile/composer/header/image code is invoked.",
+      "function_signature_body_sha256": "92e4fc7558b4b62827a2b6ad66314e96861cd064b4842942effbf2f6ab80eeb6",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "test_file_sha256_at_target": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/deferredReadinessRechecksResizeAndCanRecoverAtTheNewViewport()",
+      "suite": "ChatScrollViewHandleTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/deferredReadinessRechecksResizeAndCanRecoverAtTheNewViewport()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "The handle, layout/controller dependencies and 11 UIWindow/UIScrollView fixture bodies are byte-identical. No changed profile/composer/header/image code is invoked.",
+      "function_signature_body_sha256": "0998b4ee17a91733f9a5b9d92b637d9161f40be86e77207858426c270dfe6451",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "test_file_sha256_at_target": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/ChatScrollViewHandleTests/incomingBindingBeforeActivationDoesNotNeedAnotherBridgeCallback()",
+      "suite": "ChatScrollViewHandleTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/incomingBindingBeforeActivationDoesNotNeedAnotherBridgeCallback()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "The handle, layout/controller dependencies and 11 UIWindow/UIScrollView fixture bodies are byte-identical. No changed profile/composer/header/image code is invoked.",
+      "function_signature_body_sha256": "f4216057067d99342ee5f5c99a2bc8e782463e84b98de8885ee6ade6f23b2509",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "test_file_sha256_at_target": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/CurrentLocationToolTests/validCoordinatesSurviveUnavailableAddress(emptyAddress:)",
+      "suite": "CurrentLocationToolTests",
+      "invocation_count": 2,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/validCoordinatesSurviveUnavailableAddress(emptyAddress:)",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "Original MapServices/WeatherServices and real legacy dispatcher branches, APIManager initializer, NativeToolResult and in-memory ToolKeys fixtures are unchanged. These branches do not prepare an MCP authority, invoke a model engine or construct ToolPresentationProfile; the optional engine closure is not executed.",
+      "function_signature_body_sha256": "109211670df33731ce7cb65346d4c98749959d1334006e1930ec42185d4cf55f",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "ec0bff66f8bea7b6296622975ccb4f24d46d24cd47a33737b716b26f637069fb",
+      "test_file_sha256_at_target": "ec0bff66f8bea7b6296622975ccb4f24d46d24cd47a33737b716b26f637069fb",
+      "original_arguments": [
+        {
+          "value": "false",
+          "result": "Passed",
+          "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/validCoordinatesSurviveUnavailableAddress(emptyAddress:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+        },
+        {
+          "value": "true",
+          "result": "Passed",
+          "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/validCoordinatesSurviveUnavailableAddress(emptyAddress:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+        }
+      ]
+    },
+    {
+      "test_identifier": "AI_HLYTests/CurrentLocationToolTests/addressLookupCancellationRemainsCancellation()",
+      "suite": "CurrentLocationToolTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/addressLookupCancellationRemainsCancellation()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "Original MapServices/WeatherServices and real legacy dispatcher branches, APIManager initializer, NativeToolResult and in-memory ToolKeys fixtures are unchanged. These branches do not prepare an MCP authority, invoke a model engine or construct ToolPresentationProfile; the optional engine closure is not executed.",
+      "function_signature_body_sha256": "e6618126444b2aa5f36a29d251627d7b8c6be30ddf4f55cf4a93e0ffb67132a6",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "ec0bff66f8bea7b6296622975ccb4f24d46d24cd47a33737b716b26f637069fb",
+      "test_file_sha256_at_target": "ec0bff66f8bea7b6296622975ccb4f24d46d24cd47a33737b716b26f637069fb",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/CurrentLocationToolTests/deniedLocationDoesNotAttemptAddressLookup()",
+      "suite": "CurrentLocationToolTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/deniedLocationDoesNotAttemptAddressLookup()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "Original MapServices/WeatherServices and real legacy dispatcher branches, APIManager initializer, NativeToolResult and in-memory ToolKeys fixtures are unchanged. These branches do not prepare an MCP authority, invoke a model engine or construct ToolPresentationProfile; the optional engine closure is not executed.",
+      "function_signature_body_sha256": "8cecc8efc4d8dff6080b645cdc25e4b35518a522554de98708821924ae634ec0",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "ec0bff66f8bea7b6296622975ccb4f24d46d24cd47a33737b716b26f637069fb",
+      "test_file_sha256_at_target": "ec0bff66f8bea7b6296622975ccb4f24d46d24cd47a33737b716b26f637069fb",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/CurrentLocationToolTests/currentLocationAppendsToExistingMapPayload()",
+      "suite": "CurrentLocationToolTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/currentLocationAppendsToExistingMapPayload()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "Original MapServices/WeatherServices and real legacy dispatcher branches, APIManager initializer, NativeToolResult and in-memory ToolKeys fixtures are unchanged. These branches do not prepare an MCP authority, invoke a model engine or construct ToolPresentationProfile; the optional engine closure is not executed.",
+      "function_signature_body_sha256": "46a10cd5d4d443bd4a59548c47470f64a1b7ede84260b8a1d261b32d99fc9739",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "ec0bff66f8bea7b6296622975ccb4f24d46d24cd47a33737b716b26f637069fb",
+      "test_file_sha256_at_target": "ec0bff66f8bea7b6296622975ccb4f24d46d24cd47a33737b716b26f637069fb",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/CurrentLocationToolTests/currentLocationFailureAndCancellationAreTruthful(cancelled:)",
+      "suite": "CurrentLocationToolTests",
+      "invocation_count": 2,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/currentLocationFailureAndCancellationAreTruthful(cancelled:)",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "Original MapServices/WeatherServices and real legacy dispatcher branches, APIManager initializer, NativeToolResult and in-memory ToolKeys fixtures are unchanged. These branches do not prepare an MCP authority, invoke a model engine or construct ToolPresentationProfile; the optional engine closure is not executed.",
+      "function_signature_body_sha256": "82d33a8434e477f171afe7086ddde89738d764d926b4f325798b860b7d219cba",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "ec0bff66f8bea7b6296622975ccb4f24d46d24cd47a33737b716b26f637069fb",
+      "test_file_sha256_at_target": "ec0bff66f8bea7b6296622975ccb4f24d46d24cd47a33737b716b26f637069fb",
+      "original_arguments": [
+        {
+          "value": "false",
+          "result": "Passed",
+          "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/currentLocationFailureAndCancellationAreTruthful(cancelled:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+        },
+        {
+          "value": "true",
+          "result": "Passed",
+          "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/currentLocationFailureAndCancellationAreTruthful(cancelled:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+        }
+      ]
+    },
+    {
+      "test_identifier": "AI_HLYTests/CurrentLocationToolTests/weatherFailuresAreNotReportedAsSuccess(configuredService:)",
+      "suite": "CurrentLocationToolTests",
+      "invocation_count": 2,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/weatherFailuresAreNotReportedAsSuccess(configuredService:)",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "Original MapServices/WeatherServices and real legacy dispatcher branches, APIManager initializer, NativeToolResult and in-memory ToolKeys fixtures are unchanged. These branches do not prepare an MCP authority, invoke a model engine or construct ToolPresentationProfile; the optional engine closure is not executed.",
+      "function_signature_body_sha256": "6fbf60191cc1e03772f3c465db0dfec9cac3579d2b471d53ead945c1f0c3dfcc",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "ec0bff66f8bea7b6296622975ccb4f24d46d24cd47a33737b716b26f637069fb",
+      "test_file_sha256_at_target": "ec0bff66f8bea7b6296622975ccb4f24d46d24cd47a33737b716b26f637069fb",
+      "original_arguments": [
+        {
+          "value": "false",
+          "result": "Passed",
+          "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/weatherFailuresAreNotReportedAsSuccess(configuredService:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa"
+        },
+        {
+          "value": "true",
+          "result": "Passed",
+          "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/weatherFailuresAreNotReportedAsSuccess(configuredService:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b"
+        }
+      ]
+    },
+    {
+      "test_identifier": "AI_HLYTests/CurrentLocationToolTests/alreadyCancelledRequestDoesNotReportSuccess(toolName:)",
+      "suite": "CurrentLocationToolTests",
+      "invocation_count": 2,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/alreadyCancelledRequestDoesNotReportSuccess(toolName:)",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "Original MapServices/WeatherServices and real legacy dispatcher branches, APIManager initializer, NativeToolResult and in-memory ToolKeys fixtures are unchanged. These branches do not prepare an MCP authority, invoke a model engine or construct ToolPresentationProfile; the optional engine closure is not executed.",
+      "function_signature_body_sha256": "f1167c560fa12e179d35118e037471dc1c878c75198759ecc00d4dfd5e9e8057",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "ec0bff66f8bea7b6296622975ccb4f24d46d24cd47a33737b716b26f637069fb",
+      "test_file_sha256_at_target": "ec0bff66f8bea7b6296622975ccb4f24d46d24cd47a33737b716b26f637069fb",
+      "original_arguments": [
+        {
+          "value": "\"get_current_location\"",
+          "result": "Passed",
+          "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/alreadyCancelledRequestDoesNotReportSuccess(toolName:)?args=13e44d7b5a6bc3c42124c5666d90a804b1d4a750064fd2e4e4f8790233ec38a4"
+        },
+        {
+          "value": "\"query_weather\"",
+          "result": "Passed",
+          "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CurrentLocationToolTests/alreadyCancelledRequestDoesNotReportSuccess(toolName:)?args=1211e442284c5748a078ff6263addcb2dedd42e0047e2e14e47226ae36d83950"
+        }
+      ]
+    },
+    {
+      "test_identifier": "AI_HLYTests/HanlinModelDisplayNameTests/removesOnlyTheGeneratedLegacyDisplaySuffix()",
+      "suite": "HanlinModelDisplayNameTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinModelDisplayNameTests/removesOnlyTheGeneratedLegacyDisplaySuffix()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "Both tests and the Foundation string/UUID implementation are byte-identical. No changed icon/metadata code or modified catalog key is used.",
+      "function_signature_body_sha256": "b916265c6b9b8d2ee86f8894bbf746842f372a9120d73badf46a39f8f70d5c5d",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "e8a0ce9249d6093a7b53d6a167feadd2292e191ac317fa9c34750f58013a7106",
+      "test_file_sha256_at_target": "e8a0ce9249d6093a7b53d6a167feadd2292e191ac317fa9c34750f58013a7106",
+      "original_arguments": []
+    },
+    {
+      "test_identifier": "AI_HLYTests/HanlinModelDisplayNameTests/keepsUserLabelsAndUsesTheRoutingNameOnlyAsFallback()",
+      "suite": "HanlinModelDisplayNameTests",
+      "invocation_count": 1,
+      "baseline_status": "EXECUTED_PASS",
+      "baseline_result_node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinModelDisplayNameTests/keepsUserLabelsAndUsesTheRoutingNameOnlyAsFallback()",
+      "target_status": "ELIGIBLE_REUSE_PENDING_ENVIRONMENT_COMPARISON",
+      "reason": "Both tests and the Foundation string/UUID implementation are byte-identical. No changed icon/metadata code or modified catalog key is used.",
+      "function_signature_body_sha256": "1b42e4c1ef7a9295da4575e3a9426804325874be95e7ba38c1560b6fa97a67a8",
+      "function_signature_body_unchanged": true,
+      "test_file_sha256_at_139c": "e8a0ce9249d6093a7b53d6a167feadd2292e191ac317fa9c34750f58013a7106",
+      "test_file_sha256_at_target": "e8a0ce9249d6093a7b53d6a167feadd2292e191ac317fa9c34750f58013a7106",
+      "original_arguments": []
+    }
+  ],
+  "new_unit_tests": [
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/mcpDeclaredIconsPreferToolThenItsServerForCurrentTheme()",
+      "status": "NOT_RUN",
+      "function_signature_body_sha256": "d91f0c650c5a151c50d0a9b8a750aa41cde099f476c80207b0c7ac1a150f3c7e"
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/mcpUnsafeAndMissingIconsKeepServerOrSystemSymbolFallback()",
+      "status": "NOT_RUN",
+      "function_signature_body_sha256": "75708b5956d034391ac157e220471c9225d36bd1ecc6c3ea712d3690c79f8bcf"
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/mcpIconMetadataPreservesLegacyCodableAndSkipsMalformedDecoration()",
+      "status": "NOT_RUN",
+      "function_signature_body_sha256": "d35b8c2396bcc61d8a7f809dce7f93747184dd616a35ccf2d62a6812643a0ea3"
+    },
+    {
+      "test_identifier": "AI_HLYTests/AgentRoundPresentationTests/mcpIconsSurviveCanonicalCallPersistenceAndActivityProjectionWithoutChangingAuthority()",
+      "status": "NOT_RUN",
+      "function_signature_body_sha256": "4186c0b19c6a9c2acfea6b28c82b76d35413e8b590007c319d94bd85b964d8a6"
+    }
+  ],
+  "native_ui_decisions": [
+    {
+      "test_identifier": "AI_HLYUITests/AgentRuntimeConversationUITests/testOriginalChatActivitySurvivesKeyboardRotationAndConversationReattachment",
+      "last_requested_source": "951cd4f5d212a3997ac72a7b88c83cf64b5d79b6",
+      "last_requested_run": "45073227781",
+      "current_run_result": "NOT_OBSERVED_BY_THIS_REVIEW_ROOT_OWNS_WATCHER",
+      "target_status": "NEEDS_FRESH_EXECUTION_AT_ICON_SOURCE",
+      "test_body_unchanged_since_951c": true,
+      "reason": "Actual activity rows and header now carry/render icons and a keyed async icon task. This native geometry/disclosure/reattachment obligation must execute at final source, even if its Python fixture uses the SF fallback."
+    },
+    {
+      "test_identifier": "AI_HLYUITests/AgentRuntimeConversationUITests/testNativePartialSelectionSaveAndOriginalLongPressPreview",
+      "last_requested_source": "951cd4f5d212a3997ac72a7b88c83cf64b5d79b6",
+      "last_requested_run": "45073227781",
+      "current_run_result": "NOT_OBSERVED_BY_THIS_REVIEW_ROOT_OWNS_WATCHER",
+      "target_status": "NEEDS_FRESH_EXECUTION_AT_ICON_SOURCE",
+      "test_body_unchanged_since_951c": true,
+      "reason": "Actual Markdown component now references the extracted shared loader and the containing chat surface has a changed activity header. Native interaction/layout/timing independence is not established by a model-only review; do not infer a final-source pass from the no-icon fixture branch."
+    },
+    {
+      "test_identifier": "AI_HLYUITests/AgentRuntimeConversationUITests/testUI03SearchMessageAndDeduplicatedCitations",
+      "last_requested_source": "951cd4f5d212a3997ac72a7b88c83cf64b5d79b6",
+      "last_requested_run": "45073227781",
+      "current_run_result": "NOT_OBSERVED_BY_THIS_REVIEW_ROOT_OWNS_WATCHER",
+      "target_status": "NEEDS_FRESH_EXECUTION_AT_ICON_SOURCE",
+      "test_body_unchanged_since_951c": true,
+      "reason": "Both actual header and inline citation image-loading dependency changed. Reexecute the original citation chip/sheet/footer interaction at final source."
+    },
+    {
+      "test_identifier": "AI_HLYUITests/AgentRuntimeConversationUITests/testUI03HebrewRTLSearchMessageAndDeduplicatedCitations",
+      "last_requested_source": "951cd4f5d212a3997ac72a7b88c83cf64b5d79b6",
+      "last_requested_run": "45073227781",
+      "current_run_result": "NOT_OBSERVED_BY_THIS_REVIEW_ROOT_OWNS_WATCHER",
+      "target_status": "NEEDS_FRESH_EXECUTION_AT_ICON_SOURCE",
+      "test_body_unchanged_since_951c": true,
+      "reason": "Same shared header/loader changes, plus real RTL/Hebrew card and source-chip geometry. Reexecute; a passing English case cannot replace this obligation."
+    }
+  ],
+  "two_weather_methods": {
+    "selectors": [
+      "AI_HLYTests/ProductionSystemSkillsTests/weatherSkillResolvesCoordinatesBeforeQuerying()",
+      "AI_HLYTests/ProductionSystemSkillsTests/weatherSkillRespectsDisabledMaps()"
+    ],
+    "status": "AWAIT_ACTUAL_951C_RESULT",
+    "source_unaffected_by_icons": true,
+    "reason": "Both methods only inspect unchanged SystemSkillsProvider weather instruction/tool-ID descriptors. They do not use icon-bearing ToolPresentationProfile or native views.",
+    "rule": "If both actually pass in run45073227781 with matching receipts, retain those authentic passes. Otherwise add missing/failed methods to the next run; no credit from run45067928645 where they did not execute."
+  },
+  "selector_file": {
+    "path": "/workspace/scratch/2453c7f51f3d/native-mcp-icon-selectors.txt",
+    "sha256": "669f9f47bb90f8b328e8f54b445c2db1ee13e8e2a618575baf3bbf5fa86bc64f",
+    "method_signature_note": "All Swift Testing unit selectors use full function () signatures to avoid the prior silent nonexecution."
+  },
+  "pipeline_review": {
+    "finding": "No concrete metadata drop or authority change found in the completed patch.",
+    "trace": [
+      "MCPClientSession.connect records up to8 icons from the exact connected serverInfo; loadTools admits current tool.icons and server icons into MCPToolDescriptor.",
+      "MCPToolBridge.presentationProfile assigns descriptor.presentationIcons to activity.icons.",
+      "HanlinCanonicalToolAuthority stores that complete profile in its candidate/backend target; canonical descriptor projection/revision/authority does not derive from artwork.",
+      "AssistantToolBridge.PreparedTools.presentationProfile only fills canonical fields; ToolPresentationProfileRegistry returns explicit profiles unchanged.",
+      "HanlinAISDKToolAdapter captures the profile for its canonical executor and AgentToolCall; AgentEventAccumulator persists it on actual call/execution steps.",
+      "ToolActivityPresentationDescriptor adds an optional Codable field; old missing fields decode nil. New icon-set decoding skips malformed decoration entries and bounds admission/replay.",
+      "AgentActivityComposer takes the first nonnil profile icons within that call lifecycle group, preserving call grouping; AgentDisplayActivity carries it to activityRow and HanlinToolActivityHeader.",
+      "The header chooses matching/neutral tool then server artwork; same SF slot remains during failure; the task is keyed by candidate URLs and checks cancellation/current candidates before state publication."
+    ],
+    "reconnect": "MCPRuntimeController creates a fresh MCPClientSession per generation, replaces its catalog only for the current generation and removes old records on stop/failure. A new handshake assigns serverInfo.icons including nil; no old server artwork is consulted.",
+    "loading": "Shared Data/ImageIO loader retains128KiB stream cap,32px thumbnail,PNG normalization,cookies disabled,and6-second URLRequest timeout; adds central HTTPS URL admission and redirect guard. No claim that this request timeout is a separately enforced absolute resource deadline.",
+    "native_limit": "Network/decode/render behavior is not authenticated by the four metadata unit tests. Shared-header/loader native impact is classified for fresh UI execution rather than assumed equivalent."
+  },
+  "final_reuse_conditions": [
+    {
+      "check": "Compare current authenticated native receipt source SHA with target SHA and final source tree. Any later code change requires review from this evidence source again.",
+      "where": "Latest 06-current-unit-xctestrun.json / 08-current-unit-xctestrun-admission.json / 06-diagnostics-build-provenance.json."
+    },
+    {
+      "check": "Match Xcode 27.2 build 27B52, Swift 6 compiler mode, Debug/testability/defines/optimization, iOS Simulator SDK 27.2 and arm64 app/unit compile target. If changed, source equivalence alone cannot authorize reuse.",
+      "where": "Latest 01-environment.log and 06-xcodebuild-simulator.log compile commands; current receipt context."
+    },
+    {
+      "check": "Match simulator OS 27.2 build 24B8117 and iPad Pro 13-inch (M5) device class, architecture and relevant locale/input environment. Run-owned UUID/device name must change legitimately and are not semantic equality requirements.",
+      "where": "Latest verified-simulator-environment.json and result devices; latest xctestrun language/region/environment settings."
+    },
+    {
+      "check": "Match Package.resolved and resolved dependency revisions, frozen Runtime native artifact/Host closure, relevant generated build inputs, entitlements and compiler/link settings. Source-specific provenance/run/selector digests can differ; inspect differences rather than suppressing them.",
+      "where": "Latest 06-diagnostics-build-provenance.json, 02-prepare-runtime-core.log, xctestrun seal/admission, build command and unchanged tracked build recipe."
+    },
+    {
+      "check": "Only after equivalent environment/runtime inputs are verified, label only the 32 source-eligible original functions / 36 invocations REUSED_VERIFIED_PASS, retaining their original run and source. The other 23 original functions are INVALIDATED_REEXECUTE and require authentic fresh passes, alongside the 4 new unit functions and 4 native UI obligations. Never label reused cases EXECUTED_PASS at the target.",
+      "where": "Final acceptance evidence manifest, linked to this JSON and original raw results."
+    },
+    {
+      "check": "Two missing ProductionSystemSkills methods and all affected/failed/unknown native UI selectors still need authentic fresh passes. Their result cannot be inferred from these five suites.",
+      "where": "Latest 08-downstream-unit-test-results.json / 08-nativescript-production-ui-test-results.json plus existing completeness verifier."
+    }
+  ],
+  "review_actions": {
+    "repository_edits": false,
+    "ci_polling": false,
+    "ci_dispatch": false,
+    "tests_executed": false
+  }
+}

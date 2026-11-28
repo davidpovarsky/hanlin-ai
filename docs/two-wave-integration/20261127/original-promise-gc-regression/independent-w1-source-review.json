@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w1_review_resume",
+  "recordedAtUTC": "2026-11-27T09:13:16.278167+00:00",
+  "sourceSHA256": "2f7f8d4bccb94e9f2957067d48ac9e96bd7ababf9491788bd71f33b7f0623394",
+  "sourceValidationSHA256": "9bdd47ebc59a89eed8a77500b4b21176c0af31ae972bcd38eb7380e4687e05e0",
+  "status": "APPROVED_FOR_OLD_SOURCE_NATIVE_DIAGNOSTIC",
+  "actualProductionPromiseSHA256": "13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5",
+  "reviewed": [
+    "All 165 candidate lines and exact original session init/onJavaScriptQueue/cancel/finish.",
+    "Observer is an unowned JSManagedValue; initial JSValue temporaries are drained inside autoreleasepool before collection.",
+    "Actual original session and ScriptWidgetRuntimePromise delivery; controlled native operation retains only guarded completion callbacks.",
+    "Global capture is deleted before collection; callback queue settlement read follows the actual asynchronous delivery on the same original serial lane.",
+    "Actual duplicate/late callback assertions and explicit bridge/callback/context cleanup.",
+    "No original production, existing test body, package configuration or deadline changes."
+  ],
+  "limitations": [
+    "No native test or compiler execution by reviewer.",
+    "A single forced garbage collection may preserve conservative stack/register roots; a non-release assertion alone does not prove a production leak.",
+    "Reproducing a managed-reference reachability defect does not alone prove it caused the retained full-suite HTTP timeout."
+  ],
+  "requiredNextGate": "Mac-owned original-source diagnostic with raw outcomes retained before product repair."
+}

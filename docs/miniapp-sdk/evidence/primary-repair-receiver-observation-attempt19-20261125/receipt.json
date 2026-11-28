@@ -1,0 +1,612 @@
+{
+  "schemaVersion": 1,
+  "kind": "ACTUAL_REPAIR_RECEIVER_OBSERVATION_FAILURE_AND_TEST_SYNCHRONIZATION_CORRECTION",
+  "source": "7bf0c2fdc2f7168d6b98dda66f443ae032fe1c11",
+  "executedSource": "f6bb035f2828ec24a683bb2f5f1dddb27143dc4a",
+  "createdAt": "2026-11-25T14:32:10.666623+00:00",
+  "fileCount": 120,
+  "totalBytes": 3339688,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4231,
+      "sha256": "bbafb21177a0556176369a8770a218743f25b5833bcbf68a040b3947564555a3"
+    },
+    {
+      "path": "actual-receiver-timeline.json",
+      "bytes": 9514,
+      "sha256": "7aa53eb22aa1ed7c5ae42688191138a1a6357b789e93bd43c0fa0c3ab8640fd7"
+    },
+    {
+      "path": "control/focused19-draft/focused-native-child-v7.py",
+      "bytes": 22857,
+      "sha256": "2476dc9960a6067d9615d6d2f105487739eac45e784cbeb8256f2c7579730931"
+    },
+    {
+      "path": "control/focused19-draft/focused19-recovery-controller-v7.py",
+      "bytes": 44396,
+      "sha256": "4570da142e8a61608818f1b4011486c26b53ed727bd694c73a6a3203332101b2"
+    },
+    {
+      "path": "control/focused19-v7-recovery-inputs.json",
+      "bytes": 5664,
+      "sha256": "3666ff8aeccad416ef8e333feed8dd0f662915870dd8642c70a02e8ca54eb82c"
+    },
+    {
+      "path": "focused19-v7-built-inputs/built-input-bindings.json",
+      "bytes": 11843,
+      "sha256": "e2ee9f0368c627b7c4b45ae847a0472aa14e1da91b63957ff53c6b94a15c8e43"
+    },
+    {
+      "path": "focused19-v7-built-inputs/paired-prefix/ai-build.log",
+      "bytes": 378734,
+      "sha256": "eac9e35e7857e68b2bb3dbaed022640908511f4daa0d8e4dd4a73669bb4f6f29"
+    },
+    {
+      "path": "focused19-v7-built-inputs/paired-prefix/commands.jsonl",
+      "bytes": 7849,
+      "sha256": "1613a301b130c8745f76033869bf395e460cb904668b5e19eaa94bdce3dc5077"
+    },
+    {
+      "path": "focused19-v7-built-inputs/source-receipt.json",
+      "bytes": 1787,
+      "sha256": "11a4d2c24d4e209f9744dadbf9f484933e597fdf138dd6914c51353d44ad3678"
+    },
+    {
+      "path": "focused19-v7-built-inputs/staged-inputs.json",
+      "bytes": 5833,
+      "sha256": "f30becc670e67684e8a1399f6c3662ad7fc887e247482eba7854c8cd7b6203bf"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/MiniAppTypeError.hanlinNativeScript",
+      "bytes": 4399,
+      "sha256": "9a2a14be4ad24565bad66a98fc53522229de903acfb8a41b3df18006e81b51c9"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/diagnostics.json",
+      "bytes": 1973,
+      "sha256": "056319b39767858df9cc6f8608754be0d328e372a05424127d6ab19b066f88bc"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/hanlin.authoring.json",
+      "bytes": 1643,
+      "sha256": "e642cc15f45d70c606097c3b62cca6534b9bd53a659b8a28bd8175f7a3e40019"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/hanlin.validation.json",
+      "bytes": 774,
+      "sha256": "a59ff01c18c3a992b45cb055a5af4deca5d1893b3a7b38000e65a77f2c6f30ba"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/nativescript/app/bundle.mjs",
+      "bytes": 30,
+      "sha256": "77326621f8ddcf98a2eccfc7deb128f535b962f1969f914b562a8d3823a7d049"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/nativescript/app/modules/index.mjs",
+      "bytes": 473,
+      "sha256": "385f77fdbb936605a555084d36db281e8b0c81914de51815927a47595bca1844"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/nativescript/app/modules/index.mjs.map",
+      "bytes": 1005,
+      "sha256": "75817b5a5e3fcef325906ef4e6609c122cb17692e83fa94f55a161acfbf72507"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/nativescript/app/package.json",
+      "bytes": 299,
+      "sha256": "9afb516e7e0301554d6dc122a33651d5b15af29e134879f6e616d4da29903345"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/script.json",
+      "bytes": 171,
+      "sha256": "acd6800ca8220fa14546ed28eab6dd1e8676ec8f107d13ccf8535f467bd6b39f"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/source/.hanlin-build/00f137d5-34ea-489f-8a3a-4ee6f4c84638/MiniApp.hanlinNativeScript",
+      "bytes": 7247,
+      "sha256": "74db9d447035e1b8e000394a515093094b99f18a5587be54048a766232306727"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/source/.hanlin-build/00f137d5-34ea-489f-8a3a-4ee6f4c84638/package/hanlin.authoring.json",
+      "bytes": 1643,
+      "sha256": "e642cc15f45d70c606097c3b62cca6534b9bd53a659b8a28bd8175f7a3e40019"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/source/.hanlin-build/00f137d5-34ea-489f-8a3a-4ee6f4c84638/package/hanlin.validation.json",
+      "bytes": 774,
+      "sha256": "a59ff01c18c3a992b45cb055a5af4deca5d1893b3a7b38000e65a77f2c6f30ba"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/source/.hanlin-build/00f137d5-34ea-489f-8a3a-4ee6f4c84638/package/nativescript/app/bundle.mjs",
+      "bytes": 30,
+      "sha256": "77326621f8ddcf98a2eccfc7deb128f535b962f1969f914b562a8d3823a7d049"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/source/.hanlin-build/00f137d5-34ea-489f-8a3a-4ee6f4c84638/package/nativescript/app/modules/index.mjs",
+      "bytes": 473,
+      "sha256": "385f77fdbb936605a555084d36db281e8b0c81914de51815927a47595bca1844"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/source/.hanlin-build/00f137d5-34ea-489f-8a3a-4ee6f4c84638/package/nativescript/app/modules/index.mjs.map",
+      "bytes": 1005,
+      "sha256": "75817b5a5e3fcef325906ef4e6609c122cb17692e83fa94f55a161acfbf72507"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/source/.hanlin-build/00f137d5-34ea-489f-8a3a-4ee6f4c84638/package/nativescript/app/package.json",
+      "bytes": 299,
+      "sha256": "9afb516e7e0301554d6dc122a33651d5b15af29e134879f6e616d4da29903345"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/source/.hanlin-build/00f137d5-34ea-489f-8a3a-4ee6f4c84638/package/script.json",
+      "bytes": 171,
+      "sha256": "acd6800ca8220fa14546ed28eab6dd1e8676ec8f107d13ccf8535f467bd6b39f"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/source/.hanlin-build/00f137d5-34ea-489f-8a3a-4ee6f4c84638/package/source/hanlin.authoring.json",
+      "bytes": 76,
+      "sha256": "fcd55704f81de3ab56c92484d1c59bb3e5efe8dd9383ee791e61a58429314e0c"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/source/.hanlin-build/00f137d5-34ea-489f-8a3a-4ee6f4c84638/package/source/index.ts",
+      "bytes": 397,
+      "sha256": "9ca13f866936891fd664e0001e366632c94fe2f069308ae6cca0cc09149a6101"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/source/.hanlin-build/00f137d5-34ea-489f-8a3a-4ee6f4c84638/package/source/package.json",
+      "bytes": 94,
+      "sha256": "5832acb1bde65c8cac7e628b64902291ee2aa2a20c23962524b0ea5e7ae933eb"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/source/.hanlin-build/00f137d5-34ea-489f-8a3a-4ee6f4c84638/package/source/script.json",
+      "bytes": 171,
+      "sha256": "acd6800ca8220fa14546ed28eab6dd1e8676ec8f107d13ccf8535f467bd6b39f"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/source/.hanlin-build/00f137d5-34ea-489f-8a3a-4ee6f4c84638/package/source/tsconfig.json",
+      "bytes": 188,
+      "sha256": "91961a73001983b248169b1544e7ef30f96334bfa5528aaad3c24429a1d92af0"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/source/hanlin.authoring.json",
+      "bytes": 76,
+      "sha256": "fcd55704f81de3ab56c92484d1c59bb3e5efe8dd9383ee791e61a58429314e0c"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/source/index.ts",
+      "bytes": 397,
+      "sha256": "9ca13f866936891fd664e0001e366632c94fe2f069308ae6cca0cc09149a6101"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/source/package.json",
+      "bytes": 94,
+      "sha256": "5832acb1bde65c8cac7e628b64902291ee2aa2a20c23962524b0ea5e7ae933eb"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/source/script.json",
+      "bytes": 171,
+      "sha256": "acd6800ca8220fa14546ed28eab6dd1e8676ec8f107d13ccf8535f467bd6b39f"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/clients/agents/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6/project/source/tsconfig.json",
+      "bytes": 188,
+      "sha256": "91961a73001983b248169b1544e7ef30f96334bfa5528aaad3c24429a1d92af0"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/jobs/node/072c30f4-592f-443c-bc83-eca5afd80bb7/job.json",
+      "bytes": 297,
+      "sha256": "a4e7d0ff1c0c53d1b535bf6e2c87e172d4d34314baf16f8be8dab0cba2422f0c"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/jobs/node/1e001f77-4723-4156-a822-c7684af03869/job.json",
+      "bytes": 3873,
+      "sha256": "3f04e9a72d31146dc95717cb1d70a81897e3f65d3c5c36dd1f2df244ff2dedfd"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/jobs/node/1e001f77-4723-4156-a822-c7684af03869/main.mjs",
+      "bytes": 1318,
+      "sha256": "2ff1ae45786c647bb5103a18143a186d3b671d25936ac893c4b08c8909d3313d"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/jobs/node/1e001f77-4723-4156-a822-c7684af03869/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/jobs/node/1e001f77-4723-4156-a822-c7684af03869/stdout.log",
+      "bytes": 1313,
+      "sha256": "89950ee02e16d622db3ed7e719fed89053d9bb09e9c58437d272ddc06d48b7d7"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/jobs/node/63b6723b-647c-44fd-ba38-654a284738e2/job.json",
+      "bytes": 3139,
+      "sha256": "1102e8cbfed1434e2817d982c22d672e0a0373919b748bdbe2fcf2d876e19d68"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/jobs/node/63b6723b-647c-44fd-ba38-654a284738e2/main.mjs",
+      "bytes": 1321,
+      "sha256": "aa264c600887c24c38550ab2f0d0e67785a376917fb28b9d4496eb1dc9942684"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/jobs/node/63b6723b-647c-44fd-ba38-654a284738e2/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/jobs/node/63b6723b-647c-44fd-ba38-654a284738e2/stdout.log",
+      "bytes": 949,
+      "sha256": "06b2cccd516f38bd5a00a1bf35c9378bff8130a71aaee53b843b19017faab1d2"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/jobs/node/904a8aa3-46e3-400a-b317-c5a381674d0f/job.json",
+      "bytes": 3998,
+      "sha256": "d6bd33990ccaf0873116c7e497dbf6675672311608f29e26f7ae4d5a4baea708"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/jobs/node/904a8aa3-46e3-400a-b317-c5a381674d0f/main.mjs",
+      "bytes": 1313,
+      "sha256": "bd3385e240c5d665934b4fb2f5529d890f6568ce014fc67e2ffb4e519fb63ad4"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/jobs/node/904a8aa3-46e3-400a-b317-c5a381674d0f/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/jobs/node/904a8aa3-46e3-400a-b317-c5a381674d0f/stdout.log",
+      "bytes": 1357,
+      "sha256": "1bf155bd52bd26addfddc4f1e0f911ef86885cd64f9da2e8aac2d0f10f10ac68"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/jobs/node/e32a1440-1723-4823-b59e-533e1a1dfb6f/job.json",
+      "bytes": 30283,
+      "sha256": "1313a9ca9ea1ebea086936a3af82c275198fcaf527dfa73fdd626b22a0814d3a"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/jobs/node/e32a1440-1723-4823-b59e-533e1a1dfb6f/main.mjs",
+      "bytes": 995,
+      "sha256": "e584317451dac6deeeaf593b2d3faf9d26ab80fcd5907b6e3cbbf6bfbf1e2c99"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/jobs/node/e32a1440-1723-4823-b59e-533e1a1dfb6f/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/ai-runtime/jobs/node/e32a1440-1723-4823-b59e-533e1a1dfb6f/stdout.log",
+      "bytes": 13936,
+      "sha256": "582df467f1716236ad9fc5b41fd98ab69c12ffa182e470b3babfbc588e9823dd"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/authoring-transfer/2ff15551-9ed0-464b-b844-abcb1836fff6/MiniAppTypeError.hanlinNativeScript",
+      "bytes": 4399,
+      "sha256": "9a2a14be4ad24565bad66a98fc53522229de903acfb8a41b3df18006e81b51c9"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/authoring-transfer/2ff15551-9ed0-464b-b844-abcb1836fff6/diagnostics.json",
+      "bytes": 1973,
+      "sha256": "056319b39767858df9cc6f8608754be0d328e372a05424127d6ab19b066f88bc"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/authoring-transfer/2ff15551-9ed0-464b-b844-abcb1836fff6/receipt.json",
+      "bytes": 214,
+      "sha256": "cee6c67c6c03ec35bdf7f4d7dbfa1505935004d9ffbe4de1f1a2870a42a3351f"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/authoring-transfer/2ff15551-9ed0-464b-b844-abcb1836fff6/request.json",
+      "bytes": 251,
+      "sha256": "6b930affd839ed2cc13bb812580a600591a6c3a58dafea151c418399705841cf"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/authoring-transfer/7d064eea-d625-4262-a770-56d6a52573a8/MiniApp.hanlinNativeScript",
+      "bytes": 7247,
+      "sha256": "74db9d447035e1b8e000394a515093094b99f18a5587be54048a766232306727"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/authoring-transfer/7d064eea-d625-4262-a770-56d6a52573a8/diagnostics.json",
+      "bytes": 2,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/authoring-transfer/7d064eea-d625-4262-a770-56d6a52573a8/receipt.json",
+      "bytes": 102,
+      "sha256": "66c49eb3bbf3a7bf775a62dd3344eaa1927b1bd2b79e8ff000009fb6815ab249"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/authoring-transfer/7d064eea-d625-4262-a770-56d6a52573a8/request.json",
+      "bytes": 243,
+      "sha256": "03461fb3d5ec8698549264c4087c0651402334199f66cbd1d91517f644589fcf"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/mini-runtime/jobs/node/331c8851-9a46-4908-85ee-d9ace1edc5ba/job.json",
+      "bytes": 4020,
+      "sha256": "4355d369dc59fdc8205973cf608669524e0870812d1601ba255d4d4295ef50b9"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/mini-runtime/jobs/node/331c8851-9a46-4908-85ee-d9ace1edc5ba/main.mjs",
+      "bytes": 1323,
+      "sha256": "83285fba387c2124fd7680188cc1bc300539d374fb83a3385c6ac106b27fadef"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/mini-runtime/jobs/node/331c8851-9a46-4908-85ee-d9ace1edc5ba/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/mini-runtime/jobs/node/331c8851-9a46-4908-85ee-d9ace1edc5ba/stdout.log",
+      "bytes": 1368,
+      "sha256": "a423fd1a34bc14fdf5b14dc7058531d0ce2ceb11cb87cc38bdb371ae29a55c66"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/mini-runtime/jobs/node/aebbeb51-27bb-4b40-9948-e1104a72b855/job.json",
+      "bytes": 174,
+      "sha256": "042baa7509d7d7adabab413ed334fbac5b9e247cefadf77d9413ede9401ff022"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/mini-runtime/jobs/node/aebbeb51-27bb-4b40-9948-e1104a72b855/main.mjs",
+      "bytes": 1323,
+      "sha256": "555258f75ebc26c1374998fecb1c77d205fa642549acf3af6212fef7c03213b1"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/mini-runtime/jobs/node/aebbeb51-27bb-4b40-9948-e1104a72b855/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/mini-runtime/jobs/node/aebbeb51-27bb-4b40-9948-e1104a72b855/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/source-receipt.json",
+      "bytes": 44451,
+      "sha256": "6b3c9b1547c7f0aae5ad5640cdc6b94f59e6d910a4a5eedbfd66e83a91011a21"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/tool-results/chat-74c5070eeb839c447d69b75a86d92c0fc9c66fee00735a870a045dc3c8bcf5aa/ref_2c570aa4dd574855809b487f0f81f485.json",
+      "bytes": 140,
+      "sha256": "5ccf08c7b01876877c2c2f9be7efd15140c66bf7aa1ed2a4be3bcd550cb22835"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/tool-results/chat-74c5070eeb839c447d69b75a86d92c0fc9c66fee00735a870a045dc3c8bcf5aa/ref_2c570aa4dd574855809b487f0f81f485.payload",
+      "bytes": 13935,
+      "sha256": "fcc4d6a17b9ddf8ac395a637454be8c30592e8db04eb5cdef1f73cef2a30b4d3"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/tool-results/chat-74c5070eeb839c447d69b75a86d92c0fc9c66fee00735a870a045dc3c8bcf5aa/ref_6db6f0857bb04e369bef62a9f2e395c7.json",
+      "bytes": 139,
+      "sha256": "f4ca9420929ef83854e6d0fef6dc2819a89d263c698b19e765b757887b0b9529"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/tool-results/chat-74c5070eeb839c447d69b75a86d92c0fc9c66fee00735a870a045dc3c8bcf5aa/ref_6db6f0857bb04e369bef62a9f2e395c7.payload",
+      "bytes": 1340,
+      "sha256": "a1daff0302da8d9709b1b0787da67e70b4d19110011cac87baf964479b0fcba8"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/tool-results/chat-74c5070eeb839c447d69b75a86d92c0fc9c66fee00735a870a045dc3c8bcf5aa/ref_a862bfb402774ca29357a3d1a202654b.json",
+      "bytes": 139,
+      "sha256": "82b53517fcf674ab0bac438622b74383737957fa41596137d85c16712086a9bb"
+    },
+    {
+      "path": "focused19-v7-repair-durable-packet/tool-results/chat-74c5070eeb839c447d69b75a86d92c0fc9c66fee00735a870a045dc3c8bcf5aa/ref_a862bfb402774ca29357a3d1a202654b.payload",
+      "bytes": 1674,
+      "sha256": "3100b25f9ae27b0b285346a572e190557a2fd4b8861357aed6f910a8bf09837c"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/controller-child.log",
+      "bytes": 12147,
+      "sha256": "69f3e934134df2a854674ffbc3dc6cb9fd7e64f5ee6929338bb2af4b0864aaeb"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/decision.json",
+      "bytes": 80895,
+      "sha256": "51e5f719fc302d9e55dc5da77069b03cd33f1e2eae9def2c59a7c48a819abbb6"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/ledger.json",
+      "bytes": 3908,
+      "sha256": "1af45eba7e832d63fea413326cdb232f4dba879771181669ad3bc8b324871685"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/08D940C9-5B3F-4B5E-B0A6-E9A8EFFE11E6.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/1E00FE1D-F21F-46D4-B21E-B0363E2A97A0.png",
+      "bytes": 1275607,
+      "sha256": "4145b1a6b4a97e3835b2c3596b133d8e72ba45bbd6bd48f1e9587d7dcb2749b3"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/240E8F37-64F5-40FB-A00D-BB3B4CEA9BA5.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/25E80BB5-46EA-4BB6-963C-673F3CF66DD1.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/2893B301-91C6-4C1F-80DD-6003929DFF05.png",
+      "bytes": 1108095,
+      "sha256": "bfe6b461c2cd75e5eb264980d1623ae7741819846a2c77ffbd83d9ea053355e6"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/34AB3E42-7BAB-4A8B-9FE2-DA6F1B29FC32.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/3F601E97-4BD9-4E91-AAAC-35F71A511DA7.txt",
+      "bytes": 30636,
+      "sha256": "853a0febffd778bba29944b8a6ed60dcb1584bf5c7c81f52ac47257d793e0e06"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/4EECBFFB-49F4-48ED-B4EF-D08EE0027762.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/643DEC88-5388-4077-91C1-B77866C21A31.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/66ACE818-1A4A-41FE-9A3E-0E4A3439DAAA.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/726F9ECA-407F-42FE-8207-7EC4CE9C46DA.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/72B9C430-A530-4C12-9743-D24202177AC2.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/8153732F-9B2F-45D6-95E0-69A8EBA3C251.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/8A48234F-A454-4D6C-B058-7D3B09AF3424.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/8A5D9AF5-80C8-4B38-BD2A-AA8B55FF3BCE.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/96B3D5A7-0BBE-4754-B1D9-60F584F23AE5.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/9D0DE454-7E05-4457-ABB9-80D161DF1911.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/A54323A8-8E2F-4E5E-956B-4601E0E27D7A.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/B2F9E67C-3E6A-42DD-927F-8D52222700A6.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/B8283317-5EDC-4CF0-B64F-F2B6FFAE7D4B.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/DA3D8872-3339-4BD9-9896-80F6B8A4F22D.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/DCA3CC3F-AB50-4CB8-9104-349EB93F0A48.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/E055FCED-ABE2-4D42-91DC-7BC6115DFD61.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/FCC4E158-4376-4651-9FB0-D177BEA05889.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/FDC2308D-2D0E-4B66-9630-AC280D7196BA.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/manifest.json",
+      "bytes": 15404,
+      "sha256": "e127652f03249b66c82fc7adb9509684765613080632b1ad5cbfb7800fbc10b7"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/built-input-bindings.json",
+      "bytes": 11843,
+      "sha256": "e2ee9f0368c627b7c4b45ae847a0472aa14e1da91b63957ff53c6b94a15c8e43"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/paired-prefix/FocusedRepair1-attachments-export.log",
+      "bytes": 5331,
+      "sha256": "f6b5bf05d26e7ac7fb5b92e206a25ba1b4f951d0aaf46725270da17bee5f3647"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/paired-prefix/FocusedRepair1-nodes.json",
+      "bytes": 2369,
+      "sha256": "f21d487f6bef9573981da0b13be2ee42d894c7394b593dae3c5f87ceb19deddd"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/paired-prefix/FocusedRepair1-selected-tests.log",
+      "bytes": 57,
+      "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/paired-prefix/FocusedRepair1-summary.json",
+      "bytes": 2135,
+      "sha256": "f9a88171e3bf163c8d24724068137fe05547ca7dd38a7694a60f9307eb6408c4"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/paired-prefix/FocusedRepair1.log",
+      "bytes": 21343,
+      "sha256": "2ff04130c2f1d9e19a528a90a38abbae1e7455e5f334e8a80f21463f8fcb3bfe"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/paired-prefix/command-events.jsonl",
+      "bytes": 47917,
+      "sha256": "1a612270a2123b5fa3b2328d32f5e719e77afa1cab5e457814a049756d63f2cd"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/paired-prefix/commands.jsonl",
+      "bytes": 7849,
+      "sha256": "1613a301b130c8745f76033869bf395e460cb904668b5e19eaa94bdce3dc5077"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/staged-inputs.json",
+      "bytes": 5833,
+      "sha256": "f30becc670e67684e8a1399f6c3662ad7fc887e247482eba7854c8cd7b6203bf"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/native-result/state.json",
+      "bytes": 16211,
+      "sha256": "38b0f5cf3b0c256050fc5e90c374ab2768592e67321cfc04007f2a7c8a7c9886"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/source-receipt.json",
+      "bytes": 9789,
+      "sha256": "c14d1359261a314f1108993fd7dc8749ad383836a84a42fcc9b28a474e889b7d"
+    },
+    {
+      "path": "focused19-v7-repair-first-packet/state.json",
+      "bytes": 6653,
+      "sha256": "b5910e3c415ba2fd73dac642483dc10314fc9d6c798d66049e4353013d89c971"
+    },
+    {
+      "path": "receiver-observation.patch",
+      "bytes": 2580,
+      "sha256": "f7367126f5890d67fd19a40e0242eb182649bbdf58b895df69f9cd475497f987"
+    },
+    {
+      "path": "source-bindings.json",
+      "bytes": 2464,
+      "sha256": "23bfa01a7223a69d991cec3b7fef2183e05a7d09840f29d77d66dfff38177af6"
+    }
+  ],
+  "nativeAcceptance": "V7_ACTUAL_REPAIR_FAIL_WITH_COMPLETED_BUILD_AND_RECEIVER_INSPECTION; POSTFIX_NOT_ESTABLISHED"
+}

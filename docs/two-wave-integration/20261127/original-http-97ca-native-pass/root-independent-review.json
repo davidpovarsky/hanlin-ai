@@ -1,0 +1,25 @@
+{
+  "source": "97ca89552b8e39fab4d0a26e51e3f77010e1811e",
+  "rawMembersVerified": 16,
+  "rawBytes": 155689,
+  "manifestSHA256": "196d42eca53ac2fcdcb0bacade2f5ae57595e3a4e8245c13c9995563e7af8448",
+  "scope": "One original HTTP selector actual native PASS, not full601. Original runtime executionTimeout5 unchanged.",
+  "files": [
+    "handoff/original-http-97ca8955-pass/controller-binding.diff",
+    "handoff/original-http-97ca8955-pass/focused-pass-reconciliation.json",
+    "import-97ca8955/root-http-framing-integrated.json",
+    "original-http-diagnostic-launch-97ca8955-r1.json",
+    "original-http-diagnostic-supervisor-97ca8955-r1.log",
+    "run-original-http-diagnostic-97ca8955.py",
+    "source/Packages/HanlinPlatform/Package.resolved",
+    "source/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+    "source-stage-97ca8955-r1.json",
+    "validation/original-http-97ca8955-r1/controller.json",
+    "validation/original-http-97ca8955-r1/native/original-http-hanlin-widget-pass3-5F69E524-45A3-49A8-AE24-6C3280AA8319/native-stages.jsonl",
+    "validation/original-http-97ca8955-r1/native/original-http-hanlin-widget-pass3-5F69E524-45A3-49A8-AE24-6C3280AA8319/port",
+    "validation/original-http-97ca8955-r1/native/original-http-hanlin-widget-pass3-5F69E524-45A3-49A8-AE24-6C3280AA8319/server.stderr",
+    "validation/original-http-97ca8955-r1/native/original-http-hanlin-widget-pass3-5F69E524-45A3-49A8-AE24-6C3280AA8319/server.stdout",
+    "validation/original-http-97ca8955-r1/native/original-http-hanlin-widget-pass3-5F69E524-45A3-49A8-AE24-6C3280AA8319/wire.jsonl",
+    "validation/original-http-97ca8955-r1/original-http-selector.log"
+  ]
+}

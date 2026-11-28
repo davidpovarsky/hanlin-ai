@@ -1,0 +1,12 @@
+{
+  "AI_HLY/ChatView.swift": 1,
+  "AI_HLY/VisionView.swift": 13,
+  "AI_HLY/Views/Components/ChatViewBottom.swift": 12,
+  "AI_HLY/Views/Components/ChatViewComponents.swift": 45,
+  "AI_HLY/Views/Components/KnowledgeWritingView.swift": 5,
+  "AI_HLY/Views/Components/MemoryArchiveView.swift": 3,
+  "AI_HLY/Views/Components/ModelsViewComponents.swift": 6,
+  "AI_HLY/Views/Components/PromptRepoView.swift": 5,
+  "AI_HLY/Views/Components/QuickToolsView.swift": 10,
+  "AI_HLY/Views/Components/VoiceInputView.swift": 1
+}

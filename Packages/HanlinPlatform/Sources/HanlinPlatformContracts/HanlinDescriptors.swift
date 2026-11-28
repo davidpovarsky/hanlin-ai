@@ -1,0 +1,1210 @@
+import Foundation
+
+public struct LocalizedValue: Codable, Hashable, Sendable {
+    public let values: [String: String]
+    public let fallbackLocale: String
+
+    public init(
+        _ values: [String: String],
+        fallbackLocale: String = "en"
+    ) throws {
+        guard !values.isEmpty else {
+            throw HanlinContractError.invalidLocalizedValue(
+                reason: "at least one localization is required"
+            )
+        }
+        guard values[fallbackLocale]?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false else {
+            throw HanlinContractError.invalidLocalizedValue(
+                reason: "fallback locale '\(fallbackLocale)' is missing or empty"
+            )
+        }
+        for (locale, value) in values {
+            guard Self.isCanonicalLocale(locale) else {
+                throw HanlinContractError.invalidLocalizedValue(
+                    reason: "locale '\(locale)' is not canonical"
+                )
+            }
+            guard !value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+                throw HanlinContractError.invalidLocalizedValue(
+                    reason: "locale '\(locale)' has an empty value"
+                )
+            }
+        }
+        self.values = values
+        self.fallbackLocale = fallbackLocale
+    }
+
+    public func resolved(locale: Locale) -> String {
+        let identifier = locale.identifier.replacingOccurrences(of: "_", with: "-")
+        if let exact = values[identifier] {
+            return exact
+        }
+        if let language = locale.language.languageCode?.identifier,
+           let languageValue = values[language]
+        {
+            return languageValue
+        }
+        return values[fallbackLocale] ?? values.values.sorted().first ?? ""
+    }
+
+    public func preferredValue(forLocale locale: String = "en") -> String {
+        resolved(locale: Locale(identifier: locale))
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case values
+        case fallbackLocale
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        try self.init(
+            container.decode([String: String].self, forKey: .values),
+            fallbackLocale: container.decode(
+                String.self,
+                forKey: .fallbackLocale
+            )
+        )
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(values, forKey: .values)
+        try container.encode(fallbackLocale, forKey: .fallbackLocale)
+    }
+
+    private static func isCanonicalLocale(_ value: String) -> Bool {
+        guard !value.isEmpty, value.utf8.count <= 35 else {
+            return false
+        }
+        let components = value.split(separator: "-", omittingEmptySubsequences: false)
+        guard !components.contains(where: { $0.isEmpty }) else {
+            return false
+        }
+        return components.allSatisfy { component in
+            component.unicodeScalars.allSatisfy { scalar in
+                scalar.value < 128 && CharacterSet.alphanumerics.contains(scalar)
+            }
+        }
+    }
+}
+
+public enum HanlinExecutionOrigin: String, Codable, CaseIterable, Hashable, Sendable {
+    case system
+    case nativeModule
+    case scriptPackage
+    case assistantModel
+    case mcpServer
+    case userAutomation
+    case appExtension
+}
+
+public enum HanlinRiskLevel: String, Codable, CaseIterable, Hashable, Sendable {
+    case passive
+    case read
+    case sensitiveRead
+    case write
+    case destructive
+    case privileged
+}
+
+public enum HanlinExecutionContext: String, Codable, CaseIterable, Hashable, Sendable {
+    case mainApplication
+    case widget
+    case liveActivity
+    case controlWidget
+    case appIntent
+    case notificationUI
+    case keyboard
+    case translationUI
+    case backgroundTask
+}
+
+public enum HanlinDistributionMode: String, Codable, CaseIterable, Hashable, Sendable {
+    case personalDevelopment
+    case enterprise
+    case testFlight
+    case appStoreRestricted
+}
+
+public enum HanlinAppImplementation: Codable, Hashable, Sendable {
+    case native(moduleID: HanlinModuleID)
+    case script(packageID: HanlinPackageID)
+    case nativeScript(packageID: HanlinPackageID)
+    case hybrid(moduleID: HanlinModuleID, packageID: HanlinPackageID)
+}
+
+extension HanlinAppImplementation {
+    private enum CodingKeys: String, CodingKey {
+        case type
+        case moduleID
+        case packageID
+    }
+
+    private enum ImplementationType: String, Codable {
+        case native
+        case script
+        case nativeScript
+        case hybrid
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        switch try container.decode(ImplementationType.self, forKey: .type) {
+        case .native:
+            self = try .native(
+                moduleID: container.decode(HanlinModuleID.self, forKey: .moduleID)
+            )
+        case .script:
+            self = try .script(
+                packageID: container.decode(
+                    HanlinPackageID.self,
+                    forKey: .packageID
+                )
+            )
+        case .nativeScript:
+            self = try .nativeScript(
+                packageID: container.decode(
+                    HanlinPackageID.self,
+                    forKey: .packageID
+                )
+            )
+        case .hybrid:
+            self = try .hybrid(
+                moduleID: container.decode(HanlinModuleID.self, forKey: .moduleID),
+                packageID: container.decode(
+                    HanlinPackageID.self,
+                    forKey: .packageID
+                )
+            )
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        switch self {
+        case let .native(moduleID):
+            try container.encode(ImplementationType.native, forKey: .type)
+            try container.encode(moduleID, forKey: .moduleID)
+        case let .script(packageID):
+            try container.encode(ImplementationType.script, forKey: .type)
+            try container.encode(packageID, forKey: .packageID)
+        case let .nativeScript(packageID):
+            try container.encode(ImplementationType.nativeScript, forKey: .type)
+            try container.encode(packageID, forKey: .packageID)
+        case let .hybrid(moduleID, packageID):
+            try container.encode(ImplementationType.hybrid, forKey: .type)
+            try container.encode(moduleID, forKey: .moduleID)
+            try container.encode(packageID, forKey: .packageID)
+        }
+    }
+}
+
+public enum HanlinIconDescriptor: Codable, Hashable, Sendable {
+    case systemSymbol(name: String)
+    case asset(name: String)
+    case packageResource(path: String)
+}
+
+extension HanlinIconDescriptor {
+    private enum CodingKeys: String, CodingKey {
+        case type
+        case value
+    }
+
+    private enum IconType: String, Codable {
+        case systemSymbol
+        case asset
+        case packageResource
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let value = try container.decode(String.self, forKey: .value)
+        switch try container.decode(IconType.self, forKey: .type) {
+        case .systemSymbol:
+            self = .systemSymbol(name: value)
+        case .asset:
+            self = .asset(name: value)
+        case .packageResource:
+            self = .packageResource(path: value)
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        switch self {
+        case let .systemSymbol(name):
+            try container.encode(IconType.systemSymbol, forKey: .type)
+            try container.encode(name, forKey: .value)
+        case let .asset(name):
+            try container.encode(IconType.asset, forKey: .type)
+            try container.encode(name, forKey: .value)
+        case let .packageResource(path):
+            try container.encode(IconType.packageResource, forKey: .type)
+            try container.encode(path, forKey: .value)
+        }
+    }
+}
+
+public struct HanlinAppearanceDescriptor: Codable, Hashable, Sendable {
+    public let accentHex: String?
+    public let preferredColorScheme: HanlinPreferredColorScheme?
+    public let isBeta: Bool
+
+    public init(
+        accentHex: String? = nil,
+        preferredColorScheme: HanlinPreferredColorScheme? = nil,
+        isBeta: Bool = false
+    ) {
+        self.accentHex = accentHex
+        self.preferredColorScheme = preferredColorScheme
+        self.isBeta = isBeta
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case accentHex
+        case preferredColorScheme
+        case isBeta
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        accentHex = try container.decodeIfPresent(String.self, forKey: .accentHex)
+        preferredColorScheme = try container.decodeIfPresent(HanlinPreferredColorScheme.self, forKey: .preferredColorScheme)
+        isBeta = try container.decodeIfPresent(Bool.self, forKey: .isBeta) ?? false
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(accentHex, forKey: .accentHex)
+        try container.encodeIfPresent(preferredColorScheme, forKey: .preferredColorScheme)
+        if isBeta {
+            try container.encode(isBeta, forKey: .isBeta)
+        }
+    }
+}
+
+public enum HanlinPreferredColorScheme: String, Codable, Hashable, Sendable {
+    case system
+    case light
+    case dark
+}
+
+public enum HanlinAppCategory: String, Codable, CaseIterable, Hashable, Sendable {
+    case assistant
+    case developer
+    case education
+    case health
+    case knowledge
+    case media
+    case productivity
+    case reference
+    case utilities
+    case other
+}
+
+public enum HanlinEntryPointKind: String, Codable, CaseIterable, Hashable, Sendable {
+    case app
+    case assistantTool
+    case embeddedResult
+    case widget
+    case liveActivity
+    case controlWidget
+    case appIntentBridge
+    case notificationUI
+    case keyboard
+    case translationUI
+    case backgroundTask
+    case spotlight
+    case shareExtension
+    case capture
+}
+
+public struct HanlinEntryPointDescriptor: Codable, Hashable, Sendable {
+    public let kind: HanlinEntryPointKind
+    public let handler: String
+    public let allowedContexts: [HanlinExecutionContext]
+    public let runtimeProfile: HanlinRuntimeProfile?
+    public let assistantTool: HanlinAssistantToolDeclaration?
+
+    public init(
+        kind: HanlinEntryPointKind,
+        handler: String,
+        allowedContexts: [HanlinExecutionContext],
+        runtimeProfile: HanlinRuntimeProfile? = nil,
+        assistantTool: HanlinAssistantToolDeclaration? = nil
+    ) {
+        self.kind = kind
+        self.handler = handler
+        self.allowedContexts = allowedContexts
+        self.runtimeProfile = runtimeProfile
+        self.assistantTool = assistantTool
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case kind
+        case handler
+        case allowedContexts
+        case runtimeProfile
+        case assistantTool
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        kind = try container.decode(HanlinEntryPointKind.self, forKey: .kind)
+        handler = try container.decode(String.self, forKey: .handler)
+        allowedContexts = try container.decode([HanlinExecutionContext].self, forKey: .allowedContexts)
+        runtimeProfile = try container.decodeIfPresent(HanlinRuntimeProfile.self, forKey: .runtimeProfile)
+        assistantTool = try container.decodeIfPresent(HanlinAssistantToolDeclaration.self, forKey: .assistantTool)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(kind, forKey: .kind)
+        try container.encode(handler, forKey: .handler)
+        try container.encode(allowedContexts, forKey: .allowedContexts)
+        try container.encodeIfPresent(runtimeProfile, forKey: .runtimeProfile)
+        try container.encodeIfPresent(assistantTool, forKey: .assistantTool)
+    }
+}
+
+public struct HanlinRouteDescriptor: Codable, Hashable, Sendable {
+    public let id: HanlinRouteID
+    public let title: LocalizedValue
+    public let parameterSchema: HanlinJSONSchemaDocument
+    public let requiredCapabilities: [HanlinCapabilityID]
+
+    public init(
+        id: HanlinRouteID,
+        title: LocalizedValue,
+        parameterSchema: HanlinJSONSchemaDocument,
+        requiredCapabilities: [HanlinCapabilityID] = []
+    ) {
+        self.id = id
+        self.title = title
+        self.parameterSchema = parameterSchema
+        self.requiredCapabilities = requiredCapabilities
+    }
+}
+
+public struct HanlinActionDescriptor: Codable, Hashable, Sendable {
+    public let id: HanlinActionID
+    public let title: LocalizedValue
+    public let inputSchema: HanlinJSONSchemaDocument
+    public let outputSchema: HanlinJSONSchemaDocument?
+    public let capabilities: [HanlinCapabilityID]
+    public let handler: String?
+    public let risk: HanlinRiskLevel
+
+    public init(
+        id: HanlinActionID,
+        title: LocalizedValue,
+        inputSchema: HanlinJSONSchemaDocument,
+        outputSchema: HanlinJSONSchemaDocument? = nil,
+        capabilities: [HanlinCapabilityID] = [],
+        handler: String? = nil,
+        risk: HanlinRiskLevel
+    ) {
+        self.id = id
+        self.title = title
+        self.inputSchema = inputSchema
+        self.outputSchema = outputSchema
+        self.capabilities = capabilities
+        self.handler = handler
+        self.risk = risk
+    }
+}
+
+public enum HanlinToolOwner: Codable, Hashable, Sendable {
+    case system
+    case app(HanlinAppID)
+    case module(HanlinModuleID)
+    case `package`(HanlinPackageID)
+    case mcpServer(HanlinMCPServerID)
+}
+
+extension HanlinToolOwner {
+    private enum CodingKeys: String, CodingKey {
+        case type
+        case identifier
+    }
+
+    private enum OwnerType: String, Codable {
+        case system
+        case app
+        case module
+        case `package`
+        case mcpServer
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        switch try container.decode(OwnerType.self, forKey: .type) {
+        case .system:
+            self = .system
+        case .app:
+            self = try .app(
+                container.decode(HanlinAppID.self, forKey: .identifier)
+            )
+        case .module:
+            self = try .module(
+                container.decode(HanlinModuleID.self, forKey: .identifier)
+            )
+        case .package:
+            self = try .package(
+                container.decode(HanlinPackageID.self, forKey: .identifier)
+            )
+        case .mcpServer:
+            self = try .mcpServer(
+                container.decode(HanlinMCPServerID.self, forKey: .identifier)
+            )
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        switch self {
+        case .system:
+            try container.encode(OwnerType.system, forKey: .type)
+        case let .app(identifier):
+            try container.encode(OwnerType.app, forKey: .type)
+            try container.encode(identifier, forKey: .identifier)
+        case let .module(identifier):
+            try container.encode(OwnerType.module, forKey: .type)
+            try container.encode(identifier, forKey: .identifier)
+        case let .package(identifier):
+            try container.encode(OwnerType.package, forKey: .type)
+            try container.encode(identifier, forKey: .identifier)
+        case let .mcpServer(identifier):
+            try container.encode(OwnerType.mcpServer, forKey: .type)
+            try container.encode(identifier, forKey: .identifier)
+        }
+    }
+}
+
+public struct HanlinToolPresentationDescriptor: Codable, Hashable, Sendable {
+    public let compactStyle: HanlinToolCompactStyle
+
+    /// Optional execution presentation descriptor. Controls how in-progress
+    /// tool execution appears in the chat/transcript. Distinct from result UI.
+    public let executionPresentation: HanlinToolExecutionPresentationDescriptor?
+
+    /// Optional embedded result presentation. Controls how the tool's final
+    /// result is rendered in embedded surfaces (chat, inline, notifications).
+    /// This is the canonical source of truth for result presentation.
+    public let embeddedPresentation: HanlinEmbeddedPresentationDescriptor?
+
+    /// Whether this tool result supports expanded presentation.
+    /// Derived from canonical `embeddedPresentation.expansion != nil`
+    /// to ensure the presentation contract is the single semantic authority.
+    public var supportsExpandedPresentation: Bool {
+        embeddedPresentation?.expansion != nil
+    }
+
+    public init(
+        compactStyle: HanlinToolCompactStyle = .automatic,
+        supportsExpandedPresentation: Bool = false,
+        executionPresentation: HanlinToolExecutionPresentationDescriptor? = nil,
+        embeddedPresentation: HanlinEmbeddedPresentationDescriptor? = nil
+    ) {
+        self.compactStyle = compactStyle
+        self.executionPresentation = executionPresentation
+        if let embeddedPresentation = embeddedPresentation {
+            self.embeddedPresentation = embeddedPresentation
+        } else if supportsExpandedPresentation {
+            // Construct canonical presentation descriptor from legacy supportsExpandedPresentation
+            self.embeddedPresentation = HanlinEmbeddedPresentationDescriptor(
+                sizing: HanlinEmbeddedSizingPreference(preset: compactStyle.defaultSizingPreset),
+                expansion: HanlinExpansionDescriptor(supportedModes: [.sheet])
+            )
+        } else {
+            self.embeddedPresentation = nil
+        }
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case compactStyle
+        case supportsExpandedPresentation
+        case executionPresentation
+        case embeddedPresentation
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        compactStyle = try container.decodeIfPresent(HanlinToolCompactStyle.self, forKey: .compactStyle) ?? .automatic
+        executionPresentation = try container.decodeIfPresent(HanlinToolExecutionPresentationDescriptor.self, forKey: .executionPresentation)
+        let decodedEmbedded = try container.decodeIfPresent(HanlinEmbeddedPresentationDescriptor.self, forKey: .embeddedPresentation)
+        let decodedSupportsExpanded = try container.decodeIfPresent(Bool.self, forKey: .supportsExpandedPresentation) ?? false
+
+        if let decodedEmbedded = decodedEmbedded {
+            self.embeddedPresentation = decodedEmbedded
+        } else if decodedSupportsExpanded {
+            // Construct canonical presentation descriptor from legacy payload
+            self.embeddedPresentation = HanlinEmbeddedPresentationDescriptor(
+                sizing: HanlinEmbeddedSizingPreference(preset: compactStyle.defaultSizingPreset),
+                expansion: HanlinExpansionDescriptor(supportedModes: [.sheet])
+            )
+        } else {
+            self.embeddedPresentation = nil
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(compactStyle, forKey: .compactStyle)
+        try container.encode(supportsExpandedPresentation, forKey: .supportsExpandedPresentation)
+        try container.encodeIfPresent(executionPresentation, forKey: .executionPresentation)
+        try container.encodeIfPresent(embeddedPresentation, forKey: .embeddedPresentation)
+    }
+}
+
+public enum HanlinToolCompactStyle: String, Codable, Hashable, Sendable {
+    case automatic
+    case text
+    case entity
+    case search
+    case error
+
+    public var defaultSizingPreset: HanlinEmbeddedSizePreset {
+        switch self {
+        case .automatic: return .automatic
+        case .text, .error: return .compact
+        case .entity: return .regular
+        case .search: return .large
+        }
+    }
+}
+
+public struct HanlinToolDescriptor: Codable, Hashable, Sendable {
+    public var id: HanlinLogicalToolID { logicalID }
+    public let logicalID: HanlinLogicalToolID
+    public let descriptorRevision: HanlinDescriptorRevision
+    public let owner: HanlinToolOwner
+    public let title: LocalizedValue
+    public let summary: LocalizedValue
+    public let inputSchema: HanlinJSONSchemaDocument
+    public let outputSchema: HanlinJSONSchemaDocument?
+    public let capabilities: [HanlinCapabilityID]
+    public let risk: HanlinRiskLevel
+    public let presentation: HanlinToolPresentationDescriptor
+    public let approval: HanlinToolApprovalDescriptor?
+
+    public init(
+        logicalID: HanlinLogicalToolID,
+        descriptorRevision: HanlinDescriptorRevision,
+        owner: HanlinToolOwner,
+        title: LocalizedValue,
+        summary: LocalizedValue,
+        inputSchema: HanlinJSONSchemaDocument,
+        outputSchema: HanlinJSONSchemaDocument? = nil,
+        capabilities: [HanlinCapabilityID] = [],
+        risk: HanlinRiskLevel,
+        presentation: HanlinToolPresentationDescriptor,
+        approval: HanlinToolApprovalDescriptor? = nil
+    ) {
+        self.logicalID = logicalID
+        self.descriptorRevision = descriptorRevision
+        self.owner = owner
+        self.title = title
+        self.summary = summary
+        self.inputSchema = inputSchema
+        self.outputSchema = outputSchema
+        self.capabilities = capabilities
+        self.risk = risk
+        self.presentation = presentation
+        self.approval = approval
+    }
+}
+
+public struct HanlinCapabilityDeclaration: Codable, Hashable, Sendable {
+    public let id: HanlinCapabilityID
+    public let reason: LocalizedValue
+    public let constraints: HanlinValue
+    public let optional: Bool
+    public let scopeSchema: HanlinValueSchema?
+    public let risk: HanlinRiskLevel
+    public let requiresSystemAuthorization: Bool
+
+    public init(
+        id: HanlinCapabilityID,
+        reason: LocalizedValue,
+        constraints: HanlinValue = .object([:]),
+        optional: Bool = false,
+        scopeSchema: HanlinValueSchema? = nil,
+        risk: HanlinRiskLevel = .read,
+        requiresSystemAuthorization: Bool = false
+    ) {
+        self.id = id
+        self.reason = reason
+        self.constraints = constraints
+        self.optional = optional
+        self.scopeSchema = scopeSchema
+        self.risk = risk
+        self.requiresSystemAuthorization = requiresSystemAuthorization
+    }
+}
+
+public struct HanlinDependencyDeclaration: Codable, Hashable, Sendable {
+    public let packageID: HanlinPackageID
+    public let versions: HanlinHostVersionRange
+    public let optional: Bool
+
+    public init(
+        packageID: HanlinPackageID,
+        versions: HanlinHostVersionRange,
+        optional: Bool = false
+    ) {
+        self.packageID = packageID
+        self.versions = versions
+        self.optional = optional
+    }
+}
+
+public struct HanlinExtensionDeclaration: Codable, Hashable, Sendable {
+    public let kind: HanlinEntryPointKind
+    public let entryPoint: String
+    public let requiredCapabilities: [HanlinCapabilityID]
+
+    public init(
+        kind: HanlinEntryPointKind,
+        entryPoint: String,
+        requiredCapabilities: [HanlinCapabilityID] = []
+    ) {
+        self.kind = kind
+        self.entryPoint = entryPoint
+        self.requiredCapabilities = requiredCapabilities
+    }
+}
+
+public struct HanlinAuthor: Codable, Hashable, Sendable {
+    public let name: String
+    public let identifier: HanlinPublisherID?
+    public let website: URL?
+
+    public init(
+        name: String,
+        identifier: HanlinPublisherID? = nil,
+        website: URL? = nil
+    ) {
+        self.name = name
+        self.identifier = identifier
+        self.website = website
+    }
+}
+
+public struct HanlinDistributionDeclaration: Codable, Hashable, Sendable {
+    public let sourceVisible: Bool
+    public let sourceEditable: Bool
+    public let remoteUpdates: Bool
+    public let allowedModes: [HanlinDistributionMode]
+
+    public init(
+        sourceVisible: Bool,
+        sourceEditable: Bool,
+        remoteUpdates: Bool,
+        allowedModes: [HanlinDistributionMode]
+    ) {
+        self.sourceVisible = sourceVisible
+        self.sourceEditable = sourceEditable
+        self.remoteUpdates = remoteUpdates
+        self.allowedModes = allowedModes
+    }
+}
+
+public enum HanlinIntegrityAlgorithm: String, Codable, Hashable, Sendable {
+    case sha256
+}
+
+public struct HanlinIntegrityDeclaration: Codable, Hashable, Sendable {
+    public let algorithm: HanlinIntegrityAlgorithm
+    public let digest: String
+    public let signer: HanlinPublisherID?
+
+    public init(
+        algorithm: HanlinIntegrityAlgorithm,
+        digest: String,
+        signer: HanlinPublisherID? = nil
+    ) {
+        self.algorithm = algorithm
+        self.digest = digest
+        self.signer = signer
+    }
+}
+
+public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
+    public let schemaVersion: HanlinManifestVersion
+    public let descriptorRevision: HanlinDescriptorRevision
+    public let id: HanlinAppID
+    public let name: LocalizedValue
+    public let summary: LocalizedValue
+    public let description: LocalizedValue
+    public let version: HanlinPackageVersion
+    public let minimumHostVersion: HanlinPackageVersion?
+    public let apiVersion: HanlinAPIVersion
+    public let icon: HanlinIconDescriptor
+    public let appearance: HanlinAppearanceDescriptor
+    public let category: HanlinAppCategory
+    public let implementation: HanlinAppImplementation
+    public let entryPoints: [HanlinEntryPointDescriptor]
+    public let supportedExposures: [HanlinExposureKind]
+    public let routes: [HanlinRouteDescriptor]
+    public let actions: [HanlinActionDescriptor]
+    public let tools: [HanlinToolDescriptor]
+    public let skills: [HanlinSkillDescriptor]
+    public let capabilities: [HanlinCapabilityDeclaration]
+    public let dependencies: [HanlinDependencyDeclaration]
+    public let extensions: [HanlinExtensionDeclaration]
+    public let authors: [HanlinAuthor]
+    public let distribution: HanlinDistributionDeclaration
+    public let integrity: HanlinIntegrityDeclaration?
+
+    public static func defaultExposures(for entryPoints: [HanlinEntryPointDescriptor]) -> [HanlinExposureKind] {
+        var seen = Set<HanlinExposureKind>()
+        var result: [HanlinExposureKind] = []
+        for ep in entryPoints {
+            let exposure: HanlinExposureKind = switch ep.kind {
+            case .app: .foregroundApp
+            case .assistantTool: .assistantTool
+            case .embeddedResult: .embeddedResult
+            case .widget: .widget
+            case .liveActivity: .liveActivity
+            case .controlWidget: .controlWidget
+            case .appIntentBridge: .appIntent
+            case .notificationUI: .notificationUI
+            case .keyboard: .keyboard
+            case .translationUI: .translationUI
+            case .backgroundTask: .backgroundTask
+            case .spotlight: .spotlight
+            case .shareExtension: .shareExtension
+            case .capture: .capture
+            }
+            if seen.insert(exposure).inserted {
+                result.append(exposure)
+            }
+        }
+        return result
+    }
+
+    public init(
+        schemaVersion: HanlinManifestVersion,
+        descriptorRevision: HanlinDescriptorRevision,
+        id: HanlinAppID,
+        name: LocalizedValue,
+        summary: LocalizedValue,
+        description: LocalizedValue,
+        version: HanlinPackageVersion,
+        minimumHostVersion: HanlinPackageVersion? = nil,
+        apiVersion: HanlinAPIVersion,
+        icon: HanlinIconDescriptor,
+        appearance: HanlinAppearanceDescriptor = .init(),
+        category: HanlinAppCategory,
+        implementation: HanlinAppImplementation,
+        entryPoints: [HanlinEntryPointDescriptor],
+        supportedExposures: [HanlinExposureKind] = [],
+        routes: [HanlinRouteDescriptor] = [],
+        actions: [HanlinActionDescriptor] = [],
+        tools: [HanlinToolDescriptor] = [],
+        skills: [HanlinSkillDescriptor] = [],
+        capabilities: [HanlinCapabilityDeclaration] = [],
+        dependencies: [HanlinDependencyDeclaration] = [],
+        extensions: [HanlinExtensionDeclaration] = [],
+        authors: [HanlinAuthor],
+        distribution: HanlinDistributionDeclaration,
+        integrity: HanlinIntegrityDeclaration? = nil
+    ) {
+        self.schemaVersion = schemaVersion
+        self.descriptorRevision = descriptorRevision
+        self.id = id
+        self.name = name
+        self.summary = summary
+        self.description = description
+        self.version = version
+        self.minimumHostVersion = minimumHostVersion
+        self.apiVersion = apiVersion
+        self.icon = icon
+        self.appearance = appearance
+        self.category = category
+        self.implementation = implementation
+        self.entryPoints = entryPoints
+        self.supportedExposures = supportedExposures.isEmpty
+            ? Self.defaultExposures(for: entryPoints)
+            : supportedExposures
+        self.routes = routes
+        self.actions = actions
+        self.tools = tools
+        self.skills = skills
+        self.capabilities = capabilities
+        self.dependencies = dependencies
+        self.extensions = extensions
+        self.authors = authors
+        self.distribution = distribution
+        self.integrity = integrity
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case schemaVersion, descriptorRevision, id, name, summary, description
+        case version, minimumHostVersion, apiVersion, icon, appearance, category
+        case implementation, entryPoints, supportedExposures, routes, actions
+        case tools, skills, capabilities, dependencies, extensions, authors, distribution, integrity
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        schemaVersion = try container.decode(HanlinManifestVersion.self, forKey: .schemaVersion)
+        descriptorRevision = try container.decode(HanlinDescriptorRevision.self, forKey: .descriptorRevision)
+        id = try container.decode(HanlinAppID.self, forKey: .id)
+        name = try container.decode(LocalizedValue.self, forKey: .name)
+        summary = try container.decode(LocalizedValue.self, forKey: .summary)
+        description = try container.decode(LocalizedValue.self, forKey: .description)
+        version = try container.decode(HanlinPackageVersion.self, forKey: .version)
+        minimumHostVersion = try container.decodeIfPresent(HanlinPackageVersion.self, forKey: .minimumHostVersion)
+        apiVersion = try container.decode(HanlinAPIVersion.self, forKey: .apiVersion)
+        icon = try container.decode(HanlinIconDescriptor.self, forKey: .icon)
+        appearance = try container.decodeIfPresent(HanlinAppearanceDescriptor.self, forKey: .appearance) ?? .init()
+        category = try container.decode(HanlinAppCategory.self, forKey: .category)
+        implementation = try container.decode(HanlinAppImplementation.self, forKey: .implementation)
+        entryPoints = try container.decode([HanlinEntryPointDescriptor].self, forKey: .entryPoints)
+        let decodedExposures = try container.decodeIfPresent([HanlinExposureKind].self, forKey: .supportedExposures)
+        supportedExposures = decodedExposures ?? Self.defaultExposures(for: entryPoints)
+        routes = try container.decodeIfPresent([HanlinRouteDescriptor].self, forKey: .routes) ?? []
+        actions = try container.decodeIfPresent([HanlinActionDescriptor].self, forKey: .actions) ?? []
+        tools = try container.decodeIfPresent([HanlinToolDescriptor].self, forKey: .tools) ?? []
+        skills = try container.decodeIfPresent([HanlinSkillDescriptor].self, forKey: .skills) ?? []
+        capabilities = try container.decodeIfPresent([HanlinCapabilityDeclaration].self, forKey: .capabilities) ?? []
+        dependencies = try container.decodeIfPresent([HanlinDependencyDeclaration].self, forKey: .dependencies) ?? []
+        extensions = try container.decodeIfPresent([HanlinExtensionDeclaration].self, forKey: .extensions) ?? []
+        authors = try container.decode([HanlinAuthor].self, forKey: .authors)
+        distribution = try container.decode(HanlinDistributionDeclaration.self, forKey: .distribution)
+        integrity = try container.decodeIfPresent(HanlinIntegrityDeclaration.self, forKey: .integrity)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(schemaVersion, forKey: .schemaVersion)
+        try container.encode(descriptorRevision, forKey: .descriptorRevision)
+        try container.encode(id, forKey: .id)
+        try container.encode(name, forKey: .name)
+        try container.encode(summary, forKey: .summary)
+        try container.encode(description, forKey: .description)
+        try container.encode(version, forKey: .version)
+        try container.encodeIfPresent(minimumHostVersion, forKey: .minimumHostVersion)
+        try container.encode(apiVersion, forKey: .apiVersion)
+        try container.encode(icon, forKey: .icon)
+        try container.encode(appearance, forKey: .appearance)
+        try container.encode(category, forKey: .category)
+        try container.encode(implementation, forKey: .implementation)
+        try container.encode(entryPoints, forKey: .entryPoints)
+        try container.encode(supportedExposures, forKey: .supportedExposures)
+        try container.encode(routes, forKey: .routes)
+        try container.encode(actions, forKey: .actions)
+        try container.encode(tools, forKey: .tools)
+        try container.encode(skills, forKey: .skills)
+        try container.encode(capabilities, forKey: .capabilities)
+        try container.encode(dependencies, forKey: .dependencies)
+        try container.encode(extensions, forKey: .extensions)
+        try container.encode(authors, forKey: .authors)
+        try container.encode(distribution, forKey: .distribution)
+        try container.encodeIfPresent(integrity, forKey: .integrity)
+    }
+
+    public func canonicalJSONData() throws -> Data {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+        return try encoder.encode(self)
+    }
+
+    public static func decodeAndValidate(
+        _ data: Data,
+        support: HanlinVersionSupport = .version1
+    ) throws -> HanlinAppDescriptor {
+        let descriptor = try JSONDecoder().decode(Self.self, from: data)
+        try descriptor.validate(support: support)
+        return descriptor
+    }
+
+    public func validate(
+        support: HanlinVersionSupport = .version1
+    ) throws {
+        var issues: [HanlinManifestIssue] = []
+        do {
+            try support.validate(schemaVersion)
+        } catch {
+            issues.append(.init(
+                code: .unsupportedManifestVersion,
+                path: "schemaVersion",
+                message: error.localizedDescription
+            ))
+        }
+        do {
+            try support.validate(apiVersion)
+        } catch {
+            issues.append(.init(
+                code: .unsupportedAPIVersion,
+                path: "apiVersion",
+                message: error.localizedDescription
+            ))
+        }
+        if entryPoints.isEmpty && supportedExposures.isEmpty {
+            issues.append(.init(
+                code: .missingEntryPoint,
+                path: "entryPoints",
+                message: "At least one entry point or supported exposure is required."
+            ))
+        }
+        for (index, entryPoint) in entryPoints.enumerated() {
+            if !Self.isSafeRelativePath(entryPoint.handler) {
+                issues.append(.init(
+                    code: .unsafeEntryPoint,
+                    path: "entryPoints[\(index)].handler",
+                    message: "Entry-point handlers must be normalized relative paths."
+                ))
+            }
+            if entryPoint.allowedContexts.isEmpty {
+                issues.append(.init(
+                    code: .missingExecutionContext,
+                    path: "entryPoints[\(index)].allowedContexts",
+                    message: "Entry points require at least one execution context."
+                ))
+            }
+            Self.appendDuplicateIssues(
+                values: entryPoint.allowedContexts,
+                code: .duplicateExecutionContext,
+                path: "entryPoints[\(index)].allowedContexts",
+                into: &issues
+            )
+        }
+        // A package may publish several dedicated assistant tools. Their
+        // registered handler paths distinguish them; all other entrypoint kinds
+        // retain the existing single-route contract.
+        Self.appendDuplicateIssues(
+            values: entryPoints.filter { $0.kind != .assistantTool }.map(\.kind),
+            code: .duplicateEntryPoint,
+            path: "entryPoints",
+            into: &issues
+        )
+        Self.appendDuplicateIssues(
+            values: entryPoints.filter { $0.kind == .assistantTool }.map(\.handler),
+            code: .duplicateEntryPoint,
+            path: "entryPoints",
+            into: &issues
+        )
+        Self.appendDuplicateIssues(
+            values: routes.map(\.id),
+            code: .duplicateRoute,
+            path: "routes",
+            into: &issues
+        )
+        Self.appendDuplicateIssues(
+            values: actions.map(\.id),
+            code: .duplicateAction,
+            path: "actions",
+            into: &issues
+        )
+        Self.appendDuplicateIssues(
+            values: tools.map(\.id),
+            code: .duplicateTool,
+            path: "tools",
+            into: &issues
+        )
+        Self.appendDuplicateIssues(
+            values: capabilities.map(\.id),
+            code: .duplicateCapability,
+            path: "capabilities",
+            into: &issues
+        )
+        Self.appendDuplicateIssues(
+            values: dependencies.map(\.packageID),
+            code: .duplicateDependency,
+            path: "dependencies",
+            into: &issues
+        )
+        if authors.isEmpty || authors.contains(where: {
+            $0.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        }) {
+            issues.append(.init(
+                code: .invalidAuthor,
+                path: "authors",
+                message: "At least one non-empty author name is required."
+            ))
+        }
+        if distribution.allowedModes.isEmpty {
+            issues.append(.init(
+                code: .missingDistributionMode,
+                path: "distribution.allowedModes",
+                message: "At least one distribution mode is required."
+            ))
+        }
+        Self.appendDuplicateIssues(
+            values: distribution.allowedModes,
+            code: .duplicateDistributionMode,
+            path: "distribution.allowedModes",
+            into: &issues
+        )
+        if let integrity,
+           integrity.algorithm == .sha256,
+           !Self.isCanonicalSHA256(integrity.digest)
+        {
+            issues.append(.init(
+                code: .invalidIntegrity,
+                path: "integrity.digest",
+                message: "SHA-256 digests must be 64 lowercase hexadecimal characters."
+            ))
+        }
+        for (index, route) in routes.enumerated() {
+            do {
+                _ = try route.parameterSchema.canonicalJSONData()
+            } catch {
+                issues.append(.init(
+                    code: .invalidSchema,
+                    path: "routes[\(index)].parameterSchema",
+                    message: error.localizedDescription
+                ))
+            }
+        }
+        for (index, action) in actions.enumerated() {
+            if let handler = action.handler, !Self.isSafeRelativePath(handler) {
+                issues.append(.init(
+                    code: .unsafeEntryPoint,
+                    path: "actions[\(index)].handler",
+                    message: "Action handlers must be normalized relative paths."
+                ))
+            }
+            Self.validate(
+                action.inputSchema,
+                path: "actions[\(index)].inputSchema",
+                into: &issues
+            )
+            if let outputSchema = action.outputSchema {
+                Self.validate(
+                    outputSchema,
+                    path: "actions[\(index)].outputSchema",
+                    into: &issues
+                )
+            }
+        }
+        for (index, tool) in tools.enumerated() {
+            Self.validate(
+                tool.inputSchema,
+                path: "tools[\(index)].inputSchema",
+                into: &issues
+            )
+            if let outputSchema = tool.outputSchema {
+                Self.validate(
+                    outputSchema,
+                    path: "tools[\(index)].outputSchema",
+                    into: &issues
+                )
+            }
+        }
+        Self.appendDuplicateIssues(
+            values: skills.map(\.id),
+            code: .duplicateSkill,
+            path: "skills",
+            into: &issues
+        )
+        for (index, skill) in skills.enumerated() {
+            if case .resource(let path) = skill.instructions, !Self.isSafeRelativePath(path) {
+                issues.append(.init(
+                    code: .unsafeEntryPoint,
+                    path: "skills[\(index)].instructions",
+                    message: "Skill instruction resources must be normalized relative paths."
+                ))
+            }
+        }
+        guard issues.isEmpty else {
+            throw HanlinContractError.invalidManifest(issues)
+        }
+    }
+
+    private static func validate(
+        _ schema: HanlinJSONSchemaDocument,
+        path: String,
+        into issues: inout [HanlinManifestIssue]
+    ) {
+        do {
+            _ = try schema.canonicalJSONData()
+        } catch {
+            issues.append(.init(
+                code: .invalidSchema,
+                path: path,
+                message: error.localizedDescription
+            ))
+        }
+    }
+
+    private static func appendDuplicateIssues<Value: Hashable>(
+        values: [Value],
+        code: HanlinManifestIssueCode,
+        path: String,
+        into issues: inout [HanlinManifestIssue]
+    ) {
+        var seen: Set<Value> = []
+        if values.contains(where: { !seen.insert($0).inserted }) {
+            issues.append(.init(
+                code: code,
+                path: path,
+                message: "Duplicate canonical identifiers are not allowed."
+            ))
+        }
+    }
+
+    private static func isSafeRelativePath(_ value: String) -> Bool {
+        guard
+            !value.isEmpty,
+            !value.hasPrefix("/"),
+            !value.hasPrefix("\\"),
+            !value.contains("\\"),
+            !value.contains("\0")
+        else {
+            return false
+        }
+        let components = value.split(separator: "/", omittingEmptySubsequences: false)
+        return components.allSatisfy { component in
+            !component.isEmpty && component != "." && component != ".."
+        }
+    }
+
+    private static func isCanonicalSHA256(_ value: String) -> Bool {
+        value.utf8.count == 64 && value.utf8.allSatisfy { byte in
+            (48 ... 57).contains(byte) || (97 ... 102).contains(byte)
+        }
+    }
+}
+
+public enum HanlinManifestIssueCode: String, Codable, Hashable, Sendable {
+    case unsupportedManifestVersion
+    case unsupportedAPIVersion
+    case missingEntryPoint
+    case unsafeEntryPoint
+    case missingExecutionContext
+    case duplicateExecutionContext
+    case duplicateEntryPoint
+    case duplicateRoute
+    case duplicateAction
+    case duplicateTool
+    case duplicateSkill
+    case duplicateCapability
+    case duplicateDependency
+    case invalidAuthor
+    case missingDistributionMode
+    case duplicateDistributionMode
+    case invalidIntegrity
+    case invalidSchema
+    case invalidRuntime
+    case unsupportedScriptABI
+    case invalidCompiler
+    case missingScriptTool
+}
+
+public struct HanlinManifestIssue: Codable, Hashable, Sendable {
+    public let code: HanlinManifestIssueCode
+    public let path: String
+    public let message: String
+
+    public init(code: HanlinManifestIssueCode, path: String, message: String) {
+        self.code = code
+        self.path = path
+        self.message = message
+    }
+}

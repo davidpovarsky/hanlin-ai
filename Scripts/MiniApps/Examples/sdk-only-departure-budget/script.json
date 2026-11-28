@@ -1,0 +1,10 @@
+{
+  "name": "Departure Budget",
+  "version": "1.0.0",
+  "description": "Plan preparation, travel and arrival buffer with native SwiftUI controls.",
+  "entry": "bundle.js",
+  "runInApp": true,
+  "hanlinRuntime": "hanlin-expo",
+  "icon": "clock",
+  "color": "#146C78"
+}

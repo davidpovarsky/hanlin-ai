@@ -1,0 +1,308 @@
+[
+  {
+    "name": "HanlinSDK.lock.json",
+    "bytes": 101,
+    "compressed_bytes": 101,
+    "crc32": "a9b6b4ac"
+  },
+  {
+    "name": "Motion.xcresult.tar.gz",
+    "bytes": 27386392,
+    "compressed_bytes": 27394225,
+    "crc32": "5b9ce66a"
+  },
+  {
+    "name": "boot-initial.log",
+    "bytes": 0,
+    "compressed_bytes": 2,
+    "crc32": "00000000"
+  },
+  {
+    "name": "bootstatus-attempt-1.log",
+    "bytes": 139,
+    "compressed_bytes": 127,
+    "crc32": "2a58542b"
+  },
+  {
+    "name": "bootstatus.log",
+    "bytes": 398,
+    "compressed_bytes": 257,
+    "crc32": "523b6480"
+  },
+  {
+    "name": "build-duration-seconds.txt",
+    "bytes": 4,
+    "compressed_bytes": 6,
+    "crc32": "a5220307"
+  },
+  {
+    "name": "build.log",
+    "bytes": 1263726,
+    "compressed_bytes": 62053,
+    "crc32": "8da535a6"
+  },
+  {
+    "name": "ci-performance-report.json",
+    "bytes": 2502,
+    "compressed_bytes": 789,
+    "crc32": "e3e2057f"
+  },
+  {
+    "name": "complete-duration-seconds.txt",
+    "bytes": 2,
+    "compressed_bytes": 4,
+    "crc32": "7e4acd12"
+  },
+  {
+    "name": "device-strategy.txt",
+    "bytes": 6,
+    "compressed_bytes": 8,
+    "crc32": "fbc327c2"
+  },
+  {
+    "name": "devices.json",
+    "bytes": 22084,
+    "compressed_bytes": 2104,
+    "crc32": "0e56bf1f"
+  },
+  {
+    "name": "generated-project.pbxproj",
+    "bytes": 15508,
+    "compressed_bytes": 3399,
+    "crc32": "66f06047"
+  },
+  {
+    "name": "generated-target-settings.json",
+    "bytes": 1436,
+    "compressed_bytes": 416,
+    "crc32": "3541db78"
+  },
+  {
+    "name": "macro-input-admission.json",
+    "bytes": 900,
+    "compressed_bytes": 571,
+    "crc32": "6097ee55"
+  },
+  {
+    "name": "macro-input-verification.json",
+    "bytes": 900,
+    "compressed_bytes": 571,
+    "crc32": "6097ee55"
+  },
+  {
+    "name": "macro-source.json",
+    "bytes": 1130,
+    "compressed_bytes": 504,
+    "crc32": "ac81a736"
+  },
+  {
+    "name": "motion-Package.resolved",
+    "bytes": 2222,
+    "compressed_bytes": 625,
+    "crc32": "0afc6636"
+  },
+  {
+    "name": "motion-boot-readiness.json",
+    "bytes": 1441,
+    "compressed_bytes": 602,
+    "crc32": "c641f47f"
+  },
+  {
+    "name": "motion-first120s.mp4",
+    "bytes": 26322412,
+    "compressed_bytes": 25542038,
+    "crc32": "4e586af5"
+  },
+  {
+    "name": "owned-simulator-cleanup.log",
+    "bytes": 88,
+    "compressed_bytes": 88,
+    "crc32": "3eb44e70"
+  },
+  {
+    "name": "owned-sources.tar.gz",
+    "bytes": 15277943,
+    "compressed_bytes": 15274078,
+    "crc32": "1fdbf051"
+  },
+  {
+    "name": "preflight-duration-seconds.txt",
+    "bytes": 4,
+    "compressed_bytes": 6,
+    "crc32": "21994f93"
+  },
+  {
+    "name": "preflight.txt",
+    "bytes": 962,
+    "compressed_bytes": 318,
+    "crc32": "1c5a426b"
+  },
+  {
+    "name": "preparation.json",
+    "bytes": 99164,
+    "compressed_bytes": 15350,
+    "crc32": "86758aa1"
+  },
+  {
+    "name": "process-status.txt",
+    "bytes": 27,
+    "compressed_bytes": 29,
+    "crc32": "5fbce873"
+  },
+  {
+    "name": "project.json",
+    "bytes": 1837,
+    "compressed_bytes": 619,
+    "crc32": "ac181810"
+  },
+  {
+    "name": "proof-inputs.json",
+    "bytes": 99164,
+    "compressed_bytes": 15350,
+    "crc32": "86758aa1"
+  },
+  {
+    "name": "raw-result-status.json",
+    "bytes": 231,
+    "compressed_bytes": 178,
+    "crc32": "dc56d7cc"
+  },
+  {
+    "name": "requested-scope.txt",
+    "bytes": 9,
+    "compressed_bytes": 11,
+    "crc32": "6749512a"
+  },
+  {
+    "name": "resolve-duration-seconds.txt",
+    "bytes": 4,
+    "compressed_bytes": 6,
+    "crc32": "e4078114"
+  },
+  {
+    "name": "resolve.log",
+    "bytes": 2687,
+    "compressed_bytes": 819,
+    "crc32": "e79bb1d4"
+  },
+  {
+    "name": "resolved-before-macro.json",
+    "bytes": 2222,
+    "compressed_bytes": 625,
+    "crc32": "0afc6636"
+  },
+  {
+    "name": "result-validation.json",
+    "bytes": 256,
+    "compressed_bytes": 193,
+    "crc32": "c6011ca2"
+  },
+  {
+    "name": "results-duration-seconds.txt",
+    "bytes": 3,
+    "compressed_bytes": 5,
+    "crc32": "d74debda"
+  },
+  {
+    "name": "runtimes.json",
+    "bytes": 60604,
+    "compressed_bytes": 2378,
+    "crc32": "4290fe8f"
+  },
+  {
+    "name": "sdk-input-verification.json",
+    "bytes": 171,
+    "compressed_bytes": 146,
+    "crc32": "cbf83e1c"
+  },
+  {
+    "name": "sdk-installation.json",
+    "bytes": 1549,
+    "compressed_bytes": 626,
+    "crc32": "714e16cd"
+  },
+  {
+    "name": "sdk-resolved-inputs.json",
+    "bytes": 423576,
+    "compressed_bytes": 104844,
+    "crc32": "a2a04c20"
+  },
+  {
+    "name": "selected-device.txt",
+    "bytes": 37,
+    "compressed_bytes": 39,
+    "crc32": "8e65528a"
+  },
+  {
+    "name": "selected-scope.txt",
+    "bytes": 9,
+    "compressed_bytes": 11,
+    "crc32": "6749512a"
+  },
+  {
+    "name": "selected-sdk-Package.swift",
+    "bytes": 2008,
+    "compressed_bytes": 648,
+    "crc32": "fcdf827a"
+  },
+  {
+    "name": "selected-sdk-manifest.json",
+    "bytes": 2413,
+    "compressed_bytes": 1117,
+    "crc32": "c5878c2b"
+  },
+  {
+    "name": "source-sha.txt",
+    "bytes": 41,
+    "compressed_bytes": 41,
+    "crc32": "3a72495d"
+  },
+  {
+    "name": "test-duration-seconds.txt",
+    "bytes": 4,
+    "compressed_bytes": 6,
+    "crc32": "65231a5c"
+  },
+  {
+    "name": "test.log",
+    "bytes": 10266,
+    "compressed_bytes": 2574,
+    "crc32": "75fa96e5"
+  },
+  {
+    "name": "tests.json",
+    "bytes": 2038,
+    "compressed_bytes": 615,
+    "crc32": "7173aebd"
+  },
+  {
+    "name": "verified-environment.json",
+    "bytes": 81347,
+    "compressed_bytes": 3666,
+    "crc32": "90c70d8d"
+  },
+  {
+    "name": "video-status.json",
+    "bytes": 308,
+    "compressed_bytes": 222,
+    "crc32": "68375877"
+  },
+  {
+    "name": "video.log",
+    "bytes": 445,
+    "compressed_bytes": 322,
+    "crc32": "0b2c674b"
+  },
+  {
+    "name": "xcodegen-install.log",
+    "bytes": 327,
+    "compressed_bytes": 213,
+    "crc32": "032e600a"
+  },
+  {
+    "name": "xcodegen.log",
+    "bytes": 188,
+    "compressed_bytes": 136,
+    "crc32": "4b9dedef"
+  }
+]

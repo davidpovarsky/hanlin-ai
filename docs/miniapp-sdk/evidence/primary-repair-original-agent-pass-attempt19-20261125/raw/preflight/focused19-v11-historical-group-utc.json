@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T16:54:52.847371+00:00",
+  "priorObservationSHA256": "4aa9fa8360003410a60e4eeaf45040fcf18c5285198f13d5707c9c38ca9d89b7",
+  "localNow": "2026-11-25T17:54:52.847535+01:00",
+  "timeZoneNames": [
+    "CET",
+    "CEST"
+  ],
+  "localOffsetSeconds": 3600.0,
+  "environmentTZ": "UTC",
+  "argv": [
+    "/bin/ps",
+    "-p",
+    "44325",
+    "-o",
+    "pid=,pgid=,state=,lstart=,comm="
+  ],
+  "exitCode": 0,
+  "stdout": "44325 44325 Ss   Wed Nov 25 16:19:11 2026     /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.3CDVUO/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/People.framework/peopled\n",
+  "stderr": "",
+  "boundary": "Read-only same exact recycled PID, UTC normalization only. No process or native execution action."
+}

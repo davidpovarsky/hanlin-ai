@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-24T09:29:03.884802+00:00",
+  "sourceCommit": "6d9a59bfc1bd1830a8d56e694c42b19c6bd7d468",
+  "branch": "codex/hanlin-miniapps-sdk-completion-20261123",
+  "workflowID": 419196373,
+  "workflowPath": ".github/workflows/validate-app-split.yml",
+  "inputs": {
+    "paired_product_acceptance": "true",
+    "paired_test_scope": "miniapp_authoring",
+    "runtime_bundle_artifact_run_id": "42926628418"
+  },
+  "selectedCases": 42,
+  "aiCases": 25,
+  "miniAppsCases": 17,
+  "previousRunID": 45354940642,
+  "concurrencySuffix": "paired-miniapp_authoring",
+  "dispatchExecuted": true,
+  "dispatchOutput": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45365620977\n",
+  "dispatchStderr": "",
+  "parallelScriptWidgetRunID": 45364761765,
+  "sourceDifferenceFromScriptWidgetRun": "Only paired-acceptance runner/test and excluded evidence files; no production/SDK input change.",
+  "boundary": "Fresh full current original-native/RuntimeHost/SDK/example/doc preparation, actualbothappbuilds and42app/UIcase evidence required. Starting a run does not establish a pass.",
+  "newRunID": 45365620977,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45365620977"
+}

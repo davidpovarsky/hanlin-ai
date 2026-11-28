@@ -1,0 +1,128 @@
+import Foundation
+
+struct ExecuteShellCommandTool: NativeTool {
+    let name = "execute_shell_command"
+    private let hostContext: HanlinHostCallContext?
+    private let shellServiceOverride: ShellRuntimeService?
+
+    init(hostContext: HanlinHostCallContext? = nil, shellServiceOverride: ShellRuntimeService? = nil) {
+        self.hostContext = hostContext
+        self.shellServiceOverride = shellServiceOverride
+    }
+
+    var catalogEntry: NativeToolCatalogEntry {
+        .init(name: name, title: RuntimeL10n.string("Shell / ios_system"), summary: RuntimeL10n.string("Run one supported ios_system program with a structured argument array."), categories: ["runtime", "code", "shell"], keywords: ["shell", "files", "ios_system"], examples: ["List the files in the local workspace"], isSensitive: true, systemImage: "apple.terminal", presentationProfile: RuntimeToolSupport.profile(name: name, image: "apple.terminal", running: "Running shell command", completed: "Shell command completed", arguments: ["program", "arguments", "allow_network"]))
+    }
+
+    func openAIToolSchema() -> [String: Any] {
+        let supportedPrograms = ShellRuntimeService.capabilities.map(\.name) + ["pwd"]
+        let baseDescription = RuntimeL10n.string("Run a structured native program or a command string in the assigned workspace. Command strings use the existing local portable shell for chaining, pipes and redirection; external commands use the shared runtime broker. Linked curl keeps its normal TLS behavior without a second internal network approval.")
+        return NativeToolSchema.function(name: name, description: baseDescription + " Supported programs: \(supportedPrograms.joined(separator: ", ")).", parameters: NativeToolSchema.object(properties: [
+            "program": NativeToolSchema.string(description: RuntimeL10n.string("Supported program name."), enumValues: supportedPrograms),
+            "arguments": NativeToolSchema.stringArray(description: RuntimeL10n.string("Program arguments as separate strings; shell syntax is not interpreted."), maximumItems: nil),
+            "command": NativeToolSchema.string(description: RuntimeL10n.string("Command string to execute through ios_system.")),
+            "allow_network": ["type": "boolean", "description": RuntimeL10n.string("Legacy compatibility flag; network access does not require an internal approval.")]
+        ], required: []))
+    }
+
+    func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
+        guard await isAllowedByCatalog() else {
+            return RuntimeToolSupport.failure(
+                HanlinHostServiceError.capabilityNotGranted("tool.\(name)"),
+                title: "Shell disabled",
+                runtimeKind: .shell
+            )
+        }
+        do {
+            let arguments = try NativeToolJSON.validatedDictionary(
+                from: argumentsJSON,
+                allowedKeys: ["program", "arguments", "allow_network", "command"]
+            )
+            let program = try NativeToolJSON.strictOptionalString(arguments, "program")
+            let legacyCommand = try NativeToolJSON.strictOptionalString(arguments, "command")
+            guard (program == nil) != (legacyCommand == nil) else {
+                throw NativeToolJSON.JSONError.invalidValue(
+                    key: "program",
+                    description: "provide either 'program' (structured) or 'command' (command string), not both or neither"
+                )
+            }
+            let argv = try NativeToolJSON.strictStringArray(arguments, "arguments")
+            let allowNetwork = try NativeToolJSON.strictBool(arguments, "allow_network")
+            let environment = try await AppRuntimeCore.shared.environment.resolved(scopes: [.shared, .shell])
+            let result: RuntimeExecutionResult
+            if let program {
+                guard program == "pwd" || ShellRuntimeService.capabilities.contains(where: { $0.name == program }) else {
+                    let approvedList = (ShellRuntimeService.capabilities.map(\.name) + ["pwd"]).joined(separator: ", ")
+                    throw NativeToolJSON.JSONError.invalidValue(
+                        key: "program",
+                        description: "program '\(program)' is not in the approved ios_system catalog. Supported programs: [\(approvedList)]"
+                    )
+                }
+                if let shellServiceOverride {
+                    let workspace = try shellServiceOverride.fileLayout.workspace(client: .tools, identifier: name)
+                    result = try await shellServiceOverride.execute(
+                        tokens: [program] + argv,
+                        workspace: workspace,
+                        environment: environment,
+                        allowNetwork: allowNetwork
+                    )
+                } else {
+                    result = try await AgentHostServicesAdapter.executeShell(
+                        program: program,
+                        arguments: argv,
+                        environment: environment,
+                        allowNetwork: allowNetwork,
+                        context: hostContext
+                    )
+                }
+            } else {
+                guard argv.isEmpty else {
+                    throw NativeToolJSON.JSONError.invalidValue(
+                        key: "arguments",
+                        description: "arguments cannot accompany the command string form"
+                    )
+                }
+                if let shellServiceOverride {
+                    let workspace = try shellServiceOverride.fileLayout.workspace(client: .tools, identifier: name)
+                    result = try await shellServiceOverride.execute(
+                        command: legacyCommand ?? "",
+                        workspace: workspace,
+                        environment: environment,
+                        allowNetwork: allowNetwork
+                    )
+                } else {
+                    result = try await AgentHostServicesAdapter.executeLegacyShell(
+                        command: legacyCommand ?? "",
+                        environment: environment,
+                        allowNetwork: allowNetwork,
+                        context: hostContext
+                    )
+                }
+            }
+            return RuntimeToolSupport.result(
+                result,
+                title: "Shell / ios_system",
+                systemImage: "apple.terminal",
+                runtimeKind: .shell,
+                argumentKeys: Array(arguments.keys),
+                jobRuntime: program == nil && shellServiceOverride == nil ? .node : nil
+            )
+        } catch { return RuntimeToolSupport.failure(error, title: "Shell command failed", runtimeKind: .shell) }
+    }
+
+    private func isAllowedByCatalog() async -> Bool {
+        let catalogEnabled = await MainActor.run {
+            NativeToolCatalog.shared.ensureBuiltinsRegistered()
+            guard let entry = NativeToolCatalog.shared.entry(named: name) else { return true }
+            return NativeToolCatalog.shared.isEffectivelyEnabled(entry)
+        }
+        guard catalogEnabled else { return false }
+        if let hostContext {
+            return hostContext.effectiveCapabilities.contains("all") ||
+                   hostContext.effectiveCapabilities.contains("shell") ||
+                   hostContext.effectiveCapabilities.contains("runtime.shell") ||
+                   hostContext.origin == .assistantModel
+        }
+        return true
+    }
+}

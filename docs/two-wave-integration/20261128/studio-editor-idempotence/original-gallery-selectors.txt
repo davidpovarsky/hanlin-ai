@@ -1,0 +1,5 @@
+53329e1a9dde33432d886ec5ffbee7c3d44d2014:AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift:2158:    func testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns() throws {
+53329e1a9dde33432d886ec5ffbee7c3d44d2014:AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift:2161:    func testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns() throws {
+53329e1a9dde33432d886ec5ffbee7c3d44d2014:AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift:2164:    func testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns() throws {
+53329e1a9dde33432d886ec5ffbee7c3d44d2014:AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift:2167:    func testStudioTableShareCopiesEditsBuildsInstallsAndRuns() throws {
+53329e1a9dde33432d886ec5ffbee7c3d44d2014:AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift:2170:    func testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns() throws {

@@ -1,0 +1,10 @@
+{
+  "path": "portable-r2/controls.log.gz",
+  "rawBytes": 7073,
+  "rawSHA256": "1c048d35c6cf94728a26b3e5e94146f09463eb1ddd12bdfbea31c9fd4e349d64",
+  "gzipBytes": 1493,
+  "gzipSHA256": "4d14e399f4abcf79855e792cb8a211a3f8019fd2827acf17fbf93577cf3d1f8d",
+  "roundTripExact": true,
+  "initialDiffCheckExit": 2,
+  "reason": "The actual unittest subtest-error prefix ends with a literal trailing space. Preserve the raw failure losslessly in gzip; no raw log or test changed."
+}

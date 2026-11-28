@@ -1,0 +1,17 @@
+{
+  "run_id": 45144384416,
+  "source": "9e4fbcbdeed05aa8dea0ab3c55997a73383f92b4",
+  "artifact_id": 14803689577,
+  "artifact_bytes": 1147047,
+  "artifact_sha256": "6d71d190ca1cfef2521cd81d8a2873a0065b259ad7a30e2e48164278098c1cd4",
+  "zip_all_crc": "PASS",
+  "original_log": {
+    "member": "simulator-logs/06-xcodebuild-simulator.log",
+    "bytes": 8149579,
+    "sha256": "590a9b0f95e26b4451fe2b5f2fa219617a5cd361f9f0c075a1196dffe5f86094"
+  },
+  "diagnostics": [
+    "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift:30:7: error: stored property 'legacyLaunchRequest' of 'Sendable'-conforming struct 'ChatResolvedExpansion' contains non-Sendable type 'NativeAppLaunchRequest'",
+    "    |       `- error: stored property 'legacyLaunchRequest' of 'Sendable'-conforming struct 'ChatResolvedExpansion' contains non-Sendable type 'NativeAppLaunchRequest'"
+  ]
+}

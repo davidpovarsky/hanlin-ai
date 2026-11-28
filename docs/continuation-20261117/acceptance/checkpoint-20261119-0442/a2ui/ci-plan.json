@@ -1,0 +1,17 @@
+{
+  "verified_at": "2026-11-19T03:57:10.042736+00:00",
+  "run": 44454776034,
+  "head": "ce2fb04e8a266759f6c9eed70fd2dda02029720d",
+  "exact_selectors": [
+    "AI_HLYTests/HanlinA2UIProductPerformanceTests/testPacedCanonicalPartsOneNodeOriginalMatrix",
+    "AI_HLYTests/HanlinA2UIProductPerformanceTests/testPacedCanonicalPartsTenNodesOriginalMatrix",
+    "AI_HLYTests/HanlinA2UIProductPerformanceTests/testPacedCanonicalPartsHundredNodesOriginalMatrix",
+    "AI_HLYTests/HanlinA2UIProductPerformanceTests/testPacedResponsesOneNodeOriginalMatrix",
+    "AI_HLYTests/HanlinA2UIProductPerformanceTests/testPacedResponsesTenNodesOriginalMatrix",
+    "AI_HLYTests/HanlinA2UIProductPerformanceTests/testPacedResponsesHundredNodesOriginalMatrix"
+  ],
+  "actual_unit_filter_matches": true,
+  "configuration": "Debug",
+  "plan_archive_sha256": "78fc5f602f2db987d6890bc818388acc6e1386c1dfff85bf07f25ca24688a81a",
+  "native_result": "PENDING"
+}

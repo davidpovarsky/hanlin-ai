@@ -1,0 +1,28 @@
+{
+  "base": "52d4e75401c1cb67e936ef3389571ef0c9001831",
+  "patchSHA256": "60e63a5b2dee5c7329fb0ee92adfe95e851f16bcffef9dd678bd83f75c87efa2",
+  "sourceFiles": [
+    {
+      "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "sha256": "9211672a94444de2abc86699a285784c8d6c71bf91e3082a44d4a33cb6c94dd0"
+    },
+    {
+      "path": "Scripts/CI/current_unit_xctestrun.py",
+      "sha256": "157e6e474d8a9fe84b534fcee0d482233034dd8fa79f8abcfb5389c23b5e0375"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_current_unit_xctestrun.py",
+      "sha256": "1a7b0cb63612dd03960fa176d16dcba9ba5bf8e8279294470a93cd8883d0c8d1"
+    }
+  ],
+  "rootReview": "Exact current-build unit descriptor replaces project/scheme test-without-building. Prior descriptors preserved; currentmanifest/source/run/attempt/owneddevice and app/test paths/binaries bound. Original12DATAselectors and result verifier unchanged. Raw rejected manifests retained. Root read original helper and v2delta; source paths matched actual archived native linker/plist records.",
+  "rootFocusedTests": {
+    "exit": 0,
+    "output": "..................\n----------------------------------------------------------------------\nRan 18 tests in 1.302s\n\nOK\n",
+    "sha256": "c3c5e2e705120a729b820441a4d62794fa93e7a707c36568f1851efd0f3ee8b5"
+  },
+  "yaml": "PASS",
+  "gitDiffCheck": "PASS",
+  "AppleNative": "NOT_YET_RUN",
+  "qualification": "Current build-for-testing may reuse compiler outputs; actual Xcode27 manifest shape must pass native validation. Does not prove cause of cancellation or cure all Simulator startup failures."
+}

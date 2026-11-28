@@ -1,0 +1,147 @@
+{
+  "sourceCommit": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
+  "logSHA256": "2547babc01695d8a058d54d57661020aa398dae17176cdb8cd49217bd1d49971",
+  "optionsBodyRows": [
+    3494,
+    3495,
+    3496,
+    3497,
+    3498,
+    4757,
+    4759
+  ],
+  "widgetUIModuleAndBodyRows": [
+    3555,
+    3556,
+    3557,
+    3558,
+    3559,
+    3560,
+    3561,
+    3562,
+    3563,
+    3564,
+    3565,
+    3566,
+    3567,
+    3568,
+    3569,
+    3583,
+    3584,
+    3585,
+    3612,
+    3614
+  ],
+  "actualRows": [
+    {
+      "line": 3494,
+      "text": "SwiftCompile normal arm64 Compiling\\ HanlinOriginalExpoWidgetOptions.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift (in target 'HanlinScriptingWidgets' from project 'HanlinSDK')"
+    },
+    {
+      "line": 3495,
+      "text": ""
+    },
+    {
+      "line": 3496,
+      "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift (in target 'HanlinScriptingWidgets' from project 'HanlinSDK')"
+    },
+    {
+      "line": 3497,
+      "text": "    cd /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY.xcodeproj"
+    },
+    {
+      "line": 3498,
+      "text": "    builtin-SwiftPerFileCompile HanlinOriginalExpoWidgetOptions.swift"
+    },
+    {
+      "line": 4757,
+      "text": "SwiftDriverJobDiscovery normal arm64 Compiling HanlinOriginalExpoWidgetOptions.swift (in target 'HanlinScriptingWidgets' from project 'HanlinSDK')"
+    },
+    {
+      "line": 4759,
+      "text": "SwiftDriver\\ Compilation HanlinScriptingWidgets normal arm64 com.apple.xcode.tools.swift.compiler (in target 'HanlinScriptingWidgets' from project 'HanlinSDK')"
+    },
+    {
+      "line": 3555,
+      "text": "SwiftEmitModule normal arm64 Emitting\\ module\\ for\\ HanlinWidgetUI (in target 'HanlinWidgetUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 3556,
+      "text": ""
+    },
+    {
+      "line": 3557,
+      "text": "SwiftCompile normal arm64 (in target 'HanlinWidgetUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 3558,
+      "text": "    cd /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY.xcodeproj"
+    },
+    {
+      "line": 3559,
+      "text": "    "
+    },
+    {
+      "line": 3560,
+      "text": ""
+    },
+    {
+      "line": 3561,
+      "text": "SwiftCompile normal arm64 Compiling\\ Exports.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinWidgetUI/Exports.swift (in target 'HanlinWidgetUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 3562,
+      "text": ""
+    },
+    {
+      "line": 3563,
+      "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinWidgetUI/Exports.swift (in target 'HanlinWidgetUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 3564,
+      "text": "    cd /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY.xcodeproj"
+    },
+    {
+      "line": 3565,
+      "text": "    builtin-SwiftPerFileCompile Exports.swift"
+    },
+    {
+      "line": 3566,
+      "text": ""
+    },
+    {
+      "line": 3567,
+      "text": "SwiftDriverJobDiscovery normal arm64 Emitting module for HanlinWidgetUI (in target 'HanlinWidgetUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 3568,
+      "text": ""
+    },
+    {
+      "line": 3569,
+      "text": "SwiftDriver\\ Compilation\\ Requirements HanlinWidgetUI normal arm64 com.apple.xcode.tools.swift.compiler (in target 'HanlinWidgetUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 3583,
+      "text": "Copy /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinWidgetUI.swiftmodule/arm64-apple-ios-simulator.swiftmodule /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinWidgetUI-t.build/Objects-normal/arm64/HanlinWidgetUI.swiftmodule (in target 'HanlinWidgetUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 3584,
+      "text": "    cd /Users/runner/work/hanlin-ai/hanlin-ai"
+    },
+    {
+      "line": 3585,
+      "text": "    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinWidgetUI-t.build/Objects-normal/arm64/HanlinWidgetUI.swiftmodule /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinWidgetUI.swiftmodule/arm64-apple-ios-simulator.swiftmodule"
+    },
+    {
+      "line": 3612,
+      "text": "SwiftDriverJobDiscovery normal arm64 Compiling Exports.swift (in target 'HanlinWidgetUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 3614,
+      "text": "SwiftDriver\\ Compilation HanlinWidgetUI normal arm64 com.apple.xcode.tools.swift.compiler (in target 'HanlinWidgetUI' from project 'HanlinSDK')"
+    }
+  ],
+  "objectLinkRows": [],
+  "boundary": "Options body and WidgetUI module/body completed compilation/discovery; this incremental log does not establish final object linking or application/test success. Independent review: entrypoints."
+}

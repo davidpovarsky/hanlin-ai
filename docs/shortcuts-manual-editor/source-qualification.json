@@ -1,0 +1,25 @@
+{
+  "recordedAt": "2026-11-28T13:19:35.984814+00:00",
+  "status": "FROZEN_FOR_INDEPENDENT_SOURCE_REVIEW",
+  "base": "1ea6ab198151169236f473ab906993ff18d0c74c",
+  "sourcePath": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "candidateSHA256": "9db4c641cc130f036c828a60f0bfe32615dc4c0407dfcaac5deecfc6c581a95b",
+  "patchSHA256": "ec95a19b8cf3bd51be28e8c8d92a5f88abb3cdea2b3f72d11eb7e12be4625d27",
+  "originalQualificationRetained": true,
+  "worktreeOnlyModifiedPath": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "diffCheckExit": 0,
+  "reverseApplyCheckExit": 0,
+  "originalAssertAndBudgetLinesExact": 428,
+  "original47TestBodiesExact": true,
+  "other179MethodBodiesExact": true,
+  "sourceOnly": true,
+  "portableTests": 0,
+  "nativeCompilation": "NOT_RUN",
+  "nativeAcceptance": "NOT_RUN",
+  "dispatches": 0,
+  "knownLimits": [
+    "The prior malformed literal match stopped preparation before writes, not an executed test failure.",
+    "The candidate does not modify fixtures, observers, runtime, original methods, selectors, assertions or deadlines.",
+    "Static call reachability crosses shared observation dispatch branches; it is not evidence that every listed route actually executed the changed helper."
+  ]
+}

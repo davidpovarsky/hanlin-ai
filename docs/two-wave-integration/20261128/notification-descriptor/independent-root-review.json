@@ -1,0 +1,47 @@
+{
+  "status": "SOURCE_APPROVED_NATIVE_ACCEPTANCE_PENDING",
+  "at": "2026-11-28T07:25:41.654108+00:00",
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "reviewedRootHead": "3ee173aaf7fc90f02f5e1e2d8f5f9cc9a14b7f1a",
+  "manifestSHA256": "6df99b0383f46edaa50c4afd5dca46239ef3321955619ad87a7a42da27b8932d",
+  "payloadsRehashed": 36,
+  "payloadBytes": 2569178,
+  "sourcePatchSHA256": "9a9a6039250a9f6a3c9b7002f03e150bd2aa4bcdaca576b7397ba434a78b6325",
+  "projectedTree": "50156f87ab51ad07608be2ffd5a743f59d58e44f",
+  "sourcePaths": [
+    "Scripts/CI/Tests/test_notification_os_scope.py",
+    "Scripts/ProductSplit/run_native_acceptance.py"
+  ],
+  "wholeOriginalFileInverses": true,
+  "originalRunnerFunctionsUnchanged": 11,
+  "originalControlBodiesUnchanged": 14,
+  "actualPortableOutcomes": 23,
+  "newPortableControls": 9,
+  "actualControlReceiptSHA256": "fed007062a6e3fcfc81dd35d8553cea3388ecd39576eecf77ca931392bd5961f",
+  "originalSetupChanges": "Supply original build argv, actual unchanged helper bytes and original descriptor fixture; no old method body modified.",
+  "descriptor": "Sole original current-build descriptor, exact app/runner/test products; no descriptor or environment rewriting. Bound before command recording, pre-XCTest, pre-worker, and terminal after owned cleanup.",
+  "limits": {
+    "buildSeconds": 2400,
+    "testCommandSeconds": 1200,
+    "workerSeconds": 650,
+    "uiCaseSeconds": 600
+  },
+  "historicalRawLogs": {
+    "original9a-notification.log.gz": {
+      "bytes": 12191,
+      "sha256": "bfe4e3b80073b70f67a8bb198bfca5ae672d8c0c11aee2f3dff03688c651edf9",
+      "resolvePackageGraphMarkers": 155,
+      "xctestStarts": 0
+    },
+    "c990-origin-descriptor.log.gz": {
+      "bytes": 234171,
+      "sha256": "eaf532ae7e343b92acdc3d5cec9e51a84cffff996cb8e91f8aef48dfe062612b",
+      "resolvePackageGraphMarkers": 0,
+      "xctestStarts": 9
+    }
+  },
+  "historicalLimit": "Descriptor route demonstrates native dispatch can start; c990 retained 2PASS/6FAIL/1interrupted is not notification or all25 acceptance. Original notification inner package-resolution cause remains unproven.",
+  "workflowProductSDKChanged": false,
+  "native": "NOT_RUN",
+  "rootRepeatedTests": false
+}

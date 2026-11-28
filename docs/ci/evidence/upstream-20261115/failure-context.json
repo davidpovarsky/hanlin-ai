@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "repository": "davidpovarsky/hanlin-ai",
+  "pullRequest": 6,
+  "head": "ea969bee9c1b18a19eafeeecb16ecf454935c244",
+  "base": "abbcd4ce9a72177a068f52c0d21fa226c7df42f6",
+  "changedPaths": [
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/package.json",
+    "RuntimeDependencies.lock.json"
+  ],
+  "impact": "runtime-host",
+  "updateType": "patch",
+  "updates": [
+    {
+      "name": "semver",
+      "previous": "7.8.5",
+      "version": "7.8.6",
+      "updateType": "patch",
+      "integrity": "sha512-9lpSSU4Mly3mrtruwLs1eLK6+gzbzqeBFwRNjIjE+9LuDpWdYctrQlQ3ej1Ilgi7gknpsTRnPoLP8DpCHqHIJw==",
+      "license": "ISC",
+      "licenseReview": "UNCHANGED_FROM_PARENT_LOCK",
+      "sourceRepository": "npm/node-semver",
+      "upstreamCommit": "b37b033b585ad5e575afeccadb426ea41bc6cea4",
+      "tarball": "https://registry.npmjs.org/semver/-/semver-7.8.6.tgz"
+    }
+  ],
+  "nativeArtifact": "Unchanged exact native identity must also pass the existing authenticated consumer before Host tests",
+  "rollback": {
+    "commit": "ea969bee9c1b18a19eafeeecb16ecf454935c244",
+    "parent": "abbcd4ce9a72177a068f52c0d21fa226c7df42f6",
+    "strategy": "Revert the isolated dependency candidate; preserve original binary pins and regenerate the original Host archive"
+  }
+}

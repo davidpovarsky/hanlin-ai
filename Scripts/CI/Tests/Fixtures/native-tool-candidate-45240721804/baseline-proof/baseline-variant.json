@@ -1,0 +1,14 @@
+{
+  "base_commit": "7523f45cf8ea180a8e30f511ff0fbd3bb5ccae6d",
+  "scope": "Candidate package graph and same candidate boundary tests; only the two original engine/model files replaced with exact baseline Git bytes.",
+  "files": {
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": {
+      "baseline_sha256": "aaf8ae687d478710c2b4388f19350164a606facd02b70375743c808629cbe524",
+      "candidate_sha256": "9ebefece37869982b4569942af7f61f0c01c61a21ade627f6868b7b438d4b079"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift": {
+      "baseline_sha256": "c8e0ecfdda95960195c3454f76d35fa5bd6c48c08781e920d39903157416eb92",
+      "candidate_sha256": "39e14e004a2b1d894ded12b666160dadc2900a00aafafa33974caa56c5a31a06"
+    }
+  }
+}

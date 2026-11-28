@@ -1,0 +1,69 @@
+{
+  "base": "61f9c028ff1a8772a6eb27ec4129afeb302c4976",
+  "sourcePath": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "beforeSHA256": "7afb1614ee417a1657f2705900cbf78df90d651c575f27f5dddc5808b757f779",
+  "afterSHA256": "efe7abe29bd1be36d7991844d67d7d79e12a1f3c1bc639fca741be87fd00480c",
+  "patchSHA256": "986b458b8ceab54e13023775c461af58c382fd7e418a170ebfc971d473f8e40e",
+  "exactWholeFileInverse": true,
+  "selectorsUnchanged": [
+    "testExpoPlacedWidgetInvokesAllFiveRuntimes",
+    "testNativeScriptPlacedWidgetInvokesAllFiveRuntimes",
+    "testExpoLiveActivityInvokesAllFiveRuntimes",
+    "testNativeScriptLiveActivityInvokesAllFiveRuntimes",
+    "testExpoShortcutInvokesAllFiveRuntimes",
+    "testNativeScriptShortcutInvokesAllFiveRuntimes",
+    "testExpoSystemShareInvokesAllFiveRuntimes",
+    "testNativeScriptSystemShareInvokesAllFiveRuntimes",
+    "testExpoSystemTranslationInvokesAllFiveRuntimes",
+    "testNativeScriptSystemTranslationInvokesAllFiveRuntimes",
+    "testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult",
+    "testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult",
+    "testExpoRunMiniAppActionSavedForegroundReturnsTypedResult",
+    "testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult",
+    "testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers",
+    "testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState",
+    "testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+    "testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts",
+    "testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+    "testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+    "testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+    "testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+    "testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns",
+    "testStudioExpoCreatesMovesStylesAndReopensSource",
+    "testStudioNativeScriptCreatesMovesStylesAndReopensSource",
+    "testStudioOriginalTypeScriptHelpPreferencesAndLiveLogExport",
+    "testStudioImportsActualFilesSourceAndReopensIndependentEdit",
+    "testStudioTwoRealWindowsConflictReloadAndRecoverSeparateCopy"
+  ],
+  "selectorCount": 28,
+  "nativeStatus": "NOT_RUN",
+  "scope": "Two source-supported UI helper corrections; no product/observer/runner/budget/selector changes",
+  "independentReview": {
+    "agent": "/root/w1_review_resume",
+    "sha256": "4f9790e52c8ae277459a2953489f03abd52fb465092b6e6bc0080ba53005d768",
+    "scope": "Source/API approval only; no native execution"
+  },
+  "actualFailedSource": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+  "actualNativeCases": {
+    "editor": {
+      "run": 46000325286,
+      "tests": 5,
+      "passed": 0,
+      "failed": 5
+    },
+    "gallery": {
+      "run": 46000338354,
+      "tests": 5,
+      "passed": 0,
+      "failed": 5
+    }
+  },
+  "installedKeyboardAPIReceiptSHA256": "b22ea0d42724bec2a9835205ff3518d0a2f76f741a66ea23842ff151b50044da",
+  "preserved": [
+    "All28 actual selector functions",
+    "All existing exact-value assertions and native deadlines",
+    "Existing text-view/menu selection when keyboard opt-in is false",
+    "All Widget state/recovery code",
+    "All product/SDK source bytes and all original runner/observer code"
+  ]
+}

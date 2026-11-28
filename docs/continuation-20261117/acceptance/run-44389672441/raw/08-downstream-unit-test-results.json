@@ -1,0 +1,70 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "D0858274-0BFD-4096-A947-A9938948D394",
+      "deviceName" : "Hanlin-Phase2-44389672441-1",
+      "modelName" : "iPad Pro 13-inch (M5)",
+      "osBuildNumber" : "24B8117",
+      "osVersion" : "27.2",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "0.0088s",
+                  "durationInSeconds" : 0.00875711441040039,
+                  "name" : "Canvas presentation retains its original record and model across endpoint changes",
+                  "nodeIdentifier" : "ModelPopoverZoomOrderTests/canvasPresentationRetainsItsOriginalOrigin()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ModelPopoverZoomOrderTests/canvasPresentationRetainsItsOriginalOrigin()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "7A.7 ModelPopoverZoomOrderTests — Expand First, Push All Models Only On Completion",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ModelPopoverZoomOrderTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0.65s",
+                  "durationInSeconds" : 0.6548399925231934,
+                  "name" : "ordinaryInstructionsLoadReadAndContinueWithoutRuntimeWork()",
+                  "nodeIdentifier" : "SkillRuntimeProductTests/ordinaryInstructionsLoadReadAndContinueWithoutRuntimeWork()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests/ordinaryInstructionsLoadReadAndContinueWithoutRuntimeWork()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "Imported Skills through the original product execution path",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillRuntimeProductTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "AI_HLYTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "AI_HLY",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

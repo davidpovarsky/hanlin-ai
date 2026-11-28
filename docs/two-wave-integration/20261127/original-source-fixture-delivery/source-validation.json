@@ -1,0 +1,56 @@
+{
+  "base": "95c12227097f73d5755a6ff20ced43c9e2691c45",
+  "sources": [
+    {
+      "path": "AI_HLYTests/OriginalSourceFixtures.swift",
+      "beforeSHA256": null,
+      "afterSHA256": "d70f5707544cd5314caf19bd0db3c947e72268cf13903e44894375aa25d11929",
+      "bytes": 953
+    },
+    {
+      "path": "Scripts/CI/Tests/test_original_source_fixtures.py",
+      "beforeSHA256": null,
+      "afterSHA256": "37b0b1a08a06e71f535cfd6996fc3896aa81d2ae59c1962cde014f769f177dd2",
+      "bytes": 7851
+    },
+    {
+      "path": "Scripts/CI/original-source-fixtures.xcfilelist",
+      "beforeSHA256": null,
+      "afterSHA256": "36e5bab991c5207ef490edc299d6d444150816a63e359d2bc41ccd406f9d7b6d",
+      "bytes": 1861
+    },
+    {
+      "path": "Scripts/CI/prepare_original_source_fixtures.py",
+      "beforeSHA256": null,
+      "afterSHA256": "9e052e05c003854a440e24c49004a223a06d319bc356fd2e322dbfdfd8ce3dc2",
+      "bytes": 3828
+    },
+    {
+      "path": "Scripts/SDK/update_project.py",
+      "beforeSHA256": "4f7f842454864cef78235cc59013039b067acad27a2aa4d0285f6a3241530a7b",
+      "afterSHA256": "ec476b5266ebaf28161796010c948dbc92122af16caa38e0c1bc7bf777e103f5",
+      "bytes": 35996
+    },
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "beforeSHA256": "4f1afea0f0d166c55962b619d187efdc59b3c394a4b6c246af0f120260d74d80",
+      "afterSHA256": "3563bca75df76ae2862be5272bf5daa958eceb9ef4d6110498e410e0050fa15e",
+      "bytes": 267008
+    },
+    {
+      "path": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "beforeSHA256": "3df0d0a250b4ecb047224ea0e5c4f6f326af8b1bffcd3f1ce3dbed26a88cb85b",
+      "afterSHA256": "4d194e70793361169dd40c8c3d6fa01e9b5622bfa99f364835b358a93a4feb05",
+      "bytes": 95691
+    }
+  ],
+  "sourcePatchSHA256": "72dafe4720a238a43d801146f6ae33cab19d5a9c33af809e746f32c40a0f7bcd",
+  "sdkInputIntersection": [],
+  "declaredSourceCount": 23,
+  "onlyUnitTestProductOwnsFixturePhase": true,
+  "FINAL12": "Separate root-owned root-binding patch; must be applied by integration owner",
+  "nativeStatus": "NOT_RUN",
+  "status": "FROZEN_SOURCE_READY_FOR_REVIEW",
+  "preservationSHA256": "b9ddd4f2be90cc203e21d028bca4607608c40b9c4127c4b7c1d468d6bcf63ffe",
+  "sourceCommit": "5c0486f3a859000fabe430aa26d827b0c1b4a515"
+}

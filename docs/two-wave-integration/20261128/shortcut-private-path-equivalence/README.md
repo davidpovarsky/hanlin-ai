@@ -1,0 +1,19 @@
+# NativeScript concurrency private-path comparison
+
+The two original source 3634078f cases reached a real NativeScript foreground window and prepared separate challenges, then failed their existing identity waits. The first recorded observer rejection is “Visible owner state path differs from its actual private preparation.” Both own-case AXs, with matching screenshots/process captures, show State//surface-proof.json. The fixture concatenates its directory string with /surface-proof.json; the original read-only file enumeration uses Path components and records one separator.
+
+This candidate changes only the concurrency observer and its existing focused control module. The same_private_path helper compares the raw visible or handler spelling with the already validated reader path. It collapses repeated interior separators only. It refuses non-string, relative, double-leading-root, trailing-separator, NUL, dot and parent-component spellings. It does not resolve links, read another file, search another container, normalize case/Unicode or change recorded evidence.
+
+Four existing comparisons use the helper: initial owner admission, headless handler presentation samples, final owner-path continuity, and final foreground presentation samples. Actual reader paths remain strictly equal to one another. The original raw request and sample fields remain in the contract and receipts. Original no-symlink/container reads, matching challenge/generation/window/nonce/session/receipt checks and native callbacks remain intact. The existing optional Expo journal branch remains exact.
+
+The positive added control supplies canonical reader paths and double-separator observed paths through original collect and owner-completion checks, preserving raw evidence. The negative added control checks eleven invalid path shapes at admission, final owner, foreground sample and headless sample boundaries, then checks a foreign window identity with an otherwise equivalent path. All 17 old methods and their helper ASTs are unchanged. The original focused module executed once: 19 methods passed, zero failed/skipped, 0.154 seconds reported (0.317 seconds command wall time). These are synthetic portable controls, not native results.
+
+The two whole-file inverses recover the actual base Git objects. All original assertion messages and timing/hold/lease lines remain exact. The changed paths intersect zero of the retained 396 SDK and 99 Host inputs. No product, fixture, shared reader, UI, workflow or package source is changed. The controls remain in their existing ProductSplit/Tests module; no full-CI/discovery change is claimed.
+
+The actual source 3634078f failures remain failed. The first observer error and the two own visible path spellings are retained separately from source inference about the unretained private file/request values. The original two OS cases still require successful execution on the integrated candidate; saved Shortcut creation, overlapping work, Stop, reverse completion and surviving-owner acceptance have not passed through this correction.
+
+The complete frozen candidate packet is retained under shortcut-private-path-equivalence-5facdb20/candidate-r1 (manifest ca6d45a852f567b68e58c054f83570566034a05d6f45c856ffb2965db5fc1848). No native execution, workflow dispatch, SDK producer or full-CI run was started by this lane.
+
+## Sealed source and independent review
+
+Source commit 32e08c0a4356f8f5e079ddb4bec33f1d6c9d47db contains exactly the two reviewed files. Its parent is 5facdb200df2ab339ae52ff317e445cc3dd800dd. The source seal records the exact Git blobs and clean diff check. Both independent reviews are retained verbatim. Their approval is for source admission with native execution still required; neither reviewer repeated the focused controls or native cases.

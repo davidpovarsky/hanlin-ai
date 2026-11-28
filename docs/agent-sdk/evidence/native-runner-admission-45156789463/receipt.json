@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-11-23T10:58:27.622741+00:00",
+  "run_id": 45156789463,
+  "source_sha": "646b22918b1c56e5a6a16addcb1d3ebd982d3846",
+  "native_job_id": 137631863565,
+  "native_status": "NOT_RUN_HOSTED_RUNNER_NOT_ACQUIRED",
+  "build_status": "NOT_RUN",
+  "selected_test_group_count": 26,
+  "selected_test_status": "NOT_RUN",
+  "native_artifact_production": "NOT_RUN",
+  "runner_label": [
+    "xcode-27"
+  ],
+  "runner_id": 0,
+  "native_steps": [],
+  "job_start": "2026-11-23T10:31:18Z",
+  "job_end": "2026-11-23T10:46:19Z",
+  "workflow_conclusion": "failure",
+  "watch_ended_at": "2026-11-23T10:46:52.075520+00:00",
+  "metadata_sha256": {
+    "native-job.json": "f2efca1d50d9dcba1c56113c4d8152d4e7943c7e6edb581a2d65dbad0babfd71",
+    "artifact-index.json": "c726d84f71fa3fed5210700f30a8c54fb13c84161b51cd0f223002afa2a167b0",
+    "native-check-annotations.json": "03e23db8b3154cbbc6e8b4a2fc4785aa572b58024c70858e753655ba69d026e7"
+  }
+}

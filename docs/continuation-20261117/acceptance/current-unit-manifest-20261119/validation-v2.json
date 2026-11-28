@@ -1,0 +1,53 @@
+{
+  "base_head": "36faa1904e819c92db193d65cafbec0b8bd62ab1",
+  "observed_head": "884c41d039dfbf276af4c12299d84ac4c981e082",
+  "patch": {
+    "path": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\sdk05-xctestrun-admission\\current-unit-xctestrun-v2.diff",
+    "bytes": 41952,
+    "sha256": "60e63a5b2dee5c7329fb0ee92adfe95e851f16bcffef9dd678bd83f75c87efa2"
+  },
+  "apply_check": {
+    "exit": 0,
+    "output": ""
+  },
+  "input_drift": [],
+  "focused_tests": {
+    "methods": 18,
+    "passed": 18,
+    "failed": 0,
+    "skipped": 0,
+    "log_sha256": "51a09c3b1916fbd08f5027abe6dd47cbc3b3e82da95296417676225044f3b75e"
+  },
+  "python_ast": "PASS",
+  "yaml": "PASS",
+  "unrelated_jobs_and_steps": "UNCHANGED",
+  "scripting_and_ui_command_tail": "BYTE_IDENTICAL",
+  "bash_syntax": [
+    {
+      "step": "Retain prior unit manifests before the current test build",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "step": "Validate the current build-for-testing unit products",
+      "exit": 0,
+      "output": ""
+    },
+    {
+      "step": "Run simulator test suite",
+      "exit": 0,
+      "output": ""
+    }
+  ],
+  "native": "NOT_RUN",
+  "selection_file": {
+    "count": 12,
+    "sha256": "85bbb7128a756b6cb03c814673a9ddc94e1270b443afc641e9e9e2ac0725c862",
+    "bytes": 1053,
+    "original_bytes_preserved": true
+  },
+  "canonical_mutations": false,
+  "ci_dispatches": 0,
+  "v1_preserved": true,
+  "raw_rejected_manifest_evidence": "RETAINED_BEFORE_STRUCTURAL_VALIDATION"
+}

@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "updatedAtUTC": "2026-11-25 03:49:30 UTC",
+  "mutationFields": [
+    "html_notes"
+  ],
+  "writeAttempts": 1,
+  "readBackRetries": 0,
+  "completionChanged": false,
+  "acknowledgement": {
+    "data": [
+      {
+        "gid": "1220882717750164",
+        "name": "[HANLIN-COMPOSER-CAPABILITIES][P0] צירוף מפורש לכל הודעה + assistantTool + ממשק הגדרות בבועה"
+      },
+      {
+        "gid": "1220882600644494",
+        "name": "[M5][רוני | QA] שילוב עדכני ובדיקות Mac ממוקדות"
+      }
+    ],
+    "failed": [],
+    "summary": "Updated 2 of 2 tasks."
+  },
+  "verification": [
+    {
+      "id": "1220882717750164",
+      "readBackSucceeded": true,
+      "completed": false,
+      "completionUnchanged": true,
+      "modifiedAt": "2026-11-25T03:49:32.356Z",
+      "originalPlainNotesExact": true,
+      "originalRichNotesExact": true,
+      "expectedHTMLExact": true,
+      "newPlainSummaryExact": true,
+      "permalinkURL": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220882717750164"
+    },
+    {
+      "id": "1220882600644494",
+      "readBackSucceeded": true,
+      "completed": false,
+      "completionUnchanged": true,
+      "modifiedAt": "2026-11-25T03:49:32.287Z",
+      "originalPlainNotesExact": true,
+      "originalRichNotesExact": true,
+      "expectedHTMLExact": true,
+      "newPlainSummaryExact": true,
+      "permalinkURL": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220882600644494"
+    }
+  ],
+  "newMilestoneSummary": "עדכון אבן דרך — AI_HLY עדכני ומניפסט בדיקות מאומת — 2026-11-25 03:49:30 UTC\n\nניסיון 6 המקורי של AI_HLY Debug build-for-testing עבר בפועל על המק לאחר תיקון סכמת הבדיקות: מקור d89ce38b170bc9af4734cd11e30ca793b16698d0, ‏exit 0, ‏TEST BUILD SUCCEEDED, ‏207.607 שניות. התחלה 03:36:50.226249 UTC, סיום 03:40:17.832877 UTC. קובץ הנעילה לא השתנה ואין שינויי מקור מנוהלים. SHA-256 של היומן המקורי: 479775e23c60d7ccbf2ee82cf297de84acfc927d68f65320498de12070692bd8.\nאימות התוצרים העדכני עבר גם הוא בפועל ב-03:43:36.389381 UTC: המניפסט שנוצר ב-03:40:15.538609 מכיל HANLIN_UNIT_TEST_HOST=1 במפת הסביבה של שני היעדים AI_HLYTests ו-AI_HLYUITests. מפת TestingEnvironmentVariables הנוספת נותרה null; ההוכחה מתייחסת לשדה שנמצא בפועל. SHA-256 של המניפסט: 7a298177b07b04a7554677049a6f557865f0aa9387e352107bec3ea2c60253e5.\nהבדיקה קושרת את המניפסט לקבלת build 6, ומאשרת שבינארי ה-main וה-debug dylib זהים לבינארים שעברו את קדם-הבדיקה המקורית --app; גם קוד הבודק לא השתנה. לכן שער המניפסט הטרי וסביבת ה-test host מאומת כעת, בלי להסיק מכך תוצאת VM או UI.\n\nהתיעוד שומר גם על רצף ההפעלה: התהליך הקודם היה ממתין לקיבולת בלבד ונעצר ב-03:31:11 לאחר בדיקת בעלות וילדים; לא היה בו compiler, log או result של build 6. הקומפיילר האמיתי של אותו ניסיון התחיל פעם אחת ב-03:36:50. אין כאן שתי בניות ולא כשל קמפול נוסף.\nתכנית הקיבולת עודכנה לשלב האינקרמנטלי עם תוצרים חמים: אומדן 2+4+2 GiB, ללא סף CPU/load או מספר jobs. הערכת המשך שמרנית של 4+4+2 GiB נשמרה בנפרד, מול 18.73 GiB פנויים שנמדדו ב-03:40:13; היא אינה משנה בדיעבד את תכנית הכניסה המקורית.\nנשמרה קבלת פינוי של 12 נתיבי cache לא פעילים השייכים למשימה, בהקצאה כוללת לפני המחיקה של 1,579,753,472 בתים, לאחר בדיקת תהליכים וקבצים פתוחים ללא התאמות. שינוי השטח הפנוי שנצפה בזמן החלון היה דווקא ‎-1,436,356,608 בתים; אין טענה לרווח נטו של 1.47 GiB, בגלל פעילות מקבילה ושיתוף בלוקים ב-APFS. תוצרים, ראיות, מקור, SourcePackages, מכשירי סימולטור ותיקיות הסוכנים האחרים נשמרו. תיקיית Host7 הזמנית נשמרה גם היא משום שבדיקת הקבצים הפתוחים הנפרדת שלה הסתיימה ב-timeout.\n\nהשלב הבא מנוהל על ידי הסוכן הראשי באמצעות מניפסט xctestrun המקורי: בדיקות האינטגרציה, ארבע בדיקות מנוע native, ארבע בדיקות העורך ובדיקות UI באייפון ובאייפד; בניית HanlinMiniApps תבוצע לאחר קבוצות AI_HLY. בעדכון זה אין עדיין תוצאות קבלה מקבוצות אלו, והן נשארות פתוחות. שתי משימות Asana אינן מסומנות כהושלמו.",
+  "originalTaskBodiesIncluded": false,
+  "applicationSourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+  "freshManifestSHA256": "7a298177b07b04a7554677049a6f557865f0aa9387e352107bec3ea2c60253e5",
+  "acceptanceTestsInferred": false
+}

@@ -1,0 +1,15 @@
+test_capture_cannot_be_embedded_in_plugins (test_system_extension_targets.SystemExtensionTargetsTests.test_capture_cannot_be_embedded_in_plugins) ... ok
+test_complete_actual_shipping_graph_and_source_metadata (test_system_extension_targets.SystemExtensionTargetsTests.test_complete_actual_shipping_graph_and_source_metadata) ... ok
+test_each_export_selects_exactly_its_five_or_eight_owned_bundles (test_system_extension_targets.SystemExtensionTargetsTests.test_each_export_selects_exactly_its_five_or_eight_owned_bundles) ... ok
+test_generation_is_idempotent_and_preserves_native_shell_phases (test_system_extension_targets.SystemExtensionTargetsTests.test_generation_is_idempotent_and_preserves_native_shell_phases) ... ok
+test_missing_target_or_capture_intent_link_is_rejected (test_system_extension_targets.SystemExtensionTargetsTests.test_missing_target_or_capture_intent_link_is_rejected) ... ok
+test_new_system_surfaces_do_not_acquire_hanlin_shipping_or_registration (test_system_extension_targets.SystemExtensionTargetsTests.test_new_system_surfaces_do_not_acquire_hanlin_shipping_or_registration) ... ok
+test_original_ten_signing_roles_and_profile_names_are_unchanged (test_system_extension_targets.SystemExtensionTargetsTests.test_original_ten_signing_roles_and_profile_names_are_unchanged) ... ok
+test_registration_scope_and_capture_entitlements_are_exact (test_system_extension_targets.SystemExtensionTargetsTests.test_registration_scope_and_capture_entitlements_are_exact) ... ok
+test_shared_publication_and_camera_ui_are_gated_to_standalone_miniapps (test_system_extension_targets.SystemExtensionTargetsTests.test_shared_publication_and_camera_ui_are_gated_to_standalone_miniapps) ... ok
+test_wrong_owner_or_duplicate_embedding_is_rejected (test_system_extension_targets.SystemExtensionTargetsTests.test_wrong_owner_or_duplicate_embedding_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 1.805s
+
+OK

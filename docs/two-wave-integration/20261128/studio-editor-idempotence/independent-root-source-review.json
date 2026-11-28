@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-28T00:56:16.867865+00:00",
+  "classification": "APPROVED_MINIAPPS_EDITOR_IDEMPOTENCE_SOURCE_ONLY",
+  "base": "53329e1a9dde33432d886ec5ffbee7c3d44d2014",
+  "path": "HanlinMiniAppsApp/MiniAppsDeveloperStudio.swift",
+  "preimageSHA256": "1471af7b39899452fd3ab797bf24cd9d4e1c2273807e438795564ebe259608d7",
+  "candidateSHA256": "28058e1a2b8189a16e6a517d20e64db7ff76c9aebc6ddc120cde16963baa8c4c",
+  "patchSHA256": "9d6cbdeb0fbff3eeb0b46fe9f857c31b06a7a9d28027e731edfed59a4cacec2c",
+  "verifiedMembers": 11,
+  "exactFiveSubstitutionInverse": true,
+  "review": "Only redundant equal-value writes are omitted. Real editability/font/text/selection/caret changes still use the original setters. Original incoming text/selection validation, caret geometry, callback ordering, model change path, tests and budgets are untouched. No new asynchronous work or delegate suppression.",
+  "rationale": "Concrete source-supported repeated assignments, not a claim that samples prove a synchronous cycle or that native Gallery failures are solved.",
+  "nativeCompilation": "NOT_RUN",
+  "originalGalleryEditorAcceptance": "NOT_RUN",
+  "sdk396Intersection": []
+}

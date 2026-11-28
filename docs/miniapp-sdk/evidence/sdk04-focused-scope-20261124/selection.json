@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "createdAtUTC": "2026-11-24T10:01:32.989039+00:00",
+  "baseCommit": "97bc2e1d7b3fb3fe5c1bfcc8fe25ed790b8477f8",
+  "scope": "miniapp_sdk04",
+  "selectedNativeHostCases": [
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"
+  ],
+  "selectedMiniAppsCases": [
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents"
+  ],
+  "expected": {
+    "nativeHost": 2,
+    "MiniAppsUI": 8,
+    "total": 10
+  },
+  "scopePreservation": {
+    "allPreviousTestPlansIdentical": true,
+    "unchangedFunctions": [
+      "command",
+      "command_phase_status",
+      "record_build_phases",
+      "capture_app_intents_metadata",
+      "fixture_archive",
+      "authoring_fixtures",
+      "verify_native_result",
+      "start_native_adapter_assets"
+    ],
+    "commandExecutionAndJournalUnchanged": true,
+    "existingTimeoutsUnchanged": true,
+    "ownedIPadSimulator": true,
+    "freshNativeAndShippingSDKPreparation": true,
+    "newArtifactReuseBypass": false,
+    "existingAuthoring42SelectorsUnchanged": true
+  },
+  "workflowChanged": [
+    "Add explicit dispatch scope",
+    "Retain focused UI attachments through existing artifact upload"
+  ],
+  "nativeExecution": "NOT_RUN; compile current fixture and production source before dispatch",
+  "boundary": [
+    "Generated modifier context coverage does not prove all83 individual semantics",
+    "DefaultDocumentGroupLaunchActions requires genuine document container; unmounted in this scope",
+    "Widget consumer assertions do not imply WidgetKit OS rendered",
+    "No physical-device or release result"
+  ],
+  "sources": [
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "sha256": "bd1991f657e42bf7f3224ad5c504e972ccf7b97d397be9235038631f8ff3b870"
+    },
+    {
+      "path": ".github/workflows/validate-app-split.yml",
+      "sha256": "dee16f5485c208a48ec2bfb931001ce55d388ff5cd7be4904456458a7e6e6f6b"
+    }
+  ]
+}

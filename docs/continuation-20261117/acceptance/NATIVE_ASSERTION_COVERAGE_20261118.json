@@ -1,0 +1,178 @@
+{
+  "document": "NATIVE_ASSERTION_COVERAGE_20261118",
+  "generated_at": "2026-11-18T08:15:23.225285+00:00",
+  "mapping_source_sha": "595163c98d654966d068b99787c767ccfc15caec",
+  "run": 44250279050,
+  "native_source_sha": "bf7296397154ddccceecedda4307b79f6a0c480d",
+  "native_test_results_sha256": "6a2a962e9b441a8660cd8acb794eb05cbc1522f560d78773207ffbe305d9c368",
+  "unique_passed_native_methods": 20,
+  "distinct_partially_evidenced_feature_rows": 9,
+  "fully_accepted_feature_rows": 0,
+  "method_results": {
+    "CompactRecentConversationsTests/historySnippetKeepsOriginalStringIndices()": "Passed",
+    "CompactRecentConversationsTests/historySnippetPreservesUnicodeContext()": "Passed",
+    "CompactRecentConversationsTests/historySnippetHandlesShortAndAbsentMatches()": "Passed",
+    "CompactRecentConversationsTests/selectsTopThreeByLastEditedIgnoringPinnedAndTemp()": "Passed",
+    "ModelPopoverZoomOrderTests/nativeCatalogRegistrationFeedsExistingPickerWithoutIndexDrift()": "Passed",
+    "ModelPopoverZoomOrderTests/nativeOnlyConversationCreationRespectsActualAvailabilityAndCatalogIndices()": "Passed",
+    "ModelPopoverZoomOrderTests/downloadedLocalConversationCreationDoesNotTreatCatalogPresenceAsReadiness()": "Passed",
+    "ModelPopoverZoomOrderTests/nativeVisibilityKeepsOriginalIndices()": "Passed",
+    "ModelPopoverZoomOrderTests/compactNativeVisibilityKeepsFeaturedAndSelectedIndices()": "Passed",
+    "ModelPopoverZoomOrderTests/nativeCallbacksAreDeferredAndSuperseded()": "Passed",
+    "ModelPopoverZoomOrderTests/nativeSizeCompletionOwnsForwardNavigation()": "Passed",
+    "ModelPopoverZoomOrderTests/staleNativeResizeCannotCompleteReopenedPresentation()": "Passed",
+    "ModelPopoverZoomOrderTests/reenterWhileExpandedDoesNotWaitForAnotherResize()": "Passed",
+    "ModelPopoverZoomOrderTests/reverseCompletesBeforeShrink()": "Passed",
+    "ModelPopoverZoomOrderTests/staleReverseCannotShrinkNewPresentation()": "Passed",
+    "ModelPopoverZoomOrderTests/staleCompletionCannotEndNewExpansion()": "Passed",
+    "ModelPopoverZoomOrderTests/popoverFitsSmallContainer()": "Passed",
+    "ModelPopoverZoomOrderTests/expandFirstThenPushAllModelsInCompletion()": "Passed",
+    "ModelPopoverZoomOrderTests/generationTokenCancelsStaleCompletion()": "Passed",
+    "ModelPopoverZoomOrderTests/reduceMotionNavigatesImmediately()": "Passed"
+  },
+  "direct_tested_source_closure": [
+    {
+      "path": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "native_source_sha256": "5a9beb5269444603895a60a03449724009c832922c455614a57d7a1e780d0658",
+      "current_source_sha256": "5a9beb5269444603895a60a03449724009c832922c455614a57d7a1e780d0658",
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/ListView.swift",
+      "native_source_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
+      "current_source_sha256": "8037a41e0940c7a9e5eb4592254d854191933976d92e41a8711617fc79711572",
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactRecentChats.swift",
+      "native_source_sha256": "a3c978426684c1e0e814ff284ce1ed522acd36da4c041ef591d13748f3e11b7b",
+      "current_source_sha256": "a3c978426684c1e0e814ff284ce1ed522acd36da4c041ef591d13748f3e11b7b",
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinDefaultChatPolicy.swift",
+      "native_source_sha256": "d00c79860e63f50872c4793b70c755b400d9668186c44592e2f097202d964aa2",
+      "current_source_sha256": "d00c79860e63f50872c4793b70c755b400d9668186c44592e2f097202d964aa2",
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/HanlinModelPickerPopover.swift",
+      "native_source_sha256": "50c95572628801167550162453f21f0e6b1ba1cc837b61bb3f79ed9ce2fc6067",
+      "current_source_sha256": "50c95572628801167550162453f21f0e6b1ba1cc837b61bb3f79ed9ce2fc6067",
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/HanlinComposerPopupCoordinator.swift",
+      "native_source_sha256": "93db8f73981ba3d8bb0bfcb84c87d9fbf69d7c7abce8c17a0e2539f9fa548516",
+      "current_source_sha256": "93db8f73981ba3d8bb0bfcb84c87d9fbf69d7c7abce8c17a0e2539f9fa548516",
+      "identical": true
+    },
+    {
+      "path": "AI_HLY/Model/HanlinAppleModelCatalogAdapter.swift",
+      "native_source_sha256": "c3b6c99bf142c255efb59a136e0ddfd1d529d26d00b1f368eacfbc83fba2b142",
+      "current_source_sha256": "c3b6c99bf142c255efb59a136e0ddfd1d529d26d00b1f368eacfbc83fba2b142",
+      "identical": true
+    }
+  ],
+  "closure_limit": "The explicitly listed tested helpers and test source are identical. Other integrated app/Host/UI files changed; this is limited eligible component reuse, not proof of the complete current app.",
+  "feature_method_mapping": [
+    {
+      "feature_id": "NAV-02",
+      "methods": [
+        "ModelPopoverZoomOrderTests/nativeOnlyConversationCreationRespectsActualAvailabilityAndCatalogIndices()",
+        "ModelPopoverZoomOrderTests/downloadedLocalConversationCreationDoesNotTreatCatalogPresenceAsReadiness()"
+      ],
+      "assertions_covered": "Original creation policy selects an available native/downloaded local model without changing catalog indices.",
+      "remaining": "Actual new-chat action, welcome message and persisted record still require original app UI."
+    },
+    {
+      "feature_id": "NAV-05",
+      "methods": [
+        "CompactRecentConversationsTests/selectsTopThreeByLastEditedIgnoringPinnedAndTemp()"
+      ],
+      "assertions_covered": "Original recent-conversation function returns the latest three by lastEdited and excludes temporary/non-chat rows.",
+      "remaining": "Visible list, pin grouping, navigation and persisted edit ordering are broader UI obligations."
+    },
+    {
+      "feature_id": "NAV-08",
+      "methods": [
+        "CompactRecentConversationsTests/historySnippetKeepsOriginalStringIndices()",
+        "CompactRecentConversationsTests/historySnippetHandlesShortAndAbsentMatches()"
+      ],
+      "assertions_covered": "Actual message snippet comparison matches mixed case without reusing indices from Unicode-folded strings.",
+      "remaining": "Whole title/body search, debounce and result navigation require original UI acceptance."
+    },
+    {
+      "feature_id": "NAV-10",
+      "methods": [
+        "CompactRecentConversationsTests/historySnippetKeepsOriginalStringIndices()",
+        "CompactRecentConversationsTests/historySnippetPreservesUnicodeContext()",
+        "CompactRecentConversationsTests/historySnippetHandlesShortAndAbsentMatches()"
+      ],
+      "assertions_covered": "Original search helper keeps forty grapheme clusters around the match, complete emoji/pointed Hebrew and valid original String indices.",
+      "remaining": "Visible snippet and scrolling to the original matching message remain separate."
+    },
+    {
+      "feature_id": "NAV-25",
+      "methods": [
+        "ModelPopoverZoomOrderTests/nativeOnlyConversationCreationRespectsActualAvailabilityAndCatalogIndices()",
+        "ModelPopoverZoomOrderTests/downloadedLocalConversationCreationDoesNotTreatCatalogPresenceAsReadiness()"
+      ],
+      "assertions_covered": "Unavailable/hidden native or local model/provider cannot authorize original creation; catalog presence alone is not readiness.",
+      "remaining": "Actual failure prompt and navigation from prompt to settings have not been accepted."
+    },
+    {
+      "feature_id": "MODEL-01",
+      "methods": [
+        "ModelPopoverZoomOrderTests/nativeCatalogRegistrationFeedsExistingPickerWithoutIndexDrift()",
+        "ModelPopoverZoomOrderTests/nativeVisibilityKeepsOriginalIndices()",
+        "ModelPopoverZoomOrderTests/compactNativeVisibilityKeepsFeaturedAndSelectedIndices()"
+      ],
+      "assertions_covered": "Original model identities and selected array indices survive native registration, hiding and availability filtering.",
+      "remaining": "Actual user selection and conversation persistence need native product UI acceptance."
+    },
+    {
+      "feature_id": "MODEL-04",
+      "methods": [
+        "ModelPopoverZoomOrderTests/compactNativeVisibilityKeepsFeaturedAndSelectedIndices()"
+      ],
+      "assertions_covered": "Original compact picker keeps featured/selected native indices and excludes hidden/unavailable/duplicate native rows.",
+      "remaining": "Actual compact menu presentation and user selection remain UI obligations."
+    },
+    {
+      "feature_id": "MODEL-05",
+      "methods": [
+        "ModelPopoverZoomOrderTests/nativeCallbacksAreDeferredAndSuperseded()",
+        "ModelPopoverZoomOrderTests/nativeSizeCompletionOwnsForwardNavigation()",
+        "ModelPopoverZoomOrderTests/staleNativeResizeCannotCompleteReopenedPresentation()",
+        "ModelPopoverZoomOrderTests/reenterWhileExpandedDoesNotWaitForAnotherResize()",
+        "ModelPopoverZoomOrderTests/reverseCompletesBeforeShrink()",
+        "ModelPopoverZoomOrderTests/staleReverseCannotShrinkNewPresentation()",
+        "ModelPopoverZoomOrderTests/staleCompletionCannotEndNewExpansion()",
+        "ModelPopoverZoomOrderTests/popoverFitsSmallContainer()",
+        "ModelPopoverZoomOrderTests/expandFirstThenPushAllModelsInCompletion()",
+        "ModelPopoverZoomOrderTests/generationTokenCancelsStaleCompletion()",
+        "ModelPopoverZoomOrderTests/reduceMotionNavigatesImmediately()"
+      ],
+      "assertions_covered": "Actual UIKit sizing callback is deferred and superseded; original coordinator enforces forward/reverse ordering, generation rejection, constrained size and Reduce Motion.",
+      "remaining": "Original presented model search screen, touches, dismissal and draft retention need UI acceptance."
+    },
+    {
+      "feature_id": "MODEL-10",
+      "methods": [
+        "ModelPopoverZoomOrderTests/nativeCatalogRegistrationFeedsExistingPickerWithoutIndexDrift()",
+        "ModelPopoverZoomOrderTests/nativeVisibilityKeepsOriginalIndices()",
+        "ModelPopoverZoomOrderTests/compactNativeVisibilityKeepsFeaturedAndSelectedIndices()"
+      ],
+      "assertions_covered": "Original visibility filtering skips hidden models and unavailable/duplicate native entries without index drift.",
+      "remaining": "User editing/reordering hidden models and persisted catalog UI are not proven by these methods."
+    }
+  ],
+  "same_workflow_ui_result": {
+    "passed": 0,
+    "failed": 2,
+    "repair_run": 44263129438
+  },
+  "phase2_complete": false,
+  "phase3_complete": false
+}

@@ -1,0 +1,30 @@
+{
+  "sourceTemplateBase": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "workflow": ".github/workflows/validate-app-split.yml",
+  "paired_test_scope": "miniapp_native_lists_nativescript_os",
+  "dispatch": "NOT_REQUESTED",
+  "testCases": 4,
+  "requiredRealActionExecutions": 8,
+  "runtime": "Original paired selector chooses one actual available iPad runtime; exact version/build must be recorded by original route",
+  "bounds": {
+    "caseSharedSeconds": 360,
+    "nativeTestCommandSeconds": 2100,
+    "pairedJobMinutes": 210,
+    "originalValidateSeconds": 300,
+    "originalBuildSeconds": 600
+  },
+  "preconditions": [
+    "Reviewed sealed source plus independently integrated workflow, current full CI and normal publication",
+    "Actual source-bound standalone MiniApps and AI_HLY XCTest runner products through original paired build commands",
+    "Original SDK/fixtures produced from actual shipping RuntimeHostResources.zip; portable historical SDK proof is not a hosted product substitute",
+    "Emitted current native list metadata must match all four optional array element types and summary cases",
+    "Actual current installed package archive/generation, native window storage and original source/product closure",
+    "Owned simulator/device/runtime admission, original resource guards and cleanup"
+  ],
+  "boundaries": [
+    "NativeScript4 only; Expo4 still required later",
+    "No pre-change saved-action migration proof",
+    "No physical-device claim",
+    "Unknown native array editor produces retained actual AX/PNG failure; no JSON/private preference/direct-invocation substitute"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "sourceCommit": "6265dd26948fe671f9b73904529b3bd6d871c9a4",
+  "sourceBase": "04e33c45acedd3f372f836b06f17b805bc91293d",
+  "candidateManifestSHA256": "2714ddc079ba3d580d9a3119e45496b0b1ec14c6ad57e14d0acf1bacc27b05f9",
+  "patchSHA256": "49b093d63987208dbdf4ef477bee5ca27bc2d40bb8fe001f3758f68451922547",
+  "reviewSHA256": "3bd6dd8b67caa4e47bad1b2c263742647de1b4c75e6a050da9338f75e359a8fa",
+  "actualPortable": {
+    "methods": 25,
+    "pass": 25,
+    "fail": 0,
+    "skip": 0,
+    "executions": 1,
+    "receiptSHA256": "9e3bc760a6d7a43ad62b7374a009ddc238e9103e84767208a5f1371244605107",
+    "methodReconciliationSHA256": "14e9aa0504f705b00568619949e664cd012dc46c0b57daad0622795b4e2bce4b",
+    "stderrSHA256": "7c421ada691447a3ea8cd6283af0cbb21bd49a6427f0cb83032e784669a69a23"
+  },
+  "actualFailedNativeRun": 46128022331,
+  "actualFailedSource": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+  "native": "NOT_RUN for successor",
+  "sourceChangeScope": "Only failure diagnostic +2 portable controls; exact old runner AST after removal of helper/hook and all23 old control/helper ASTs preserved."
+}

@@ -1,0 +1,463 @@
+{
+  "run": 44243185407,
+  "sha": "00a932d63db76549dff0a228a6b75711fcad8a22",
+  "status": "BUILD_PASS_NATIVE_ACCEPTANCE_FAILED",
+  "artifact": {
+    "id": 14404598006,
+    "api_zip_sha256": "80afc909d7c7f78f45f03665288d8aaab0f3fdc229807e09a5e83475c235afb8",
+    "full_zip_digest_recomputed": false
+  },
+  "scope": {
+    "host_components": {
+      "source": "08-downstream-unit-test-results.json",
+      "sha256": "c67407057ba09f8240897d2aac89a2c7e5b4c5c41f505dc253a41e705db60d5b",
+      "cases": [
+        {
+          "identity": "AgentRoundPresentationTests/providerCitationsKeepTheOriginalAnswerAndCannotBorrowChangedText()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "AgentRoundPresentationTests/actualApprovalKeepsCallIdentityAndDenialStaysNeutralThroughFailureReplay()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "AgentRoundPresentationTests/richToolFollowupPreservesPriorAnswerAndStableActivityIdentity()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "AgentRoundPresentationTests/asyncCancellationCannotClearANewerRunWhileRecorderDrains()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "AgentRoundPresentationTests/suspendedBeginCannotReclaimOwnershipFromANewerRun()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "AgentRoundPresentationTests/actualRoundMarkersOwnReasoningAndParallelSameNameTools()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "AgentRoundPresentationTests/legacyActivitiesNeverAcquireAParentFromTheirTimeOrName()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "ExpoPreparedEntrypointTests/malformedAndEscapingMainValuesAreRejectedBeforeRuntimeCreation()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "ExpoPreparedEntrypointTests/symlinkedMetadataOrAnyEntrypointComponentCannotRedirectThePreparedRoot()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "ExpoPreparedEntrypointTests/defaultAndNestedRegularFilesRemainValidWithoutStartingReactOrHermes()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppAgentSessionOwnerTests/originalConsentExpiresRevokesAndRejectsStaleSheetAnswers()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppAgentSessionOwnerTests/existingSwiftDataRowPreservesLegacyFieldsAndRejectsConflictForeignScopeAndDeletion()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppAgentSessionOwnerTests/identicalContentAndPartIDsKeepExactRowRunBindingAndOriginalReplaySession()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppAgentSessionOwnerTests/temporaryCanonicalMetadataSurvivesCancellationWithoutDatabaseWrite()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppAgentSessionOwnerTests/historyOpenRejectsDeletedForeignAndCancelledOriginsWithoutCreatingSession()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppAgentSessionOwnerTests/historicalReceiptDedupRejectsChangedLargeIntegerOutcomeAndPreservesBytes()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppAgentSessionOwnerTests/liveSettledAndProvisionalReceiptsHaveDistinctReconciliationRules()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppAgentSessionOwnerTests/acceptedOriginAcknowledgementCannotClearAnotherWindowOrNewerDelivery()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppAgentSessionOwnerTests/actualNativeBoundaryRejectsLossyOrInvalidInputAndChangedContextBeforeEffects()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppAgentSessionOwnerTests/officialToolPayloadUsesOriginalRendererAndPersistsExactBytesWithoutInferringArbitraryJSON()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppAgentSessionOwnerTests/appHostInvokesOriginalExecutorOnceAndUsesExplicitNativeOutcome()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppSplitOriginTests/canonicalSharingSurvivesViewRegistrationAndReadsActualPrivateState()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppSplitOriginTests/canonicalSharingStillRejectsUnrelatedCallerAndWrongCapability()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppSplitOriginTests/canonicalSharingDoesNotBypassTheHostAuthorizer()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppSplitOriginTests/canonicalSharingNeverRecastsCorruptPersistedStateAsAnEmptySuccess()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppSplitOriginTests/actualSessionDispatchSavesBeforeOpenAndReceiptBeforeOneTimeAccept()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppSplitOriginTests/cancellationWhileOSOpenAwaitsCannotLeaveAnUnresumableHostWaiter()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppSplitOriginTests/cancellationAfterReceiverStartKeepsOutcomeUnknownAndNeverNavigates()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppSplitOriginTests/deletedOriginalCannotSaveAcceptNavigateOrRecreateAConversation()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppSplitOriginTests/deletedOriginalAssistantRowCannotRetargetAnExistingConversation()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppSplitOriginTests/anotherIdleOrFailedOwnerCannotHideTheOriginalActiveCanonicalWriter()",
+          "result": "Failed",
+          "failures": [
+            {
+              "message": "Crash: AI_Hanlin at HanlinAppConversationStore.requireOriginalConversation()",
+              "source": null
+            }
+          ]
+        },
+        {
+          "identity": "HanlinAppSplitOriginTests/receptionClaimRequiresAnExplicitWindowAndRejectsDuplicatesBeforeAwait()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinAppSplitOriginTests/expiredOriginalFailsBeforeAnyTargetAuthorityOrStoreLookup()",
+          "result": "Passed",
+          "failures": []
+        }
+      ],
+      "counts": {
+        "Passed": 32,
+        "Failed": 1,
+        "Skipped": 0
+      }
+    },
+    "original_app_ui": {
+      "source": "08-nativescript-production-ui-test-results.json",
+      "sha256": "c468929f6eac61a4456d29677fb6b797acbc11535f2fdb228097a7e3ec8bb330",
+      "cases": [
+        {
+          "identity": "AgentRuntimeConversationUITests/testPhase2ActualPythonToolApprovalAndColdConversationRestoration()",
+          "result": "Failed",
+          "failures": [
+            {
+              "message": "Failed to get matching snapshot: No matches found for Elements matching predicate '\"hanlin-phase2-chat-id\" IN identifiers' from input {(\n    StaticText, label: 'Agent Acceptance Chat',\n    StaticText, label: 'Please enter the group chat name',\n    StaticText, identifier: 'hanlin-user-bubble', label: 'PHASE2_REAL_PYTHON_669191B6-B17A-485C-B0E1-3C0BE2119C8E',\n    StaticText, label: 'Tools',\n    StaticText, label: 'Skills',\n    StaticText, label: 'Runtimes',\n    StaticText, label: 'Agent Acceptance',\n    StaticText, label: 'Program Results',\n    StaticText, label: 'PHASE2_RESULT_669191B6-B17A-485C-B0E1-3C0BE2119C8E:3.14.6:42\n',\n    StaticText, label: 'Agent Acceptance',\n    StaticText, label: 'Agent Acceptance Chat',\n    StaticText, label: '06:17',\n    StaticText, label: 'PHASE2_VERIFIED_669191B6-B17A-485C-B0E1-3C0BE2119C8E:3.14.6:42',\n    StaticText, label: 'Thinking',\n    StaticText, label: 'Worked for 1m 6s',\n    StaticText, label: 'Source Code',\n    StaticText, label: 'Using a tool',\n    StaticText, label: 'Completed',\n    StaticText, label: 'Used a tool',\n    StaticText, label: 'Completed',\n    StaticText, label: 'Loading skill...',\n    StaticText, label: 'Completed',\n    StaticText, label: 'Allowed once',\n    StaticText, label: 'Completed'\n)}\nPossibly caused by runtime issues:\nAutomation type mismatch: computed TextView from legacy attributes vs StaticText from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 48;\n    \"XC_kAXXCAttributeElementBaseType\" = UIAccessibilityElement;\n    \"XC_kAXXCAttributeElementType\" = \"_AXUITextViewParagraphElement\";\n    \"XC_kAXXCAttributeTraits\" = 140746078289984;\n}\nAutomation type mismatch: computed StaticText from legacy attributes vs DisclosureTriangle from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 13;\n    \"XC_kAXXCAttributeElementBaseType\" = NSObject;\n    \"XC_kAXXCAttributeElementType\" = \"SwiftUI.AccessibilityNode\";\n    \"XC_kAXXCAttributeTraits\" = 8589934656;\n}\nSee test report attachments for more detail.",
+              "source": {
+                "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                "lineNumber": 73
+              }
+            }
+          ]
+        },
+        {
+          "identity": "AgentRuntimeConversationUITests/testPhase2OfficialToolSurfaceContinuesThroughTheSameOriginalChat()",
+          "result": "Failed",
+          "failures": [
+            {
+              "message": "XCTAssertTrue failed",
+              "source": {
+                "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+                "lineNumber": 17
+              }
+            }
+          ]
+        },
+        {
+          "identity": "HanlinCanvasRuntimeUITests/testOriginalCanvasRunsEmbeddedPythonAndRetainsSourceAfterRelaunch()",
+          "result": "Failed",
+          "failures": [
+            {
+              "message": "XCTAssertTrue failed",
+              "source": {
+                "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinCanvasRuntimeUITests.swift",
+                "lineNumber": 24
+              }
+            }
+          ]
+        },
+        {
+          "identity": "HanlinContextualTextToolsUITests/testOriginalTextToolsReceiveTheMessageWithoutReplacingTheConversation()",
+          "result": "Failed",
+          "failures": [
+            {
+              "message": "XCTAssertTrue failed",
+              "source": {
+                "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinContextualTextToolsUITests.swift",
+                "lineNumber": 20
+              }
+            }
+          ]
+        },
+        {
+          "identity": "HanlinExpoProductionE2ETests/testProductionExpoSwiftUIProbeEndToEnd()",
+          "result": "Failed",
+          "failures": [
+            {
+              "message": "XCTAssertTrue failed - hanlin-apps-add button did not exist",
+              "source": {
+                "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinExpoProductionE2ETests.swift",
+                "lineNumber": 672
+              }
+            }
+          ]
+        },
+        {
+          "identity": "HanlinHelpUITests/testOfflineGuideCostsAndSupportReturnToTheOriginalProfile()",
+          "result": "Failed",
+          "failures": [
+            {
+              "message": "failed - Profile destination is unreachable: hanlin-help-guide-link",
+              "source": {
+                "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinHelpUITests.swift",
+                "lineNumber": 23
+              }
+            }
+          ]
+        },
+        {
+          "identity": "HanlinMorphComposerUITests/testWideNavigationKeepsDraft()",
+          "result": "Failed",
+          "failures": [
+            {
+              "message": "XCTAssertTrue failed",
+              "source": {
+                "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinMorphComposerUITests.swift",
+                "lineNumber": 347
+              }
+            }
+          ]
+        },
+        {
+          "identity": "HanlinNativeA2UIChatUITests/testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest()",
+          "result": "Failed",
+          "failures": [
+            {
+              "message": "XCTAssertTrue failed - The isolated SDK bootstrap did not expose its original seeded conversation",
+              "source": {
+                "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                "lineNumber": 271
+              }
+            }
+          ]
+        },
+        {
+          "identity": "HanlinNativeA2UIChatUITests/testNewConversationWorksWithoutOptimizationModel()",
+          "result": "Failed",
+          "failures": [
+            {
+              "message": "XCTAssertTrue failed - The isolated SDK bootstrap did not expose its original seeded conversation",
+              "source": {
+                "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                "lineNumber": 271
+              }
+            }
+          ]
+        },
+        {
+          "identity": "HanlinNativeA2UIChatUITests/testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft()",
+          "result": "Failed",
+          "failures": [
+            {
+              "message": "XCTAssertTrue failed - The isolated SDK bootstrap did not expose its original seeded conversation",
+              "source": {
+                "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                "lineNumber": 271
+              }
+            }
+          ]
+        },
+        {
+          "identity": "HanlinNativeA2UIChatUITests/testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory()",
+          "result": "Failed",
+          "failures": [
+            {
+              "message": "XCTAssertTrue failed - The isolated SDK bootstrap did not expose its original seeded conversation",
+              "source": {
+                "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                "lineNumber": 271
+              }
+            }
+          ]
+        },
+        {
+          "identity": "HanlinNativeA2UIChatUITests/testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft()",
+          "result": "Failed",
+          "failures": [
+            {
+              "message": "XCTAssertTrue failed - The isolated SDK bootstrap did not expose its original seeded conversation",
+              "source": {
+                "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                "lineNumber": 271
+              }
+            }
+          ]
+        },
+        {
+          "identity": "HanlinNativeA2UIChatUITests/testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest()",
+          "result": "Failed",
+          "failures": [
+            {
+              "message": "XCTAssertTrue failed - The isolated SDK bootstrap did not expose its original seeded conversation",
+              "source": {
+                "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                "lineNumber": 271
+              }
+            }
+          ]
+        },
+        {
+          "identity": "HanlinNativeA2UIChatUITests/testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow()",
+          "result": "Failed",
+          "failures": [
+            {
+              "message": "XCTAssertTrue failed - The isolated SDK bootstrap did not expose its original seeded conversation",
+              "source": {
+                "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+                "lineNumber": 271
+              }
+            }
+          ]
+        },
+        {
+          "identity": "HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime()",
+          "result": "Failed",
+          "failures": [
+            {
+              "message": "XCTAssertTrue failed - hanlin-apps-add button did not exist",
+              "source": {
+                "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinNativeScriptProductionE2ETests.swift",
+                "lineNumber": 517
+              }
+            }
+          ]
+        },
+        {
+          "identity": "HanlinPrimaryNavigationSmokeUITests/testWholeAppPrimaryNavigationSmoke()",
+          "result": "Failed",
+          "failures": [
+            {
+              "message": "XCTAssertEqual failed: (\"0\") is not equal to (\"2\") - Chat and Library are the only permanent destinations",
+              "source": {
+                "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinPrimaryNavigationSmokeUITests.swift",
+                "lineNumber": 48
+              }
+            }
+          ]
+        },
+        {
+          "identity": "HanlinSkillCenterUITests/testCancelActuallyRunningImportedNodeSkillRetainsPartialOutput()",
+          "result": "Failed",
+          "failures": [
+            {
+              "message": "XCTAssertTrue failed",
+              "source": {
+                "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinSkillCenterUITests.swift",
+                "lineNumber": 429
+              }
+            }
+          ]
+        },
+        {
+          "identity": "HanlinSkillCenterUITests/testImportedSkillExecutionRequiresApprovalAndPersistsAfterColdLaunch()",
+          "result": "Failed",
+          "failures": [
+            {
+              "message": "XCTAssertFalse failed",
+              "source": {
+                "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinSkillCenterUITests.swift",
+                "lineNumber": 398
+              }
+            }
+          ]
+        },
+        {
+          "identity": "HanlinSkillCenterUITests/testImportSkillZipPreviewInstall()",
+          "result": "Passed",
+          "failures": []
+        },
+        {
+          "identity": "HanlinSkillCenterUITests/testSkillResourceAddImportEditDelete()",
+          "result": "Failed",
+          "failures": [
+            {
+              "message": "XCTAssertTrue failed - Add Resource button not found",
+              "source": {
+                "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinSkillCenterUITests.swift",
+                "lineNumber": 635
+              }
+            }
+          ]
+        }
+      ],
+      "counts": {
+        "Passed": 1,
+        "Failed": 19,
+        "Skipped": 0
+      }
+    }
+  },
+  "motion": "NOT_RUN: selector omitted the task-named prepared iPad; source fix 53fd873b preserves SDK and exact-device checks",
+  "missing_native_cases": {
+    "incorrect_suite_name": "NativeScriptRuntimeWireTests.swift extends HanlinUnifiedHostServicesE2ETests; select the seven actual methods in that suite",
+    "skill_suite": "No requested SkillRuntimeProductTests method executed. Next run must select the whole original suite with parameterized cases and verify raw nodes."
+  },
+  "known_source_correction": "16684ada: simulator acceptance inputs honor existing HANLIN_TESTING used by actual Release build; no shipping Release or assertion changes",
+  "remaining": "Inspect original crash/navigation/Skill Center attachments, then execute affected and missing scope. This is not phase completion."
+}

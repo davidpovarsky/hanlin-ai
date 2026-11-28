@@ -1,0 +1,11 @@
+{
+  "source": "3c3bbb955bc79733607e90c719fc95a454d6b387",
+  "runID": 45927192346,
+  "reviewer": "/root",
+  "originalArtifactSHA256": "391d39658c0e4d7939187f94f3f28e4bbc5c5270f7c75853705a882732ca47cc",
+  "verifiedFiles": 57,
+  "zipCRC": "PASS",
+  "allSizesAndSHA256Match": true,
+  "knownFailure": "Only Spotlight non-Sendable protocol witness compiler errors; fix2a integrated before9c",
+  "original90Tests": "NOT_RUN"
+}

@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "base_sha": "970aae5b86a1ebf8bb7fb84b6ca83c88fd759091",
+  "date": "2026-11-18",
+  "scope": "MiniApps original native build scripts declared filesystem inputs and outputs",
+  "failed_run": 44204046519,
+  "failed_artifact": 14382929647,
+  "failure": "Xcode user-script sandbox denied the original metadata launcher read before any UI test executed",
+  "changes": [
+    "AI_HLY.xcodeproj/project.pbxproj",
+    "Scripts/ProductSplit/BuildIO",
+    "Scripts/ProductSplit/verify_targets.py",
+    "Scripts/CI/IntegrationValidation/project_graph.py"
+  ],
+  "dependency_impact": "Only the MiniApps metadata/Python shell phases and MiniApps Debug/Release script environment change. Script executable literals and original AI target objects remain identical. Native engines, package locks, foreground broker and application behavior are unchanged.",
+  "obligations": [
+    {
+      "id": "MiniApps build-for-testing",
+      "status": "NEEDS_TEST",
+      "reason": "Previously failed script IO; newly declared sandbox boundaries require actual Xcode verification"
+    },
+    {
+      "id": "MiniApps hosted storage/provider tests",
+      "status": "NOT_RUN",
+      "reason": "No successful standalone build yet"
+    },
+    {
+      "id": "MiniApps standalone UI 7 methods",
+      "status": "NOT_RUN",
+      "reason": "Prior run failed before test execution"
+    },
+    {
+      "id": "Foreground strict route 42 portable cases",
+      "status": "EXECUTED_PASS_AT_PREVIOUS_SHA",
+      "origin_run": 44204046519,
+      "reason": "Route code and its tests unchanged; existing standalone workflow includes this fast native preflight"
+    },
+    {
+      "id": "Original AI build on arm64 iOS27 simulator",
+      "status": "EXECUTED_PASS_AT_PREVIOUS_SHA",
+      "origin_run": 44204049982,
+      "reason": "Original target and source untouched by this fix; no new AI build requested for the IO change"
+    }
+  ],
+  "toolchain": "Existing xcode-27 runner; select installed stable SDK; owned simulator only",
+  "native_status": "NOT_RUN",
+  "runtime_artifact_run_id": 42926628418,
+  "host_proof_run_id": 43726905638,
+  "publication": "No publication is part of this validation",
+  "amendment": {
+    "date": "2026-11-18",
+    "base_sha": "9ace45ff6110d52102a510235790e9a3ab0d3adf",
+    "failed_followup_run": 44209276187,
+    "failed_followup_artifact": 14386051208,
+    "artifact_sha256": "355fca72ba218c920c8f7b99b5905bc190d0c426d0153143fc54103a374d8cac",
+    "observed_failure": "The declared Scripts/NativeScript directory was a literal path, so the original nested launcher was still denied; tests did not run.",
+    "diagnosis": "Official Swift Build source uses literal output nodes for shell script phases and cannot grant unknown dynamic directory contents. Recursive input setting alone would not cover original Python rsync/framework outputs and original metadata intermediates.",
+    "decision": "Align only MiniApps Debug/Release ENABLE_USER_SCRIPT_SANDBOXING=NO with the original AI target. Keep original executable scripts, engines, provenance checks and IO inventory. App entitlements, installed-app sandbox and runtime permission broker are unchanged.",
+    "authority": "Current direct owner authorization covers completion and build fixes. This is Xcode build dependency checking, not an app authorization change.",
+    "sources": [
+      "https://developer.apple.com/videos/play/wwdc2022/110364/",
+      "https://github.com/swiftlang/swift-build/blob/d36e96cffd63c2949ece00e7d50df03651cc7e63/Sources/SWBTaskConstruction/TaskProducerSandboxing.swift"
+    ],
+    "validation": "SOURCE_VALIDATED; actual native build and UI remain required"
+  }
+}

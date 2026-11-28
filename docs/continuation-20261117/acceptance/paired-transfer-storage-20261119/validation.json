@@ -1,0 +1,133 @@
+{
+  "createdAt": "2026-11-19T01:52:23.486744+00:00",
+  "baseSHA": "ca49d1381d186dcc481eeb7c7eb753dd19bd0085",
+  "patch": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\paired-transfer-storage-fix\\paired-transfer-storage-fix.diff",
+  "patchSHA256": "d50d68bddae6624b2c2ab4687650fe1e5028add5ef6326c5dba89bd985c8240e",
+  "patchBytes": 2610,
+  "files": [
+    {
+      "path": "Tests/ProductSplit/TransferFixture/index.tsx",
+      "baseSHA256": "217e911883138741fe3a391bad34686262879e6f84f2bcff999e5ec1bbb6d29c",
+      "proposedSHA256": "1e1ac0652ca1bbbff785ea24c1aed86eb1322a89a66867bd6b62313d8bae944d"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinPairedProductUITests.swift",
+      "baseSHA256": "f6a29cbd89cdc2425e3b09ec41388d6e9a56807270ce9e49e844c5afc4c45a09",
+      "proposedSHA256": "a73f3809da906e16e53d94a449bdb06a00944c252f708d70b09b69c9189f276b"
+    },
+    {
+      "path": "Scripts/ScriptingCompiler/production-compiler-corpus.json",
+      "baseSHA256": "dcda194ba71d9371512a54696b8877ec7048d0da52f6212e5a40effc6a2e339a",
+      "proposedSHA256": "8cf74c8bbf72e3ede888aa27c912d43086299505d6c728c491310abe289cbdf9"
+    }
+  ],
+  "checks": [
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\paired-transfer-storage-fix\\paired-transfer-storage-fix.diff"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "C:\\Users\\DAVID\\AppData\\Local\\Programs\\Swift\\Toolchains\\6.3.3+Asserts\\usr\\bin\\swiftc.EXE",
+        "-frontend",
+        "-parse",
+        "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\paired-transfer-storage-fix\\proposal\\AI_HLYUITests\\HanlinPairedProductUITests.swift"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "config",
+        "core.autocrlf",
+        "false"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\paired-transfer-storage-fix\\paired-transfer-storage-fix.diff"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "isolatedApplyByteIdentical": true,
+  "originalCompilerReproduction": [
+    {
+      "case": "observed-original",
+      "compilerVersion": "6.0.3",
+      "compilerIntegrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+      "diagnostics": [
+        {
+          "code": 2305,
+          "category": "error",
+          "message": "Module '\"scripting\"' has no exported member 'Storage'.",
+          "file": "index.tsx",
+          "line": 1,
+          "column": 30
+        }
+      ],
+      "emittedFiles": [],
+      "succeeded": false
+    },
+    {
+      "case": "corrected-global-storage",
+      "compilerVersion": "6.0.3",
+      "compilerIntegrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+      "diagnostics": [],
+      "emittedFiles": [
+        "dist\\index.js",
+        "dist\\index.js.map"
+      ],
+      "succeeded": true
+    }
+  ],
+  "nativeRun": {
+    "runID": 44426526923,
+    "sourceSHA": "90314963",
+    "rawStdoutMember": "app-split-evidence/paired-product/Paired.xcresult/Data/data.0~ATVaPl6rKsx0Z5-V17X-5oRJ9U2fKnY4PQtDUhrj8S-m5qWxdPF8GDOPy8kyBWH04cvCQfBskSO3sccWDOttmg==",
+    "rawStdoutSHA256": "fb73438466a248b6d45584530c3fbb738afdf36a70e02ac3f9553fd448c25589",
+    "rawStdoutBytes": 54975950,
+    "selectedLines": [
+      {
+        "line": 192318,
+        "text": "HANLIN_IMPORT_PACKAGE_TAPPED url=HanlinTransferAcceptance.zip"
+      },
+      {
+        "line": 192321,
+        "text": "HANLIN_IMPORT_PACKAGE_SUCCESS: canInstall=true entrypoints=1"
+      },
+      {
+        "line": 207525,
+        "text": "HANLIN_INSTALL_PREVIEW_STARTED: canInstall=true"
+      },
+      {
+        "line": 213440,
+        "text": "HANLIN_INSTALL_PREVIEW_FAILED: compilerFailed([HanlinScriptCompiler.HanlinCompilerDiagnostic(code: 2305, category: \"error\", message: \"Module \\'\\\"scripting\\\"\\' has no exported member \\'Storage\\'.\", file: Optional(\"index.tsx\"), line: Optional(1), column: Optional(30), endLine: nil, endColumn: nil)])"
+      }
+    ],
+    "observed": "Original importer preview accepted the fixture; actual production compiler rejected Storage named import before any store install/update.",
+    "acceptance": "NOT_ACCEPTED",
+    "followup": "Paired UI, persistent Storage and cross-product transfer/rollback still require a new actual native result."
+  },
+  "limitations": [
+    "Swift syntax parsed; native XCTest execution not run.",
+    "Original TypeScript 6.0.3 production emit compiler verified; TypeScript 7.0.2 typecheck lane not locally rerun.",
+    "No canonical file changed."
+  ]
+}

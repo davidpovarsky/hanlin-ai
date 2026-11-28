@@ -1,0 +1,70 @@
+{
+  "actualTypecheckPayloadsVerified": 23,
+  "candidateManifestSHA256": "5f3d7a829d5767dbd7b40bf8aa7e052b9a3ecbdeb7ca9c7a08f74133c23b7e6c",
+  "clean": true,
+  "commitStdout": "[codex/hanlin-widget-components-fc5-20261128 8c968dd2c] test(widget): add native Large component pilot\n 9 files changed, 1157 insertions(+), 4 deletions(-)\n create mode 100644 Fixtures/WidgetComponents/script.json\n create mode 100644 Fixtures/WidgetComponents/widget.jsx\n create mode 100644 Scripts/CI/Tests/test_widget_components_observer.py\n create mode 100644 Scripts/ProductSplit/observe_widget_components.py\n",
+  "controls": "NOT_RUN",
+  "nativeUI": "NOT_RUN",
+  "parent": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "paths": [
+    {
+      "bytes": 294243,
+      "gitBlob": "6192cec276a8c9dae2053326d3e72a4df2055912",
+      "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "sha256": "0242e3cd6074290011b8239626b1406009973ebe0a267b1082a12df7bfd2a2ed"
+    },
+    {
+      "bytes": 34243,
+      "gitBlob": "4ddb759e3962d9eb6c74a849016f16fa79c1e33e",
+      "path": "Scripts/ProductSplit/observe_widget_components.py",
+      "sha256": "49cb57bc123ca0e92170c730e6cca15b81efa47ba7fb62c35e7c24689d1998d9"
+    },
+    {
+      "bytes": 110066,
+      "gitBlob": "e669ef0132fb29e5378ede625f82bbc66f86b4b8",
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "sha256": "7a386466c5df2caa8c1d72eaf9204eed36b6477ce21a15ed5521b5e6db4245aa"
+    },
+    {
+      "bytes": 68044,
+      "gitBlob": "e1f84f45e71a0b328126b5ee667d82c3a8a9c424",
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "sha256": "7d001d486ad668fa4efd68bc244ce08daf943756cc344612542550c83cbc6380"
+    },
+    {
+      "bytes": 13690,
+      "gitBlob": "d24c78e2cb955ef4404a24a413625c77a785495c",
+      "path": "Scripts/CI/Tests/test_widget_components_observer.py",
+      "sha256": "ee1c83513932fb72e072d84096c2a69edc08ccbe8d18aac3ceebe8d9f806b334"
+    },
+    {
+      "bytes": 567,
+      "gitBlob": "2d542597b5b8d00f5ce9e9f095ae7079cd28b3b0",
+      "path": "Fixtures/WidgetComponents/script.json",
+      "sha256": "fbfc54b66d4c02d3c7ceaa4762d2d28fe762b247bc30a7a3f9788f96a8c4a58b"
+    },
+    {
+      "bytes": 1903,
+      "gitBlob": "c1a341d5f742e1c287c0711c9628dfa2a610f5b6",
+      "path": "Fixtures/WidgetComponents/widget.jsx",
+      "sha256": "81dcce5aefcab558b150605d23bdc8c5021e7c78ece6bbe83458d876e33e1005"
+    },
+    {
+      "bytes": 81306,
+      "gitBlob": "ef3337834cc6d888b9c443d607f879b7cce78ecd",
+      "path": "Scripts/CI/affected-validation-map.json",
+      "sha256": "d411b9de7096f9c0e210f81e86ac63a6732c3615d992754551def919fd6dfbc8"
+    },
+    {
+      "bytes": 90765,
+      "gitBlob": "1e72f55735a9e636ed7d7347f04556d6c43d35ee",
+      "path": "Scripts/CI/Tests/test_affected_validation.py",
+      "sha256": "f925db372a8a2e82941d5fbd29246ea3423598b3a09459c6df4af465996fef7f"
+    }
+  ],
+  "recipe": "NOT_RUN",
+  "recordedAt": "2026-11-28T11:32:57.595064+00:00",
+  "sourceCommit": "8c968dd2c38f6277216a70288991a7efa2656511",
+  "tree": "5eb4a2a433d0f8464812d4573044af0919ebd2eb",
+  "typecheckReceiptSHA256": "741d574bb9cc61f3b9a24fd7c739f79a45130b3dbe3981d8dd46898829ec459e"
+}

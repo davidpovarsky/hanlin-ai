@@ -1,0 +1,8 @@
+{
+  "status": "PREPARATION_ASSERTION_STOPPED_BEFORE_ANY_SOURCE_WRITE",
+  "expectedOptionalSetupLinesInitially": 7,
+  "actualOptionalSetupLines": 6,
+  "sourceUnchanged": true,
+  "testsRun": 0,
+  "nativeCommands": 0
+}

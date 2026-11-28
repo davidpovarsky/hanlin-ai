@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-28T04:33:21.047852+00:00",
+  "source": "2e1909d61c1ca31e8783c97dd694156c518883db",
+  "base": "4d6809376bcdd65666c1410aa2c35ddc1f27e86b",
+  "frozenManifestSHA256": "9b99abfc5d56af2b4b73be51ab1189d5e517991ae10a938044aed2ba7921146f",
+  "all13FrozenMembersRehashed": true,
+  "allThreeActualGitDonorBlobsMatchReviewedCandidate": true,
+  "allThreePreimagesMatchCurrentRoot": true,
+  "rootReadFullProductionAndTestDiff": true,
+  "decision": "APPROVED_SOURCE_ONLY",
+  "findings": [
+    "Local record publication and existing Capture await remain on catalog caller.",
+    "One retained MainActor worker coalesces latest records; current/queued actual writes own transfer exclusion before suspension.",
+    "Actual delete/index remain serialized; partial failure invalidates cache and only actual success commits inside task.",
+    "Explicit callbacks await real latest projection and errors; worker-drain method does not promise to join unrelated explicit callers.",
+    "All original nine tests preserved; six controlled tests added."
+  ],
+  "independentReviewSHA256": "424c3c6a3ddf74ef0506360d6dff1e83dc240dccc4e6dc7aa486f5816c205faa",
+  "requiredAcceptance": [
+    "original SDK13 because2/396 inputs changed",
+    "original90 entire discovery/capture suite",
+    "actual affected OS catalog/UI gates"
+  ],
+  "native": "NOT_RUN"
+}

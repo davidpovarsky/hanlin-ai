@@ -1,0 +1,51 @@
+{
+  "actualSDKSource": "700664fdbf0871321c30433172f39299e706b0f8",
+  "docsOnlyBase": "166d53f1360a9503e94d2a92587046315936532a",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4862,
+      "sha256": "51ac712c9a0d399fc9c614f28918de54f1443608259c743ab70842caf0787d63"
+    },
+    {
+      "path": "archive-and-reuse.json",
+      "bytes": 6138,
+      "sha256": "02650cf939cc8113c823db39a735c65b3f5722ae68815717d46f203656e212e5"
+    },
+    {
+      "path": "execution-phases.json",
+      "bytes": 10693,
+      "sha256": "5da4df8685493fe6d8869ec77d7affcedeb1c58bb318514c8f1dadb8b3521e18"
+    },
+    {
+      "path": "independent-root-review.json",
+      "bytes": 4915,
+      "sha256": "5cda06182708fac9d2296fa2f2607083566911e2f3e517740ca97bafd416dfc6"
+    },
+    {
+      "path": "original-archive-reuse-qualification.json",
+      "bytes": 2071,
+      "sha256": "1a67cff32bb2a8eb12d7e9342d0dedecce08152c26170deded2dac21b3ab0d7b"
+    },
+    {
+      "path": "original-packed-validation.log",
+      "bytes": 387,
+      "sha256": "0ca4882425d674b70aab9e8bc421f18e4c4e001db549e49488d359dbf0e2e9b5"
+    },
+    {
+      "path": "original-reconciliation.json",
+      "bytes": 5597,
+      "sha256": "a4375a665ada1fb68efeefdfac1e7b1455208b655688817e1331247eea849887"
+    },
+    {
+      "path": "raw-evidence-references.json",
+      "bytes": 4117,
+      "sha256": "ad3e0f353e1dd1e90faa266ea3d336de71d52db74e6d4dad0877eb46155f3458"
+    },
+    {
+      "path": "source-bindings.json",
+      "bytes": 2189,
+      "sha256": "a6771152e4c04e3b39fc23f0a078e013c0e8d4146a1764d6caa39fcbf56f7b14"
+    }
+  ]
+}

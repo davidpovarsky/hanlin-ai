@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "3f7c4a6f3cafa3919301750086cd1abf5c459955",
+  "productSourceCommit": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "status": "ROUTING_EXECUTED_PASS_NATIVE_IN_PROGRESS",
+  "plannerExit": 0,
+  "plannerDurationSeconds": 60.824887284077704,
+  "changedFiles": 4060,
+  "selectedSuites": 90,
+  "unitSuites": 80,
+  "uiSelectors": 10,
+  "runId": 45870248837,
+  "runURL": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45870248837",
+  "earlierUnmappedPaths": 14,
+  "fullValidationFallbackUsed": false,
+  "documentationReview": {
+    "sourceFiles": 137,
+    "sha256Matches": 137,
+    "artifacts": 5,
+    "mismatches": []
+  },
+  "files": {
+    "planner.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "affected-plan.json": {
+      "bytes": 1376659,
+      "sha256": "5225c5507b6b43e56242cc56319786e6f3123a410bea00fa1bd6c100b3617107"
+    },
+    "planner.stdout.log": {
+      "bytes": 28344,
+      "sha256": "8284b147aca980bda1b883a09359548f1c69954f7e57a368cc8ab2704d028032"
+    },
+    "dispatch.json": {
+      "bytes": 4863,
+      "sha256": "7f9fbafee8a286e795d88c76b7838ff9ddb8a6022a28c5fcbcbf1022d07f46a5"
+    }
+  }
+}

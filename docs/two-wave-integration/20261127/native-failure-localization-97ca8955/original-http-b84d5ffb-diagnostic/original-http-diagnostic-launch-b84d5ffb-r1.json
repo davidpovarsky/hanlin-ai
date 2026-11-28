@@ -1,0 +1,9 @@
+{
+  "status": "DETACHED_OWNED_DIAGNOSTIC_CONTROLLER_STARTED",
+  "controllerPID": 28486,
+  "controllerPGID": 28486,
+  "at": "2026-11-27T08:19:07.972459+00:00",
+  "controllerSHA256": "3bad2a2f013a9e312b9b0cf21311581e4cb29f47afcc0cb3b3fbbcb81edad68c",
+  "originalControllerUnmodified": true,
+  "transportTimeoutSeconds": 15
+}

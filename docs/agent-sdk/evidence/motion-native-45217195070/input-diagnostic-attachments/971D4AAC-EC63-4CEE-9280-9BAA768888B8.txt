@@ -1,0 +1,52 @@
+{
+  "actionTimeGaps" : [
+    0.8175725833332308,
+    0.7992608333333919
+  ],
+  "control" : "rapid-production-animated",
+  "delivery" : "independent-coordinate-taps",
+  "diagnosticOnly" : true,
+  "expectedActions" : 3,
+  "laterActionsAtIntermediateGeometry" : [
+    false,
+    false
+  ],
+  "observationSemantics" : "single-native-snapshot-after-gesture;not-a-five-second-delivery-deadline",
+  "observedActions" : 3,
+  "phase" : "immediate-touch-down",
+  "receiptLabel" : "3",
+  "receiptObservedThree" : true,
+  "samples" : [
+    {
+      "control" : "rapid-production-animated",
+      "isExpanded" : true,
+      "naturalHeight" : 64.5,
+      "uptime" : 1243.9013843333335,
+      "visibleHeight" : 0,
+      "wasExpanded" : false
+    },
+    {
+      "control" : "rapid-production-animated",
+      "isExpanded" : false,
+      "naturalHeight" : 64.5,
+      "uptime" : 1244.7189569166667,
+      "visibleHeight" : 70.5,
+      "wasExpanded" : true
+    },
+    {
+      "control" : "rapid-production-animated",
+      "isExpanded" : true,
+      "naturalHeight" : 64.5,
+      "uptime" : 1245.51821775,
+      "visibleHeight" : 0,
+      "wasExpanded" : false
+    }
+  ],
+  "scrollConfiguration" : {
+    "canCancelContentTouches" : true,
+    "delaysContentTouches" : false,
+    "isScrollEnabled" : true,
+    "originalDelaysContentTouches" : true,
+    "phase" : "immediate-touch-down"
+  }
+}

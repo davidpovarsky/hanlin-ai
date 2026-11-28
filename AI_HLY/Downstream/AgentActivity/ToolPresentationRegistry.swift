@@ -1,0 +1,6 @@
+// Original shared implementation is owned by the SDK.
+import HanlinAgentActivityCore
+
+typealias ToolPresentation = HanlinAgentActivityCore.ToolPresentation
+typealias ToolPresentationRegistry = HanlinAgentActivityCore.ToolPresentationRegistry
+typealias AgentToolApprovalSummary = HanlinAgentActivityCore.AgentToolApprovalSummary

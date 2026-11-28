@@ -1,0 +1,301 @@
+import { createHash } from 'node:crypto';
+import { access, chmod, cp, lstat, mkdir, readFile, readdir, readlink, rm, stat, writeFile } from 'node:fs/promises';
+import { createWriteStream, existsSync } from 'node:fs';
+import { basename, dirname, resolve } from 'node:path';
+import { execSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+import https from 'node:https';
+import http from 'node:http';
+
+import { generateCodegen } from './generate-codegen.mjs';
+import { patchNativeModuleForSessions, patchUIKitHostHeaderForSessions, patchUIKitViewForSessions } from './multiscene-patch.mjs';
+import { verifyNSMD } from './verify-nsmd.mjs';
+import { verifyArtifacts } from './verify-artifacts.mjs';
+
+const scriptRoot = resolve(import.meta.dirname);
+const repoRoot = resolve(scriptRoot, '..', '..');
+const lockPath = resolve(scriptRoot, 'dependency-lock.json');
+const targetPackageRoot = resolve(repoRoot, 'Packages', 'HanlinExpoNativeAPI');
+const sourcesRoot = resolve(targetPackageRoot, 'Sources');
+
+const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
+
+async function downloadFile(url, destPath) {
+  const curlBin = process.platform === 'win32' ? 'curl.exe' : 'curl';
+  try {
+    execSync(`${curlBin} -fL --retry 3 --retry-delay 2 --connect-timeout 20 --max-time 300 -sS "${url}" -o "${destPath}"`, {
+      stdio: ['ignore', 'inherit', 'inherit'],
+    });
+    if (existsSync(destPath)) {
+      const fileStat = await stat(destPath);
+      if (fileStat.size > 0) {
+        return;
+      }
+    }
+  } catch (curlErr) {
+    console.warn(`[HanlinExpoNativeAPI] curl download attempt failed (${curlErr.message}); falling back to Node http client...`);
+  }
+
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      await new Promise((res, rej) => {
+        function get(currentURL, redirects = 0) {
+          if (redirects > 10) {
+            return rej(new Error(`Too many redirects for ${url}`));
+          }
+          const client = currentURL.startsWith('https') ? https : http;
+          const req = client.get(
+            currentURL,
+            { agent: false, headers: { 'User-Agent': 'hanlin-ci-builder/1.0' } },
+            (response) => {
+              if (response.statusCode >= 300 && response.statusCode < 400 && response.headers.location) {
+                const redirectURL = new URL(response.headers.location, currentURL).toString();
+                return get(redirectURL, redirects + 1);
+              }
+              if (response.statusCode !== 200) {
+                return rej(new Error(`Download failed with status ${response.statusCode} for ${currentURL}`));
+              }
+              const file = createWriteStream(destPath);
+              response.pipe(file);
+              file.on('finish', () => {
+                file.close(() => res());
+              });
+              file.on('error', rej);
+            }
+          );
+          req.setTimeout(60000, () => {
+            req.destroy(new Error(`Socket timeout downloading ${currentURL}`));
+          });
+          req.on('error', rej);
+        }
+        get(url);
+      });
+      if (existsSync(destPath) && (await stat(destPath)).size > 0) {
+        return;
+      }
+    } catch (nodeErr) {
+      console.warn(`[HanlinExpoNativeAPI] Node download attempt ${attempt}/3 failed (${nodeErr.message})...`);
+      if (attempt === 3) throw nodeErr;
+      await new Promise((r) => setTimeout(r, 2000 * attempt));
+    }
+  }
+}
+
+function applyStrictPatch(content, findExact, replaceWith, label) {
+  const parts = content.split(findExact);
+  if (parts.length !== 2) {
+    throw new Error(`[HanlinExpoNativeAPI] Patch '${label}' failed: expected exactly 1 occurrence of anchor, found ${parts.length - 1}`);
+  }
+  return parts.join(replaceWith);
+}
+
+export async function prepareExpoNativeAPI() {
+  console.log('[HanlinExpoNativeAPI] Preparing NativeScript RN and Worklets iOS dependencies...');
+  const lock = JSON.parse(await readFile(lockPath, 'utf8'));
+  const tempDir = resolve(scriptRoot, '.scratch', 'prep-downloads');
+  await mkdir(tempDir, { recursive: true });
+
+  // 1. Fetch & verify NativeScript RN 9.1.2 tarball
+  const nsTarPath = resolve(tempDir, 'nativescript-rn.tgz');
+  if (!existsSync(nsTarPath)) {
+    console.log(`[HanlinExpoNativeAPI] Downloading ${lock.nativeApi.package}@${lock.nativeApi.version}...`);
+    await downloadFile(lock.nativeApi.tarballUrl, nsTarPath);
+  }
+  const nsBytes = await readFile(nsTarPath);
+  const nsDigest = sha256(nsBytes);
+  if (nsDigest !== lock.nativeApi.sha256) {
+    throw new Error(`[HanlinExpoNativeAPI] Checksum mismatch for NativeScript RN: expected ${lock.nativeApi.sha256}, got ${nsDigest}`);
+  }
+  console.log(`[HanlinExpoNativeAPI] Verified NativeScript RN tarball SHA256: ${nsDigest}`);
+
+  // 2. Fetch & verify Worklets 0.13.1 tarball
+  const wlTarPath = resolve(tempDir, 'worklets.tgz');
+  if (!existsSync(wlTarPath)) {
+    console.log(`[HanlinExpoNativeAPI] Downloading ${lock.worklets.package}@${lock.worklets.version}...`);
+    await downloadFile(lock.worklets.tarballUrl, wlTarPath);
+  }
+  const wlBytes = await readFile(wlTarPath);
+  const wlDigest = sha256(wlBytes);
+  if (wlDigest !== lock.worklets.sha256) {
+    throw new Error(`[HanlinExpoNativeAPI] Checksum mismatch for Worklets: expected ${lock.worklets.sha256}, got ${wlDigest}`);
+  }
+  console.log(`[HanlinExpoNativeAPI] Verified Worklets tarball SHA256: ${wlDigest}`);
+
+  // 3. Unpack into scratch
+  const nsExtractDir = resolve(tempDir, 'ns-extracted');
+  await rm(nsExtractDir, { recursive: true, force: true });
+  await mkdir(nsExtractDir, { recursive: true });
+  execSync(`tar -zxf "${nsTarPath}" -C "${nsExtractDir}"`);
+
+  const wlExtractDir = resolve(tempDir, 'wl-extracted');
+  await rm(wlExtractDir, { recursive: true, force: true });
+  await mkdir(wlExtractDir, { recursive: true });
+  execSync(`tar -zxf "${wlTarPath}" -C "${wlExtractDir}"`);
+
+  const nsPkgDir = resolve(nsExtractDir, 'package');
+  const wlPkgDir = resolve(wlExtractDir, 'package');
+
+  // 4. Stage metadata and Libffi into Artifacts
+  const artifactsDir = resolve(targetPackageRoot, 'Artifacts');
+  const metadataTargetDir = resolve(artifactsDir, 'metadata');
+  await mkdir(metadataTargetDir, { recursive: true });
+
+  const metadataSrcDir = resolve(nsPkgDir, 'metadata');
+  const metadataFiles = ['metadata.ios.arm64.nsmd', 'metadata.ios-sim.arm64.nsmd', 'metadata.ios-sim.x86_64.nsmd'];
+  for (const f of metadataFiles) {
+    await cp(resolve(metadataSrcDir, f), resolve(metadataTargetDir, f));
+  }
+
+  // Also stage metadata into target-owned SwiftPM resource directory
+  const swiftResourcesDir = resolve(sourcesRoot, 'HanlinExpoNativeAPI', 'Resources', 'metadata');
+  await mkdir(swiftResourcesDir, { recursive: true });
+  for (const f of metadataFiles) {
+    await cp(resolve(metadataSrcDir, f), resolve(swiftResourcesDir, f));
+  }
+  console.log('[HanlinExpoNativeAPI] Staged metadata .nsmd files into Artifacts/metadata and Sources/HanlinExpoNativeAPI/Resources/metadata');
+
+  // Libffi framework and static libraries
+  const libffiSrc = resolve(nsPkgDir, 'ios', 'vendor', 'Libffi.xcframework');
+  const libffiDst = resolve(artifactsDir, 'Libffi.xcframework');
+  if (existsSync(libffiSrc)) {
+    await rm(libffiDst, { recursive: true, force: true });
+    await cp(libffiSrc, libffiDst, { recursive: true, verbatimSymlinks: true });
+  }
+
+  // Ensure Libffi static library slices are present and non-empty
+  const libffiArm64 = resolve(libffiDst, 'ios-arm64', 'libffi.a');
+  const libffiSim = resolve(libffiDst, 'ios-arm64_x86_64-simulator', 'libffi.a');
+  if (!existsSync(libffiArm64) || (await stat(libffiArm64)).size === 0) {
+    throw new Error(`[HanlinExpoNativeAPI] Missing or empty libffi.a slice for arm64: ${libffiArm64}`);
+  }
+  if (!existsSync(libffiSim) || (await stat(libffiSim)).size === 0) {
+    throw new Error(`[HanlinExpoNativeAPI] Missing or empty libffi.a slice for simulator: ${libffiSim}`);
+  }
+  console.log('[HanlinExpoNativeAPI] Verified Libffi.xcframework static libraries (arm64 + sim).');
+
+  // 5. Stage Worklets into Sources/HanlinExpoWorklets (Clang ARC target)
+  const workletsTargetDir = resolve(sourcesRoot, 'HanlinExpoWorklets');
+  await rm(workletsTargetDir, { recursive: true, force: true });
+  await mkdir(workletsTargetDir, { recursive: true });
+
+  await cp(resolve(wlPkgDir, 'Common'), resolve(workletsTargetDir, 'Common'), { recursive: true });
+  await cp(resolve(wlPkgDir, 'apple'), resolve(workletsTargetDir, 'apple'), { recursive: true });
+
+  // Public include directory for HanlinExpoWorklets
+  const workletsIncludeDir = resolve(workletsTargetDir, 'include');
+  await mkdir(resolve(workletsIncludeDir, 'worklets', 'apple'), { recursive: true });
+  await cp(resolve(wlPkgDir, 'apple', 'worklets', 'apple', 'WorkletsModule.h'), resolve(workletsIncludeDir, 'worklets', 'apple', 'WorkletsModule.h'));
+  await cp(resolve(wlPkgDir, 'apple', 'worklets', 'apple', 'WorkletsModule.h'), resolve(workletsIncludeDir, 'WorkletsModule.h'));
+
+  const workletsUmbrellaHeader = resolve(workletsIncludeDir, 'HanlinExpoWorklets.h');
+  await writeFile(workletsUmbrellaHeader, `#pragma once
+#import <Foundation/Foundation.h>
+#import "WorkletsModule.h"
+`, 'utf8');
+
+  const workletsModuleMap = resolve(workletsIncludeDir, 'module.modulemap');
+  await writeFile(workletsModuleMap, `module HanlinExpoWorklets {
+    umbrella header "HanlinExpoWorklets.h"
+    export *
+}
+`, 'utf8');
+
+  // 6. Stage NativeScript and Bridge into Sources/HanlinExpoNativeAPICore (Clang MRC target)
+  const coreTargetDir = resolve(sourcesRoot, 'HanlinExpoNativeAPICore');
+  await rm(coreTargetDir, { recursive: true, force: true });
+  await mkdir(coreTargetDir, { recursive: true });
+
+  // Copy ios/ directory
+  await cp(resolve(nsPkgDir, 'ios'), resolve(coreTargetDir, 'nativescript', 'ios'), { recursive: true });
+
+  // Copy native-api/ directory (strictly omitting non-iOS ffi/jni)
+  const nativeApiDst = resolve(coreTargetDir, 'nativescript', 'native-api');
+  await mkdir(nativeApiDst, { recursive: true });
+  await cp(resolve(nsPkgDir, 'native-api', 'ffi', 'objc'), resolve(nativeApiDst, 'ffi', 'objc'), { recursive: true });
+  await cp(resolve(nsPkgDir, 'native-api', 'metadata'), resolve(nativeApiDst, 'metadata'), { recursive: true });
+  await cp(resolve(nsPkgDir, 'native-api', 'jsi', 'hermes'), resolve(nativeApiDst, 'jsi', 'hermes'), { recursive: true });
+  await cp(resolve(nsPkgDir, 'native-api', 'jsi', 'shared'), resolve(nativeApiDst, 'jsi', 'shared'), { recursive: true });
+  await rm(resolve(nativeApiDst, 'jsi', 'shared', 'Tasks.cpp'), { force: true });
+
+  // Stage bridge sources
+  const bridgeSrcDir = resolve(scriptRoot, '..', '..', 'Packages', 'HanlinExpoNativeAPI', 'bridge-source');
+  const bridgeDstDir = resolve(coreTargetDir, 'bridge');
+  await mkdir(bridgeDstDir, { recursive: true });
+
+  // If bridge-source backup directory doesn't exist yet, save current bridge files there
+  const legacyBridgeDir = resolve(sourcesRoot, 'HanlinExpoNativeAPI', 'bridge');
+  if (existsSync(legacyBridgeDir) && !existsSync(bridgeSrcDir)) {
+    await cp(legacyBridgeDir, bridgeSrcDir, { recursive: true });
+  }
+  const sourceBridgeDir = existsSync(bridgeSrcDir) ? bridgeSrcDir : legacyBridgeDir;
+  await cp(sourceBridgeDir, bridgeDstDir, { recursive: true });
+
+  // Public include directory for HanlinExpoNativeAPICore
+  const coreIncludeDir = resolve(coreTargetDir, 'include');
+  await mkdir(coreIncludeDir, { recursive: true });
+  await cp(resolve(bridgeDstDir, 'HanlinExpoNativeAPIGate.h'), resolve(coreIncludeDir, 'HanlinExpoNativeAPIGate.h'));
+  await cp(resolve(bridgeDstDir, 'HanlinExpoRuntimeScheduler.h'), resolve(coreIncludeDir, 'HanlinExpoRuntimeScheduler.h'));
+  await cp(resolve(bridgeDstDir, 'HanlinExpoDependencyProvider.h'), resolve(coreIncludeDir, 'HanlinExpoDependencyProvider.h'));
+  await cp(resolve(coreTargetDir, 'nativescript', 'ios', 'NativeScriptUIKitHost.h'), resolve(coreIncludeDir, 'NativeScriptUIKitHost.h'));
+  await cp(resolve(coreTargetDir, 'nativescript', 'ios', 'NativeScriptUIView.h'), resolve(coreIncludeDir, 'NativeScriptUIView.h'));
+
+  const coreUmbrellaHeader = resolve(coreIncludeDir, 'HanlinExpoNativeAPICore.h');
+  await writeFile(coreUmbrellaHeader, `#pragma once
+#import <Foundation/Foundation.h>
+#import "HanlinExpoNativeAPIGate.h"
+#import "HanlinExpoRuntimeScheduler.h"
+#import "HanlinExpoDependencyProvider.h"
+#import "NativeScriptUIKitHost.h"
+#import "NativeScriptUIView.h"
+`, 'utf8');
+
+  const coreModuleMap = resolve(coreIncludeDir, 'module.modulemap');
+  await writeFile(coreModuleMap, `module HanlinExpoNativeAPICore {
+    umbrella header "HanlinExpoNativeAPICore.h"
+    export *
+}
+`, 'utf8');
+
+  // 7. Apply reproducible per-session native runtime and UIKit host patches.
+  const nativeIOSDir = resolve(coreTargetDir, 'nativescript', 'ios');
+  for (const [name, patch] of [
+    ['NativeScriptNativeApiModule.mm', patchNativeModuleForSessions],
+    ['NativeScriptUIKitHost.h', patchUIKitHostHeaderForSessions],
+    ['NativeScriptUIView.mm', patchUIKitViewForSessions]
+  ]) {
+    const path = resolve(nativeIOSDir, name);
+    await writeFile(path, patch(await readFile(path, 'utf8')), 'utf8');
+  }
+  // The public header must expose the patched session-aware entry points too.
+  await cp(resolve(nativeIOSDir, 'NativeScriptUIKitHost.h'), resolve(coreIncludeDir, 'NativeScriptUIKitHost.h'));
+  console.log('[HanlinExpoNativeAPI] Applied session/runtime/view-scoped native integration');
+
+  // 8. Generate Codegen artifacts into target directories
+  await generateCodegen({
+    nsOutputDir: resolve(coreTargetDir, 'generated'),
+    wlOutputDir: resolve(workletsTargetDir, 'generated')
+  });
+
+  // 9. Clean up legacy subdirectories under Sources/HanlinExpoNativeAPI (pure Swift target)
+  const swiftTargetDir = resolve(sourcesRoot, 'HanlinExpoNativeAPI');
+  await rm(resolve(swiftTargetDir, 'nativescript'), { recursive: true, force: true });
+  await rm(resolve(swiftTargetDir, 'worklets'), { recursive: true, force: true });
+  await rm(resolve(swiftTargetDir, 'generated'), { recursive: true, force: true });
+  await rm(resolve(swiftTargetDir, 'bridge'), { recursive: true, force: true });
+
+  // 10. Verify metadata and artifacts
+  await verifyNSMD(metadataTargetDir);
+  await verifyArtifacts();
+
+  console.log('[HanlinExpoNativeAPI] All Native API dependencies prepared and verified successfully.');
+}
+
+export default prepareExpoNativeAPI;
+
+const isMain = process.argv[1] && resolve(fileURLToPath(import.meta.url)) === resolve(process.argv[1]);
+if (isMain) {
+  prepareExpoNativeAPI().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}

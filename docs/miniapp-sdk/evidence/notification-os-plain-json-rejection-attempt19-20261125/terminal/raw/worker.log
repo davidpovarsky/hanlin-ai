@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/m1/builds/hanlin-notification-os-recovery-20261125/Scripts/CI/observe_notification_os_delivery.py", line 366, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/Users/m1/builds/hanlin-notification-os-recovery-20261125/Scripts/CI/observe_notification_os_delivery.py", line 349, in main
+    check(completion["status"] == "EXECUTED_PASS", completion.get("reason", "OS observation failed"))
+  File "/Users/m1/builds/hanlin-notification-os-recovery-20261125/Scripts/CI/observe_notification_os_delivery.py", line 28, in check
+    raise RuntimeError(message)
+RuntimeError: No actual terminal OS-ingress receipt

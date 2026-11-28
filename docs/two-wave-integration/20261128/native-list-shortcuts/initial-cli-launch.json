@@ -1,0 +1,7 @@
+{
+  "pid": 3875284,
+  "controller": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-lists-shortcuts-3634078f/run-portable-cli-r1.py",
+  "sha256": "7e4982d8d813b7a794f6ec86ae3e6d4d51a966e804f22d1082e5b81aa9fdae62",
+  "scope": "Two original portable CLI operations only; no native app/OS/SDK producer",
+  "status": "STARTED"
+}

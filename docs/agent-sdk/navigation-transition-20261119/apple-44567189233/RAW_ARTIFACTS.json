@@ -1,0 +1,804 @@
+{
+  "archive": "raw-proof.zip",
+  "archive_kind": "local lossless repack of complete downloaded artifact; not the GitHub upload ZIP",
+  "sha256": "9f1bbbd83bf2ec1f74321e3b618fba4725c51c60c5474db2fb1d5536d33a64cf",
+  "bytes": 2551675,
+  "files": {
+    "expected-tests.json": {
+      "sha256": "a351fa633c84d5ddc7948e7a73cfd4be5cf8c02d6ad555778245554c634361db",
+      "bytes": 4937
+    },
+    "host-schema-tests.log": {
+      "sha256": "d7ca07ed8852f589dd4d1282f81a96e0f2ca08c371c61c59fdd63e320c5475bb",
+      "bytes": 1362322
+    },
+    "HostSchemaIOS.xcresult/Data/data.0~2KoGGr5F-mLaV-eFgOVZKz2Q7wjYpM8yQXypjba-eoKmds5qEvZF3DIlRy4WzFnHzKcOdJSU3XsSz-RHwuHFQA==": {
+      "sha256": "57999206481befa296e9e0b2901ab9c1d006b7e2f3dd93d720c7809bd4b22145",
+      "bytes": 300
+    },
+    "HostSchemaIOS.xcresult/Data/data.0~a9xg_xw06e4pTuNqRRq2-IQTTFCaU624Fe3DKeG3JFzT12Xhu7fFmQsmpDdy41E1drtm-lEcXrGX17aIToOcOA==": {
+      "sha256": "db225dfd336d7c7b59b95dbabef175608acfa8256719a70f5e96b1c2b514dbf2",
+      "bytes": 1545
+    },
+    "HostSchemaIOS.xcresult/Data/data.0~t2CFIp5yu-raicK5IIMrDEyCokjZc_UsWiIptDWXP62B3FY5s7Sd7WXx41r2s2oiG50n5ZpOUYnqbylLsXIaiA==": {
+      "sha256": "5552ecfe01ec86a6b50bf0d22d83dedd43ff58fe7f87e0e6c00c3888901af5a7",
+      "bytes": 201993
+    },
+    "HostSchemaIOS.xcresult/Data/refs.0~2KoGGr5F-mLaV-eFgOVZKz2Q7wjYpM8yQXypjba-eoKmds5qEvZF3DIlRy4WzFnHzKcOdJSU3XsSz-RHwuHFQA==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaIOS.xcresult/Data/refs.0~a9xg_xw06e4pTuNqRRq2-IQTTFCaU624Fe3DKeG3JFzT12Xhu7fFmQsmpDdy41E1drtm-lEcXrGX17aIToOcOA==": {
+      "sha256": "e660dbb616753b925016be2d382fa5516d1d25f74585689a56776e1e2d769d47",
+      "bytes": 133
+    },
+    "HostSchemaIOS.xcresult/Data/refs.0~t2CFIp5yu-raicK5IIMrDEyCokjZc_UsWiIptDWXP62B3FY5s7Sd7WXx41r2s2oiG50n5ZpOUYnqbylLsXIaiA==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaIOS.xcresult/Info.plist": {
+      "sha256": "4ba0f7ff7593dae4635c4352eacdc6363745ccd503206b79b5f86d7d6c591616",
+      "bytes": 776
+    },
+    "HostSchemaTests.json": {
+      "sha256": "c1ccd0474fb5f6b2bd07525bf50c2d690a82198eb1f09f25fa81b4727a3089b0",
+      "bytes": 38519
+    },
+    "HostSchemaTests.xcresult/Data/data.0~099PkDvmayF5kBpKsfQLDgqFP-6WTpeN7PhfJtGmzmLjw46Jo5Cqj2nLF1d42uz-DPLHTsIVRJIhhkZ9xqN3eA==": {
+      "sha256": "138085296e63a0a8bea4671cbba011006b1226326d3b95d885aa258e49459396",
+      "bytes": 403
+    },
+    "HostSchemaTests.xcresult/Data/data.0~0NP1geU_oHlSFNVJ1T2qzXUlDJlrW8f6cO6z1u8r1J2kh-pRBWjWXPs90rwOyXQUv3FlvconQ0V-Rn8L5I0FGA==": {
+      "sha256": "18cc721379d5da2d31e64dd2faf527fcfebb00231f63a84ac54a57dcfdf4fc1d",
+      "bytes": 418
+    },
+    "HostSchemaTests.xcresult/Data/data.0~1iR0T-Kq5hiLyrpnCvIUkz55-SEhiFKd7kMBtMQ_QxOVTXua4IREHM9h7aFEFbKRNO9uWDmYzAbaUqZxbe54nw==": {
+      "sha256": "5dc57bcf63967b1902d3ec22bb7eb088d014e0a689632b47bda7d5ee1675d228",
+      "bytes": 11329
+    },
+    "HostSchemaTests.xcresult/Data/data.0~2PMfyK_KhGbBAx98kzp8L7KFSVMDmOG6MwTj_jUn9y7WST9tNrKcXF_PT0KClVvHSUXa4XE8hk2YSgcrL7RDJQ==": {
+      "sha256": "7badbb28a57489b913e4832e4415e2f9b3ad93506fc2f88c293cf2d7f096a0b7",
+      "bytes": 6215
+    },
+    "HostSchemaTests.xcresult/Data/data.0~4efXBT4GCLZwOpqimsHbil9qFkeP4liniXjYbqH4fRbtLs0a_9stHMSMuRBoY7Ykx7sjMDh5tUqOtzkMTA8nDQ==": {
+      "sha256": "f25d5f2d5646b04517296117d27842f51129a06901fff99620db48d4dd4a3b56",
+      "bytes": 416
+    },
+    "HostSchemaTests.xcresult/Data/data.0~4MpYgykBXebyVmiPolS8VJkPdQF780AnqVEMGa6XsB7wZZnd0_3NgHrYOn-IaacXZka8USxtU5sqHGoUaqWdjQ==": {
+      "sha256": "e1f416b264b15e892f5c7be6ec907789dc4c7fd372e66ec395d372a5d400e3dc",
+      "bytes": 410
+    },
+    "HostSchemaTests.xcresult/Data/data.0~5MtSHnj7K5G5TiAWaSVVXshN4CE_Bb58AyGqiP0U6MBKhCJuvpm0h1OatzznCgot2fADmv3-1RBxkZtjkbXCqQ==": {
+      "sha256": "57b8282826f3284f55062fd3174a15ae23d9e506d8a0047d427b0fa85ba7f899",
+      "bytes": 120
+    },
+    "HostSchemaTests.xcresult/Data/data.0~6Dns-MKCVQgnvNgb2i7r3I02YH686Z3w_SY4HCHysptyPS1lLHs2-KHWL33GpBugEIuiV-nah5r9yIhxMMoLeQ==": {
+      "sha256": "6babc19650124bb1e3a89672ef38beba42e4ae5e7d57b00832c8043bb2a52658",
+      "bytes": 413
+    },
+    "HostSchemaTests.xcresult/Data/data.0~6H98647E_3bhhIZEmHmpGExS177mgOoBM6zu9ZlTuaYHknSS_jxmcabWFzxsSlIX19o_OapREglEudDfFwcK8Q==": {
+      "sha256": "33bb2f5835a8a7a8057b404f0ff2a41e02b3f7807134a8654ac6b5b41f53e2cd",
+      "bytes": 416
+    },
+    "HostSchemaTests.xcresult/Data/data.0~6LGK0WiaVuGbHVJ4L2dU0VV0WLS_kpsnnDm9wJdWbfwVmgLX2V165HORhKUFyf8fFpOYdp7SI45iyKTPtP5ZCg==": {
+      "sha256": "ec4b6adf45924a30ae441f9d7803cc9777f4d1d1d75de7faa214d1106ce36cce",
+      "bytes": 410
+    },
+    "HostSchemaTests.xcresult/Data/data.0~76YQtZfbKJm2HKkAdCsEchRzm8uqY_11qzZF3Sw8hpMux8uR23IzClMzZTLN78z4re_yFkLJ8Er5GZYqW9G4jw==": {
+      "sha256": "4889180dd94ba714113620fe907760df57f996bcd9dab8923ae785b330f3e6c2",
+      "bytes": 406
+    },
+    "HostSchemaTests.xcresult/Data/data.0~7CAhDiUuwbMw92Cpk-UWioRRoX_4RgVm9nCqiShjQUOeYE0PwZEW8Vqvkgz0Dero44ezUIO9Wc8AbwJ_n20UqA==": {
+      "sha256": "ba963ecfd7d0d1fb7d9a94e8cdcd2972cc629712e41f166cbab203857fb7a39c",
+      "bytes": 114
+    },
+    "HostSchemaTests.xcresult/Data/data.0~7CnkQyWvuhGyarUezpZHe6y7kqbuXFwRjqlXlhiB_cAe3ECwm-JeMW4JIZVQmiF6Ah89w8AWHSDi2TlTxHTyZw==": {
+      "sha256": "0892aa9ca14700001668ddd1103cf1a1ff479d6dbecf993a973707abacb9f332",
+      "bytes": 13775
+    },
+    "HostSchemaTests.xcresult/Data/data.0~7NaZr_bhuJATRnBoUCEwRHqITziKswKJA0yr7vPvLc-11uTtzwhP79iln8LSPZBYZ6ibbIXjjAl25ltDywan1g==": {
+      "sha256": "1b2e8aec5b557906895278d02c52848c287e30e7420423a4af14f2dc4c6fac88",
+      "bytes": 383
+    },
+    "HostSchemaTests.xcresult/Data/data.0~8nn7VLUajaNQt1KuJTfMBCxoO3PpiR8kD4_gdME9f391RtlUyHz8RlgJKk5nxAuPuqXwajKHCNxIXUYbDJyIcQ==": {
+      "sha256": "e79b7b96f7827fcc3129a1b633d18c485fb5bed5c1920240047efb6293438e51",
+      "bytes": 835
+    },
+    "HostSchemaTests.xcresult/Data/data.0~8VS2rPt3os98-0uFcCJLZjD-7dUMwjUjGMguZd746_T3VumokVGvcymqj1wwoqG9k7dhaTdTWDUr2cPJSci_Fg==": {
+      "sha256": "5d02345fcce256a0160737d4afe9c6dcdb727ee38c38bee828d8a57dec86dcdc",
+      "bytes": 5516
+    },
+    "HostSchemaTests.xcresult/Data/data.0~8YleVn3cMXdmndFzEGTaaSpwpKRDc9Cvs6J8bRax3JCK6Oss3guSJ4VzrTKK7AGuh4lwvfxWDXZ4EERg0UrVcA==": {
+      "sha256": "88b511d19f690f66aa03c326cb0a62eb7d3416b6a32b5164f169c089c2106704",
+      "bytes": 405
+    },
+    "HostSchemaTests.xcresult/Data/data.0~9k-JgSS-z4B-6l3fqkkrd1Ef7gyV5la8jSNyRIjgsME2gDIY00syujkelW9XwuFPz-r6nMAxuV5rcTvzx0Lhsg==": {
+      "sha256": "e0040f84a627adc3adc7e110aa3bedecedf9b0edd6d013ddd07ebdab07f2cd82",
+      "bytes": 250
+    },
+    "HostSchemaTests.xcresult/Data/data.0~9PL5bJlFK92GLhI3i-lotXWUdHPwehTyBXlcqOLAzMH5XPBS9OCYDuemhb3MFfvVjxNqgwoPpLX-HGL1QHJ_kg==": {
+      "sha256": "4cccf3a95faff42002e7e96c9f4fbc7db31d6011e0244a9a15e95ddc93c304b2",
+      "bytes": 6161
+    },
+    "HostSchemaTests.xcresult/Data/data.0~_-hxVlYE8_h1XYWRvH5hJU6oaDnfDGnFW5UwiqSJEbHH4ju8f4ZfG8LyA2bMEA88hizAMvNOaGVT5QXQluCyJg==": {
+      "sha256": "f36025a0ee5e959b6a6c72a661fb35d774c0a4759ca6715eb355a490f1c6cdb0",
+      "bytes": 416
+    },
+    "HostSchemaTests.xcresult/Data/data.0~Act9mEPWFJ69iTCUWDIoNzapZcY3SmvBa4RDdjpg6AQI5u2IO9sYrHOwLp5PUkoMu3eFsTKH_0skdqxTqroYmw==": {
+      "sha256": "2ca4a8b0190ab9f8adccffb977f49853122ab753c53ebf65d7c6905547946f5c",
+      "bytes": 11553
+    },
+    "HostSchemaTests.xcresult/Data/data.0~aok0ZVUA4P1ywLNPrJTAoBfhyumF1n6giz2QD8J78bZkZ7bjR91_wv2shpAVM4mK4tWEzLTx0Jv3kBAWAy1WLQ==": {
+      "sha256": "2b2dd162f274a7277e2ec9c5eeee42da5f008c60b3bcebdc279e9ea66798cd19",
+      "bytes": 123
+    },
+    "HostSchemaTests.xcresult/Data/data.0~AQ0iAIUD1il6YT7LDivrdADPjzdXRTXkBk-VJN7n1rtc17z5jLuUIdVNMfyDjk5RVu8fP8hIJjaFr43EEITsIA==": {
+      "sha256": "843644e3825f7a75232d21636bc424a594823ebb07f35fa5fd1fa8a49bae6b40",
+      "bytes": 412
+    },
+    "HostSchemaTests.xcresult/Data/data.0~AU_Mq8QgsHtnoFykbThmF97yZfV1v6IAALOwdmiuGjJ5esB4_kScRXJtEyB2qm3TM9fQue6KryRTvXo0qJcFZA==": {
+      "sha256": "f1d20bbe9d41eef9f9942b5edc11a07448c3ae504ca35629bcf2b7088c95cd8a",
+      "bytes": 580
+    },
+    "HostSchemaTests.xcresult/Data/data.0~B_7lvyVB1H-VN7XyNICIdBd6wEXCcybxSJcc8S9uwG6pI92hLkyNCJfDzefgjPRZLx_mOAzyup53TIo2sr3QoA==": {
+      "sha256": "3e1403f463ad5c001a064ac060c8e1d51b96e8c54fb94ec4669b183d88af75a9",
+      "bytes": 420
+    },
+    "HostSchemaTests.xcresult/Data/data.0~bkw3UbUKBJd7ue7IOIoDc2UwKuWufcQ7q7KCGxwp6rAJ4ZokoG7v_q8xJ-3nayB7_XYU1HEgFQzac8pFHOd4kg==": {
+      "sha256": "691fc04e730f2326c7d9bf46398336f8e0bebc830e1f2a94573667145744dec6",
+      "bytes": 407
+    },
+    "HostSchemaTests.xcresult/Data/data.0~bmZS0wBtUFlXztBp_O1hphG1XCt7yAWzKNCM9WVZOkm1gm9yFSLpN9mbP2V93adJ_NBqvU1oY2I9haHKRjMQrw==": {
+      "sha256": "82e32d1dcc7593c8cab0ba2e7f92b4cc09301d88c6edb163ae33edb36d80bd7a",
+      "bytes": 416
+    },
+    "HostSchemaTests.xcresult/Data/data.0~CKgqUutNyuZE43vVhVX5kTUygzxWC46281cay6mG3SYbT_P8_P51rjDQJWFMR4sLy31pbThuwVzCElTeFt57fQ==": {
+      "sha256": "737c18920e2a57f0d377a0955db17ca74a3d5b3c4f48f8e02184edd004756d32",
+      "bytes": 124
+    },
+    "HostSchemaTests.xcresult/Data/data.0~crSwmsTkbUjlujjW1mPyyXLutBd0esep2yW2EJg4VxGyKfPBuGLDod5pu565IYGlj6JJy23tjqCAe72KQmnAeQ==": {
+      "sha256": "4923ea83ae3a9e349903a37b8c0e766c696fbb561374ce8bae4b3bd294468bd4",
+      "bytes": 408
+    },
+    "HostSchemaTests.xcresult/Data/data.0~dAHOpVl1gY8h4jMJe2OcG0hQWwkepyWE_3hSJoeEKHq7R9_0xsjUD7_U9vnUhQsy5f5HfmL57WqfM2GscUnqfA==": {
+      "sha256": "a73b4eb3a3d47dfbf74b54529e301816a95cb57c5f02b468676354be0b490fa1",
+      "bytes": 118
+    },
+    "HostSchemaTests.xcresult/Data/data.0~DcLFQl1isD2NUXmoK6CdW_dc11H0KEprjU7m_zpC0cYsNQw30Yh8DMwnklSEcZpywiGoUBg4cnKcbHDp2paUzg==": {
+      "sha256": "478f301f088dfd6f1b8c4e5d9a544cd5fc74caec6b842af75cc364c19f057834",
+      "bytes": 570
+    },
+    "HostSchemaTests.xcresult/Data/data.0~dlt4q1--rCIayQIqhi_WFmekSKKVZ--2lVrGVrpvpXjSGbFlDS3DkuVm54-08OBjIcN2qQijaZRd5JJkeUDIqQ==": {
+      "sha256": "f67d357397b3280399dc7e61bc44ff09a36eecac947cf5047338a2b99fe9008b",
+      "bytes": 422
+    },
+    "HostSchemaTests.xcresult/Data/data.0~DO3vgsbmmrXU630vhXll7sfnhMWsbbSHvPTxNAoVebp_KBlqLOHSOoQFnx59-ZGlLPv4DbT1NQKVv9jYQpJjlQ==": {
+      "sha256": "cf91bbc9ac1205c6fb97c99dd4fd125321872e3a24ea85b6c0d03001baafa19c",
+      "bytes": 418
+    },
+    "HostSchemaTests.xcresult/Data/data.0~Ede_B2spgrb3FzJl2hG6xGk0tQmuDMxMhD51HDMLmARgDsHa1Dcv18sDM-GHxrsoBIVOXSh2AqhSZ_yyJa-CKA==": {
+      "sha256": "caa92ee45b0a8f126cac8e6fb4d62000a16983690a390a28f9f9137e17860a78",
+      "bytes": 404
+    },
+    "HostSchemaTests.xcresult/Data/data.0~EGsMMX-1FGjsMP-hc3VQ6kF2zv49YK3-MUIkdz4MNyhOviCPUC3o9bDs86dbPJbrym2Po9OJcaQDop-Bj3bhiA==": {
+      "sha256": "2f23678cf98e971338e355c699d95f6827c41e4fe4014dc7f10bdfd8ea218a7a",
+      "bytes": 2255
+    },
+    "HostSchemaTests.xcresult/Data/data.0~eopL938vZwQV7EpnAMitck0BeysLo7blaRdW_aU4DPwU7IAri4U1YrZaenNabkZa6w9lhnjMRZPR5ir0qnANcA==": {
+      "sha256": "7fb64bc49c307051b28eec7537771adc884ea36861d4a706f2550cc0e1c85838",
+      "bytes": 423
+    },
+    "HostSchemaTests.xcresult/Data/data.0~eZOjOIwo9_fY-0H7tnfm1utd_pB9Tlk026PFqSxir0cJxeggrPlcjg0_Pxw7OtaWiV54L2pzHuKYr1UzNt4oCg==": {
+      "sha256": "4894d022c20d1dacd05336aa147d9f64d9118133db5ac7a7f4b5ca7b1bb72f29",
+      "bytes": 410
+    },
+    "HostSchemaTests.xcresult/Data/data.0~f42qwRucoAZqr3wC3AB3e5PInDTMDUe5U_fcApGwagnAk9UjhdHtEF3esGJ2HIoj1FtuUw4XKMxX_vPwM43eUg==": {
+      "sha256": "32e7e94054f8b18551a94d15a109f9b4ed72a980dd72f3e0bd75df8e6df4d1f9",
+      "bytes": 418
+    },
+    "HostSchemaTests.xcresult/Data/data.0~Fc859X-PNdquk-eQAJ008S_6c1zS2AEAak1FT3MLzATmZqLkQamOJuwZ9BmeD4uulI-h3PtaCXSW0zBcVNlCSQ==": {
+      "sha256": "fe04fc82930d04702ea1fa5596e90b1987e3b6e1a4dcbaa29e02b499d2aa002c",
+      "bytes": 420
+    },
+    "HostSchemaTests.xcresult/Data/data.0~FiGAJmHP3KUU_V70DwUBRXZFgzqrpgI-PAzMra1TfQXnEZoGJh-JD1YK3C3f63lqSJhw9K7UHrCu_I0xHAmjaw==": {
+      "sha256": "e92055b48dbc20d68977955782837f9a674f3261a59ca87140e295088ea45679",
+      "bytes": 608
+    },
+    "HostSchemaTests.xcresult/Data/data.0~fivUk4ndiyF497Ahz_TQe9iktWYV3szDxIsHmpuisWU3DrFjS4UZohRuIRFndDF0C4xvng5ghqlnDfz8sg16kQ==": {
+      "sha256": "f618a5840a7bd0cb9affab3137a19070ac28d58561a51122b2c12c8593f69a3e",
+      "bytes": 412
+    },
+    "HostSchemaTests.xcresult/Data/data.0~G5g0_dTSc5mARvof0-oxuWeHW_vWv-DJfQYSk6dBIqOKXZNfYLc53GWh54GtWNf3Ez2_JXfwIKp4-IOXbRFCrQ==": {
+      "sha256": "840ebe7de59b4667d7721cd3c18cab28f6027e1481810012c5a4f65f9d3c3afc",
+      "bytes": 417
+    },
+    "HostSchemaTests.xcresult/Data/data.0~hD6ncYkVyOUTWLVvw-nhCgh0-h4Rcok_QWGRvAlhte9kMGYKENVQhcauddJiKc631Z3Ua7JJ4pMtewi6iLUJdw==": {
+      "sha256": "72abf6393cf16f440bfe7b5c876c2a09120a8f429d55c90d5213f6ec22271f48",
+      "bytes": 418
+    },
+    "HostSchemaTests.xcresult/Data/data.0~HExwaNgcygyD-0WMq4F5McLpRSru5od31V_UJYofVAErq-C5nWD9y6XmE6Xi5K7iNovYLUZX-KP1EdNxY7k7bg==": {
+      "sha256": "8d1b25fc4ed0d88d0964f50257631f6ad7e695005f93bae586f9df7a86ccbbc1",
+      "bytes": 416
+    },
+    "HostSchemaTests.xcresult/Data/data.0~hra1wUkqCujNazD4mbwrlYjf1SZnXfgXgbiS6Gg8zN08nNWQ3wQ8PDX2sbRnHSxY6N32zznWl1kheCZcUKv-zQ==": {
+      "sha256": "0835996fbb5af8ea8df1d673d59ce481c8a0a382fc6217a487ef44c51e0d2620",
+      "bytes": 415
+    },
+    "HostSchemaTests.xcresult/Data/data.0~huY58G5ecdFtx1wUEpJrCwyTZTOxbD7OIi5aiWd6rWl2hSBn1UwHAgPBOeQ3Zqtlmhi27LklPIQDgAwQ0vsMsg==": {
+      "sha256": "440f8fa2ee4beecdd3f8e211b4107aefd019dbfc13d2cf03137cae97c3d714ce",
+      "bytes": 421
+    },
+    "HostSchemaTests.xcresult/Data/data.0~HZJn0tIYkbGC7CW0RkkTAfvuU33Mah4QF81uF7v3lzS8YwH8otItIDhd8Y8V629SC2CF-KMf0GwuNmsqHkDUcw==": {
+      "sha256": "31b736e8e283de47fe6a8459ac23b6d4907171265f6bf6fc92cd29e1604d25cf",
+      "bytes": 116
+    },
+    "HostSchemaTests.xcresult/Data/data.0~IGvQ5bHS1KCRToGqe-zfBc6SqO4rXpammmaTGKXF84S10usTcY6s_z3r0CgXrt8qrTSOnQk5TXuWp-1QS9GWeA==": {
+      "sha256": "48cea1b54304d37a26a55d3556fe8e91ec9af8bf881aea7acbd67121f9d71cd1",
+      "bytes": 414
+    },
+    "HostSchemaTests.xcresult/Data/data.0~ITrC4NS9YpcULxNhDc5SKfwmwXnX1WGSu7V_fW-EvMsCWaPbET6UrVRCjXtc0juSvJEE9YBa6isReiir_F7T2Q==": {
+      "sha256": "b68a4b7a839035f04bf2b69d064cf60800fb2af6674dd3b315fdd69c4d7a5bc6",
+      "bytes": 301
+    },
+    "HostSchemaTests.xcresult/Data/data.0~IZveQa_hH0ms1NwNypr0n_YGHgkM08XotFTt6tJV8UqG02luw0zksJLRSmC28PFILntHvmKCi3azaJOvYZvr5A==": {
+      "sha256": "61a187dd8141d135632e371683afb43951e0b21321081ab8b22b4a418da180df",
+      "bytes": 283
+    },
+    "HostSchemaTests.xcresult/Data/data.0~jL3Wc4egXc-QTh0-Woo4sYRG_tbQgqo7F1lvd3guB6pJgvcIxbR8mzBMKy_m9RuryXNbssx88qB1kqQZgkrSHA==": {
+      "sha256": "25608d897a73250404aa056b09feba2683a8ada0e298b925a0258cc0a059613b",
+      "bytes": 285
+    },
+    "HostSchemaTests.xcresult/Data/data.0~jx5sPJMEsL5U6TFfIQt-MVDps9qLGM6n7cJH9gSIdrvKM586Ib4HuzX_yR2b2SuQdB1OqEKw-taj1CwyVdJIMg==": {
+      "sha256": "bac9514a9a568377bd803766d6539bc74a363844947cc2cfa00fd459aecd0744",
+      "bytes": 417
+    },
+    "HostSchemaTests.xcresult/Data/data.0~KXrhHmGeXP29PrgJTclk5ZDBhxrG4bt-BcWfbE6khd49XZgTuOAVN9r4RWr-TPJ2LacpmzzE0kr87TiUe9iyvQ==": {
+      "sha256": "027eb0ae43b4ba2555ee61e8f4946710d9c266034904e2af236eb18e26bb0a05",
+      "bytes": 409
+    },
+    "HostSchemaTests.xcresult/Data/data.0~lkLW5yTIk7YZ8LtPCsqzBEdkHXPDvM9jCmCIvpdBimjIMQFcfg1y3kof15fztYH7CximVRUm7feYywuawHPi4w==": {
+      "sha256": "a9236682dd6b4073431da3fb261f0d9c7c63cbe6a92781deb064161c39833780",
+      "bytes": 411
+    },
+    "HostSchemaTests.xcresult/Data/data.0~LMu6jIFQdKPAoeNa0buoc4h_qUkLg7rMXHq2qU4xaAUQQgQY2YKbKc6R8B8-E30fUYNw9qsQ3V8AcfHwvlT8tg==": {
+      "sha256": "746c3cd0c148d3edd3a6cc9ae053f5b798bfee5617db53fb1bea614d7ed07cba",
+      "bytes": 409
+    },
+    "HostSchemaTests.xcresult/Data/data.0~LTeqFsanpVirLiNSm7I4_eKkUY6lbPHoofb-HdHbRJPuPNKeZHReDN32pJR_iprEdd9yAaa7N_qyxfTZokro9g==": {
+      "sha256": "eb5c9a24df5a293f0bcfb4fdf6cc4fa496e10f2ade5ea7ad6b842da825d7a405",
+      "bytes": 423
+    },
+    "HostSchemaTests.xcresult/Data/data.0~m7boVNL0WjsepKbaO9RXWrfXf2ixNXLud7tYQ2kyaupYmz7YtUeUhbN8_o--d5kzMm8JkG5Fq_0FndgqmRCPMA==": {
+      "sha256": "cde471f3906b989139e6fdb6fa56bcfef038e56f91d67c5e114f889b04c701f4",
+      "bytes": 423
+    },
+    "HostSchemaTests.xcresult/Data/data.0~mKu9lQfsLoJxdYQzeUT2afrLkYFrmrEMBcQJy2LPXL8m0_G60T0gOaEQ1IPDqU0DgQ8Zby2HKXowUZAW1_C3Cw==": {
+      "sha256": "dcc645b5fe04b089372ed89f99f589e5e1eee699e1291bf9d856729b37c87fc9",
+      "bytes": 414
+    },
+    "HostSchemaTests.xcresult/Data/data.0~MnlasL-IZ5Ty93CQrqipyUC7C6HemaH1AyAGUQ9GMCiO7kbRr-WMUhx0j5hjNIfBrRqkN4wqnOiOsYA1xAC-Og==": {
+      "sha256": "69a0e3cd2093b423a0a48596f651e4223b7b7a6695d44da5a6f718ee8a947b3f",
+      "bytes": 2288
+    },
+    "HostSchemaTests.xcresult/Data/data.0~MOzGFTAyN9RThiOHHTEBVlrwR_DBBwnHi3xrtubZUrwFEIupCf0vRAQd8uAeUaMRQhm1vx4XbHOYjP579zcfAw==": {
+      "sha256": "d247cff65409bc2bcb2833f2a5faf895ca8ab870cfcc8057a360157013b9a7c0",
+      "bytes": 9088
+    },
+    "HostSchemaTests.xcresult/Data/data.0~NlNPgbF3-PSBWGSyF4iKrMV3UP184VSpiyxRDjA7iUXgb2rCLTxtWregDF89smsJl9WexHclYFpN6KDUPu4ToQ==": {
+      "sha256": "b69368f66680c7560443bcb7808262740b568716019f589eebdb67120a1b0bf5",
+      "bytes": 427
+    },
+    "HostSchemaTests.xcresult/Data/data.0~NXpeeVbN2LMMwygGU0Fu167zHSnKdJKkbvpm_fKYAluLK1B4YlXRP_36hKCcUnOmKC4SgNRJ5d22x-3zDB-Ygw==": {
+      "sha256": "87cebd6a025123a8960496e6b089897ace24e72f7418f50c4b7ac53c2bc13760",
+      "bytes": 415
+    },
+    "HostSchemaTests.xcresult/Data/data.0~o3qiysGSqXtEEcmOFPdHKTgPFVFdKtVWeSzsPP85Oup6Sc6IfGc7-4jSDn_cjLt3YgWb_oCjF0zJJGPJhgnqow==": {
+      "sha256": "80448f59b0bc449f6307576519abff73d30db98fd9efad9a7a3003ea9b2ce5ad",
+      "bytes": 415
+    },
+    "HostSchemaTests.xcresult/Data/data.0~oRMi0sbQLktfDDDGUS-SqBKpdDiD6HCztVES_ShfGr0KVcYENoIq7y9oUSDWL5B_P2gkdtWG8JEsJLxPbdWOZA==": {
+      "sha256": "75fb7c443d41c504b005c3117dbf9a0162852456d3601744b4d1c95c5a246e9c",
+      "bytes": 199
+    },
+    "HostSchemaTests.xcresult/Data/data.0~oyqCBxPS96NSOTErOAbvao08YKrLW_XbT59fR3mcnfG8dirv1GJMaLbj0T2GhIIsMN1P0nttisx4CNby8bHzMQ==": {
+      "sha256": "0d0c156d87487638a795023b38dddbcf6c31fbc3884b1816bd91c62516d5a81a",
+      "bytes": 413
+    },
+    "HostSchemaTests.xcresult/Data/data.0~p3Xp4YgNWNhl4uicypcpL1FpOxGd843tp0SO4qnAvq87gTf-yY0WQDsvmroJ3MqaYFvZUlQQkJL9mKASj_7UZg==": {
+      "sha256": "0a3e38a7ee2f4a7971fb4853eb1fdbd6acbeae91d43fcf4a6e70f65e3371434d",
+      "bytes": 38
+    },
+    "HostSchemaTests.xcresult/Data/data.0~pjkDF8XdDihjtC9CSlMRMZrVQdz0lZWXYWkMsAkrRzEYzXyBqAQomqsTkgAGDnbH1hI15dIreukBwdgTmZEk5g==": {
+      "sha256": "715490cc8b0694e367a06368734aaacfb16c88d7a0ce50aecef0308b2c2d8f2e",
+      "bytes": 655
+    },
+    "HostSchemaTests.xcresult/Data/data.0~PQSxoK5YC5225_enRovy2LTftNfBcbjyYZVbgOfNl_CLuJjiYMQpuaUFMVdsP3LWniRRRmgYg8tb9PoKUN0Ztg==": {
+      "sha256": "9a125f25c711892a5c0d95924e5938b340048114cedd1bcad4fa789ab800be05",
+      "bytes": 416
+    },
+    "HostSchemaTests.xcresult/Data/data.0~RbSXiBOpDAFMtqwk8-Bb40pAb5K7LZn8WYpF7hNzDBARpYlZsw6RTLI18rFYa86NBqGnlw0NgqCD2MeH5FzZeQ==": {
+      "sha256": "8868e288da7d8099553ab52b5898d29242a1af47a7fe7b0e352ba5e1f3337ff8",
+      "bytes": 406
+    },
+    "HostSchemaTests.xcresult/Data/data.0~rG0uIwdQP0SGyn3zBP0zNZLLjHHWmNVuVsaxefGe-qYcr_ZxmyFe710jzcTR52HxOAz5yAiBveVmyroZWReh4Q==": {
+      "sha256": "9716199da7d594afc48f6b7e8a411ed4f5a12afe2cc145c199801bc93a94a541",
+      "bytes": 424
+    },
+    "HostSchemaTests.xcresult/Data/data.0~rSE4qelhd9ii-25QJ7LOHhatOrw4xVv-JcQjZub0TOSXk1bcF0M9sJmTmcPg22g4oHucG6jVjoj9lH86OJZetA==": {
+      "sha256": "58b16bc1c7db947362c2c27d00337d49f9a8f910f0e0c128785244a6229b6b3b",
+      "bytes": 405
+    },
+    "HostSchemaTests.xcresult/Data/data.0~S9kvQyFtwa8DRaekVCjB6Rg3X9sjWBJzFvUETqDdlKOEz8IpM3Z2ACILOkCwQbL4jBBMYUvmGCPMfCjlfxG3eg==": {
+      "sha256": "e74e54198e00e604cb0003de79c9c2c5681f3045ea6c4480d03c3049fda7c22e",
+      "bytes": 421
+    },
+    "HostSchemaTests.xcresult/Data/data.0~sfdcd_A1abdQadMcytjzyYjg1zcCqn5sdCqiwP770wbx6MRZhcahfaKKkkmfc013F8qapB-lgD-dc-Smi21-Lw==": {
+      "sha256": "8c64ef53e1bfe85eae9c0d83ff096cf5ba036f0c11f4743fce8a10560b6e4537",
+      "bytes": 415
+    },
+    "HostSchemaTests.xcresult/Data/data.0~swrClOTktZpYnLjItqYoFk34T_9sejU031oHULC0GOR8Liy5OWrNghVT8VOYU5GG5ebZgviljhRyPxAZ11X2sQ==": {
+      "sha256": "1612bcbf63ed4ef628dfec43b43170362834873ba6dd29e8f9fd35df86d89110",
+      "bytes": 412
+    },
+    "HostSchemaTests.xcresult/Data/data.0~sYPf5LE5AYTq3x1s4eD6_f8J-AGjP0-DjHWy1pTBSDH1BfybgpWy1gvKmwjeBVbjFyLjvYJe5kQmRMez3l41Yg==": {
+      "sha256": "44404d602a71c1420ec641352213a2878a73ba1ccfe21bf022614069f2ff25d7",
+      "bytes": 402
+    },
+    "HostSchemaTests.xcresult/Data/data.0~T9mL6FX3hT3XTjiFWNjLDOgwN9Yc_ERN-x-uzOnvfQzeIU3RKX5pZXOjQiiumQYC1ci0ZVXAeatYxf4aw9IYQA==": {
+      "sha256": "f02336bcbc883a13aac3a0aaf9e9b1aecea175e1a4d0be44a2c717d0e1f4968b",
+      "bytes": 411
+    },
+    "HostSchemaTests.xcresult/Data/data.0~TchCito3joOfiKlmO1IyQgNRmUp6umkSIqPRMssuKXhTtMQ8dG6T4H9igtjETEmRNbXz0lGOiy--LyouM7jvCg==": {
+      "sha256": "f068ec58fdb7563168bbe81d02845cb8b6f73cde92f8b0bd52186aa41399902b",
+      "bytes": 71
+    },
+    "HostSchemaTests.xcresult/Data/data.0~trswkIsofhU0shseWSuF96LsxgiP0Kn1IOn_fytgPEh4zbNbH4DBjzZ41dOsHd0Q9l4I6tP9VVfDDgqxsCz28Q==": {
+      "sha256": "045b60ef9093e01e316b540de7c9811d39e9744ffdca8167a7a144f4623f6d63",
+      "bytes": 419
+    },
+    "HostSchemaTests.xcresult/Data/data.0~u5jIbN2x36kpJ6CYu54-UrN2o3T1xTMP71UKYGs5XR9KY7EAafOMBBP9L5DQBb-FPHlvUkYu4p7rny_FshYMIA==": {
+      "sha256": "fdb4cb60005e5a3284ee8c7d8e0a44a90a4ef899ce6c075359245aba62b43f05",
+      "bytes": 133745
+    },
+    "HostSchemaTests.xcresult/Data/data.0~uAioOUf5aUCZqj8hQ21wFPzNT1v62JJ_8XXw4kjokZjYiKm3nTcZkgcfcfFjxbjQX8xr7d0NCAQyfzoPPK9JQA==": {
+      "sha256": "d686d28f30849579f37bfbda5618068c5bc0c33d86acfce4a9872034bcce45c3",
+      "bytes": 425
+    },
+    "HostSchemaTests.xcresult/Data/data.0~Ulh7WwZG2WdMiRZ2XczcFWCjs97TQm0sCzMO43yid1-948oRelCOYpUPrX6ADwLXBi5Ev_pvB5SEGnm3qWnyfQ==": {
+      "sha256": "7dbaba830241cca732ee4a07e05fa76b29ef39a5be3e8568d589641b895bb276",
+      "bytes": 397
+    },
+    "HostSchemaTests.xcresult/Data/data.0~UZOkb4CTm99BTefbHm16q1Fl1aeX_msAcaJoH5gZvjuJt8tQZe-8bxJQk3z6pbVuoiL6jq9MeqKg3UE4CunfeQ==": {
+      "sha256": "fc2767328b0b001a0ddf6a604cd96af320a384377dc326db29fea3701dcb800a",
+      "bytes": 413
+    },
+    "HostSchemaTests.xcresult/Data/data.0~vZXRClIttp0A3JICznetpM9S2h8wJkJkZgG0qKfWvNl_4mqpuXaB3hcIJM40JjItiDpGi14R1Q89t4NkuXuj9A==": {
+      "sha256": "897593be6fb487958229647e106c24640cf9d12754934ab872cb80001aaffe41",
+      "bytes": 434
+    },
+    "HostSchemaTests.xcresult/Data/data.0~xnJew7T3OMEoR1mIaYaVBP37hCfO_n8B1qWs7fgILt_Wva9MSif_TRCUJPk3pEZ4-PKfUTmheCHDBTwNYWVh0Q==": {
+      "sha256": "49f26d714b0c344a278973ac205ba4b994d51809f4b83950da896c7db9209c90",
+      "bytes": 418
+    },
+    "HostSchemaTests.xcresult/Data/data.0~xoo6CSlanjWGGgQo1KHrNLnmUqG3EtkSEBM7Cq1-UIKlnMOuhGJDhw7fqcERUYRpmBwe36cHsN2xz2s7yPUl6A==": {
+      "sha256": "35260f10ea3548ca4eeff7d0aa3127710172b34e545000da4813425444701f58",
+      "bytes": 418
+    },
+    "HostSchemaTests.xcresult/Data/data.0~YkzY1sVUnSajOpni7xcJyMHztw839CFCkKMnVIVn0JyDpmn1fKZGmAlFGRmnqt5Odbx73S6vrQ-R_xM5prleSw==": {
+      "sha256": "9ba89a8140278e19ffdab0e9cb6c6e2afd0681facb0297afa38a6023ab5b5338",
+      "bytes": 281
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~099PkDvmayF5kBpKsfQLDgqFP-6WTpeN7PhfJtGmzmLjw46Jo5Cqj2nLF1d42uz-DPLHTsIVRJIhhkZ9xqN3eA==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~0NP1geU_oHlSFNVJ1T2qzXUlDJlrW8f6cO6z1u8r1J2kh-pRBWjWXPs90rwOyXQUv3FlvconQ0V-Rn8L5I0FGA==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~1iR0T-Kq5hiLyrpnCvIUkz55-SEhiFKd7kMBtMQ_QxOVTXua4IREHM9h7aFEFbKRNO9uWDmYzAbaUqZxbe54nw==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~2PMfyK_KhGbBAx98kzp8L7KFSVMDmOG6MwTj_jUn9y7WST9tNrKcXF_PT0KClVvHSUXa4XE8hk2YSgcrL7RDJQ==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~4efXBT4GCLZwOpqimsHbil9qFkeP4liniXjYbqH4fRbtLs0a_9stHMSMuRBoY7Ykx7sjMDh5tUqOtzkMTA8nDQ==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~4MpYgykBXebyVmiPolS8VJkPdQF780AnqVEMGa6XsB7wZZnd0_3NgHrYOn-IaacXZka8USxtU5sqHGoUaqWdjQ==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~5MtSHnj7K5G5TiAWaSVVXshN4CE_Bb58AyGqiP0U6MBKhCJuvpm0h1OatzznCgot2fADmv3-1RBxkZtjkbXCqQ==": {
+      "sha256": "e90166912ed147edd6a25856f8f8bc640f0bb5db7c4bfc3c75e78345a882cef3",
+      "bytes": 133
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~6Dns-MKCVQgnvNgb2i7r3I02YH686Z3w_SY4HCHysptyPS1lLHs2-KHWL33GpBugEIuiV-nah5r9yIhxMMoLeQ==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~6H98647E_3bhhIZEmHmpGExS177mgOoBM6zu9ZlTuaYHknSS_jxmcabWFzxsSlIX19o_OapREglEudDfFwcK8Q==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~6LGK0WiaVuGbHVJ4L2dU0VV0WLS_kpsnnDm9wJdWbfwVmgLX2V165HORhKUFyf8fFpOYdp7SI45iyKTPtP5ZCg==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~76YQtZfbKJm2HKkAdCsEchRzm8uqY_11qzZF3Sw8hpMux8uR23IzClMzZTLN78z4re_yFkLJ8Er5GZYqW9G4jw==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~7CAhDiUuwbMw92Cpk-UWioRRoX_4RgVm9nCqiShjQUOeYE0PwZEW8Vqvkgz0Dero44ezUIO9Wc8AbwJ_n20UqA==": {
+      "sha256": "4beed55644d2230514de0307e9a8b5a6ba79c9b0c35855e4d8884e57bf1dddc4",
+      "bytes": 133
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~7CnkQyWvuhGyarUezpZHe6y7kqbuXFwRjqlXlhiB_cAe3ECwm-JeMW4JIZVQmiF6Ah89w8AWHSDi2TlTxHTyZw==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~7NaZr_bhuJATRnBoUCEwRHqITziKswKJA0yr7vPvLc-11uTtzwhP79iln8LSPZBYZ6ibbIXjjAl25ltDywan1g==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~8nn7VLUajaNQt1KuJTfMBCxoO3PpiR8kD4_gdME9f391RtlUyHz8RlgJKk5nxAuPuqXwajKHCNxIXUYbDJyIcQ==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~8VS2rPt3os98-0uFcCJLZjD-7dUMwjUjGMguZd746_T3VumokVGvcymqj1wwoqG9k7dhaTdTWDUr2cPJSci_Fg==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~8YleVn3cMXdmndFzEGTaaSpwpKRDc9Cvs6J8bRax3JCK6Oss3guSJ4VzrTKK7AGuh4lwvfxWDXZ4EERg0UrVcA==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~9k-JgSS-z4B-6l3fqkkrd1Ef7gyV5la8jSNyRIjgsME2gDIY00syujkelW9XwuFPz-r6nMAxuV5rcTvzx0Lhsg==": {
+      "sha256": "417e5d16c819fa4794c235fddc16cab82d7b978a738c4d65c00204c4ec062a08",
+      "bytes": 265
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~9PL5bJlFK92GLhI3i-lotXWUdHPwehTyBXlcqOLAzMH5XPBS9OCYDuemhb3MFfvVjxNqgwoPpLX-HGL1QHJ_kg==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~_-hxVlYE8_h1XYWRvH5hJU6oaDnfDGnFW5UwiqSJEbHH4ju8f4ZfG8LyA2bMEA88hizAMvNOaGVT5QXQluCyJg==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~Act9mEPWFJ69iTCUWDIoNzapZcY3SmvBa4RDdjpg6AQI5u2IO9sYrHOwLp5PUkoMu3eFsTKH_0skdqxTqroYmw==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~aok0ZVUA4P1ywLNPrJTAoBfhyumF1n6giz2QD8J78bZkZ7bjR91_wv2shpAVM4mK4tWEzLTx0Jv3kBAWAy1WLQ==": {
+      "sha256": "d10253fd7084b36a09ed7906ef1121b28739d3028798dfd59930b1d0be6f372f",
+      "bytes": 133
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~AQ0iAIUD1il6YT7LDivrdADPjzdXRTXkBk-VJN7n1rtc17z5jLuUIdVNMfyDjk5RVu8fP8hIJjaFr43EEITsIA==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~AU_Mq8QgsHtnoFykbThmF97yZfV1v6IAALOwdmiuGjJ5esB4_kScRXJtEyB2qm3TM9fQue6KryRTvXo0qJcFZA==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~B_7lvyVB1H-VN7XyNICIdBd6wEXCcybxSJcc8S9uwG6pI92hLkyNCJfDzefgjPRZLx_mOAzyup53TIo2sr3QoA==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~bkw3UbUKBJd7ue7IOIoDc2UwKuWufcQ7q7KCGxwp6rAJ4ZokoG7v_q8xJ-3nayB7_XYU1HEgFQzac8pFHOd4kg==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~bmZS0wBtUFlXztBp_O1hphG1XCt7yAWzKNCM9WVZOkm1gm9yFSLpN9mbP2V93adJ_NBqvU1oY2I9haHKRjMQrw==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~CKgqUutNyuZE43vVhVX5kTUygzxWC46281cay6mG3SYbT_P8_P51rjDQJWFMR4sLy31pbThuwVzCElTeFt57fQ==": {
+      "sha256": "f488a539153966eb77a8d5dc8981f73bfd2392ba6a6df92781f19efe84f3777e",
+      "bytes": 133
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~crSwmsTkbUjlujjW1mPyyXLutBd0esep2yW2EJg4VxGyKfPBuGLDod5pu565IYGlj6JJy23tjqCAe72KQmnAeQ==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~dAHOpVl1gY8h4jMJe2OcG0hQWwkepyWE_3hSJoeEKHq7R9_0xsjUD7_U9vnUhQsy5f5HfmL57WqfM2GscUnqfA==": {
+      "sha256": "7c7994895f1e6873b4cce72327c1c749c0e55139fcc4b4609826e2e8dbf282a1",
+      "bytes": 133
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~DcLFQl1isD2NUXmoK6CdW_dc11H0KEprjU7m_zpC0cYsNQw30Yh8DMwnklSEcZpywiGoUBg4cnKcbHDp2paUzg==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~dlt4q1--rCIayQIqhi_WFmekSKKVZ--2lVrGVrpvpXjSGbFlDS3DkuVm54-08OBjIcN2qQijaZRd5JJkeUDIqQ==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~DO3vgsbmmrXU630vhXll7sfnhMWsbbSHvPTxNAoVebp_KBlqLOHSOoQFnx59-ZGlLPv4DbT1NQKVv9jYQpJjlQ==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~Ede_B2spgrb3FzJl2hG6xGk0tQmuDMxMhD51HDMLmARgDsHa1Dcv18sDM-GHxrsoBIVOXSh2AqhSZ_yyJa-CKA==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~EGsMMX-1FGjsMP-hc3VQ6kF2zv49YK3-MUIkdz4MNyhOviCPUC3o9bDs86dbPJbrym2Po9OJcaQDop-Bj3bhiA==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~eopL938vZwQV7EpnAMitck0BeysLo7blaRdW_aU4DPwU7IAri4U1YrZaenNabkZa6w9lhnjMRZPR5ir0qnANcA==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~eZOjOIwo9_fY-0H7tnfm1utd_pB9Tlk026PFqSxir0cJxeggrPlcjg0_Pxw7OtaWiV54L2pzHuKYr1UzNt4oCg==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~f42qwRucoAZqr3wC3AB3e5PInDTMDUe5U_fcApGwagnAk9UjhdHtEF3esGJ2HIoj1FtuUw4XKMxX_vPwM43eUg==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~Fc859X-PNdquk-eQAJ008S_6c1zS2AEAak1FT3MLzATmZqLkQamOJuwZ9BmeD4uulI-h3PtaCXSW0zBcVNlCSQ==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~FiGAJmHP3KUU_V70DwUBRXZFgzqrpgI-PAzMra1TfQXnEZoGJh-JD1YK3C3f63lqSJhw9K7UHrCu_I0xHAmjaw==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~fivUk4ndiyF497Ahz_TQe9iktWYV3szDxIsHmpuisWU3DrFjS4UZohRuIRFndDF0C4xvng5ghqlnDfz8sg16kQ==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~G5g0_dTSc5mARvof0-oxuWeHW_vWv-DJfQYSk6dBIqOKXZNfYLc53GWh54GtWNf3Ez2_JXfwIKp4-IOXbRFCrQ==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~hD6ncYkVyOUTWLVvw-nhCgh0-h4Rcok_QWGRvAlhte9kMGYKENVQhcauddJiKc631Z3Ua7JJ4pMtewi6iLUJdw==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~HExwaNgcygyD-0WMq4F5McLpRSru5od31V_UJYofVAErq-C5nWD9y6XmE6Xi5K7iNovYLUZX-KP1EdNxY7k7bg==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~hra1wUkqCujNazD4mbwrlYjf1SZnXfgXgbiS6Gg8zN08nNWQ3wQ8PDX2sbRnHSxY6N32zznWl1kheCZcUKv-zQ==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~huY58G5ecdFtx1wUEpJrCwyTZTOxbD7OIi5aiWd6rWl2hSBn1UwHAgPBOeQ3Zqtlmhi27LklPIQDgAwQ0vsMsg==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~HZJn0tIYkbGC7CW0RkkTAfvuU33Mah4QF81uF7v3lzS8YwH8otItIDhd8Y8V629SC2CF-KMf0GwuNmsqHkDUcw==": {
+      "sha256": "bd069e9ddfa6b10573583e27f828defed4f9018986368c3005c085f474b1512b",
+      "bytes": 133
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~IGvQ5bHS1KCRToGqe-zfBc6SqO4rXpammmaTGKXF84S10usTcY6s_z3r0CgXrt8qrTSOnQk5TXuWp-1QS9GWeA==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~ITrC4NS9YpcULxNhDc5SKfwmwXnX1WGSu7V_fW-EvMsCWaPbET6UrVRCjXtc0juSvJEE9YBa6isReiir_F7T2Q==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~IZveQa_hH0ms1NwNypr0n_YGHgkM08XotFTt6tJV8UqG02luw0zksJLRSmC28PFILntHvmKCi3azaJOvYZvr5A==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~jL3Wc4egXc-QTh0-Woo4sYRG_tbQgqo7F1lvd3guB6pJgvcIxbR8mzBMKy_m9RuryXNbssx88qB1kqQZgkrSHA==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~jx5sPJMEsL5U6TFfIQt-MVDps9qLGM6n7cJH9gSIdrvKM586Ib4HuzX_yR2b2SuQdB1OqEKw-taj1CwyVdJIMg==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~KXrhHmGeXP29PrgJTclk5ZDBhxrG4bt-BcWfbE6khd49XZgTuOAVN9r4RWr-TPJ2LacpmzzE0kr87TiUe9iyvQ==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~lkLW5yTIk7YZ8LtPCsqzBEdkHXPDvM9jCmCIvpdBimjIMQFcfg1y3kof15fztYH7CximVRUm7feYywuawHPi4w==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~LMu6jIFQdKPAoeNa0buoc4h_qUkLg7rMXHq2qU4xaAUQQgQY2YKbKc6R8B8-E30fUYNw9qsQ3V8AcfHwvlT8tg==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~LTeqFsanpVirLiNSm7I4_eKkUY6lbPHoofb-HdHbRJPuPNKeZHReDN32pJR_iprEdd9yAaa7N_qyxfTZokro9g==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~m7boVNL0WjsepKbaO9RXWrfXf2ixNXLud7tYQ2kyaupYmz7YtUeUhbN8_o--d5kzMm8JkG5Fq_0FndgqmRCPMA==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~mKu9lQfsLoJxdYQzeUT2afrLkYFrmrEMBcQJy2LPXL8m0_G60T0gOaEQ1IPDqU0DgQ8Zby2HKXowUZAW1_C3Cw==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~MnlasL-IZ5Ty93CQrqipyUC7C6HemaH1AyAGUQ9GMCiO7kbRr-WMUhx0j5hjNIfBrRqkN4wqnOiOsYA1xAC-Og==": {
+      "sha256": "3de9bb6ce68691b7231ccddc37c8e045e32837bae0ef4e56bd8d882e3f0940bb",
+      "bytes": 463
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~MOzGFTAyN9RThiOHHTEBVlrwR_DBBwnHi3xrtubZUrwFEIupCf0vRAQd8uAeUaMRQhm1vx4XbHOYjP579zcfAw==": {
+      "sha256": "3f299c6ed523a1e2b0eb35b88fc5ac2df409fd8330488960e3cf2fedd1d8d0ec",
+      "bytes": 3829
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~NlNPgbF3-PSBWGSyF4iKrMV3UP184VSpiyxRDjA7iUXgb2rCLTxtWregDF89smsJl9WexHclYFpN6KDUPu4ToQ==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~NXpeeVbN2LMMwygGU0Fu167zHSnKdJKkbvpm_fKYAluLK1B4YlXRP_36hKCcUnOmKC4SgNRJ5d22x-3zDB-Ygw==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~o3qiysGSqXtEEcmOFPdHKTgPFVFdKtVWeSzsPP85Oup6Sc6IfGc7-4jSDn_cjLt3YgWb_oCjF0zJJGPJhgnqow==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~oRMi0sbQLktfDDDGUS-SqBKpdDiD6HCztVES_ShfGr0KVcYENoIq7y9oUSDWL5B_P2gkdtWG8JEsJLxPbdWOZA==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~oyqCBxPS96NSOTErOAbvao08YKrLW_XbT59fR3mcnfG8dirv1GJMaLbj0T2GhIIsMN1P0nttisx4CNby8bHzMQ==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~p3Xp4YgNWNhl4uicypcpL1FpOxGd843tp0SO4qnAvq87gTf-yY0WQDsvmroJ3MqaYFvZUlQQkJL9mKASj_7UZg==": {
+      "sha256": "022e6d8d65736ed0a4becd121f6195020f28112fa8959c1836cb9796631251f5",
+      "bytes": 67
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~pjkDF8XdDihjtC9CSlMRMZrVQdz0lZWXYWkMsAkrRzEYzXyBqAQomqsTkgAGDnbH1hI15dIreukBwdgTmZEk5g==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~PQSxoK5YC5225_enRovy2LTftNfBcbjyYZVbgOfNl_CLuJjiYMQpuaUFMVdsP3LWniRRRmgYg8tb9PoKUN0Ztg==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~RbSXiBOpDAFMtqwk8-Bb40pAb5K7LZn8WYpF7hNzDBARpYlZsw6RTLI18rFYa86NBqGnlw0NgqCD2MeH5FzZeQ==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~rG0uIwdQP0SGyn3zBP0zNZLLjHHWmNVuVsaxefGe-qYcr_ZxmyFe710jzcTR52HxOAz5yAiBveVmyroZWReh4Q==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~rSE4qelhd9ii-25QJ7LOHhatOrw4xVv-JcQjZub0TOSXk1bcF0M9sJmTmcPg22g4oHucG6jVjoj9lH86OJZetA==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~S9kvQyFtwa8DRaekVCjB6Rg3X9sjWBJzFvUETqDdlKOEz8IpM3Z2ACILOkCwQbL4jBBMYUvmGCPMfCjlfxG3eg==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~sfdcd_A1abdQadMcytjzyYjg1zcCqn5sdCqiwP770wbx6MRZhcahfaKKkkmfc013F8qapB-lgD-dc-Smi21-Lw==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~swrClOTktZpYnLjItqYoFk34T_9sejU031oHULC0GOR8Liy5OWrNghVT8VOYU5GG5ebZgviljhRyPxAZ11X2sQ==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~sYPf5LE5AYTq3x1s4eD6_f8J-AGjP0-DjHWy1pTBSDH1BfybgpWy1gvKmwjeBVbjFyLjvYJe5kQmRMez3l41Yg==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~T9mL6FX3hT3XTjiFWNjLDOgwN9Yc_ERN-x-uzOnvfQzeIU3RKX5pZXOjQiiumQYC1ci0ZVXAeatYxf4aw9IYQA==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~TchCito3joOfiKlmO1IyQgNRmUp6umkSIqPRMssuKXhTtMQ8dG6T4H9igtjETEmRNbXz0lGOiy--LyouM7jvCg==": {
+      "sha256": "69e93fc4f531db0c22522e9e21e70f070bce8765ff2abc3ca05dc92753efe26c",
+      "bytes": 199
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~trswkIsofhU0shseWSuF96LsxgiP0Kn1IOn_fytgPEh4zbNbH4DBjzZ41dOsHd0Q9l4I6tP9VVfDDgqxsCz28Q==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~u5jIbN2x36kpJ6CYu54-UrN2o3T1xTMP71UKYGs5XR9KY7EAafOMBBP9L5DQBb-FPHlvUkYu4p7rny_FshYMIA==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~uAioOUf5aUCZqj8hQ21wFPzNT1v62JJ_8XXw4kjokZjYiKm3nTcZkgcfcfFjxbjQX8xr7d0NCAQyfzoPPK9JQA==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~Ulh7WwZG2WdMiRZ2XczcFWCjs97TQm0sCzMO43yid1-948oRelCOYpUPrX6ADwLXBi5Ev_pvB5SEGnm3qWnyfQ==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~UZOkb4CTm99BTefbHm16q1Fl1aeX_msAcaJoH5gZvjuJt8tQZe-8bxJQk3z6pbVuoiL6jq9MeqKg3UE4CunfeQ==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~vZXRClIttp0A3JICznetpM9S2h8wJkJkZgG0qKfWvNl_4mqpuXaB3hcIJM40JjItiDpGi14R1Q89t4NkuXuj9A==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~xnJew7T3OMEoR1mIaYaVBP37hCfO_n8B1qWs7fgILt_Wva9MSif_TRCUJPk3pEZ4-PKfUTmheCHDBTwNYWVh0Q==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~xoo6CSlanjWGGgQo1KHrNLnmUqG3EtkSEBM7Cq1-UIKlnMOuhGJDhw7fqcERUYRpmBwe36cHsN2xz2s7yPUl6A==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/Data/refs.0~YkzY1sVUnSajOpni7xcJyMHztw839CFCkKMnVIVn0JyDpmn1fKZGmAlFGRmnqt5Odbx73S6vrQ-R_xM5prleSw==": {
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "bytes": 1
+    },
+    "HostSchemaTests.xcresult/database.sqlite3": {
+      "sha256": "780d56dca16544e4b4e22a80498b919803100072e30b177f50f799f46c5570b0",
+      "bytes": 303104
+    },
+    "HostSchemaTests.xcresult/Info.plist": {
+      "sha256": "c83067c68794c6e5e6f5ce2cb67d1ab9bfdb843b43dab185fa86ba5c01f25204",
+      "bytes": 776
+    },
+    "ios-build.log": {
+      "sha256": "d1fcdf48cd5f1882df2ae2d5fb87d1f9ec1da8a954f661c0cbe2c7f2c4b4dcd7",
+      "bytes": 2160403
+    },
+    "process-exit.json": {
+      "sha256": "b0dc4da6caf5d017d42f6c7a6e304e39081f9b598bf1522e43839992695bd766",
+      "bytes": 31
+    },
+    "process-status.json": {
+      "sha256": "2d7219c797aa08abd9413bc68e247f4b001923e5e06c67f43ad7ec8dcacf6b43",
+      "bytes": 35
+    },
+    "raw-0-Package.resolved": {
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+      "bytes": 1198
+    },
+    "raw-1-Package.resolved": {
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+      "bytes": 1198
+    },
+    "resolution.json": {
+      "sha256": "c889c8e879c2470468b53ef5fc05365b9220338fc512c6ce30d04802addcc20d",
+      "bytes": 3076
+    },
+    "resolve.log": {
+      "sha256": "0ac1f46ad889556fbd67fd4704e55a8c8e69a70daf2ecb954dc6611380f3beb6",
+      "bytes": 2006
+    },
+    "schemes.json": {
+      "sha256": "cbf09fd020fdcb28960abbb0b2e6c86893770d1cbbce25599d5d4a8128f24955",
+      "bytes": 260
+    },
+    "summary.json": {
+      "sha256": "250f1769abaf4603af56185902af8c45c42be918092ebc16a82876b0accbbf09",
+      "bytes": 29051
+    },
+    "tested-source-commit.txt": {
+      "sha256": "adab4532e9f40678e5c440ea5a2345ecf3976cb31be17786edd6c2d0af1ec74e",
+      "bytes": 41
+    },
+    "tested-source-sha256.json": {
+      "sha256": "77724de4045a4b97b54eb8f82b83625a7f97c3ddeedd34012105054b66bb4fcb",
+      "bytes": 64194
+    },
+    "tested-source.tar": {
+      "sha256": "9c8d47a5542c36f2b2fba7c0167b3a1e2bf2a99182d06bc6601802621b0e3ba6",
+      "bytes": 9799680
+    },
+    "toolchain.txt": {
+      "sha256": "a8bed08466a1b4e0726454d47e526136a83414cec62e16420bd263fcb88ae584",
+      "bytes": 211
+    },
+    "validator-provenance.json": {
+      "sha256": "6400dc330c8fa1e7ceceee35bb01186596b780fff3d8f77e8d7b9c63b13aae5b",
+      "bytes": 33190
+    },
+    "validator-source-commit.txt": {
+      "sha256": "f50bb7f812f1a56421e45a5b13ed531574792b33a296d52261a25c4e9c5716a6",
+      "bytes": 41
+    }
+  }
+}

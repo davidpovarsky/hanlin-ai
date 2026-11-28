@@ -1,0 +1,276 @@
+{
+  "appID": "script-ec17057f5a2c82aaed6ab6ca",
+  "entity": {
+    "displayName": "Host Services failure",
+    "id": "hostServicesFail",
+    "identity": {
+      "entrypointID": "hostServicesFail",
+      "generation": 11,
+      "installedPackageID": "install-script-ec17057f5a2c82aaed6ab6ca",
+      "packageID": "script-ec17057f5a2c82aaed6ab6ca",
+      "variantID": "default"
+    }
+  },
+  "package": {
+    "enabled": true,
+    "entrypoints": [
+      {
+        "artifactDigest": "86b92de5a95ff5bb38b21f44e68da44d3cb7c86aff5e696afc918a053c69b012",
+        "compatibility": "partial",
+        "id": "app",
+        "kind": "app",
+        "requiredCapabilities": [
+          {
+            "capabilityID": "inter-app.share",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "storage",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          }
+        ],
+        "runtimePolicyID": "foreground-app-v1",
+        "runtimeProfile": "hanlin-expo",
+        "sourcePath": "source/bundle.js",
+        "supportedContexts": [
+          "mainApplication"
+        ]
+      },
+      {
+        "artifactDigest": "86b92de5a95ff5bb38b21f44e68da44d3cb7c86aff5e696afc918a053c69b012",
+        "compatibility": "partial",
+        "exportedSymbol": "hostServicesEcho",
+        "id": "hostServicesEcho",
+        "kind": "appIntent",
+        "requiredCapabilities": [
+          {
+            "capabilityID": "inter-app.share",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "storage",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          }
+        ],
+        "runtimePolicyID": "prepared-foreground-action-v1",
+        "runtimeProfile": "hanlin-expo",
+        "sourcePath": "source/bundle.js",
+        "supportedContexts": [
+          "appIntent",
+          "mainApplication"
+        ]
+      },
+      {
+        "artifactDigest": "86b92de5a95ff5bb38b21f44e68da44d3cb7c86aff5e696afc918a053c69b012",
+        "compatibility": "partial",
+        "exportedSymbol": "hostServicesFail",
+        "id": "hostServicesFail",
+        "kind": "appIntent",
+        "requiredCapabilities": [
+          {
+            "capabilityID": "inter-app.share",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "storage",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          }
+        ],
+        "runtimePolicyID": "prepared-foreground-action-v1",
+        "runtimeProfile": "hanlin-expo",
+        "sourcePath": "source/bundle.js",
+        "supportedContexts": [
+          "mainApplication",
+          "appIntent"
+        ]
+      },
+      {
+        "artifactDigest": "86b92de5a95ff5bb38b21f44e68da44d3cb7c86aff5e696afc918a053c69b012",
+        "compatibility": "partial",
+        "exportedSymbol": "hostServicesPublishWidget",
+        "id": "hostServicesPublishWidget",
+        "kind": "appIntent",
+        "requiredCapabilities": [
+          {
+            "capabilityID": "inter-app.share",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "storage",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          }
+        ],
+        "runtimePolicyID": "prepared-foreground-action-v1",
+        "runtimeProfile": "hanlin-expo",
+        "sourcePath": "source/bundle.js",
+        "supportedContexts": [
+          "appIntent",
+          "mainApplication"
+        ]
+      },
+      {
+        "artifactDigest": "86b92de5a95ff5bb38b21f44e68da44d3cb7c86aff5e696afc918a053c69b012",
+        "compatibility": "partial",
+        "id": "widget",
+        "kind": "widget",
+        "requiredCapabilities": [
+          {
+            "capabilityID": "inter-app.share",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "storage",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          }
+        ],
+        "runtimePolicyID": "widget-v1",
+        "runtimeProfile": "hanlin-expo",
+        "sourcePath": "widgets/widget.json",
+        "supportedContexts": [
+          "widget"
+        ],
+        "widgetEngine": "expo"
+      }
+    ],
+    "grantedCapabilities": [
+      "inter-app.share",
+      "storage"
+    ],
+    "manifest": {
+      "actions": [
+        {
+          "capability": "inter-app.share",
+          "handler": "bundle.js",
+          "id": "hostServicesEcho",
+          "title": "Host Services roundtrip"
+        },
+        {
+          "capability": "inter-app.share",
+          "handler": "bundle.js",
+          "id": "hostServicesFail",
+          "title": "Host Services failure"
+        },
+        {
+          "capability": "inter-app.share",
+          "handler": "bundle.js",
+          "id": "hostServicesPublishWidget",
+          "title": "Host Services prepared widget publication"
+        }
+      ],
+      "author": {
+        "name": "Hanlin Expo Runtime Team"
+      },
+      "capabilities": [
+        "storage",
+        "inter-app.share"
+      ],
+      "color": "#4A90E2",
+      "contributors": [],
+      "description": "Dynamic Expo MiniApp Variant A rendering Apple SwiftUI.",
+      "entry": "bundle.js",
+      "entrypoints": [
+        {
+          "exportedSymbol": "hostServicesEcho",
+          "id": "hostServicesEcho",
+          "kind": "appIntent",
+          "sourcePath": "bundle.js"
+        },
+        {
+          "exportedSymbol": "hostServicesFail",
+          "id": "hostServicesFail",
+          "kind": "appIntent",
+          "sourcePath": "bundle.js"
+        },
+        {
+          "exportedSymbol": "hostServicesPublishWidget",
+          "id": "hostServicesPublishWidget",
+          "kind": "appIntent",
+          "sourcePath": "bundle.js"
+        }
+      ],
+      "hanlinRuntime": "hanlin-expo",
+      "hanlinWidget": {
+        "abiVersion": 1,
+        "actions": [],
+        "families": [
+          "systemSmall",
+          "systemMedium",
+          "systemLarge",
+          "systemExtraLarge"
+        ],
+        "sourceFormat": "tsx"
+      },
+      "icon": "sparkles",
+      "intentInputTypes": [],
+      "localizedDescriptions": {},
+      "localizedNames": {},
+      "name": "Expo SwiftUI Probe A",
+      "runInApp": false,
+      "version": "1.0.0",
+      "widgetEngine": "expo"
+    },
+    "record": {
+      "activeGeneration": 11,
+      "artifactDigest": "86b92de5a95ff5bb38b21f44e68da44d3cb7c86aff5e696afc918a053c69b012",
+      "installedAt": 1795650398863.978,
+      "installedPackageID": "install-script-ec17057f5a2c82aaed6ab6ca",
+      "packageID": "script-ec17057f5a2c82aaed6ab6ca",
+      "schemaVersion": 1,
+      "sourceDigest": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "updatedAt": 1795653334365.617,
+      "version": "1.0.0"
+    }
+  },
+  "registrySHA256": "344f7951e14b774edf909c76a09b6c95772c49b3ed03641440bdbb1eaf59c6cb",
+  "revisionSHA256": "f3abb62f7fa36ca322b6f377a0aa2bd5e1c77b1a9ea90726b05617a6860da76f"
+}

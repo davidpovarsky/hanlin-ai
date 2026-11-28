@@ -1,0 +1,38 @@
+{
+  "candidateBase": "da07904e482b5a1e2ea954dea32a6e6522c0ae5f",
+  "changedPaths": [
+    "Scripts/ProductSplit/observe_shortcut_native_lists.py",
+    "Scripts/CI/Tests/test_shortcut_native_lists.py"
+  ],
+  "sourceOnly": true,
+  "sdkInputPathAuthority": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/full-icu-original-hosted-live-d4d1b5e1-r2/completed-host-sdk-qualification-r1/actual396-git-binding.json",
+    "bytes": 160182,
+    "sha256": "89e5ca3fd3302ba8322c747cf30467c6a9e87c3d21755483f52bc9872f87430e"
+  },
+  "sdkInputPathCount": 396,
+  "sdkInputIntersection": [],
+  "hostInputPathAuthority": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/sdk13-9ee23af8-pass-r2/reconciliation/host99-live-inputs.json",
+    "bytes": 20571,
+    "sha256": "460b6ebe9de738d033f841be7f99d992f5293e9739c208bea2eadbf057847889"
+  },
+  "hostInputPathCount": 99,
+  "hostInputIntersection": [],
+  "boundary": "Exact changed-path membership only. No new SDK, Host, product, platform, dependency or native qualification is inferred.",
+  "consumers": [
+    "NativeScript four saved native-list cases",
+    "Expo four saved native-list cases",
+    "genuine old-to-current migration observer and upgrade identity revalidation"
+  ],
+  "unchanged": [
+    "native fixtures and archives",
+    "all existing Swift/UI methods/assertions",
+    "all existing reader controls and fixture helpers",
+    "original producer and installed catalog checks",
+    "engine_contract archive-relative handler values",
+    "360-second list cases and original2100 command/210-minute route",
+    "migration source and original timing"
+  ],
+  "nativeAcceptance": "NOT_RUN"
+}

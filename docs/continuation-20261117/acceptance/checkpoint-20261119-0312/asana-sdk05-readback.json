@@ -1,0 +1,34 @@
+{
+  "posted": {
+    "gid": "1220692480048659",
+    "created_at": "2026-11-19T03:04:17.303Z",
+    "is_pinned": false,
+    "text": "[ChatGPT | DEV/QA] חיבור DATA ports למסלולי המוצר המקוריים פורסם — 19.11.2026\nקומיט1480b347f519073b384cd86f7efc506e9c2d1aab מחבר את APIManager המקורי ל-CredentialResolver ול-MemoryStore, ואת AuthorizedAttachmentRegistry המקורי ל-AttachmentStore. לא נוסף מאגר נתונים מקביל. שליפת מפתח/זיכרון קשורה לבקשה המקורית ולתקופת התוקף שלה; ביטול ושינוי הקשר מבטלים אותה, ולאחר await נבדקת הבעלות מחדש.\nשליפת זיכרונות אוטומטית בשני בוני ההנחיות וכלי הזיכרון מכבדים כעת גם useMemory וגם useCrossMemory. השורות הישנות נשמרות; replace אינו מוחק זיכרונות חסרי שיוך ומחזיר שגיאה מפורשת. מסלולי append/update המקוריים נשארו בעלי הכתיבה.\nתוקן פער אמיתי בתמונות: ה-SDK מאמת כעת את מזהה הבקשה המקורית שבו נרשמה התמונה, בתוך ה-HostSession האמיתי, במקום מזהה סבב האבחון. נבדקים namespace/session/MIME/גודל/ביטול; הנתונים אינם מועתקים למאגר חדש.\nנוספו5 בדיקות Native משמעותיות;7קובצי Swift ומפת הניתוב עברו בדיקה מקומית. הריצה החדשה כוללת את כל23 המקרים הקודמים, את כל חבילת SessionOwner המורחבת, בדיקות Registry/SDK/MCP ואת12 בדיקות AppSplitOrigin:\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44448313143\nמפת ה-CI הורדה ואומתה מול SHA ו-selectors. הריצה הישנה44443891179 הוחלפה רק לאחר אימות runner0/queued וכל היקפה נשמר.\nהמשימה פתוחה: תוצאת Apple עדיין ממתינה; שמירת APIKeys הישנה לא הוסבה ל-Keychain, לא הומצא שיוך חשבון לשורות MemoryArchive, ו-CloudKit/logout/erase/חתימה/מכשיר עדיין דורשים השלמה. ראיות: docs/continuation-20261117/acceptance/sdk05-typed-data-ports-20261119.",
+    "html_text": "<body>[ChatGPT | DEV/QA] חיבור DATA ports למסלולי המוצר המקוריים פורסם — 19.11.2026\nקומיט1480b347f519073b384cd86f7efc506e9c2d1aab מחבר את APIManager המקורי ל-CredentialResolver ול-MemoryStore, ואת AuthorizedAttachmentRegistry המקורי ל-AttachmentStore. לא נוסף מאגר נתונים מקביל. שליפת מפתח/זיכרון קשורה לבקשה המקורית ולתקופת התוקף שלה; ביטול ושינוי הקשר מבטלים אותה, ולאחר await נבדקת הבעלות מחדש.\nשליפת זיכרונות אוטומטית בשני בוני ההנחיות וכלי הזיכרון מכבדים כעת גם useMemory וגם useCrossMemory. השורות הישנות נשמרות; replace אינו מוחק זיכרונות חסרי שיוך ומחזיר שגיאה מפורשת. מסלולי append/update המקוריים נשארו בעלי הכתיבה.\nתוקן פער אמיתי בתמונות: ה-SDK מאמת כעת את מזהה הבקשה המקורית שבו נרשמה התמונה, בתוך ה-HostSession האמיתי, במקום מזהה סבב האבחון. נבדקים namespace/session/MIME/גודל/ביטול; הנתונים אינם מועתקים למאגר חדש.\nנוספו5 בדיקות Native משמעותיות;7קובצי Swift ומפת הניתוב עברו בדיקה מקומית. הריצה החדשה כוללת את כל23 המקרים הקודמים, את כל חבילת SessionOwner המורחבת, בדיקות Registry/SDK/MCP ואת12 בדיקות AppSplitOrigin:\n<a href=\"https://github.com/davidpovarsky/hanlin-ai/actions/runs/44448313143\">https://github.com/davidpovarsky/hanlin-ai/actions/runs/44448313143</a>\nמפת ה-CI הורדה ואומתה מול SHA ו-selectors. הריצה הישנה44443891179 הוחלפה רק לאחר אימות runner0/queued וכל היקפה נשמר.\nהמשימה פתוחה: תוצאת Apple עדיין ממתינה; שמירת APIKeys הישנה לא הוסבה ל-Keychain, לא הומצא שיוך חשבון לשורות MemoryArchive, ו-CloudKit/logout/erase/חתימה/מכשיר עדיין דורשים השלמה. ראיות: docs/continuation-20261117/acceptance/sdk05-typed-data-ports-20261119.</body>",
+    "created_by": {
+      "gid": "1219597879016933",
+      "resource_type": "user",
+      "name": "דוד פוברסקי"
+    }
+  },
+  "readback": {
+    "gid": "1220542199999956",
+    "completed": false,
+    "name": "[HANLIN-SDK-05][P0][DATA/SEC] ConversationStore, Keychain, App Group, CloudKit, בידוד והרשאות",
+    "comments": [
+      {
+        "gid": "1220692480048659",
+        "created_at": "2026-11-19T03:04:17.303Z",
+        "created_by": {
+          "gid": "1219597879016933",
+          "name": "דוד פוברסקי",
+          "resource_type": "user"
+        },
+        "resource_type": "story",
+        "text": "[ChatGPT | DEV/QA] חיבור DATA ports למסלולי המוצר המקוריים פורסם — 19.11.2026\nקומיט1480b347f519073b384cd86f7efc506e9c2d1aab מחבר את APIManager המקורי ל-CredentialResolver ול-MemoryStore, ואת AuthorizedAttachmentRegistry המקורי ל-AttachmentStore. לא נוסף מאגר נתונים מקביל. שליפת מפתח/זיכרון קשורה לבקשה המקורית ולתקופת התוקף שלה; ביטול ושינוי הקשר מבטלים אותה, ולאחר await נבדקת הבעלות מחדש.\nשליפת זיכרונות אוטומטית בשני בוני ההנחיות וכלי הזיכרון מכבדים כעת גם useMemory וגם useCrossMemory. השורות הישנות נשמרות; replace אינו מוחק זיכרונות חסרי שיוך ומחזיר שגיאה מפורשת. מסלולי append/update המקוריים נשארו בעלי הכתיבה.\nתוקן פער אמיתי בתמונות: ה-SDK מאמת כעת את מזהה הבקשה המקורית שבו נרשמה התמונה, בתוך ה-HostSession האמיתי, במקום מזהה סבב האבחון. נבדקים namespace/session/MIME/גודל/ביטול; הנתונים אינם מועתקים למאגר חדש.\nנוספו5 בדיקות Native משמעותיות;7קובצי Swift ומפת הניתוב עברו בדיקה מקומית. הריצה החדשה כוללת את כל23 המקרים הקודמים, את כל חבילת SessionOwner המורחבת, בדיקות Registry/SDK/MCP ואת12 בדיקות AppSplitOrigin:\nhttps://github.com/davidpovarsky/hanlin-ai/actions/runs/44448313143\nמפת ה-CI הורדה ואומתה מול SHA ו-selectors. הריצה הישנה44443891179 הוחלפה רק לאחר אימות runner0/queued וכל היקפה נשמר.\nהמשימה פתוחה: תוצאת Apple עדיין ממתינה; שמירת APIKeys הישנה לא הוסבה ל-Keychain, לא הומצא שיוך חשבון לשורות MemoryArchive, ו-CloudKit/logout/erase/חתימה/מכשיר עדיין דורשים השלמה. ראיות: docs/continuation-20261117/acceptance/sdk05-typed-data-ports-20261119.",
+        "type": "comment",
+        "resource_subtype": "comment_added"
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "ref": "codex/hanlin-two-wave-integration-20261126",
+  "inputs": {
+    "target_validation_group": "project_packaging",
+    "compare_base_sha": "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+    "testflight_upload": "false",
+    "phase1_validation_only": "false",
+    "fast_validation_only": "false",
+    "simulator_e2e_only": "false",
+    "full_validation": "false",
+    "force_clean_build": "false"
+  }
+}

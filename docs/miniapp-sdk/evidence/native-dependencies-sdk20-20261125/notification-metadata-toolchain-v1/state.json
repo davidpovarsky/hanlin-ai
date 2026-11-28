@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "status": "INSTALLED",
+  "startedAt": "2026-11-25T22:05:07.315082+00:00",
+  "argv": [
+    "/opt/homebrew/bin/brew",
+    "install",
+    "cmake"
+  ],
+  "environmentChanges": {
+    "HOMEBREW_NO_AUTO_UPDATE": "1",
+    "HOMEBREW_NO_INSTALL_CLEANUP": "1",
+    "HOMEBREW_NO_ANALYTICS": "1"
+  },
+  "sourceErrors": [],
+  "cleanupErrors": [],
+  "commandPID": 80800,
+  "exitCode": 0,
+  "cmake": {
+    "path": "/opt/homebrew/bin/cmake",
+    "resolvedPath": "/opt/homebrew/Cellar/cmake/4.5.1/bin/cmake",
+    "bytes": 15166664,
+    "sha256": "95d520b3b99b4ba06f1bb0d2cefe1dd6ff177b5f6bddd0ee221feb46f7ee843b",
+    "version": "cmake version 4.5.1\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake).\n"
+  },
+  "finishedAt": "2026-11-25T22:05:14.662384+00:00",
+  "actualElapsedSeconds": 7.347363291992224,
+  "log": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-metadata-toolchain-v1/brew-install-cmake.log",
+    "bytes": 423,
+    "sha256": "ffc0d0a091cc4738ccf069c98ec903b10164573c0f6bc0f0c57cd9f4f8c3bb06"
+  }
+}

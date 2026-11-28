@@ -1,0 +1,11 @@
+✔ manifest declarations/schema match the installed original source and provenance (18.130504ms)
+✔ installed network declarations preserve the generated wildcard and reject malformed hosts (31.596822ms)
+✔ changed original semantic rules cannot silently publish a stale authoring validator (20.330957ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 432.316923

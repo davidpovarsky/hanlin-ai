@@ -1,0 +1,69 @@
+{
+  "schema": "hanlin.shortcut-private-path.source-validation.v1",
+  "base": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+  "files": [
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_concurrency.py",
+      "preimageSHA256": "794e514726d39b836f65c9c2bce3fea74c17b09076137480b61212a6bb5c3f8a",
+      "candidateSHA256": "ade0b57d32fc718610017d845cfd27ea8762afffd5fa6827a3653e34397897bd"
+    },
+    {
+      "path": "Scripts/ProductSplit/Tests/test_shortcut_concurrency_observer.py",
+      "preimageSHA256": "69ff828b1f87da80bb406d74501ded01e17572f3c9f96039d6fd2f257565c4d2",
+      "candidateSHA256": "654730b33fc81195984d35dd3456eb7a8df669a55e91a7714fa5d56bc41bed7e"
+    }
+  ],
+  "sourceWholeFileInverse": "Remove exactly helper-addition.py and reverse exactly four substitutions. Byte-identical original.",
+  "testsWholeFileInverse": "Remove exactly test-addition.py. Byte-identical original.",
+  "originalFunctions": 20,
+  "changedOriginalFunctions": [
+    "collect",
+    "owner_completion",
+    "observe"
+  ],
+  "newFunction": "same_private_path",
+  "unchangedOriginalFunctions": [
+    "number",
+    "valid_uuid",
+    "native_uuid",
+    "validate_request",
+    "contract",
+    "invocation_map",
+    "validate_launches",
+    "journal_documents",
+    "live_holding",
+    "overlap",
+    "require_cancelled_handler_not_completed",
+    "terminal",
+    "current_identity",
+    "same_identity",
+    "verify_roots",
+    "write_response",
+    "main"
+  ],
+  "originalTestMethods": 17,
+  "originalTestASTsExact": true,
+  "originalTestHelperASTsExact": true,
+  "newTestMethods": [
+    "test_path_equivalence_rejects_escapes_and_foreign_owner_or_handler",
+    "test_repeated_separators_preserve_actual_owner_and_headless_paths"
+  ],
+  "allOriginalRequireMessagesExact": true,
+  "originalRequireCount": 89,
+  "allOriginalTimingHoldAndLeaseLinesExact": true,
+  "rawRequestAndSampleValuesPreserved": true,
+  "noAdditionalOSReadOrStateWrite": true,
+  "diffCheck": "PASS",
+  "patchSHA256": "31a1eb8dff8dd16c75c97a77c988bb7ac124b54a9885b067d257d46dfa822ca0",
+  "actualPortable": {
+    "methods": 19,
+    "passed": 19,
+    "failed": 0,
+    "skipped": 0,
+    "exitCode": 0,
+    "reportedSeconds": 0.154,
+    "receiptSHA256": "503e804faadfe9c0d2927c08019c1ebb23eacf1285c64e5149879ccb03000805",
+    "logSHA256": "8f53e28cc255c2dc11ffc2ddec66d827bdab051c8c69b6654e47e591664b5967"
+  },
+  "native": "NOT_RUN"
+}

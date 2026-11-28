@@ -1,0 +1,6 @@
+test_sparse_bootstrap_never_materializes_unselected_application_payload (test_install.SDKInstallTests.test_sparse_bootstrap_never_materializes_unselected_application_payload) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.527s
+
+OK

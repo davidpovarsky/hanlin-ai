@@ -1,0 +1,42 @@
+[
+  {
+    "name": "reasoning-canvas-original-navigation",
+    "id": "44428104345",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428104345",
+    "head_sha": "d6cb7d0b704abf11d0296e77eea246700c390f5c",
+    "status": "queued",
+    "conclusion": null,
+    "inputs": {
+      "target_validation_group": "exact_test_selector",
+      "exact_test_selector": "AI_HLYTests/ClassicChatRestorationTests/agentReasoningNeverLeaksRawCoTToViews(),AI_HLYTests/ClassicChatRestorationTests/expandedReasoningUsesApprovedSummaryProjection(),AI_HLYUITests/AgentRuntimeConversationUITests/testUI04CollapsedProgressAndInspectorWithoutRawCoT,AI_HLYUITests/HanlinCanvasRuntimeUITests/testOriginalCanvasRunsEmbeddedPythonAndRetainsSourceAfterRelaunch,AI_HLYUITests/AgentRuntimeConversationUITests/testUI01UnifiedHistoryPinSearchSwitchDraftPreservation,AI_HLYUITests/AgentRuntimeConversationUITests/testNativePartialSelectionSaveAndOriginalLongPressPreview",
+      "fast_validation_only": "false",
+      "simulator_e2e_only": "false",
+      "compare_base_sha": "54098fc7f692984df65484f2d9deb12f3aeadfc2",
+      "runtime_bundle_artifact_run_id": "42926628418",
+      "runtime_publish_release": "false",
+      "testflight_upload": "false",
+      "full_validation": "false"
+    },
+    "recorded_at": "2026-11-19T00:19:44.624451+00:00"
+  },
+  {
+    "name": "live-gemini-original-python-cold-reopen",
+    "id": "44428114202",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/44428114202",
+    "head_sha": "d6cb7d0b704abf11d0296e77eea246700c390f5c",
+    "status": "queued",
+    "conclusion": null,
+    "inputs": {
+      "target_validation_group": "exact_test_selector",
+      "exact_test_selector": "AI_HLYUITests/AgentRuntimeConversationUITests/testLiveGeminiPythonConsentAndColdReopen",
+      "fast_validation_only": "false",
+      "simulator_e2e_only": "false",
+      "compare_base_sha": "54098fc7f692984df65484f2d9deb12f3aeadfc2",
+      "runtime_bundle_artifact_run_id": "42926628418",
+      "runtime_publish_release": "false",
+      "testflight_upload": "false",
+      "full_validation": "false"
+    },
+    "recorded_at": "2026-11-19T00:19:49.003568+00:00"
+  }
+]

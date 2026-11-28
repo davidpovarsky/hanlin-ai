@@ -1,0 +1,28 @@
+✔ one exact protected-base current-head candidate is selected (2.3637ms)
+✔ generic base-branch audit cannot select a candidate (0.227ms)
+✔ a moved candidate does not inherit the old run (0.3297ms)
+✔ foreign repository run is rejected (0.5317ms)
+✔ non-dispatch and noncanonical run paths are rejected (0.3223ms)
+✔ ambiguous and incomplete pull inventories are rejected (0.3652ms)
+✔ draft and unowned candidate branches cannot become eligible (0.2942ms)
+✔ failed or skipped source run cannot use an otherwise positive receipt (0.5331ms)
+✔ green audit without schema2 native-origin accounting is rejected (0.497ms)
+✔ legacy schema1 proof is never upgraded (0.3854ms)
+✔ base and source receipt drift are rejected (0.3897ms)
+✔ unknown or failed source validation cannot qualify (0.2399ms)
+✔ strict source and proof app bindings are both required (0.8077ms)
+✔ an additional required failed gate prevents automatic merge (0.2212ms)
+✔ pending, stale, skipped and ambiguous server gates prevent automatic merge (1.8186ms)
+✔ only activation-disabled can remain after all gates pass (0.3411ms)
+✔ closed or draft proposals cannot activate automatic merge (0.1837ms)
+✔ only the two explicitly protected acceptance bases are recognized (0.2455ms)
+✔ v2 selects only its own exact candidate and never inherits the original base (0.2817ms)
+✔ a matching PR cannot authorize a main or unlisted target (0.5258ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 139.0324

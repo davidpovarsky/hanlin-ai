@@ -1,0 +1,43 @@
+diff --git a/AI_HLYTests/HanlinNativePresentationTests.swift b/AI_HLYTests/HanlinNativePresentationTests.swift
+index 498aef0e5..6b019d695 100644
+--- a/AI_HLYTests/HanlinNativePresentationTests.swift
++++ b/AI_HLYTests/HanlinNativePresentationTests.swift
+@@ -228,11 +228,11 @@ final class HanlinNativePresentationTests: XCTestCase {
+     private func text(in prepared: HanlinPreparedWidget) -> [String] {
+         guard case let .scriptwidget(node, _) = prepared else { return [] }
+         func collect(_ node: HanlinScriptWidgetPreparedNode) -> [String] {
+-            node.children.flatMap { child in
++            node.children.flatMap { child -> [String] in
+                 switch child {
+-                case let .element(element): collect(element)
+-                case let .value(.string(value)): [value]
+-                default: []
++                case let .element(element): return collect(element)
++                case let .value(.string(value)): return [value]
++                default: return []
+                 }
+             }
+         }
+diff --git a/AI_HLYTests/HanlinOriginalExpoWidgetTests.swift b/AI_HLYTests/HanlinOriginalExpoWidgetTests.swift
+index e27b50ad2..6a9f18ab2 100644
+--- a/AI_HLYTests/HanlinOriginalExpoWidgetTests.swift
++++ b/AI_HLYTests/HanlinOriginalExpoWidgetTests.swift
+@@ -13,11 +13,15 @@ import XCTest
+ final class HanlinOriginalExpoWidgetTests: XCTestCase {
+     func testOriginalWidgetRegistrationTimelineAndPickerKeepProductAndInstallationIdentity() async throws {
+         let group = try XCTUnwrap(Bundle.main.object(forInfoDictionaryKey: "ExpoWidgetsAppGroupIdentifier") as? String)
+-        XCTAssertEqual(WidgetsStorage.appGroupIdentifier, group)
+-        XCTAssertTrue(HanlinExpoWidgetsIntegration.isOriginalRuntimeAvailable,
+-            "The original Expo Widgets JavaScript runtime must be embedded with its native module.")
+         let defaults = try XCTUnwrap(UserDefaults(suiteName: group))
+         let token = UUID().uuidString.lowercased()
++        let groupProbeKey = "__hanlin_original_expo_group_probe." + token
++        defer { defaults.removeObject(forKey: groupProbeKey) }
++        defaults.set(group, forKey: groupProbeKey)
++        XCTAssertEqual(WidgetsStorage.getString(forKey: groupProbeKey), group,
++            "The original Expo widget storage must reach the declared app-group suite.")
++        XCTAssertTrue(HanlinExpoWidgetsIntegration.isOriginalRuntimeAvailable,
++            "The original Expo Widgets JavaScript runtime must be embedded with its native module.")
+         let packageID = "test.original-expo." + token
+         let firstInstallation = "installed.expo-first." + token
+         let secondInstallation = "installed.expo-second." + token

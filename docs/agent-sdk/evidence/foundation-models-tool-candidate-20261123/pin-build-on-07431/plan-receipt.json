@@ -1,0 +1,146 @@
+{
+  "version": 1,
+  "utc": "2026-11-24T00:55:40.823668+00:00",
+  "status": "FROZEN_PREPARATION_ONLY_NOT_DISPATCHED",
+  "source_pin_commit": "0a424ef62a7e981b37a9ce5980358a449b3b9249",
+  "ci_commit": "25a4ee7cfacefebb8a3bbd5ecaca304a99093295",
+  "producer": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "reference_manifest_sha256": "658be86c8ca893b5b9fab37ab16df1e632304fdd82d2d7eb4369abe5ebfd77f0",
+  "original_native15": {
+    "run_id": 45292176348,
+    "run_attempt": 1,
+    "source": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+    "artifact_id": 14877495539,
+    "zip_sha256": "69a9a0e2a9f7f6671715c09160198bb1c01b85b165d630ce9ced402d9a1ceb83",
+    "actual_cases": {
+      "PASS": 15,
+      "FAIL": 0,
+      "NOT_RUN": 0
+    },
+    "actual_ios_exit": 0,
+    "original_strict_status": "BLOCKED_POST_BUILD_LOCK_CHANGED",
+    "evidence_commit": "77c013abb4c3ee2cf0af5641c5b71382e94fa5ce"
+  },
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "request": {
+    "ref": "codex/hanlin-sdk02-stop-continuation-20261123",
+    "inputs": {
+      "composer_validation_only": "false",
+      "nativescript_metadata_validation_only": "false",
+      "runtime_job_foundation_only": "false",
+      "markdown_renderer_validation_only": "false",
+      "code_fence_webkit_validation_only": "false",
+      "diagnostics_capture_validation_only": "false",
+      "testflight_upload": "false",
+      "runtime_bundle_only": "false",
+      "runtime_publish_release": "false",
+      "phase1_validation_only": "false",
+      "fast_validation_only": "false",
+      "nativescript_poc_only": "false",
+      "force_clean_build": "false",
+      "measure_warm_rebuild": "false",
+      "simulator_e2e_only": "false",
+      "full_validation": "false",
+      "target_validation_group": "agent_sdk_exact_source_proof",
+      "exact_test_selector": "HanlinNativeToolPinBuildRecheck"
+    }
+  },
+  "execution_scope": {
+    "current_test_invocations": 0,
+    "current_simulator_launches": 0,
+    "current_baseline_invocations": 0,
+    "current_producer_suite_invocations": 0,
+    "current_ios_agent_core_build": "REQUIRED_ONE",
+    "native15": "REUSE_ONLY_AFTER_FROZEN_ORIGINAL_AND_CURRENT_SOURCE_GUARDS",
+    "prior21": "SEPARATE_REUSE_AFTER_SAME_GUARDS",
+    "historical_e7_baseline": "HISTORICAL_REFERENCE_ONLY",
+    "null_current_test_process_exits": [
+      "core_test_exit",
+      "sdk_test_exit",
+      "delta_test_exit",
+      "baseline_core_exit",
+      "native_core_test_exit",
+      "native_sdk_test_exit"
+    ]
+  },
+  "raw_lock_admission": {
+    "source_constraint": "ZIPFoundation exact0.9.19",
+    "intended_zip_revision": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
+    "source_locks": "UNCHANGED",
+    "before_build": "Actual CLI and explicit Xcode resolution; retain generated originHash and all raw locks; every declared pin must match intended original0.9.19 map",
+    "current_build": "Automatic package resolution disabled; both actual post-build raw locks must be byte-identical to captured pre-build locks",
+    "producer_checkouts": "Core CLI, SDK CLI and actual Xcode SourcePackages clean07431 full production source hashes before and after build",
+    "graph": "Current30-target iOS graph must equal original authenticated30-target graph"
+  },
+  "reuse_qualification": {
+    "current_package_files": 404,
+    "allowed_package_difference_count": 1,
+    "allowed_package_difference": "Packages/HanlinPlatform/Package.swift: .upToNextMinor(from:0.9.19) becomes exact0.9.19",
+    "all_swift_source_resources_and_test_bodies": "BYTE_IDENTICAL",
+    "original_graphs": {
+      "Core": {
+        "full": 73,
+        "focused": 22,
+        "ZIP_in_focused": false
+      },
+      "SDK": {
+        "full": 40,
+        "focused": 32,
+        "ZIP_in_full": false
+      },
+      "iOS": {
+        "full": 30,
+        "focused": 30,
+        "ZIP_in_full": false
+      }
+    },
+    "original_resolved_ZIP": {
+      "Core": "0.9.19",
+      "SDK": "0.9.21",
+      "iOS": "0.9.21"
+    },
+    "original_summary": "PRESERVED_BLOCKED; reconstructed unchanged verifier must reproduce exact original result",
+    "reused_native_cases": 15,
+    "reused_prior_product_cases": 21,
+    "historical_baseline_cases": 12,
+    "historical_baseline_current_equivalence": false
+  },
+  "local_validation": {
+    "new_local_report_controls": 4,
+    "status": "PASS",
+    "duration_seconds": 1.904,
+    "apple_execution": false,
+    "accepted_old_controls_or_cases_reexecuted": 0,
+    "controls": [
+      "Complete15+21 source attribution and zero current tests",
+      "Real ZIP and origin-only post-build drift rejected",
+      "Changed source/original case/producer rejected",
+      "Fake current process, replay, absent no-update flag and altered graph rejected"
+    ]
+  },
+  "source_sha256": {
+    "Packages/HanlinPlatform/Package.swift": "14938dfa34223bab91ff00f4f7e4d1e7563418f0ec00153413f9ded1d073af12",
+    "Packages/HanlinAgentSDK/Package.swift": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8",
+    "Packages/HanlinPlatform/Package.resolved": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
+    "Packages/HanlinAgentSDK/Package.resolved": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83",
+    "Scripts/CI/IntegrationValidation/run_agent_sdk.sh": "48a88ed274a00552d4dbaae5411e046fd8952a7b3e0075479243ab74f972f4b7",
+    "Scripts/CI/IntegrationValidation/run_native_tool_pin_build.py": "1ac7c3d7b21aa972ce6482fc2b34e4d2cf9e169832df90186a1ae2217176981e",
+    "Scripts/CI/IntegrationValidation/verify_native_tool_pin_build.py": "910f10cda646baa74c2c0840c621e4fff3fb0faf9c47218b22c4bf3e7909d3a0",
+    "Scripts/CI/Tests/test_native_tool_pin_build_report.py": "6072bd10bab8ada3c3eb410f111171c4fb3cb2af699244790e84593660588e0b",
+    "Scripts/CI/IntegrationValidation/run_stop_continuation_delta.py": "928388954c0ff0c673c82bd80647c5e81149756e3c9a0f67871588256a114d87",
+    "Scripts/CI/IntegrationValidation/verify_native_tool_cancellation_recheck.py": "b791865d45bd09fa01c974080486fd6131df3410bc213f3c9a9c506a172a886c",
+    "Scripts/CI/IntegrationValidation/verify_native_tool_candidate.py": "3543dcc8bb30ac050e8203aa4d05cfdc39f7d175308c336a66794482a25c81da",
+    "Scripts/CI/IntegrationValidation/verify_stop_continuation_delta.py": "74f5f2e4beb3b96bb11de1842be661586cffa51e04f9730919d3014535f52f75",
+    "Scripts/CI/IntegrationValidation/xcresult_to_xunit.py": "41720f0fa414875f05a3b96e9364e6659c230f96a4d5cbb708fad801eb3b3afb",
+    "Scripts/CI/select_stable_xcode.py": "531237772eeeb10888359064302a5980f42ad47cad135e5bb0b544afe289f05f",
+    "Scripts/CI/verify_exact_json_vendor.py": "67d90e3bcb9660c719c89f4b54ee62d56bb11aeaae6650d5996c10bc4179165b",
+    ".github/workflows/build-ios26-unsigned-ipa.yml": "afeed29d2451d17f835230166cb2da894d574aa4474ca296b770ebb68e1f3d8c",
+    "Scripts/CI/Tests/Fixtures/native-pin-build-07431/manifest-after.swift": "14938dfa34223bab91ff00f4f7e4d1e7563418f0ec00153413f9ded1d073af12",
+    "Scripts/CI/Tests/Fixtures/native-pin-build-07431/manifest-before.swift": "a22b7948988b776de98f51d6a9c493b9b2f9db62deae097f31ced5971b842665",
+    "Scripts/CI/Tests/Fixtures/native-pin-build-07431/reference.json": "658be86c8ca893b5b9fab37ab16df1e632304fdd82d2d7eb4369abe5ebfd77f0"
+  },
+  "current_ios_status": "NOT_RUN",
+  "shipping_gates": "ALL_FOUR_CLOSED",
+  "system_model_generation": "NOT_RUN",
+  "authorization": "Root preparation authorized; immutable source/plan and independent review required before one build-only POST"
+}

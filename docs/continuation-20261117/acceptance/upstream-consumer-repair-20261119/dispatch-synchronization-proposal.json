@@ -1,0 +1,37 @@
+{
+  "createdAt": "2026-11-19T04:26:45.274968+00:00",
+  "canonicalHead": "7d5f0a47d7cfb98b28fd9f16d83a2b917618da95",
+  "patchSHA256": "0eae4dc4dc90e12c6f81979a38e8945f2c5c8317ac943679c0a9a52c37d1c362",
+  "files": [
+    {
+      "path": "Scripts/Runtime/sync-upstream-host-pr.mjs",
+      "beforeSHA256": "15549a4afee7a4f35c929a1bbe485764da0fb48ab4dd185896da7b0e08849141",
+      "afterSHA256": "6476fc4359d648f91d7dfed79daaab364620bc9758b953972a59e67205ff3b4b"
+    },
+    {
+      "path": "Scripts/Runtime/run-upstream-bot.mjs",
+      "beforeSHA256": "59cb0e427cf85ff6c1012f5ad1c26826b2d9fb975aa9d944e2c0e8c2631b4155",
+      "afterSHA256": "d785026858ef27d28c5b53f1b8873486a0fb4e2b1a467a4c3173ac6e6eea621b"
+    },
+    {
+      "path": ".github/workflows/check-runtime-dependency-updates.yml",
+      "beforeSHA256": "097263ef454ad5efd362c53a13b1799b8b183ffe553a983321bccf4015faedb5",
+      "afterSHA256": "84c5e34132ffb467ee2d5482f85e7de04168b87c252ce0d89cd0dce1eda466fc"
+    },
+    {
+      "path": "Scripts/Runtime/upstream-dispatch-synchronization.mjs",
+      "beforeSHA256": null,
+      "afterSHA256": "431a3884a0d4998b36810fe5b23abb862c1415317758add8b3a1b795a62c5dc2"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/upstream-dispatch-synchronization.test.mjs",
+      "beforeSHA256": null,
+      "afterSHA256": "5029752ce7bdae835061640529df5d690e6955244d027bfd63e29c991028fe57"
+    }
+  ],
+  "focusedTestsExit": 0,
+  "applyCheckExit": 0,
+  "nativeCandidateUntouched": "44455722821@c80f620ba8ed28243922728e00acffcdd439cc12",
+  "frozenBaseUntouched": "codex/upstream-acceptance-base-20261119-v3@d6e2e3f062633fe7a55c0f44b922c5b3321aaf4a",
+  "scope": "Future canonical producer receipt correctness only. Branch dispatch is still subject to concurrent head movement; actual candidate and trusted consumer continue binding GITHUB_SHA and current PR. No broader branches/check identities/source trust/protection/automerge behavior."
+}

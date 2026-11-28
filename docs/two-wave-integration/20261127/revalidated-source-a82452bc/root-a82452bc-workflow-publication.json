@@ -1,0 +1,8 @@
+{
+  "atUTC": "2026-11-27T07:24:52.867120+00:00",
+  "head": "a82452bce57a55ea13a9cee655b3588dc3e17f6a",
+  "workflowSHA256": "e888ff8ba3a13cdf7e7e1ac0fcee7969c291d4fd41e8233187cd35ede258e652",
+  "independentReviewSHA256": "0ed01902af198ff8b083095f0e2e4c4a89b52a9662a562ff484fa4842cb2f8dc",
+  "scope": "Four additive existing OS choices and their UI attachment condition only",
+  "gitClean": true
+}

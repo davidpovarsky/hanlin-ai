@@ -1,0 +1,3 @@
+# Actual generated SDK source binding
+
+The original Host producer executed on 764ed325 and passed all 188 tests. Its canonical inventory phase refreshed exactly three generated SDK documentation inputs. The resulting 396-input SDK fingerprint is 7e2d370d0753b37bb1c589e4c2b28e3e8383c6fb948b09b0556e651efcfa4a9e; c8ba03a7 describes the pre-producer input state only. The exact generated files are sealed by 78ec8f97. Root independently verified every transferred source-seal file and the complete inverse of the three generated changes. Full native phase evidence is retained separately and will be published after packet verification. This source binding does not claim current UI, MCP11 or full app acceptance.

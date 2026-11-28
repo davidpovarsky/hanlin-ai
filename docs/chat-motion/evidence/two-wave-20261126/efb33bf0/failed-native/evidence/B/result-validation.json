@@ -1,0 +1,33 @@
+{
+  "method": "testBRapidReversalPresetSwitchAndPersistence",
+  "status": "FAILED",
+  "evidence": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/efb33bf0/retry1/evidence/B",
+  "testExit": 65,
+  "attachmentExportExit": 0,
+  "caseNodes": [
+    {
+      "nodeIdentifier": "MotionUITests/testBRapidReversalPresetSwitchAndPersistence()",
+      "result": "Failed",
+      "duration": "19s"
+    }
+  ],
+  "rawResult": {
+    "test_exit_code": 65,
+    "archive": "ARCHIVED",
+    "readability": "READABLE",
+    "diagnostics": [],
+    "archive_sha256": "c222e996c2c8ef81bd003deb6bd014ba7c595887e01edb5e5f1efb797a478bed",
+    "status": "FINALIZED_READABLE_ARCHIVED"
+  },
+  "video": {
+    "exit_code": 0,
+    "status": "CAPTURE_ATTEMPTED",
+    "maximum_recording_seconds": 120,
+    "scope": "first120s from an actual XCTest case event, not every preset or original app",
+    "stop_reason": "timer_120s",
+    "elapsed_seconds": 120.013,
+    "sigint_sent": true,
+    "timed_out_finalizing": false,
+    "output_bytes": 9594605
+  }
+}

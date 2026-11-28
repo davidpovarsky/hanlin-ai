@@ -1,0 +1,51 @@
+{
+  "source": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "through": "split-host-lifecycle",
+  "scope": "ORIGINAL_HOST_PREFIX_ONLY",
+  "startedAt": "2026-11-24T22:14:10.908955+00:00",
+  "wrapperPID": 9356,
+  "status": "HOST_PREFIX_PASS_HEAVY_WORK_PENDING",
+  "nativePreparationStarted": false,
+  "fullAcceptancePass": false,
+  "admissionPID": 335,
+  "admissionStartedAt": "2026-11-24T22:00:01.606668+00:00",
+  "maximumWaitSeconds": 3500,
+  "activeElapsedBefore": 2329.728348708002,
+  "admissionSHA256Before": "408d4527eb8a9b3532beb6aca06090fb75f7d92377c451d9a5fc89b679a05fe8",
+  "controllerPID": 9360,
+  "controllerArgv": [
+    "/opt/homebrew/bin/python3.12",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/controller-attempt7.py",
+    "split-host-lifecycle"
+  ],
+  "controllerStartedAt": "2026-11-24T22:14:10.955622+00:00",
+  "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/controller-host-prefix-attempt7.log",
+  "admissionTemporarilyPaused": false,
+  "exitCode": 0,
+  "controllerFinishedAt": "2026-11-24T22:14:19.181906+00:00",
+  "controllerStateStatus": "PAUSED_AFTER_PHASE",
+  "phase": "split-host-lifecycle",
+  "phaseResult": {
+    "status": "PASS",
+    "startedAt": "2026-11-24T22:14:11.174688+00:00",
+    "argv": [
+      "/bin/bash",
+      "-e",
+      "-o",
+      "pipefail",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-host-lifecycle.sh"
+    ],
+    "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt7/split-host-lifecycle.log",
+    "scriptSHA256": "956541d15f45f12b7777b8ebeb800fe14e1686db5fc7ceae397835547953d7bc",
+    "pid": 9364,
+    "exitCode": 0,
+    "elapsedSeconds": 7.998473999999987,
+    "finishedAt": "2026-11-24T22:14:19.174056+00:00",
+    "logBytes": 2345,
+    "logSHA256": "4685988e182745ba00a11ed63a51dc8277d01ead7ab96c24f4960af9aea2c155"
+  },
+  "activeElapsedAfter": 2337.726822708002,
+  "logSHA256": "babf832618ef658d4dc457cbec49b1a686528b1afdbcf4327b319457cf867177",
+  "finishedAt": "2026-11-24T22:14:19.181997+00:00",
+  "admissionResumedAt": "2026-11-24T22:14:19.182379+00:00"
+}

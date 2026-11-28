@@ -1,0 +1,28 @@
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:26:public enum HanlinAtomicScriptStoreError: Error, Equatable, Sendable {
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:233:                throw HanlinAtomicScriptStoreError.notInstalled(id)
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:260:                throw HanlinAtomicScriptStoreError.alreadyInstalled(plan.installedPackageID)
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:280:                throw HanlinAtomicScriptStoreError.notInstalled(plan.installedPackageID)
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:296:                throw HanlinAtomicScriptStoreError.notInstalled(id)
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:304:                throw HanlinAtomicScriptStoreError.generationMetadataUnavailable(generation)
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:337:                throw HanlinAtomicScriptStoreError.notInstalled(id)
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:353:                throw HanlinAtomicScriptStoreError.notInstalled(id)
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:367:                throw HanlinAtomicScriptStoreError.notInstalled(id)
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:402:                throw HanlinAtomicScriptStoreError.notInstalled(id)
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:521:        guard value.schemaVersion == 1 else { throw HanlinAtomicScriptStoreError.unsupportedRegistryVersion(value.schemaVersion) }
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:573:            throw HanlinAtomicScriptStoreError.requiredCapabilitiesNotGranted(
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:578:            throw HanlinAtomicScriptStoreError.sourceAndArtifactDigestMatchRequired
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:681:        throw HanlinAtomicScriptStoreError.generationMetadataUnavailable(generation)
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:694:            else { throw HanlinAtomicScriptStoreError.corruptRegistry }
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:748:            throw HanlinAtomicScriptStoreError.artifactManifestMissing
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:752:            throw HanlinAtomicScriptStoreError.artifactManifestMismatch("manifest")
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:759:            else { throw HanlinAtomicScriptStoreError.artifactManifestMismatch(file.logicalPath) }
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:809:        else { throw HanlinAtomicScriptStoreError.artifactManifestMismatch(path) }
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:838:        guard let loaded else { throw HanlinAtomicScriptStoreError.corruptRegistry }
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:840:            throw HanlinAtomicScriptStoreError.unsupportedRegistryVersion(loaded.schemaVersion)
+HEAD:Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift:843:            throw HanlinAtomicScriptStoreError.corruptRegistry
+HEAD:Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift:145:        await #expect(throws: HanlinAtomicScriptStoreError.generationMetadataUnavailable(1)) {
+HEAD:Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift:261:        #expect(throws: HanlinAtomicScriptStoreError.corruptRegistry) {
+HEAD:Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift:264:        await #expect(throws: HanlinAtomicScriptStoreError.corruptRegistry) {
+HEAD:Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift:288:        #expect(throws: HanlinAtomicScriptStoreError.corruptRegistry) {
+HEAD:Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift:331:        await #expect(throws: HanlinAtomicScriptStoreError.artifactManifestMismatch("main.js")) {
+HEAD:Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift:349:        await #expect(throws: HanlinAtomicScriptStoreError.artifactManifestMissing) {

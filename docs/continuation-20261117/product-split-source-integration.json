@@ -1,0 +1,141 @@
+{
+  "source_commit": "226330c70cd8691219c0d192f147c0bf03bb55f7",
+  "integration_base": "16934250fb193b4b9b2e162413d948a544c0d099",
+  "selected_files": [
+    {
+      "path": "AI_HLY/Downstream/ProductSplit/HanlinSplitForegroundTransport.swift",
+      "before_sha256": null,
+      "source_sha256": "e9cb1c0e250244770dfb68e88d2cf3794c6d2fc07dbfc60590a407b7752775ad"
+    },
+    {
+      "path": "AI_HLY/Downstream/ProductSplit/HanlinSplitLiveTarget.swift",
+      "before_sha256": null,
+      "source_sha256": "5029e630e035a567162d2d3c2da4ce7692025aa21193ba49b7684fa996ab0ada"
+    },
+    {
+      "path": "AI_HLY/Downstream/ProductSplit/HanlinSplitMailbox.swift",
+      "before_sha256": null,
+      "source_sha256": "e399d1e0febc448b99935d36b082dfc9df51b02cd8c17bd37bc7a4ca870766fa"
+    },
+    {
+      "path": "HanlinMiniAppsApp/HanlinMiniApps.entitlements",
+      "before_sha256": null,
+      "source_sha256": "8eeb1557fc21f6a664ed1b717f3e259362b3cb85d6c99c60a708c03df2b7e793"
+    },
+    {
+      "path": "HanlinMiniAppsApp/Info.plist",
+      "before_sha256": null,
+      "source_sha256": "e0b088977cbd994bdfd4590710ba078fcb4a9c97e9789130a4edf996813e5b35"
+    },
+    {
+      "path": "HanlinMiniAppsApp/MiniAppsForegroundBridge.swift",
+      "before_sha256": null,
+      "source_sha256": "223c9ea5fafb1b989eac3122b3b29ae0b4c358045af798f544ce442204ad6b3a"
+    },
+    {
+      "path": "HanlinMiniAppsTests/SplitAppStorageLayoutTests.swift",
+      "before_sha256": null,
+      "source_sha256": "617e09f742b8416f391d09a8a3c90609918893fed1d90e86349af9ee782f059c"
+    },
+    {
+      "path": "HanlinMiniAppsTests/SplitMailboxTests.swift",
+      "before_sha256": null,
+      "source_sha256": "ebbdbd39704d0219781b37a0b2051eb2151bf687214bc03a7054c3087fe5d8e4"
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "before_sha256": null,
+      "source_sha256": "5383a9d18a72cfd01b426458f4722c0cfef56058fe936da2a1aabb7abc966cea"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Sources/HanlinProductSplit/SplitAppStorageLayout.swift",
+      "before_sha256": null,
+      "source_sha256": "4e2f13b08ffa2d240fbf026157659320c34a1daaae2a1c001b01da24090a01a9"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Sources/HanlinProductSplit/SplitForegroundRoute.swift",
+      "before_sha256": null,
+      "source_sha256": "2144dcbcff66a5392e122945841419f1fc51c2acf0ed1c358c3b40f96cc93254"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Sources/HanlinProductSplit/SplitTargetRegistration.swift",
+      "before_sha256": null,
+      "source_sha256": "59ba4daaca18d60fcfe269d9cc9aeda6ceb26a260b655d5e3857d423184a42ff"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Tests/ForegroundSchemeTests.swift",
+      "before_sha256": null,
+      "source_sha256": "11556eef07f5a41932d7d1540d09bcdaa22e9492cb74f70cfa579fde87367adc"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinManagedStateTransaction.swift",
+      "before_sha256": null,
+      "source_sha256": "b0ce80f8f1ccf68cd148134cdbad5f16f67ba3053db6c37110551a9f9e3ed1a1"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_native_acceptance.py",
+      "before_sha256": null,
+      "source_sha256": "46ea880e40a726f43b49c5b94c4948006033e2965c6f98c261b4bbdda43f37e3"
+    },
+    {
+      "path": "Scripts/ProductSplit/restore_host_proof.py",
+      "before_sha256": null,
+      "source_sha256": "f95a821c258b068161a33bf329df37dee77f516e8560930473f9a609cdab2b1c"
+    },
+    {
+      "path": "Scripts/ProductSplit/verify_targets.py",
+      "before_sha256": null,
+      "source_sha256": "89b1baaff27a91a3b35050fec960394ee824969c427a5f41ebd0f41a0523a3eb"
+    },
+    {
+      "path": "docs/product-split/target-membership.json",
+      "before_sha256": null,
+      "source_sha256": "0cf4ea2923f66a9d3e6c650960252c23499447d645f685c9ed7cb1c4cc2d75e8"
+    },
+    {
+      "path": "docs/product-split/TRANSPORT_V1.md",
+      "before_sha256": null,
+      "source_sha256": "53d5099feaa97e399dbb0970dc1569918b1a0c7730f5169a33a5875834d455bc"
+    },
+    {
+      "path": ".github/workflows/validate-app-split.yml",
+      "before_sha256": null,
+      "source_sha256": "6f44a914eecc4987756ed8bbe833161abbbd2a5061e5cc2ab0ada81f5dce9ff5"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Sources/HanlinProductSplit/DurableReceiver.swift",
+      "before_sha256": "cf13973aaa8421074fdd0ec6849401fee82a76931833d238f44bb8a903b9240a",
+      "source_sha256": "da3b7d14fc66dd388e00ab845cbeae08bd1f8b76dda8ab7c06635e28df8a39cd"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Sources/HanlinProductSplit/ForegroundBridge.swift",
+      "before_sha256": "b153bdfc8d9c3747ed1b3e7a48596cac510d8d020a04382ef1c95eb80f4085a0",
+      "source_sha256": "daf4d90a2198f3401728b2e00294a520ffedb452232e7d1c7637e25e2e360db5"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_portable.py",
+      "before_sha256": "3cf5a1e12fa9f1ae12c636366ad134b6cf2873ca7e900f10d67451ba19b93bf2",
+      "source_sha256": "74bb2557f6b17eacd1786769d0095d9edc787cf5de2308be35368b7798d87bc9"
+    },
+    {
+      "path": "Packages/HanlinParityMiniApp/Sources/HanlinParityMiniApp/SwiftParityMiniApp.swift",
+      "before_sha256": "58e52fc0703bb1cbb83da0fd25bf2898ae5c2886baa3872736151783df90a188",
+      "source_sha256": "ac074c40698f5221d0521892a9bf8083b759d2563fc50770d42a20b603ef032d"
+    }
+  ],
+  "preserved": "Current AI, SDK, provider, initialization and target identities; no whole source branch merge",
+  "acceptance": "PENDING; source imported only",
+  "origin_source_commit": "71ba9d73941c27c582ebb71e05bee36ec02dd8a7",
+  "origin_selected_files": [
+    "AI_HLY/Downstream/ChatCore/HanlinAIReceivingWindowRoot.swift",
+    "AI_HLY/Downstream/ChatCore/HanlinAppHostSplitTool.swift",
+    "AI_HLY/Downstream/ChatCore/HanlinAppSplitOriginCoordinator.swift",
+    "AI_HLYTests/HanlinAppSplitOriginTests.swift",
+    "docs/agent-sdk/APP_SPLIT_ORIGIN_COMPOSITION_2026-11-15.md"
+  ],
+  "integration_changes": [
+    "Preserve current consent and provider callback paths; require explicit original Host approval before Split dispatch",
+    "Import exact SDK origin/coordinator/window claims and tests; enable previously gated receipt tests",
+    "Preserve current MiniApps target IDs, Host bootstrap and canonical provider; add production identity, split leaves and storage tests"
+  ]
+}

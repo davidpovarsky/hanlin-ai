@@ -1,0 +1,14 @@
+{
+  "status": "SOURCE_SEALED_CLEAN",
+  "at": "2026-11-27T23:56:23.510263+00:00",
+  "commit": "1e5a566762d9f47350aeb97c136e92dc49dc117c",
+  "parent": "34dc92c16b37c7e14453e86f25f14d8e5063556a",
+  "paths": {
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "5f15f5ffb4fcdaf63ef9ad396a650fce32b7b0b04eee8ba7690b013c6e8f8600",
+    "Scripts/CI/Tests/test_widget_catalog_compatibility.py": "5bbe28a3b0e0be3c1b5d079088a438672a3b0187694746ab572fdec2cfc375b0"
+  },
+  "sourcePatchSHA256": "9f0ac1c3c942f6cc5518be5c00216f9376b85b4d17bcfe267dfa4779122d2ded",
+  "native": "NOT_RUN",
+  "additionalTestsRun": false,
+  "commitOutput": "[codex/widget-catalog-compatibility-20261127 1e5a56676] fix(ci): admit canonical partial widget catalog entries\n 2 files changed, 128 insertions(+), 1 deletion(-)\n create mode 100644 Scripts/CI/Tests/test_widget_catalog_compatibility.py\n"
+}

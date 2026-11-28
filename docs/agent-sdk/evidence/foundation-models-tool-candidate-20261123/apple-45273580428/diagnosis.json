@@ -1,0 +1,96 @@
+{
+  "utc": "2026-11-23T22:15:32.769801+00:00",
+  "source": "2c41a1b7ed6b191be7529550ae1ca4501632ce8d",
+  "run_id": 45273580428,
+  "case_counts": {
+    "PASS": 2,
+    "FAIL": 3,
+    "NOT_RUN": 0
+  },
+  "system_model_generation": "NOT_RUN",
+  "shipping_gates": "CLOSED",
+  "observations": {
+    "instructions": "Both native continuation cases record exactly two instruction mismatches: [] instead of [ORIGINAL_SYSTEM]; no other assertion failures recorded",
+    "cancellation": "Failure field nil and executor cancellation flag false at immediate observation after cancelling the outer consumer; zero host effects/approvals still hold",
+    "passes": [
+      "nativeNumericSiblingCannotPartiallyExecute()",
+      "rejectsUnsupportedTransportHeader()"
+    ]
+  },
+  "source_findings": {
+    "system": "Original engine and pinned producer retain baseSystemPrompt, provider forwards options unchanged. Candidate separately declares DynamicInstructions and replaces request history with canonical entries via historyTransform. Exact private framework ordering is not observed.",
+    "cancellation": "DefaultStreamTextResult.stop schedules actor.requestStop asynchronously. SE-0314 cancelled iterator termination returns nil, so current fixture catch-only failure observation does not directly represent Task cancellation."
+  },
+  "proposals_not_yet_applied": [
+    "Remove redundant historyTransform, retain documented onPrompt canonical-prefix/empty-trigger removal and all request-history assertions",
+    "Observe actual consumer cancellation after stream iteration with Task.checkCancellation and wait boundedly for actual executor acknowledgement; preserve all old assertions and add no-text/no-tool-call checks"
+  ],
+  "primary_sources": [
+    "https://developer.apple.com/documentation/foundationmodels/composing-dynamic-sessions-with-instructions-and-profiles",
+    "https://github.com/swiftlang/swift-evolution/blob/main/proposals/0314-async-stream.md"
+  ],
+  "ios_compile_reuse": {
+    "mode": "REUSED_VERIFIED",
+    "original_run_id": 45268041311,
+    "original_run_attempt": 1,
+    "original_source_commit": "846ca37aaee19f46dccca3cd39c7d6762d2561f4",
+    "artifact_id": 14863913714,
+    "zip_sha256": "59c7487ea235103e043d01a1a67901f5d9b639ad90d929e7d7895a6cd9d44fef",
+    "reference_manifest_sha256": "e87046d8b0944d0eb91d7001050ba668b2902210dc43fc2d4131f58ce2ceebea",
+    "current_source_commit": "2c41a1b7ed6b191be7529550ae1ca4501632ce8d",
+    "source_files": 404,
+    "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+    "raw_lock_sha256": {
+      "sdk": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+      "core": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    "toolchain_fingerprint": {
+      "select-xcode": {
+        "stdout": "8d652b3e258a63181e163aa5c534b30b06052368fc3d2ccb2dad57211f17302d",
+        "stderr": "43aa03c0f021d590a4ac56edce3f8ac3754b88842aa24f8302b73e3e47625b70"
+      },
+      "xcode": {
+        "stdout": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "swift": {
+        "stdout": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+        "stderr": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e"
+      },
+      "macos-sdk": {
+        "stdout": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ios-sdk": {
+        "stdout": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "os": {
+        "stdout": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c",
+        "stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "original_build": {
+      "argv": [
+        "xcodebuild",
+        "build",
+        "-scheme",
+        "HanlinAgentCore",
+        "-destination",
+        "generic/platform=iOS Simulator",
+        "-derivedDataPath",
+        "/Users/runner/work/_temp/hanlin-native-tool-candidate.cxeft_6d/IOSDerivedData",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/agent-sdk-validation-evidence/IOSBuild.xcresult",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=NO"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "3f3195225c3822a91a366b22884add507335fb58c53a1221a67b07760ff5b726",
+      "stderr_sha256": "c955e554a9e617581705a39658a0dfab406445f011c2aa9c4ac91cd95fb32b0a"
+    },
+    "current_build_process": "NOT_INVOKED",
+    "native_model_generation": "NOT_RUN"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "at": "2026-11-27T20:44:45.683906+00:00",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_widget_families_observer.py",
+    "-v"
+  ],
+  "cwd": "/workspace/scratch/d49eec8920ef/w2-widget-families/candidate",
+  "exitCode": 0,
+  "elapsedSeconds": 0.26474761962890625,
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "scope": "Pure evidence controls only; no native, Swift, WidgetKit or Simulator execution",
+  "sources": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "07dab2303533a16e0a1e0dc36f0ebfa9f8689e1ec6f5ea203347c3170bcfd7ed",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "38b7c4e8a3cc3051018497f5eb5edcbb94bb73ba41953eb0cc0562fab71337a7",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "ed9116aaaf7bf8bab3a77d273a30560760e4e8cc2051cf2e0ee64438b60edf79",
+    "Scripts/ProductSplit/observe_widget_families.py": "2d6e4b1488ba0b408d8a94c9ad82ec07bc07f05c1ea0a7cfccf2f86d104d9c94",
+    "Scripts/CI/Tests/test_widget_families_observer.py": "88ffb91278c2db3d3e97f53aa49e746e6f21dbe9b0ca4bc3d12ff7134ec61c19"
+  },
+  "dependencies": {
+    "Scripts/ProductSplit/observe_widget_state.py": "68b84fcc6475a125e1424c774c9337dde5fbde06f92becec1e6b3782389e8be6",
+    "Scripts/ProductSplit/prepare_widget_fixtures.py": "2c24e64319ffd6547243b445260ef1448588a9c639dfe2a1103d74dc68e1273a"
+  },
+  "logs": {
+    "stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "stderr.log": {
+      "sha256": "9042d5ddc3dc946d53ebbd25518d052077462dedd1fdca3bffcdf6614f091627",
+      "bytes": 3475
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "status": "ACTUAL_WHOLE_FILE_TYPECHECK_PASS",
+  "recordedAtUTC": "2026-11-28T14:44:47.909018+00:00",
+  "sourceBase": "55c2eb343399543eac327720f25e8eacf86bba15",
+  "sourceSHA256": "8a7ee5200bd83c5d2a6d2355be46ee5d460aa7c57aa58f7567135b1e08dffac7",
+  "nativeReceipt": {
+    "path": "native/receipt.json",
+    "sha256": "7ac20f2772a5cd62f1d15e0f2aacaf77562987bf5d42770f8a60baae5a63c1fb"
+  },
+  "commandSeconds": 1.5282168329576962,
+  "commandExit": 0,
+  "deadlineSeconds": 120,
+  "sevenBeforeAfterInputsEqual": true,
+  "stdoutBytes": 0,
+  "stderrBytes": 0,
+  "toolchain": "local Xcode27.0/27A266a, iPhoneSimulator SDK27.0",
+  "methodsCompiled": 51,
+  "nativeTestInvocations": 0,
+  "appBuild": "NOT_RUN",
+  "simulatorExecution": "NOT_RUN",
+  "sourceScope": "Exact root-composed51-method UI over55c; full old49 methods retained. This is compiler acceptance only.",
+  "transfer": {
+    "exit": 0,
+    "archiveBytes": 121476,
+    "archiveSHA256": "14bee0d6440ae13c4a01ee2470071bd8c839c08e0482e549b456977e948ac7c7",
+    "fileCount": 23
+  }
+}

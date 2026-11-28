@@ -1,0 +1,1627 @@
+from __future__ import annotations
+
+import importlib.util
+import json
+from pathlib import Path
+import tempfile
+import unittest
+import unittest.mock
+
+SCRIPT_PATH = Path(__file__).parents[1] / "plan_affected_validation.py"
+MAP_PATH = Path(__file__).parents[1] / "affected-validation-map.json"
+
+SPEC = importlib.util.spec_from_file_location("plan_affected_validation", SCRIPT_PATH)
+assert SPEC is not None and SPEC.loader is not None
+planner = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(planner)
+
+
+class AffectedValidationPlannerTests(unittest.TestCase):
+    def test_original_source_amendment_routes_to_the_native_preservation_guard(self) -> None:
+        for path in (
+            "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2.json",
+            "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2_APPROVED_TRANSITION_467cfcab.json",
+        ):
+            with self.subTest(path=path):
+                plan = self.plan_files([path])
+                self.assertEqual(plan.affected_components, {
+                    "hanlin_organizer_dock_parity_unit_tests": ["directly modified: " + path],
+                })
+                self.assertNotIn(path, plan.no_impact_files)
+                self.assertIn("AI_HLYTests/OriginalSourceNonRegressionTests",
+                              plan.step_outputs["simulator_unit_filter"].split(","))
+                self.assertTrue(plan.step_outputs["run_simulator_unit"])
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+
+    def test_original_source_fixture_helper_selects_its_existing_consumers(self) -> None:
+        path = "AI_HLYTests/OriginalSourceFixtures.swift"
+        plan = self.plan_files([path])
+        self.assertEqual(plan.affected_components, {
+            "original_source_fixture_test_helper": ["directly modified: " + path],
+        })
+        self.assertNotIn(path, plan.no_impact_files)
+        self.assertEqual(set(plan.step_outputs["simulator_unit_filter"].split(",")), {
+            "AI_HLYTests/OriginalSourceNonRegressionTests",
+            "AI_HLYTests/MasterScenarioSemanticAcceptanceTests",
+        })
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertFalse(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+
+    def test_original_source_fixture_helper_keeps_the_exact_legacy_request(self) -> None:
+        selector = "AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeLegacyWidgetWithHostTerminated"
+        plan = self.plan_files(["AI_HLYTests/OriginalSourceFixtures.swift"],
+                               exact_test_selector=selector,
+                               manual_modes={"simulator_e2e_only": True})
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], selector)
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "")
+        self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"],
+                         "-only-testing:" + selector)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertFalse(plan.step_outputs["run_simulator_unit"])
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
+    def test_unowned_source_fixture_helper_siblings_still_fail_closed(self) -> None:
+        selector = "AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeLegacyWidgetWithHostTerminated"
+        for path in ("AI_HLYTests/OriginalSourceFixturesCopy.swift",
+                     "AI_HLYTests/Unreviewed/OriginalSourceFixtures.swift"):
+            for exact in (None, selector):
+                with self.subTest(path=path, exact=exact):
+                    with self.assertRaises(planner.UnmappedPathsError) as ctx:
+                        self.plan_files([path], exact_test_selector=exact)
+                    self.assertEqual(ctx.exception.unmapped_paths, [path])
+
+    def test_native_api_template_config_uses_the_existing_expo_route(self) -> None:
+        selector = "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIMountAndInteraction"
+        plan = self.plan_files(["Fixtures/ExpoNativeAPIProbe/tsconfig.json"], exact_test_selector=selector)
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], selector)
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
+    def test_prepared_runtime_version_constructor_cases_have_a_focused_unit_route(self) -> None:
+        selector = "AI_HLYTests/PreparedRuntimeVersionGateTests"
+        plan = self.plan_files(["AI_HLYTests/PreparedRuntimeVersionGateTests.swift"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
+    def test_expo_constructor_boundary_routes_exact_unit_tests_without_full_acceptance(self) -> None:
+        selector = "AI_HLYTests/ExpoPreparedEntrypointTests"
+        plan = self.plan_files(["AI_HLYTests/ExpoPreparedEntrypointTests.swift"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
+    def test_nativescript_generic_wire_paths_accept_exact_native_selection_without_engine_rebuild(self) -> None:
+        selector = "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine()"
+        for changed in ("AI_HLYTests/NativeScriptRuntimeWireTests.swift", "Scripts/NativeScript/host-services.ts",
+                        "Scripts/NativeScript/build-host-services.mjs"):
+            with self.subTest(path=changed):
+                plan = self.plan_files([changed], exact_test_selector=selector)
+                self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
+    def test_new_runtime_cases_route_to_their_exact_suite_without_full_or_native_rebuild(self) -> None:
+        for suite in ("MCPPackageGenerationTests", "RuntimeExecutionInputArtifactTests", "RuntimeFetchConformanceTests",
+                      "RuntimeJavaScriptCoreTests", "RuntimeJobInterruptionTests", "RuntimeNativeInterruptionTests",
+                      "RuntimeUserOperationTests"):
+            with self.subTest(suite=suite):
+                plan = self.plan_files(["AI_HLYTests/" + suite + ".swift"])
+                self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/" + suite)
+                self.assertTrue(plan.step_outputs["run_simulator_unit"])
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+                if suite in ("RuntimeFetchConformanceTests", "RuntimeNativeInterruptionTests"):
+                    self.assertTrue(plan.step_outputs["run_runtimecore_host"])
+
+    def test_native_python_catalog_paths_keep_focused_consumers_without_rebuilding_frameworks(self) -> None:
+        selector = "AI_HLYTests/RuntimeAutonomyV3Tests/linkedPythonExtensionCatalogReadsDoNotStartOrChangeTheOriginalService()"
+        for path in ("AI_HLY/Downstream/RuntimeCore/Python/PythonNativeExtensions.swift",
+                     "Scripts/Runtime/Tests/test_python_native_catalog.py",
+                     "Scripts/Runtime/Tests/python_native_catalog_probe.cpp"):
+            with self.subTest(path=path):
+                plan = self.plan_files([path], exact_test_selector=selector)
+                self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_device_build"])
+
+    def test_native_reuse_and_foundation_sdk_scripts_have_explicit_affected_routes(self) -> None:
+        plan = self.plan_files(["Scripts/Runtime/verify-runtime-job-foundation.sh"])
+        self.assertTrue(plan.step_outputs["run_ci_router"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+        selector = "AI_HLYTests/RuntimeNativeInterruptionTests"
+        plan = self.plan_files(["Scripts/Runtime/verify_runtime_reuse.py"], exact_test_selector=selector)
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+
+    def test_swift_testing_empty_parentheses_are_preserved_in_method_selectors(self) -> None:
+        selector = "AI_HLYTests/SkillStoreAndImportTests/resourceReadingContract()"
+        plan = self.plan_files(["README.md"], exact_test_selector=selector)
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+        self.assertIn("-only-testing:" + selector, plan.step_outputs["simulator_build_for_testing_args"])
+
+    def test_swift_testing_parameter_labels_are_preserved_without_argument_values(self) -> None:
+        selector = "AI_HLYTests/HanlinAutonomousRuntimeTests/canonicalSkillResourceReadAndExecute(fileExtension:)"
+        plan = self.plan_files(["README.md"], exact_test_selector=selector)
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+        self.assertIn("-only-testing:" + selector, plan.step_outputs["simulator_build_for_testing_args"])
+
+    def test_method_parentheses_do_not_admit_arguments_or_shell_syntax(self) -> None:
+        for selector in ("AI_HLYTests/Suite()/method", "AI_HLYTests/Suite/method(1)",
+                         "AI_HLYTests/Suite/method();echo", "AI_HLYTests/Suite/method$(whoami)"):
+            with self.subTest(selector=selector), self.assertRaises(planner.RoutingError):
+                self.plan_files(["README.md"], exact_test_selector=selector)
+
+    def test_host_archive_prerequisite_supports_focused_sdk_selection(self) -> None:
+        selector = "AI_HLYTests/HanlinAutonomousRuntimeTests/embeddedNodeHTTPSRoundTrips()"
+        plan = self.plan_files(["Scripts/Runtime/runtime_host_archive.py"], exact_test_selector=selector)
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
+    def test_runtime_bundle_only_does_not_build_app_consumers(self) -> None:
+        plan = self.plan_files(["RuntimeDependencies.lock.json", ".github/workflows/build-ios26-unsigned-ipa.yml"], manual_modes={"runtime_bundle_only": True})
+        self.assertTrue(plan.step_outputs["run_runtimecore_bundle"])
+        for name, value in plan.step_outputs.items():
+            if name.startswith("run_") and name != "run_runtimecore_bundle":
+                self.assertFalse(value, name)
+
+    def test_runtime_bundle_only_rejects_conflicting_operator_requests(self) -> None:
+        for kwargs in ({"full_validation": True}, {"exact_test_selector": "AI_HLYTests/Example/test"},
+                       {"target_group": "app_unit_tests"}):
+            with self.subTest(kwargs=kwargs), self.assertRaises(planner.RoutingError):
+                self.plan_files(["README.md"], manual_modes={"runtime_bundle_only": True}, **kwargs)
+
+    def test_native_node_patch_inputs_route_to_the_bundle_pipeline(self) -> None:
+        for file in ("Scripts/Runtime/apply-node-source-patches.py",
+                     "Scripts/Runtime/Patches/v8-std-hash-65ce14d8.json",
+                     "Scripts/Runtime/Tests/test_node_source_patches.py",
+                     "Scripts/Runtime/Tests/node-fd-ownership-probe.mjs",
+                     "Scripts/Runtime/Tests/node-mobile-smoke.mjs"):
+            with self.subTest(file=file):
+                plan = self.plan_files([file])
+                self.assertTrue(plan.step_outputs["run_runtimecore_bundle"])
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+
+    def test_private_runtime_candidate_source_supports_focused_sdk_selection(self) -> None:
+        selector = "AI_HLYTests/HanlinAutonomousRuntimeTests/canonicalSkillResourceReadAndExecute(fileExtension:)"
+        for file in ("Scripts/Runtime/runtime_bundle_source.py", "Scripts/Runtime/Tests/test_runtime_bundle_source.py"):
+            with self.subTest(file=file):
+                plan = self.plan_files([file], exact_test_selector=selector)
+                self.assertTrue(plan.step_outputs["run_simulator_unit"])
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
+    def test_autonomous_runtime_suite_has_an_explicit_narrow_route(self) -> None:
+        plan = self.plan_files(["AI_HLYTests/HanlinAutonomousRuntimeTests.swift"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/HanlinAutonomousRuntimeTests")
+        self.assertTrue(plan.step_outputs["run_runtimecore_host"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+
+    def test_native_api_ui_suite_stages_its_existing_fixtures_without_full_fallback(self) -> None:
+        selector = "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests"
+        plan = self.plan_files(["AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests.swift"], exact_test_selector=selector)
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], selector)
+        self.assertTrue(plan.step_outputs["stage_scriptui_fixtures"])
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        with open(MAP_PATH, "r", encoding="utf-8") as f:
+            cls.mapping_config = json.load(f)
+
+    def plan_files(
+        self,
+        files: list[str],
+        full_validation: bool = False,
+        target_group: str | None = None,
+        manual_modes: dict[str, bool] | None = None,
+        exact_test_selector: str | None = None,
+    ):
+        return planner.plan_affected_validation(
+            mapping_config=self.mapping_config,
+            changed_files=files,
+            base_sha="abc1234567890",
+            head_sha="def9876543210",
+            event_name="workflow_dispatch",
+            full_validation=full_validation,
+            target_group=target_group,
+            manual_modes=manual_modes,
+            exact_test_selector=exact_test_selector,
+        )
+
+    def test_long_running_fixture_sources_use_the_original_split_owner(self) -> None:
+        paths = (
+            "Fixtures/ShortcutLongRunning/expo/App.tsx",
+            "Fixtures/ShortcutLongRunning/expo/hanlin.authoring.json",
+            "Fixtures/ShortcutLongRunning/expo/index.ts",
+            "Fixtures/ShortcutLongRunning/expo/package.json",
+            "Fixtures/ShortcutLongRunning/expo/proof.ts",
+            "Fixtures/ShortcutLongRunning/expo/script.json",
+            "Fixtures/ShortcutLongRunning/expo/tsconfig.json",
+            "Fixtures/ShortcutLongRunning/nativescript/hanlin.authoring.json",
+            "Fixtures/ShortcutLongRunning/nativescript/index.ts",
+            "Fixtures/ShortcutLongRunning/nativescript/package.json",
+            "Fixtures/ShortcutLongRunning/nativescript/proof.ts",
+            "Fixtures/ShortcutLongRunning/nativescript/script.json",
+            "Fixtures/ShortcutLongRunning/nativescript/tsconfig.json",
+        )
+        for path in paths:
+            with self.subTest(path=path):
+                plan = self.plan_files([path])
+                self.assertEqual(plan.affected_components, {
+                    "canonical_product_split": ["directly modified: " + path],
+                })
+                self.assertNotIn(path, plan.no_impact_files)
+                self.assertTrue(plan.step_outputs["run_simulator_unit"])
+                self.assertEqual(set(plan.step_outputs["simulator_unit_filter"].split(",")), {
+                    "AI_HLYTests/HanlinAppSplitOriginTests",
+                    "AI_HLYTests/HanlinAppAgentSessionOwnerTests",
+                })
+                self.assertFalse(plan.step_outputs["run_simulator_targeted_ui"])
+                self.assertEqual(plan.step_outputs["simulator_ui_filter"], "")
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+                self.assertFalse(plan.step_outputs["run_device_build"])
+
+    def test_unreviewed_long_running_fixture_siblings_still_fail_closed(self) -> None:
+        for path in ("Fixtures/ShortcutLongRunning/expo/unreviewed-driver.ts",
+                     "Fixtures/ShortcutLongRunning/nativescript/unreviewed.json",
+                     "Fixtures/ShortcutLongRunning/unreviewed/proof.ts"):
+            with self.subTest(path=path), self.assertRaises(planner.UnmappedPathsError) as ctx:
+                self.plan_files([path])
+            self.assertEqual(ctx.exception.unmapped_paths, [path])
+
+    def test_component_fixture_has_exact_original_owner_without_unreviewed_siblings(self) -> None:
+        for path in ("Fixtures/WidgetComponents/script.json", "Fixtures/WidgetComponents/widget.jsx"):
+            with self.subTest(path=path):
+                plan = self.plan_files([path])
+                self.assertEqual(plan.affected_components, {
+                    "canonical_product_split": ["directly modified: " + path],
+                })
+                self.assertEqual(set(plan.step_outputs["simulator_unit_filter"].split(",")), {
+                    "AI_HLYTests/HanlinAppSplitOriginTests", "AI_HLYTests/HanlinAppAgentSessionOwnerTests",
+                })
+                self.assertFalse(plan.step_outputs["run_simulator_targeted_ui"])
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+        for path in ("Fixtures/WidgetComponents/unreviewed.jsx", "Fixtures/WidgetComponents/nested/widget.jsx"):
+            with self.subTest(path=path), self.assertRaises(planner.UnmappedPathsError) as ctx:
+                self.plan_files([path])
+            self.assertEqual(ctx.exception.unmapped_paths, [path])
+
+    def test_live_activity_lifecycle_fixtures_use_exact_split_ownership(self) -> None:
+        paths = (
+            "Fixtures/LiveActivityLifecycle/expo/App.tsx",
+            "Fixtures/LiveActivityLifecycle/expo/hanlin.authoring.json",
+            "Fixtures/LiveActivityLifecycle/expo/index.ts",
+            "Fixtures/LiveActivityLifecycle/expo/package.json",
+            "Fixtures/LiveActivityLifecycle/expo/script.json",
+            "Fixtures/LiveActivityLifecycle/expo/tsconfig.json",
+            "Fixtures/LiveActivityLifecycle/nativescript/hanlin.authoring.json",
+            "Fixtures/LiveActivityLifecycle/nativescript/index.ts",
+            "Fixtures/LiveActivityLifecycle/nativescript/package.json",
+            "Fixtures/LiveActivityLifecycle/nativescript/script.json",
+            "Fixtures/LiveActivityLifecycle/nativescript/tsconfig.json",
+            "Fixtures/LiveActivityLifecycle/nativescript/widget.jsx",
+        )
+        for path in paths:
+            with self.subTest(path=path):
+                plan = self.plan_files([path])
+                self.assertEqual(plan.affected_components, {
+                    "canonical_product_split": ["directly modified: " + path],
+                })
+                self.assertNotIn(path, plan.no_impact_files)
+                self.assertTrue(plan.step_outputs["run_simulator_unit"])
+                self.assertEqual(set(plan.step_outputs["simulator_unit_filter"].split(",")), {
+                    "AI_HLYTests/HanlinAppSplitOriginTests",
+                    "AI_HLYTests/HanlinAppAgentSessionOwnerTests",
+                })
+                self.assertFalse(plan.step_outputs["run_simulator_targeted_ui"])
+                self.assertEqual(plan.step_outputs["simulator_ui_filter"], "")
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+                self.assertFalse(plan.step_outputs["run_device_build"])
+        for path in ("Fixtures/LiveActivityLifecycle/expo/unreviewed-driver.ts",
+                     "Fixtures/LiveActivityLifecycle/nativescript/unreviewed.json",
+                     "Fixtures/LiveActivityLifecycle/unreviewed/index.ts"):
+            with self.subTest(path=path), self.assertRaises(planner.UnmappedPathsError) as ctx:
+                self.plan_files([path])
+            self.assertEqual(ctx.exception.unmapped_paths, [path])
+
+    def test_native_list_fixture_inputs_use_the_original_split_owner(self) -> None:
+        paths = (
+            "Fixtures/ShortcutNativeLists/expo/App.tsx",
+            "Fixtures/ShortcutNativeLists/expo/hanlin.authoring.json",
+            "Fixtures/ShortcutNativeLists/expo/index.ts",
+            "Fixtures/ShortcutNativeLists/expo/package.json",
+            "Fixtures/ShortcutNativeLists/expo/proof.ts",
+            "Fixtures/ShortcutNativeLists/expo/script.json",
+            "Fixtures/ShortcutNativeLists/expo/tsconfig.json",
+            "Fixtures/ShortcutNativeLists/nativescript/hanlin.authoring.json",
+            "Fixtures/ShortcutNativeLists/nativescript/index.ts",
+            "Fixtures/ShortcutNativeLists/nativescript/package.json",
+            "Fixtures/ShortcutNativeLists/nativescript/proof.ts",
+            "Fixtures/ShortcutNativeLists/nativescript/script.json",
+            "Fixtures/ShortcutNativeLists/nativescript/tsconfig.json",
+        )
+        for path in paths:
+            with self.subTest(path=path):
+                plan = self.plan_files([path])
+                self.assertEqual(plan.affected_components, {
+                    "canonical_product_split": ["directly modified: " + path],
+                })
+                self.assertNotIn(path, plan.no_impact_files)
+                self.assertTrue(plan.step_outputs["run_simulator_unit"])
+                self.assertEqual(set(plan.step_outputs["simulator_unit_filter"].split(",")), {
+                    "AI_HLYTests/HanlinAppSplitOriginTests",
+                    "AI_HLYTests/HanlinAppAgentSessionOwnerTests",
+                })
+                self.assertFalse(plan.step_outputs["run_simulator_targeted_ui"])
+                self.assertEqual(plan.step_outputs["simulator_ui_filter"], "")
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+                self.assertFalse(plan.step_outputs["run_device_build"])
+
+    def test_unreviewed_native_list_fixture_siblings_still_fail_closed(self) -> None:
+        for path in ("Fixtures/ShortcutNativeLists/expo/unreviewed-driver.ts",
+                     "Fixtures/ShortcutNativeLists/nativescript/unreviewed.json",
+                     "Fixtures/ShortcutNativeLists/unreviewed/proof.ts"):
+            with self.subTest(path=path), self.assertRaises(planner.UnmappedPathsError) as ctx:
+                self.plan_files([path])
+            self.assertEqual(ctx.exception.unmapped_paths, [path])
+
+    def test_system_surface_sources_use_the_original_split_owner(self) -> None:
+        paths = (
+            "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+            "Fixtures/HostActionSurfaces/expo/App.tsx",
+            "Fixtures/HostActionSurfaces/expo/proof.ts",
+            "Fixtures/HostActionSurfaces/nativescript/index.ts",
+            "Fixtures/HostActionSurfaces/nativescript/package.json",
+            "Fixtures/HostActionSurfaces/nativescript/proof.ts",
+        )
+        for path in paths:
+            with self.subTest(path=path):
+                plan = self.plan_files([path])
+                self.assertIn("canonical_product_split", plan.affected_components)
+                self.assertNotIn(path, plan.no_impact_files)
+                self.assertTrue(plan.step_outputs["run_simulator_unit"])
+                self.assertEqual(set(plan.step_outputs["simulator_unit_filter"].split(",")), {
+                    "AI_HLYTests/HanlinAppSplitOriginTests",
+                    "AI_HLYTests/HanlinAppAgentSessionOwnerTests",
+                })
+                # Real paired/system UI requires the original two-product runner;
+                # this one-app plan must not pretend to execute that OS scope.
+                self.assertFalse(plan.step_outputs["run_simulator_targeted_ui"])
+                self.assertEqual(plan.step_outputs["simulator_ui_filter"], "")
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+                self.assertFalse(plan.step_outputs["run_device_build"])
+
+    def test_unreviewed_system_surface_source_still_fails_closed(self) -> None:
+        for path in ("Fixtures/HostActionSurfaces/expo/unreviewed-driver.ts",
+                     "AI_HLYUITests/UnreviewedSystemSurfaceUITests.swift"):
+            with self.subTest(path=path), self.assertRaises(planner.UnmappedPathsError) as ctx:
+                self.plan_files([path])
+            self.assertEqual(ctx.exception.unmapped_paths, [path])
+
+    def test_original_widget_native_primitives_route_actual_consumers_and_packaging(self) -> None:
+        prefix = "Packages/HanlinExpoWidgetSubset/"
+        paths = (
+            "Package.swift",
+            "Sources/HanlinExpoWidgetSubset/DictionaryContext.swift",
+            "Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ViewModifierRegistry.swift",
+            "Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/GlassEffectModifier.swift",
+            "Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/HingeObservationModifiers.swift",
+        )
+        for relative in paths:
+            with self.subTest(path=relative):
+                path = prefix + relative
+                plan = self.plan_files([path])
+                self.assertIn("original_widget_native_primitives", plan.affected_components)
+                self.assertNotIn(path, plan.no_impact_files)
+                expected_units = {
+                    "AI_HLYTests/HanlinNativeWidgetRendererTests",
+                    "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+                }
+                if relative == "Package.swift":
+                    # Preserve the independent canonical application-SDK manifest
+                    # owner as well as adding the original native widget consumers.
+                    original_mapping = json.loads(json.dumps(self.mapping_config))
+                    del original_mapping["components"]["original_widget_native_primitives"]
+                    original = planner.plan_affected_validation(
+                        mapping_config=original_mapping, changed_files=[path],
+                        base_sha="abc123", head_sha="def456", event_name="workflow_dispatch",
+                    )
+                    expected_units.update(filter(None, original.step_outputs["simulator_unit_filter"].split(",")))
+                    self.assertEqual(plan.step_outputs["run_simulator_smoke_launch"],
+                                     original.step_outputs["run_simulator_smoke_launch"])
+                self.assertEqual(set(plan.step_outputs["simulator_unit_filter"].split(",")), expected_units)
+                self.assertEqual(plan.step_outputs["simulator_ui_filter"],
+                                 "AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeExpoWidgetSourceActionsWithHostTerminated")
+                for flag in ("run_simulator_unit", "run_simulator_targeted_ui", "stage_scriptui_fixtures",
+                             "run_runtimecore_host", "run_device_build", "run_ipa_packaging"):
+                    self.assertTrue(plan.step_outputs[flag], flag)
+                self.assertEqual(plan.step_outputs["simulator_configuration"], "Release")
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_platform_contracts"])
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
+    def test_unowned_widget_native_sibling_still_fails_closed(self) -> None:
+        for path in (
+            "Packages/HanlinExpoWidgetSubset/Sources/UnreviewedSibling/Widget.swift",
+            "Packages/HanlinExpoWidgetSubset/Unreviewed.swift",
+            "Packages/HanlinExpoWidgetSubsetSibling/Sources/HanlinExpoWidgetSubset/Widget.swift",
+        ):
+            with self.subTest(path=path), self.assertRaises(planner.UnmappedPathsError) as ctx:
+                self.plan_files([path])
+            self.assertEqual(ctx.exception.unmapped_paths, [path])
+
+    def test_original_widget_archives_select_their_existing_consumers(self) -> None:
+        renderer_suite = "AI_HLYTests/HanlinNativeWidgetRendererTests"
+        counter_ui = "AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeExpoWidgetSourceActionsWithHostTerminated"
+        for archive, renders, drives_ui in (
+            ("Hanlin-Expo-Widget-Counter.hanlinExpo", True, True),
+            ("Hanlin-Expo-Widget-Visuals.hanlinExpo", True, False),
+            ("Hanlin-Mixed-Native-Widget.hanlinExpo", False, False),
+            ("Hanlin-Widget-Invalid-Cases.hanlinExpo", False, False),
+        ):
+            with self.subTest(archive=archive):
+                plan = self.plan_files(["Fixtures/Widgets/" + archive])
+                self.assertTrue(plan.step_outputs["run_platform_contracts"])
+                self.assertTrue(plan.step_outputs["run_phase1"])
+                self.assertEqual(plan.step_outputs["run_simulator_unit"], renders)
+                self.assertEqual(plan.step_outputs["simulator_unit_filter"], renderer_suite if renders else "")
+                self.assertEqual(plan.step_outputs["run_simulator_targeted_ui"], drives_ui)
+                self.assertEqual(plan.step_outputs["simulator_ui_filter"], counter_ui if drives_ui else "")
+                self.assertEqual(plan.step_outputs["run_runtimecore_host"], renders)
+                self.assertEqual(plan.step_outputs["stage_scriptui_fixtures"], drives_ui)
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+                self.assertFalse(plan.step_outputs["run_device_build"])
+                self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+
+    def test_unknown_widget_archive_still_fails_closed(self) -> None:
+        path = "Fixtures/Widgets/Unreviewed-Widget.hanlinExpo"
+        with self.assertRaises(planner.UnmappedPathsError) as ctx:
+            self.plan_files([path])
+        self.assertEqual(ctx.exception.unmapped_paths, [path])
+
+    # 1. docs-only change -> no simulator/device/IPA
+    def test_docs_only_change_skips_all_expensive_validations(self) -> None:
+        changed = ["README.md", "docs/architecture.md", ".gitignore"]
+        plan = self.plan_files(changed)
+
+        self.assertFalse(plan.is_full_validation)
+        self.assertEqual(len(plan.selected_groups), 0)
+        self.assertFalse(plan.step_outputs["run_phase1"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertFalse(plan.step_outputs["run_simulator_job"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
+        summary = plan.render_markdown_summary()
+        self.assertIn("SKIPPED", summary)
+        self.assertIn("iPad Simulator downstream unit tests", summary)
+        self.assertIn("Device Release IPA build & packaging", summary)
+
+    # 2. Scripting compiler source -> Scripting validation only plus real dependencies
+    def test_scripting_compiler_only_change(self) -> None:
+        changed = [
+            "Scripts/ScriptingCompiler/compile-scripting-fixtures.mjs",
+            "Scripts/ScriptingCompiler/package.json",
+        ]
+        plan = self.plan_files(changed)
+
+        self.assertIn("scripting_compiler", plan.selected_groups)
+        self.assertIn("simulator_scripting_acceptance", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_scripting_compiler"])
+        self.assertTrue(plan.step_outputs["run_phase1"])
+        self.assertTrue(plan.step_outputs["run_simulator_scripting_acceptance"])
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+
+        # Unrelated suites must NOT run
+        self.assertNotIn("nativescript_runtime", plan.selected_groups)
+        self.assertNotIn("nativescript_dependencies", plan.selected_groups)
+        self.assertNotIn("python_runtime", plan.selected_groups)
+        self.assertNotIn("node_runtime", plan.selected_groups)
+        self.assertNotIn("device_build", plan.selected_groups)
+        self.assertNotIn("ipa_packaging", plan.selected_groups)
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
+    # 3. NativeScript fixture -> targeted NativeScript validation
+    def test_nativescript_fixture_change(self) -> None:
+        changed = [
+            "Scripts/NativeScript/Fixtures/Source/app.ts",
+            "Scripts/NativeScript/Fixtures/Source/swiftui-app.ts",
+        ]
+        plan = self.plan_files(changed)
+
+        self.assertIn("nativescript_dependencies", plan.selected_groups)
+        self.assertIn("simulator_targeted_ui", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+
+        # Fixture changes do NOT build release IPA or run phase 1 Swift packages
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertFalse(plan.step_outputs["run_platform_contracts"])
+        self.assertFalse(plan.step_outputs["run_scripting_compiler"])
+
+    # 4. NativeScript native provider -> required native/link validation
+    def test_nativescript_native_provider_change(self) -> None:
+        changed = [
+            "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeScriptCoreSupport.mm",
+            "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/FixtureSupport/HanlinNativeScriptSwiftUIFixtureProvider.swift",
+        ]
+        plan = self.plan_files(changed)
+
+        self.assertIn("nativescript_runtime", plan.selected_groups)
+        self.assertIn("simulator_targeted_ui", plan.selected_groups)
+        self.assertNotIn("device_build", plan.selected_groups)
+        self.assertIn("nativescript_dependencies", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_nativescript_runtime"])
+        self.assertTrue(plan.step_outputs["run_phase1"])
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+
+        # Does not run unrelated suites
+        self.assertNotIn("scripting_reference", plan.selected_groups)
+        self.assertNotIn("python_runtime", plan.selected_groups)
+        self.assertNotIn("node_runtime", plan.selected_groups)
+        self.assertFalse(plan.step_outputs["run_scripting_reference"])
+
+    # 5. UI-flow source -> corresponding UI/unit validation only
+    def test_ui_flow_source_change(self) -> None:
+        changed = [
+            "AI_HLY/Views/ChatView.swift",
+            "AI_HLY/MainTabView.swift",
+        ]
+        plan = self.plan_files(changed)
+
+        self.assertIn("app_unit_tests", plan.selected_groups)
+        self.assertIn("simulator_smoke_launch", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+
+        # Must not package IPA or run phase 1 or run NativeScript E2E UI
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertFalse(plan.step_outputs["run_phase1"])
+        self.assertFalse(plan.step_outputs["run_simulator_targeted_ui"])
+
+    # 6. Device packaging input -> device/IPA validation only where appropriate
+    def test_device_packaging_change(self) -> None:
+        changed = [
+            "AI_HLY.xcodeproj/project.pbxproj",
+            "AI-HLY-Info.plist",
+        ]
+        plan = self.plan_files(changed)
+
+        self.assertIn("device_build", plan.selected_groups)
+        self.assertIn("ipa_packaging", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_device_build"])
+        self.assertTrue(plan.step_outputs["run_ipa_packaging"])
+
+        # Packaging changes do not boot iPad simulator
+        self.assertFalse(plan.step_outputs["run_simulator_job"])
+        self.assertFalse(plan.step_outputs["run_simulator_unit"])
+        self.assertFalse(plan.step_outputs["run_simulator_targeted_ui"])
+
+    # 7. Shared dependency -> correct downstream union
+    def test_shared_dependency_expands_to_consumers(self) -> None:
+        changed = [
+            "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPlatformContracts.swift",
+        ]
+        plan = self.plan_files(changed)
+
+        self.assertIn("platform_contracts", plan.selected_groups)
+        self.assertIn("app_unit_tests", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_platform_contracts"])
+        self.assertTrue(plan.step_outputs["run_phase1"])
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+
+        # Unrelated runtimes must NOT run
+        self.assertNotIn("nativescript_runtime", plan.selected_groups)
+        self.assertNotIn("python_runtime", plan.selected_groups)
+        self.assertNotIn("node_runtime", plan.selected_groups)
+        self.assertFalse(plan.step_outputs["run_nativescript_runtime"])
+
+    # 8. Test-only change -> owning target
+    def test_test_only_change_targets_owning_suite(self) -> None:
+        changed = [
+            "AI_HLYTests/CanonicalAdapterTests.swift",
+        ]
+        plan = self.plan_files(changed)
+
+        self.assertIn("app_unit_tests", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+
+        # Must not run broad unrelated suites
+        self.assertFalse(plan.step_outputs["run_phase1"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertFalse(plan.step_outputs["run_simulator_scripting_acceptance"])
+
+    # 9. Unknown path -> planner fails with UnmappedPathsError, NOT full
+    def test_unknown_path_fails_planner_without_full_fallback(self) -> None:
+        changed = [
+            "UnexpectedModule/NewFeature.swift",
+            "RandomDirectory/data.csv",
+        ]
+        with self.assertRaises(planner.UnmappedPathsError) as ctx:
+            self.plan_files(changed)
+
+        self.assertIn("UnexpectedModule/NewFeature.swift", ctx.exception.unmapped_paths)
+        self.assertIn("RandomDirectory/data.csv", ctx.exception.unmapped_paths)
+
+    # 10. Explicit full validation -> all groups
+    def test_explicit_full_validation_selects_all_groups(self) -> None:
+        changed = ["README.md"]
+        plan = self.plan_files(changed, full_validation=True)
+
+        self.assertTrue(plan.is_full_validation)
+        self.assertTrue(plan.step_outputs["run_full_validation"])
+        self.assertTrue(plan.step_outputs["run_phase1"])
+        self.assertTrue(plan.step_outputs["run_device_build"])
+        self.assertTrue(plan.step_outputs["run_ipa_packaging"])
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertTrue(plan.step_outputs["run_simulator_shell_acceptance"])
+        self.assertTrue(plan.step_outputs["run_simulator_mcp_acceptance"])
+        self.assertEqual(len(plan.skipped_expensive_groups), 0)
+
+    # 11. Default invocation -> full_validation=false
+    def test_default_invocation_has_full_validation_false(self) -> None:
+        changed = ["Scripts/CI/xcode_cache_inputs.py"]
+        plan = self.plan_files(changed)
+
+        self.assertFalse(plan.is_full_validation)
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+        self.assertIn("ci_router", plan.selected_groups)
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_simulator_job"])
+
+    # 12. Explicit targeted rerun -> only requested group plus prerequisites
+    def test_explicit_targeted_rerun_with_prerequisites(self) -> None:
+        changed = []  # No changed files
+        plan = self.plan_files(
+            changed,
+            target_group="nativescript_runtime",
+        )
+
+        self.assertFalse(plan.is_full_validation)
+        self.assertIn("nativescript_runtime", plan.selected_groups)
+        self.assertIn("nativescript_dependencies", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_nativescript_runtime"])
+        self.assertTrue(plan.step_outputs["run_nativescript_dependencies"])
+        self.assertTrue(plan.step_outputs["run_phase1"])
+
+        # Unrelated groups remain skipped
+        self.assertNotIn("scripting_compiler", plan.selected_groups)
+        self.assertNotIn("platform_contracts", plan.selected_groups)
+        self.assertNotIn("device_build", plan.selected_groups)
+        self.assertFalse(plan.step_outputs["run_device_build"])
+
+    def test_runtime_tooling_target_builds_every_collected_suite_once(self) -> None:
+        plan = self.plan_files([], target_group="runtime_tooling_full_acceptance")
+
+        self.assertTrue(plan.step_outputs["run_runtime_tooling_full_acceptance"])
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+        self.assertTrue(plan.step_outputs["run_runtimecore_host"])
+        build_args = plan.step_outputs["simulator_build_for_testing_args"]
+        self.assertIn("-only-testing:AI_HLYTests", build_args)
+        self.assertIn("-only-testing:AI_HLYUITests/HanlinRuntimeInstallationUITests", build_args)
+        self.assertIn("-only-testing:AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests", build_args)
+        self.assertIn("-only-testing:AI_HLYUITests/AgentRuntimeConversationUITests", build_args)
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Release")
+
+    # 13. Base SHA resolution failure throws actionable BaseSHAResolutionError
+    def test_base_sha_resolution_error_diagnostic(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            repo_path = Path(temp_dir)
+            with self.assertRaises(planner.BaseSHAResolutionError) as ctx:
+                planner.resolve_comparison_range(
+                    repo_root=repo_path,
+                    event_name="workflow_dispatch",
+                    event_payload={},
+                    compare_base_sha_input="non_existent_sha_00000",
+                    head_sha_input="head_sha_12345",
+                )
+
+            err = ctx.exception
+            self.assertEqual(err.head_sha, "head_sha_12345")
+            self.assertIn("non_existent_sha_00000", err.candidate_shas)
+            self.assertIn("does not exist", err.reason)
+
+    # 14. Manual modes integration
+    def test_manual_mode_runtime_bundle_only(self) -> None:
+        plan = self.plan_files(
+            ["README.md"],
+            manual_modes={"runtime_bundle_only": True},
+        )
+        self.assertTrue(plan.step_outputs["run_runtimecore_bundle"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_simulator_job"])
+
+    def test_manual_mode_fast_validation_only(self) -> None:
+        plan = self.plan_files(
+            ["README.md"],
+            manual_modes={"fast_validation_only": True},
+        )
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertTrue(plan.step_outputs["run_simulator_smoke_launch"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+    def test_glob_pattern_with_wildcard_prefix_and_double_star(self) -> None:
+        self.assertTrue(
+            planner.match_pattern("AI_HLY/en.lproj/InfoPlist.strings", "AI_HLY/*.lproj/**")
+        )
+        self.assertTrue(
+            planner.match_pattern("AI_HLY/he.lproj/InfoPlist.strings", "AI_HLY/*.lproj/**")
+        )
+        self.assertFalse(
+            planner.match_pattern("Other/en.lproj/InfoPlist.strings", "AI_HLY/*.lproj/**")
+        )
+
+    # MARK: - Prompt Section 9 Regression Test Cases (A through F)
+
+    # Case A: simulator_e2e_only=true strictly suppresses device_build and ipa_packaging
+    def test_case_a_simulator_e2e_only_suppresses_device_build(self) -> None:
+        changed = [
+            "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeScriptCoreSupport.mm",
+        ]
+        plan = self.plan_files(
+            changed,
+            manual_modes={"simulator_e2e_only": True},
+        )
+        self.assertFalse(plan.is_full_validation)
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertFalse(plan.step_outputs["run_simulator_unit"])
+        self.assertFalse(plan.step_outputs["run_simulator_scripting_acceptance"])
+        self.assertNotIn("device_build", plan.selected_groups)
+        self.assertNotIn("ipa_packaging", plan.selected_groups)
+        self.assertNotIn("app_unit_tests", plan.selected_groups)
+        self.assertNotIn("simulator_scripting_acceptance", plan.selected_groups)
+        self.assertEqual(
+            plan.step_outputs["simulator_build_for_testing_args"],
+            "-only-testing:AI_HLYUITests/HanlinNativeScriptProductionE2ETests",
+        )
+
+    # Case B: NativeScript runtime/fixture source only -> NativeScript UI suite only
+    def test_case_b_nativescript_only_selects_nativescript_ui_filter(self) -> None:
+        changed = [
+            "Scripts/NativeScript/Fixtures/Source/app.ts",
+        ]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertEqual(
+            plan.step_outputs["simulator_ui_filter"],
+            "AI_HLYUITests/HanlinNativeScriptProductionE2ETests",
+        )
+        self.assertNotIn(
+            "AI_HLYUITests/HanlinRuntimeInstallationUITests",
+            plan.step_outputs["simulator_ui_filter"],
+        )
+
+    # Case C: Runtime Installation UI/package-manager source only -> Runtime UI suite only
+    def test_case_c_runtime_install_only_selects_runtime_ui_filter(self) -> None:
+        changed = [
+            "AI_HLY/Downstream/RuntimeCore/UI/NodePackagesView.swift",
+        ]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        expected_filter = (
+            "AI_HLYUITests/HanlinRuntimeInstallationUITests/testNodePackageManagerUIWorkflowAndFailure,"
+            "AI_HLYUITests/HanlinRuntimeInstallationUITests/testNodePackageManagerUIWorkflowAndSuccess"
+        )
+        self.assertEqual(
+            plan.step_outputs["simulator_ui_filter"],
+            expected_filter,
+        )
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Debug")
+        self.assertFalse(plan.step_outputs["run_nativescript_dependencies"])
+        self.assertNotIn(
+            "AI_HLYUITests/HanlinNativeScriptProductionE2ETests",
+            plan.step_outputs["simulator_ui_filter"],
+        )
+        self.assertFalse(plan.step_outputs["run_device_build"])
+
+    # Case D: Both affected -> exact union of the two suites
+    def test_case_d_both_affected_selects_union_ui_filter(self) -> None:
+        changed = [
+            "Scripts/NativeScript/Fixtures/Source/app.ts",
+            "AI_HLY/Downstream/RuntimeCore/UI/NodePackagesView.swift",
+        ]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        expected_filter = (
+            "AI_HLYUITests/HanlinNativeScriptProductionE2ETests,"
+            "AI_HLYUITests/HanlinRuntimeInstallationUITests/testNodePackageManagerUIWorkflowAndFailure,"
+            "AI_HLYUITests/HanlinRuntimeInstallationUITests/testNodePackageManagerUIWorkflowAndSuccess"
+        )
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], expected_filter)
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Release")
+        self.assertTrue(plan.step_outputs["run_nativescript_dependencies"])
+
+    def test_python_package_manager_isolated_fast_path(self) -> None:
+        changed = [
+            "AI_HLY/Downstream/RuntimeCore/Python/PythonPackageManager.swift",
+        ]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        expected_filter = (
+            "AI_HLYUITests/HanlinRuntimeInstallationUITests/testPythonPackageManagerUIWorkflowAndFailure,"
+            "AI_HLYUITests/HanlinRuntimeInstallationUITests/testPythonPackageManagerUIWorkflowAndSuccess"
+        )
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], expected_filter)
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Debug")
+        self.assertFalse(plan.step_outputs["run_nativescript_dependencies"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_host"])
+        self.assertNotIn("AI_HLYUITests/HanlinNativeScriptProductionE2ETests", plan.step_outputs["simulator_ui_filter"])
+        self.assertNotIn("testNodePackageManager", plan.step_outputs["simulator_ui_filter"])
+        self.assertNotIn("testMCPServerInstallation", plan.step_outputs["simulator_ui_filter"])
+        expected_build_args = (
+            "-only-testing:AI_HLYUITests/HanlinRuntimeInstallationUITests/testPythonPackageManagerUIWorkflowAndFailure "
+            "-only-testing:AI_HLYUITests/HanlinRuntimeInstallationUITests/testPythonPackageManagerUIWorkflowAndSuccess"
+        )
+        self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"], expected_build_args)
+
+    def test_runtime_install_ui_test_file_direct_change_runs_class_level(self) -> None:
+        changed = [
+            "AI_HLYUITests/HanlinRuntimeInstallationUITests.swift",
+        ]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], "AI_HLYUITests/HanlinRuntimeInstallationUITests")
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Debug")
+        self.assertFalse(plan.step_outputs["run_nativescript_dependencies"])
+
+    def test_combined_parent_and_child_ui_suites_prune_duplicates(self) -> None:
+        changed = [
+            "AI_HLYUITests/HanlinRuntimeInstallationUITests.swift",
+            "AI_HLY/Downstream/RuntimeCore/UI/PythonPackagesView.swift",
+        ]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], "AI_HLYUITests/HanlinRuntimeInstallationUITests")
+        self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"], "-only-testing:AI_HLYUITests/HanlinRuntimeInstallationUITests")
+
+    # Case E: Test-only Runtime path -> owning tests only, no device/IPA build
+    def test_case_e_runtime_test_only_never_selects_device_or_ipa(self) -> None:
+        changed = [
+            "Scripts/Runtime/Tests/test_validate_shell_acceptance.py",
+        ]
+        plan = self.plan_files(changed)
+        self.assertIn("runtimecore_host", plan.selected_groups)
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertNotIn("device_build", plan.selected_groups)
+        self.assertNotIn("ipa_packaging", plan.selected_groups)
+
+    # Case F: Unknown UI component requiring targeted UI -> fails planner without fallback
+    def test_case_f_unmapped_ui_file_fails_planner_without_fallback(self) -> None:
+        changed = [
+            "AI_HLYUITests/SomeUnknownFutureUITest.swift",
+        ]
+        with self.assertRaises(planner.UnmappedPathsError) as ctx:
+            self.plan_files(changed)
+        self.assertIn("AI_HLYUITests/SomeUnknownFutureUITest.swift", ctx.exception.unmapped_paths)
+
+    def test_case_f_unmapped_targeted_ui_suite_raises_routing_error(self) -> None:
+        custom_mapping = json.loads(json.dumps(self.mapping_config))
+        custom_mapping["components"]["hypothetical_ui"] = {
+            "description": "Component selecting targeted UI without ui_suites",
+            "patterns": ["AI_HLY/HypotheticalUI/**"],
+            "direct_validation_groups": ["simulator_targeted_ui"],
+            "consumers": [],
+        }
+        with self.assertRaises(planner.RoutingError) as ctx:
+            planner.plan_affected_validation(
+                mapping_config=custom_mapping,
+                changed_files=["AI_HLY/HypotheticalUI/Test.swift"],
+                base_sha="abc1234567890",
+                head_sha="def9876543210",
+                event_name="workflow_dispatch",
+            )
+        self.assertIn("no specific UI test suite mapping was found", str(ctx.exception))
+
+    # ScriptUI Fixture Staging Dependency Selection Tests
+    def test_scriptui_test_file_change_selects_fixture_staging(self) -> None:
+        changed = ["AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift"]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertIn("AI_HLYUITests/HanlinScriptUIProductionE2ETests", plan.step_outputs["simulator_ui_filter"])
+        self.assertTrue(plan.step_outputs["stage_scriptui_fixtures"])
+        self.assertFalse(plan.step_outputs["run_nativescript_dependencies"])
+        self.assertIn("| **ScriptUI Fixture Staging** | `true` |", plan.render_markdown_summary())
+
+    def test_scriptui_fixture_archive_change_selects_fixture_staging(self) -> None:
+        changed = ["AI_HLYUITests/Fixtures/HanlinScriptUIValid.scripting"]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["stage_scriptui_fixtures"])
+        self.assertIn("AI_HLYUITests/HanlinScriptUIProductionE2ETests", plan.step_outputs["simulator_ui_filter"])
+
+    def test_unrelated_ui_change_skips_scriptui_fixture_staging(self) -> None:
+        changed = ["AI_HLY/Downstream/RuntimeCore/UI/NodePackagesView.swift"]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertFalse(plan.step_outputs["stage_scriptui_fixtures"])
+        self.assertIn("| **ScriptUI Fixture Staging** | `false` |", plan.render_markdown_summary())
+
+    def test_full_validation_enables_scriptui_fixture_staging(self) -> None:
+        plan = self.plan_files(["README.md"], full_validation=True)
+        self.assertTrue(plan.step_outputs["stage_scriptui_fixtures"])
+
+    # Narrowed Unit Suites & RuntimeCore Host Dependency Selection Tests
+    def test_scripting_platform_routes_narrowed_unit_and_ui_suites(self) -> None:
+        changed = ["AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift"]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertEqual(
+            plan.step_outputs["simulator_unit_filter"],
+            "AI_HLYTests/CanonicalAdapterTests,AI_HLYTests/HanlinScriptPackageProductionE2ETests,AI_HLYTests/VoiceRecordingLifecycleTests",
+        )
+        self.assertNotIn("HanlinScriptingProductionCompilerAcceptanceTests", plan.step_outputs["simulator_unit_filter"])
+        self.assertNotIn("HanlinScriptPackagePhysicalIPadRegressionTests", plan.step_outputs["simulator_unit_filter"])
+        self.assertTrue(plan.step_outputs["run_runtimecore_host"])
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Debug")
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+
+    def test_canonical_adapter_unit_test_file_routes_narrow_suite_without_host(self) -> None:
+        changed = ["AI_HLYTests/CanonicalAdapterTests.swift"]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/CanonicalAdapterTests")
+        self.assertFalse(plan.step_outputs["run_runtimecore_host"])
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Debug")
+
+    def test_unmapped_unit_suite_raises_routing_error(self) -> None:
+        custom_mapping = json.loads(json.dumps(self.mapping_config))
+        custom_mapping["components"]["hypothetical_app_core"] = {
+            "description": "Component selecting app_unit_tests without unit_suites",
+            "patterns": ["AI_HLY/HypotheticalCore/**"],
+            "direct_validation_groups": ["app_unit_tests"],
+            "consumers": [],
+        }
+        with self.assertRaises(planner.RoutingError) as ctx:
+            planner.plan_affected_validation(
+                mapping_config=custom_mapping,
+                changed_files=["AI_HLY/HypotheticalCore/Core.swift"],
+                base_sha="abc1234567890",
+                head_sha="def9876543210",
+                event_name="workflow_dispatch",
+            )
+        self.assertIn("no specific unit test suite mapping was found", str(ctx.exception))
+
+    def test_parent_suite_ai_hlytests_requires_runtimecore_host(self) -> None:
+        # When full_validation selects AI_HLYTests (parent), it contains Node-dependent suites,
+        # so runtimecore_host must be activated.
+        plan = self.plan_files(["README.md"], full_validation=True)
+        self.assertTrue(plan.step_outputs["run_runtimecore_host"])
+
+    def test_narrow_non_node_suite_does_not_require_runtimecore_host(self) -> None:
+        # A file that maps only to a non-Node adapter suite must NOT activate runtimecore_host.
+        changed = ["AI_HLYTests/CanonicalShadowCoordinatorTests.swift"]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/CanonicalShadowCoordinatorTests")
+        self.assertFalse(plan.step_outputs["run_runtimecore_host"])
+
+    def test_runtime_performance_test_change(self) -> None:
+        changed = ["AI_HLYTests/HanlinRuntimePerformanceTests.swift"]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/HanlinRuntimePerformanceTests")
+        self.assertTrue(plan.step_outputs["run_runtimecore_host"])
+        self.assertFalse(plan.step_outputs["run_simulator_targeted_ui"])
+
+    def test_ui_performance_test_change(self) -> None:
+        changed = ["AI_HLYUITests/HanlinUIPerformanceUITests.swift"]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], "AI_HLYUITests/HanlinUIPerformanceUITests")
+        self.assertTrue(plan.step_outputs["stage_scriptui_fixtures"])
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/HanlinRuntimePerformanceTests")
+    def test_agent_runtime_conversation_acceptance_tests_change_routes_to_targeted_unit(self) -> None:
+        changed = ["AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift"]
+        plan = self.plan_files(changed)
+        self.assertIn("app_unit_tests", plan.selected_groups)
+        self.assertNotIn("runtime_tooling_full_acceptance", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertFalse(plan.step_outputs["run_runtime_tooling_full_acceptance"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/AgentRuntimeConversationAcceptanceTests")
+
+    def test_agent_runtime_conversation_ui_tests_change_routes_to_targeted_ui(self) -> None:
+        changed = ["AI_HLYUITests/AgentRuntimeConversationUITests.swift"]
+        plan = self.plan_files(changed)
+        self.assertIn("simulator_targeted_ui", plan.selected_groups)
+        self.assertNotIn("runtime_tooling_full_acceptance", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertFalse(plan.step_outputs["run_runtime_tooling_full_acceptance"])
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], "AI_HLYUITests/AgentRuntimeConversationUITests")
+
+    def test_runtime_center_view_change_routes_to_targeted_runtime_center_ui(self) -> None:
+        changed = ["AI_HLY/Downstream/RuntimeCore/UI/RuntimeCenterView.swift"]
+        plan = self.plan_files(changed)
+        self.assertIn("simulator_targeted_ui", plan.selected_groups)
+        self.assertNotIn("runtime_tooling_full_acceptance", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertFalse(plan.step_outputs["run_runtime_tooling_full_acceptance"])
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], "AI_HLYUITests/HanlinRuntimeInstallationUITests/testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness")
+
+    def test_run_runtime_tooling_acceptance_script_change_routes_to_full_acceptance(self) -> None:
+        changed = ["Scripts/Runtime/run_runtime_tooling_acceptance.py"]
+        plan = self.plan_files(changed)
+        self.assertIn("runtime_tooling_full_acceptance", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_runtime_tooling_full_acceptance"])
+
+    def test_explicit_runtime_tooling_full_acceptance_override(self) -> None:
+        plan = self.plan_files(["README.md"], target_group="runtime_tooling_full_acceptance")
+        self.assertIn("runtime_tooling_full_acceptance", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_runtime_tooling_full_acceptance"])
+
+    def test_nativescript_runtime_change_receives_native_release_validation(self) -> None:
+        changed = ["Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m"]
+        plan = self.plan_files(changed)
+        self.assertIn("nativescript_runtime", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_nativescript_runtime"])
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Release")
+
+    def test_runtime_tooling_full_acceptance_deduplication_and_scoped_build(self) -> None:
+        changed = [
+            "AI_HLYTests/RuntimeToolContractTests.swift",
+            "AI_HLYTests/AgentSkillsExposureTests.swift",
+        ]
+        plan = self.plan_files(changed, target_group="runtime_tooling_full_acceptance")
+        self.assertTrue(plan.step_outputs["run_runtime_tooling_full_acceptance"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"],
+            "AI_HLYTests/AgentSkillsExposureTests,AI_HLYTests/HanlinCapabilityObservationTests")
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        bft = plan.step_outputs["simulator_build_for_testing_args"]
+        self.assertNotIn("-only-testing:AI_HLYTests ", bft)
+        self.assertFalse(bft.endswith("-only-testing:AI_HLYTests"))
+        self.assertIn("-only-testing:AI_HLYTests/RuntimeToolContractTests", bft)
+        self.assertIn("-only-testing:AI_HLYTests/AgentSkillsExposureTests", bft)
+        self.assertEqual(bft.split().count("-only-testing:AI_HLYTests/HanlinCapabilityObservationTests"), 1)
+        self.assertIn("-only-testing:AI_HLYUITests/HanlinRuntimeInstallationUITests", bft)
+
+    def test_explicit_component_targeted_validation_avoids_full_acceptance(self) -> None:
+        changed = [
+            "Scripts/Runtime/run_runtime_tooling_acceptance.py",
+            "AI_HLYTests/RuntimePackageAcceptanceTests.swift",
+        ]
+        plan = self.plan_files(changed, target_group="runtime_package_acceptance_unit_tests")
+        self.assertFalse(plan.step_outputs["run_runtime_tooling_full_acceptance"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_phase1"])
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "AI_HLYTests/RuntimePackageAcceptanceTests")
+        self.assertIn("app_unit_tests", plan.selected_groups)
+        self.assertNotIn("runtime_tooling_full_acceptance", plan.selected_groups)
+
+    def test_exact_test_selector_routes_only_selected_ui_method(self) -> None:
+        selector = "AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime"
+        plan = planner.plan_affected_validation(
+            mapping_config=self.mapping_config,
+            changed_files=["PROJECT_BOARD.md"],
+            base_sha="abc1234567890",
+            head_sha="def9876543210",
+            event_name="workflow_dispatch",
+            exact_test_selector=selector,
+        )
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertFalse(plan.step_outputs["run_simulator_unit"])
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], selector)
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "")
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Release")
+        self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"], f"-only-testing:{selector}")
+        self.assertNotIn("-configuration", plan.step_outputs["simulator_build_for_testing_args"])
+
+    def test_exact_test_selector_routes_only_selected_unit_method(self) -> None:
+        selector = "AI_HLYTests/HanlinUnifiedHostServicesTests/capabilityCheckWithPackageIdentityAndContextFallback"
+        plan = planner.plan_affected_validation(
+            mapping_config=self.mapping_config,
+            changed_files=["PROJECT_BOARD.md"],
+            base_sha="abc1234567890",
+            head_sha="def9876543210",
+            event_name="workflow_dispatch",
+            exact_test_selector=selector,
+        )
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertFalse(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], selector)
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], "")
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertEqual(plan.step_outputs["simulator_configuration"], "Debug")
+        self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"], f"-only-testing:{selector}")
+        self.assertNotIn("-configuration", plan.step_outputs["simulator_build_for_testing_args"])
+
+    def test_native_api_bridge_changes_require_expo_runtime_validation(self) -> None:
+        plan = self.plan_files([
+            "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/Runtime/HanlinExpoRuntimeScheduler.mm",
+            "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs",
+        ])
+        self.assertIn("expo_runtime", plan.affected_components)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertIn("AI_HLYUITests/HanlinExpoProductionE2ETests", plan.step_outputs["simulator_ui_filter"])
+
+    def test_exact_selectors_mix_unit_and_ui_without_broadening(self) -> None:
+        unit = "AI_HLYTests/ModelPopoverZoomOrderTests"
+        ui = "AI_HLYUITests/AgentRuntimeConversationUITests/testCompactToolsManagementDestinationsPreserveDraft"
+        plan = self.plan_files(["README.md"], exact_test_selector=unit + "," + ui)
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], unit)
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], ui)
+        self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"],
+                         f"-only-testing:{unit} -only-testing:{ui}")
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertNotIn("AI_HLYUITests/AgentRuntimeConversationUITests", plan.not_required_tests)
+
+    def test_composer_ui_file_routes_and_exact_consumers_remain_bounded(self) -> None:
+        path = "AI_HLYUITests/HanlinMorphComposerUITests.swift"
+        ordinary = self.plan_files([path])
+        self.assertEqual(ordinary.step_outputs["simulator_ui_filter"],
+                         "AI_HLYUITests/HanlinMorphComposerUITests")
+        self.assertFalse(ordinary.step_outputs["run_simulator_unit"])
+        self.assertFalse(ordinary.step_outputs["run_device_build"])
+        unit = "AI_HLYTests/ModelPopoverZoomOrderTests/nativeCatalogRegistrationFeedsExistingPickerWithoutIndexDrift()"
+        ui = "AI_HLYUITests/HanlinMorphComposerUITests/testEnabledToolsChipOpensSettingsAndContextMenuDisables"
+        exact = self.plan_files([path, "AI_HLYTests/HanlinOrganizerDockParityTests.swift"],
+                                exact_test_selector=unit + "," + ui)
+        self.assertEqual(exact.step_outputs["simulator_unit_filter"], unit)
+        self.assertEqual(exact.step_outputs["simulator_ui_filter"], ui)
+        self.assertEqual(exact.step_outputs["simulator_build_for_testing_args"],
+                         f"-only-testing:{unit} -only-testing:{ui}")
+        self.assertFalse(exact.step_outputs["run_device_build"])
+        self.assertFalse(exact.step_outputs["run_ipa_packaging"])
+
+    def test_model_host_context_has_a_focused_real_unit_route(self) -> None:
+        suite = "AI_HLYTests/HanlinModelHostingEnvironmentTests"
+        standalone = self.plan_files(["AI_HLYTests/HanlinModelHostingEnvironmentTests.swift"])
+        self.assertEqual(standalone.step_outputs["simulator_unit_filter"], suite)
+        self.assertFalse(standalone.step_outputs["run_simulator_targeted_ui"])
+        self.assertFalse(standalone.step_outputs["run_device_build"])
+        changed_host = self.plan_files(["AI_HLY/Downstream/ChatInput/HanlinModelZoomPopover.swift"])
+        self.assertIn(suite, changed_host.step_outputs["simulator_unit_filter"].split(","))
+        method = suite + "/nativeHostRetainsCatalogContextAcrossRootUpdates()"
+        exact = self.plan_files(["AI_HLY/Downstream/ChatInput/HanlinModelZoomPopover.swift"],
+                                exact_test_selector=method)
+        self.assertEqual(exact.step_outputs["simulator_build_for_testing_args"], f"-only-testing:{method}")
+        self.assertFalse(exact.step_outputs["run_device_build"])
+        self.assertFalse(exact.step_outputs["run_ipa_packaging"])
+
+    def test_exact_selectors_reject_invalid_members(self) -> None:
+        valid = "AI_HLYTests/VoiceRecordingLifecycleTests"
+        for suffix in [",", ",OtherBundle/Suite", ",AI_HLYUITests/Suite;echo"]:
+            # Surrounding whitespace is accepted, but a missing path, unknown
+            # bundle or shell syntax must never reach xcodebuild.
+            with self.subTest(suffix=suffix), self.assertRaises(planner.RoutingError):
+                self.plan_files(["README.md"], exact_test_selector=valid + suffix)
+
+    def test_exact_selectors_reject_modes_that_skip_requested_cases(self) -> None:
+        unit = "AI_HLYTests/ModelPopoverZoomOrderTests"
+        ui = "AI_HLYUITests/AgentRuntimeConversationUITests/testModelPopoverZoomExpandThenNavigate"
+        for selector, mode in [
+            (ui, "fast_validation_only"),
+            (unit + "," + ui, "fast_validation_only"),
+            (unit, "simulator_e2e_only"),
+            (unit + "," + ui, "simulator_e2e_only"),
+            (ui, "nativescript_poc_only"),
+        ]:
+            with self.subTest(selector=selector, mode=mode):
+                with self.assertRaisesRegex(planner.RoutingError, mode):
+                    self.plan_files(["README.md"], exact_test_selector=selector,
+                                    manual_modes={mode: True})
+
+    def test_exact_selectors_allow_compatible_execution_modes(self) -> None:
+        for selector, mode, output in [
+            ("AI_HLYTests/ModelPopoverZoomOrderTests", "fast_validation_only", "run_simulator_unit"),
+            ("AI_HLYUITests/AgentRuntimeConversationUITests/testModelPopoverZoomExpandThenNavigate",
+             "simulator_e2e_only", "run_simulator_targeted_ui"),
+        ]:
+            with self.subTest(selector=selector, mode=mode):
+                plan = self.plan_files(["README.md"], exact_test_selector=selector,
+                                       manual_modes={mode: True})
+                self.assertTrue(plan.step_outputs[output])
+
+    def test_exact_selectors_deduplicate_and_keep_method_boundaries(self) -> None:
+        method = "AI_HLYTests/VoiceRecordingLifecycleTests/testVR17_StressFiftyRapidCycles"
+        plan = self.plan_files(["README.md"], exact_test_selector=f" {method} , {method} ")
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], method)
+        self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"], f"-only-testing:{method}")
+
+    def test_exact_test_selector_rejects_malformed_input(self) -> None:
+        with self.assertRaises(planner.RoutingError) as ctx:
+            planner.plan_affected_validation(
+                mapping_config=self.mapping_config,
+                changed_files=["PROJECT_BOARD.md"],
+                base_sha="abc1234567890",
+                head_sha="def9876543210",
+                event_name="workflow_dispatch",
+                exact_test_selector="AI_HLYUITests/HanlinNativeScriptProductionE2ETests; rm -rf /",
+            )
+        self.assertIn("Invalid exact-test-selector format", str(ctx.exception))
+
+    def test_exact_test_selector_rejects_contradictory_full_validation(self) -> None:
+        with self.assertRaises(planner.RoutingError) as ctx:
+            planner.plan_affected_validation(
+                mapping_config=self.mapping_config,
+                changed_files=["PROJECT_BOARD.md"],
+                base_sha="abc1234567890",
+                head_sha="def9876543210",
+                event_name="workflow_dispatch",
+                full_validation=True,
+                exact_test_selector="AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime",
+            )
+        self.assertIn("Contradictory options", str(ctx.exception))
+
+
+class TestDependencyLedgerTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.ledger = planner.TestDependencyLedger(Path(__file__).parents[2])
+
+    def test_ledger_rejects_non_passing_status(self) -> None:
+        res = self.ledger.evaluate_test_reuse(
+            test_id="TEST-01",
+            suite_or_name="HanlinNativeScriptProductionE2ETests",
+            origin_sha="0095b6441e8968d4200e8cd8acf42f61b46b7c59",
+            target_sha="0095b6441e8968d4200e8cd8acf42f61b46b7c59",
+            original_status="Failed",
+        )
+        self.assertEqual(res["decision"], "INVALIDATE")
+        self.assertIn("not passing", res["reason"])
+
+    def test_ledger_accepts_identical_origin_and_target_sha(self) -> None:
+        head_sha = planner.run_git(["rev-parse", "HEAD"], cwd=self.ledger.repo_root)
+        res = self.ledger.evaluate_test_reuse(
+            test_id="TEST-01",
+            suite_or_name="HanlinNativeScriptProductionE2ETests",
+            origin_sha=head_sha,
+            target_sha=head_sha,
+            original_status="Passed",
+        )
+        self.assertEqual(res["decision"], "REUSE_VERIFIED")
+        self.assertIn("matches target SHA exactly", res["reason"])
+
+    def test_ledger_invalidates_on_changed_shared_dependency(self) -> None:
+        # Simulate diff with Package.resolved
+        with unittest.mock.patch.object(planner, "get_changed_files", return_value=["Package.resolved"]):
+            with unittest.mock.patch.object(planner, "git_commit_exists", return_value=True):
+                with unittest.mock.patch("subprocess.run") as mock_run:
+                    mock_run.return_value.returncode = 0
+                    res = self.ledger.evaluate_test_reuse(
+                        test_id="TEST-01",
+                        suite_or_name="HanlinNativeScriptProductionE2ETests",
+                        origin_sha="1111111111111111111111111111111111111111",
+                        target_sha="2222222222222222222222222222222222222222",
+                        original_status="Passed",
+                    )
+                    self.assertEqual(res["decision"], "INVALIDATE")
+                    self.assertIn("Global shared dependency changed", res["reason"])
+
+    def test_ledger_invalidates_on_changed_test_specific_dependency(self) -> None:
+        # Simulate diff with NativeScript bridge
+        with unittest.mock.patch.object(
+            planner,
+            "get_changed_files",
+            return_value=["Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m"],
+        ):
+            with unittest.mock.patch.object(planner, "git_commit_exists", return_value=True):
+                with unittest.mock.patch("subprocess.run") as mock_run:
+                    mock_run.return_value.returncode = 0
+                    res = self.ledger.evaluate_test_reuse(
+                        test_id="TEST-01",
+                        suite_or_name="HanlinNativeScriptProductionE2ETests",
+                        origin_sha="1111111111111111111111111111111111111111",
+                        target_sha="2222222222222222222222222222222222222222",
+                        original_status="Passed",
+                    )
+                    self.assertEqual(res["decision"], "INVALIDATE")
+                    self.assertIn("Test-specific dependency changed", res["reason"])
+
+    def test_ledger_accepts_docs_only_commit(self) -> None:
+        with unittest.mock.patch.object(
+            planner,
+            "get_changed_files",
+            return_value=["README.md", "docs/architecture.md"],
+        ):
+            with unittest.mock.patch.object(planner, "git_commit_exists", return_value=True):
+                with unittest.mock.patch("subprocess.run") as mock_run:
+                    mock_run.return_value.returncode = 0
+                    res = self.ledger.evaluate_test_reuse(
+                        test_id="TEST-01",
+                        suite_or_name="HanlinNativeScriptProductionE2ETests",
+                        origin_sha="1111111111111111111111111111111111111111",
+                        target_sha="2222222222222222222222222222222222222222",
+                        original_status="Passed",
+                    )
+                    self.assertEqual(res["decision"], "REUSE_VERIFIED")
+                    self.assertIn("Verified clean dependency closure", res["reason"])
+
+    def test_ledger_fails_closed_on_unknown_suite(self) -> None:
+        with unittest.mock.patch.object(planner, "get_changed_files", return_value=["some_source.swift"]):
+            with unittest.mock.patch.object(planner, "git_commit_exists", return_value=True):
+                with unittest.mock.patch("subprocess.run") as mock_run:
+                    mock_run.return_value.returncode = 0
+                    res = self.ledger.evaluate_test_reuse(
+                        test_id="UNKNOWN-01",
+                        suite_or_name="CompletelyUnknownTestSuite",
+                        origin_sha="1111111111111111111111111111111111111111",
+                        target_sha="2222222222222222222222222222222222222222",
+                        original_status="Passed",
+                    )
+                    self.assertEqual(res["decision"], "INVALIDATE")
+                    self.assertIn("unknown dependency closure", res["reason"])
+
+    def test_consumed_docs_not_treated_as_no_impact(self) -> None:
+        consumed_files = [
+            "docs/hanlin-platform/personal-runtime-completion/scenario-evidence-map.json",
+            "docs/hanlin-platform/personal-runtime-completion/authoritative-master-spec.md",
+        ]
+        with open(MAP_PATH, "r", encoding="utf-8") as f:
+            mapping_config = json.load(f)
+        plan = planner.plan_affected_validation(
+            mapping_config=mapping_config,
+            changed_files=consumed_files,
+            base_sha="abc1234567890",
+            head_sha="def9876543210",
+            event_name="workflow_dispatch",
+        )
+        self.assertIn("ci_router", plan.affected_components)
+        self.assertNotIn(consumed_files[0], plan.no_impact_files)
+        self.assertNotIn(consumed_files[1], plan.no_impact_files)
+
+    def test_evaluate_reuse_cli_roundtrip(self) -> None:
+        import subprocess, sys
+        repo_root = Path(__file__).parents[3]
+        try:
+            current_sha = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=str(repo_root)).decode().strip()
+        except Exception:
+            current_sha = "0095b6441e8968d4200e8cd8acf42f61b46b7c59"
+        query = {
+            "test_id": "TEST-01",
+            "suite": "HanlinNativeScriptProductionE2ETests",
+            "origin_sha": current_sha,
+            "target_sha": current_sha,
+            "original_status": "Passed",
+        }
+        res = subprocess.run(
+            [sys.executable, str(SCRIPT_PATH), "--evaluate-reuse", json.dumps(query)],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        data = json.loads(res.stdout)
+        self.assertEqual(data["decision"], "REUSE_VERIFIED")
+
+
+class ComprehensiveValidationInfrastructureTests(unittest.TestCase):
+    """Test suite covering the 14 mandatory validation criteria (Tests A through N)."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        with open(MAP_PATH, "r", encoding="utf-8") as f:
+            cls.mapping_config = json.load(f)
+        cls.repo_root = Path(__file__).parents[3]
+        cls.ledger = planner.TestDependencyLedger(cls.repo_root)
+
+    def plan_files(
+        self,
+        files: list[str],
+        full_validation: bool = False,
+        target_group: str | None = None,
+        manual_modes: dict[str, bool] | None = None,
+        exact_test_selector: str | None = None,
+    ) -> planner.ValidationPlan:
+        return planner.plan_affected_validation(
+            mapping_config=self.mapping_config,
+            changed_files=files,
+            base_sha="abc1234567890",
+            head_sha="def9876543210",
+            event_name="workflow_dispatch",
+            full_validation=full_validation,
+            target_group=target_group,
+            manual_modes=manual_modes,
+            exact_test_selector=exact_test_selector,
+        )
+
+    # Test A: Docs-only change: no build, no simulator, no device
+    def test_a_docs_only_change(self) -> None:
+        changed = ["README.md", "docs/architecture.md", ".gitignore"]
+        plan = self.plan_files(changed)
+        self.assertFalse(plan.is_full_validation)
+        self.assertFalse(plan.step_outputs["run_phase1"])
+        self.assertFalse(plan.step_outputs["run_simulator_job"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertEqual(len(plan.selected_groups), 0)
+
+    # Test B: Focused Swift change: run relevant tests without IPA build
+    def test_b_focused_swift_change(self) -> None:
+        changed = ["AI_HLY/Downstream/RuntimeCore/Shell/HanlinRuntimeShellService.swift"]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertIn("simulator_shell_acceptance", plan.selected_groups)
+
+    # Test C: UI change: run targeted UI tests without device build
+    def test_c_ui_change_without_device_build(self) -> None:
+        changed = ["AI_HLY/Views/ChatView.swift", "AI_HLY/MainTabView.swift"]
+        plan = self.plan_files(changed)
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+
+    # Test D: Shared dependency change: expands to actual consumers
+    def test_d_shared_dependency_expansion(self) -> None:
+        changed = ["Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPlatformContracts.swift"]
+        plan = self.plan_files(changed)
+        self.assertIn("platform_contracts", plan.selected_groups)
+        self.assertIn("app_unit_tests", plan.selected_groups)
+        self.assertTrue(plan.step_outputs["run_phase1"])
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+
+    # Test E: Toolchain mismatch invalidates prior test evidence
+    def test_e_toolchain_mismatch_invalidation(self) -> None:
+        res = self.ledger.evaluate_test_reuse(
+            test_id="TEST-TOOLCHAIN-01",
+            suite_or_name="HanlinNativeScriptProductionE2ETests",
+            origin_sha="1111111111111111111111111111111111111111",
+            target_sha="1111111111111111111111111111111111111111",
+            original_status="Passed",
+            origin_toolchain="Xcode 16.2",
+            target_toolchain="Xcode 16.3",
+        )
+        self.assertEqual(res["decision"], "INVALIDATE")
+        self.assertEqual(res["status"], "INVALIDATED")
+        self.assertIn("Toolchain version mismatch", res["reason"])
+
+    # Test F: Corrupt cache fallback to clean build
+    def test_f_corrupt_cache_safe_fallback(self) -> None:
+        raw_invalid_json = "not-a-valid-json"
+        with tempfile.NamedTemporaryFile("w", delete=False) as tf:
+            tf.write(raw_invalid_json)
+            tf_path = Path(tf.name)
+        try:
+            records = self.ledger.load_ledger(tf_path)
+            self.fail("Should have failed to decode invalid JSON")
+        except json.JSONDecodeError:
+            records = []
+        self.assertEqual(records, [])
+        tf_path.unlink()
+
+    # Test G: Clean evidence reuse returns REUSED_VERIFIED_PASS
+    def test_g_clean_evidence_reuse(self) -> None:
+        sha = "1111111111111111111111111111111111111111"
+        with unittest.mock.patch.object(planner, "git_commit_exists", return_value=True):
+            res = self.ledger.evaluate_test_reuse(
+                test_id="TEST-REUSE-01",
+                suite_or_name="HanlinNativeScriptProductionE2ETests",
+                origin_sha=sha,
+                target_sha=sha,
+                original_status="Passed",
+            )
+            self.assertEqual(res["decision"], "REUSE_VERIFIED")
+            self.assertEqual(res["status"], "REUSED_VERIFIED_PASS")
+
+    # Test H: Dependency change invalidates prior evidence
+    def test_h_dependency_change_invalidates(self) -> None:
+        with unittest.mock.patch.object(planner, "git_commit_exists", return_value=True):
+            with unittest.mock.patch.object(planner, "run_git", return_value="Packages/HanlinNativeScriptRuntime/Sources/Core.swift\n"):
+                with unittest.mock.patch("subprocess.run") as mock_run:
+                    mock_run.return_value.returncode = 0
+                    res = self.ledger.evaluate_test_reuse(
+                        test_id="TEST-DEP-01",
+                        suite_or_name="HanlinNativeScriptProductionE2ETests",
+                        origin_sha="1111111111111111111111111111111111111111",
+                        target_sha="2222222222222222222222222222222222222222",
+                        original_status="Passed",
+                    )
+                    self.assertEqual(res["decision"], "INVALIDATE")
+                    self.assertEqual(res["status"], "INVALIDATED")
+
+    # Test I: Bounded diagnostics timeout
+    def test_i_bounded_diagnostics_timeout(self) -> None:
+        workflow_text = (self.repo_root / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8")
+        self.assertIn("timeout-minutes: 2", workflow_text)
+        self.assertIn("output.splitlines()[-5000:]", workflow_text)
+
+    # Test J: Deterministic failure handling: never masquerades as PASS
+    def test_j_deterministic_failure_handling(self) -> None:
+        res = self.ledger.evaluate_test_reuse(
+            test_id="TEST-FAIL-01",
+            suite_or_name="HanlinNativeScriptProductionE2ETests",
+            origin_sha="1111111111111111111111111111111111111111",
+            target_sha="1111111111111111111111111111111111111111",
+            original_status="Failed",
+        )
+        self.assertEqual(res["decision"], "INVALIDATE")
+        self.assertEqual(res["status"], "INVALIDATED")
+        self.assertIn("was not passing", res["reason"])
+
+    # Test K: Exact Test Selector isolates single test without device/IPA build
+    def test_k_exact_test_selector_isolates(self) -> None:
+        selector = "AI_HLYUITests/HanlinNativeScriptProductionE2ETests/testProductionNativeScriptParityFullRuntime"
+        plan = self.plan_files(["README.md"], exact_test_selector=selector)
+        self.assertFalse(plan.step_outputs["run_device_build"])
+        self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+        self.assertTrue(plan.step_outputs["run_simulator_job"])
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], selector)
+        self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"], f"-only-testing:{selector}")
+
+    # Test L: Fake pass rejection and strict status taxonomy
+    def test_l_fake_pass_rejection(self) -> None:
+        for invalid_status in ["BLOCKED", "NOT_RUN", "SyntheticPass", "CustomSuccess"]:
+            res = self.ledger.evaluate_test_reuse(
+                test_id="TEST-FAKE-01",
+                suite_or_name="HanlinNativeScriptProductionE2ETests",
+                origin_sha="1111111111111111111111111111111111111111",
+                target_sha="1111111111111111111111111111111111111111",
+                original_status=invalid_status,
+            )
+            self.assertEqual(res["decision"], "INVALIDATE")
+            self.assertEqual(res["status"], "INVALIDATED")
+
+        with self.assertRaises(ValueError):
+            self.ledger.record_test_result(
+                test_id="TEST-BAD-01",
+                suite="AI_HLYTests",
+                commit_sha="1111",
+                run_id="123",
+                status="INVALID_CUSTOM_STATUS",
+                toolchain_version="16.2",
+                build_config="Debug",
+            )
+
+    # Test M: Simulator configuration selection (Debug vs Release)
+    def test_m_simulator_configuration_selection(self) -> None:
+        # Routine UI change uses Debug
+        plan_debug = self.plan_files(["AI_HLY/Views/ChatView.swift"])
+        self.assertEqual(plan_debug.step_outputs["simulator_configuration"], "Debug")
+
+        # NativeScript runtime change requires Release
+        plan_release = self.plan_files(["Packages/HanlinNativeScriptRuntime/Sources/Core.swift"])
+        self.assertEqual(plan_release.step_outputs["simulator_configuration"], "Release")
+
+        # Full validation requires Release
+        plan_full = self.plan_files(["README.md"], full_validation=True)
+        self.assertEqual(plan_full.step_outputs["simulator_configuration"], "Release")
+
+    # Test N: Workflow safety & read-only permissions
+    def test_n_workflow_safety_and_permissions(self) -> None:
+        workflow_text = (self.repo_root / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8")
+        self.assertIn("permissions:", workflow_text)
+        self.assertIn("contents: read", workflow_text)
+        self.assertIn("actions: read", workflow_text)
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+

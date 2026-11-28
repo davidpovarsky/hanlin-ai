@@ -1,0 +1,27 @@
+{
+  "id": 137632459705,
+  "run_id": 45157020895,
+  "workflow_name": "Build iOS 26 Unsigned IPA",
+  "head_branch": "codex/hanlin-sdk-unification-20261123",
+  "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45157020895",
+  "run_attempt": 1,
+  "node_id": "CR_kwDOTTRem88AAAAgC4iruQ",
+  "head_sha": "646b22918b1c56e5a6a16addcb1d3ebd982d3846",
+  "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/137632459705",
+  "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45157020895/job/137632459705",
+  "status": "completed",
+  "conclusion": "cancelled",
+  "created_at": "2026-11-23T10:32:27Z",
+  "started_at": "2026-11-23T10:32:27Z",
+  "completed_at": "2026-11-23T10:47:27Z",
+  "name": "Original Motion visual capture (C)",
+  "steps": [],
+  "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/137632459705",
+  "labels": [
+    "xcode-27"
+  ],
+  "runner_id": 0,
+  "runner_name": "",
+  "runner_group_id": 0,
+  "runner_group_name": ""
+}

@@ -1,0 +1,15 @@
+✔ actual canonical files initialize only this empty window, preserving original request/run output (29.32437ms)
+✔ exact canonical text representations admit without opening any file (0.615924ms)
+✔ prepared, completed or activity-owning state cannot be overwritten even by the same challenge (1.292848ms)
+✔ all other original routes leave the state and actual file reader untouched (0.510643ms)
+✔ malformed batch/item identities, counts and unsafe file URLs fail before mutation (2.558855ms)
+✔ wrong or missing JSON identity and mismatched second input cannot initialize a window (1.795331ms)
+✔ missing/unreadable actual supplied files cannot seed state or become successful runtime output (0.600364ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 278.700968

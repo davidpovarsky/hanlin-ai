@@ -1,0 +1,102 @@
+{
+  "atUTC": "2026-11-26T17:36:51.987503+00:00",
+  "source": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "originalFullPlanExit": 1,
+  "originalFullPlanSeconds": 59.32796948682517,
+  "failure": "Fourteen newly added production/extension/test paths were not classified. The original router refused to fall back to full validation.",
+  "scopedRoutingProof": "All14 actual previously-unmapped paths now route to explicit product/source/SDK/native groups; none classified no-impact.",
+  "preparationCorrection": "The first correction driver mistakenly asserted15 paths before committing. The actual retained original stderr contains14; that driver stopped before any commit or native dispatch.",
+  "originalPaths": [
+    "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests.swift",
+    "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.entitlements",
+    "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift",
+    "HanlinMiniAppsExtensions/CameraCapture/Info.plist",
+    "HanlinMiniAppsExtensions/Keyboard/HanlinMiniAppsKeyboard.entitlements",
+    "HanlinMiniAppsExtensions/Keyboard/HanlinMiniAppsKeyboard.swift",
+    "HanlinMiniAppsExtensions/Keyboard/Info.plist",
+    "HanlinMiniAppsExtensions/NotificationContent/HanlinMiniAppsNotificationContent.entitlements",
+    "HanlinMiniAppsExtensions/NotificationContent/HanlinMiniAppsNotificationContent.swift",
+    "HanlinMiniAppsExtensions/NotificationContent/Info.plist",
+    "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.swift",
+    "Scripts/MiniApps/scriptwidget/native-api.json",
+    "Scripts/MiniApps/scriptwidget/original-api.d.ts",
+    "Scripts/MiniApps/scriptwidget/service-types.d.ts"
+  ],
+  "selectedGroups": {
+    "app_unit_tests": [
+      "component 'miniapps_system_entrypoints' was affected (directly modified: AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests.swift)",
+      "component 'canonical_product_split' was affected (directly modified: HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.entitlements)",
+      "component 'app_core' was affected (consumes platform_contracts)",
+      "component 'app_ui' was affected (consumes app_core)"
+    ],
+    "device_build": [
+      "component 'project_packaging' was affected (directly modified: HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.entitlements)"
+    ],
+    "ipa_packaging": [
+      "component 'project_packaging' was affected (directly modified: HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.entitlements)"
+    ],
+    "runtimecore_host": [
+      "component 'runtimecore_host' was affected (directly modified: Scripts/MiniApps/scriptwidget/native-api.json)"
+    ],
+    "platform_contracts": [
+      "component 'platform_contracts' was affected (consumes miniapps_system_entrypoints)"
+    ],
+    "python_runtime": [
+      "component 'python_runtime' was affected (consumes runtimecore_host)"
+    ],
+    "simulator_shell_acceptance": [
+      "component 'python_runtime' was affected (consumes runtimecore_host)",
+      "component 'ios_system' was affected (consumes runtimecore_host)"
+    ],
+    "node_runtime": [
+      "component 'node_runtime' was affected (consumes runtimecore_host)"
+    ],
+    "simulator_mcp_acceptance": [
+      "component 'node_runtime' was affected (consumes runtimecore_host)"
+    ],
+    "ios_system": [
+      "component 'ios_system' was affected (consumes runtimecore_host)"
+    ],
+    "simulator_smoke_launch": [
+      "component 'app_ui' was affected (consumes app_core)"
+    ],
+    "nativescript_dependencies": [
+      "prerequisite for 'device_build'"
+    ]
+  },
+  "selectedTests": [
+    "AI_HLYTests/AgentRuntimeConversationAcceptanceTests",
+    "AI_HLYTests/AgentSkillsExposureTests",
+    "AI_HLYTests/AppleLocalProvidersTests",
+    "AI_HLYTests/CanonicalAdapterTests",
+    "AI_HLYTests/CanonicalShadowCoordinatorTests",
+    "AI_HLYTests/CanonicalToolAuthorityTests",
+    "AI_HLYTests/ChatCanonicalPresentationSurvivalTests",
+    "AI_HLYTests/ChatComposerSessionBridgeTests",
+    "AI_HLYTests/ClassicChatRestorationTests",
+    "AI_HLYTests/CompactChatRouteTests",
+    "AI_HLYTests/CompactRecentConversationsTests",
+    "AI_HLYTests/ComposerActionsParityTests",
+    "AI_HLYTests/EmbeddedResultResolverTests",
+    "AI_HLYTests/FoundationJSONShadowAdapterTests",
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests",
+    "AI_HLYTests/HanlinAppSplitOriginTests",
+    "AI_HLYTests/HanlinComposerDrawerRouteTests",
+    "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests",
+    "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests",
+    "AI_HLYTests/LegacyToolMigrationTests",
+    "AI_HLYTests/MasterScenarioSemanticAcceptanceTests",
+    "AI_HLYTests/ModelPopoverZoomOrderTests",
+    "AI_HLYTests/OrganizerDockStateTests",
+    "AI_HLYTests/OriginalSourceNonRegressionTests",
+    "AI_HLYTests/PendingFirstTurnTests",
+    "AI_HLYTests/ProductionProviderConformanceTests",
+    "AI_HLYTests/ProductionSystemSkillsTests",
+    "AI_HLYTests/RuntimeToolContractTests",
+    "AI_HLYTests/ScriptingCanonicalAuthorityTests",
+    "AI_HLYTests/SkillStoreAndImportTests",
+    "AI_HLYTests/VoiceRecordingLifecycleTests"
+  ],
+  "nativeExecution": "NOT_RUN",
+  "fullPlanRerun": "PENDING"
+}

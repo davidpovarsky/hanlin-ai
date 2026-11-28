@@ -1,0 +1,11 @@
+# Prepare the original MiniApps registration
+
+Owner authorization: OWNER_AUTHORIZATION_20261118.md. Exact target: com.itorah.hanlinminiapps, display name Hanlin MiniApps, iOS. Current actual read-only audit 44250819961 found no exact registered Bundle ID or App Store record.
+
+The register-original-product job in the existing validate-app-split.yml workflow, enabled only by the explicit prepare_miniapps_registration manual input, may create that original Bundle ID if a complete exact lookup still shows it missing. It then enables only the documented APP_GROUPS and HEALTHKIT capabilities already declared in the original target, and reads them back. Existing Apple account credentials already held by the CI environment are used only against the fixed Apple API origin. No new key/certificate, credential export, profile replacement, App Store listing, build upload or notification is part of this operation. A transport-uncertain write is reconciled by read-only lookup, never retried blindly.
+
+The official OpenAPI specification downloaded from https://developer.apple.com/sample-code/app-store-connect/app-store-connect-openapi-specification.zip on 2026-11-18 identifies version 4.6; ZIP SHA256 f41ed4489c78bf1488cd2291f23394565364fe37b402130f48c3e3c3f5ea1acd. Its documented POST BundleId/BundleIdCapability schemas are used. It exposes no App Group assignment endpoint or POST /v1/apps; Extended Virtual Addressing/WeatherKit/Time Sensitive Notifications are not in its CapabilityType enum. No undocumented endpoint is guessed.
+
+Remaining portal setup is explicit: both original App Groups, all three other required capabilities, a profile matching the existing Distribution certificate and every source entitlement, and the separate App Store record. The existing AI profile is also missing Extended Virtual Addressing. Registration success is not signing or release success. Required entitlements remain unchanged.
+
+Dispatching a brand-new workflow filename returned GitHub 404 because it was absent from the default branch; no Apple job ran. The reviewed operation therefore uses the already-registered validation workflow and suppresses all build/audit jobs in registration mode. No default-branch change is required.

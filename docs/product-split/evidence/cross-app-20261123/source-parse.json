@@ -1,0 +1,85 @@
+{
+  "checks": [
+    {
+      "file": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+      "status": "PARSE_PASS",
+      "detail": ""
+    },
+    {
+      "file": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+      "status": "PARSE_PASS",
+      "detail": ""
+    },
+    {
+      "file": "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
+      "status": "PARSE_PASS",
+      "detail": ""
+    },
+    {
+      "file": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsCatalogView.swift",
+      "status": "PARSE_PASS",
+      "detail": ""
+    },
+    {
+      "file": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
+      "status": "PARSE_PASS",
+      "detail": ""
+    },
+    {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "status": "PARSE_PASS",
+      "detail": ""
+    },
+    {
+      "file": "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
+      "status": "PARSE_PASS",
+      "detail": ""
+    },
+    {
+      "file": "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsPicker/MiniAppPicker.swift",
+      "status": "PARSE_PASS",
+      "detail": ""
+    },
+    {
+      "file": "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinCompiledMiniAppProvider.swift",
+      "status": "PARSE_PASS",
+      "detail": ""
+    },
+    {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptingApplicationRuntime/HanlinScriptingApplicationSession.swift",
+      "status": "PARSE_PASS",
+      "detail": ""
+    },
+    {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptingSDK/HanlinScriptingSDK.swift",
+      "status": "PARSE_PASS",
+      "detail": ""
+    },
+    {
+      "file": "Packages/HanlinTextStudioMiniApp/Sources/HanlinTextStudioMiniApp/NativeAppTextStudioViews.swift",
+      "status": "PARSE_PASS",
+      "detail": ""
+    },
+    {
+      "file": "Packages/HanlinTextStudioMiniApp/Sources/HanlinTextStudioMiniApp/TextStudioMiniApp.swift",
+      "status": "PARSE_PASS",
+      "detail": ""
+    },
+    {
+      "file": "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+      "status": "PARSE_PASS",
+      "detail": ""
+    },
+    {
+      "file": "HanlinMiniAppsTests/CrossAppInvocationTests.swift",
+      "status": "PARSE_PASS",
+      "detail": ""
+    },
+    {
+      "file": "HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests.swift",
+      "status": "PARSE_PASS",
+      "detail": ""
+    }
+  ],
+  "apple_build": "NOT_RUN_AT_RECORD_TIME"
+}

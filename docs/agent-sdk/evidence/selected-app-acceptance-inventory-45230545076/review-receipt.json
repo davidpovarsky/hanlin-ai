@@ -1,0 +1,198 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-23T18:05:26.396033+00:00",
+  "sourceSHA": "7523f45cf8ea180a8e30f511ff0fbd3bb5ccae6d",
+  "run": 45230545076,
+  "status": "SOURCE_REVIEW_COMPLETE",
+  "executionStatus": "NOT_RUN_BY_THIS_REVIEW",
+  "requestSHA256": "a35d7db74a12ccfffc049c126aff9a554dd641f4bdb8f4561afa03236f70d7ef",
+  "inventorySHA256": "b49ff364035c999a2734bd6f62ba8c6ea4631cb6eeec20d7f252fa15e49b2031",
+  "sourceGateSHA256": {
+    ".github/workflows/build-ios26-unsigned-ipa.yml": "afeed29d2451d17f835230166cb2da894d574aa4474ca296b770ebb68e1f3d8c",
+    "Scripts/CI/plan_affected_validation.py": "267df1696402e912c330b726aa9c73b2a1b371d18b39a2717b77a8a2b310f021",
+    "Scripts/CI/verify_selected_tests.py": "4ae4a28934341461b364a9b83fb891ca214da64cf3046635278fb4e6837caad5",
+    "Scripts/CI/Tests/test_verify_selected_tests.py": "3ac4fd4d4ac7179d06d6c8b493250828361f71811ddb031d6f69343fb5b7df8b",
+    "Scripts/CI/current_unit_xctestrun.py": "2d7839768ed684daee282382ab846e118adab049e22a6a7252053062e7f08efa",
+    "Scripts/CI/prepare_calendar_acceptance.py": "2abebdeeaf9445a2047f84c439b6755102a5dbaa78c6c2b0d98d432cc4c55321",
+    "AI_HLY.xcodeproj/project.pbxproj": "d1113ad4826f9f4f7e610914a914dcd9d368985f50cc73073a2cfd8934aa726c",
+    "Scripts/SDK/update_project.py": "119c68b4cd187d3c4e53db788ad3da4062e4644a22ff5402d98b85e10fff1636"
+  },
+  "expectedCounts": {
+    "methodDefinitions": 310,
+    "expectedInvocations": 342,
+    "unitMethodDefinitions": 299,
+    "uiMethodDefinitions": 11,
+    "bySuite": {
+      "A2UISDKTests": {
+        "methodDefinitions": 38,
+        "expectedInvocations": 38
+      },
+      "A2UIIngressTests": {
+        "methodDefinitions": 8,
+        "expectedInvocations": 8
+      },
+      "AgentActivityHeaderPhaseTests": {
+        "methodDefinitions": 14,
+        "expectedInvocations": 14
+      },
+      "AgentRoundPresentationTests": {
+        "methodDefinitions": 25,
+        "expectedInvocations": 25
+      },
+      "CalendarToolTests": {
+        "methodDefinitions": 4,
+        "expectedInvocations": 6
+      },
+      "ChatAutoFollowTests": {
+        "methodDefinitions": 12,
+        "expectedInvocations": 12
+      },
+      "ChatCodeFenceTests": {
+        "methodDefinitions": 5,
+        "expectedInvocations": 5
+      },
+      "ChatPresentationTests": {
+        "methodDefinitions": 15,
+        "expectedInvocations": 16
+      },
+      "ChatScrollViewHandleTests": {
+        "methodDefinitions": 11,
+        "expectedInvocations": 11
+      },
+      "HanlinAppAgentSessionOwnerTests": {
+        "methodDefinitions": 51,
+        "expectedInvocations": 68
+      },
+      "HanlinApplicationEmbeddingTests": {
+        "methodDefinitions": 16,
+        "expectedInvocations": 16
+      },
+      "HanlinApplicationSystemIntegrationTests": {
+        "methodDefinitions": 4,
+        "expectedInvocations": 6
+      },
+      "HanlinCapabilityObservationTests": {
+        "methodDefinitions": 18,
+        "expectedInvocations": 18
+      },
+      "HanlinConversationProjectionTests": {
+        "methodDefinitions": 2,
+        "expectedInvocations": 2
+      },
+      "HanlinMCPEmbeddingTests": {
+        "methodDefinitions": 10,
+        "expectedInvocations": 10
+      },
+      "HanlinNativeWidgetRendererTests": {
+        "methodDefinitions": 7,
+        "expectedInvocations": 7
+      },
+      "PendingFirstTurnTests": {
+        "methodDefinitions": 4,
+        "expectedInvocations": 4
+      },
+      "ModelPopoverZoomOrderTests": {
+        "methodDefinitions": 2,
+        "expectedInvocations": 2
+      },
+      "HanlinRemoteMediaURLTests": {
+        "methodDefinitions": 7,
+        "expectedInvocations": 7
+      },
+      "NativeComposerLineSizingTests": {
+        "methodDefinitions": 14,
+        "expectedInvocations": 22
+      },
+      "RuntimeAutonomyV3Tests": {
+        "methodDefinitions": 1,
+        "expectedInvocations": 1
+      },
+      "ShareInboxHostIntegrationTests": {
+        "methodDefinitions": 4,
+        "expectedInvocations": 4
+      },
+      "VoiceRecordingLifecycleTests": {
+        "methodDefinitions": 22,
+        "expectedInvocations": 22
+      },
+      "AgentRuntimeConversationUITests": {
+        "methodDefinitions": 4,
+        "expectedInvocations": 4
+      },
+      "HanlinNativeA2UIChatUITests": {
+        "methodDefinitions": 7,
+        "expectedInvocations": 7
+      },
+      "HanlinLocalizedControlTests": {
+        "methodDefinitions": 1,
+        "expectedInvocations": 1
+      },
+      "HanlinOriginalAssetTests": {
+        "methodDefinitions": 1,
+        "expectedInvocations": 1
+      },
+      "HanlinLocalizationTests": {
+        "methodDefinitions": 3,
+        "expectedInvocations": 5
+      }
+    }
+  },
+  "conditionalExclusionsForRequestedRun": [],
+  "requiredCompileContext": {
+    "configuration": "Debug",
+    "platform": "iOS Simulator",
+    "targetEnvironment(simulator)": true,
+    "HANLIN_A2UI_POC": true,
+    "DEBUG": true,
+    "HANLIN_A2UI_PORTABLE_RUNNER": false,
+    "HANLIN_MEDIA_URL_PORTABLE_RUNNER": false,
+    "canImport(Darwin)": true,
+    "canImport(SwiftUI)": true,
+    "canImport(UIKit)": true
+  },
+  "gateFinding": "verify_selected_tests rejects zero/skipped requested selectors, but accepts a suite once any one child executed; it does not enforce full suite membership or parameter-array cardinalities. Failed and Expected Failure count as execution only; xcodebuild owns failures. Require original per-method/per-argument passing evidence before acceptance.",
+  "resultPaths": {
+    "units": "simulator-logs/08-downstream-unit-test-results.json",
+    "unitLog": "simulator-logs/08-downstream-unit-tests.log",
+    "unitXCResult": "simulator-logs/DownstreamTestsResult.xcresult",
+    "ui": "simulator-logs/08-nativescript-production-ui-test-results.json",
+    "uiLog": "simulator-logs/08-nativescript-production-ui-tests.log",
+    "uiXCResult": "simulator-logs/NativeScriptProductionE2EResult.xcresult",
+    "unitAdmission": "simulator-logs/08-current-unit-xctestrun-admission.json",
+    "unitBuildReceipt": "simulator-logs/06-current-unit-xctestrun.json",
+    "generatedManifest": "simulator-logs/06-generated-unit.xctestrun",
+    "calendarStaging": "simulator-logs/08-calendar-native-staging.json",
+    "environment": "simulator-logs/verified-simulator-environment.json"
+  },
+  "criticalRequired": {
+    "eventKit": "AI_HLYTests/HanlinAppAgentSessionOwnerTests/actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow()",
+    "intentLocales": {
+      "method": "AI_HLYTests/HanlinApplicationSystemIntegrationTests/widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)",
+      "arguments": [
+        "en",
+        "he",
+        "zh-Hans"
+      ]
+    },
+    "originalSDKLocales": {
+      "method": "AI_HLYTests/HanlinLocalizationTests/originalTranslationTablesRemainAvailable(locale:)",
+      "arguments": [
+        "en",
+        "he",
+        "zh-Hans"
+      ]
+    },
+    "nativeConfiguration": [
+      "AI_HLYTests/ModelPopoverZoomOrderTests/nativeGenerationConfigurationPreservesOriginalSettings()",
+      "AI_HLYTests/ModelPopoverZoomOrderTests/nativeGenerationRejectsUnsupportedTopPThroughOriginalEngine()"
+    ],
+    "mixedOriginalUI": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft()",
+    "mixedUIAttachments": [
+      "original-mixed-openui-react-native-state-and-action",
+      "original-mixed-openui-react-native-state-and-action-AX"
+    ]
+  },
+  "artifactsAcquiredByThisReview": 0,
+  "testCommandsExecutedByThisReview": 0,
+  "productionOrCIChanges": false
+}

@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "status": "SOURCE_AND_SYNTAX_PASS_APPLE_RETEST_PENDING",
+  "baseCommit": "09dbbe6480171be89816db72fb0ec0fa56b7f66f",
+  "failures": [
+    {
+      "runID": 45352968920,
+      "jobID": 138303731047,
+      "sourceCommit": "09dbbe6480171be89816db72fb0ec0fa56b7f66f",
+      "commitAppearsInRawLog": true,
+      "result": "FAILED_BEFORE_TESTS",
+      "requestedCases": 8,
+      "executedCases": 0,
+      "fullRawLog": "modern8-failed-build.log",
+      "bytes": 170534,
+      "sha256": "f87478e17e0ad805969612947df3d76dbab55911c0213b4e3c71e132e8730c03",
+      "macroErrorOrigins": [
+        {
+          "logLine": 783,
+          "origins": [
+            "`- /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinMiniAppSurfaceRoutingTests.swift:28:54: ^[[1;39mnote: ^[[1;39mexpanded code originates here^[[0;0m"
+          ]
+        }
+      ],
+      "typeError": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinMiniAppSurfaceRoutingTests.swift:60:20 cannot find HanlinScriptUINode in scope; Any.object/array/string errors are cascading context failures.",
+      "renderingBatchAttribution": "The frontend batch names HanlinOriginalScriptWidgetRenderingTests.swift, but its macro diagnostic explicitly originates in the surface-routing test; no independent direct rendering-test error is present."
+    },
+    {
+      "runID": 45352972636,
+      "jobID": 138303742401,
+      "sourceCommit": "09dbbe6480171be89816db72fb0ec0fa56b7f66f",
+      "commitAppearsInRawLog": true,
+      "result": "FAILED_BEFORE_TESTS",
+      "requestedCases": 1,
+      "executedCases": 0,
+      "fullRawLog": "lifecycle1-failed-build.log",
+      "bytes": 171662,
+      "sha256": "52a7b5f4a89f943d0fd4956048dfb34d532aaea834c4a1a5b05dc95ff69f481f",
+      "macroErrorOrigins": [
+        {
+          "logLine": 801,
+          "origins": [
+            "`- /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinMiniAppSurfaceRoutingTests.swift:28:54: ^[[1;39mnote: ^[[1;39mexpanded code originates here^[[0;0m"
+          ]
+        }
+      ],
+      "typeError": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinMiniAppSurfaceRoutingTests.swift:60:20 cannot find HanlinScriptUINode in scope; Any.object/array/string errors are cascading context failures.",
+      "renderingBatchAttribution": "The frontend batch names HanlinOriginalScriptWidgetRenderingTests.swift, but its macro diagnostic explicitly originates in the surface-routing test; no independent direct rendering-test error is present."
+    }
+  ],
+  "change": {
+    "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinMiniAppSurfaceRoutingTests.swift",
+    "beforeSHA256": "c3d2cc50b8379ff355ec64f9d137e6340c435911075ac25a9df7e8762eda3e4a",
+    "afterSHA256": "aea4249a0d8c12adb78adac65b02ad7ed19347755fc8f599a412815c8a64bd9f",
+    "edits": [
+      "Import existing HanlinScriptUI, the defining module of HanlinScriptUINode.",
+      "Mark the throwing store.claim(id) expression inside #require with try, retaining the existing outer try."
+    ],
+    "onlyTwoEdits": true,
+    "assertionsAndTestSelectionUnchanged": true
+  },
+  "renderingTest": {
+    "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetRenderingTests.swift",
+    "sha256": "dad830f5257f7394955c7e0f8e5375af343924e6d2ca828b63e03e3caad1cb01",
+    "unchanged": true,
+    "reason": "Its sequence and tagAsString helpers are nonthrowing; the actual throwing macro originates at surface routing line28."
+  },
+  "sourceChecks": {
+    "typeDeclaration": "Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIContracts.swift:57",
+    "sameTargetImportPrecedents": [
+      "HanlinDualWidgetEnginesTests.swift",
+      "HanlinScriptExtensionStoreTests.swift"
+    ],
+    "throwingClaimDeclaration": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
+    "nativeProductionSourcesChanged": false,
+    "packageGraphChanged": false,
+    "selectorChanges": false
+  },
+  "syntax": {
+    "command": [
+      "swiftc",
+      "-frontend",
+      "-parse",
+      "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinMiniAppSurfaceRoutingTests.swift",
+      "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetRenderingTests.swift"
+    ],
+    "exitCode": 0,
+    "toolchain": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+    "scope": "Swift parse only on Linux, no Apple framework typecheck, macro acceptance or test execution."
+  },
+  "nativeAcceptance": {
+    "status": "NOT_RUN",
+    "modernAnalyzerCasesPending": 8,
+    "lifecycleCasesPending": 1,
+    "noCIQueriesDispatchPollingOrAsana": true
+  },
+  "logs": {
+    "swift-syntax.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "swift-syntax.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

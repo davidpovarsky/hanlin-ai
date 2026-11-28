@@ -1,0 +1,28 @@
+✖ generated GroupBox forwards ordinary children and gives explicit content including null precedence (93.140233ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 380.504499
+
+✖ failing tests:
+
+test at Packages/HanlinExpoUI/tests/generated-views.test.mjs:37:1
+✖ generated GroupBox forwards ordinary children and gives explicit content including null precedence (93.140233ms)
+  AssertionError [ERR_ASSERTION]: ../src/generated/views.tsx: omitted content must retain content and label slots
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Packages/HanlinExpoUI/tests/generated-views.test.mjs:56:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

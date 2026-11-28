@@ -1,0 +1,45 @@
+{
+  "recordedAtUTC": "2026-11-26T18:46:48.174678+00:00",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2764,
+      "sha256": "738e69919763e836a19daf5b18a368bec76edfc8cbb4758041e31fd911cc17e4"
+    },
+    {
+      "path": "ci-job-140089266632.log.gz",
+      "bytes": 619103,
+      "sha256": "8901a33fcfee79e3fcec7c8c12b18724e1147a6fc6723b0af89ceb7d8b116a2b"
+    },
+    {
+      "path": "local-archive-readback.json",
+      "bytes": 8034,
+      "sha256": "0bfb244affdcae7f9150446d6a47b6eba9ded237aa4ceeeaa81eb8c43ed0d3ee"
+    },
+    {
+      "path": "matching-artifacts-response.json",
+      "bytes": 34,
+      "sha256": "af3c25b59e7048d2e4b6ea03a688b2eced4e1786b5ae40f71516bc3ce0d4149e"
+    },
+    {
+      "path": "producer-artifacts-current.json",
+      "bytes": 22,
+      "sha256": "fb09a9699b26ad536855bb4263ff01baa31a107d9af48b348e96cb4a9eb2b8d9"
+    },
+    {
+      "path": "producer-run-current.json",
+      "bytes": 15543,
+      "sha256": "0dd39c9500e757172ded8b9c7254faa91e81c213fce68cc72946eaa9eba69f84"
+    },
+    {
+      "path": "recovery-receipt.json",
+      "bytes": 5954,
+      "sha256": "2228806506470e8d635aeb8dff9733c37a81a0836e438cf286ef790b202cc575"
+    },
+    {
+      "path": "release-notes.md",
+      "bytes": 780,
+      "sha256": "f5fcb3f7b8a02af95dd5312719aaccb58128f8c0ae778b21ee46f04b3c978113"
+    }
+  ]
+}

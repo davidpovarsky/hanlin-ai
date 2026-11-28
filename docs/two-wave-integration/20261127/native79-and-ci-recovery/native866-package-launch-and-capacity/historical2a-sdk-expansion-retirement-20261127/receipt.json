@@ -1,0 +1,17 @@
+{
+  "status": "HISTORICAL_EXPANDED_SDK_RETIRED_FULL_ARCHIVE_AND_ALL_FILE_PROOF_RETAINED",
+  "source": "2a0b19b79f3da0fef092ca8b0762b9b0e7001caa",
+  "currentSource": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "retiredExpansion": "/Users/m1/builds/hanlin-two-wave-root-20261126/fresh-sdk-2a0b19b7-original-phases-r1/MiniAppSDK",
+  "archive": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host-2a0b19b7-original-phases-r1/RuntimeHostResources.zip",
+  "archiveSHA256": "6612023836ff21ac7c9e894b420734781e621ba9c0e348fe9fc2d11174a39c14",
+  "hostReceipt": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-preparation-2a0b19b7-original-phases-r1.json",
+  "hostReceiptSHA256": "4879d45ed351f9b1d9b76f7e13fe734552b53bd1e505c6212596426d62025362",
+  "comparedFiles": 25703,
+  "allExpandedFileSHA256": "89021b82287484231da4e543743a817acd0e37217a8f0b437fff3f3752046484",
+  "manifest": "/Users/m1/builds/hanlin-two-wave-root-20261126/historical2a-sdk-expansion-retirement-20261127/all-expanded-file-comparison.json",
+  "freeBefore": 7645974528,
+  "scope": "Historical2a expanded SDK only. Full exact original distribution ZIP and standalone SDK manifest retained;866 requires fresh188 because Widget native input changed.",
+  "finishedAt": "2026-11-27T04:59:10.474648+00:00",
+  "freeAfter": 8022503424
+}

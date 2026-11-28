@@ -1,0 +1,64 @@
+{
+  "document": "COMPACT_COMPOSER_NATIVE_REPAIR_20261118",
+  "recorded_at": "2026-11-18T07:57:47.449100+00:00",
+  "original_run": {
+    "id": 44250279050,
+    "sha": "bf7296397154ddccceecedda4307b79f6a0c480d",
+    "conclusion": "failure",
+    "build": "PASS",
+    "native_unit": {
+      "passed": 20,
+      "failed": 0,
+      "skipped": 0,
+      "suites": [
+        "CompactRecentConversationsTests (4)",
+        "ModelPopoverZoomOrderTests (16)"
+      ]
+    },
+    "ui": {
+      "passed": 0,
+      "failed": 2,
+      "skipped": 0,
+      "tests": [
+        "HanlinMorphComposerUITests/testCompactLargeTextWithAttachment",
+        "HanlinMorphComposerUITests/testCompactNavigationKeepsDraft"
+      ],
+      "actual_device": "iPhone Air",
+      "runtime": "iOS 27.2"
+    }
+  },
+  "artifact": {
+    "id": 14408116015,
+    "size_bytes": 52385206,
+    "api_zip_sha256": "596776c70a5fe92fe5245291144e248d5c5c67e4dab8a701e8e8324883c3b88d",
+    "full_zip_digest_recomputed": false,
+    "unit_json_sha256": "6a2a962e9b441a8660cd8acb794eb05cbc1522f560d78773207ffbe305d9c368",
+    "ui_json_sha256": "cba061efb961e0e001e966b2cf6aba14b4c5da0574c53d6d8a931d47aa2a17eb",
+    "selected_payload_proof": "build/continuation-evidence/44250279050/selected-payload-proof.jsonl",
+    "decoded_manifest": "build/continuation-evidence/44250279050/decoded-original-attachments/manifest.json"
+  },
+  "observations": [
+    "Actual window 420 x 912 points; compact workspace AX frame 420 x 1028.7",
+    "Large Text native editor extends from y827.3 to951.3 outside actual window; tap did not obtain keyboard focus",
+    "Normal-size test typed draft but focused editor frame height became zero",
+    "Both original recordings inspected; composer below visible screen and disappears behind keyboard"
+  ],
+  "repair": {
+    "navigation": "Remove fixed full-height frame before native safeAreaInset so NavigationStack accepts the reduced proposal",
+    "height_budget": "Use actual GeometryReader proposed size; do not subtract keyboard/container safe-area values a second time",
+    "preserved": [
+      "one original persistent composer",
+      "original NativeMultilineTextEditor",
+      "original Morph shell",
+      "draft and attachment bindings",
+      "all existing navigation, focus, bounds and draft assertions"
+    ],
+    "tests": "Retain original two complete product UI selectors; add original hierarchy and pre-focus viewport/hittability assertions"
+  },
+  "native_repair_validation": "FAILED: build passed; both original compact UI cases failed. See COMPACT_COMPOSER_KEYBOARD_LAYOUT_20261118.json.",
+  "retry_run": 44263129438,
+  "platform_reference": "https://developer.apple.com/videos/play/wwdc2021/10021/",
+  "phase2_complete": false,
+  "phase3_complete": false,
+  "release_decision": "NO_GO"
+}

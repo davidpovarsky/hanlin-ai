@@ -1,0 +1,14 @@
+{
+  "utc": "2026-11-23T22:30:10.258382+00:00",
+  "path": ".github/workflows/testflight.yml",
+  "base": "e1d936c27e4e89736c622e398af8fb0094094d5a",
+  "oldSHA256": "6d11af69940ca0633c683db2adc31787ce9cb0b3bbbf5c3479060296040a5a15",
+  "newSHA256": "c73889a17322eec05954209b9cb154797eed9233760a10deca259b82e04615cc",
+  "exactSingleSubstitution": {
+    "before": "check_target AI_Hanlin \"$APP_BUNDLE_ID\" \"$MAIN_PROFILE_SPECIFIER\" AI_HLY/AI_HLY.entitlements",
+    "after": "check_target HanlinApp \"$APP_BUNDLE_ID\" \"$MAIN_PROFILE_SPECIFIER\" AI_HLY/AI_HLY.entitlements"
+  },
+  "otherWorkflowBytesIdentical": true,
+  "workflowExecution": "NOT_RUN",
+  "publish": "Root will use the connected GitHub exact-tree route; no CLI workflow push attempted."
+}

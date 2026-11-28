@@ -1,0 +1,9 @@
+{
+  "source": "7f6af7536db3d2aa9ecc9eb51ec82293fc5db3bc",
+  "branch": "codex/hanlin-two-wave-integration-20261126",
+  "exit_code": 0,
+  "duration_seconds": 3.374,
+  "at": "2026-11-26T13:16:22.335254+00:00",
+  "log": "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/build/two-wave-publication-7f6af753/push.log",
+  "independent_remote_verification": "pending GitHub ref GET"
+}

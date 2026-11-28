@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-24T18:39:08.297897+00:00",
+  "base": "36a044c3c147eda2baa4fbe99e0fe698dcd0c13e",
+  "source": {
+    "path": "Scripts/Expo/prepare-ios-dependencies.mjs",
+    "beforeSHA256": "a5f3ad45840e6c88fcdb107945a6dc136eb6da98185c33cbfd6bcd5c90107679",
+    "afterSHA256": "81b44608fbc6c04dbbf315435b06c21cd62c43d7a75b511a3105ecb91f3fb44a",
+    "change": "Pass supported REACT_NATIVE_PATH: rnRoot alongside existing RN_ROOT/PODS_ROOT to the original ExpoModulesJSI producer."
+  },
+  "observed": {
+    "originalPackage": "expo-modules-jsi@58.0.23",
+    "producerSHA256": "864d02bbcb0bbed4e45cb1236b023791521f20869b6f1ec6a128b7d2918e5e7c",
+    "declaredReactNative": "0.88.1",
+    "actuallySelectedReactNative": "0.81.6",
+    "selectedFrom": "ambient ancestor node_modules in another checkout",
+    "producerBuildResult": "Original script reported completed73s; component rejected as wrong dependency provenance, not accepted as current graph.",
+    "rawLogBytes": 2905603,
+    "rawLogSHA256": "cf69787b7c9c8057bf3317915ba243b7b65db40de0a8e1fda141ec433f3d8efc",
+    "phaseResult": "Natural exit1 at18:28:55UTC from separate RuntimeCore fallback release-not-found; no signal sent.",
+    "appBuild": "NOT_RUN",
+    "selected52Cases": "NOT_RUN"
+  },
+  "cause": "Original build-xcframework.sh recomputes RN_ROOT from REACT_NATIVE_PATH if set, otherwise Node resolution from inherited cwd; caller supplied RN_ROOT alone, which the original selector overwrote.",
+  "preserved": [
+    "original producer/library source",
+    "own verified react-native0.88.1 graph",
+    "existing PODS_ROOT and RN_ROOT",
+    "existing script args and full original preparation sequence",
+    "existing original cache validation",
+    "all52 native test selectors"
+  ],
+  "cacheBoundary": "No outer JSI fast return exists. Original script selects RN_ROOT before computing per-slice hashes, and includes resolved RN_ROOT/PODS_ROOT/toolchain/source/header/modulemap bytes. Correcting the selected root invalidates contaminated original slice keys. Unchanged producerSHA by itself is not proof of the corrected source selection.",
+  "validation": {
+    "argv": [
+      "node",
+      "--check",
+      "Scripts/Expo/prepare-ios-dependencies.mjs"
+    ],
+    "cwd": "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124",
+    "node": "v24.22.0",
+    "exitCode": 0,
+    "elapsedSeconds": 0.11689902935177088,
+    "stdout": "",
+    "stderr": "",
+    "boundary": "JavaScript syntax check only; no native build or producer execution"
+  },
+  "nativeCorrectionStatus": "PENDING_SINGLE_ORIGINAL_PRODUCER_REBUILD_ON_PRIMARY",
+  "review": {
+    "selector": "/root/entrypoints read-only actual original selector and one-line binding review",
+    "outerReuse": "/root/sdk_only_author read-only no-wrapper-early-return/source-hash/cache review; no compiler run"
+  },
+  "resume": "Use root-integrated exact source and original RUNTIME_CORE_ARTIFACT_RUN_ID=42926628418. Retain new actual RN_ROOT log plus original slice hash/output evidence. Do not accept the old0.81.6-linked component.",
+  "evidenceFiles": [
+    {
+      "path": "failure-tail.log",
+      "bytes": 8000,
+      "sha256": "0b4ba4cc459b69d761b93551b36e4ba4eab1613dcfc69633373723650e12c67c"
+    },
+    {
+      "path": "native-preparation-before.log.gz",
+      "bytes": 292827,
+      "sha256": "b459b652b7d2c6e41ea252f23a1131edd04d22ea82e05f7f1db369a7cc74cb22"
+    },
+    {
+      "path": "original-selection.json",
+      "bytes": 10128,
+      "sha256": "412f1a7839c0e3f99005677a1251cdd8f3554fa5553e27227728ecf6dc1a6984"
+    },
+    {
+      "path": "phase-stop.json",
+      "bytes": 5978,
+      "sha256": "1d20ca197335aa857a393baac5bebd85e731d8268eb0f149c887c86b159c8b1e"
+    },
+    {
+      "path": "source-advance.json",
+      "bytes": 4015,
+      "sha256": "caf88b7b85a3345f6981f2495d4accd97aa69ece0870f3c840fd80277b740d4e"
+    },
+    {
+      "path": "source-diff.patch",
+      "bytes": 491,
+      "sha256": "78ca2d7b199e640d328084ca143d22314206dc44907d437353e096309dd4ea88"
+    },
+    {
+      "path": "syntax-check.json",
+      "bytes": 379,
+      "sha256": "f1f02ee216e4e03501f7200cf69f6f0c0abdc1340348f4b36223e87ff27fc711"
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "source_commit": "6b0030926cd771f2dd9995fd01aecd1efe8bcf4e",
+  "producer_commit": "e7bf34111e603ca977becd007dd4e5bb109af857",
+  "run_id": 45282347722,
+  "run_attempt": 1,
+  "scope": "Actual public FoundationModels framework executor controls through the original provider/engine; no SystemLanguageModel generation",
+  "executed_cases": [
+    {
+      "children": [
+        {
+          "name": "Expectation failed: await state.cancelled",
+          "nodeType": "Failure Message",
+          "sourceLocation": {
+            "filePath": "/Users/runner/work/_temp/hanlin-native-tool-candidate.7dzugpkh/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+            "lineNumber": 170
+          }
+        }
+      ],
+      "duration": "5s",
+      "durationInSeconds": 5.0972583293914795,
+      "name": "Cancelling a waiting native request reaches its public executor and produces no host effect",
+      "nodeIdentifier": "HanlinAppleToolSessionBridgeTests/nativeCancellationStopsAwaitingExecutor()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeCancellationStopsAwaitingExecutor()",
+      "nodeType": "Test Case",
+      "result": "Failed"
+    },
+    {
+      "duration": "0.047s",
+      "durationInSeconds": 0.0470731258392334,
+      "name": "A denied native call has no effect and continues with the correlated tool denial",
+      "nodeIdentifier": "HanlinAppleToolSessionBridgeTests/nativeDenialReturnsThroughCanonicalHistory()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeDenialReturnsThroughCanonicalHistory()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.034s",
+      "durationInSeconds": 0.033988237380981445,
+      "name": "Nonstreaming use of the original provider preserves native handoff calls",
+      "nodeIdentifier": "HanlinAppleToolSessionBridgeTests/nativeGeneratePreservesToolCalls()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeGeneratePreservesToolCalls()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.049s",
+      "durationInSeconds": 0.049497127532958984,
+      "name": "Two same-name calls keep their identities and continue through the original executor",
+      "nodeIdentifier": "HanlinAppleToolSessionBridgeTests/nativeFrameworkHandoffUsesCanonicalExecutorAndHistory()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeFrameworkHandoffUsesCanonicalExecutorAndHistory()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.088s",
+      "durationInSeconds": 0.08806657791137695,
+      "name": "An invalid numeric sibling blocks the complete batch before approval or effect",
+      "nodeIdentifier": "HanlinAppleToolSessionBridgeTests/nativeNumericSiblingCannotPartiallyExecute()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeNumericSiblingCannotPartiallyExecute()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    }
+  ],
+  "sole_failed_assertion": "Expectation failed: await state.cancelled",
+  "failed_assertion_source_line": 170,
+  "current_sdk_test_exit": 65,
+  "current_ios_build_exit": 0,
+  "current_core_test_exit": null,
+  "current_baseline_test_exit": null,
+  "case_status_not_weakened": true,
+  "observations": {
+    "system_instructions_and_exact_canonical_history": "Both complete continuation cases now PASS with the original assertions.",
+    "physical_cancellation": "The public executor did not acknowledge cancellation before the unchanged five-second acknowledgement deadline.",
+    "consumer_signal": "Consumer Task cancellation is observed separately; zero effects, approvals, text, tool-call events and final requestCount1 have no recorded assertion failure.",
+    "interpretation": "Only the complete cancellation case is FAIL. No unrecorded assertion pass is substituted for it."
+  },
+  "producer_source_sha256": {
+    "Sources/SwiftAISDK/GenerateText/StreamText.swift": "94449a5545198efcc142ccf2e6d0582538be744d849e9c04e313f988beb81eed",
+    "Sources/SwiftAISDK/GenerateText/StreamTextActor.swift": "b9f6de97279affdfea026c1c1a4e4ba2561446d2f852b96bdb787b7648f4debf",
+    "Sources/SwiftAISDK/Prompt/CallSettings.swift": "49c97064294c497d0ddc2185932664426251b2809970467529701fcc1a771798",
+    "Sources/SwiftAISDK/Model/ModelV4Adapters.swift": "30df53d471371faa4e963304ef9fd82ace52c75fbc72f98fecb3198aec08c370"
+  },
+  "source_diagnosis": [
+    "The original engine supplied no CallSettings.abortSignal.",
+    "DefaultStreamTextResult.stop() schedules StreamTextActor.requestStop().",
+    "requestStop sets externalStopRequested, cancels in-flight host tool tasks and emits abort, while keeping streams open until the provider finishes.",
+    "The candidate bridge has a pre-existing task-group abort watcher, entered only when options.abortSignal is nonnil.",
+    "The proposed engine-only repair exposes the existing per-stream stop flag as the native-only abortSignal. This repair is not part of this tested source and remains NOT_RUN."
+  ],
+  "reused_product_passes": 28,
+  "reused_baseline_outcomes": {
+    "expected_native_failures": 10,
+    "cloud_passes": 2
+  },
+  "shipping_native_tool_capability": false,
+  "SystemLanguageModel": "NOT_RUN"
+}

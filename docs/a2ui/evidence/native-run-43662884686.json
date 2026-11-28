@@ -1,0 +1,119 @@
+{
+  "run_id": 43662884686,
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/43662884686",
+  "workflow_sha": "127092d9b7cbcf12c99a151384298e29cca5d049",
+  "tested_source_sha": "c40e617b7856f189c699a09fd1ab5f3d8af7193e",
+  "upstream_revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079",
+  "observation": "GitHub completed-run metadata and actual full job log read; artifact API digest verified, ZIP not downloaded or locally rehashed",
+  "compilation": "EXECUTED_PASS at c40e617b",
+  "portable_cases": "8 EXECUTED_PASS",
+  "sdk_cases": "17 FAILED during valid fixture load",
+  "artifact": {
+    "advertised_digest": "sha256:ac5719290dd51265b2c333311ba17cbfe8c1c46f108fec5a833c9fced89c4d92",
+    "id": 14141275174,
+    "name": "a2ui-exact-pin-43662884686",
+    "size_in_bytes": 111431709
+  },
+  "cases": [
+    {
+      "result": "passed",
+      "name": "acceptsOfficialV1FixtureFrames"
+    },
+    {
+      "result": "passed",
+      "name": "boundsUTF8MessageAndComponentBatch"
+    },
+    {
+      "result": "failed",
+      "name": "buttonEventUsesCurrentBoundValue"
+    },
+    {
+      "result": "failed",
+      "name": "closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce"
+    },
+    {
+      "result": "failed",
+      "name": "closeRejectsLateFramesAndDisposesSurfaces"
+    },
+    {
+      "result": "failed",
+      "name": "closeRevokesQueuedAndRetainedActionCallbacks"
+    },
+    {
+      "result": "passed",
+      "name": "componentValidationRemainsWithSDK"
+    },
+    {
+      "result": "failed",
+      "name": "deleteDisposesAndRecreateStartsWithNewIdentity"
+    },
+    {
+      "result": "failed",
+      "name": "hebrewFixtureRetainsBindingsInRTLComposition"
+    },
+    {
+      "result": "failed",
+      "name": "independentOwnersCanReuseWireSurfaceID"
+    },
+    {
+      "result": "failed",
+      "name": "independentSurfacesKeepModelsSeparate"
+    },
+    {
+      "result": "failed",
+      "name": "malformedAndUnknownContentFallsBackAndRecovers"
+    },
+    {
+      "result": "failed",
+      "name": "nativeInputBindingWritesAndReadsOfficialModel"
+    },
+    {
+      "result": "failed",
+      "name": "officialSchemasRejectInvalidTextInputButton"
+    },
+    {
+      "result": "failed",
+      "name": "parsesAndRendersTextCardInputButton"
+    },
+    {
+      "result": "passed",
+      "name": "preservesUnicodeSurfaceIdentity"
+    },
+    {
+      "result": "passed",
+      "name": "rejectedEnvelopesNeverExportSurfaceCorrelation"
+    },
+    {
+      "result": "failed",
+      "name": "rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound"
+    },
+    {
+      "result": "passed",
+      "name": "rejectsMalformedAndAmbiguousFrames"
+    },
+    {
+      "result": "passed",
+      "name": "rejectsOtherProtocolVersions"
+    },
+    {
+      "result": "passed",
+      "name": "rejectsRPCAndUnnegotiatedCatalogs"
+    },
+    {
+      "result": "failed",
+      "name": "stableIDsAndNodeIdentityAcrossUpdates"
+    },
+    {
+      "result": "failed",
+      "name": "surfaceLimitDoesNotRemoveExistingContent"
+    },
+    {
+      "result": "failed",
+      "name": "unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC"
+    },
+    {
+      "result": "failed",
+      "name": "unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks"
+    }
+  ]
+}

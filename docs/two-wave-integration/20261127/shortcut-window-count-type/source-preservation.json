@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "recordedAt": "2026-11-27T17:41:22.939933+00:00",
+  "parent": "f57dfcc2292c0830f454e28d87293e85fe426a44",
+  "path": "HanlinMiniAppsTests/NativeScriptShortcutConcurrencyTests.swift",
+  "beforeSHA256": "ea849be5aa05038199c69c18d5d18af6bad599dedb325ab60464bffd26fa11d0",
+  "afterSHA256": "9e09c2083d836ba868e5a993a248a7945b80d18c4ced2409d3df8bc24888fd4e",
+  "patchSHA256": "296ae02172773bd87200aa0412160f2e364f24bd484afb59e4e7187c7bc38246",
+  "changedCodeFiles": 1,
+  "exactWholeFileInverse": true,
+  "originalSelectors": [
+    "testOriginalWindowSurvivesReverseShortcutsCancellationDeadlineAndStaleGeneration",
+    "testLegacyOwnerRejectsBothFactoryAndLegacyShortcutsWithoutQueuedReplay",
+    "testForegroundShortcutUsesItsOwnedProviderAndReceiptWithoutReplacingTheOwnerHandler",
+    "testClosingRunningForegroundDrainsBeforeReleasingItsOwnedSession",
+    "testOccupiedForegroundRejectsOnlyTheNewShortcutAndPreservesLegacyIntentDrain"
+  ],
+  "assertionAndUnwrapLines": 124,
+  "assertionComparison": "Every assertion line identical after removing only the one UInt(...) conversion around the same expected value.",
+  "expectedLoopValues": [
+    3,
+    2,
+    1
+  ],
+  "boundsSource": "Three commands; commands.indices.reversed(); expected index+1.",
+  "productionChanges": 0,
+  "nativeRuns": 0,
+  "fixtureFailure": {
+    "assessment": "../current-f57-six-native-routes/46034328513/terminal-evidence-assessment.json",
+    "sha256": "659fb2f429a8c36c9b34cf7669f5fac918dcc464a80423b7aab914eae162d394"
+  },
+  "gitDiffCheck": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "allXCTestAssertionUnwrapFailureLines": 131,
+  "originalExplicitFailureLines": 7,
+  "originalValidationSHA256": "3b3069bf55a364583c83dd1140530322b22b8328c86497f1a29715828841cca9",
+  "historicalNativeStatus": "NOT_RUN_PENDING_INSTALLED_HEADER_TYPE_ADMISSION_AND_ORIGINAL_BUILD",
+  "currentQualification": "ACTUAL_IMPORTED_HEADER_AND_CORRECTED_XCTEST_EXPRESSION_TYPECHECK_PASS; whole native file and app/runtime tests NOT_RUN"
+}

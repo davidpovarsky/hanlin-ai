@@ -1,0 +1,98 @@
+{
+  "sourceSHA": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa",
+  "sourceTree": "d0dc201253ea9a57a4837c9a47cf4049004185fb",
+  "startedAtUTC": "2026-11-25T04:33:21.871710+00:00",
+  "status": "CHECK_FAILURE",
+  "pid": 4076156,
+  "mode": "Original source/graph/audit CHECKS only; no tests/native build/generator rewrite",
+  "typescriptModule": {
+    "path": "/mnt/development/projects/worktrees/hanlin-ai-cache-bridge-20261125/Scripts/Expo/node_modules/typescript/lib/typescript.js",
+    "sha256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5"
+  },
+  "commands": [
+    {
+      "name": "app-intents-check",
+      "argv": [
+        "python3",
+        "-B",
+        "Scripts/SDK/generate_app_intents_resources.py",
+        "--check"
+      ],
+      "startedAtUTC": "2026-11-25T04:33:21.872009+00:00",
+      "stdout": "01-app-intents-check.stdout.log",
+      "stderr": "01-app-intents-check.stderr.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T04:33:21.936735+00:00",
+      "stdoutSHA256": "dee7c7cc1ea4e0689e5f02b0dc6fc6ccf217e0f7a744f91bd9a91e7053b641cf",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "manifest-check",
+      "argv": [
+        "python3",
+        "-B",
+        "Scripts/SDK/generate_manifest.py",
+        "--check"
+      ],
+      "startedAtUTC": "2026-11-25T04:33:21.937134+00:00",
+      "stdout": "02-manifest-check.stdout.log",
+      "stderr": "02-manifest-check.stderr.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T04:33:29.198377+00:00",
+      "stdoutSHA256": "6a3adc34271cba4ee688071b7aec9eb7f0ee9731bedf3e215a77efb8648947f0",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "project-check",
+      "argv": [
+        "python3",
+        "-B",
+        "Scripts/SDK/update_project.py",
+        "--check"
+      ],
+      "startedAtUTC": "2026-11-25T04:33:29.199084+00:00",
+      "stdout": "03-project-check.stdout.log",
+      "stderr": "03-project-check.stderr.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T04:33:32.334304+00:00",
+      "stdoutSHA256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "miniapp-sdk-audit-check",
+      "argv": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--check",
+        "--typescript-module",
+        "/mnt/development/projects/worktrees/hanlin-ai-cache-bridge-20261125/Scripts/Expo/node_modules/typescript/lib/typescript.js"
+      ],
+      "startedAtUTC": "2026-11-25T04:33:32.335115+00:00",
+      "stdout": "04-miniapp-sdk-audit-check.stdout.log",
+      "stderr": "04-miniapp-sdk-audit-check.stderr.log",
+      "exitCode": 1,
+      "finishedAtUTC": "2026-11-25T04:33:33.158912+00:00",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSHA256": "867e3dd813f3c62b70df06e63053424a5dde63111e033f7ab41197d5f723d2ef"
+    },
+    {
+      "name": "miniapp-reachability-check",
+      "argv": [
+        "python3",
+        "-B",
+        "Scripts/Audit/audit_miniapp_reachability.py",
+        "--check"
+      ],
+      "startedAtUTC": "2026-11-25T04:33:33.159373+00:00",
+      "stdout": "05-miniapp-reachability-check.stdout.log",
+      "stderr": "05-miniapp-reachability-check.stderr.log",
+      "exitCode": 1,
+      "finishedAtUTC": "2026-11-25T04:33:33.374968+00:00",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSHA256": "201a9034bcc8adda84daa3e1f8e7b0de9e9eae2f2fa05eae20d055b32535ef97"
+    }
+  ],
+  "finishedAtUTC": "2026-11-25T04:33:33.375776+00:00",
+  "sourceAfter": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa",
+  "workingTreeStatusAfter": ""
+}

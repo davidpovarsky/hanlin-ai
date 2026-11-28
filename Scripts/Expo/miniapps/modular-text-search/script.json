@@ -1,0 +1,235 @@
+{
+  "name": "חיפוש טקסטים מודולרי — Expo",
+  "version": "1.4.0",
+  "description": "Original native Expo search app, Share, interactive native Shortcuts snippets and editable Translation UI with original ScriptWidget services.",
+  "entry": "bundle.js",
+  "runInApp": true,
+  "hanlinRuntime": "hanlin-expo",
+  "author": {
+    "name": "david povarsky"
+  },
+  "icon": "magnifyingglass",
+  "color": "#007AFF",
+  "capabilities": [
+    "ios-native-api",
+    "network",
+    "inter-app.share"
+  ],
+  "entrypoints": [
+    {
+      "id": "appIntents",
+      "kind": "appIntent",
+      "sourcePath": "bundle.js",
+      "exportedSymbol": "search"
+    },
+    {
+      "id": "share",
+      "kind": "share",
+      "sourcePath": "bundle.js",
+      "exportedSymbol": "search"
+    },
+    {
+      "id": "translation",
+      "kind": "translationUI",
+      "sourcePath": "bundle.js",
+      "exportedSymbol": "search"
+    },
+    {
+      "id": "assistant-search",
+      "kind": "assistantTool",
+      "sourcePath": "assistant/search/bundle.js",
+      "assistantTool": {
+        "title": "חיפוש בספריא",
+        "summary": "Search Sefaria using the user's explicitly selected text collections, matching mode and result limit.",
+        "actions": [
+          {
+            "id": "search",
+            "title": "חיפוש טקסטים",
+            "summary": "Search a query in the user's selected Sefaria catalog; configuration is supplied separately by the host.",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "query": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "query"
+              ],
+              "additionalProperties": false
+            }
+          }
+        ],
+        "configuration": {
+          "schemaVersion": 1,
+          "panels": [
+            {
+              "id": "catalog",
+              "title": "קטלוג",
+              "fields": [
+                {
+                  "key": "filters",
+                  "title": "מקורות לחיפוש",
+                  "kind": "catalog",
+                  "defaultValue": [],
+                  "options": [
+                    {
+                      "id": "Tanakh",
+                      "title": "תנ״ך"
+                    },
+                    {
+                      "id": "Mishnah",
+                      "title": "משנה"
+                    },
+                    {
+                      "id": "Talmud",
+                      "title": "תלמוד"
+                    },
+                    {
+                      "id": "Midrash",
+                      "title": "מדרש"
+                    },
+                    {
+                      "id": "Halakhah",
+                      "title": "הלכה"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "search-settings",
+              "title": "הגדרות חיפוש",
+              "fields": [
+                {
+                  "key": "field",
+                  "title": "התאמת מילים",
+                  "kind": "choice",
+                  "required": true,
+                  "defaultValue": "naive_lemmatizer",
+                  "options": [
+                    {
+                      "id": "naive_lemmatizer",
+                      "title": "צורות דקדוקיות"
+                    },
+                    {
+                      "id": "exact",
+                      "title": "התאמה מדויקת"
+                    },
+                    {
+                      "id": "content",
+                      "title": "תוכן"
+                    }
+                  ]
+                },
+                {
+                  "key": "size",
+                  "title": "מספר תוצאות",
+                  "kind": "number",
+                  "required": true,
+                  "defaultValue": 20,
+                  "minimum": 1,
+                  "maximum": 100
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "actions": [
+    {
+      "id": "search",
+      "title": "חיפוש טקסטים",
+      "handler": "bundle.js",
+      "capability": "inter-app.share"
+    }
+  ],
+  "intentInputTypes": [
+    "Text",
+    "URLs"
+  ],
+  "nativePresentations": {
+    "appIntents": {
+      "engine": "scriptwidget",
+      "sourcePath": "native/search.tsx",
+      "sourceFormat": "tsx",
+      "actions": [
+        {
+          "id": "retry",
+          "kind": "function",
+          "handler": "retry"
+        },
+        {
+          "id": "toggleVersions",
+          "kind": "function",
+          "handler": "toggleVersions"
+        },
+        {
+          "id": "loadFullText",
+          "kind": "function",
+          "handler": "loadFullText"
+        },
+        {
+          "id": "closeFullText",
+          "kind": "function",
+          "handler": "closeFullText"
+        },
+        {
+          "id": "loadMore",
+          "kind": "function",
+          "handler": "loadMore"
+        },
+        {
+          "id": "replaceText",
+          "kind": "function",
+          "handler": "replaceText"
+        }
+      ]
+    },
+    "translation": {
+      "engine": "scriptwidget",
+      "sourcePath": "native/search.tsx",
+      "sourceFormat": "tsx",
+      "actions": [
+        {
+          "id": "retry",
+          "kind": "function",
+          "handler": "retry"
+        },
+        {
+          "id": "toggleVersions",
+          "kind": "function",
+          "handler": "toggleVersions"
+        },
+        {
+          "id": "loadFullText",
+          "kind": "function",
+          "handler": "loadFullText"
+        },
+        {
+          "id": "closeFullText",
+          "kind": "function",
+          "handler": "closeFullText"
+        },
+        {
+          "id": "loadMore",
+          "kind": "function",
+          "handler": "loadMore"
+        },
+        {
+          "id": "replaceText",
+          "kind": "function",
+          "handler": "replaceText"
+        }
+      ],
+      "input": {
+        "title": "טקסט לחיפוש",
+        "placeholder": "כתוב מילה או משפט",
+        "submitTitle": "חפש מחדש"
+      }
+    }
+  }
+}

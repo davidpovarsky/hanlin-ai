@@ -1,0 +1,9 @@
+{
+  "at": "2026-11-23T08:46:52.761129+00:00",
+  "run_id": 45133334293,
+  "head_sha": "6772dce6304fc6761a2200314f7d2020dc782e47",
+  "artifact_id": 14802375245,
+  "bytes": 83126367,
+  "sha256": "26ef10cd19762ac227cca61964abbce4e2c7af24f55372d4c42060faffb909b4",
+  "verified_against_api_digest_and_size": true
+}

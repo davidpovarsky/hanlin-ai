@@ -1,0 +1,89 @@
+{
+  "base_sha": "ca49d1381d186dcc481eeb7c7eb753dd19bd0085",
+  "patch_sha256": "a5d886150c64d9a50e73ed5c1a5a0ed1d312305efd9377253caf6c509aefb79b",
+  "observed_at": "2026-11-19T01:52:15.380822+00:00",
+  "checks": [
+    {
+      "name": "python-module-facts",
+      "command": [
+        "C:\\ProgramData\\SentinelX\\.venv\\Scripts\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/Runtime/Tests",
+        "-p",
+        "test_python_skill_module_facts.py",
+        "-v"
+      ],
+      "exit": 0,
+      "path": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\python-module-facts\\root-review-v2\\python-module-facts.log",
+      "sha256": "2f88bbc90078f878da890654e71dc458f62eeb87f11d155f1b42099259539745"
+    },
+    {
+      "name": "ci-routing",
+      "command": [
+        "C:\\ProgramData\\SentinelX\\.venv\\Scripts\\python.exe",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/CI/Tests",
+        "-p",
+        "test_affected_validation.py"
+      ],
+      "exit": 0,
+      "path": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\python-module-facts\\root-review-v2\\ci-routing.log",
+      "sha256": "e221b0aa832bdf2ac14c419c76c3da63f11b4f3be2861b4e728f07e8df8f66b3"
+    },
+    {
+      "name": "git-diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "path": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\python-module-facts\\root-review-v2\\git-diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "PythonRuntimeService-syntax",
+      "command": [
+        "C:\\Users\\DAVID\\AppData\\Local\\Programs\\Swift\\Toolchains\\6.3.3+Asserts\\usr\\bin\\swiftc.EXE",
+        "-frontend",
+        "-parse",
+        "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeService.swift"
+      ],
+      "exit": 0,
+      "path": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\python-module-facts\\root-review-v2\\PythonRuntimeService-syntax.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "SkillRuntimeFactsProvider-syntax",
+      "command": [
+        "C:\\Users\\DAVID\\AppData\\Local\\Programs\\Swift\\Toolchains\\6.3.3+Asserts\\usr\\bin\\swiftc.EXE",
+        "-frontend",
+        "-parse",
+        "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillRuntimeFactsProvider.swift"
+      ],
+      "exit": 0,
+      "path": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\python-module-facts\\root-review-v2\\SkillRuntimeFactsProvider-syntax.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "MaintainedSkillCorpusTests-syntax",
+      "command": [
+        "C:\\Users\\DAVID\\AppData\\Local\\Programs\\Swift\\Toolchains\\6.3.3+Asserts\\usr\\bin\\swiftc.EXE",
+        "-frontend",
+        "-parse",
+        "AI_HLYTests/MaintainedSkillCorpusTests.swift"
+      ],
+      "exit": 0,
+      "path": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\python-module-facts\\root-review-v2\\MaintainedSkillCorpusTests-syntax.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "native_typecheck": "NOT_RUN",
+  "native_acceptance": "NOT_RUN"
+}

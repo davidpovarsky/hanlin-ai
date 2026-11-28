@@ -1,0 +1,42 @@
+{
+  "packet": "ci477-infrastructure-controller",
+  "encoding": "Lossless original file bytes in gzip/tar; archive header metadata normalized; original receipts remain unchanged",
+  "originalDeclaredManifestSHA256": null,
+  "files": [
+    {
+      "path": "admission.json",
+      "bytes": 574,
+      "sha256": "060848b30620b73aae56b15f066d271661fe259e1c6ddecf62a6515e1390b33f"
+    },
+    {
+      "path": "controller.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "controller.stdout",
+      "bytes": 1227,
+      "sha256": "8fdd0764fc4e82d7ba14e6d7ed9e21fada20da18894f687355596abfcfd06098"
+    },
+    {
+      "path": "lease.json",
+      "bytes": 184,
+      "sha256": "658d7271733638349b61cbf54531a98f4fc6020711e908527e99795e4a4a9007"
+    },
+    {
+      "path": "ownership-repair.json",
+      "bytes": 542,
+      "sha256": "832c49f57b905e9e4f60b7c8a8114275ae4b6f76a6c62665dcc0e445876d806b"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 2347,
+      "sha256": "f8de314e75e4753c5985128ebbb22f81cc77da290c465bf02294edc2db072e02"
+    },
+    {
+      "path": "sparse-checkout.before",
+      "bytes": 2220,
+      "sha256": "fd9faf02165766a7ff4055132a8ecb65ac0038dc9ab5b163fd5e211e16eaf732"
+    }
+  ]
+}

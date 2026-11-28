@@ -1,0 +1,40 @@
+{
+  "status": "BLOCKED",
+  "test_status": "NOT_RUN",
+  "run_id": 45223225171,
+  "source_sha": "c1c9fde5299124953d7ced72748dc09b50b72f7f",
+  "workflow_conclusion": "failure",
+  "native_job": 137862767156,
+  "native_job_conclusion": "cancelled",
+  "native_runner_acquired": false,
+  "native_steps_executed": 0,
+  "native_tests_executed": 0,
+  "artifact_count": 0,
+  "scheduler_message": "The job was not acquired by Runner of type hosted even after multiple attempts",
+  "original_B_assertion_status": "Previous actual run45133334293 remains FAIL; this attempt did not evaluate it",
+  "A": "NOT_RUN in this continuation",
+  "C": "REUSED_PASS from45166004801; exact additive catalog change reviewed separately",
+  "D": "DIAGNOSTIC_CAPTURED from45217195070; not a B acceptance substitute",
+  "source_closure": {
+    "unchanged_files": 372,
+    "catalog_existing_entries_unchanged": true,
+    "unused_added_widget_keys": 9,
+    "animation_or_assertion_changes": false
+  },
+  "scope": "Hosted runner allocation failure before checkout, compilation, simulator or XCTest",
+  "next_gate": "One original B-only retry after hosted runner recovery is observed; preserve bounds, native assertions and C reuse",
+  "retained_files": {
+    "dispatch-request.json": "e34ef6142d6cc356b18502dddfc9f6f517178276956c993145d9520bf36d6710",
+    "dispatch-intent.json": "d74a0e1beecf121936d70b3b9e085418d3cc23cb4628774d72b8fa00f7826462",
+    "dispatch-ack.json": "6379c17d798191f995d43b0950ea7787779fe29c9af7354b25de37a514ff207d",
+    "run-readback.json": "c1dd9a809ea6ec8f6c7b31ec223f0f31c1db3915bae1a77a5ac9367993fd882b",
+    "source-closure.json": "116ab889d4a453f6151ad518301d4bdf6fa3e01c33a47cff4464294c7604a506",
+    "watch-start.json": "82b1746a40581b4ab87df83af00e807714cb6b099c74fce802da8871d8b70623",
+    "watch-ended.json": "389d1a61c7c2f6ad40344e9b60e4cf2ab1143a862849010010ab4f5e3b7e245b",
+    "terminal-run.json": "46e38931dbd696e2227ff4bd9e6ec5680487a063c859b4c215bed6efbf298306",
+    "terminal-jobs.json": "d72812fb4ed16d80d05fcb57bf0edc9dfd524884e6948a31e13ef0beea544538",
+    "terminal-artifacts.json": "f7417e1fb877d3f5934f143cc38ad9e2905476e8f5ac6776507d09441efcd6f6",
+    "terminal-checks.json": "c950a32a7c41380d145032a34eb93d2a70bea378f8541221b49ad94000de25bb",
+    "terminal-annotations.json": "ce1456ee2b97ef3bc1b339403378ac210fefd3fd1371ca8b29fa21af773263be"
+  }
+}

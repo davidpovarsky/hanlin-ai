@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-23T12:06:02.327651+00:00",
+  "run_id": 45166004801,
+  "attempt": 1,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45166004801",
+  "source_sha": "3a9e1681f03080412d0ee934a00b307f3d7ae59c",
+  "selector": "ChatMotionProofUITests/MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion",
+  "selected_scope": "visual-c",
+  "dispatch_posts": 1,
+  "native_job": {
+    "id": 137663002114,
+    "name": "Original Motion visual capture (C)",
+    "conclusion": "success",
+    "runner_id": 1000024625,
+    "runner_name": "GitHub Actions 1000024625",
+    "started_at": "2026-11-23T11:32:15Z",
+    "completed_at": "2026-11-23T11:51:50Z"
+  },
+  "native_result": {
+    "status": "EXECUTED_PASS",
+    "test_methods": 1,
+    "passed": 1,
+    "failed": 0,
+    "case_duration_seconds": 40.222079038619995,
+    "device": "iPad Pro 13-inch (M5)",
+    "os": "iOS Simulator 27.2 (24B8117)",
+    "toolchain": "Xcode 27.2 (27B52), Swift 6.4.2",
+    "warning": "Update the Info.plist: Support for all orientations will soon be required."
+  },
+  "scope_exclusions": [
+    "A/B/D NOT_SELECTED",
+    "Full Hanlin app/production Markdown renderer/agent engine/scroll integration NOT_RUN",
+    "iPadOS26/physical-device acceptance NOT_RUN"
+  ],
+  "source_accounting": {
+    "fixture_matches_recorded_revision": true,
+    "selected_products": [
+      "HanlinChatUI"
+    ],
+    "canonical_source_resource_files": 364,
+    "source_resource_sha256": "b5f2db469ba93b1c49c15f530ab125f27db9689e0543a2ee29d1885f1c5b489e",
+    "generated_sha256": {
+      "Package.swift": "67bd5ca5a9e9c368886949f8fd178d11d502f858f5fe411b11540f8df238d2f4",
+      "docs/agent-sdk/unified-package-manifest.json": "41eeb2e6c87be6dee04f652afcff1be839c5a4dce0f412aa72ff172eb11191ff"
+    },
+    "resolved_dependency_trees": 8,
+    "packaged_resource_bundle_instances": 6,
+    "equatable_revision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+    "automatic_package_resolution_during_build_test": false
+  },
+  "artifact": {
+    "recorded_at": "2026-11-23T11:56:51.635827+00:00",
+    "artifact_id": 14816840026,
+    "run_id": 45166004801,
+    "head_sha": "3a9e1681f03080412d0ee934a00b307f3d7ae59c",
+    "bytes": 68440465,
+    "sha256": "16c454d58a723f5422f4709aafb7ae8078cb3536cc4a1c9af4fc36ec5f226c39",
+    "api_size_digest_match": true,
+    "zip_crc": "PASS",
+    "member_count": 51,
+    "download_and_crc_seconds": 15.093564444221556
+  },
+  "raw_result_sha256": "84afe21594556745db392d1d8f510486329ba0985e8e88f7d8ac836480b75baf",
+  "visual_review": {
+    "status": "C_FIXTURE_CAPTURE_GAP_RESOLVED",
+    "reviewers": [
+      "sdk_presentation: all four original PNG attachments",
+      "root: original full-screen landscape PNG independently reviewed"
+    ],
+    "full_screen_sha256": "15ad9d20764dbdce3f8168ddc2d55294b1edba1754a371f47d8f1be62d1f7ba6",
+    "observations": [
+      "Full-screen landscape shows complete horizontal viewport, full right Thinking header, readable Hebrew/Arabic/English large text and bottom control without black band or right-edge truncation.",
+      "Immediately preceding original app-boundary landscape attachment retains black top band and right-edge truncation; no product animation or layout was changed.",
+      "Expanded portrait and final completed/collapsed portrait are readable. Final image reports collapsed/actions=2 and shimmer=false;numeric=true.",
+      "Long fixture content extends below the visible scroll viewport; the image is not evidence that all long content fits at once.",
+      "Literal Markdown markers belong to the original fixture Text; no production renderer acceptance is inferred."
+    ],
+    "attachment_timestamp_gap_seconds": 0.27,
+    "native_attachment_mapping": "visual/extraction-receipt.json and original serialized native-attachment-metadata.txt",
+    "image_processing": "Original PNG bytes retained; PNG chunk CRC validation only; no retouching, crop, rotation or other derivative"
+  },
+  "watcher": {
+    "job_id": "job_b551ad8dee69",
+    "status": "ENDED",
+    "ended_at": "2026-11-23T11:52:39Z",
+    "no_additional_watcher": true
+  },
+  "remaining_motion_acceptance": {
+    "A": "Not executed on current canonical input; not selected by this run.",
+    "B": "Earlier source-bound failure remains unresolved; not replayed or relabeled.",
+    "D": "Prior two infrastructure-blocked attempts had zero executed tests; no D result inferred from C."
+  }
+}

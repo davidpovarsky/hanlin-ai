@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/w2_source_resume",
+  "decision": "APPROVED_PRODUCER_AND_READER_SOURCE_BOUNDARY_ONLY",
+  "base": "24fd1e20eb1af2ebab0f4d7dd7f617145217eded",
+  "patchSHA256": "89ca110e94cb7f90f2c4cd2b57b0d3fb75918d36bde10c25a11f2a304338ed87",
+  "sourceSHA256": {
+    "Scripts/ProductSplit/prepare_widget_fixtures.py": "2c24e64319ffd6547243b445260ef1448588a9c639dfe2a1103d74dc68e1273a",
+    "Scripts/ProductSplit/observe_widget_state.py": "68b84fcc6475a125e1424c774c9337dde5fbde06f92becec1e6b3782389e8be6",
+    "Scripts/CI/Tests/test_widget_fixture_producer.py": "28a59303b8c737dbe2511d408caba09350e6b63963db3ac0265ec8c02e69366c"
+  },
+  "independentChecks": {
+    "fullThreePathPatchRead": true,
+    "allSourceHashesRecomputed": true,
+    "wholeOriginalReaderInverseExact": true,
+    "originalReaderFunctionDefinitions": 23,
+    "originalSevenSourceMapEntriesAndSignaturePreserved": true,
+    "fiveOrdinaryReaderSourcesRemainGitExact": true,
+    "onlyDerivedMatrixArchiveAndManifestUseProducerAdmission": true,
+    "originalProducerAndDeterministicZipRead": true,
+    "originalResolverReceiptWriteContractRead": true
+  },
+  "findings": [
+    "The new helper, its controls, original sample/ZIP/producer code and resolver code are checked against the exact checkout before any recipe admission.",
+    "The three effective sample dependency versions are matched across the actual package, root lock, installed lock entries and applied resolver report. All effective input bytes and pinned Node executable identity are retained before/after.",
+    "The original producer remains the sole archive writer. Validation uses only the original widgetSamples and deterministicZip exports and recomputes the original manifest serialization without filesystem writes.",
+    "All 24 archive mirrors plus SHA256.json must agree with both the current-run receipt and the independently recomputed authored bytes. Self-consistent archive/manifest/receipt replacement alone cannot pass.",
+    "Receipt path, exact source/workspace/run/attempt, successful original command, finite chronology, logs and current inputs are bound. Symlink/hard-link substitutions fail.",
+    "The unchanged source-map return shape preserves the new VoiceOver and planned family leaf delegation boundary."
+  ],
+  "validation": {
+    "priorPortableControls": 12,
+    "priorPortableExit": 0,
+    "receiptSHA256": "37eec50046c47228562e4bbe5820f87c8fd28c081627a9e9f4e4c5d0d8dff577",
+    "stderrSHA256": "f62b01245aba4ede8998e5fcb906ce8141ec0f2001fac49ddfa2a6989cd53c09",
+    "newTestInvocations": 0,
+    "actualNodeProducerInThisReview": 0,
+    "nativeInvocations": 0
+  },
+  "limitations": [
+    "W1 separately owns the original pinned-Node producer/recipe qualification; these source checks do not imply that execution succeeded.",
+    "The current admission intentionally requires actual GitHub Actions source/run context. A direct Mac OS invocation is not qualified by fabricating GitHub environment values.",
+    "Actual WidgetKit import, placement and UI acceptance remain NOT_RUN."
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "actualGitPreimageEqual": true,
+  "baseCommit": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "candidateSHA256": "c48f33bd0179cc95b0fbf1c5f7455c8e49831ddc612e32ce2eef6fa55a6cb474",
+  "engineAuthority": {
+    "excerpt": "                                    shouldReloadToolsAndContinue = true\n                                    break\n                                }\n                                if reason == .toolCalls,\n                                   limit.map({ nextOffset < $0 }) ?? true,\n                                   let dynamicTools {\n                                    let latestDefinitions = await dynamicTools()\n                                    let reloadWasRequested = await toolReload.wasRequested\n                                    if reloadWasRequested || Set(latestDefinitions.map(\\.name)) != currentNames {\n                                        let completedSteps = try await result.steps\n                                        for step in completedSteps {\n                                            for msg in step.response.messages {\n                                                switch msg {\n                                                case .assistant(let assistantMsg):\n                                                    currentMessages.append(.assistant(assistantMsg))\n                                                case .tool(let toolMsg):\n                                                    currentMessages.append(.tool(toolMsg))\n                                                }\n                                            }\n                                        }\n                                        currentDefinitions = latestDefinitions\n                                        currentTools = try Self.makeTools(latestDefinitions, providerKind: resolvedProvider.descriptor.kind)\n                                        stepOffset = nextOffset\n                                        shouldReloadToolsAndContinue = true\n                                        break\n                                    }\n                                }\n                                if let structuredResponse {\n                                    guard reason == .stop else { throw HanlinNativeStructuredResponseError.incompleteResponse }\n                                    let completeParts = try await structuredResponse.decodeComplete(completeResponseText)\n                                    for part in completeParts {\n                                        try Task.checkCancellation()\n                                        guard try structuredParts.admit(part) else { continue }\n                                        hasStructuredContent = true\n                                        continuation.yield(.structuredPart(part))\n                                    }\n                                }\n                                if responseSchema != nil {\n                                    guard reason == .stop else {\n                                        throw HanlinAISDKError.incompleteProviderResponse(reason: rawReason ?? reason.rawValue)\n                                    }\n                                    // The producer validates the final output against the original\n                                    // schema. Partial/repaired streaming JSON is never accepted.\n                                    _ = try await result.experimentalOutput\n                                }\n                                guard finalVisibleCharacters > 0 || hasSuccessfulToolAction || hasStructuredContent || hasDeniedToolAction else {\n                                    throw HanlinAISDKError.incompleteProviderResponse(reason: rawReason ?? reason.rawValue)\n                                }\n                                continuation.yield(.finished(\n                                    reason: rawReason ?? reason.rawValue,\n                                    usage: Self.usage(from: accumulatedUsage)\n                                ))\n                                continuation.finish()\n                                return\n                            case .abort:",
+    "gitStderr": "warning: unable to access '/mnt/development/projects/git-mirrors/hanlin-ai.git/info/grafts': Permission denied\n",
+    "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+    "sha256": "454a3cb784d8c0e64541bf3204ee77ebd4852d79e8e4bd98d1768f41ff93cf29"
+  },
+  "existingFixtureAuthorities": [
+    {
+      "path": "AI_HLYTests/HanlinAppSplitOriginTests.swift",
+      "scope": "Existing textStart/textDelta/textEnd/stop response sequence",
+      "sha256": "476b3a6cca2635a68dc2436f2aba261a5f32633a268d4e163edc0cb0c75277a0"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift",
+      "scope": "Existing textStart/textDelta/textEnd/stop response sequence",
+      "sha256": "043ae321551f2a6678ff1b2e83c05595e1c0188ef2b71876de827f0a2686f5e4"
+    }
+  ],
+  "manifestSHA256": "8990cde4279134295fe45840789ecbd7113ea5a4daef2b8037dcc2dd51592d69",
+  "nativeLimits": [
+    "No source compile or native/test execution by this review.",
+    "Two observed incompleteProviderResponse(stop) failures are retained, not retroactively marked passed.",
+    "The four previously passing consumers still require their original native assertions under the changed shared fixture.",
+    "The original no-visible-content rejection remains effective; the synthetic successful completion is made nonempty."
+  ],
+  "originalSHA256": "cab45c3fe1e7733cc772e6e08cc0cc3fddef2c8254a0d98e219f392e1f17408f",
+  "patchSHA256": "241d3b8c83e97595d20e6f2055d6fde09f214cb47fc1a699af6a074331217b74",
+  "recordedAt": "2026-11-28T10:31:32.600457+00:00",
+  "reviewPreparation": {
+    "gitWarnings": "warning: unable to access '/mnt/development/projects/git-mirrors/hanlin-ai.git/info/grafts': Permission denied\n",
+    "initialGuardLookup": "No match under AgentSDK; actual guard source is HanlinPlatform/HanlinChatCore as recorded."
+  },
+  "reviewer": "mac_build_resume",
+  "schemaVersion": 1,
+  "semantics": {
+    "bothPreviouslyFailedConsumersNeedSuccessfulOriginalStreamCompletion": true,
+    "cancelledConsumersRetainTheirOriginalLateEventAndStoreChecks": true,
+    "contentOnlyEmittedWhenOriginalFinishIsReleased": true,
+    "controlledInstallWaitUnchanged": true,
+    "foreignWriterAndDeletedRowAssertionsUnchanged": true,
+    "noNewAwaitSleepRetryOrBudget": true,
+    "noProductionGuardChanged": true,
+    "originalStopAndContinuationFinishUnchanged": true,
+    "validNonemptyTextStartDeltaEndSequenceMatchesTwoExistingV3Fixtures": true
+  },
+  "sourcePacket": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/owner-synthetic-stream-fc5ce1ba-r1/candidate-r1",
+  "status": "SOURCE_REVIEW_APPROVED_NATIVE_PENDING",
+  "verifiedManifestPayloads": 4,
+  "wholeOriginalFileRecoveredByRemovingOnlyThreeAddedLines": true
+}

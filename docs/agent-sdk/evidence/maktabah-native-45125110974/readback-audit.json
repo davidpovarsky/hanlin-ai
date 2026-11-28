@@ -1,0 +1,356 @@
+{
+  "schema_version": 1,
+  "audited_at_utc": "2026-11-23T07:50:59.135309+00:00",
+  "repository": "davidpovarsky/Maktabah",
+  "run_id": 45125110974,
+  "run_url": "https://github.com/davidpovarsky/Maktabah/actions/runs/45125110974",
+  "source_commit": "a65cdf9add70586af4defc916d4817040b331137",
+  "application_source_commit": "aa944bd2327edca035ed9a596fa169499f922138",
+  "hanlin_sdk_commit": "d49a4fd4115b8335105d2991bf74ab4d7f6aad2d",
+  "status": "SOURCE_BOUND_FOCUSED_NATIVE_PASS",
+  "artifacts": [
+    {
+      "id": 14798580150,
+      "name": "completion-focused-native-evidence",
+      "bytes": 1822117,
+      "sha256": "90787cb94918b8cab9b7ccc4441de79ab592100f8db6a7e4a3f4b391a87db3e0",
+      "crc_verified_on_original_extraction": true
+    },
+    {
+      "id": 14798112046,
+      "name": "completion-focused-native-captures",
+      "bytes": 36319529,
+      "sha256": "3a78bd79beb0b894f4639145a3362539737f4fdc649b437a57ad94084c72f552",
+      "crc_verified_on_original_extraction": true
+    }
+  ],
+  "source_verification": {
+    "application_trees_verified_at_both_commits": {
+      "Source": "85e1eb7a9c9ea9396464f71ec0f615e48a4ede19",
+      "Vendor": "acebe8874c8bf3f5264ef33528c1d1773091d678",
+      "Maktabah.xcodeproj": "2cee049b4cc0bda65875aa35b40391f1d8dd3d2d",
+      "Maktabah-iOSUITests": "ca36ba13f1fd900adf528a3e404fed6a66290b6b"
+    },
+    "execution_inputs_verified_against_git_blobs_and_sha256": 282,
+    "actual_source_unmodified_blob_members_verified": 1011,
+    "original_cocoapods_generated_privacy": {
+      "path": "Source/PrivacyInfo.xcprivacy",
+      "original_blob": "c86c62cc12e3ceadea279ff9948a8891a0860577",
+      "generated_blob": "af80d26d37547b62412f5922bfd9cc601a7e9344",
+      "original_sha256": "39380ce07cfe093fee32ef7d99c7d1cf86d3565b8fe860ecb0f8497c23c585a1",
+      "compiled_sha256": "e6946e8876416f5a802dcad79e6c629416788175e0fa078d46accfdc73752fc5",
+      "all_other_declarations_unchanged": true,
+      "all_original_reasons_retained": true,
+      "actual_added_reasons": [
+        [
+          "NSPrivacyAccessedAPICategoryDiskSpace",
+          "85F4.1"
+        ],
+        [
+          "NSPrivacyAccessedAPICategoryDiskSpace",
+          "E174.1"
+        ],
+        [
+          "NSPrivacyAccessedAPICategoryFileTimestamp",
+          "0A2A.1"
+        ],
+        [
+          "NSPrivacyAccessedAPICategorySystemBootTime",
+          "35F9.1"
+        ],
+        [
+          "NSPrivacyAccessedAPICategoryUserDefaults",
+          "1C8F.1"
+        ],
+        [
+          "NSPrivacyAccessedAPICategoryUserDefaults",
+          "C56D.1"
+        ]
+      ],
+      "original_dependency_plists_verified": 5
+    },
+    "sdk_blobs_verified_at_exact_pin": 577,
+    "sdk_before_after_identical": true,
+    "sdk_selected_profile": {
+      "products": [
+        "HanlinHostContracts",
+        "HanlinAgentCore",
+        "HanlinChatCore",
+        "HanlinScriptUI",
+        "HanlinChatUI",
+        "HanlinPresentationKit",
+        "HanlinRichUI",
+        "HanlinPlatformContracts"
+      ],
+      "source_paths": [
+        "Packages/HanlinAgentSDK/Sources/HanlinAgentCore",
+        "Packages/HanlinAgentSDK/Sources/HanlinHostContracts",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONRegexRuntime",
+        "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema",
+        "Packages/HanlinPlatform/Sources/HanlinChatCore",
+        "Packages/HanlinPlatform/Sources/HanlinPlatformContracts",
+        "Packages/HanlinPlatform/Sources/HanlinScriptContracts",
+        "Packages/HanlinPlatform/Sources/HanlinScriptUI",
+        "Packages/HanlinPresentationSDK/Sources/HanlinChatUI",
+        "Packages/HanlinPresentationSDK/Sources/HanlinLocalization",
+        "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit",
+        "Packages/HanlinPresentationSDK/Sources/HanlinRichUI"
+      ],
+      "generated_sha256": {
+        "Package.swift": "2d5cf939b5c8f43f30ee2be1e382e5f52e13a3f4cd9fc66709cb4ee96c2f23e4",
+        "docs/agent-sdk/unified-package-manifest.json": "04f730878cbf173f4101f8132cfe35197309833471cca400ff44edc29fe56e48"
+      },
+      "binary_targets": []
+    },
+    "compiled_binary_ci_receipt_unchanged": true,
+    "binary_ci_receipts": {
+      "build/DerivedData/Build/Products/Debug-iphonesimulator/Maktabah.app": "9de52c71b30492d3bd85feca78fe6a40e4040f2aa36e9654d240bafb5e223fea",
+      "build/DerivedData/Build/Products/Debug-iphonesimulator/Maktabah-iOSUITests-Runner.app": "5881966c95c787bd317ddc220da138f0bddf9cdbe781970c3e7d01c8fe42400e",
+      "build/DerivedData/Build/Products/Debug-iphonesimulator/Maktabah-iOSUITests-Runner.app/PlugIns/Maktabah-iOSUITests.xctest": "62a86ceb5155a4e5d31a93a44fd9484ec0b2b9b0d945d628e33365cd4304dbe0"
+    }
+  },
+  "host48": {
+    "status": "PASS",
+    "passed": 48,
+    "failed": 0,
+    "xctest_seconds": 2.502,
+    "suite_wall_seconds": 2.512,
+    "alltests_wall_seconds": 2.515,
+    "exact_passed_method_set_matches_expected": true,
+    "all_65_packaged_inputs_equal_original_git_source": true,
+    "canonical_sdk_input_files": 30,
+    "host_input_files": 35,
+    "test_methods": [
+      "testAPI12CancellationAfterEntryRetainsReceiptWithoutClaimingRollback",
+      "testAPI12CancellationBeforeAuthorityReturnHasNoNativeEffect",
+      "testAPI12DeniesBackgroundBeforeNativeEffect",
+      "testAPI12QueuedReceiptNeverIssuesSuccessorOrRepeats",
+      "testAPI12RejectsMismatchedNativeAcknowledgement",
+      "testAPI12RetainsReceiptWhenSuccessorWasRevoked",
+      "testAPI12TransitionReturnsLiveCorrelatedSuccessor",
+      "testAllowedScopedSearchExecutesOriginalCoreAndPreservesExactQuery",
+      "testBackgroundNavigationIsDenied",
+      "testCancellationDuringAuthorityLookupNeverReachesCore",
+      "testCanonicalCatalogReadRevalidatesOriginalHostAfterAwait",
+      "testCanonicalSchemaRejectionNeverBecomesCompleted",
+      "testCatalogIsExactReadOnlyProjectionAndBackendQualified",
+      "testCatalogUsesCanonicalAvailabilityAndDoesNotExposeMetadataOnlyActions",
+      "testCatalogUsesSamePolicyAsOriginalCoreWithoutContentRights",
+      "testConsentConsumesOnlyOnceForExactDismissalSourceAndConfiguration",
+      "testConsentRejectsChangedConfigurationOrNamespaceAndRevocation",
+      "testConsentRejectsEveryChangedSourceDimensionWithoutGrant",
+      "testContentRightsHideSearchButPreserveCanonicalMetadataActions",
+      "testContextRevocationDuringReadSuppressesResult",
+      "testEmptyNativeForegroundIdentityIsDenied",
+      "testExplicitCancellationReachesOriginalCoreTask",
+      "testForeignProviderAndStaleCatalogAreRejected",
+      "testGrantRevocationDuringSearchSuppressesEvenCompletedBackendResult",
+      "testMissingOriginalArgumentsAndDuplicateKeysNeverReachCorePorts",
+      "testModelArgumentsCannotChooseContentContextOrBackend",
+      "testMutationGuaranteeIsRejectedBeforeDispatch",
+      "testOpaqueNativeSceneIDIsNotReinterpretedAsSDKSceneUUID",
+      "testOriginalCoreRejectsBackendResponseOutsideAuthorizedWork",
+      "testOriginalSDKDispatcherConsumesScopedSearchWithoutSDKChanges",
+      "testOriginalSDKInvalidationCancelsAndSuppressesInFlightScopedRead",
+      "testOutputLimitAndExpiredDeadlineAreEnforced",
+      "testQueuedNavigationIsNotPresentedAndForeignReceiptIsRejected",
+      "testRealCoreExecutionPreservesGenerationBeyondDoublePrecision",
+      "testReplayDoesNotExecuteAgain",
+      "testRevokedReadGrantIsHiddenAndForcedOldToolCannotRead",
+      "testSDKDispatcherAcceptsHostTransitionAndRetiresOriginalSession",
+      "testSDKDispatcherDoesNotRepeatQueuedHostTransition",
+      "testScopedReadDoesNotRestrictOriginalMetadataForAnotherWork",
+      "testScopedReadIssuerKeepsMetadataContextAndBoundsOnlySearch",
+      "testScopedReadIssuerRejectsMissingForegroundOrForeignOrigin",
+      "testScopedReadIssuerRejectsUnknownBackendAndNoncanonicalWork",
+      "testScopedSearchCancellationReachesOriginalCoreWorker",
+      "testScopedSearchRejectsMissingAndBroaderScopeBeforeBackendRead",
+      "testScopedSearchUsesActualCoreAvailabilityWithoutHidingOldMetadata",
+      "testSeparateReadContextCannotBelongToAnotherSceneOrSubject",
+      "testSeparateReadContextWithoutContentRightsStaysClosed",
+      "testSupersededDismissalCannotConsumeCurrentConsentEvenWhileDismissing"
+    ],
+    "scope": "Original Contracts, complete HostDispatcher, actual ActionCore and host adapter; explicit backend, authority and native receipt doubles; not app/provider/UI/device acceptance"
+  },
+  "native_ui": {
+    "status": "SELECTED_UI_EXECUTED_PASS",
+    "scope": "FOCUSED_FRESH_READ_NO_SEND_ONLY",
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 242.39134907722473,
+    "original_xcresult_sqlite_rows": [
+      {
+        "identifier": "HanlinReaderConsumerAcceptanceTests/testOriginalIPadFreshCurrentWorkReadConnectionWithoutSending()",
+        "result": "Success",
+        "duration": 242.39134907722473
+      }
+    ],
+    "original_xcresult_test_issues": 0,
+    "device": "iPad Pro 11-inch (M5)",
+    "runtime": "iOS 27.2 (24B8117), arm64 simulator",
+    "source_assertions": [
+      "Original reader locator, text UTF-8 bytes and workspace owner preserved after closing chat",
+      "Source-qualified current-book consent starts disabled and is explicitly enabled using actual native controls",
+      "Actual native keyboard dismissal asserted",
+      "Fresh canonical SDK Composer exists; Send disabled for untouched empty conversation; Stop absent",
+      "No Send action; no live-provider mode or nonce"
+    ],
+    "screenshots": [
+      {
+        "name": "hanlin-fresh-read-no-send-before-native-keyboard-dismiss",
+        "uuid": "0551AEC8-B56F-41A5-AA23-B7F5B1F61C51",
+        "timestamp": 817111631.5780001,
+        "timestamp_unix": 1795418831.578,
+        "relative_path": "captures/visual-11-reader/0551AEC8-B56F-41A5-AA23-B7F5B1F61C51.png",
+        "bytes": 669120,
+        "sha256": "4f91addccc474eed4e7f4a1ed9433bb360392ce9d24900fa2342062602829ae8",
+        "inspected_native_image": true
+      },
+      {
+        "name": "hanlin-fresh-read-no-send-after-native-keyboard-dismiss",
+        "uuid": "1F0A4887-B09E-46A2-9386-BE54520FCB30",
+        "timestamp": 817111643.098,
+        "timestamp_unix": 1795418843.098,
+        "relative_path": "captures/visual-11-reader/1F0A4887-B09E-46A2-9386-BE54520FCB30.png",
+        "bytes": 709545,
+        "sha256": "39ea5611d28a8120733cdbe6a3c9a37f8ea48e7301fc62180ebca59a8e5f0397",
+        "inspected_native_image": true
+      },
+      {
+        "name": "hanlin-fresh-read-no-send-before-original-connect",
+        "uuid": "98D19702-12E2-4619-B672-D8E07C205F88",
+        "timestamp": 817111665.572,
+        "timestamp_unix": 1795418865.572,
+        "relative_path": "captures/visual-11-reader/98D19702-12E2-4619-B672-D8E07C205F88.png",
+        "bytes": 710110,
+        "sha256": "afa905cd88ba89be72a75d1a5306e0a893bb2b6fd513595f6895f801a50339b2",
+        "inspected_native_image": true
+      },
+      {
+        "name": "hanlin-fresh-read-no-send-after-original-dismiss-reopen",
+        "uuid": "D0887743-E7F7-476B-B886-4925EF9E97F6",
+        "timestamp": 817111678.652,
+        "timestamp_unix": 1795418878.652,
+        "relative_path": "captures/visual-11-reader/D0887743-E7F7-476B-B886-4925EF9E97F6.png",
+        "bytes": 783390,
+        "sha256": "f2aed633d4a71aa4825c8d41e9642665a05579556bd0e0fd057de5f6d8970d28",
+        "inspected_native_image": true
+      },
+      {
+        "name": "hanlin-fresh-read-no-send-returned-to-original-reader",
+        "uuid": "FB92E69E-8A7E-4D04-AC76-34385116F224",
+        "timestamp": 817111712.4979999,
+        "timestamp_unix": 1795418912.498,
+        "relative_path": "captures/visual-11-reader/FB92E69E-8A7E-4D04-AC76-34385116F224.png",
+        "bytes": 883031,
+        "sha256": "d37397bb48d234259dbbd516975d758e23ce1c22aeae358e4681439dda06b444",
+        "inspected_native_image": true
+      },
+      {
+        "name": "r27-final-native-screen",
+        "uuid": "175E2630-0E86-4F27-9B5C-9F68D86A9A2C",
+        "timestamp": 817111716.8369999,
+        "timestamp_unix": 1795418916.837,
+        "relative_path": "captures/visual-11-reader/175E2630-0E86-4F27-9B5C-9F68D86A9A2C.png",
+        "bytes": 883031,
+        "sha256": "d37397bb48d234259dbbd516975d758e23ce1c22aeae358e4681439dda06b444",
+        "inspected_native_image": true
+      }
+    ]
+  },
+  "visual_review": {
+    "original_images_inspected": 6,
+    "unique_image_hashes": 5,
+    "observations": [
+      "Original landscape Hebrew reader and gold toolbar/sidebar remain behind Study chat.",
+      "Connection form carries current Otzaria book identity; consent off then on; controls fit original sheet.",
+      "After original connection dismissal/reopen, canonical empty Composer, plus action, disabled Send, book title and End book access are visible.",
+      "Closing Study chat returns to original reader; final two screenshots byte-identical; selected text and reader controls remain visible."
+    ],
+    "limits": [
+      "No pixel-baseline comparison or animation measurement.",
+      "Screenshot labelled before keyboard dismissal does not itself visibly show software keyboard; original XCTest separately asserts actual keyboard existence and dismissal.",
+      "No live model response, provider, request-transcript or network-silence claim."
+    ]
+  },
+  "not_claimed": [
+    "full native116 acceptance",
+    "full release114 acceptance",
+    "physical device",
+    "archive or signed distribution",
+    "live provider or model response",
+    "database state from test counts"
+  ],
+  "receipts": {
+    "original/artifacts/continuation-host48-current/result.json": {
+      "sha256": "a4c8aa6cdf98394859740ed50b1327731b4b4bf5d8ecd11608998fd85e11e4d0",
+      "bytes": 6785
+    },
+    "original/artifacts/continuation-host48-current/inputs.json": {
+      "sha256": "74daccc6bd46f823b6e1dfb1b2326f612ac7a19dac659ca09a40b26f7bd79af1",
+      "bytes": 19041
+    },
+    "original/artifacts/continuation-host48-current/swift-test.log": {
+      "sha256": "1de5eef8b2f7691ccbe12d54b8a277512906cd943b6c2f7724068db0be65c0ed",
+      "bytes": 16888
+    },
+    "original/artifacts/continuation-focused/result.json": {
+      "sha256": "94a45e3eed7d04b148b50c1d1d629cba58392c1dec6f6359ded01d1a1402c350",
+      "bytes": 65903
+    },
+    "original/artifacts/continuation-focused/source-before.json": {
+      "sha256": "60bc503912d9095834783cdcebc805b4347d08bd689ccd50f5ce09137c39774a",
+      "bytes": 63355
+    },
+    "original/artifacts/continuation-focused/original-post-ui-input-audit.json": {
+      "sha256": "e56c0c4499cb90a874c44e885248b9493ac652fd39af0308507ccbc5ab6fe627",
+      "bytes": 118896
+    },
+    "original/artifacts/continuation-focused/built-binaries.json": {
+      "sha256": "d2f48e4ff6bbc7844dccca16faadab4ef30e641b0aa4a0199b7a366d3163af81",
+      "bytes": 497
+    },
+    "original/hq-stage2/result.json": {
+      "sha256": "fc8f15295c61bd0cb2e5b3b4bc018e155150e9dff080b14a0fbcd9b7e2bbb028",
+      "bytes": 114230
+    },
+    "original/hq-stage2/hanlin-sdk-inputs.json": {
+      "sha256": "6f2918f9785c824fe850f06f9146274a729cc7688a46e44604e69aa0da4b2458",
+      "bytes": 91376
+    },
+    "original/hq-stage2/hanlin-sdk-inputs-after.json": {
+      "sha256": "6f2918f9785c824fe850f06f9146274a729cc7688a46e44604e69aa0da4b2458",
+      "bytes": 91376
+    },
+    "original/hq-stage2/actual-source-inputs.json": {
+      "sha256": "b7961fad3e1b70dcfe16f620514c7ab48854d84b0dde315e5dc552649b996d78",
+      "bytes": 115282
+    },
+    "original/hq-stage2/privacy-original.xcprivacy": {
+      "sha256": "39380ce07cfe093fee32ef7d99c7d1cf86d3565b8fe860ecb0f8497c23c585a1",
+      "bytes": 1132
+    },
+    "original/hq-stage2/privacy-generated.xcprivacy": {
+      "sha256": "e6946e8876416f5a802dcad79e6c629416788175e0fa078d46accfdc73752fc5",
+      "bytes": 1386
+    },
+    "original/artifacts/runtime27/verified-11-reader.summary.json": {
+      "sha256": "d91f857538288e1bdd40c8389bf9b10f1703e911eab7df5c80992a69130d5f34",
+      "bytes": 986
+    },
+    "original/artifacts/runtime27/verified-11-reader.tests.json": {
+      "sha256": "dd2d05bbad704850fed0484b7844cedfa477986888bd1b4c061f04f96f780d60",
+      "bytes": 1807
+    },
+    "captures/result-11-reader.xcresult/database.sqlite3": {
+      "sha256": "68cecb5d1bdcef8fa4f64c13ee22b63e8a644aa41d5ac83940f857cf29a5d2d8",
+      "bytes": 319488
+    },
+    "captures/visual-11-reader/manifest.json": {
+      "sha256": "2e49d737617b56fb5b36cd3310a427323001bd64c67d52329faae62224c4c081",
+      "bytes": 6018
+    }
+  }
+}

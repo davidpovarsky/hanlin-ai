@@ -1,0 +1,87 @@
+{
+  "source": "97ca89552b8e39fab4d0a26e51e3f77010e1811e",
+  "status": "ONE_ORIGINAL_HTTP_SELECTOR_EXECUTED_PASS",
+  "memberCount": 16,
+  "files": [
+    {
+      "path": "handoff/original-http-97ca8955-pass/controller-binding.diff",
+      "bytes": 2755,
+      "sha256": "23c58a8334655c58172c17adec5b6604b58dfb65417e9cd72aab93d916b37027"
+    },
+    {
+      "path": "handoff/original-http-97ca8955-pass/focused-pass-reconciliation.json",
+      "bytes": 1063,
+      "sha256": "4541474418189308deef7337ca275afd4e5e72f4bd7718fed8a0fb7301ba4e5f"
+    },
+    {
+      "path": "import-97ca8955/root-http-framing-integrated.json",
+      "bytes": 785,
+      "sha256": "3261acb5225874ad3cc86e7d912202d22f290abbf5e588b54b7846cbc21656ad"
+    },
+    {
+      "path": "original-http-diagnostic-launch-97ca8955-r1.json",
+      "bytes": 386,
+      "sha256": "6f8b5207b9c93dbdf1859634d8cd27de37899147f9cefbf755f6e3e5dce19a7f"
+    },
+    {
+      "path": "original-http-diagnostic-supervisor-97ca8955-r1.log",
+      "bytes": 640,
+      "sha256": "d4d854db660e6747e50c6072c1fb21c8bf7b8174c5640b05afa9e9557659d7ba"
+    },
+    {
+      "path": "run-original-http-diagnostic-97ca8955.py",
+      "bytes": 12565,
+      "sha256": "f5b6b5931da6ce44adead6acbf2032d9a441b4f80d6f187c762c84786eabe062"
+    },
+    {
+      "path": "source/Packages/HanlinPlatform/Package.resolved",
+      "bytes": 1771,
+      "sha256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d"
+    },
+    {
+      "path": "source/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+      "bytes": 99347,
+      "sha256": "c5846466716970ab7c4a1b5c2cd970e36a7d09cbedbc8a52417144fa6569a905"
+    },
+    {
+      "path": "source-stage-97ca8955-r1.json",
+      "bytes": 5459,
+      "sha256": "2f83416687063358d91261e599ddcc5a9eb912097536140125f43140bac61919"
+    },
+    {
+      "path": "validation/original-http-97ca8955-r1/controller.json",
+      "bytes": 5480,
+      "sha256": "7aa9b2d3d2e10b36a2a35c0e902f25fa159cff3579a37483b53461f9da157631"
+    },
+    {
+      "path": "validation/original-http-97ca8955-r1/native/original-http-hanlin-widget-pass3-5F69E524-45A3-49A8-AE24-6C3280AA8319/native-stages.jsonl",
+      "bytes": 7337,
+      "sha256": "efc72b075ff9095949f208442e1ec611626037d75e139383256dfc05716dd749"
+    },
+    {
+      "path": "validation/original-http-97ca8955-r1/native/original-http-hanlin-widget-pass3-5F69E524-45A3-49A8-AE24-6C3280AA8319/port",
+      "bytes": 5,
+      "sha256": "24575f966b03b8d9ed258998b4cb26181af1d937124a363ce8f97f4cc507a1d4"
+    },
+    {
+      "path": "validation/original-http-97ca8955-r1/native/original-http-hanlin-widget-pass3-5F69E524-45A3-49A8-AE24-6C3280AA8319/server.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "validation/original-http-97ca8955-r1/native/original-http-hanlin-widget-pass3-5F69E524-45A3-49A8-AE24-6C3280AA8319/server.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "validation/original-http-97ca8955-r1/native/original-http-hanlin-widget-pass3-5F69E524-45A3-49A8-AE24-6C3280AA8319/wire.jsonl",
+      "bytes": 11657,
+      "sha256": "642ad50840a90c45f44a0edaef05342b07cb950e30ed128c90e26c318d74f895"
+    },
+    {
+      "path": "validation/original-http-97ca8955-r1/original-http-selector.log",
+      "bytes": 6439,
+      "sha256": "a002e0142ba02d8ce69fc6d29eeb5cd8062c2e6023ef17f1b54886c52e17dee3"
+    }
+  ]
+}

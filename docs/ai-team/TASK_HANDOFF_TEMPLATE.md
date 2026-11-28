@@ -11,7 +11,9 @@ acting_role: "[נועם | DEV] / [רוני | QA] / [איתן | ARCH] / [תומר
 execution_mode: "MAIN_SESSION | SUBAGENT"
 subagent_invocation:
   subagent_type: "<eitan | noam | maya | roni | tomer | yael | dana | NONE>"
-  conversation_id: "<subagent-conversation-id or NONE (MAIN_SESSION)>"
+  conversation_id: "<real platform conversation ID, or NONE when the platform exposes an agent/task ID instead>"
+  native_agent_id: "<real built-in agent/task identifier or NONE>"
+  invocation_tool: "<actual platform-native tool or NONE (MAIN_SESSION)>"
 next_reviewer: "[רוני | QA] / [תומר | INT] / [איתן | ARCH] / [דנה | SEC] / Owner"
 status: "BACKLOG | READY | IN_PROGRESS | READY_FOR_QA | VERIFIED | BLOCKED | AWAITING_OWNER_APPROVAL | DONE"
 goal: "<Concise description of the task objective>"

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-28T10:29:33.328669+00:00",
+  "agent": "/root/w1_review_resume",
+  "sourceCommit": "0edf7784cdbd854bea0266a22f06f182974a4df1",
+  "baseCommit": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+  "beforeSHA256": "cab45c3fe1e7733cc772e6e08cc0cc3fddef2c8254a0d98e219f392e1f17408f",
+  "afterSHA256": "c48f33bd0179cc95b0fbf1c5f7455c8e49831ddc612e32ce2eef6fa55a6cb474",
+  "patchSHA256": "241d3b8c83e97595d20e6f2055d6fde09f214cb47fc1a699af6a074331217b74",
+  "patchEncoding": "lossless gzip; original bytes retained without whitespace rewriting",
+  "scope": "Exactly three V3 text events inside the test-only controlled fixture finish helper, before its original stop and continuation finish.",
+  "wholeFileInverseExact": true,
+  "preservedAssertions": 655,
+  "preservedTimingLines": 15,
+  "preservedOtherFunctionBlocks": 93,
+  "affectedFixtureDefinitions": 6,
+  "sourceAuthorization": "Parent approved exact three-event proposal d677d3d278f13284ce58bee5e1e26d97e03e0e1fcc38bfbef5cf1ba3b9e43d3b before implementation.",
+  "sourceReview": {
+    "status": "APPROVED_SOURCE_ONLY_NATIVE_PENDING",
+    "receipts": [
+      {
+        "path": "independent-root-source-review.json",
+        "sha256": "9329c43c878bb474086d20022326b793e4b52530bc671cecf0fcb6d9340b6f33"
+      },
+      {
+        "path": "independent-mac-source-review.json",
+        "sha256": "34026aa96ac76cc2218eecfe1e5b76393ac52ce4f3132ba5284d2cca42e7ddc1"
+      }
+    ]
+  },
+  "productionChanges": 0,
+  "SDK396InputIntersection": [],
+  "Host99TestIntersection": [],
+  "nativeValidation": "NOT_RUN",
+  "portableMirrorValidation": "NOT_RUN",
+  "futureNativeGate": "All original controlled-fixture consumers retain their assertions and native acceptance obligation; the original whole Owner suite remains included in original90."
+}

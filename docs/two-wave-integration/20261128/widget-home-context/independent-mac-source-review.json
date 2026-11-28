@@ -1,0 +1,99 @@
+{
+  "schema": 1,
+  "reviewer": "/root/mac_build_resume",
+  "status": "APPROVED_SOURCE_ONLY_NATIVE_COMPILATION_AND_ACCEPTANCE_PENDING",
+  "sourceBase": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "candidatePath": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "candidateSHA256": "1a657ce9913094faa6974b534c7d53abc7599a3c4549445113cd3c4fbc8fb98c",
+  "packet": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/widget-home-context-3634078f/candidate-r1",
+    "manifestSHA256": "e52506cf045c3e10b91a1eaa133b9c68a2e47b11e5d17209b59cedd25ff1b127",
+    "members": 19,
+    "bytes": 561886,
+    "allMemberSHA256AndSizesVerified": true
+  },
+  "patchSHA256": "4a14977829125a226cc63f9a2fbfaae4fdf860e955c8194d58938584d4531c59",
+  "sourceVerification": {
+    "wholeBaseByteInverse": true,
+    "actualBaseGitBlob": "b1c993f84b8e9ebff3890be47797f60531f3c80a67b938e5ee5a17369fc837bd",
+    "onlyChangedOriginalFunctions": [
+      "openWidgetFamilyGallery",
+      "placeMatrixWidget"
+    ],
+    "addedFunction": "widgetHomeScreenIcon",
+    "baseTests": 38,
+    "currentRootTests": 42,
+    "currentRoot": "fcedca4d091a3e11d26ef7526764b8d7eae0f3e0",
+    "currentRootFileSHA256": "2abf678e162ae445d9e55802786843872251760d328756cfcc569ec137f04b4e",
+    "composedSHA256": "e2c11d2f6c0d64eea19e3360aff034ba376cc8d5fa17014046ce4df5e6750443",
+    "wholeRootByteInverse": true,
+    "allCurrentRootTestBodiesExact": true,
+    "unaffectedBaseHelpers": 114,
+    "originalAssertionLines": 401,
+    "observedDeHelperBytesEqual": true
+  },
+  "actualEvidence": {
+    "externalMembers": 17,
+    "allSHA256SizesVerified": true,
+    "allEightAttachmentCRCsRecomputed": true,
+    "rawLogExcerptRangesByteExact": true,
+    "cases": [
+      {
+        "scope": "state",
+        "runID": 46109331496,
+        "pid": 61496,
+        "rawLogSHA256": "edf20307d5025c128ddaef6a040b1985695d12d6ef909c8af02a8a09a3c61241",
+        "finalPNGSHA256": "a8b6101f351d899f9a7fe62b14c8b55558d2a5807ecd39cd4c56d8689ad0e7ab",
+        "finalAXSHA256": "04490555b861d5440bab8118a1c3f243a2b391e5525c0226dec779af4649acbb"
+      },
+      {
+        "scope": "voiceover",
+        "runID": 46109228743,
+        "pid": 85561,
+        "rawLogSHA256": "d5b534bba1c5e88b582c71fff12ac73b2d7a71d03f283a76bbeebf3233b04ee3",
+        "finalPNGSHA256": "3cd6fa22e63ce7d77e5bd321f7e03e56ea92158e3f4289fa1022e142813f201e",
+        "finalAXSHA256": "7a742d6335fd97ffeb5b2bb62e631b5747c7a82a585b6b1c9c052c5c9fb08a5f"
+      }
+    ],
+    "visualInspection": "Both exact PNGs show App Library search/categories and the selected MiniApps Options/Delete App context. Each own-case AX retains Page 3 of 2 at x=-407, outside the 756-wide frame.",
+    "gestureAuthority": "Each actual unique native log retains one Home press, one left swipe, MiniApps long press for 1.2 seconds, Options and the failed original Edit Home Screen wait.",
+    "limits": "Final AX is after the gesture. Search-field hittability and a successful Home-page hierarchy are not established by these failed artifacts. Three original animation-idle waits and remote-element warnings remain unmodified and unattributed."
+  },
+  "assessment": {
+    "contextAdmission": "Visible App Library causes a right swipe within the existing observations. Otherwise one visible Home icon container, exactly one visible hittable Page control, parsed positive in-range Page N of M, and at most one visible above-dock MiniApps icon are required. The actual final wrong contexts fail the page frame/range requirements independently of search-field hittability.",
+    "bound": "At most five observations and four swipes between them; no new waits, sleeps, tasks, retries or timing overrides. Candidate checks earlier observed pages and never traverses left beyond the observed final page.",
+    "originalFlow": "Both unchanged nil-icon assertions remain. Original long press, Options, 12-second Edit Home wait, gallery selection, named instance binding, action/state/speech assertions, host termination and cleanup/restoration remain exact.",
+    "affectedPaths": "Recovery/State/VoiceOver use placeMatrixWidget; Layout and four Home-family cases use openWidgetFamilyGallery (four families through observeWidgetFamily). Generic system-widget helper remains unchanged.",
+    "failureMode": "No missing/ambiguous/out-of-range page or duplicate icon is accepted. English Page-format and public XCTest querying of observed identifiers remain fail-closed pilot assumptions."
+  },
+  "inputMembership": {
+    "sdk396": {
+      "rows": 396,
+      "sha256": "26596817f3023ea07901862d3782a99e60cbd8b2c1630210915a9103598ab074",
+      "intersection": []
+    },
+    "host99": {
+      "rows": 99,
+      "sha256": "460b6ebe9de738d033f841be7f99d992f5293e9739c208bea2eadbf057847889",
+      "intersection": []
+    }
+  },
+  "officialNavigation": {
+    "url": "https://support.apple.com/en-euro/guide/ipad/ipad997d9e62/27/ipados/27",
+    "scope": "Independently opened Apple guide; left/right swipes browse Home pages. No official guarantee for observed AX identifier strings is asserted.",
+    "appLibraryPageOpen": "HTTP429 retained; not retried."
+  },
+  "execution": {
+    "native": "NOT_RUN",
+    "tests": [],
+    "builds": [],
+    "generatorRuns": [],
+    "sourceEditsByReviewer": [],
+    "repositoryOrIndexWrites": []
+  },
+  "limits": [
+    "Source-only approval does not establish Apple compilation or successful new navigation.",
+    "Original failed cases remain failed; no WidgetKit/VoiceOver success or product change is inferred.",
+    "Current root composition was computed in memory against immutable fcedca4d; final integration/source admission remains the root owner's responsibility."
+  ]
+}

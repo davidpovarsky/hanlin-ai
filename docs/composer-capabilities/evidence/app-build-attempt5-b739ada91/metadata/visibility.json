@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "scope": "HOST_BASELINE_ONLY",
+  "platform": "iphonesimulator",
+  "architecture": "arm64",
+  "sha256": {
+    "metadata-generation-stderr-arm64.txt": "9518b950dd8d66ddec4588cd2f52552330b306ad93de0578f135e1b493192220",
+    "umbrella-arm64.h": "4b2eeb938c104bfda51cccc496200a27dcd125c7e8fbe0cc35e8cc80ef22ca50",
+    "metadata-arm64.bin": "5a3385b02b9f1c626301a326d32068aadc5d6ef6ceb4fa5bae486a978321fbba"
+  },
+  "requiredMetadataStringsPresent": {
+    "HanlinNativeServicesBridge": true,
+    "HanlinNativeServicesSessionBridge": true,
+    "HanlinNativeScriptCompatibility": true,
+    "UIView": true,
+    "NSObject": true,
+    "NativeScriptEmbedder": true,
+    "SwiftUIProvider": true,
+    "HanlinNativeScriptSwiftUIFixtureProvider": true,
+    "WKNavigationDelegate": true,
+    "WKWebView": true,
+    "TNSLabel": true,
+    "NSCCrypto": true
+  },
+  "clangErrorCount": 0,
+  "boundary": "Build-time completeness check; actual VM tests still required."
+}

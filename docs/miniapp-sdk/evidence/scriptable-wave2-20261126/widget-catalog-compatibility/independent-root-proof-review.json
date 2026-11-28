@@ -1,0 +1,31 @@
+{
+  "classification": "INDEPENDENT_ORIGINAL_PORTABLE_LOG_RECONCILIATION",
+  "at": "2026-11-27T23:53:19.418618+00:00",
+  "records": [
+    {
+      "phase": "red-original",
+      "testCount": 1,
+      "exitCode": 1,
+      "rawLogSHA256": "dae00b6513b1ca5f0b9bdf559eebbd0295531b991042df5b698a35dd63e31145",
+      "tail": [
+        "----------------------------------------------------------------------",
+        "Ran 1 test in 0.013s",
+        "",
+        "FAILED (errors=1)"
+      ]
+    },
+    {
+      "phase": "green-focused",
+      "testCount": 9,
+      "exitCode": 0,
+      "rawLogSHA256": "92bca0fef861105460b13b4b8c7acd8965768922629e7299e504fe495a127751",
+      "tail": [
+        "----------------------------------------------------------------------",
+        "Ran 9 tests in 0.048s",
+        "",
+        "OK"
+      ]
+    }
+  ],
+  "replay": false
+}

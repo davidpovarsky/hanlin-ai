@@ -1,0 +1,12 @@
+{
+  "author": "/root/w2_source_resume",
+  "beforeSHA256": "4f57bfd6988de32d0ca3b69ebc46cb3ccc91c943a5f3bfa434c55e7b5214d63c",
+  "candidateSHA256": "519cb2c41cf1835b30d9e82da54703c3ca844668686b1d933cb49a1bc2f8f974",
+  "exactSourceAddition": "event[\"isMainThread\"] = Thread.isMainThread",
+  "independentReviewer": "/root",
+  "nativeValidation": "NOT_RUN",
+  "parent": "590b17a6c1f586daeeb1138850048f99e503ab5b",
+  "reason": "The shipping completion wait pumps the main run loop only for a main-thread caller. Observe the actual test thread before attributing the native timeout; wait/deadline behavior remains unchanged.",
+  "removingOnlyAdditionRecoversParentBytes": true,
+  "reviewMessage": "Add isMainThread now as one diagnostic follow-up commit before native attempt; valuable one-field distinction and no policy change. Please do immediately, send updated file SHA/commit, then hold further HTTP source edits pending actual attempt."
+}

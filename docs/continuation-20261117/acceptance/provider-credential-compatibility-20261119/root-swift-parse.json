@@ -1,0 +1,93 @@
+{
+  "scope": "Windows Swift6.3.3 syntax only; Apple execution NOT_RUN",
+  "files": [
+    {
+      "file": "AI_HLY/Downstream/ChatCore/HanlinDefaultChatPolicy.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingAssistantProviderAdapter.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatformAIIntegration.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "AI_HLY/ModelsView.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "AI_HLY/Services/APIServices/ModelRefreshService.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "AI_HLY/Services/ChatServices/AutomaticSearch/AutomaticSearchMigration.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "AI_HLY/Services/ChatServices/SystemOptimizer.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "AI_HLY/Services/ChatServices/TextToSpeech.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "AI_HLY/Services/DataServices/HanlinAppProviderCredentials.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "AI_HLY/Services/VisionServices/VisionAPI.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "AI_HLY/SettingsView.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "AI_HLY/Views/Components/APISettingView.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "AI_HLY/Views/Components/ChatViewComponents.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "AI_HLY/Views/Components/KnowledgeWritingView.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "AI_HLY/Views/Components/ModelManagementView.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "AI_HLY/Views/Components/QuickToolsView.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "AI_HLY/Views/Components/SettingsViewComponents.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "ChavrusaChatTranslationProvider/TranslationProviderSession.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinCompactAgentContracts.swift",
+      "exit_code": 0
+    },
+    {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinKeychainCredentialStore.swift",
+      "exit_code": 0
+    }
+  ]
+}

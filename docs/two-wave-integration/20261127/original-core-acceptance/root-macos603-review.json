@@ -1,0 +1,36 @@
+{
+  "reviewer": "/root",
+  "atUTC": "2026-11-27T12:37:32.661359+00:00",
+  "source": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+  "verifiedMembers": 165,
+  "memberBytes": 1098875,
+  "manifestSHA256": "30ae4d1dc25aa7681ef4cd6b864b5be332b67306767260ceb4c5838b5c2ceaa3",
+  "originalReceiptSHA256": "9b8e9cf4cb53bcf211816aaa996e787dfdabaf87c52fcbe07d4972d1e86f4499",
+  "rawLogSHA256": "0972d6ce26d47917f5582fc5ff76407b7f5a542c2077e3d9f08b98adfee80719",
+  "rootRawCounts": {
+    "started": 603,
+    "passed": 603,
+    "failedSkippedCancelled": 0,
+    "parameterRowsSeparate": 316,
+    "summaryCount": 13,
+    "summaryTotal": 603,
+    "runStartHeadersSeparate": 13
+  },
+  "normalizedMethodNameMultisetsEqual": true,
+  "sourceUnchanged": true,
+  "exitCode": 0,
+  "nativeCommands": 1,
+  "originalPhaseSeconds": 3600,
+  "samples": 0,
+  "sourceReviews": {
+    "intakeSHA256": "836cb9332e26c9e6262d5bea2ba6848e5b957bd4ddfb0ed91eb34a615162cc0f",
+    "rootReviewSHA256": "dd2d1d4fdaf46f856960d0dc393a021c4b057649d22723cf02842b0bc0ceb32a",
+    "w1ReviewSHA256": "337e89babe60db647f229beb1e105b2460043b5ff8e352d09e52b79e81aa50c3",
+    "sourceDonor": "dbb423c6713fedd54a6d0c8b40f2ee31c3ef8c7c",
+    "originalHTTPRestoredSHA256": "433703973e69d764686c6761ad1851c40d76f5e53afa4561d1720d873a5a1ae4",
+    "temporaryDebugCallbackDiscriminatorRemoved": true,
+    "historical602ObserverReviewPreservedAsHistorical": true
+  },
+  "boundary": "Original unfiltered macOS Swift package suite only. This does not replace generic platform builds, selected iOS79, paired54, extra26, or app/OS/distribution acceptance.",
+  "rootParserNote": "Initial read-only counting included13 Test run started headers; corrected observer excludes those headers only. Native receipt and raw log unchanged."
+}

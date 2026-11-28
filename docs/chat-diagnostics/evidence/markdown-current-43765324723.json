@@ -1,0 +1,194 @@
+{
+  "status": "EXECUTED_PASS",
+  "run_id": 43765324723,
+  "job_id": 132969011946,
+  "source_sha": "d51f288ea7347699fefd476cfac494f48aabc7f5",
+  "renderer_sha": "f59bd0d533b6d94e01408bf6bdf9f5b09db57891",
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/43765324723",
+  "artifact": {
+    "id": 14182850411,
+    "size_bytes": 12792369,
+    "zip_sha256": "50ba03e49c271a9f0963dfaca1805efdd052dc39be47295dc619baf459946f4a",
+    "digest_verification": "DOWNLOADED_ZIP_MATCHES_API"
+  },
+  "actual_runtime_closure": "AUTHENTICATED_APP_43761037885_PLUS_ORIGINAL_3_TEST_DEPENDENCIES",
+  "lock_sha256": "9d16f1f18234592e4f0660d129f4d2c455183db8247d84d6b9f7dbad8d31b0b5",
+  "actual_checkouts": [
+    {
+      "directory": "SwiftUI-Shimmer",
+      "revision": "0226e21f9bf355d40e07e5f5e1c33679d50e167f",
+      "files": {
+        "Package.swift": "77292f7126f3062a2bfec128cdfab4b58763a04c0a9e80ac762051848c6a1bb7",
+        "LICENSE": "4f77e514d5f70e976c4ba48407db21fb286a1ad2365093105c75206da14ecfbf"
+      }
+    },
+    {
+      "directory": "equatable",
+      "revision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+      "files": {
+        "Package.swift": "21f122fb50207cf54b2177b6fcf85841ad40371769ba0d6587828748cc8b60f3",
+        "LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+      }
+    },
+    {
+      "directory": "highlightswift",
+      "revision": "99c431b38a1444a5fd6a4978307fbbefe3a7af53",
+      "files": {
+        "Package.swift": "3471309f274eaacfa3f0f7912822f2dd0d63aa7452ee89de0d72d302989eaf47",
+        "LICENSE.md": "71d978783b52eb1c8a614bfb37cc38055781f9777911c3917d861e01c5fdd8a3"
+      }
+    },
+    {
+      "directory": "iosMath",
+      "revision": "ba9ab7729b151329c54fd895a7c1859981d9484c",
+      "files": {
+        "Package.swift": "668593c91087742588f7170db5f8c9ea992157212debf30ca6dcba4985434e8b",
+        "LICENSE": "431b2cb82b8a55977323598231f1baa44f32accac1231b4781a9a393d0bc29ed"
+      }
+    },
+    {
+      "directory": "swift-cmark",
+      "revision": "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
+      "files": {
+        "Package.swift": "60c2250cbae9160395168d8eb3a11aa8b49177b8fd12d8f69bc0b71a83665ee4"
+      }
+    },
+    {
+      "directory": "swift-custom-dump",
+      "revision": "06c57924455064182d6b217f06ebc05d00cb2990",
+      "files": {
+        "Package.swift": "832e1b830d11bf383f8ce2e59d8ea92fdcad371f02f06ebd76ffff88934e03dd",
+        "LICENSE": "e26e14493356d7abf33f426942a1c451832a8a4a309297d44c5b8a03af1d9ea1"
+      }
+    },
+    {
+      "directory": "swift-markdown",
+      "revision": "7d9a5ce307528578dfa777d505496bd5f544ad94",
+      "files": {
+        "Package.swift": "f2b31dc2e03b221015e71c8a242c8517df53a9622a8ee0df4ba56275a23753cf",
+        "LICENSE.txt": "167beb36f181bd163c93c6feb45c68e5f9462fe1af55b278f7bfd1df20e673a3"
+      }
+    },
+    {
+      "directory": "swift-snapshot-testing",
+      "revision": "1bc16f430d8410e7f087d4c787767b26fd32fe30",
+      "files": {
+        "Package.swift": "a7f20f401f8e7e63fcbbf8f125219ebefceeebbf5e29a85a0753ec502bb3ac0f",
+        "LICENSE": "5b31e3500e1add0ccd688abaa98c9a4086200a4a738e780760b57be97f5f6a4d"
+      }
+    },
+    {
+      "directory": "swift-syntax",
+      "revision": "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
+      "files": {
+        "Package.swift": "a9d82d3f7cdd7c1be7baa604173651e51f1711b190516eb9fbfe279c642eacc5",
+        "LICENSE.txt": "770af8291f708538d8ff885a0bbc4e045cd700531741c4f99528d435c14d7f55"
+      }
+    },
+    {
+      "directory": "xctest-dynamic-overlay",
+      "revision": "dfd70507def84cb5fb821278448a262c6ff2bbad",
+      "files": {
+        "Package.swift": "a3b03e5dda1cd97dc065f0b1dcdbad6b82cd6182d0cbfbc8507edfd51e0566d0",
+        "LICENSE": "e26e14493356d7abf33f426942a1c451832a8a4a309297d44c5b8a03af1d9ea1"
+      }
+    }
+  ],
+  "cases": [
+    {
+      "identity": "CodeBlockConfigTests/testCustomTextFontsAreStoredForRendering()",
+      "result": "Passed",
+      "duration_seconds": 0.1142110824584961
+    },
+    {
+      "identity": "CodeBlockConfigTests/testDefaultTextFontsPreserveBundledTypography()",
+      "result": "Passed",
+      "duration_seconds": 0.714635968208313
+    },
+    {
+      "identity": "CodeBlockConfigTests/testOriginalInitializerFunctionTypeRemainsSourceCompatible()",
+      "result": "Passed",
+      "duration_seconds": 0.0008399486541748047
+    },
+    {
+      "identity": "CodeBlockRendererTests/testDefaultRendererRemainsOptIn()",
+      "result": "Passed",
+      "duration_seconds": 0.08239996433258057
+    },
+    {
+      "identity": "CodeBlockRendererTests/testParsedBlocksKeepLiteralSourceAndStableSelectionIdentity()",
+      "result": "Passed",
+      "duration_seconds": 1.9088410139083862
+    },
+    {
+      "identity": "CodeBlockRendererTests/testViewHookReceivesTheExistingParsedBlock()",
+      "result": "Passed",
+      "duration_seconds": 2.4160460233688354
+    }
+  ],
+  "devices": [
+    {
+      "architecture": "arm64",
+      "deviceId": "0A1B5EC5-2485-4F8E-B06B-1185D8E186C0",
+      "deviceName": "iPhone 18 Pro",
+      "modelName": "iPhone 18 Pro",
+      "osBuildNumber": "24A434",
+      "osVersion": "27.0",
+      "platform": "iOS Simulator"
+    }
+  ],
+  "preflight": "Xcode 27.2\nBuild version 27B52\nApple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0\nDriverKit SDKs:\n\tDriverKit 27.2                \t-sdk driverkit27.2\n\niOS SDKs:\n\tiOS 27.2                      \t-sdk iphoneos27.2\n\niOS Simulator SDKs:\n\tSimulator - iOS 27.2          \t-sdk iphonesimulator27.2\n\nmacOS SDKs:\n\tmacOS 27.2                    \t-sdk macosx27.2\n\tmacOS 27.2                    \t-sdk macosx27.2\n\ntvOS SDKs:\n\ttvOS 27.2                     \t-sdk appletvos27.2\n\ntvOS Simulator SDKs:\n\tSimulator - tvOS 27.2         \t-sdk appletvsimulator27.2\n\nvisionOS SDKs:\n\tvisionOS 27.2                 \t-sdk xros27.2\n\nvisionOS Simulator SDKs:\n\tSimulator - visionOS 27.2     \t-sdk xrsimulator27.2\n\nwatchOS SDKs:\n\twatchOS 27.2                  \t-sdk watchos27.2\n\nwatchOS Simulator SDKs:\n\tSimulator - watchOS 27.2      \t-sdk watchsimulator27.2\n\nProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\narm64\n",
+  "phase_durations_seconds": {
+    "build-and-test": 682,
+    "complete": 0,
+    "preflight": 28,
+    "resolution": 76,
+    "results": 17
+  },
+  "job_duration_seconds": 839,
+  "raw_result_status": {
+    "status": "FINALIZED_READABLE_ARCHIVED"
+  },
+  "file_hashes": {
+    "actual-checkouts-validation.json": "c1658412ef2adf5f0bcd327c209eaafb32ebf0d17b88ede34acee48a2417c738",
+    "actual-Package.resolved": "9d16f1f18234592e4f0660d129f4d2c455183db8247d84d6b9f7dbad8d31b0b5",
+    "build-and-test-duration-seconds.txt": "9831a2964a92b51538bcbcdfc8ddfd527a8df2a452c127cdbcebbf543112330c",
+    "ci-performance-report.json": "efe1b35c629ab1d03c97908ae669717474014ff11846ffb963dbde43940e563d",
+    "closure-contract.json": "97f7eb51632718ffec71936ce0af30b02636113d362151fadddc40be2b1168e1",
+    "CodeBlocks.xcresult.tar.gz": "d33b89f44d373b7ad4ae79bf526b055b21bede25a56e9318910e76596ef3b372",
+    "complete-duration-seconds.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "dependency-source-audit.json": "38ca640c896cdf7a9e0c7cde42d88834bb22a9b8e7ef33cf98a0af854a94e493",
+    "devices.json": "98d36717798ad15b8cfe7d3facd4f815d3326cfd90b7a24ff03266b84e364b32",
+    "final-pin-validation.json": "429836213f349b1e2624fa11841ff27d7cea1d245ae1e39b24b678bd6422ab04",
+    "original-renderer-Package.resolved": "35f8552d9ce934cfa15c9576ef9eb0824f86d351fc828beec9fcf6af84f123f0",
+    "original-renderer-source.tar.gz": "01db2ffec089c73ab1b0d0259a63b1c20312ee83d93f23230e0628372ec1a040",
+    "preflight-duration-seconds.txt": "9961d158a7e0e2f990765971a9e490af826c0743b7d603020f34cc8944319fcb",
+    "preflight-start-epoch.txt": "7620992396761f4ffb543d42f2e6bcfde6b60ea1306492156d50f1db6838b4c2",
+    "preflight.txt": "8e3257de49575e781696980941d13a1cc87ea42ada84d26382187c797f64efb4",
+    "process-status.json": "0cf4bd99266815bf294555ed8f029ebd957fff38c8049d2294d5d56a3ea36a3a",
+    "raw-result-status.json": "f22d9503bff9051917f19163fd473a2f8954dfe36df90271087ce149b94d9c31",
+    "renderer-Package.swift": "9a6d87007499587933bbd04e3edf9aadb4bfceba91c3b1914bfc383e96f7aa8e",
+    "renderer-sha.txt": "a04e47f130c67698d10fadbe58b1a8aafcce6c2a274ca0e06272445a3326b1f4",
+    "renderer-tree.txt": "3b095a485b88316d261d8df59b77888e06e3dbbb62db79404a00a0edec4c7eda",
+    "resolution-duration-seconds.txt": "461144ccfd56ee3cf0f9a9d80e520c5b872166b23092d5fd838ecbdb46d64dab",
+    "resolution-validation.json": "429836213f349b1e2624fa11841ff27d7cea1d245ae1e39b24b678bd6422ab04",
+    "resolve.log": "ed4e878a04e382e1b5dd1d02c2636b4c8ad08ebf0a266ce139d3dcbb9398e8a0",
+    "resolved-before-tests.json": "9d16f1f18234592e4f0660d129f4d2c455183db8247d84d6b9f7dbad8d31b0b5",
+    "result-validation.json": "85c64b43c1882718228cf5360baa4aa852cc8f7d25def7c128c4e4eb3f4a474c",
+    "results-duration-seconds.txt": "54183f4323f377b737433a1e98229ead0fdc686f93bab057ecb612daa94002b5",
+    "runtimes.json": "5155d32520280fa9939af367a4d364be2bb0e7fe4ef3cf9945cc28ec44564d1f",
+    "seeded-consumer-Package.resolved": "9d16f1f18234592e4f0660d129f4d2c455183db8247d84d6b9f7dbad8d31b0b5",
+    "selected-device.txt": "a964b846a4a5d36046ae57070d5b9e94fcd04abd5e4dfe867702670b51fb1dfb",
+    "source-sha.txt": "2516390cad41c47d128ff848f68264e34a7698b923c109b8afbbe4089264db68",
+    "test-inputs.json": "c4d37e397429b25f564cd7f51f0ba429e7956cc6281d3ea16a4dd92803548b53",
+    "tests.json": "83a51a57e7753a6e6d33d1e4c336b343185b0a0e372b88684abbe04908c8e4ca",
+    "xcodebuild.log": "ecdc6f1af989134774f4e9fe58a6235c5eecab118a3a3359febb5b275be95182"
+  },
+  "scope_limits": [
+    "Full app/Runtime/Metadata graph NOT_RUN",
+    "A2UI/AST/UI suites NOT_RUN in this execution",
+    "No physical device or external playback acceptance",
+    "No renderer or app pin-source/pruning changes"
+  ],
+  "reused_tests": []
+}

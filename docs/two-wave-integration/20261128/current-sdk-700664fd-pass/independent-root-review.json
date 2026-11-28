@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "root",
+  "at": "2026-11-28T01:17:40.529692+00:00",
+  "classification": "CURRENT_SDK13_PASS_WITH_EXACT_HISTORICAL_HOST188_REUSE_VERIFIED",
+  "actualFreshSource": "700664fdbf0871321c30433172f39299e706b0f8",
+  "currentRootSource": "9edbed3a8b52c3dae5e52032b3fd8f6ef40dda37",
+  "manifestSHA256": "eb37d1f955874dedf581e051b9c6c6bca4a1960ac2413cef8bdf271765317ecb",
+  "independentlyRehashedPacketMembers": 48,
+  "packetBytes": 34726556,
+  "freshPhases": 13,
+  "allOriginalPhaseLogsAndExitCodesVerified": true,
+  "freshPhaseNames": [
+    "node-version",
+    "current-scriptwidget-types-check",
+    "current-sdk-audit",
+    "current-reachability-audit",
+    "current-sdk-fingerprint",
+    "restore-accepted-runtime-payload",
+    "original-sdk-stage",
+    "node-fingerprint",
+    "host-input-fingerprint",
+    "original-post-test-packing",
+    "original-packed-validation-jitless-and-seal",
+    "original-archive-reuse-validation",
+    "final-current-sdk-fingerprint"
+  ],
+  "completeHistoricalAndCurrentPayloadRowsCompared": 28810,
+  "actualPayloadByteChanges": [
+    "MiniAppSDK/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+    "MiniAppSDK/docs/miniapp-sdk/extension-reachability.json",
+    "MiniAppSDK/docs/miniapp-sdk/extension-reachability.md",
+    "MiniAppSDK/docs/miniapp-sdk/source-inventory.json",
+    "MiniAppSDK/miniapp-sdk.json"
+  ],
+  "modeEvidence": {
+    "actualArchiveQualificationSHA256": "df2ef36af5450e26a296c5770e889c88ee4ebc1a60d70cdeefc9427de909700d",
+    "allModesEqualRecorded": true,
+    "allChangedRowModesEqualVerified": true,
+    "scope": "Reconciled the recorded actual archive mode comparison; root did not transfer or reopen the two ZIPs."
+  },
+  "sdkManifestFilesIndependentlyReconciled": 25706,
+  "currentSDKInputsIndependentlyMatchedToRootGitBlobs": 396,
+  "currentSDKInputSHA256": "c4463f0f702e5b070f1e0236c452f90e5e31e8a2fa6a1978e72b9ad55caaf307",
+  "sdkManifestSHA256": "4819de6f518a2b9ea1c6e3c80a3567dbf46ef0ec886e883be162bb77766be480",
+  "currentArchive": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host-700664fd-source-provenance-r1/RuntimeHostResources.zip",
+    "canonicalPath": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81905749,
+    "sha256": "cfda1ac4ae05729f309ac235eec883b57df0fc6fbd158de46e986cd3ebac4158",
+    "testReuseQualificationSHA256": "1a67cff32bb2a8eb12d7e9342d0dedecce08152c26170deded2dac21b3ab0d7b"
+  },
+  "packedJITlessContracts": [
+    "GET",
+    "Request POST Unicode",
+    "redirect",
+    "HTTP error",
+    "ReadableStream",
+    "clone",
+    "gzip",
+    "multipart File",
+    "abort",
+    "HEAD",
+    "204"
+  ],
+  "crcReadbackRecorded": true,
+  "actualHost188": {
+    "status": "REUSED_VERIFIED",
+    "actualExecutionSource": "b5475156e7b0253b24c0a4385236b60da21f6f7e",
+    "actualExecutionReceipt": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-preparation-b5475156-original-phases-r1.json",
+    "actualExecutionReceiptSHA256": "ae96e1b3f5cbeafed5645fd26bbd3edfd1a74fd264c5a5dda4837fb1990d43a9",
+    "originalTestSummary": {
+      "tests": 188,
+      "pass": 188,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "actualLongJobProof": {
+      "proof": "actual-node-job-over-300-seconds",
+      "elapsedMilliseconds": 305044.987583,
+      "executionID": "432c5399-ce28-4670-826e-4336fc28dd24"
+    },
+    "testClosureSHA256": "3a48396dfcf27155074296d19b56ebd03eaebe5387e56f4eb76e1c34865bf96c",
+    "testInvocationsThisAttempt": 0,
+    "acceptedPayloadFiles": 28810,
+    "changedPayloadFiles": [
+      "MiniAppSDK/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "MiniAppSDK/docs/miniapp-sdk/extension-reachability.json",
+      "MiniAppSDK/docs/miniapp-sdk/extension-reachability.md",
+      "MiniAppSDK/docs/miniapp-sdk/source-inventory.json",
+      "MiniAppSDK/miniapp-sdk.json"
+    ],
+    "allOtherPayloadBytesAndModesEqual": true,
+    "newArchiveNotYetAccepted": false
+  },
+  "freshHost188Invocations": 0,
+  "freshOriginal12PhasePassClaimed": false,
+  "actualFullPlatformSource": "167219a491a844ae838041f195c12abe9800dac3",
+  "currentPackagesTreeEqualToFull619": true,
+  "full619IndependentRootReviewSHA256": "2e94adf0c34f56033e45309e72475406922eba07a7693c1cb9431de41eba1610",
+  "rawControllerReceiptSHA256": "06eac022be5b4c3484638c3a069184d08fd7e070f3fe1c40e66a363ee020cab9",
+  "reconciliationSHA256": "a4375a665ada1fb68efeefdfac1e7b1455208b655688817e1331247eea849887",
+  "originalControllerReviewSHA256": "f5e0ee7abd182898bf0000f2e3ab8a83fda25aff1b89f4baf9e2b93ad313118a",
+  "noTestOrNativeRerunByReview": true,
+  "boundary": "Fresh canonical source staging, SDK checks, original packed/JITless/archive checks pass. Host188 is actual historical b547 execution reused through exact closure, not fresh execution. Current iOS/app/OS/signing/physical-device acceptance remains separate."
+}

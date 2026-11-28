@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "sourceBefore": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "scope": "Two test-only fixture/assertion corrections preserving original selectors and persistence/containment semantics",
+  "files": {
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift": {
+      "beforeSHA256": "53bc610452297522b67593dc6a63e201aa5287acc8ed5b0e5769d94f381b7b5f",
+      "afterSHA256": "7e9f0d66ac6a6235f40af87f687cfc001f7db0f7ce03654535d2a76550ca9813"
+    },
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests.swift": {
+      "beforeSHA256": "6100a9d5412b22cf5542abcd1872e56f5ac6d23e996380947e896d77a97b3d91",
+      "afterSHA256": "708678c69c5078183642edd9e222975d5cbb345a8a97cff452b009d73456220d"
+    }
+  },
+  "native": "NOT_RUN",
+  "productionChanged": false,
+  "originalHTTPMethodChanged": false,
+  "atUTC": "2026-11-27T06:52:24.200166+00:00",
+  "sourceDiffSHA256": "1c3129ae84291c12a5c0e7312c29f5364be659de05baee8d92b3c29e87f98bb2",
+  "independentReviewSHA256": "ce196e88a38cb9a39482f945ed3256c9ea5ca802054d748b5887c9b26016bdd1",
+  "originalFailureLogSHA256": "4940cd870734bedec4fa4b3f079f9e2320be86087e0459cac458eac2ef507b0d",
+  "changes": [
+    "Keep original full install snapshot equality before intentional preparation mutation",
+    "Add full post-preparation snapshot equality, exact verified cached-node equality, and unchanged legacy snapshot",
+    "Check canonical physical path components rather than lexical Darwin alias prefixes"
+  ],
+  "native79Impact": "Keyboard original method is selected and needs current native execution; this proof does not qualify prior79 against its changed source",
+  "SDK392Intersection": [],
+  "actualFullPlatformAndSwiftCompilation": "NOT_RUN"
+}

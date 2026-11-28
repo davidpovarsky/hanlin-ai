@@ -1,0 +1,12 @@
+{
+  "reviewer": "/root",
+  "atUTC": "2026-11-27T10:07:14.437809+00:00",
+  "source": "226e7cfcc60a9ace99241f009d3586b9cea7e65e",
+  "verifiedOriginalMembers": 18,
+  "verifiedRawBytes": 102916,
+  "archiveSHA256": "788bd94b0f15f9ea52d0b6a69846692b4262045c2d42e1fdf114d33e1299c3d9",
+  "manifestSHA256": "fa8f2c9551bb40d7ff8343107422866916043908913224a4f91542d3ee505e26",
+  "actualResult": "2 executed; 2 failures, both newly introduced immediate weak-object collection assumptions",
+  "functionalObservations": "pending continuation retained; delivered once; duplicate callbacks suppressed; late delivery suppressed after cancellation; both contexts disposed",
+  "inferenceLimit": "No lost delivery or persistent context leak reproduced. Single public GC does not guarantee immediate weak-object clearance. The speculative production change remains unapplied. Later test-only correction retains every original601 assertion and actual JSONL observations."
+}

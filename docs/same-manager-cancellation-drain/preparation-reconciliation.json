@@ -1,0 +1,17 @@
+{
+  "status": "PREPARATION_ONLY_NO_TEST_OR_NATIVE_FAILURE",
+  "originalStaging": {
+    "returncode": 1,
+    "resultSHA256": "a5dd987ef2e00b88c78517f344ecb41b6b69e533a459a39e756f95510ed58574",
+    "reason": "Two newly owned paths were outside the inherited sparse definition. Subsequent explicit git add --sparse staged exactly the reviewed eight paths without changing sparse configuration."
+  },
+  "transcriptionCorrection": {
+    "retainedPriorPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/same-manager-cancellation-drain-fc5ce1ba-seal-r3/initial-staging-stop.transcription-before-correction.json",
+    "priorSHA256": "84c355b9e5b665a8f5dacca213f2ed01e9347c7cfa5b107596ff2066906ea31e",
+    "changedOnlyQuotedAdvice": "A previous serialization replaced false in quoted git advice with False. Exact retained tool JSON restores the original output. No source or command was re-executed."
+  },
+  "r3SourcePreflight": "The retained R3 preparation stop found six optional setup replacements rather than the initially expected seven, before source writes; the exact six were subsequently used.",
+  "rootDonorObjectRead": "The root review initially read an unpublished donor absent from its mirror, then read the actual isolated donor repository; its stopped receipt is preserved verbatim.",
+  "testsExecuted": 0,
+  "nativeExecuted": 0
+}

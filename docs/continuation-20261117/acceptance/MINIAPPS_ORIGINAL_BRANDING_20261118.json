@@ -1,0 +1,22 @@
+{
+  "document": "MINIAPPS_ORIGINAL_BRANDING_20261118",
+  "recorded_at": "2026-11-18T09:19:42.921744+00:00",
+  "observed": "Original standalone native failure screenshot displays the OS default grid icon. Source MiniApps target had neither an asset catalog resource nor an AppIcon compiler name.",
+  "change": "Reference the existing original AI_HLY/Assets.xcassets directly from MiniApps resources and select the same original AppIcon in Debug/Release. No image modified, copied or invented; original AI target unchanged.",
+  "original_icon_sha256": {
+    "Contents.json": "61d4bf516baee1e1b10ab131d5cbbcbc1cfdedf7ebe6a63d80ffac55fa1196ff",
+    "logo_3_0 1.png": "33627c30c1c853af9e9e9a27502a831b8b2c3f0ad286c91e580a5e0159163841",
+    "logo_origanal.jpg": "f0a57db8236b3dadfbd297b22403c6aa496c53805cf45a07881f752d1a832b4c",
+    "logo_white.png": "0d3aae54fd22bf77e6dfd59f04009038cb1d85eaab1e660523f1a88a89d471e7"
+  },
+  "project_existing_objects_changed": [
+    "F9F4C452EBF2FA6B1274B4D7",
+    "F8000000000000000000000C",
+    "F80000000000000000000015",
+    "F80000000000000000000016"
+  ],
+  "source_graph": "PASS;63 original shared source files and exact original product boundaries retained",
+  "packaging_proof": "Existing native and paired acceptance now verify actual compiled CFBundlePrimaryIcon name and nonempty Assets.car; source resource provenance hashes expand the original catalog.",
+  "native_validation": "PENDING; include in the next necessary paired/native product gate, no separate broad rerun solely for branding",
+  "release": "NO_GO"
+}

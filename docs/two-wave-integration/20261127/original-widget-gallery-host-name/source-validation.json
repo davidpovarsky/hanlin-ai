@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "sourceBase": "c929ebc14434523edfa78c4b0764fe8eb0fd47e6",
+  "candidateWorktreeBase": "65ae04775002acaf923c45d562e609e36f697cd2",
+  "path": "AI_HLYUITests/HanlinExpoProductionE2ETests.swift",
+  "beforeSHA256": "f1448ad05a503f71c1e7324f8b67064ab4ab22b9bf3f13f0a5f58816c14e2dee",
+  "afterSHA256": "1e4032c02cb68ec327a87b213d193ce8d161c59eaa8fb3ca3d0fc6bec84e4931",
+  "patchSHA256": "b73bb85f125cc52ce730716ec4565165d4f2264ed8c165fee7443d5aa6629173",
+  "actualCanonicalHostDisplayNames": {
+    "Debug": "Hanlin AI",
+    "Release": "Hanlin AI"
+  },
+  "wholeFileInverseWithTwoLiteralCorrections": true,
+  "allOriginalAssertFailLinesIdentical": true,
+  "originalSelectorCount": 12,
+  "allOriginalSelectorsAndDeadlinesPreserved": true,
+  "galleryCollectionBindingUnchanged": true,
+  "predicateScope": "Exact current owning host display name only; no broad aliases",
+  "nativeStatus": "NOT_RUN",
+  "observedOldFailure": "Original legacy test reached Search Widgets and failed its existing gallery-cell wait; no successful row or placement was observed."
+}

@@ -1,0 +1,128 @@
+{
+  "status": "SOURCE_READY_NATIVE_NOT_STARTED",
+  "utc": "2026-11-25T00:28:24.313552+00:00",
+  "sourceBase": "2b3271824e0338f0d7f5239e3b3a14c2b8c9f3b0",
+  "target": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "targetTree": "d06c5752c33c787df957a01d33461889cf5d7f4e",
+  "packSHA256": "c9d58437831233e6d79e001ee02b70276f549f2f527e2960a10a546a15e1e2bc",
+  "workingFiles": [
+    {
+      "path": "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "oldHEADSHA256": "08fe8608ac946c2759a05389b69c5601039cff61f41ad24fa55cee8d222cc2c2",
+      "workingSHA256": "610bcbb9a7f90c27e3bd3ecd3b1d139fe3ff72ed18086327d1d96c437de932f5",
+      "newHEADSHA256": "08fe8608ac946c2759a05389b69c5601039cff61f41ad24fa55cee8d222cc2c2",
+      "workingMode": 33188,
+      "preserved": true
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "oldHEADSHA256": "f7ad6d7bf5841f5a0be2f722a1b2735620aa06dcf4801cb73210688a7a135e64",
+      "workingSHA256": "3d619674297acb22ae4d0a97f5e7d8a878b0eccbc3bfc49769cfdb5a05248a0b",
+      "newHEADSHA256": "f7ad6d7bf5841f5a0be2f722a1b2735620aa06dcf4801cb73210688a7a135e64",
+      "workingMode": 33188,
+      "preserved": true
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "oldHEADSHA256": "9ee1d2babe6266148d8f969b25f542c00897c569969e5aae6dd6f744e2a0c53c",
+      "workingSHA256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+      "newHEADSHA256": "9ee1d2babe6266148d8f969b25f542c00897c569969e5aae6dd6f744e2a0c53c",
+      "workingMode": 33188,
+      "preserved": true
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "oldHEADSHA256": "da083105462f40368adb89acba0dbc1b623d2249b26b2ac1cbe1d326edc2bd3d",
+      "workingSHA256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206",
+      "newHEADSHA256": "da083105462f40368adb89acba0dbc1b623d2249b26b2ac1cbe1d326edc2bd3d",
+      "workingMode": 33188,
+      "preserved": true
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "oldHEADSHA256": "2bf8f371f06949fbe56858c38addeb417a07f9b598fc38ff72aedb39d5f364eb",
+      "workingSHA256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb",
+      "newHEADSHA256": "2bf8f371f06949fbe56858c38addeb417a07f9b598fc38ff72aedb39d5f364eb",
+      "workingMode": 33188,
+      "preserved": true
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "oldHEADSHA256": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1",
+      "workingSHA256": "54b154ffd2d74328ad849b521d7d3940184e8771cf2adb03f5b0acc8587a8e96",
+      "newHEADSHA256": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1",
+      "workingMode": 33188,
+      "preserved": true
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "oldHEADSHA256": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29",
+      "workingSHA256": "855ce12c168cc258cd202b1bf436dc7849901a71e189c2d4d49201b7f5da062b",
+      "newHEADSHA256": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29",
+      "workingMode": 33188,
+      "preserved": true
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "oldHEADSHA256": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1",
+      "workingSHA256": "5499b31720ac284d264768ba3416ed032d5a3d37f821350a06c3a3f3625e75c2",
+      "newHEADSHA256": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1",
+      "workingMode": 33188,
+      "preserved": true
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "oldHEADSHA256": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef",
+      "workingSHA256": "b0d3426a1238df51009a1c2b124f2d4dfa98f1ac6a75540e5a3a4f8578bd9c95",
+      "newHEADSHA256": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef",
+      "workingMode": 33188,
+      "preserved": true
+    }
+  ],
+  "workingArchiveSHA256": "81abd456e63968969032a41f83a19aed71c74521e66903ea13961ca5695e5c85",
+  "sourceHashes": {
+    "Scripts/Audit/miniapp-manifest-contracts.mjs": "9f592ef1d6d280923c473041a078e7f63757633ff55c3ee08f80af6d80b057e3"
+  },
+  "productionDelta": [
+    "Scripts/Audit/miniapp-manifest-contracts.mjs"
+  ],
+  "retainedPhaseIDs": [
+    "split-metadata",
+    "split-platform",
+    "split-upstreams",
+    "host-proof",
+    "split-foreground",
+    "split-host-lifecycle"
+  ],
+  "invalidatedPhaseIDs": [
+    "split-native-preparation"
+  ],
+  "nativePreparedCacheReuse": "Only audit map changed; existing native producers verify their unchanged actual input fingerprints. No hand-built substitute or forced rebuild.",
+  "priorFailure": {
+    "status": "FAIL",
+    "startedAt": "2026-11-25T00:15:39.815271+00:00",
+    "argv": [
+      "/bin/bash",
+      "-e",
+      "-o",
+      "pipefail",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+    ],
+    "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt8/split-native-preparation.log",
+    "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+    "pid": 68778,
+    "elapsedSeconds": 213.77175374999933,
+    "logBytes": 4019345,
+    "exitCode": 1,
+    "finishedAt": "2026-11-25T00:19:13.587171+00:00",
+    "logSHA256": "9451f196a79ec7de542b05d86d75ecb75825ee993f02c60a92ff3876a157dbbc"
+  },
+  "runtimeCoreArtifactRunID": "42926628418",
+  "runtimeCoreLocalArchive": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-inputs/runtime-core/hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip",
+  "newPlanSHA256": "769db2496c2960b2e3064ceb29f06795ccd4f1f1473f50cbdf0b352bcecd5d65",
+  "controllerAttempt9SHA256": "f8a6d2ca3fe3c259f4fbaa984d9702c8e576153ca8e62000724c6165e345d5d0",
+  "admissionAttempt9SHA256": "bfb20efeff0ddc20f86f981bbd071eaddaf4de3f22900089b380a2927065b426",
+  "maximumActiveSeconds": 12600,
+  "preservedActiveElapsedSeconds": 4209.053410252,
+  "nativeStarted": false
+}

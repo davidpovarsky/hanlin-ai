@@ -1,0 +1,79 @@
+# CHAT-SDK W1 — frozen source handoff
+
+**P1 corrected packet (current):** producer `e7bf34111e603ca977becd007dd4e5bb109af857`
+rejects multiple approval requests per call before either resume execution path.
+Only CollectToolApprovals and its raw-input regression source changed. Three new
+real-entry-point test bodies / 56 matrix rows are NOT_RUN, not typechecked or
+syntax-parsed. Prior45/39 evidence below remains historical at its exact old
+closure. Consumer source is unchanged; shipping pins remain unchanged. See the
+[combined packet](RAW_INPUT_AND_SESSION_HANDOFF.md) and
+`evidence/approval-correlation-source-manifest.json` for the corrected source hashes.
+
+
+**Earlier review entry (historical):** [combined producer/consumer/session packet](RAW_INPUT_AND_SESSION_HANDOFF.md).
+Producer is frozen at `788a591aa0981443ec9a8e747393f07fcdcae4cf`; the consumer is this
+containing commit. 45 selected actual producer tests and 39 portable Hanlin cases
+passed with distinct scopes. Actual Hanlin Session/full Apple graph remains
+NOT_RUN and numeric execution remains BLOCKED until that chain passes. Shipping
+pins/locks remain old43ebcf for Tomer's sole integration window; this source needs
+the new additive producer API. Stream cancellation is terminal; SDK04 must not
+promise reusable-turn cancellation. Earlier milestone text below is historical.
+
+
+Package/API preview: **HanlinAgentSDK 0.1.0-preview.1**, host API major **1**. Git SHA is pinned in the official single HANDOFF and canonical source Asana records; use that exact commit containing this document. This is a substantial source/portable-test milestone, not completed parent/host/native/UI acceptance.
+
+MAIN_SESSION, independently verified TOP_LEVEL_THREAD `01a1dd57-5fd2-78d2-98f1-95b0eecbe97c`; gpt-6.1-sol/high verified by controller. Branch `codex/hanlin-agent-sdk-wave1-20261115`, worktree `C:/Users/DAVID/Code/hanlin-agent-sdk-wave1-20261115`, baseline `6a533ef4cc26c3c4e2ce90037bbe2e50f4862c36` plus audit `f33e50f5a9e0e01c7397740da43e94fcc1347781`.
+
+Scope: SDK-01 `1220542174541844`, SDK-02 `1220542419128390`, SDK-03 `1220542199992529`, SDK-05 `1220542199999956`, SDK-07 fixture `1220542174542004`; parent `1219613181643838`. All remain open for their actual acceptance/review. SDK-04 Maya/Eitan, SDK-06 Anytype lead/Noam, SDK-08 Roni/Tomer are separate owners.
+
+## Source QA correction after 357d0042
+
+Independent Roni source review requested a P1 correction: an awaited host context can return an old matching snapshot after the dispatcher actor has revoked the session. The corrected dispatcher checks task cancellation and actor revocation before AND immediately after each freshness await; cached returns have a final cancellation/revocation check. Initial navigation cannot dispatch after invalidation during the context await, and post-effect/result/navigation acknowledgement delivery is rejected after that same race. Progress also rejects cancelled tasks before/after its context await. Receipts remain recorded in the original scope before delivery rejection, including uncertain outcomes; no write is reissued.
+
+Nine new continuation-gated race cases cover cached duplicate delivery, post-execute delivery (both committed and uncertain), initial open dispatch, post-open scripted acknowledgement, progress filtering/in-flight host cancellation, and task cancellation at the four result/navigation boundaries. The host fixture captures a matching context, signals actual suspension, waits for explicit invalidation/cancellation, then releases that captured value. There are no sleeps or timing assumptions. A scripted navigation acknowledgement is test data, not real host/UI evidence. The corrected closure has **32 portable case passes**; independent re-review remains pending. No public host API, shared core, Apple provider, store, app source, manifest, native/full-graph or device gate was changed by this correction.
+
+## Delivered source
+
+- NEW `Packages/HanlinAgentSDK`: products HanlinHostContracts, HanlinAgentCore, HanlinPersistenceAdapters and headless HanlinFixtureHost. iOS27/macOS26/tools6.2/Swift6 preserved; no changes to existing Platform manifest/locks, app projects/workflows/entitlements. Existing SwiftAISDK exact pin reused and new package lock captured.
+- Typed context/namespace/session/catalog ports reuse existing tool/request/result/progress/schema/permission contracts. Exact current signatures, effects/reconciliation, auth/revision and queued-vs-presented navigation semantics are documented in `PUBLIC_API.md` and declared in HostContracts. No second host authority/grant store, agent loop, business repository, production action registry or renderer.
+- HanlinHostDispatcher rejects unknown/duplicate tools, stale context, unsupported conditional writes, malformed JSON and conflicting/repeated calls, bounds delivery, filters stale progress and keeps receipts in the original scope before suppressing stale delivery. Durable native deduplication/mutation/permissions/schema validation stay host-owned. A thrown write after entering dispatch is conservatively uncertain, not assumed rolled back or retried in a new account/Space.
+- HanlinAgentSession is a source facade over the EXISTING HanlinAISDKAgentEngine. Injects host/catalog/capability/persistence/diagnostic services; wraps stable run/step/event correlation, serializes metadata saves and exposes current canonical host result/progress callbacks. Existing core dynamic tools are reused; same-name revision changes fail explicitly. Pending dispatch identities are persisted before execution. Default tool-history projection removes raw arguments, business result bodies and raw error details; secret-bearing model configuration never enters the record. Rich historical output requires authorized host references/UI projection, not business-data copies.
+- Private single-actor store, ephemeral store, bounded revisioned records, exact UTF-8 namespace isolation, display-only versioned references, checkpoint/restore and explicit conflict/errors. No production data migration, app/extension coordination, Keychain/CloudKit/AppGroup or signed protection claim. Host supplies the private directory and concrete credential/attachment/memory/permission adapters.
+- Thin FoundationModels text-only LanguageModelV3 adapter in NEW core Providers: real availability query, manual existing-picker identity, native text-role transcripts, byte-exact snapshot deltas including combining marks, cancellation/error propagation and explicit unsupported capabilities. **Native tools are unsupported in this preview** pending exact-once native/SwiftAISDK handoff and installed-SDK proof; no nested native tool loop/fake tool parity. No picker/UI changes or automatic cloud fallback.
+- Exact approved shared-core edits only: public existing provider injection initializer; throwing duplicate-alias guard before dictionary construction; truthful Apple identity/non-network factory error; native-only non-text guard immediately before message conversion, before SwiftAISDK can download image URLs. Original loop, cloud APIs, stream event cases, transport/parser/trace/replay/nonempty sources are retained. Added injection/native preflight/duplicate tests under existing core tests.
+- Synthetic host and headless example import no Otzaria/Anytype code. Navigation returns queued only, never a fake native UI acknowledgement. No Otzaria API enumeration/reader/search/backend mapping or host-source edits.
+
+## Actual verification
+
+**PASS: 32 portable behavior cases** (original 23 plus nine gated race cases above), executed on Windows Swift **6.3.3**, target **x86_64-unknown-windows-msvc**, language mode **6**. Exact commands, original input hashes and raw text output are in `evidence/portable-source-proof.json` and `evidence/portable-run.log`. Reproduce with:
+
+```powershell
+& Packages/HanlinAgentSDK/Tests/PortableProof/run.ps1
+```
+
+The proof compiles ACTUAL canonical PlatformContracts sources except the unrelated SwiftPM-only manifest resource loader, ACTUAL HostContracts, stores, dispatcher, pure Apple snapshot normalizer and the synthetic host. It supplies no replacement authority/model/consumer declarations. It deliberately excludes AgentSession, the SwiftAISDK/core provider loop, FoundationModels, Apple SDK/UI and real hosts. A partial module used by this harness is explicitly identified in the source manifest; this is not a full HanlinAgentCore/SPM/native PASS.
+
+Cases: exact Unicode namespace bytes; invalid decoded identity; scoped read; unknown tools; duplicate catalog aliases; duplicate JSON keys; fixture's actual schema validation; denied consent; single-dispatch repeated write; changed-argument idempotency conflict; unsupported CAS; stale scene; uncertain post-dispatch cancellation without retry; original receipt after context switch; monotonic progress; revoked presentation; output budget including cached results; queued navigation vs exact-target acknowledgement; metadata-only redaction; ephemeral namespace/revision isolation; replay version/order validation; private-store roundtrip/checkpoint/rollback; cumulative/combining-mark native text normalization. Fixture events are not real native/security/host evidence.
+
+**Manifest evaluation PASS** (`swift package ... dump-package`) and scoped Swift syntax parse PASS. Package resolution used the exact model SDK pin; it was not bypassed with a substitute manifest/provider. C: reserve was preflighted before materialization; only this worktree's `.build` was used. Initial source-audit proof has its separate original 33-blob inventory.
+
+**Full graph attempt BLOCKED on Windows**: `swift build --package-path Packages/HanlinAgentSDK --target HanlinAgentCore --jobs 2` reached real dependencies/core, then failed in unchanged existing `String(localized:)` usage in HanlinAISDKModels. `evidence/windows-full-graph-attempt.{json,log}` records the command, compiler and raw diagnostic. This was an in-progress graph attempt, not a frozen full-source build proof. No compatibility shim, fake Foundation declaration, replacement manifest or unrelated source change was made. Final AgentSession/provider code and additive core tests have syntax proof but no complete Apple typecheck/test result.
+
+**NOT_RUN**: full AgentSessionTests/ContextTests/StoreTests through SwiftPM; existing HanlinInjectedProviderTests and cloud regression suites; installed FoundationModels/iOS27 SDK compilation; actual local model generation/tool support/runtime availability/cancel; native file protection/Keychain/AppGroup; app integration; Anytype authenticated native read/write/navigation; real Otzaria actions; iPhone/iPad UI/RTL/accessibility/reference parity; simulator, physical device, owner acceptance, signing/release/TestFlight. No CI was dispatched by this writer. Independent QA is not claimed.
+
+## Required next integration, within existing owners
+
+1. Tomer: consume this frozen commit once; preserve the three exact Platform core edits and new package. Arrange faithful Apple compilation of NEW HanlinAgentSDK against the genuine local HanlinPlatform manifest/pinned SDK, discover actual schemes/SDK/toolchain, then run new AgentSessionTests/ContextTests/StoreTests and existing core HanlinInjectedProviderTests plus scoped cloud regression. The Windows String(localized:) blocker is not permission to modify product APIs. Do not rerun the same Windows graph to rediscover it.
+2. Native-negative tests use a fixture provider spy: both existing non-text enum cases (imageURL/imageData), all three roles, no provider capability query/execution before typed rejection. They do NOT prove real FoundationModels. Follow with actual available/unavailable/lost-availability and manual existing-picker tests on eligible physical hardware; native tool support stays explicitly unavailable until a separately verified implementation.
+3. Maya/Eitan: freeze canonical HanlinChatUI entry/API from original UI/Composer/A2UI, bind the new session's authorized event/result/progress projection and availability identity into the existing picker. Do not create a parallel view or claim index refresh/visual parity from this source package. No HanlinChatUI placeholder was shipped.
+4. Anytype lead: map these exact public types to the supplied frozen 57-blob audit. Scene/presentation-owned identity and real native services; unsupported CAS/uncertain outcomes stay honest. No generic Torah bootstrap repository, direct Heart/CRDT or automatic write retry. The lead owns divergent upstream lineage, dependency/minimum/UI hooks and actual host lease.
+5. Otzaria lead: generic fixture is SDK-07 readiness only. Actual thin in-process adapter, ActionCore/UIRegistry/SceneOrchestrator and scene/routing ports remain host-owned. Supplied portable code/contract pins are mock/compile readiness, not approved semantic integration. Real adapter requires both this versioned SDK API and accepted versioned host semantic + scene/routing ports; no current API mapping.
+6. Roni: independently review the frozen source/security/ownership and actual proof manifests; then native/full-host/device gates as available. Full SDK-02/03/05/07 and parent acceptance remain open; source/portable tests do not satisfy those gates.
+
+No main merge, upstream sync, source moves/deletes, second worktree, production migration, release/signing change or global model setting was performed.
+
+## Later bounded Otzaria contract feedback
+
+The supplied eight-blob consumer review was verified against 357d and reconciled in PUBLIC_API.md without a host API audit or shared-contract/source changes. Scene UUIDs require explicit host native-lifetime bindings; complete normalized routes need scoped opaque backing references and actual native UI receipt validation; noncompleted statuses use non-success operationUnavailable/details plus a scoped receipt, with current model/history projection limitations stated.
+
+A NEW concrete limitation was reproduced in the actual pinned JSONValue boundary: SwiftAISDK's Double-only numeric type followed by the current core executor's JSON re-encoding can convert `1.0` to integer `1` and round `9007199254740993` to `9007199254740992` before the host validator. Direct canonical types preserve supported Int64/Double distinctions, but cannot restore data already lost upstream. The narrow raw validated executor-input proposal and fail-closed alternative require owner coordination before any shared core/pin changes. This is consumer/model-tool compatibility BLOCKED, not a new pass. The existing 32 portable behavior passes do not cover this full model path; the isolated numeric reproduction confirms the limitation, not a repair or native runtime result.

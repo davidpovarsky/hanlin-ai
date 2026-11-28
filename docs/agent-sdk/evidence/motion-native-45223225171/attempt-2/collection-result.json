@@ -1,0 +1,125 @@
+{
+  "run": 45223225171,
+  "attempt": 2,
+  "source": "c1c9fde5299124953d7ced72748dc09b50b72f7f",
+  "workflow_conclusion": "failure",
+  "native_job": 137877646849,
+  "native_conclusion": "failure",
+  "native_runner": "GitHub Actions 1000024812",
+  "completed_steps": 6,
+  "annotations": [
+    "Process completed with exit code 65."
+  ],
+  "artifact": {
+    "run": 45223225171,
+    "attempt": 2,
+    "artifact_id": 14847359495,
+    "artifact_bytes": 62064111,
+    "artifact_sha256": "1100fce7733df41a14552ccc4510d1c63b1e450cb1aee6d018faacdf04adf8b0",
+    "api_digest_and_size_match": true,
+    "zip_crc": "PASS",
+    "member_count": 50
+  },
+  "result-validation.json": null,
+  "raw-result-status.json": {
+    "test_exit_code": 65,
+    "archive": "ARCHIVED",
+    "readability": "READABLE",
+    "diagnostics": [],
+    "archive_sha256": "485725da75aa484da0742309924892dab8f3867c567dde140e539f1005d5e982",
+    "status": "FINALIZED_READABLE_ARCHIVED"
+  },
+  "tests.json": {
+    "devices": [
+      {
+        "architecture": "arm64",
+        "deviceId": "D4BD0F75-3049-424D-91C1-1CD812147467",
+        "deviceName": "Hanlin-Phase2-Motion-45223225171",
+        "modelName": "iPad Pro 13-inch (M5)",
+        "osBuildNumber": "24B8117",
+        "osVersion": "27.2",
+        "platform": "iOS Simulator"
+      }
+    ],
+    "testNodes": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "name": "XCTAssertTrue failed - Rapid reversal must observe at least one later burst action at intermediate geometry: Optional(\"actions=5;expanded=true;natural=100.0;visible=0.0;gaps=1.9559,1.9175,0.0450,0.0716;intermediate=false,false,false,false;scrollY=0.0;orientation=portrait;actionVisible=0.0,106.0,0.0,0.0,0.0\")",
+                        "nodeType": "Failure Message",
+                        "sourceLocation": {
+                          "filePath": "/Users/runner/work/_temp/hanlin-motion-ui.X6aAnUCf/proof/UITests/MotionUITests.swift",
+                          "lineNumber": 160
+                        }
+                      },
+                      {
+                        "name": "Update the Info.plist: Support for all orientations will soon be required.",
+                        "nodeType": "Runtime Warning"
+                      }
+                    ],
+                    "duration": "31s",
+                    "durationInSeconds": 31.57348895072937,
+                    "name": "testBRapidReversalPresetSwitchAndPersistence()",
+                    "nodeIdentifier": "MotionUITests/testBRapidReversalPresetSwitchAndPersistence()",
+                    "nodeIdentifierURL": "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests/MotionUITests/testBRapidReversalPresetSwitchAndPersistence",
+                    "nodeType": "Test Case",
+                    "result": "Failed"
+                  }
+                ],
+                "name": "MotionUITests",
+                "nodeIdentifierURL": "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests/MotionUITests",
+                "nodeType": "Test Suite",
+                "result": "Failed"
+              }
+            ],
+            "name": "ChatMotionProofUITests",
+            "nodeIdentifierURL": "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests",
+            "nodeType": "UI test bundle",
+            "result": "Failed"
+          }
+        ],
+        "name": "ChatMotionProof",
+        "nodeType": "Test Plan",
+        "result": "Failed"
+      }
+    ],
+    "testPlanConfigurations": [
+      {
+        "configurationId": "1",
+        "configurationName": "Test Scheme Action"
+      }
+    ]
+  },
+  "sdk-input-verification.json": {
+    "status": "SOURCE_AND_RESOLVED_INPUTS_RECORDED",
+    "resolvedDependencies": 8,
+    "resourceBundles": 6,
+    "sourceRevision": "c1c9fde5299124953d7ced72748dc09b50b72f7f"
+  },
+  "macro-input-verification.json": {
+    "schemaVersion": 1,
+    "status": "EXACT_ORIGINAL_MACRO_INPUT_ADMITTED",
+    "sourceRevision": "c1c9fde5299124953d7ced72748dc09b50b72f7f",
+    "expectedPin": {
+      "identity": "equatable",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/ordo-one/equatable",
+      "state": {
+        "revision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+        "version": "1.4.1"
+      }
+    },
+    "originalAppLockSHA256": "28fb383e35bd875dd91b124ad02ca4210da7771c53daf4c6c6d28c1e2a55e529",
+    "resolvedLockSHA256": "c3d602a21e0adf396417bb7d1bd50e290bedbafa33472fabdeba15b9c666da3e",
+    "originalAdmissionHelperSHA256": "86f58b55ef3f717111303bf3897945f433b66261a2870dfe2b94b4e123787e5a",
+    "macroSourceReceiptSHA256": "e4116358061980dba289af972479444ac20ec5fcc14d6a98ce50b3cc66a9b4ec",
+    "automaticPackageResolutionDuringBuildAndTest": false,
+    "nativeAcceptance": "NOT_CLAIMED_BY_MACRO_INPUT_ADMISSION"
+  }
+}

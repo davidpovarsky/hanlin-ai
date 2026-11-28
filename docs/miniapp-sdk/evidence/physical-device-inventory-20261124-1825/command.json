@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "sudo",
+    "-u",
+    "ubuntu",
+    "ssh",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "scaleway-mac",
+    "/opt/homebrew/bin/python3.12 -"
+  ],
+  "elapsedSeconds": 1.496806032024324,
+  "exitCode": 0,
+  "stdoutSHA256": "ae84fec9f572fb43deadbf109873e33ebda7b1904e36675febc052e3ca3770ff",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

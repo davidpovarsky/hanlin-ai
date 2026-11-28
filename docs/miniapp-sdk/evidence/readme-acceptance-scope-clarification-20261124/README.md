@@ -1,0 +1,7 @@
+# README acceptance-scope clarification
+
+This is a one-line prose edit in the public SDK README, based on the actual named runner scopes at active MAIN15 source `e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c`. The 42 count remains valid for `miniapp_authoring`; the wording now distinguishes the full `miniapp_complete` selection of 27 AI plus 25 MiniApps cases, 52 total. No pass is claimed.
+
+Only the acceptance paragraph changes. Its JSON descriptor and every other README line remain byte-identical, and no fixture, snippet inventory, source implementation or workflow is edited. `consumer-impact.json` retains exact source hashes/excerpts, selector overlap, before/after README hashes and downstream impact. No generator, compiler, test, build, network, CI or Asana action was run.
+
+Root owns the existing reachability refresh/check after integration because `sourceRefs.currentScope` hashes the README. The README is not a source-inventory input, so that generator needs no refresh for this paragraph alone. A normal later SDK stage changes the document/input/manifest hashes, and the existing shipping-doc byte comparison must use that new artifact. Existing code/fixture/type evidence retains its actual source attribution; no pending native case becomes PASS and no new text is claimed to exist in an older binary. MAIN15's fixed source and historical/frozen proofs remain untouched. SDK05 remains completed.

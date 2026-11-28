@@ -1,0 +1,22 @@
+{
+  "timeUTC": "2026-11-25T04:08:26.418663+00:00",
+  "source": "1710bc6119983799f7d22cb723659ac274fe96b1",
+  "ownedSimulator": "34B2DB02-626B-4393-81A2-45AB371865C8",
+  "confirmedOwnedXcodePID": 41487,
+  "argv": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test-without-building -xctestrun /Users/m1/caches/DerivedData/hanlin-ai-cache-app-20261125/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun -destination platform=iOS Simulator,id=34B2DB02-626B-4393-81A2-45AB371865C8 -resultBundlePath /Users/m1/builds/hanlin-ai-cache-native-20261125/build/cache-app-native-evidence-04-20261125/test/AppCacheTests.xcresult -parallel-testing-enabled NO -test-timeouts-enabled YES -maximum-test-execution-time-allowance 300 -only-testing:AI_HLYTests/HanlinPromptCachingIntegrationTests -only-testing:AI_HLYTests/ClassicChatRestorationTests -only-testing:AI_HLYTests/HanlinMiniAppAssistantIntegrationTests -only-testing:AI_HLYTests/HanlinModelPromptCachePersistenceTests",
+  "stdoutAgeSeconds": 396.3315680027008,
+  "ownedTestHostProcesses": [],
+  "reason": "Known failed original selected test plus CoreData abort; restart finished remaining6cases, testhost exited, xcodebuild stayed idle without output for >300s. Preserve failure and request graceful result finalization; not a passing result.",
+  "sample": {
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "Sampling process 41487 for 2 seconds with 1 millisecond of run time between samples\nSampling completed, processing symbols...\nSample analysis of process 41487 written to file /Users/m1/builds/hanlin-ai-cache-native-20261125/build/cache-app-native-evidence-04-20261125/test/postcrash-xcode-sample.txt\n"
+  },
+  "action": "SIGINT sent only to verified owned stalled xcodebuild",
+  "followUp": {
+    "timeUTC": "2026-11-25T04:10:54.792533+00:00",
+    "secondsAfterSIGINT": 148.3169231414795,
+    "action": "SIGTERM to same verified stalled xcodebuild; SIGINT did not finish it; no testhost process remains",
+    "ownedTestHostProcesses": []
+  }
+}

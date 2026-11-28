@@ -1,0 +1,43 @@
+{
+  "status": "ORIGINAL_READER_REPRODUCED_REJECTION",
+  "argv": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "Scripts.CI.Tests.test_widget_catalog_compatibility.WidgetCatalogCompatibilityTests.test_recorded_partial_widget_qualifies_without_rewriting_catalog"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-widget-catalog-compatibility-20261127",
+  "startedAt": "2026-11-27T23:47:36.190283+00:00",
+  "finishedAt": "2026-11-27T23:47:36.325757+00:00",
+  "seconds": 0.1354656768962741,
+  "exitCode": 1,
+  "platform": "Linux-6.17.0-1020-oracle-aarch64-with-glibc2.39",
+  "python": "Python 3.12.3",
+  "sourceInputs": [
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "sha256": "8246b68f0125d31c2a83819e31c6e7e0dd2f385a731914d25b2eb60a95c342f3",
+      "bytes": 65405
+    },
+    {
+      "path": "Scripts/CI/Tests/test_widget_catalog_compatibility.py",
+      "sha256": "5bbe28a3b0e0be3c1b5d079088a438672a3b0187694746ab572fdec2cfc375b0",
+      "bytes": 7531
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinCanonicalEntrypointProjectionTests.swift",
+      "sha256": "5babc16bfe0a33eaa723f8915f4b64eb4292fefd075da0a047201fca09722d70",
+      "bytes": 13538
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo",
+      "sha256": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995",
+      "bytes": 1953
+    }
+  ],
+  "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSHA256": "dae00b6513b1ca5f0b9bdf559eebbd0295531b991042df5b698a35dd63e31145",
+  "native": "NOT_RUN"
+}

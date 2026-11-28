@@ -1,0 +1,68 @@
+{
+  "name": "Expo SwiftUI Probe",
+  "version": "1.0.0",
+  "entry": "bundle.js",
+  "hanlinRuntime": "hanlin-expo",
+  "author": {
+    "name": "Hanlin Expo Runtime Team"
+  },
+  "description": "Proof of concept demonstrating dynamic Expo / React Native runtime rendering native Apple SwiftUI through Expo UI.",
+  "icon": "sparkles",
+  "color": "#4A90E2",
+  "capabilities": [
+    "storage",
+    "inter-app.share"
+  ],
+  "widgetEngine": "expo",
+  "hanlinWidget": {
+    "abiVersion": 1,
+    "sourceFormat": "tsx",
+    "families": [
+      "systemSmall",
+      "systemMedium",
+      "systemLarge",
+      "systemExtraLarge"
+    ],
+    "actions": []
+  },
+  "actions": [
+    {
+      "id": "hostServicesEcho",
+      "title": "Host Services roundtrip",
+      "capability": "inter-app.share",
+      "handler": "bundle.js"
+    },
+    {
+      "id": "hostServicesFail",
+      "title": "Host Services failure",
+      "capability": "inter-app.share",
+      "handler": "bundle.js"
+    },
+    {
+      "id": "hostServicesPublishWidget",
+      "title": "Host Services prepared widget publication",
+      "capability": "inter-app.share",
+      "handler": "bundle.js"
+    }
+  ],
+  "entrypoints": [
+    {
+      "id": "hostServicesEcho",
+      "kind": "appIntent",
+      "sourcePath": "bundle.js",
+      "exportedSymbol": "hostServicesEcho"
+    },
+    {
+      "id": "hostServicesFail",
+      "kind": "appIntent",
+      "sourcePath": "bundle.js",
+      "exportedSymbol": "hostServicesFail"
+    },
+    {
+      "id": "hostServicesPublishWidget",
+      "kind": "appIntent",
+      "sourcePath": "bundle.js",
+      "exportedSymbol": "hostServicesPublishWidget"
+    }
+  ]
+}

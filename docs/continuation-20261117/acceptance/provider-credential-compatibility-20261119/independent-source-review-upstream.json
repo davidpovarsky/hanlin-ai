@@ -1,0 +1,42 @@
+{
+  "observedAt": "2026-11-19T03:57:21.854963+00:00",
+  "reviewer": "upstream_v2_finish",
+  "reviewedPatch": "C:\\Users\\DAVID\\Code\\Hanlin-Continuation-Evidence-20261119\\sdk05-provider-credentials\\credential-compatibility-phase.diff",
+  "patchSHA256": "434dce8e1a6b7135308720c55144cc2d7f576df7d7b3fc4397702801940cf0b0",
+  "mode": "read-only independent source review; no user credentials read; no canonical edits",
+  "findings": [
+    {
+      "severity": "P2",
+      "title": "Unsaved editor key is not propagated into original model discovery and probes",
+      "source": [
+        "AI_HLY/Views/Components/APISettingView.swift:282-285,422-423",
+        "AI_HLY/Views/Components/ModelManagementView.swift:321-324,394-399,431-436",
+        "AI_HLY/Services/APIServices/ModelRefreshService.swift:171-174,535-542"
+      ],
+      "scenario": "Open an empty or configured provider, type a new secret, then open Refresh model list before Save. The draft remains transient, but discovery and capability probes read the persisted original APIKeys value. This rejects the initial new credential or uses the prior credential during rotation. Original direct binding used the edited value.",
+      "recommendation": "Use an explicit transient request credential/configuration for discovery and probes without writing the row, or require a clear explicit Save before opening this route while preserving draft state. Cover initial key and rotation cases."
+    },
+    {
+      "severity": "P2",
+      "title": "A successful credential save is reported as failed when subsequent compact configuration publication fails",
+      "source": [
+        "AI_HLY/Views/Components/APISettingView.swift:393-401"
+      ],
+      "scenario": "Compatible commit and draft reload succeed, then original App Group config publication fails. The common catch displays a key save error while the new value is already durable; Cancel cannot roll it back. Repeated Save retries credential commit unnecessarily.",
+      "recommendation": "Distinguish durable credential success from extension publication failure; offer a bounded retry of publication rather than claiming the credential failed to save."
+    }
+  ],
+  "verifiedDesignFacts": [
+    "Production legacy Save/insert use saveCompatible/insertCompatible; secure activation overlay remains separate.",
+    "Current owner, namespace, model and request checks are preserved at typed credential resolution; exact UTF-8 matching strengthens raw String comparison.",
+    "Local expected-value/current-context/fresh durable-context checks reject known stale edits before staging/checkpoint; they are not atomic cross-process or CloudKit CAS, as REVIEW explicitly states.",
+    "Immutable Keychain UUID generations verify exact encoded payload bytes before handle commit; uncertain postcommit results do not delete generations.",
+    "The original app and Translation host own the shared service/access-group policy. Generic package receives policy explicitly.",
+    "Compact client without supplied configuration reloads original shared file for each request and resolves through injected host closure. Legacy rows remain raw-compatible; secured rows export empty apiKey plus handle."
+  ],
+  "remainingEvidenceLimits": [
+    "No Apple typecheck, Security/SwiftData native execution or UI interaction was performed in this review.",
+    "Original current-key check occurs before subsequent tool/skill/diagnostic awaits; configuration captures the key later. This is inherited, not introduced by phase1. New sequential port tests do not prove revocation/rotation at the actual network-send boundary. Do not claim that stronger property without a defined policy and a paused-transport native test.",
+    "Signed cross-extension access, cross-device arrival ordering, older full-host compatibility, account isolation, orphan cleanup and erasure remain separate; phase1 does not complete SDK05."
+  ]
+}

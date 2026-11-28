@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "base": "244a2b75675af452d0122dfacd7ca68bfd6dcfd9",
+  "path": "HanlinMiniAppsApp/MiniAppsDeveloperStudio.swift",
+  "originalSHA256": "ee4df962e7f05b3cf402ae366c50582f70342133b783d625f4d6cc0766d786ea",
+  "candidateSHA256": "1471af7b39899452fd3ab797bf24cd9d4e1c2273807e438795564ebe259608d7",
+  "patchSHA256": "801a36560f313a136215a22ac6fd934f30989f1202f1df9b002fe132c6208825",
+  "scope": "Only a semantic accessibility label and identifier on the existing editor options menu; no added actions, callbacks, state, layout, permissions or feature logic.",
+  "outsideTwoAdditionsExact": true,
+  "tests": "NOT_RUN; this reversible semantic-label change does not warrant optional tests. Original native UI gate remains authoritative."
+}

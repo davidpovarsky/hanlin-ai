@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "status": "APPROVED_SOURCE_ONLY_SEALED",
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "candidateSHA256": "1a657ce9913094faa6974b534c7d53abc7599a3c4549445113cd3c4fbc8fb98c",
+  "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "sourcePatchSHA256": "4a14977829125a226cc63f9a2fbfaae4fdf860e955c8194d58938584d4531c59",
+  "originalTestBodiesExact": 38,
+  "originalAssertionLinesRetained": 401,
+  "originalUnchangedHelpers": 114,
+  "changedHelpers": [
+    "openWidgetFamilyGallery",
+    "placeMatrixWidget"
+  ],
+  "addedHelper": "widgetHomeScreenIcon",
+  "originalCaseDeadlinesUnchanged": true,
+  "originalEditHomeWaitSeconds": 12,
+  "originalSearchObservationMaximum": 5,
+  "candidateSearchObservationMaximum": 5,
+  "candidateNavigationSwipeMaximum": 4,
+  "noAdditionalWaitOrPoll": true,
+  "native": "NOT_RUN",
+  "testsRun": [],
+  "sdkIntersection": 0,
+  "hostIntersection": 0,
+  "qualifiedObservation": "Both retained final App Library contexts are excluded by actual page frame/range requirements. This is source reasoning over real evidence, not XCTest execution.",
+  "unverifiedPositiveAdmission": "Visible Home icon container plus Page control format and unique Home MiniApps icon must be observed in the native run. No positive Home-page AX/placement sample is present in the reviewed packet.",
+  "caseStatus": "Both original failed UI receipts remain failed; builds and real variant creation remain scope-qualified successes.",
+  "sourceCommit": "ff625d1ad247877e64715245bd35ebdc9bc68600",
+  "sourceTree": "0a1fa62953ab3b23940e3f6564378bc0c7cfa3c7",
+  "frozenCandidateManifestSHA256": "e52506cf045c3e10b91a1eaa133b9c68a2e47b11e5d17209b59cedd25ff1b127",
+  "frozenCandidateQualificationSHA256": "7876d0e33280d620cc9cbf17e24dc5edccacdd530b122d40671c1083d16d0dcf",
+  "reviewReceipts": [
+    {
+      "file": "independent-mac-source-review.json",
+      "sha256": "616c9deeb88e7a025147d45236f308909823e12e17d43e9b598aeca643e83add"
+    },
+    {
+      "file": "independent-root-source-review.json",
+      "sha256": "4af682937c8500f03bbc2128bf4ccd33aca1f212ac72d830447f2e486e79e31f"
+    }
+  ],
+  "sourceCommitNativeExecution": "NOT_RUN",
+  "proofExecution": "No tests, native commands, observers or SDK producers were run to seal this proof.",
+  "currentRootCompositionScope": "Read-only composition against fcedca4d preserves all 42 existing test bodies; root owns final integration and current-source native admission.",
+  "originalFailuresRemainFailed": true
+}

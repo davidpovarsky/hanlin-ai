@@ -1,0 +1,15 @@
+{
+  "createdAt": "2026-11-19T01:32:43.985131+00:00",
+  "parent": "ae3948f27710888c19b0e0dfe9baa01db2b21452",
+  "source": "docs/chat-motion/MotionUI/MotionUITests.swift",
+  "beforeSHA256": "ada5ed4bb2f5c677d746fd460042b630a73a9359204259db32b47d326292b5cb",
+  "afterSHA256": "a0c550806ddba1df3044a50eb49a1ad576bfb54bf61dc8d0cbe8dcc69270c189",
+  "rootReview": "All diagnostic field references searched; no other consumer of renamed report field. Original first150 source lines including A/B/C and original helpers are byte-identical. Original rapid triple-tap delivery unchanged. Real native query outlived and was canceled by the shorter outer waiter; snapshot observation is explicitly not a 5-second delivery guarantee.",
+  "swiftParse": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "diffCheck": "PASS",
+  "nativeStatus": "NOT_RUN on this source; original B acceptance still open"
+}

@@ -1,0 +1,66 @@
+{
+  "parentSHA": "116cc6be0654a5d11bc56ba00e0310031107ee36",
+  "scope": "Provider-owned citation anchors in canonical AgentRun evidence; original Markdown attachments with scoped sheets; preserve media configuration.",
+  "dependency": {
+    "repository": "davidpovarsky/hanlin-streaming-markdown",
+    "base": "f59bd0d533b6d94e01408bf6bdf9f5b09db57891",
+    "revision": "4072507bf5c5a1c9786d4c9a607873e65be59cc8",
+    "branch": "codex/hanlin-inline-citations-20261117"
+  },
+  "portableEvidence": {
+    "changedSwiftParsed": 17,
+    "foundationCitationTests": 3,
+    "status": "PASS (not native UI proof)"
+  },
+  "priorEvidence": {
+    "presentationNative": "44191601266 PASS at 116cc6be",
+    "AgentSession": "44190539298 SDK job PASS at 25729ca4"
+  },
+  "plannedNative": {
+    "core": {
+      "group": "agent_sdk_session_only_proof",
+      "selector": "HanlinChatCoreTests",
+      "reason": "Changed real engine metadata projection; test exact provider text-end/Unicode data without re-running unchanged AgentSession/producer suites"
+    },
+    "markdown": {
+      "input": "markdown_renderer_validation_only=true",
+      "methods": 9,
+      "reason": "Six original consumer checks plus three new icon/media regressions on owned iPhone 27 simulator"
+    },
+    "originalApp": "New OpenUI, typed approval, persistence and source-correlation E2E; baseline 8 failed/missing cases already running independently"
+  },
+  "files": {
+    ".github/workflows/build-ios26-unsigned-ipa.yml": "c5f9faf44df388671881965bbd19a0b88fbe01b62ca16cdd23111daf8ceb7c62",
+    ".github/workflows/validate-chat-markdown.yml": "b43fbd54bd95dafa7c9a99c7f18f4f918f001bb341de542a7c5daf6d4f02287f",
+    "AI_HLY.xcodeproj/project.pbxproj": "e260c23e2a06c40741a315dc6fb3496df7485a91cefea2581579f3a32bdd76bf",
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "94f744f4868919c8ccbb076e2ca6a8445245a556a6158c505f107f703fc56711",
+    "AI_HLY/ChatView.swift": "9b22b3afa908fe398b608f3ef18c9d40447baaab7d9e2887bced8a8a699522aa",
+    "AI_HLY/Downstream/AgentActivity/AgentEvent.swift": "ef4da21d5b744dd3c196dfe93f69762dfe810297266a346331141ac823dcb2b4",
+    "AI_HLY/Downstream/AgentActivity/AgentEventAccumulator.swift": "0b78b59118805810e4f3efd9ae767a50bf9d430ca184c691dfe9150bb1e0a38f",
+    "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceAccumulator.swift": "31535bc46634a0c7d87f3331cb3e53f6f0bc92e6f1cd0ab615296037f8491ac0",
+    "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceItem.swift": "33c77075d9100996d9bb9668c0c872c7bd098c2825dd398e39de8488f62d62cc",
+    "AI_HLY/Downstream/AgentActivity/ProviderEventAdapter.swift": "f6d3e0921c4f0a8c08c155e726f627383efafdca04fb52bcd1599a343f096b8c",
+    "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift": "6774d75fabed43254bda5493ef407888f1017e79229205bf574f7e0027d120b5",
+    "AI_HLY/Services/ChatServices/APIManager.swift": "40cf0519f5781a7ad3d4fdb77c0ed20983a588bcd48c900983719c400458f1b2",
+    "AI_HLY/Views/Components/ChatViewComponents.swift": "65acef7c9bc7f0f9cd62dd8c9f30084bc77ab154a44794a3a51f94e1f7ce7ea6",
+    "AI_HLYTests/AgentRoundPresentationTests.swift": "40c30e83769def44e0792ea604c1fd80953b801098ffa7c74ded2096f8cb8edb",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": "b19e89b8ab92597c94419ffd79b2d51ca43da60faab9ff77f9da450b8ad75e22",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift": "2d6436ca558ab24305b4d961b0fe29938c0d265c8441117b270cfd4f480757c6",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAISDKTests.swift": "9fe345c4412a48ee4c308d6845667b62fb110a1cb15279848fbd1df5eb5637ca",
+    "Scripts/CI/IntegrationValidation/run_agent_sdk.sh": "b3d8977de1b1d9d057825895f58d4072d01b0ab95cbb30afc0d8b8aed3a008f7",
+    "Scripts/CI/IntegrationValidation/run_chat_markdown_consumer.sh": "e4ff0608a8094b94da0dd820c64e6016eb8323b55cf73898ad1a8dbd056688a2",
+    "Scripts/CI/prepare_markdown_consumer_closure.py": "acddb5f1de44f45be3988bfad8ee991a0a3477a10bfe57a910a0d5c0c8b16281",
+    "Scripts/CI/select_installed_simulator.py": "cc5fca21fd4e95ddfe9ecd5a3aebfeb0741828095881ea06b99528f2291a7c61",
+    "docs/chat-diagnostics/markdown-consumer-closure-2026-11-15.json": "bdd3baf97571c0a23f0eb24f9fc85eaa85d95a734c7abb137360503ef541b1c9",
+    "AI_HLY/Downstream/ChatPresentation/HanlinMessageCitations.swift": "abdccc72a092cff03dc3ba6a270ac324bbdd6e5b8d868a9b83faa5eccca730e5",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinSources.swift": "c77b5abb1c60be8f7b5536408ab031cc6ea86f5a952ff0e5f54f7e39d9738c9d",
+    "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/HanlinCitations.swift": "bceedab64b7842748f6c770b28a605a600686b2d10a9fe466199419da614295a",
+    "Packages/HanlinPresentationSDK/Tests/HanlinPresentationKitTests/CitationProjectionTests.swift": "d95bb7709fdcb81ec0f1542f8fbef4e7d15045195286896069306eb4812417be"
+  },
+  "sourceReferences": [
+    "https://developers.openai.com/api/docs/guides/tools-web-search",
+    "https://developers.openai.com/cookbook/examples/deep_research_api/introduction_to_deep_research_api",
+    "https://github.com/davidpovarsky/swift-ai-sdk/blob/e7bf34111e603ca977becd007dd4e5bb109af857/Sources/OpenAIProvider/OpenAIResponsesModel.swift"
+  ],
+  "release": false
+}

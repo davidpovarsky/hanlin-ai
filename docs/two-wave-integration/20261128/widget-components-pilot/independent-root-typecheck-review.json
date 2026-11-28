@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-28T11:34:52.559187+00:00",
+  "status": "ROOT_VERIFIED_ORIGINAL_BOUNDED_APPLE_TYPECHECK_PASS",
+  "candidateUIHash": "0242e3cd6074290011b8239626b1406009973ebe0a267b1082a12df7bfd2a2ed",
+  "baseSource": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "rawReceiptSHA256": "741d574bb9cc61f3b9a24fd7c739f79a45130b3dbe3981d8dd46898829ec459e",
+  "rawManifestSHA256": "ab55bb6178379dc676d1d7c510185c04d78367964468c8e173a394ff200f3c6f",
+  "rawArchiveSHA256": "6fea522d620f105b1424a10b80faffa66d7dd1992b6df5766eeba0fcb182ede0",
+  "verifiedPayloads": 23,
+  "verifiedTarFiles": 24,
+  "wholeCurrentCandidateBytesExact": true,
+  "sixCurrentGitAuthoritiesExact": true,
+  "sevenBeforeAfterSourceRowsExact": true,
+  "wholeOriginalControllerInverseExact": true,
+  "controllerChangesOnly": [
+    "attempt-owned root",
+    "admission literal hash"
+  ],
+  "originalCommandUnchangedExceptCandidateSourcePath": true,
+  "originalAIHelperAndDebugSettingsExact": true,
+  "pid": 47520,
+  "commandSeconds": 1.7057347919999999,
+  "originalDeadlineSeconds": 120,
+  "exit": 0,
+  "stdoutBytes": 0,
+  "stderrBytes": 0,
+  "toolchain": {
+    "Xcode": "27.0",
+    "build": "27A266a",
+    "SDK": "27.0"
+  },
+  "testsRun": 0,
+  "appBuilds": 0,
+  "SimulatorCases": 0,
+  "scope": "Whole frozen47-method XCTest source with original flags; no actual native component AX, geometry, pixels or hosted27.2 app build acceptance."
+}

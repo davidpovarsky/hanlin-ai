@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "0edf7784cdbd854bea0266a22f06f182974a4df1",
+  "baseCommit": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "payloadCount": 8,
+  "payloadBytes": 52713,
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 1599,
+      "sha256": "683083fcd0355fb25b698a2615b54fe17dfe2dced5f24d644479744faefa18d4"
+    },
+    {
+      "path": "SOURCE_PROOF.json",
+      "bytes": 1885,
+      "sha256": "51a1ffb65a91579288d8eb501373ac2457a001a25f18d873dd27092123197e5d"
+    },
+    {
+      "path": "independent-mac-source-review.json",
+      "bytes": 7007,
+      "sha256": "34026aa96ac76cc2218eecfe1e5b76393ac52ce4f3132ba5284d2cca42e7ddc1"
+    },
+    {
+      "path": "independent-root-source-review.json",
+      "bytes": 2336,
+      "sha256": "9329c43c878bb474086d20022326b793e4b52530bc671cecf0fcb6d9340b6f33"
+    },
+    {
+      "path": "native-owner-failure-evidence.json",
+      "bytes": 9672,
+      "sha256": "0b1a591803ce82744b97cdcccd6e3d0a5aac5a60ec91c9076750c563a19603f0"
+    },
+    {
+      "path": "source-authorities.json",
+      "bytes": 5061,
+      "sha256": "65bd27bb5ff3e5914179528fa83059dcefd48fa9d8f333255794eb1b0854e812"
+    },
+    {
+      "path": "source-qualification.json",
+      "bytes": 24820,
+      "sha256": "1b21bad57bbbc0893487e8bb2790d624b9aba3b204ea30080f2312deaa0cf72b"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 333,
+      "sha256": "909c7b142b9b608bf68162fc19e4de8db8b30199d12ed2524dc9cc265608347b"
+    }
+  ]
+}

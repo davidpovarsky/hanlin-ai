@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "python3",
+    "docs/miniapp-sdk/evidence/sdk05-shipping-main14-20261124/inspect_shipping_delta.py"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-sdk05-current-shipping-20261124",
+  "exitCode": 0,
+  "durationSeconds": 1.367732,
+  "scope": "Artifact data/source identity comparison only; no product tests or builds"
+}

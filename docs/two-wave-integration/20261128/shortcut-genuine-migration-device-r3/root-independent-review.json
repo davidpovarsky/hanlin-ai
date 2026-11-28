@@ -1,0 +1,16 @@
+{
+  "createdAt": "2026-11-28T13:28:54.122095+00:00",
+  "status": "ROOT_RUNNER_ONLY_DEVICE_DELTA_APPROVED",
+  "manifestSHA256": "10a6fe6d81216bf0eda74080ebe2e2648a5fd77ccbe516a7fd9e1592d14019c0",
+  "patchSHA256": "a8135550a6fee9b438c652215ca7da550d1dec464801bc120b6a97f92e5b2215",
+  "runnerSHA256": "bbaaf97bb38c1e473770b21608848309d183e21ff87340032e5481555b709f5a",
+  "wholeR2InverseExact": true,
+  "verifiedPayloads": 4,
+  "verifiedBytes": 117699,
+  "semanticReview": "Extend only original iPad device-family conditional to exactly the two new MIGRATION_SCOPES before original supported-device lookup/create; original scope set and all existing routes/fallback unchanged.",
+  "originalMigrationRootReviewSHA256": "46e919f80b4914acf5826cc389bd376d32eb2b3732188351bde9f0cd758ef333",
+  "allOtherSourceFilesUnchanged": true,
+  "controlsExecuted": 0,
+  "nativeInvocations": 0,
+  "existingWholeUITypecheckUnaffected": "The runner-only delta does not change composed UI1f9de292 or its actual compiler result; a separate new Shortcuts title representation correction is under review."
+}

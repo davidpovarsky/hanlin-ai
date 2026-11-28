@@ -1,0 +1,540 @@
+{
+  "host": "scaleway-mac",
+  "donor": "/Users/m1/builds/hanlin-testflight-ca631-direct-20261125/source",
+  "frameworks": [
+    {
+      "target": "ReactNativeHeaders",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework",
+      "matchesSDK19Libraries": true,
+      "libraries": [
+        {
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null,
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/libReactNativeHeaders-ios.a",
+          "binarySHA256": "770c9bd74f4c398ba46c307536f26ca51ae5c50b668ab076c8f38077484df068"
+        },
+        {
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator",
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/libReactNativeHeaders-ios-simulator.a",
+          "binarySHA256": "dacca1290ec6b34f1f9820068f2e3fa00dfe31e9d57408e970de742a77638920"
+        }
+      ]
+    },
+    {
+      "target": "React",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/React.xcframework",
+      "matchesSDK19Libraries": true,
+      "libraries": [
+        {
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator",
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/React.framework/React",
+          "binarySHA256": "b14f9d4a824d6919d13de0db204195f2caba856fde2f8a2ea4cddf9f3ceff27b"
+        },
+        {
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null,
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/React.framework/React",
+          "binarySHA256": "553c55df62d1472bafa9483317f193469864c4953c5e2b3ce5f673fc2a6cd3e8"
+        }
+      ]
+    },
+    {
+      "target": "ReactNativeDependencies",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework",
+      "matchesSDK19Libraries": true,
+      "libraries": [
+        {
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null,
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/ReactNativeDependencies.framework/ReactNativeDependencies",
+          "binarySHA256": "5c612c23ad6904b9b771ccbab0b4221a0b74cda384c151235c8cf91a43fe2b91"
+        },
+        {
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator",
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/ReactNativeDependencies.framework/ReactNativeDependencies",
+          "binarySHA256": "41eb01ffcbcad6ddf93ce5cf4eac65b87e14f18257b1ee0f313f7eceb5843ac7"
+        }
+      ]
+    },
+    {
+      "target": "hermesvm",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/hermesvm.xcframework",
+      "matchesSDK19Libraries": true,
+      "libraries": [
+        {
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator",
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/hermesvm.framework/hermesvm",
+          "binarySHA256": "effde4b7c515ca4b95e8e1f7ee93983d12dbe675281362e147644eec657f947c"
+        },
+        {
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null,
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/hermesvm.framework/hermesvm",
+          "binarySHA256": "b1476b4a43dabab8ed267283d279f3b67db5e72d1e5670b834bb3aedd662f136"
+        }
+      ]
+    },
+    {
+      "target": "ExpoModulesJSI",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesJSI.xcframework",
+      "matchesSDK19Libraries": true,
+      "libraries": [
+        {
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null,
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/ExpoModulesJSI.framework/ExpoModulesJSI",
+          "binarySHA256": "d332f5a4655670b2c2110e71e3dc7cb32a4aa14dfe04d75104be69a940179bd8"
+        },
+        {
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator",
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/ExpoModulesJSI.framework/ExpoModulesJSI",
+          "binarySHA256": "1bdef96de621d6b390248eec43bf8d8a845398f2d89b4fd270498d9792447155"
+        }
+      ]
+    },
+    {
+      "target": "ExpoModulesCore",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesCore.xcframework",
+      "matchesSDK19Libraries": true,
+      "libraries": [
+        {
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator",
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/ExpoModulesCore.framework/ExpoModulesCore",
+          "binarySHA256": "7825f81ffec8d42676554af4e2e7efbaf171f276a467cffcf9e74a4c8b3ec906"
+        },
+        {
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null,
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/ExpoModulesCore.framework/ExpoModulesCore",
+          "binarySHA256": "4b4b8a271c2394083fecb55afa4514767ff99d432916353e038c01870961d64c"
+        }
+      ]
+    },
+    {
+      "target": "ExpoModulesWorklets",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesWorklets.xcframework",
+      "matchesSDK19Libraries": true,
+      "libraries": [
+        {
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null,
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+          "binarySHA256": "f6e9c5e3829e41031e08ef466d3f6ec8199fa6aba03b4644f3cd937f5a1ffcf8"
+        },
+        {
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator",
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+          "binarySHA256": "a0fddc922b70655a68f4d99da9328c77f52f989c444980f87962cc4df55295e1"
+        }
+      ]
+    },
+    {
+      "target": "ExpoUI",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/ExpoUI.xcframework",
+      "matchesSDK19Libraries": true,
+      "libraries": [
+        {
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator",
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/ExpoUI.framework/ExpoUI",
+          "binarySHA256": "a38e45501457d47a49f6fa006df014c6dbb58d0bfae1598cfd001d995245ea9b"
+        },
+        {
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null,
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/ExpoUI.framework/ExpoUI",
+          "binarySHA256": "2044d9461cac651a900b33394a5aa7eff02eb6ae310a410294b5185f170355af"
+        }
+      ]
+    },
+    {
+      "target": "ExpoAsset",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework",
+      "matchesSDK19Libraries": true,
+      "libraries": [
+        {
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null,
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/ExpoAsset.framework/ExpoAsset",
+          "binarySHA256": "bc4ec32879fe696af9246f6d2280c75f95ac7a136b712ba4e823d7e9c8e5c90e"
+        },
+        {
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator",
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/ExpoAsset.framework/ExpoAsset",
+          "binarySHA256": "61fb7c7abb126eb34b1b7c5ce7cd99b6d0c0ba22bc1767f19da38a9a191bbd94"
+        }
+      ]
+    },
+    {
+      "target": "ExpoBrownfield",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/ExpoBrownfield.xcframework",
+      "matchesSDK19Libraries": true,
+      "libraries": [
+        {
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null,
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/ExpoBrownfield.framework/ExpoBrownfield",
+          "binarySHA256": "fb08be09caafea6790641e3f5de1607834a0a5180f0cf56551a84053d40802ce"
+        },
+        {
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator",
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/ExpoBrownfield.framework/ExpoBrownfield",
+          "binarySHA256": "77e6bbb2ce166391c590647655c813b0505e968352f993cf2a28a7034cf33076"
+        }
+      ]
+    },
+    {
+      "target": "Libffi",
+      "installPath": "Packages/HanlinExpoNativeAPI/Artifacts/Libffi.xcframework",
+      "matchesSDK19Libraries": true,
+      "libraries": [
+        {
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator",
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/libffi.a",
+          "binarySHA256": "bc606b462e39d126c40accc8b87a7fb293b6ddf9e29b038d71c56b5a8df4edb1"
+        },
+        {
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null,
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/libffi.a",
+          "binarySHA256": "b9af1e0fa8fef0ef42f2318909edf2d45a589388fb4927b48585bec99123d4ab"
+        }
+      ]
+    },
+    {
+      "target": "TNSWidgets",
+      "installPath": "Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework",
+      "matchesSDK19Libraries": true,
+      "libraries": [
+        {
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null,
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/TNSWidgets.framework/TNSWidgets",
+          "binarySHA256": "1139ca728fd26962074bab0ef9be77cebfe267f57684228131a09b3b268e8c3d"
+        },
+        {
+          "identifier": "ios-arm64_x86_64-maccatalyst",
+          "platform": "ios",
+          "variant": "maccatalyst",
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-maccatalyst/TNSWidgets.framework/Versions/A/TNSWidgets",
+          "binarySHA256": "d9e634e975b9c5e0540a8e573eaebfb125f9dd44e6636d2891e3f803b88e1c3a"
+        },
+        {
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator",
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/TNSWidgets.framework/TNSWidgets",
+          "binarySHA256": "c9f33af5cd4389d62637e612e734ab3875eff71d0ae0aaaa31309015d69142e9"
+        },
+        {
+          "identifier": "xros-arm64",
+          "platform": "xros",
+          "variant": null,
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "xros-arm64/TNSWidgets.framework/TNSWidgets",
+          "binarySHA256": "20156193a0f68f91709bb0acd2cffb441bd6584d0c5aeaa343dd7a7187fdc3d6"
+        },
+        {
+          "identifier": "xros-arm64_x86_64-simulator",
+          "platform": "xros",
+          "variant": "simulator",
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "xros-arm64_x86_64-simulator/TNSWidgets.framework/TNSWidgets",
+          "binarySHA256": "330be5d2ae9304e2b5cfecf7b686fb9df42a1f8f2c99a6f7febcb009cd959624"
+        }
+      ]
+    },
+    {
+      "target": "NSCWinterTC",
+      "installPath": "Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework",
+      "matchesSDK19Libraries": true,
+      "libraries": [
+        {
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator",
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/NSCWinterTC.framework/NSCWinterTC",
+          "binarySHA256": "70a681e0a9df00a2dfbfe2758993adfab987c59002426b0685c8351ef358481d"
+        },
+        {
+          "identifier": "ios-arm64_x86_64-maccatalyst",
+          "platform": "ios",
+          "variant": "maccatalyst",
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-maccatalyst/NSCWinterTC.framework/Versions/A/NSCWinterTC",
+          "binarySHA256": "fdfe3fe639cf603e283dfc9caf792abfb4d60ec4d7b99a07fc9f9f12a58add48"
+        },
+        {
+          "identifier": "xros-arm64_x86_64-simulator",
+          "platform": "xros",
+          "variant": "simulator",
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "xros-arm64_x86_64-simulator/NSCWinterTC.framework/NSCWinterTC",
+          "binarySHA256": "016ebe799a5f063d08ca9900b3fd33ba4e342976c8dcf31cc60efc4147ae637e"
+        },
+        {
+          "identifier": "xros-arm64",
+          "platform": "xros",
+          "variant": null,
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "xros-arm64/NSCWinterTC.framework/NSCWinterTC",
+          "binarySHA256": "96c2fd2401cae85993c4907cddb75ce1703e8d3e775c524a2097d18d88c6edb7"
+        },
+        {
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null,
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/NSCWinterTC.framework/NSCWinterTC",
+          "binarySHA256": "3eae0169d57e6606c550f6daa2f8a3bef59e6c9d7dee1c520ed82ed661104584"
+        }
+      ]
+    },
+    {
+      "target": "NodeMobile",
+      "installPath": "Vendor/NodeMobile/NodeMobile.xcframework",
+      "matchesSDK19Libraries": true,
+      "libraries": [
+        {
+          "identifier": "ios-arm64-simulator",
+          "platform": "ios",
+          "variant": "simulator",
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64-simulator/NodeMobile.framework/NodeMobile",
+          "binarySHA256": "a0daa0ebeb6a1f819726fff5228f2efadd58be9b8475ffe142edc992194bb8a0"
+        },
+        {
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null,
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/NodeMobile.framework/NodeMobile",
+          "binarySHA256": "86492ee2e27c580f38747522a443094b5db02aa74b9460b3a593545f5bc2a23c"
+        }
+      ]
+    },
+    {
+      "target": "Python",
+      "installPath": "Vendor/Python/Python.xcframework",
+      "matchesSDK19Libraries": true,
+      "libraries": [
+        {
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null,
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/Python.framework/Python",
+          "binarySHA256": "bab15643505f43f9902515f48f8d198161e1a0207303c454860eed8337375df5"
+        },
+        {
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator",
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/Python.framework/Python",
+          "binarySHA256": "3503ecf5bbf78bfb9aed1918b5ac386ea837917967b9d32b53bf98340ac792bc"
+        }
+      ]
+    }
+  ],
+  "binarySliceCount": 36,
+  "allLibraryRecordsMatchSDK19": true,
+  "originalSupportValidator": {
+    "status": "PASS",
+    "groups": {
+      "HanlinExpoHeaderSupport": [
+        "Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+        "Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders"
+      ],
+      "HanlinExpoWidgetRuntimeSupport": [
+        "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle"
+      ],
+      "HanlinNativeScriptHostSupport": [
+        "Packages/HanlinNativeScriptRuntime/Artifacts/native-api-usage.json",
+        "Packages/HanlinNativeScriptRuntime/Artifacts/dependency-closure.json",
+        "build/nativescript-metadata-tool/bin",
+        "build/nativescript-metadata-tool/provenance.json",
+        "Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-arm64/bin/build-step-metadata-generator.py",
+        "Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-arm64/bin/build-step-metadata-generator-upstream.py"
+      ],
+      "HanlinNodeHostSupport": [
+        "AI_HLY/RuntimeHostResources.zip"
+      ],
+      "HanlinPythonHostSupport": [
+        "Vendor/Python/Python-VERSIONS"
+      ]
+    },
+    "metadataTool": {
+      "schemaVersion": 1,
+      "sourceCommit": "5d4569c197810cdd4c1e02e7c16d42a01a77d5c0",
+      "sourceArchiveSHA256": "fad3c54f5d321148e39c46eae6d9cbc8e2891afb414064eb3a10f64ba25d3f8b",
+      "cmakeSourceCommit": "8856ee520a44641dfed313a71cfc01dd47e0352b",
+      "cmakeSHA256": {
+        "metadata-generator/CMakeLists.txt": "0d64383530493f13d1bce04d367984bb6081e665814d893693f4b065fd1bcf51",
+        "metadata-generator/src/CMakeLists.txt": "0f0a48c60391e75c62db3387639de62088cb688e2d004a7576db36e02f18788b"
+      },
+      "llvmArchiveSHA256": "4d2eade1e9fb7a5fae1a502d0e5d935d20190007477743a1379d81838d87b832",
+      "architecture": "arm64",
+      "xcode": "Xcode 27.0\nBuild version 27A266a",
+      "patchSourceSHA256": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+      "generatorSHA256": "e2bfd9ecd5f5b235dda04b05b6b1b838c799323a558dee7e6651c8d6a93f9e25",
+      "boundary": "Build tool only. No NativeScript/Node/Python engine or app rebuilt; no VM pass."
+    }
+  },
+  "widgetFiles": {
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/ExpoWidgets.bundle": "6ec4f91b442f8c387f2ea339f503b5a39082878811806cb58179236d06323aed",
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json": "11bce470854088208234f0143dbf4c713a2eadb0968a9a5bfcc350933db205e9",
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/README.txt": "ecab392c89bea2ecf2153f046c9107dec788736ed800907c2c51ab353a5d4a06",
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/Info.plist": "06a9c2c6630712a6761042823033448a59a6242cf6e93ddd57edabad88ff724b",
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/ExpoWidgetsLayoutRegistry.json": "71c9d33ca106b100af05bbb627934736fc082bfcf2bb33c412ead9eb0c5840b5"
+  }
+}

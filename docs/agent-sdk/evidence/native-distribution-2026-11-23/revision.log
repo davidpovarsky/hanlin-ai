@@ -1,0 +1,13 @@
+Building for debugging...
+[Constructing description]
+[Planning deferred tasks]
+[22 / 33] UnsafeLibrary
+[24 / 35] UnsafeLibrary
+[33 / 38] Consumer-product
+[36 / 39] AllExcludingTests
+[40 / 40] Consumer-product
+Build complete! (5.88 secs)
+Fetching http://127.0.0.1:33751/UnsafeLibrary.git from cache
+Fetched http://127.0.0.1:33751/UnsafeLibrary.git from cache (0.03s)
+Creating working copy for http://127.0.0.1:33751/UnsafeLibrary.git
+Working copy of http://127.0.0.1:33751/UnsafeLibrary.git resolved at cf0d5e1734554649ad069769e773385fa3c4e171

@@ -1,0 +1,64 @@
+{
+  "date": "2026-11-18",
+  "status": "IN_PROGRESS",
+  "media_run": {
+    "id": 44229930213,
+    "head": "e4ca9f40bedd25f48e9c5335562038b74c46d112",
+    "selected_cases": 12,
+    "log_passes": 10,
+    "assertion_failures": [
+      "testHistoryGalleryLoadsThreeRealSourcesAndNativeQuickLook: expected Done/Close control after image tap"
+    ],
+    "launch_infrastructure_failure": [
+      "testBackgroundDisappearanceAndDisposalUnloadEveryPlayer: Xcode application launch timeout, runner restarted"
+    ],
+    "log_sha256": "7dd5043f26df9279dbabaec740227bcb0cd4022fac9a13a125d041c51b266aff",
+    "native_results_inspection": {
+      "cases": 12,
+      "passed": 10,
+      "failed": 2,
+      "skipped": 0,
+      "quicklook": "Actual screenshot and accessibility tree show the real SwiftUI icon in a full-screen native preview with hidden chrome; not a missing preview.",
+      "screenshot_sha256": "50200a7bdbc4acf59cd7f4197134267e71e47a3a2548c7826bf3186ab088cb15",
+      "accessibility_sha256": "663cecfe9d93d54577e9c5fa32b688a90fa8788cd7ecc758093285c64ead1997",
+      "test_change": "Require the observed native preview image, reveal its controls with a real tap, then require and use the native close control; retain the third image/source and zero-outbound assertions."
+    }
+  },
+  "full_app_run": {
+    "id": 44231641195,
+    "head": "8a1cb2085598c8eafdd9a88eb96ef7e5e2776bd1",
+    "build": "FAILED_SWIFT_COMPILER_CRASH",
+    "ui": "NOT_RUN",
+    "swift": "Apple Swift 6.4.2",
+    "request": "ASTLoweringRequest / emitNativeToForeignThunk for HanlinMediaNoRedirect async URLSession redirect callback",
+    "log_sha256": "6df1d58b70d3c1d07fdd42fcf9b43d36bb9570f4a271c7d40e866fbf6de63c79"
+  },
+  "fix": {
+    "file": "AI_HLY/Downstream/ChatPresentation/Media/HanlinRichMediaStore.swift",
+    "sha256": "6e657d6f4d3f9816a3292f25b93bccffdea59e325a32f9500ebe077850048ddf",
+    "change": "Use the original @Sendable completion-handler URLSessionTaskDelegate callback and return nil exactly once. No redirect allowance, credentials, network policy, dependencies, C++ interop or language mode changed.",
+    "documentation": "https://developer.apple.com/documentation/foundation/urlsessiontaskdelegate/urlsession(_:task:willperformhttpredirection:newrequest:completionhandler:)",
+    "windows_swift_parse": "PASS",
+    "apple_module_emission": "PENDING"
+  },
+  "acceptance": "No whole app, compact keyboard UI or complete media PASS claimed.",
+  "media_recheck": {
+    "scope": "Five gallery/link cases affected by redirect callback plus the single launch-timeout player lifecycle case; the other six unchanged player cases retain their own native results.",
+    "status": "PENDING",
+    "test_sha256": "beecee0ef3a355357728dc0f611dcc9a9a0d898cc96bfe97663091b629d280c9"
+  },
+  "core_native": {
+    "run": 44233494834,
+    "source_sha": "e56dcc8693bebe0d4febcadaf86ec3bd58962377",
+    "status": "EXECUTED_PASS",
+    "cases": 46,
+    "suites": 2,
+    "failed": 0,
+    "skipped": 0,
+    "platform": "macOS 27 / Apple Swift 6.4.2",
+    "scope": "Original pinned A2UI enabled SDK + framing consumer, including the updated gallery/link model and schema cases; not a whole app or media UI acceptance.",
+    "log_sha256": "e1a632f43f0a077ee427e05e1a1d2af2b09a528509c15d50f5311485f7994c09",
+    "resolved_lock_sha256": "af74be77f91276268a10e0b32f13e04d538f4a01110ad93d8c9e484177dd9fae",
+    "identities": "Existing verifier confirmed all 46 expected identities and exact SDK pin."
+  }
+}

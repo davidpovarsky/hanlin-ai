@@ -1,0 +1,16 @@
+{
+  "sourceRevision": "a12cf4bac4de9c3d2a60f7620b73306046f40d7a",
+  "source": "AI_HLY/Views/Components/ChatViewComponents.swift",
+  "destination": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageBubble.swift",
+  "originalUserChromeSHA256": "1da655ca8e35f1869993ebf6f6039823f2bf02a5d40c15b187ce33ec4a898d72",
+  "originalAssistantChromeSHA256": "088693b64b9023b9b5e59cfd69f889bd81fa927f5d0b9f4683f0f06df6b9b316",
+  "unchangedPathFunctionSHA256": "8fdc64889def4539c808b5aebf0f0b47f4b66bc269a6350e6ae69e74f7a7e356",
+  "preservation": "Original user padding, display-P3 color, foreground, corner radii, fixed sizing, 75% measured width, accessibility, transition and spring values are retained. Original assistant VStack spacing, accessibility, transition and spring values are retained. Host callbacks remain in ChatBubbleView. Shape function copied byte for byte apart from public visibility.",
+  "asset": "HanlinLocalization Color.hanlinHLBlue resolves byte-identical original HLBlue.colorset; no copied color values.",
+  "authorizedCorrection": {
+    "date": "2026-11-26",
+    "task": "1220927011075841",
+    "reason": "The menu lift was rectangular before settling into the original rounded bubble. Clip the source before attaching its context menu and give the native lift preview that same original asymmetric shape. No custom duplicate preview or replacement menu.",
+    "api": "https://developer.apple.com/documentation/swiftui/contentshapekinds/contextmenupreview"
+  }
+}

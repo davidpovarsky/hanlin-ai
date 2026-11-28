@@ -1,0 +1,30 @@
+{
+  "base": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "r2FrozenManifest": "7c2fa9ca2fff66164db220eaabe871bcbf63b980d86fbf3a45afab5311571e49",
+  "modified": [
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/AgentRunLifecycleCoordinator.swift",
+      "beforeSHA256": "2aaa8012cb54acb5dec358e9469ebb6069273fa8942acf4cfc0dc0e85cfb4c60",
+      "afterSHA256": "4d02db2ff447c049de237dc26b8296b2d4fc0ff485809b23c7617659ea9b9caa",
+      "bytes": 5960
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "beforeSHA256": "7ddef722822d380d51c0bc179d7a799a3b6dd1339462830f7c363a736c607db4",
+      "afterSHA256": "34458e752f6dc96742904c5fc6d9fcc769e698921c3b3b037bb5d7925f07582f",
+      "bytes": 230472
+    },
+    {
+      "path": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "beforeSHA256": "a30e448321c7a80da6186e98110b454ae40189b86df671084ce9c7329a652280",
+      "afterSHA256": "86ba4ec861fa6010c24847f0b98e55b527f493759edc8e5058c951d46f7ca6ac",
+      "bytes": 50957
+    }
+  ],
+  "r2NewTestOptionalSetupChanges": 6,
+  "originalTestsChanged": false,
+  "newR3Definitions": 3,
+  "newR3SemanticCases": 4,
+  "testsRun": 0,
+  "nativeCommands": 0
+}

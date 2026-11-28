@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w1_review_resume",
+  "recordedAtUTC": "2026-11-27T17:03:23.711596+00:00",
+  "status": "APPROVED_FOR_EXISTING_GITHUB_ROUTE_SOURCE_ONLY",
+  "base": "f57dfcc2292c0830f454e28d87293e85fe426a44",
+  "rootComparedSource": "97ebeb20074928e875b675005b0e1804b9dcc0c8",
+  "candidateJSONSHA256": "5eaeeef86c95eb086b5083f108f6546165b4d577d3dcce4a5f524b16f2582ef3",
+  "patchSHA256": "aa36133977b08871322c437fa8621fed0c62812499ecbbe3ac2b85cc00e2ddf1",
+  "sources": [
+    {
+      "path": "Scripts/CI/IntegrationValidation/run_agent_sdk.sh",
+      "bytes": 13062,
+      "sha256": "ace71bbfcb2be24dc3ffef177f4e1e63a1111998be68008f6aa3e428275790eb"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/run_host_mcp_wire_comparison.py",
+      "bytes": 25872,
+      "sha256": "5865ed78117ac14d82055441481c5a51853061b9780069eb0e903887ae57b841"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_mcp_wire_supervision.py",
+      "bytes": 11120,
+      "sha256": "989ae19a5c6c5b10621f474bbb63353bc4ddacdae8ae37ff9bc5102389b9fa80"
+    }
+  ],
+  "portProofSHA256": "78ee0e9d4ffc7211015c351caea9eb0c6f9dd65cd6f49b6631ac7f51df517efe",
+  "independentlyVerified": {
+    "original882dSHA256": "882d9b58090a12d3bf5adfd01839f1f241ec5d2e4682a2340b23632505973f18",
+    "elevenOriginalHelperASTsEqual": true,
+    "entireNativeBodyEqualAfterExactlyFiveNamedBindingReplacements": true,
+    "dispatcherEntireOriginalRecovered": true,
+    "sixteenControlBodiesBytePreservedExceptSourcePath": true,
+    "actualProvided16ControlLogSHA256": "9582d8b7b1c7a2de107b5d113bd9e70b988d0dbcf7dff0eb4eb16a85ace5282c",
+    "sixPackageTreesAtCurrentRootEqualFixedReviewedConstants": true,
+    "sixCriticalSourceAndPinHashesAtCurrentRootEqualFixedReviewedConstants": true,
+    "workflowUnmodifiedByCandidate": true,
+    "rootWorkflowSHA256": "e9777f014bde0a00f8dafd583e5470bf0fbefe469d4c22cba837af443b6c0c36"
+  },
+  "routeReview": [
+    "Only the exact existing agent_sdk_exact_source_proof plus HostMCPWireComparisonTests pair selects the early exec; it cannot fall through after admission.",
+    "The controller verifies actual workflow_dispatch repository/GITHUB_SHA/workspace, flags, clean checkout, fixed complete package trees and exact source/pins; historical Git objects are not required on a shallow Actions checkout.",
+    "Existing stable-Xcode selection and exact-JSON vendor verifier execute before the native command; actual Swift/Xcode, source and capacity are retained.",
+    "The relative original Swift command, --jobs2, serialized eleven methods, both120-second cases, 3600-second phase ceiling and all original stop/no-PASS-on-stop reconciliation remain intact.",
+    "The existing 60-minute job includes preparation and is not extended. Always-uploaded build/agent-sdk-validation-evidence retains early failure and native logs.",
+    "Use composer_validation_only=false and the other original false flags; the dedicated group does not admit the app/device planner. Check for a live same-group AgentSDK run before dispatch, because its concurrency key is not run-unique."
+  ],
+  "limitations": [
+    "All three Mac attempts remain infrastructure failures with zero native starts; this port does not claim a proved ps-timeout cause or recovery.",
+    "The retained observer can still fail within10seconds. An unresolved stop/liveness observation remains an infrastructure failure, with no cleanup or native acceptance credit.",
+    "The cold capacity estimate is remeasured at admission and the reserve is enforced during execution; no accepted Mac binary/cache is reused.",
+    "Native/Swift execution and actual GitHub runner behavior remain NOT_RUN. Original greater-than8MiB application transport/render/store acceptance remains separate."
+  ],
+  "nativeCommandsRunByReviewer": 0,
+  "portableTestsRerunByReviewer": 0
+}

@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T14:00:22.621626+00:00",
+  "runID": 45398772829,
+  "jobID": 138461551988,
+  "sourceCommit": "cf9c18903c03264265557efb446207efa7226912",
+  "runURL": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45398772829",
+  "result": "FIRST_MINIAPPS_BUILD_FAILED",
+  "nativePreparation": "EXECUTED_PASS",
+  "export": "EXECUTED_PASS",
+  "miniBuild": {
+    "status": "EXECUTED_FAIL",
+    "exit": 65,
+    "seconds": 1387.076741917,
+    "logBytes": 8294813,
+    "logSHA256": "052c16cb8d1ba5ba804f11eba671f997b9a7760a668c28e9b83df9d6d39c4a3e",
+    "timeoutSeconds": 3600,
+    "hitTimeout": false
+  },
+  "aiBuild": "NOT_RUN",
+  "selectedCases": 52,
+  "executedApplicationCases": 0,
+  "applicationStatus": "NOT_RUN",
+  "compilerHeaders": [
+    {
+      "line": 94392,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift:45:51: error: cannot use optional chaining on non-optional value of type 'Optional<HanlinOriginalExpoWidgetEntity>.UnwrappedType' (aka 'HanlinOriginalExpoWidgetEntity')"
+    },
+    {
+      "line": 94400,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift:129:16: error: cannot convert return expression of type 'HanlinObject<HanlinValue>' to return type '[String : HanlinValue]'"
+    }
+  ],
+  "cause": "Widget option query applies optional chaining to the nonoptional IntentParameterDependency unwrapped widget; values returns HanlinObject where public API requires Dictionary. Focused correction and exact-source independent review assigned.",
+  "priorPublicationAndCxxScope": "Actual target/body compilation extent is assigned for independent log review; no complete widget/app build success inferred.",
+  "artifact": {
+    "id": 14927335537,
+    "bytes": 334245460,
+    "sha256": "1ff663b205d35ce9d6f6eaadbb6e0690c40d4f96fdee9ab2f19d3bdd083ce33e",
+    "authenticatedAgainstGitHubDigest": true,
+    "retainedArchive": "/tmp/hanlin-native-gate-evidence-45398772829/app-split-45398772829.zip"
+  },
+  "jobLogSHA256": "1c736dd20a13110502b87672980fe2c4a10e6a3e342066dc3471f15aa0194c2f",
+  "boundary": "No application UI/physical-device/release PASS. Failure screenshot is not product acceptance. Exact52 selection preserved; no new test executed to record evidence. Four previously completed scoped tasks retain their separate proofs.",
+  "files": [
+    {
+      "path": "acceptance.json",
+      "bytes": 2625,
+      "sha256": "ba7cc70cf89fb3c12bce0c5973da56a80c9764fd39c213bc172c28f6eb16846d"
+    },
+    {
+      "path": "active-command.json",
+      "bytes": 513,
+      "sha256": "f9886d05f4d1a58d5620c5beef8359be62770f4e4765c82ab546a9ec82b3c01a"
+    },
+    {
+      "path": "artifact-download-receipt.json",
+      "bytes": 10581,
+      "sha256": "339218550b94d373a45b68cf6c1640c6e4efe586cb072f5967e7e267620b8270"
+    },
+    {
+      "path": "artifacts-api.json",
+      "bytes": 771,
+      "sha256": "5536613643438371a0a14bf189a0c0686e6b8ffaa8b2a722593010a897fe64d2"
+    },
+    {
+      "path": "command-events.jsonl",
+      "bytes": 61587,
+      "sha256": "5d22ce833d4c2c57492a39da25eb8c25f1354816f50630e1e2bb1267fdf47a4a"
+    },
+    {
+      "path": "commands.jsonl",
+      "bytes": 4366,
+      "sha256": "a0df402a78f0544005cea2cc77dbf2ce13c92833295dfe8222d2e467724d422f"
+    },
+    {
+      "path": "diagnostic-context.json",
+      "bytes": 6117,
+      "sha256": "d424efb50f75278a982650d8a94b1340119c7af4b359e3fb04e306b796baecab"
+    },
+    {
+      "path": "dispatch.json",
+      "bytes": 1182,
+      "sha256": "c824e52da3cc48d29f826a3c5c750642717a27ea8a6827fb3571233537511c92"
+    },
+    {
+      "path": "documentation-snippets.json",
+      "bytes": 20066,
+      "sha256": "162e1231fc94047c80603ba1dbc9ed7de04701d094e72549da000b34390b2a1e"
+    },
+    {
+      "path": "failure-memory.txt",
+      "bytes": 1247,
+      "sha256": "d6607c46e8d775cad2c20112b5f93ecc2e85bb66e2ed5dc66efdb2f4a6245521"
+    },
+    {
+      "path": "failure-processes.txt.gz",
+      "bytes": 15869,
+      "sha256": "6db69a7d10116bc213514979f18909d5d823667d4a1e9c12c0d83b53979f1702"
+    },
+    {
+      "path": "job.log.gz",
+      "bytes": 481752,
+      "sha256": "dc693a2d771fa8c4bd7972465b0df55c7ea868642c02ee3d5d62abe34d17e720"
+    },
+    {
+      "path": "mini-build.log.gz",
+      "bytes": 288029,
+      "sha256": "780a1e9e104739270f96b1643a4f0189827f432919a946410e44127ff9241ec3"
+    },
+    {
+      "path": "performance.json",
+      "bytes": 2241,
+      "sha256": "e8d71438134b8201fe842017a7b84906f09894675e7186d61adf0fd327d10078"
+    },
+    {
+      "path": "run-api.json",
+      "bytes": 7226,
+      "sha256": "2d98c1f8eaf5f1570902a4f556c31594620b10c1ea0708de8b7d34b09271ecad"
+    },
+    {
+      "path": "watcher-completion.json",
+      "bytes": 1489,
+      "sha256": "7d9a5d46880baad04e4a20297c436e3ba87f155bf762a92c5763e29bdd82c4df"
+    }
+  ]
+}

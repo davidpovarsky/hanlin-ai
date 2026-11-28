@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "utc": "2026-11-25T09:10:36.475932+00:00",
+  "status": "PRODUCT_CHANGE_PENDING_ACTUAL_NATIVE_ACCEPTANCE",
+  "original_source": "08ef8741ff58241a081c908536a3b4d3917cc0e8",
+  "integrated_base": "68dee3512bd92ad733b5204cb69c710e2708ae84",
+  "original_summary_sha256": "6fb4697c9af914f3296488c7294a0a13a51a0df85dcb5df3bc54fba04ac43c60",
+  "original_raw_archive_sha256": "efe52d3b8cee7a3b40e2c055cfa19b26b8a07125abdf79ebdf720bbe0b902155",
+  "observations": [
+    "The original different-package cancellation case passed its warm interactions in one application PID20215.",
+    "Delta Apps was tapped at118.76s, its title-based window query disappeared at120.28s, a global catalog button existed at121.57s, and app termination began at121.63s.",
+    "The next actual cold process restored delta with Result saved. Its saved sceneValue and presentedSceneValue both still contained its UUID.",
+    "Gamma had a persisted null presentedSceneValue while its original sceneValue remained the gamma UUID.",
+    "The later failed alpha case cleanup tapped Apps at49.14s and terminated at50.78s. The next cold process restored alpha as Cancelled.",
+    "All four scene sessions remained in KnownSceneSessions. Setting the request binding to nil had not destroyed those native scenes."
+  ],
+  "inference": "The last UI change did not reach the saved presentation value before process termination. This is consistent with deferred state restoration persistence; it is not proof of an Apple framework defect.",
+  "implementation": [
+    "Keep the original UUID-valued miniapp-invocation WindowGroup.",
+    "Give the root WindowGroup a Codable/Hashable catalog-or-request identity so a pending request in a reused root is not mistaken for an available catalog.",
+    "On Apps from a multiwindow request, open/focus the catalog value and dismiss the current native scene through SwiftUI dismissWindow().",
+    "Use the existing request binding for single-window platforms. Do not delete requests, attachments, prepared results, or another window."
+  ],
+  "native_api_verification": {
+    "sdk": "Xcode27.0 iPhoneSimulator27 SwiftUI.swiftinterface",
+    "dismissWindow": "public iOS17+ callAsFunction() and id/value overloads found",
+    "rootWindowGroup": "public id/for/content/defaultValue initializer with Binding<D> found",
+    "documentation": [
+      "https://developer.apple.com/documentation/swiftui/dismisswindowaction",
+      "https://developer.apple.com/documentation/swiftui/openwindowaction",
+      "https://developer.apple.com/documentation/swiftui/windowgroup"
+    ]
+  },
+  "required_native_verification": [
+    "The original23 MiniApps core UI methods plus the original card menu/search case on the integrated source, because root startup/restoration changes invalidate previous UI source equivalence.",
+    "Cold reopen after both package requests close must display a hittable catalog and no owned request window.",
+    "Pending other request and prepared callback survive closure of the first request in the same actual app PID.",
+    "NativeScript reverse completion, original nonces and external modal lifetime preserve their original assertions.",
+    "Original consumer acceptance uses the resulting verified producer, not the historical08ef compiled app."
+  ],
+  "tests_run_for_this_change": [],
+  "frozen_engines": "No Scripting-JSC/ScriptUI or .scripting engine development."
+}

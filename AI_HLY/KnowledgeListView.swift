@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  KnowledgeListView.swift
 //  AI_Hanlin
@@ -9,6 +10,8 @@ import SwiftUI
 import SwiftData
 
 struct KnowledgeListView: View {
+    var isPresentedInSheet = false
+    @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @Query private var knowledgeRecords: [KnowledgeRecords]
     
@@ -20,7 +23,7 @@ struct KnowledgeListView: View {
     @State private var showIconSheet: Bool = false
     @State private var editingRecord: KnowledgeRecords? = nil
     @State private var editingIcon: String = "document.circle"
-    @State private var editingColor: Color = .hlBlue
+    @State private var editingColor: Color = .hanlinHLBlue
     @State private var editingTitle: String = "Title"
     
     @State private var searchTask: Task<Void, Never>? = nil
@@ -29,11 +32,19 @@ struct KnowledgeListView: View {
     var body: some View {
         NavigationStack(path: $navigationPath) {
             content
-                .navigationTitle("知识背包")
+                .navigationTitle(String(localized: "知识背包", bundle: HanlinLocalization.bundle))
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier("hanlin-knowledge-list")
                 .safeAreaInset(edge: .bottom) {
                     Color.clear.frame(height: 75)
                 }
                 .toolbar {
+                    if isPresentedInSheet {
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button(hanlin: "Done") { dismiss() }
+                                .accessibilityIdentifier("hanlin-library-knowledge-done")
+                        }
+                    }
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
                             addNewKnowledge()
@@ -44,8 +55,8 @@ struct KnowledgeListView: View {
                     ToolbarItem(placement: .navigationBarLeading) {
                         if loadHistoryMessages {
                             HStack {
-                                ProgressView().font(.caption)
-                                Text("正在加载...").font(.caption)
+                                ProgressView().font(HanlinTypography.caption)
+                                Text(String(localized: "正在加载...", bundle: HanlinLocalization.bundle)).font(HanlinTypography.caption)
                             }
                         }
                     }
@@ -82,7 +93,7 @@ struct KnowledgeListView: View {
             knowledgeRecordsSection
         }
         .listStyle(.plain)
-        .searchable(text: $searchText, prompt: "搜索知识文档")
+        .searchable(text: $searchText, prompt: String(localized: "搜索知识文档", bundle: HanlinLocalization.bundle))
         .onChange(of: searchText) { searchRecords() }
         .refreshable {
             handleOnAppear()
@@ -117,10 +128,10 @@ struct KnowledgeListView: View {
             dateFormatter.dateFormat = "HH:mm"
             return dateFormatter.string(from: date)
         } else if calendar.isDateInYesterday(date) {
-            return "昨天"
+            return String(localized: "昨天", bundle: HanlinLocalization.bundle)
         } else if let twoDaysAgo = calendar.date(byAdding: .day, value: -2, to: Date()),
                   calendar.isDate(date, inSameDayAs: twoDaysAgo) {
-            return "前天"
+            return String(localized: "前天", bundle: HanlinLocalization.bundle)
         } else {
             // 超过前天，显示“月-日”
             dateFormatter.dateFormat = "MM-dd"
@@ -156,14 +167,14 @@ struct KnowledgeListView: View {
                 VStack(alignment: .leading) {
                     HStack {
                         Text(highlightedName(for: record))
-                            .font(.headline)
+                            .font(HanlinTypography.headline)
                             .lineLimit(1)
                             .truncationMode(.tail)
                         
                         Spacer()
                         
                         Text(formattedDate(record.lastEdited))
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .foregroundColor(.gray)
                     }
                     
@@ -177,7 +188,7 @@ struct KnowledgeListView: View {
                         let limitedContent = String(processedContent.prefix(100))
                         
                         Text(limitedContent)
-                            .font(.caption)
+                            .font(HanlinTypography.caption)
                             .lineLimit(2)
                             .truncationMode(.tail)
                             .foregroundColor(.gray)
@@ -194,19 +205,19 @@ struct KnowledgeListView: View {
                     editingTitle  = record.name
                     showIconSheet = true
                 } label: {
-                    Label("编辑图标", systemImage: "paintbrush")
+                    Label(String(localized: "编辑图标", bundle: HanlinLocalization.bundle), systemImage: "paintbrush")
                 }
                 
                 Button {
                     togglePin(record)
                 } label: {
-                    Label(record.isPinned ? "取消置顶" : "置顶知识", systemImage: record.isPinned ? "pin.slash" : "pin")
+                    Label(record.isPinned ? String(localized: "取消置顶", bundle: HanlinLocalization.bundle) : String(localized: "置顶知识", bundle: HanlinLocalization.bundle), systemImage: record.isPinned ? "pin.slash" : "pin")
                 }
                 
                 Button(role: .destructive) {
                     deleteKnowledge(record)
                 } label: {
-                    Label("删除知识", systemImage: "trash")
+                    Label(String(localized: "删除知识", bundle: HanlinLocalization.bundle), systemImage: "trash")
                 }
             }
         }
@@ -218,17 +229,17 @@ struct KnowledgeListView: View {
             Button(role: .destructive) {
                 deleteKnowledge(record)
             } label: {
-                Label("删除知识", systemImage: "trash")
+                Label(String(localized: "删除知识", bundle: HanlinLocalization.bundle), systemImage: "trash")
             }
-            .tint(.hlRed)
+            .tint(.hanlinHLRed)
         }
         .swipeActions(edge: .leading, allowsFullSwipe: true) {
             Button {
                 togglePin(record)
             } label: {
-                Label(record.isPinned ? "取消置顶" : "置顶知识", systemImage: record.isPinned ? "pin.slash" : "pin")
+                Label(record.isPinned ? String(localized: "取消置顶", bundle: HanlinLocalization.bundle) : String(localized: "置顶知识", bundle: HanlinLocalization.bundle), systemImage: record.isPinned ? "pin.slash" : "pin")
             }
-            .tint(.hlBlue)
+            .tint(.hanlinHLBlue)
             
             Button {
                 editingRecord = record
@@ -237,9 +248,9 @@ struct KnowledgeListView: View {
                 editingTitle  = record.name
                 showIconSheet = true
             } label: {
-                Label("编辑图标", systemImage: "paintbrush")
+                Label(String(localized: "编辑图标", bundle: HanlinLocalization.bundle), systemImage: "paintbrush")
             }
-            .tint(.hlGreen)
+            .tint(.hanlinHLGreen)
         }
     }
     
@@ -297,7 +308,7 @@ struct KnowledgeListView: View {
         while let range = lowerName.range(of: lowerSearch, options: .caseInsensitive, range: searchRange) {
             let nsRange = NSRange(range, in: name)
             if let attrRange = Range(nsRange, in: attributedString) {
-                attributedString[attrRange].foregroundColor = .hlBlue
+                attributedString[attrRange].foregroundColor = .hanlinHLBlue
             }
             searchRange = range.upperBound..<lowerName.endIndex
             matchFound = true
@@ -326,7 +337,7 @@ struct KnowledgeListView: View {
                         let charIndex = name.index(name.startIndex, offsetBy: i)
                         let nsRange = NSRange(charIndex...charIndex, in: name)
                         if let attrRange = Range(nsRange, in: attributedString) {
-                            attributedString[attrRange].foregroundColor = .hlBlue
+                            attributedString[attrRange].foregroundColor = .hanlinHLBlue
                         }
                     }
                 }
@@ -396,7 +407,7 @@ struct KnowledgeListView: View {
     private func addNewKnowledge() {
         
         let newKnowledge = KnowledgeRecords(
-            name: "新知识",
+            name: String(localized: "新知识", bundle: HanlinLocalization.bundle),
             lastEdited: Date(),
             content: ""
         )

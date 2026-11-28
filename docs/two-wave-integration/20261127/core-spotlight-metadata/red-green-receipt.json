@@ -1,0 +1,54 @@
+{
+  "decision": "Real header-dependency regression demonstrated; original wrapper omitted CoreSpotlight public umbrella",
+  "productionDelta": "One added system framework in HOST_FRAMEWORKS only",
+  "sourceOnly": true,
+  "nativeCompilation": "PENDING",
+  "rows": [
+    {
+      "phase": "before",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/CI/Tests",
+        "-p",
+        "test_nativescript_metadata_wrapper.py",
+        "-k",
+        "host_baseline",
+        "-v"
+      ],
+      "startedAt": "2026-11-27T12:05:26.506278+00:00",
+      "elapsedSeconds": 0.1627123309954186,
+      "exitCode": 1,
+      "wrapperSHA256": "577e4d58a3bebd29e379918938199aacff0a4c775cfb1c4923e1f7735686238c",
+      "testSHA256": "a15bef4c3db22813538a684859034c4d18f90f407f71df70591f9bd6519cebeb",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSHA256": "b43ba495c62a4296124bf6c6b0c107fa9b1228918e5820527e6cc23a5a82660e"
+    },
+    {
+      "phase": "after",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/CI/Tests",
+        "-p",
+        "test_nativescript_metadata_wrapper.py",
+        "-k",
+        "host_baseline",
+        "-v"
+      ],
+      "startedAt": "2026-11-27T12:05:26.669686+00:00",
+      "elapsedSeconds": 0.17217595699912636,
+      "exitCode": 0,
+      "wrapperSHA256": "9e45c0aa8d951a6a59afa1eb4dbcad6e524fc1f408d2406d6c8e5a9efcdd7f8c",
+      "testSHA256": "a15bef4c3db22813538a684859034c4d18f90f407f71df70591f9bd6519cebeb",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSHA256": "0b66fdacc72c444c8bdbe7b3c05b34767260c98b28df0c01a9e883c88119ce9f"
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "observedAtUTC": "2026-11-26T18:45:25.828838+00:00",
+  "productRevision": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "failureRunID": 45871800987,
+  "failureJobID": 140089266632,
+  "originalProducerRunID": 42926628418,
+  "originalProducerSource": "4784dd99c3e5892ef726e7a3cce6587eb7847997",
+  "runtimeBundle": {
+    "formatVersion": 1,
+    "releaseRepository": "davidpovarsky/hanlin-ai",
+    "releaseTagPrefix": "runtime-core-v1-",
+    "sha256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+    "verificationStatus": "verified",
+    "artifactDependencyHash": "2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+    "nativeInputSHA256": "d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5",
+    "sourceCommit": "4784dd99c3e5892ef726e7a3cce6587eb7847997"
+  },
+  "originalReleaseTag": "runtime-core-v1-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+  "originalFourAssets": [
+    {
+      "path": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/frozen-runtime/hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip",
+      "releaseAssetName": "hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip",
+      "bytes": 86253335,
+      "sha256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f"
+    },
+    {
+      "path": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/frozen-runtime/runtime-bundle.sha256",
+      "releaseAssetName": "runtime-bundle.sha256",
+      "bytes": 150,
+      "sha256": "d1f1110aeb0714024338f11375c5f759a834ae7bf749b8f7d97409c212306a7a"
+    },
+    {
+      "path": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/frozen-runtime/node-xcframework.sha256",
+      "releaseAssetName": "node-xcframework.sha256",
+      "bytes": 93,
+      "sha256": "9ae89508107207c03f6b5dc55bdf71288c29ee14b388473266fcab6b7606b1c3"
+    },
+    {
+      "path": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/frozen-runtime/runtime-bundle/RuntimeProvenance.json",
+      "releaseAssetName": "RuntimeProvenance.json",
+      "bytes": 2062,
+      "sha256": "f829c24da20ca914186b41b23866229f51c5527917dc3de775a33192eac01c45"
+    }
+  ],
+  "archiveChecksumCommand": {
+    "argv": [
+      "shasum",
+      "-a",
+      "256",
+      "-c",
+      "runtime-bundle.sha256"
+    ],
+    "cwd": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/frozen-runtime",
+    "exitCode": 0,
+    "stdout": "hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip: OK\n"
+  },
+  "originalArchiveVerifier": {
+    "sourceSHA256": "059f37520387b3cf49d7d08fd22c81e5c9bd4050ca90cd76f2b5989aafcb7038",
+    "function": "verify_archive",
+    "result": "PASS"
+  },
+  "innerProvenanceByteIdenticalToRetainedReleaseAsset": true,
+  "originalCommonProvenanceAndSmokeFieldsMatch": true,
+  "requiredPayloadPaths": [
+    "NodeMobile.xcframework/Info.plist",
+    "NodeMobile.xcframework/ios-arm64/NodeMobile.framework/NodeMobile",
+    "NodeMobile.xcframework/ios-arm64-simulator/NodeMobile.framework/NodeMobile",
+    "Python.xcframework/Info.plist",
+    "Python.xcframework/ios-arm64/Python.framework/Python",
+    "Python.xcframework/ios-arm64_x86_64-simulator/Python.framework/Python",
+    "Python-VERSIONS",
+    "RuntimeHostResources.zip",
+    "RuntimeManifest.json",
+    "RuntimeProvenance.json",
+    "NodeMobile-smoke.json"
+  ],
+  "presentRequiredPayloadPaths": 11,
+  "liveArtifactQuery": "exact name across same repository returns total_count0",
+  "releaseAndTagObserved": "absent404",
+  "nativePreparation": "NOT_RUN_BY_THIS_RECOVERY",
+  "publication": "NOT_PERFORMED_BY_THIS_AGENT",
+  "archiveRepackingOrRebuild": false,
+  "route": "Publish absent original immutable release from exact four retained producer assets; keep workflow runtime_bundle_artifact_run_id empty; original prepare-runtime-core.sh release transport and all common checks remain unchanged.",
+  "originalLiveArtifactMetadataValidator": {
+    "result": "REJECTED_AS_REQUIRED",
+    "message": "Expected one live Runtime bundle artifact"
+  },
+  "failedCITransport": {
+    "run": 45871800987,
+    "job": 140089266632,
+    "input": "RUNTIME_CORE_ARTIFACT_RUN_ID empty",
+    "nativeInputVerified": "d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5",
+    "failure": "release not found",
+    "failureTimeUTC": "2026-11-26T18:13:58.7662030Z"
+  },
+  "sourceAuthorities": {
+    "RuntimeDependencies.lock.json": {
+      "sourceRevision": "9819697c1792119a6a93b492d12abad7b3330c93",
+      "sha256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a"
+    },
+    "Scripts/Runtime/prepare-runtime-core.sh": {
+      "sourceRevision": "9819697c1792119a6a93b492d12abad7b3330c93",
+      "sha256": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540"
+    },
+    "Scripts/Runtime/runtime_bundle_source.py": {
+      "sourceRevision": "9819697c1792119a6a93b492d12abad7b3330c93",
+      "sha256": "059f37520387b3cf49d7d08fd22c81e5c9bd4050ca90cd76f2b5989aafcb7038"
+    },
+    "Scripts/Runtime/runtime_native_identity.py": {
+      "sourceRevision": "9819697c1792119a6a93b492d12abad7b3330c93",
+      "sha256": "2b0430d2bfc8c1e362d3a5f764280459ad14551714613eecc47fae4d36409ff2"
+    },
+    ".github/workflows/build-runtime-bundle.yml": {
+      "sourceRevision": "9819697c1792119a6a93b492d12abad7b3330c93",
+      "sha256": "b7cb1d1afb5cf52abd7bab654ceac1da89d08076db6ce6ae95e3f8ab12335d61"
+    },
+    ".github/workflows/build-ios26-unsigned-ipa.yml": {
+      "sourceRevision": "9819697c1792119a6a93b492d12abad7b3330c93",
+      "sha256": "d82289d5fc545302ad4ff45d447247b1c6ae82dd96e1b6dc4915d537fbf269ac"
+    }
+  },
+  "retainedFailureExcerpt": [
+    "2026-11-26T18:13:57.4505790Z   RUNTIME_CORE_ARTIFACT_RUN_ID: ",
+    "2026-11-26T18:13:57.8213830Z d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5",
+    "2026-11-26T18:13:58.7662030Z release not found"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "reviewer": "/root",
+  "atUTC": "2026-11-27T10:28:43.284067+00:00",
+  "decision": "APPROVED_TEST_ONLY_LIVE_PATH_PUBLICATION",
+  "sourceSHA256": "433703973e69d764686c6761ad1851c40d76f5e53afa4561d1720d873a5a1ae4",
+  "originalSHA256": "9996460cb770d19297fdda3c87423685223e5fa4243a044c0ef824dd58628a35",
+  "patchSHA256": "22c8ee0b129ca8485c44dee42f1d2007435d8388d5ed85b0fb06910fe0c48373",
+  "singlePureInsertionBytes": 1448,
+  "allOriginalBytesRestoredByRemovingInsertion": true,
+  "testCountUnchanged": 603,
+  "originalNativeTimeoutSeconds": 5,
+  "productCodeUnchanged": true,
+  "scope": "Optional atomic descriptor before server/JSexecution, using existing unique temporary/evidence paths and existing sha helper. Existing final file copies/cleanup unchanged. Mac must bind source/run/PID/first genuine stage before following the exact live JSONL; no broad scan. Diagnostic publication failures remain explicit console output and do not change native test decisions."
+}

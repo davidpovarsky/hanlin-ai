@@ -1,0 +1,90 @@
+{
+  "observed_at": "2026-11-19T04:49:54.354606+00:00",
+  "run": 44455016248,
+  "source_sha": "469d2f65e58d4ef0e74fe4466b5cc91ece8ac1c4",
+  "url": "https://github.com/davidpovarsky/Maktabah/actions/runs/44455016248",
+  "artifact": 14499671266,
+  "zip_bytes": 154238,
+  "full_zip_sha256": "d344453225e74c684db3d831061dffd7a6c489c8833ae49f079d5904e4d29376",
+  "zip_crc_verified": true,
+  "toolchain": {
+    "xcode": "Xcode 27.2\nBuild version 27B52",
+    "swift": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0",
+    "sdk": "/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk",
+    "target": "arm64-apple-ios27.0-simulator"
+  },
+  "toolbar_original_sdk_compile": "PASS_WITH_CODE_GENERATION",
+  "all_nine_original_ui_files_compile": "PASS_WITH_CODE_GENERATION",
+  "ui_compile_warnings": 2306,
+  "native_ui_tests_executed": 0,
+  "navigation": {
+    "passed": 8,
+    "failed": 0,
+    "sdk_sha": "080d1a2b264ead9e3f9df690f2dd0d3e81ebd07e",
+    "status": "REPRODUCED_CURRENT_CONTRACT_LIMITATION",
+    "methods": [
+      "testAccountTransitionMustRemainRejected",
+      "testAlreadyStaleContextNeverNavigates",
+      "testGenerationTransitionDropsAcknowledgementAfterNavigationEffect",
+      "testObjectTransitionDropsAcknowledgementAfterNavigationEffect",
+      "testQueuedIsNotPresentationAcknowledgement",
+      "testReplyCannotSubstituteNewContextToBypassGuard",
+      "testRevokedSessionNeverNavigates",
+      "testStableContextPreservesExactPresentedAcknowledgement"
+    ],
+    "boundary": "Whole unchanged SDK HostDispatcher + complete original Platform/Host contract modules. Explicit host/navigation effect double; no AgentSession, provider, UIKit, Otzaria runtime or actual UI acknowledgement.",
+    "finding": "Current context changes caused by navigation cannot be acknowledged through HostDispatcher.open: returning the old context becomes stale after the host effect, while returning a new context fails result validation. Existing safety guards remain unchanged."
+  },
+  "other_original_source_proofs": {
+    "sqlite_cases": 20,
+    "sqlite_all_pass": true,
+    "owner_passed": 17,
+    "owner_failed": 0,
+    "owner_boundary": "Exact app binding with real Swift6/MainActor, explicit model/backend DTO doubles. No UIKit, Core permission, database or native presentation acceptance."
+  },
+  "not_claimed": [
+    "native app UI execution",
+    "latest f423 composition compilation",
+    "provider/model/source-opening acceptance",
+    "signed physical device",
+    "whole SDK07 acceptance"
+  ],
+  "raw_files": {
+    "toolbar-sdk-compile.json": {
+      "bytes": 2445,
+      "sha256": "76c5505a6859b2bfd136b77a2094bb6f32e67b90530de682a05929ff41839be6"
+    },
+    "ui-acceptance-typecheck.hanlin-navigation-contract-inputs.json": {
+      "bytes": 9526,
+      "sha256": "7173d564377b7f94a26b04a1246ad311eb34e89a4c57bbd28839ca8c9cfcc6fe"
+    },
+    "ui-acceptance-typecheck.hanlin-navigation-contract-RESULT.json": {
+      "bytes": 1996,
+      "sha256": "921891d268e337de2eed79faf25f253bdb357f7ccb9d2ada47e4066502900361"
+    },
+    "ui-acceptance-typecheck.hanlin-sdk-inputs.json": {
+      "bytes": 60738,
+      "sha256": "4e40a099e4aebb1176e54a7db1ad852737fbf7915e6f933e248127260a928a8e"
+    },
+    "ui-acceptance-typecheck.hebrew-ranges-RESULT.json": {
+      "bytes": 5929,
+      "sha256": "05d2a82cdb7f223c250f761dae64a9f53722b670bf8c4126340c4deaf963258d"
+    },
+    "ui-acceptance-typecheck.inspector-owner-RESULT.json": {
+      "bytes": 2235,
+      "sha256": "4597cecb63503bf34b8ced7c2f1d7a78202228ca74281f2e891e6846494ded57"
+    },
+    "ui-acceptance-typecheck.json": {
+      "bytes": 52378,
+      "sha256": "4e96208a39ecf6a230596f287a1342a040116bfc719f15329c956b88657c2c56"
+    },
+    "ui-acceptance-typecheck.sqlite-RESULT.json": {
+      "bytes": 4034,
+      "sha256": "5e47f2b2bfca2ba1425725c681cdc0c98efd3db02fecc804a3c3b2b6b9cd3915"
+    },
+    "ui-acceptance-typecheck.toolchain.json": {
+      "bytes": 13019,
+      "sha256": "7e70d8fd00dffdd028d97ec4b4500b324935d2c21b9401b39eda8ed834c6475a"
+    }
+  }
+}
