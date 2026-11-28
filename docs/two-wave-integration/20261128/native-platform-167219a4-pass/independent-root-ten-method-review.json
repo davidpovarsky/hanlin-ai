@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-28T00:50:48.141405+00:00",
+  "source": "167219a491a844ae838041f195c12abe9800dac3",
+  "manifestSHA256": "57685d2e3354278b14e1f34cdf044a2c2ec5ede548a614cbf80b5fda58817b73",
+  "reconciliationSHA256": "6ca316571627067cff2576735e3eeb749260b399c1bfccec137000de016e2a9f",
+  "verifiedMembers": 22,
+  "verifiedBytes": 5675150,
+  "rawLogSHA256": "d933d053012faffa34b9cb2f6a0d1d64f714740bb9b827ffa3f681ab264caf4c",
+  "rawBoundStarts": 10,
+  "rawBoundTerminals": 10,
+  "passed": 10,
+  "failed": 0,
+  "skipped": 0,
+  "nativeExitCode": 0,
+  "nativeStop": null,
+  "retainedExpoProgramBytes": 5915,
+  "originalWriterLimitUnchanged": true,
+  "scope": "Actual original10methods3suites;2frozenretainedoracles+8ownershipcompatibility/negativecontrols. No originalfull619, SDK producer, app or OS result claimed.",
+  "currentRootPackageTreeDelta": [],
+  "currentRoot": "53329e1a9dde33432d886ec5ffbee7c3d44d2014"
+}

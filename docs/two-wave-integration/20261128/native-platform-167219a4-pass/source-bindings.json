@@ -1,0 +1,85 @@
+{
+  "actualNativeSource": "167219a491a844ae838041f195c12abe9800dac3",
+  "docsOnlyDonorBase": "575afd3e9f5bac1272169b59555ef4c73552b5f1",
+  "exactEqualTrees": {
+    "Packages": "6ca9aa6021c09a89387acf990b2a89f206796c24",
+    "Packages/HanlinPlatform": "4861e402c7be59a8d9454d9d320c5e5c96f3389c",
+    "Packages/HanlinPlatform/Sources": "6251d5ef0053a6c9473cbef8e7b26f8eccfc631e",
+    "Packages/HanlinPlatform/Tests": "f79940ec9c1740b7f76b1e53deea3f4c4356617d"
+  },
+  "fileBindings": {
+    "Packages/HanlinPlatform/Fixtures/ImportRegressions/SurfaceExpo-39006.hanlinExpo": {
+      "bytes": 2018717,
+      "sha256": "dae2e23187170548f197f532a991aa26fc3fca1f394613499d2e24696f7199ed"
+    },
+    "Packages/HanlinPlatform/Fixtures/ImportRegressions/SurfaceNativeScript-39006.hanlinNativeScript": {
+      "bytes": 33751,
+      "sha256": "3441747a86120c936135f6a472be1a8e029f1b3480ea020a484585d25225d4b3"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptingBundler.swift": {
+      "bytes": 22741,
+      "sha256": "307afa1ce693a21d812686f7aae776eab452437a55aa29d28c44f0042ddc37ae"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift": {
+      "bytes": 26538,
+      "sha256": "fa62de1025c7ae06406794e9c397e3f64ed0e32a8fb0fc3584e43fa2e28bd066"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/prepare-widget.js": {
+      "bytes": 11782,
+      "sha256": "5053e0587036008a1ae85d24b4d469271d5f6c880e1a1244e752ec436b32813c"
+    },
+    "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinRetainedExpoWidgetArtifactTests.swift": {
+      "bytes": 8903,
+      "sha256": "52907705daa74d07c31e9c71a59e697ff6dd97666f96825da6ad703479b5aefa"
+    },
+    "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinRetainedSurfaceImportTests.swift": {
+      "bytes": 5120,
+      "sha256": "fd74bce046b8801ebc0d1c0ebefd533d9050375c895e80ba49ebe0889631bec4"
+    },
+    "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json": {
+      "bytes": 255664,
+      "sha256": "9f734715989941ac4cdb8bfdb3196b5f36cce4d06ffadcf9aa645b9589516cc9"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift": {
+      "bytes": 32842,
+      "sha256": "84f13725a823e11c473b97c62a807858c6acb5fb03370ecb750f8bcab3a72dd2"
+    },
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetInputOwnershipTests.swift": {
+      "bytes": 16876,
+      "sha256": "1f19fadfa4112a8a93f6ad3c3a2c42452566eb56932f537dc8097f9cfee8464c"
+    }
+  },
+  "immutableArchives": [
+    {
+      "path": "Packages/HanlinPlatform/Fixtures/ImportRegressions/SurfaceNativeScript-39006.hanlinNativeScript",
+      "sha256": "3441747a86120c936135f6a472be1a8e029f1b3480ea020a484585d25225d4b3",
+      "archiveBytes": 33751,
+      "members": 18,
+      "uncompressedBytes": 111653,
+      "largestMember": {
+        "path": "nativescript/app/modules/proof.mjs.map",
+        "bytes": 35947
+      }
+    },
+    {
+      "path": "Packages/HanlinPlatform/Fixtures/ImportRegressions/SurfaceExpo-39006.hanlinExpo",
+      "sha256": "dae2e23187170548f197f532a991aa26fc3fca1f394613499d2e24696f7199ed",
+      "archiveBytes": 2018717,
+      "members": 15,
+      "uncompressedBytes": 9924771,
+      "largestMember": {
+        "path": "bundle.js.map",
+        "bytes": 6740756
+      }
+    }
+  ],
+  "executionTimeSDKSourceFingerprint": "e8ddacfefcdb51912270c230a60de97c5a2be3499e3f7bd6496e6b5707f9f4fc",
+  "executionTimeSDKSourceFileCount": 396,
+  "packedSDKStatusAtNativeExecution": "HISTORICAL_NOT_CURRENT_QUALIFIED",
+  "noPackagedSDKPassFromTheseTests": true,
+  "editor": {
+    "path": "HanlinMiniAppsApp/MiniAppsDeveloperStudio.swift",
+    "sha256": "28058e1a2b8189a16e6a517d20e64db7ff76c9aebc6ddc120cde16963baa8c4c",
+    "qualification": "Outside package execution; original native compilation/editor acceptance remains separate."
+  }
+}

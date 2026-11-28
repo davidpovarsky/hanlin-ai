@@ -1,0 +1,41 @@
+{
+  "actualNativeSource": "167219a491a844ae838041f195c12abe9800dac3",
+  "docsOnlyBase": "575afd3e9f5bac1272169b59555ef4c73552b5f1",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4838,
+      "sha256": "24e84f44b8ff581310ec1c18b3808632b9a7d1ad5d32096bd85fff9c50f0043b"
+    },
+    {
+      "path": "history.json",
+      "bytes": 2806,
+      "sha256": "7522b4760738a4bb732220693efef49b881e8f8cdcf5e31baea2d1726df09fb9"
+    },
+    {
+      "path": "independent-root-full619-review.json",
+      "bytes": 1419,
+      "sha256": "2e94adf0c34f56033e45309e72475406922eba07a7693c1cb9431de41eba1610"
+    },
+    {
+      "path": "independent-root-ten-method-review.json",
+      "bytes": 912,
+      "sha256": "4dc5ad5866fafbbefdf1751ae7790f3d4b1e290f466269e2eaa3b2703480efa3"
+    },
+    {
+      "path": "raw-evidence-references.json",
+      "bytes": 4761,
+      "sha256": "2ea977b9cd7c433ce8479b8eed9519ee03e2546f4ffcbb8fcaabee167c8a044d"
+    },
+    {
+      "path": "results.json",
+      "bytes": 7560,
+      "sha256": "203b984c67e0bbc0cf52ddd479d99d47f95b6d85247fb456ca46939935cf6193"
+    },
+    {
+      "path": "source-bindings.json",
+      "bytes": 3914,
+      "sha256": "6fcdefcb755a3b514be9d4b091ed982689eb740e5d20c8a4399eb4cdc3ba45d9"
+    }
+  ]
+}

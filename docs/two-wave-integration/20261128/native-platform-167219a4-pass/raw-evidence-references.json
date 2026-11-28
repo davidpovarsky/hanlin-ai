@@ -1,0 +1,115 @@
+{
+  "packets": [
+    {
+      "packet": "retained-import-34dc92c1-two-red",
+      "manifest": {
+        "path": "manifest.json",
+        "sha256": "fa55594b20cd341b6a22253c95796e863b67c3b9e9e6a322cdf467135069e4b7"
+      },
+      "reconciliation": {
+        "path": "reconciliation.json",
+        "sha256": "120ebdf9fbf310bfa25223675413c94edf923238c6dadc0c35cb9fc157c4b402"
+      },
+      "originalNativeLogSHA256": "aa269ad8fb90852490100d717a75012ecb8573f282a5838231bbd69204c1f926"
+    },
+    {
+      "packet": "retained-import-ed4a6207-two-pass-eight-fixture-fail",
+      "manifest": {
+        "path": "manifest.json",
+        "sha256": "e4a9872d548010d4fa151b56f6afeb4a0fa10e970e6d31b112a62c343f5f8951"
+      },
+      "reconciliation": {
+        "path": "reconciliation.json",
+        "sha256": "7a58f107d8c37e31b028c29b62f0b13237a7b16c6f9909cc3d113016bdb88223"
+      },
+      "originalNativeLogSHA256": "b796abe084922c8affd157261d36ff775504357da7880645522a1a688abb0682"
+    },
+    {
+      "packet": "retained-import-5baa01fb-seven-pass-three-runtime-errors",
+      "manifest": {
+        "path": "manifest.json",
+        "sha256": "21a842af7bd829557428ae03e82b3e53dd891a7e75cdbf1fe2522da7358d1da6"
+      },
+      "reconciliation": {
+        "path": "reconciliation.json",
+        "sha256": "fcdcc74449465be7834b16c37ab461efda6a6122d530a506b637933ae737330e"
+      },
+      "originalNativeLogSHA256": "fe2d9436677aae3d88a4f7e68142d36e76a5d591b47189a25e52535e8969e9fb"
+    },
+    {
+      "packet": "retained-import-167219a4-ten-pass",
+      "manifest": {
+        "path": "manifest.json",
+        "sha256": "57685d2e3354278b14e1f34cdf044a2c2ec5ede548a614cbf80b5fda58817b73"
+      },
+      "reconciliation": {
+        "path": "reconciliation.json",
+        "sha256": "6ca316571627067cff2576735e3eeb749260b399c1bfccec137000de016e2a9f"
+      },
+      "originalNativeLogSHA256": "d933d053012faffa34b9cb2f6a0d1d64f714740bb9b827ffa3f681ab264caf4c"
+    },
+    {
+      "packet": "full-platform-167219a4-pass",
+      "manifest": {
+        "path": "manifest.json",
+        "sha256": "6425f82bff2154c67c9bcdc85d91847d2be5cc5d5845b268c9ed9ddd1af5263f"
+      },
+      "reconciliation": {
+        "path": "native/normalized-test-reconciliation.json",
+        "sha256": "91a5a92b7f350ee4bb93f3d8ca1753f4c1f643f28cfaf51189cb8fdb79a42473"
+      },
+      "originalNativeLogSHA256": "9f76be955309c21b18a831360c180b3db487fa8a5c1f3620680cd863c5cbec54",
+      "methodIdentityMap": {
+        "path": "identity/expected619-method-identities.json",
+        "sha256": "49d06ddbf1c647aa3a23f2b1d9367ecea6e192fb099de0ec609e9e43a1dfc515"
+      },
+      "originalParameterIdentityMap": {
+        "path": "identity/historical316-parameter-identities.json",
+        "sha256": "7a34055434fea426c6e9394d4003b28af57ed571782fe6e43b35cc925299a1f0"
+      }
+    }
+  ],
+  "nativeObservations": [
+    {
+      "path": "retained-import-167219a4-ten-pass/native-observations/retained-expo-widget-66bb6f9a-6cf1-407c-ae9d-6e00b1fdd2e2-artifact-materialized.json",
+      "sha256": "e013030877b7366500620efafeab03b5b7e1953a6defefae87a8c4a5c499fca9",
+      "bytes": 1107,
+      "phase": "artifact-materialized"
+    },
+    {
+      "path": "retained-import-167219a4-ten-pass/native-observations/retained-expo-widget-66bb6f9a-6cf1-407c-ae9d-6e00b1fdd2e2-input-admitted.json",
+      "sha256": "b616399bd23ab5e876c6c2340f204ca9e0249a0f32c485b092b84f6bdea6836e",
+      "bytes": 670,
+      "phase": "input-admitted"
+    },
+    {
+      "path": "retained-import-167219a4-ten-pass/native-observations/retained-expo-widget-66bb6f9a-6cf1-407c-ae9d-6e00b1fdd2e2-widget-prepared.json",
+      "sha256": "8ca709c579a262208f67e7c3e1fcb8700dc9dbdfe125522325ee95179e215152",
+      "bytes": 1101,
+      "phase": "widget-prepared"
+    },
+    {
+      "path": "retained-import-167219a4-ten-pass/native-observations/retained-surface-import-00d7916d-9b1e-49c2-9144-9ce05eb00f3e-analyzed.json",
+      "sha256": "02e11e39ede11fe7a0b52d0b4a709cf08b5897437cad003583610010f208a61d",
+      "bytes": 16395,
+      "phase": "analyzed"
+    },
+    {
+      "path": "retained-import-167219a4-ten-pass/native-observations/retained-surface-import-00d7916d-9b1e-49c2-9144-9ce05eb00f3e-input-admitted.json",
+      "sha256": "88c717c7aafcbdb7635a6cc163253a310bd0e41a5ca94d32ef3e5fa3f81f126e",
+      "bytes": 512,
+      "phase": "input-admitted"
+    }
+  ],
+  "rootReviewsCopiedVerbatim": [
+    {
+      "file": "independent-root-ten-method-review.json",
+      "sha256": "4dc5ad5866fafbbefdf1751ae7790f3d4b1e290f466269e2eaa3b2703480efa3"
+    },
+    {
+      "file": "independent-root-full619-review.json",
+      "sha256": "2e94adf0c34f56033e45309e72475406922eba07a7693c1cb9431de41eba1610"
+    }
+  ],
+  "rawLogsAndArchivesNotCopiedIntoThisCompactProof": true
+}
