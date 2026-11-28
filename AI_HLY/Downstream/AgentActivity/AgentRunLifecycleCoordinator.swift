@@ -8,6 +8,12 @@ import Foundation
 final class AgentRunLifecycleCoordinator {
     static let shared = AgentRunLifecycleCoordinator()
 
+    struct RunAdmission: Equatable, Sendable {
+        fileprivate let runID: UUID
+        fileprivate let generation: UUID
+    }
+
+    private var latestAdmission: RunAdmission?
     private(set) var activeRunID: UUID?
     private var activeProducerTask: Task<Void, Never>?
     private var activeRecorder: AgentDiagnosticsRecorder?
@@ -17,8 +23,49 @@ final class AgentRunLifecycleCoordinator {
         await $0.complete(status: "cancelled")
     }) { self.completeCancelledRecorder = completeCancelledRecorder }
 
+    /// Reserve global request order and request cancellation before a manager awaits its old writer.
+    /// Retain the registered producer, recorder, and identity until the original completion paths.
+    func reserveRunAdmission(runID: UUID) -> RunAdmission? {
+        guard !Task.isCancelled else { return nil }
+        let admission = replaceRunAdmission(runID: runID)
+        activeProducerTask?.cancel()
+        return admission
+    }
+
+    private func replaceRunAdmission(runID: UUID) -> RunAdmission {
+        let admission = RunAdmission(runID: runID, generation: UUID())
+        latestAdmission = admission
+        return admission
+    }
+
+    func isCurrentAdmission(_ admission: RunAdmission) -> Bool {
+        latestAdmission == admission
+    }
+
+    private func revokeRunAdmission(runID: UUID?) {
+        if runID == nil || latestAdmission?.runID == runID { latestAdmission = nil }
+    }
+
+    /// Reject a superseded reservation before any task/recorder mutation, then retain
+    /// the original cancellation and recorder-completion ordering.
+    func beginRun(admission: RunAdmission, recorder: AgentDiagnosticsRecorder?) async -> Bool {
+        guard !Task.isCancelled, isCurrentAdmission(admission) else { return false }
+        let oldRecorder = activeRecorder
+        if let oldTask = activeProducerTask {
+            oldTask.cancel()
+            activeProducerTask = nil
+        }
+        activeRunID = admission.runID
+        activeRecorder = recorder
+        if let oldRecorder, oldRecorder !== recorder {
+            await completeCancelledRecorder(oldRecorder)
+        }
+        return !Task.isCancelled && isCurrentAdmission(admission) && activeRunID == admission.runID
+    }
+
     /// Begins a new Agent run, cancelling and superseding any existing run.
     func beginRun(runID: UUID, recorder: AgentDiagnosticsRecorder?) async {
+        _ = replaceRunAdmission(runID: runID)
         let oldRecorder = activeRecorder
         if let oldTask = activeProducerTask {
             oldTask.cancel()
@@ -33,6 +80,7 @@ final class AgentRunLifecycleCoordinator {
 
     /// Synchronous overload for beginRun.
     func beginRun(runID: UUID, recorder: AgentDiagnosticsRecorder?) {
+        _ = replaceRunAdmission(runID: runID)
         if let oldTask = activeProducerTask {
             oldTask.cancel()
             activeProducerTask = nil
@@ -66,6 +114,7 @@ final class AgentRunLifecycleCoordinator {
 
     /// Cancels the specified run, or the currently active run if runID is nil (async).
     func cancelRun(runID: UUID? = nil) async {
+        revokeRunAdmission(runID: runID)
         if let runID, activeRunID != runID {
             return
         }
@@ -79,6 +128,7 @@ final class AgentRunLifecycleCoordinator {
 
     /// Cancels the specified run, or the currently active run if runID is nil (sync).
     func cancelRun(runID: UUID? = nil) {
+        revokeRunAdmission(runID: runID)
         if let runID, activeRunID != runID {
             return
         }
@@ -101,6 +151,7 @@ final class AgentRunLifecycleCoordinator {
     /// Cleans up state when a run finishes, only if it is still the active run.
     func finishRun(runID: UUID) {
         guard activeRunID == runID else { return }
+        revokeRunAdmission(runID: runID)
         activeProducerTask = nil
         activeRunID = nil
         activeRecorder = nil

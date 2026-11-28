@@ -11,6 +11,7 @@ public actor HanlinHostDispatcher {
         let resultID: UUID
         let alias: String
         let arguments: Data
+        let limits: HanlinToolInvocationLimits
         var result: HanlinHostExecutionResult?
         var progressSequence: UInt64?
     }
@@ -82,7 +83,7 @@ public actor HanlinHostDispatcher {
         calls[key] = CallState(invocationID: invocationID,
             identity: .init(session: session, runID: runID, step: step, providerCallID: providerCallID,
                             invocationID: invocationID, logicalToolID: tool.route.logicalToolID),
-            resultID: resultID, alias: alias, arguments: bytes)
+            resultID: resultID, alias: alias, arguments: bytes, limits: limits)
         let result: HanlinHostExecutionResult
         do {
             result = try await host.execute(invocation) { event in
@@ -125,6 +126,26 @@ public actor HanlinHostDispatcher {
         guard sessionIsAvailable(session),
               let state = calls[CallKey(session: session.id, run: runID, providerID: providerCallID)] else {
             throw HanlinHostError.staleContext
+        }
+        return try .init(resultID: state.resultID, call: state.identity, result: result)
+    }
+
+    /// Read-only reconciliation for one already-entered call after live delivery was revoked.
+    /// This grants no execution/presentation authority and repeats the original output admission:
+    /// dispatch retains a raw result before applying its size bound.
+    func retainedResultEvent(alias: String, argumentsJSON: String, providerCallID: String,
+                             runID: UUID, step: Int, session: HanlinHostSession,
+                             logicalToolID: HanlinLogicalToolID,
+                             limits: HanlinToolInvocationLimits) throws -> HanlinHostResultEvent? {
+        guard let state = calls[CallKey(session: session.id, run: runID, providerID: providerCallID)] else { return nil }
+        guard state.alias == alias, state.arguments == Data(argumentsJSON.utf8), state.limits == limits,
+              state.identity.session == session, state.identity.runID == runID,
+              state.identity.step == step, state.identity.providerCallID == providerCallID,
+              state.identity.logicalToolID == logicalToolID,
+              state.identity.invocationID == state.invocationID else { throw HanlinHostError.resultMismatch }
+        guard let result = state.result else { return nil }
+        guard try JSONEncoder().encode(result).count <= limits.maximumOutputBytes else {
+            throw HanlinHostError.outputLimitExceeded
         }
         return try .init(resultID: state.resultID, call: state.identity, result: result)
     }

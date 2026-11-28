@@ -253,6 +253,134 @@ private struct OwnerControlledTextModel: LanguageModelV3 {
 
 @Suite @MainActor struct HanlinAppAgentSessionOwnerTests {
     @Test(.timeLimit(.minutes(1)))
+    func thirdRequestSupersedesWaitingAdmissionWhileTheOriginalPreparationDrains() async throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Original admission epochs", type: "chat")
+        context.insert(row); try context.save()
+        let id = try #require(row.id), scene = UUID(), owner = HanlinAppAgentSessionOwner()
+        func request() -> HanlinAppAgentSessionOwner.Request {
+            .init(conversation: row, conversationID: id, sceneID: scene, rowID: UUID(),
+                  uiRunID: UUID(), temporary: false, interaction: nil)
+        }
+        let first = request(), second = request(), third = request(), config = configuration()
+        let access = try owner.prepareDataAccess(request: first, modelContext: context)
+        let gate = AppHistoryWriteGate()
+        let firstQueue = AppPartQueue([try .init(messageID: first.rowID, partID: UUID(),
+            sequence: 0, payload: .textDelta("Retired preparation must not appear"))])
+        let preparing = Task { @MainActor in
+            try await owner.stream(request: first, modelContext: context, configuration: config,
+                engineFactory: { await gate.pause(); return factory(config, queue: firstQueue) },
+                toolAdapter: nil, messages: [.init(role: .user, text: "Original A")],
+                systemPrompt: nil, dataAccess: access)
+        }
+        defer { preparing.cancel(); gate.release(); owner.cancel() }
+        await gate.waitUntilPaused()
+        let waiting = try owner.beginRequestAdmission(replacing: first, request: second, modelContext: context)
+        preparing.cancel() // The manager also cancels and joins this actual outer preparation.
+        let latest = try owner.beginRequestAdmission(replacing: first, request: third, modelContext: context)
+        #expect(throws: HanlinHostError.staleContext) { try owner.requireRequestAdmission(waiting) }
+        try owner.requireRequestAdmission(latest)
+        // Revocation does not fabricate completion of the still-suspended original stream.
+        #expect(throws: HanlinHostError.duplicateInvocation) {
+            _ = try owner.prepareDataAccess(request: third, modelContext: context)
+        }
+        gate.release()
+        do { _ = try await preparing.value; Issue.record("The revoked A preparation installed a Session") }
+        catch { /* Original cancellation/context guard must reject A after the real await. */ }
+        try await owner.drainRequestAdmission(latest)
+        #expect(owner.session == nil)
+        let nextAccess = try owner.prepareDataAccess(request: third, modelContext: context)
+        let queue = AppPartQueue([try .init(messageID: third.rowID, partID: UUID(),
+            sequence: 0, payload: .textDelta("Only C is current"))])
+        let stream = try await owner.stream(request: third, modelContext: context, configuration: config,
+            engineFactory: { factory(config, queue: queue) }, toolAdapter: nil,
+            messages: [.init(role: .user, text: "Current C")], systemPrompt: nil, dataAccess: nextAccess)
+        for try await event in stream { try owner.receive(event, uiRunID: third.uiRunID) }
+        try owner.producerStreamDrained(uiRunID: third.uiRunID)
+        #expect(owner.bindings.contains { $0.reference.rowID == third.rowID })
+        #expect(!owner.bindings.contains { $0.reference.rowID == first.rowID || $0.reference.rowID == second.rowID })
+    }
+
+    @Test(.timeLimit(.minutes(1)), arguments: [false, true])
+    func stopOrOriginalRowDeletionRevokesWaitingRequestAdmission(deleteOriginal: Bool) async throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Original pending admission", type: "chat")
+        context.insert(row); try context.save()
+        let id = try #require(row.id), owner = HanlinAppAgentSessionOwner(), config = configuration()
+        let first = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id, sceneID: UUID(),
+            rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        let next = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id, sceneID: first.sceneID,
+            rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        let access = try owner.prepareDataAccess(request: first, modelContext: context), gate = AppHistoryWriteGate()
+        let queue = AppPartQueue([try .init(messageID: first.rowID, partID: UUID(),
+            sequence: 0, payload: .textDelta("Must not resurrect"))])
+        let preparing = Task { @MainActor in
+            try await owner.stream(request: first, modelContext: context, configuration: config,
+                engineFactory: { await gate.pause(); return factory(config, queue: queue) }, toolAdapter: nil,
+                messages: [.init(role: .user, text: "A")], systemPrompt: nil, dataAccess: access)
+        }
+        defer { preparing.cancel(); gate.release(); owner.cancel() }
+        await gate.waitUntilPaused()
+        let waiting = try owner.beginRequestAdmission(replacing: first, request: next, modelContext: context)
+        preparing.cancel()
+        if deleteOriginal {
+            HanlinConversationRunLease.revoke(container: container, conversationID: id)
+            context.delete(row); try context.save()
+        } else {
+            owner.cancel()
+        }
+        #expect(throws: HanlinHostError.staleContext) { try owner.requireRequestAdmission(waiting) }
+        gate.release()
+        do { _ = try await preparing.value; Issue.record("Revoked preparation resumed after destructive admission change") }
+        catch { /* Keep the original cancellation/context outcome. */ }
+        do { try await owner.drainRequestAdmission(waiting); Issue.record("A revoked waiting request regained authority") }
+        catch { #expect(error as? HanlinHostError == .staleContext) }
+        #expect(owner.session == nil)
+        #expect(try context.fetch(FetchDescriptor<ChatRecords>()).count == (deleteOriginal ? 0 : 1))
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func idleAdmissionPreservesTheOriginalSessionAndCannotRetireAForeignRequest() async throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Original idle reuse", type: "chat")
+        context.insert(row); try context.save()
+        let id = try #require(row.id), owner = HanlinAppAgentSessionOwner(), config = configuration()
+        let first = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id, sceneID: UUID(),
+            rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        let next = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id, sceneID: first.sceneID,
+            rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        let queue = AppPartQueue([
+            try .init(messageID: first.rowID, partID: UUID(), sequence: 0, payload: .textDelta("Original A")),
+            try .init(messageID: next.rowID, partID: UUID(), sequence: 0, payload: .textDelta("Original B"))
+        ])
+        let access = try owner.prepareDataAccess(request: first, modelContext: context)
+        let stream = try await owner.stream(request: first, modelContext: context, configuration: config,
+            engineFactory: { factory(config, queue: queue) }, toolAdapter: nil,
+            messages: [.init(role: .user, text: "A")], systemPrompt: nil, dataAccess: access)
+        defer { owner.cancel() }
+        let originalSession = try #require(owner.session)
+        #expect(throws: HanlinHostError.duplicateInvocation) {
+            _ = try owner.beginRequestAdmission(replacing: next, request: next, modelContext: context)
+        }
+        #expect(owner.isCurrentRequest(first.uiRunID))
+        for try await event in stream { try owner.receive(event, uiRunID: first.uiRunID) }
+        try owner.producerStreamDrained(uiRunID: first.uiRunID)
+        #expect(!originalSession.isRunning)
+        let admission = try owner.beginRequestAdmission(replacing: first, request: next, modelContext: context)
+        try await owner.drainRequestAdmission(admission)
+        #expect(owner.session === originalSession)
+        let nextAccess = try owner.prepareDataAccess(request: next, modelContext: context)
+        var constructed = false
+        let second = try await owner.stream(request: next, modelContext: context, configuration: config,
+            engineFactory: { constructed = true; return factory(config, queue: queue) }, toolAdapter: nil,
+            messages: [.init(role: .user, text: "B")], systemPrompt: nil, dataAccess: nextAccess)
+        for try await event in second { try owner.receive(event, uiRunID: next.uiRunID) }
+        try owner.producerStreamDrained(uiRunID: next.uiRunID)
+        #expect(!constructed && owner.session === originalSession)
+        #expect(owner.bindings.contains { $0.reference.rowID == next.rowID && $0.session == originalSession.identity })
+    }
+
+    @Test(.timeLimit(.minutes(1)))
     func sameOwnerRestartJoinsItsCancelledOriginalWriterBeforeAdmission() async throws {
         let container = try database(), context = container.mainContext
         let row = ChatRecords(name: "Original same-owner restart", type: "chat")

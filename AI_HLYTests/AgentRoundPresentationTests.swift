@@ -485,6 +485,265 @@ struct AgentRoundPresentationTests {
         await recorder.complete(status: "cancelled")
     }
 
+    @MainActor @Test(.timeLimit(.minutes(1)), arguments: [false, true])
+    func laterOriginalCoordinatorEntryRejectsAReservedBeginBeforeItCanCancelTheNewerProducer(asyncEntry: Bool) async throws {
+        let recorder = try #require(await AgentDiagnosticsRecorder.start(
+            runID: UUID(), groupID: UUID(), providerID: "fixture", modelID: "fixture"))
+        let completions = ReservationRecorderCompletions()
+        let coordinator = AgentRunLifecycleCoordinator(completeCancelledRecorder: { _ in
+            await completions.record()
+        })
+        let first = UUID(), waiting = UUID(), newer = UUID()
+        let firstGate = RecorderDrainGate(), newerGate = RecorderDrainGate()
+        beginSynchronously(coordinator, id: first)
+        let firstProducer = Task { @MainActor in await firstGate.drain() }
+        coordinator.attachProducerTask(firstProducer, for: first)
+        await firstGate.waitUntilEntered()
+
+        // B reserves before joining A; A deliberately does not treat cancellation as completion.
+        let admission = try #require(coordinator.reserveRunAdmission(runID: waiting))
+        let suspendedBegin = Task { @MainActor in
+            await firstProducer.value
+            return await coordinator.beginRun(admission: admission, recorder: nil)
+        }
+        if asyncEntry {
+            await coordinator.beginRun(runID: newer, recorder: recorder)
+        } else {
+            beginSynchronously(coordinator, id: newer, recorder: recorder)
+        }
+        let newerProducer = Task { @MainActor in await newerGate.drain() }
+        coordinator.attachProducerTask(newerProducer, for: newer)
+        defer {
+            firstProducer.cancel(); suspendedBegin.cancel(); newerProducer.cancel()
+            Task { await firstGate.release(); await newerGate.release() }
+            coordinator.finishRun(runID: newer)
+        }
+        await newerGate.waitUntilEntered()
+        #expect(firstProducer.isCancelled)
+        #expect(!coordinator.isCurrentAdmission(admission) && coordinator.isCurrentRun(newer))
+        cancelSynchronously(coordinator, id: waiting)
+        #expect(coordinator.isCurrentRun(newer) && !newerProducer.isCancelled,
+                "Stopping stale B must preserve the later unrelated C")
+        await firstGate.release()
+        #expect(await suspendedBegin.value == false)
+        #expect(coordinator.isCurrentRun(newer) && !newerProducer.isCancelled)
+        #expect(await completions.count == 0,
+                "Stale B must never cancel C's producer or complete C's recorder")
+        await newerGate.release()
+        await newerProducer.value
+        coordinator.finishRun(runID: newer)
+        await recorder.complete(status: "cancelled")
+    }
+
+    @MainActor @Test(.timeLimit(.minutes(1)))
+    func reservedBeginRechecksTheSameTokenAfterTheOriginalRecorderAwait() async throws {
+        let recorder = try #require(await AgentDiagnosticsRecorder.start(
+            runID: UUID(), groupID: UUID(), providerID: "fixture", modelID: "fixture"))
+        let gate = RecorderDrainGate()
+        let coordinator = AgentRunLifecycleCoordinator(completeCancelledRecorder: { _ in await gate.drain() })
+        let first = UUID(), waiting = UUID(), newer = UUID()
+        beginSynchronously(coordinator, id: first, recorder: recorder)
+        let admission = try #require(coordinator.reserveRunAdmission(runID: waiting))
+        let suspendedBegin = Task { @MainActor in
+            await coordinator.beginRun(admission: admission, recorder: nil)
+        }
+        defer {
+            suspendedBegin.cancel()
+            Task { await gate.release() }
+            coordinator.finishRun(runID: newer)
+        }
+        await gate.waitUntilEntered()
+        #expect(coordinator.isCurrentRun(waiting))
+        beginSynchronously(coordinator, id: newer)
+        await gate.release()
+        #expect(await suspendedBegin.value == false)
+        #expect(!coordinator.isCurrentAdmission(admission) && coordinator.isCurrentRun(newer))
+        #expect(!coordinator.attachRecorder(recorder, for: waiting))
+        await recorder.complete(status: "cancelled")
+    }
+
+    @MainActor @Test(.timeLimit(.minutes(1)), arguments: [false, true])
+    func reservationCancellationAndOldCompletionKeepTheirOriginalRunIdentity(asyncCancellation: Bool) async throws {
+        let coordinator = AgentRunLifecycleCoordinator()
+        let first = UUID(), waiting = UUID(), newer = UUID(), stopped = UUID()
+        beginSynchronously(coordinator, id: first)
+        let waitingAdmission = try #require(coordinator.reserveRunAdmission(runID: waiting))
+        let newerAdmission = try #require(coordinator.reserveRunAdmission(runID: newer))
+        coordinator.finishRun(runID: first)
+        #expect(!coordinator.isCurrentAdmission(waitingAdmission))
+        #expect(coordinator.isCurrentAdmission(newerAdmission),
+                "An actual old completion cannot revoke the later request reservation")
+        if asyncCancellation {
+            await coordinator.cancelRun(runID: first)
+        } else {
+            cancelSynchronously(coordinator, id: first)
+        }
+        #expect(coordinator.isCurrentAdmission(newerAdmission))
+        #expect(await coordinator.beginRun(admission: waitingAdmission, recorder: nil) == false)
+        #expect(await coordinator.beginRun(admission: newerAdmission, recorder: nil))
+
+        let stoppedAdmission = try #require(coordinator.reserveRunAdmission(runID: stopped))
+        if asyncCancellation {
+            await coordinator.cancelRun(runID: stopped)
+        } else {
+            cancelSynchronously(coordinator, id: stopped)
+        }
+        #expect(!coordinator.isCurrentAdmission(stoppedAdmission))
+        #expect(coordinator.isCurrentRun(newer),
+                "Stopping a pending request must not cancel the unrelated current producer")
+        #expect(await coordinator.beginRun(admission: stoppedAdmission, recorder: nil) == false)
+        #expect(coordinator.isCurrentRun(newer))
+
+        let lastAdmission = try #require(coordinator.reserveRunAdmission(runID: UUID()))
+        if asyncCancellation {
+            await coordinator.cancelRun()
+        } else {
+            cancelSynchronously(coordinator, id: nil)
+        }
+        #expect(!coordinator.isCurrentAdmission(lastAdmission) && coordinator.activeRunID == nil)
+        #expect(await coordinator.beginRun(admission: lastAdmission, recorder: nil) == false)
+    }
+
+    @MainActor @Test(.timeLimit(.minutes(1)), arguments: [false, true])
+    func reservedBeginRejectsCancellationBeforeMutationAndAfterRecorderAwait(cancelDuringRecorderAwait: Bool) async throws {
+        let recorder = try #require(await AgentDiagnosticsRecorder.start(
+            runID: UUID(), groupID: UUID(), providerID: "fixture", modelID: "fixture"))
+        let recorderGate = RecorderDrainGate(), entryGate = RecorderDrainGate()
+        let producerGate = RecorderDrainGate()
+        let completions = ReservationRecorderCompletions()
+        let coordinator = AgentRunLifecycleCoordinator(completeCancelledRecorder: { _ in
+            await completions.record()
+            await recorderGate.drain()
+        })
+        let first = UUID(), waiting = UUID()
+        beginSynchronously(coordinator, id: first, recorder: recorder)
+        let firstProducer = Task { @MainActor in await producerGate.drain() }
+        coordinator.attachProducerTask(firstProducer, for: first)
+        await producerGate.waitUntilEntered()
+        let admission = try #require(coordinator.reserveRunAdmission(runID: waiting))
+        let suspendedBegin = Task { @MainActor in
+            if !cancelDuringRecorderAwait { await entryGate.drain() }
+            return await coordinator.beginRun(admission: admission, recorder: nil)
+        }
+        defer {
+            suspendedBegin.cancel(); firstProducer.cancel()
+            Task { await entryGate.release(); await recorderGate.release(); await producerGate.release() }
+            coordinator.finishRun(runID: first)
+            coordinator.finishRun(runID: waiting)
+        }
+        if cancelDuringRecorderAwait {
+            await recorderGate.waitUntilEntered()
+            #expect(coordinator.isCurrentRun(waiting))
+            suspendedBegin.cancel()
+            await recorderGate.release()
+        } else {
+            await entryGate.waitUntilEntered()
+            suspendedBegin.cancel()
+            await entryGate.release()
+        }
+        #expect(await suspendedBegin.value == false)
+        #expect(coordinator.isCurrentAdmission(admission),
+                "The unchanged token alone cannot admit an already cancelled caller")
+        #expect(coordinator.isCurrentRun(cancelDuringRecorderAwait ? waiting : first))
+        #expect(await completions.count == (cancelDuringRecorderAwait ? 1 : 0),
+                "Cancellation before entry must not replace identity or complete the old recorder")
+        await producerGate.release()
+        await firstProducer.value
+        await recorder.complete(status: "cancelled")
+    }
+
+    @MainActor @Test(.timeLimit(.minutes(1)))
+    func reservationCancelsTheRegisteredProducerBeforeWaitingForTheOtherManagerDrain() async throws {
+        let recorder = try #require(await AgentDiagnosticsRecorder.start(
+            runID: UUID(), groupID: UUID(), providerID: "fixture", modelID: "fixture"))
+        let completions = ReservationRecorderCompletions()
+        let finishedProducer = ReservationRecorderCompletions()
+        let coordinator = AgentRunLifecycleCoordinator(completeCancelledRecorder: { _ in
+            await completions.record()
+        })
+        let first = UUID(), waiting = UUID()
+        let globalGate = RecorderDrainGate(), retiredManagerGate = RecorderDrainGate()
+        beginSynchronously(coordinator, id: first, recorder: recorder)
+        let globalProducer = Task { @MainActor in
+            await globalGate.drain()
+            await finishedProducer.record()
+        }
+        coordinator.attachProducerTask(globalProducer, for: first)
+        let retiredManagerProducer = Task { @MainActor in await retiredManagerGate.drain() }
+        await globalGate.waitUntilEntered()
+        await retiredManagerGate.waitUntilEntered()
+        retiredManagerProducer.cancel()
+
+        // M2/C must cancel the registered M1/A now, before waiting for its own M2/D.
+        let admission = try #require(coordinator.reserveRunAdmission(runID: waiting))
+        #expect(globalProducer.isCancelled)
+        #expect(coordinator.isCurrentRun(first) && coordinator.isCurrentAdmission(admission))
+        #expect(await completions.count == 0)
+        #expect(await finishedProducer.count == 0,
+                "Requesting cancellation must retain the actual old lifetime and recorder")
+        let waitingBegin = Task { @MainActor in
+            await retiredManagerProducer.value
+            return await coordinator.beginRun(admission: admission, recorder: nil)
+        }
+        defer {
+            globalProducer.cancel(); retiredManagerProducer.cancel(); waitingBegin.cancel()
+            Task { await globalGate.release(); await retiredManagerGate.release() }
+            coordinator.finishRun(runID: first)
+            coordinator.finishRun(runID: waiting)
+        }
+        await retiredManagerGate.release()
+        #expect(await waitingBegin.value)
+        #expect(coordinator.isCurrentRun(waiting))
+        #expect(await completions.count == 1)
+        #expect(await finishedProducer.count == 0,
+                "The unchanged global begin requests cancellation; it does not claim A completed")
+        await globalGate.release()
+        await globalProducer.value
+        #expect(await finishedProducer.count == 1)
+        await recorder.complete(status: "cancelled")
+    }
+
+    @MainActor @Test(.timeLimit(.minutes(1)))
+    func alreadyCancelledReservationPreservesTheActiveProducerAndCurrentToken() async throws {
+        let recorder = try #require(await AgentDiagnosticsRecorder.start(
+            runID: UUID(), groupID: UUID(), providerID: "fixture", modelID: "fixture"))
+        let completions = ReservationRecorderCompletions()
+        let coordinator = AgentRunLifecycleCoordinator(completeCancelledRecorder: { _ in
+            await completions.record()
+        })
+        let first = UUID(), cancelled = UUID()
+        let admission = try #require(coordinator.reserveRunAdmission(runID: first))
+        #expect(await coordinator.beginRun(admission: admission, recorder: recorder))
+        let producerGate = RecorderDrainGate(), entryGate = RecorderDrainGate()
+        let producer = Task { @MainActor in await producerGate.drain() }
+        coordinator.attachProducerTask(producer, for: first)
+        await producerGate.waitUntilEntered()
+        let cancelledReservation = Task { @MainActor in
+            await entryGate.drain()
+            return coordinator.reserveRunAdmission(runID: cancelled)
+        }
+        defer {
+            cancelledReservation.cancel(); producer.cancel()
+            Task { await entryGate.release(); await producerGate.release() }
+            coordinator.finishRun(runID: first)
+        }
+        await entryGate.waitUntilEntered()
+        cancelledReservation.cancel()
+        await entryGate.release()
+        #expect(await cancelledReservation.value == nil)
+        #expect(coordinator.isCurrentAdmission(admission) && coordinator.isCurrentRun(first))
+        #expect(!producer.isCancelled)
+        #expect(await completions.count == 0,
+                "A cancelled reservation must not publish a token, cancel A, or replace its recorder")
+        await producerGate.release()
+        await producer.value
+        await recorder.complete(status: "cancelled")
+    }
+
+    @MainActor private func cancelSynchronously(_ coordinator: AgentRunLifecycleCoordinator, id: UUID?) {
+        coordinator.cancelRun(runID: id)
+    }
+
     @MainActor private func beginSynchronously(_ coordinator: AgentRunLifecycleCoordinator, id: UUID,
                                                recorder: AgentDiagnosticsRecorder? = nil) {
         coordinator.beginRun(runID: id, recorder: recorder)
@@ -547,4 +806,9 @@ private actor RecorderDrainGate {
         releaseWaiters.forEach { $0.resume() }
         releaseWaiters.removeAll()
     }
+}
+
+private actor ReservationRecorderCompletions {
+    private(set) var count = 0
+    func record() { count += 1 }
 }

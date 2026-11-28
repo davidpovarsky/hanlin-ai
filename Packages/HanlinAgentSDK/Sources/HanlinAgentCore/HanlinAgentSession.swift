@@ -43,7 +43,7 @@ public final class HanlinAgentSession {
     private let interactions: (any HanlinHostInteractionSource)?
     private let diagnostics: (any HanlinDiagnosticsSink)?
     public let dispatcher: HanlinHostDispatcher
-    public var isRunning: Bool { activeRun != nil }
+    public var isRunning: Bool { activeRun != nil || !toolExecutions.isEmpty }
     private var activeRun: UUID?
     private var record: HanlinConversationRecord?
     private var entries: [HanlinTranscriptEntry] = []
@@ -52,6 +52,9 @@ public final class HanlinAgentSession {
     private var preparationError: HanlinHostError?
     private var invalidated = false
     private var producerTask: Task<Void, Never>?
+    // The stream consumer can finish before a cancelled, already-entered Host call.
+    // Retain each real execution through its original metadata CAS, not only its consumer.
+    private var toolExecutions: [UUID: Task<HanlinAISDKToolExecutionOutput, Error>] = [:]
     private var persistenceTail: Task<Void, Error>?
     private var associatedInvocations: [HanlinToolInvocationID: String] = [:]
     private var currentCatalog: HanlinHostCatalog?
@@ -87,7 +90,7 @@ public final class HanlinAgentSession {
                              structuredResponse: HanlinNativeStructuredResponse?,
                              presentationReference: String?, transport: HanlinAISDKTurnTransport?) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
         guard !invalidated else { throw HanlinHostError.staleContext }
-        guard activeRun == nil else { throw HanlinHostError.duplicateInvocation }
+        guard !isRunning else { throw HanlinHostError.duplicateInvocation }
         guard host.apiVersion.major == 1 else { throw HanlinHostError.unsupportedVersion }
         guard presentationReference.map({ !$0.isEmpty && $0.utf8.count <= 4096 }) ?? true else { throw HanlinHostError.invalidArguments }
         // Reserve before ANY store/host await. Concurrent starts cannot share a producer.
@@ -274,6 +277,7 @@ public final class HanlinAgentSession {
         observedInteractionOrigins.removeAll()
         completedLiveRuns.removeAll()
         producerTask?.cancel()
+        for execution in toolExecutions.values { execution.cancel() }
         if firstInvalidation { onSessionInvalidated?(identity) }
         await dispatcher.invalidate(identity)
     }
@@ -283,12 +287,26 @@ public final class HanlinAgentSession {
     public func invalidateAndDrain() async throws {
         let producer = producerTask
         let writer = persistenceTail
+        let executions = Array(toolExecutions.values)
         await invalidate()
         await producer?.value
+        // Cancellation requests cleanup; only these actual completions join Host return
+        // and the original Session's ordered CAS. Never replay the effect to obtain a receipt.
+        for execution in executions { _ = await execution.result }
         try await writer?.value
         try await persistenceTail?.value
-        // A preparation/inline writer with no captured producer cannot be declared drained.
-        guard activeRun == nil else { throw HanlinHostError.unresolvedWrite }
+        // A preparation/inline writer, absent receipt or uncertain effect still blocks admission.
+        guard !isRunning else { throw HanlinHostError.unresolvedWrite }
+        var pending = Set<String>()
+        for entry in entries {
+            switch entry.payload {
+            case .toolCall(let id, _, _): pending.insert(entry.runID.uuidString + id)
+            case .toolResult(let id, let result):
+                if result.effectState != .uncertain { pending.remove(entry.runID.uuidString + id) }
+            default: break
+            }
+        }
+        guard pending.isEmpty else { throw HanlinHostError.unresolvedWrite }
     }
 
     /// Surface deletion/replacement is explicit host lifecycle, independent of sheet visibility.
@@ -446,11 +464,11 @@ public final class HanlinAgentSession {
     private func requireInteraction(_ origin: HanlinHostInteractionOrigin) async throws {
         try Task.checkCancellation()
         guard !invalidated, origin.session == identity, interactionOrigins.contains(origin) else { throw HanlinHostError.staleContext }
-        guard activeRun == nil else { throw HanlinHostError.duplicateInvocation }
+        guard !isRunning else { throw HanlinHostError.duplicateInvocation }
         let current = try await host.context(for: identity)
         try Task.checkCancellation()
         guard !invalidated, origin.session == identity, interactionOrigins.contains(origin), current == identity.context else { throw HanlinHostError.staleContext }
-        guard activeRun == nil else { throw HanlinHostError.duplicateInvocation }
+        guard !isRunning else { throw HanlinHostError.duplicateInvocation }
     }
 
     private func revokeInteractions(run: UUID) {
@@ -466,49 +484,80 @@ public final class HanlinAgentSession {
                 let invocationStep = self.step
                 if let error = self.preparationError { throw error }
                 return try await HanlinModelToolInputGuard.withValidatedArguments(arguments, originalInputVerified: provenance == .acceptedOriginal) { _ -> HanlinAISDKToolExecutionOutput in
-                    // Invalid/unsupported input is rejected before pending entry or host effect.
-                    // Never persist raw arguments; original input remains transient.
-                    try self.append(.toolCall(providerCallID: providerID, alias: tool.route.alias, arguments: .null), run: run)
-                    // Durable pending entry BEFORE dispatch; interruption must not silently replay.
-                    try await self.persist(model: model)
                     try self.requireActive(run: run)
-                    let hostEvent = try await self.dispatcher.dispatchEvent(alias: tool.route.alias, argumentsJSON: arguments,
-                        providerCallID: providerID, runID: run, step: invocationStep, session: self.identity, catalog: catalog,
-                        expectedRevision: tool.writeGuarantee == .atomicRevisionMutation ? self.identity.context.sourceRevision : nil,
-                        limits: HanlinToolInvocationLimits(), progress: { event in
-                            await self.deliverProgress(event, run: run, providerCallID: providerID,
-                                                       step: invocationStep, logicalToolID: tool.route.logicalToolID)
-                        })
-                    let result = hostEvent.result
-                    guard self.activeRun == run else { throw HanlinHostError.staleContext }
-                    try self.append(.hostResultIdentity(resultID: hostEvent.resultID, call: hostEvent.call),
-                                    run: run, stepOverride: hostEvent.call.step)
-                    try self.append(.toolResult(providerCallID: providerID, result: result.metadataReceipt()),
-                                    run: run, stepOverride: hostEvent.call.step)
-                    try await self.persist(model: model)
-                    try await self.requireCurrent(run: run)
-                    self.onHostResult?(hostEvent)
-                    if result.effectState == .uncertain { throw HanlinHostError.unresolvedWrite }
-                    let encoded = try JSONEncoder().encode(result)
-                    guard encoded.count <= 1_048_576 else { throw HanlinHostError.outputLimitExceeded }
-                    switch result.result.outcome {
-                    case .completed(let content):
-                        let text = try content.map { item -> String in
-                            switch item {
-                            case .text(let text): return text
-                            case .structured(let value): return String(decoding: try value.canonicalJSONData(), as: UTF8.self)
-                            case .attachment(let handle, let mediaType, let byteCount):
-                                return "Scoped attachment reference: \(handle) (\(mediaType), \(byteCount) bytes)"
-                            case .resourceLink(let uri, let title): return "\(title ?? "Host resource"): \(uri)"
-                            }
-                        }.joined(separator: "\n")
-                        return .init(modelText: text, resultReference: result.reconciliationReference)
-                    case .failed(let failure):
-                        // The host explicitly sanctions this transient model feedback. The
-                        // persisted metadataReceipt still redacts it and the business payload.
-                        return .init(modelText: failure.userMessage, resultReference: result.reconciliationReference, isError: true)
-                    default:
-                        return .init(modelText: "The host did not authorize or complete this operation.", resultReference: result.reconciliationReference, isError: true)
+                    let executionID = UUID()
+                    let task = Task<HanlinAISDKToolExecutionOutput, Error> { @MainActor in
+                        defer { self.toolExecutions.removeValue(forKey: executionID) }
+                        try self.requireActive(run: run)
+                        // Invalid/unsupported input is rejected before pending entry or host effect.
+                        // Never persist raw arguments; original input remains transient.
+                        try self.append(.toolCall(providerCallID: providerID, alias: tool.route.alias, arguments: .null), run: run)
+                        // Durable pending entry BEFORE dispatch; interruption must not silently replay.
+                        try await self.persist(model: model)
+                        try self.requireActive(run: run)
+                        let limits = try HanlinToolInvocationLimits()
+                        let hostEvent: HanlinHostResultEvent
+                        var revokedDelivery: Error?
+                        do {
+                            hostEvent = try await self.dispatcher.dispatchEvent(alias: tool.route.alias, argumentsJSON: arguments,
+                                providerCallID: providerID, runID: run, step: invocationStep, session: self.identity, catalog: catalog,
+                                expectedRevision: tool.writeGuarantee == .atomicRevisionMutation ? self.identity.context.sourceRevision : nil,
+                                limits: limits, progress: { event in
+                                    await self.deliverProgress(event, run: run, providerCallID: providerID,
+                                                               step: invocationStep, logicalToolID: tool.route.logicalToolID)
+                                })
+                        } catch {
+                            guard self.invalidated || Task.isCancelled,
+                                  let retained = try await self.dispatcher.retainedResultEvent(
+                                    alias: tool.route.alias, argumentsJSON: arguments, providerCallID: providerID,
+                                    runID: run, step: invocationStep, session: self.identity,
+                                    logicalToolID: tool.route.logicalToolID, limits: limits) else { throw error }
+                            hostEvent = retained
+                            revokedDelivery = error
+                        }
+                        let result = hostEvent.result
+                        guard self.toolExecutions[executionID] != nil,
+                              hostEvent.call.session == self.identity, hostEvent.call.runID == run,
+                              hostEvent.call.step == invocationStep, hostEvent.call.providerCallID == providerID,
+                              hostEvent.call.logicalToolID == tool.route.logicalToolID else { throw HanlinHostError.resultMismatch }
+                        try self.append(.hostResultIdentity(resultID: hostEvent.resultID, call: hostEvent.call),
+                                        run: run, stepOverride: hostEvent.call.step)
+                        try self.append(.toolResult(providerCallID: providerID, result: result.metadataReceipt()),
+                                        run: run, stepOverride: hostEvent.call.step)
+                        try await self.persist(model: model)
+                        // A historical receipt resolves only this original writer. It must never
+                        // reach live presentation, split callbacks or the replacement model turn.
+                        if let revokedDelivery { throw revokedDelivery }
+                        try await self.requireCurrent(run: run)
+                        self.onHostResult?(hostEvent)
+                        if result.effectState == .uncertain { throw HanlinHostError.unresolvedWrite }
+                        let encoded = try JSONEncoder().encode(result)
+                        guard encoded.count <= 1_048_576 else { throw HanlinHostError.outputLimitExceeded }
+                        switch result.result.outcome {
+                        case .completed(let content):
+                            let text = try content.map { item -> String in
+                                switch item {
+                                case .text(let text): return text
+                                case .structured(let value): return String(decoding: try value.canonicalJSONData(), as: UTF8.self)
+                                case .attachment(let handle, let mediaType, let byteCount):
+                                    return "Scoped attachment reference: \(handle) (\(mediaType), \(byteCount) bytes)"
+                                case .resourceLink(let uri, let title): return "\(title ?? "Host resource"): \(uri)"
+                                }
+                            }.joined(separator: "\n")
+                            return .init(modelText: text, resultReference: result.reconciliationReference)
+                        case .failed(let failure):
+                            // The host explicitly sanctions this transient model feedback. The
+                            // persisted metadataReceipt still redacts it and the business payload.
+                            return .init(modelText: failure.userMessage, resultReference: result.reconciliationReference, isError: true)
+                        default:
+                            return .init(modelText: "The host did not authorize or complete this operation.", resultReference: result.reconciliationReference, isError: true)
+                        }
+                    }
+                    self.toolExecutions[executionID] = task
+                    return try await withTaskCancellationHandler {
+                        try await task.value
+                    } onCancel: {
+                        task.cancel()
                     }
                 }
             }

@@ -120,6 +120,9 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
     private var currentTask: URLSessionDataTask? // 当前流式请求任务
     private var isCancelled = false              // 请求取消标记
     private var activeAgentProducerTask: Task<Void, Never>?
+    private var pendingAgentProducerDrain: Task<Void, Never>?
+    private var requestAdmissionEpoch = UUID()
+    private var requestLifecycleAdmission: AgentRunLifecycleCoordinator.RunAdmission?
     private var activeAgentRunID: UUID?
     private var initializingRunID: UUID?
     
@@ -1490,8 +1493,36 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
     }
     
     // MARK: - 任务取消
+    @discardableResult
+    private func retireAgentProducer() -> Task<Void, Never>? {
+        guard let producer = activeAgentProducerTask else { return pendingAgentProducerDrain }
+        let previous = pendingAgentProducerDrain
+        producer.cancel()
+        let drain = Task { @MainActor in
+            await previous?.value
+            await producer.value
+        }
+        pendingAgentProducerDrain = drain
+        activeAgentProducerTask = nil
+        activeAgentRunID = nil
+        return drain
+    }
+
+    private func requireRequestAdmission(epoch: UUID,
+                                         ownerAdmission: HanlinAppAgentSessionOwner.RequestAdmission,
+                                         lifecycleAdmission: AgentRunLifecycleCoordinator.RunAdmission) throws {
+        try Task.checkCancellation()
+        guard requestAdmissionEpoch == epoch, requestLifecycleAdmission == lifecycleAdmission,
+              AgentRunLifecycleCoordinator.shared.isCurrentAdmission(lifecycleAdmission) else {
+            throw HanlinChatError.cancelled
+        }
+        try agentSessionOwner.requireRequestAdmission(ownerAdmission)
+    }
+
     func cancelCurrentRequest() {
         let cancelledRunID = initializingRunID ?? activeAgentRunID
+        requestAdmissionEpoch = UUID()
+        requestLifecycleAdmission = nil
         isCancelled = true
         dataAccess = nil
         dataModel = nil
@@ -1500,8 +1531,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
         activeLocalLLMDriver = nil
         currentTask?.cancel()
         currentTask = nil
-        activeAgentProducerTask?.cancel()
-        activeAgentProducerTask = nil
+        retireAgentProducer()
         activeAgentRunID = nil
         initializingRunID = nil
         if let cancelledRunID { AgentRunLifecycleCoordinator.shared.cancelRun(runID: cancelledRunID) }
@@ -3725,16 +3755,36 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
             throw HanlinComposerCapabilityError.toolsUnsupported
         }
         try HanlinComposerCapabilities.validate(assistantToolScope.capabilityAttachments)
-        initializingRunID = runID
         if let agentSDKRequest, agentSDKRequest.uiRunID != runID { throw HanlinHostError.resultMismatch }
+        // Revoke the captured same-manager request synchronously, before the first suspension.
+        // Both the outer producer and its entered Host/CAS work must retire before B owns diagnostics.
+        let ownerAdmission = try agentSessionOwner.beginRequestAdmission(
+            replacing: self.agentSDKRequest, request: agentSDKRequest, modelContext: context)
+        let admissionEpoch = UUID()
+        requestAdmissionEpoch = admissionEpoch
+        initializingRunID = runID
+        guard let lifecycleAdmission = AgentRunLifecycleCoordinator.shared.reserveRunAdmission(runID: runID) else {
+            throw HanlinChatError.cancelled
+        }
+        requestLifecycleAdmission = lifecycleAdmission
+        let producerDrain = retireAgentProducer()
+        currentTask?.cancel()
+        currentTask = nil
+        await producerDrain?.value
+        try requireRequestAdmission(epoch: admissionEpoch, ownerAdmission: ownerAdmission,
+                                    lifecycleAdmission: lifecycleAdmission)
+        try await agentSessionOwner.drainRequestAdmission(ownerAdmission)
+        try requireRequestAdmission(epoch: admissionEpoch, ownerAdmission: ownerAdmission,
+                                    lifecycleAdmission: lifecycleAdmission)
         self.agentSDKRequest = agentSDKRequest
         dataAccess = nil
         dataModel = nil
-        await AgentRunLifecycleCoordinator.shared.beginRun(runID: runID, recorder: nil)
-        try Task.checkCancellation()
+        guard await AgentRunLifecycleCoordinator.shared.beginRun(admission: lifecycleAdmission, recorder: nil) else {
+            throw HanlinChatError.cancelled
+        }
+        try requireRequestAdmission(epoch: admissionEpoch, ownerAdmission: ownerAdmission,
+                                    lifecycleAdmission: lifecycleAdmission)
         guard AgentRunLifecycleCoordinator.shared.isCurrentRun(runID) else { throw HanlinChatError.cancelled }
-        currentTask?.cancel()
-        currentTask = nil
         isCancelled = false
         reportProgressController = ReportProgressController()
         latestToolProgressSummary = nil
@@ -3770,6 +3820,13 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
             providerID: modelInfo.company ?? "Unknown",
             modelID: modelInfo.name ?? modelName
         )
+        do {
+            try requireRequestAdmission(epoch: admissionEpoch, ownerAdmission: ownerAdmission,
+                                    lifecycleAdmission: lifecycleAdmission)
+        } catch {
+            await recorder?.complete(status: "cancelled")
+            throw error
+        }
         guard !isCancelled, !Task.isCancelled,
               AgentRunLifecycleCoordinator.shared.attachRecorder(recorder, for: runID) else {
             await recorder?.complete(status: "cancelled")
@@ -3790,6 +3847,8 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
         switch executionRoute {
         case .localText:
             await agentDiagnosticsRecorder?.setAgentEngineKind("local")
+            try requireRequestAdmission(epoch: admissionEpoch, ownerAdmission: ownerAdmission,
+                                    lifecycleAdmission: lifecycleAdmission)
             return try await processLocalModel(messages: messages,
                                                modelInfo: modelInfo,
                                                currentLanguage: currentLanguage,
@@ -3830,6 +3889,8 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
             )
         case .remoteImageGeneration:
             await agentDiagnosticsRecorder?.setAgentEngineKind("image")
+            try requireRequestAdmission(epoch: admissionEpoch, ownerAdmission: ownerAdmission,
+                                    lifecycleAdmission: lifecycleAdmission)
             return try await processImageGenModel(messages: messages,
                                                   modelInfo: modelInfo,
                                                   currentLanguage: currentLanguage,
@@ -3957,6 +4018,15 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
         let baseSystemPrompt = converted.baseSystemPrompt
         let sdkMessages = converted.messages
         let userOperation = RuntimeUserOperation.current
+        let callbackEpoch = requestAdmissionEpoch
+        let callbackLifecycleAdmission = requestLifecycleAdmission
+        let acceptsLiveCallback: @MainActor @Sendable () -> Bool = { [weak self] in
+            guard let self, let callbackLifecycleAdmission else { return false }
+            return self.requestAdmissionEpoch == callbackEpoch
+                && AgentRunLifecycleCoordinator.shared.isCurrentAdmission(callbackLifecycleAdmission)
+                && self.agentSessionOwner.isCurrentRequest(runID)
+                && AgentRunLifecycleCoordinator.shared.isCurrentRun(runID)
+        }
 
         let toolAdapter = preparedAssistantTools.map { prepared in HanlinAISDKToolAdapter(
             session: session,
@@ -3966,8 +4036,12 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
             progressSummaryRequired: modelInfo.agentCapabilities.supportsProgressSummaryField,
             supportsReportProgress: modelInfo.agentCapabilities.supportsReportProgressTool,
             callbacks: HanlinAISDKToolAdapter.Callbacks(
-                onStreamData: { continuation.yield($0) },
+                onStreamData: {
+                    guard acceptsLiveCallback() else { return }
+                    continuation.yield($0)
+                },
                 onAgentEvent: { event in
+                    guard acceptsLiveCallback() else { return }
                     switch event {
                     case .toolExecutionStarted(let execution):
                         if !AgentActivityVisibilityPolicy.isInternalTool(execution.name) {
@@ -3985,8 +4059,14 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                     }
                     continuation.yield(StreamData(agentEvents: [event]))
                 },
-                onProgressMessage: { continuation.yield(StreamData(agentEvents: [.progressMessage($0)])) },
-                currentReasoningSummary: { [weak self] in self?.toolMessageReasoning }
+                onProgressMessage: {
+                    guard acceptsLiveCallback() else { return }
+                    continuation.yield(StreamData(agentEvents: [.progressMessage($0)]))
+                },
+                currentReasoningSummary: { [weak self] in
+                    guard acceptsLiveCallback() else { return nil }
+                    return self?.toolMessageReasoning
+                }
             ),
             reportProgressController: self.reportProgressController,
             diagnosticsRecorder: self.agentDiagnosticsRecorder

@@ -34,6 +34,7 @@ final class HanlinAppAgentSessionOwner {
     @ObservationIgnored private var pendingConsentOperation: (requestID: UUID, operation: RuntimeUserOperation)?
     @ObservationIgnored private var completion: HanlinAgentRunCompletion?
     @ObservationIgnored private var starting = false
+    @ObservationIgnored private var startingGeneration: UUID?
     @ObservationIgnored private var revocationGeneration = UUID()
     @ObservationIgnored private var pendingInvalidation: Task<Void, Error>?
     @ObservationIgnored private var historyGeneration: UUID?
@@ -228,6 +229,77 @@ final class HanlinAppAgentSessionOwner {
         let namespace: HanlinConversationNamespace
     }
 
+    /// A waiting manager request is tied to this owner's original row and revocation epoch.
+    /// It is not a Session and never grants authority to a retired producer.
+    struct RequestAdmission {
+        fileprivate let generation: UUID
+        fileprivate let request: Request?
+        fileprivate let namespace: HanlinConversationNamespace?
+        fileprivate let modelContext: ModelContext
+        fileprivate let registration: HanlinConversationRunLease.OwnerRegistration?
+    }
+
+    func beginRequestAdmission(replacing original: Request?, request: Request?,
+                               modelContext: ModelContext) throws -> RequestAdmission {
+        try Task.checkCancellation()
+        let namespace = try request.map {
+            try Self.namespace(conversationID: $0.conversationID, temporary: $0.temporary, modelContext: modelContext)
+        }
+        if let request {
+            _ = try HanlinAppConversationStore.requireOriginalConversation(context: modelContext,
+                conversation: request.conversation, conversationID: request.conversationID, temporary: request.temporary)
+        }
+        let hasLiveWork = (starting && startingGeneration == revocationGeneration)
+            || activeUIRunID != nil || session?.isRunning == true || !inlineToolTasks.isEmpty
+        if hasLiveWork {
+            // A manager can retire only its captured original request. Another owner/request
+            // remains protected by the original admission and canonical-writer checks.
+            guard let original, let binding = dataAccessBinding,
+                  binding.context === modelContext, binding.request.conversation === original.conversation,
+                  binding.request.conversationID == original.conversationID,
+                  binding.request.sceneID == original.sceneID, binding.request.rowID == original.rowID,
+                  binding.request.uiRunID == original.uiRunID, binding.request.temporary == original.temporary,
+                  activeUIRunID == nil || activeUIRunID == original.uiRunID else {
+                throw HanlinHostError.duplicateInvocation
+            }
+            cancel()
+        } else {
+            // A completed producer handle is not live Session work. Keep the idle Session
+            // and its interaction/context authority while superseding any waiting admission.
+            revocationGeneration = UUID()
+            dataAccessBinding = nil
+        }
+        let registration = request.map {
+            HanlinConversationRunLease.register(owner: self, container: modelContext.container,
+                conversationID: $0.conversationID)
+        }
+        return .init(generation: revocationGeneration, request: request, namespace: namespace,
+                     modelContext: modelContext, registration: registration)
+    }
+
+    func requireRequestAdmission(_ admission: RequestAdmission) throws {
+        try Task.checkCancellation()
+        guard revocationGeneration == admission.generation,
+              admission.registration?.isRevoked != true else { throw HanlinHostError.staleContext }
+        if let request = admission.request {
+            guard admission.namespace == (try Self.namespace(conversationID: request.conversationID,
+                temporary: request.temporary, modelContext: admission.modelContext)) else { throw HanlinHostError.staleContext }
+            _ = try HanlinAppConversationStore.requireOriginalConversation(context: admission.modelContext,
+                conversation: request.conversation, conversationID: request.conversationID, temporary: request.temporary)
+        }
+    }
+
+    func drainRequestAdmission(_ admission: RequestAdmission) async throws {
+        try requireRequestAdmission(admission)
+        try await pendingInvalidation?.value
+        try requireRequestAdmission(admission)
+    }
+
+    func isCurrentRequest(_ uiRunID: UUID) -> Bool {
+        guard activeUIRunID == uiRunID, let session else { return false }
+        return contextGeneration == session.identity.context.generation
+    }
+
     private struct DataAccessBinding {
         let access: DataAccess
         let request: Request
@@ -329,8 +401,9 @@ final class HanlinAppAgentSessionOwner {
         try Task.checkCancellation()
         guard !starting, activeUIRunID == nil else { throw HanlinHostError.duplicateInvocation }
         starting = true
-        defer { starting = false }
+        defer { starting = false; startingGeneration = nil }
         let admissionGeneration = revocationGeneration
+        startingGeneration = admissionGeneration
         guard request.conversation.id == request.conversationID else { throw HanlinHostError.staleContext }
         if let dataAccess { try requireDataAccess(dataAccess, request: request, modelContext: modelContext) }
         _ = try HanlinAppConversationStore.requireOriginalConversation(context: modelContext,
@@ -356,7 +429,7 @@ final class HanlinAppAgentSessionOwner {
             && Self.sameEngineConfiguration(modelConfiguration, configuration)
         if !matches {
             guard request.interaction == nil else { throw HanlinHostError.staleContext }
-            let invalidationGeneration = await invalidate(preservingDataAccess: dataAccess)
+            let invalidationGeneration = await invalidate(preservingDataAccess: dataAccess, preservingStart: admissionGeneration)
             try await pendingInvalidation?.value
             try Task.checkCancellation()
             guard revocationGeneration == invalidationGeneration, !registration.isRevoked else { throw HanlinHostError.staleContext }
@@ -606,13 +679,18 @@ final class HanlinAppAgentSessionOwner {
 
     func invalidate() async { _ = await invalidate(preservingDataAccess: nil) }
 
-    private func invalidate(preservingDataAccess access: DataAccess?) async -> UUID {
+    private func invalidate(preservingDataAccess access: DataAccess?, preservingStart: UUID? = nil) async -> UUID {
         // Replacing the model engine does not replace the already admitted request.
         // Any external revoke/cancel still clears the lease synchronously, and stream
         // checks its exact epoch again after this suspension.
         let originalSession = session
         if dataAccessBinding?.access != access { dataAccessBinding = nil }
+        let preservesStartingRequest = preservingStart != nil
+            && preservingStart == startingGeneration && startingGeneration == revocationGeneration
         let generation = revokeSessionAuthority()
+        // Only this same stream's internal engine replacement preserves its starting authority.
+        // External Stop/replacement leaves the old starting generation revoked while it drains.
+        if preservesStartingRequest { startingGeneration = generation }
         session = nil; host = nil; engine = nil; modelConfiguration = nil; completion = nil
         enqueueInvalidation(originalSession)
         // Keep any failure on the task so a subsequent stream cannot admit it.
