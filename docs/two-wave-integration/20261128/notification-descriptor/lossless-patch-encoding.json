@@ -1,0 +1,8 @@
+{
+  "rawSHA256": "9a9a6039250a9f6a3c9b7002f03e150bd2aa4bcdaca576b7397ba434a78b6325",
+  "rawBytes": 32733,
+  "gzipSHA256": "2ce78bf8fad7966e72fe3fe8590291abf5a72549be3a6e825891f7c6e9678344",
+  "gzipBytes": 7520,
+  "roundTripExact": true,
+  "reason": "Keep the exact unified diff, including literal blank context lines, without a Git whitespace error."
+}

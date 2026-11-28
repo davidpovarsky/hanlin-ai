@@ -1,0 +1,17 @@
+{
+  "base": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "sourceCommit": "d83d873e3adfcfd4344cd9c247b1e677fc66a969",
+  "sourceTree": "50156f87ab51ad07608be2ffd5a743f59d58e44f",
+  "sourcePaths": {
+    "Scripts/ProductSplit/run_native_acceptance.py": "a08434296ba9dc7c143029353043f0b0f32176fb65434829047802d5f406172f",
+    "Scripts/CI/Tests/test_notification_os_scope.py": "98ae6e922e349ffa5af2e87cbd13669286cc4672e2c03e8eb835db7ebf7fee57"
+  },
+  "rootReviewSHA256": "4ff19b04b5279565d0f5cc50bdea43f0d018b733fad3d70e6d6678d2d4ab1142",
+  "privateFullPacket": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/notification-descriptor-3634078f/candidate-r1",
+  "privateManifestSHA256": "6df99b0383f46edaa50c4afd5dca46239ef3321955619ad87a7a42da27b8932d",
+  "nativeExecuted": false,
+  "testsRepeatedForSeal": false,
+  "workflowChanged": false,
+  "sdkProducerExecuted": false,
+  "notes": "The public proof retains references/hashes for historical native logs and the large local bundle table, whose original bytes remain in the independently reviewed private packet."
+}

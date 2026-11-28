@@ -1,0 +1,13 @@
+{
+  "path": "Scripts/ProductSplit/observe_runtime_image_origin.py",
+  "sha256": "fab2f99e9ee1cdb251c949453d8cfcef23a9b38a26d034c0b31d82e7831bc9e1",
+  "source": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "unchanged": true,
+  "functions": {
+    "descriptor_target": "eb552986e4a6d5ffba0756abdd9e6408d54efea2136944987c7f48567d0de5b2",
+    "descriptor_path": "7c740d1ae690d2dd1d43f4c55106f915752b09b3b8d4fc88129217ec029060c6",
+    "origin_test_command": "06166d21312963357f48be7319aa6f1949e779917267868cb2177ff83ac92a47"
+  },
+  "preparedSourceRequired": true,
+  "loadedHelperBytesMustMatchPreparedHash": true
+}

@@ -1,0 +1,33 @@
+{
+  "source": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "scheme": {
+    "path": "AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinMiniApps.xcscheme",
+    "sha256": "45badd3c80274ccba347b3a511b3a1f889b6a0e9e2adfa53198870cc79eaaad7",
+    "originalBuildPreserved": true
+  },
+  "uiSource": {
+    "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+    "sha256": "3a989ba8a8dad3d76441ef206d8b41d91c1202672f5141054215fd2c94e77607",
+    "changed": false
+  },
+  "selectors": [
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines"
+  ],
+  "expectedOriginalCases": 1,
+  "expectedPushObservations": 5,
+  "bounds": {
+    "buildSeconds": 2400,
+    "testCommandSeconds": 1200,
+    "workerSeconds": 650,
+    "uiCaseSeconds": 600
+  },
+  "actualInvocation": "Only -project/-scheme/-derivedDataPath option-value pairs removed; original -xctestrun added. All other argv values retained.",
+  "descriptorCheckpoints": [
+    "before state.command",
+    "mandatory pre-XCTest admission in run_notification_test",
+    "before worker admission",
+    "native terminal after owned cleanup"
+  ],
+  "sourceCaptureIncludesHelper": true,
+  "nativeExecuted": false
+}

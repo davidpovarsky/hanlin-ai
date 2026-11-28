@@ -1,0 +1,26 @@
+{
+  "argv": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_notification_os_scope.py",
+    "-v"
+  ],
+  "elapsedSeconds": 0.16850389633327723,
+  "returncode": 1,
+  "source": {
+    "Scripts/ProductSplit/run_native_acceptance.py": "c2dad5f1227fd72b4e90747dd21cee4e9ac47baed0bbf47ad1c505aac39dec63",
+    "Scripts/CI/Tests/test_notification_os_scope.py": "45200ba7c98e9b3814f6e74128d5ac60e0087945a25b4545f997455e1dfc9088"
+  },
+  "nativeExecuted": false,
+  "expectedMethods": 23,
+  "logSHA256": "dad8507841aa3318f53d4609be704430c469251f120cc55e8265e1ae222a40fb"
+}

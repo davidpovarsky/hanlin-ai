@@ -1,0 +1,38 @@
+{
+  "original9a-notification": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-concurrency-notification-9a76309c-terminal-r1/selected-r1/notification/artifact-selected-members/xcodebuild.log.gz",
+    "rawBytes": 12191,
+    "rawSHA256": "bfe4e3b80073b70f67a8bb198bfca5ae672d8c0c11aee2f3dff03688c651edf9",
+    "resolvePackageGraphCount": 155,
+    "xctestStartedLines": [],
+    "scope": "Historical dispatch mechanism only; neither cached-source causation nor current native acceptance.",
+    "initialPatternCorrection": "Initial sourceFolderWarningCount used an unrelated missing-file string. Actual warning is counted below from its exact original Folder Reference text; raw evidence unchanged.",
+    "folderReferenceWarningCount": 1,
+    "folderReferenceDetails": [
+      "Details:  Attempted to open a Xcode 3 project as a Folder Reference! ",
+      "Path: <DVTFilePath:0x77350e1140:'/Users/runner/work/hanlin-ai/hanlin-ai/build/miniapp-upstreams/expo-native-source/node_modules/expo-modules-jsi/apple/.swiftpm/xcode'> ",
+      "2026-11-28 05:01:29.494 xcodebuild[13981:282625] [MT] IDEFileReferenceDebug: [Load] <IDEFolderFileReference, 0x773548a800: name:xcode path:group:xcode> Failed to load container at path: /Users/runner/work/hanlin-ai/hanlin-ai/build/miniapp-upstreams/expo-native-source/node_modules/expo-modules-jsi/apple/.swiftpm/xcode, Error: Error Domain=com.apple.DVTKit.generic Code=-1 \"The project \u201cxcode\u201d does not contain a project definition file.\" UserInfo={PBXIsMissingProjectFileError=true, NSLocalizedDescription=The project \u201cxcode\u201d does not contain a project definition file., NSLocalizedRecoverySuggestion=One of \u201cxcode/project.xcproj\u201d or \u201cxcode/project.pbxproj\u201d should exist."
+    ]
+  },
+  "c990-origin-descriptor": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-origin25-c9908a25-terminal-r1/selected-r1/origin25/artifact-selected-members/xcodebuild.log.gz",
+    "rawBytes": 234171,
+    "rawSHA256": "eaf532ae7e343b92acdc3d5cec9e51a84cffff996cb8e91f8aef48dfe062612b",
+    "resolvePackageGraphCount": 0,
+    "xctestStartedLines": [
+      "Test Case '-[HanlinMiniAppsUITests.MiniAppsCrossAppPreferencesUITests testAppleStyleEditorAddsFavoriteWithNativeEditControls]' started.",
+      "Test Case '-[HanlinMiniAppsUITests.MiniAppsCrossAppPreferencesUITests testPreferencesUsesEnglishAndHebrewNativeToolbarLayouts]' started.",
+      "Test Case '-[HanlinMiniAppsUITests.MiniAppsCrossAppPreferencesUITests testSharedNewWindowPreferencePersistsAfterProcessRestart]' started.",
+      "Test Case '-[HanlinMiniAppsUITests.MiniAppsExternalModalLifetimeUITests testExternalInvocationSurvivesNestedFullScreenModal]' started.",
+      "Test Case '-[HanlinMiniAppsUITests.MiniAppsNativeScriptPackageWindowUITests testCancellingOnePackageKeepsOtherPackageAndItsPreparedCallbackAlive]' started.",
+      "Test Case '-[HanlinMiniAppsUITests.MiniAppsNativeScriptPackageWindowUITests testDifferentPackagesKeepModulesResourcesAndCallbacksWhenCompletingInReverseOrder]' started.",
+      "Test Case '-[HanlinMiniAppsUITests.MiniAppsNativeScriptPackageWindowUITests testReturningToCatalogKeepsPendingRequestInExistingRootWindow]' started.",
+      "Test Case '-[HanlinMiniAppsUITests.MiniAppsNativeScriptWindowUITests testCancellingOneNativeWindowKeepsOtherWindowAndPreparedCallbackAlive]' started.",
+      "Test Case '-[HanlinMiniAppsUITests.MiniAppsNativeScriptWindowUITests testTwoNativeWindowsCompleteInReverseOrderWithoutContextMixing]' started."
+    ],
+    "scope": "Historical dispatch mechanism only; neither cached-source causation nor current native acceptance.",
+    "initialPatternCorrection": "Initial sourceFolderWarningCount used an unrelated missing-file string. Actual warning is counted below from its exact original Folder Reference text; raw evidence unchanged.",
+    "folderReferenceWarningCount": 0,
+    "folderReferenceDetails": []
+  }
+}

@@ -1,0 +1,25 @@
+test_notification_os_scope (unittest.loader._FailedTest.test_notification_os_scope) ... ERROR
+
+======================================================================
+ERROR: test_notification_os_scope (unittest.loader._FailedTest.test_notification_os_scope)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_notification_os_scope
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "/mnt/development/projects/worktrees/hanlin-notification-descriptor-20261128/Scripts/CI/Tests/test_notification_os_scope.py", line 32, in <module>
+    spec.loader.exec_module(runner)
+  File "/mnt/development/projects/worktrees/hanlin-notification-descriptor-20261128/Scripts/ProductSplit/run_native_acceptance.py", line 20, in <module>
+    from verify_targets import native_ui_typecheck_command, validate_native_test_membership
+  File "/mnt/development/projects/worktrees/hanlin-notification-descriptor-20261128/Scripts/ProductSplit/verify_targets.py", line 11, in <module>
+    from project_graph import parse_project, validate_graph, validate_agent_sdk_linkage
+ModuleNotFoundError: No module named 'project_graph'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

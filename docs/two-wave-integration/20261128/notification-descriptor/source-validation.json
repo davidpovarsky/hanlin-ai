@@ -1,0 +1,16 @@
+{
+  "source": "3634078f89c5fa469199da1f69d6f4bad6686d96",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-notification-descriptor-20261128",
+  "stagedUncommitted": true,
+  "changedPaths": 2,
+  "runnerSHA256": "a08434296ba9dc7c143029353043f0b0f32176fb65434829047802d5f406172f",
+  "controlsSHA256": "98ae6e922e349ffa5af2e87cbd13669286cc4672e2c03e8eb835db7ebf7fee57",
+  "patchSHA256": "9a9a6039250a9f6a3c9b7002f03e150bd2aa4bcdaca576b7397ba434a78b6325",
+  "finalPortableReceiptSHA256": "fed007062a6e3fcfc81dd35d8553cea3388ecd39576eecf77ca931392bd5961f",
+  "original14MethodBodiesExact": true,
+  "finalPortableControls": 23,
+  "portableExit": 0,
+  "nativeExecuted": false,
+  "sdkProducerExecuted": false,
+  "workflowChanged": false
+}
