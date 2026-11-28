@@ -1,0 +1,290 @@
+{
+  "source": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+  "creation": [
+    {
+      "caller": "runShortcut",
+      "originalSeconds": 12,
+      "candidateSeconds": 12,
+      "candidateWait": "createSystemShortcut -> wait(12) -> bounded(existing case deadline)",
+      "navigationLimit": "At most one observed Continue and one unique observed sidebar-owned Hide Sidebar inside that same12s."
+    },
+    {
+      "caller": "runMiniAppShortcut",
+      "originalSeconds": 12,
+      "candidateSeconds": 12,
+      "candidateWait": "createSystemShortcut -> wait(12) -> bounded(existing case deadline)",
+      "navigationLimit": "At most one observed Continue and one unique observed sidebar-owned Hide Sidebar inside that same12s."
+    },
+    {
+      "caller": "configureConcurrencyShortcut",
+      "originalSeconds": 12,
+      "candidateSeconds": 12,
+      "candidateWait": "createSystemShortcut -> wait(12) -> bounded(existing case deadline)",
+      "navigationLimit": "At most one observed Continue and one unique observed sidebar-owned Hide Sidebar inside that same12s."
+    },
+    {
+      "caller": "createNativeListShortcut",
+      "originalSeconds": 12,
+      "candidateSeconds": 12,
+      "candidateWait": "createSystemShortcut -> wait(12) -> bounded(existing case deadline)",
+      "navigationLimit": "At most one observed Continue and one unique observed sidebar-owned Hide Sidebar inside that same12s."
+    }
+  ],
+  "actionSearch": [
+    {
+      "caller": "runShortcut",
+      "originalSeconds": 12,
+      "candidateSeconds": 12,
+      "candidateWait": "findShortcutActionSearch -> wait(12) -> bounded(existing case deadline)",
+      "navigationLimit": "At most one New Shortcut/Editor and one exact Add Action or Search Actions button, inside that same12s. Existing action/entity assertions follow unchanged."
+    },
+    {
+      "caller": "runMiniAppShortcut",
+      "originalSeconds": 12,
+      "candidateSeconds": 12,
+      "candidateWait": "findShortcutActionSearch -> wait(12) -> bounded(existing case deadline)",
+      "navigationLimit": "At most one New Shortcut/Editor and one exact Add Action or Search Actions button, inside that same12s. Existing action/entity assertions follow unchanged."
+    },
+    {
+      "caller": "configureConcurrencyShortcut",
+      "originalSeconds": 12,
+      "candidateSeconds": 12,
+      "candidateWait": "findShortcutActionSearch -> wait(12) -> bounded(existing case deadline)",
+      "navigationLimit": "At most one New Shortcut/Editor and one exact Add Action or Search Actions button, inside that same12s. Existing action/entity assertions follow unchanged."
+    },
+    {
+      "caller": "createNativeListShortcut",
+      "originalSeconds": 12,
+      "candidateSeconds": 12,
+      "candidateWait": "findShortcutActionSearch -> wait(12) -> bounded(existing case deadline)",
+      "navigationLimit": "At most one New Shortcut/Editor and one exact Add Action or Search Actions button, inside that same12s. Existing action/entity assertions follow unchanged."
+    }
+  ],
+  "builtInResultChain": {
+    "caller": "addShortcutAction",
+    "originalOptionalOpeningSeconds": 12,
+    "candidateOptionalOpeningSeconds": 12,
+    "originalSearchSeconds": 12,
+    "candidateSearchSeconds": 12,
+    "openingChange": "Existing phase is conditioned on absence of an actual action search instead of absence of any library search; original tap helper and diagnostic retained.",
+    "searchNavigationDisabled": true,
+    "preventsDuplicateOpening": true
+  },
+  "unchangedMethods": [
+    "tap",
+    "wait",
+    "bounded"
+  ],
+  "allOriginalTestCaseBodiesUnchanged": true,
+  "allOriginalSelectorsCaseLimitsCommandLimitsJobLimitsUnchanged": true,
+  "sourceCallGraphConsumers": [
+    {
+      "method": "testExpoShortcutInvokesAllFiveRuntimes",
+      "affectedHelpers": [
+        "runShortcut"
+      ],
+      "originalMethodSHA256": "62b0dbb0973f5be3753db6442bde96103c2e9adb6257f450151c921c51483ee0",
+      "literalSurface": "shortcuts",
+      "actualSurfaceDispatch": "runShortcut"
+    },
+    {
+      "method": "testNativeScriptShortcutInvokesAllFiveRuntimes",
+      "affectedHelpers": [
+        "runShortcut"
+      ],
+      "originalMethodSHA256": "c0c8edfde73e324a03c280649e591c84146e8b435c2d139771a6febbfb344edd",
+      "literalSurface": "shortcuts",
+      "actualSurfaceDispatch": "runShortcut"
+    },
+    {
+      "method": "testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult",
+      "affectedHelpers": [
+        "addShortcutAction",
+        "runMiniAppShortcut"
+      ],
+      "originalMethodSHA256": "8c37973631f1b592a10d0fb7cedc44c004cf693275ebce0dfca734cc196b93eb",
+      "literalSurface": "miniAppShortcut",
+      "actualSurfaceDispatch": "runMiniAppShortcut"
+    },
+    {
+      "method": "testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult",
+      "affectedHelpers": [
+        "addShortcutAction",
+        "runMiniAppShortcut"
+      ],
+      "originalMethodSHA256": "0b7b72bc06e0e38a17b93666220cbe3664b54f248804e8ec22ffffa675147ed3",
+      "literalSurface": "miniAppShortcut",
+      "actualSurfaceDispatch": "runMiniAppShortcut"
+    },
+    {
+      "method": "testExpoRunMiniAppActionSavedForegroundReturnsTypedResult",
+      "affectedHelpers": [
+        "addShortcutAction",
+        "runMiniAppShortcut"
+      ],
+      "originalMethodSHA256": "0a92b592c0239fb99d6c81b35e804187c371b4c14890343c676f5a82c7604ec0",
+      "literalSurface": "miniAppShortcut",
+      "actualSurfaceDispatch": "runMiniAppShortcut"
+    },
+    {
+      "method": "testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult",
+      "affectedHelpers": [
+        "addShortcutAction",
+        "runMiniAppShortcut"
+      ],
+      "originalMethodSHA256": "0325329f23a56790dd1ea99a6cb64e9a8a432e558f35fda98cbedc6b4283c59a",
+      "literalSurface": "miniAppShortcut",
+      "actualSurfaceDispatch": "runMiniAppShortcut"
+    },
+    {
+      "method": "testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+      "affectedHelpers": [
+        "configureConcurrencyShortcut"
+      ],
+      "originalMethodSHA256": "67a613f7abab69d488d858625b802cd43a2eae3d39ccd7b4c0e2e500749a5cd3",
+      "literalSurface": null,
+      "actualSurfaceDispatch": null
+    },
+    {
+      "method": "testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts",
+      "affectedHelpers": [
+        "configureConcurrencyShortcut"
+      ],
+      "originalMethodSHA256": "ea82291ea9dbf87b4d3597a2d6dbfb8faf7d7478130ff58d4de1b1ccebe8a84e",
+      "literalSurface": null,
+      "actualSurfaceDispatch": null
+    },
+    {
+      "method": "testExpoSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds",
+      "affectedHelpers": [
+        "addShortcutAction",
+        "configureConcurrencyShortcut"
+      ],
+      "originalMethodSHA256": "f3b1725a0e15d14f90e666b90c5e41917fab08fbf980a2b97a5d83047de39a5f",
+      "literalSurface": null,
+      "actualSurfaceDispatch": null
+    },
+    {
+      "method": "testNativeScriptSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds",
+      "affectedHelpers": [
+        "addShortcutAction",
+        "configureConcurrencyShortcut"
+      ],
+      "originalMethodSHA256": "f3fb25691b9b8b8cb9e163e3c33dcb2450c2809b3a1b6fc95efc0503865fe375",
+      "literalSurface": null,
+      "actualSurfaceDispatch": null
+    },
+    {
+      "method": "testExpoSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds",
+      "affectedHelpers": [
+        "addShortcutAction",
+        "configureConcurrencyShortcut"
+      ],
+      "originalMethodSHA256": "b6747df2ba37f74e3df7d58ccd936b9aea3fced3f8f5b50139095432d7d182e1",
+      "literalSurface": null,
+      "actualSurfaceDispatch": null
+    },
+    {
+      "method": "testNativeScriptSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds",
+      "affectedHelpers": [
+        "addShortcutAction",
+        "configureConcurrencyShortcut"
+      ],
+      "originalMethodSHA256": "f5dcaed2834d0811b28b98805dad9c8d01efbb1b9a806179815124e91c81fa95",
+      "literalSurface": null,
+      "actualSurfaceDispatch": null
+    },
+    {
+      "method": "testNativeScriptSavedTextListReopensThenClearsToEmpty",
+      "affectedHelpers": [
+        "addShortcutAction",
+        "createNativeListShortcut"
+      ],
+      "originalMethodSHA256": "83dec1b7b9404eebfec665b9bc5d8acf3af6453bac65640b7f971efe3d03ae90",
+      "literalSurface": null,
+      "actualSurfaceDispatch": null
+    },
+    {
+      "method": "testNativeScriptSavedIntegerListReopensThenClearsToEmpty",
+      "affectedHelpers": [
+        "addShortcutAction",
+        "createNativeListShortcut"
+      ],
+      "originalMethodSHA256": "5482966a2cc271d2651ac0ede5060eceae391eeb32d0b3d5bc94accb2cfc7cb0",
+      "literalSurface": null,
+      "actualSurfaceDispatch": null
+    },
+    {
+      "method": "testNativeScriptSavedNumberListReopensThenClearsToEmpty",
+      "affectedHelpers": [
+        "addShortcutAction",
+        "createNativeListShortcut"
+      ],
+      "originalMethodSHA256": "7676f94890a3167ec9388aa4ff4687d4f55e3c90a553a2aa39de6b21fdb8737f",
+      "literalSurface": null,
+      "actualSurfaceDispatch": null
+    },
+    {
+      "method": "testNativeScriptSavedBooleanListReopensThenClearsToEmpty",
+      "affectedHelpers": [
+        "addShortcutAction",
+        "createNativeListShortcut"
+      ],
+      "originalMethodSHA256": "0efb9eb09c6ce99eef40684b3b1c6fa432f12b4b04bd37cfc4402886d615ae88",
+      "literalSurface": null,
+      "actualSurfaceDispatch": null
+    }
+  ],
+  "unchangedSurfaceSwitchBranches": {
+    "widget": "runPlacedWidget",
+    "liveActivity": "runLiveActivity",
+    "shortcuts": "runShortcut",
+    "miniAppShortcut": "runMiniAppShortcut",
+    "share": "runShare",
+    "translation": "runTranslation"
+  },
+  "otherSurfaceCasesDoNotReachChangedHelpers": [
+    {
+      "method": "testExpoPlacedWidgetInvokesAllFiveRuntimes",
+      "literalSurface": "widget",
+      "actualSurfaceDispatch": "runPlacedWidget"
+    },
+    {
+      "method": "testNativeScriptPlacedWidgetInvokesAllFiveRuntimes",
+      "literalSurface": "widget",
+      "actualSurfaceDispatch": "runPlacedWidget"
+    },
+    {
+      "method": "testExpoLiveActivityInvokesAllFiveRuntimes",
+      "literalSurface": "liveActivity",
+      "actualSurfaceDispatch": "runLiveActivity"
+    },
+    {
+      "method": "testNativeScriptLiveActivityInvokesAllFiveRuntimes",
+      "literalSurface": "liveActivity",
+      "actualSurfaceDispatch": "runLiveActivity"
+    },
+    {
+      "method": "testExpoSystemShareInvokesAllFiveRuntimes",
+      "literalSurface": "share",
+      "actualSurfaceDispatch": "runShare"
+    },
+    {
+      "method": "testNativeScriptSystemShareInvokesAllFiveRuntimes",
+      "literalSurface": "share",
+      "actualSurfaceDispatch": "runShare"
+    },
+    {
+      "method": "testExpoSystemTranslationInvokesAllFiveRuntimes",
+      "literalSurface": "translation",
+      "actualSurfaceDispatch": "runTranslation"
+    },
+    {
+      "method": "testNativeScriptSystemTranslationInvokesAllFiveRuntimes",
+      "literalSurface": "translation",
+      "actualSurfaceDispatch": "runTranslation"
+    }
+  ],
+  "newWaitAllowances": 0,
+  "nativeTimingNotMeasured": true
+}

@@ -1,0 +1,27 @@
+{
+  "runID": 46113028468,
+  "source": "5f827bac46543271991668a089830650893cd72d",
+  "diagnosisManifest": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcuts-system-ui-5f827bac-diagnosis-r1/manifest.json",
+    "sha256": "eee932419741a2e90b8d4d836e38f772021dac3a0dd0bc184b79a9b4b00ce355"
+  },
+  "assessment": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcuts-system-ui-5f827bac-diagnosis-r1/assessment.json",
+    "sha256": "27cb088f7c721aa98687e1568806d9e4127ae3a370aadd8c58ff7c142c13fdf7"
+  },
+  "ownCaseEvidence": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcuts-system-ui-5f827bac-diagnosis-r1/actual-own-case-evidence.json",
+    "sha256": "a5d7332e1b7810b3f5943c2a2e8eae36b45c664fdeba059b19e3efa2311ba483"
+  },
+  "actualNativeLogExcerpts": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcuts-system-ui-5f827bac-diagnosis-r1/actual-native-excerpts.json",
+    "sha256": "fd4838113038e07b378bb29cbe9860b06f8547d68d3e52f203aeaddcb21f019b"
+  },
+  "nativeCounts": {
+    "started": 4,
+    "passed": 0,
+    "failed": 4
+  },
+  "unchangedRawPacket": true,
+  "differentExpoReaderBoundary": "The two Expo identity waits precede creation and are addressed by the separately sealed observer correction; no sole-cause or native success claim."
+}

@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "status": "APPROVED_SOURCE_ONLY_NATIVE_NOT_RUN",
+  "base": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+  "sourceCommit": "fb0b5af649a0d8e1cf67456dcfa57b40ba29ab1a",
+  "sourcePath": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "sourceSHA256": "cc5253987c66f16528b5e5423523e96d31a255a278330eeddf07ca0997e1f8a3",
+  "patchSHA256": "98272e51ce9c00330081dc833e4e0408adc3a36a1f0aa4a24537d4964fd6f89b",
+  "reviewSHA256": "f10aedf82b1520e151beb33391589cf2eb5eae9752753a3f0bd042191f6968aa",
+  "originalMethodsPreserved": 42,
+  "otherOriginalHelpersPreserved": 125,
+  "changedHelpers": 5,
+  "addedPrivateHelpers": 3,
+  "actualAffectedMethods": 16,
+  "allOriginalPhaseCaseCommandJobAllowancesPreserved": true,
+  "directSDK396PathIntersection": [],
+  "newPortableRuns": 0,
+  "nativeStatus": "NOT_RUN",
+  "actualPriorRun": {
+    "id": 46113028468,
+    "source": "5f827bac46543271991668a089830650893cd72d",
+    "started": 4,
+    "passed": 0,
+    "failed": 4
+  },
+  "causalLimits": [
+    "Two NativeScript cases exposed distinct system-UI creation and manual-editor/action-search boundaries.",
+    "Two Expo cases failed before creation at the separately corrected storage/identity observer boundary; no sole-cause claim.",
+    "The actual compiled UI file hash was not retained; prior-source attribution uses Git plus the complete retained tracked overlay.",
+    "Public query API semantics are source-qualified. Current action-search locators, Swift compilation and original native cases remain pending."
+  ],
+  "rawEvidenceArchive": {
+    "members": 16,
+    "encoding": "tar+gzip",
+    "retention": "All member hashes are in raw-evidence-manifest.json; original log gzip bytes and decompressed hash/size are retained."
+  },
+  "scope": "Only system Shortcuts UI test helpers; no product, fixture, observer, workflow, selector or timeout changes."
+}

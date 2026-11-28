@@ -1,0 +1,111 @@
+{
+  "status": "ACTUAL_UI_DRIVER_BOUNDARIES_BOUND_SOURCE_REPAIR_AUTHORIZED_NO_NATIVE_RETRY",
+  "runID": 46113028468,
+  "source": "5f827bac46543271991668a089830650893cd72d",
+  "currentSource": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+  "actualCaseCount": 4,
+  "actualPassed": 0,
+  "actualFailed": 4,
+  "cases": [
+    {
+      "methods": [
+        "testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult",
+        "testExpoRunMiniAppActionSavedForegroundReturnsTypedResult"
+      ],
+      "actualFailure": "identity.json observation did not finish before original allowance",
+      "retainedObserverError": "Exactly one actual private state must match the fresh UI preparation",
+      "classification": "Old source uses app/Windows storage discovery for an Expo package-scoped state. Current source already contains the separately reviewed exact validated installed-package path correction. Native retry of that correction has not occurred.",
+      "limit": "No actual rejected Expo state row was retained in this run; source mismatch and observed reader error do not establish that it is the sole possible failure."
+    },
+    {
+      "method": "testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult",
+      "ownShortcutsPID": 56863,
+      "actualFailure": "Create an actual new system Shortcut.",
+      "events": [
+        {
+          "seconds": 84.54,
+          "event": "One actual Continue tap"
+        },
+        {
+          "seconds": 85.73,
+          "event": "Onboarding title no longer found; creation candidates examined"
+        },
+        {
+          "seconds": 85.95,
+          "event": "New Shortcut exists but firstButton returns its nonexisting fallback after the hittability check"
+        },
+        {
+          "seconds": 96.96,
+          "event": "Original12-second creation allowance expires with no creation tap"
+        }
+      ],
+      "classification": "Expanded Shortcuts sidebar remains over/dims the main pane after onboarding dismissal. The visible creation button is not hittable; the helper never dismisses the observed sidebar.",
+      "evidence": [
+        "90F44EAA-6419-4328-9F3D-267CBC8A8D09.txt",
+        "3021DBCE-3C51-428C-A39A-F5001840BF21.png",
+        "B32ABB75-C5D1-440E-947F-1276283FFB37.png"
+      ],
+      "limit": "Final-system AX belongs to SpringBoard81795; it is not a post-dismissal Shortcuts hierarchy. The start own AX supplies exact overlay navigation identifiers, the final system screenshot supplies visible post-dismissal context, and the raw source-bound query stream supplies the hittability inference."
+    },
+    {
+      "method": "testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult",
+      "ownShortcutsPID": 59438,
+      "actualFailure": "PRODUCT FAILED: MiniApps is absent from the functioning Shortcuts gallery.",
+      "events": [
+        {
+          "seconds": 31.67,
+          "event": "Actual New Shortcut button tapped"
+        },
+        {
+          "seconds": 35.64,
+          "event": "Add Action lookup returns absent"
+        },
+        {
+          "seconds": 35.83,
+          "event": "Generic first Search field tapped"
+        },
+        {
+          "seconds": 38.79,
+          "event": "Hanlin MiniApps typed into All Shortcuts library search"
+        }
+      ],
+      "classification": "The driver searches the library while the right New Shortcut pane remains in Describe-a-shortcut mode with an actual Editor button. No action-gallery query was reached.",
+      "evidence": [
+        "D91B1EA2-79D7-4209-8D0A-B7872344636A.txt",
+        "4CB13029-85DF-4170-88FF-333A310B94CF.txt",
+        "0CB5BE43-6330-4098-AA21-052D2022B907.png",
+        "C71469CB-E488-4622-8936-442CD7E6FEFC.png"
+      ],
+      "limit": "The old diagnostic string is retained as raw evidence, but is not a proven missing-product-action defect."
+    }
+  ],
+  "repairBoundary": {
+    "onlySourcePath": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+    "creation": "Use the same original12-second creation allowance; at most one actual observed onboarding Continue and one unique overlay-owned Hide Sidebar. Require the original creation button to become enabled and hittable before one actual tap.",
+    "actionSearch": "Use the original12-second search allowance; accept one uniquely visible action search with original known Search Actions or Search for apps and actions label/placeholder. If the exact New Shortcut navigation bar exposes Editor, tap it once and then use original Add Action. Never choose the All Shortcuts generic Search field.",
+    "callers": [
+      "runShortcut",
+      "runMiniAppShortcut",
+      "configureConcurrencyShortcut",
+      "createNativeListShortcut",
+      "addShortcutAction"
+    ],
+    "sharedConsumers": [
+      "old Run Script Action system cases",
+      "saved typed-result MiniApp Shortcuts",
+      "concurrency two cases",
+      "long-running four cases through configureConcurrencyShortcut",
+      "new native Lists four cases",
+      "original Get Text from Input and Show Result chains"
+    ],
+    "originalBudgets": "Each creation and action-search allowance stays12 seconds, clipped by the same existing case deadline. Existing optional Add/Search action opening allowance remains12 seconds; all selector/case/command/job limits and downstream assertions stay unchanged.",
+    "nonClaims": [
+      "No UI or native execution",
+      "No published action eligibility relaxation",
+      "No generic search fallback",
+      "No successful new locator claim",
+      "No new product or fixture change"
+    ]
+  },
+  "recordedAt": "2026-11-28T08:45:19.806130+00:00"
+}

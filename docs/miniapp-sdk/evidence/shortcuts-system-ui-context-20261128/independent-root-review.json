@@ -1,0 +1,86 @@
+{
+  "at": "2026-11-28T09:11:29.569071+00:00",
+  "status": "APPROVED_SOURCE_ONLY_NATIVE_NAVIGATION_PENDING",
+  "packets": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcuts-system-ui-5facdb20-source/candidate-r1",
+      "manifestSHA256": "d42f83aa8a6bc4be596f3e18f96ce42f3d1cd4dbe73df1e89957ed2f83232b79",
+      "members": 9
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcuts-system-ui-5f827bac-diagnosis-r1",
+      "manifestSHA256": "eee932419741a2e90b8d4d836e38f772021dac3a0dd0bc184b79a9b4b00ce355",
+      "members": 16
+    }
+  ],
+  "sourceSHA256": "cc5253987c66f16528b5e5423523e96d31a255a278330eeddf07ca0997e1f8a3",
+  "sourcePatchSHA256": "98272e51ce9c00330081dc833e4e0408adc3a36a1f0aa4a24537d4964fd6f89b",
+  "originalArtifactMembersVerified": 54,
+  "artifactIndexes": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-5f-shortcuts-families-terminal-r1/selected-r1/shortcuts/artifact-range-index.json",
+      "sha256": "4d162ddf230723f7ed788e13deecbf9082e02f55de191d30bff94c2e867d24c1",
+      "membersVerified": 19
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/w1-5f-shortcuts-families-terminal-r1/attachments-r1/shortcuts/artifact-range-index.json",
+      "sha256": "76075346bcbe898e3e97d55b00d0dee725f87d8076513061e9aeb10c6e356991",
+      "membersVerified": 35
+    }
+  ],
+  "ownCaseAXPNGVerified": 8,
+  "originalNativeCounts": {
+    "started": 4,
+    "failed": 4,
+    "passed": 0
+  },
+  "wholeFileInverse": true,
+  "changedHelpers": [
+    "addShortcutAction",
+    "configureConcurrencyShortcut",
+    "createNativeListShortcut",
+    "runMiniAppShortcut",
+    "runShortcut"
+  ],
+  "addedHelpers": [
+    "createSystemShortcut",
+    "findShortcutActionSearch",
+    "shortcutActionSearchFields"
+  ],
+  "unchangedOriginalTestBodies": 42,
+  "unchangedOtherOriginalHelpers": 125,
+  "downstreamSuffixes": 5,
+  "affectedOriginalMethods": 16,
+  "excludedOtherSurfaceMethods": 8,
+  "originalCreationAndSearchSeconds": 12,
+  "originalOptionalChainOpeningSeconds": 12,
+  "newWaitAllowances": 0,
+  "patchProjections": [
+    {
+      "base": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+      "tree": "b405e5585c2d604d03cba110a1f9da0b8d58bc13",
+      "uiSHA256": "cc5253987c66f16528b5e5423523e96d31a255a278330eeddf07ca0997e1f8a3",
+      "inverse": true
+    },
+    {
+      "base": "6061796ff67ec1619404a8320580a769923bcb47",
+      "tree": "d03ce86225ea35b713500a85a01008d8f5d08b6a",
+      "uiSHA256": "107fd8e6fe3b5568124586e55d9ae0ccaceeab46867f27a327e02a72e38b6e9a",
+      "inverse": true
+    }
+  ],
+  "galleryCompositionCommutes": true,
+  "publicAPISource": "https://developer.apple.com/documentation/xcuiautomation/xcuielementquery/matching(identifier:).md",
+  "rootPrimaryReadRef": "turn384371310view0",
+  "semanticFindings": [
+    "Apple public matching(identifier:) explicitly matches label and other identifying properties; exact Editor/Hide Sidebar labels are valid query inputs.",
+    "Actual own starting sidebar AX and final screenshot support distinct sidebar ownership; only unique observed visible/enabled controls may be tapped once.",
+    "Actual foreground own AX supports New Shortcut/Editor navigation. Only the original two action-search labels or placeholders are admitted; generic library Search is excluded.",
+    "All downstream action/entity/save/reopen/receipt assertions and case/command budgets remain. The existing wait is cooperative and remote query/tap latency is still subject to native case enforcement.",
+    "Two Expo identity waits remain a separate corrected reader boundary, not proof of sole cause. Positive navigation and indexed action completion require native runs."
+  ],
+  "reviewerNewPortableTests": 0,
+  "reviewerSwiftCompilation": false,
+  "reviewerNativeRuns": 0,
+  "visualReadback": "Original case image bytes/CRC and agent visual assessment verified; root did not repeat image rendering."
+}
