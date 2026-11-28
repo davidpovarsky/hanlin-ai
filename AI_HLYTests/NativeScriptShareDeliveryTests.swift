@@ -1,4 +1,5 @@
 import Foundation
+import HanlinNativeScriptRuntime
 import HanlinPlatformContracts
 import HanlinScriptCompiler
 import HanlinScriptExtensions
@@ -56,6 +57,75 @@ extension HanlinUnifiedHostServicesE2ETests {
             let group = try #require(FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.itorah.chavrusachat"))
             let inbox = try HanlinShareInboxStore(container: group)
             let queue = try HanlinScriptExtensionStore()
+            // Failure-only scalar observation. Do not retain a native session,
+            // serialize shared text/results, or replace the original thrown error.
+            @MainActor
+            func recordShareWaitFailure(_ originalError: any Error, iteration: Int, batchID: UUID) {
+                func bounded(_ value: String) -> String {
+                    String(decoding: value.utf8.prefix(256), as: UTF8.self)
+                }
+                let current = platform.installedPackages.first {
+                    $0.record.installedPackageID == installedID
+                }?.record
+                let activeApp = platform.activeApplicationID
+                let nativeSession = HanlinNativeScriptSession.activeSessionIdentifier
+                let windowRuntime = HanlinNativeScriptWindowSession.activeRuntimeSessionIdentifier
+                var fields: [String: Any] = [
+                    "schemaVersion": 1,
+                    "test": "actualOwnedShareDispatchWaitsForTheVMAndPreservesResultsAcrossTwoSessions",
+                    "sourceFile": #fileID, "phase": "terminal-receipt-wait",
+                    "processID": ProcessInfo.processInfo.processIdentifier,
+                    "observedAt": Date().timeIntervalSince1970,
+                    "processUptime": ProcessInfo.processInfo.systemUptime,
+                    "iteration": iteration, "batchID": batchID.uuidString.lowercased(),
+                    "appID": bounded(appID), "installedID": bounded(installedID.rawValue),
+                    "installedGeneration": String(installed.record.activeGeneration),
+                    "installedSourceDigest": bounded(installed.record.sourceDigest),
+                    "installedArtifactDigest": bounded(installed.record.artifactDigest),
+                    "currentInstallationPresent": current != nil,
+                    "activeApplicationPresent": activeApp != nil,
+                    "activeApplicationID": bounded(activeApp?.rawValue ?? ""),
+                    "activeNativeControllerPresent": platform.activeNativeScriptController != nil,
+                    "nativeSessionPresent": nativeSession != nil,
+                    "nativeSessionID": bounded(nativeSession ?? ""),
+                    "windowRuntimePresent": windowRuntime != nil,
+                    "windowRuntimeID": bounded(windowRuntime ?? ""),
+                    "pendingInPlatform": platform.pendingResumeCommands.contains { $0.id == batchID },
+                    "originalErrorType": bounded(String(reflecting: type(of: originalError)))
+                ]
+                if let current {
+                    fields["currentGeneration"] = String(current.activeGeneration)
+                    fields["currentSourceDigest"] = bounded(current.sourceDigest)
+                    fields["currentArtifactDigest"] = bounded(current.artifactDigest)
+                }
+                // One existing per-ID API read; its existing store-lock policy
+                // is unchanged. This is a sequential snapshot, not an atomic
+                // claim that a process-global VM belongs to this invocation.
+                do {
+                    let observed = try queue.receipt(for: batchID)
+                    fields["receiptPresent"] = observed != nil
+                    if let observed {
+                        fields["receiptInvocationID"] = observed.invocationID.uuidString.lowercased()
+                        fields["receiptStatus"] = observed.status.rawValue
+                        fields["receiptAttempt"] = observed.attempt
+                        fields["receiptUpdatedAt"] = observed.updatedAt.timeIntervalSince1970
+                        fields["receiptFailure"] = observed.failure?.rawValue ?? ""
+                        fields["receiptCancellationRequested"] = observed.cancellationRequested
+                        fields["receiptLeaseID"] = observed.leaseID?.uuidString.lowercased() ?? ""
+                        if let expiry = observed.leaseExpiresAt { fields["receiptLeaseExpiresAt"] = expiry.timeIntervalSince1970 }
+                        fields["receiptHasResult"] = observed.value != nil
+                    }
+                } catch {
+                    fields["receiptReadErrorType"] = bounded(String(reflecting: type(of: error)))
+                }
+                guard let data = try? JSONSerialization.data(withJSONObject: fields, options: [.sortedKeys]),
+                      data.count <= 16_384 else {
+                    print("HANLIN_SHARE_WAIT_FAILURE encoding_unavailable iteration=\(iteration) batch=\(batchID.uuidString.lowercased())")
+                    return
+                }
+                print("HANLIN_SHARE_WAIT_FAILURE " + String(decoding: data, as: UTF8.self))
+            }
+
             var batchIDs: [UUID] = []
             defer {
                 for id in batchIDs {
@@ -85,9 +155,14 @@ extension HanlinUnifiedHostServicesE2ETests {
                     platform.dismissActiveApplication()
                 }
                 let deadline = ContinuousClock.now + .seconds(120)
-                while try queue.receipt(for: id)?.status.isTerminal != true {
-                    try #require(ContinuousClock.now < deadline, "Actual Share action did not produce a terminal receipt")
-                    try await Task.sleep(for: .milliseconds(25))
+                do {
+                    while try queue.receipt(for: id)?.status.isTerminal != true {
+                        try #require(ContinuousClock.now < deadline, "Actual Share action did not produce a terminal receipt")
+                        try await Task.sleep(for: .milliseconds(25))
+                    }
+                } catch {
+                    recordShareWaitFailure(error, iteration: iteration, batchID: id)
+                    throw error
                 }
                 let receipt = try #require(try HanlinScriptExtensionStore().receipt(for: id))
                 #expect(receipt.status == .succeeded && receipt.attempt == 1)
