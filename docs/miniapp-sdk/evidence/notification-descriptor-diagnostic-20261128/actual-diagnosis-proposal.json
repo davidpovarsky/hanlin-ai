@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "classification": "READ_ONLY_DIAGNOSIS_AND_SOURCE_PROPOSAL_NO_CHANGE",
+  "source": {
+    "failedRun": 46128022331,
+    "head": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+    "currentMain": "04e33c45acedd3f372f836b06f17b805bc91293d",
+    "runnerSHA256": "a08434296ba9dc7c143029353043f0b0f32176fb65434829047802d5f406172f",
+    "helperSHA256": "fab2f99e9ee1cdb251c949453d8cfcef23a9b38a26d034c0b31d82e7831bc9e1",
+    "bothSourceHeadsEqual": true
+  },
+  "facts": {
+    "guard": "notification_check(len(candidates) == 1, 'the original build descriptor is missing or ambiguous')",
+    "candidateExpression": "sorted(products.glob('*.xctestrun'))",
+    "location": "Scripts/ProductSplit/run_native_acceptance.py:193-200",
+    "failureBeforeDescriptorParsing": true,
+    "candidateCount": "UNKNOWN: actual condition permits zero or more than one",
+    "candidateNames": "NOT_RETAINED",
+    "freshBuild": {
+      "action": "build-for-testing",
+      "exit": 0,
+      "seconds": 562.813190583,
+      "scheme": "HanlinMiniApps",
+      "project": "AI_HLY.xcodeproj",
+      "derivedData": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+      "products": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products",
+      "destination": "platform=iOS Simulator,id=F5C5682A-0694-48D5-BAB0-739501D09FE7,arch=arm64"
+    },
+    "installAndLaunch": "EXECUTED_PASS",
+    "ui": "NOT_RUN",
+    "testCommandCount": 0,
+    "cacheRestoreObserved": true,
+    "cacheCauseEstablished": false
+  },
+  "evidenceLimits": {
+    "rawBuildContainsDescriptorPath": false,
+    "rawJobContainsDescriptorPath": false,
+    "fullArtifactMembers": 117,
+    "artifactRetainsDescriptorOrProductsListing": false,
+    "sourceIdentityOrInputsContainDescriptorOrProductsRows": false,
+    "noNewAcquisition": true
+  },
+  "proposedDiagnostic": {
+    "placement": "Only the len(candidates) != 1 branch, after the existing products ownership/path checks and immediately before the unchanged guard.",
+    "records": [
+      "Actual full candidate count from the already-computed list; at most64 path/name records with explicit truncation count.",
+      "Original DerivedData argument, canonical DerivedData path and Build/Products root already admitted by existing ownership checks.",
+      "For at most64 existing candidate entries: lstat-only file type/mode/inode/device/size/mtime or exact OSError; do not read descriptor contents or follow symlinks.",
+      "lstat-only presence/type for the exact expected Debug-iphonesimulator app, UI runner and nested UI test bundle plus their parent directory; no recursive product walk.",
+      "The original build command and its actual exit/duration are bound through existing acceptance.json and commands.jsonl. If passing the command into this snapshot is chosen, use the existing state['build_command']; no recomputed build argv.",
+      "One fresh attempt-owned JSON snapshot using exclusive creation; if snapshot persistence fails, retain the error and still raise the identical original admission error."
+    ],
+    "unchanged": [
+      "Exact len(candidates)==1 admission; no best-match selection or foreign descriptor filtering.",
+      "Fresh build requirement, exact original one selector, all descriptor target/path/byte/source/product guards and original test argv transform.",
+      "Original1200-second command,650-second worker and600-second UI limits; no new waits, retries, subprocesses or native invocation.",
+      "All existing build/runtime/fixture/AppGroup checks and existing failure result."
+    ],
+    "bounds": {
+      "candidateRows": 64,
+      "productPathStats": 6,
+      "recursiveWalk": false,
+      "descriptorContentRead": false,
+      "newCommand": false,
+      "newWait": false,
+      "scope": "Failure-only bounded metadata capture. No missing-versus-ambiguous conclusion before an actual captured observation."
+    }
+  },
+  "implementationOwner": "Root after reviewing this proposal; no candidate edit or native retry performed here.",
+  "references": [
+    {
+      "path": "w1-notification-recovery-5facdb20-terminal-r1/selected-r1/notification/artifact-selected-members/acceptance.json",
+      "sha256": "9e884f98a393bed6dca955dbcce878ad8c7553888b0d0738194c9b5ea75e8d1b"
+    },
+    {
+      "path": "w1-notification-recovery-5facdb20-terminal-r1/selected-r1/notification/artifact-selected-members/build.log.gz",
+      "rawSHA256": "a38509a7e16dba1f12ed8e7c626639f6502d366e051f4e9531c27f7e60311d9f"
+    },
+    {
+      "path": "w1-notification-recovery-5facdb20-terminal-r1/job-logs/notification.job.log.gz",
+      "rawSHA256": "7c2a687519a8b371bf03449eaac660520ebfb35e37e9e0aa4e0c47bd5b72f3e4"
+    },
+    {
+      "path": "w1-notification-recovery-5facdb20-terminal-r1/selected-r1/selected-artifact-members-receipt.json",
+      "sha256": "93af37cda7425dd4318f1901b15d170c43d5812c794364c63f03107417ae2dbf"
+    },
+    {
+      "path": "w1-notification-recovery-5facdb20-terminal-r1/range-readback/notification/app-split-artifact/artifact-range-index.json",
+      "sha256": "0b61caaba64c222bad5f878d8e31d5fcf90dc252a578667d32e37382c49c1464"
+    }
+  ]
+}

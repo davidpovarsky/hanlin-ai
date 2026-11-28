@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "reviewer": "mac_build_resume",
+  "atUTC": "2026-11-28T10:00:23.560773+00:00",
+  "status": "APPROVED_SOURCE_ONLY",
+  "source": "04e33c45acedd3f372f836b06f17b805bc91293d",
+  "candidateManifestSHA256": "2714ddc079ba3d580d9a3119e45496b0b1ec14c6ad57e14d0acf1bacc27b05f9",
+  "manifestPayloadCount": 7,
+  "payloadBytes": 252779,
+  "totalFilesIncludingManifest": 8,
+  "reviewedRunnerSHA256": "da9546c9e60cfa17e1ea3689916ee632cf0fe92bac49e8365b30d8b397da82ba",
+  "reviewedControlsSHA256": "2b00160304759b6cd41f326f32b6f380b978963a1bb4a1885fe46850d0d33dff",
+  "wholeOriginalRunnerByteInverse": true,
+  "wholeOriginalControlsByteInverse": true,
+  "originalFunctionASTCount": 21,
+  "allOriginalRunnerFunctionASTsExactAfterDiagnosticRemoval": true,
+  "allOriginalControlAndHelperASTsExact": true,
+  "originalControlCount": 23,
+  "newControls": [
+    "test_descriptor_count_failure_retains_bounded_metadata_without_content_reads",
+    "test_descriptor_diagnostic_failure_preserves_original_error_and_prior_evidence"
+  ],
+  "actualFailureAuthority": {
+    "run": 46128022331,
+    "source": "5facdb200df2ab339ae52ff317e445cc3dd800dd",
+    "sameRunnerAndDescriptorHelperAs04": true,
+    "buildExit": 0,
+    "buildSeconds": 562.813190583,
+    "ui": "NOT_RUN",
+    "originalGuard": "len(candidates) == 1",
+    "actualCandidateCount": "UNKNOWN:zero or multiple",
+    "rawBuildSHA256": "a38509a7e16dba1f12ed8e7c626639f6502d366e051f4e9531c27f7e60311d9f",
+    "rawJobSHA256": "7c2a687519a8b371bf03449eaac660520ebfb35e37e9e0aa4e0c47bd5b72f3e4"
+  },
+  "semanticReview": [
+    "The hook only runs on the already-rejected descriptor-count branch. The identical uniqueness guard executes afterward.",
+    "Candidate population/order is the original already-computed list. All actual count plus at most64 lstat rows and6 fixed expected product paths are retained.",
+    "Fixed child paths are inspected only after their immediate parent was observed as a directory; final-component symlinks are reported, not read. This is metadata observation, not a new product or descriptor acceptance.",
+    "No descriptor content, recursive walk, subprocess, selection/filter, cache mutation, native command, wait or retry is added.",
+    "The attempt-owned diagnostic uses exclusive create mode; existing regular/symlink evidence cannot be overwritten. Ordinary persistence/metadata failures are caught and the original admission guard remains authoritative.",
+    "Canonical DerivedData/products and raw SPLIT_DERIVED_DATA environment value are explicitly separate; existing acceptance.json/commands.jsonl retain the exact actual build action/argv/result.",
+    "Original fresh-build, source/product/descriptor bytes, worker admission and terminal revalidation remain whole-file byte-exact outside the two additions. Original1200/650/600 limits are untouched.",
+    "New controls meaningfully cover zero and70 candidates with64-row cap, no plist reads, symlink preservation, prior evidence and permission failure. They are source-reviewed only by this reviewer."
+  ],
+  "SDK396Intersection": [],
+  "Host99Intersection": [],
+  "controlExecution": "NOT_REPEATED_BY_REVIEWER; root owns the one25-control run and its receipt",
+  "native": "NOT_RUN_BY_REVIEWER; no successful descriptor admission inferred",
+  "boundary": "Failure-only diagnosis, not a fix or a missing-versus-multiple causal conclusion.",
+  "sourcePayloads": [
+    {
+      "path": "controls.after.py",
+      "bytes": 46168,
+      "sha256": "2b00160304759b6cd41f326f32b6f380b978963a1bb4a1885fe46850d0d33dff"
+    },
+    {
+      "path": "controls.before.py",
+      "bytes": 42489,
+      "sha256": "98ae6e922e349ffa5af2e87cbd13669286cc4672e2c03e8eb835db7ebf7fee57"
+    },
+    {
+      "path": "diagnostic-helper.py",
+      "bytes": 3067,
+      "sha256": "1dfe2b8982f3375217e603a4e4969782a0f8463607cb7b6729b481a1c9eac6ea"
+    },
+    {
+      "path": "runner.after.py",
+      "bytes": 77566,
+      "sha256": "da9546c9e60cfa17e1ea3689916ee632cf0fe92bac49e8365b30d8b397da82ba"
+    },
+    {
+      "path": "runner.before.py",
+      "bytes": 74388,
+      "sha256": "a08434296ba9dc7c143029353043f0b0f32176fb65434829047802d5f406172f"
+    },
+    {
+      "path": "source-qualification.json",
+      "bytes": 818,
+      "sha256": "cc3e48bc8800d73985065af49fc17c301158a804516750204bb10fe331fe1658"
+    },
+    {
+      "path": "source.patch",
+      "bytes": 8283,
+      "sha256": "49b093d63987208dbdf4ef477bee5ca27bc2d40bb8fe001f3758f68451922547"
+    }
+  ]
+}
