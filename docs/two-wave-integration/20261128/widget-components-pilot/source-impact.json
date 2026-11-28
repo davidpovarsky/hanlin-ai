@@ -1,0 +1,33 @@
+{
+  "base": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "hostAuthority": {
+    "intersection": [],
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/post-icu-bundle-closure-main04e33c45-readonly-r1/git-input-and-tree-qualification.json",
+    "pathCount": 99,
+    "sha256": "6500ffeb0d0368072ab2d060b4cde26cf3531c5882857a344839ea0514024879"
+  },
+  "limits": [
+    "Actual d4 Linux SDK and historical99 Host closure remain source-scoped; not current hosted app acceptance.",
+    "No collector, SDK stage, producer, CLI, control or native command was executed."
+  ],
+  "scope": "Static changed-path intersection only; no new SDK/Host/native qualification",
+  "sdkManifest": {
+    "inputSHA256": "6f49d8486c1d9f64ab54065a8c822f8a77c2d55263af78c6268f5aafefe61352",
+    "intersection": [],
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/full-icu-original-hosted-live-d4d1b5e1-r2/completed-host-sdk-qualification-r1/MiniAppSDK-miniapp-sdk.json",
+    "pathCount": 396,
+    "sha256": "6ac6a79cf1242eff21a3e8a558590f780135b7e28e47ff1180c9b6d8ba250683"
+  },
+  "sourcePaths": [
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+    "Scripts/ProductSplit/observe_widget_components.py",
+    "Scripts/ProductSplit/run_paired_acceptance.py",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+    "Scripts/CI/Tests/test_widget_components_observer.py",
+    "Fixtures/WidgetComponents/script.json",
+    "Fixtures/WidgetComponents/widget.jsx",
+    "Scripts/CI/affected-validation-map.json",
+    "Scripts/CI/Tests/test_affected_validation.py"
+  ],
+  "workflowSeparate": ".github/workflows/validate-app-split.yml"
+}

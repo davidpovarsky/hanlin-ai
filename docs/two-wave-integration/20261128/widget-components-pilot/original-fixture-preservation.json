@@ -1,0 +1,184 @@
+{
+  "base": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "outputCount": 25,
+  "outputs": [
+    {
+      "bytes": 1149,
+      "candidatePatchTouches": false,
+      "gitBlob": "939b67f0349c3fa1c772b2c8d55643def1cdfd77",
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "sha256": "a52c828cdb87f115c668b7cba544781ce89c023b14a65551844ee7985faa3d9d"
+    },
+    {
+      "bytes": 1283,
+      "candidatePatchTouches": false,
+      "gitBlob": "c7d3f6d00440987240d377e6fa889afb57c89e0c",
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "sha256": "4532c361e91e32580a7dca5c120e1131bb2d9f07138b2b4103bdab138f588368"
+    },
+    {
+      "bytes": 968,
+      "candidatePatchTouches": false,
+      "gitBlob": "6f64a02b3f7d355e6452b1b753b1e42c79f0d81d",
+      "path": "Fixtures/Widgets/Hanlin-ScriptWidget-Dashboard.scripting",
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace"
+    },
+    {
+      "bytes": 825,
+      "candidatePatchTouches": false,
+      "gitBlob": "60b75892d301552659e5de4b7df6813186b527e7",
+      "path": "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting",
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+    },
+    {
+      "bytes": 1000,
+      "candidatePatchTouches": false,
+      "gitBlob": "234e4b0b1bf6535f681ad1d2cf9dcbb5d1494512",
+      "path": "Fixtures/Widgets/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "sha256": "2121ea971faa158e891b8222372e2250062286b813ad8a889971cc351a8c75d7"
+    },
+    {
+      "bytes": 444,
+      "candidatePatchTouches": false,
+      "gitBlob": "31bd2a33d7d078d70b54d1861e3c74cad766fcba",
+      "path": "Fixtures/Widgets/Hanlin-Widget-Legacy-Regression.scripting",
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f"
+    },
+    {
+      "bytes": 949,
+      "candidatePatchTouches": false,
+      "gitBlob": "9ffea1e09848037430647c1fb80ac321f396fcb4",
+      "path": "Fixtures/Widgets/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "sha256": "a86f47a41f684ecbb1dcce23552798b88cc7ab6622a8c316f2b721b44daf52c5"
+    },
+    {
+      "bytes": 1953,
+      "candidatePatchTouches": false,
+      "gitBlob": "fce35a3656fc70e4ae17aa956f12259af000a814",
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo",
+      "sha256": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995"
+    },
+    {
+      "bytes": 1149,
+      "candidatePatchTouches": false,
+      "gitBlob": "939b67f0349c3fa1c772b2c8d55643def1cdfd77",
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "sha256": "a52c828cdb87f115c668b7cba544781ce89c023b14a65551844ee7985faa3d9d"
+    },
+    {
+      "bytes": 1283,
+      "candidatePatchTouches": false,
+      "gitBlob": "c7d3f6d00440987240d377e6fa889afb57c89e0c",
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "sha256": "4532c361e91e32580a7dca5c120e1131bb2d9f07138b2b4103bdab138f588368"
+    },
+    {
+      "bytes": 968,
+      "candidatePatchTouches": false,
+      "gitBlob": "6f64a02b3f7d355e6452b1b753b1e42c79f0d81d",
+      "path": "AI_HLYUITests/Fixtures/Hanlin-ScriptWidget-Dashboard.scripting",
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace"
+    },
+    {
+      "bytes": 825,
+      "candidatePatchTouches": false,
+      "gitBlob": "60b75892d301552659e5de4b7df6813186b527e7",
+      "path": "AI_HLYUITests/Fixtures/Hanlin-ScriptWidget-Actions.scripting",
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+    },
+    {
+      "bytes": 1000,
+      "candidatePatchTouches": false,
+      "gitBlob": "234e4b0b1bf6535f681ad1d2cf9dcbb5d1494512",
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "sha256": "2121ea971faa158e891b8222372e2250062286b813ad8a889971cc351a8c75d7"
+    },
+    {
+      "bytes": 444,
+      "candidatePatchTouches": false,
+      "gitBlob": "31bd2a33d7d078d70b54d1861e3c74cad766fcba",
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Widget-Legacy-Regression.scripting",
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f"
+    },
+    {
+      "bytes": 949,
+      "candidatePatchTouches": false,
+      "gitBlob": "9ffea1e09848037430647c1fb80ac321f396fcb4",
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "sha256": "a86f47a41f684ecbb1dcce23552798b88cc7ab6622a8c316f2b721b44daf52c5"
+    },
+    {
+      "bytes": 1953,
+      "candidatePatchTouches": false,
+      "gitBlob": "fce35a3656fc70e4ae17aa956f12259af000a814",
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo",
+      "sha256": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995"
+    },
+    {
+      "bytes": 1149,
+      "candidatePatchTouches": false,
+      "gitBlob": "939b67f0349c3fa1c772b2c8d55643def1cdfd77",
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "sha256": "a52c828cdb87f115c668b7cba544781ce89c023b14a65551844ee7985faa3d9d"
+    },
+    {
+      "bytes": 1283,
+      "candidatePatchTouches": false,
+      "gitBlob": "c7d3f6d00440987240d377e6fa889afb57c89e0c",
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "sha256": "4532c361e91e32580a7dca5c120e1131bb2d9f07138b2b4103bdab138f588368"
+    },
+    {
+      "bytes": 968,
+      "candidatePatchTouches": false,
+      "gitBlob": "6f64a02b3f7d355e6452b1b753b1e42c79f0d81d",
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-ScriptWidget-Dashboard.scripting",
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace"
+    },
+    {
+      "bytes": 825,
+      "candidatePatchTouches": false,
+      "gitBlob": "60b75892d301552659e5de4b7df6813186b527e7",
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-ScriptWidget-Actions.scripting",
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+    },
+    {
+      "bytes": 1000,
+      "candidatePatchTouches": false,
+      "gitBlob": "234e4b0b1bf6535f681ad1d2cf9dcbb5d1494512",
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "sha256": "2121ea971faa158e891b8222372e2250062286b813ad8a889971cc351a8c75d7"
+    },
+    {
+      "bytes": 444,
+      "candidatePatchTouches": false,
+      "gitBlob": "31bd2a33d7d078d70b54d1861e3c74cad766fcba",
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Widget-Legacy-Regression.scripting",
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f"
+    },
+    {
+      "bytes": 949,
+      "candidatePatchTouches": false,
+      "gitBlob": "9ffea1e09848037430647c1fb80ac321f396fcb4",
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "sha256": "a86f47a41f684ecbb1dcce23552798b88cc7ab6622a8c316f2b721b44daf52c5"
+    },
+    {
+      "bytes": 1953,
+      "candidatePatchTouches": false,
+      "gitBlob": "fce35a3656fc70e4ae17aa956f12259af000a814",
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo",
+      "sha256": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995"
+    },
+    {
+      "bytes": 4242,
+      "candidatePatchTouches": false,
+      "gitBlob": "4749753f17a58c8f52fa295319bfe5341e5fa9db",
+      "path": "Fixtures/Widgets/SHA256.json",
+      "sha256": "2c3fac22ca5647ab476bbbfddd6286565959da7b9c1a21438a956c94b64d0466"
+    }
+  ],
+  "qualification": "Actual base Git objects read; none is changed or overwritten by the candidate or new recipe. No original producer replay/native claim.",
+  "sourceRecipe": "Scripts/Widgets/samples.mjs",
+  "sourceSHA256": "5c36e26e3b7d86cbb017c67660070e5d3ea2f06faaae807ea72e7ce2c6fa9b82"
+}

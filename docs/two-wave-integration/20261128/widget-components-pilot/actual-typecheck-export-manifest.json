@@ -1,0 +1,145 @@
+{
+  "schema": 1,
+  "status": "TYPECHECK_PASS_ONLY",
+  "sourceProjection": "fc5 plus exact reviewed component UI0242e3cd",
+  "files": [
+    {
+      "path": "admission.json",
+      "bytes": 6079,
+      "sha256": "a40df22ee61cc8e2ebd466055af73d83518f441bca8798d2e8e08549c7af8671",
+      "mode": "0o644"
+    },
+    {
+      "path": "controller-binding-inverse.json",
+      "bytes": 487,
+      "sha256": "e3c07e18b0637968a86a857da4af00e07a25c370f82b0590e8ea3daa32884aa1",
+      "mode": "0o644"
+    },
+    {
+      "path": "controller-launch.json",
+      "bytes": 299,
+      "sha256": "b57494b329964dcf4c78f6d9a0d4af12d2dfb5b86e49ef0ff2983f534b0e9e28",
+      "mode": "0o644"
+    },
+    {
+      "path": "controller.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0o644"
+    },
+    {
+      "path": "controller.stdout.log",
+      "bytes": 2162,
+      "sha256": "981f1a4c075b807e6f462c75c251a3510798a4027f764797c076c6046b8fc58e",
+      "mode": "0o644"
+    },
+    {
+      "path": "launch.json",
+      "bytes": 2914,
+      "sha256": "c1d540b2f4a85ac74e497c6b98774d9038c2fc7ef34924076c2e715c55496b41",
+      "mode": "0o644"
+    },
+    {
+      "path": "payload-manifest.json",
+      "bytes": 1928,
+      "sha256": "e0c383c19e8b139c3e7e68f84028fd7eecbc6ae83f415f3f5cc31b29c560b42d",
+      "mode": "0o644"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 2352,
+      "sha256": "741d574bb9cc61f3b9a24fd7c739f79a45130b3dbe3981d8dd46898829ec459e",
+      "mode": "0o644"
+    },
+    {
+      "path": "remaining-owned-source-processes.json",
+      "bytes": 332,
+      "sha256": "6e88eae51b03b85ee76ed93e2da49560ccf861f47fe17c4cf3e8bfd69b33d363",
+      "mode": "0o644"
+    },
+    {
+      "path": "source/HanlinEntrypointSystemSurfaceUITests.swift",
+      "bytes": 294243,
+      "sha256": "0242e3cd6074290011b8239626b1406009973ebe0a267b1082a12df7bfd2a2ed",
+      "mode": "0o644"
+    },
+    {
+      "path": "source-after.json",
+      "bytes": 1327,
+      "sha256": "12ea217da2d8735fbe429382b010b20745502f6ab191a1fc1c6bec1cc3e329bd",
+      "mode": "0o644"
+    },
+    {
+      "path": "source-authorities/AI_HLY.xcodeproj/project.pbxproj",
+      "bytes": 272874,
+      "sha256": "16d57d2ba64e9b39b3a7fdf2536a823d6f59055d2222517a8dab49f73560fcc9",
+      "mode": "0o644"
+    },
+    {
+      "path": "source-authorities/AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme",
+      "bytes": 5513,
+      "sha256": "1a37dc5e015ee2e29e873f3e6d6035d6e933ec4eb27848c1263e51c9958af480",
+      "mode": "0o644"
+    },
+    {
+      "path": "source-authorities/AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinMiniApps.xcscheme",
+      "bytes": 3843,
+      "sha256": "45badd3c80274ccba347b3a511b3a1f889b6a0e9e2adfa53198870cc79eaaad7",
+      "mode": "0o644"
+    },
+    {
+      "path": "source-authorities/Scripts/CI/IntegrationValidation/project_graph.py",
+      "bytes": 25273,
+      "sha256": "b55b15a969fb438d32f78db491e65ea51d755019d3f2d563e61e1cffe9f9afbd",
+      "mode": "0o644"
+    },
+    {
+      "path": "source-authorities/Scripts/ProductSplit/extension_inventory.py",
+      "bytes": 4263,
+      "sha256": "969011d17099fada7c7010528579ec8b3a256b8c7bb25fcfd609789e800068a8",
+      "mode": "0o644"
+    },
+    {
+      "path": "source-authorities/Scripts/ProductSplit/verify_targets.py",
+      "bytes": 15644,
+      "sha256": "7d98c480a0a9866115527277abd093e897671705a6164e86b5952e00093c1602",
+      "mode": "0o644"
+    },
+    {
+      "path": "source-before.json",
+      "bytes": 1327,
+      "sha256": "12ea217da2d8735fbe429382b010b20745502f6ab191a1fc1c6bec1cc3e329bd",
+      "mode": "0o644"
+    },
+    {
+      "path": "source-intake.json",
+      "bytes": 2483,
+      "sha256": "b0c8406266d4c7658c86194d4e58e23627aca69823d7cbc7c3ae0e248a23b2bf",
+      "mode": "0o644"
+    },
+    {
+      "path": "toolchain-before.json",
+      "bytes": 679,
+      "sha256": "93b89016d1d078a043b7832273cdcfcff359047a5c61c8507005a3b30a237ab0",
+      "mode": "0o644"
+    },
+    {
+      "path": "typecheck-controller.py",
+      "bytes": 5474,
+      "sha256": "c88218de55bfee2d465a1f3cacf27d5f10ec935b623aadad63ed9e87bc204018",
+      "mode": "0o644"
+    },
+    {
+      "path": "typecheck.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0o644"
+    },
+    {
+      "path": "typecheck.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0o644"
+    }
+  ]
+}

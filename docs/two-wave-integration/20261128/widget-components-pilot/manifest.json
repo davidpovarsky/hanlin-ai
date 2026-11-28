@@ -1,0 +1,79 @@
+{
+  "base": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "bytes": 77431,
+  "count": 14,
+  "members": [
+    {
+      "bytes": 3486,
+      "path": "README.md",
+      "sha256": "3e7df4c30dd88f8152dc34b45c3a1184e58db664497f1e39fa8ee8b8ea07a33a"
+    },
+    {
+      "bytes": 4537,
+      "path": "actual-typecheck-export-manifest.json",
+      "sha256": "ab55bb6178379dc676d1d7c510185c04d78367964468c8e173a394ff200f3c6f"
+    },
+    {
+      "bytes": 2352,
+      "path": "actual-typecheck-receipt.json",
+      "sha256": "741d574bb9cc61f3b9a24fd7c739f79a45130b3dbe3981d8dd46898829ec459e"
+    },
+    {
+      "bytes": 4365,
+      "path": "candidate-manifest.json",
+      "sha256": "5f3d7a829d5767dbd7b40bf8aa7e052b9a3ecbdeb7ca9c7a08f74133c23b7e6c"
+    },
+    {
+      "bytes": 7700,
+      "path": "independent-mac-source-review.json",
+      "sha256": "9248e62fc093493438b1b246aa32494166199018959e8c592149a5303dfaa944"
+    },
+    {
+      "bytes": 4198,
+      "path": "independent-root-source-review.json",
+      "sha256": "0e68136c733e9ca1fc8622625e413bebd214ceb16b570fef1e93df0396245eb1"
+    },
+    {
+      "bytes": 1400,
+      "path": "independent-root-typecheck-review.json",
+      "sha256": "e96f72c8dd19e2b24c54651f0e3dba5b51407ad1d56b26f4bf58eb1d7c7519fc"
+    },
+    {
+      "bytes": 7909,
+      "path": "original-fixture-preservation.json",
+      "sha256": "ca480c10844ef838d18037c9297bc72fbd4e357a2541cf8e343a8683fab89cfa"
+    },
+    {
+      "bytes": 2960,
+      "path": "post-freeze-static-qualification.json",
+      "sha256": "3ea717654a1179a6c0b7cc4d234eddcaaa602be93db90f76cd8c52f4af3e983b"
+    },
+    {
+      "bytes": 2712,
+      "path": "qualification.json",
+      "sha256": "7ef4256a43f3ffb7e0ec481dfc84cdb7fc29d5e94b8d67b86ab9f23d3439e50d"
+    },
+    {
+      "bytes": 1696,
+      "path": "source-impact.json",
+      "sha256": "09d5d4d52b398204f36df07de22893ca0b1a0b6fe6e35f23c7370db0f0dfcafd"
+    },
+    {
+      "bytes": 3187,
+      "path": "source-seal.json",
+      "sha256": "2d2f7775e853e025369ec477a270bba3a4c09a810e08a5b6b92a202a02bf910e"
+    },
+    {
+      "bytes": 9992,
+      "path": "source-validation.json",
+      "sha256": "a0fdf675a864bff7a5e164d2885954c3004b0a10a0f94497ec41b28cf33def4e"
+    },
+    {
+      "bytes": 20937,
+      "path": "source.patch.gz",
+      "sha256": "56356e9d637201d086c116a1cb11cb7668f0a4ad65557ac70b33f1607a076bc3"
+    }
+  ],
+  "schema": 1,
+  "sourceCommit": "8c968dd2c38f6277216a70288991a7efa2656511"
+}
