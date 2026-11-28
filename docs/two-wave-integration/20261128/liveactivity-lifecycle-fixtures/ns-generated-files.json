@@ -1,0 +1,92 @@
+[
+  {
+    "path": "0bdcccdf-5116-462e-802e-45d428266772/package/hanlin.authoring.json",
+    "bytes": 2051,
+    "sha256": "425ae2b8bcece55bd4d333239c381146fedfb446939563f89978832f09e31d64",
+    "mode": 420
+  },
+  {
+    "path": "0bdcccdf-5116-462e-802e-45d428266772/package/hanlin.validation.json",
+    "bytes": 899,
+    "sha256": "24bf29ac640c3dee6c1c4870f96df6d378158328711a7cf024a221ce0610ca88",
+    "mode": 420
+  },
+  {
+    "path": "0bdcccdf-5116-462e-802e-45d428266772/package/nativescript/app/bundle.mjs",
+    "bytes": 30,
+    "sha256": "77326621f8ddcf98a2eccfc7deb128f535b962f1969f914b562a8d3823a7d049",
+    "mode": 420
+  },
+  {
+    "path": "0bdcccdf-5116-462e-802e-45d428266772/package/nativescript/app/modules/index.mjs",
+    "bytes": 10723,
+    "sha256": "c20d211e50bb91f48b6e8289d11da752912d5f5a447596f8c034bdbf44bc5aec",
+    "mode": 420
+  },
+  {
+    "path": "0bdcccdf-5116-462e-802e-45d428266772/package/nativescript/app/modules/index.mjs.map",
+    "bytes": 21527,
+    "sha256": "ae74dae2f1d8212561ffbe6554ba1d1fd170c29202172feb7d4c213836fef821",
+    "mode": 420
+  },
+  {
+    "path": "0bdcccdf-5116-462e-802e-45d428266772/package/nativescript/app/modules/widget.jsx",
+    "bytes": 923,
+    "sha256": "1b61cc1b750e82415cac38a9b6af78fc63154ec98d0f7a4dfcddddf2ccf2bc90",
+    "mode": 420
+  },
+  {
+    "path": "0bdcccdf-5116-462e-802e-45d428266772/package/nativescript/app/package.json",
+    "bytes": 345,
+    "sha256": "9b400bd989f784b4a69767530132843dfcc83f5575fee2f02d61ee1eafcebbd9",
+    "mode": 420
+  },
+  {
+    "path": "0bdcccdf-5116-462e-802e-45d428266772/package/script.json",
+    "bytes": 700,
+    "sha256": "bb4dbd0fa034e6f9e29bf39d76f00146f5a7e5e770fa38265ac7c60f37a22885",
+    "mode": 420
+  },
+  {
+    "path": "0bdcccdf-5116-462e-802e-45d428266772/package/source/hanlin.authoring.json",
+    "bytes": 146,
+    "sha256": "228cd8d7c2d312b4f5c1ef2ba89a4c4a2e02f9b750a82411346c0da9885971c5",
+    "mode": 420
+  },
+  {
+    "path": "0bdcccdf-5116-462e-802e-45d428266772/package/source/index.ts",
+    "bytes": 11271,
+    "sha256": "c99e8b36bf5e155340f29ff26f549532910c890095a549afd21708e372f2483c",
+    "mode": 420
+  },
+  {
+    "path": "0bdcccdf-5116-462e-802e-45d428266772/package/source/package.json",
+    "bytes": 293,
+    "sha256": "67c8ebb3dc9a091eb9484f0f2a7122cd82cc43567480964cfed04a074790ec9d",
+    "mode": 420
+  },
+  {
+    "path": "0bdcccdf-5116-462e-802e-45d428266772/package/source/script.json",
+    "bytes": 700,
+    "sha256": "bb4dbd0fa034e6f9e29bf39d76f00146f5a7e5e770fa38265ac7c60f37a22885",
+    "mode": 420
+  },
+  {
+    "path": "0bdcccdf-5116-462e-802e-45d428266772/package/source/tsconfig.json",
+    "bytes": 75,
+    "sha256": "4148cad60e1db19b1159ba84bd5e8b9749bf9c90ed607de6fbeeaa942cf2097d",
+    "mode": 420
+  },
+  {
+    "path": "0bdcccdf-5116-462e-802e-45d428266772/package/source/widget.jsx",
+    "bytes": 923,
+    "sha256": "1b61cc1b750e82415cac38a9b6af78fc63154ec98d0f7a4dfcddddf2ccf2bc90",
+    "mode": 420
+  },
+  {
+    "path": "0bdcccdf-5116-462e-802e-45d428266772/package/widget.jsx",
+    "bytes": 923,
+    "sha256": "1b61cc1b750e82415cac38a9b6af78fc63154ec98d0f7a4dfcddddf2ccf2bc90",
+    "mode": 420
+  }
+]

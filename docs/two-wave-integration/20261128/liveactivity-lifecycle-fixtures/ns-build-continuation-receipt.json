@@ -1,0 +1,104 @@
+{
+  "startedAt": "2026-11-28T12:04:54.952339+00:00",
+  "source": "de44473dfa2684051974c76f3b91504b186b3c3d",
+  "status": "PASS_BOTH_ORIGINAL_ENGINE_RECIPES_WITH_QUALIFIED_WRAPPER_CORRECTION",
+  "engines": [
+    {
+      "engine": "nativescript",
+      "status": "PASS_ORIGINAL_PORTABLE_BUILD",
+      "archive": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/liveactivity-lifecycle-de44473d-original-cli-r1/ns-build-continuation-r2/nativescript/LiveActivityLifecycleNativeScript.hanlinNativeScript",
+        "bytes": 17759,
+        "sha256": "a8c2e10eb2ae4bc8541b448979680b81c1604df459d84a3be1537ca7846590cf"
+      },
+      "archiveMembers": 15,
+      "retainedGeneratedFiles": 15
+    }
+  ],
+  "commands": [
+    {
+      "engine": "nativescript",
+      "operation": "build",
+      "argv": [
+        "/mnt/development/projects/toolchains/node-v24.5.0-linux-arm64/bin/node",
+        "Scripts/MiniApps/miniapp.mjs",
+        "build",
+        "--sdk",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/modular-search-types-ce896542/accepted-sdk/MiniAppSDK",
+        "--project",
+        "/mnt/development/projects/worktrees/hanlin-ci-1aef1ec1-20261128/Fixtures/LiveActivityLifecycle/nativescript",
+        "--archive",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/liveactivity-lifecycle-de44473d-original-cli-r1/ns-build-continuation-r2/nativescript/LiveActivityLifecycleNativeScript.hanlinNativeScript",
+        "--report",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/liveactivity-lifecycle-de44473d-original-cli-r1/ns-build-continuation-r2/nativescript/nativescript-build.json"
+      ],
+      "cwd": "/mnt/development/projects/worktrees/hanlin-ci-1aef1ec1-20261128",
+      "timeoutSeconds": 600,
+      "startedAt": "2026-11-28T12:05:03.067283+00:00",
+      "stopActions": [],
+      "pid": 528273,
+      "pgid": 528273,
+      "exit": 0,
+      "finishedAt": "2026-11-28T12:05:16.141743+00:00",
+      "seconds": 13.074487087316811,
+      "reportSHA256": "37277e8c0784de2dc1049241c903010601f1ba1c8cb4394656a0cefb789216b9",
+      "succeeded": true,
+      "compiler": {
+        "packageVersions": {
+          "@nativescript/core": "9.1.4",
+          "@nativescript/swift-ui": "4.0.2",
+          "@nativescript/ios": "9.1.1",
+          "@nativescript/types": "9.1.4",
+          "@nativescript/vite": "8.0.24",
+          "typescript": "5.9.3",
+          "vite": "8.0.0",
+          "@hanlin/notification-events": "1.0.0",
+          "@hanlin/system-surfaces": "1.0.0",
+          "@hanlin/host-services": "1.0.0",
+          "@hanlin/window-factory": "1.0.0",
+          "@hanlin/assistant-tools": "1.0.0"
+        },
+        "manifestSHA256": "7f2702e52587fe1d126cef37f068ab3a9e3a26adb275ffafb687cb38a2db9b87",
+        "compilerVersion": "5.9.3"
+      },
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": true,
+        "dependencyDeclarationsChecked": false
+      },
+      "diagnosticCount": 0
+    }
+  ],
+  "nativeCommands": 0,
+  "scope": "Expo original validate/build and NS original validate remain retained from prior exact attempt; only NS original build600 executes here. Actual NS strict source retains original skipLibCheck=true and TypeScript5.9.3; no SDK/compiler flag modification. Native/final shipping SDK gates separate.",
+  "failure": null,
+  "previousReceiptSHA256": "638b80a13e3e80005834f233c2a468d171b7bf25c27d3b7ad5fa19a6a6367c86",
+  "sourceFilesUnchanged": true,
+  "sdkCompleteBytesModesUnchanged": true,
+  "sdkPhysicalFiles": 25707,
+  "worktreeClean": true,
+  "commandsRepeated": 0,
+  "commandsExecutedInContinuation": 1,
+  "priorActualValidatedPhases": [
+    {
+      "engine": "expo",
+      "operation": "validate",
+      "exit": 0,
+      "reportSHA256": "05bb5fb76f7a48e3e31c61eb8771418612148a2bcc7c01f553ae814aed45affa"
+    },
+    {
+      "engine": "expo",
+      "operation": "build",
+      "exit": 0,
+      "reportSHA256": "e1462c1c7c63fec48b79ccec283521b81b161f7e9fc4ff3869eb306eacfd64ed"
+    },
+    {
+      "engine": "nativescript",
+      "operation": "validate",
+      "exit": 0,
+      "reportSHA256": "dce8bfe3ef6667587bffee648a3589863a0482dd8b061ac23420ccfec5791123"
+    }
+  ],
+  "finishedAt": "2026-11-28T12:05:40.040762+00:00"
+}

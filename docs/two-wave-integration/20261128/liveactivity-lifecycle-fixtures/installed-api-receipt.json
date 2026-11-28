@@ -1,0 +1,67 @@
+{
+  "status": "RETAINED_PUBLIC_SOURCE_READ_ONLY",
+  "actualSDKFingerprint": "6f49d8486c1d9f64ab54065a8c822f8a77c2d55263af78c6268f5aafefe61352",
+  "actualManifestSHA256": "6ac6a79cf1242eff21a3e8a558590f780135b7e28e47ff1180c9b6d8ba250683",
+  "originalInnerArchiveSHA256": "fdacf7568b23e1038e6ad2dd37b301809cae76a803feab24964cf4b96b860184",
+  "rows": [
+    {
+      "path": "expo/node_modules/expo-widgets/package.json",
+      "bytes": 1571,
+      "sha256": "645f89606fd11556371840926d3b07b7ec302a25ccc5709b6413ec508ec2f9ee",
+      "crc": "a985473c",
+      "actualManifestMatched": true
+    },
+    {
+      "path": "expo/node_modules/expo-widgets/build/Widgets.d.ts",
+      "bytes": 7312,
+      "sha256": "ef10c36afab89e8a28ef4b7e1efaaafee58ed2b90e0d1f420e8c36e06389fac4",
+      "crc": "dc58c348",
+      "actualManifestMatched": true
+    },
+    {
+      "path": "expo/node_modules/expo-widgets/build/Widgets.types.d.ts",
+      "bytes": 10283,
+      "sha256": "bbeebd690e279c638804e10fd6af7a01018e072830d7c5f34292f172aeb37ea3",
+      "crc": "193f0ec5",
+      "actualManifestMatched": true
+    },
+    {
+      "path": "expo/node_modules/expo-widgets/src/Widgets.ts",
+      "bytes": 9838,
+      "sha256": "897d60636fc17499ce52e0a52e14244f33ed7373bcaaac2d4b4d0eb8988c2dea",
+      "crc": "628cde49",
+      "actualManifestMatched": true
+    },
+    {
+      "path": "expo/node_modules/expo-widgets/src/Widgets.types.ts",
+      "bytes": 9912,
+      "sha256": "d32749ebdb75d08e1633665dbe8cbdc22142097bc61ebf7e38ea2050d596cf8d",
+      "crc": "2b66ae38",
+      "actualManifestMatched": true
+    },
+    {
+      "path": "expo/node_modules/expo-widgets/build/index.d.ts",
+      "bytes": 616,
+      "sha256": "d9089dac60398d5799434fee299dca54481038d2fdcb254af55ad3e1ac5ca21b",
+      "crc": "065709f7",
+      "actualManifestMatched": true
+    },
+    {
+      "path": "nativescript/node_modules/@nativescript/core/ui/text-field/index.d.ts",
+      "bytes": 1400,
+      "sha256": "e4bffa8f8deca05b9e156226808f8bf4781c10c89fed44467fab25c89b9768f4",
+      "crc": "8f4a2515",
+      "actualManifestMatched": true
+    },
+    {
+      "path": "nativescript/node_modules/@nativescript/core/index.d.ts",
+      "bytes": 3833,
+      "sha256": "e47fa8f9f8b7d773aa418be72e228a195c50a502ca76fd0dab21c9dd0a998277",
+      "crc": "4d618f45",
+      "actualManifestMatched": true
+    }
+  ],
+  "newDownload": false,
+  "compilerOrCLI": false,
+  "native": false
+}

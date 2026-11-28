@@ -1,0 +1,107 @@
+{
+  "archive": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/liveactivity-lifecycle-de44473d-original-cli-r1/expo/LiveActivityLifecycleExpo.hanlinExpo",
+    "bytes": 2019944,
+    "sha256": "b22370a308edcd50d9874588555bd6e248d298f6eb224700e60c9258199fe6bb"
+  },
+  "preparedPackagePath": "/mnt/development/projects/worktrees/hanlin-ci-1aef1ec1-20261128/Fixtures/LiveActivityLifecycle/expo/.hanlin-build/741c0950-151e-4614-8405-badfd6dd74b1/package",
+  "files": [
+    {
+      "path": "bundle.js",
+      "bytes": 3163922,
+      "sha256": "438baeee35ad7ab9cec45f5d475fe096e582220622686158d197003e58310336",
+      "crc32": "325e12c6",
+      "zipMode": 384,
+      "sourceMode": 420
+    },
+    {
+      "path": "bundle.js.map",
+      "bytes": 6743595,
+      "sha256": "80c2179c698b107febc45a8c8b16213c51eb499eabe9c0c16161907b04ec6a7b",
+      "crc32": "31fd0323",
+      "zipMode": 384,
+      "sourceMode": 420
+    },
+    {
+      "path": "hanlin.authoring.json",
+      "bytes": 2089,
+      "sha256": "0e3ffa564b4e9192b5241394c7c44254c62a10265fd996052ae977ee0455144c",
+      "crc32": "4040dc10",
+      "zipMode": 384,
+      "sourceMode": 420
+    },
+    {
+      "path": "hanlin.validation.json",
+      "bytes": 1307,
+      "sha256": "4a93e071245ddf05c414e4a5b868c6a60ec847ba2ab598c4346cce372fb211c7",
+      "crc32": "98bd4a57",
+      "zipMode": 384,
+      "sourceMode": 420
+    },
+    {
+      "path": "package.json",
+      "bytes": 768,
+      "sha256": "83121e790a6be46678c256173bba83621f887f10d27f1ae475e04a1692201224",
+      "crc32": "e1052b7e",
+      "zipMode": 384,
+      "sourceMode": 420
+    },
+    {
+      "path": "script.json",
+      "bytes": 487,
+      "sha256": "e6c6dcae32b51de961b7342b8c399f7df8469f67c0f58b11934c5c354521ff62",
+      "crc32": "c3650a25",
+      "zipMode": 384,
+      "sourceMode": 420
+    },
+    {
+      "path": "source/App.tsx",
+      "bytes": 12938,
+      "sha256": "a6f1bd6e9255262fea6f2c9b7d0dedd477969750efc44beba3c4db96d4acd74e",
+      "crc32": "97992571",
+      "zipMode": 384,
+      "sourceMode": 420
+    },
+    {
+      "path": "source/hanlin.authoring.json",
+      "bytes": 118,
+      "sha256": "57239928efb0bd0e6760bf64443e70bf021eb963f074908332de3f5b7959a5a3",
+      "crc32": "2186d655",
+      "zipMode": 384,
+      "sourceMode": 420
+    },
+    {
+      "path": "source/index.ts",
+      "bytes": 117,
+      "sha256": "e6ff990a5f73c39cebfecc539611b23872e530f1287c6b0d0d8447fbc9a832ee",
+      "crc32": "fb31af3c",
+      "zipMode": 384,
+      "sourceMode": 420
+    },
+    {
+      "path": "source/package.json",
+      "bytes": 334,
+      "sha256": "a886a091cc90947b1bd64d5a123af9dbde523cd35dabd7d5dea0384fe98fd61f",
+      "crc32": "a15cf0f3",
+      "zipMode": 384,
+      "sourceMode": 420
+    },
+    {
+      "path": "source/script.json",
+      "bytes": 487,
+      "sha256": "e6c6dcae32b51de961b7342b8c399f7df8469f67c0f58b11934c5c354521ff62",
+      "crc32": "c3650a25",
+      "zipMode": 384,
+      "sourceMode": 420
+    },
+    {
+      "path": "source/tsconfig.json",
+      "bytes": 53,
+      "sha256": "02e14c4b983c0f436d32ce0eb2f96309512a7d69774ed0c7d39ffa4175ccf7df",
+      "crc32": "747dda22",
+      "zipMode": 384,
+      "sourceMode": 420
+    }
+  ],
+  "allOriginalGeneratedBytesAndCRCVerified": true
+}

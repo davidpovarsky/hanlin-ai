@@ -1,0 +1,28 @@
+{
+  "Host99Intersection": [],
+  "HostCount": 99,
+  "SDK396Intersection": [],
+  "SDKCount": 396,
+  "actualSDKManifestSHA256": "6ac6a79cf1242eff21a3e8a558590f780135b7e28e47ff1180c9b6d8ba250683",
+  "collectorRootOrExplicitEntryIntersection": [],
+  "collectorRoots": 14,
+  "explicitInputs": 44,
+  "hostAndCollectorAuthoritySHA256": "6500ffeb0d0368072ab2d060b4cde26cf3531c5882857a344839ea0514024879",
+  "qualification": "Static path/collector relationship only. No collector/SDK/Host execution or current byte-identity claim.",
+  "sourcePaths": [
+    "Fixtures/LiveActivityLifecycle/expo/App.tsx",
+    "Fixtures/LiveActivityLifecycle/expo/hanlin.authoring.json",
+    "Fixtures/LiveActivityLifecycle/expo/index.ts",
+    "Fixtures/LiveActivityLifecycle/expo/package.json",
+    "Fixtures/LiveActivityLifecycle/expo/script.json",
+    "Fixtures/LiveActivityLifecycle/expo/tsconfig.json",
+    "Fixtures/LiveActivityLifecycle/nativescript/hanlin.authoring.json",
+    "Fixtures/LiveActivityLifecycle/nativescript/index.ts",
+    "Fixtures/LiveActivityLifecycle/nativescript/package.json",
+    "Fixtures/LiveActivityLifecycle/nativescript/script.json",
+    "Fixtures/LiveActivityLifecycle/nativescript/tsconfig.json",
+    "Fixtures/LiveActivityLifecycle/nativescript/widget.jsx",
+    "Scripts/CI/affected-validation-map.json",
+    "Scripts/CI/Tests/test_affected_validation.py"
+  ]
+}

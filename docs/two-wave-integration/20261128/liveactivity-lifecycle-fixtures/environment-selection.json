@@ -1,0 +1,14 @@
+{
+  "uid": 0,
+  "node": {
+    "path": "/mnt/development/projects/toolchains/node-v24.5.0-linux-arm64/bin/node",
+    "version": "v24.5.0",
+    "sha256": "47befb5f57df96771ce343d6293349ecf4d46c91110b626423ec3a49d2fee7c1",
+    "currentFileHashVerified": true
+  },
+  "actualNodeVersion": "v24.5.0",
+  "HANLIN_AUTHORING_TYPESCRIPT": null,
+  "NODE_OPTIONS": null,
+  "compilerOverrideIntroduced": false,
+  "sdkManifestSHA256": "7f2702e52587fe1d126cef37f068ab3a9e3a26adb275ffafb687cb38a2db9b87"
+}

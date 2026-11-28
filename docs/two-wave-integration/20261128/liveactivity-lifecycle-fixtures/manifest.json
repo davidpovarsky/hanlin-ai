@@ -1,0 +1,130 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4608,
+      "sha256": "f74176586b53f50ccb1293852f83219bf6e0e8c9427b092b683893ff4a423c73"
+    },
+    {
+      "path": "cli-admission.json",
+      "bytes": 11649,
+      "sha256": "cbf80beac548489529cd4e17610d57bb243b9aee86bdd2f79b45c95edfedbf89"
+    },
+    {
+      "path": "environment-selection.json",
+      "bytes": 489,
+      "sha256": "eb1c8b1f8cf0ad6f4652a83c2d17b01341bb538a71036ee579cbf62e65817cb5"
+    },
+    {
+      "path": "expo-archive-reconciliation.json",
+      "bytes": 3270,
+      "sha256": "45a36c4414dfaf5a7f5d3ec47f80487678cf4873cf28381981f6b27d60ea6814"
+    },
+    {
+      "path": "expo-build.json",
+      "bytes": 1772,
+      "sha256": "e1462c1c7c63fec48b79ccec283521b81b161f7e9fc4ff3869eb306eacfd64ed"
+    },
+    {
+      "path": "expo-generated-files.json",
+      "bytes": 2448,
+      "sha256": "534043c173e93e4f7e5e4306e5d638e4df4a2e1f42948383e28444090819e871"
+    },
+    {
+      "path": "expo-validate.json",
+      "bytes": 1403,
+      "sha256": "05bb5fb76f7a48e3e31c61eb8771418612148a2bcc7c01f553ae814aed45affa"
+    },
+    {
+      "path": "independent-cli-review.json",
+      "bytes": 16231,
+      "sha256": "1c0ef44566910db62dde6b45a80b6e8aab55d129e9ae39f6c924ddb5aa733984"
+    },
+    {
+      "path": "installed-api-receipt.json",
+      "bytes": 2414,
+      "sha256": "dbad78c61b736a04b0c28a1a1feee1c92b805a65c85fb9661bca3292bf3d6bd6"
+    },
+    {
+      "path": "ns-archive-reconciliation.json",
+      "bytes": 4085,
+      "sha256": "caa650d97e9a96ff3ddcd23db538f054ff759ef81068d22d153601d03c1feb8f"
+    },
+    {
+      "path": "ns-build-continuation-controller.py.gz",
+      "bytes": 4038,
+      "sha256": "dd0ac90e50692884692ab015dada73276726fc69bd628d078eea56552e77ed7f"
+    },
+    {
+      "path": "ns-build-continuation-receipt.json",
+      "bytes": 4346,
+      "sha256": "fd42adeb72c794cf39469a8ec22e5b7af20c0c256e618b1004ce32bd44dbbc28"
+    },
+    {
+      "path": "ns-build.json",
+      "bytes": 1429,
+      "sha256": "37277e8c0784de2dc1049241c903010601f1ba1c8cb4394656a0cefb789216b9"
+    },
+    {
+      "path": "ns-generated-files.json",
+      "bytes": 3142,
+      "sha256": "cb8b7419c9bd08fce02401ddedb62b3a0bfaa07dcabf6a42027a7f634f67f5b3"
+    },
+    {
+      "path": "ns-validate.json",
+      "bytes": 1003,
+      "sha256": "dce8bfe3ef6667587bffee648a3589863a0482dd8b061ac23420ccfec5791123"
+    },
+    {
+      "path": "original-cli-controller.py.gz",
+      "bytes": 3516,
+      "sha256": "7f574c0f0f0d35e67a9d998269c1628f75ef4bce528c2347a3ac48e79f9f978c"
+    },
+    {
+      "path": "original-cli-receipt.json",
+      "bytes": 9475,
+      "sha256": "638b80a13e3e80005834f233c2a468d171b7bf25c27d3b7ad5fa19a6a6367c86"
+    },
+    {
+      "path": "qualification.json",
+      "bytes": 6524,
+      "sha256": "bfcb9eaf70a7d5b4e00651e9c71c40ec93a5c8606781ba61ecd1abcb52a3c5e4"
+    },
+    {
+      "path": "root-source-review.json",
+      "bytes": 2465,
+      "sha256": "524c3f8efb42be56dba2947cee4fc9a5d09aaee8b242589250e8bec883dc50a7"
+    },
+    {
+      "path": "source-impact.json",
+      "bytes": 1369,
+      "sha256": "e73d9bce0f7e8dc7dc04828d8b9bbbe77a9ebabd3865096659f2a44076eda385"
+    },
+    {
+      "path": "source-inputs.json",
+      "bytes": 2460,
+      "sha256": "6320215781dc1648b3920a77556d9944b5c3f42e2b9d49c51f97289cec0f2aa1"
+    },
+    {
+      "path": "source-seal.json",
+      "bytes": 5650,
+      "sha256": "6f4cbd78d08f254b72d3d004d0b6dc60fa97977a4d8c025b4b38c28a3230a7ab"
+    },
+    {
+      "path": "source-validation.json",
+      "bytes": 5348,
+      "sha256": "52c956b171df824e9a6109e880cb45685354e886a7dc2efc073459a8b8e947d6"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 7401,
+      "sha256": "593d76879671a8118128486fd613a14aae5c105e0865fc1128a64ffed4d13af9"
+    },
+    {
+      "path": "wrapper-qualification-correction.json",
+      "bytes": 803,
+      "sha256": "0ba087898808183d8b20ad9442bf916a04574692fe1e86399fcba626682d9e95"
+    }
+  ]
+}

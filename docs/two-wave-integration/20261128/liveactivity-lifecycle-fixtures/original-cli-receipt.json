@@ -1,0 +1,217 @@
+{
+  "startedAt": "2026-11-28T12:00:28.145859+00:00",
+  "source": "de44473dfa2684051974c76f3b91504b186b3c3d",
+  "status": "FAIL_ONE_OR_MORE_ENGINES",
+  "engines": [
+    {
+      "engine": "expo",
+      "status": "PASS_ORIGINAL_PORTABLE_VALIDATE_BUILD",
+      "failure": null,
+      "archive": {
+        "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/liveactivity-lifecycle-de44473d-original-cli-r1/expo/LiveActivityLifecycleExpo.hanlinExpo",
+        "bytes": 2019944,
+        "sha256": "b22370a308edcd50d9874588555bd6e248d298f6eb224700e60c9258199fe6bb"
+      },
+      "archiveMembers": 12,
+      "retainedGeneratedFiles": 12
+    },
+    {
+      "engine": "nativescript",
+      "status": "FAIL_OR_ADMISSION_BLOCKED",
+      "failure": {
+        "type": "AssertionError",
+        "message": "",
+        "traceback": "Traceback (most recent call last):\n  File \"/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/liveactivity-lifecycle-de44473d-original-cli-r1/run-original-fixture-cli.py\", line 95, in <module>\n    for phase in engine[\"phases\"]:reports[phase[\"operation\"]]=run_phase(name,phase)\n                                                              ^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/liveactivity-lifecycle-de44473d-original-cli-r1/run-original-fixture-cli.py\", line 60, in run_phase\n    assert report[\"typecheck\"][\"strict\"] is True and report[\"typecheck\"][\"skipLibCheck\"] is False and report[\"typecheck\"][\"dependencyDeclarationsChecked\"] is True\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+      }
+    }
+  ],
+  "commands": [
+    {
+      "engine": "expo",
+      "operation": "validate",
+      "argv": [
+        "/mnt/development/projects/toolchains/node-v24.5.0-linux-arm64/bin/node",
+        "Scripts/MiniApps/miniapp.mjs",
+        "validate",
+        "--sdk",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/modular-search-types-ce896542/accepted-sdk/MiniAppSDK",
+        "--project",
+        "/mnt/development/projects/worktrees/hanlin-ci-1aef1ec1-20261128/Fixtures/LiveActivityLifecycle/expo",
+        "--report",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/liveactivity-lifecycle-de44473d-original-cli-r1/expo/expo-validate.json"
+      ],
+      "cwd": "/mnt/development/projects/worktrees/hanlin-ci-1aef1ec1-20261128",
+      "timeoutSeconds": 300,
+      "startedAt": "2026-11-28T12:00:56.178737+00:00",
+      "stopActions": [],
+      "pid": 517571,
+      "pgid": 517571,
+      "exit": 0,
+      "finishedAt": "2026-11-28T12:01:00.641213+00:00",
+      "seconds": 4.4625033820047975,
+      "reportSHA256": "05bb5fb76f7a48e3e31c61eb8771418612148a2bcc7c01f553ae814aed45affa",
+      "succeeded": true,
+      "compiler": {
+        "packageVersions": {
+          "@expo/ui": "58.0.29",
+          "@hanlin/expo-native-api": "1.0.0",
+          "@hanlin/expo-ui": "1.0.0",
+          "@nativescript/react-native": "9.1.2",
+          "expo": "58.0.26",
+          "expo-asset": "58.0.21",
+          "expo-brownfield": "58.0.20",
+          "expo-modules-core": "58.1.0",
+          "expo-modules-jsi": "58.0.23",
+          "react": "19.3.0",
+          "react-native": "0.88.1",
+          "react-native-worklets": "0.13.0",
+          "expo-widgets": "58.0.29",
+          "@babel/core": "7.29.7",
+          "@react-native-community/cli": "20.2.0",
+          "@react-native/codegen": "0.88.1",
+          "@react-native/metro-config": "0.88.1",
+          "@types/react": "19.3.3",
+          "babel-preset-expo": "58.0.26",
+          "esbuild": "0.25.12",
+          "typescript": "6.0.2",
+          "@hanlin/notification-events": "1.0.0",
+          "@hanlin/system-surfaces": "1.0.0",
+          "@hanlin/assistant-tools": "1.0.0"
+        },
+        "manifestSHA256": "7f2702e52587fe1d126cef37f068ab3a9e3a26adb275ffafb687cb38a2db9b87",
+        "compilerVersion": "6.0.3"
+      },
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": false,
+        "dependencyDeclarationsChecked": true
+      },
+      "diagnosticCount": 0
+    },
+    {
+      "engine": "expo",
+      "operation": "build",
+      "argv": [
+        "/mnt/development/projects/toolchains/node-v24.5.0-linux-arm64/bin/node",
+        "Scripts/MiniApps/miniapp.mjs",
+        "build",
+        "--sdk",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/modular-search-types-ce896542/accepted-sdk/MiniAppSDK",
+        "--project",
+        "/mnt/development/projects/worktrees/hanlin-ci-1aef1ec1-20261128/Fixtures/LiveActivityLifecycle/expo",
+        "--archive",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/liveactivity-lifecycle-de44473d-original-cli-r1/expo/LiveActivityLifecycleExpo.hanlinExpo",
+        "--report",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/liveactivity-lifecycle-de44473d-original-cli-r1/expo/expo-build.json"
+      ],
+      "cwd": "/mnt/development/projects/worktrees/hanlin-ci-1aef1ec1-20261128",
+      "timeoutSeconds": 600,
+      "startedAt": "2026-11-28T12:01:00.641805+00:00",
+      "stopActions": [],
+      "pid": 517767,
+      "pgid": 517767,
+      "exit": 0,
+      "finishedAt": "2026-11-28T12:01:26.642136+00:00",
+      "seconds": 26.000355469994247,
+      "reportSHA256": "e1462c1c7c63fec48b79ccec283521b81b161f7e9fc4ff3869eb306eacfd64ed",
+      "succeeded": true,
+      "compiler": {
+        "packageVersions": {
+          "@expo/ui": "58.0.29",
+          "@hanlin/expo-native-api": "1.0.0",
+          "@hanlin/expo-ui": "1.0.0",
+          "@nativescript/react-native": "9.1.2",
+          "expo": "58.0.26",
+          "expo-asset": "58.0.21",
+          "expo-brownfield": "58.0.20",
+          "expo-modules-core": "58.1.0",
+          "expo-modules-jsi": "58.0.23",
+          "react": "19.3.0",
+          "react-native": "0.88.1",
+          "react-native-worklets": "0.13.0",
+          "expo-widgets": "58.0.29",
+          "@babel/core": "7.29.7",
+          "@react-native-community/cli": "20.2.0",
+          "@react-native/codegen": "0.88.1",
+          "@react-native/metro-config": "0.88.1",
+          "@types/react": "19.3.3",
+          "babel-preset-expo": "58.0.26",
+          "esbuild": "0.25.12",
+          "typescript": "6.0.2",
+          "@hanlin/notification-events": "1.0.0",
+          "@hanlin/system-surfaces": "1.0.0",
+          "@hanlin/assistant-tools": "1.0.0"
+        },
+        "manifestSHA256": "7f2702e52587fe1d126cef37f068ab3a9e3a26adb275ffafb687cb38a2db9b87",
+        "compilerVersion": "6.0.3"
+      },
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": false,
+        "dependencyDeclarationsChecked": true
+      },
+      "diagnosticCount": 0
+    },
+    {
+      "engine": "nativescript",
+      "operation": "validate",
+      "argv": [
+        "/mnt/development/projects/toolchains/node-v24.5.0-linux-arm64/bin/node",
+        "Scripts/MiniApps/miniapp.mjs",
+        "validate",
+        "--sdk",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/modular-search-types-ce896542/accepted-sdk/MiniAppSDK",
+        "--project",
+        "/mnt/development/projects/worktrees/hanlin-ci-1aef1ec1-20261128/Fixtures/LiveActivityLifecycle/nativescript",
+        "--report",
+        "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/liveactivity-lifecycle-de44473d-original-cli-r1/nativescript/nativescript-validate.json"
+      ],
+      "cwd": "/mnt/development/projects/worktrees/hanlin-ci-1aef1ec1-20261128",
+      "timeoutSeconds": 300,
+      "startedAt": "2026-11-28T12:01:26.702763+00:00",
+      "stopActions": [],
+      "pid": 518960,
+      "pgid": 518960,
+      "exit": 0,
+      "finishedAt": "2026-11-28T12:01:33.321181+00:00",
+      "seconds": 6.618442573584616,
+      "reportSHA256": "dce8bfe3ef6667587bffee648a3589863a0482dd8b061ac23420ccfec5791123",
+      "succeeded": true,
+      "compiler": {
+        "packageVersions": {
+          "@nativescript/core": "9.1.4",
+          "@nativescript/swift-ui": "4.0.2",
+          "@nativescript/ios": "9.1.1",
+          "@nativescript/types": "9.1.4",
+          "@nativescript/vite": "8.0.24",
+          "typescript": "5.9.3",
+          "vite": "8.0.0",
+          "@hanlin/notification-events": "1.0.0",
+          "@hanlin/system-surfaces": "1.0.0",
+          "@hanlin/host-services": "1.0.0",
+          "@hanlin/window-factory": "1.0.0",
+          "@hanlin/assistant-tools": "1.0.0"
+        },
+        "manifestSHA256": "7f2702e52587fe1d126cef37f068ab3a9e3a26adb275ffafb687cb38a2db9b87",
+        "compilerVersion": "5.9.3"
+      },
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": true,
+        "dependencyDeclarationsChecked": false
+      },
+      "diagnosticCount": 0
+    }
+  ],
+  "nativeCommands": 0,
+  "scope": "Exactly one original validate300/build600 per new engine fixture on qualified historical SDK; native and final shipping SDK acceptance separate.",
+  "failure": null,
+  "sourceFilesUnchanged": true,
+  "sdkCompleteBytesModesUnchanged": true,
+  "sdkPhysicalFiles": 25707,
+  "worktreeClean": true,
+  "finishedAt": "2026-11-28T12:01:41.293804+00:00"
+}
