@@ -1270,7 +1270,7 @@ def main():
         }
         _, raw = command(["xcrun", "simctl", "list", "devicetypes", "-j"], "device-types.json")
         supported = {item["identifier"] for item in runtime["supportedDeviceTypes"]}
-        device_family = "iPad" if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_native_lists_nativescript_os", "miniapp_native_lists_expo_os", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_widget_components_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"} else "iPhone"
+        device_family = "iPad" if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_native_lists_nativescript_os", "miniapp_native_lists_expo_os", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_widget_families_os", "miniapp_widget_layout_os", "miniapp_widget_components_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"} or TEST_SCOPE in MIGRATION_SCOPES else "iPhone"
         device = next(item for item in json.loads(raw)["devicetypes"]
             if item.get("productFamily") == device_family and item["identifier"] in supported)
         _, raw = command(["xcrun", "simctl", "create",
