@@ -1,0 +1,72 @@
+{
+  "atUTC": "2026-11-28T10:37:49.399766+00:00",
+  "owner": "/root",
+  "status": "FROZEN_SINGLE_FILE_CANDIDATE_INDEPENDENT_REVIEW_PENDING",
+  "base": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+  "beforeSHA256": "fa423e890c1447a77dd8c978bc3124e9385d12098b04aec472303562d312be25",
+  "afterSHA256": "d7dbeebf232d1ab00e251920a7af0bdeeb52cf4ea6838e709f86385ff1d15f02",
+  "patchSHA256": "d7440d8758f807b24b4f5828e10ab3aac599dfc76dd980ab5ef80b9feed3faf2",
+  "candidateTree": "3406e618fae7ba3f0fe042b44c1f035d7bbcfd4b",
+  "wholeFileInverseExact": true,
+  "actualFailure": "Original productionToolFailureRecoversAndAnswersSameTurn only reports resultPresentationSuppressed nil rather than false; source unchanged de to fc5.",
+  "sourceFinding": "Fallback toolResult omitted presentationDecision and emitted only toolExecutionFailed. Actual accumulator failure branch updates failed activity/transcript; canonical result insertion is in toolExecutionCompleted. Recording a fabricated non-suppressed boolean alone would not create a result card.",
+  "change": "Build a real redacted NativeUIBlock.error, obtain original canonical coordinator decision, emit an error-semantic AgentToolResult only if that decision allows it, otherwise preserve the failed event. Pass the same decision to the unchanged recorder.",
+  "preserved": [
+    "Original real provider/model tool-result flow and finalErrorText selection.",
+    "Original parsed call/profile binding and completedCallIDs duplicate guard.",
+    "Original call-start/call-complete/execution-start ordering.",
+    "Original invalidArguments semantic outcome, duration0, diagnostics and failure count.",
+    "Original AgentSafeError redaction for every newly emitted UI text/body.",
+    "Original coordinator visibility/profile/invalid/empty rules; no forced shouldPresent=true.",
+    "Original completed/error reducer, recorder, adapter and all test code.",
+    "Original tool-recovery false assertion,42/continuation/final-answer checks and all deadlines."
+  ],
+  "uiTextSource": "Existing AgentSafeError.message; no raw new UI payload. Model-facing continuation is unchanged; original recorder arguments remain finalErrorText.",
+  "errorBlockPolicy": "Empty redacted message yields no block; coordinator remains authoritative. Unsupported profiles keep failure event and receive the truthful suppression decision.",
+  "renderer": "Existing profile renderer selected by canonical coordinator; the new rich block has no fabricated legacy payload.",
+  "authorities": [
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolResultPresentationCoordinator.swift",
+      "bytes": 3220,
+      "sha256": "882dd0e49f2529664379bef9790e85221448fc928a7fe803f6e0b295286c4969"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/AgentEventAccumulator.swift",
+      "bytes": 27378,
+      "sha256": "d1c9a3ce85ff65b90e277a6f315aae81a0cab51afd69ebd1b25522bfa5bd14fd"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/AgentEvent.swift",
+      "bytes": 4961,
+      "sha256": "8848c6253a7f3b4a2e17d7d417279d7e5124dc5eff57367894f77a858183a38d"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRecorder.swift",
+      "bytes": 39038,
+      "sha256": "68de1592a12ad4e9421651d50d86538798f66643370025230a0d9a5168a7a79c"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/HanlinAISDKToolAdapter.swift",
+      "bytes": 50953,
+      "sha256": "d15665f526a62376591f7ed2ba89e42a06c542f38ee394856771abaec37366cb"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteShellCommandTool.swift",
+      "bytes": 7548,
+      "sha256": "fb4f23ac984f1ad83d887d91406852cf72b050d2e2c0c0a6681f8edc222ddd52"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/RuntimeToolSupport.swift",
+      "bytes": 10588,
+      "sha256": "318aafd2fcea288abdfc333e3103e66af4f409daadb54a96d33d57b2fbf82ce9"
+    },
+    {
+      "path": "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift",
+      "bytes": 52257,
+      "sha256": "d26270284346c31b011b45aac482ac190fd43a54ec4ffa3ec6a437c7c9404c06"
+    }
+  ],
+  "nativeExecution": "NOT_RUN",
+  "tests": "No new mirror; original production conversation and presentation gates remain required."
+}

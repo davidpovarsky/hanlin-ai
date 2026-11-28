@@ -1,0 +1,50 @@
+{
+  "actualNativeSource": "de7758a9647122e302e996e72f3b9c63776764cc",
+  "sourceQualification": "Actual Gitde plus retained36-path tracked preparation patch and255 adapted native files. The relevant five test files and listed owner/API/Session/engine files are absent from the actual tracked overlay. No separate hash of every compiled Swift input is claimed.",
+  "classificationSHA256": "532d293c151c6519c547de5fc2424164454be9d4c904b505f3a96a6f5483e912",
+  "case": {
+    "case": "AgentRuntimeConversationAcceptanceTests/productionToolFailureRecoversAndAnswersSameTurn()",
+    "actualResult": {
+      "children": [
+        {
+          "name": "Expectation failed: calls[1].resultPresentationSuppressed == false\ncalls[1].resultPresentationSuppressed \u2192 nil",
+          "nodeType": "Failure Message",
+          "sourceLocation": {
+            "filePath": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift",
+            "lineNumber": 542
+          }
+        }
+      ],
+      "duration": "3s",
+      "durationInSeconds": 3.4341437816619873,
+      "name": "Production tool failure renders error card and recovers in same turn",
+      "nodeIdentifier": "AgentRuntimeConversationAcceptanceTests/productionToolFailureRecoversAndAnswersSameTurn()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRuntimeConversationAcceptanceTests/productionToolFailureRecoversAndAnswersSameTurn()",
+      "nodeType": "Test Case",
+      "result": "Failed"
+    },
+    "sourceComparison": {
+      "case": "AgentRuntimeConversationAcceptanceTests/productionToolFailureRecoversAndAnswersSameTurn()",
+      "original": {
+        "path": "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift",
+        "startLine": 523,
+        "endLine": 555,
+        "bytes": 1757,
+        "sha256": "6099c39f380d5580e91b688499da9144d7005560e53485093775f094d0d7b07d"
+      },
+      "current": {
+        "path": "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift",
+        "startLine": 523,
+        "endLine": 555,
+        "bytes": 1757,
+        "sha256": "6099c39f380d5580e91b688499da9144d7005560e53485093775f094d0d7b07d"
+      },
+      "methodBytesEqual": true
+    },
+    "status": "CURRENT_PRESENTATION_DIAGNOSTIC_GAP",
+    "actualBoundary": "Only this method issue is calls[1].resultPresentationSuppressed nil instead of false. Its original recovery/42/final-answer assertions produced no additional issue.",
+    "currentSourceFinding": "The failed method body is exact. APIManager is exactde\u2192c8. Its fallback .toolResult branch emits an error presentation but calls completeToolCall without presentationDecision; the unchanged recorder defaults that optional argument to nil and maps only a supplied decision into resultPresentationSuppressed.",
+    "causalLimit": "The source omission explains a nil diagnostic on that branch; no separate UI-renderer failure or new runtime execution is inferred.",
+    "nextGate": "Owner may review a minimal canonical presentation-decision propagation candidate. Preserve the original false assertion and complete original method."
+  }
+}

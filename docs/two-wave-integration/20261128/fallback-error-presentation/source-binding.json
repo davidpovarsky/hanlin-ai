@@ -1,0 +1,17 @@
+{
+  "atUTC": "2026-11-28T10:45:24.363200+00:00",
+  "base": "fc5ce1bacffbf8b3cd206b83debfac406c0044ed",
+  "sourceCommit": "f470dababcfa368236854fa64e7fb24149216696",
+  "tree": "3406e618fae7ba3f0fe042b44c1f035d7bbcfd4b",
+  "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+  "beforeSHA256": "fa423e890c1447a77dd8c978bc3124e9385d12098b04aec472303562d312be25",
+  "afterSHA256": "d7dbeebf232d1ab00e251920a7af0bdeeb52cf4ea6838e709f86385ff1d15f02",
+  "patchSHA256": "d7440d8758f807b24b4f5828e10ab3aac599dfc76dd980ab5ef80b9feed3faf2",
+  "candidateManifestSHA256": "1d7736a0a7b60e86820c72211fd6792b258f5912fc5ea1015fb2db05ce69a0ac",
+  "independentReviewSHA256": "1a70ede573ef9fbdf10839e606b0608f4c4122129d9bc2681ab3c0e6ddd345ac",
+  "originalTestSourceUnchanged": true,
+  "SDK396DirectChangedPathIntersection": 0,
+  "Host99DirectChangedPathIntersection": 0,
+  "nativeTests": "NOT_RUN",
+  "portableMirrorTests": "NOT_RUN"
+}
