@@ -1,0 +1,63 @@
+{
+  "source": "ce896542",
+  "testSourceSHA256": "6aa9c15d739096aaf8ec7f0e929cbde37996de50a8a9178288d3cd2e9812a4ad",
+  "authority": {
+    "path": "w1-original90-ce896542-terminal-20261127/unit-issue-contexts.json",
+    "sha256": "162823d2ba59613d0f76e7c02d9b848a7e781859effac6b8054c30c9b49d56f4"
+  },
+  "scope": "Original timeout is observed. Iteration, invocation state and native VM ownership remain unknown.",
+  "lines": [
+    {
+      "line": 233773,
+      "text": "2026-11-27T20:40:46.5196030Z \u2718 Test actualOwnedShareDispatchWaitsForTheVMAndPreservesResultsAcrossTwoSessions() recorded an issue at NativeScriptShareDeliveryTests.swift:89:25: Expectation failed: ContinuousClock.now < deadline"
+    },
+    {
+      "line": 233774,
+      "text": "2026-11-27T20:40:46.5225750Z \u21b3 Actual Share action did not produce a terminal receipt"
+    },
+    {
+      "line": 233775,
+      "text": "2026-11-27T20:40:46.5259750Z \u21b3 ContinuousClock.now < deadline \u2192 false"
+    },
+    {
+      "line": 233776,
+      "text": "2026-11-27T20:40:46.5265120Z \u21b3   ContinuousClock.now \u2192 Instant(_value: 6484.154356333001 seconds)"
+    },
+    {
+      "line": 233777,
+      "text": "2026-11-27T20:40:46.5271200Z \u21b3     _value \u2192 6484.154356333001 seconds"
+    },
+    {
+      "line": 233778,
+      "text": "2026-11-27T20:40:46.5272160Z \u21b3       _low \u2192 9347186460947382784"
+    },
+    {
+      "line": 233779,
+      "text": "2026-11-27T20:40:46.5273810Z \u21b3       _high \u2192 351"
+    },
+    {
+      "line": 233780,
+      "text": "2026-11-27T20:40:46.5274430Z \u21b3   deadline \u2192 Instant(_value: 6484.133336500001 seconds)"
+    },
+    {
+      "line": 233781,
+      "text": "2026-11-27T20:40:46.5274960Z \u21b3     _value \u2192 6484.133336500001 seconds"
+    },
+    {
+      "line": 233782,
+      "text": "2026-11-27T20:40:46.5275870Z \u21b3       _low \u2192 9326166627947382784"
+    },
+    {
+      "line": 233783,
+      "text": "2026-11-27T20:40:46.5276430Z \u21b3       _high \u2192 351"
+    },
+    {
+      "line": 233784,
+      "text": "2026-11-27T20:40:46.5277480Z 2026-11-27 20:40:46.454488+0000 AI_Hanlin[91061:472745] HANLIN_NS_PRODUCTION_SHUTDOWN_OK"
+    },
+    {
+      "line": 233785,
+      "text": "2026-11-27T20:40:46.5958810Z \u2718 Test actualOwnedShareDispatchWaitsForTheVMAndPreservesResultsAcrossTwoSessions() failed after 136.083 seconds with 1 issue."
+    }
+  ]
+}

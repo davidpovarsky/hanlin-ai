@@ -1,0 +1,62 @@
+{
+  "classification": "FAILURE_ONLY_TEST_OBSERVATION_SOURCE_ONLY",
+  "base": "1aef1ec13b980454b5aba43f0a4787cd5301a748",
+  "changedPath": "AI_HLYTests/NativeScriptShareDeliveryTests.swift",
+  "originalSHA256": "6aa9c15d739096aaf8ec7f0e929cbde37996de50a8a9178288d3cd2e9812a4ad",
+  "candidateSHA256": "50f7cfb15e8c7fde04b26840ca0aa6687c6bc34b53ff6a9565f53718db463519",
+  "patchSHA256": "a37842498dc2182cb768993cdf3e87e707dfbdc7145f78c49acb676fe63c9e69",
+  "purpose": "Retain the original Share receipt-wait failure state before the existing batch defer and uninstall cleanup, then rethrow the same error.",
+  "preservation": {
+    "wholeFileExactInverse": true,
+    "originalCeTestByteIdentical": true,
+    "selectors": [
+      "actualOwnedShareDispatchWaitsForTheVMAndPreservesResultsAcrossTwoSessions"
+    ],
+    "assertionLinesUnchanged": 18,
+    "iterations": "0..<2 unchanged",
+    "deadlineSeconds": 120,
+    "pollMilliseconds": 25,
+    "initialSleepMilliseconds": 100,
+    "runtimeFixtureByteIdentical": true,
+    "allSuccessfulPathCallsAndCleanupUnchanged": true,
+    "productionChangedPaths": [],
+    "SDK396Intersection": []
+  },
+  "observation": {
+    "stdoutPrefix": "HANLIN_SHARE_WAIT_FAILURE",
+    "maximumJSONBytes": 16384,
+    "variableStringUTF8PrefixBytes": 256,
+    "queueReads": 1,
+    "queueAPI": "HanlinScriptExtensionStore.receipt(for:)",
+    "perIDOnly": true,
+    "existingLockAcquisitionMaximumSeconds": 10,
+    "lockPolicyChanged": false,
+    "timing": "Only after original polling error; no added reads in success/poll paths.",
+    "serialization": "Identities, enum status, count, boolean, numeric timing. Generations use exact decimal strings. No shared text, result contents, source or error-message serialization.",
+    "errorPreservation": "Snapshot read/encoding failures are contained; the original catch rethrows its original error.",
+    "ownership": "MainActor synchronous local function. Existing public session getters return copied String identifiers; no session/context is retained."
+  },
+  "limitations": [
+    "Sequential state observations are not an atomic snapshot.",
+    "Process-global session IDs are not proof that the VM belongs to this Share invocation.",
+    "The existing receipt API may create/open its original transaction lock and decode a receipt. Only selected scalar fields are serialized; no custom queue mutation or broad disk scan is added.",
+    "The existing lock acquisition is bounded to 10 seconds; filesystem read/encoding cost is not a new hard wall-clock guarantee.",
+    "The original deadline and assertion remain unchanged. A post-failure observation can delay subsequent cleanup.",
+    "No cause or repair of the native Share timeout is established; actual Apple compiler/test acceptance remains required."
+  ],
+  "sdkAuthority": {
+    "path": "retained-import-ed4a6207-two-pass-eight-fixture-fail/current-sdk-fingerprint.json",
+    "sha256": "a9e7468bc7b3898a6408587ef48a80dc83e389ab945c84ec77cc8d48b692710b",
+    "inputCount": 396,
+    "inputSHA256": "e8ddacfefcdb51912270c230a60de97c5a2be3499e3f7bd6496e6b5707f9f4fc"
+  },
+  "execution": {
+    "Swift": "NOT_RUN",
+    "native": "NOT_RUN",
+    "portableTests": "NOT_RUN",
+    "mechanicalSourceVerification": "PASS"
+  },
+  "gitPatchSHA256": "6d05aa2cd88305325dec11c1f1b45e842f14f8f7c91948f6afd15e7b51cf9fec",
+  "diffCheckExit": 0,
+  "sourceCommit": "180c24939f25ed429d11f172072b259b5e333580"
+}
