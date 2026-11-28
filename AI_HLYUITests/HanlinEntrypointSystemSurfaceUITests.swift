@@ -1474,8 +1474,15 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
                         "The actual gallery page evidence exceeded its finite observation bound.")
             let texts = rows.flatMap { [$0["label"] as? String ?? "", $0["value"] as? String ?? ""] }
             let normalized = texts.map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
-            let selected = normalized.contains("hanlin script") &&
-                normalized.contains(where: { $0 == sizeLabel.lowercased() || $0 == sizeLabel.lowercased() + " widget" })
+            let nativePreviewCount = rows.filter {
+                ($0["label"] as? String ?? "").trimmingCharacters(in: .whitespacesAndNewlines).lowercased() ==
+                    "hanlin miniapps, hanlin script" &&
+                ($0["value"] as? String ?? "").trimmingCharacters(in: .whitespacesAndNewlines).lowercased() ==
+                    "widget, " + sizeLabel.lowercased()
+            }.count
+            let selected = normalized.contains("hanlin script") && nativePreviewCount <= 1 &&
+                (normalized.contains(where: { $0 == sizeLabel.lowercased() || $0 == sizeLabel.lowercased() + " widget" }) ||
+                 nativePreviewCount == 1)
             let signature = try String(data: JSONSerialization.data(withJSONObject: rows, options: [.sortedKeys]), encoding: .utf8)
             let actualSignature = try XCTUnwrap(signature)
             try require(seen.insert(actualSignature).inserted, "The actual gallery repeated a page without offering the named family.")

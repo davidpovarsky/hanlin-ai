@@ -184,7 +184,10 @@ def require_gallery(request, after):
         previous, uptime = current, current_uptime
         if page["selected"]:
             label = FAMILIES[request["expectedFamily"]][0].lower()
-            require("hanlin script" in texts and (label in texts or label + " widget" in texts),
+            native_preview_count = sum(row["label"].strip().lower() == "hanlin miniapps, hanlin script"
+                                       and row["value"].strip().lower() == "widget, " + label for row in rows)
+            require("hanlin script" in texts and native_preview_count <= 1
+                    and (label in texts or label + " widget" in texts or native_preview_count == 1),
                     "The actual selected page must expose Hanlin Script and the requested size; ordinal is insufficient")
     return {"prePlacement": copy.deepcopy(before), "galleryPages": copy.deepcopy(pages)}
 

@@ -80,6 +80,45 @@ def fixture(family="systemMedium"):
 
 
 class WidgetFamilyEvidenceControls(unittest.TestCase):
+    def test_recorded_native_medium_preview_label_and_value_pair_is_accepted(self):
+        # Parser controls use the actual failed Layout AX strings and geometry.
+        # They are not a native run, image, or placement acceptance receipt.
+        request, _, _, now = fixture()
+        rows = [{"label": "Hanlin Script", "value": "", "frame": [209, 203, 523, 33.5]},
+                {"label": "Hanlin MiniApps, Hanlin Script", "value": "Widget, Medium",
+                 "frame": [353.5, 561, 234, 108]}]
+        for observed in (rows, [{**row, "label": " " + row["label"].upper() + " ",
+                                "value": " " + row["value"].upper() + " "} for row in rows]):
+            changed = copy.deepcopy(request); changed["galleryPages"][0]["rows"] = observed
+            reader.require_gallery(changed, (now + 4) * 1000)
+
+    def test_native_preview_rejects_wrong_provider_kind_family_split_or_duplicate_rows(self):
+        request, _, _, now = fixture()
+        request["galleryPages"][0]["rows"] = [
+            {"label": "Hanlin Script", "value": "", "frame": [209, 203, 523, 33.5]},
+            {"label": "Hanlin MiniApps, Hanlin Script", "value": "Widget, Medium",
+             "frame": [353.5, 561, 234, 108]}]
+        mutations = [
+            ("provider", lambda rows: rows[1].update(label="Another App, Hanlin Script")),
+            ("kind", lambda rows: rows[1].update(label="Hanlin MiniApps, Expo MiniApp")),
+            ("family", lambda rows: rows[1].update(value="Widget, Small")),
+            ("ordinal", lambda rows: rows[1].update(value="page 2 of 8")),
+            ("substring", lambda rows: rows[1].update(value="Widget, Medium preview")),
+            ("missing-value", lambda rows: rows[1].update(value="")),
+            ("split-pair", lambda rows: (rows[1].update(value=""),
+                                        rows.append({"label": "", "value": "Widget, Medium",
+                                                     "frame": [353.5, 690, 234, 40]}))),
+            ("duplicate", lambda rows: rows.append(copy.deepcopy(rows[1]))),
+            ("duplicate-with-legacy-label", lambda rows: (
+                rows.append(copy.deepcopy(rows[1])),
+                rows.append({"label": "Medium", "value": "", "frame": [209, 240, 100, 30]}))),
+            ("missing-title", lambda rows: rows.pop(0)),
+        ]
+        for label, mutate in mutations:
+            changed = copy.deepcopy(request); mutate(changed["galleryPages"][0]["rows"])
+            with self.subTest(reason=label), self.assertRaises(Error):
+                reader.require_gallery(changed, (now + 4) * 1000)
+
     def test_four_distinct_family_contracts_accept_complete_correlated_evidence(self):
         for family in reader.FAMILIES:
             with self.subTest(family=family):
