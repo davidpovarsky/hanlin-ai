@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "445e2cb514012110cd865bdd33a3dbb8e6b8143d",
+  "sourceCommit": "167219a491a844ae838041f195c12abe9800dac3",
   "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
@@ -7561,8 +7561,8 @@
             },
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
-              "sha256": "e9d0ff9247fa5673803d643c80bd5f6a7ce612f39b638292a209cde2ccf19c8f",
-              "line": 57
+              "sha256": "84f13725a823e11c473b97c62a807858c6acb5fb03370ecb750f8bcab3a72dd2",
+              "line": 58
             }
           ]
         },
@@ -8425,7 +8425,7 @@
             },
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
-              "sha256": "e9d0ff9247fa5673803d643c80bd5f6a7ce612f39b638292a209cde2ccf19c8f",
+              "sha256": "84f13725a823e11c473b97c62a807858c6acb5fb03370ecb750f8bcab3a72dd2",
               "line": 31
             }
           ]
@@ -8439,7 +8439,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
-              "sha256": "e9d0ff9247fa5673803d643c80bd5f6a7ce612f39b638292a209cde2ccf19c8f",
+              "sha256": "84f13725a823e11c473b97c62a807858c6acb5fb03370ecb750f8bcab3a72dd2",
               "line": 12,
               "symbol": "HanlinWidgetPackageMetadata.abiVersion"
             }
@@ -8454,7 +8454,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
-              "sha256": "e9d0ff9247fa5673803d643c80bd5f6a7ce612f39b638292a209cde2ccf19c8f",
+              "sha256": "84f13725a823e11c473b97c62a807858c6acb5fb03370ecb750f8bcab3a72dd2",
               "line": 14,
               "symbol": "HanlinWidgetPackageMetadata.actions"
             }
@@ -8589,7 +8589,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
-              "sha256": "e9d0ff9247fa5673803d643c80bd5f6a7ce612f39b638292a209cde2ccf19c8f",
+              "sha256": "84f13725a823e11c473b97c62a807858c6acb5fb03370ecb750f8bcab3a72dd2",
               "line": 15,
               "symbol": "HanlinWidgetPackageMetadata.families"
             }
@@ -8604,7 +8604,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
-              "sha256": "e9d0ff9247fa5673803d643c80bd5f6a7ce612f39b638292a209cde2ccf19c8f",
+              "sha256": "84f13725a823e11c473b97c62a807858c6acb5fb03370ecb750f8bcab3a72dd2",
               "line": 13,
               "symbol": "HanlinWidgetPackageMetadata.sourceFormat"
             }
@@ -15490,14 +15490,14 @@
         },
         {
           "source": "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift",
-          "sha256": "b1ed3e326e5fe968671a15900c18cffb3606641674aafa9c47dd36fd49b6b5bd",
-          "line": 58,
+          "sha256": "88eaefa67a733beb153d2c0d3310de2e23ae85c80bf854f22b161c0b9e49ebeb",
+          "line": 114,
           "anchor": "systemContext.currentMode == .foreground"
         },
         {
           "source": "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift",
-          "sha256": "b1ed3e326e5fe968671a15900c18cffb3606641674aafa9c47dd36fd49b6b5bd",
-          "line": 162,
+          "sha256": "88eaefa67a733beb153d2c0d3310de2e23ae85c80bf854f22b161c0b9e49ebeb",
+          "line": 223,
           "anchor": "userGesturePresent: true, canPresentUI: canPresentUI"
         }
       ]
@@ -15585,7 +15585,7 @@
     },
     {
       "path": "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift",
-      "sha256": "b1ed3e326e5fe968671a15900c18cffb3606641674aafa9c47dd36fd49b6b5bd"
+      "sha256": "88eaefa67a733beb153d2c0d3310de2e23ae85c80bf854f22b161c0b9e49ebeb"
     },
     {
       "path": "Package.swift",
@@ -15809,7 +15809,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
-      "sha256": "e9d0ff9247fa5673803d643c80bd5f6a7ce612f39b638292a209cde2ccf19c8f"
+      "sha256": "84f13725a823e11c473b97c62a807858c6acb5fb03370ecb750f8bcab3a72dd2"
     },
     {
       "path": "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/OutputGenerator.swift",
